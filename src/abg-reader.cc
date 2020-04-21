@@ -118,6 +118,7 @@ private:
   suppr::suppressions_type				m_supprs;
   bool							m_tracking_non_reachable_types;
   bool							m_drop_undefined_syms;
+  bool							m_merge_translation_units;
 
   read_context();
 
@@ -129,7 +130,8 @@ public:
       m_corp_node(),
       m_exported_decls_builder(),
       m_tracking_non_reachable_types(),
-      m_drop_undefined_syms()
+      m_drop_undefined_syms(),
+      m_merge_translation_units()
   {}
 
   /// Getter for the flag that tells us if we are tracking types that
@@ -166,6 +168,22 @@ public:
   void
   drop_undefined_syms(bool f)
   {m_drop_undefined_syms = f;}
+
+  /// Getter for the flag that tells us if we are merging translation
+  /// units.
+  ///
+  /// @return true iff we are merging translation units.
+  bool
+  merge_translation_units() const
+  {return m_merge_translation_units;}
+
+  /// Setter for the flag that tells us if we are merging translation
+  /// units.
+  ///
+  /// @param f the new value of the flag.
+  void
+  merge_translation_units(bool f)
+  {m_merge_translation_units = f;}
 
   /// Getter of the path to the ABI file.
   ///
