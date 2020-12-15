@@ -5,23 +5,23 @@
 
 /// @file
 ///
-/// Utilities to ease the wrapping of C types into std::tr1::shared_ptr
+/// Utilities to ease the wrapping of C types into std::shared_ptr
 
 #ifndef __ABG_SPTR_UTILS_H__
 #define __ABG_SPTR_UTILS_H__
 
 #include <regex.h>
+#include <memory>
 
-#include "abg-cxx-compat.h"
 
 namespace abigail
 {
 
-/// Namespace for the utilities to wrap C types into std::tr1::shared_ptr.
+/// Namespace for the utilities to wrap C types into std::shared_ptr.
 namespace sptr_utils
 {
 
-using abg_compat::shared_ptr;
+using std::shared_ptr;
 
 /// This is to be specialized for the diverse C types that needs
 /// wrapping in shared_ptr.

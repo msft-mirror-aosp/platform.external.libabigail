@@ -19,18 +19,20 @@
 #include <libgen.h>
 #include <assert.h>
 #include <limits.h>
-#include <cstring>
-#include <cmath>
 #include <elfutils/libdwfl.h>
 #include <dwarf.h>
 #include <algorithm>
-#include <stack>
+#include <cmath>
+#include <cstring>
 #include <deque>
 #include <list>
+#include <memory>
 #include <ostream>
 #include <sstream>
+#include <stack>
+#include <unordered_map>
+#include <unordered_set>
 
-#include "abg-cxx-compat.h"
 #include "abg-ir-priv.h"
 #include "abg-suppression-priv.h"
 #include "abg-corpus-priv.h"
@@ -62,10 +64,10 @@ using std::cerr;
 namespace dwarf_reader
 {
 
-using abg_compat::dynamic_pointer_cast;
-using abg_compat::static_pointer_cast;
-using abg_compat::unordered_map;
-using abg_compat::unordered_set;
+using std::dynamic_pointer_cast;
+using std::static_pointer_cast;
+using std::unordered_map;
+using std::unordered_set;
 using std::stack;
 using std::deque;
 using std::list;
