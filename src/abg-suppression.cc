@@ -12,8 +12,8 @@
 
 #include <algorithm>
 
-#include "abg-cxx-compat.h"
 #include "abg-internal.h"
+#include <memory>
 
 // <headers defining libabigail's API go under here>
 ABG_BEGIN_EXPORT_DECLARATIONS
@@ -34,7 +34,7 @@ namespace abigail
 namespace suppr
 {
 
-using abg_compat::dynamic_pointer_cast;
+using std::dynamic_pointer_cast;
 using regex::regex_t_sptr;
 
 // <parsing stuff>

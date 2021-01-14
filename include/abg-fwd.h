@@ -9,15 +9,16 @@
 #define __ABG_IRFWD_H__
 
 #include <stdint.h>
-#include <cstdlib>
 #include <cstddef>
+#include <cstdlib>
 #include <list>
-#include <vector>
+#include <memory>
+#include <ostream>
 #include <string>
 #include <typeinfo>
+#include <unordered_map>
 #include <utility> // for std::rel_ops, at least.
-#include <ostream>
-#include "abg-cxx-compat.h"
+#include <vector>
 #include "abg-interned-str.h"
 #include "abg-hash.h"
 
@@ -48,9 +49,9 @@ namespace abigail
 */
 
 // Inject some types.
-using abg_compat::shared_ptr;
-using abg_compat::weak_ptr;
-using abg_compat::unordered_map;
+using std::shared_ptr;
+using std::weak_ptr;
+using std::unordered_map;
 using std::string;
 using std::vector;
 

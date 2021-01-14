@@ -12,10 +12,10 @@
 
 #include <regex.h>
 
+#include <memory>
 #include <string>
 #include <vector>
 
-#include "abg-cxx-compat.h"
 #include "abg-sptr-utils.h"
 
 namespace abigail
@@ -26,7 +26,7 @@ namespace regex
 {
 
 /// A convenience typedef for a shared pointer of regex_t.
-typedef abg_compat::shared_ptr<regex_t> regex_t_sptr;
+typedef std::shared_ptr<regex_t> regex_t_sptr;
 
 /// A delete functor for a shared_ptr of regex_t.
 struct regex_t_deleter
