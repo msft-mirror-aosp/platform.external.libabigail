@@ -8,12 +8,12 @@
 #ifndef __ABG_TOOLS_UTILS_H
 #define __ABG_TOOLS_UTILS_H
 
-#include <string>
-#include <set>
-#include <ostream>
-#include <istream>
 #include <iostream>
-#include "abg-cxx-compat.h"
+#include <istream>
+#include <memory>
+#include <ostream>
+#include <set>
+#include <string>
 #include "abg-suppression.h"
 
 namespace abigail
@@ -27,7 +27,7 @@ using std::istream;
 using std::ifstream;
 using std::string;
 using std::set;
-using abg_compat::shared_ptr;
+using std::shared_ptr;
 
 const char* get_system_libdir();
 const char* get_anonymous_struct_internal_name_prefix();
@@ -303,7 +303,7 @@ bool
 file_is_kernel_debuginfo_package(const string& file_path,
 				 file_type file_type);
 
-abg_compat::shared_ptr<char>
+std::shared_ptr<char>
 make_path_absolute(const char*p);
 
 char*

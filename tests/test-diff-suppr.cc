@@ -16,12 +16,13 @@
 /// one.
 
 #include <sys/wait.h>
+#include <cstdlib>
 #include <cstring>
-#include <string>
 #include <fstream>
 #include <iostream>
-#include <cstdlib>
-#include "abg-cxx-compat.h"
+#include <memory>
+#include <string>
+#include <unordered_set>
 #include "abg-tools-utils.h"
 #include "abg-workers.h"
 #include "test-utils.h"
@@ -2155,7 +2156,7 @@ main(int argc, char *argv[])
   const std::string out_base_path = std::string(get_build_dir()) + "/tests/";
 
   // output paths need to be unique to avoid collisions during parallel testing
-  abg_compat::unordered_set<std::string> out_paths;
+  std::unordered_set<std::string> out_paths;
   bool non_unique_output_paths = false;
   for (InOutSpec* s = in_out_specs; s->in_elfv0_path; ++s) {
 	if (!out_paths.insert(s->out_report_path).second) {
@@ -2169,7 +2170,7 @@ main(int argc, char *argv[])
 
   for (InOutSpec* s = in_out_specs; s->in_elfv0_path; ++s)
     {
-      abg_compat::shared_ptr<test_task> t(
+      std::shared_ptr<test_task> t(
 	  new test_task(*s, in_base_path, out_base_path));
       ABG_ASSERT(task_queue.schedule_task(t));
     }
@@ -2189,8 +2190,8 @@ main(int argc, char *argv[])
        ti != completed_tasks.end();
        ++ti)
     {
-      abg_compat::shared_ptr<test_task> t =
-	  abg_compat::dynamic_pointer_cast<test_task>(*ti);
+      std::shared_ptr<test_task> t =
+	  std::dynamic_pointer_cast<test_task>(*ti);
       if (!t->is_ok)
 	{
 	  is_ok = false;

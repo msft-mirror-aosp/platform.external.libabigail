@@ -16,16 +16,18 @@
 #ifndef __ABG_INTERNED_STR_H__
 #define __ABG_INTERNED_STR_H__
 
+#include <functional>
+#include <memory>
 #include <ostream>
 #include <string>
-#include "abg-cxx-compat.h"
+#include <unordered_set>
 
 
 namespace abigail
 {
 // Inject some std types into this namespace.
-using abg_compat::unordered_set;
-using abg_compat::shared_ptr;
+using std::unordered_set;
+using std::shared_ptr;
 using std::string;
 using std::ostream;
 
@@ -211,7 +213,7 @@ struct hash_interned_string
   size_t
   operator()(const interned_string& s) const
   {
-    abg_compat::hash<size_t> hash_size_t;
+    std::hash<size_t> hash_size_t;
     return hash_size_t(reinterpret_cast<size_t>(s.raw()));
   }
 }; // end struct hash_interned_string

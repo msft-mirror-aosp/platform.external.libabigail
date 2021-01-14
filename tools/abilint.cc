@@ -13,14 +13,14 @@
 /// runs a diff on the two files and expects the result of the diff to
 /// be empty.
 
-#include <cstring>
 #include <cstdio>
 #include <cstdlib>
-#include <string>
-#include <iostream>
+#include <cstring>
 #include <fstream>
+#include <iostream>
+#include <memory>
+#include <string>
 #include <vector>
-#include "abg-cxx-compat.h"
 #include "abg-config.h"
 #include "abg-tools-utils.h"
 #include "abg-ir.h"
@@ -68,7 +68,7 @@ struct options
   bool				read_tu;
   bool				diff;
   bool				noout;
-  abg_compat::shared_ptr<char>	di_root_path;
+  std::shared_ptr<char>	di_root_path;
   vector<string>		suppression_paths;
   string			headers_dir;
   vector<string>		header_files;
