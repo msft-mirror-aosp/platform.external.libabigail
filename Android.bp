@@ -67,7 +67,7 @@ cc_binary_host {
     name: "abidw",
     defaults: ["libabigail_defaults"],
     srcs: [
-        "tools/abidiff.cc",
+        "tools/abidw.cc",
     ],
     static_libs: [
         "libabigail",
