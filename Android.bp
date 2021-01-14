@@ -39,6 +39,7 @@ cc_defaults {
     visibility: [
         "//visibility:private",
     ],
+    compile_multilib: "64",
 }
 
 cc_library_host_static {
