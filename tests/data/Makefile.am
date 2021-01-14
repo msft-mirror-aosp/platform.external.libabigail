@@ -184,6 +184,19 @@ test-abidiff-exit/test-headers-dirs/test-headers-dir-v0.c \
 test-abidiff-exit/test-headers-dirs/test-headers-dir-v0.o \
 test-abidiff-exit/test-headers-dirs/test-headers-dir-v1.c \
 test-abidiff-exit/test-headers-dirs/test-headers-dir-v1.o \
+test-abidiff-exit/qualifier-typedef-array-v0.c \
+test-abidiff-exit/qualifier-typedef-array-v0.o \
+test-abidiff-exit/qualifier-typedef-array-v1.c \
+test-abidiff-exit/qualifier-typedef-array-v1.o \
+test-abidiff-exit/qualifier-typedef-array-report-0.txt \
+test-abidiff-exit/qualifier-typedef-array-report-1.txt \
+test-abidiff-exit/qualifier-typedef-array-report-2.txt \
+test-abidiff-exit/qualifier-typedef-array-report-3.txt \
+test-abidiff-exit/test-non-leaf-array-v0.c \
+test-abidiff-exit/test-non-leaf-array-v0.o \
+test-abidiff-exit/test-non-leaf-array-v1.c \
+test-abidiff-exit/test-non-leaf-array-v1.o \
+test-abidiff-exit/test-non-leaf-array-report.txt \
 \
 test-diff-dwarf/test0-v0.cc		\
 test-diff-dwarf/test0-v0.o			\
