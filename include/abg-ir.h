@@ -18,8 +18,9 @@
 #include <assert.h>
 #include <stdint.h>
 #include <cstdlib>
+#include <functional>
 #include <set>
-#include "abg-cxx-compat.h"
+#include <unordered_map>
 #include "abg-fwd.h"
 #include "abg-hash.h"
 #include "abg-traverse.h"
@@ -35,7 +36,7 @@
 /// How objects' lifetime is handled in libabigail.
 ///
 /// For memory management and garbage collection of libabigail's IR
-/// artifacts, we use std::tr1::shared_ptr and std::tr1::weak_ptr.
+/// artifacts, we use std::shared_ptr and std::weak_ptr.
 ///
 /// When manipulating these IR artifacts, there are a few rules to keep in
 /// mind.
@@ -90,8 +91,8 @@ namespace abigail
 namespace ir
 {
 
-// Inject some std::tr1 types in here.
-using abg_compat::unordered_map;
+// Inject some std types in here.
+using std::unordered_map;
 
 /// A convenience typedef fo r an ordered set of size_t.
 typedef unordered_set<size_t> pointer_set;
@@ -137,7 +138,7 @@ public:
   /// the pretty representation string of a particular type and the
   /// value is the vector of canonical types that have the same pretty
   /// representation string.
-  typedef abg_compat::unordered_map<string, std::vector<type_base_sptr> >
+  typedef std::unordered_map<string, std::vector<type_base_sptr> >
       canonical_types_map_type;
 
 private:
@@ -362,7 +363,7 @@ struct type_or_decl_hash
   operator()(const type_or_decl_base *artifact) const
   {
     string repr =  get_pretty_representation(artifact);
-    abg_compat::hash<string> do_hash;
+    std::hash<string> do_hash;
     return do_hash(repr);
   }
 
@@ -757,7 +758,7 @@ typedef weak_ptr<elf_symbol> elf_symbol_wptr;
 
 /// Convenience typedef for a map which key is a string and which
 /// value if the elf symbol of the same name.
-typedef abg_compat::unordered_map<string, elf_symbol_sptr>
+typedef std::unordered_map<string, elf_symbol_sptr>
 string_elf_symbol_sptr_map_type;
 
 /// Convenience typedef for a shared pointer to an
@@ -770,7 +771,7 @@ typedef std::vector<elf_symbol_sptr> elf_symbols;
 
 /// Convenience typedef for a map which key is a string and which
 /// value is a vector of elf_symbol.
-typedef abg_compat::unordered_map<string, elf_symbols>
+typedef std::unordered_map<string, elf_symbols>
 string_elf_symbols_map_type;
 
 /// Convenience typedef for a shared pointer to
