@@ -827,6 +827,12 @@ public:
   show_redundant_changes(bool f);
 
   bool
+  flag_indirect_changes() const;
+
+  void
+  flag_indirect_changes(bool f);
+
+  bool
   show_symbols_unreferenced_by_debug_info() const;
 
   void
