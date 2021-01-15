@@ -1,8 +1,27 @@
 To compile libabigail, you first need to install its dependencies.  At
 the moment the dependencies are the following Free Software packages:
 
+    elfutils
+    libtool
     libxml2
- 
+
+If you are building from the Git repository, then you'd also need the
+following packages:
+
+    autoconf
+    automake
+    pkg-config
+
+If you want to build the documentation of libabigail, then you also
+need these packages (and its dependencies):
+
+     doxygen
+     python-sphinx
+
+Note that if you are installing these packages in a binary form
+provided by your distribution, then you probably need to install the
+development variant of those that have one.
+
 Once you have installed the development packages of the dependencies,
 there are two options for compiling libabigail, depending on the two
 kinds of source code package you have: either you've got the source
@@ -29,7 +48,7 @@ receive the binaries resulting from the compilation:
 Generate the relevant build-system-related information needed to
 configure the package for compilation, by typing:
 
-    autoreconf
+    autoreconf -i
 
 Then configure the package:
 
@@ -68,3 +87,28 @@ Then compile it:
 Then install the resulting binaries
 
     make install
+
+* Building the documentation of libabigail
+==========================================
+
+To build the documentation of libabigail, you need to install the
+python-sphinx package prior to running configure.
+
+Once you've done that, type:
+
+     make doc
+
+This will generate the documentation in html, info and man format, in
+under the doc/ subdirectory of your build directory.
+
+If you only want the html documentation (mainly the web site, apidoc and manuals) then just type:
+
+   make html-doc
+
+If you only want to generate the man documentation, just type:
+
+   make man
+
+If you only want to generate the info documentation, just type:
+
+   make info

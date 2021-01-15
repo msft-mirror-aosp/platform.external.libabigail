@@ -1,35 +1,35 @@
+// SPDX-License-Identifier: Apache-2.0 WITH LLVM-exception
 // -*- mode: C++ -*-
 //
-// Copyright (C) 2013 Red Hat, Inc.
-//
-// This file is part of the GNU Application Binary Interface Generic
-// Analysis and Instrumentation Library (libabigail).  This library is
-// free software; you can redistribute it and/or modify it under the
-// terms of the GNU Lesser General Public License as published by the
-// Free Software Foundation; either version 3, or (at your option) any
-// later version.
-
-// This library is distributed in the hope that it will be useful, but
-// WITHOUT ANY WARRANTY; without even the implied warranty of
-// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
-// General Lesser Public License for more details.
-
-// You should have received a copy of the GNU Lesser General Public
-// License along with this program; see the file COPYING-LGPLV3.  If
-// not, see <http://www.gnu.org/licenses/>.
+// Copyright (C) 2013-2020 Red Hat, Inc.
 
 /// @file
 
-#include <tr1/memory>
+#ifndef __ABG_LIBXML_UTILS_H__
+#define __ABG_LIBXML_UTILS_H__
+
 #include <libxml/xmlreader.h>
+
+#include <istream>
+#include <memory>
+
+#include "abg-sptr-utils.h"
 
 namespace abigail
 {
-/// Internal namespace for xml.
+
+/// Internal namespace for xml manipulation utilities.
 namespace xml
 {
 
-using std::tr1::shared_ptr;
+using sptr_utils::build_sptr;
+using std::shared_ptr;
+
+/// A convenience typedef for a shared pointer of xmlTextReader.
+typedef shared_ptr<xmlTextReader> reader_sptr;
+
+/// A convenience typedef for a shared pointer of xmlChar.
+typedef shared_ptr<xmlChar> xml_char_sptr;
 
 /// This functor is used to instantiate a shared_ptr for the
 /// xmlTextReader.
@@ -37,11 +37,8 @@ struct textReaderDeleter
 {
   void
   operator()(xmlTextReaderPtr reader)
-  { xmlFreeTextReader(reader); }
+  {xmlFreeTextReader(reader);}
 };
-
-
-typedef shared_ptr<xmlTextReader> reader_sptr;
 
 /// This functor is used to instantiate a shared_ptr for xmlChar
 struct charDeleter
@@ -51,22 +48,10 @@ struct charDeleter
   { xmlFree(str); }
 };
 
-typedef shared_ptr<xmlChar> xml_char_sptr;
-
 reader_sptr new_reader_from_file(const std::string& path);
 reader_sptr new_reader_from_buffer(const std::string& buffer);
-xml_char_sptr build_xml_char_sptr(xmlChar*);
-
-template<class T>
-shared_ptr<T> build_sptr(T*);
-
-/// Specialization of build_sptr for xmlTextReader
-template<>
-shared_ptr<xmlTextReader> build_sptr<xmlTextReader>(xmlTextReader *p);
-
-/// Specialization of build_str for xmlChar.
-template<>
-shared_ptr<xmlChar> build_sptr<xmlChar>(xmlChar *p);
+reader_sptr new_reader_from_istream(std::istream*);
+bool xml_char_sptr_to_string(xml_char_sptr, std::string&);
 
 int get_xml_node_depth(xmlNodePtr);
 
@@ -96,5 +81,51 @@ int get_xml_node_depth(xmlNodePtr);
 #define CHAR_STR(xml_char_str) \
   reinterpret_cast<char*>(xml_char_str.get())
 
+xmlNodePtr
+advance_to_next_sibling_element(xmlNodePtr node);
+
+void
+escape_xml_string(const std::string& str,
+		  std::string& escaped);
+
+std::string
+escape_xml_string(const std::string& str);
+
+void
+escape_xml_comment(const std::string& str,
+		   std::string& escaped);
+
+std::string
+escape_xml_comment(const std::string& str);
+
+void
+unescape_xml_string(const std::string& str,
+		    std::string& escaped);
+
+std::string
+unescape_xml_string(const std::string& str);
+
+void
+unescape_xml_comment(const std::string& str,
+		     std::string& escaped);
+
+std::string
+unescape_xml_comment(const std::string& str);
+
 }//end namespace xml
+
+namespace sptr_utils
+{
+/// Specialization of sptr_utils::build_sptr for xmlTextReader
+template<>
+xml::reader_sptr
+build_sptr<xmlTextReader>(xmlTextReader *p);
+
+/// Specialization of build_str for xmlChar.
+template<>
+xml::xml_char_sptr
+build_sptr<xmlChar>(xmlChar *p);
+}// end namespace sptr_utils
+
 }//end namespace abigail
+#endif //__ABG_LIBXML_UTILS_H__

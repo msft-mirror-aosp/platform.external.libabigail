@@ -1,22 +1,7 @@
+// SPDX-License-Identifier: Apache-2.0 WITH LLVM-exception
 // -*- mode: C++ -*-
 //
-// Copyright (C) 2013 Red Hat, Inc.
-//
-// This file is part of the GNU Application Binary Interface Generic
-// Analysis and Instrumentation Library (libabigail).  This library is
-// free software; you can redistribute it and/or modify it under the
-// terms of the GNU Lesser General Public License as published by the
-// Free Software Foundation; either version 3, or (at your option) any
-// later version.
-
-// This library is distributed in the hope that it will be useful, but
-// WITHOUT ANY WARRANTY; without even the implied warranty of
-// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
-// General Lesser Public License for more details.
-
-// You should have received a copy of the GNU Lesser General Public
-// License along with this program; see the file COPYING-LGPLV3.  If
-// not, see <http://www.gnu.org/licenses/>.
+// Copyright (C) 2013-2020 Red Hat, Inc.
 
 /// @file
 
@@ -43,7 +28,7 @@ struct node_base
   const style&		_M_style;
 
   explicit
-  node_base(std::string __id, type __t, const style& __sty)
+  node_base(const std::string& __id, type __t, const style& __sty)
     : _M_id(__id), _M_count(++_M_count_total), 
     _M_type(__t), _M_x_space(0.4), _M_y_space(0.2), _M_style(__sty)
   { }
@@ -66,7 +51,7 @@ extern const style child_sty;
  */
 struct parent_node : public node_base 
 {
-   parent_node(std::string __id) 
+   parent_node(const std::string& __id)
    : node_base(__id, node_base::parent, parent_sty)
    { }
 };
@@ -83,7 +68,7 @@ struct parent_node : public node_base
  */
 struct child_node : public node_base 
 {
-   child_node(std::string __id) 
+   child_node(const std::string& __id)
    : node_base(__id, node_base::child, child_sty)
    { }
 };
@@ -111,17 +96,13 @@ struct dot
 private:
 
   const std::string    	_M_title;
-  const canvas&	       	_M_canvas;
-  const typography&    	_M_typo;	
 
   std::ostringstream   	_M_sstream;
   
 public:
 
-  dot(const std::string __title, 
-      const canvas& __cv = ansi_letter_canvas,
-      const typography& __typo = arial_typo) 
-  : _M_title(__title), _M_canvas(__cv), _M_typo(__typo)
+  dot(const std::string &__title)
+  : _M_title(__title)
   { }
   
   // Empty when the output buffer is.
