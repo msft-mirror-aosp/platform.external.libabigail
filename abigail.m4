@@ -1,26 +1,10 @@
-# Copyright (C) 2013 Free Software Foundation, Inc.
-# 
-# This file is part of the GNU Application Binary Interface Generic
-# Analysis and Instrumentation Library (libabigail).  This library is
-# free software; you can redistribute it and/or modify it under the
-# terms of the GNU General Public License as published by the Free
-# Software Foundation; either version 3, or (at your option) any
-# later version.
-# 
-# This library is distributed in the hope that it will be useful, but
-# WITHOUT ANY WARRANTY; without even the implied warranty of
-# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
-# General Public License for more details.
-# 
-# Under Section 7 of GPL version 3, you are granted additional
-# permissions described in the GCC Runtime Library Exception, version
-# 3.1, as published by the Free Software Foundation.
-# 
-# You should have received a copy of the GNU General Public License
-# and a copy of the GCC Runtime Library Exception along with this
-# program; see the files COPYING3 and COPYING.RUNTIME respectively.
-# If not, see <http://www.gnu.org/licenses/>.
+# SPDX-License-Identifier: Apache-2.0 WITH LLVM-exception
+#
+# Copyright (C) 2013-2020 Red Hat, Inc
+#
+# Author: Dodji Seketeli <dodji@redhat.com>
 
+#
 # ABIGAIL_INIT
 #
 # Handle the detection of the libabigail header and library files on
@@ -62,7 +46,7 @@ AC_DEFUN([ABIGAIL_INIT],
 	       [ENABLE_ABIGAIL_VERSION_CHECK=yes])
 
  if test x$with_abigail != x -a x$with_abigail != xno; then
-   abigailinc="-I$with_abigail/include"
+   abigailinc="-I$with_abigail/include/libabigail"
    abigaillibs="-L$with_abigail/lib"
    found_abigail_lib=yes
    found_abigail_inc=yes
@@ -101,7 +85,7 @@ AC_DEFUN([ABIGAIL_INIT],
    if test -d $srcdir/libabigail -a -f $srcdir/gcc/gcc.c; then
       libpath='$$r/$(HOST_SUBDIR)/libabigail/src/'"${lt_cv_objdir}"
       abigaillibs="-L$libpath ${abigaillibs}"
-      abigailinc='-I${srcdir}/libabigail/src '"${abigailinc}"
+      abigailinc='-I${srcdir}/libabigail/include '"${abigailinc}"
       found_abigail_lib=yes
       found_abigail_inc=yes
       HAVE_LIBABIGAIL=yes
@@ -111,7 +95,7 @@ AC_DEFUN([ABIGAIL_INIT],
  fi
 
  if test x$found_abigail_lib = xyes; then
-    abigaillibs="$abigaillibs -labigail"
+    abigaillibs="$abigaillibs -Wl,-Bstatic -labigail -Wl,-Bdynamic"
  fi
 
 ]
@@ -157,7 +141,7 @@ AC_DEFUN([ABIGAIL_CHECK_VERSION],
 
    AC_MSG_CHECKING([for version $1.$2 of libabigail])
    AC_LANG_PUSH(C++)
-   AC_COMPILE_IFELSE([AC_LANG_PROGRAM([#include "libabigail/abg-version.h"],
+   AC_COMPILE_IFELSE([AC_LANG_PROGRAM([#include "abg-version.h"],
 				      [#if ABIGAIL_VERSION_MAJOR != $1 || ABIGAIL_VERSION_MINOR < $2
 				          choke here
 				       #endif

@@ -1,28 +1,52 @@
-libabigail_LTLIBRARIES=libabigail.la
-libabigaildir=$(libdir)/
+## SPDX-License-Identifier: Apache-2.0 WITH LLVM-exception
+lib_LTLIBRARIES=libabigail.la
+libabigaildir=$(libdir)
 
-headers =		\
-abg-ir.h		\
-abg-reader.h		\
-abg-corpus.h		\
-abg-libxml-utils.h	\
-abg-hash.h		\
-abg-writer.h		\
-abg-config.h		\
-abg-version.h
+AM_CXXFLAGS = $(VISIBILITY_FLAGS)
 
-libabigail_la_SOURCES = $(headers)	\
+VIZ_SOURCES = abg-viz-common.cc	\
+		abg-viz-dot.cc	\
+		abg-viz-svg.cc
+
+libabigail_la_SOURCES =			\
+abg-internal.h				\
+abg-traverse.cc				\
+abg-ir-priv.h				\
 abg-ir.cc				\
-abg-reader.cc			\
-abg-corpus.cc			\
-abg-libxml-utils.cc		\
-abg-hash.cc			\
-abg-writer.cc			\
-abg-config.cc
+abg-corpus-priv.h			\
+abg-corpus.cc				\
+abg-diff-utils.cc			\
+abg-comparison.cc			\
+abg-comparison-priv.h			\
+abg-reporter-priv.h			\
+abg-reporter-priv.cc			\
+abg-default-reporter.cc			\
+abg-leaf-reporter.cc			\
+abg-suppression-priv.h			\
+abg-suppression.cc			\
+abg-comp-filter.cc			\
+abg-reader.cc				\
+abg-dwarf-reader.cc			\
+abg-libxml-utils.cc			\
+abg-libzip-utils.cc			\
+abg-hash.cc				\
+abg-writer.cc				\
+abg-config.cc				\
+abg-ini.cc				\
+abg-workers.cc				\
+abg-tools-utils.cc			\
+abg-elf-helpers.h			\
+abg-elf-helpers.cc			\
+abg-regex.cc				\
+abg-symtab-reader.cc			\
+$(VIZ_SOURCES)
 
-libabigail_la_LDFLAGS=@XML_LIBS@ -Wl,--as-needed
+libabigail_la_LIBADD = $(DEPS_LIBS)
+libabigail_la_LDFLAGS = -lpthread -Wl,--as-needed -no-undefined
 
-publicheaders_DATA=$(headers)
-publicheadersdir=$(includedir)/libabigail
+CUSTOM_MACROS = -DABIGAIL_ROOT_SYSTEM_LIBDIR=\"${libdir}\"
 
-AM_CPPFLAGS=@XML_CFLAGS@ -Wall
+AM_CPPFLAGS=\
+$(CUSTOM_MACROS) $(DEPS_CPPFLAGS) \
+-Wall -I$(abs_top_srcdir) -I$(abs_top_srcdir)/include \
+-I$(abs_top_builddir)/include -I$(abs_top_builddir)
