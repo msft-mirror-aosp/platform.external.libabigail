@@ -40,6 +40,11 @@ cc_defaults {
         "//visibility:private",
     ],
     compile_multilib: "64",
+    target: {
+        darwin: {
+            enabled: false,
+        },
+    },
 }
 
 cc_library_host_static {
