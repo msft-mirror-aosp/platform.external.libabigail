@@ -12,6 +12,24 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+package {
+    default_applicable_licenses: ["external_libabigail_license"],
+}
+
+// http://go/android-license-faq
+license {
+    name: "external_libabigail_license",
+    visibility: [":__subpackages__"],
+    license_kinds: [
+        "SPDX-license-identifier-Apache-2.0",
+        "SPDX-license-identifier-BSL-1.0",
+        "SPDX-license-identifier-MIT",
+    ],
+    license_text: [
+        "LICENSE",
+    ],
+}
+
 cc_defaults {
     name: "libabigail_defaults",
     cflags: [
