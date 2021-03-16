@@ -24,6 +24,7 @@
 #include "abg-fwd.h"
 #include "abg-hash.h"
 #include "abg-traverse.h"
+#include "abg-config.h"
 
 /// @file
 ///
@@ -195,6 +196,9 @@ public:
 
   interned_string
   intern(const string&) const;
+
+  const config&
+  get_config() const;
 
   friend class class_or_union;
   friend class class_decl;
@@ -1217,6 +1221,11 @@ change_kind&
 operator&=(change_kind&, change_kind);
 
 bool
+maybe_compare_as_member_decls(const decl_base& l,
+			      const decl_base& r,
+			      change_kind* k);
+
+bool
 equals(const decl_base&, const decl_base&, change_kind*);
 
 /// The base class of both types and declarations.
@@ -1595,6 +1604,11 @@ public:
 
   friend bool
   equals(const var_decl&, const var_decl&, change_kind*);
+
+  friend bool
+  maybe_compare_as_member_decls(const decl_base& l,
+				const decl_base& r,
+				change_kind* k);
 
   friend decl_base_sptr
   add_decl_to_scope(decl_base_sptr decl, scope_decl* scpe);
@@ -3789,6 +3803,7 @@ public:
   typedef vector<method_decl_sptr>		member_functions;
   typedef unordered_map<ssize_t, member_functions> virtual_mem_fn_map_type;
   typedef unordered_map<string, method_decl*> string_mem_fn_ptr_map_type;
+  typedef unordered_map<string, method_decl_sptr> string_mem_fn_sptr_map_type;
   /// @}
 
   class_or_union(const environment* env, const string& name,
@@ -3892,6 +3907,9 @@ public:
 
   method_decl*
   find_member_function(const string& mangled_name);
+
+  method_decl_sptr
+  find_member_function_sptr(const string& mangled_name);
 
   const method_decl*
   find_member_function_from_signature(const string& s) const;
