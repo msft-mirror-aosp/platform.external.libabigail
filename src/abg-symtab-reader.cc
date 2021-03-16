@@ -55,11 +55,9 @@ symtab_filter_builder
 symtab::make_filter() const
 {
   symtab_filter_builder builder;
+  builder.public_symbols();
   if (is_kernel_binary_)
-    // kernel symbols might be exported, but not public
     builder.kernel_symbols();
-  else
-    builder.public_symbols();
   return builder;
 }
 
@@ -294,7 +292,8 @@ symtab::load_(Elf*	       elf_handle,
 	continue;
 
       for (const auto& elf_symbol : r->second)
-	elf_symbol->set_is_in_ksymtab(true);
+	  if (elf_symbol->is_public())
+	    elf_symbol->set_is_in_ksymtab(true);
       has_ksymtab_entries_ = true;
     }
 
