@@ -55,11 +55,9 @@ symtab_filter_builder
 symtab::make_filter() const
 {
   symtab_filter_builder builder;
+  builder.public_symbols();
   if (is_kernel_binary_)
-    // kernel symbols might be exported, but not public
     builder.kernel_symbols();
-  else
-    builder.public_symbols();
   return builder;
 }
 
@@ -162,6 +160,7 @@ symtab::load_(Elf*	       elf_handle,
   std::unordered_set<std::string> exported_kernel_symbols;
   std::unordered_map<std::string, uint64_t> crc_values;
 
+  const bool is_arm32 = elf_helpers::architecture_is_arm32(elf_handle);
   const bool is_ppc64 = elf_helpers::architecture_is_ppc64(elf_handle);
 
   for (size_t i = 0; i < number_syms; ++i)
@@ -269,13 +268,21 @@ symtab::load_(Elf*	       elf_handle,
 	}
       else if (symbol_sptr->is_defined())
 	{
-	  const GElf_Addr symbol_value =
-	      elf_helpers::maybe_adjust_et_rel_sym_addr_to_abs_addr(elf_handle,
-								    sym);
+	  GElf_Addr symbol_value =
+	    elf_helpers::maybe_adjust_et_rel_sym_addr_to_abs_addr(elf_handle,
+								  sym);
 
-	  if (is_ppc64 && symbol_sptr->is_function())
-	    update_function_entry_address_symbol_map(elf_handle, sym,
-						     symbol_sptr);
+	  if (symbol_sptr->is_function())
+	    {
+	      if (is_arm32)
+		// Clear bit zero of ARM32 addresses as per "ELF for the Arm
+		// Architecture" section 5.5.3.
+		// https://static.docs.arm.com/ihi0044/g/aaelf32.pdf
+		symbol_value &= ~1;
+	      else if (is_ppc64)
+		update_function_entry_address_symbol_map(elf_handle, sym,
+							 symbol_sptr);
+	    }
 
 	  const auto result =
 	    addr_symbol_map_.emplace(symbol_value, symbol_sptr);
@@ -294,7 +301,8 @@ symtab::load_(Elf*	       elf_handle,
 	continue;
 
       for (const auto& elf_symbol : r->second)
-	elf_symbol->set_is_in_ksymtab(true);
+	  if (elf_symbol->is_public())
+	    elf_symbol->set_is_in_ksymtab(true);
       has_ksymtab_entries_ = true;
     }
 
