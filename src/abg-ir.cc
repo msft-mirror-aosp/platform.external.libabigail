@@ -258,6 +258,12 @@ namespace ir
 static size_t
 hash_as_canonical_type_or_constant(const type_base *t);
 
+static bool
+has_generic_anonymous_internal_type_name(const decl_base *d);
+
+static interned_string
+get_generic_anonymous_internal_type_name(const decl_base *d);
+
 /// @brief the location of a token represented in its simplest form.
 /// Instances of this type are to be stored in a sorted vector, so the
 /// type must have proper relational operators.
@@ -1720,10 +1726,18 @@ bool
 elf_symbol::is_variable() const
 {return get_type() == OBJECT_TYPE || get_type() == TLS_TYPE;}
 
+/// Getter of the 'is-in-ksymtab' property.
+///
+/// @return true iff the current symbol is in the Linux Kernel
+/// specific 'ksymtab' symbol table.
 bool
 elf_symbol::is_in_ksymtab() const
 {return priv_->is_in_ksymtab_;}
 
+/// Setter of the 'is-in-ksymtab' property.
+///
+/// @param is_in_ksymtab this is true iff the current symbol is in the
+/// Linux Kernel specific 'ksymtab' symbol table.
 void
 elf_symbol::set_is_in_ksymtab(bool is_in_ksymtab)
 {priv_->is_in_ksymtab_ = is_in_ksymtab;}
@@ -1736,10 +1750,20 @@ void
 elf_symbol::set_crc(uint64_t crc)
 {priv_->crc_ = crc;}
 
+/// Getter for the 'is-suppressed' property.
+///
+/// @return true iff the current symbol has been suppressed by a
+/// suppression specification that was provided in the context that
+/// led to the creation of the corpus this ELF symbol belongs to.
 bool
 elf_symbol::is_suppressed() const
 {return priv_->is_suppressed_;}
 
+/// Setter for the 'is-suppressed' property.
+///
+/// @param true iff the current symbol has been suppressed by a
+/// suppression specification that was provided in the context that
+/// led to the creation of the corpus this ELF symbol belongs to.
 void
 elf_symbol::set_is_suppressed(bool is_suppressed)
 {priv_->is_suppressed_ = is_suppressed;}
@@ -2132,7 +2156,7 @@ elf_symbol::get_name_and_version_from_id(const string&	id,
 {
   name.clear(), ver.clear();
 
-  string::size_type i = id.find("@");
+  string::size_type i = id.find('@');
   if (i == string::npos)
     {
       name = id;
@@ -2145,7 +2169,7 @@ elf_symbol::get_name_and_version_from_id(const string&	id,
   if (i >= id.size())
     return true;
 
-  string::size_type j = id.find("@", i);
+  string::size_type j = id.find('@', i);
   if (j == string::npos)
     j = i;
   else
@@ -2742,6 +2766,7 @@ typedef unordered_map<interned_string,
 /// The private data of the @ref environment type.
 struct environment::priv
 {
+  config			 config_;
   canonical_types_map_type	 canonical_types_;
   mutable vector<type_base_sptr> sorted_canonical_types_;
   type_base_sptr		 void_type_;
@@ -2961,8 +2986,8 @@ environment::get_void_type() const
 {
   if (!priv_->void_type_)
     priv_->void_type_.reset(new type_decl(const_cast<environment*>(this),
-					       intern("void"),
-					       0, 0, location()));
+					  intern("void"),
+					  0, 0, location()));
   return priv_->void_type_;
 }
 
@@ -3143,6 +3168,13 @@ environment::is_variadic_parameter_type(const type_base_sptr& t) const
 interned_string
 environment::intern(const string& s) const
 {return const_cast<environment*>(this)->priv_->string_pool_.create_string(s);}
+
+/// Getter of the general configuration object.
+///
+/// @return the configuration object.
+const config&
+environment::get_config() const
+{return priv_->config_;}
 
 // </environment stuff>
 
@@ -4006,6 +4038,25 @@ string
 decl_base::get_pretty_representation(bool internal,
 				     bool qualified_name) const
 {
+  if (internal
+      && get_is_anonymous()
+      && has_generic_anonymous_internal_type_name(this))
+    {
+      // We are looking at an anonymous enum, union or class and we
+      // want an *internal* pretty representation for it.  All
+      // anonymous types of this kind in the same namespace must have
+      // the same internal representation for type canonicalization to
+      // work properly.
+      //
+      // OK, in practise, we are certainly looking at an enum because
+      // classes and unions should have their own overloaded virtual
+      // member function for this.
+      string name = get_generic_anonymous_internal_type_name(this);
+      if (qualified_name && !get_qualified_parent_name().empty())
+	name = get_qualified_parent_name() + "::" + name;
+      return name;
+    }
+
   if (qualified_name)
     return get_qualified_name(internal);
   return get_name();
@@ -4146,6 +4197,74 @@ operator&=(change_kind& l, change_kind r)
   return l;
 }
 
+/// Compare the properties that belong to the "is-a-member-relation"
+/// of a decl.
+///
+/// For instance, access specifiers are part of the
+/// "is-a-member-relation" of a decl.
+///
+/// This comparison however doesn't take decl names into account.  So
+/// typedefs for instance are decls that we want to compare with this
+/// function.
+///
+/// This function is a sub-routine of the more general 'equals'
+/// overload for instances of decl_base.
+///
+/// @param l the left-hand side operand of the comparison.
+///
+/// @param r the right-hand side operand of the comparison.
+///
+/// @return true iff @p l compare equals, as a member decl, to @p r.
+bool
+maybe_compare_as_member_decls(const decl_base& l,
+			      const decl_base& r,
+			      change_kind* k)
+{
+  bool result = true;
+  if (is_member_decl(l) && is_member_decl(r))
+    {
+      context_rel* r1 = const_cast<context_rel*>(l.get_context_rel());
+      context_rel *r2 = const_cast<context_rel*>(r.get_context_rel());
+
+      access_specifier la = no_access, ra = no_access;
+      bool member_types_or_functions =
+	((is_type(l) && is_type(r))
+	 || (is_function_decl(l) && is_function_decl(r)));
+
+      if (member_types_or_functions)
+	{
+	  // Access specifiers on member types in DWARF is not
+	  // reliable; in the same DSO, the same struct can be either
+	  // a class or a struct, and the access specifiers of its
+	  // member types are not necessarily given, so they
+	  // effectively can be considered differently, again, in the
+	  // same DSO.  So, here, let's avoid considering those!
+	  // during comparison.
+	  la = r1->get_access_specifier();
+	  ra = r2->get_access_specifier();
+	  r1->set_access_specifier(no_access);
+	  r2->set_access_specifier(no_access);
+	}
+
+      bool rels_are_different = *r1 != *r2;
+
+      if (member_types_or_functions)
+	{
+	  // restore the access specifiers.
+	  r1->set_access_specifier(la);
+	  r2->set_access_specifier(ra);
+	}
+
+      if (rels_are_different)
+	{
+	  result = false;
+	  if (k)
+	    *k |= LOCAL_NON_TYPE_CHANGE_KIND;
+	}
+    }
+  return result;
+}
+
 /// Compares two instances of @ref decl_base.
 ///
 /// If the two intances are different, set a bitfield to give some
@@ -4233,49 +4352,7 @@ equals(const decl_base& l, const decl_base& r, change_kind* k)
 	return false;
     }
 
-  if (is_member_decl(l) && is_member_decl(r))
-    {
-      context_rel* r1 = const_cast<context_rel*>(l.get_context_rel());
-      context_rel *r2 = const_cast<context_rel*>(r.get_context_rel());
-
-      access_specifier la = no_access, ra = no_access;
-      bool member_types_or_functions =
-	((is_type(l) && is_type(r))
-	 || (is_function_decl(l) && is_function_decl(r)));
-
-      if (member_types_or_functions)
-	{
-	  // Access specifiers on member types in DWARF is not
-	  // reliable; in the same DSO, the same struct can be either
-	  // a class or a struct, and the access specifiers of its
-	  // member types are not necessarily given, so they
-	  // effectively can be considered differently, again, in the
-	  // same DSO.  So, here, let's avoid considering those!
-	  // during comparison.
-	  la = r1->get_access_specifier();
-	  ra = r2->get_access_specifier();
-	  r1->set_access_specifier(no_access);
-	  r2->set_access_specifier(no_access);
-	}
-
-      bool rels_are_different = *r1 != *r2;
-
-      if (member_types_or_functions)
-	{
-	  // restore the access specifiers.
-	  r1->set_access_specifier(la);
-	  r2->set_access_specifier(ra);
-	}
-
-      if (rels_are_different)
-	{
-	  result = false;
-	  if (k)
-	    *k |= LOCAL_NON_TYPE_CHANGE_KIND;
-	  else
-	    return false;
-	}
-    }
+  result &= maybe_compare_as_member_decls(l, r, k);
 
   return result;
 }
@@ -7228,6 +7305,19 @@ interned_string
 get_type_name(const type_base_sptr& t, bool qualified, bool internal)
 {return get_type_name(t.get(), qualified, internal);}
 
+/// Return true iff a decl is for a type type that has a generic
+/// anonymous internal type name.
+///
+/// @param d the decl to considier.
+///
+/// @return true iff @p d is for a type type that has a generic
+/// anonymous internal type name.
+static bool
+has_generic_anonymous_internal_type_name(const decl_base *d)
+{
+  return is_class_or_union_type(d) || is_enum_type(d);
+}
+
 /// Return the generic internal name of an anonymous type.
 ///
 /// For internal purposes, we want to define a generic name for all
@@ -7241,7 +7331,7 @@ get_type_name(const type_base_sptr& t, bool qualified, bool internal)
 static interned_string
 get_generic_anonymous_internal_type_name(const decl_base *d)
 {
-  ABG_ASSERT(d);
+  ABG_ASSERT(has_generic_anonymous_internal_type_name(d));
 
   const environment *env = d->get_environment();
 
@@ -12468,7 +12558,14 @@ type_base::get_canonical_type_for(type_base_sptr t)
 
   class_or_union_sptr class_or_union = is_class_or_union_type(t);
 
-  // Look through declaration-only classes
+  // Look through declaration-only classes when we are dealing with
+  // C++ or languages where we assume the "One Definition Rule".  In
+  // that context, we assume that a declaration-only non-anonymous
+  // class equals all fully defined classes of the same name.
+  //
+  // Otherwise, all classes, including declaration-only classes are
+  // canonicalized and only canonical comparison is going to be used
+  // in the system.
   if (decl_only_class_equals_definition)
     if (class_or_union)
       {
@@ -13027,7 +13124,7 @@ parse_integral_type(const string&			type_name,
   while (cur_pos < len)
     {
       prev_pos = cur_pos;
-      cur_pos = input.find(" ", prev_pos);
+      cur_pos = input.find(' ', prev_pos);
       prev_word = cur_word;
       cur_word = input.substr(prev_pos, cur_pos - prev_pos);
 
@@ -13041,7 +13138,7 @@ parse_integral_type(const string&			type_name,
 	  && prev_word != "long")
 	{
 	  prev_pos = cur_pos;
-	  cur_pos = input.find(" ", prev_pos);
+	  cur_pos = input.find(' ', prev_pos);
 	  string saved_prev_word = prev_word;
 	  prev_word = cur_word;
 	  cur_word = input.substr(prev_pos, cur_pos - prev_pos);
@@ -14202,7 +14299,9 @@ pointer_type_def::pointer_type_def(const type_base_sptr&	pointed_to,
 bool
 equals(const pointer_type_def& l, const pointer_type_def& r, change_kind* k)
 {
-  bool result = (l.get_pointed_to_type() == r.get_pointed_to_type());
+  // Compare the pointed-to-types modulo the typedefs they might have
+  bool result = (peel_typedef_type(l.get_pointed_to_type())
+		 == peel_typedef_type(r.get_pointed_to_type()));
   if (!result)
     if (k)
       {
@@ -14507,7 +14606,9 @@ equals(const reference_type_def& l, const reference_type_def& r, change_kind* k)
       return false;
     }
 
-  bool result = (l.get_pointed_to_type() == r.get_pointed_to_type());
+  // Compare the pointed-to-types modulo the typedefs they might have
+  bool result = (peel_typedef_type(l.get_pointed_to_type())
+		 == (peel_typedef_type(r.get_pointed_to_type())));
   if (!result)
     if (k)
       {
@@ -15327,7 +15428,9 @@ equals(const array_type_def& l, const array_type_def& r, change_kind* k)
 	  return false;
       }
 
-  if (l.get_element_type() != r.get_element_type())
+  // Compare the element types modulo the typedefs they might have
+  if (peel_typedef_type(l.get_element_type())
+      != peel_typedef_type(r.get_element_type()))
     {
       result = false;
       if (k)
@@ -16199,7 +16302,14 @@ bool
 equals(const typedef_decl& l, const typedef_decl& r, change_kind* k)
 {
   bool result = true;
-  if (!l.decl_base::operator==(r))
+  // Compare the properties of the 'is-a-member-decl" relation of this
+  // decl.  For typedefs of a C program, this always return true as
+  // there is no "member typedef type" in C.
+  //
+  // In other words, in C, Only the underlying types of typedefs are
+  // compared.  In C++ however, the properties of the
+  // 'is-a-member-decl' relation of the typedef are compared.
+  if (!maybe_compare_as_member_decls(l, r, k))
     {
       result = false;
       if (k)
@@ -18156,9 +18266,10 @@ function_decl::get_id() const
       if (elf_symbol_sptr s = get_symbol())
 	{
 	  if (s->has_aliases())
-	    // The symbol has several aliases, so let's use the
-	    // linkage name of the function as its ID.
-	    priv_->id_ = env->intern(get_linkage_name());
+	    // The symbol has several aliases, so let's use a scheme
+	    // that allows all aliased functions to have different
+	    // IDs.
+	    priv_->id_ = env->intern(get_name() + "/" + s->get_id_string());
 	  else
 	    // Let's use the full symbol name with its version as ID.
 	    priv_->id_ = env->intern(s->get_id_string());
@@ -18601,7 +18712,7 @@ struct class_or_union::priv
   data_members			non_static_data_members_;
   member_functions		member_functions_;
   // A map that associates a linkage name to a member function.
-  string_mem_fn_ptr_map_type	mem_fns_map_;
+  string_mem_fn_sptr_map_type	mem_fns_map_;
   // A map that associates function signature strings to member
   // function.
   string_mem_fn_ptr_map_type	signature_2_mem_fn_map_;
@@ -19416,7 +19527,7 @@ class_or_union::add_member_function(method_decl_sptr f,
   // Update the map of linkage name -> member functions.  It's useful,
   // so that class_or_union::find_member_function() can function.
   if (!f->get_linkage_name().empty())
-    priv_->mem_fns_map_[f->get_linkage_name()] = f.get();
+    priv_->mem_fns_map_[f->get_linkage_name()] = f;
 }
 
 /// Get the member functions of this @ref class_or_union.
@@ -19446,7 +19557,22 @@ class_or_union::find_member_function(const string& linkage_name) const
 method_decl*
 class_or_union::find_member_function(const string& linkage_name)
 {
-  string_mem_fn_ptr_map_type::const_iterator i =
+  string_mem_fn_sptr_map_type::const_iterator i =
+    priv_->mem_fns_map_.find(linkage_name);
+  if (i == priv_->mem_fns_map_.end())
+    return 0;
+  return i->second.get();
+}
+
+/// Find a method, using its linkage name as a key.
+///
+/// @param linkage_name the linkage name of the method to find.
+///
+/// @return the method found, or nil if none was found.
+method_decl_sptr
+class_or_union::find_member_function_sptr(const string& linkage_name)
+{
+  string_mem_fn_sptr_map_type::const_iterator i =
     priv_->mem_fns_map_.find(linkage_name);
   if (i == priv_->mem_fns_map_.end())
     return 0;
@@ -19796,7 +19922,8 @@ equals(const class_or_union& l, const class_or_union& r, change_kind* k)
 	    {
 	      // Report any representation change as being local.
 	      if (!types_have_similar_structure((*d0)->get_type(),
-						(*d1)->get_type()))
+						(*d1)->get_type())
+		  || (*d0)->get_type() == (*d1)->get_type())
 		*k |= LOCAL_TYPE_CHANGE_KIND;
 	      else
 		*k |= SUBTYPE_CHANGE_KIND;
@@ -20764,7 +20891,8 @@ method_decl::set_linkage_name(const string& l)
     {
       method_type_sptr t = get_type();
       class_or_union_sptr cl = t->get_class_type();
-      cl->priv_->mem_fns_map_[l] = this;
+      method_decl_sptr m(this, sptr_utils::noop_deleter());
+      cl->priv_->mem_fns_map_[l] = m;
     }
 }
 
@@ -23494,9 +23622,9 @@ hash_as_canonical_type_or_constant(const type_base *t)
     return reinterpret_cast<size_t>(canonical_type);
 
   // If we reached this point, it means we are seeing a
-  // non-canonicalized type.  It must be a decl-only class;
-  // otherwise it means that for some weird reason, the type hasn't
-  // been canonicalized.  It should be!
+  // non-canonicalized type.  It must be a decl-only class or a
+  // function type, otherwise it means that for some weird reason, the
+  // type hasn't been canonicalized.  It should be!
   ABG_ASSERT(is_declaration_only_class_or_union_type(t));
 
   return 0xDEADBABE;
