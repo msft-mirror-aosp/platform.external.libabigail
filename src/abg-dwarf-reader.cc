@@ -32,6 +32,7 @@
 #include <stack>
 #include <unordered_map>
 #include <unordered_set>
+#include <map>
 
 #include "abg-ir-priv.h"
 #include "abg-suppression-priv.h"
@@ -72,6 +73,7 @@ using std::unordered_set;
 using std::stack;
 using std::deque;
 using std::list;
+using std::map;
 
 using namespace elf_helpers; // TODO: avoid using namespace
 
@@ -385,6 +387,9 @@ die_constant_attribute(const Dwarf_Die *die,
 
 static bool
 form_is_DW_FORM_strx(unsigned form);
+
+static bool
+form_is_DW_FORM_line_strp(unsigned form);
 
 static bool
 die_address_attribute(Dwarf_Die* die, unsigned attr_name, Dwarf_Addr& result);
@@ -2125,6 +2130,7 @@ public:
   corpus::exported_decls_builder* exported_decls_builder_;
   options_type			options_;
   bool				drop_undefined_syms_;
+  bool				merge_translation_units_;
   read_context();
 
 private:
@@ -2268,6 +2274,7 @@ public:
     options_.load_in_linux_kernel_mode = linux_kernel_mode;
     options_.load_all_types = load_all_types;
     drop_undefined_syms_ = false;
+    merge_translation_units_ = false;
     load_in_linux_kernel_mode(linux_kernel_mode);
   }
 
@@ -2354,6 +2361,22 @@ public:
   void
   drop_undefined_syms(bool f)
   {drop_undefined_syms_ = f;}
+
+  /// Setter for the flag that tells us if we are merging translation
+  /// units.
+  ///
+  /// @param f the new value of the flag.
+  void
+  merge_translation_units(bool f)
+  {merge_translation_units_ = f;}
+
+  /// Getter for the flag that tells us if we are merging translation
+  /// units.
+  ///
+  /// @return true iff we are merging translation units.
+  bool
+  merge_translation_units() const
+  {return merge_translation_units_;}
 
   /// Getter of the suppression specifications to be used during
   /// ELF/DWARF parsing.
@@ -4139,6 +4162,31 @@ public:
     return false;
   }
 
+  /// Compare two ABI artifacts in a context which canonicalization
+  /// has not be done yet.
+  ///
+  /// @param l the left-hand-side operand of the comparison
+  ///
+  /// @param r the right-hand-side operand of the comparison.
+  ///
+  /// @return true if @p l equals @p r.
+  bool
+  compare_before_canonicalisation(const type_or_decl_base_sptr &l,
+				  const type_or_decl_base_sptr &r)
+  {
+    if (!l || !r)
+      return !!l == !!r;
+
+    const environment* e = l->get_environment();
+    ABG_ASSERT(!e->canonicalization_is_done());
+
+    bool s = e->decl_only_class_equals_definition();
+    e->decl_only_class_equals_definition(true);
+    bool equal = l == r;
+    e->decl_only_class_equals_definition(s);
+    return equal;
+  }
+
   /// Walk the declaration-only classes that have been found during
   /// the building of the corpus and resolve them to their definitions.
   void
@@ -4184,8 +4232,8 @@ public:
 	//
 	//   2/ There are more than one class that define that
 	//   declaration and none of them is defined in the TU of the
-	//   declaration.  In this case, the declaration is left
-	//   unresolved.
+	//   declaration.  If those classes are all different, then
+	//   the declaration is left unresolved.
 	//
 	//   3/ No class defines the declaration.  In this case, the
 	//   declaration is left unresoved.
@@ -4197,7 +4245,13 @@ public:
 	if (!classes)
 	  continue;
 
-	unordered_map<string, class_decl_sptr> per_tu_class_map;
+	// This is a map that associates the translation unit path to
+	// the class (that potentially defines the declarations that
+	// we consider) that are defined in that translation unit.  It
+	// should stay ordered by using the TU path as key to ensure
+	// stability of the order of classe definitions in ABIXML
+	// output.
+	map<string, class_decl_sptr> per_tu_class_map;
 	for (type_base_wptrs_type::const_iterator c = classes->begin();
 	     c != classes->end();
 	     ++c)
@@ -4234,13 +4288,45 @@ public:
 		  {
 		    string tu_path =
 		      (*j)->get_translation_unit()->get_absolute_path();
-		    unordered_map<string, class_decl_sptr>::const_iterator e =
+		    map<string, class_decl_sptr>::const_iterator e =
 		      per_tu_class_map.find(tu_path);
 		    if (e != per_tu_class_map.end())
 		      (*j)->set_definition_of_declaration(e->second);
 		    else if (per_tu_class_map.size() == 1)
 		      (*j)->set_definition_of_declaration
 			(per_tu_class_map.begin()->second);
+		    else if (per_tu_class_map.size() > 1)
+		      {
+			// We are in case where there are more than
+			// one definition for the declaration.  Let's
+			// see if they are all equal.  If they are,
+			// then the declaration resolves to the
+			// definition.  Otherwise, we are in the case
+			// 3/ described above.
+			map<string,
+			    class_decl_sptr>::const_iterator it;
+			class_decl_sptr first_class =
+			  per_tu_class_map.begin()->second;
+			bool all_class_definitions_are_equal = true;
+			for (it = per_tu_class_map.begin();
+			     it != per_tu_class_map.end();
+			     ++it)
+			  {
+			    if (it == per_tu_class_map.begin())
+			      continue;
+			    else
+			      {
+				if (!compare_before_canonicalisation(it->second,
+								     first_class))
+				  {
+				    all_class_definitions_are_equal = false;
+				    break;
+				  }
+			      }
+			  }
+			if (all_class_definitions_are_equal)
+			  (*j)->set_definition_of_declaration(first_class);
+		      }
 		  }
 	      }
 	    resolved_classes.push_back(i->first);
@@ -4338,6 +4424,11 @@ public:
 
   /// Walk the declaration-only enums that have been found during
   /// the building of the corpus and resolve them to their definitions.
+  ///
+  /// TODO: Do away with this function by factorizing it with
+  /// resolve_declaration_only_classes.  All declaration-only decls
+  /// could be handled the same way as declaration-only-ness is a
+  /// property of abigail::ir::decl_base now.
   void
   resolve_declaration_only_enums()
   {
@@ -4685,7 +4776,8 @@ public:
 	cn_timer.start();
       }
 
-    if (!types_to_canonicalize(source).empty())
+    if (!types_to_canonicalize(source).empty()
+	|| !extra_types_to_canonicalize().empty())
       {
 	tools_utils::timer single_type_cn_timer;
 	size_t total = types_to_canonicalize(source).size();
@@ -6148,6 +6240,17 @@ void
 set_drop_undefined_syms(read_context& ctxt, bool f)
 {ctxt.drop_undefined_syms(f);}
 
+/// Setter of the "merge_translation_units" flag.
+///
+/// This flag tells if we should merge translation units.
+///
+/// @param ctxt the read context to consider for this flag.
+///
+/// @param f the value of the flag.
+void
+set_merge_translation_units(read_context& ctxt, bool f)
+{ctxt.merge_translation_units(f);}
+
 /// Setter of the "do_log" flag.
 ///
 /// This flag tells if we should emit verbose logs for various
@@ -6324,6 +6427,28 @@ form_is_DW_FORM_strx(unsigned form)
 	  || form == DW_FORM_strx2
 	  || form == DW_FORM_strx3
 	  ||form == DW_FORM_strx4)
+	return true;
+#endif
+    }
+  return false;
+}
+
+/// Test if a given DWARF form is DW_FORM_line_strp.
+///
+/// Unfortunaly, the DW_FORM_line_strp is an enumerator of an untagged
+/// enum in dwarf.h so we have to use an unsigned int for the form,
+/// grrr.
+///
+/// @param form the form to consider.
+///
+/// @return true iff @p form is DW_FORM_line_strp.
+static bool
+form_is_DW_FORM_line_strp(unsigned form)
+{
+  if (form)
+    {
+#if defined HAVE_DW_FORM_line_strp
+      if (form == DW_FORM_line_strp)
 	return true;
 #endif
     }
@@ -7434,19 +7559,23 @@ compare_dies_string_attribute_value(const Dwarf_Die *l, const Dwarf_Die *r,
   ABG_ASSERT(l_attr.form == DW_FORM_strp
 	     || l_attr.form == DW_FORM_string
 	     || l_attr.form == DW_FORM_GNU_strp_alt
-	     || form_is_DW_FORM_strx(l_attr.form));
+	     || form_is_DW_FORM_strx(l_attr.form)
+	     || form_is_DW_FORM_line_strp(l_attr.form));
 
   ABG_ASSERT(r_attr.form == DW_FORM_strp
 	     || r_attr.form == DW_FORM_string
 	     || r_attr.form == DW_FORM_GNU_strp_alt
-	     || form_is_DW_FORM_strx(r_attr.form));
+	     || form_is_DW_FORM_strx(r_attr.form)
+	     || form_is_DW_FORM_line_strp(r_attr.form));
 
   if ((l_attr.form == DW_FORM_strp
        && r_attr.form == DW_FORM_strp)
       || (l_attr.form == DW_FORM_GNU_strp_alt
 	  && r_attr.form == DW_FORM_GNU_strp_alt)
       || (form_is_DW_FORM_strx(l_attr.form)
-	  && form_is_DW_FORM_strx(r_attr.form)))
+	  && form_is_DW_FORM_strx(r_attr.form))
+      || (form_is_DW_FORM_line_strp(l_attr.form)
+	  && form_is_DW_FORM_line_strp(r_attr.form)))
     {
       // So these string attributes are actually pointers into a
       // string table.  The string table is most likely de-duplicated
@@ -8323,6 +8452,223 @@ eval_last_constant_dwarf_sub_expr(Dwarf_Op*	expr,
 // </location expression evaluation>
 // -----------------------------------
 
+/// Convert the value of the DW_AT_bit_offset attribute into the value
+/// of the DW_AT_data_bit_offset attribute.
+///
+/// On big endian machines, the value of the DW_AT_bit_offset
+/// attribute is the same as the value of the DW_AT_data_bit_offset
+/// attribute.
+///
+/// On little endian machines however, the situation is different.
+/// The DW_AT_bit_offset value for a bit field is the number of bits
+/// to the left of the most significant bit of the bit field.
+///
+/// The DW_AT_data_bit_offset offset value is the number of bits to
+/// the right of the least significant bit of the bit field.
+///
+/// In other words, DW_AT_data_bit_offset is what everybody would
+/// instinctively think of as being the "offset of the bit
+/// field". DW_AT_bit_offset however is very counter-intuitive on
+/// little endian machines.
+///
+/// This function thus reads the value of a DW_AT_bit_offset property
+/// of a DIE and converts it into what the DW_AT_data_bit_offset would
+/// have been if it was present.
+///
+/// Note that DW_AT_bit_offset has been made obsolete starting from
+/// DWARF5.
+///
+/// If you like coffee and it's not too late, now might be a good time
+/// to have a coffee break.  Otherwise if it's late at night, you
+/// might want to consider an herbal tea break.  Then come back to
+/// read this.
+///
+///
+/// Okay, to have a better idea of what DW_AT_bit_offset and
+/// DW_AT_data_bit_offset represent, let's consider a struct 'S' which
+/// have bit fields data members defined as:
+///
+///      struct S
+///      {
+///        int j:5;
+///        int k:6;
+///        int m:5;
+///        int n:8;
+///      };
+///
+/// The below wonderful (at least!) ASCII art sketch describes the
+/// layout of the bitfields of 'struct S' on a little endian machine.
+/// You need to read the sketch from the bottom-up.
+///
+/// So please scroll down to its bottom.  Note how the 32 bits integer
+/// word containing the bit fields is laid out with its least
+/// significant bit starting on the right hand side, at index 0.
+///
+/// Then slowly scroll up starting from there, and take the time to
+/// read each line and see how the bit fields are laid out and what
+/// DW_AT_bit_offset and DW_AT_data_bit_offset represent for each of
+/// the bit fields.
+///
+/// DW_AT_bit_offset(n)
+/// <   - - - - - - >
+/// |               |       n      |
+/// ^               ^< - -   - -  >^
+///                                           DW_AT_data_bit_offset(n)
+///                                <  - - - - -  - - - - - - - - - - >
+///                                |                                 |
+///                                ^                                 ^
+///                 DW_AT_bit_offset(m)
+/// <--------------------------------->
+/// |                                 |   m   |
+/// ^                                 ^<  -  >^
+///                                           DW_AT_data_bit_offset(m)
+///                                           <  - - - - - - - - - - >
+///                                           |                      |
+///                                           ^                      ^
+///                           DW_AT_bit_offset(k)
+/// <-------------------------------------------->
+/// |                                            |    k    |
+/// ^                                            ^<  - -  >^
+///                                                     DW_AT_data_bit_offset(k)
+///                                                        < - - - - >
+///                                                        |         |
+///                                                        ^         ^
+///                                      DW_AT_bit_offset(j)
+/// <-------------------------------------------------------->
+/// |                                                        |
+/// ^                                                        ^
+///                       n               m          k          j
+///                 <  - - - - - - >  < - - - >  < - - - - > < - - - >
+///                                                                   
+/// | | | | | | | | |  | | | | | | |  | | | | |  | | | | | | | | | | |
+/// ^       ^       ^              ^  ^       ^  ^       ^ ^ ^       ^
+/// 31      27      23             16 15      11 10      6 5 4       0
+///
+/// So, the different bit fields all fit in one 32 bits word, assuming
+/// the bit fields are tightly packed.
+///
+/// Let's look at what DW_AT_bit_offset of the 'j' bit field would be
+/// on this little endian machine and let's see how it relates to
+/// DW_AT_data_bit_offset of j.
+///
+/// DW_AT_bit_offset(j) would be equal to the number of bits from the
+/// left of the 32 bits word (i.e from bit number 31) to the most
+/// significant bit of the j bit field (i.e, bit number 4).  Thus:
+///
+///       DW_AT_bit_offset(j) =
+///         sizeof_in_bits(int) - size_in_bits_of(j) = 32 - 5 = 27.
+///
+/// DW_AT_data_bit_offset(j) is the number of bits from the right of the
+/// 32 bits word (i.e, bit number 0) to the lest significant bit of
+/// the 'j' bit field (ie, bit number 0).  Thus:
+///
+///       DW_AT_data_bit_offset(j) = 0.
+///
+/// More generally, we can notice that:
+///
+///       sizeof_in_bits(int) =
+///         DW_AT_bit_offset(j) + sizeof_in_bits(j) + DW_AT_data_bit_offset(j).
+///
+/// It follows that:
+///
+///       DW_AT_data_bit_offset(j) =
+///          sizeof_in_bits(int) - sizeof_in_bits(j) - DW_AT_bit_offset(j);
+///
+/// Thus:
+///
+///       DW_AT_data_bit_offset(j) = 32 - 27 - 5 = 0;
+///
+/// Note that DW_AT_data_bit_offset(j) is the offset of 'j' starting
+/// from the right hand side of the word.  It is what we would
+/// intuitively think it is.  DW_AT_bit_offset however is super
+/// counter-intuitive, pfff.
+///
+/// Anyway, this general equation holds true for all bit fields.
+///
+/// Similarly, it follows that:
+///
+///       DW_AT_bit_offset(k) =
+///         sizeof_in_bits(int) - sizeof_in_bits(k) - DW_AT_data_bit_offset(k);
+///
+/// Thus:
+///       DW_AT_bit_offset(k) = 32 - 6 - 5 = 21.
+///
+///
+/// Likewise:
+///
+///      DW_AT_bit_offset(m) =
+///        sizeof_in_bits(int) - sizeof_in_bits(m) - DW_AT_data_bit_offset(m);
+///
+///
+/// Thus:
+///      DW_AT_bit_offset(m) = 32 - 5 - (5 + 6) = 16.
+///
+/// And:
+///
+///
+/// Lastly:
+///
+///      DW_AT_bit_offset(n) =
+///        sizeof_in_bits(int) - sizeof_in_bits(n) - DW_AT_bit_offset(n);
+///
+/// Thus:
+///      DW_AT_bit_offset(n) = 32 - 8 - (5 + 6 + 5) = 8.
+///
+/// Luckily, the body of the function is much smaller than this
+/// comment.  Enjoy!
+///
+/// @param die the DIE to consider.
+///
+/// @param is_big_endian this is true iff the machine we are looking at
+/// is big endian.
+///
+/// @param offset this is the output parameter into which the value of
+/// the DW_AT_bit_offset is put, converted as if it was the value of
+/// the DW_AT_data_bit_offset parameter.  This parameter is set iff
+/// the function returns true.
+///
+/// @return true if DW_AT_bit_offset was found on @p die.
+static bool
+read_and_convert_DW_at_bit_offset(const Dwarf_Die* die,
+				  bool is_big_endian,
+				  uint64_t &offset)
+{
+  uint64_t off = 0;
+  if (!die_unsigned_constant_attribute(die, DW_AT_bit_offset, off))
+    return false;
+
+  if (is_big_endian)
+    {
+      offset = off;
+      return true;
+    }
+
+  // Okay, we are looking at a little endian machine.  We need to
+  // convert DW_AT_bit_offset into what DW_AT_data_bit_offset would
+  // have been.  To understand this, you really need to read the
+  // preliminary comment of this function.
+  uint64_t containing_anonymous_object_size = 0;
+  ABG_ASSERT(die_unsigned_constant_attribute(die, DW_AT_byte_size,
+					     containing_anonymous_object_size));
+  containing_anonymous_object_size *= 8;
+
+  uint64_t bitfield_size = 0;
+  ABG_ASSERT(die_unsigned_constant_attribute(die, DW_AT_bit_size,
+					     bitfield_size));
+
+  // As noted in the the preliminary comment of this function if we
+  // want to get the DW_AT_data_bit_offset of a bit field 'k' from the
+  // its DW_AT_bit_offset value, the equation is:
+  //
+  //     DW_AT_data_bit_offset(k) =
+  //       sizeof_in_bits(containing_anonymous_object_size)
+  //       - DW_AT_data_bit_offset(k)
+  //       - sizeof_in_bits(k)
+  offset = containing_anonymous_object_size - off - bitfield_size;
+
+  return true;
+}
+
 /// Get the offset of a struct/class member as represented by the
 /// value of the DW_AT_data_member_location attribute.
 ///
@@ -8330,10 +8676,10 @@ eval_last_constant_dwarf_sub_expr(Dwarf_Op*	expr,
 /// DW_AT_data_member_location is not necessarily a constant that one
 /// would just read and be done with it.  Rather, it can be a DWARF
 /// expression that one has to interpret.  In general, the offset can
-/// be given by the DW_AT_bit_offset attribute.  In that case the
-/// offset is a constant.  But it can also be given by the
-/// DW_AT_data_member_location attribute.  In that case it's a DWARF
-/// location expression.
+/// be given by the DW_AT_bit_offset or DW_AT_data_bit_offset
+/// attribute.  In that case the offset is a constant.  But it can
+/// also be given by the DW_AT_data_member_location attribute.  In
+/// that case it's a DWARF location expression.
 ///
 /// When the it's the DW_AT_data_member_location that is present,
 /// there are three cases to possibly take into account:
@@ -8379,15 +8725,28 @@ die_member_offset(const read_context& ctxt,
   uint64_t expr_len = 0;
   uint64_t off = 0;
 
-  if (die_unsigned_constant_attribute(die, DW_AT_bit_offset, off))
+  // First let's see if the DW_AT_data_bit_offset attribute is
+  // present.
+  if (die_unsigned_constant_attribute(die, DW_AT_data_bit_offset, off))
     {
-      // The DW_AT_bit_offset is present.  If it contains a non-zero
-      // value, let's read that one.
-      if (off != 0)
-	{
-	  offset = off;
-	  return true;
-	}
+      offset = off;
+      return true;
+    }
+
+  // Otherwise, let's see if the DW_AT_bit_offset attribute is
+  // present.  On little endian machines, we need to convert this
+  // attribute into what it would have been if the
+  // DW_AT_data_bit_offset was used instead.  In other words,
+  // DW_AT_bit_offset needs to be converted into a
+  // human-understandable form that represents the offset of the
+  // bitfield data member it describes.  For details about the
+  // conversion, please read the extensive comments of
+  // read_and_convert_DW_at_bit_offset.
+  bool is_big_endian = architecture_is_big_endian(ctxt.elf_handle());
+  if (read_and_convert_DW_at_bit_offset(die, is_big_endian, off))
+    {
+      offset = off;
+      return true;
     }
 
   if (!die_location_expr(die, DW_AT_data_member_location, &expr, &expr_len))
@@ -10563,7 +10922,9 @@ get_scope_for_die(read_context& ctxt,
 {
   const die_source source_of_die = ctxt.get_die_source(die);
 
-  if (is_c_language(ctxt.cur_transl_unit()->get_language()))
+  translation_unit::language die_lang = translation_unit::LANG_UNKNOWN;
+  ctxt.get_die_language(die, die_lang);
+  if (is_c_language(die_lang))
     {
       ABG_ASSERT(dwarf_tag(die) != DW_TAG_member);
       return ctxt.global_scope();
@@ -10899,29 +11260,50 @@ build_translation_unit_and_add_to_ir(read_context&	ctxt,
     }
   string compilation_dir = die_string_attribute(die, DW_AT_comp_dir);
 
-  // See if the same translation unit exits already in the current
-  // corpus.  Sometimes, the same translation unit can be present
-  // several times in the same debug info.  The content of the
-  // different instances of the translation unit are different.  So to
-  // represent that, we are going to re-use the same translation
-  // unit.  That is, it's going to be the union of all the translation
-  // units of the same path.
-  {
-    const string& abs_path =
-      compilation_dir.empty() ? path : compilation_dir + "/" + path;
-    result = ctxt.current_corpus()->find_translation_unit(abs_path);
-  }
+  uint64_t lang = 0;
+  die_unsigned_constant_attribute(die, DW_AT_language, lang);
+  translation_unit::language language = dwarf_language_to_tu_language(lang);
+
+  corpus_sptr corp = ctxt.current_corpus();
+
+  if (ctxt.merge_translation_units())
+    {
+      // See if there is already a translation for the address_size
+      // and language. If so, just reuse that one.
+      for (const auto& tu : corp->get_translation_units())
+	{
+	  if (tu->get_address_size() == address_size
+	      && tu->get_language() == language)
+	    {
+	      result = tu;
+	      break;
+	    }
+	}
+    }
+  else
+    {
+      // See if the same translation unit exits already in the current
+      // corpus.  Sometimes, the same translation unit can be present
+      // several times in the same debug info.  The content of the
+      // different instances of the translation unit are different.  So to
+      // represent that, we are going to re-use the same translation
+      // unit.  That is, it's going to be the union of all the translation
+      // units of the same path.
+      const std::string& abs_path =
+	  compilation_dir.empty() ? path : compilation_dir + "/" + path;
+      result = corp->find_translation_unit(abs_path);
+    }
 
   if (!result)
     {
       result.reset(new translation_unit(ctxt.env(),
-					path,
+					(ctxt.merge_translation_units()
+					 ? "" : path),
 					address_size));
-      result->set_compilation_dir_path(compilation_dir);
+      if (!ctxt.merge_translation_units())
+	result->set_compilation_dir_path(compilation_dir);
       ctxt.current_corpus()->add(result);
-      uint64_t l = 0;
-      die_unsigned_constant_attribute(die, DW_AT_language, l);
-      result->set_language(dwarf_language_to_tu_language(l));
+      result->set_language(language);
     }
 
   ctxt.cur_transl_unit(result);
@@ -11338,13 +11720,22 @@ finish_member_function_reading(Dwarf_Die*		  die,
       first_parm = f->get_parameters()[0];
 
     bool is_artificial = first_parm && first_parm->get_is_artificial();
-    pointer_type_def_sptr this_ptr_type;
-    type_base_sptr other_klass;
+    type_base_sptr this_ptr_type, other_klass;
 
     if (is_artificial)
-      this_ptr_type = is_pointer_type(first_parm->get_type());
-    if (this_ptr_type)
-      other_klass = this_ptr_type->get_pointed_to_type();
+      this_ptr_type = first_parm->get_type();
+
+    // Sometimes, the type of the "this" pointer is "const class_type* const".
+    //
+    // Meaning that the "this pointer" itself is const qualified.  So
+    // let's get the underlying underlying non-qualified pointer.
+    if (qualified_type_def_sptr q = is_qualified_type(this_ptr_type))
+      this_ptr_type = q->get_underlying_type();
+
+    // Now, get the pointed-to type.
+    if (pointer_type_def_sptr p = is_pointer_type(this_ptr_type))
+      other_klass = p->get_pointed_to_type();
+
     // Sometimes, other_klass can be qualified; e.g, volatile.  In
     // that case, let's get the unqualified version of other_klass.
     if (qualified_type_def_sptr q = is_qualified_type(other_klass))
@@ -11355,6 +11746,17 @@ finish_member_function_reading(Dwarf_Die*		  die,
       ;
     else
       is_static = true;
+
+    if (is_static)
+      {
+	// If we are looking at a DWARF version that is high enough
+	// for the DW_AT_object_pointer attribute to be present, let's
+	// see if it's present.  If it is, then the current member
+	// function is not static.
+	Dwarf_Die object_pointer_die;
+	if (die_has_object_pointer(die, object_pointer_die))
+	  is_static = false;
+      }
   }
   set_member_access_specifier(m, access);
   if (vindex != -1)
@@ -13649,12 +14051,6 @@ get_opaque_version_of_type(read_context	&ctxt,
       && tag != DW_TAG_enumeration_type)
     return result;
 
-  if (tag == DW_TAG_union_type)
-    // TODO: also handle declaration-only unions.  To do that, we mostly
-    // need to adapt add_or_update_union_type to make it schedule
-    // declaration-only unions for resolution too.
-    return result;
-
   string type_name, linkage_name;
   location type_location;
   die_loc_and_name(ctxt, type_die, type_location, type_name, linkage_name);
@@ -13716,6 +14112,7 @@ get_opaque_version_of_type(read_context	&ctxt,
 							    underlying_type,
 							    enumeratorz,
 							    linkage_name));
+	  add_decl_to_scope(enum_type, scope);
 	  result = enum_type;
 	}
     }
@@ -14142,7 +14539,8 @@ maybe_canonicalize_type(const Dwarf_Die *die, read_context& ctxt)
       || is_union_type(peeled_type)
       || is_function_type(peeled_type)
       || is_array_type(peeled_type)
-      || is_qualified_type(peeled_type))
+      || is_qualified_type(peeled_type)
+      || is_typedef(t))
     // We delay canonicalization of classes/unions or typedef,
     // pointers, references and array to classes/unions.  This is
     // because the (underlying) class might not be finished yet and we
@@ -14236,6 +14634,44 @@ maybe_set_member_type_access_specifier(decl_base_sptr member_type_declaration,
       die_access_specifier(die, access);
       set_member_access_specifier(member_type_declaration, access);
     }
+}
+
+/// This function tests if a given function which might be intented to
+/// be added to a class scope (to become a member function) should be
+/// dropped on the floor instead and not be added to the class.
+///
+/// This is a subroutine of build_ir_node_from_die.
+///
+/// @param fn the function to consider.
+///
+/// @param scope the scope the function is intended to be added
+/// to. This might be of class type or not.
+///
+/// @param fn_die the DWARF die of @p fn.
+///
+/// @return true iff @p fn should be dropped on the floor.
+static bool
+potential_member_fn_should_be_dropped(const function_decl_sptr& fn,
+				      Dwarf_Die *fn_die)
+{
+  if (!fn || fn->get_scope())
+    return false;
+
+  if (// A function that is not virtual ...
+      !die_is_virtual(fn_die)
+      // ... has a linkage name ...
+      && !fn->get_linkage_name().empty()
+      // .. and yet has no ELF symbol associated ...
+      && !fn->get_symbol())
+    // Should not be added to its class scope.
+    //
+    // Why would it? It's not part of the ABI anyway, as it doesn't
+    // have any ELF symbol associated and is not a virtual member
+    // function.  It just constitutes bloat in the IR and might even
+    // induce spurious change reports down the road.
+    return true;
+
+  return false;
 }
 
 /// Build an IR node from a given DIE and add the node to the current
@@ -14689,14 +15125,19 @@ build_ir_node_from_die(read_context&	ctxt,
 						where_offset);
 	    if (interface_scope)
 	      {
-		decl_base_sptr d =
-		  is_decl(build_ir_node_from_die(ctxt,
-						 origin_die,
-						 interface_scope.get(),
-						 called_from_public_decl,
-						 where_offset,
-						 is_declaration_only,
-						 /*is_required_decl_spec=*/false));
+		decl_base_sptr d;
+		class_decl_sptr c = is_class_type(interface_scope);
+		if (c && !linkage_name.empty())
+		  d = c->find_member_function_sptr(linkage_name);
+
+		if (!d)
+		  d = is_decl(build_ir_node_from_die(ctxt,
+						     origin_die,
+						     interface_scope.get(),
+						     called_from_public_decl,
+						     where_offset,
+						     is_declaration_only,
+						     /*is_required_decl_spec=*/false));
 		if (d)
 		  {
 		    fn = dynamic_pointer_cast<function_decl>(d);
@@ -14721,10 +15162,18 @@ build_ir_node_from_die(read_context&	ctxt,
 	result = build_or_get_fn_decl_if_not_suppressed(ctxt, logical_scope,
 							die, where_offset,
 							is_declaration_only,
-                                                        fn);
+							fn);
 
 	if (result && !fn)
-	  result = add_decl_to_scope(is_decl(result), logical_scope);
+	  {
+	    if (potential_member_fn_should_be_dropped(is_function_decl(result),
+						      die))
+	      {
+		result.reset();
+		break;
+	      }
+	    result = add_decl_to_scope(is_decl(result), logical_scope);
+	  }
 
 	fn = is_function_decl(result);
 	if (fn && is_member_function(fn))
