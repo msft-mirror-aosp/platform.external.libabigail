@@ -8,6 +8,9 @@
 /* Define to 1 if you have the <dlfcn.h> header file. */
 #define HAVE_DLFCN_H 1
 
+/* Define to 1 if dwarf.h has the DW_FORM_line_strp enumerator */
+#define HAVE_DW_FORM_line_strp 1
+
 /* Define to 1 if dwarf.h has the DW_FORM_strx enumerators */
 #define HAVE_DW_FORM_strx 1
 
