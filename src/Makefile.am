@@ -28,7 +28,6 @@ abg-comp-filter.cc			\
 abg-reader.cc				\
 abg-dwarf-reader.cc			\
 abg-libxml-utils.cc			\
-abg-libzip-utils.cc			\
 abg-hash.cc				\
 abg-writer.cc				\
 abg-config.cc				\
@@ -38,6 +37,7 @@ abg-tools-utils.cc			\
 abg-elf-helpers.h			\
 abg-elf-helpers.cc			\
 abg-regex.cc				\
+abg-symtab-reader.h			\
 abg-symtab-reader.cc			\
 $(VIZ_SOURCES)
 
