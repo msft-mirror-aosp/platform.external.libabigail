@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: Apache-2.0 WITH LLVM-exception
 // -*- mode: C++ -*-
 //
-// Copyright (C) 2013-2020 Red Hat, Inc.
+// Copyright (C) 2013-2021 Red Hat, Inc.
 
 /// @file
 
@@ -27,10 +27,6 @@ ABG_BEGIN_EXPORT_DECLARATIONS
 #include "abg-tools-utils.h"
 #include "abg-writer.h"
 
-#if WITH_ZIP_ARCHIVE
-#include "abg-libzip-utils.h"
-#endif
-
 ABG_END_EXPORT_DECLARATIONS
 // </headers defining libabigail's API>
 
@@ -47,13 +43,6 @@ using std::ostringstream;
 using std::unordered_map;
 using std::list;
 using std::vector;
-
-#if WITH_ZIP_ARCHIVE
-using zip_utils::zip_sptr;
-using zip_utils::zip_file_sptr;
-using zip_utils::open_archive;
-using zip_utils::open_file_in_archive;
-#endif // WITH_ZIP_ARCHIVE
 
 using regex::regex_t_sptr;
 
@@ -324,14 +313,20 @@ corpus::priv::get_sorted_fun_symbols() const
 {
   if (!sorted_fun_symbols)
     {
-      const symtab_reader::symtab_filter filter =
-	  symtab_->make_filter().functions();
-
+      auto filter = symtab_->make_filter();
+      filter.set_functions();
       sorted_fun_symbols = elf_symbols(symtab_->begin(filter), symtab_->end());
     }
   return *sorted_fun_symbols;
 }
 
+/// Return a map from name to function symbol for this corpus.
+///
+/// Note that the first time this function is called, the map is built.
+/// Subsequent invocations of this function return the cached map that was
+/// built previously.
+///
+/// @return the name function symbol map
 const string_elf_symbols_map_type&
 corpus::priv::get_fun_symbol_map() const
 {
@@ -354,17 +349,24 @@ corpus::priv::get_sorted_undefined_fun_symbols() const
 {
   if (!sorted_undefined_fun_symbols)
     {
-      const symtab_reader::symtab_filter filter = symtab_->make_filter()
-						      .functions()
-						      .undefined_symbols()
-						      .public_symbols(false);
+      auto filter = symtab_->make_filter();
+      filter.set_functions();
+      filter.set_undefined_symbols();
+      filter.set_public_symbols(false);
 
       sorted_undefined_fun_symbols =
-	  elf_symbols(symtab_->begin(filter), symtab_->end());
+	elf_symbols(symtab_->begin(filter), symtab_->end());
     }
   return *sorted_undefined_fun_symbols;
 }
 
+/// Return a map from name to undefined function symbol for this corpus.
+///
+/// Note that the first time this function is called, the map is built.
+/// Subsequent invocations of this function return the cached map that was
+/// built previously.
+///
+/// @return the name function symbol map for undefined symbols
 const string_elf_symbols_map_type&
 corpus::priv::get_undefined_fun_symbol_map() const
 {
@@ -385,6 +387,8 @@ corpus::priv::get_undefined_fun_symbol_map() const
 /// unreferenced function symbol is not in the list of functions to keep, then
 /// that symbol is dropped and will not be part of the resulting table of
 /// unreferenced symbol that is built.
+///
+/// @return list of symbols that are not referenced by any function
 const elf_symbols&
 corpus::priv::get_unreferenced_function_symbols() const
 {
@@ -404,8 +408,8 @@ corpus::priv::get_unreferenced_function_symbols() const
 		  refed_funs[a->get_id_string()] = true;
 	      }
 
-	  const symtab_reader::symtab_filter filter =
-	    symtab_->make_filter().functions();
+	  auto filter = symtab_->make_filter();
+	  filter.set_functions();
 	  for (const auto& symbol :
 	       symtab_reader::filtered_symtab(*symtab_, filter))
 	    {
@@ -442,14 +446,21 @@ corpus::priv::get_sorted_var_symbols() const
 {
   if (!sorted_var_symbols)
     {
-      const symtab_reader::symtab_filter filter =
-	  symtab_->make_filter().variables();
+      auto filter = symtab_->make_filter();
+      filter.set_variables();
 
       sorted_var_symbols = elf_symbols(symtab_->begin(filter), symtab_->end());
     }
   return *sorted_var_symbols;
 }
 
+/// Return a map from name to variable symbol for this corpus.
+///
+/// Note that the first time this function is called, the map is built.
+/// Subsequent invocations of this function return the cached map that was
+/// built previously.
+///
+/// @return the name variable symbol map
 const string_elf_symbols_map_type&
 corpus::priv::get_var_symbol_map() const
 {
@@ -472,10 +483,10 @@ corpus::priv::get_sorted_undefined_var_symbols() const
 {
   if (!sorted_undefined_var_symbols)
     {
-      const symtab_reader::symtab_filter filter = symtab_->make_filter()
-						      .variables()
-						      .undefined_symbols()
-						      .public_symbols(false);
+      auto filter = symtab_->make_filter();
+      filter.set_variables();
+      filter.set_undefined_symbols();
+      filter.set_public_symbols(false);
 
       sorted_undefined_var_symbols =
 	  elf_symbols(symtab_->begin(filter), symtab_->end());
@@ -483,6 +494,13 @@ corpus::priv::get_sorted_undefined_var_symbols() const
   return *sorted_undefined_var_symbols;
 }
 
+/// Return a map from name to undefined variable symbol for this corpus.
+///
+/// Note that the first time this function is called, the map is built.
+/// Subsequent invocations of this function return the cached map that was
+/// built previously.
+///
+/// @return the name undefined variable symbol map
 const string_elf_symbols_map_type&
 corpus::priv::get_undefined_var_symbol_map() const
 {
@@ -503,6 +521,8 @@ corpus::priv::get_undefined_var_symbol_map() const
 /// unreferenced variable symbol is not in the list of variable to keep, then
 /// that symbol is dropped and will not be part of the resulting table of
 /// unreferenced symbol that is built.
+///
+/// @return list of symbols that are not referenced by any variable
 const elf_symbols&
 corpus::priv::get_unreferenced_variable_symbols() const
 {
@@ -521,8 +541,8 @@ corpus::priv::get_unreferenced_variable_symbols() const
 		  refed_vars[a->get_id_string()] = true;
 	      }
 
-	  const symtab_reader::symtab_filter filter =
-	    symtab_->make_filter().variables();
+	  auto filter = symtab_->make_filter();
+	  filter.set_variables();
 	  for (const auto& symbol :
 	       symtab_reader::filtered_symtab(*symtab_, filter))
 	    {
@@ -1015,13 +1035,19 @@ corpus::operator==(const corpus& other) const
 	  && j == other.get_translation_units().end());
 }
 
+/// Setter for the symtab object.
+///
+/// @param symtab a shared pointer to the new symtab object
 void
 corpus::set_symtab(symtab_reader::symtab_sptr symtab)
 {priv_->symtab_ = symtab;}
 
+/// Getter for the symtab object.
+///
+/// @return a shared pointer to the symtab object
 const symtab_reader::symtab_sptr&
 corpus::get_symtab() const
-{ return priv_->symtab_; }
+{return priv_->symtab_;}
 
 /// Getter for the function symbols map.
 ///
@@ -1040,21 +1066,45 @@ const string_elf_symbols_map_type&
 corpus::get_undefined_fun_symbol_map() const
 {return priv_->get_undefined_fun_symbol_map();}
 
+/// Return a sorted vector of function symbols for this corpus.
+///
+/// Note that the first time this function is called, the symbols are
+/// sorted and cached.  Subsequent invocations of this function return
+/// the cached vector that was built previously.
+///
+/// @return the sorted list of function symbols.
 const elf_symbols&
 corpus::get_sorted_fun_symbols() const
-{ return priv_->get_sorted_fun_symbols(); }
+{return priv_->get_sorted_fun_symbols();}
 
+/// Getter for a sorted vector of the function symbols undefined in
+/// this corpus.
+///
+/// @return a vector of the function symbols undefined in this corpus,
+/// sorted by name and then version.
 const elf_symbols&
 corpus::get_sorted_undefined_fun_symbols() const
-{ return priv_->get_sorted_undefined_fun_symbols(); }
+{return priv_->get_sorted_undefined_fun_symbols();}
 
+/// Getter for the sorted vector of variable symbols for this corpus.
+///
+/// Note that the first time this function is called, it computes the
+/// sorted vector, caches the result and returns it.  Subsequent
+/// invocations of this function just return the cached vector.
+///
+/// @return the sorted vector of variable symbols for this corpus.
 const elf_symbols&
 corpus::get_sorted_var_symbols() const
-{ return priv_->get_sorted_var_symbols(); }
+{return priv_->get_sorted_var_symbols();}
 
+/// Getter for a sorted vector of the variable symbols undefined in
+/// this corpus.
+///
+/// @return a vector of the variable symbols undefined in this corpus,
+/// sorted by name and then version.
 const elf_symbols&
 corpus::get_sorted_undefined_var_symbols() const
-{ return priv_->get_sorted_undefined_var_symbols(); }
+{return priv_->get_sorted_undefined_var_symbols();}
 
 /// Getter for the variable symbols map.
 ///
@@ -1315,7 +1365,7 @@ corpus::sort_variables()
 /// function exported by the current corpus.
 const elf_symbols&
 corpus::get_unreferenced_function_symbols() const
-{ return priv_->get_unreferenced_function_symbols(); }
+{return priv_->get_unreferenced_function_symbols();}
 
 /// Getter of the set of variable symbols that are not referenced by
 /// any variable exported by the current corpus.
@@ -1328,7 +1378,7 @@ corpus::get_unreferenced_function_symbols() const
 /// variable exported by the current corpus.
 const elf_symbols&
 corpus::get_unreferenced_variable_symbols() const
-{ return priv_->get_unreferenced_variable_symbols(); }
+{return priv_->get_unreferenced_variable_symbols();}
 
 /// Accessor for the regex patterns describing the functions to drop
 /// from the public decl table.

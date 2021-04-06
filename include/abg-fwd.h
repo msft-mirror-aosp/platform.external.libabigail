@@ -1379,6 +1379,7 @@ namespace symtab_reader
 {
 
 class symtab;
+/// Convenience typedef for a shared pointer to a @ref symtab
 typedef std::shared_ptr<symtab> symtab_sptr;
 
 } // end namespace symtab_reader
