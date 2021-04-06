@@ -1413,6 +1413,8 @@ elf_symbol::elf_symbol()
 ///
 /// @param is_linux_string_cst true if the symbol is a Linux Kernel
 /// string constant defined in the __ksymtab_strings section.
+///
+/// @param crc the CRC (modversions) value of Linux Kernel symbols
 elf_symbol::elf_symbol(const environment* e,
 		       size_t		  i,
 		       size_t		  s,
@@ -1483,6 +1485,8 @@ elf_symbol::create()
 ///
 /// @param is_linux_string_cst if true, it means the symbol represents
 /// a string constant from a linux kernel binary.
+///
+/// @param crc the CRC (modversions) value of Linux Kernel symbols
 ///
 /// @return a (smart) pointer to a newly created instance of @ref
 /// elf_symbol.
@@ -1742,10 +1746,16 @@ void
 elf_symbol::set_is_in_ksymtab(bool is_in_ksymtab)
 {priv_->is_in_ksymtab_ = is_in_ksymtab;}
 
+/// Getter of the 'crc' property.
+///
+/// @return the CRC (modversions) value for Linux Kernel symbols (if present)
 uint64_t
 elf_symbol::get_crc() const
 {return priv_->crc_;}
 
+/// Setter of the 'crc' property.
+///
+/// @param crc the new CRC (modversions) value for Linux Kernel symbols
 void
 elf_symbol::set_crc(uint64_t crc)
 {priv_->crc_ = crc;}
