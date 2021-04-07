@@ -1,5 +1,6 @@
 name: "libabigail"
 description: "The ABI Generic Analysis and Instrumentation Library"
+
 third_party {
   url {
     type: HOMEPAGE
@@ -9,11 +10,7 @@ third_party {
     type: GIT
     value: "http://sourceware.org/git/libabigail.git"
   }
-  version: "32c7829e4156666e1975329fb1b3201c43b5f84f"
+  version: "acc4bea0b8fed335657878ee849adbd7b4238597"
+  last_upgrade_date { year: 2021 month: 4 day: 03 }
   license_type: NOTICE
-  last_upgrade_date {
-    year: 2021
-    month: 3
-    day: 10
-  }
 }

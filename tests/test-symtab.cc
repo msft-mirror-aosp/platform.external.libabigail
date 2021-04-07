@@ -35,18 +35,19 @@ static const std::string test_data_dir =
     std::string(abigail::tests::get_src_dir()) + "/tests/data/test-symtab/";
 
 dwarf_reader::status
-read_corpus(
-  const std::string&		  path,
-  corpus_sptr&			  result,
-  const std::vector<std::string>& whitelist_paths = std::vector<std::string>())
+read_corpus(const std::string&		    path,
+	    corpus_sptr&		    result,
+	    const std::vector<std::string>& whitelist_paths =
+		std::vector<std::string>())
 {
   const std::string& absolute_path = test_data_dir + path;
 
   environment_sptr	    env(new environment);
   const std::vector<char**> debug_info_root_paths;
-  read_context_sptr	    ctxt = create_read_context(
-      absolute_path, debug_info_root_paths, env.get(),
-      /* load_all_type = */ true, /* linux_kernel_mode = */ true);
+  read_context_sptr	    ctxt =
+      create_read_context(absolute_path, debug_info_root_paths, env.get(),
+			  /* load_all_type = */ true,
+			  /* linux_kernel_mode = */ true);
 
   if (!whitelist_paths.empty())
     {
@@ -81,9 +82,9 @@ TEST_CASE("Symtab::NoDebugInfo", "[symtab, basic]")
   const dwarf_reader::status status = read_corpus(binary, corpus_ptr);
   REQUIRE(corpus_ptr);
 
-  REQUIRE(
-    status
-    == (dwarf_reader::STATUS_OK | dwarf_reader::STATUS_DEBUG_INFO_NOT_FOUND));
+  REQUIRE(status
+	  == (dwarf_reader::STATUS_OK
+	      | dwarf_reader::STATUS_DEBUG_INFO_NOT_FOUND));
 }
 
 // this value indicates in the following helper method, that we do not want to
@@ -92,13 +93,13 @@ TEST_CASE("Symtab::NoDebugInfo", "[symtab, basic]")
 #define N std::numeric_limits<size_t>::max()
 
 corpus_sptr
-assert_symbol_count(
-  const std::string&		  path,
-  size_t			  function_symbols = 0,
-  size_t			  variable_symbols = 0,
-  size_t			  undefined_function_symbols = 0,
-  size_t			  undefined_variable_symbols = 0,
-  const std::vector<std::string>& whitelist_paths = std::vector<std::string>())
+assert_symbol_count(const std::string& path,
+		    size_t	       function_symbols = 0,
+		    size_t	       variable_symbols = 0,
+		    size_t	       undefined_function_symbols = 0,
+		    size_t	       undefined_variable_symbols = 0,
+		    const std::vector<std::string>& whitelist_paths =
+			std::vector<std::string>())
 {
   corpus_sptr		     corpus_ptr;
   const dwarf_reader::status status =
