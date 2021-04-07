@@ -13,7 +13,6 @@ abg-suppression.h	\
 abg-comp-filter.h	\
 abg-diff-utils.h	\
 abg-libxml-utils.h	\
-abg-libzip-utils.h	\
 abg-fwd.h		\
 abg-hash.h		\
 abg-tools-utils.h	\
@@ -26,7 +25,6 @@ abg-version.h		\
 abg-viz-common.h	\
 abg-viz-dot.h		\
 abg-viz-svg.h		\
-abg-regex.h		\
-abg-symtab-reader.h
+abg-regex.h
 
 EXTRA_DIST = abg-version.h.in

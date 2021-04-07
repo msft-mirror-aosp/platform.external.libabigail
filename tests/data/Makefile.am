@@ -946,6 +946,14 @@ test-diff-filter/test-PR27331-v0.o           \
 test-diff-filter/test-PR27331-v1.c           \
 test-diff-filter/test-PR27331-v1.o           \
 test-diff-filter/test-PR27331-report-0.txt   \
+test-diff-filter/test-PR27569-v0.abi	     \
+test-diff-filter/test-PR27569-v1.abi         \
+test-diff-filter/test-PR27569-report-0.txt   \
+test-diff-filter/test-PR27598-v0.cc          \
+test-diff-filter/test-PR27598-v0.o           \
+test-diff-filter/test-PR27598-v1.cc          \
+test-diff-filter/test-PR27598-v1.o           \
+test-diff-filter/test-PR27598-report-0.txt   \
 \
 test-diff-suppr/test0-type-suppr-v0.cc	\
 test-diff-suppr/test0-type-suppr-v1.cc	\
@@ -1831,6 +1839,10 @@ test-diff-pkg/sshpass-debuginfo-1.07-1.fc34.x86_64.rpm \
 test-diff-pkg/nmap-7.70-5.el8_testjcc.x86_64-self-check-report-0.txt \
 test-diff-pkg/nmap-7.70-5.el8_testjcc.x86_64.rpm \
 test-diff-pkg/nmap-debuginfo-7.70-5.el8_testjcc.x86_64.rpm \
+test-diff-pkg/elfutils-libs-debuginfo-0.183-1.el9.x86_64-self-check-report-0.txt \
+test-diff-pkg/elfutils-libs-0.183-1.el9.x86_64.rpm \
+test-diff-pkg/elfutils-libs-debuginfo-0.183-1.el9.x86_64.rpm \
+test-diff-pkg/elfutils-debuginfo-0.183-1.el9.x86_64.rpm \
 \
 test-fedabipkgdiff/dbus-glib-0.104-3.fc23.x86_64.rpm \
 test-fedabipkgdiff/dbus-glib-debuginfo-0.104-3.fc23.x86_64.rpm \

@@ -1177,6 +1177,8 @@ maybe_adjust_et_rel_sym_addr_to_abs_addr(Elf* elf_handle, GElf_Sym* sym)
 /// @param addr the address to consider.
 ///
 /// @param section the section to consider.
+///
+/// @return true iff @p addr is in section @p section.
 bool
 address_is_in_section(Dwarf_Addr addr, Elf_Scn* section)
 {
@@ -1197,8 +1199,8 @@ address_is_in_section(Dwarf_Addr addr, Elf_Scn* section)
 ///
 /// @param addr the address to consider.
 ///
-/// @return true iff @p addr is designates a word that is in the
-/// ".opd" section.
+/// @return true iff @p addr designates a word that is in the ".opd"
+/// section.
 bool
 address_is_in_opd_section(Elf* elf_handle, Dwarf_Addr addr)
 {
