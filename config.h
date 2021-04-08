@@ -68,9 +68,6 @@
 /* Define to 1 if you have the <inttypes.h> header file. */
 #define HAVE_INTTYPES_H 1
 
-/* Defined to 1 if the libzip library is available */
-/* #undef HAVE_LIBZIP */
-
 /* Define to 1 if you have the <memory.h> header file. */
 #define HAVE_MEMORY_H 1
 
@@ -170,9 +167,6 @@
 
 /* compile the GNU tar archive support in abipkgdiff */
 #define WITH_TAR 1
-
-/* compile the zip archive support */
-/* #undef WITH_ZIP_ARCHIVE */
 
 /* Enable large inode numbers on Mac OS X 10.5.  */
 #ifndef _DARWIN_USE_64_BIT_INODE
