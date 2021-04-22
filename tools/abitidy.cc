@@ -109,6 +109,23 @@ get_attribute(xmlNodePtr node, const char* name)
   return result;
 }
 
+/// Store an attribute value.
+///
+/// @param node the node
+///
+/// @param name the attribute name
+///
+/// @param value the attribute value, optionally
+static void
+set_attribute(xmlNodePtr node, const char* name,
+              const std::optional<std::string>& value)
+{
+  if (value)
+    xmlSetProp(node, to_libxml(name), to_libxml(value.value().c_str()));
+  else
+    xmlUnsetProp(node, to_libxml(name));
+}
+
 /// Remove text nodes, recursively.
 ///
 /// This simplifies subsequent analysis and manipulation. Removing and
@@ -444,6 +461,43 @@ prune_unreachable(xmlDocPtr document)
     remove_unseen(node);
 }
 
+static const std::map<std::string, std::string> ANONYMOUS_TYPE_NAMES = {
+  {"enum-decl", "__anonymous_enum__"},
+  {"class-decl", "__anonymous_struct__"},
+  {"union-decl", "__anonymous_union__"},
+};
+
+/// Normalise anonymous type names by removing the numerical suffix.
+///
+/// Anonymous type names take the form __anonymous_foo__N where foo is
+/// one of enum, struct or union and N is an optional numerical suffix.
+/// The suffices are senstive to processing order and do not convey
+/// useful ABI information. They can cause spurious harmless diffs and
+/// make XML diffing and rebasing harder.
+///
+/// @param node the XML node to process
+static void
+normalise_anonymous_type_names(xmlNodePtr node)
+{
+  if (node->type != XML_ELEMENT_NODE)
+    return;
+
+  const auto it = ANONYMOUS_TYPE_NAMES.find(from_libxml(node->name));
+  if (it != ANONYMOUS_TYPE_NAMES.end())
+    if (const auto attribute = get_attribute(node, "name"))
+      {
+        const auto& anon = it->second;
+        const auto& name = attribute.value();
+        // __anonymous_foo__123 -> __anonymous_foo__
+        if (!name.compare(0, anon.size(), anon) &&
+            name.find_first_not_of("0123456789", anon.size()) == name.npos)
+          set_attribute(node, "name", anon);
+      }
+
+  for (auto child : get_children(node))
+    normalise_anonymous_type_names(child);
+}
+
 /// Main program.
 ///
 /// Read and write ABI XML, with optional extra processing passes.
@@ -462,6 +516,7 @@ main(int argc, char* argv[])
   int opt_indentation = 2;
   bool opt_drop_empty = false;
   bool opt_prune_unreachable = false;
+  bool opt_normalise_anonymous = false;
 
   // Process command line.
   auto usage = [&]() -> int {
@@ -472,6 +527,7 @@ main(int argc, char* argv[])
               << " [-a|--all]"
               << " [-d|--[no-]drop-empty]"
               << " [-p|--[no-]prune-unreachable]"
+              << " [-n|--[no-]normalise-anonymous]"
               << '\n';
     return 1;
   };
@@ -496,7 +552,7 @@ main(int argc, char* argv[])
             exit(usage());
         }
       else if (!strcmp(arg, "-a") || !strcmp(arg, "--all"))
-        opt_drop_empty = opt_prune_unreachable = true;
+        opt_drop_empty = opt_prune_unreachable = opt_normalise_anonymous = true;
       else if (!strcmp(arg, "-d") || !strcmp(arg, "--drop-empty"))
         opt_drop_empty = true;
       else if (!strcmp(arg, "--no-drop-empty"))
@@ -505,6 +561,10 @@ main(int argc, char* argv[])
         opt_prune_unreachable = true;
       else if (!strcmp(arg, "--no-prune-unreachable"))
         opt_prune_unreachable = false;
+      else if (!strcmp(arg, "-n") || !strcmp(arg, "--normalise-anonymous"))
+        opt_normalise_anonymous = true;
+      else if (!strcmp(arg, "--no-normalise-anonymous"))
+        opt_normalise_anonymous = false;
       else
         exit(usage());
     }
@@ -536,6 +596,11 @@ main(int argc, char* argv[])
   // Strip text nodes to simplify other operations.
   for (xmlNodePtr node = document->children; node; node = node->next)
     strip_text(node);
+
+  // Normalise anonymous type names.
+  if (opt_normalise_anonymous)
+    for (xmlNodePtr node = document->children; node; node = node->next)
+      normalise_anonymous_type_names(node);
 
   // Prune unreachable elements.
   if (opt_prune_unreachable)
