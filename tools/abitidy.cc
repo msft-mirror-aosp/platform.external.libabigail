@@ -89,6 +89,26 @@ get_children(xmlNodePtr node)
   return result;
 }
 
+/// Fetch an attribute from a node.
+///
+/// @param node the node
+///
+/// @param name the attribute name
+///
+/// @return the attribute value, if present
+static std::optional<std::string>
+get_attribute(xmlNodePtr node, const char* name)
+{
+  std::optional<std::string> result;
+  xmlChar* attribute = xmlGetProp(node, to_libxml(name));
+  if (attribute)
+    {
+      result = from_libxml(attribute);
+      xmlFree(attribute);
+    }
+  return result;
+}
+
 /// Remove text nodes, recursively.
 ///
 /// This simplifies subsequent analysis and manipulation. Removing and
@@ -238,6 +258,192 @@ drop_empty(xmlNodePtr node)
     remove_element(node);
 }
 
+/// Prune unreachable elements.
+///
+/// Reachability is defined to be union of contains, containing and
+/// refers-to relationships for types, declarations and symbols. The
+/// roots for reachability are the ELF elements in the ABI.
+///
+/// @param document the XML document to process
+static void
+prune_unreachable(xmlDocPtr document)
+{
+  // ELF symbol names.
+  std::set<std::string> elf_symbols;
+
+  // Simple way of allowing two kinds of nodes: false=>type,
+  // true=>symbol.
+  using vertex_t = std::pair<bool, std::string>;
+
+  // Graph vertices.
+  std::set<vertex_t> vertices;
+  // Graph edges.
+  std::map<vertex_t, std::set<vertex_t>> edges;
+
+  // Keep track of type / symbol nesting so we can identify contains,
+  // containing and refers-to relationships.
+  std::vector<vertex_t> stack;
+
+  // Process an XML node, adding a vertex and possibly some edges.
+  std::function<void(xmlNodePtr)> process_node = [&](xmlNodePtr node) {
+    // We only care about elements and not comments, at this stage.
+    if (node->type != XML_ELEMENT_NODE)
+      return;
+
+    // Is this an ELF symbol?
+    if (!strcmp(from_libxml(node->name), "elf-symbol"))
+      {
+        const auto name = get_attribute(node, "name");
+        if (name)
+          elf_symbols.insert(name.value());
+        // Early return is safe, but not necessary.
+        return;
+      }
+
+    // Is this a type? Note that the same id may appear multiple times.
+    const auto id = get_attribute(node, "id");
+    if (id)
+      {
+        vertex_t type_vertex{false, id.value()};
+        vertices.insert(type_vertex);
+        const auto naming_typedef_id = get_attribute(node, "naming-typedef-id");
+        if (naming_typedef_id)
+          {
+            // This is an odd one, there can be a backwards link from an
+            // anonymous type to the typedef that refers to it. We could
+            // either remove these links when pruning a typedef but it's
+            // simpler just to pull in the typedef, even if nothing else
+            // refers to it.
+            vertex_t naming_typedef_vertex{false, naming_typedef_id.value()};
+            edges[type_vertex].insert(naming_typedef_vertex);
+          }
+        if (!stack.empty())
+          {
+            // Parent<->child dependencies; record dependencies both ways to
+            // avoid holes in XML types and declarations.
+            const auto& parent = stack.back();
+            edges[parent].insert(type_vertex);
+            edges[type_vertex].insert(parent);
+          }
+        // Record the type.
+        stack.push_back(type_vertex);
+      }
+
+    // Is this a (declaration expected to be linked to a) symbol?
+    const auto symbol = get_attribute(node, "mangled-name");
+    if (symbol)
+      {
+        vertex_t symbol_vertex{true, symbol.value()};
+        vertices.insert(symbol_vertex);
+        if (!stack.empty())
+          {
+            // Parent<->child dependencies; record dependencies both ways to
+            // avoid making holes in XML types and declarations.
+            //
+            // Symbols exist outside of the type hierarchy, so choosing to make
+            // them depend on a containing type scope and vice versa is
+            // conservative and probably not necessary.
+            const auto& parent = stack.back();
+            edges[parent].insert(symbol_vertex);
+            edges[symbol_vertex].insert(parent);
+          }
+        // Record the symbol.
+        stack.push_back(symbol_vertex);
+        // In practice there will be at most one symbol on the stack; we could
+        // verify this here, but it wouldn't achieve anything.
+      }
+
+    // Being both would make the stack ordering ambiguous.
+    if (id && symbol)
+      {
+        std::cerr << "cannot handle element which is both type and symbol\n";
+        exit(1);
+      }
+
+    // Is there a reference to another type?
+    const auto type_id = get_attribute(node, "type-id");
+    if (type_id && !stack.empty())
+      {
+        // The enclosing type or symbol refers to another type.
+        const auto& parent = stack.back();
+        vertex_t type_id_vertex{false, type_id.value()};
+        edges[parent].insert(type_id_vertex);
+      }
+
+    // Process recursively.
+    for (auto child : get_children(node))
+      process_node(child);
+
+    // Restore the stack.
+    if (symbol)
+      stack.pop_back();
+    if (id)
+      stack.pop_back();
+  };
+
+  // Traverse the whole XML document and build a graph.
+  for (xmlNodePtr node = document->children; node; node = node->next)
+    process_node(node);
+
+  // Simple DFS.
+  std::set<vertex_t> seen;
+  std::function<void(vertex_t)> dfs = [&](vertex_t vertex) {
+    if (!seen.insert(vertex).second)
+      return;
+    auto it = edges.find(vertex);
+    if (it != edges.end())
+      for (auto to : it->second)
+        dfs(to);
+  };
+
+  // Traverse the graph, starting from the ELF symbols.
+  for (const auto& symbol : elf_symbols)
+    {
+      vertex_t symbol_vertex{true, symbol};
+      if (vertices.count(symbol_vertex))
+        dfs(symbol_vertex);
+      else
+        std::cerr << "no declaration found for ELF symbol " << symbol << '\n';
+    }
+
+  // This is a DFS with early stopping.
+  std::function<void(xmlNodePtr)> remove_unseen = [&](xmlNodePtr node) {
+    if (node->type != XML_ELEMENT_NODE)
+      return;
+
+    // Return if we know that this is a type to keep or drop in its
+    // entirety.
+    const auto id = get_attribute(node, "id");
+    if (id)
+      {
+        if (!seen.count(vertex_t{false, id.value()}))
+          remove_element(node);
+        return;
+      }
+
+    // Return if we know that this is a declaration to keep or drop in
+    // its entirety. Note that var-decl and function-decl are the only
+    // elements that can have a mangled-name attribute.
+    const char* node_name = from_libxml(node->name);
+    if (!strcmp(node_name, "var-decl") || !strcmp(node_name, "function-decl"))
+      {
+        const auto symbol = get_attribute(node, "mangled-name");
+        if (!(symbol && seen.count(vertex_t{true, symbol.value()})))
+          remove_element(node);
+        return;
+      }
+
+    // Otherwise, this is not a type, declaration or part thereof, so
+    // process child elements.
+    for (auto child : get_children(node))
+      remove_unseen(child);
+  };
+
+  // Traverse the document, removing unseen elements.
+  for (xmlNodePtr node = document->children; node; node = node->next)
+    remove_unseen(node);
+}
+
 /// Main program.
 ///
 /// Read and write ABI XML, with optional extra processing passes.
@@ -255,6 +461,7 @@ main(int argc, char* argv[])
   const char* opt_output = NULL;
   int opt_indentation = 2;
   bool opt_drop_empty = false;
+  bool opt_prune_unreachable = false;
 
   // Process command line.
   auto usage = [&]() -> int {
@@ -264,6 +471,7 @@ main(int argc, char* argv[])
               << " [-I|--indentation n]"
               << " [-a|--all]"
               << " [-d|--[no-]drop-empty]"
+              << " [-p|--[no-]prune-unreachable]"
               << '\n';
     return 1;
   };
@@ -288,11 +496,15 @@ main(int argc, char* argv[])
             exit(usage());
         }
       else if (!strcmp(arg, "-a") || !strcmp(arg, "--all"))
-        opt_drop_empty = true;
+        opt_drop_empty = opt_prune_unreachable = true;
       else if (!strcmp(arg, "-d") || !strcmp(arg, "--drop-empty"))
         opt_drop_empty = true;
       else if (!strcmp(arg, "--no-drop-empty"))
         opt_drop_empty = false;
+      else if (!strcmp(arg, "-p") || !strcmp(arg, "--prune-unreachable"))
+        opt_prune_unreachable = true;
+      else if (!strcmp(arg, "--no-prune-unreachable"))
+        opt_prune_unreachable = false;
       else
         exit(usage());
     }
@@ -324,6 +536,10 @@ main(int argc, char* argv[])
   // Strip text nodes to simplify other operations.
   for (xmlNodePtr node = document->children; node; node = node->next)
     strip_text(node);
+
+  // Prune unreachable elements.
+  if (opt_prune_unreachable)
+    prune_unreachable(document);
 
   // Drop empty elements.
   if (opt_drop_empty)
