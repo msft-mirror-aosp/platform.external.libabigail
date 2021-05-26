@@ -121,6 +121,17 @@ cc_binary_host {
     ],
 }
 
+cc_binary_host {
+    name: "abitidy",
+    defaults: ["libabigail_defaults"],
+    srcs: [
+        "tools/abitidy.cc",
+    ],
+    static_libs: [
+        "libabigail",
+    ],
+}
+
 genrule {
     name: "android_build_version",
     cmd: "$(location) $(location .) $(out)",
