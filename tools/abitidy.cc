@@ -42,6 +42,17 @@ to_libxml(const char* str)
   return reinterpret_cast<const xmlChar*>(str);
 }
 
+/// Cast a libxml string to C string.
+///
+/// @param str the libxml string (pointer)
+///
+/// @return the same thing, as a type compatible with the C library API
+static const char*
+from_libxml(const xmlChar* str)
+{
+  return reinterpret_cast<const char*>(str);
+}
+
 /// Remove a node from its document and free its storage.
 ///
 /// @param node the node to remove
@@ -50,6 +61,18 @@ remove_node(xmlNodePtr node)
 {
   xmlUnlinkNode(node);
   xmlFreeNode(node);
+}
+
+/// Remove an XML element and any immediately preceding comment.
+///
+/// @param node the element to remove
+static void
+remove_element(xmlNodePtr node)
+{
+  xmlNodePtr previous_node = node->prev;
+  if (previous_node && previous_node->type == XML_COMMENT_NODE)
+    remove_node(previous_node);
+  remove_node(node);
 }
 
 /// Get child nodes of given node.
@@ -189,6 +212,32 @@ adjust_quotes(xmlChar* start, xmlChar* limit)
     }
 }
 
+static const std::set<std::string> DROP_IF_EMPTY = {
+  "elf-variable-symbols",
+  "elf-function-symbols",
+  "namespace-decl",
+  "abi-instr",
+  "abi-corpus",
+  "abi-corpus-group",
+};
+
+/// Drop empty elements, if safe to do so, recursively.
+///
+/// @param element node to process
+static void
+drop_empty(xmlNodePtr node)
+{
+  if (node->type != XML_ELEMENT_NODE)
+    return;
+  for (xmlNodePtr child : get_children(node))
+    drop_empty(child);
+  // Do not drop the root element, even if empty.
+  if (node->parent->type == XML_DOCUMENT_NODE)
+    return;
+  if (!node->children && DROP_IF_EMPTY.count(from_libxml(node->name)))
+    remove_element(node);
+}
+
 /// Main program.
 ///
 /// Read and write ABI XML, with optional extra processing passes.
@@ -205,6 +254,7 @@ main(int argc, char* argv[])
   const char* opt_input = NULL;
   const char* opt_output = NULL;
   int opt_indentation = 2;
+  bool opt_drop_empty = false;
 
   // Process command line.
   auto usage = [&]() -> int {
@@ -213,6 +263,7 @@ main(int argc, char* argv[])
               << " [-o|--output file]"
               << " [-I|--indentation n]"
               << " [-a|--all]"
+              << " [-d|--[no-]drop-empty]"
               << '\n';
     return 1;
   };
@@ -237,7 +288,11 @@ main(int argc, char* argv[])
             exit(usage());
         }
       else if (!strcmp(arg, "-a") || !strcmp(arg, "--all"))
-        ;
+        opt_drop_empty = true;
+      else if (!strcmp(arg, "-d") || !strcmp(arg, "--drop-empty"))
+        opt_drop_empty = true;
+      else if (!strcmp(arg, "--no-drop-empty"))
+        opt_drop_empty = false;
       else
         exit(usage());
     }
@@ -269,6 +324,11 @@ main(int argc, char* argv[])
   // Strip text nodes to simplify other operations.
   for (xmlNodePtr node = document->children; node; node = node->next)
     strip_text(node);
+
+  // Drop empty elements.
+  if (opt_drop_empty)
+    for (xmlNodePtr node = document->children; node; node = node->next)
+      drop_empty(node);
 
   // Reformat XML for human consumption.
   for (xmlNodePtr node = document->children; node; node = node->next)
