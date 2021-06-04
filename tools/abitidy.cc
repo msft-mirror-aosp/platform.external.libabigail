@@ -514,9 +514,9 @@ main(int argc, char* argv[])
   const char* opt_input = NULL;
   const char* opt_output = NULL;
   int opt_indentation = 2;
-  bool opt_drop_empty = false;
-  bool opt_prune_unreachable = false;
   bool opt_normalise_anonymous = false;
+  bool opt_prune_unreachable = false;
+  bool opt_drop_empty = false;
 
   // Process command line.
   auto usage = [&]() -> int {
@@ -525,9 +525,9 @@ main(int argc, char* argv[])
               << " [-o|--output file]"
               << " [-I|--indentation n]"
               << " [-a|--all]"
-              << " [-d|--[no-]drop-empty]"
-              << " [-p|--[no-]prune-unreachable]"
               << " [-n|--[no-]normalise-anonymous]"
+              << " [-p|--[no-]prune-unreachable]"
+              << " [-d|--[no-]drop-empty]"
               << '\n';
     return 1;
   };
@@ -552,19 +552,19 @@ main(int argc, char* argv[])
             exit(usage());
         }
       else if (!strcmp(arg, "-a") || !strcmp(arg, "--all"))
-        opt_drop_empty = opt_prune_unreachable = opt_normalise_anonymous = true;
-      else if (!strcmp(arg, "-d") || !strcmp(arg, "--drop-empty"))
-        opt_drop_empty = true;
-      else if (!strcmp(arg, "--no-drop-empty"))
-        opt_drop_empty = false;
-      else if (!strcmp(arg, "-p") || !strcmp(arg, "--prune-unreachable"))
-        opt_prune_unreachable = true;
-      else if (!strcmp(arg, "--no-prune-unreachable"))
-        opt_prune_unreachable = false;
+        opt_normalise_anonymous = opt_prune_unreachable = opt_drop_empty = true;
       else if (!strcmp(arg, "-n") || !strcmp(arg, "--normalise-anonymous"))
         opt_normalise_anonymous = true;
       else if (!strcmp(arg, "--no-normalise-anonymous"))
         opt_normalise_anonymous = false;
+      else if (!strcmp(arg, "-p") || !strcmp(arg, "--prune-unreachable"))
+        opt_prune_unreachable = true;
+      else if (!strcmp(arg, "--no-prune-unreachable"))
+        opt_prune_unreachable = false;
+      else if (!strcmp(arg, "-d") || !strcmp(arg, "--drop-empty"))
+        opt_drop_empty = true;
+      else if (!strcmp(arg, "--no-drop-empty"))
+        opt_drop_empty = false;
       else
         exit(usage());
     }
