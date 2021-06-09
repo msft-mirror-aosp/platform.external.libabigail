@@ -75,8 +75,6 @@ cc_defaults {
         "libz",
     ],
 
-    generated_headers: ["android_build_version"],
-
     visibility: [
         "//visibility:private",
     ],
@@ -130,16 +128,4 @@ cc_binary_host {
     static_libs: [
         "libabigail",
     ],
-}
-
-genrule {
-    name: "android_build_version",
-    cmd: "$(location) $(location .) $(out)",
-    out: [
-        "android_build_version.h",
-    ],
-    srcs : ["."],
-    tool_files: [
-        "android_build_version.sh"
-    ]
 }
