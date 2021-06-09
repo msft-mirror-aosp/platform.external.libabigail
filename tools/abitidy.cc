@@ -308,7 +308,7 @@ prune_unreachable(xmlDocPtr document)
       return;
 
     // Is this an ELF symbol?
-    if (!strcmp(from_libxml(node->name), "elf-symbol"))
+    if (strcmp(from_libxml(node->name), "elf-symbol") == 0)
       {
         const auto name = get_attribute(node, "name");
         if (name)
@@ -442,7 +442,8 @@ prune_unreachable(xmlDocPtr document)
     // its entirety. Note that var-decl and function-decl are the only
     // elements that can have a mangled-name attribute.
     const char* node_name = from_libxml(node->name);
-    if (!strcmp(node_name, "var-decl") || !strcmp(node_name, "function-decl"))
+    if (strcmp(node_name, "var-decl") == 0
+        || strcmp(node_name, "function-decl") == 0)
       {
         const auto symbol = get_attribute(node, "mangled-name");
         if (!(symbol && seen.count(vertex_t{true, symbol.value()})))
@@ -539,31 +540,31 @@ main(int argc, char* argv[])
   };
   while (opt_index < argc)
     {
-      const char* arg = get_arg();
-      if (!strcmp(arg, "-i") || !strcmp(arg, "--input"))
+      const std::string arg = get_arg();
+      if (arg == "-i" || arg == "--input")
         opt_input = get_arg();
-      else if (!strcmp(arg, "-o") || !strcmp(arg, "--output"))
+      else if (arg == "-o" || arg == "--output")
         opt_output = get_arg();
-      else if (!strcmp(arg, "-I") || !strcmp(arg, "--indentation"))
+      else if (arg == "-I" || arg == "--indentation")
         {
           std::istringstream is(get_arg());
           is >> std::noskipws >> opt_indentation;
           if (!is || !is.eof() || opt_indentation < 0)
             exit(usage());
         }
-      else if (!strcmp(arg, "-a") || !strcmp(arg, "--all"))
+      else if (arg == "-a" || arg == "--all")
         opt_normalise_anonymous = opt_prune_unreachable = opt_drop_empty = true;
-      else if (!strcmp(arg, "-n") || !strcmp(arg, "--normalise-anonymous"))
+      else if (arg == "-n" || arg == "--normalise-anonymous")
         opt_normalise_anonymous = true;
-      else if (!strcmp(arg, "--no-normalise-anonymous"))
+      else if (arg == "--no-normalise-anonymous")
         opt_normalise_anonymous = false;
-      else if (!strcmp(arg, "-p") || !strcmp(arg, "--prune-unreachable"))
+      else if (arg == "-p" || arg == "--prune-unreachable")
         opt_prune_unreachable = true;
-      else if (!strcmp(arg, "--no-prune-unreachable"))
+      else if (arg == "--no-prune-unreachable")
         opt_prune_unreachable = false;
-      else if (!strcmp(arg, "-d") || !strcmp(arg, "--drop-empty"))
+      else if (arg == "-d" || arg == "--drop-empty")
         opt_drop_empty = true;
-      else if (!strcmp(arg, "--no-drop-empty"))
+      else if (arg == "--no-drop-empty")
         opt_drop_empty = false;
       else
         exit(usage());
