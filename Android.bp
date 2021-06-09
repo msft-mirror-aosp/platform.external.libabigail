@@ -57,6 +57,7 @@ cc_defaults {
     name: "libabigail_defaults",
     cflags: [
         "-DABIGAIL_ROOT_SYSTEM_LIBDIR=\"lib\"",
+        "-DUSE_ANDROID_BUILD_NUMBER",
         "-fexceptions",
         "-Wno-implicit-fallthrough",
     ],
@@ -72,6 +73,7 @@ cc_defaults {
         "libicuuc",
         "libicuuc_stubdata",
         "libxml2",
+        "libbuildversion",
         "libz",
     ],
 
