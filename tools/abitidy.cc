@@ -16,6 +16,7 @@
 #include <fcntl.h>
 #include <unistd.h>
 
+#include <cassert>
 #include <cstring>
 #include <functional>
 #include <ios>
@@ -25,11 +26,16 @@
 #include <set>
 #include <sstream>
 #include <string>
+#include <unordered_map>
+#include <unordered_set>
 #include <vector>
 
 #include <libxml/globals.h>
 #include <libxml/parser.h>
 #include <libxml/tree.h>
+
+/// Convenience typedef referring to a namespace scope.
+using namespace_scope = std::vector<std::string>;
 
 /// Cast a C string to a libxml string.
 ///
@@ -499,6 +505,186 @@ normalise_anonymous_type_names(xmlNodePtr node)
     normalise_anonymous_type_names(child);
 }
 
+/// Set of attributes that should be excluded from consideration when comparing
+/// XML elements.
+///
+/// These attributes are omitted with --no-show-locs without changing the
+/// meaning of the ABI. They can also sometimes vary between duplicate type
+/// definitions.
+static const std::unordered_set<std::string> IRRELEVANT_ATTRIBUTES = {
+  {"filepath"},
+  {"line"},
+  {"column"},
+};
+
+/// Determine whether one XML element is a subtree of another.
+///
+/// XML elements representing types are sometimes emitted multiple
+/// times, identically. Also, member typedefs are sometimes emitted
+/// separately from their types, resulting in duplicate XML fragments.
+///
+/// Both these issues can be resolved by first detecting duplicate
+/// occurrences of a given type id and then checking to see if there's
+/// an instance that subsumes the others which can then be eliminated.
+///
+/// @param left the first element to compare
+///
+/// @param right the second element to compare
+///
+/// @return whether the first element is a subtree of the second
+bool
+sub_tree(xmlNodePtr left, xmlNodePtr right)
+{
+  // Node names must match.
+  const char* left_name = from_libxml(left->name);
+  const char* right_name = from_libxml(right->name);
+  if (strcmp(left_name, right_name) != 0)
+    return false;
+  // Attributes may be missing on the left, but must match otherwise.
+  for (auto p = left->properties; p; p = p->next)
+  {
+    const char* attribute_name = from_libxml(p->name);
+    if (IRRELEVANT_ATTRIBUTES.count(attribute_name))
+      continue;
+    // EXCEPTION: libabigail emits the access specifier for the type
+    // it's trying to "emit in scope" rather than for what may be a
+    // containing type; so allow member-type attribute access to differ.
+    if (strcmp(left_name, "member-type") == 0
+        && strcmp(attribute_name, "access") == 0)
+      continue;
+    const auto left_value = get_attribute(left, attribute_name);
+    assert(left_value);
+    const auto right_value = get_attribute(right, attribute_name);
+    if (!right_value || left_value.value() != right_value.value())
+      return false;
+  }
+  // The left subelements must be a subsequence of the right ones.
+  xmlNodePtr left_child = xmlFirstElementChild(left);
+  xmlNodePtr right_child = xmlFirstElementChild(right);
+  while (left_child && right_child)
+    {
+      if (sub_tree(left_child, right_child))
+        left_child = xmlNextElementSibling(left_child);
+      right_child = xmlNextElementSibling(right_child);
+    }
+  return !left_child;
+}
+
+/// Elminate non-conflicting / report conflicting type definitions.
+///
+/// This function can eliminate exact type duplicates and duplicates where there
+/// is at least one maximal definition. It can report the remaining, conflicting
+/// duplicate definitions.
+///
+/// If a type has duplicate definitions in multiple namespace scopes, these
+/// should not be reordered. This function reports how many such types it finds.
+///
+/// @param eliminate whether to eliminate non-conflicting duplicates
+///
+/// @param report whether to report conflicting duplicate definitions
+///
+/// @param node the XML node to process
+///
+/// @return the number of types defined in multiple namespace scopes
+size_t handle_duplicate_types(bool eliminate, bool report, xmlNodePtr node)
+{
+  // map type-id to pair of set of vector of namespace names and vector of xmlNodes
+  std::unordered_map<
+      std::string,
+      std::pair<
+          std::set<namespace_scope>,
+          std::vector<xmlNodePtr>>> types;
+  namespace_scope namespaces;
+
+  // find all type occurrences
+  std::function<void(xmlNodePtr)> dfs = [&](xmlNodePtr node) {
+    if (node->type != XML_ELEMENT_NODE)
+      return;
+    const char* node_name = from_libxml(node->name);
+    std::optional<std::string> namespace_name;
+    if (strcmp(node_name, "namespace-decl") == 0)
+      namespace_name = get_attribute(node, "name");
+    if (namespace_name)
+      namespaces.push_back(namespace_name.value());
+    if (strcmp(node_name, "abi-corpus-group") == 0
+        || strcmp(node_name, "abi-corpus") == 0
+        || strcmp(node_name, "abi-instr") == 0
+        || namespace_name)
+      {
+        for (auto child : get_children(node))
+          dfs(child);
+      }
+    else
+      {
+        const auto id = get_attribute(node, "id");
+        if (id)
+          {
+            auto& info = types[id.value()];
+            info.first.insert(namespaces);
+            info.second.push_back(node);
+          }
+      }
+    if (namespace_name)
+      namespaces.pop_back();
+  };
+  dfs(node);
+
+  size_t scope_conflicts = 0;
+  for (const auto& [id, scopes_and_definitions] : types)
+    {
+      const auto& [scopes, definitions] = scopes_and_definitions;
+
+      if (scopes.size() > 1)
+        {
+          if (report)
+            std::cerr << "conflicting scopes found for type '" << id << "'\n";
+          ++scope_conflicts;
+          continue;
+        }
+
+      const size_t count = definitions.size();
+      if (count <= 1)
+        continue;
+
+      // Find a potentially maximal candidate by scanning through and retaining the
+      // new definition if it's a supertree of the current candidate.
+      std::vector<bool> ok(count);
+      size_t candidate = 0;
+      ok[candidate] = true;
+      for (size_t ix = 1; ix < count; ++ix)
+        if (sub_tree(definitions[candidate], definitions[ix]))
+          {
+            candidate = ix;
+            ok[candidate] = true;
+          }
+
+      // Verify it is indeed maximal by scanning the definitions not already
+      // known to be subtrees of the candidate.
+      bool bad = false;
+      for (size_t ix = 0; ix < count; ++ix)
+        if (!ok[ix] && !sub_tree(definitions[ix], definitions[candidate]))
+          {
+            bad = true;
+            break;
+          }
+      if (bad)
+        {
+          if (report)
+            std::cerr << "conflicting definitions found for type '" << id
+                      << "'\n";
+          continue;
+        }
+
+      if (eliminate)
+        // Remove all but the maximal definition.
+        for (size_t ix = 0; ix < count; ++ix)
+          if (ix != candidate)
+            remove_element(definitions[ix]);
+    }
+
+  return scope_conflicts;
+}
+
 /// Main program.
 ///
 /// Read and write ABI XML, with optional extra processing passes.
@@ -517,6 +703,8 @@ main(int argc, char* argv[])
   int opt_indentation = 2;
   bool opt_normalise_anonymous = false;
   bool opt_prune_unreachable = false;
+  bool opt_eliminate_duplicates = false;
+  bool opt_report_conflicts = false;
   bool opt_drop_empty = false;
 
   // Process command line.
@@ -528,6 +716,8 @@ main(int argc, char* argv[])
               << " [-a|--all]"
               << " [-n|--[no-]normalise-anonymous]"
               << " [-p|--[no-]prune-unreachable]"
+              << " [-e|--[no-]eliminate-duplicates]"
+              << " [-c|--[no-]report-conflicts]"
               << " [-d|--[no-]drop-empty]"
               << '\n';
     return 1;
@@ -553,7 +743,9 @@ main(int argc, char* argv[])
             exit(usage());
         }
       else if (arg == "-a" || arg == "--all")
-        opt_normalise_anonymous = opt_prune_unreachable = opt_drop_empty = true;
+        opt_normalise_anonymous = opt_prune_unreachable = opt_drop_empty
+                                = opt_eliminate_duplicates
+                                = opt_report_conflicts = true;
       else if (arg == "-n" || arg == "--normalise-anonymous")
         opt_normalise_anonymous = true;
       else if (arg == "--no-normalise-anonymous")
@@ -562,6 +754,14 @@ main(int argc, char* argv[])
         opt_prune_unreachable = true;
       else if (arg == "--no-prune-unreachable")
         opt_prune_unreachable = false;
+      else if (arg == "-e" || arg == "--eliminate-duplicates")
+        opt_eliminate_duplicates = true;
+      else if (arg == "--no-eliminate-duplicates")
+        opt_eliminate_duplicates = false;
+      else if (arg == "-c" || arg == "--report-conflicts")
+        opt_report_conflicts = true;
+      else if (arg == "--no-report-conflicts")
+        opt_report_conflicts = false;
       else if (arg == "-d" || arg == "--drop-empty")
         opt_drop_empty = true;
       else if (arg == "--no-drop-empty")
@@ -606,6 +806,15 @@ main(int argc, char* argv[])
   // Prune unreachable elements.
   if (opt_prune_unreachable)
     prune_unreachable(document);
+
+  // Eliminate complete duplicates and extra fragments of types.
+  // Report conflicting type defintions.
+  // Record whether there are namespace scope conflicts.
+  size_t scope_conflicts = 0;
+  if (opt_eliminate_duplicates || opt_report_conflicts)
+    for (xmlNodePtr node = document->children; node; node = node->next)
+      scope_conflicts += handle_duplicate_types(
+          opt_eliminate_duplicates, opt_report_conflicts, node);
 
   // Drop empty elements.
   if (opt_drop_empty)
