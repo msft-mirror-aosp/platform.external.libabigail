@@ -926,6 +926,7 @@ main(int argc, char* argv[])
   bool opt_normalise_anonymous = false;
   bool opt_prune_unreachable = false;
   bool opt_report_untyped = false;
+  bool opt_abort_on_untyped = false;
   bool opt_eliminate_duplicates = false;
   bool opt_report_conflicts = false;
   bool opt_sort = false;
@@ -941,6 +942,7 @@ main(int argc, char* argv[])
               << " [-n|--[no-]normalise-anonymous]"
               << " [-p|--[no-]prune-unreachable]"
               << " [-u|--[no-]report-untyped]"
+              << " [-U|--abort-on-untyped-symbols]"
               << " [-e|--[no-]eliminate-duplicates]"
               << " [-c|--[no-]report-conflicts]"
               << " [-s|--[no-]sort]"
@@ -988,6 +990,8 @@ main(int argc, char* argv[])
         opt_report_untyped = true;
       else if (arg == "--no-report-untyped")
         opt_report_untyped = false;
+      else if (arg == "-U" || arg == "--abort-on-untyped-symbols")
+        opt_abort_on_untyped = true;
       else if (arg == "-e" || arg == "--eliminate-duplicates")
         opt_eliminate_duplicates = true;
       else if (arg == "--no-eliminate-duplicates")
@@ -1044,9 +1048,14 @@ main(int argc, char* argv[])
 
   // Prune unreachable elements and/or report untyped symbols.
   size_t untyped_symbols = 0;
-  if (opt_prune_unreachable || opt_report_untyped)
+  if (opt_prune_unreachable || opt_report_untyped || opt_abort_on_untyped)
     untyped_symbols += handle_unreachable(
         opt_prune_unreachable, opt_report_untyped, document);
+  if (opt_abort_on_untyped && untyped_symbols)
+    {
+      std::cerr << "found " << untyped_symbols << " untyped symbols\n";
+      exit(1);
+    }
 
   // Eliminate complete duplicates and extra fragments of types.
   // Report conflicting type defintions.
