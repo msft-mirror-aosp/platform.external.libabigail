@@ -588,7 +588,7 @@ sub_tree(xmlNodePtr left, xmlNodePtr right)
 /// @return the number of types defined in multiple namespace scopes
 size_t handle_duplicate_types(bool eliminate, bool report, xmlNodePtr node)
 {
-  // map type-id to pair of set of vector of namespace names and vector of xmlNodes
+  // map of type-id to pair of set of namespace scopes and vector of xmlNodes
   std::unordered_map<
       std::string,
       std::pair<
@@ -646,8 +646,8 @@ size_t handle_duplicate_types(bool eliminate, bool report, xmlNodePtr node)
       if (count <= 1)
         continue;
 
-      // Find a potentially maximal candidate by scanning through and retaining the
-      // new definition if it's a supertree of the current candidate.
+      // Find a potentially maximal candidate by scanning through and retaining
+      // the new definition if it's a supertree of the current candidate.
       std::vector<bool> ok(count);
       size_t candidate = 0;
       ok[candidate] = true;
@@ -698,8 +698,8 @@ int
 main(int argc, char* argv[])
 {
   // Defaults.
-  const char* opt_input = NULL;
-  const char* opt_output = NULL;
+  const char* opt_input = nullptr;
+  const char* opt_output = nullptr;
   int opt_indentation = 2;
   bool opt_normalise_anonymous = false;
   bool opt_prune_unreachable = false;
@@ -743,9 +743,11 @@ main(int argc, char* argv[])
             exit(usage());
         }
       else if (arg == "-a" || arg == "--all")
-        opt_normalise_anonymous = opt_prune_unreachable = opt_drop_empty
+        opt_normalise_anonymous = opt_prune_unreachable
                                 = opt_eliminate_duplicates
-                                = opt_report_conflicts = true;
+                                = opt_report_conflicts
+                                = opt_drop_empty
+                                = true;
       else if (arg == "-n" || arg == "--normalise-anonymous")
         opt_normalise_anonymous = true;
       else if (arg == "--no-normalise-anonymous")
@@ -785,7 +787,8 @@ main(int argc, char* argv[])
 
   // Read the XML.
   xmlParserCtxtPtr parser_context = xmlNewParserCtxt();
-  xmlDocPtr document = xmlCtxtReadFd(parser_context, in_fd, NULL, NULL, 0);
+  xmlDocPtr document
+      = xmlCtxtReadFd(parser_context, in_fd, nullptr, nullptr, 0);
   if (!document)
     {
       std::cerr << "failed to parse input as XML\n";
