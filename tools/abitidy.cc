@@ -309,15 +309,21 @@ drop_empty(xmlNodePtr node)
     remove_element(node);
 }
 
-/// Prune unreachable elements.
+/// Handle unreachable elements.
 ///
 /// Reachability is defined to be union of contains, containing and
 /// refers-to relationships for types, declarations and symbols. The
 /// roots for reachability are the ELF elements in the ABI.
 ///
+/// @param prune whether to prune unreachable elements
+///
+/// @param report whether to report untyped symbols
+///
 /// @param document the XML document to process
-static void
-prune_unreachable(xmlDocPtr document)
+///
+/// @return the number of untyped symbols
+static size_t
+handle_unreachable(bool prune, bool report, xmlDocPtr document)
 {
   // ELF symbol names.
   std::set<std::string> elf_symbols;
@@ -447,14 +453,23 @@ prune_unreachable(xmlDocPtr document)
         dfs(to);
   };
 
+  // Count of how many symbols are untyped.
+  size_t untyped = 0;
+
   // Traverse the graph, starting from the ELF symbols.
   for (const auto& symbol : elf_symbols)
     {
       vertex_t symbol_vertex{true, symbol};
       if (vertices.count(symbol_vertex))
-        dfs(symbol_vertex);
+        {
+          dfs(symbol_vertex);
+        }
       else
-        std::cerr << "no declaration found for ELF symbol " << symbol << '\n';
+        {
+          if (report)
+            std::cerr << "no declaration found for ELF symbol " << symbol << '\n';
+          ++untyped;
+        }
     }
 
   // This is a DFS with early stopping.
@@ -491,9 +506,12 @@ prune_unreachable(xmlDocPtr document)
       remove_unseen(child);
   };
 
-  // Traverse the document, removing unseen elements.
-  for (xmlNodePtr node = document->children; node; node = node->next)
-    remove_unseen(node);
+  if (prune)
+    // Traverse the document, removing unseen elements.
+    for (xmlNodePtr node = document->children; node; node = node->next)
+      remove_unseen(node);
+
+  return untyped;
 }
 
 static const std::map<std::string, std::string> ANONYMOUS_TYPE_NAMES = {
@@ -907,6 +925,7 @@ main(int argc, char* argv[])
   int opt_indentation = 2;
   bool opt_normalise_anonymous = false;
   bool opt_prune_unreachable = false;
+  bool opt_report_untyped = false;
   bool opt_eliminate_duplicates = false;
   bool opt_report_conflicts = false;
   bool opt_sort = false;
@@ -921,6 +940,7 @@ main(int argc, char* argv[])
               << " [-a|--all]"
               << " [-n|--[no-]normalise-anonymous]"
               << " [-p|--[no-]prune-unreachable]"
+              << " [-u|--[no-]report-untyped]"
               << " [-e|--[no-]eliminate-duplicates]"
               << " [-c|--[no-]report-conflicts]"
               << " [-s|--[no-]sort]"
@@ -950,6 +970,7 @@ main(int argc, char* argv[])
         }
       else if (arg == "-a" || arg == "--all")
         opt_normalise_anonymous = opt_prune_unreachable
+                                = opt_report_untyped
                                 = opt_eliminate_duplicates
                                 = opt_report_conflicts
                                 = opt_sort
@@ -963,6 +984,10 @@ main(int argc, char* argv[])
         opt_prune_unreachable = true;
       else if (arg == "--no-prune-unreachable")
         opt_prune_unreachable = false;
+      else if (arg == "-u" || arg == "--report-untyped")
+        opt_report_untyped = true;
+      else if (arg == "--no-report-untyped")
+        opt_report_untyped = false;
       else if (arg == "-e" || arg == "--eliminate-duplicates")
         opt_eliminate_duplicates = true;
       else if (arg == "--no-eliminate-duplicates")
@@ -1017,9 +1042,11 @@ main(int argc, char* argv[])
     for (xmlNodePtr node = document->children; node; node = node->next)
       normalise_anonymous_type_names(node);
 
-  // Prune unreachable elements.
-  if (opt_prune_unreachable)
-    prune_unreachable(document);
+  // Prune unreachable elements and/or report untyped symbols.
+  size_t untyped_symbols = 0;
+  if (opt_prune_unreachable || opt_report_untyped)
+    untyped_symbols += handle_unreachable(
+        opt_prune_unreachable, opt_report_untyped, document);
 
   // Eliminate complete duplicates and extra fragments of types.
   // Report conflicting type defintions.
