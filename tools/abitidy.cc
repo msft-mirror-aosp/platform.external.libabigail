@@ -16,6 +16,7 @@
 #include <fcntl.h>
 #include <unistd.h>
 
+#include <array>
 #include <cassert>
 #include <cstring>
 #include <functional>
@@ -79,6 +80,33 @@ remove_element(xmlNodePtr node)
   if (previous_node && previous_node->type == XML_COMMENT_NODE)
     remove_node(previous_node);
   remove_node(node);
+}
+
+/// Move a node to an element.
+///
+/// @param node the node to move
+///
+/// @param destination the destination element
+static void
+move_node(xmlNodePtr node, xmlNodePtr destination)
+{
+  xmlUnlinkNode(node);
+  xmlAddChild(destination, node);
+}
+
+/// Move an XML element and any immediately preceding comment to another
+/// element.
+///
+/// @param node the element to remove
+///
+/// @param destination the destination element
+static void
+move_element(xmlNodePtr node, xmlNodePtr destination)
+{
+  xmlNodePtr previous_node = node->prev;
+  if (previous_node && previous_node->type == XML_COMMENT_NODE)
+    move_node(previous_node, destination);
+  move_node(node, destination);
 }
 
 /// Get child nodes of given node.
@@ -281,15 +309,21 @@ drop_empty(xmlNodePtr node)
     remove_element(node);
 }
 
-/// Prune unreachable elements.
+/// Handle unreachable elements.
 ///
 /// Reachability is defined to be union of contains, containing and
 /// refers-to relationships for types, declarations and symbols. The
 /// roots for reachability are the ELF elements in the ABI.
 ///
+/// @param prune whether to prune unreachable elements
+///
+/// @param report whether to report untyped symbols
+///
 /// @param document the XML document to process
-static void
-prune_unreachable(xmlDocPtr document)
+///
+/// @return the number of untyped symbols
+static size_t
+handle_unreachable(bool prune, bool report, xmlDocPtr document)
 {
   // ELF symbol names.
   std::set<std::string> elf_symbols;
@@ -419,14 +453,23 @@ prune_unreachable(xmlDocPtr document)
         dfs(to);
   };
 
+  // Count of how many symbols are untyped.
+  size_t untyped = 0;
+
   // Traverse the graph, starting from the ELF symbols.
   for (const auto& symbol : elf_symbols)
     {
       vertex_t symbol_vertex{true, symbol};
       if (vertices.count(symbol_vertex))
-        dfs(symbol_vertex);
+        {
+          dfs(symbol_vertex);
+        }
       else
-        std::cerr << "no declaration found for ELF symbol " << symbol << '\n';
+        {
+          if (report)
+            std::cerr << "no declaration found for ELF symbol " << symbol << '\n';
+          ++untyped;
+        }
     }
 
   // This is a DFS with early stopping.
@@ -463,9 +506,12 @@ prune_unreachable(xmlDocPtr document)
       remove_unseen(child);
   };
 
-  // Traverse the document, removing unseen elements.
-  for (xmlNodePtr node = document->children; node; node = node->next)
-    remove_unseen(node);
+  if (prune)
+    // Traverse the document, removing unseen elements.
+    for (xmlNodePtr node = document->children; node; node = node->next)
+      remove_unseen(node);
+
+  return untyped;
 }
 
 static const std::map<std::string, std::string> ANONYMOUS_TYPE_NAMES = {
@@ -588,7 +634,7 @@ sub_tree(xmlNodePtr left, xmlNodePtr right)
 /// @return the number of types defined in multiple namespace scopes
 size_t handle_duplicate_types(bool eliminate, bool report, xmlNodePtr node)
 {
-  // map type-id to pair of set of vector of namespace names and vector of xmlNodes
+  // map of type-id to pair of set of namespace scopes and vector of xmlNodes
   std::unordered_map<
       std::string,
       std::pair<
@@ -646,8 +692,8 @@ size_t handle_duplicate_types(bool eliminate, bool report, xmlNodePtr node)
       if (count <= 1)
         continue;
 
-      // Find a potentially maximal candidate by scanning through and retaining the
-      // new definition if it's a supertree of the current candidate.
+      // Find a potentially maximal candidate by scanning through and retaining
+      // the new definition if it's a supertree of the current candidate.
       std::vector<bool> ok(count);
       size_t candidate = 0;
       ok[candidate] = true;
@@ -685,6 +731,182 @@ size_t handle_duplicate_types(bool eliminate, bool report, xmlNodePtr node)
   return scope_conflicts;
 }
 
+static const std::set<std::string> INSTR_VARIABLE_ATTRIBUTES = {
+  "path",
+  "comp-dir-path",
+  "language",
+};
+
+/// Collect elements of an abi-instr by namespace.
+///
+/// Namespaces are not returned but are recursively traversed with the
+/// namespace stack being maintained. Other elements are associated with
+/// the current namespace.
+///
+/// @param node the node to traverse
+///
+/// @param namesapces the current stack of namespaces
+///
+/// @param child elements grouped by namespace scope
+static std::map<namespace_scope, std::vector<xmlNodePtr>>
+get_children_by_namespace(xmlNodePtr node)
+{
+  std::map<namespace_scope, std::vector<xmlNodePtr>> result;
+  namespace_scope scope;
+
+  std::function<void(xmlNodePtr)> process = [&](xmlNodePtr node) {
+    if (node->type != XML_ELEMENT_NODE)
+      return;
+    std::optional<std::string> namespace_name;
+    const char* node_name = from_libxml(node->name);
+    if (strcmp(node_name, "namespace-decl") == 0)
+      namespace_name = get_attribute(node, "name");
+    if (namespace_name)
+      {
+        scope.push_back(namespace_name.value());
+        for (auto child : get_children(node))
+          process(child);
+        scope.pop_back();
+      }
+    else
+      result[scope].push_back(node);
+  };
+
+  for (auto child : get_children(node))
+    process(child);
+  return result;
+}
+
+/// Sort namespaces, types and declarations.
+///
+/// This loses annotations (XML comments) on namespace-decl elements.
+/// It would have been a fair amount of extra work to preserve them.
+///
+/// @param node the XML node to process
+static void
+sort_namespaces_types_and_declarations(xmlNodePtr node)
+{
+  if (node->type != XML_ELEMENT_NODE)
+    return;
+  const char* node_name = from_libxml(node->name);
+  if (strcmp(node_name, "abi-corpus-group") == 0)
+    {
+      // Process each corpus in a corpus group separately.
+      for (auto child : get_children(node))
+        sort_namespaces_types_and_declarations(child);
+      return;
+    }
+  if (strcmp(node_name, "abi-corpus") != 0)
+    // Standalone abi-instr is another possibility.
+    return;
+
+  // We have a corpus to sort, get its instrs.
+  std::vector<xmlNodePtr> instrs;
+  for (auto child : get_children(node))
+    if (strcmp(from_libxml(child->name), "abi-instr") == 0)
+      instrs.push_back(child);
+  if (instrs.empty())
+    return;
+
+  // Collect the attributes of all the instrs.
+  std::map<std::string, std::set<std::string>> attributes;
+  // Collect the child elements of all the instrs, *ordered* by namespace scope
+  // with types before declarations, types by id, declarations by name and
+  // duplicates preserving original order.
+  std::map<namespace_scope,
+           std::array<std::map<std::string,
+                               std::vector<xmlNodePtr>>, 2>> children;
+  for (auto instr : instrs)
+    {
+      for (auto p = instr->properties; p; p = p->next)
+        {
+          // This is horrible. There should be a better way.
+          const char* attribute_name = from_libxml(p->name);
+          const auto attribute_value = get_attribute(instr, attribute_name);
+          assert(attribute_value);
+          attributes[attribute_name].insert(attribute_value.value());
+        }
+      for (const auto& [scope, elements] : get_children_by_namespace(instr))
+        {
+          for (auto child : elements)
+            {
+              const auto id = get_attribute(child, "id");
+              if (id)
+                {
+                  children[scope][0][id.value()].push_back(child);
+                  continue;
+                }
+              const auto name = get_attribute(child, "name");
+              if (name)
+                {
+                  children[scope][1][name.value()].push_back(child);
+                  continue;
+                }
+              std::cerr << "child element is not a type or a declaration\n";
+              return;
+            }
+        }
+    }
+
+  // Create and attach a replacement instr and populate its attributes.
+  xmlNodePtr replacement =
+      xmlAddChild(node, xmlNewNode(nullptr, to_libxml("abi-instr")));
+  for (const auto& attribute : attributes)
+    {
+      const char* attribute_name = attribute.first.c_str();
+      const auto& attribute_values = attribute.second;
+      if (attribute_values.size() == 1)
+        set_attribute(replacement, attribute_name, *attribute_values.begin());
+      else if (INSTR_VARIABLE_ATTRIBUTES.count(attribute_name))
+        set_attribute(replacement, attribute_name, "various");
+      else
+        {
+          std::cerr << "unexpectedly variable abi-instr attribute '"
+                    << attribute_name << "'\n";
+          remove_node(replacement);
+          return;
+        }
+    }
+
+  // Move the children to the replacement instr, creating namespace
+  // elements as needed.
+  std::map<namespace_scope, xmlNodePtr> namespace_elements;
+  // Start by recording the global scope's element.
+  namespace_elements.insert({{}, replacement});
+  std::function<xmlNodePtr(const namespace_scope&)> get_namespace_element =
+      [&](const namespace_scope& scope) {
+        auto insertion = namespace_elements.insert({scope, nullptr});
+    if (insertion.second)
+      {
+        // Lookup failed so scope cannot be empty.
+        namespace_scope truncated = scope;
+        truncated.pop_back();
+        xmlNodePtr parent = get_namespace_element(truncated);
+        // We can now create an XML element in the right place.
+        xmlNodePtr child = xmlNewNode(nullptr, to_libxml("namespace-decl"));
+        set_attribute(child, "name", scope.back());
+        xmlAddChild(parent, child);
+        insertion.first->second = child;
+      }
+    return insertion.first->second;
+  };
+  for (const auto& [scope, types_and_declarations] : children)
+    {
+      xmlNodePtr namespace_element = get_namespace_element(scope);
+      for (const auto& types_or_declarations : types_and_declarations)
+        for (const auto& [_, elements] : types_or_declarations)
+          for (auto element : elements)
+            move_element(element, namespace_element);
+    }
+
+  // Check the original instrs are now all empty and remove them.
+  for (auto instr : instrs)
+    if (get_children_by_namespace(instr).empty())
+      remove_node(instr);
+    else
+      std::cerr << "original abi-instr has residual child elements\n";
+}
+
 /// Main program.
 ///
 /// Read and write ABI XML, with optional extra processing passes.
@@ -698,13 +920,16 @@ int
 main(int argc, char* argv[])
 {
   // Defaults.
-  const char* opt_input = NULL;
-  const char* opt_output = NULL;
+  const char* opt_input = nullptr;
+  const char* opt_output = nullptr;
   int opt_indentation = 2;
   bool opt_normalise_anonymous = false;
   bool opt_prune_unreachable = false;
+  bool opt_report_untyped = false;
+  bool opt_abort_on_untyped = false;
   bool opt_eliminate_duplicates = false;
   bool opt_report_conflicts = false;
+  bool opt_sort = false;
   bool opt_drop_empty = false;
 
   // Process command line.
@@ -716,8 +941,11 @@ main(int argc, char* argv[])
               << " [-a|--all]"
               << " [-n|--[no-]normalise-anonymous]"
               << " [-p|--[no-]prune-unreachable]"
+              << " [-u|--[no-]report-untyped]"
+              << " [-U|--abort-on-untyped-symbols]"
               << " [-e|--[no-]eliminate-duplicates]"
               << " [-c|--[no-]report-conflicts]"
+              << " [-s|--[no-]sort]"
               << " [-d|--[no-]drop-empty]"
               << '\n';
     return 1;
@@ -743,9 +971,13 @@ main(int argc, char* argv[])
             exit(usage());
         }
       else if (arg == "-a" || arg == "--all")
-        opt_normalise_anonymous = opt_prune_unreachable = opt_drop_empty
+        opt_normalise_anonymous = opt_prune_unreachable
+                                = opt_report_untyped
                                 = opt_eliminate_duplicates
-                                = opt_report_conflicts = true;
+                                = opt_report_conflicts
+                                = opt_sort
+                                = opt_drop_empty
+                                = true;
       else if (arg == "-n" || arg == "--normalise-anonymous")
         opt_normalise_anonymous = true;
       else if (arg == "--no-normalise-anonymous")
@@ -754,6 +986,12 @@ main(int argc, char* argv[])
         opt_prune_unreachable = true;
       else if (arg == "--no-prune-unreachable")
         opt_prune_unreachable = false;
+      else if (arg == "-u" || arg == "--report-untyped")
+        opt_report_untyped = true;
+      else if (arg == "--no-report-untyped")
+        opt_report_untyped = false;
+      else if (arg == "-U" || arg == "--abort-on-untyped-symbols")
+        opt_abort_on_untyped = true;
       else if (arg == "-e" || arg == "--eliminate-duplicates")
         opt_eliminate_duplicates = true;
       else if (arg == "--no-eliminate-duplicates")
@@ -762,6 +1000,10 @@ main(int argc, char* argv[])
         opt_report_conflicts = true;
       else if (arg == "--no-report-conflicts")
         opt_report_conflicts = false;
+      else if (arg == "-s" || arg == "--sort")
+        opt_sort = true;
+      else if (arg == "--no-sort")
+        opt_sort = false;
       else if (arg == "-d" || arg == "--drop-empty")
         opt_drop_empty = true;
       else if (arg == "--no-drop-empty")
@@ -785,7 +1027,8 @@ main(int argc, char* argv[])
 
   // Read the XML.
   xmlParserCtxtPtr parser_context = xmlNewParserCtxt();
-  xmlDocPtr document = xmlCtxtReadFd(parser_context, in_fd, NULL, NULL, 0);
+  xmlDocPtr document
+      = xmlCtxtReadFd(parser_context, in_fd, nullptr, nullptr, 0);
   if (!document)
     {
       std::cerr << "failed to parse input as XML\n";
@@ -803,18 +1046,35 @@ main(int argc, char* argv[])
     for (xmlNodePtr node = document->children; node; node = node->next)
       normalise_anonymous_type_names(node);
 
-  // Prune unreachable elements.
-  if (opt_prune_unreachable)
-    prune_unreachable(document);
+  // Prune unreachable elements and/or report untyped symbols.
+  size_t untyped_symbols = 0;
+  if (opt_prune_unreachable || opt_report_untyped || opt_abort_on_untyped)
+    untyped_symbols += handle_unreachable(
+        opt_prune_unreachable, opt_report_untyped, document);
+  if (opt_abort_on_untyped && untyped_symbols)
+    {
+      std::cerr << "found " << untyped_symbols << " untyped symbols\n";
+      exit(1);
+    }
 
   // Eliminate complete duplicates and extra fragments of types.
   // Report conflicting type defintions.
   // Record whether there are namespace scope conflicts.
   size_t scope_conflicts = 0;
-  if (opt_eliminate_duplicates || opt_report_conflicts)
+  if (opt_eliminate_duplicates || opt_report_conflicts || opt_sort)
     for (xmlNodePtr node = document->children; node; node = node->next)
       scope_conflicts += handle_duplicate_types(
           opt_eliminate_duplicates, opt_report_conflicts, node);
+
+  // Sort namespaces, types and declarations.
+  if (opt_sort)
+    {
+      if (scope_conflicts)
+        std::cerr << "found type definition scope conflicts, skipping sort\n";
+      else
+        for (xmlNodePtr node = document->children; node; node = node->next)
+          sort_namespaces_types_and_declarations(node);
+    }
 
   // Drop empty elements.
   if (opt_drop_empty)
