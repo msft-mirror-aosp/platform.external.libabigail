@@ -788,23 +788,49 @@ sort_namespaces_types_and_declarations(xmlNodePtr node)
 {
   if (node->type != XML_ELEMENT_NODE)
     return;
+
+  // There are (currently) 2 ABI formats we handle here.
+  //
+  // 1. An abi-corpus containing ones or more abi-instr. In this case, we move
+  // all namespaces, types and declarations to a replacement abi-instr at the
+  // end of the abi-corpus. The existing abi-instr will then be confirmed as
+  // empty and removed.
+  //
+  // 2. An abi-corpus-group containing one or more abi-corpus each containing
+  // zero or more abi-instr (with at least one abi-instr altogether). In this
+  // case the replacement abi-instr is created within the first abi-corpus of
+  // the group.
+  //
+  // Anything else is left alone. For example, single abi-instr elements are
+  // present in some libabigail test suite files.
+
+  // We first need to identify where to place the new abi-instr and all the
+  // abi-instr to process.
+  xmlNodePtr where = nullptr;
+  std::vector<xmlNodePtr> instrs;
+
+  auto process_corpus = [&](xmlNodePtr corpus) {
+    if (!where)
+      where = corpus;
+    for (auto instr : get_children(corpus))
+      if (strcmp(from_libxml(instr->name), "abi-instr") == 0)
+        instrs.push_back(instr);
+  };
+
   const char* node_name = from_libxml(node->name);
   if (strcmp(node_name, "abi-corpus-group") == 0)
     {
-      // Process each corpus in a corpus group separately.
-      for (auto child : get_children(node))
-        sort_namespaces_types_and_declarations(child);
-      return;
+      // Process all corpora in a corpus group together.
+      for (auto corpus : get_children(node))
+        if (strcmp(from_libxml(corpus->name), "abi-corpus") == 0)
+          process_corpus(corpus);
     }
-  if (strcmp(node_name, "abi-corpus") != 0)
-    // Standalone abi-instr is another possibility.
-    return;
+  else if (strcmp(node_name, "abi-corpus") == 0)
+    {
+      // We have a corpus to sort, just get its instrs.
+      process_corpus(node);
+    }
 
-  // We have a corpus to sort, get its instrs.
-  std::vector<xmlNodePtr> instrs;
-  for (auto child : get_children(node))
-    if (strcmp(from_libxml(child->name), "abi-instr") == 0)
-      instrs.push_back(child);
   if (instrs.empty())
     return;
 
@@ -850,7 +876,7 @@ sort_namespaces_types_and_declarations(xmlNodePtr node)
 
   // Create and attach a replacement instr and populate its attributes.
   xmlNodePtr replacement =
-      xmlAddChild(node, xmlNewNode(nullptr, to_libxml("abi-instr")));
+      xmlAddChild(where, xmlNewNode(nullptr, to_libxml("abi-instr")));
   for (const auto& attribute : attributes)
     {
       const char* attribute_name = attribute.first.c_str();
