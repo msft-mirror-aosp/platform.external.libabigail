@@ -897,8 +897,20 @@ sort_namespaces_types_and_declarations(xmlNodePtr node)
       if (result)
         return result;
       if (a_name)
-        // sort declarations by name
-        return a_name.value().compare(b_name.value());
+        {
+          // sort declarations by name
+          result = a_name.value().compare(b_name.value());
+          if (result)
+            return result;
+          auto a_mangled = get_attribute(a, "mangled-name");
+          auto b_mangled = get_attribute(b, "mangled-name");
+          // without mangled-name first
+          result = a_mangled.has_value() - b_mangled.has_value();
+          if (result)
+            return result;
+          // and by mangled-name if present
+          return !a_mangled ? 0 : a_mangled.value().compare(b_mangled.value());
+        }
 
       // a and b are not types or declarations; should not be reached
       return 0;
