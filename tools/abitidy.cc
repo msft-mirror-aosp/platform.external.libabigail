@@ -737,19 +737,19 @@ static const std::set<std::string> INSTR_VARIABLE_ATTRIBUTES = {
   "language",
 };
 
-/// Collect elements of an abi-instr by namespace.
+/// Collect elements of abi-instr elements by namespace.
 ///
 /// Namespaces are not returned but are recursively traversed with the
 /// namespace stack being maintained. Other elements are associated with
 /// the current namespace.
 ///
-/// @param node the node to traverse
+/// @param nodes the nodes to traverse
 ///
 /// @param namesapces the current stack of namespaces
 ///
 /// @param child elements grouped by namespace scope
 static std::map<namespace_scope, std::vector<xmlNodePtr>>
-get_children_by_namespace(xmlNodePtr node)
+get_children_by_namespace(const std::vector<xmlNodePtr>& nodes)
 {
   std::map<namespace_scope, std::vector<xmlNodePtr>> result;
   namespace_scope scope;
@@ -772,8 +772,9 @@ get_children_by_namespace(xmlNodePtr node)
       result[scope].push_back(node);
   };
 
-  for (auto child : get_children(node))
-    process(child);
+  for (auto node : nodes)
+    for (auto child : get_children(node))
+      process(child);
   return result;
 }
 
@@ -804,8 +805,8 @@ sort_namespaces_types_and_declarations(xmlNodePtr node)
   // Anything else is left alone. For example, single abi-instr elements are
   // present in some libabigail test suite files.
 
-  // We first need to identify where to place the new abi-instr and all the
-  // abi-instr to process.
+  // We first need to identify where to place the new abi-instr and collect all
+  // the abi-instr to process.
   xmlNodePtr where = nullptr;
   std::vector<xmlNodePtr> instrs;
 
@@ -836,43 +837,15 @@ sort_namespaces_types_and_declarations(xmlNodePtr node)
 
   // Collect the attributes of all the instrs.
   std::map<std::string, std::set<std::string>> attributes;
-  // Collect the child elements of all the instrs, *ordered* by namespace scope
-  // with types before declarations, types by id, declarations by name and
-  // duplicates preserving original order.
-  std::map<namespace_scope,
-           std::array<std::map<std::string,
-                               std::vector<xmlNodePtr>>, 2>> children;
   for (auto instr : instrs)
-    {
-      for (auto p = instr->properties; p; p = p->next)
-        {
-          // This is horrible. There should be a better way.
-          const char* attribute_name = from_libxml(p->name);
-          const auto attribute_value = get_attribute(instr, attribute_name);
-          assert(attribute_value);
-          attributes[attribute_name].insert(attribute_value.value());
-        }
-      for (const auto& [scope, elements] : get_children_by_namespace(instr))
-        {
-          for (auto child : elements)
-            {
-              const auto id = get_attribute(child, "id");
-              if (id)
-                {
-                  children[scope][0][id.value()].push_back(child);
-                  continue;
-                }
-              const auto name = get_attribute(child, "name");
-              if (name)
-                {
-                  children[scope][1][name.value()].push_back(child);
-                  continue;
-                }
-              std::cerr << "child element is not a type or a declaration\n";
-              return;
-            }
-        }
-    }
+    for (auto p = instr->properties; p; p = p->next)
+      {
+        // This is horrible. There should be a better way of iterating.
+        const char* attribute_name = from_libxml(p->name);
+        const auto attribute_value = get_attribute(instr, attribute_name);
+        assert(attribute_value);
+        attributes[attribute_name].insert(attribute_value.value());
+      }
 
   // Create and attach a replacement instr and populate its attributes.
   xmlNodePtr replacement =
@@ -894,11 +867,71 @@ sort_namespaces_types_and_declarations(xmlNodePtr node)
         }
     }
 
-  // Move the children to the replacement instr, creating namespace
-  // elements as needed.
-  std::map<namespace_scope, xmlNodePtr> namespace_elements;
-  // Start by recording the global scope's element.
-  namespace_elements.insert({{}, replacement});
+  // Order types before declarations, types by id, declarations by name (and by
+  // mangled-name, if present).
+  struct Compare {
+    int
+    cmp(xmlNodePtr a, xmlNodePtr b) const
+    {
+      // NOTE: This must not reorder type definitions with the same id. In
+      // particular, we cannot do anything nice and easy like order by element
+      // tag first.
+      //
+      // TODO: Replace compare and subtraction with <=>.
+      int result;
+
+      auto a_id = get_attribute(a, "id");
+      auto b_id = get_attribute(b, "id");
+      // types before non-types
+      result = b_id.has_value() - a_id.has_value();
+      if (result)
+        return result;
+      if (a_id)
+        // sort types by id
+        return a_id.value().compare(b_id.value());
+
+      auto a_name = get_attribute(a, "name");
+      auto b_name = get_attribute(b, "name");
+      // declarations before non-declarations
+      result = b_name.has_value() - a_name.has_value();
+      if (result)
+        return result;
+      if (a_name)
+        {
+          // sort declarations by name
+          result = a_name.value().compare(b_name.value());
+          if (result)
+            return result;
+          auto a_mangled = get_attribute(a, "mangled-name");
+          auto b_mangled = get_attribute(b, "mangled-name");
+          // without mangled-name first
+          result = a_mangled.has_value() - b_mangled.has_value();
+          if (result)
+            return result;
+          // and by mangled-name if present
+          return !a_mangled ? 0 : a_mangled.value().compare(b_mangled.value());
+        }
+
+      // a and b are not types or declarations; should not be reached
+      return 0;
+    }
+
+    bool
+    operator()(xmlNodePtr a, xmlNodePtr b) const
+    {
+      return cmp(a, b) < 0;
+    }
+  };
+
+  // Collect the child elements of all the instrs, by namespace scope.
+  auto scoped_children = get_children_by_namespace(instrs);
+  for (auto& [scope, children] : scoped_children)
+    // Sort the children, preserving order of duplicates with a stable sort.
+    std::stable_sort(children.begin(), children.end(), Compare());
+
+  // Create namespace elements on demand. The global namespace is just the
+  // replacement instr itself.
+  std::map<namespace_scope, xmlNodePtr> namespace_elements{{{}, replacement}};
   std::function<xmlNodePtr(const namespace_scope&)> get_namespace_element =
       [&](const namespace_scope& scope) {
         auto insertion = namespace_elements.insert({scope, nullptr});
@@ -916,18 +949,18 @@ sort_namespaces_types_and_declarations(xmlNodePtr node)
       }
     return insertion.first->second;
   };
-  for (const auto& [scope, types_and_declarations] : children)
+
+  // Move the children to the replacement instr or its subelements.
+  for (const auto& [scope, elements] : scoped_children)
     {
       xmlNodePtr namespace_element = get_namespace_element(scope);
-      for (const auto& types_or_declarations : types_and_declarations)
-        for (const auto& [_, elements] : types_or_declarations)
-          for (auto element : elements)
-            move_element(element, namespace_element);
+      for (auto element : elements)
+        move_element(element, namespace_element);
     }
 
   // Check the original instrs are now all empty and remove them.
   for (auto instr : instrs)
-    if (get_children_by_namespace(instr).empty())
+    if (get_children_by_namespace({instr}).empty())
       remove_node(instr);
     else
       std::cerr << "original abi-instr has residual child elements\n";
