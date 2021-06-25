@@ -194,7 +194,7 @@ add_text(xmlNodePtr node, bool after, const std::string& text)
     xmlAddPrevSibling(node, text_node);
 }
 
-/// Format an XML elementy by adding internal indentation and newlines.
+/// Format an XML element by adding internal indentation and newlines.
 ///
 /// This makes the XML readable.
 ///
@@ -294,7 +294,7 @@ static const std::set<std::string> DROP_IF_EMPTY = {
 
 /// Drop empty elements, if safe to do so, recursively.
 ///
-/// @param element node to process
+/// @param node element to process
 static void
 drop_empty(xmlNodePtr node)
 {
@@ -319,11 +319,11 @@ drop_empty(xmlNodePtr node)
 ///
 /// @param report whether to report untyped symbols
 ///
-/// @param document the XML document to process
+/// @param root the XML root element
 ///
 /// @return the number of untyped symbols
 static size_t
-handle_unreachable(bool prune, bool report, xmlDocPtr document)
+handle_unreachable(bool prune, bool report, xmlNodePtr root)
 {
   // ELF symbol names.
   std::set<std::string> elf_symbols;
@@ -438,9 +438,8 @@ handle_unreachable(bool prune, bool report, xmlDocPtr document)
       stack.pop_back();
   };
 
-  // Traverse the whole XML document and build a graph.
-  for (xmlNodePtr node = document->children; node; node = node->next)
-    process_node(node);
+  // Traverse the whole root element and build a graph.
+  process_node(root);
 
   // Simple DFS.
   std::set<vertex_t> seen;
@@ -507,9 +506,8 @@ handle_unreachable(bool prune, bool report, xmlDocPtr document)
   };
 
   if (prune)
-    // Traverse the document, removing unseen elements.
-    for (xmlNodePtr node = document->children; node; node = node->next)
-      remove_unseen(node);
+    // Traverse the XML, removing unseen elements.
+    remove_unseen(root);
 
   return untyped;
 }
@@ -571,7 +569,7 @@ static const std::unordered_set<std::string> IRRELEVANT_ATTRIBUTES = {
 ///
 /// Both these issues can be resolved by first detecting duplicate
 /// occurrences of a given type id and then checking to see if there's
-/// an instance that subsumes the others which can then be eliminated.
+/// an instance that subsumes the others, which can then be eliminated.
 ///
 /// @param left the first element to compare
 ///
@@ -629,10 +627,10 @@ sub_tree(xmlNodePtr left, xmlNodePtr right)
 ///
 /// @param report whether to report conflicting duplicate definitions
 ///
-/// @param node the XML node to process
+/// @param root the root XML element
 ///
 /// @return the number of types defined in multiple namespace scopes
-size_t handle_duplicate_types(bool eliminate, bool report, xmlNodePtr node)
+size_t handle_duplicate_types(bool eliminate, bool report, xmlNodePtr root)
 {
   // map of type-id to pair of set of namespace scopes and vector of xmlNodes
   std::unordered_map<
@@ -673,7 +671,7 @@ size_t handle_duplicate_types(bool eliminate, bool report, xmlNodePtr node)
     if (namespace_name)
       namespaces.pop_back();
   };
-  dfs(node);
+  dfs(root);
 
   size_t scope_conflicts = 0;
   for (const auto& [id, scopes_and_definitions] : types)
@@ -704,8 +702,8 @@ size_t handle_duplicate_types(bool eliminate, bool report, xmlNodePtr node)
             ok[candidate] = true;
           }
 
-      // Verify it is indeed maximal by scanning the definitions not already
-      // known to be subtrees of the candidate.
+      // Verify the candidate is indeed maximal by scanning the definitions not
+      // already known to be subtrees of it.
       bool bad = false;
       for (size_t ix = 0; ix < count; ++ix)
         if (!ok[ix] && !sub_tree(definitions[ix], definitions[candidate]))
@@ -783,16 +781,13 @@ get_children_by_namespace(const std::vector<xmlNodePtr>& nodes)
 /// This loses annotations (XML comments) on namespace-decl elements.
 /// It would have been a fair amount of extra work to preserve them.
 ///
-/// @param node the XML node to process
+/// @param root the XML root element
 static void
-sort_namespaces_types_and_declarations(xmlNodePtr node)
+sort_namespaces_types_and_declarations(xmlNodePtr root)
 {
-  if (node->type != XML_ELEMENT_NODE)
-    return;
-
   // There are (currently) 2 ABI formats we handle here.
   //
-  // 1. An abi-corpus containing ones or more abi-instr. In this case, we move
+  // 1. An abi-corpus containing one or more abi-instr. In this case, we move
   // all namespaces, types and declarations to a replacement abi-instr at the
   // end of the abi-corpus. The existing abi-instr will then be confirmed as
   // empty and removed.
@@ -818,18 +813,18 @@ sort_namespaces_types_and_declarations(xmlNodePtr node)
         instrs.push_back(instr);
   };
 
-  const char* node_name = from_libxml(node->name);
-  if (strcmp(node_name, "abi-corpus-group") == 0)
+  const char* root_name = from_libxml(root->name);
+  if (strcmp(root_name, "abi-corpus-group") == 0)
     {
       // Process all corpora in a corpus group together.
-      for (auto corpus : get_children(node))
+      for (auto corpus : get_children(root))
         if (strcmp(from_libxml(corpus->name), "abi-corpus") == 0)
           process_corpus(corpus);
     }
-  else if (strcmp(node_name, "abi-corpus") == 0)
+  else if (strcmp(root_name, "abi-corpus") == 0)
     {
       // We have a corpus to sort, just get its instrs.
-      process_corpus(node);
+      process_corpus(root);
     }
 
   if (instrs.empty())
@@ -937,7 +932,7 @@ sort_namespaces_types_and_declarations(xmlNodePtr node)
         auto insertion = namespace_elements.insert({scope, nullptr});
     if (insertion.second)
       {
-        // Lookup failed so scope cannot be empty.
+        // Lookup failed (and insertion succeeded) so scope cannot be empty.
         namespace_scope truncated = scope;
         truncated.pop_back();
         xmlNodePtr parent = get_namespace_element(truncated);
@@ -968,11 +963,11 @@ sort_namespaces_types_and_declarations(xmlNodePtr node)
 
 /// Main program.
 ///
-/// Read and write ABI XML, with optional extra processing passes.
+/// Read and write ABI XML, with optional processing passes.
 ///
 /// @param argc argument count
 ///
-/// @param argv atgument vector
+/// @param argv argument vector
 ///
 /// @return exit status
 int
@@ -1096,20 +1091,26 @@ main(int argc, char* argv[])
   xmlFreeParserCtxt(parser_context);
   close(in_fd);
 
+  // Get the root element.
+  xmlNodePtr root = xmlDocGetRootElement(document);
+  if (!root)
+    {
+      std::cerr << "XML document has no root element\n";
+      exit(1);
+    }
+
   // Strip text nodes to simplify other operations.
-  for (xmlNodePtr node = document->children; node; node = node->next)
-    strip_text(node);
+  strip_text(root);
 
   // Normalise anonymous type names.
   if (opt_normalise_anonymous)
-    for (xmlNodePtr node = document->children; node; node = node->next)
-      normalise_anonymous_type_names(node);
+    normalise_anonymous_type_names(root);
 
   // Prune unreachable elements and/or report untyped symbols.
   size_t untyped_symbols = 0;
   if (opt_prune_unreachable || opt_report_untyped || opt_abort_on_untyped)
     untyped_symbols += handle_unreachable(
-        opt_prune_unreachable, opt_report_untyped, document);
+        opt_prune_unreachable, opt_report_untyped, root);
   if (opt_abort_on_untyped && untyped_symbols)
     {
       std::cerr << "found " << untyped_symbols << " untyped symbols\n";
@@ -1121,9 +1122,8 @@ main(int argc, char* argv[])
   // Record whether there are namespace scope conflicts.
   size_t scope_conflicts = 0;
   if (opt_eliminate_duplicates || opt_report_conflicts || opt_sort)
-    for (xmlNodePtr node = document->children; node; node = node->next)
-      scope_conflicts += handle_duplicate_types(
-          opt_eliminate_duplicates, opt_report_conflicts, node);
+    scope_conflicts += handle_duplicate_types(
+        opt_eliminate_duplicates, opt_report_conflicts, root);
 
   // Sort namespaces, types and declarations.
   if (opt_sort)
@@ -1131,18 +1131,15 @@ main(int argc, char* argv[])
       if (scope_conflicts)
         std::cerr << "found type definition scope conflicts, skipping sort\n";
       else
-        for (xmlNodePtr node = document->children; node; node = node->next)
-          sort_namespaces_types_and_declarations(node);
+        sort_namespaces_types_and_declarations(root);
     }
 
-  // Drop empty elements.
+  // Drop empty subelements.
   if (opt_drop_empty)
-    for (xmlNodePtr node = document->children; node; node = node->next)
-      drop_empty(node);
+    drop_empty(root);
 
-  // Reformat XML for human consumption.
-  for (xmlNodePtr node = document->children; node; node = node->next)
-    format_xml(std::string(opt_indentation, ' '), std::string(), node);
+  // Reformat root element for human consumption.
+  format_xml(std::string(opt_indentation, ' '), std::string(), root);
 
   // Open output for writing.
   int out_fd = STDOUT_FILENO;
