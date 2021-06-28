@@ -34,6 +34,7 @@ cc_defaults {
     name: "libabigail_defaults",
     cflags: [
         "-DABIGAIL_ROOT_SYSTEM_LIBDIR=\"lib\"",
+        "-DUSE_ANDROID_BUILD_NUMBER",
         "-fexceptions",
         "-Wno-implicit-fallthrough",
     ],
@@ -49,10 +50,9 @@ cc_defaults {
         "libicuuc",
         "libicuuc_stubdata",
         "libxml2",
+        "libbuildversion",
         "libz",
     ],
-
-    generated_headers: ["android_build_version"],
 
     visibility: [
         "//visibility:private",
@@ -107,16 +107,4 @@ cc_binary_host {
     static_libs: [
         "libabigail",
     ],
-}
-
-genrule {
-    name: "android_build_version",
-    cmd: "$(location) $(location .) $(out)",
-    out: [
-        "android_build_version.h",
-    ],
-    srcs : ["."],
-    tool_files: [
-        "android_build_version.sh"
-    ]
 }
