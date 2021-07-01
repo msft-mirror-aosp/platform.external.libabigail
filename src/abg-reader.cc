@@ -1531,8 +1531,8 @@ read_translation_unit_from_input(read_context&	ctxt)
   return tu;
 }
 
-/// Parse the input XML document containing a function symbols
-/// or a variable symbol database.
+/// Parse the input XML document that may contain function symbol and
+/// variable symbol databases.
 ///
 /// A function symbols database is an XML element named
 /// "elf-function-symbols" and a variable symbols database is an XML
@@ -1541,12 +1541,11 @@ read_translation_unit_from_input(read_context&	ctxt)
 ///
 /// @param ctxt the read_context to use for the parsing.
 ///
-/// @param function_symbols is true if this function should look for a
-/// function symbols database, false if it should look for a variable
-/// symbols database.
+/// @param fn_symdb any resulting function symbol database object, if
+/// elf-function-symbols was present.
 ///
-/// @param symdb the resulting symbol database object.  This is set
-/// iff the function return true.
+/// @param var_symdb any resulting variable symbol database object, if
+/// elf-variable-symbols was present.
 ///
 /// @return true upon successful parsing, false otherwise.
 static bool
@@ -1557,8 +1556,6 @@ read_symbol_db_from_input(read_context&		 ctxt,
   xml::reader_sptr reader = ctxt.get_reader();
   if (!reader)
     return false;
-
-  bool found = false;
 
   if (!ctxt.get_corpus_node())
     for (;;)
@@ -1586,17 +1583,9 @@ read_symbol_db_from_input(read_context&		 ctxt,
 	  return false;
 
 	if (has_fn_syms)
-	  {
-	    fn_symdb = build_elf_symbol_db(ctxt, node, true);
-	    if (fn_symdb)
-	      found = true;
-	  }
+	  fn_symdb = build_elf_symbol_db(ctxt, node, true);
 	else if (has_var_syms)
-	  {
-	    var_symdb = build_elf_symbol_db(ctxt, node, false);
-	    if (var_symdb)
-	      found = true;
-	  }
+	  var_symdb = build_elf_symbol_db(ctxt, node, false);
 
 	xmlTextReaderNext(reader.get());
       }
@@ -1615,20 +1604,14 @@ read_symbol_db_from_input(read_context&		 ctxt,
 	  break;
 	ctxt.set_corpus_node(n);
 	if (has_fn_syms)
-	  {
-	    fn_symdb = build_elf_symbol_db(ctxt, n, true);
-	    found = true;
-	  }
+	  fn_symdb = build_elf_symbol_db(ctxt, n, true);
 	else if (has_var_syms)
-	  {
-	    var_symdb = build_elf_symbol_db(ctxt, n, false);
-	    found = true;
-	  }
+	  var_symdb = build_elf_symbol_db(ctxt, n, false);
 	else
 	  break;
       }
 
-  return found;
+  return true;
 }
 
 /// From an "elf-needed" XML_ELEMENT node, build a vector of strings
@@ -1839,11 +1822,7 @@ read_corpus_from_input(read_context& ctxt)
 				       BAD_CAST("abi-corpus")))
 	return nil;
 
-      if (!ctxt.get_corpus())
-	{
-	  corpus_sptr c(new corpus(ctxt.get_environment(), ""));
-	  ctxt.set_corpus(c);
-	}
+      ctxt.set_corpus(std::make_shared<corpus>(ctxt.get_environment(), ""));
 
       if (!ctxt.get_corpus_group())
 	ctxt.clear_per_corpus_data();
@@ -1897,11 +1876,7 @@ read_corpus_from_input(read_context& ctxt)
     }
   else
     {
-      if (!ctxt.get_corpus())
-	{
-	  corpus_sptr c(new corpus(ctxt.get_environment(), ""));
-	  ctxt.set_corpus(c);
-	}
+      ctxt.set_corpus(std::make_shared<corpus>(ctxt.get_environment(), ""));
 
       if (!ctxt.get_corpus_group())
 	ctxt.clear_per_corpus_data();
@@ -1943,24 +1918,16 @@ read_corpus_from_input(read_context& ctxt)
   string_elf_symbols_map_sptr fn_sym_db, var_sym_db;
 
   // Read the symbol databases.
-  bool is_ok = read_symbol_db_from_input(ctxt, fn_sym_db, var_sym_db);
-  if (is_ok)
-    {
-      // Note that it's possible that both fn_sym_db and var_sym_db
-      // are nil, due to potential suppression specifications.  That's
-      // fine.
-      corp.set_symtab(symtab_reader::symtab::load(fn_sym_db, var_sym_db));
-    }
+  read_symbol_db_from_input(ctxt, fn_sym_db, var_sym_db);
+  // Note that it's possible that both fn_sym_db and var_sym_db are nil,
+  // due to potential suppression specifications.  That's fine.
+  corp.set_symtab(symtab_reader::symtab::load(fn_sym_db, var_sym_db));
 
   ctxt.get_environment()->canonicalization_is_done(false);
 
   // Read the translation units.
-  do
-    {
-      translation_unit_sptr tu = read_translation_unit_from_input(ctxt);
-      is_ok = bool(tu);
-    }
-  while (is_ok);
+  while (read_translation_unit_from_input(ctxt))
+    ;
 
   if (ctxt.tracking_non_reachable_types())
     {
