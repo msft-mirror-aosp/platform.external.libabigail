@@ -1822,11 +1822,7 @@ read_corpus_from_input(read_context& ctxt)
 				       BAD_CAST("abi-corpus")))
 	return nil;
 
-      if (!ctxt.get_corpus())
-	{
-	  corpus_sptr c(new corpus(ctxt.get_environment(), ""));
-	  ctxt.set_corpus(c);
-	}
+      ctxt.set_corpus(std::make_shared<corpus>(ctxt.get_environment(), ""));
 
       if (!ctxt.get_corpus_group())
 	ctxt.clear_per_corpus_data();
@@ -1880,11 +1876,7 @@ read_corpus_from_input(read_context& ctxt)
     }
   else
     {
-      if (!ctxt.get_corpus())
-	{
-	  corpus_sptr c(new corpus(ctxt.get_environment(), ""));
-	  ctxt.set_corpus(c);
-	}
+      ctxt.set_corpus(std::make_shared<corpus>(ctxt.get_environment(), ""));
 
       if (!ctxt.get_corpus_group())
 	ctxt.clear_per_corpus_data();
