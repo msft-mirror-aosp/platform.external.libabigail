@@ -309,6 +309,35 @@ drop_empty(xmlNodePtr node)
     remove_element(node);
 }
 
+/// Get ELF symbol id.
+///
+/// This is not an explicit attribute. It takes one of these forms:
+///
+/// * name (if symbol is not versioned)
+/// * name@version (if symbol is versioned but this is not the default version)
+/// * name@@version (if symbol is versioned and this is the default version)
+///
+/// @param node the elf-symbol element
+///
+/// @return the ELF symbol id
+static std::string
+get_elf_symbol_id(xmlNodePtr node)
+{
+  const auto name = get_attribute(node, "name");
+  assert(name);
+  std::string result = name.value();
+  const auto version = get_attribute(node, "version");
+  if (version)
+    {
+      result += '@';
+      const auto is_default = get_attribute(node, "is-default-version");
+      if (is_default && is_default.value() == "yes")
+        result += '@';
+      result += version.value();
+    }
+  return result;
+}
+
 /// Handle unreachable elements.
 ///
 /// Reachability is defined to be union of contains, containing and
@@ -325,8 +354,8 @@ drop_empty(xmlNodePtr node)
 static size_t
 handle_unreachable(bool prune, bool report, xmlNodePtr root)
 {
-  // ELF symbol names.
-  std::set<std::string> elf_symbols;
+  // ELF symbol ids.
+  std::set<std::string> elf_symbol_ids;
 
   // Simple way of allowing two kinds of nodes: false=>type,
   // true=>symbol.
@@ -350,9 +379,7 @@ handle_unreachable(bool prune, bool report, xmlNodePtr root)
     // Is this an ELF symbol?
     if (strcmp(from_libxml(node->name), "elf-symbol") == 0)
       {
-        const auto name = get_attribute(node, "name");
-        if (name)
-          elf_symbols.insert(name.value());
+        elf_symbol_ids.insert(get_elf_symbol_id(node));
         // Early return is safe, but not necessary.
         return;
       }
@@ -387,7 +414,7 @@ handle_unreachable(bool prune, bool report, xmlNodePtr root)
       }
 
     // Is this a (declaration expected to be linked to a) symbol?
-    const auto symbol = get_attribute(node, "mangled-name");
+    const auto symbol = get_attribute(node, "elf-symbol-id");
     if (symbol)
       {
         vertex_t symbol_vertex{true, symbol.value()};
@@ -456,9 +483,9 @@ handle_unreachable(bool prune, bool report, xmlNodePtr root)
   size_t untyped = 0;
 
   // Traverse the graph, starting from the ELF symbols.
-  for (const auto& symbol : elf_symbols)
+  for (const auto& symbol_id : elf_symbol_ids)
     {
-      vertex_t symbol_vertex{true, symbol};
+      vertex_t symbol_vertex{true, symbol_id};
       if (vertices.count(symbol_vertex))
         {
           dfs(symbol_vertex);
@@ -466,7 +493,8 @@ handle_unreachable(bool prune, bool report, xmlNodePtr root)
       else
         {
           if (report)
-            std::cerr << "no declaration found for ELF symbol " << symbol << '\n';
+            std::cerr << "no declaration found for ELF symbol with id "
+                      << symbol_id << '\n';
           ++untyped;
         }
     }
@@ -488,12 +516,12 @@ handle_unreachable(bool prune, bool report, xmlNodePtr root)
 
     // Return if we know that this is a declaration to keep or drop in
     // its entirety. Note that var-decl and function-decl are the only
-    // elements that can have a mangled-name attribute.
+    // elements that can have an elf-symbol-id attribute.
     const char* node_name = from_libxml(node->name);
     if (strcmp(node_name, "var-decl") == 0
         || strcmp(node_name, "function-decl") == 0)
       {
-        const auto symbol = get_attribute(node, "mangled-name");
+        const auto symbol = get_attribute(node, "elf-symbol-id");
         if (!(symbol && seen.count(vertex_t{true, symbol.value()})))
           remove_element(node);
         return;
