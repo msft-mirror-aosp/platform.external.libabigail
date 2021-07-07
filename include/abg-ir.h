@@ -1017,6 +1017,9 @@ operator<<(std::ostream& o, elf_symbol::type t);
 std::ostream&
 operator<<(std::ostream& o, elf_symbol::binding t);
 
+std::ostream&
+operator<<(std::ostream& o, elf_symbol::visibility t);
+
 bool
 string_to_elf_symbol_type(const string&, elf_symbol::type&);
 
