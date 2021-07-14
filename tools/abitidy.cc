@@ -1128,21 +1128,20 @@ main(int argc, char* argv[])
 
   // Process command line.
   auto usage = [&]() -> int {
-    std::cerr << "usage: " << argv[0]
-              << " [-i|--input file]"
-              << " [-o|--output file]"
-              << " [-S|--symbols file]"
-              << " [-I|--indentation n]"
-              << " [-a|--all]"
-              << " [-n|--[no-]normalise-anonymous]"
-              << " [-p|--[no-]prune-unreachable]"
-              << " [-u|--[no-]report-untyped]"
-              << " [-U|--abort-on-untyped-symbols]"
-              << " [-e|--[no-]eliminate-duplicates]"
-              << " [-c|--[no-]report-conflicts]"
-              << " [-s|--[no-]sort]"
-              << " [-d|--[no-]drop-empty]"
-              << '\n';
+    std::cerr << "usage: " << argv[0] << '\n'
+              << "  [-i|--input file]\n"
+              << "  [-o|--output file]\n"
+              << "  [-S|--symbols file\n"
+              << "  [-I|--indentation n]\n"
+              << "  [-a|--all]\n"
+              << "  [-n|--[no-]normalise-anonymous]\n"
+              << "  [-p|--[no-]prune-unreachable]\n"
+              << "  [-u|--[no-]report-untyped]\n"
+              << "  [-U|--abort-on-untyped-symbols]\n"
+              << "  [-e|--[no-]eliminate-duplicates]\n"
+              << "  [-c|--[no-]report-conflicts]\n"
+              << "  [-s|--[no-]sort]\n"
+              << "  [-d|--[no-]drop-empty]\n";
     return 1;
   };
   int opt_index = 1;
