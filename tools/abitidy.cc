@@ -18,7 +18,9 @@
 
 #include <array>
 #include <cassert>
+#include <cctype>
 #include <cstring>
+#include <fstream>
 #include <functional>
 #include <ios>
 #include <iostream>
@@ -37,6 +39,9 @@
 
 /// Convenience typedef referring to a namespace scope.
 using namespace_scope = std::vector<std::string>;
+
+/// Convenience typedef referring to a set of symbols.
+using symbol_set = std::unordered_set<std::string>;
 
 /// Cast a C string to a libxml string.
 ///
@@ -989,6 +994,112 @@ sort_namespaces_types_and_declarations(xmlNodePtr root)
       std::cerr << "original abi-instr has residual child elements\n";
 }
 
+static constexpr std::array<std::string_view, 2> SYMBOL_SECTION_SUFFICES = {
+  "symbol_list",
+  "whitelist",
+};
+
+/// Read symbols from a file.
+///
+/// This aims to be compatible with the .ini format used by libabigail for
+/// suppression specifications and symbol lists. All symbol list sections in the
+/// given file are combined into a single set of symbols.
+///
+/// @param filename the name of the file from which to read
+///
+/// @return a set of symbols
+symbol_set
+read_symbols(const char* filename)
+{
+  symbol_set symbols;
+  std::ifstream file(filename);
+  if (!file)
+    {
+      std::cerr << "error opening symbol file '" << filename << "'\n";
+      exit(1);
+    }
+
+  bool in_symbol_section = false;
+  std::string line;
+  while (std::getline(file, line))
+    {
+      size_t start = 0;
+      size_t limit = line.size();
+      // Strip comments and leading / trailing whitespace.
+      while (start < limit)
+        {
+          if (std::isspace(line[start]))
+            ++start;
+          else if (line[start] == '#')
+            start = limit;
+          else
+            break;
+        }
+      while (start < limit)
+        {
+          if (std::isspace(line[limit - 1]))
+            --limit;
+          else
+            break;
+        }
+      // Skip empty lines.
+      if (start == limit)
+        continue;
+      // See if we are entering a symbol list section.
+      if (line[start] == '[' && line[limit - 1] == ']')
+        {
+          std::string_view section(&line[start + 1], limit - start - 2);
+          bool found = false;
+          for (const auto& suffix : SYMBOL_SECTION_SUFFICES)
+            if (section.size() >= suffix.size()
+                && section.substr(section.size() - suffix.size()) == suffix)
+              {
+                found = true;
+                break;
+              }
+          in_symbol_section = found;
+          continue;
+        }
+      // Add symbol.
+      if (in_symbol_section)
+        symbols.insert(std::string(&line[start], limit - start));
+    }
+  if (!file.eof())
+    {
+      std::cerr << "error reading symbol file '" << filename << "'\n";
+      exit(1);
+    }
+  return symbols;
+}
+
+/// Remove unlisted ELF symbols.
+///
+/// @param symbols the set of symbols
+///
+/// @param node the XML node to process
+void
+filter_symbols(const symbol_set& symbols, xmlNodePtr node)
+{
+  if (node->type != XML_ELEMENT_NODE)
+    return;
+  const char* node_name = from_libxml(node->name);
+  if (strcmp(node_name, "abi-corpus-group") == 0
+      || strcmp(node_name, "abi-corpus") == 0
+      || strcmp(node_name, "elf-variable-symbols") == 0
+      || strcmp(node_name, "elf-function-symbols") == 0)
+    {
+      // Process children.
+      for (auto child : get_children(node))
+        filter_symbols(symbols, child);
+    }
+  else if (strcmp(node_name, "elf-symbol") == 0)
+    {
+      const auto name = get_attribute(node, "name");
+      if (name && !symbols.count(name.value()))
+        remove_element(node);
+    }
+}
+
 /// Main program.
 ///
 /// Read and write ABI XML, with optional processing passes.
@@ -1004,6 +1115,7 @@ main(int argc, char* argv[])
   // Defaults.
   const char* opt_input = nullptr;
   const char* opt_output = nullptr;
+  std::optional<symbol_set> opt_symbols;
   int opt_indentation = 2;
   bool opt_normalise_anonymous = false;
   bool opt_prune_unreachable = false;
@@ -1016,20 +1128,20 @@ main(int argc, char* argv[])
 
   // Process command line.
   auto usage = [&]() -> int {
-    std::cerr << "usage: " << argv[0]
-              << " [-i|--input file]"
-              << " [-o|--output file]"
-              << " [-I|--indentation n]"
-              << " [-a|--all]"
-              << " [-n|--[no-]normalise-anonymous]"
-              << " [-p|--[no-]prune-unreachable]"
-              << " [-u|--[no-]report-untyped]"
-              << " [-U|--abort-on-untyped-symbols]"
-              << " [-e|--[no-]eliminate-duplicates]"
-              << " [-c|--[no-]report-conflicts]"
-              << " [-s|--[no-]sort]"
-              << " [-d|--[no-]drop-empty]"
-              << '\n';
+    std::cerr << "usage: " << argv[0] << '\n'
+              << "  [-i|--input file]\n"
+              << "  [-o|--output file]\n"
+              << "  [-S|--symbols file\n"
+              << "  [-I|--indentation n]\n"
+              << "  [-a|--all]\n"
+              << "  [-n|--[no-]normalise-anonymous]\n"
+              << "  [-p|--[no-]prune-unreachable]\n"
+              << "  [-u|--[no-]report-untyped]\n"
+              << "  [-U|--abort-on-untyped-symbols]\n"
+              << "  [-e|--[no-]eliminate-duplicates]\n"
+              << "  [-c|--[no-]report-conflicts]\n"
+              << "  [-s|--[no-]sort]\n"
+              << "  [-d|--[no-]drop-empty]\n";
     return 1;
   };
   int opt_index = 1;
@@ -1045,6 +1157,8 @@ main(int argc, char* argv[])
         opt_input = get_arg();
       else if (arg == "-o" || arg == "--output")
         opt_output = get_arg();
+      else if (arg == "-S" || arg == "--symbols")
+        opt_symbols = read_symbols(get_arg());
       else if (arg == "-I" || arg == "--indentation")
         {
           std::istringstream is(get_arg());
@@ -1129,6 +1243,10 @@ main(int argc, char* argv[])
 
   // Strip text nodes to simplify other operations.
   strip_text(root);
+
+  // Remove unlisted symbols.
+  if (opt_symbols)
+    filter_symbols(opt_symbols.value(), root);
 
   // Normalise anonymous type names.
   if (opt_normalise_anonymous)
