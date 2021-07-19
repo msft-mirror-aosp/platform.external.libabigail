@@ -133,6 +133,9 @@ typedef vector<type_base_sptr> type_base_sptrs_type;
 /// that you can de-allocate the environment instance.
 class environment
 {
+  struct priv;
+  std::unique_ptr<priv> priv_;
+
 public:
 
   /// A convenience typedef for a map of canonical types.  The key is
@@ -141,15 +144,8 @@ public:
   /// representation string.
   typedef std::unordered_map<string, std::vector<type_base_sptr> >
       canonical_types_map_type;
-
-private:
-  struct priv;
-  typedef shared_ptr<priv> priv_sptr;
-
-  priv_sptr priv_;
-public:
-
   environment();
+
   virtual ~environment();
 
   canonical_types_map_type&
@@ -321,13 +317,13 @@ public:
 class location_manager
 {
   struct priv;
-
-  /// Pimpl.
-  shared_ptr<priv> priv_;
+  std::unique_ptr<priv> priv_;
 
 public:
 
   location_manager();
+
+  ~location_manager();
 
   location
   create_new_location(const std::string& fle, size_t lne, size_t col);
@@ -461,12 +457,13 @@ istring_type_or_decl_base_sptr_map_type;
 class type_maps
 {
   struct priv;
-  typedef shared_ptr<priv> priv_sptr;
-  priv_sptr priv_;
+  std::unique_ptr<priv> priv_;
 
 public:
 
   type_maps();
+
+  ~type_maps();
 
   bool
   empty() const;
@@ -547,12 +544,10 @@ public:
 class translation_unit : public traversable_base
 {
   struct priv;
-  typedef shared_ptr<priv> priv_sptr;
-
-  priv_sptr priv_;
+  std::unique_ptr<priv> priv_;
 
   // Forbidden
-  translation_unit();
+  translation_unit() = delete;
 
 public:
   /// Convenience typedef for a shared pointer on a @ref global_scope.
@@ -828,7 +823,7 @@ public:
 
 private:
   struct priv;
-  shared_ptr<priv> priv_;
+  std::unique_ptr<priv> priv_;
 
   elf_symbol();
 
@@ -1060,7 +1055,7 @@ compute_aliases_for_elf_symbol(const elf_symbol& symbol,
 class elf_symbol::version
 {
   struct priv;
-  shared_ptr<priv> priv_;
+  std::unique_ptr<priv> priv_;
 
 public:
   version();
@@ -1069,6 +1064,8 @@ public:
 	  bool is_default);
 
   version(const version& v);
+
+  ~version();
 
   operator const string&() const;
 
@@ -1232,8 +1229,7 @@ equals(const decl_base&, const decl_base&, change_kind*);
 class type_or_decl_base : public ir_traversable_base
 {
   struct priv;
-  typedef shared_ptr<priv> priv_sptr;
-  mutable priv_sptr priv_;
+  mutable std::unique_ptr<priv> priv_;
 
   type_or_decl_base();
 
@@ -1678,6 +1674,9 @@ equals(const scope_decl&, const scope_decl&, change_kind*);
 /// A declaration that introduces a scope.
 class scope_decl : public virtual decl_base
 {
+  struct priv;
+  std::unique_ptr<priv> priv_;
+
 public:
 
   /// Convenience typedef for a vector of @ref decl_base_sptr.
@@ -1686,13 +1685,6 @@ public:
   typedef std::vector<function_type_sptr >	function_types;
   /// Convenience typedef for a vector of @ref scope_decl_sptr.
   typedef std::vector<scope_decl_sptr>	scopes;
-  /// The type of the private data of @ref scope_decl.
-  struct priv;
-  /// A convenience typedef for a shared pointer to scope_decl::priv.
-  typedef shared_ptr<priv> priv_sptr;
-
-private:
-  priv_sptr priv_;
 
   scope_decl();
 
@@ -2064,8 +2056,7 @@ equals(const qualified_type_def&, const qualified_type_def&, change_kind*);
 class qualified_type_def : public virtual type_base, public virtual decl_base
 {
   class priv;
-  typedef shared_ptr<priv> priv_sptr;
-  priv_sptr priv_;
+  std::unique_ptr<priv> priv_;
 
   // Forbidden.
   qualified_type_def();
@@ -2171,9 +2162,7 @@ equals(const pointer_type_def&, const pointer_type_def&, change_kind*);
 class pointer_type_def : public virtual type_base, public virtual decl_base
 {
   struct priv;
-  typedef shared_ptr<priv> priv_sptr;
-
-  priv_sptr priv_;
+  std::unique_ptr<priv> priv_;
 
   // Forbidden.
   pointer_type_def();
@@ -2287,10 +2276,8 @@ equals(const array_type_def&, const array_type_def&, change_kind*);
 /// The abstraction of an array type.
 class array_type_def : public virtual type_base, public virtual decl_base
 {
-private:
   struct priv;
-  typedef shared_ptr<priv> priv_sptr;
-  priv_sptr priv_;
+  std::unique_ptr<priv> priv_;
 
   // Forbidden.
   array_type_def();
@@ -2314,13 +2301,13 @@ public:
   class subrange_type : public virtual type_base,  public virtual decl_base
   {
     struct priv;
-    typedef shared_ptr<priv> priv_sptr;
-    priv_sptr priv_;
+    std::unique_ptr<priv> priv_;
 
     // Forbidden.
     subrange_type();
   public:
 
+    virtual ~subrange_type();
     /// This class is to hold the value of the bound of a subrange.
     /// The value can be either signed or unsigned, at least when it
     /// comes from DWARF.  The class keeps the sign information, but
@@ -2503,6 +2490,12 @@ equals(const enum_type_decl&, const enum_type_decl&, change_kind*);
 /// Abstracts a declaration for an enum type.
 class enum_type_decl : public virtual type_base, public virtual decl_base
 {
+  class priv;
+  std::unique_ptr<priv> priv_;
+
+  // Forbidden
+  enum_type_decl();
+
 public:
 
   /// A hasher for an enum_type_decl.
@@ -2513,18 +2506,6 @@ public:
 
   /// Convenience typedef for a list of @ref enumerator.
   typedef std::vector<enumerator> enumerators;
-
-private:
-
-  class priv;
-  typedef shared_ptr<priv> priv_sptr;
-
-  priv_sptr priv_;
-
-  // Forbidden
-  enum_type_decl();
-
-public:
 
   /// Constructor of an enum type declaration.
   ///
@@ -2592,13 +2573,13 @@ enum_has_non_name_change(const enum_type_decl& l,
 class enum_type_decl::enumerator
 {
   class priv;
-  typedef shared_ptr<priv> priv_sptr;
-  priv_sptr priv_;
-
+  std::unique_ptr<priv> priv_;
 
 public:
 
   enumerator();
+
+  ~enumerator();
 
   enumerator(const environment* env, const string& name, int64_t value);
 
@@ -2645,9 +2626,7 @@ equals(const typedef_decl&, const typedef_decl&, change_kind*);
 class typedef_decl : public virtual type_base, public virtual decl_base
 {
   struct priv;
-  typedef shared_ptr<priv> priv_sptr;
-
-  priv_sptr priv_;
+  std::unique_ptr<priv> priv_;
 
   // Forbidden
   typedef_decl();
@@ -2700,9 +2679,7 @@ class dm_context_rel : public context_rel
 {
 protected:
   struct priv;
-  typedef shared_ptr<priv> priv_sptr;
-
-  priv_sptr priv_;
+  std::unique_ptr<priv> priv_;
 
 public:
   dm_context_rel();
@@ -2752,7 +2729,7 @@ equals_modulo_cv_qualifier(const array_type_def*, const array_type_def*);
 class var_decl : public virtual decl_base
 {
   struct priv;
-  shared_ptr<priv> priv_;
+  std::unique_ptr<priv> priv_;
 
   // Forbidden
   var_decl();
@@ -3024,9 +3001,7 @@ struct type_or_decl_base_comp
 class function_decl::parameter : public decl_base
 {
   struct priv;
-  typedef shared_ptr<priv> priv_sptr;
-
-  priv_sptr priv_;
+  std::unique_ptr<priv> priv_;
 
 public:
 
@@ -3055,6 +3030,8 @@ public:
   parameter(const type_base_sptr	type,
 	    unsigned			index = 0,
 	    bool			variadic_marker = false);
+
+  virtual ~parameter();
 
   const type_base_sptr
   get_type()const;
@@ -3127,9 +3104,6 @@ equals(const function_type&, const function_type&, change_kind*);
 /// Abstraction of a function type.
 class function_type : public virtual type_base
 {
-  struct priv;
-  typedef shared_ptr<priv> priv_sptr;
-
 protected:
   virtual void on_canonical_type_set();
 
@@ -3143,7 +3117,8 @@ public:
   /// Convenience typedef for a vector of @ref parameter_sptr
   typedef std::vector<parameter_sptr>		parameters;
 
-  priv_sptr priv_;
+  struct priv;
+  std::unique_ptr<priv> priv_;
 
 private:
   function_type();
@@ -3226,8 +3201,7 @@ struct function_type::hash
 class method_type : public function_type
 {
   struct priv;
-  typedef shared_ptr<priv> priv_sptr;
-  priv_sptr priv_;
+  std::unique_ptr<priv> priv_;
 
   method_type();
 
@@ -3283,8 +3257,7 @@ public:
 class template_decl : public virtual decl_base
 {
   class priv;
-  typedef shared_ptr<priv> priv_sptr;
-  priv_sptr priv_;
+  std::unique_ptr<priv> priv_;
 
   template_decl();
 
@@ -3316,8 +3289,7 @@ public:
 class template_parameter
 {
   class priv;
-  typedef shared_ptr<priv> priv_sptr;
-  priv_sptr priv_;
+  std::unique_ptr<priv> priv_;
 
   // Forbidden
   template_parameter();
@@ -3363,9 +3335,7 @@ struct template_decl::hash
 class type_tparameter : public template_parameter, public virtual type_decl
 {
   class priv;
-  typedef shared_ptr<priv> priv_sptr;
-
-  priv_sptr priv_;
+  std::unique_ptr<priv> priv_;
 
   // Forbidden
   type_tparameter();
@@ -3396,9 +3366,7 @@ public:
 class non_type_tparameter : public template_parameter, public virtual decl_base
 {
   class priv;
-  typedef shared_ptr<priv> priv_sptr;
-
-  priv_sptr priv_;
+  std::unique_ptr<priv> priv_;
 
   type_base_wptr type_;
 
@@ -3445,8 +3413,7 @@ class template_tparameter;
 class template_tparameter : public type_tparameter, public template_decl
 {
   class priv;
-  typedef shared_ptr<priv> priv_sptr;
-  priv_sptr priv_;
+  std::unique_ptr<priv> priv_;
 
   // Forbidden
   template_tparameter();
@@ -3481,9 +3448,7 @@ public:
 class type_composition : public template_parameter, public virtual decl_base
 {
   class priv;
-  typedef shared_ptr<priv> priv_sptr;
-
-  priv_sptr priv_;
+  std::unique_ptr<priv> priv_;
 
   type_composition();
 
@@ -3521,9 +3486,7 @@ struct type_composition::hash
 class function_tdecl : public template_decl, public scope_decl
 {
   class priv;
-  typedef shared_ptr<priv> priv_sptr;
-
-  priv_sptr priv_;
+  std::unique_ptr<priv> priv_;
 
   // Forbidden
   function_tdecl();
@@ -3572,9 +3535,7 @@ public:
 class class_tdecl : public template_decl, public scope_decl
 {
   class priv;
-  typedef shared_ptr<priv> priv_sptr;
-
-  priv_sptr priv_;
+  std::unique_ptr<priv> priv_;
 
   // Forbidden
   class_tdecl();
@@ -4192,9 +4153,7 @@ class class_decl::base_spec : public member_base,
 			      public virtual decl_base
 {
   struct priv;
-  typedef shared_ptr<priv>priv_sptr;
-
-  priv_sptr priv_;
+  std::unique_ptr<priv> priv_;
 
   // Forbidden
   base_spec();
@@ -4209,6 +4168,8 @@ public:
 
   base_spec(const type_base_sptr& base, access_specifier a,
 	    long offset_in_bits = -1, bool is_virtual = false);
+
+  virtual ~base_spec();
 
   class_decl_sptr
   get_base_class() const;
@@ -4709,13 +4670,13 @@ struct class_tdecl::shared_ptr_hash
 class ir_node_visitor : public node_visitor_base
 {
   struct priv;
-  typedef shared_ptr<priv> priv_sptr;
-
-  priv_sptr priv_;
+  std::unique_ptr<priv> priv_;
 
 public:
 
   ir_node_visitor();
+
+  virtual ~ir_node_visitor();
 
   void allow_visiting_already_visited_type_node(bool);
   bool allow_visiting_already_visited_type_node() const;
