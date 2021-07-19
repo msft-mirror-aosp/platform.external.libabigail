@@ -837,7 +837,6 @@ private:
 	     bool		c,
 	     const version&	ve,
 	     visibility		vi,
-	     bool		is_linux_string_cst = false,
 	     bool		is_in_ksymtab = false,
 	     uint64_t		crc = 0,
 	     bool		is_suppressed = false);
@@ -863,7 +862,6 @@ public:
 	 bool		    c,
 	 const version&	    ve,
 	 visibility	    vi,
-	 bool		    is_linux_string_cst = false,
 	 bool		    is_in_ksymtab = false,
 	 uint64_t	    crc = 0,
 	 bool		    is_suppressed = false);
@@ -879,9 +877,6 @@ public:
 
   void
   set_index(size_t);
-
-  bool
-  get_is_linux_string_cst() const;
 
   const string&
   get_name() const;
