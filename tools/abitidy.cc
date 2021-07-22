@@ -1131,7 +1131,7 @@ main(int argc, char* argv[])
     std::cerr << "usage: " << argv[0] << '\n'
               << "  [-i|--input file]\n"
               << "  [-o|--output file]\n"
-              << "  [-S|--symbols file\n"
+              << "  [-S|--symbols file]\n"
               << "  [-I|--indentation n]\n"
               << "  [-a|--all]\n"
               << "  [-n|--[no-]normalise-anonymous]\n"
