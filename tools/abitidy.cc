@@ -1133,7 +1133,7 @@ main(int argc, char* argv[])
               << "  [-o|--output file]\n"
               << "  [-S|--symbols file]\n"
               << "  [-I|--indentation n]\n"
-              << "  [-a|--all]\n"
+              << "  [-a|--all] (-n -p -u -e -c -s -d)\n"
               << "  [-n|--[no-]normalise-anonymous]\n"
               << "  [-p|--[no-]prune-unreachable]\n"
               << "  [-u|--[no-]report-untyped]\n"
