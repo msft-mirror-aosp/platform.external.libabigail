@@ -43,6 +43,17 @@ using namespace_scope = std::vector<std::string>;
 /// Convenience typedef referring to a set of symbols.
 using symbol_set = std::unordered_set<std::string>;
 
+/// Level of location information to preserve.
+enum struct LocationInfo { COLUMN, LINE, FILE, NONE };
+
+static const std::map<std::string, LocationInfo> LOCATION_INFO_NAME = {
+  {"column", LocationInfo::COLUMN},
+  {"line", LocationInfo::LINE},
+  {"file", LocationInfo::FILE},
+  {"none", LocationInfo::NONE},
+};
+
+
 /// Cast a C string to a libxml string.
 ///
 /// @param str the C string (pointer)
@@ -366,6 +377,43 @@ discard_naming_typedefs(xmlNodePtr node)
     set_attribute(node, "naming-typedef-id", {});
   for (xmlNodePtr child : get_children(node))
     discard_naming_typedefs(child);
+}
+
+static const std::set<std::string> HAS_LOCATION = {
+  "class-decl",
+  "enum-decl",
+  "function-decl",
+  "parameter",
+  "typedef-decl",
+  "union-decl",
+  "var-decl"
+};
+
+/// Limit location information.
+///
+/// @param location_info the level of location information to retain
+///
+/// @param node the element to process
+static void
+limit_locations(LocationInfo location_info, xmlNodePtr node)
+{
+  if (node->type != XML_ELEMENT_NODE)
+    return;
+  if (HAS_LOCATION.count(from_libxml(node->name)))
+    {
+      if (location_info > LocationInfo::COLUMN)
+        {
+          set_attribute(node, "column", {});
+          if (location_info > LocationInfo::LINE)
+            {
+              set_attribute(node, "line", {});
+              if (location_info > LocationInfo::FILE)
+                set_attribute(node, "filepath", {});
+            }
+        }
+    }
+  for (xmlNodePtr child : get_children(node))
+    limit_locations(location_info, child);
 }
 
 /// Handle unreachable elements.
@@ -1138,6 +1186,7 @@ main(int argc, char* argv[])
   const char* opt_input = nullptr;
   const char* opt_output = nullptr;
   std::optional<symbol_set> opt_symbols;
+  LocationInfo opt_locations = LocationInfo::COLUMN;
   int opt_indentation = 2;
   bool opt_normalise_anonymous = false;
   bool opt_discard_naming_typedefs = false;
@@ -1155,6 +1204,7 @@ main(int argc, char* argv[])
               << "  [-i|--input file]\n"
               << "  [-o|--output file]\n"
               << "  [-S|--symbols file]\n"
+              << "  [-L|--locations column|line|file|none]\n"
               << "  [-I|--indentation n]\n"
               << "  [-a|--all] (-n -t -p -u -e -c -s -d)\n"
               << "  [-n|--[no-]normalise-anonymous]\n"
@@ -1183,6 +1233,13 @@ main(int argc, char* argv[])
         opt_output = get_arg();
       else if (arg == "-S" || arg == "--symbols")
         opt_symbols = read_symbols(get_arg());
+      else if (arg == "-L" || arg == "--locations")
+        {
+          auto it = LOCATION_INFO_NAME.find(get_arg());
+          if (it == LOCATION_INFO_NAME.end())
+            exit(usage());
+          opt_locations = it->second;
+        }
       else if (arg == "-I" || arg == "--indentation")
         {
           std::istringstream is(get_arg());
@@ -1295,6 +1352,10 @@ main(int argc, char* argv[])
       std::cerr << "found " << untyped_symbols << " untyped symbols\n";
       exit(1);
     }
+
+  // Limit location information.
+  if (opt_locations > LocationInfo::COLUMN)
+    limit_locations(opt_locations, root);
 
   // Eliminate complete duplicates and extra fragments of types.
   // Report conflicting type defintions.
