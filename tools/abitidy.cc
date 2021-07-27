@@ -299,7 +299,7 @@ static const std::set<std::string> DROP_IF_EMPTY = {
 
 /// Drop empty elements, if safe to do so, recursively.
 ///
-/// @param node element to process
+/// @param node the element to process
 static void
 drop_empty(xmlNodePtr node)
 {
@@ -356,7 +356,7 @@ get_elf_symbol_id(xmlNodePtr node)
 ///
 /// It's best to just drop the attribute.
 ///
-/// @param root the XML root element
+/// @param node the element to process
 static void
 discard_naming_typedefs(xmlNodePtr node)
 {
@@ -800,9 +800,7 @@ static const std::set<std::string> INSTR_VARIABLE_ATTRIBUTES = {
 ///
 /// @param nodes the nodes to traverse
 ///
-/// @param namesapces the current stack of namespaces
-///
-/// @param child elements grouped by namespace scope
+/// @return child elements grouped by namespace scope
 static std::map<namespace_scope, std::vector<xmlNodePtr>>
 get_children_by_namespace(const std::vector<xmlNodePtr>& nodes)
 {
