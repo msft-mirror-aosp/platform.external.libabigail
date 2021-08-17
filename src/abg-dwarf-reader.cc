@@ -824,10 +824,6 @@ lookup_symbol_from_sysv_hash_tab(const environment*		env,
   elf_symbol::binding sym_binding;
   elf_symbol::visibility sym_visibility;
   bool found = false;
-  Elf_Scn *strings_section = find_ksymtab_strings_section(elf_handle);
-  size_t strings_ndx = strings_section
-    ? elf_ndxscn(strings_section)
-    : 0;
 
   do
     {
@@ -856,8 +852,7 @@ lookup_symbol_from_sysv_hash_tab(const environment*		env,
 			       sym_binding,
 			       symbol.st_shndx != SHN_UNDEF,
 			       symbol.st_shndx == SHN_COMMON,
-			       ver, sym_visibility,
-			       symbol.st_shndx == strings_ndx);
+			       ver, sym_visibility);
 	  syms_found.push_back(symbol_found);
 	  found = true;
 	}
@@ -1103,10 +1098,6 @@ lookup_symbol_from_gnu_hash_tab(const environment*		env,
   elf_symbol::type sym_type;
   elf_symbol::binding sym_binding;
   elf_symbol::visibility sym_visibility;
-  Elf_Scn *strings_section = find_ksymtab_strings_section(elf_handle);
-    size_t strings_ndx = strings_section
-    ? elf_ndxscn(strings_section)
-    : 0;
 
   // Let's walk the hash table and record the versions of all the
   // symbols which name equal sym_name.
@@ -1151,8 +1142,7 @@ lookup_symbol_from_gnu_hash_tab(const environment*		env,
 			       sym_type, sym_binding,
 			       symbol.st_shndx != SHN_UNDEF,
 			       symbol.st_shndx == SHN_COMMON,
-			       ver, sym_visibility,
-			       symbol.st_shndx == strings_ndx);
+			       ver, sym_visibility);
 	  syms_found.push_back(symbol_found);
 	  found = true;
 	}
@@ -1275,10 +1265,6 @@ lookup_symbol_from_symtab(const environment*		env,
   char* name_str = 0;
   elf_symbol::version ver;
   bool found = false;
-  Elf_Scn *strings_section = find_ksymtab_strings_section(elf_handle);
-  size_t strings_ndx = strings_section
-    ? elf_ndxscn(strings_section)
-    : 0;
 
   for (size_t i = 0; i < symcount; ++i)
     {
@@ -1307,8 +1293,7 @@ lookup_symbol_from_symtab(const environment*		env,
 	    elf_symbol::create(env, i, sym->st_size,
 			       name_str, sym_type,
 			       sym_binding, sym_is_defined,
-			       sym_is_common, ver, sym_visibility,
-			       sym->st_shndx == strings_ndx);
+			       sym_is_common, ver, sym_visibility);
 	  syms_found.push_back(symbol_found);
 	  found = true;
 	}
@@ -2130,7 +2115,6 @@ public:
   corpus::exported_decls_builder* exported_decls_builder_;
   options_type			options_;
   bool				drop_undefined_syms_;
-  bool				merge_translation_units_;
   read_context();
 
 private:
@@ -2274,7 +2258,6 @@ public:
     options_.load_in_linux_kernel_mode = linux_kernel_mode;
     options_.load_all_types = load_all_types;
     drop_undefined_syms_ = false;
-    merge_translation_units_ = false;
     load_in_linux_kernel_mode(linux_kernel_mode);
   }
 
@@ -2361,22 +2344,6 @@ public:
   void
   drop_undefined_syms(bool f)
   {drop_undefined_syms_ = f;}
-
-  /// Setter for the flag that tells us if we are merging translation
-  /// units.
-  ///
-  /// @param f the new value of the flag.
-  void
-  merge_translation_units(bool f)
-  {merge_translation_units_ = f;}
-
-  /// Getter for the flag that tells us if we are merging translation
-  /// units.
-  ///
-  /// @return true iff we are merging translation units.
-  bool
-  merge_translation_units() const
-  {return merge_translation_units_;}
 
   /// Getter of the suppression specifications to be used during
   /// ELF/DWARF parsing.
@@ -6244,17 +6211,6 @@ void
 set_drop_undefined_syms(read_context& ctxt, bool f)
 {ctxt.drop_undefined_syms(f);}
 
-/// Setter of the "merge_translation_units" flag.
-///
-/// This flag tells if we should merge translation units.
-///
-/// @param ctxt the read context to consider for this flag.
-///
-/// @param f the value of the flag.
-void
-set_merge_translation_units(read_context& ctxt, bool f)
-{ctxt.merge_translation_units(f);}
-
 /// Setter of the "do_log" flag.
 ///
 /// This flag tells if we should emit verbose logs for various
@@ -8459,37 +8415,44 @@ eval_last_constant_dwarf_sub_expr(Dwarf_Op*	expr,
 // </location expression evaluation>
 // -----------------------------------
 
-/// Convert the value of the DW_AT_bit_offset attribute into the value
-/// of the DW_AT_data_bit_offset attribute.
+/// Convert a DW_AT_bit_offset attribute value into the same value as
+/// DW_AT_data_bit_offset - 8 * DW_AT_data_member_location.
 ///
 /// On big endian machines, the value of the DW_AT_bit_offset
+/// attribute + 8 * the value of the DW_AT_data_member_location
 /// attribute is the same as the value of the DW_AT_data_bit_offset
 /// attribute.
 ///
 /// On little endian machines however, the situation is different.
 /// The DW_AT_bit_offset value for a bit field is the number of bits
-/// to the left of the most significant bit of the bit field.
+/// to the left of the most significant bit of the bit field, within
+/// the integer value at DW_AT_data_member_location.
 ///
 /// The DW_AT_data_bit_offset offset value is the number of bits to
-/// the right of the least significant bit of the bit field.
+/// the right of the least significant bit of the bit field, again
+/// relative to the containing integer value.
 ///
 /// In other words, DW_AT_data_bit_offset is what everybody would
-/// instinctively think of as being the "offset of the bit
-/// field". DW_AT_bit_offset however is very counter-intuitive on
-/// little endian machines.
+/// instinctively think of as being the "offset of the bit field". 8 *
+/// DW_AT_data_member_location + DW_AT_bit_offset however is very
+/// counter-intuitive on little endian machines.
 ///
 /// This function thus reads the value of a DW_AT_bit_offset property
 /// of a DIE and converts it into what the DW_AT_data_bit_offset would
-/// have been if it was present.
+/// have been if it was present, ignoring the contribution of
+/// DW_AT_data_member_location.
 ///
 /// Note that DW_AT_bit_offset has been made obsolete starting from
-/// DWARF5.
+/// DWARF5 (for GCC; Clang still emits it).
 ///
 /// If you like coffee and it's not too late, now might be a good time
 /// to have a coffee break.  Otherwise if it's late at night, you
 /// might want to consider an herbal tea break.  Then come back to
 /// read this.
 ///
+///
+/// In what follows, the bit fields are all contained within the first
+/// whole int of the struct, so DW_AT_data_member_location is 0.
 ///
 /// Okay, to have a better idea of what DW_AT_bit_offset and
 /// DW_AT_data_bit_offset represent, let's consider a struct 'S' which
@@ -8631,8 +8594,9 @@ eval_last_constant_dwarf_sub_expr(Dwarf_Op*	expr,
 ///
 /// @param offset this is the output parameter into which the value of
 /// the DW_AT_bit_offset is put, converted as if it was the value of
-/// the DW_AT_data_bit_offset parameter.  This parameter is set iff
-/// the function returns true.
+/// the DW_AT_data_bit_offset parameter, less the contribution of
+/// DW_AT_data_member_location.  This parameter is set iff the
+/// function returns true.
 ///
 /// @return true if DW_AT_bit_offset was found on @p die.
 static bool
@@ -8683,12 +8647,13 @@ read_and_convert_DW_at_bit_offset(const Dwarf_Die* die,
 /// DW_AT_data_member_location is not necessarily a constant that one
 /// would just read and be done with it.  Rather, it can be a DWARF
 /// expression that one has to interpret.  In general, the offset can
-/// be given by the DW_AT_bit_offset or DW_AT_data_bit_offset
-/// attribute.  In that case the offset is a constant.  But it can
-/// also be given by the DW_AT_data_member_location attribute.  In
-/// that case it's a DWARF location expression.
+/// be given by the DW_AT_data_bit_offset or by the
+/// DW_AT_data_member_location attribute and optionally the
+/// DW_AT_bit_offset attribute.  The bit offset attributes are
+/// always simple constants, but the DW_AT_data_member_location
+/// attribute is a DWARF location expression.
 ///
-/// When the it's the DW_AT_data_member_location that is present,
+/// When it's the DW_AT_data_member_location that is present,
 /// there are three cases to possibly take into account:
 ///
 ///     1/ The offset in the vtable where the offset of a virtual base
@@ -8717,12 +8682,12 @@ read_and_convert_DW_at_bit_offset(const Dwarf_Die* die,
 ///     the offset of the function in the vtable.  In this case this
 ///     function returns that constant.
 ///
-///@param ctxt the read context to consider.
+/// @param ctxt the read context to consider.
 ///
-///@param die the DIE to read the information from.
+/// @param die the DIE to read the information from.
 ///
-///@param offset the resulting constant offset, in bits.  This
-///argument is set iff the function returns true.
+/// @param offset the resulting constant offset, in bits.  This
+/// argument is set iff the function returns true.
 static bool
 die_member_offset(const read_context& ctxt,
 		  const Dwarf_Die* die,
@@ -8730,39 +8695,24 @@ die_member_offset(const read_context& ctxt,
 {
   Dwarf_Op* expr = NULL;
   uint64_t expr_len = 0;
-  uint64_t off = 0;
+  uint64_t bit_offset = 0;
 
   // First let's see if the DW_AT_data_bit_offset attribute is
   // present.
-  if (die_unsigned_constant_attribute(die, DW_AT_data_bit_offset, off))
+  if (die_unsigned_constant_attribute(die, DW_AT_data_bit_offset, bit_offset))
     {
-      offset = off;
+      offset = bit_offset;
       return true;
     }
 
-  // Otherwise, let's see if the DW_AT_bit_offset attribute is
-  // present.  On little endian machines, we need to convert this
-  // attribute into what it would have been if the
-  // DW_AT_data_bit_offset was used instead.  In other words,
-  // DW_AT_bit_offset needs to be converted into a
-  // human-understandable form that represents the offset of the
-  // bitfield data member it describes.  For details about the
-  // conversion, please read the extensive comments of
-  // read_and_convert_DW_at_bit_offset.
-  bool is_big_endian = architecture_is_big_endian(ctxt.elf_handle());
-  if (read_and_convert_DW_at_bit_offset(die, is_big_endian, off))
-    {
-      offset = off;
-      return true;
-    }
-
+  // Otherwise, let's see if the DW_AT_data_member_location attribute and,
+  // optionally, the DW_AT_bit_offset attributes are present.
   if (!die_location_expr(die, DW_AT_data_member_location, &expr, &expr_len))
     return false;
 
-  // Otherwise, the DW_AT_data_member_location attribute is present.
-  // In that case, let's evaluate it and get its constant
+  // The DW_AT_data_member_location attribute is present.
+  // Let's evaluate it and get its constant
   // sub-expression and return that one.
-
   if (!eval_quickly(expr, expr_len, offset))
     {
       bool is_tls_address = false;
@@ -8771,8 +8721,23 @@ die_member_offset(const read_context& ctxt,
 					     ctxt.dwarf_expr_eval_ctxt()))
 	return false;
     }
-
   offset *= 8;
+
+  // On little endian machines, we need to convert the
+  // DW_AT_bit_offset attribute into a relative offset to 8 *
+  // DW_AT_data_member_location equal to what DW_AT_data_bit_offset
+  // would be if it were used instead.
+  //
+  // In other words, before adding it to 8 *
+  // DW_AT_data_member_location, DW_AT_bit_offset needs to be
+  // converted into a human-understandable form that represents the
+  // offset of the bitfield data member it describes.  For details
+  // about the conversion, please read the extensive comments of
+  // read_and_convert_DW_at_bit_offset.
+  bool is_big_endian = architecture_is_big_endian(ctxt.elf_handle());
+  if (read_and_convert_DW_at_bit_offset(die, is_big_endian, bit_offset))
+    offset += bit_offset;
+
   return true;
 }
 
@@ -11267,50 +11232,29 @@ build_translation_unit_and_add_to_ir(read_context&	ctxt,
     }
   string compilation_dir = die_string_attribute(die, DW_AT_comp_dir);
 
-  uint64_t lang = 0;
-  die_unsigned_constant_attribute(die, DW_AT_language, lang);
-  translation_unit::language language = dwarf_language_to_tu_language(lang);
-
-  corpus_sptr corp = ctxt.current_corpus();
-
-  if (ctxt.merge_translation_units())
-    {
-      // See if there is already a translation for the address_size
-      // and language. If so, just reuse that one.
-      for (const auto& tu : corp->get_translation_units())
-	{
-	  if (tu->get_address_size() == address_size
-	      && tu->get_language() == language)
-	    {
-	      result = tu;
-	      break;
-	    }
-	}
-    }
-  else
-    {
-      // See if the same translation unit exits already in the current
-      // corpus.  Sometimes, the same translation unit can be present
-      // several times in the same debug info.  The content of the
-      // different instances of the translation unit are different.  So to
-      // represent that, we are going to re-use the same translation
-      // unit.  That is, it's going to be the union of all the translation
-      // units of the same path.
-      const std::string& abs_path =
-	  compilation_dir.empty() ? path : compilation_dir + "/" + path;
-      result = corp->find_translation_unit(abs_path);
-    }
+  // See if the same translation unit exits already in the current
+  // corpus.  Sometimes, the same translation unit can be present
+  // several times in the same debug info.  The content of the
+  // different instances of the translation unit are different.  So to
+  // represent that, we are going to re-use the same translation
+  // unit.  That is, it's going to be the union of all the translation
+  // units of the same path.
+  {
+    const string& abs_path =
+      compilation_dir.empty() ? path : compilation_dir + "/" + path;
+    result = ctxt.current_corpus()->find_translation_unit(abs_path);
+  }
 
   if (!result)
     {
       result.reset(new translation_unit(ctxt.env(),
-					(ctxt.merge_translation_units()
-					 ? "" : path),
+					path,
 					address_size));
-      if (!ctxt.merge_translation_units())
-	result->set_compilation_dir_path(compilation_dir);
+      result->set_compilation_dir_path(compilation_dir);
       ctxt.current_corpus()->add(result);
-      result->set_language(language);
+      uint64_t l = 0;
+      die_unsigned_constant_attribute(die, DW_AT_language, l);
+      result->set_language(dwarf_language_to_tu_language(l));
     }
 
   ctxt.cur_transl_unit(result);
@@ -14148,8 +14092,7 @@ create_default_fn_sym(const string& sym_name, const environment *env)
 		       /*symbol is defined=*/ true,
 		       /*symbol is common=*/ false,
 		       /*symbol version=*/ ver,
-		       /*symbol visibility=*/elf_symbol::DEFAULT_VISIBILITY,
-		       /*symbol is linux string cst=*/false);
+		       /*symbol visibility=*/elf_symbol::DEFAULT_VISIBILITY);
   return result;
 }
 
