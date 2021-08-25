@@ -2299,8 +2299,8 @@ find_vmlinux_and_module_paths(const string&	from,
   FTSENT *entry;
   while ((entry = fts_read(file_hierarchy)))
     {
-      // Skip descendents of symbolic links.
-      if (entry->fts_info == FTS_SL || entry->fts_info == FTS_SLNONE)
+      // Skip descendents of dead symbolic links.
+      if (entry->fts_info == FTS_SLNONE)
 	{
 	  fts_set(file_hierarchy, entry, FTS_SKIP);
 	  continue;
