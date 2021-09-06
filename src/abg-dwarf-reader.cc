@@ -4147,10 +4147,13 @@ public:
     const environment* e = l->get_environment();
     ABG_ASSERT(!e->canonicalization_is_done());
 
-    bool s = e->decl_only_class_equals_definition();
+    bool s0 = e->decl_only_class_equals_definition();
+    bool s1 = e->use_enum_binary_only_equality();
     e->decl_only_class_equals_definition(true);
+    e->use_enum_binary_only_equality(true);
     bool equal = l == r;
-    e->decl_only_class_equals_definition(s);
+    e->decl_only_class_equals_definition(s0);
+    e->use_enum_binary_only_equality(s1);
     return equal;
   }
 
@@ -10241,6 +10244,16 @@ compare_dies(const read_context& ctxt,
 	  }
 	if (found_l_child != found_r_child)
 	  result = false;
+	// Compare the types of the elements of the array.
+	Dwarf_Die ltype_die, rtype_die;
+	bool found_ltype = die_die_attribute(l, DW_AT_type, ltype_die);
+	bool found_rtype = die_die_attribute(r, DW_AT_type, rtype_die);
+	ABG_ASSERT(found_ltype && found_rtype);
+
+	if (!compare_dies(ctxt, &ltype_die, &rtype_die,
+			  aggregates_being_compared,
+			  update_canonical_dies_on_the_fly))
+	  return false;
       }
       break;
 
@@ -12127,6 +12140,9 @@ add_or_update_class_type(read_context&	 ctxt,
   if (klass)
     {
       res = result = klass;
+      if (has_child && klass->get_is_declaration_only()
+	  && klass->get_definition_of_declaration())
+	res = result = is_class_type(klass->get_definition_of_declaration());
       if (loc)
 	result->set_location(loc);
     }
@@ -12144,7 +12160,7 @@ add_or_update_class_type(read_context&	 ctxt,
       ABG_ASSERT(result);
     }
 
-  if (size)
+  if (size != result->get_size_in_bits())
     result->set_size_in_bits(size);
 
   if (klass)
@@ -13207,6 +13223,8 @@ build_function_type(read_context&	ctxt,
 
   tu->bind_function_type_life_time(result);
 
+  result->set_is_artificial(true);
+
   {
     die_function_type_map_type::const_iterator i =
       ctxt.die_wip_function_types_map(source).
@@ -14035,6 +14053,7 @@ get_opaque_version_of_type(read_context	&ctxt,
 					       type_location,
 					       decl_base::VISIBILITY_DEFAULT));
 	  klass->set_is_declaration_only(true);
+	  klass->set_is_artificial(die_is_artificial(type_die));
 	  add_decl_to_scope(klass, scope);
 	  ctxt.associate_die_to_type(type_die, klass, where_offset);
 	  ctxt.maybe_schedule_declaration_only_class_for_resolution(klass);
@@ -14063,6 +14082,7 @@ get_opaque_version_of_type(read_context	&ctxt,
 							    underlying_type,
 							    enumeratorz,
 							    linkage_name));
+	  enum_type->set_is_artificial(die_is_artificial(type_die));
 	  add_decl_to_scope(enum_type, scope);
 	  result = enum_type;
 	}
@@ -14253,6 +14273,11 @@ read_debug_info_into_corpus(read_context& ctxt)
   ctxt.exported_decls_builder
     (ctxt.current_corpus()->get_exported_decls_builder().get());
 
+#ifdef WITH_DEBUG_SELF_COMPARISON
+  if (ctxt.env()->self_comparison_debug_is_on())
+    ctxt.env()->set_self_comparison_debug_input(ctxt.current_corpus());
+#endif
+
   // Walk all the DIEs of the debug info to build a DIE -> parent map
   // useful for get_die_parent() to work.
   {
@@ -14424,6 +14449,11 @@ read_debug_info_into_corpus(read_context& ctxt)
 	     <<" \n";
       }
   }
+
+#ifdef WITH_DEBUG_SELF_COMPARISON
+  if (ctxt.env()->self_comparison_debug_is_on())
+    ctxt.env()->set_self_comparison_debug_input(ctxt.current_corpus());
+#endif
 
   return ctxt.current_corpus();
 }
@@ -14793,13 +14823,16 @@ build_ir_node_from_die(read_context&	ctxt,
 	bool type_suppressed =
 	  type_is_suppressed(ctxt, scope, die, type_is_private);
 	if (type_suppressed && type_is_private)
-	  // The type is suppressed because it's private.  If other
-	  // non-suppressed and declaration-only instances of this
-	  // type exist in the current corpus, then it means those
-	  // non-suppressed instances are opaque versions of the
-	  // suppressed private type.  Lets return one of these opaque
-	  // types then.
-	  result = get_opaque_version_of_type(ctxt, scope, die, where_offset);
+	  {
+	    // The type is suppressed because it's private.  If other
+	    // non-suppressed and declaration-only instances of this
+	    // type exist in the current corpus, then it means those
+	    // non-suppressed instances are opaque versions of the
+	    // suppressed private type.  Lets return one of these opaque
+	    // types then.
+	    result = get_opaque_version_of_type(ctxt, scope, die, where_offset);
+	    maybe_canonicalize_type(is_type(result), ctxt);
+	  }
 	else if (!type_suppressed)
 	  {
 	    enum_type_decl_sptr e = build_enum_type(ctxt, die, scope,
@@ -14823,13 +14856,16 @@ build_ir_node_from_die(read_context&	ctxt,
 	  type_is_suppressed(ctxt, scope, die, type_is_private);
 
 	if (type_suppressed && type_is_private)
-	  // The type is suppressed because it's private.  If other
-	  // non-suppressed and declaration-only instances of this
-	  // type exist in the current corpus, then it means those
-	  // non-suppressed instances are opaque versions of the
-	  // suppressed private type.  Lets return one of these opaque
-	  // types then.
-	  result = get_opaque_version_of_type(ctxt, scope, die, where_offset);
+	  {
+	    // The type is suppressed because it's private.  If other
+	    // non-suppressed and declaration-only instances of this
+	    // type exist in the current corpus, then it means those
+	    // non-suppressed instances are opaque versions of the
+	    // suppressed private type.  Lets return one of these opaque
+	    // types then.
+	    result = get_opaque_version_of_type(ctxt, scope, die, where_offset);
+	    maybe_canonicalize_type(is_type(result), ctxt);
+	  }
 	else if (!type_suppressed)
 	  {
 	    Dwarf_Die spec_die;
@@ -14906,6 +14942,7 @@ build_ir_node_from_die(read_context&	ctxt,
 	if (f)
 	  {
 	    result = f;
+	    result->set_is_artificial(false);
 	    maybe_canonicalize_type(die, ctxt);
 	  }
       }
