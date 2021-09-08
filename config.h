@@ -159,9 +159,6 @@
 /* compile the deb package support in abipkgdiff */
 #define WITH_DEB 1
 
-/* compile support of debugging abidw --abidiff */
-/* #undef WITH_DEBUG_SELF_COMPARISON */
-
 /* compile the rpm package support in abipkgdiff */
 #define WITH_RPM 1
 
