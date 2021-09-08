@@ -66,12 +66,6 @@ AC_ARG_ENABLE(rpm415,
 	      ENABLE_RPM415=$enableval,
 	      ENABLE_RPM415=auto)
 
-AC_ARG_ENABLE(debug-self-comparison,
-	      AS_HELP_STRING([--enable-debug-self-comparison=yes|no],
-			     [enable debugging of self comparison with 'abidw --debug-abidiff'(default is no)]),
-	      ENABLE_DEBUG_SELF_COMPARISON=$enableval,
-	      ENABLE_DEBUG_SELF_COMPARISON=no)
-
 AC_ARG_ENABLE(deb,
 	      AS_HELP_STRING([--enable-deb=yes|no|auto],
 			     [enable the support of deb in abipkgdiff (default is auto)]),
@@ -285,7 +279,7 @@ if test x$ENABLE_RPM = xyes -o x$ENABLE_RPM = xauto; then
   fi
 fi
 
-if test x$ENABLE_RPM = xyes -o x$ENABLE_RPM415 = xauto; then
+if test x$ENABLE_RPM = xyes -a x$ENABLE_RPM415 = xauto; then
    rpmversion=$(rpm --version | sed "s/RPM version //")
    AC_MSG_NOTICE([detected rpm version: $rpmversion])
    if [[[ "$rpmversion" > "4.14.0" ]]]; then
@@ -308,16 +302,6 @@ else
 fi
 
 AM_CONDITIONAL(ENABLE_RPM, test x$ENABLE_RPM = xyes)
-
-dnl enable the debugging of self comparison when doing abidw --debug-abidiff <binary>
-if test x$ENABLE_DEBUG_SELF_COMPARISON = xyes; then
-  AC_DEFINE([WITH_DEBUG_SELF_COMPARISON], 1, [compile support of debugging abidw --abidiff])
-  AC_MSG_NOTICE([support of debugging self comparison is enabled])
-else
-  AC_MSG_NOTICE([support of debugging self comparison is disabled])
-fi
-
-AM_CONDITIONAL(ENABLE_DEBUG_SELF_COMPARISON, test x$ENABLE_DEBUG_SELF_COMPARISON = xyes)
 
 dnl Check for the dpkg program
 if test x$ENABLE_DEB = xauto -o x$ENABLE_DEB = xyes; then
@@ -942,7 +926,6 @@ AC_MSG_NOTICE([
     libdw has the dwarf_getalt function            : ${FOUND_DWARF_GETALT_IN_LIBDW}
     Enable rpm support in abipkgdiff               : ${ENABLE_RPM}
     Enable rpm 4.15 support in abipkgdiff tests    : ${ENABLE_RPM415}
-    Enable self comparison debugging               : ${ENABLE_DEBUG_SELF_COMPARISON}
     Enable deb support in abipkgdiff               : ${ENABLE_DEB}
     Enable GNU tar archive support in abipkgdiff   : ${ENABLE_TAR}
     Enable bash completion	                   : ${ENABLE_BASH_COMPLETION}
