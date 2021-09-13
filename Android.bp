@@ -85,6 +85,9 @@ cc_defaults {
         darwin: {
             enabled: false,
         },
+        musl: {
+            static_libs: ["libfts"],
+        },
     },
 }
 
