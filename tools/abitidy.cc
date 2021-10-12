@@ -373,7 +373,10 @@ discard_naming_typedefs(xmlNodePtr node)
 {
   if (node->type != XML_ELEMENT_NODE)
     return;
-  if (strcmp(from_libxml(node->name), "class-decl") == 0)
+  const char* node_name = from_libxml(node->name);
+  if (strcmp(node_name, "class-decl") == 0
+      || strcmp(node_name, "union-decl") == 0
+      || strcmp(node_name, "enum-decl") == 0)
     set_attribute(node, "naming-typedef-id", {});
   for (xmlNodePtr child : get_children(node))
     discard_naming_typedefs(child);
