@@ -557,6 +557,9 @@ test-read-dwarf/test-suppressed-alias.c \
 test-read-dwarf/test-suppressed-alias.o \
 test-read-dwarf/test-suppressed-alias.o.abi \
 test-read-dwarf/test-suppressed-alias.suppr \
+test-read-dwarf/PR28584/PR28584-smv.cc  \
+test-read-dwarf/PR28584/PR28584-smv.clang.o \
+test-read-dwarf/PR28584/PR28584-smv.clang.o.abi \
 \
 test-annotate/test0.abi			\
 test-annotate/test1.abi			\
