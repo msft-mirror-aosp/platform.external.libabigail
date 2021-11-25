@@ -228,7 +228,7 @@
       <class-decl name='allocator&lt;char&gt;' size-in-bits='8' visibility='default' filepath='/usr/include/c++/5.3.1/bits/allocator.h' line='92' column='1' id='type-id-84'>
         <base-class access='public' layout-offset-in-bits='0' type-id='type-id-40'/>
         <member-type access='public'>
-          <typedef-decl name='size_type' type-id='type-id-86' filepath='/usr/include/c++/5.3.1/bits/allocator.h' line='95' column='1' id='type-id-85'/>
+          <typedef-decl name='size_type' type-id='type-id-85' filepath='/usr/include/c++/5.3.1/bits/allocator.h' line='95' column='1' id='type-id-86'/>
         </member-type>
         <member-type access='public'>
           <typedef-decl name='reference' type-id='type-id-42' filepath='/usr/include/c++/5.3.1/bits/allocator.h' line='99' column='1' id='type-id-87'/>
@@ -242,7 +242,7 @@
           <typedef-decl name='allocator_type' type-id='type-id-84' filepath='/usr/include/c++/5.3.1/bits/basic_string.h' line='2518' column='1' id='type-id-89'/>
         </member-type>
         <member-type access='public'>
-          <typedef-decl name='size_type' type-id='type-id-85' filepath='/usr/include/c++/5.3.1/bits/basic_string.h' line='2519' column='1' id='type-id-61'/>
+          <typedef-decl name='size_type' type-id='type-id-86' filepath='/usr/include/c++/5.3.1/bits/basic_string.h' line='2519' column='1' id='type-id-61'/>
         </member-type>
         <member-type access='public'>
           <typedef-decl name='reference' type-id='type-id-87' filepath='/usr/include/c++/5.3.1/bits/basic_string.h' line='2521' column='1' id='type-id-90'/>
@@ -251,16 +251,16 @@
           <typedef-decl name='const_reference' type-id='type-id-88' filepath='/usr/include/c++/5.3.1/bits/basic_string.h' line='2522' column='1' id='type-id-91'/>
         </member-type>
         <member-type access='public'>
-          <typedef-decl name='iterator' type-id='type-id-93' filepath='/usr/include/c++/5.3.1/bits/basic_string.h' line='2525' column='1' id='type-id-92'/>
+          <typedef-decl name='iterator' type-id='type-id-92' filepath='/usr/include/c++/5.3.1/bits/basic_string.h' line='2525' column='1' id='type-id-93'/>
         </member-type>
         <member-type access='public'>
-          <typedef-decl name='const_iterator' type-id='type-id-95' filepath='/usr/include/c++/5.3.1/bits/basic_string.h' line='2527' column='1' id='type-id-94'/>
+          <typedef-decl name='const_iterator' type-id='type-id-94' filepath='/usr/include/c++/5.3.1/bits/basic_string.h' line='2527' column='1' id='type-id-95'/>
         </member-type>
         <member-type access='public'>
-          <typedef-decl name='const_reverse_iterator' type-id='type-id-97' filepath='/usr/include/c++/5.3.1/bits/basic_string.h' line='2528' column='1' id='type-id-96'/>
+          <typedef-decl name='const_reverse_iterator' type-id='type-id-96' filepath='/usr/include/c++/5.3.1/bits/basic_string.h' line='2528' column='1' id='type-id-97'/>
         </member-type>
         <member-type access='public'>
-          <typedef-decl name='reverse_iterator' type-id='type-id-99' filepath='/usr/include/c++/5.3.1/bits/basic_string.h' line='2529' column='1' id='type-id-98'/>
+          <typedef-decl name='reverse_iterator' type-id='type-id-98' filepath='/usr/include/c++/5.3.1/bits/basic_string.h' line='2529' column='1' id='type-id-99'/>
         </member-type>
         <member-type access='private'>
           <class-decl name='_Rep_base' size-in-bits='192' is-struct='yes' visibility='default' filepath='/usr/include/c++/5.3.1/bits/basic_string.h' line='2546' column='1' id='type-id-100'>
@@ -314,10 +314,10 @@
       </class-decl>
       <typedef-decl name='string' type-id='type-id-56' filepath='/usr/include/c++/5.3.1/bits/stringfwd.h' line='74' column='1' id='type-id-67'/>
       <typedef-decl name='ostream' type-id='type-id-103' filepath='/usr/include/c++/5.3.1/iosfwd' line='141' column='1' id='type-id-78'/>
-      <typedef-decl name='size_t' type-id='type-id-17' filepath='/usr/include/c++/5.3.1/x86_64-redhat-linux/bits/c++config.h' line='1969' column='1' id='type-id-86'/>
+      <typedef-decl name='size_t' type-id='type-id-17' filepath='/usr/include/c++/5.3.1/x86_64-redhat-linux/bits/c++config.h' line='1969' column='1' id='type-id-85'/>
       <class-decl name='basic_ostream&lt;char, std::char_traits&lt;char&gt; &gt;' visibility='default' is-declaration-only='yes' id='type-id-103'/>
-      <class-decl name='reverse_iterator&lt;__gnu_cxx::__normal_iterator&lt;char const*, std::basic_string&lt;char, std::char_traits&lt;char&gt;, std::allocator&lt;char&gt; &gt; &gt; &gt;' visibility='default' is-declaration-only='yes' id='type-id-97'/>
-      <class-decl name='reverse_iterator&lt;__gnu_cxx::__normal_iterator&lt;char*, std::basic_string&lt;char, std::char_traits&lt;char&gt;, std::allocator&lt;char&gt; &gt; &gt; &gt;' visibility='default' is-declaration-only='yes' id='type-id-99'/>
+      <class-decl name='reverse_iterator&lt;__gnu_cxx::__normal_iterator&lt;char const*, std::basic_string&lt;char, std::char_traits&lt;char&gt;, std::allocator&lt;char&gt; &gt; &gt; &gt;' visibility='default' is-declaration-only='yes' id='type-id-96'/>
+      <class-decl name='reverse_iterator&lt;__gnu_cxx::__normal_iterator&lt;char*, std::basic_string&lt;char, std::char_traits&lt;char&gt;, std::allocator&lt;char&gt; &gt; &gt; &gt;' visibility='default' is-declaration-only='yes' id='type-id-98'/>
       <function-decl name='operator+&lt;char, std::char_traits&lt;char&gt;, std::allocator&lt;char&gt; &gt;' mangled-name='_ZStplIcSt11char_traitsIcESaIcEESbIT_T0_T1_EPKS3_RKS6_' filepath='/usr/include/c++/5.3.1/bits/basic_string.tcc' line='1151' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZStplIcSt11char_traitsIcESaIcEESbIT_T0_T1_EPKS3_RKS6_'>
         <parameter type-id='type-id-29' name='__lhs' filepath='/usr/include/c++/5.3.1/bits/basic_string.tcc' line='1151' column='1'/>
         <parameter type-id='type-id-58' name='__rhs' filepath='/usr/include/c++/5.3.1/bits/basic_string.tcc' line='1152' column='1'/>
@@ -335,7 +335,7 @@
     <namespace-decl name='__gnu_cxx'>
       <class-decl name='new_allocator&lt;char&gt;' size-in-bits='8' visibility='default' filepath='/usr/include/c++/5.3.1/ext/new_allocator.h' line='58' column='1' id='type-id-40'>
         <member-type access='public'>
-          <typedef-decl name='size_type' type-id='type-id-86' filepath='/usr/include/c++/5.3.1/ext/new_allocator.h' line='61' column='1' id='type-id-104'/>
+          <typedef-decl name='size_type' type-id='type-id-85' filepath='/usr/include/c++/5.3.1/ext/new_allocator.h' line='61' column='1' id='type-id-104'/>
         </member-type>
         <member-type access='public'>
           <typedef-decl name='pointer' type-id='type-id-25' filepath='/usr/include/c++/5.3.1/ext/new_allocator.h' line='63' column='1' id='type-id-105'/>
@@ -420,8 +420,8 @@
           <var-decl name='__digits' type-id='type-id-51' visibility='default' filepath='/usr/include/c++/5.3.1/ext/numeric_traits.h' line='64' column='1'/>
         </data-member>
       </class-decl>
-      <class-decl name='__normal_iterator&lt;char const*, std::basic_string&lt;char, std::char_traits&lt;char&gt;, std::allocator&lt;char&gt; &gt; &gt;' visibility='default' is-declaration-only='yes' id='type-id-95'/>
-      <class-decl name='__normal_iterator&lt;char*, std::basic_string&lt;char, std::char_traits&lt;char&gt;, std::allocator&lt;char&gt; &gt; &gt;' visibility='default' is-declaration-only='yes' id='type-id-93'/>
+      <class-decl name='__normal_iterator&lt;char const*, std::basic_string&lt;char, std::char_traits&lt;char&gt;, std::allocator&lt;char&gt; &gt; &gt;' visibility='default' is-declaration-only='yes' id='type-id-94'/>
+      <class-decl name='__normal_iterator&lt;char*, std::basic_string&lt;char, std::char_traits&lt;char&gt;, std::allocator&lt;char&gt; &gt; &gt;' visibility='default' is-declaration-only='yes' id='type-id-92'/>
     </namespace-decl>
     <function-decl name='setlocale' filepath='/usr/include/locale.h' line='124' column='1' visibility='default' binding='global' size-in-bits='64'>
       <parameter type-id='type-id-11'/>
