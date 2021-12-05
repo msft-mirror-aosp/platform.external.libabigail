@@ -2912,7 +2912,6 @@ write_elf_symbols_table(const elf_symbols&	syms,
   if (syms.empty())
     return false;
 
-  unordered_map<string, bool> emitted_syms;
   for (elf_symbols::const_iterator it = syms.begin(); it != syms.end(); ++it)
     write_elf_symbol(*it, ctxt, indent);
 
