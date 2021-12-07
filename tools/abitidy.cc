@@ -670,16 +670,20 @@ handle_anonymous_types(bool normalise, bool reanonymise, bool discard_naming,
     handle_anonymous_types(normalise, reanonymise, discard_naming, child);
 }
 
-/// Set of attributes that should be excluded from consideration when
-/// comparing XML elements.
+/// The set of attributes that should be excluded from consideration
+/// when comparing XML elements.
 ///
-/// These attributes are omitted with --no-show-locs without changing
-/// the meaning of the ABI. They can also sometimes vary between
-/// duplicate type definitions.
+/// Source location attributes are omitted with --no-show-locs without
+/// changing the meaning of the ABI. They can also sometimes vary
+/// between duplicate type definitions.
+///
+/// The naming-typedef-id attribute, if not already removed by another
+/// pass, is irrelevant to ABI semantics.
 static const std::unordered_set<std::string> IRRELEVANT_ATTRIBUTES = {
   {"filepath"},
   {"line"},
   {"column"},
+  {"naming-typedef-id"},
 };
 
 /// Determine whether one XML element is a subtree of another.
