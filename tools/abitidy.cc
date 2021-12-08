@@ -354,36 +354,6 @@ get_elf_symbol_id(xmlNodePtr node)
   return result;
 }
 
-/// Discard naming typedef backlinks.
-///
-/// The attribute naming-typedef-id is a backwards link from an
-/// anonymous type to the typedef that refers to it. This attribute only
-/// exists for struct/class and not union or enum types. It is also
-/// ignored by abidiff.
-///
-/// Unfortunately, libabigail sometimes conflates multiple anonymous
-/// types that have naming typedefs and only one of the typedefs can
-/// "win". ABI XML is thus sensitive to processing order and can also
-/// end up containing definitions of an anonymous type with differing
-/// naming-typedef-id attributes.
-///
-/// It's best to just drop the attribute.
-///
-/// @param node the element to process
-static void
-discard_naming_typedefs(xmlNodePtr node)
-{
-  if (node->type != XML_ELEMENT_NODE)
-    return;
-  const char* node_name = from_libxml(node->name);
-  if (strcmp(node_name, "class-decl") == 0
-      || strcmp(node_name, "union-decl") == 0
-      || strcmp(node_name, "enum-decl") == 0)
-    set_attribute(node, "naming-typedef-id", {});
-  for (xmlNodePtr child : get_children(node))
-    discard_naming_typedefs(child);
-}
-
 static const std::set<std::string> HAS_LOCATION = {
   "class-decl",
   "enum-decl",
@@ -629,7 +599,9 @@ static const std::map<std::string, std::string> ANONYMOUS_TYPE_NAMES = {
   {"union-decl", "__anonymous_union__"},
 };
 
-/// Normalise anonymous type names by removing the numerical suffix.
+/// Tidy anonymous types in various ways.
+///
+/// 1. Normalise anonymous type names by removing the numerical suffix.
 ///
 /// Anonymous type names take the form __anonymous_foo__N where foo is
 /// one of enum, struct or union and N is an optional numerical suffix.
@@ -637,27 +609,65 @@ static const std::map<std::string, std::string> ANONYMOUS_TYPE_NAMES = {
 /// useful ABI information. They can cause spurious harmless diffs and
 /// make XML diffing and rebasing harder.
 ///
+/// It's best to remove the suffix.
+///
+/// 2. Reanonymise anonymous types that have been given names.
+///
+/// A recent change to abidw changed its behaviour for any anonymous
+/// type that has a naming typedef. In addition to linking the typedef
+/// and type in both directions, the code now gives (some) anonymous
+/// types the same name as the typedef. This misrepresents the original
+/// types.
+///
+/// Such types should be anonymous.
+///
+/// 3. Discard naming typedef backlinks.
+///
+/// The attribute naming-typedef-id is a backwards link from an
+/// anonymous type to the typedef that refers to it. It is ignored by
+/// abidiff.
+///
+/// Unfortunately, libabigail sometimes conflates multiple anonymous
+/// types that have naming typedefs and only one of the typedefs can
+/// "win". ABI XML is thus sensitive to processing order and can also
+/// end up containing definitions of an anonymous type with differing
+/// naming-typedef-id attributes.
+///
+/// It's best to just drop the attribute.
+///
 /// @param node the XML node to process
 static void
-normalise_anonymous_type_names(xmlNodePtr node)
+handle_anonymous_types(bool normalise, bool reanonymise, bool discard_naming,
+                       xmlNodePtr node)
 {
   if (node->type != XML_ELEMENT_NODE)
     return;
 
   const auto it = ANONYMOUS_TYPE_NAMES.find(from_libxml(node->name));
   if (it != ANONYMOUS_TYPE_NAMES.end())
-    if (const auto attribute = get_attribute(node, "name"))
-      {
-        const auto& anon = it->second;
-        const auto& name = attribute.value();
+    {
+      const auto& anon = it->second;
+      const auto name_attribute = get_attribute(node, "name");
+      const auto& name =
+          name_attribute ? name_attribute.value() : std::string();
+      const auto anon_attr = get_attribute(node, "is-anonymous");
+      const bool is_anon = anon_attr && anon_attr.value() == "yes";
+      const auto naming_attribute = get_attribute(node, "naming-typedef-id");
+      if (normalise && is_anon && name != anon) {
         // __anonymous_foo__123 -> __anonymous_foo__
-        if (!name.compare(0, anon.size(), anon) &&
-            name.find_first_not_of("0123456789", anon.size()) == name.npos)
-          set_attribute(node, "name", anon);
+        set_attribute(node, "name", anon);
       }
+      if (reanonymise && !is_anon && naming_attribute) {
+        // bar with naming typedef -> __anonymous_foo__
+        set_attribute(node, "is-anonymous", "yes");
+        set_attribute(node, "name", anon);
+      }
+      if (discard_naming && naming_attribute)
+        set_attribute(node, "naming-typedef-id", {});
+    }
 
   for (auto child : get_children(node))
-    normalise_anonymous_type_names(child);
+    handle_anonymous_types(normalise, reanonymise, discard_naming, child);
 }
 
 /// Set of attributes that should be excluded from consideration when
@@ -1199,6 +1209,7 @@ main(int argc, char* argv[])
   LocationInfo opt_locations = LocationInfo::COLUMN;
   int opt_indentation = 2;
   bool opt_normalise_anonymous = false;
+  bool opt_reanonymise_anonymous = false;
   bool opt_discard_naming_typedefs = false;
   bool opt_prune_unreachable = false;
   bool opt_report_untyped = false;
@@ -1216,8 +1227,9 @@ main(int argc, char* argv[])
               << "  [-S|--symbols file]\n"
               << "  [-L|--locations column|line|file|none]\n"
               << "  [-I|--indentation n]\n"
-              << "  [-a|--all] (-n -t -p -u -e -c -s -d)\n"
+              << "  [-a|--all] (-n -r -t -p -u -e -c -s -d)\n"
               << "  [-n|--[no-]normalise-anonymous]\n"
+              << "  [-r|--[no-]reanonymise-anonymous]\n"
               << "  [-t|--[no-]discard-naming-typedefs]\n"
               << "  [-p|--[no-]prune-unreachable]\n"
               << "  [-u|--[no-]report-untyped]\n"
@@ -1258,7 +1270,8 @@ main(int argc, char* argv[])
             exit(usage());
         }
       else if (arg == "-a" || arg == "--all")
-        opt_normalise_anonymous = opt_discard_naming_typedefs
+        opt_normalise_anonymous = opt_reanonymise_anonymous
+                                = opt_discard_naming_typedefs
                                 = opt_prune_unreachable
                                 = opt_report_untyped
                                 = opt_eliminate_duplicates
@@ -1270,6 +1283,10 @@ main(int argc, char* argv[])
         opt_normalise_anonymous = true;
       else if (arg == "--no-normalise-anonymous")
         opt_normalise_anonymous = false;
+      else if (arg == "-r" || arg == "--reanonymise-anonymous")
+        opt_reanonymise_anonymous = true;
+      else if (arg == "--no-reanonymise-anonymous")
+        opt_reanonymise_anonymous = false;
       else if (arg == "-t" || arg == "--discard-naming-typedefs")
         opt_discard_naming_typedefs = true;
       else if (arg == "--no-discard-naming-typedefs")
@@ -1345,12 +1362,12 @@ main(int argc, char* argv[])
     filter_symbols(opt_symbols.value(), root);
 
   // Normalise anonymous type names.
-  if (opt_normalise_anonymous)
-    normalise_anonymous_type_names(root);
-
+  // Reanonymise anonymous types.
   // Discard naming typedef backlinks.
-  if (opt_discard_naming_typedefs)
-    discard_naming_typedefs(root);
+  if (opt_normalise_anonymous || opt_reanonymise_anonymous
+      || opt_discard_naming_typedefs)
+    handle_anonymous_types(opt_normalise_anonymous, opt_reanonymise_anonymous,
+                           opt_discard_naming_typedefs, root);
 
   // Prune unreachable elements and/or report untyped symbols.
   size_t untyped_symbols = 0;
