@@ -330,8 +330,8 @@ drop_empty(xmlNodePtr node)
 /// This is not an explicit attribute. It takes one of these forms:
 ///
 /// * name (if symbol is not versioned)
-/// * name@version (if symbol is versioned but this is not the default version)
-/// * name@@version (if symbol is versioned and this is the default version)
+/// * name@version (if symbol is versioned but not the default version)
+/// * name@@version (if symbol is versioned and the default version)
 ///
 /// @param node the elf-symbol element
 ///
@@ -356,14 +356,16 @@ get_elf_symbol_id(xmlNodePtr node)
 
 /// Discard naming typedef backlinks.
 ///
-/// The attribute naming-typedef-id is a backwards link from an anonymous type
-/// to the typedef that refers to it. This attribute only exists for
-/// struct/class and not union or enum types. It is also ignored by abidiff.
+/// The attribute naming-typedef-id is a backwards link from an
+/// anonymous type to the typedef that refers to it. This attribute only
+/// exists for struct/class and not union or enum types. It is also
+/// ignored by abidiff.
 ///
-/// Unfortunately, libabigail sometimes conflates multiple anonymous types that
-/// have naming typedefs and only one of the typedefs can "win". ABI XML is thus
-/// sensitive to processing order and can also end up containing definitions of
-/// an anonymous type with differing naming-typedef-id attributes.
+/// Unfortunately, libabigail sometimes conflates multiple anonymous
+/// types that have naming typedefs and only one of the typedefs can
+/// "win". ABI XML is thus sensitive to processing order and can also
+/// end up containing definitions of an anonymous type with differing
+/// naming-typedef-id attributes.
 ///
 /// It's best to just drop the attribute.
 ///
@@ -475,16 +477,17 @@ handle_unreachable(bool prune, bool report, xmlNodePtr root)
         if (naming_typedef_id)
           {
             // This is an odd one, there can be a backwards link from an
-            // anonymous type to a typedef that refers to it. The -t option will
-            // drop these, but if they are still present, we should model the
-            // link to avoid the risk of dangling references.
+            // anonymous type to a typedef that refers to it. The -t
+            // option will drop these, but if they are still present, we
+            // should model the link to avoid the risk of dangling
+            // references.
             vertex_t naming_typedef_vertex{false, naming_typedef_id.value()};
             edges[type_vertex].insert(naming_typedef_vertex);
           }
         if (!stack.empty())
           {
-            // Parent<->child dependencies; record dependencies both ways to
-            // avoid holes in XML types and declarations.
+            // Parent<->child dependencies; record dependencies both
+            // ways to avoid holes in XML types and declarations.
             const auto& parent = stack.back();
             edges[parent].insert(type_vertex);
             edges[type_vertex].insert(parent);
@@ -501,12 +504,12 @@ handle_unreachable(bool prune, bool report, xmlNodePtr root)
         vertices.insert(symbol_vertex);
         if (!stack.empty())
           {
-            // Parent<->child dependencies; record dependencies both ways to
-            // avoid making holes in XML types and declarations.
+            // Parent<->child dependencies; record dependencies both
+            // ways to avoid making holes in XML types and declarations.
             //
-            // Symbols exist outside of the type hierarchy, so choosing to make
-            // them depend on a containing type scope and vice versa is
-            // conservative and probably not necessary.
+            // Symbols exist outside of the type hierarchy, so choosing
+            // to make them depend on a containing type scope and vice
+            // versa is conservative and probably not necessary.
             const auto& parent = stack.back();
             edges[parent].insert(symbol_vertex);
             edges[symbol_vertex].insert(parent);
@@ -657,12 +660,12 @@ normalise_anonymous_type_names(xmlNodePtr node)
     normalise_anonymous_type_names(child);
 }
 
-/// Set of attributes that should be excluded from consideration when comparing
-/// XML elements.
+/// Set of attributes that should be excluded from consideration when
+/// comparing XML elements.
 ///
-/// These attributes are omitted with --no-show-locs without changing the
-/// meaning of the ABI. They can also sometimes vary between duplicate type
-/// definitions.
+/// These attributes are omitted with --no-show-locs without changing
+/// the meaning of the ABI. They can also sometimes vary between
+/// duplicate type definitions.
 static const std::unordered_set<std::string> IRRELEVANT_ATTRIBUTES = {
   {"filepath"},
   {"line"},
@@ -724,12 +727,13 @@ sub_tree(xmlNodePtr left, xmlNodePtr right)
 
 /// Elminate non-conflicting / report conflicting type definitions.
 ///
-/// This function can eliminate exact type duplicates and duplicates where there
-/// is at least one maximal definition. It can report the remaining, conflicting
-/// duplicate definitions.
+/// This function can eliminate exact type duplicates and duplicates
+/// where there is at least one maximal definition. It can report the
+/// remaining, conflicting duplicate definitions.
 ///
-/// If a type has duplicate definitions in multiple namespace scopes, these
-/// should not be reordered. This function reports how many such types it finds.
+/// If a type has duplicate definitions in multiple namespace scopes,
+/// these should not be reordered. This function reports how many such
+/// types it finds.
 ///
 /// @param eliminate whether to eliminate non-conflicting duplicates
 ///
@@ -740,7 +744,8 @@ sub_tree(xmlNodePtr left, xmlNodePtr right)
 /// @return the number of types defined in multiple namespace scopes
 size_t handle_duplicate_types(bool eliminate, bool report, xmlNodePtr root)
 {
-  // map of type-id to pair of set of namespace scopes and vector of xmlNodes
+  // map of type-id to pair of set of namespace scopes and vector of
+  // xmlNodes
   std::unordered_map<
       std::string,
       std::pair<
@@ -798,8 +803,9 @@ size_t handle_duplicate_types(bool eliminate, bool report, xmlNodePtr root)
       if (count <= 1)
         continue;
 
-      // Find a potentially maximal candidate by scanning through and retaining
-      // the new definition if it's a supertree of the current candidate.
+      // Find a potentially maximal candidate by scanning through and
+      // retaining the new definition if it's a supertree of the current
+      // candidate.
       std::vector<bool> ok(count);
       size_t candidate = 0;
       ok[candidate] = true;
@@ -810,8 +816,8 @@ size_t handle_duplicate_types(bool eliminate, bool report, xmlNodePtr root)
             ok[candidate] = true;
           }
 
-      // Verify the candidate is indeed maximal by scanning the definitions not
-      // already known to be subtrees of it.
+      // Verify the candidate is indeed maximal by scanning the
+      // definitions not already known to be subtrees of it.
       bool bad = false;
       for (size_t ix = 0; ix < count; ++ix)
         if (!ok[ix] && !sub_tree(definitions[ix], definitions[candidate]))
@@ -893,21 +899,21 @@ sort_namespaces_types_and_declarations(xmlNodePtr root)
 {
   // There are (currently) 2 ABI formats we handle here.
   //
-  // 1. An abi-corpus containing one or more abi-instr. In this case, we move
-  // all namespaces, types and declarations to a replacement abi-instr at the
-  // end of the abi-corpus. The existing abi-instr will then be confirmed as
-  // empty and removed.
+  // 1. An abi-corpus containing one or more abi-instr. In this case, we
+  // move all namespaces, types and declarations to a replacement
+  // abi-instr at the end of the abi-corpus. The existing abi-instr will
+  // then be confirmed as empty and removed.
   //
-  // 2. An abi-corpus-group containing one or more abi-corpus each containing
-  // zero or more abi-instr (with at least one abi-instr altogether). In this
-  // case the replacement abi-instr is created within the first abi-corpus of
-  // the group.
+  // 2. An abi-corpus-group containing one or more abi-corpus each
+  // containing zero or more abi-instr (with at least one abi-instr
+  // altogether). In this case the replacement abi-instr is created
+  // within the first abi-corpus of the group.
   //
-  // Anything else is left alone. For example, single abi-instr elements are
-  // present in some libabigail test suite files.
+  // Anything else is left alone. For example, single abi-instr elements
+  // are present in some libabigail test suite files.
 
-  // We first need to identify where to place the new abi-instr and collect all
-  // the abi-instr to process.
+  // We first need to identify where to place the new abi-instr and
+  // collect all the abi-instr to process.
   xmlNodePtr where = nullptr;
   std::vector<xmlNodePtr> instrs;
 
@@ -968,15 +974,15 @@ sort_namespaces_types_and_declarations(xmlNodePtr root)
         }
     }
 
-  // Order types before declarations, types by id, declarations by name (and by
-  // mangled-name, if present).
+  // Order types before declarations, types by id, declarations by name
+  // (and by mangled-name, if present).
   struct Compare {
     int
     cmp(xmlNodePtr a, xmlNodePtr b) const
     {
-      // NOTE: This must not reorder type definitions with the same id. In
-      // particular, we cannot do anything nice and easy like order by element
-      // tag first.
+      // NOTE: This must not reorder type definitions with the same id.
+      // In particular, we cannot do anything nice and easy like order
+      // by element tag first.
       //
       // TODO: Replace compare and subtraction with <=>.
       int result;
@@ -1027,18 +1033,18 @@ sort_namespaces_types_and_declarations(xmlNodePtr root)
   // Collect the child elements of all the instrs, by namespace scope.
   auto scoped_children = get_children_by_namespace(instrs);
   for (auto& [scope, children] : scoped_children)
-    // Sort the children, preserving order of duplicates with a stable sort.
+    // Sort the children, preserving order of duplicates.
     std::stable_sort(children.begin(), children.end(), Compare());
 
-  // Create namespace elements on demand. The global namespace is just the
-  // replacement instr itself.
+  // Create namespace elements on demand. The global namespace, with
+  // empty scope, is just the replacement instr itself.
   std::map<namespace_scope, xmlNodePtr> namespace_elements{{{}, replacement}};
   std::function<xmlNodePtr(const namespace_scope&)> get_namespace_element =
       [&](const namespace_scope& scope) {
         auto insertion = namespace_elements.insert({scope, nullptr});
     if (insertion.second)
       {
-        // Lookup failed (and insertion succeeded) so scope cannot be empty.
+        // Insertion succeeded, so the scope cannot be empty.
         namespace_scope truncated = scope;
         truncated.pop_back();
         xmlNodePtr parent = get_namespace_element(truncated);
@@ -1074,9 +1080,10 @@ static constexpr std::array<std::string_view, 2> SYMBOL_SECTION_SUFFICES = {
 
 /// Read symbols from a file.
 ///
-/// This aims to be compatible with the .ini format used by libabigail for
-/// suppression specifications and symbol lists. All symbol list sections in the
-/// given file are combined into a single set of symbols.
+/// This aims to be compatible with the .ini format used by libabigail
+/// for suppression specifications and symbol lists. All symbol list
+/// sections in the given file are combined into a single set of
+/// symbols.
 ///
 /// @param filename the name of the file from which to read
 ///
@@ -1404,7 +1411,7 @@ main(int argc, char* argv[])
   xmlChar* out_data;
   int out_size;
   xmlDocDumpMemory(document, &out_data, &out_size);
-  // Remove the XML declaration as this is not currently accepted by abidiff.
+  // Remove the XML declaration as it currently upsets abidiff.
   xmlChar* out_limit = out_data + out_size;
   while (out_data < out_limit && *out_data != '\n')
     ++out_data;
