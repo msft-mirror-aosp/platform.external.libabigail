@@ -397,6 +397,10 @@ limit_locations(LocationInfo location_info, xmlNodePtr node)
 /// refers-to relationships for types, declarations and symbols. The
 /// roots for reachability are the ELF elements in the ABI.
 ///
+/// The subrange element requires special treatment. It has a useless
+/// type id, but it is not a type and its type id aliases with that of
+/// all other subranges of the same length. So don't treat it as a type.
+///
 /// @param prune whether to prune unreachable elements
 ///
 /// @param report whether to report untyped symbols
@@ -429,8 +433,10 @@ handle_unreachable(bool prune, bool report, xmlNodePtr root)
     if (node->type != XML_ELEMENT_NODE)
       return;
 
+    const char* node_name = from_libxml(node->name);
+
     // Is this an ELF symbol?
-    if (strcmp(from_libxml(node->name), "elf-symbol") == 0)
+    if (strcmp(node_name, "elf-symbol") == 0)
       {
         elf_symbol_ids.insert(get_elf_symbol_id(node));
         // Early return is safe, but not necessary.
@@ -438,7 +444,9 @@ handle_unreachable(bool prune, bool report, xmlNodePtr root)
       }
 
     // Is this a type? Note that the same id may appear multiple times.
-    const auto id = get_attribute(node, "id");
+    const auto id = strcmp(node_name, "subrange") != 0
+                    ? get_attribute(node, "id")
+                    : std::optional<std::string>();
     if (id)
       {
         vertex_t type_vertex{false, id.value()};
@@ -557,9 +565,13 @@ handle_unreachable(bool prune, bool report, xmlNodePtr root)
     if (node->type != XML_ELEMENT_NODE)
       return;
 
+    const char* node_name = from_libxml(node->name);
+
     // Return if we know that this is a type to keep or drop in its
     // entirety.
-    const auto id = get_attribute(node, "id");
+    const auto id = strcmp(node_name, "subrange") != 0
+                    ? get_attribute(node, "id")
+                    : std::optional<std::string>();
     if (id)
       {
         if (!seen.count(vertex_t{false, id.value()}))
@@ -570,7 +582,6 @@ handle_unreachable(bool prune, bool report, xmlNodePtr root)
     // Return if we know that this is a declaration to keep or drop in
     // its entirety. Note that var-decl and function-decl are the only
     // elements that can have an elf-symbol-id attribute.
-    const char* node_name = from_libxml(node->name);
     if (strcmp(node_name, "var-decl") == 0
         || strcmp(node_name, "function-decl") == 0)
       {
