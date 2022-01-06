@@ -330,8 +330,8 @@ drop_empty(xmlNodePtr node)
 /// This is not an explicit attribute. It takes one of these forms:
 ///
 /// * name (if symbol is not versioned)
-/// * name@version (if symbol is versioned but this is not the default version)
-/// * name@@version (if symbol is versioned and this is the default version)
+/// * name@version (if symbol is versioned but not the default version)
+/// * name@@version (if symbol is versioned and the default version)
 ///
 /// @param node the elf-symbol element
 ///
@@ -352,34 +352,6 @@ get_elf_symbol_id(xmlNodePtr node)
       result += version.value();
     }
   return result;
-}
-
-/// Discard naming typedef backlinks.
-///
-/// The attribute naming-typedef-id is a backwards link from an anonymous type
-/// to the typedef that refers to it. This attribute only exists for
-/// struct/class and not union or enum types. It is also ignored by abidiff.
-///
-/// Unfortunately, libabigail sometimes conflates multiple anonymous types that
-/// have naming typedefs and only one of the typedefs can "win". ABI XML is thus
-/// sensitive to processing order and can also end up containing definitions of
-/// an anonymous type with differing naming-typedef-id attributes.
-///
-/// It's best to just drop the attribute.
-///
-/// @param node the element to process
-static void
-discard_naming_typedefs(xmlNodePtr node)
-{
-  if (node->type != XML_ELEMENT_NODE)
-    return;
-  const char* node_name = from_libxml(node->name);
-  if (strcmp(node_name, "class-decl") == 0
-      || strcmp(node_name, "union-decl") == 0
-      || strcmp(node_name, "enum-decl") == 0)
-    set_attribute(node, "naming-typedef-id", {});
-  for (xmlNodePtr child : get_children(node))
-    discard_naming_typedefs(child);
 }
 
 static const std::set<std::string> HAS_LOCATION = {
@@ -425,6 +397,10 @@ limit_locations(LocationInfo location_info, xmlNodePtr node)
 /// refers-to relationships for types, declarations and symbols. The
 /// roots for reachability are the ELF elements in the ABI.
 ///
+/// The subrange element requires special treatment. It has a useless
+/// type id, but it is not a type and its type id aliases with that of
+/// all other subranges of the same length. So don't treat it as a type.
+///
 /// @param prune whether to prune unreachable elements
 ///
 /// @param report whether to report untyped symbols
@@ -457,8 +433,10 @@ handle_unreachable(bool prune, bool report, xmlNodePtr root)
     if (node->type != XML_ELEMENT_NODE)
       return;
 
+    const char* node_name = from_libxml(node->name);
+
     // Is this an ELF symbol?
-    if (strcmp(from_libxml(node->name), "elf-symbol") == 0)
+    if (strcmp(node_name, "elf-symbol") == 0)
       {
         elf_symbol_ids.insert(get_elf_symbol_id(node));
         // Early return is safe, but not necessary.
@@ -466,7 +444,9 @@ handle_unreachable(bool prune, bool report, xmlNodePtr root)
       }
 
     // Is this a type? Note that the same id may appear multiple times.
-    const auto id = get_attribute(node, "id");
+    const auto id = strcmp(node_name, "subrange") != 0
+                    ? get_attribute(node, "id")
+                    : std::optional<std::string>();
     if (id)
       {
         vertex_t type_vertex{false, id.value()};
@@ -475,16 +455,17 @@ handle_unreachable(bool prune, bool report, xmlNodePtr root)
         if (naming_typedef_id)
           {
             // This is an odd one, there can be a backwards link from an
-            // anonymous type to a typedef that refers to it. The -t option will
-            // drop these, but if they are still present, we should model the
-            // link to avoid the risk of dangling references.
+            // anonymous type to a typedef that refers to it. The -t
+            // option will drop these, but if they are still present, we
+            // should model the link to avoid the risk of dangling
+            // references.
             vertex_t naming_typedef_vertex{false, naming_typedef_id.value()};
             edges[type_vertex].insert(naming_typedef_vertex);
           }
         if (!stack.empty())
           {
-            // Parent<->child dependencies; record dependencies both ways to
-            // avoid holes in XML types and declarations.
+            // Parent<->child dependencies; record dependencies both
+            // ways to avoid holes in XML types and declarations.
             const auto& parent = stack.back();
             edges[parent].insert(type_vertex);
             edges[type_vertex].insert(parent);
@@ -501,12 +482,12 @@ handle_unreachable(bool prune, bool report, xmlNodePtr root)
         vertices.insert(symbol_vertex);
         if (!stack.empty())
           {
-            // Parent<->child dependencies; record dependencies both ways to
-            // avoid making holes in XML types and declarations.
+            // Parent<->child dependencies; record dependencies both
+            // ways to avoid making holes in XML types and declarations.
             //
-            // Symbols exist outside of the type hierarchy, so choosing to make
-            // them depend on a containing type scope and vice versa is
-            // conservative and probably not necessary.
+            // Symbols exist outside of the type hierarchy, so choosing
+            // to make them depend on a containing type scope and vice
+            // versa is conservative and probably not necessary.
             const auto& parent = stack.back();
             edges[parent].insert(symbol_vertex);
             edges[symbol_vertex].insert(parent);
@@ -584,9 +565,13 @@ handle_unreachable(bool prune, bool report, xmlNodePtr root)
     if (node->type != XML_ELEMENT_NODE)
       return;
 
+    const char* node_name = from_libxml(node->name);
+
     // Return if we know that this is a type to keep or drop in its
     // entirety.
-    const auto id = get_attribute(node, "id");
+    const auto id = strcmp(node_name, "subrange") != 0
+                    ? get_attribute(node, "id")
+                    : std::optional<std::string>();
     if (id)
       {
         if (!seen.count(vertex_t{false, id.value()}))
@@ -597,7 +582,6 @@ handle_unreachable(bool prune, bool report, xmlNodePtr root)
     // Return if we know that this is a declaration to keep or drop in
     // its entirety. Note that var-decl and function-decl are the only
     // elements that can have an elf-symbol-id attribute.
-    const char* node_name = from_libxml(node->name);
     if (strcmp(node_name, "var-decl") == 0
         || strcmp(node_name, "function-decl") == 0)
       {
@@ -626,7 +610,9 @@ static const std::map<std::string, std::string> ANONYMOUS_TYPE_NAMES = {
   {"union-decl", "__anonymous_union__"},
 };
 
-/// Normalise anonymous type names by removing the numerical suffix.
+/// Tidy anonymous types in various ways.
+///
+/// 1. Normalise anonymous type names by removing the numerical suffix.
 ///
 /// Anonymous type names take the form __anonymous_foo__N where foo is
 /// one of enum, struct or union and N is an optional numerical suffix.
@@ -634,39 +620,81 @@ static const std::map<std::string, std::string> ANONYMOUS_TYPE_NAMES = {
 /// useful ABI information. They can cause spurious harmless diffs and
 /// make XML diffing and rebasing harder.
 ///
+/// It's best to remove the suffix.
+///
+/// 2. Reanonymise anonymous types that have been given names.
+///
+/// A recent change to abidw changed its behaviour for any anonymous
+/// type that has a naming typedef. In addition to linking the typedef
+/// and type in both directions, the code now gives (some) anonymous
+/// types the same name as the typedef. This misrepresents the original
+/// types.
+///
+/// Such types should be anonymous.
+///
+/// 3. Discard naming typedef backlinks.
+///
+/// The attribute naming-typedef-id is a backwards link from an
+/// anonymous type to the typedef that refers to it. It is ignored by
+/// abidiff.
+///
+/// Unfortunately, libabigail sometimes conflates multiple anonymous
+/// types that have naming typedefs and only one of the typedefs can
+/// "win". ABI XML is thus sensitive to processing order and can also
+/// end up containing definitions of an anonymous type with differing
+/// naming-typedef-id attributes.
+///
+/// It's best to just drop the attribute.
+///
 /// @param node the XML node to process
 static void
-normalise_anonymous_type_names(xmlNodePtr node)
+handle_anonymous_types(bool normalise, bool reanonymise, bool discard_naming,
+                       xmlNodePtr node)
 {
   if (node->type != XML_ELEMENT_NODE)
     return;
 
   const auto it = ANONYMOUS_TYPE_NAMES.find(from_libxml(node->name));
   if (it != ANONYMOUS_TYPE_NAMES.end())
-    if (const auto attribute = get_attribute(node, "name"))
-      {
-        const auto& anon = it->second;
-        const auto& name = attribute.value();
+    {
+      const auto& anon = it->second;
+      const auto name_attribute = get_attribute(node, "name");
+      const auto& name =
+          name_attribute ? name_attribute.value() : std::string();
+      const auto anon_attr = get_attribute(node, "is-anonymous");
+      const bool is_anon = anon_attr && anon_attr.value() == "yes";
+      const auto naming_attribute = get_attribute(node, "naming-typedef-id");
+      if (normalise && is_anon && name != anon) {
         // __anonymous_foo__123 -> __anonymous_foo__
-        if (!name.compare(0, anon.size(), anon) &&
-            name.find_first_not_of("0123456789", anon.size()) == name.npos)
-          set_attribute(node, "name", anon);
+        set_attribute(node, "name", anon);
       }
+      if (reanonymise && !is_anon && naming_attribute) {
+        // bar with naming typedef -> __anonymous_foo__
+        set_attribute(node, "is-anonymous", "yes");
+        set_attribute(node, "name", anon);
+      }
+      if (discard_naming && naming_attribute)
+        set_attribute(node, "naming-typedef-id", {});
+    }
 
   for (auto child : get_children(node))
-    normalise_anonymous_type_names(child);
+    handle_anonymous_types(normalise, reanonymise, discard_naming, child);
 }
 
-/// Set of attributes that should be excluded from consideration when comparing
-/// XML elements.
+/// The set of attributes that should be excluded from consideration
+/// when comparing XML elements.
 ///
-/// These attributes are omitted with --no-show-locs without changing the
-/// meaning of the ABI. They can also sometimes vary between duplicate type
-/// definitions.
+/// Source location attributes are omitted with --no-show-locs without
+/// changing the meaning of the ABI. They can also sometimes vary
+/// between duplicate type definitions.
+///
+/// The naming-typedef-id attribute, if not already removed by another
+/// pass, is irrelevant to ABI semantics.
 static const std::unordered_set<std::string> IRRELEVANT_ATTRIBUTES = {
   {"filepath"},
   {"line"},
   {"column"},
+  {"naming-typedef-id"},
 };
 
 /// Determine whether one XML element is a subtree of another.
@@ -724,12 +752,13 @@ sub_tree(xmlNodePtr left, xmlNodePtr right)
 
 /// Elminate non-conflicting / report conflicting type definitions.
 ///
-/// This function can eliminate exact type duplicates and duplicates where there
-/// is at least one maximal definition. It can report the remaining, conflicting
-/// duplicate definitions.
+/// This function can eliminate exact type duplicates and duplicates
+/// where there is at least one maximal definition. It can report the
+/// remaining, conflicting duplicate definitions.
 ///
-/// If a type has duplicate definitions in multiple namespace scopes, these
-/// should not be reordered. This function reports how many such types it finds.
+/// If a type has duplicate definitions in multiple namespace scopes,
+/// these should not be reordered. This function reports how many such
+/// types it finds.
 ///
 /// @param eliminate whether to eliminate non-conflicting duplicates
 ///
@@ -740,7 +769,8 @@ sub_tree(xmlNodePtr left, xmlNodePtr right)
 /// @return the number of types defined in multiple namespace scopes
 size_t handle_duplicate_types(bool eliminate, bool report, xmlNodePtr root)
 {
-  // map of type-id to pair of set of namespace scopes and vector of xmlNodes
+  // map of type-id to pair of set of namespace scopes and vector of
+  // xmlNodes
   std::unordered_map<
       std::string,
       std::pair<
@@ -798,8 +828,9 @@ size_t handle_duplicate_types(bool eliminate, bool report, xmlNodePtr root)
       if (count <= 1)
         continue;
 
-      // Find a potentially maximal candidate by scanning through and retaining
-      // the new definition if it's a supertree of the current candidate.
+      // Find a potentially maximal candidate by scanning through and
+      // retaining the new definition if it's a supertree of the current
+      // candidate.
       std::vector<bool> ok(count);
       size_t candidate = 0;
       ok[candidate] = true;
@@ -810,8 +841,8 @@ size_t handle_duplicate_types(bool eliminate, bool report, xmlNodePtr root)
             ok[candidate] = true;
           }
 
-      // Verify the candidate is indeed maximal by scanning the definitions not
-      // already known to be subtrees of it.
+      // Verify the candidate is indeed maximal by scanning the
+      // definitions not already known to be subtrees of it.
       bool bad = false;
       for (size_t ix = 0; ix < count; ++ix)
         if (!ok[ix] && !sub_tree(definitions[ix], definitions[candidate]))
@@ -893,21 +924,21 @@ sort_namespaces_types_and_declarations(xmlNodePtr root)
 {
   // There are (currently) 2 ABI formats we handle here.
   //
-  // 1. An abi-corpus containing one or more abi-instr. In this case, we move
-  // all namespaces, types and declarations to a replacement abi-instr at the
-  // end of the abi-corpus. The existing abi-instr will then be confirmed as
-  // empty and removed.
+  // 1. An abi-corpus containing one or more abi-instr. In this case, we
+  // move all namespaces, types and declarations to a replacement
+  // abi-instr at the end of the abi-corpus. The existing abi-instr will
+  // then be confirmed as empty and removed.
   //
-  // 2. An abi-corpus-group containing one or more abi-corpus each containing
-  // zero or more abi-instr (with at least one abi-instr altogether). In this
-  // case the replacement abi-instr is created within the first abi-corpus of
-  // the group.
+  // 2. An abi-corpus-group containing one or more abi-corpus each
+  // containing zero or more abi-instr (with at least one abi-instr
+  // altogether). In this case the replacement abi-instr is created
+  // within the first abi-corpus of the group.
   //
-  // Anything else is left alone. For example, single abi-instr elements are
-  // present in some libabigail test suite files.
+  // Anything else is left alone. For example, single abi-instr elements
+  // are present in some libabigail test suite files.
 
-  // We first need to identify where to place the new abi-instr and collect all
-  // the abi-instr to process.
+  // We first need to identify where to place the new abi-instr and
+  // collect all the abi-instr to process.
   xmlNodePtr where = nullptr;
   std::vector<xmlNodePtr> instrs;
 
@@ -968,15 +999,15 @@ sort_namespaces_types_and_declarations(xmlNodePtr root)
         }
     }
 
-  // Order types before declarations, types by id, declarations by name (and by
-  // mangled-name, if present).
+  // Order types before declarations, types by id, declarations by name
+  // (and by mangled-name, if present).
   struct Compare {
     int
     cmp(xmlNodePtr a, xmlNodePtr b) const
     {
-      // NOTE: This must not reorder type definitions with the same id. In
-      // particular, we cannot do anything nice and easy like order by element
-      // tag first.
+      // NOTE: This must not reorder type definitions with the same id.
+      // In particular, we cannot do anything nice and easy like order
+      // by element tag first.
       //
       // TODO: Replace compare and subtraction with <=>.
       int result;
@@ -1027,18 +1058,18 @@ sort_namespaces_types_and_declarations(xmlNodePtr root)
   // Collect the child elements of all the instrs, by namespace scope.
   auto scoped_children = get_children_by_namespace(instrs);
   for (auto& [scope, children] : scoped_children)
-    // Sort the children, preserving order of duplicates with a stable sort.
+    // Sort the children, preserving order of duplicates.
     std::stable_sort(children.begin(), children.end(), Compare());
 
-  // Create namespace elements on demand. The global namespace is just the
-  // replacement instr itself.
+  // Create namespace elements on demand. The global namespace, with
+  // empty scope, is just the replacement instr itself.
   std::map<namespace_scope, xmlNodePtr> namespace_elements{{{}, replacement}};
   std::function<xmlNodePtr(const namespace_scope&)> get_namespace_element =
       [&](const namespace_scope& scope) {
         auto insertion = namespace_elements.insert({scope, nullptr});
     if (insertion.second)
       {
-        // Lookup failed (and insertion succeeded) so scope cannot be empty.
+        // Insertion succeeded, so the scope cannot be empty.
         namespace_scope truncated = scope;
         truncated.pop_back();
         xmlNodePtr parent = get_namespace_element(truncated);
@@ -1074,9 +1105,10 @@ static constexpr std::array<std::string_view, 2> SYMBOL_SECTION_SUFFICES = {
 
 /// Read symbols from a file.
 ///
-/// This aims to be compatible with the .ini format used by libabigail for
-/// suppression specifications and symbol lists. All symbol list sections in the
-/// given file are combined into a single set of symbols.
+/// This aims to be compatible with the .ini format used by libabigail
+/// for suppression specifications and symbol lists. All symbol list
+/// sections in the given file are combined into a single set of
+/// symbols.
 ///
 /// @param filename the name of the file from which to read
 ///
@@ -1192,6 +1224,7 @@ main(int argc, char* argv[])
   LocationInfo opt_locations = LocationInfo::COLUMN;
   int opt_indentation = 2;
   bool opt_normalise_anonymous = false;
+  bool opt_reanonymise_anonymous = false;
   bool opt_discard_naming_typedefs = false;
   bool opt_prune_unreachable = false;
   bool opt_report_untyped = false;
@@ -1209,8 +1242,9 @@ main(int argc, char* argv[])
               << "  [-S|--symbols file]\n"
               << "  [-L|--locations column|line|file|none]\n"
               << "  [-I|--indentation n]\n"
-              << "  [-a|--all] (-n -t -p -u -e -c -s -d)\n"
+              << "  [-a|--all] (-n -r -t -p -u -e -c -s -d)\n"
               << "  [-n|--[no-]normalise-anonymous]\n"
+              << "  [-r|--[no-]reanonymise-anonymous]\n"
               << "  [-t|--[no-]discard-naming-typedefs]\n"
               << "  [-p|--[no-]prune-unreachable]\n"
               << "  [-u|--[no-]report-untyped]\n"
@@ -1251,7 +1285,8 @@ main(int argc, char* argv[])
             exit(usage());
         }
       else if (arg == "-a" || arg == "--all")
-        opt_normalise_anonymous = opt_discard_naming_typedefs
+        opt_normalise_anonymous = opt_reanonymise_anonymous
+                                = opt_discard_naming_typedefs
                                 = opt_prune_unreachable
                                 = opt_report_untyped
                                 = opt_eliminate_duplicates
@@ -1263,6 +1298,10 @@ main(int argc, char* argv[])
         opt_normalise_anonymous = true;
       else if (arg == "--no-normalise-anonymous")
         opt_normalise_anonymous = false;
+      else if (arg == "-r" || arg == "--reanonymise-anonymous")
+        opt_reanonymise_anonymous = true;
+      else if (arg == "--no-reanonymise-anonymous")
+        opt_reanonymise_anonymous = false;
       else if (arg == "-t" || arg == "--discard-naming-typedefs")
         opt_discard_naming_typedefs = true;
       else if (arg == "--no-discard-naming-typedefs")
@@ -1338,12 +1377,12 @@ main(int argc, char* argv[])
     filter_symbols(opt_symbols.value(), root);
 
   // Normalise anonymous type names.
-  if (opt_normalise_anonymous)
-    normalise_anonymous_type_names(root);
-
+  // Reanonymise anonymous types.
   // Discard naming typedef backlinks.
-  if (opt_discard_naming_typedefs)
-    discard_naming_typedefs(root);
+  if (opt_normalise_anonymous || opt_reanonymise_anonymous
+      || opt_discard_naming_typedefs)
+    handle_anonymous_types(opt_normalise_anonymous, opt_reanonymise_anonymous,
+                           opt_discard_naming_typedefs, root);
 
   // Prune unreachable elements and/or report untyped symbols.
   size_t untyped_symbols = 0;
@@ -1404,7 +1443,7 @@ main(int argc, char* argv[])
   xmlChar* out_data;
   int out_size;
   xmlDocDumpMemory(document, &out_data, &out_size);
-  // Remove the XML declaration as this is not currently accepted by abidiff.
+  // Remove the XML declaration as it currently upsets abidiff.
   xmlChar* out_limit = out_data + out_size;
   while (out_data < out_limit && *out_data != '\n')
     ++out_data;
