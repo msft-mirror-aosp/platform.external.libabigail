@@ -137,7 +137,7 @@ operator|=(abidiff_status&l, abidiff_status r)
 /// @return true iff @p s has its ABIDIFF_ERROR bit set.
 bool
 abidiff_status_has_error(abidiff_status s)
-{return s & ABIDIFF_ERROR;}
+{return s & (ABIDIFF_ERROR | ABIDIFF_USAGE_ERROR);}
 
 /// Test if an instance of @param abidiff_status bits mask represents
 /// an abi change.
@@ -1034,6 +1034,18 @@ get_library_version_string()
   string major, minor, revision, version_string, suffix;
   abigail::abigail_get_library_version(major, minor, revision, suffix);
   version_string = major + "." + minor + "." + revision + suffix;
+  return version_string;
+}
+
+/// Return the version string for the ABIXML format.
+///
+/// @return the version string of the ABIXML format.
+string
+get_abixml_version_string()
+{
+  string major, minor, version_string;
+  abigail::abigail_get_abixml_version(major, minor);
+  version_string = major + "." + minor;
   return version_string;
 }
 
@@ -2545,7 +2557,7 @@ build_corpus_group_from_kernel_dist_under(const string&	root,
       char *di_root_ptr = di_root.get();
       vector<char**> di_roots;
       di_roots.push_back(&di_root_ptr);
-      abigail::dwarf_reader::status status = abigail::dwarf_reader::STATUS_OK;
+      abigail::elf_reader::status status = abigail::elf_reader::STATUS_OK;
       corpus_group_sptr group;
       if (!vmlinux.empty())
 	{
