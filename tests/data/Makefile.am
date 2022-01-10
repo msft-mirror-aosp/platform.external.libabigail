@@ -91,6 +91,13 @@ test-abidiff/test-crc-0.xml \
 test-abidiff/test-crc-1.xml \
 test-abidiff/test-crc-2.xml \
 test-abidiff/test-crc-report.txt \
+test-abidiff/test-PR27985-report.txt	 \
+test-abidiff/test-PR27985-v0.c		 \
+test-abidiff/test-PR27985-v0.o		 \
+test-abidiff/test-PR27985-v0.o.abi	 \
+test-abidiff/test-PR27985-v1.c		 \
+test-abidiff/test-PR27985-v1.o		 \
+test-abidiff/test-PR27985-v1.o.abi	 \
 \
 test-abidiff-exit/test1-voffset-change-report0.txt \
 test-abidiff-exit/test1-voffset-change-report1.txt \
@@ -207,6 +214,10 @@ test-abidiff-exit/test-crc-v1.abi \
 test-abidiff-exit/test-missing-alias-report.txt \
 test-abidiff-exit/test-missing-alias.abi \
 test-abidiff-exit/test-missing-alias.suppr \
+test-abidiff/test-PR27616-squished-v0.abi \
+test-abidiff/test-PR27616-squished-v1.abi \
+test-abidiff/test-PR27616-v0.xml \
+test-abidiff/test-PR27616-v1.xml \
 \
 test-diff-dwarf/test0-v0.cc		\
 test-diff-dwarf/test0-v0.o			\
@@ -557,6 +568,14 @@ test-read-dwarf/test-suppressed-alias.c \
 test-read-dwarf/test-suppressed-alias.o \
 test-read-dwarf/test-suppressed-alias.o.abi \
 test-read-dwarf/test-suppressed-alias.suppr \
+test-read-dwarf/PR27700/include-dir/priv.h  \
+test-read-dwarf/PR27700/include-dir/pub.h  \
+test-read-dwarf/PR27700/pub-incdir/inc.h  \
+test-read-dwarf/PR27700/test-PR27700.abi  \
+test-read-dwarf/PR27700/test-PR27700.c  \
+test-read-dwarf/PR27700/test-PR27700.o  \
+test-read-dwarf/test-libaaudio.so       \
+test-read-dwarf/test-libaaudio.so.abi   \
 \
 test-annotate/test0.abi			\
 test-annotate/test1.abi			\
@@ -593,6 +612,7 @@ test-types-stability/pr19142-topo.o \
 test-types-stability/pr19204-libtcmalloc.so.4.2.6-xlc \
 test-types-stability/PR27165-libzmq.so.5.2.3 \
 test-types-stability/PR27165-libzmq.so.5.2.3.debug \
+test-types-stability/pr27980-libc.so \
 \
 test-diff-filter/test0-v0.cc		\
 test-diff-filter/test0-v1.cc		\
@@ -954,6 +974,8 @@ test-diff-filter/test-PR27598-v0.o           \
 test-diff-filter/test-PR27598-v1.cc          \
 test-diff-filter/test-PR27598-v1.o           \
 test-diff-filter/test-PR27598-report-0.txt   \
+test-diff-filter/test-PR27995-report-0.txt   \
+test-diff-filter/test-PR27995.abi	     \
 \
 test-diff-suppr/test0-type-suppr-v0.cc	\
 test-diff-suppr/test0-type-suppr-v1.cc	\
@@ -1843,6 +1865,9 @@ test-diff-pkg/elfutils-libs-debuginfo-0.183-1.el9.x86_64-self-check-report-0.txt
 test-diff-pkg/elfutils-libs-0.183-1.el9.x86_64.rpm \
 test-diff-pkg/elfutils-libs-debuginfo-0.183-1.el9.x86_64.rpm \
 test-diff-pkg/elfutils-debuginfo-0.183-1.el9.x86_64.rpm \
+test-diff-pkg/graphviz-2.44.0-18.el9.aarch64-self-check-report-0.txt \
+test-diff-pkg/graphviz-2.44.0-18.el9.aarch64.rpm \
+test-diff-pkg/graphviz-debuginfo-2.44.0-18.el9.aarch64.rpm \
 \
 test-fedabipkgdiff/dbus-glib-0.104-3.fc23.x86_64.rpm \
 test-fedabipkgdiff/dbus-glib-debuginfo-0.104-3.fc23.x86_64.rpm \
