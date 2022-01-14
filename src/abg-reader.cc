@@ -58,10 +58,19 @@ static bool	read_is_declaration_only(xmlNodePtr, bool&);
 static bool	read_is_artificial(xmlNodePtr, bool&);
 static bool	read_tracking_non_reachable_types(xmlNodePtr, bool&);
 static bool	read_is_non_reachable_type(xmlNodePtr, bool&);
+static bool	read_naming_typedef_id_string(xmlNodePtr, string&);
 #ifdef WITH_DEBUG_SELF_COMPARISON
 static bool	read_type_id_string(xmlNodePtr, string&);
+static bool	maybe_map_type_with_type_id(const type_base_sptr&,
+					    xmlNodePtr);
+static bool	maybe_map_type_with_type_id(const type_base_sptr&,
+					    const string&);
+#define MAYBE_MAP_TYPE_WITH_TYPE_ID(type, xml_node) \
+  maybe_map_type_with_type_id(type, xml_node)
+#else
+#define MAYBE_MAP_TYPE_WITH_TYPE_ID(type, xml_node)
 #endif
-
+static void	maybe_set_naming_typedef(read_context&	ctxt, xmlNodePtr, const decl_base_sptr &);
 class read_context;
 
 /// This abstracts the context in which the current ABI
@@ -838,9 +847,12 @@ public:
 	// was being serialized.
 	auto j = m_env->get_type_id_canonical_type_map().find(type_id);
 	if (j == m_env->get_type_id_canonical_type_map().end())
-	  std::cerr << "error: no type with type-id: '"
-		    << type_id
-		    << "' could be read back from the typeid file\n";
+	  {
+	    if (t->get_naked_canonical_type())
+	      std::cerr << "error: no type with type-id: '"
+			<< type_id
+			<< "' could be read back from the typeid file\n";
+	  }
 	else if (j->second
 		 != reinterpret_cast<uintptr_t>(t->get_canonical_type().get()))
 	  // So thecanonical type of 't' (at abixml de-serialization
@@ -1884,6 +1896,7 @@ read_corpus_from_input(read_context& ctxt)
 	ctxt.clear_per_corpus_data();
 
       corpus& corp = *ctxt.get_corpus();
+      corp.set_origin(corpus::NATIVE_XML_ORIGIN);
       ctxt.set_exported_decls_builder(corp.get_exported_decls_builder().get());
 
       handle_version_attribute(reader, corp);
@@ -1943,6 +1956,8 @@ read_corpus_from_input(read_context& ctxt)
 	ctxt.clear_per_corpus_data();
 
       corpus& corp = *ctxt.get_corpus();
+      corp.set_origin(corpus::NATIVE_XML_ORIGIN);
+
       ctxt.set_exported_decls_builder(corp.get_exported_decls_builder().get());
 
       xml::xml_char_sptr path_str = XML_NODE_GET_ATTRIBUTE(node, "path");
@@ -2008,8 +2023,6 @@ read_corpus_from_input(read_context& ctxt)
   ctxt.perform_late_type_canonicalizing();
 
   ctxt.get_environment()->canonicalization_is_done(true);
-
-  corp.set_origin(corpus::NATIVE_XML_ORIGIN);
 
   if (call_reader_next)
     {
@@ -2455,13 +2468,13 @@ read_size_and_alignment(xmlNodePtr node,
   bool got_something = false;
   if (xml_char_sptr s = XML_NODE_GET_ATTRIBUTE(node, "size-in-bits"))
     {
-      size_in_bits = atoi(CHAR_STR(s));
+      size_in_bits = atoll(CHAR_STR(s));
       got_something = true;
     }
 
   if (xml_char_sptr s = XML_NODE_GET_ATTRIBUTE(node, "alignment-in-bits"))
     {
-      align_in_bits = atoi(CHAR_STR(s));
+      align_in_bits = atoll(CHAR_STR(s));
       got_something = true;
     }
   return got_something;
@@ -2668,6 +2681,26 @@ read_is_non_reachable_type(xmlNodePtr node, bool& is_non_reachable_type)
   return false;
 }
 
+/// Read the "naming-typedef-id" property from an XML node.
+///
+/// @param node the XML node to consider.
+///
+/// @param naming_typedef_id output parameter.  It's set to the
+/// content of the "naming-typedef-id" property, if it's present.
+///
+/// @return true iff the "naming-typedef-id" property exists and was
+/// read from @p node.
+static bool
+read_naming_typedef_id_string(xmlNodePtr node, string& naming_typedef_id)
+{
+  if (xml_char_sptr s = XML_NODE_GET_ATTRIBUTE(node, "naming-typedef-id"))
+    {
+      naming_typedef_id = xml::unescape_xml_string(CHAR_STR(s));
+      return true;
+    }
+  return false;
+}
+
 /// Read the "is-virtual" attribute of the current xml node.
 ///
 /// @param node the xml node to read the attribute from
@@ -2816,7 +2849,95 @@ read_type_id_string(xmlNodePtr node, string& type_id)
     }
   return false;
 }
+
+/// Associate a type-id string with the type that was constructed from
+/// it.
+///
+/// Note that if we are not in "self comparison debugging" mode or if
+/// the type we are looking at is not canonicalized, then this
+/// function does nothing.
+///
+/// @param t the type built from the a type XML node that has a
+/// particular type-id.
+///
+/// @param type_id the type-id of type @p t.
+///
+/// @return true if the association was performed.
+static bool
+maybe_map_type_with_type_id(const type_base_sptr& t,
+			    const string& type_id)
+{
+  if (!t)
+    return false;
+
+  environment *env = t->get_environment();
+  if (!env->self_comparison_debug_is_on()
+      || is_non_canonicalized_type(t.get()))
+    return false;
+
+  env->get_pointer_type_id_map()[reinterpret_cast<uintptr_t>(t.get())] =
+    type_id;
+
+  return true;
+}
+
+/// Associate a type-id string with the type that was constructed from
+/// it.
+///
+/// Note that if we are not in "self comparison debugging" mode or if
+/// the type we are looking at is not canonicalized, then this
+/// function does nothing.
+///
+/// @param t the type built from the a type XML node that has a
+/// particular type-id.
+///
+/// @param type_id the type-id of type @p t.
+///
+/// @return true if the association was performed.
+static bool
+maybe_map_type_with_type_id(const type_base_sptr& t,
+			    xmlNodePtr node)
+{
+  if (!t)
+    return false;
+
+  environment *env = t->get_environment();
+  if (!env->self_comparison_debug_is_on()
+      || is_non_canonicalized_type(t.get()))
+    return false;
+
+  string type_id;
+  if (!read_type_id_string(node, type_id) || type_id.empty())
+    return false;
+
+  return maybe_map_type_with_type_id(t, type_id);
+}
+
 #endif
+
+/// Set the naming typedef to a given decl depending on the content of
+/// the "naming-typedef-id" property of its descriptive XML element.
+///
+/// @param ctxt the current read context.
+///
+/// @param node the XML node to read from.
+///
+/// @param decl the decl to set the naming typedef to.
+static void
+maybe_set_naming_typedef(read_context&		ctxt,
+			 xmlNodePtr		node,
+			 const decl_base_sptr&	decl)
+{
+  string naming_typedef_id;
+  read_naming_typedef_id_string(node, naming_typedef_id);
+  if (!naming_typedef_id.empty())
+    {
+      typedef_decl_sptr naming_typedef =
+	is_typedef(ctxt.build_or_get_type_decl(naming_typedef_id, true));
+      ABG_ASSERT(naming_typedef);
+      decl->set_naming_typedef(naming_typedef);
+    }
+}
 
 /// Build a @ref namespace_decl from an XML element node which name is
 /// "namespace-decl".  Note that this function recursively reads the
@@ -3646,20 +3767,6 @@ build_qualified_type_decl(read_context&	ctxt,
   if (restrict_cv)
     cv = cv | qualified_type_def::CV_RESTRICT;
 
-  // Create the qualified type /before/ the underlying type.  After
-  // the creation, the type is 'keyed' using
-  // ctxt.push_and_key_type_decl.  This means that the type can be
-  // retrieved from its type ID.  This is so that if the underlying
-  // type indirectly uses this qualified type (via recursion) then
-  // that is made possible.
-  //
-  // The underlying type will later be set after it's created.
-  qualified_type_def_sptr decl;
-  decl.reset(new qualified_type_def(ctxt.get_environment(), cv, loc));
-  maybe_set_artificial_location(ctxt, node, decl);
-  ctxt.push_and_key_type_decl(decl, id, add_to_current_scope);
-  ctxt.map_xml_node_to_decl(node, decl);
-
   string type_id;
   if (xml_char_sptr s = XML_NODE_GET_ATTRIBUTE(node, "type-id"))
     type_id = CHAR_STR(s);
@@ -3668,7 +3775,21 @@ build_qualified_type_decl(read_context&	ctxt,
   shared_ptr<type_base> underlying_type =
     ctxt.build_or_get_type_decl(type_id, true);
   ABG_ASSERT(underlying_type);
-  decl->set_underlying_type(underlying_type);
+
+  qualified_type_def_sptr decl;
+  if (type_base_sptr t = ctxt.get_type_decl(id))
+    {
+      decl = is_qualified_type(t);
+      ABG_ASSERT(decl);
+    }
+  else
+    {
+      decl.reset(new qualified_type_def(underlying_type, cv, loc));
+      maybe_set_artificial_location(ctxt, node, decl);
+      ctxt.push_and_key_type_decl(decl, id, add_to_current_scope);
+    }
+
+  ctxt.map_xml_node_to_decl(node, decl);
 
   return decl;
 }
@@ -3868,12 +3989,12 @@ build_function_type(read_context&	ctxt,
   std::vector<shared_ptr<function_decl::parameter> > parms;
   type_base_sptr return_type = env->get_void_type();
 
-  class_decl_sptr method_class_type;
+  class_or_union_sptr method_class_type;
   if (is_method_t)
     {
       method_class_type =
-	is_class_type(ctxt.build_or_get_type_decl(method_class_id,
-						  /*add_decl_to_scope=*/true));
+	is_class_or_union_type(ctxt.build_or_get_type_decl(method_class_id,
+							   /*add_decl_to_scope=*/true));
       ABG_ASSERT(method_class_type);
     }
 
@@ -4125,6 +4246,7 @@ build_array_type_def(read_context&	ctxt,
 	if (array_type_def::subrange_sptr s =
 	    build_subrange_type(ctxt, n))
 	  {
+	    MAYBE_MAP_TYPE_WITH_TYPE_ID(s, n);
 	    if (add_to_current_scope)
 	      {
 		add_decl_to_scope(s, ctxt.get_cur_scope());
@@ -4134,17 +4256,15 @@ build_array_type_def(read_context&	ctxt,
 	  }
       }
 
-  array_type_def_sptr ar_type(new array_type_def(ctxt.get_environment(),
-						 subranges, loc));
-  maybe_set_artificial_location(ctxt, node, ar_type);
-  if (ctxt.push_and_key_type_decl(ar_type, id, add_to_current_scope))
-    ctxt.map_xml_node_to_decl(node, ar_type);
-
   // The type of array elements.
   type_base_sptr type =
     ctxt.build_or_get_type_decl(type_id, true);
   ABG_ASSERT(type);
-  ar_type->set_element_type(type);
+
+  array_type_def_sptr ar_type(new array_type_def(type, subranges, loc));
+  maybe_set_artificial_location(ctxt, node, ar_type);
+  if (ctxt.push_and_key_type_decl(ar_type, id, add_to_current_scope))
+    ctxt.map_xml_node_to_decl(node, ar_type);
 
   if (dimensions != ar_type->get_dimension_count()
       || (alignment_in_bits
@@ -4299,7 +4419,11 @@ build_enum_type_decl(read_context&	ctxt,
 	  if (a)
 	    {
 	      value = strtoll(CHAR_STR(a), NULL, 0);
-	      if (value == LLONG_MIN || value == LLONG_MAX)
+	      // when strtoll encounters overflow or underflow, errno
+	      // is set to ERANGE and the returned value is either
+	      // LLONG_MIN or LLONG_MAX.
+	      if ((errno == ERANGE)
+		  && (value == LLONG_MIN || value == LLONG_MAX))
 		return nil;
 	    }
 
@@ -4320,6 +4444,7 @@ build_enum_type_decl(read_context&	ctxt,
   t->set_is_declaration_only(is_decl_only);
   if (ctxt.push_and_key_type_decl(t, id, add_to_current_scope))
     {
+      maybe_set_naming_typedef(ctxt, node, t);
       ctxt.map_xml_node_to_decl(node, t);
       return t;
     }
@@ -4376,19 +4501,14 @@ build_typedef_decl(read_context&	ctxt,
     type_id = CHAR_STR(s);
   ABG_ASSERT(!type_id.empty());
 
-  // Create the typedef type /before/ the underlying type.  After the
-  // creation, the type is 'keyed' using ctxt.push_and_key_type_decl.
-  // This means that the type can be retrieved from its type ID.  This
-  // is so that if the underlying type indirectly (needs to) use(s)
-  // this very same typedef type (via recursion) then that is made
-  // possible.
-  typedef_decl_sptr t(new typedef_decl(name, ctxt.get_environment(), loc));
+  type_base_sptr underlying_type(ctxt.build_or_get_type_decl(type_id, true));
+  ABG_ASSERT(underlying_type);
+
+  typedef_decl_sptr t(new typedef_decl(name, underlying_type, loc));
   maybe_set_artificial_location(ctxt, node, t);
   ctxt.push_and_key_type_decl(t, id, add_to_current_scope);
   ctxt.map_xml_node_to_decl(node, t);
-  type_base_sptr underlying_type(ctxt.build_or_get_type_decl(type_id, true));
-  ABG_ASSERT(underlying_type);
-  t->set_underlying_type(underlying_type);
+
   return t;
 }
 
@@ -4501,11 +4621,6 @@ build_class_decl(read_context&		ctxt,
 
   bool is_anonymous = false;
   read_is_anonymous(node, is_anonymous);
-
-  string naming_typedef_id;
-
-  if (xml_char_sptr s = XML_NODE_GET_ATTRIBUTE(node, "naming-typedef-id"))
-    naming_typedef_id = xml::unescape_xml_string(CHAR_STR(s));
 
   ABG_ASSERT(!id.empty());
 
@@ -4639,13 +4754,7 @@ build_class_decl(read_context&		ctxt,
   ctxt.key_type_decl(decl, id);
 
   // If this class has a naming typedef, get it and refer to it.
-  if (!naming_typedef_id.empty())
-    {
-      typedef_decl_sptr naming_typedef =
-	is_typedef(ctxt.build_or_get_type_decl(naming_typedef_id, true));
-      ABG_ASSERT(naming_typedef);
-      decl->set_naming_typedef(naming_typedef);
-    }
+  maybe_set_naming_typedef(ctxt, node, decl);
 
   for (xmlNodePtr n = xmlFirstElementChild(node);
        !is_decl_only && n;
@@ -5042,6 +5151,8 @@ build_union_decl(read_context& ctxt,
 
   ctxt.map_xml_node_to_decl(node, decl);
   ctxt.key_type_decl(decl, id);
+
+  maybe_set_naming_typedef(ctxt, node, decl);
 
   for (xmlNodePtr n = xmlFirstElementChild(node);
        !is_decl_only && n;
@@ -5638,16 +5749,7 @@ build_type(read_context&	ctxt,
 	abi->record_type_as_reachable_from_public_interfaces(*t);
     }
 
-#ifdef WITH_DEBUG_SELF_COMPARISON
-  environment *env = ctxt.get_environment();
-  if (t && env->self_comparison_debug_is_on())
-    {
-      string type_id;
-      if (read_type_id_string(node, type_id))
-	// Let's store the type-id of this type pointer.
-	env->get_pointer_type_id_map()[reinterpret_cast<uintptr_t>(t.get())] = type_id;
-    }
-#endif
+  MAYBE_MAP_TYPE_WITH_TYPE_ID(t, node);
 
   if (t)
     ctxt.maybe_canonicalize_type(t,/*force_delay=*/false );
@@ -5665,6 +5767,7 @@ handle_type_decl(read_context&	ctxt,
 		 bool		add_to_current_scope)
 {
   type_decl_sptr decl = build_type_decl(ctxt, node, add_to_current_scope);
+  MAYBE_MAP_TYPE_WITH_TYPE_ID(decl, node);
   if (decl && decl->get_scope())
     ctxt.maybe_canonicalize_type(decl, /*force_delay=*/false);
   return decl;
@@ -5698,6 +5801,7 @@ handle_qualified_type_decl(read_context&	ctxt,
   qualified_type_def_sptr decl =
     build_qualified_type_decl(ctxt, node,
 			      add_to_current_scope);
+  MAYBE_MAP_TYPE_WITH_TYPE_ID(decl, node);
   if (decl && decl->get_scope())
     ctxt.maybe_canonicalize_type(decl, /*force_delay=*/false);
   return decl;
@@ -5715,6 +5819,7 @@ handle_pointer_type_def(read_context&	ctxt,
 {
   pointer_type_def_sptr decl = build_pointer_type_def(ctxt, node,
 						      add_to_current_scope);
+  MAYBE_MAP_TYPE_WITH_TYPE_ID(decl, node);
   if (decl && decl->get_scope())
     ctxt.maybe_canonicalize_type(decl, /*force_delay=*/false);
   return decl;
@@ -5732,6 +5837,7 @@ handle_reference_type_def(read_context& ctxt,
 {
   reference_type_def_sptr decl = build_reference_type_def(ctxt, node,
 							  add_to_current_scope);
+  MAYBE_MAP_TYPE_WITH_TYPE_ID(decl, node);
   if (decl && decl->get_scope())
     ctxt.maybe_canonicalize_type(decl, /*force_delay=*/false);
   return decl;
@@ -5749,6 +5855,7 @@ handle_function_type(read_context&	ctxt,
 {
   function_type_sptr type = build_function_type(ctxt, node,
 						  add_to_current_scope);
+  MAYBE_MAP_TYPE_WITH_TYPE_ID(type, node);
   ctxt.maybe_canonicalize_type(type, /*force_delay=*/true);
   return type;
 }
@@ -5765,6 +5872,7 @@ handle_array_type_def(read_context&	ctxt,
 {
   array_type_def_sptr decl = build_array_type_def(ctxt, node,
 						  add_to_current_scope);
+  MAYBE_MAP_TYPE_WITH_TYPE_ID(decl, node);
   ctxt.maybe_canonicalize_type(decl, /*force_delay=*/false);
   return decl;
 }
@@ -5780,6 +5888,7 @@ handle_enum_type_decl(read_context&	ctxt,
   enum_type_decl_sptr decl =
     build_enum_type_decl_if_not_suppressed(ctxt, node,
 					   add_to_current_scope);
+  MAYBE_MAP_TYPE_WITH_TYPE_ID(decl, node);
   if (decl && decl->get_scope())
     ctxt.maybe_canonicalize_type(decl, /*force_delay=*/false);
   return decl;
@@ -5795,6 +5904,7 @@ handle_typedef_decl(read_context&	ctxt,
 {
   typedef_decl_sptr decl = build_typedef_decl(ctxt, node,
 					      add_to_current_scope);
+  MAYBE_MAP_TYPE_WITH_TYPE_ID(decl, node);
   if (decl && decl->get_scope())
     ctxt.maybe_canonicalize_type(decl, /*force_delay=*/false);
   return decl;
@@ -5847,6 +5957,7 @@ handle_class_decl(read_context& ctxt,
 {
   class_decl_sptr decl =
     build_class_decl_if_not_suppressed(ctxt, node, add_to_current_scope);
+  MAYBE_MAP_TYPE_WITH_TYPE_ID(is_type(decl), node);
   if (decl && decl->get_scope())
     ctxt.maybe_canonicalize_type(decl, /*force_delay=*/false);
   return decl;
@@ -5865,6 +5976,7 @@ handle_union_decl(read_context& ctxt,
 {
   union_decl_sptr decl =
     build_union_decl_if_not_suppressed(ctxt, node, add_to_current_scope);
+  MAYBE_MAP_TYPE_WITH_TYPE_ID(is_type(decl), node);
   if (decl && decl->get_scope())
     ctxt.maybe_canonicalize_type(decl, /*force_delay=*/false);
   return decl;
@@ -6095,7 +6207,11 @@ load_canonical_type_ids(xml_reader::read_context& ctxt, const string &file_path)
 	  s << canonical_address;
 	  uintptr_t v = 0;
 	  s >>  std::hex >> v;
-	  if (!id.empty())
+	  if (!id.empty()
+	      // 0xdeadbabe is the special value the hash of types
+	      // that are not canonicalized.  Look into function
+	      // hash_as_canonical_type_or_constant for the details.
+	      && v != 0xdeadbabe)
 	    ctxt.get_environment()->get_type_id_canonical_type_map()[id] = v;
 	}
     }
