@@ -97,6 +97,7 @@ cc_library_host_static {
         "src/*.cc",
     ],
     exclude_srcs: [
+        "src/abg-ctf-reader.cc",
         "src/abg-viz-*",
     ],
     export_include_dirs: ["include"],
