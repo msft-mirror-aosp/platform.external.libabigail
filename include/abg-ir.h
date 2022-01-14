@@ -217,6 +217,14 @@ public:
   self_comparison_debug_is_on() const;
 #endif
 
+#ifdef WITH_DEBUG_TYPE_CANONICALIZATION
+  void
+  debug_type_canonicalization_is_on(bool flag);
+
+  bool
+  debug_type_canonicalization_is_on() const;
+#endif
+
   vector<type_base_sptr>* get_canonical_types(const char* name);
 
   type_base* get_canonical_type(const char* name, unsigned index);
@@ -657,7 +665,7 @@ public:
     LANG_Pascal83,
     LANG_Modula2,
     LANG_Java,
-    LANG_PL1,
+    LANG_PLI,
     LANG_UPC,
     LANG_D,
     LANG_Python,
@@ -1637,11 +1645,14 @@ public:
   bool
   get_has_anonymous_parent() const;
 
-  void
-  set_has_anonymous_parent(bool f) const;
-
   bool
   get_is_anonymous_or_has_anonymous_parent() const;
+
+  typedef_decl_sptr
+  get_naming_typedef() const;
+
+  void
+  set_naming_typedef(const typedef_decl_sptr&);
 
   const interned_string&
   get_linkage_name() const;
@@ -3905,12 +3916,6 @@ public:
 
   virtual void
   set_alignment_in_bits(size_t);
-
-  typedef_decl_sptr
-  get_naming_typedef() const;
-
-  void
-  set_naming_typedef(const typedef_decl_sptr&);
 
  void
   insert_member_type(type_base_sptr t,
