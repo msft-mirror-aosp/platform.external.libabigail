@@ -12431,7 +12431,7 @@
     <class-decl name='GSUBProxy' size-in-bits='128' is-struct='yes' visibility='default' filepath='/tmp/legendre/spack-stage/spack-stage-04g73E/harfbuzz-0.9.37/src/hb-ot-layout.cc' line='804' column='1' id='type-id-925'>
       <member-type access='public'>
         <!-- typedef OT::SubstLookup GSUBProxy::Lookup -->
-        <typedef-decl name='Lookup' type-id='type-id-927' filepath='/tmp/legendre/spack-stage/spack-stage-04g73E/harfbuzz-0.9.37/src/hb-ot-layout.cc' line='807' column='1' id='type-id-926'/>
+        <typedef-decl name='Lookup' type-id='type-id-926' filepath='/tmp/legendre/spack-stage/spack-stage-04g73E/harfbuzz-0.9.37/src/hb-ot-layout.cc' line='807' column='1' id='type-id-927'/>
       </member-type>
       <data-member access='public' static='yes'>
         <!-- static const unsigned int GSUBProxy::table_index -->
@@ -12465,7 +12465,7 @@
     <class-decl name='GPOSProxy' size-in-bits='128' is-struct='yes' visibility='default' filepath='/tmp/legendre/spack-stage/spack-stage-04g73E/harfbuzz-0.9.37/src/hb-ot-layout.cc' line='818' column='1' id='type-id-932'>
       <member-type access='public'>
         <!-- typedef OT::PosLookup GPOSProxy::Lookup -->
-        <typedef-decl name='Lookup' type-id='type-id-934' filepath='/tmp/legendre/spack-stage/spack-stage-04g73E/harfbuzz-0.9.37/src/hb-ot-layout.cc' line='821' column='1' id='type-id-933'/>
+        <typedef-decl name='Lookup' type-id='type-id-933' filepath='/tmp/legendre/spack-stage/spack-stage-04g73E/harfbuzz-0.9.37/src/hb-ot-layout.cc' line='821' column='1' id='type-id-934'/>
       </member-type>
       <data-member access='public' static='yes'>
         <!-- static const unsigned int GPOSProxy::table_index -->
@@ -12587,7 +12587,7 @@
         <class-decl name='stage_map_t' size-in-bits='128' is-struct='yes' visibility='default' filepath='/tmp/legendre/spack-stage/spack-stage-04g73E/harfbuzz-0.9.37/src/hb-ot-map-private.hh' line='70' column='1' id='type-id-911'>
           <member-type access='public'>
             <!-- typedef void (const hb_ot_shape_plan_t*, hb_font_t*, hb_buffer_t*)* hb_ot_map_t::stage_map_t::pause_func_t -->
-            <typedef-decl name='pause_func_t' type-id='type-id-942' filepath='/tmp/legendre/spack-stage/spack-stage-04g73E/harfbuzz-0.9.37/src/hb-ot-map-private.hh' line='68' column='1' id='type-id-941'/>
+            <typedef-decl name='pause_func_t' type-id='type-id-941' filepath='/tmp/legendre/spack-stage/spack-stage-04g73E/harfbuzz-0.9.37/src/hb-ot-map-private.hh' line='68' column='1' id='type-id-942'/>
           </member-type>
           <data-member access='public' layout-offset-in-bits='0'>
             <!-- unsigned int hb_ot_map_t::stage_map_t::last_lookup -->
@@ -12595,7 +12595,7 @@
           </data-member>
           <data-member access='public' layout-offset-in-bits='64'>
             <!-- hb_ot_map_t::stage_map_t::pause_func_t hb_ot_map_t::stage_map_t::pause_func -->
-            <var-decl name='pause_func' type-id='type-id-941' visibility='default' filepath='/tmp/legendre/spack-stage/spack-stage-04g73E/harfbuzz-0.9.37/src/hb-ot-map-private.hh' line='72' column='1'/>
+            <var-decl name='pause_func' type-id='type-id-942' visibility='default' filepath='/tmp/legendre/spack-stage/spack-stage-04g73E/harfbuzz-0.9.37/src/hb-ot-map-private.hh' line='72' column='1'/>
           </data-member>
         </class-decl>
       </member-type>
@@ -13910,9 +13910,9 @@
     <!-- OT::PairSet::sanitize_closure_t* -->
     <pointer-type-def type-id='type-id-1262' size-in-bits='64' id='type-id-1263'/>
     <!-- OT::PosLookup& -->
-    <reference-type-def kind='lvalue' type-id='type-id-934' size-in-bits='64' id='type-id-1264'/>
+    <reference-type-def kind='lvalue' type-id='type-id-933' size-in-bits='64' id='type-id-1264'/>
     <!-- OT::PosLookup* -->
-    <pointer-type-def type-id='type-id-934' size-in-bits='64' id='type-id-1265'/>
+    <pointer-type-def type-id='type-id-933' size-in-bits='64' id='type-id-1265'/>
     <!-- OT::PosLookupSubTable& -->
     <reference-type-def kind='lvalue' type-id='type-id-1266' size-in-bits='64' id='type-id-1267'/>
     <!-- OT::PosLookupSubTable* -->
@@ -13974,9 +13974,9 @@
     <!-- OT::SingleSubstFormat2* -->
     <pointer-type-def type-id='type-id-1308' size-in-bits='64' id='type-id-557'/>
     <!-- OT::SubstLookup& -->
-    <reference-type-def kind='lvalue' type-id='type-id-927' size-in-bits='64' id='type-id-1309'/>
+    <reference-type-def kind='lvalue' type-id='type-id-926' size-in-bits='64' id='type-id-1309'/>
     <!-- OT::SubstLookup* -->
-    <pointer-type-def type-id='type-id-927' size-in-bits='64' id='type-id-541'/>
+    <pointer-type-def type-id='type-id-926' size-in-bits='64' id='type-id-541'/>
     <!-- OT::SubstLookupSubTable& -->
     <reference-type-def kind='lvalue' type-id='type-id-1310' size-in-bits='64' id='type-id-1311'/>
     <!-- OT::SubstLookupSubTable* -->
@@ -14796,7 +14796,7 @@
     <!-- const OT::PairSet::sanitize_closure_t* -->
     <pointer-type-def type-id='type-id-1664' size-in-bits='64' id='type-id-1665'/>
     <!-- const OT::PosLookup -->
-    <qualified-type-def type-id='type-id-934' const='yes' id='type-id-1666'/>
+    <qualified-type-def type-id='type-id-933' const='yes' id='type-id-1666'/>
     <!-- const OT::PosLookup& -->
     <reference-type-def kind='lvalue' type-id='type-id-1666' size-in-bits='64' id='type-id-923'/>
     <!-- const OT::PosLookup* -->
@@ -14954,7 +14954,7 @@
     <!-- const OT::SortedArrayOf<OT::Record<OT::Script>, OT::IntType<short unsigned int, 2u> >* -->
     <pointer-type-def type-id='type-id-1747' size-in-bits='64' id='type-id-1748'/>
     <!-- const OT::SubstLookup -->
-    <qualified-type-def type-id='type-id-927' const='yes' id='type-id-1749'/>
+    <qualified-type-def type-id='type-id-926' const='yes' id='type-id-1749'/>
     <!-- const OT::SubstLookup& -->
     <reference-type-def kind='lvalue' type-id='type-id-1749' size-in-bits='64' id='type-id-922'/>
     <!-- const OT::SubstLookup* -->
@@ -15132,7 +15132,7 @@
     <!-- typedef OT::hb_collect_glyphs_context_t::return_t (OT::hb_collect_glyphs_context_t*, unsigned int)* -->
     <pointer-type-def type-id='type-id-1803' size-in-bits='64' id='type-id-1804'/>
     <!-- void (const hb_ot_shape_plan_t*, hb_font_t*, hb_buffer_t*)* -->
-    <pointer-type-def type-id='type-id-1805' size-in-bits='64' id='type-id-942'/>
+    <pointer-type-def type-id='type-id-1805' size-in-bits='64' id='type-id-941'/>
     <!-- void (hb_set_t*, const OT::USHORT&, void*)* -->
     <pointer-type-def type-id='type-id-1806' size-in-bits='64' id='type-id-1807'/>
     <!-- namespace OT -->
@@ -22844,7 +22844,7 @@
         </member-function>
       </class-decl>
       <!-- struct OT::PosLookup -->
-      <class-decl name='PosLookup' size-in-bits='80' is-struct='yes' visibility='default' filepath='/tmp/legendre/spack-stage/spack-stage-04g73E/harfbuzz-0.9.37/src/hb-ot-layout-gpos-table.hh' line='1444' column='1' id='type-id-934'>
+      <class-decl name='PosLookup' size-in-bits='80' is-struct='yes' visibility='default' filepath='/tmp/legendre/spack-stage/spack-stage-04g73E/harfbuzz-0.9.37/src/hb-ot-layout-gpos-table.hh' line='1444' column='1' id='type-id-933'>
         <!-- struct OT::Lookup -->
         <base-class access='public' layout-offset-in-bits='0' type-id='type-id-1176'/>
         <member-function access='public'>
@@ -24452,7 +24452,7 @@
         </member-function>
       </class-decl>
       <!-- struct OT::SubstLookup -->
-      <class-decl name='SubstLookup' size-in-bits='80' is-struct='yes' visibility='default' filepath='/tmp/legendre/spack-stage/spack-stage-04g73E/harfbuzz-0.9.37/src/hb-ot-layout-gsub-table.hh' line='1154' column='1' id='type-id-927'>
+      <class-decl name='SubstLookup' size-in-bits='80' is-struct='yes' visibility='default' filepath='/tmp/legendre/spack-stage/spack-stage-04g73E/harfbuzz-0.9.37/src/hb-ot-layout-gsub-table.hh' line='1154' column='1' id='type-id-926'>
         <!-- struct OT::Lookup -->
         <base-class access='public' layout-offset-in-bits='0' type-id='type-id-1176'/>
         <member-function access='public'>
@@ -28745,7 +28745,7 @@
           </data-member>
           <data-member access='public' layout-offset-in-bits='64'>
             <!-- hb_ot_map_t::stage_map_t::pause_func_t hb_ot_map_builder_t::stage_info_t::pause_func -->
-            <var-decl name='pause_func' type-id='type-id-941' visibility='default' filepath='/tmp/legendre/spack-stage/spack-stage-04g73E/harfbuzz-0.9.37/src/hb-ot-map-private.hh' line='224' column='1'/>
+            <var-decl name='pause_func' type-id='type-id-942' visibility='default' filepath='/tmp/legendre/spack-stage/spack-stage-04g73E/harfbuzz-0.9.37/src/hb-ot-map-private.hh' line='224' column='1'/>
           </data-member>
         </class-decl>
       </member-type>
@@ -28804,7 +28804,7 @@
           <!-- implicit parameter of type 'hb_ot_map_builder_t*' -->
           <parameter type-id='type-id-1895' is-artificial='yes'/>
           <!-- parameter of type 'typedef hb_ot_map_t::stage_map_t::pause_func_t' -->
-          <parameter type-id='type-id-941'/>
+          <parameter type-id='type-id-942'/>
           <!-- void -->
           <return type-id='type-id-26'/>
         </function-decl>
@@ -28815,7 +28815,7 @@
           <!-- implicit parameter of type 'hb_ot_map_builder_t*' -->
           <parameter type-id='type-id-1895' is-artificial='yes'/>
           <!-- parameter of type 'typedef hb_ot_map_t::stage_map_t::pause_func_t' -->
-          <parameter type-id='type-id-941'/>
+          <parameter type-id='type-id-942'/>
           <!-- void -->
           <return type-id='type-id-26'/>
         </function-decl>
@@ -28828,7 +28828,7 @@
           <!-- parameter of type 'unsigned int' -->
           <parameter type-id='type-id-12'/>
           <!-- parameter of type 'typedef hb_ot_map_t::stage_map_t::pause_func_t' -->
-          <parameter type-id='type-id-941'/>
+          <parameter type-id='type-id-942'/>
           <!-- void -->
           <return type-id='type-id-26'/>
         </function-decl>
