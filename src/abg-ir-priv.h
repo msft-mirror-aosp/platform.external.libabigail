@@ -16,6 +16,7 @@
 #include <string>
 
 #include "abg-ir.h"
+#include "abg-corpus.h"
 
 namespace abigail
 {
@@ -377,8 +378,8 @@ struct environment::priv
   //   'abidw --debug-abidiff <binary>'.  It holds the set of mapping of
   // an abixml (canonical) type and its type-id.
   unordered_map<string, uintptr_t>	type_id_canonical_type_map_;
-  // Likewise.  It holds a map that associates the pointer to a type read from
-  // abixml and the type-id string it corresponds to.
+  // Likewise.  It holds a map that associates the pointer to a type
+  // read from abixml and the type-id string it corresponds to.
   unordered_map<uintptr_t, string>	pointer_type_id_map_;
 #endif
   bool					canonicalization_is_done_;
@@ -387,6 +388,21 @@ struct environment::priv
   bool					use_enum_binary_only_equality_;
 #ifdef WITH_DEBUG_SELF_COMPARISON
   bool					self_comparison_debug_on_;
+#endif
+#ifdef WITH_DEBUG_TYPE_CANONICALIZATION
+  // This controls whether to use canonical type comparison during
+  // type comparison or not.  This is only used for debugging, when we
+  // want to ensure that comparing types using canonical or structural
+  // comparison yields the same result.
+  bool					use_canonical_type_comparison_;
+  // Whether we are debugging type canonicalization or not.  When
+  // debugging type canonicalization, a type is compared to its
+  // potential canonical type twice: The first time with canonical
+  // comparison activated, and the second time with structural
+  // comparison activated.  The two comparison should yield the same
+  // result, otherwise, canonicalization is "broken" for that
+  // particular type.
+  bool					debug_type_canonicalization_;
 #endif
 
   priv()
@@ -397,6 +413,11 @@ struct environment::priv
 #ifdef WITH_DEBUG_SELF_COMPARISON
     ,
       self_comparison_debug_on_(false)
+#endif
+#ifdef WITH_DEBUG_TYPE_CANONICALIZATION
+    ,
+      use_canonical_type_comparison_(true),
+      debug_type_canonicalization_(false)
 #endif
   {}
 
@@ -607,6 +628,11 @@ struct environment::priv
     bool result = false;
     for (const auto i : types)
       {
+	// First avoid infinite loop if we've already collected the
+	// current type.
+	if (collected.find(i) != collected.end())
+	  continue;
+
 	type_base *t = reinterpret_cast<type_base*>(i);
 	if (t->priv_->depends_on_recursive_type(target))
 	  {
@@ -669,6 +695,80 @@ struct environment::priv
     types_with_non_confirmed_propagated_ct_.erase(i);
   }
 
+#ifdef WITH_DEBUG_SELF_COMPARISON
+  /// When debugging self comparison, verify that a type T
+  /// de-serialized from abixml has the same canonical type as the
+  /// initial type built from DWARF that was serialized into T in the
+  /// first place.
+  ///
+  /// @param t deserialized type (from abixml) to consider.
+  ///
+  /// @param c the canonical type @p t should have.
+  ///
+  /// @return true iff @p c is the canonical type that @p t should
+  /// have.
+  bool
+  check_canonical_type_from_abixml_during_self_comp(const type_base* t,
+						    const type_base* c)
+  {
+    if (!t || !t->get_corpus() || !c)
+      return false;
+
+    if (!(t->get_corpus()->get_origin() == ir::corpus::NATIVE_XML_ORIGIN))
+      return false;
+
+    // Get the abixml type-id that this type was constructed from.
+    string type_id;
+    {
+      unordered_map<uintptr_t, string>::const_iterator it =
+	pointer_type_id_map_.find(reinterpret_cast<uintptr_t>(t));
+      if (it == pointer_type_id_map_.end())
+	return false;
+      type_id = it->second;
+    }
+
+    // Get the canonical type the original in-memory type (constructed
+    // from DWARF) had when it was serialized into abixml in the first place.
+    type_base *original_canonical_type = nullptr;
+    if (!type_id.empty())
+      {
+	unordered_map<string, uintptr_t>::const_iterator it =
+	  type_id_canonical_type_map_.find(type_id);
+	if (it == type_id_canonical_type_map_.end())
+	  return false;
+	original_canonical_type = reinterpret_cast<type_base*>(it->second);
+      }
+
+    // Now perform the real check.
+    //
+    // We want to ensure that the canonical type 'c' of 't' is the
+    // same as the canonical type of initial in-memory type (built
+    // from DWARF) that was serialized into 't' (in abixml) in the
+    // first place.
+    if (original_canonical_type == c)
+      return true;
+
+    return false;
+  }
+
+  /// When debugging self comparison, verify that a type T
+  /// de-serialized from abixml has the same canonical type as the
+  /// initial type built from DWARF that was serialized into T in the
+  /// first place.
+  ///
+  /// @param t deserialized type (from abixml) to consider.
+  ///
+  /// @param c the canonical type @p t should have.
+  ///
+  /// @return true iff @p c is the canonical type that @p t should
+  /// have.
+  bool
+  check_canonical_type_from_abixml_during_self_comp(const type_base_sptr& t,
+						    const type_base_sptr& c)
+  {
+    return check_canonical_type_from_abixml_during_self_comp(t.get(), c.get());
+  }
+#endif
 };// end struct environment::priv
 
 // <class_or_union::priv definitions>
