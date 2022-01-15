@@ -56,6 +56,7 @@ ABG_END_EXPORT_DECLARATIONS
 #endif
 
 using std::string;
+using namespace abigail::elf_reader;
 
 namespace abigail
 {
@@ -4147,10 +4148,13 @@ public:
     const environment* e = l->get_environment();
     ABG_ASSERT(!e->canonicalization_is_done());
 
-    bool s = e->decl_only_class_equals_definition();
+    bool s0 = e->decl_only_class_equals_definition();
+    bool s1 = e->use_enum_binary_only_equality();
     e->decl_only_class_equals_definition(true);
+    e->use_enum_binary_only_equality(true);
     bool equal = l == r;
-    e->decl_only_class_equals_definition(s);
+    e->decl_only_class_equals_definition(s0);
+    e->use_enum_binary_only_equality(s1);
     return equal;
   }
 
@@ -4618,6 +4622,12 @@ public:
 	  ABG_ASSERT(is_member_function(i->second));
 	  ABG_ASSERT(get_member_function_is_virtual(i->second));
 	  i->second->set_symbol(sym);
+	  // The function_decl now has an associated (public) ELF symbol so
+	  // it ought to be advertised as being public.
+	  i->second->set_is_in_public_symbol_table(true);
+	  // Add the function to the set of exported decls of the
+	  // current corpus.
+	  maybe_add_fn_to_exported_decls(i->second.get());
 	  if (do_log())
 	    cerr << "fixed up '"
 		 << i->second->get_pretty_representation()
@@ -6148,10 +6158,10 @@ variable_is_suppressed(const read_context& ctxt,
 		       bool is_required_decl_spec = false);
 
 static void
-finish_member_function_reading(Dwarf_Die*		 die,
-			       const function_decl_sptr& f,
-			       const class_or_union_sptr& klass,
-			       read_context&		 ctxt);
+finish_member_function_reading(Dwarf_Die*			die,
+			       const function_decl_sptr&	f,
+			       const class_or_union_sptr	klass,
+			       read_context&			ctxt);
 
 /// Setter of the debug info root path for a dwarf reader context.
 ///
@@ -8683,6 +8693,37 @@ read_and_convert_DW_at_bit_offset(const Dwarf_Die* die,
   return true;
 }
 
+/// Get the value of the DW_AT_data_member_location of the given DIE
+/// attribute as an constant.
+///
+/// @param die the DIE to read the attribute from.
+///
+/// @param offset the attribute as a constant value.  This is set iff
+/// the function returns true.
+///
+/// @return true if the attribute exists and has a constant value.  In
+/// that case the offset is set to the value.
+static bool
+die_constant_data_member_location(const Dwarf_Die *die,
+				  int64_t& offset)
+{
+  if (!die)
+    return false;
+
+  Dwarf_Attribute attr;
+  if (!dwarf_attr(const_cast<Dwarf_Die*>(die),
+		  DW_AT_data_member_location,
+		  &attr))
+    return false;
+
+  Dwarf_Word val;
+  if (dwarf_formudata(&attr, &val) != 0)
+    return false;
+
+  offset = val;
+  return true;
+}
+
 /// Get the offset of a struct/class member as represented by the
 /// value of the DW_AT_data_member_location attribute.
 ///
@@ -8748,21 +8789,34 @@ die_member_offset(const read_context& ctxt,
       return true;
     }
 
-  // Otherwise, let's see if the DW_AT_data_member_location attribute and,
-  // optionally, the DW_AT_bit_offset attributes are present.
-  if (!die_location_expr(die, DW_AT_data_member_location, &expr, &expr_len))
-    return false;
-
-  // The DW_AT_data_member_location attribute is present.
-  // Let's evaluate it and get its constant
-  // sub-expression and return that one.
-  if (!eval_quickly(expr, expr_len, offset))
+  // First try to read DW_AT_data_member_location as a plain constant.
+  // We do this because the generic method using die_location_expr
+  // might hit a bug in elfutils libdw dwarf_location_expression only
+  // fixed in elfutils 0.184+. The bug only triggers if the attribute
+  // is expressed as a (DWARF 5) DW_FORM_implicit_constant. But we
+  // handle all constants here because that is more consistent (and
+  // slightly faster in the general case where the attribute isn't a
+  // full DWARF expression).
+  if (!die_constant_data_member_location(die, offset))
     {
-      bool is_tls_address = false;
-      if (!eval_last_constant_dwarf_sub_expr(expr, expr_len,
-					     offset, is_tls_address,
-					     ctxt.dwarf_expr_eval_ctxt()))
+      // Otherwise, let's see if the DW_AT_data_member_location
+      // attribute and, optionally, the DW_AT_bit_offset attributes
+      // are present.
+      if (!die_location_expr(die, DW_AT_data_member_location,
+			     &expr, &expr_len))
 	return false;
+
+      // The DW_AT_data_member_location attribute is present.  Let's
+      // evaluate it and get its constant sub-expression and return
+      // that one.
+      if (!eval_quickly(expr, expr_len, offset))
+	{
+	  bool is_tls_address = false;
+	  if (!eval_last_constant_dwarf_sub_expr(expr, expr_len,
+						 offset, is_tls_address,
+						 ctxt.dwarf_expr_eval_ctxt()))
+	    return false;
+	}
     }
   offset *= 8;
 
@@ -8804,17 +8858,30 @@ die_location_address(Dwarf_Die*	die,
   uint64_t expr_len = 0;
 
   is_tls_address = false;
-  if (!die_location_expr(die, DW_AT_location, &expr, &expr_len))
+
+  if (!die)
     return false;
 
-  int64_t addr = 0;
-  if (!eval_last_constant_dwarf_sub_expr(expr, expr_len, addr, is_tls_address))
+  Dwarf_Attribute attr;
+  if (!dwarf_attr_integrate(const_cast<Dwarf_Die*>(die), DW_AT_location, &attr))
     return false;
 
-  address = addr;
+  if (dwarf_getlocation(&attr, &expr, &expr_len))
+    return false;
+  // Ignore location expressions where reading them succeeded but
+  // their length is 0.
+  if (expr_len == 0)
+    return false;
+
+  Dwarf_Attribute result;
+  if (!dwarf_getlocation_attr(&attr, expr, &result))
+    // A location that has been interpreted as an address.
+    return !dwarf_formaddr(&result, &address);
+
+  // Just get the address out of the number field.
+  address = expr->number;
   return true;
 }
-
 
 /// Return the index of a function in its virtual table.  That is,
 /// return the value of the DW_AT_vtable_elem_location attribute.
@@ -9680,6 +9747,7 @@ die_pretty_print_type(read_context& ctxt,
       // this to be a lot of hassle for no great return.  Until proven
       // otherwise, of course.
       repr = "string type";
+      break;
 
     case DW_TAG_unspecified_type:
     case DW_TAG_ptr_to_member_type:
@@ -10284,6 +10352,16 @@ compare_dies(const read_context& ctxt,
 	  }
 	if (found_l_child != found_r_child)
 	  result = false;
+	// Compare the types of the elements of the array.
+	Dwarf_Die ltype_die, rtype_die;
+	bool found_ltype = die_die_attribute(l, DW_AT_type, ltype_die);
+	bool found_rtype = die_die_attribute(r, DW_AT_type, rtype_die);
+	ABG_ASSERT(found_ltype && found_rtype);
+
+	if (!compare_dies(ctxt, &ltype_die, &rtype_die,
+			  aggregates_being_compared,
+			  update_canonical_dies_on_the_fly))
+	  return false;
       }
       break;
 
@@ -11077,8 +11155,8 @@ dwarf_language_to_tu_language(size_t l)
       return translation_unit::LANG_Ada95;
     case DW_LANG_Fortran95:
       return translation_unit::LANG_Fortran95;
-    case DW_LANG_PL1:
-      return translation_unit::LANG_PL1;
+    case DW_LANG_PLI:
+      return translation_unit::LANG_PLI;
     case DW_LANG_ObjC:
       return translation_unit::LANG_ObjC;
     case DW_LANG_ObjC_plus_plus:
@@ -11184,7 +11262,7 @@ get_default_array_lower_bound(translation_unit::language l)
     case translation_unit::LANG_Java:
       value = 0;
       break;
-    case translation_unit::LANG_PL1:
+    case translation_unit::LANG_PLI:
       value = 1;
       break;
     case translation_unit::LANG_UPC:
@@ -11676,10 +11754,10 @@ build_enum_type(read_context&	ctxt,
 ///
 /// @param ctxt the context used to read the ELF/DWARF information.
 static void
-finish_member_function_reading(Dwarf_Die*		  die,
-			       const function_decl_sptr&  f,
-			       const class_or_union_sptr& klass,
-			       read_context&		  ctxt)
+finish_member_function_reading(Dwarf_Die*			die,
+			       const function_decl_sptr&	f,
+			       const class_or_union_sptr	klass,
+			       read_context&			ctxt)
 {
   ABG_ASSERT(klass);
 
@@ -11755,7 +11833,8 @@ finish_member_function_reading(Dwarf_Die*		  die,
   set_member_access_specifier(m, access);
   if (vindex != -1)
     set_member_function_vtable_offset(m, vindex);
-  set_member_function_is_virtual(m, is_virtual);
+  if (is_virtual)
+    set_member_function_is_virtual(m, is_virtual);
   set_member_is_static(m, is_static);
   set_member_function_is_ctor(m, is_ctor);
   set_member_function_is_dtor(m, is_dtor);
@@ -12170,6 +12249,9 @@ add_or_update_class_type(read_context&	 ctxt,
   if (klass)
     {
       res = result = klass;
+      if (has_child && klass->get_is_declaration_only()
+	  && klass->get_definition_of_declaration())
+	res = result = is_class_type(klass->get_definition_of_declaration());
       if (loc)
 	result->set_location(loc);
     }
@@ -12187,7 +12269,7 @@ add_or_update_class_type(read_context&	 ctxt,
       ABG_ASSERT(result);
     }
 
-  if (size)
+  if (size != result->get_size_in_bits())
     result->set_size_in_bits(size);
 
   if (klass)
@@ -12821,28 +12903,12 @@ maybe_strip_qualification(const qualified_type_def_sptr t,
 
   decl_base_sptr result = t;
   type_base_sptr u = t->get_underlying_type();
-  environment* env = t->get_environment();
 
-  if (t->get_cv_quals() & qualified_type_def::CV_CONST
-      && (is_reference_type(u)))
-    {
-      // Let's strip only the const qualifier.  To do that, the "const"
-      // qualified is turned into a no-op "none" qualified.
-      result.reset(new qualified_type_def
-		   (u, t->get_cv_quals() & ~qualified_type_def::CV_CONST,
-		    t->get_location()));
-      ctxt.schedule_type_for_late_canonicalization(is_type(result));
-    }
-  else if (t->get_cv_quals() & qualified_type_def::CV_CONST
-	   && env->is_void_type(u))
-    {
-      // So this type is a "const void".  Let's strip the "const"
-      // qualifier out and make this just be "void", so that a "const
-      // void" type and a "void" type compare equal after going through
-      // this function.
-      result = is_decl(u);
-    }
-  else if (is_array_type(u) || is_typedef_of_array(u))
+  result = strip_useless_const_qualification(t);
+  if (result.get() != t.get())
+    return result;
+
+  if (is_array_type(u) || is_typedef_of_array(u))
     {
       array_type_def_sptr array;
       scope_decl * scope = 0;
@@ -13174,7 +13240,6 @@ build_function_type(read_context&	ctxt,
 				   /*alignment=*/0));
   ctxt.associate_die_to_type(die, result, where_offset);
   ctxt.die_wip_function_types_map(source)[dwarf_dieoffset(die)] = result;
-  ctxt.associate_die_repr_to_fn_type_per_tu(die, result);
 
   type_base_sptr return_type;
   Dwarf_Die ret_type_die;
@@ -13249,6 +13314,10 @@ build_function_type(read_context&	ctxt,
   result->set_parameters(function_parms);
 
   tu->bind_function_type_life_time(result);
+
+  result->set_is_artificial(true);
+
+  ctxt.associate_die_repr_to_fn_type_per_tu(die, result);
 
   {
     die_function_type_map_type::const_iterator i =
@@ -13594,9 +13663,15 @@ build_typedef_type(read_context&	ctxt,
       ABG_ASSERT(utype);
       result.reset(new typedef_decl(name, utype, loc, linkage_name));
 
-      if (class_decl_sptr klass = is_class_type(utype))
-	if (is_anonymous_type(klass))
-	  klass->set_naming_typedef(result);
+      if ((is_class_or_union_type(utype) || is_enum_type(utype))
+	  && is_anonymous_type(utype))
+	{
+	  // This is a naming typedef for an enum or a class.  Let's
+	  // mark the underlying decl as such.
+	  decl_base_sptr decl = is_decl(utype);
+	  ABG_ASSERT(decl);
+	  decl->set_naming_typedef(result);
+	}
     }
 
   ctxt.associate_die_to_type(die, result, where_offset);
@@ -13828,6 +13903,16 @@ function_is_suppressed(const read_context& ctxt,
 /// Note that if a member function declaration with the same signature
 /// (pretty representation) as one of the DIE we are looking at
 /// exists, this function returns that existing function declaration.
+/// Similarly, if there is already a constructed member function with
+/// the same linkage name as the one on the DIE, this function returns
+/// that member function.
+///
+/// Also note that the function_decl IR returned by this function must
+/// be passed to finish_member_function_reading because several
+/// properties from the DIE are actually read by that function, and
+/// the corresponding properties on the function_decl IR are updated
+/// accordingly.  This is done to support "updating" a function_decl
+/// IR with properties scathered across several DIEs.
 ///
 /// @param ctxt the read context to use.
 ///
@@ -13863,7 +13948,27 @@ build_or_get_fn_decl_if_not_suppressed(read_context&	  ctxt,
   if (function_is_suppressed(ctxt, scope, fn_die, is_declaration_only))
     return fn;
 
-  if (!result)
+  string name = die_name(fn_die);
+  string linkage_name = die_linkage_name(fn_die);
+  bool is_dtor = !name.empty() && name[0]== '~';
+  bool is_virtual = false;
+  if (is_dtor)
+    {
+      Dwarf_Attribute attr;
+      if (dwarf_attr_integrate(const_cast<Dwarf_Die*>(fn_die),
+			       DW_AT_vtable_elem_location,
+			       &attr))
+	is_virtual = true;
+    }
+
+
+  // If we've already built an IR for a function with the same
+  // signature (from another DIE), reuse it, unless that function is a
+  // virtual C++ destructor.  Several virtual C++ destructors with the
+  // same signature can be implemented by several different ELF
+  // symbols.  So re-using C++ destructors like that can lead to us
+  // missing some destructors.
+  if (!result && (!(is_dtor && is_virtual)))
     if ((fn = is_function_decl(ctxt.lookup_artifact_from_die(fn_die))))
       {
 	fn = maybe_finish_function_decl_reading(ctxt, fn_die, where_offset, fn);
@@ -13872,7 +13977,22 @@ build_or_get_fn_decl_if_not_suppressed(read_context&	  ctxt,
 	return fn;
       }
 
-  fn = build_function_decl(ctxt, fn_die, where_offset, result);
+  // If a member function with the same linkage name as the one
+  // carried by the DIE already exists, then return it.
+  if (class_decl* klass = is_class_type(scope))
+    {
+      string linkage_name = die_linkage_name(fn_die);
+      fn = klass->find_member_function_sptr(linkage_name);
+    }
+
+  if (!fn || !fn->get_symbol())
+    // We haven't yet been able to construct a function IR, or, we
+    // have one 'partial' function IR that doesn't have any associated
+    // symbol yet.  Note that in the later case, a function IR without
+    // any associated symbol will be dropped on the floor by
+    // potential_member_fn_should_be_dropped.  So let's build or a new
+    // function IR or complete the existing partial IR.
+    fn = build_function_decl(ctxt, fn_die, where_offset, result);
 
   return fn;
 }
@@ -14078,6 +14198,7 @@ get_opaque_version_of_type(read_context	&ctxt,
 					       type_location,
 					       decl_base::VISIBILITY_DEFAULT));
 	  klass->set_is_declaration_only(true);
+	  klass->set_is_artificial(die_is_artificial(type_die));
 	  add_decl_to_scope(klass, scope);
 	  ctxt.associate_die_to_type(type_die, klass, where_offset);
 	  ctxt.maybe_schedule_declaration_only_class_for_resolution(klass);
@@ -14106,6 +14227,7 @@ get_opaque_version_of_type(read_context	&ctxt,
 							    underlying_type,
 							    enumeratorz,
 							    linkage_name));
+	  enum_type->set_is_artificial(die_is_artificial(type_die));
 	  add_decl_to_scope(enum_type, scope);
 	  result = enum_type;
 	}
@@ -14296,6 +14418,11 @@ read_debug_info_into_corpus(read_context& ctxt)
   ctxt.exported_decls_builder
     (ctxt.current_corpus()->get_exported_decls_builder().get());
 
+#ifdef WITH_DEBUG_SELF_COMPARISON
+  if (ctxt.env()->self_comparison_debug_is_on())
+    ctxt.env()->set_self_comparison_debug_input(ctxt.current_corpus());
+#endif
+
   // Walk all the DIEs of the debug info to build a DIE -> parent map
   // useful for get_die_parent() to work.
   {
@@ -14468,6 +14595,11 @@ read_debug_info_into_corpus(read_context& ctxt)
       }
   }
 
+#ifdef WITH_DEBUG_SELF_COMPARISON
+  if (ctxt.env()->self_comparison_debug_is_on())
+    ctxt.env()->set_self_comparison_debug_input(ctxt.current_corpus());
+#endif
+
   return ctxt.current_corpus();
 }
 
@@ -14537,6 +14669,8 @@ maybe_canonicalize_type(const Dwarf_Die *die, read_context& ctxt)
     // types because they can be edited (in particular by
     // maybe_strip_qualification) after they are initially built.
     ctxt.schedule_type_for_late_canonicalization(die);
+  else if (is_decl(t) && is_decl(t)->get_is_anonymous())
+    ctxt.schedule_type_for_late_canonicalization(t);
   else if ((is_function_type(t)
 	    && ctxt.is_wip_function_type_die_offset(die_offset, source))
 	   || type_has_non_canonicalized_subtype(t))
@@ -14579,7 +14713,8 @@ maybe_canonicalize_type(const type_base_sptr& t,
       || is_union_type(peeled_type)
       || is_function_type(peeled_type)
       || is_array_type(peeled_type)
-      || is_qualified_type(peeled_type))
+      || is_qualified_type(peeled_type)
+      ||(is_decl(peeled_type) && is_decl(peeled_type)->get_is_anonymous()))
     // We delay canonicalization of classes/unions or typedef,
     // pointers, references and array to classes/unions.  This is
     // because the (underlying) class might not be finished yet and we
@@ -14836,13 +14971,16 @@ build_ir_node_from_die(read_context&	ctxt,
 	bool type_suppressed =
 	  type_is_suppressed(ctxt, scope, die, type_is_private);
 	if (type_suppressed && type_is_private)
-	  // The type is suppressed because it's private.  If other
-	  // non-suppressed and declaration-only instances of this
-	  // type exist in the current corpus, then it means those
-	  // non-suppressed instances are opaque versions of the
-	  // suppressed private type.  Lets return one of these opaque
-	  // types then.
-	  result = get_opaque_version_of_type(ctxt, scope, die, where_offset);
+	  {
+	    // The type is suppressed because it's private.  If other
+	    // non-suppressed and declaration-only instances of this
+	    // type exist in the current corpus, then it means those
+	    // non-suppressed instances are opaque versions of the
+	    // suppressed private type.  Lets return one of these opaque
+	    // types then.
+	    result = get_opaque_version_of_type(ctxt, scope, die, where_offset);
+	    maybe_canonicalize_type(is_type(result), ctxt);
+	  }
 	else if (!type_suppressed)
 	  {
 	    enum_type_decl_sptr e = build_enum_type(ctxt, die, scope,
@@ -14866,13 +15004,16 @@ build_ir_node_from_die(read_context&	ctxt,
 	  type_is_suppressed(ctxt, scope, die, type_is_private);
 
 	if (type_suppressed && type_is_private)
-	  // The type is suppressed because it's private.  If other
-	  // non-suppressed and declaration-only instances of this
-	  // type exist in the current corpus, then it means those
-	  // non-suppressed instances are opaque versions of the
-	  // suppressed private type.  Lets return one of these opaque
-	  // types then.
-	  result = get_opaque_version_of_type(ctxt, scope, die, where_offset);
+	  {
+	    // The type is suppressed because it's private.  If other
+	    // non-suppressed and declaration-only instances of this
+	    // type exist in the current corpus, then it means those
+	    // non-suppressed instances are opaque versions of the
+	    // suppressed private type.  Lets return one of these opaque
+	    // types then.
+	    result = get_opaque_version_of_type(ctxt, scope, die, where_offset);
+	    maybe_canonicalize_type(is_type(result), ctxt);
+	  }
 	else if (!type_suppressed)
 	  {
 	    Dwarf_Die spec_die;
@@ -14949,6 +15090,7 @@ build_ir_node_from_die(read_context&	ctxt,
 	if (f)
 	  {
 	    result = f;
+	    result->set_is_artificial(false);
 	    maybe_canonicalize_type(die, ctxt);
 	  }
       }
@@ -15125,7 +15267,7 @@ build_ir_node_from_die(read_context&	ctxt,
 						     called_from_public_decl,
 						     where_offset,
 						     is_declaration_only,
-						     /*is_required_decl_spec=*/false));
+						     /*is_required_decl_spec=*/true));
 		if (d)
 		  {
 		    fn = dynamic_pointer_cast<function_decl>(d);
@@ -15155,7 +15297,8 @@ build_ir_node_from_die(read_context&	ctxt,
 	if (result && !fn)
 	  {
 	    if (potential_member_fn_should_be_dropped(is_function_decl(result),
-						      die))
+						      die)
+		&& !is_required_decl_spec)
 	      {
 		result.reset();
 		break;
@@ -15354,60 +15497,6 @@ build_ir_node_from_die(read_context&	ctxt,
 				called_from_public_decl,
 				where_offset,
                                 true);
-}
-
-status
-operator|(status l, status r)
-{
-  return static_cast<status>(static_cast<unsigned>(l)
-			     | static_cast<unsigned>(r));
-}
-
-status
-operator&(status l, status r)
-{
-  return static_cast<status>(static_cast<unsigned>(l)
-			     & static_cast<unsigned>(r));
-}
-
-status&
-operator|=(status& l, status r)
-{
-  l = l | r;
-  return l;
-}
-
-status&
-operator&=(status& l, status r)
-{
-  l = l & r;
-  return l;
-}
-
-/// Emit a diagnostic status with english sentences to describe the
-/// problems encoded in a given abigail::dwarf_reader::status, if
-/// there is an error.
-///
-/// @param status the status to diagnose
-///
-/// @return a string containing sentences that describe the possible
-/// errors encoded in @p s.  If there is no error to encode, then the
-/// empty string is returned.
-string
-status_to_diagnostic_string(status s)
-{
-  string str;
-
-  if (s & STATUS_DEBUG_INFO_NOT_FOUND)
-    str += "could not find debug info\n";
-
-  if (s & STATUS_ALT_DEBUG_INFO_NOT_FOUND)
-    str += "could not find alternate debug info\n";
-
-  if (s & STATUS_NO_SYMBOLS_FOUND)
-    str += "could not load ELF symbols\n";
-
-  return str;
 }
 
 /// Create a dwarf_reader::read_context.
