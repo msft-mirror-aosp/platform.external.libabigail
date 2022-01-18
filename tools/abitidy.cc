@@ -159,21 +159,29 @@ get_attribute(xmlNodePtr node, const char* name)
   return result;
 }
 
-/// Store an attribute value.
+/// Set an attribute value.
 ///
 /// @param node the node
 ///
 /// @param name the attribute name
 ///
-/// @param value the attribute value, optionally
+/// @param value the attribute value
 static void
 set_attribute(xmlNodePtr node, const char* name,
-              const std::optional<std::string>& value)
+              const std::string& value)
 {
-  if (value)
-    xmlSetProp(node, to_libxml(name), to_libxml(value.value().c_str()));
-  else
-    xmlUnsetProp(node, to_libxml(name));
+  xmlSetProp(node, to_libxml(name), to_libxml(value.c_str()));
+}
+
+/// Unset an attribute value.
+///
+/// @param node the node
+///
+/// @param name the attribute name
+static void
+unset_attribute(xmlNodePtr node, const char* name)
+{
+  xmlUnsetProp(node, to_libxml(name));
 }
 
 /// Remove text nodes, recursively.
@@ -378,12 +386,12 @@ limit_locations(LocationInfo location_info, xmlNodePtr node)
     {
       if (location_info > LocationInfo::COLUMN)
         {
-          set_attribute(node, "column", {});
+          unset_attribute(node, "column");
           if (location_info > LocationInfo::LINE)
             {
-              set_attribute(node, "line", {});
+              unset_attribute(node, "line");
               if (location_info > LocationInfo::FILE)
-                set_attribute(node, "filepath", {});
+                unset_attribute(node, "filepath");
             }
         }
     }
@@ -674,7 +682,7 @@ handle_anonymous_types(bool normalise, bool reanonymise, bool discard_naming,
         set_attribute(node, "name", anon);
       }
       if (discard_naming && naming_attribute)
-        set_attribute(node, "naming-typedef-id", {});
+        unset_attribute(node, "naming-typedef-id");
     }
 
   for (auto child : get_children(node))
