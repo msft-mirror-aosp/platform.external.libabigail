@@ -53,6 +53,12 @@ static const std::map<std::string, LocationInfo> LOCATION_INFO_NAME = {
   {"none", LocationInfo::NONE},
 };
 
+static const std::map<std::string, std::string> NAMED_TYPES = {
+  {"enum-decl", "__anonymous_enum__"},
+  {"class-decl", "__anonymous_struct__"},
+  {"union-decl", "__anonymous_union__"},
+};
+
 
 /// Cast a C string to a libxml string.
 ///
@@ -159,21 +165,29 @@ get_attribute(xmlNodePtr node, const char* name)
   return result;
 }
 
-/// Store an attribute value.
+/// Set an attribute value.
 ///
 /// @param node the node
 ///
 /// @param name the attribute name
 ///
-/// @param value the attribute value, optionally
+/// @param value the attribute value
 static void
 set_attribute(xmlNodePtr node, const char* name,
-              const std::optional<std::string>& value)
+              const std::string& value)
 {
-  if (value)
-    xmlSetProp(node, to_libxml(name), to_libxml(value.value().c_str()));
-  else
-    xmlUnsetProp(node, to_libxml(name));
+  xmlSetProp(node, to_libxml(name), to_libxml(value.c_str()));
+}
+
+/// Unset an attribute value.
+///
+/// @param node the node
+///
+/// @param name the attribute name
+static void
+unset_attribute(xmlNodePtr node, const char* name)
+{
+  xmlUnsetProp(node, to_libxml(name));
 }
 
 /// Remove text nodes, recursively.
@@ -378,12 +392,12 @@ limit_locations(LocationInfo location_info, xmlNodePtr node)
     {
       if (location_info > LocationInfo::COLUMN)
         {
-          set_attribute(node, "column", {});
+          unset_attribute(node, "column");
           if (location_info > LocationInfo::LINE)
             {
-              set_attribute(node, "line", {});
+              unset_attribute(node, "line");
               if (location_info > LocationInfo::FILE)
-                set_attribute(node, "filepath", {});
+                unset_attribute(node, "filepath");
             }
         }
     }
@@ -604,12 +618,6 @@ handle_unreachable(bool prune, bool report, xmlNodePtr root)
   return untyped;
 }
 
-static const std::map<std::string, std::string> ANONYMOUS_TYPE_NAMES = {
-  {"enum-decl", "__anonymous_enum__"},
-  {"class-decl", "__anonymous_struct__"},
-  {"union-decl", "__anonymous_union__"},
-};
-
 /// Tidy anonymous types in various ways.
 ///
 /// 1. Normalise anonymous type names by removing the numerical suffix.
@@ -654,8 +662,8 @@ handle_anonymous_types(bool normalise, bool reanonymise, bool discard_naming,
   if (node->type != XML_ELEMENT_NODE)
     return;
 
-  const auto it = ANONYMOUS_TYPE_NAMES.find(from_libxml(node->name));
-  if (it != ANONYMOUS_TYPE_NAMES.end())
+  const auto it = NAMED_TYPES.find(from_libxml(node->name));
+  if (it != NAMED_TYPES.end())
     {
       const auto& anon = it->second;
       const auto name_attribute = get_attribute(node, "name");
@@ -674,11 +682,42 @@ handle_anonymous_types(bool normalise, bool reanonymise, bool discard_naming,
         set_attribute(node, "name", anon);
       }
       if (discard_naming && naming_attribute)
-        set_attribute(node, "naming-typedef-id", {});
+        unset_attribute(node, "naming-typedef-id");
     }
 
   for (auto child : get_children(node))
     handle_anonymous_types(normalise, reanonymise, discard_naming, child);
+}
+
+/// Remove attributes emitted by abidw --load-all-types.
+///
+/// With this invocation and if any user-defined types are deemed
+/// unreachable, libabigail will output a tracking-non-reachable-types
+/// attribute on top-level elements and a is-non-reachable attribute on
+/// each such type element.
+///
+/// abitidy has its own graph-theoretic notion of reachability and these
+/// attributes have no ABI relevance.
+///
+/// It's best to just drop them.
+///
+/// @param node the XML node to process
+void
+clear_non_reachable(xmlNodePtr node)
+{
+  if (node->type != XML_ELEMENT_NODE)
+    return;
+
+  const char* node_name = from_libxml(node->name);
+
+  if (strcmp(node_name, "abi-corpus-group") == 0
+      || strcmp(node_name, "abi-corpus") == 0)
+    unset_attribute(node, "tracking-non-reachable-types");
+  else if (NAMED_TYPES.find(node_name) != NAMED_TYPES.end())
+    unset_attribute(node, "is-non-reachable");
+
+  for (auto child : get_children(node))
+    clear_non_reachable(child);
 }
 
 /// The set of attributes that should be excluded from consideration
@@ -690,11 +729,15 @@ handle_anonymous_types(bool normalise, bool reanonymise, bool discard_naming,
 ///
 /// The naming-typedef-id attribute, if not already removed by another
 /// pass, is irrelevant to ABI semantics.
+///
+/// The is-non-reachable attribute, if not already removed by another
+/// pass, is irrelevant to ABI semantics.
 static const std::unordered_set<std::string> IRRELEVANT_ATTRIBUTES = {
   {"filepath"},
   {"line"},
   {"column"},
   {"naming-typedef-id"},
+  {"is-non-reachable"},
 };
 
 /// Determine whether one XML element is a subtree of another.
@@ -1225,6 +1268,7 @@ main(int argc, char* argv[])
   int opt_indentation = 2;
   bool opt_normalise_anonymous = false;
   bool opt_reanonymise_anonymous = false;
+  bool opt_clear_non_reachable = false;
   bool opt_discard_naming_typedefs = false;
   bool opt_prune_unreachable = false;
   bool opt_report_untyped = false;
@@ -1242,9 +1286,10 @@ main(int argc, char* argv[])
               << "  [-S|--symbols file]\n"
               << "  [-L|--locations column|line|file|none]\n"
               << "  [-I|--indentation n]\n"
-              << "  [-a|--all] (-n -r -t -p -u -e -c -s -d)\n"
+              << "  [-a|--all] (-n -r -b -t -p -u -e -c -s -d)\n"
               << "  [-n|--[no-]normalise-anonymous]\n"
               << "  [-r|--[no-]reanonymise-anonymous]\n"
+              << "  [-b|--[no-]clear-non-reachable]\n"
               << "  [-t|--[no-]discard-naming-typedefs]\n"
               << "  [-p|--[no-]prune-unreachable]\n"
               << "  [-u|--[no-]report-untyped]\n"
@@ -1287,6 +1332,7 @@ main(int argc, char* argv[])
       else if (arg == "-a" || arg == "--all")
         opt_normalise_anonymous = opt_reanonymise_anonymous
                                 = opt_discard_naming_typedefs
+                                = opt_clear_non_reachable
                                 = opt_prune_unreachable
                                 = opt_report_untyped
                                 = opt_eliminate_duplicates
@@ -1302,6 +1348,10 @@ main(int argc, char* argv[])
         opt_reanonymise_anonymous = true;
       else if (arg == "--no-reanonymise-anonymous")
         opt_reanonymise_anonymous = false;
+      else if (arg == "-b" || arg == "--clear-non-reachable")
+        opt_clear_non_reachable = true;
+      else if (arg == "--no-clear-non-reachable")
+        opt_clear_non_reachable = false;
       else if (arg == "-t" || arg == "--discard-naming-typedefs")
         opt_discard_naming_typedefs = true;
       else if (arg == "--no-discard-naming-typedefs")
@@ -1383,6 +1433,10 @@ main(int argc, char* argv[])
       || opt_discard_naming_typedefs)
     handle_anonymous_types(opt_normalise_anonymous, opt_reanonymise_anonymous,
                            opt_discard_naming_typedefs, root);
+
+  // Clear unwanted non-reachable attributes.
+  if (opt_clear_non_reachable)
+    clear_non_reachable(root);
 
   // Prune unreachable elements and/or report untyped symbols.
   size_t untyped_symbols = 0;
