@@ -18,6 +18,7 @@
 #include <sstream>
 #include <typeinfo>
 #include <unordered_map>
+#include <tuple>
 #include <utility>
 #include <vector>
 
@@ -33,6 +34,7 @@ ABG_BEGIN_EXPORT_DECLARATIONS
 ABG_END_EXPORT_DECLARATIONS
 // </headers defining libabigail's API>
 
+#include "abg-cxx-compat.h"  // for abg_compat::optional
 #include "abg-tools-utils.h"
 #include "abg-comp-filter.h"
 #include "abg-ir-priv.h"
@@ -25346,7 +25348,43 @@ bool
 types_have_similar_structure(const type_base_sptr& first,
 			     const type_base_sptr& second,
 			     bool indirect_type)
-{return types_have_similar_structure(first.get(), second.get(), indirect_type);}
+{
+  // This wrapper function is used during comparisons. It is called by and its
+  // wrappee calls the main equality functions, possibly resulting in a
+  // multiplication of the cost of comparison.
+
+  // This is a convenient place to add some memoisation to avoid at
+  // least some of the duplicate calls. This is safe only if pointer
+  // addresses are never reused.
+  using Arguments = std::tuple<const type_base*, const type_base*, bool>;
+
+  struct Hasher {
+    size_t operator()(const Arguments& arguments) const {
+      const auto& [first, second, indirect] = arguments;
+      size_t seed = 0;
+      std::hash<const type_base*> h;
+      combine_hash(seed, h(first));
+      combine_hash(seed, h(second));
+      combine_hash(seed, indirect);
+      return seed;
+    }
+    static void combine_hash(size_t& seed, size_t hash) {
+      seed ^= hash + 0x9e3779b97f4a7c15 + (seed << 12) + (seed >> 4);
+    }
+  };
+
+  static std::unordered_map<Arguments, abg_compat::optional<bool>, Hasher> memo;
+
+  const Arguments t{first.get(), second.get(), indirect_type};
+  const auto& [it, inserted] = memo.insert({t, {}});
+  auto& result = it->second;
+  if (inserted)
+    result = types_have_similar_structure(
+        std::get<0>(t), std::get<1>(t), std::get<2>(t));
+  else
+    ABG_ASSERT(result.has_value());
+  return *result;
+}
 
 /// Test if two types have similar structures, even though they are
 /// (or can be) different.
