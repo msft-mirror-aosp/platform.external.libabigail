@@ -10,7 +10,6 @@
 
 /// @file
 
-#include <memory>
 #include <ostream>
 #include <unordered_map>
 #include <unordered_set>
@@ -503,13 +502,12 @@ class corpus_diff;
 class diff_maps
 {
   struct priv;
-  std::unique_ptr<priv> priv_;
+  typedef shared_ptr<priv> priv_sptr;
+  priv_sptr priv_;
 
 public:
 
   diff_maps();
-
-  ~diff_maps();
 
   const string_diff_ptr_map&
   get_type_decl_diff_map() const;
@@ -600,7 +598,7 @@ typedef shared_ptr<corpus_diff> corpus_diff_sptr;
 class diff_context
 {
   struct priv;
-  std::unique_ptr<priv> priv_;
+  shared_ptr<priv> priv_;
 
   diff_sptr
   has_diff_for(const type_or_decl_base_sptr first,
@@ -639,8 +637,6 @@ class diff_context
 
 public:
   diff_context();
-
-  ~diff_context();
 
   void
   set_corpus_diff(const corpus_diff_sptr&);
@@ -905,12 +901,14 @@ class diff : public diff_traversable_base
 {
   friend class diff_context;
 
+  struct priv;
+  typedef shared_ptr<priv> priv_sptr;
+
   // Forbidden
   diff();
 
 protected:
-  struct priv;
-  std::unique_ptr<priv> priv_;
+  priv_sptr priv_;
 
   diff(type_or_decl_base_sptr first_subject,
        type_or_decl_base_sptr second_subject);
@@ -1071,7 +1069,9 @@ compute_diff(const type_base_sptr,
 class type_diff_base : public diff
 {
   struct priv;
-  std::unique_ptr<priv> priv_;
+  typedef shared_ptr<priv> priv_sptr;
+
+  priv_sptr priv_;
 
   type_diff_base();
 
@@ -1092,7 +1092,9 @@ public:
 class decl_diff_base : public diff
 {
   struct priv;
-  std::unique_ptr<priv> priv_;
+  typedef shared_ptr<priv> priv_sptr;
+
+  priv_sptr priv_;
 
 protected:
   decl_diff_base(decl_base_sptr	first_subject,
@@ -1120,7 +1122,8 @@ typedef shared_ptr<distinct_diff> distinct_diff_sptr;
 class distinct_diff : public diff
 {
   struct priv;
-  std::unique_ptr<priv> priv_;
+  typedef shared_ptr<priv> priv_sptr;
+  priv_sptr priv_;
 
 protected:
   distinct_diff(type_or_decl_base_sptr first,
@@ -1175,7 +1178,8 @@ compute_diff_for_distinct_kinds(const type_or_decl_base_sptr,
 class var_diff : public decl_diff_base
 {
   struct priv;
-  std::unique_ptr<priv> priv_;
+  typedef shared_ptr<priv> priv_sptr;
+  priv_sptr priv_;
 
 protected:
   var_diff(var_decl_sptr first,
@@ -1229,7 +1233,7 @@ typedef shared_ptr<pointer_diff> pointer_diff_sptr;
 class pointer_diff : public type_diff_base
 {
   struct priv;
-  std::unique_ptr<priv> priv_;
+  shared_ptr<priv> priv_;
 
 protected:
   pointer_diff(pointer_type_def_sptr	first,
@@ -1289,7 +1293,7 @@ typedef shared_ptr<reference_diff> reference_diff_sptr;
 class reference_diff : public type_diff_base
 {
   struct priv;
-  std::unique_ptr<priv> priv_;
+  shared_ptr<priv> priv_;
 
 protected:
   reference_diff(const reference_type_def_sptr	first,
@@ -1349,7 +1353,7 @@ typedef shared_ptr<array_diff> array_diff_sptr;
 class array_diff : public type_diff_base
 {
   struct priv;
-  std::unique_ptr<priv> priv_;
+  shared_ptr<priv> priv_;
 
 protected:
   array_diff(const array_type_def_sptr	first,
@@ -1406,7 +1410,8 @@ typedef class shared_ptr<qualified_type_diff> qualified_type_diff_sptr;
 class qualified_type_diff : public type_diff_base
 {
   struct priv;
-  std::unique_ptr<priv> priv_;
+  typedef shared_ptr<priv> priv_sptr;
+  priv_sptr priv_;
 
 protected:
   qualified_type_diff(qualified_type_def_sptr	first,
@@ -1466,7 +1471,8 @@ typedef shared_ptr<enum_diff> enum_diff_sptr;
 class enum_diff : public type_diff_base
 {
   struct priv;
-  std::unique_ptr<priv> priv_;
+  typedef shared_ptr<priv> priv_sptr;
+  priv_sptr priv_;
 
   void
   clear_lookup_tables();
@@ -1536,8 +1542,8 @@ class class_or_union_diff : public type_diff_base
 {
 protected:
   struct priv;
-  typedef std::unique_ptr<priv> priv_ptr;
-  priv_ptr priv_;
+  typedef shared_ptr<priv> priv_sptr;
+  priv_sptr priv_;
 
   void
   clear_lookup_tables(void);
@@ -1561,7 +1567,7 @@ protected:
 
 public:
 
-  const class_or_union_diff::priv_ptr&
+  const class_or_union_diff::priv_sptr&
   get_priv() const;
 
   //TODO: add change of the name of the type.
@@ -1656,10 +1662,10 @@ public:
 class class_diff : public class_or_union_diff
 {
   struct priv;
-  typedef std::unique_ptr<priv> priv_ptr;
-  priv_ptr priv_;
+  typedef shared_ptr<priv> priv_sptr;
+  priv_sptr priv_;
 
-  const priv_ptr& get_priv()const;
+  const priv_sptr& get_priv()const;
 
   void
   clear_lookup_tables(void);
@@ -1791,7 +1797,7 @@ compute_diff(const union_decl_sptr	first,
 class base_diff : public diff
 {
   struct priv;
-  std::unique_ptr<priv> priv_;
+  shared_ptr<priv> priv_;
 
 protected:
   base_diff(class_decl::base_spec_sptr	first,
@@ -1850,7 +1856,7 @@ typedef shared_ptr<scope_diff> scope_diff_sptr;
 class scope_diff : public diff
 {
   struct priv;
-  std::unique_ptr<priv> priv_;
+  shared_ptr<priv> priv_;
 
   bool
   lookup_tables_empty() const;
@@ -1958,7 +1964,9 @@ compute_diff(const scope_decl_sptr first_scope,
 class fn_parm_diff : public decl_diff_base
 {
   struct priv;
-  std::unique_ptr<priv> priv_;
+  typedef shared_ptr<priv> priv_sptr;
+
+  priv_sptr priv_;
 
   virtual void
   finish_diff_type();
@@ -2013,7 +2021,8 @@ typedef shared_ptr<function_type_diff> function_type_diff_sptr;
 class function_type_diff: public type_diff_base
 {
   struct priv;
-  std::unique_ptr<priv> priv_;
+  typedef shared_ptr<priv> priv_sptr;
+  priv_sptr priv_;
 
   void
   ensure_lookup_tables_populated();
@@ -2090,7 +2099,7 @@ compute_diff(const function_type_sptr	first,
 class function_decl_diff : public decl_diff_base
 {
   struct priv;
-  std::unique_ptr<priv> priv_;
+  shared_ptr<priv> priv_;
 
   void
   ensure_lookup_tables_populated();
@@ -2198,7 +2207,7 @@ typedef shared_ptr<typedef_diff> typedef_diff_sptr;
 class typedef_diff : public type_diff_base
 {
   struct priv;
-  std::unique_ptr<priv> priv_;
+  shared_ptr<priv> priv_;
 
   typedef_diff();
 
@@ -2263,7 +2272,8 @@ typedef shared_ptr<translation_unit_diff> translation_unit_diff_sptr;
 class translation_unit_diff : public scope_diff
 {
   struct priv;
-  std::unique_ptr<priv> priv_;
+  typedef shared_ptr<priv> priv_sptr;
+  priv_sptr priv_;
 
 protected:
   translation_unit_diff(translation_unit_sptr	first,
@@ -2302,7 +2312,8 @@ compute_diff(const translation_unit_sptr first,
 class corpus_diff
 {
   struct priv;
-  std::unique_ptr<priv> priv_;
+  typedef shared_ptr<priv> priv_sptr;
+  priv_sptr priv_;
 
 protected:
   corpus_diff(corpus_sptr	first,
@@ -2316,7 +2327,7 @@ public:
 
   class diff_stats;
 
-  virtual ~corpus_diff();
+  virtual ~corpus_diff() {}
 
   /// A convenience typedef for a shared pointer to @ref diff_stats
   typedef shared_ptr<diff_stats> diff_stats_sptr;
@@ -2474,7 +2485,9 @@ compute_diff(const corpus_group_sptr&,
 class corpus_diff::diff_stats
 {
   struct priv;
-  std::unique_ptr<priv> priv_;
+  typedef shared_ptr<priv> priv_sptr;
+
+  priv_sptr priv_;
 
   diff_stats();
 
@@ -2621,13 +2634,14 @@ class diff_node_visitor : public node_visitor_base
 {
 protected:
   struct priv;
-  std::unique_ptr<priv> priv_;
+  typedef shared_ptr<priv> priv_sptr;
+  priv_sptr priv_;
 
 public:
 
   diff_node_visitor();
 
-  virtual ~diff_node_visitor();
+  virtual ~diff_node_visitor() {}
 
   diff_node_visitor(visiting_kind k);
 
