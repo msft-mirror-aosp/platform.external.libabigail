@@ -11,7 +11,7 @@ if [ "$1" != "" ]; then
     cd "$1"
 fi
 
-autoreconf -i && ./configure --disable-shared --enable-cxx17
+autoreconf -i && ./configure --disable-shared
 
 # if called from the external_updater, do not apply any patches as it will do
 # that for us, otherwise do if there are any

@@ -14,8 +14,6 @@
 
 using std::cerr;
 using std::string;
-using abigail::tests::emit_test_status_and_update_counters;
-using abigail::tests::emit_test_summary;
 
 struct InOutSpec
 {
@@ -42,12 +40,12 @@ InOutSpec in_out_specs[] =
     "output/test-annotate/test2.so.abi"
   },
   {
-    "data/test-read-common/test3.so",
+    "data/test-read-dwarf/test3.so",
     "data/test-annotate/test3.so.abi",
     "output/test-annotate/test3.so.abi"
   },
   {
-    "data/test-read-common/test4.so",
+    "data/test-read-dwarf/test4.so",
     "data/test-annotate/test4.so.abi",
     "output/test-annotate/test4.so.abi"
   },
@@ -142,8 +140,7 @@ main()
   using abigail::tests::get_build_dir;
   using abigail::tools_utils::ensure_parent_dir_created;
 
-  unsigned int total_count = 0, passed_count = 0, failed_count = 0;
-
+  bool is_ok = true;
   string in_elf_path, ref_report_path, out_report_path;
   string abidw;
 
@@ -151,7 +148,6 @@ main()
     "--annotate --no-corpus-path";
   for (InOutSpec* s = in_out_specs; s->in_elf_path; ++s)
     {
-      bool is_ok = true;
       in_elf_path = string(get_src_dir()) + "/tests/" + s->in_elf_path;
       ref_report_path = string(get_src_dir()) + "/tests/" + s->in_report_path;
       out_report_path =
@@ -172,21 +168,16 @@ main()
 
       if (abidw_ok)
 	{
-	  string diff_cmd =
-	    "diff -u " + ref_report_path + " " + out_report_path;
-	  if (system(diff_cmd.c_str()))
+	  cmd = "diff -u " + ref_report_path + " " + out_report_path;
+	  if (system(cmd.c_str()))
 	    is_ok &=false;
 	}
       else
 	{
+	  cerr << "command failed: " << cmd << "\n";
 	  is_ok &= false;
 	}
-
-      emit_test_status_and_update_counters(is_ok, cmd, passed_count,
-					   failed_count, total_count);
     }
 
-  emit_test_summary(total_count, passed_count, failed_count);
-
-  return failed_count;
+  return !is_ok;
 }
