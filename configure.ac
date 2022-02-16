@@ -1,6 +1,6 @@
 # SPDX-License-Identifier: Apache-2.0 WITH LLVM-exception
 m4_define([version_major],   [2])
-m4_define([version_minor],   [1])
+m4_define([version_minor],   [0])
 
 AC_INIT([libabigail],
 	[version_major.version_minor],
@@ -38,14 +38,10 @@ AM_SILENT_RULES([yes])
 VERSION_MAJOR=version_major
 VERSION_MINOR=version_minor
 VERSION_REVISION=0
-ABIXML_VERSION_MAJOR=2
-ABIXML_VERSION_MINOR=1
 
 AC_SUBST(VERSION_MAJOR)
 AC_SUBST(VERSION_MINOR)
 AC_SUBST(VERSION_REVISION)
-AC_SUBST(ABIXML_VERSION_MAJOR)
-AC_SUBST(ABIXML_VERSION_MINOR)
 
 dnl This VERSION_SUFFIX environment variable is to allow appending
 dnl arbitrary text to the libabigail version string representation.
@@ -64,24 +60,11 @@ AC_ARG_ENABLE(rpm,
 	      ENABLE_RPM=$enableval,
 	      ENABLE_RPM=auto)
 
-# '--enable-rpm415' option name preserved for backwards compatibility.
 AC_ARG_ENABLE(rpm415,
 	      AS_HELP_STRING([--enable-rpm415=yes|no|auto],
-			     [enable rpm/zstd in abipkgdiff testing (default is auto)]),
-	      ENABLE_RPM_ZSTD=$enableval,
-	      ENABLE_RPM_ZSTD=auto)
-
-AC_ARG_ENABLE(debug-self-comparison,
-	      AS_HELP_STRING([--enable-debug-self-comparison=yes|no],
-			     [enable debugging of self comparison with 'abidw --debug-abidiff'(default is no)]),
-	      ENABLE_DEBUG_SELF_COMPARISON=$enableval,
-	      ENABLE_DEBUG_SELF_COMPARISON=no)
-
-AC_ARG_ENABLE(debug-type-canonicalization,
-	      AS_HELP_STRING([--enable-debug-type-canonicalization=yes|no],
-			     [enable debugging of type canonicalization 'abidw --debug-tc'(default is no)]),
-	      ENABLE_DEBUG_TYPE_CANONICALIZATION=$enableval,
-	      ENABLE_DEBUG_TYPE_CANONICALIZATION=no)
+			     [enable the support of rpm 4.15 or higher in abipkgdiff (default is auto)]),
+	      ENABLE_RPM415=$enableval,
+	      ENABLE_RPM415=auto)
 
 AC_ARG_ENABLE(deb,
 	      AS_HELP_STRING([--enable-deb=yes|no|auto],
@@ -149,19 +132,6 @@ AC_ARG_ENABLE(ubsan,
 	      ENABLE_UBSAN=$enableval,
 	      ENABLE_UBSAN=no)
 
-dnl check if user has enabled CTF code
-AC_ARG_ENABLE(ctf,
-	      AS_HELP_STRING([--enable-ctf=yes|no],
-			     [disable support of ctf files)]),
-	      ENABLE_CTF=$enableval,
-	      ENABLE_CTF=no)
-
-AC_ARG_ENABLE(cxx17,
-	      AS_HELP_STRING([--enable-cxx17=yes|no],
-			     [enable features that use the C++17 compiler]),
-	      ENABLE_CXX17=$enableval,
-	      ENABLE_CXX17=no)
-
 dnl *************************************************
 dnl check for dependencies
 dnl *************************************************
@@ -177,7 +147,7 @@ AC_LANG([C++])
 AC_LANG_COMPILER_REQUIRE
 
 dnl
-dnl We use C++11 or C++17 if enabled
+dnl We use C++11
 dnl
 CXX_STANDARD=c++11
 
@@ -268,24 +238,6 @@ fi
 AC_SUBST(DW_LIBS)
 AC_SUBST([ELF_LIBS])
 
-dnl check for libctf presence if CTF code has been enabled by command line
-dnl argument, and then define CTF flag (to build CTF file code) if libctf is
-dnl found on the system
-CTF_LIBS=
-if test x$ENABLE_CTF = xyes; then
-  LIBCTF=
-  AC_CHECK_LIB(ctf, ctf_open, [LIBCTF=yes], [LIBCTF=no])
-  if test x$LIBCTF = xyes; then
-    AC_MSG_NOTICE([activating CTF code])
-    AC_DEFINE([WITH_CTF], 1,
-	     [Defined if user enables and system has the libctf library])
-    CTF_LIBS=-lctf
-  else
-    AC_MSG_NOTICE([CTF enabled but no libctf found])
-    ENABLE_CTF=no
-  fi
-fi
-
 dnl Check for dependency: libxml
 LIBXML2_VERSION=2.6.22
 PKG_CHECK_MODULES(XML, libxml-2.0 >= $LIBXML2_VERSION)
@@ -321,68 +273,29 @@ if test x$ENABLE_RPM = xyes -o x$ENABLE_RPM = xauto; then
   fi
 fi
 
-dnl Point to a rpm/zstd file, that is:
-dnl     $ rpm -qp --qf '%{PAYLOADCOMPRESSOR}\n' [rpm_zstd_file]
-dnl     zstd
-m4_define([rpm_zstd_file], [tests/data/test-diff-pkg/mesa-libGLU-9.0.1-3.fc33.x86_64.rpm])
-AC_CONFIG_SRCDIR([rpm_zstd_file])
-if test x$ENABLE_RPM_ZSTD = xyes -o x$ENABLE_RPM_ZSTD = xauto; then
-  if test x$ENABLE_RPM = xno; then
-    if test x$ENABLE_RPM_ZSTD = xyes; then
-      AC_MSG_ERROR([rpm/zstd support needs rpm support])
-    fi
-    ENABLE_RPM_ZSTD=n/a
-  else
-    AC_MSG_CHECKING([for rpm/zstd support])
-    rpm2cpio > /dev/null 2>&AS_MESSAGE_LOG_FD "$srcdir"/rpm_zstd_file
-    if test $? -eq 0; then
-      enable_rpm_zstd=yes
-    else
-      enable_rpm_zstd=no
-    fi
-    AC_MSG_RESULT([$enable_rpm_zstd])
-    if test x$ENABLE_RPM_ZSTD:$enable_rpm_zstd = xyes:no; then
-      AC_MSG_ERROR([rpm/zstd support not available])
-    fi
-    ENABLE_RPM_ZSTD=$enable_rpm_zstd
-  fi
+if test x$ENABLE_RPM = xyes -a x$ENABLE_RPM415 = xauto; then
+   rpmversion=$(rpm --version | sed "s/RPM version //")
+   AC_MSG_NOTICE([detected rpm version: $rpmversion])
+   if [[[ "$rpmversion" > "4.14.0" ]]]; then
+      ENABLE_RPM415=yes
+   else
+      ENABLE_RPM415=no
+   fi
 fi
 
 if test x$ENABLE_RPM = xyes; then
    AC_DEFINE([WITH_RPM], 1, [compile the rpm package support in abipkgdiff])
    AC_MSG_NOTICE([rpm support in abipkgdiff is enabled]);
 
-   if test x$ENABLE_RPM_ZSTD = xyes; then
-      AC_DEFINE([WITH_RPM_ZSTD], 1, [has rpm/zstd support])
-      AC_MSG_NOTICE([rpm/zstd in abipkgdiff testing is enabled])
+   if test x$ENABLE_RPM415 = xyes; then
+      AC_DEFINE([WITH_RPM_4_15], 1, [has RPM 4.15 at least])
+      AC_MSG_NOTICE([rpm 4.15 support in abipkgdiff tests is enabled])
    fi
 else
    AC_MSG_NOTICE([rpm support in abipkgdiff is disabled]);
 fi
 
 AM_CONDITIONAL(ENABLE_RPM, test x$ENABLE_RPM = xyes)
-
-dnl enable the debugging of self comparison when doing abidw --debug-abidiff <binary>
-if test x$ENABLE_DEBUG_SELF_COMPARISON = xyes; then
-  AC_DEFINE([WITH_DEBUG_SELF_COMPARISON], 1, [compile support of debugging abidw --abidiff])
-  AC_MSG_NOTICE([support of debugging self comparison is enabled])
-else
-  AC_MSG_NOTICE([support of debugging self comparison is disabled])
-fi
-
-AM_CONDITIONAL(ENABLE_DEBUG_SELF_COMPARISON, test x$ENABLE_DEBUG_SELF_COMPARISON = xyes)
-
-dnl enable the debugging of type canonicalization when doing abidw --debug-tc <binary>
-if test x$ENABLE_DEBUG_TYPE_CANONICALIZATION = xyes; then
-   AC_DEFINE([WITH_DEBUG_TYPE_CANONICALIZATION],
-	     1,
-	     [compile support of debugging type canonicalization while using abidw --debug-tc])
-   AC_MSG_NOTICE([support of debugging type canonicalization is enabled])
-else
-   AC_MSG_NOTICE([support of debugging type canonicalization is disabled])
-fi
-
-AM_CONDITIONAL(ENABLE_DEBUG_TYPE_CANONICALIZATION, test x$ENABLE_DEBUG_TYPE_CANONICALIZATION = xyes)
 
 dnl Check for the dpkg program
 if test x$ENABLE_DEB = xauto -o x$ENABLE_DEB = xyes; then
@@ -539,10 +452,11 @@ if test x$CHECK_DEPS_FOR_FEDABIPKGDIFF = xyes; then
   AC_PATH_PROG(WGET, wget, no)
 
   if test x$WGET = xno; then
-    MISSING_FEDABIPKGDIFF_DEP=yes
+    ENABLE_FEDABIPKGDIFF=no
     if test x$MISSING_FEDABIPKGDIFF_DEP_FATAL = xyes; then
       AC_MSG_ERROR(could not find the wget program)
     else
+      MISSING_FEDABIPKGDIFF_DEP=yes
       AC_MSG_NOTICE([could not find the wget program])
       AC_MSG_NOTICE([disabling fedabipkgdiff as a result])
     fi
@@ -572,53 +486,47 @@ if test x$CHECK_DEPS_FOR_FEDABIPKGDIFF = xyes; then
    argparse logging os re subprocess sys $URLPARSE_MODULE \
    xdg koji mock rpm imp tempfile mimetypes shutil six"
 
-  AX_CHECK_PYTHON_MODULES([$REQUIRED_PYTHON_MODULES_FOR_FEDABIPKGDIFF],
-			  [$PYTHON],
-			  [FOUND_ALL_PYTHON_MODULES=yes],
-			  [FOUND_ALL_PYTHON_MODULES=no])
+  if test x$ENABLE_FEDABIPKGDIFF != xno; then
+    AX_CHECK_PYTHON_MODULES([$REQUIRED_PYTHON_MODULES_FOR_FEDABIPKGDIFF],
+			    [$PYTHON],
+			    [FOUND_ALL_PYTHON_MODULES=yes],
+			    [FOUND_ALL_PYTHON_MODULES=no])
 
-  if test x$FOUND_ALL_PYTHON_MODULES = xno; then
-    MISSING_FEDABIPKGDIFF_DEP=yes
-    if test x$MISSING_FEDABIPKGDIFF_DEP_FATAL = xyes; then
-      AC_MSG_ERROR([missing python modules: $MISSING_PYTHON_MODULES]);
+    if test x$FOUND_ALL_PYTHON_MODULES = xno; then
+       MISSING_FEDABIPKGDIFF_DEP=yes
+       if test x$MISSING_FEDABIPKGDIFF_DEP_FATAL = xyes; then
+         AC_MSG_ERROR([missing python modules: $MISSING_PYTHON_MODULES]);
+       else
+         AC_MSG_NOTICE([missing python modules: $MISSING_PYTHON_MODULES])
+         AC_MSG_NOTICE([disabling fedabipkgdiff as a result])
+       fi
+       ENABLE_FEDABIPKGDIFF=no
     else
-      AC_MSG_NOTICE([missing python modules: $MISSING_PYTHON_MODULES])
-      AC_MSG_NOTICE([disabling fedabipkgdiff as a result])
-    fi
-  else
-    # On some old platforms, the koji client object doesn't have
-    # the required .read_config method.  Alas, that module doesn't
-    # have any __version__ string either.  So we do as well as we
-    # can to try and detect that case and disable fedabipkgdiff if
-    # necessary.
-    AC_MSG_CHECKING([if koji client is recent enough])
-    $PYTHON 2>&AS_MESSAGE_LOG_FD -c "
+	# On some old platforms, the koji client object doesn't have
+	# the required .read_config method.  Alas, that module doesn't
+	# have any __version__ string either.  So we do as well as we
+	# can to try and detect that case and disable fedabipkgdiff if
+	# necessary.
+        AC_MSG_CHECKING([checking if koji client is recent enough ...])
+	$PYTHON -c "
 import koji
-try:
-    koji.read_config('koji')
-except koji.ConfigurationError:
-    # See 'tools/fedabipkgdiff'.
-    pass"
-    if test $? -eq 0; then
-      koji_version_check_ok=yes
-    else
-      koji_version_check_ok=no
-    fi
-    AC_MSG_RESULT([$koji_version_check_ok])
-    if test x$koji_version_check_ok = xno; then
-      MISSING_FEDABIPKGDIFF_DEP=yes
-      if test x$MISSING_FEDABIPKGDIFF_DEP_FATAL = xyes; then
-        AC_MSG_ERROR([unsuitable koji client])
-      else
-	AC_MSG_WARN([disabling fedabipkgdiff])
-      fi
-    fi
-  fi
+koji.read_config('koji')"
+	if test $? -eq 0; then
+	   koji_version_check_ok=yes
+	else
+	   koji_version_check_ok=no
+	fi
 
-  if test x$MISSING_FEDABIPKGDIFF_DEP = xno; then
-    ENABLE_FEDABIPKGDIFF=yes
-  else
-    ENABLE_FEDABIPKGDIFF=no
+	if test x$koji_version_check_ok = xno; then
+	  AC_MSG_RESULT([no, disabling fedpkgdiff])
+	  MISSING_FEDABIPKGDIFF_DEP=yes
+	else
+          AC_MSG_RESULT(yes)
+       fi
+       if test x$MISSING_FEDABIPKGDIFF_DEP = xno; then
+         ENABLE_FEDABIPKGDIFF=yes
+       fi
+    fi
   fi
 fi
 
@@ -667,15 +575,9 @@ AX_VALGRIND_DFLT(sgcheck, off)
 
 AX_VALGRIND_CHECK
 
-dnl Handle conditional use of a C++17 compiler
-if test x$ENABLE_CXX17 = xyes; then
-   CXX_STANDARD=c++17
-fi
-AM_CONDITIONAL(ENABLE_CXX17, test x$ENABLE_CXX17 = xyes)
-
 dnl Set the list of libraries libabigail depends on
 
-DEPS_LIBS="$XML_LIBS $ELF_LIBS $DW_LIBS $CTF_LIBS"
+DEPS_LIBS="$XML_LIBS $ELF_LIBS $DW_LIBS"
 AC_SUBST(DEPS_LIBS)
 
 if test x$ABIGAIL_DEVEL != x; then
@@ -712,10 +614,6 @@ if test x$ENABLE_UBSAN = xyes; then
     CFLAGS="$CFLAGS -fsanitize=undefined"
     CXXFLAGS="$CXXFLAGS -fsanitize=undefined"
 fi
-
-dnl Set a few Automake conditionals
-
-AM_CONDITIONAL([CTF_READER],[test "x$ENABLE_CTF" = "xyes"])
 
 dnl Set the level of C++ standard we use.
 CXXFLAGS="$CXXFLAGS -std=$CXX_STANDARD"
@@ -1015,15 +913,12 @@ AC_MSG_NOTICE([
     C++ standard level                             : ${CXX_STANDARD}
     libdw has the dwarf_getalt function            : ${FOUND_DWARF_GETALT_IN_LIBDW}
     Enable rpm support in abipkgdiff               : ${ENABLE_RPM}
-    Enable rpm/zstd in abipkgdiff testing          : ${ENABLE_RPM_ZSTD}
-    Enable self comparison debugging               : ${ENABLE_DEBUG_SELF_COMPARISON}
-    Enable type canonicalization debugging         : ${ENABLE_DEBUG_TYPE_CANONICALIZATION}
+    Enable rpm 4.15 support in abipkgdiff tests    : ${ENABLE_RPM415}
     Enable deb support in abipkgdiff               : ${ENABLE_DEB}
     Enable GNU tar archive support in abipkgdiff   : ${ENABLE_TAR}
     Enable bash completion	                   : ${ENABLE_BASH_COMPLETION}
     Enable fedabipkgdiff                           : ${ENABLE_FEDABIPKGDIFF}
     Enable python 3				   : ${ENABLE_PYTHON3}
-    Enable CTF front-end                           : ${ENABLE_CTF}
     Enable running tests under Valgrind            : ${enable_valgrind}
     Enable build with -fsanitize=address    	   : ${ENABLE_ASAN}
     Enable build with -fsanitize=memory    	   : ${ENABLE_MSAN}

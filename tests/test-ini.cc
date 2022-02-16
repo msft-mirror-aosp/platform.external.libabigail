@@ -21,8 +21,6 @@
 
 using std::string;
 using std::cerr;
-using abigail::tests::emit_test_status_and_update_counters;
-using abigail::tests::emit_test_summary;
 
 /// This is an aggregate that specifies where a test shall get its
 /// input from and where it shall write its ouput to.
@@ -84,13 +82,11 @@ main()
   using abigail::tools_utils::ensure_parent_dir_created;
   using abigail::tools_utils::abidiff_status;
 
-  unsigned int total_count = 0, passed_count = 0, failed_count = 0;
-
-  string in_ini_path, in_reference_output_path, out_ini_path, cmd, diff_cmd;
+  bool is_ok = true;
+  string in_ini_path, in_reference_output_path, out_ini_path, cmd;
 
   for (InOutSpec *s = in_out_specs; s->in_ini_path; ++s)
     {
-      bool is_ok = true;
       in_ini_path = get_test_src_dir() + "/" + s->in_ini_path;
       in_reference_output_path =
 	get_test_src_dir() + "/" + s->in_reference_output_path;
@@ -124,18 +120,13 @@ main()
 
       if (cmd_is_ok)
 	{
-	  diff_cmd = "diff -u " + in_reference_output_path + " " + out_ini_path;
-	  if (system(diff_cmd.c_str()))
+	  cmd = "diff -u " + in_reference_output_path + " " + out_ini_path;
+	  if (system(cmd.c_str()))
 	    is_ok = false;
 	}
       else
 	is_ok = false;
-
-      emit_test_status_and_update_counters(is_ok, cmd, passed_count,
-					   failed_count, total_count);
     }
 
-  emit_test_summary(total_count, passed_count, failed_count);
-
-  return failed_count;
+  return !is_ok;
 }
