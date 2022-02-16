@@ -17,8 +17,6 @@
 
 using std::cerr;
 using std::string;
-using abigail::tests::emit_test_status_and_update_counters;
-using abigail::tests::emit_test_summary;
 
 struct InOutSpec
 {
@@ -65,8 +63,6 @@ main()
   using abigail::tests::get_build_dir;
   using abigail::tools_utils::ensure_parent_dir_created;
 
-  unsigned int total_count = 0, passed_count = 0, failed_count = 0;
-
   bool is_ok = true;
   string in_elf_path, ref_report_path, out_report_path, debug_info_dir;
   string abidw, abidw_options;
@@ -98,17 +94,16 @@ main()
 
       if (abidw_ok)
 	{
-	  string diff_cmd = "diff -u " + ref_report_path + " " + out_report_path;
-	  if (system(diff_cmd.c_str()))
+	  cmd = "diff -u " + ref_report_path + " " + out_report_path;
+	  if (system(cmd.c_str()))
 	    is_ok &=false;
 	}
       else
-	is_ok &= false;
-
-      emit_test_status_and_update_counters(is_ok, cmd, passed_count,
-					   failed_count, total_count);
+	{
+	  cerr << "command failed: " << cmd << "\n";
+	  is_ok &= false;
+	}
     }
 
-  emit_test_summary(total_count, passed_count, failed_count);
-  return failed_count;
+  return !is_ok;
 }
