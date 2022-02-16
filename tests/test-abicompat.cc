@@ -27,7 +27,6 @@
 
 using std::string;
 using std::cerr;
-using std::cout;
 
 struct InOutSpec
 {
@@ -207,13 +206,12 @@ main()
   using abigail::tools_utils::ensure_parent_dir_created;
   using abigail::tools_utils::abidiff_status;
 
-  unsigned int cnt_total = 0, cnt_passed = 0, cnt_failed = 0;
+  bool is_ok = true;
   string in_app_path, in_lib1_path, in_lib2_path, suppression_path,
-    abicompat_options, ref_report_path, out_report_path, abicompat, cmd, diffcmd;
+    abicompat_options, ref_report_path, out_report_path, abicompat, cmd;
 
   for (InOutSpec* s = in_out_specs; s->in_app_path; ++s)
     {
-      bool is_ok = true;
       in_app_path = string(get_src_dir()) + "/tests/" + s->in_app_path;
       in_lib1_path = string(get_src_dir()) + "/tests/" + s->in_lib1_path;
       if (s->in_lib2_path && strcmp(s->in_lib2_path, ""))
@@ -255,37 +253,13 @@ main()
 
       if (abicompat_ok)
 	{
-	  diffcmd = "diff -u " + ref_report_path + " " + out_report_path;
-	  if (system(diffcmd.c_str()))
+	  cmd = "diff -u " + ref_report_path + " " + out_report_path;
+	  if (system(cmd.c_str()))
 	    is_ok = false;
 	}
       else
 	is_ok = false;
-
-      if (is_ok)
-        {
-	  cout << BRIGHT_YELLOW_COLOR
-               << "Test Passed:"
-               << DEFAULT_TERMINAL_COLOR
-               << cmd
-               << std::endl;
-	  cnt_passed++;
-	}
-      else
-        {
-	  cout << BRIGHT_RED_COLOR
-               << "Test Failed:"
-               << DEFAULT_TERMINAL_COLOR
-               << cmd
-               << std::endl;
-	  cnt_failed++;
-	}
-      cnt_total++;
     }
-  cout << "Summary: " << cnt_total << " tested!"
-       << " Test Passed: " << cnt_passed
-       << ", Test Failed: " << cnt_failed
-       << ".\n";
 
-  return cnt_failed;
+  return !is_ok;
 }
