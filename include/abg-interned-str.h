@@ -27,6 +27,7 @@ namespace abigail
 {
 // Inject some std types into this namespace.
 using std::unordered_set;
+using std::shared_ptr;
 using std::string;
 using std::ostream;
 
@@ -226,7 +227,9 @@ struct hash_interned_string
 class interned_string_pool
 {
   struct priv;
-  std::unique_ptr<priv> priv_;
+  typedef shared_ptr<priv> priv_sptr;
+
+  priv_sptr priv_;
 
 public:
 
