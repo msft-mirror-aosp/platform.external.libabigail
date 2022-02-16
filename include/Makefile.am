@@ -5,7 +5,6 @@ abg-interned-str.h	\
 abg-ir.h		\
 abg-corpus.h		\
 abg-reader.h		\
-abg-elf-reader-common.h \
 abg-dwarf-reader.h	\
 abg-writer.h		\
 abg-comparison.h	\
@@ -27,9 +26,5 @@ abg-viz-common.h	\
 abg-viz-dot.h		\
 abg-viz-svg.h		\
 abg-regex.h
-
-if CTF_READER
-pkginclude_HEADERS += abg-ctf-reader.h
-endif
 
 EXTRA_DIST = abg-version.h.in
