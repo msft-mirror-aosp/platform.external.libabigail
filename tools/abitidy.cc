@@ -16,6 +16,7 @@
 #include <fcntl.h>
 #include <unistd.h>
 
+#include <algorithm>
 #include <array>
 #include <cassert>
 #include <cctype>
