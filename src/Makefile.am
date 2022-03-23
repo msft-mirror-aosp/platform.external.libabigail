@@ -26,7 +26,6 @@ abg-suppression-priv.h			\
 abg-suppression.cc			\
 abg-comp-filter.cc			\
 abg-reader.cc				\
-abg-elf-reader-common.cc		\
 abg-dwarf-reader.cc			\
 abg-libxml-utils.cc			\
 abg-hash.cc				\
@@ -41,10 +40,6 @@ abg-regex.cc				\
 abg-symtab-reader.h			\
 abg-symtab-reader.cc			\
 $(VIZ_SOURCES)
-
-if CTF_READER
-libabigail_la_SOURCES += abg-ctf-reader.cc
-endif
 
 libabigail_la_LIBADD = $(DEPS_LIBS)
 libabigail_la_LDFLAGS = -lpthread -Wl,--as-needed -no-undefined

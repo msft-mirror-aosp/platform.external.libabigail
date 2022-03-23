@@ -63,15 +63,6 @@ Options
 
     Display a short help about the command and exit.
 
-  * ``--debug``
-
-    In this mode, error messages are emitted for types which fail type canonicalization.
-
-    This is an optional ebugging and sanity check option.  To enable
-    it the libabigail package needs to be configured with
-    the --enable-debug-self-comparison option.
-
-
   * ``--version | -v``
 
     Display the version of the program and exit.
@@ -499,11 +490,6 @@ Options
     relevant only to functions and variables that have some sub-type
     changes.  Added or removed functions and variables do not have any
     diff nodes tree associated to them.
-
-  * ``--ctf``
-
-    When comparing binaries, extract ABI information from CTF debug
-    information, if present.
 
   * ``--stats``
 
