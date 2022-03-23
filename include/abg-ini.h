@@ -40,7 +40,8 @@ typedef shared_ptr<property> property_sptr;
 class property
 {
   struct priv;
-  std::unique_ptr<priv> priv_;
+  typedef shared_ptr<priv> priv_sptr;
+  priv_sptr priv_;
 
 public:
 
@@ -65,9 +66,6 @@ typedef shared_ptr<property_value> property_value_sptr;
 /// Base class of propertie values.
 class property_value
 {
-  struct priv;
-  std::unique_ptr<priv> priv_;
-
 public:
   enum value_kind
   {
@@ -76,6 +74,13 @@ public:
     LIST_PROPERTY_VALUE = 2,
     TUPLE_PROPERTY_VALUE = 3,
   };
+
+private:
+  struct priv;
+  typedef shared_ptr<priv> priv_sptr;
+  priv_sptr priv_;
+
+public:
 
   property_value();
   property_value(value_kind);
@@ -100,7 +105,8 @@ typedef shared_ptr<string_property_value> string_property_value_sptr;
 class string_property_value : public property_value
 {
   struct priv;
-  std::unique_ptr<priv> priv_;
+  typedef shared_ptr<priv> priv_sptr;
+  priv_sptr priv_;
 
 public:
   string_property_value();
@@ -141,7 +147,9 @@ typedef shared_ptr<list_property_value> list_property_value_sptr;
 class list_property_value : public property_value
 {
   struct priv;
-  std::unique_ptr<priv> priv_;
+  typedef shared_ptr<priv> priv_sptr;
+
+  priv_sptr priv_;
 
 public:
   list_property_value();
@@ -176,7 +184,8 @@ typedef shared_ptr<tuple_property_value> tuple_property_value_sptr;
 class tuple_property_value : public property_value
 {
   struct priv;
-  std::unique_ptr<priv> priv_;
+  typedef shared_ptr<priv> priv_sptr;
+  priv_sptr priv_;
 
 public:
   tuple_property_value(const vector<property_value_sptr>&);
@@ -210,7 +219,9 @@ typedef shared_ptr<simple_property> simple_property_sptr;
 class simple_property : public property
 {
   struct priv;
-  std::unique_ptr<priv> priv_;
+  typedef shared_ptr<priv> priv_sptr;
+
+  priv_sptr priv_;
 
 public:
   simple_property();
@@ -254,7 +265,9 @@ typedef shared_ptr<list_property> list_property_sptr;
 class list_property : public property
 {
   struct priv;
-  std::unique_ptr<priv> priv_;
+  typedef shared_ptr<priv> priv_sptr;
+
+  priv_sptr priv_;
 
 public:
   list_property();
@@ -286,7 +299,9 @@ typedef shared_ptr<tuple_property> tuple_property_sptr;
 class tuple_property : public property
 {
   struct priv;
-  std::unique_ptr<priv> priv_;
+  typedef shared_ptr<priv> priv_sptr;
+
+  priv_sptr priv_;
 
 public:
   tuple_property();
@@ -321,7 +336,7 @@ typedef shared_ptr<config> config_sptr;
 class config
 {
   class priv;
-  std::unique_ptr<priv> priv_;
+  typedef shared_ptr<priv> priv_sptr;
 
 public:
   class section;
@@ -333,6 +348,11 @@ public:
 
   /// A convenience typedef for a vector of @ref property_sptr
   typedef vector<property_sptr> properties_type;
+
+private:
+  priv_sptr priv_;
+
+public:
 
   config();
 
@@ -358,7 +378,9 @@ public:
 class config::section
 {
   class priv;
-  std::unique_ptr<priv> priv_;
+  typedef shared_ptr<priv> priv_sptr;
+
+  priv_sptr priv_;
 
   // Forbid this
   section();
@@ -433,7 +455,8 @@ typedef shared_ptr<function_call_expr> function_call_expr_sptr;
 class function_call_expr
 {
   struct priv;
-  std::unique_ptr<priv> priv_;
+  typedef shared_ptr<priv> priv_sptr;
+  priv_sptr priv_;
 
   function_call_expr();
 
