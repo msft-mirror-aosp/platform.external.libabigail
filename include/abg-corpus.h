@@ -24,6 +24,10 @@ namespace ir
 class corpus
 {
 public:
+  struct priv;
+  /// Convenience typedef for shared_ptr of corpus::priv
+  typedef shared_ptr<priv> priv_sptr;
+
   /// A convenience typedef for std::vector<string>.
   typedef vector<string> strings_type;
 
@@ -46,7 +50,6 @@ public:
     ARTIFICIAL_ORIGIN = 0,
     NATIVE_XML_ORIGIN,
     DWARF_ORIGIN,
-    CTF_ORIGIN,
     LINUX_KERNEL_BINARY_ORIGIN
   };
 
@@ -57,12 +60,11 @@ private:
   void init_format_version();
 
 public:
-  struct priv;
-  std::unique_ptr<priv> priv_;
+  shared_ptr<priv> priv_;
 
   corpus(ir::environment*, const string& path= "");
 
-  virtual ~corpus();
+  virtual ~corpus() {}
 
   const environment*
   get_environment() const;
@@ -288,14 +290,21 @@ public:
 /// parameters needed.
 class corpus::exported_decls_builder
 {
+public:
   class priv;
-  std::unique_ptr<priv> priv_;
+
+  /// Convenience typedef for shared_ptr<priv>
+  typedef shared_ptr<priv> priv_sptr;
+
+  friend class corpus;
+
+private:
+  priv_sptr priv_;
 
   // Forbid default construction.
   exported_decls_builder();
 
 public:
-  friend class corpus;
 
   exported_decls_builder(functions& fns,
 			 variables& vars,
@@ -335,7 +344,9 @@ public:
 class corpus_group : public corpus
 {
   struct priv;
-  std::unique_ptr<priv> priv_;
+  typedef shared_ptr<priv> priv_sptr;
+
+  priv_sptr priv_;
 
   // Forbid copy
   corpus_group(const corpus_group&);
