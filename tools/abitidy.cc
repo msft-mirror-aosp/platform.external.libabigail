@@ -16,6 +16,7 @@
 #include <fcntl.h>
 #include <unistd.h>
 
+#include <algorithm>
 #include <array>
 #include <cassert>
 #include <cctype>
@@ -1268,11 +1269,11 @@ main(int argc, char* argv[])
   int opt_indentation = 2;
   bool opt_normalise_anonymous = false;
   bool opt_reanonymise_anonymous = false;
-  bool opt_clear_non_reachable = false;
   bool opt_discard_naming_typedefs = false;
   bool opt_prune_unreachable = false;
   bool opt_report_untyped = false;
   bool opt_abort_on_untyped = false;
+  bool opt_clear_non_reachable = false;
   bool opt_eliminate_duplicates = false;
   bool opt_report_conflicts = false;
   bool opt_sort = false;
@@ -1284,16 +1285,16 @@ main(int argc, char* argv[])
               << "  [-i|--input file]\n"
               << "  [-o|--output file]\n"
               << "  [-S|--symbols file]\n"
-              << "  [-L|--locations column|line|file|none]\n"
+              << "  [-L|--locations {column|line|file|none}]\n"
               << "  [-I|--indentation n]\n"
-              << "  [-a|--all] (-n -r -b -t -p -u -e -c -s -d)\n"
+              << "  [-a|--all] (implies -n -r -t -p -u -b -e -c -s -d)\n"
               << "  [-n|--[no-]normalise-anonymous]\n"
               << "  [-r|--[no-]reanonymise-anonymous]\n"
-              << "  [-b|--[no-]clear-non-reachable]\n"
               << "  [-t|--[no-]discard-naming-typedefs]\n"
               << "  [-p|--[no-]prune-unreachable]\n"
               << "  [-u|--[no-]report-untyped]\n"
               << "  [-U|--abort-on-untyped-symbols]\n"
+              << "  [-b|--[no-]clear-non-reachable]\n"
               << "  [-e|--[no-]eliminate-duplicates]\n"
               << "  [-c|--[no-]report-conflicts]\n"
               << "  [-s|--[no-]sort]\n"
@@ -1332,9 +1333,9 @@ main(int argc, char* argv[])
       else if (arg == "-a" || arg == "--all")
         opt_normalise_anonymous = opt_reanonymise_anonymous
                                 = opt_discard_naming_typedefs
-                                = opt_clear_non_reachable
                                 = opt_prune_unreachable
                                 = opt_report_untyped
+                                = opt_clear_non_reachable
                                 = opt_eliminate_duplicates
                                 = opt_report_conflicts
                                 = opt_sort
@@ -1348,10 +1349,6 @@ main(int argc, char* argv[])
         opt_reanonymise_anonymous = true;
       else if (arg == "--no-reanonymise-anonymous")
         opt_reanonymise_anonymous = false;
-      else if (arg == "-b" || arg == "--clear-non-reachable")
-        opt_clear_non_reachable = true;
-      else if (arg == "--no-clear-non-reachable")
-        opt_clear_non_reachable = false;
       else if (arg == "-t" || arg == "--discard-naming-typedefs")
         opt_discard_naming_typedefs = true;
       else if (arg == "--no-discard-naming-typedefs")
@@ -1366,6 +1363,10 @@ main(int argc, char* argv[])
         opt_report_untyped = false;
       else if (arg == "-U" || arg == "--abort-on-untyped-symbols")
         opt_abort_on_untyped = true;
+      else if (arg == "-b" || arg == "--clear-non-reachable")
+        opt_clear_non_reachable = true;
+      else if (arg == "--no-clear-non-reachable")
+        opt_clear_non_reachable = false;
       else if (arg == "-e" || arg == "--eliminate-duplicates")
         opt_eliminate_duplicates = true;
       else if (arg == "--no-eliminate-duplicates")
@@ -1434,10 +1435,6 @@ main(int argc, char* argv[])
     handle_anonymous_types(opt_normalise_anonymous, opt_reanonymise_anonymous,
                            opt_discard_naming_typedefs, root);
 
-  // Clear unwanted non-reachable attributes.
-  if (opt_clear_non_reachable)
-    clear_non_reachable(root);
-
   // Prune unreachable elements and/or report untyped symbols.
   size_t untyped_symbols = 0;
   if (opt_prune_unreachable || opt_report_untyped || opt_abort_on_untyped)
@@ -1452,6 +1449,10 @@ main(int argc, char* argv[])
   // Limit location information.
   if (opt_locations > LocationInfo::COLUMN)
     limit_locations(opt_locations, root);
+
+  // Clear unwanted non-reachable attributes.
+  if (opt_clear_non_reachable)
+    clear_non_reachable(root);
 
   // Eliminate complete duplicates and extra fragments of types.
   // Report conflicting type defintions.
