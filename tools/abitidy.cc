@@ -1249,17 +1249,49 @@ get_aliases(xmlNodePtr node)
   return aliases;
 }
 
-/// Record alias -> main mapping and remove unlisted ELF symbols.
+/// Set aliases in XML node.
 ///
-/// @param symbols the set of symbols, if any
+/// @param node the XML node to process
+///
+/// @param aliases an ordered set of aliases
+void
+set_aliases(xmlNodePtr node, const std::set<std::string>& aliases)
+{
+  if (aliases.empty())
+    {
+      unset_attribute(node, "alias");
+    }
+  else
+    {
+      std::ostringstream os;
+      bool first = true;
+      for (const auto& alias : aliases)
+        {
+          if (first)
+            first = false;
+          else
+            os << ',';
+          os << alias;
+        }
+      set_attribute(node, "alias", os.str());
+    }
+}
+
+/// Gather information about symbols and record alias <-> main mappings.
+///
+/// @param symbol_map a map from elf-symbol-id to XML node
 ///
 /// @param alias_map a map from alias elf-symbol-id to main
 ///
+/// @param main_map a map from main elf-symbol-id to aliases
+///
 /// @param node the XML node to process
 void
-filter_symbols(const std::optional<symbol_set>& symbols,
-               std::unordered_map<std::string, std::string>& alias_map,
-               xmlNodePtr node)
+process_symbols(
+    std::unordered_map<std::string, xmlNodePtr>& symbol_map,
+    std::unordered_map<std::string, std::string>& alias_map,
+    std::unordered_map<std::string, std::set<std::string>>& main_map,
+    xmlNodePtr node)
 {
   if (node->type != XML_ELEMENT_NODE)
     return;
@@ -1271,24 +1303,167 @@ filter_symbols(const std::optional<symbol_set>& symbols,
     {
       // Process children.
       for (auto child : get_children(node))
-        filter_symbols(symbols, alias_map, child);
+        process_symbols(symbol_map, alias_map, main_map, child);
     }
   else if (strcmp(node_name, "elf-symbol") == 0)
     {
       const auto id = get_elf_symbol_id(node);
-      for (const auto& alias : get_aliases(node))
+      if (!symbol_map.insert({id, node}).second)
+        {
+          std::cerr << "multiple symbols with id " << id << "\n";
+          exit(1);
+        }
+      const auto aliases = get_aliases(node);
+      for (const auto& alias : aliases)
         if (!alias_map.insert({alias, id}).second)
           {
             std::cerr << "multiple aliases with id " << alias << "\n";
             exit(1);
           }
-      if (symbols)
+      if (!aliases.empty())
+        main_map.insert({id, aliases});
+    }
+}
+
+/// Rewrite elf-symbol-id attributes following ELF symbol removal.
+///
+/// @param mapping map from old to new elf-symbol-id, if any
+void
+rewrite_symbols_in_declarations(
+    const std::unordered_map<std::string, std::optional<std::string>>& mapping,
+    xmlNodePtr node)
+{
+  if (node->type != XML_ELEMENT_NODE)
+    return;
+
+  const char* node_name = from_libxml(node->name);
+  if (strcmp(node_name, "var-decl") == 0
+      || strcmp(node_name, "function-decl") == 0)
+    {
+      auto symbol = get_attribute(node, "elf-symbol-id");
+      bool changed = false;
+      while (symbol)
         {
-          const auto name = get_attribute(node, "name");
-          if (name && !symbols->count(name.value()))
-            remove_element(node);
+          const auto it = mapping.find(symbol.value());
+          if (it == mapping.end())
+            break;
+          symbol = it->second;
+          changed = true;
+        }
+      if (changed)
+        {
+          if (symbol)
+            set_attribute(node, "elf-symbol-id", symbol.value());
+          else
+            unset_attribute(node, "elf-symbol-id");
         }
     }
+
+  for (xmlNodePtr child : get_children(node))
+    rewrite_symbols_in_declarations(mapping, child);
+}
+
+/// Remove unlisted ELF symbols.
+///
+/// @param symbols the set of symbols
+///
+/// @param root the XML root element
+///
+/// @return mapping from alias to main elf-symbol-id
+std::unordered_map<std::string, std::string>
+    filter_symbols(const std::optional<symbol_set>& symbols, xmlNodePtr root)
+{
+  // find symbols and record alias <-> main mappings
+  std::unordered_map<std::string, xmlNodePtr> symbol_map;
+  std::unordered_map<std::string, std::string> alias_map;
+  std::unordered_map<std::string, std::set<std::string>> main_map;
+  process_symbols(symbol_map, alias_map, main_map, root);
+  // check that aliases and main symbols are disjoint
+  for (const auto& [alias, main] : alias_map)
+    if (alias_map.count(main))
+      {
+        std::cerr << "found main symbol and alias with id " << main << '\n';
+        exit(1);
+      }
+
+  if (!symbols)
+    return alias_map;
+
+  // Track when an alias is promoted to a main symbol or a symbol is deleted as
+  // these are the cases when we need update references to symbols in
+  // declarations.
+  std::unordered_map<std::string, std::optional<std::string>> mapping;
+
+  // filter the symbols, preserving those listed
+  for (const auto& [id, node] : symbol_map)
+    {
+      const auto name = get_attribute(node, "name");
+      assert(name);
+      if (symbols->count(name.value()))
+        continue;
+      remove_element(node);
+
+      // The symbol has been removed, so remove its id from the alias <-> main
+      // mappings, promoting another alias to main symbol if needed, and
+      // updating XML alias attributes.
+      //
+      // There are 3 cases:
+      //   a main symbol - with one or more aliases
+      //   an alias - with a main symbol
+      //   an unaliased symbol
+      if (const auto main_it = main_map.find(id);
+          main_it != main_map.end())
+        {
+          // A main symbol with one or more aliases.
+          auto& aliases = main_it->second;
+          // the first alias will be the new main symbol
+          const auto first_it = aliases.begin();
+          assert(first_it != aliases.end());
+          const auto first = *first_it;
+          // remove first from the list of aliases and its link to id
+          alias_map.erase(first);
+          aliases.erase(first_it);
+          if (!aliases.empty())
+            {
+              // first is still aliased, update the maps
+              main_map[first] = aliases;
+              for (const auto& alias : aliases)
+                alias_map[alias] = first;
+              // set the XML attribute
+              set_aliases(symbol_map[first], aliases);
+            }
+          // remove id from the maps
+          main_map.erase(id);
+          // declarations referring to id must be repointed at first
+          mapping[id] = {first};
+        }
+      else if (const auto alias_it = alias_map.find(id);
+               alias_it != alias_map.end())
+        {
+          // An alias with a main symbol.
+          const auto main = alias_it->second;
+          auto& aliases = main_map[main];
+          // remove id from the maps
+          alias_map.erase(alias_it);
+          aliases.erase(id);
+          if (aliases.empty())
+            // main hasn't changed but is no longer aliased
+            main_map.erase(main);
+          // update the XML attribute
+          set_aliases(symbol_map[main], aliases);
+        }
+      else
+        {
+          // An unaliased symbol.
+          //
+          // declaration references to id must be removed
+          mapping[id] = {};
+        }
+    }
+
+  rewrite_symbols_in_declarations(mapping, root);
+
+  return alias_map;
 }
 
 /// Main program.
@@ -1466,8 +1641,7 @@ main(int argc, char* argv[])
   strip_text(root);
 
   // Get alias -> main mapping and remove unlisted symbols.
-  std::unordered_map<std::string, std::string> alias_map;
-  filter_symbols(opt_symbols, alias_map, root);
+  const auto alias_map = filter_symbols(opt_symbols, root);
 
   // Normalise anonymous type names.
   // Reanonymise anonymous types.
