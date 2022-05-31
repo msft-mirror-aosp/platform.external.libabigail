@@ -420,11 +420,16 @@ limit_locations(LocationInfo location_info, xmlNodePtr node)
 ///
 /// @param report whether to report untyped symbols
 ///
+/// @param alias_map mapping from alias to main elf-symbol-id
+///
 /// @param root the XML root element
 ///
 /// @return the number of untyped symbols
 static size_t
-handle_unreachable(bool prune, bool report, xmlNodePtr root)
+handle_unreachable(
+    bool prune, bool report,
+    const std::unordered_map<std::string, std::string>& alias_map,
+    xmlNodePtr root)
 {
   // ELF symbol ids.
   std::set<std::string> elf_symbol_ids;
@@ -561,7 +566,10 @@ handle_unreachable(bool prune, bool report, xmlNodePtr root)
   // Traverse the graph, starting from the ELF symbols.
   for (const auto& symbol_id : elf_symbol_ids)
     {
-      vertex_t symbol_vertex{true, symbol_id};
+      const auto it = alias_map.find(symbol_id);
+      const auto& mapped_symbol_id =
+          it != alias_map.end() ? it->second : symbol_id;
+      vertex_t symbol_vertex{true, mapped_symbol_id};
       if (vertices.count(symbol_vertex))
         {
           dfs(symbol_vertex);
@@ -1221,13 +1229,37 @@ read_symbols(const char* filename)
   return symbols;
 }
 
-/// Remove unlisted ELF symbols.
+/// Get aliases from XML node.
 ///
-/// @param symbols the set of symbols
+/// @param node the XML node to process
+///
+/// @return an ordered set of aliases
+std::set<std::string>
+get_aliases(xmlNodePtr node)
+{
+  std::set<std::string> aliases;
+  const auto alias = get_attribute(node, "alias");
+  if (alias)
+    {
+      std::istringstream is(alias.value());
+      std::string item;
+      while (std::getline(is, item, ','))
+        aliases.insert(item);
+    }
+  return aliases;
+}
+
+/// Record alias -> main mapping and remove unlisted ELF symbols.
+///
+/// @param symbols the set of symbols, if any
+///
+/// @param alias_map a map from alias elf-symbol-id to main
 ///
 /// @param node the XML node to process
 void
-filter_symbols(const symbol_set& symbols, xmlNodePtr node)
+filter_symbols(const std::optional<symbol_set>& symbols,
+               std::unordered_map<std::string, std::string>& alias_map,
+               xmlNodePtr node)
 {
   if (node->type != XML_ELEMENT_NODE)
     return;
@@ -1239,13 +1271,23 @@ filter_symbols(const symbol_set& symbols, xmlNodePtr node)
     {
       // Process children.
       for (auto child : get_children(node))
-        filter_symbols(symbols, child);
+        filter_symbols(symbols, alias_map, child);
     }
   else if (strcmp(node_name, "elf-symbol") == 0)
     {
-      const auto name = get_attribute(node, "name");
-      if (name && !symbols.count(name.value()))
-        remove_element(node);
+      const auto id = get_elf_symbol_id(node);
+      for (const auto& alias : get_aliases(node))
+        if (!alias_map.insert({alias, id}).second)
+          {
+            std::cerr << "multiple aliases with id " << alias << "\n";
+            exit(1);
+          }
+      if (symbols)
+        {
+          const auto name = get_attribute(node, "name");
+          if (name && !symbols->count(name.value()))
+            remove_element(node);
+        }
     }
 }
 
@@ -1423,9 +1465,9 @@ main(int argc, char* argv[])
   // Strip text nodes to simplify other operations.
   strip_text(root);
 
-  // Remove unlisted symbols.
-  if (opt_symbols)
-    filter_symbols(opt_symbols.value(), root);
+  // Get alias -> main mapping and remove unlisted symbols.
+  std::unordered_map<std::string, std::string> alias_map;
+  filter_symbols(opt_symbols, alias_map, root);
 
   // Normalise anonymous type names.
   // Reanonymise anonymous types.
@@ -1439,7 +1481,7 @@ main(int argc, char* argv[])
   size_t untyped_symbols = 0;
   if (opt_prune_unreachable || opt_report_untyped || opt_abort_on_untyped)
     untyped_symbols += handle_unreachable(
-        opt_prune_unreachable, opt_report_untyped, root);
+        opt_prune_unreachable, opt_report_untyped, alias_map, root);
   if (opt_abort_on_untyped && untyped_symbols)
     {
       std::cerr << "found " << untyped_symbols << " untyped symbols\n";
