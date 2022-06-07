@@ -1415,25 +1415,25 @@ std::unordered_map<std::string, std::string>
           main_it != main_map.end())
         {
           // A main symbol with one or more aliases.
-          auto& aliases = main_it->second;
+          std::set<std::string> aliases;
+          std::swap(aliases, main_it->second);
+          main_map.erase(main_it);
           // the first alias will be the new main symbol
           const auto first_it = aliases.begin();
           assert(first_it != aliases.end());
           const auto first = *first_it;
           // remove first from the list of aliases and its link to id
-          alias_map.erase(first);
           aliases.erase(first_it);
+          alias_map.erase(first);
           if (!aliases.empty())
             {
-              // first is still aliased, update the maps
-              main_map[first] = aliases;
+              // update the XML attribute
+              set_aliases(symbol_map[first], aliases);
+              // update the maps
               for (const auto& alias : aliases)
                 alias_map[alias] = first;
-              // set the XML attribute
-              set_aliases(symbol_map[first], aliases);
+              std::swap(aliases, main_map[first]);
             }
-          // remove id from the maps
-          main_map.erase(id);
           // declarations referring to id must be repointed at first
           mapping[id] = {first};
         }
@@ -1446,11 +1446,11 @@ std::unordered_map<std::string, std::string>
           // remove id from the maps
           alias_map.erase(alias_it);
           aliases.erase(id);
+          // update the XML attribute
+          set_aliases(symbol_map[main], aliases);
           if (aliases.empty())
             // main hasn't changed but is no longer aliased
             main_map.erase(main);
-          // update the XML attribute
-          set_aliases(symbol_map[main], aliases);
         }
       else
         {
