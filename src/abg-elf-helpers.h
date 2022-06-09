@@ -50,6 +50,9 @@ find_section(Elf*		elf_handle,
 	     Elf64_Word		section_type);
 
 Elf_Scn*
+find_section_by_name(Elf* elf_handle, const std::string& name);
+
+Elf_Scn*
 find_section(Elf* elf_handle, Elf64_Word section_type);
 
 Elf_Scn*
@@ -145,7 +148,13 @@ bool
 architecture_is_ppc64(Elf* elf_handle);
 
 bool
+architecture_is_ppc32(Elf* elf_handle);
+
+bool
 architecture_is_arm32(Elf* elf_handle);
+
+bool
+architecture_is_arm64(Elf* elf_handle);
 
 bool
 architecture_is_big_endian(Elf* elf_handle);
