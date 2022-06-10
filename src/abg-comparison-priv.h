@@ -240,7 +240,8 @@ public:
   friend class type_diff_base;
 }; // end class type_diff_base
 
-/// Private data for the @ref diff type.
+/// Private data for the @ref diff type.  The details of generic view
+/// of the diff node are expressed here.
 struct diff::priv
 {
   bool				finished_;
@@ -612,6 +613,7 @@ struct class_diff::priv
   class_decl::base_specs sorted_inserted_bases_;
   string_base_diff_sptr_map changed_bases_;
   base_diff_sptrs_type sorted_changed_bases_;
+  vector<class_decl::base_spec_sptr> moved_bases_;
 
   class_decl::base_spec_sptr
   base_has_changed(class_decl::base_spec_sptr) const;

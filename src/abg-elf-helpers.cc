@@ -296,6 +296,37 @@ e_machine_to_string(GElf_Half e_machine)
     }
 }
 
+/// Find and return a section by its name.
+///
+/// @param elf_handle the elf handle to use.
+///
+/// @param name the section name.
+///
+/// @return the section found, nor nil if none was found.
+Elf_Scn*
+find_section_by_name(Elf* elf_handle, const std::string& name)
+{
+  size_t section_header_string_index = 0;
+  if (elf_getshdrstrndx (elf_handle, &section_header_string_index) < 0)
+    return 0;
+
+  Elf_Scn* section = 0;
+  GElf_Shdr header_mem, *header;
+  while ((section = elf_nextscn(elf_handle, section)) != 0)
+    {
+      header = gelf_getshdr(section, &header_mem);
+      if (header == NULL)
+        continue;
+
+      const char* section_name =
+	elf_strptr(elf_handle, section_header_string_index, header->sh_name);
+      if (section_name && name == section_name)
+	return section;
+    }
+
+  return 0;
+}
+
 /// Find and return a section by its name and its type.
 ///
 /// @param elf_handle the elf handle to use.
@@ -887,6 +918,19 @@ architecture_is_ppc64(Elf* elf_handle)
   return (elf_header && elf_header->e_machine == EM_PPC64);
 }
 
+/// Test if the architecture of the current binary is ppc32.
+///
+/// @param elf_handle the ELF handle to consider.
+///
+/// @return true iff the architecture of the current binary is ppc32.
+bool
+architecture_is_ppc32(Elf* elf_handle)
+{
+  GElf_Ehdr  eh_mem;
+  GElf_Ehdr* elf_header = gelf_getehdr(elf_handle, &eh_mem);
+  return (elf_header && elf_header->e_machine == EM_PPC);
+}
+
 /// Test if the architecture of the current binary is arm32.
 ///
 /// @param elf_handle the ELF handle to consider.
@@ -898,6 +942,23 @@ architecture_is_arm32(Elf* elf_handle)
   GElf_Ehdr  eh_mem;
   GElf_Ehdr* elf_header = gelf_getehdr(elf_handle, &eh_mem);
   return (elf_header && elf_header->e_machine == EM_ARM);
+}
+
+/// Test if the architecture of the current binary is arm64.
+///
+/// @param elf_handle the ELF handle to consider.
+///
+/// @return true iff the architecture of the current binary is arm64.
+bool
+architecture_is_arm64(Elf* elf_handle)
+{
+#ifdef HAVE_EM_AARCH64_MACRO
+  GElf_Ehdr  eh_mem;
+  GElf_Ehdr* elf_header = gelf_getehdr(elf_handle, &eh_mem);
+  return (elf_header && elf_header->e_machine == EM_AARCH64);
+#else
+  return false;
+#endif
 }
 
 /// Test if the endianness of the current binary is Big Endian.
