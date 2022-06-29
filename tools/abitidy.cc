@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: Apache-2.0 WITH LLVM-exception
 // -*- Mode: C++ -*-
 //
-// Copyright (C) 2021 Google, Inc.
+// Copyright (C) 2021-2022 Google, Inc.
 //
 // Author: Giuliano Procida
 
@@ -420,18 +420,25 @@ limit_locations(LocationInfo location_info, xmlNodePtr node)
 ///
 /// @param report whether to report untyped symbols
 ///
+/// @param alias_map mapping from corpus to alias to main elf-symbol-id
+///
 /// @param root the XML root element
 ///
 /// @return the number of untyped symbols
 static size_t
-handle_unreachable(bool prune, bool report, xmlNodePtr root)
+handle_unreachable(
+    bool prune, bool report,
+    const std::unordered_map<xmlNodePtr,
+                             std::unordered_map<std::string,
+                                                std::string>>& alias_map,
+    xmlNodePtr root)
 {
-  // ELF symbol ids.
-  std::set<std::string> elf_symbol_ids;
+  // ELF symbol ids, per corpus.
+  std::set<std::pair<xmlNodePtr, std::string>> elf_symbol_ids;
 
-  // Simple way of allowing two kinds of nodes: false=>type,
-  // true=>symbol.
-  using vertex_t = std::pair<bool, std::string>;
+  // Simple way of allowing two kinds of nodes: nullptr=>type,
+  // node=>symbol.
+  using vertex_t = std::pair<xmlNodePtr, std::string>;
 
   // Graph vertices.
   std::set<vertex_t> vertices;
@@ -442,6 +449,10 @@ handle_unreachable(bool prune, bool report, xmlNodePtr root)
   // containing and refers-to relationships.
   std::vector<vertex_t> stack;
 
+  // Keep track of which corpus we are in as symbols and elf-symbol-ids are
+  // scoped per corpus.
+  xmlNodePtr current_corpus = nullptr;
+
   // Process an XML node, adding a vertex and possibly some edges.
   std::function<void(xmlNodePtr)> process_node = [&](xmlNodePtr node) {
     // We only care about elements and not comments, at this stage.
@@ -450,10 +461,15 @@ handle_unreachable(bool prune, bool report, xmlNodePtr root)
 
     const char* node_name = from_libxml(node->name);
 
+    // Is this a corpus?
+    if (strcmp(node_name, "abi-corpus") == 0)
+      current_corpus = node;
+
     // Is this an ELF symbol?
     if (strcmp(node_name, "elf-symbol") == 0)
       {
-        elf_symbol_ids.insert(get_elf_symbol_id(node));
+        elf_symbol_ids.insert(
+            std::make_pair(current_corpus, get_elf_symbol_id(node)));
         // Early return is safe, but not necessary.
         return;
       }
@@ -464,7 +480,7 @@ handle_unreachable(bool prune, bool report, xmlNodePtr root)
                     : std::optional<std::string>();
     if (id)
       {
-        vertex_t type_vertex{false, id.value()};
+        vertex_t type_vertex{nullptr, id.value()};
         vertices.insert(type_vertex);
         const auto naming_typedef_id = get_attribute(node, "naming-typedef-id");
         if (naming_typedef_id)
@@ -474,7 +490,7 @@ handle_unreachable(bool prune, bool report, xmlNodePtr root)
             // option will drop these, but if they are still present, we
             // should model the link to avoid the risk of dangling
             // references.
-            vertex_t naming_typedef_vertex{false, naming_typedef_id.value()};
+            vertex_t naming_typedef_vertex{nullptr, naming_typedef_id.value()};
             edges[type_vertex].insert(naming_typedef_vertex);
           }
         if (!stack.empty())
@@ -493,7 +509,7 @@ handle_unreachable(bool prune, bool report, xmlNodePtr root)
     const auto symbol = get_attribute(node, "elf-symbol-id");
     if (symbol)
       {
-        vertex_t symbol_vertex{true, symbol.value()};
+        vertex_t symbol_vertex{current_corpus, symbol.value()};
         vertices.insert(symbol_vertex);
         if (!stack.empty())
           {
@@ -526,7 +542,7 @@ handle_unreachable(bool prune, bool report, xmlNodePtr root)
       {
         // The enclosing type or symbol refers to another type.
         const auto& parent = stack.back();
-        vertex_t type_id_vertex{false, type_id.value()};
+        vertex_t type_id_vertex{nullptr, type_id.value()};
         edges[parent].insert(type_id_vertex);
       }
 
@@ -559,9 +575,16 @@ handle_unreachable(bool prune, bool report, xmlNodePtr root)
   size_t untyped = 0;
 
   // Traverse the graph, starting from the ELF symbols.
-  for (const auto& symbol_id : elf_symbol_ids)
+  for (const auto& [corpus, symbol_id] : elf_symbol_ids)
     {
-      vertex_t symbol_vertex{true, symbol_id};
+      const auto corpus_it = alias_map.find(corpus);
+      assert(corpus_it != alias_map.end());
+      const auto& corpus_alias_map = corpus_it->second;
+      const auto it = corpus_alias_map.find(symbol_id);
+      const auto& mapped_symbol_id = it != corpus_alias_map.end()
+                                     ? it->second : symbol_id;
+
+      vertex_t symbol_vertex{corpus, mapped_symbol_id};
       if (vertices.count(symbol_vertex))
         {
           dfs(symbol_vertex);
@@ -582,6 +605,10 @@ handle_unreachable(bool prune, bool report, xmlNodePtr root)
 
     const char* node_name = from_libxml(node->name);
 
+    // Is this a corpus?
+    if (strcmp(node_name, "abi-corpus") == 0)
+      current_corpus = node;
+
     // Return if we know that this is a type to keep or drop in its
     // entirety.
     const auto id = strcmp(node_name, "subrange") != 0
@@ -589,7 +616,7 @@ handle_unreachable(bool prune, bool report, xmlNodePtr root)
                     : std::optional<std::string>();
     if (id)
       {
-        if (!seen.count(vertex_t{false, id.value()}))
+        if (!seen.count(vertex_t{nullptr, id.value()}))
           remove_element(node);
         return;
       }
@@ -601,7 +628,7 @@ handle_unreachable(bool prune, bool report, xmlNodePtr root)
         || strcmp(node_name, "function-decl") == 0)
       {
         const auto symbol = get_attribute(node, "elf-symbol-id");
-        if (!(symbol && seen.count(vertex_t{true, symbol.value()})))
+        if (!(symbol && seen.count(vertex_t{current_corpus, symbol.value()})))
           remove_element(node);
         return;
       }
@@ -957,71 +984,57 @@ get_children_by_namespace(const std::vector<xmlNodePtr>& nodes)
   return result;
 }
 
-/// Sort namespaces, types and declarations.
+/// Determine whether an element contains an elf-symbol-id attribute.
+///
+/// @param node the node to examine recursively
+///
+/// @return whether or not an elf-symbol-id attribute was found
+static bool
+contains_elf_symbol_id(xmlNodePtr node)
+{
+  if (node->type != XML_ELEMENT_NODE)
+    return false;
+  if (get_attribute(node, "elf-symbol-id"))
+    return true;
+  for (auto child : get_children(node))
+    if (contains_elf_symbol_id(child))
+      return true;
+  return false;
+}
+
+/// Sort instrs into a corpus.
+///
+/// The given instrs (grouped by source corpus) are sorted and moved
+/// into the destination corpus, except that elements containing
+/// symbol-linked declarations are not moved between corpora.
 ///
 /// This loses annotations (XML comments) on namespace-decl elements.
 /// It would have been a fair amount of extra work to preserve them.
 ///
-/// @param root the XML root element
+/// @param where the XML abi-corpus element into which to move elements
+///
+/// @param instrs a list of pairs of containing corpus and XML abi-instr
+/// element out of which to move elements
 static void
-sort_namespaces_types_and_declarations(xmlNodePtr root)
+sort_instrs_into_corpus(
+    xmlNodePtr where,
+    const std::vector<std::pair<xmlNodePtr, std::vector<xmlNodePtr>>>& instrs)
 {
-  // There are (currently) 2 ABI formats we handle here.
-  //
-  // 1. An abi-corpus containing one or more abi-instr. In this case, we
-  // move all namespaces, types and declarations to a replacement
-  // abi-instr at the end of the abi-corpus. The existing abi-instr will
-  // then be confirmed as empty and removed.
-  //
-  // 2. An abi-corpus-group containing one or more abi-corpus each
-  // containing zero or more abi-instr (with at least one abi-instr
-  // altogether). In this case the replacement abi-instr is created
-  // within the first abi-corpus of the group.
-  //
-  // Anything else is left alone. For example, single abi-instr elements
-  // are present in some libabigail test suite files.
-
-  // We first need to identify where to place the new abi-instr and
-  // collect all the abi-instr to process.
-  xmlNodePtr where = nullptr;
-  std::vector<xmlNodePtr> instrs;
-
-  auto process_corpus = [&](xmlNodePtr corpus) {
-    if (!where)
-      where = corpus;
-    for (auto instr : get_children(corpus))
-      if (strcmp(from_libxml(instr->name), "abi-instr") == 0)
-        instrs.push_back(instr);
-  };
-
-  const char* root_name = from_libxml(root->name);
-  if (strcmp(root_name, "abi-corpus-group") == 0)
-    {
-      // Process all corpora in a corpus group together.
-      for (auto corpus : get_children(root))
-        if (strcmp(from_libxml(corpus->name), "abi-corpus") == 0)
-          process_corpus(corpus);
-    }
-  else if (strcmp(root_name, "abi-corpus") == 0)
-    {
-      // We have a corpus to sort, just get its instrs.
-      process_corpus(root);
-    }
-
   if (instrs.empty())
     return;
 
   // Collect the attributes of all the instrs.
   std::map<std::string, std::set<std::string>> attributes;
-  for (auto instr : instrs)
-    for (auto p = instr->properties; p; p = p->next)
-      {
-        // This is horrible. There should be a better way of iterating.
-        const char* attribute_name = from_libxml(p->name);
-        const auto attribute_value = get_attribute(instr, attribute_name);
-        assert(attribute_value);
-        attributes[attribute_name].insert(attribute_value.value());
-      }
+  for (const auto& [corpus, corpus_instrs] : instrs)
+    for (const auto& instr : corpus_instrs)
+      for (auto p = instr->properties; p; p = p->next)
+        {
+          // This is horrible. There should be a better way of iterating.
+          const char* attribute_name = from_libxml(p->name);
+          const auto attribute_value = get_attribute(instr, attribute_name);
+          assert(attribute_value);
+          attributes[attribute_name].insert(attribute_value.value());
+        }
 
   // Create and attach a replacement instr and populate its attributes.
   xmlNodePtr replacement =
@@ -1100,7 +1113,18 @@ sort_namespaces_types_and_declarations(xmlNodePtr root)
   };
 
   // Collect the child elements of all the instrs, by namespace scope.
-  auto scoped_children = get_children_by_namespace(instrs);
+  std::map<namespace_scope, std::vector<xmlNodePtr>> scoped_children;
+  std::unordered_map<xmlNodePtr, xmlNodePtr> child_corpus;
+  for (const auto& [corpus, corpus_instrs] : instrs)
+    for (const auto& [scope, children] : get_children_by_namespace(corpus_instrs))
+      {
+        auto& these_scoped_children = scoped_children[scope];
+        for (auto child : children)
+          {
+            these_scoped_children.push_back(child);
+            child_corpus[child] = corpus;
+          }
+      }
   for (auto& [scope, children] : scoped_children)
     // Sort the children, preserving order of duplicates.
     std::stable_sort(children.begin(), children.end(), Compare());
@@ -1126,20 +1150,93 @@ sort_namespaces_types_and_declarations(xmlNodePtr root)
     return insertion.first->second;
   };
 
-  // Move the children to the replacement instr or its subelements.
+  // Move each child to the replacement instr or namespace subelement
+  // thereof, unless the child would move between corpora and is or
+  // contains a symbol-linked declaration.
   for (const auto& [scope, elements] : scoped_children)
     {
       xmlNodePtr namespace_element = get_namespace_element(scope);
       for (auto element : elements)
-        move_element(element, namespace_element);
+        if (child_corpus[element] == where || !contains_elf_symbol_id(element))
+          move_element(element, namespace_element);
     }
 
-  // Check the original instrs are now all empty and remove them.
-  for (auto instr : instrs)
-    if (get_children_by_namespace({instr}).empty())
-      remove_node(instr);
-    else
-      std::cerr << "original abi-instr has residual child elements\n";
+  // Remove each original instr if now effectively empty.
+  for (const auto& [corpus, corpus_instrs] : instrs)
+    for (auto instr : corpus_instrs)
+      if (get_children_by_namespace({instr}).empty())
+        remove_node(instr);
+
+  // Remove the replacement if it wasn't used.
+  if (get_children(replacement).empty())
+    remove_node(replacement);
+}
+
+/// Get corpora instrs.
+///
+/// @param corpora a vector of corpus elements
+///
+/// @return a vector of pairs of corpus and contained instr elements
+std::vector<std::pair<xmlNodePtr, std::vector<xmlNodePtr>>>
+get_corpora_instrs(const std::vector<xmlNodePtr>& corpora)
+{
+  std::vector<std::pair<xmlNodePtr, std::vector<xmlNodePtr>>> result;
+  for (auto corpus : corpora)
+    {
+      result.push_back({corpus, {}});
+      auto& corpus_instrs = result.back().second;
+      for (auto instr : get_children(corpus))
+        if (strcmp(from_libxml(instr->name), "abi-instr") == 0)
+          corpus_instrs.push_back(instr);
+    }
+  return result;
+}
+
+/// Sort namespaces, types and declarations.
+///
+/// @param root the XML root element
+static void
+sort_namespaces_types_and_declarations(xmlNodePtr root)
+{
+  // There are (currently) 2 ABI formats we handle here.
+  //
+  // 1. An abi-corpus containing one or more abi-instr. In this case, we
+  // move all namespaces, types and declarations to a replacement
+  // abi-instr at the end of the abi-corpus.
+  //
+  // 2. An abi-corpus-group containing one or more abi-corpus each
+  // containing zero or more abi-instr (with at least one abi-instr
+  // altogether). In this case all the corpora are sorted together into
+  // a replacement abi-instr created within the first corpus, except
+  // that symbol-linked declarations in subsequent corpora are not moved.
+  //
+  // Anything else is left alone. For example, single abi-instr elements
+  // are present in some libabigail test suite files.
+
+  // We first need to identify where to place the new abi-instr and
+  // collect all the abi-instr to process.
+  const char* root_name = from_libxml(root->name);
+  if (strcmp(root_name, "abi-corpus-group") == 0)
+    {
+      // Process all corpora in a corpus group together.
+      std::vector<xmlNodePtr> corpora;
+      xmlNodePtr first = nullptr;
+      for (auto corpus : get_children(root))
+        if (strcmp(from_libxml(corpus->name), "abi-corpus") == 0)
+          {
+            if (!first)
+              first = corpus;
+            corpora.push_back(corpus);
+          }
+      if (first)
+        sort_instrs_into_corpus(first, get_corpora_instrs(corpora));
+      // An extra pass to sort whatever may have been left behind.
+      for (auto corpus : corpora)
+        if (corpus != first)
+          sort_instrs_into_corpus(corpus, get_corpora_instrs({corpus}));
+    }
+  else if (strcmp(root_name, "abi-corpus") == 0)
+    sort_instrs_into_corpus(root, get_corpora_instrs({root}));
 }
 
 static constexpr std::array<std::string_view, 2> SYMBOL_SECTION_SUFFICES = {
@@ -1221,32 +1318,276 @@ read_symbols(const char* filename)
   return symbols;
 }
 
-/// Remove unlisted ELF symbols.
+/// Get aliases from XML node.
 ///
-/// @param symbols the set of symbols
+/// @param node the XML node to process
+///
+/// @return an ordered set of aliases
+std::set<std::string>
+get_aliases(xmlNodePtr node)
+{
+  std::set<std::string> aliases;
+  const auto alias = get_attribute(node, "alias");
+  if (alias)
+    {
+      std::istringstream is(alias.value());
+      std::string item;
+      while (std::getline(is, item, ','))
+        aliases.insert(item);
+    }
+  return aliases;
+}
+
+/// Set aliases in XML node.
+///
+/// @param node the XML node to process
+///
+/// @param aliases an ordered set of aliases
+void
+set_aliases(xmlNodePtr node, const std::set<std::string>& aliases)
+{
+  if (aliases.empty())
+    {
+      unset_attribute(node, "alias");
+    }
+  else
+    {
+      std::ostringstream os;
+      bool first = true;
+      for (const auto& alias : aliases)
+        {
+          if (first)
+            first = false;
+          else
+            os << ',';
+          os << alias;
+        }
+      set_attribute(node, "alias", os.str());
+    }
+}
+
+/// Gather information about symbols and record alias <-> main mappings.
+///
+/// @param symbol_map a map from elf-symbol-id to XML node
+///
+/// @param alias_map a map from alias elf-symbol-id to main
+///
+/// @param main_map a map from main elf-symbol-id to aliases
 ///
 /// @param node the XML node to process
 void
-filter_symbols(const symbol_set& symbols, xmlNodePtr node)
+process_symbols(
+    std::unordered_map<std::string, xmlNodePtr>& symbol_map,
+    std::unordered_map<std::string, std::string>& alias_map,
+    std::unordered_map<std::string, std::set<std::string>>& main_map,
+    xmlNodePtr node)
 {
   if (node->type != XML_ELEMENT_NODE)
     return;
   const char* node_name = from_libxml(node->name);
-  if (strcmp(node_name, "abi-corpus-group") == 0
-      || strcmp(node_name, "abi-corpus") == 0
-      || strcmp(node_name, "elf-variable-symbols") == 0
-      || strcmp(node_name, "elf-function-symbols") == 0)
+  if (strcmp(node_name, "abi-corpus-group") == 0)
+    {
+      std::cerr << "symbol processing must be per corpus\n";
+      exit(1);
+    }
+  else if (strcmp(node_name, "abi-corpus") == 0
+           || strcmp(node_name, "elf-variable-symbols") == 0
+           || strcmp(node_name, "elf-function-symbols") == 0)
     {
       // Process children.
       for (auto child : get_children(node))
-        filter_symbols(symbols, child);
+        process_symbols(symbol_map, alias_map, main_map, child);
     }
   else if (strcmp(node_name, "elf-symbol") == 0)
     {
-      const auto name = get_attribute(node, "name");
-      if (name && !symbols.count(name.value()))
-        remove_element(node);
+      const auto id = get_elf_symbol_id(node);
+      if (!symbol_map.insert({id, node}).second)
+        {
+          std::cerr << "multiple symbols with id " << id << "\n";
+          exit(1);
+        }
+      const auto aliases = get_aliases(node);
+      for (const auto& alias : aliases)
+        if (!alias_map.insert({alias, id}).second)
+          {
+            std::cerr << "multiple aliases with id " << alias << "\n";
+            exit(1);
+          }
+      if (!aliases.empty())
+        main_map.insert({id, aliases});
     }
+}
+
+/// Rewrite elf-symbol-id attributes following ELF symbol removal.
+///
+/// @param mapping map from old to new elf-symbol-id, if any
+void
+rewrite_symbols_in_declarations(
+    const std::unordered_map<std::string, std::optional<std::string>>& mapping,
+    xmlNodePtr node)
+{
+  if (node->type != XML_ELEMENT_NODE)
+    return;
+
+  const char* node_name = from_libxml(node->name);
+  if (strcmp(node_name, "var-decl") == 0
+      || strcmp(node_name, "function-decl") == 0)
+    {
+      auto symbol = get_attribute(node, "elf-symbol-id");
+      bool changed = false;
+      while (symbol)
+        {
+          const auto it = mapping.find(symbol.value());
+          if (it == mapping.end())
+            break;
+          symbol = it->second;
+          changed = true;
+        }
+      if (changed)
+        {
+          if (symbol)
+            set_attribute(node, "elf-symbol-id", symbol.value());
+          else
+            unset_attribute(node, "elf-symbol-id");
+        }
+    }
+
+  for (xmlNodePtr child : get_children(node))
+    rewrite_symbols_in_declarations(mapping, child);
+}
+
+/// Remove unlisted ELF symbols.
+///
+/// @param symbols the set of symbols
+///
+/// @param corpus the XML corpus element
+///
+/// @return mapping from alias to main elf-symbol-id
+std::unordered_map<std::string, std::string>
+    filter_corpus_symbols(const std::optional<symbol_set>& symbols,
+                          xmlNodePtr corpus)
+{
+  // find symbols and record alias <-> main mappings
+  std::unordered_map<std::string, xmlNodePtr> symbol_map;
+  std::unordered_map<std::string, std::string> alias_map;
+  std::unordered_map<std::string, std::set<std::string>> main_map;
+  process_symbols(symbol_map, alias_map, main_map, corpus);
+  // check that aliases and main symbols are disjoint
+  for (const auto& [alias, main] : alias_map)
+    if (alias_map.count(main))
+      {
+        std::cerr << "found main symbol and alias with id " << main << '\n';
+        exit(1);
+      }
+
+  if (!symbols)
+    return alias_map;
+
+  // Track when an alias is promoted to a main symbol or a symbol is deleted as
+  // these are the cases when we need update references to symbols in
+  // declarations.
+  std::unordered_map<std::string, std::optional<std::string>> mapping;
+
+  // filter the symbols, preserving those listed
+  for (const auto& [id, node] : symbol_map)
+    {
+      const auto name = get_attribute(node, "name");
+      assert(name);
+      if (symbols->count(name.value()))
+        continue;
+      remove_element(node);
+
+      // The symbol has been removed, so remove its id from the alias <-> main
+      // mappings, promoting another alias to main symbol if needed, and
+      // updating XML alias attributes.
+      //
+      // There are 3 cases:
+      //   a main symbol - with one or more aliases
+      //   an alias - with a main symbol
+      //   an unaliased symbol
+      if (const auto main_it = main_map.find(id);
+          main_it != main_map.end())
+        {
+          // A main symbol with one or more aliases.
+          std::set<std::string> aliases;
+          std::swap(aliases, main_it->second);
+          main_map.erase(main_it);
+          // the first alias will be the new main symbol
+          const auto first_it = aliases.begin();
+          assert(first_it != aliases.end());
+          const auto first = *first_it;
+          // remove first from the list of aliases and its link to id
+          aliases.erase(first_it);
+          alias_map.erase(first);
+          if (!aliases.empty())
+            {
+              // update the XML attribute
+              set_aliases(symbol_map[first], aliases);
+              // update the maps
+              for (const auto& alias : aliases)
+                alias_map[alias] = first;
+              std::swap(aliases, main_map[first]);
+            }
+          // declarations referring to id must be repointed at first
+          mapping[id] = {first};
+        }
+      else if (const auto alias_it = alias_map.find(id);
+               alias_it != alias_map.end())
+        {
+          // An alias with a main symbol.
+          const auto main = alias_it->second;
+          auto& aliases = main_map[main];
+          // remove id from the maps
+          alias_map.erase(alias_it);
+          aliases.erase(id);
+          // update the XML attribute
+          set_aliases(symbol_map[main], aliases);
+          if (aliases.empty())
+            // main hasn't changed but is no longer aliased
+            main_map.erase(main);
+        }
+      else
+        {
+          // An unaliased symbol.
+          //
+          // declaration references to id must be removed
+          mapping[id] = {};
+        }
+    }
+
+  rewrite_symbols_in_declarations(mapping, corpus);
+
+  return alias_map;
+}
+
+/// Remove unlisted ELF symbols.
+///
+/// @param symbols the set of symbols
+///
+/// @param root the XML root element
+///
+/// @return mapping from corpus to alias to main elf-symbol-id
+std::unordered_map<xmlNodePtr, std::unordered_map<std::string, std::string>>
+    filter_symbols(const std::optional<symbol_set>& symbols, xmlNodePtr root)
+{
+  std::unordered_map<xmlNodePtr, std::unordered_map<std::string, std::string>>
+      result;
+  const char* node_name = from_libxml(root->name);
+  if (strcmp(node_name, "abi-corpus-group") == 0)
+    {
+      for (auto child : get_children(root))
+        result[child] = filter_corpus_symbols(symbols, child);
+    }
+  else if (strcmp(node_name, "abi-corpus") == 0)
+    {
+      result[root] = filter_corpus_symbols(symbols, root);
+    }
+  else
+    {
+      std::cerr << "unexpected root element: " << node_name << '\n';
+      exit(1);
+    }
+  return result;
 }
 
 /// Main program.
@@ -1423,9 +1764,8 @@ main(int argc, char* argv[])
   // Strip text nodes to simplify other operations.
   strip_text(root);
 
-  // Remove unlisted symbols.
-  if (opt_symbols)
-    filter_symbols(opt_symbols.value(), root);
+  // Get corpus -> alias -> main mapping and remove unlisted symbols.
+  const auto alias_map = filter_symbols(opt_symbols, root);
 
   // Normalise anonymous type names.
   // Reanonymise anonymous types.
@@ -1439,7 +1779,7 @@ main(int argc, char* argv[])
   size_t untyped_symbols = 0;
   if (opt_prune_unreachable || opt_report_untyped || opt_abort_on_untyped)
     untyped_symbols += handle_unreachable(
-        opt_prune_unreachable, opt_report_untyped, root);
+        opt_prune_unreachable, opt_report_untyped, alias_map, root);
   if (opt_abort_on_untyped && untyped_symbols)
     {
       std::cerr << "found " << untyped_symbols << " untyped symbols\n";
