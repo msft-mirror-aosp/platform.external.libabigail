@@ -101,6 +101,22 @@ from_libxml(const xmlChar* str)
   return reinterpret_cast<const char*>(str);
 }
 
+/// Get comment node corresponding to a given node if it exists.
+///
+/// Returns nullptr if previous node does not exist or is not a comment,
+/// otherwise returns the previous node.
+///
+/// @param node the node for which comment has to be returned
+///
+/// @return pointer to the comment node
+static xmlNodePtr
+get_comment_node(xmlNodePtr node)
+{
+  xmlNodePtr previous_node = node->prev;
+  return previous_node && previous_node->type == XML_COMMENT_NODE
+      ? previous_node : nullptr;
+}
+
 /// Remove a node from its document and free its storage.
 ///
 /// @param node the node to remove
@@ -117,9 +133,8 @@ remove_node(xmlNodePtr node)
 static void
 remove_element(xmlNodePtr node)
 {
-  xmlNodePtr previous_node = node->prev;
-  if (previous_node && previous_node->type == XML_COMMENT_NODE)
-    remove_node(previous_node);
+  if (auto comment_node = get_comment_node(node))
+    remove_node(comment_node);
   remove_node(node);
 }
 
@@ -144,9 +159,8 @@ move_node(xmlNodePtr node, xmlNodePtr destination)
 static void
 move_element(xmlNodePtr node, xmlNodePtr destination)
 {
-  xmlNodePtr previous_node = node->prev;
-  if (previous_node && previous_node->type == XML_COMMENT_NODE)
-    move_node(previous_node, destination);
+  if (auto comment_node = get_comment_node(node))
+    move_node(comment_node, destination);
   move_node(node, destination);
 }
 
