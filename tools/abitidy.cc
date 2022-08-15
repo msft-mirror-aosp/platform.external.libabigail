@@ -854,6 +854,105 @@ record_ids_to_renumber(
     }
 }
 
+/// Compute a stable string hash.
+///
+/// This is the 32-bit FNV-1a algorithm. The algorithm, reference code
+/// and constants are all unencumbered. It is fast and has reasonable
+/// distribution properties.
+///
+/// std::hash has no portability or stability guarantees so is
+/// unsuitable where reproducibility is a requirement such as in XML
+/// output.
+///
+/// https://en.wikipedia.org/wiki/Fowler-Noll-Vo_hash_function
+///
+/// @param str the string to hash
+///
+/// @return an unsigned 32 bit hash value
+static uint32_t
+fnv_hash(const std::string& str)
+{
+  const uint32_t prime = 0x01000193;
+  const uint32_t offset_basis = 0x811c9dc5;
+  uint32_t hash = offset_basis;
+  for (const char& c : str)
+    {
+      uint8_t byte = c;
+      hash = hash ^ byte;
+      hash = hash * prime;
+    }
+  return hash;
+}
+
+/// Generate a new 32 bit type id and return its hexadecimal representation.
+///
+/// Generates hash of the given hash content. Uses linear probing to resolve
+/// hash collisions. Also, records the newly generated hash in a set of used
+/// hashes.
+///
+/// @param hash_content the string which is used to generate a hash
+///
+/// @param used_hashes the set of hashes which have already been used
+///
+/// @return the hexadecimal representation of the newly generated hash
+static std::string
+generate_new_id(const std::string& hash_content,
+                std::unordered_set<size_t>& used_hashes)
+{
+  auto hash = fnv_hash(hash_content);
+  while (!used_hashes.insert(hash).second)
+    ++hash;
+  std::ostringstream os;
+  os << std::hex << std::setfill('0') << std::setw(8) << hash;
+  return os.str();
+}
+
+/// Calculate new type id for a given old type id.
+///
+/// This resolves the old type ids for anonymous types to new ones, while ids
+/// which do not belong to anonymous types are returned as they are.
+///
+/// @param type_id old type id
+///
+/// @param to_renumber map from ids to be renumbered to corresponding XML node
+///
+/// @param used_hashes set of hashes used by other type ids
+///
+/// @param type_id_map mapping from old type ids to new ones
+///
+/// @return resolved type id
+static std::string
+resolve_ids_to_renumber(
+    const std::string& type_id,
+    const std::unordered_map<std::string, xmlNodePtr>& to_renumber,
+    std::unordered_set<size_t>& used_hashes,
+    std::unordered_map<std::string, std::string>& type_id_map)
+{
+  // Check whether the given type_id needs to be renumbered. If not, the type_id
+  // can be returned since it does not represent an anonymous type.
+  const auto to_renumber_it = to_renumber.find(type_id);
+  if (to_renumber_it == to_renumber.end())
+    return type_id;
+
+  // Insert an empty string placeholder to prevent infinite loops.
+  const auto& [type_mapping, inserted] = type_id_map.insert({type_id, {}});
+  if (!inserted)
+    {
+      if (!type_mapping->second.empty())
+        return type_mapping->second;
+      std::cerr << "new type id depends on itself for type with id: "
+                << type_id << '\n';
+      exit(1);
+    }
+
+  const auto& node = to_renumber_it->second;
+  std::ostringstream hash_content;
+  hash_content << "__anonymous__" << from_libxml(node->name);
+
+  return type_mapping->second =
+      generate_new_id(hash_content.str(), used_hashes);
+}
+
 /// Determine whether one XML element is a subtree of another.
 ///
 /// XML elements representing types are sometimes emitted multiple
