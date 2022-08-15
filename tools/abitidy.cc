@@ -953,6 +953,37 @@ resolve_ids_to_renumber(
       generate_new_id(hash_content.str(), used_hashes);
 }
 
+/// Replace old type ids by new ones.
+///
+/// @param node the node which is being processed
+///
+/// @param type_id_map map from old type ids to replace to new ones
+static void
+renumber_type_ids(
+    xmlNodePtr node,
+    const std::unordered_map<std::string, std::string>& type_id_map)
+{
+  if (node->type != XML_ELEMENT_NODE)
+    return;
+
+  auto maybe_replace = [&](const char* attribute_name) {
+    const auto& attribute = get_attribute(node, attribute_name);
+    if (attribute)
+      {
+        const auto it = type_id_map.find(attribute.value());
+        if (it != type_id_map.end())
+          set_attribute(node, attribute_name, it->second);
+      }
+  };
+
+  maybe_replace("id");
+  maybe_replace("type-id");
+  maybe_replace("naming-typedef-id");
+
+  for (auto child : get_children(node))
+    renumber_type_ids(child, type_id_map);
+}
+
 /// Determine whether one XML element is a subtree of another.
 ///
 /// XML elements representing types are sometimes emitted multiple
