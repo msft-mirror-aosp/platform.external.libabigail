@@ -1853,6 +1853,11 @@ main(int argc, char* argv[])
   bool opt_sort = false;
   bool opt_drop_empty = false;
 
+  // Experimental flags. These are not part of --all.
+  //
+  // TODO: Move out of experimental status when stable.
+  bool opt_renumber_anonymous_types = false;
+
   // Process command line.
   auto usage = [&]() -> int {
     std::cerr << "usage: " << argv[0] << '\n'
@@ -1872,7 +1877,9 @@ main(int argc, char* argv[])
               << "  [-e|--[no-]eliminate-duplicates]\n"
               << "  [-c|--[no-]report-conflicts]\n"
               << "  [-s|--[no-]sort]\n"
-              << "  [-d|--[no-]drop-empty]\n";
+              << "  [-d|--[no-]drop-empty]\n"
+              << "\nExperimental flags, not part of --all\n"
+              << "  [-M|--[no-]renumber-anonymous-types]\n";
     return 1;
   };
   int opt_index = 1;
@@ -1957,6 +1964,10 @@ main(int argc, char* argv[])
         opt_drop_empty = true;
       else if (arg == "--no-drop-empty")
         opt_drop_empty = false;
+      else if (arg == "-M" || arg == "--renumber-anonymous-types")
+        opt_renumber_anonymous_types = true;
+      else if (arg == "--no-renumber-anonymous-types")
+        opt_renumber_anonymous_types = false;
       else
         exit(usage());
     }
@@ -1999,6 +2010,22 @@ main(int argc, char* argv[])
 
   // Get corpus -> alias -> main mapping and remove unlisted symbols.
   const auto alias_map = filter_symbols(opt_symbols, root);
+
+  // Record type ids which correspond to anonymous types.
+  // Renumber recorded type ids using information about the type.
+  // Replace recorded type ids by renumbered ones.
+  if (opt_renumber_anonymous_types)
+    {
+      std::unordered_map<std::string, xmlNodePtr> to_renumber;
+      std::unordered_set<size_t> used_hashes;
+      record_ids_to_renumber(root, to_renumber, used_hashes);
+
+      std::unordered_map<std::string, std::string> type_id_map;
+      for (const auto& [type_id, node] : to_renumber)
+        resolve_ids_to_renumber(type_id, to_renumber, used_hashes, type_id_map);
+
+      renumber_type_ids(root, type_id_map);
+    }
 
   // Normalise anonymous type names.
   // Reanonymise anonymous types.
