@@ -54,7 +54,7 @@ static const std::map<std::string, LocationInfo> LOCATION_INFO_NAME = {
   {"none", LocationInfo::NONE},
 };
 
-static const std::map<std::string, std::string> NAMED_TYPES = {
+static const std::map<std::string, std::string, std::less<>> NAMED_TYPES = {
   {"enum-decl", "__anonymous_enum__"},
   {"class-decl", "__anonymous_struct__"},
   {"union-decl", "__anonymous_union__"},
@@ -797,6 +797,61 @@ get_effective_name(xmlNodePtr node)
 {
   return get_attribute(node, "is-anonymous")
       ? std::nullopt : get_attribute(node, "name");
+}
+
+/// Record type ids for anonymous types that have to be renumbered.
+///
+/// This constructs a map from the ids that need to be renumbered to the XML
+/// node where the id is defined/declared. Also records hexadecimal hashes used
+/// by non-anonymous types.
+///
+/// @param node the node being processed
+///
+/// @param to_renumber map from ids to be renumbered to corresponding XML node
+///
+/// @param used_hashes set of hashes used by non-anonymous type ids
+static void
+record_ids_to_renumber(
+    xmlNodePtr node,
+    std::unordered_map<std::string, xmlNodePtr>& to_renumber,
+    std::unordered_set<size_t>& used_hashes)
+{
+  if (node->type != XML_ELEMENT_NODE)
+    return;
+
+  for (auto child : get_children(node))
+    record_ids_to_renumber(child, to_renumber, used_hashes);
+
+  const auto& id_attr = get_attribute(node, "id");
+  if (!id_attr)
+    return;
+
+  const auto& id = id_attr.value();
+  const std::string_view node_name(from_libxml(node->name));
+  const bool is_anonymous_type_candidate = NAMED_TYPES.count(node_name);
+  if (!is_anonymous_type_candidate || get_effective_name(node))
+    {
+      const bool is_hexadecimal = std::all_of(
+          id.begin(), id.end(), [](unsigned char c){ return std::isxdigit(c); });
+      if (id.size() == 8 && is_hexadecimal)
+        {
+          // Do not check for successful insertion since there can be multiple
+          // declarations/definitions for a type.
+          size_t hash = std::stoul(id, nullptr, 16);
+          used_hashes.insert(hash);
+        }
+    }
+  else
+    {
+      // Check for successful insertion since anonymous types are not prone to
+      // having multiple definitions/declarations.
+      if (!to_renumber.insert({id, node}).second)
+        {
+          std::cerr << "Found multiple definitions/declarations of anonmyous "
+                    << "type with id: " << id << '\n';
+          exit(1);
+        }
+    }
 }
 
 /// Determine whether one XML element is a subtree of another.
