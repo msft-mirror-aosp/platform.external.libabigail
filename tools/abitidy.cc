@@ -907,6 +907,32 @@ generate_new_id(const std::string& hash_content,
   return os.str();
 }
 
+/// Find the first member for a user defined type.
+///
+/// The first member for enums is the first enumerator while for structs and
+/// unions it is the variable declaration of the first data member.
+///
+/// @param node the node being processed
+///
+/// @return the node which represents the first member
+static xmlNodePtr
+find_first_member(xmlNodePtr node)
+{
+  auto first_child_by_xml_node_name =
+      [](const xmlNodePtr node, const std::string_view name) -> xmlNodePtr {
+    for (auto child : get_children(node))
+      if (child->type == XML_ELEMENT_NODE && from_libxml(child->name) == name)
+        return child;
+    return nullptr;
+  };
+
+  if (strcmp(from_libxml(node->name), "enum-decl") == 0)
+      return first_child_by_xml_node_name(node, "enumerator");
+  if (auto data_member = first_child_by_xml_node_name(node, "data-member"))
+      return first_child_by_xml_node_name(data_member, "var-decl");
+  return nullptr;
+}
+
 /// Calculate new type id for a given old type id.
 ///
 /// This resolves the old type ids for anonymous types to new ones, while ids
@@ -947,7 +973,22 @@ resolve_ids_to_renumber(
 
   const auto& node = to_renumber_it->second;
   std::ostringstream hash_content;
-  hash_content << "__anonymous__" << from_libxml(node->name);
+  hash_content << from_libxml(node->name);
+  if (auto first_member = find_first_member(node))
+    {
+      // Create hash content by combining the name & resolved type id of the
+      // first member and the kind of anonymous type.
+      if (auto name = get_effective_name(first_member))
+        hash_content << '-' << name.value();
+      if (auto type_id = get_attribute(first_member, "type-id"))
+        hash_content << '-' << resolve_ids_to_renumber(
+            type_id.value(), to_renumber, used_hashes, type_id_map);
+    }
+  else
+    {
+      // No member information available. Possibly type is empty.
+      hash_content << "__empty";
+    }
 
   return type_mapping->second =
       generate_new_id(hash_content.str(), used_hashes);
