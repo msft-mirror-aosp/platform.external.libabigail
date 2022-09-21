@@ -60,6 +60,24 @@ static const std::map<std::string, std::string> NAMED_TYPES = {
   {"union-decl", "__anonymous_union__"},
 };
 
+/// Compare optional strings.
+///
+/// TODO: Obsoleted by C++20 std::optional::operator<=>.
+///
+/// @param a first operand of comparison
+///
+/// @param b second operand of comparison
+///
+/// @return an integral result
+int
+compare_optional(const std::optional<std::string>& a,
+                 const std::optional<std::string>& b)
+{
+  int result = b.has_value() - a.has_value();
+  if (result)
+    return result;
+  return a ? a.value().compare(b.value()) : 0;
+}
 
 /// Cast a C string to a libxml string.
 ///
@@ -312,6 +330,23 @@ adjust_quotes(xmlChar* start, xmlChar* limit)
           start = end + 1;
         }
     }
+}
+
+/// Compare given attribute of 2 XML nodes.
+///
+/// @param attribute the attribute to compare
+///
+/// @param a first XML node to compare
+///
+/// @param b second XML node to compare
+///
+/// @return an integral result
+static int
+compare_attributes(
+    const char* attribute, const xmlNodePtr& a, const xmlNodePtr& b)
+{
+  return compare_optional(get_attribute(a, attribute),
+                          get_attribute(b, attribute));
 }
 
 static const std::set<std::string> DROP_IF_EMPTY = {
@@ -748,25 +783,21 @@ clear_non_reachable(xmlNodePtr node)
     clear_non_reachable(child);
 }
 
-/// The set of attributes that should be excluded from consideration
-/// when comparing XML elements.
+/// Determine the effective name of a given node.
 ///
-/// Source location attributes are omitted with --no-show-locs without
-/// changing the meaning of the ABI. They can also sometimes vary
-/// between duplicate type definitions.
+/// The effective name is same as the value of the 'name' attribute for all
+/// nodes except nodes which represent anonymous types. For anonymous types, the
+/// function returns std::nullopt.
 ///
-/// The naming-typedef-id attribute, if not already removed by another
-/// pass, is irrelevant to ABI semantics.
+/// @param node the node for which effective name has to be determined
 ///
-/// The is-non-reachable attribute, if not already removed by another
-/// pass, is irrelevant to ABI semantics.
-static const std::unordered_set<std::string> IRRELEVANT_ATTRIBUTES = {
-  {"filepath"},
-  {"line"},
-  {"column"},
-  {"naming-typedef-id"},
-  {"is-non-reachable"},
-};
+/// @return an optional name string
+std::optional<std::string>
+get_effective_name(xmlNodePtr node)
+{
+  return get_attribute(node, "is-anonymous")
+      ? std::nullopt : get_attribute(node, "name");
+}
 
 /// Determine whether one XML element is a subtree of another.
 ///
@@ -786,11 +817,34 @@ static const std::unordered_set<std::string> IRRELEVANT_ATTRIBUTES = {
 bool
 sub_tree(xmlNodePtr left, xmlNodePtr right)
 {
+  // The set of attributes that should be excluded from consideration when
+  // comparing XML elements. These attributes are either irrelevant for ABI
+  // monitoring or already handled by another check.
+  static const std::unordered_set<std::string> IRRELEVANT_ATTRIBUTES = {
+    // Source location information. This can vary between duplicate type
+    // definitions.
+    "filepath",
+    "line",
+    "column",
+    // Anonymous type to typedef backlinks.
+    "naming-typedef-id",
+    // Annotation that can appear with --load-all-types.
+    "is-non-reachable",
+    // Handled while checking for effective name equivalence.
+    "name",
+    "is-anonymous",
+  };
+
   // Node names must match.
   const char* left_name = from_libxml(left->name);
   const char* right_name = from_libxml(right->name);
   if (strcmp(left_name, right_name) != 0)
     return false;
+
+  // Effective names must match.
+  if (get_effective_name(left) != get_effective_name(right))
+    return false;
+
   // Attributes may be missing on the left, but must match otherwise.
   for (auto p = left->properties; p; p = p->next)
   {
@@ -809,6 +863,7 @@ sub_tree(xmlNodePtr left, xmlNodePtr right)
     if (!right_value || left_value.value() != right_value.value())
       return false;
   }
+
   // The left subelements must be a subsequence of the right ones.
   xmlNodePtr left_child = xmlFirstElementChild(left);
   xmlNodePtr right_child = xmlFirstElementChild(right);
@@ -821,15 +876,16 @@ sub_tree(xmlNodePtr left, xmlNodePtr right)
   return !left_child;
 }
 
-/// Elminate non-conflicting / report conflicting type definitions.
+/// Eliminate non-conflicting / report conflicting duplicate definitions.
 ///
 /// This function can eliminate exact type duplicates and duplicates
 /// where there is at least one maximal definition. It can report the
 /// remaining, conflicting duplicate definitions.
 ///
-/// If a type has duplicate definitions in multiple namespace scopes,
-/// these should not be reordered. This function reports how many such
-/// types it finds.
+/// If a type has duplicate definitions in multiple namespace scopes or
+/// definitions with different effective names, these are considered as
+/// conflicting duplicate definitions and should not be reordered. This function
+/// reports how many such types it finds.
 ///
 /// @param eliminate whether to eliminate non-conflicting duplicates
 ///
@@ -837,7 +893,7 @@ sub_tree(xmlNodePtr left, xmlNodePtr right)
 ///
 /// @param root the root XML element
 ///
-/// @return the number of types defined in multiple namespace scopes
+/// @return the number of conflicting duplicate definitions
 size_t handle_duplicate_types(bool eliminate, bool report, xmlNodePtr root)
 {
   // map of type-id to pair of set of namespace scopes and vector of
@@ -882,7 +938,7 @@ size_t handle_duplicate_types(bool eliminate, bool report, xmlNodePtr root)
   };
   dfs(root);
 
-  size_t scope_conflicts = 0;
+  size_t conflicting_types = 0;
   for (const auto& [id, scopes_and_definitions] : types)
     {
       const auto& [scopes, definitions] = scopes_and_definitions;
@@ -891,7 +947,7 @@ size_t handle_duplicate_types(bool eliminate, bool report, xmlNodePtr root)
         {
           if (report)
             std::cerr << "conflicting scopes found for type '" << id << "'\n";
-          ++scope_conflicts;
+          ++conflicting_types;
           continue;
         }
 
@@ -915,17 +971,28 @@ size_t handle_duplicate_types(bool eliminate, bool report, xmlNodePtr root)
       // Verify the candidate is indeed maximal by scanning the
       // definitions not already known to be subtrees of it.
       bool bad = false;
+      const auto& candidate_definition = definitions[candidate];
+      const char* candidate_node_name = from_libxml(candidate_definition->name);
+      const auto& candidate_effective_name =
+          get_effective_name(candidate_definition);
       for (size_t ix = 0; ix < count; ++ix)
-        if (!ok[ix] && !sub_tree(definitions[ix], definitions[candidate]))
-          {
-            bad = true;
-            break;
-          }
+        {
+          const auto& definition = definitions[ix];
+          if (!ok[ix] && !sub_tree(definition, candidate_definition))
+            {
+              if (strcmp(from_libxml(definition->name), candidate_node_name) != 0
+                  || get_effective_name(definition) != candidate_effective_name)
+                ++conflicting_types;
+              bad = true;
+              break;
+            }
+        }
+
       if (bad)
         {
           if (report)
-            std::cerr << "conflicting definitions found for type '" << id
-                      << "'\n";
+            std::cerr << "unresolvable duplicate definitions found for type '"
+                      << id << "'\n";
           continue;
         }
 
@@ -936,7 +1003,7 @@ size_t handle_duplicate_types(bool eliminate, bool report, xmlNodePtr root)
             remove_element(definitions[ix]);
     }
 
-  return scope_conflicts;
+  return conflicting_types;
 }
 
 static const std::set<std::string> INSTR_VARIABLE_ATTRIBUTES = {
@@ -1056,53 +1123,34 @@ sort_instrs_into_corpus(
         }
     }
 
-  // Order types before declarations, types by id, declarations by name
-  // (and by mangled-name, if present).
+  // Order XML nodes by XML element names, effective names, mangled names and
+  // type ids.
   struct Compare {
     int
     cmp(xmlNodePtr a, xmlNodePtr b) const
     {
-      // NOTE: This must not reorder type definitions with the same id.
-      // In particular, we cannot do anything nice and easy like order
-      // by element tag first.
-      //
-      // TODO: Replace compare and subtraction with <=>.
       int result;
 
-      auto a_id = get_attribute(a, "id");
-      auto b_id = get_attribute(b, "id");
-      // types before non-types
-      result = b_id.has_value() - a_id.has_value();
+      // Compare XML element names.
+      result = strcmp(from_libxml(a->name), from_libxml(b->name));
+      if (result)
+          return result;
+
+      // Compare effective names.
+      const auto a_effective_name = get_effective_name(a);
+      const auto b_effective_name = get_effective_name(b);
+
+      result = compare_optional(a_effective_name, b_effective_name);
       if (result)
         return result;
-      if (a_id)
-        // sort types by id
-        return a_id.value().compare(b_id.value());
 
-      auto a_name = get_attribute(a, "name");
-      auto b_name = get_attribute(b, "name");
-      // declarations before non-declarations
-      result = b_name.has_value() - a_name.has_value();
+      // Compare declarations using mangled names.
+      result = compare_attributes("mangled-name", a, b);
       if (result)
         return result;
-      if (a_name)
-        {
-          // sort declarations by name
-          result = a_name.value().compare(b_name.value());
-          if (result)
-            return result;
-          auto a_mangled = get_attribute(a, "mangled-name");
-          auto b_mangled = get_attribute(b, "mangled-name");
-          // without mangled-name first
-          result = a_mangled.has_value() - b_mangled.has_value();
-          if (result)
-            return result;
-          // and by mangled-name if present
-          return !a_mangled ? 0 : a_mangled.value().compare(b_mangled.value());
-        }
 
-      // a and b are not types or declarations; should not be reached
-      return 0;
+      // Compare types using ids.
+      return compare_attributes("id", a, b);
     }
 
     bool
@@ -1795,18 +1843,18 @@ main(int argc, char* argv[])
     clear_non_reachable(root);
 
   // Eliminate complete duplicates and extra fragments of types.
-  // Report conflicting type defintions.
-  // Record whether there are namespace scope conflicts.
-  size_t scope_conflicts = 0;
+  // Report conflicting duplicate defintions.
+  // Record whether there are conflicting duplicate definitions.
+  size_t conflicting_types = 0;
   if (opt_eliminate_duplicates || opt_report_conflicts || opt_sort)
-    scope_conflicts += handle_duplicate_types(
+    conflicting_types += handle_duplicate_types(
         opt_eliminate_duplicates, opt_report_conflicts, root);
 
   // Sort namespaces, types and declarations.
   if (opt_sort)
     {
-      if (scope_conflicts)
-        std::cerr << "found type definition scope conflicts, skipping sort\n";
+      if (conflicting_types)
+        std::cerr << "found type definition conflicts, skipping sort\n";
       else
         sort_namespaces_types_and_declarations(root);
     }
