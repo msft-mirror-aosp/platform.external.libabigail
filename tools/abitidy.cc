@@ -766,6 +766,142 @@ handle_anonymous_types(bool normalise, bool reanonymise, bool discard_naming,
     handle_anonymous_types(normalise, reanonymise, discard_naming, child);
 }
 
+/// Builds a mapping from qualified types to the underlying type ids.
+///
+/// Recursively constructs a mapping from qualified types to the underlying
+/// type ids found in the XML tree rooted at the given node.
+///
+/// @param node node of the XML tree to process
+///
+/// @param qualifier_id_to_type_id map from qualified types to underlying type
+/// ids being constructed
+static void
+build_qualifier_id_to_type_id_map(
+    const xmlNodePtr node,
+    std::unordered_map<std::string, std::string>& qualifier_id_to_type_id)
+{
+  if (node->type != XML_ELEMENT_NODE)
+    return;
+
+  if (strcmp(from_libxml(node->name), "qualified-type-def") == 0)
+    {
+      const auto id = get_attribute(node, "id");
+      const auto type_id = get_attribute(node, "type-id");
+      if (!id || !type_id)
+        {
+          std::cerr << "found qualified type definition with missing id and/or "
+                    << "type id\nid: " << id.value_or("(missing)")
+                    << "\ntype id: " << type_id.value_or("(missing)") << '\n';
+          exit(1);
+        }
+      const auto& id_value = id.value();
+      const auto& type_id_value = type_id.value();
+      auto [it, inserted] =
+          qualifier_id_to_type_id.insert({id_value, type_id_value});
+      if (!inserted && it->second != type_id_value)
+        {
+          std::cerr << "conflicting type ids ('" << it->second << "' & '"
+                    << type_id_value << "') found for qualified type with "
+                    << "id: " << id_value << '\n';
+          exit(1);
+        }
+    }
+  else
+    {
+      for (auto child : get_children(node))
+        build_qualifier_id_to_type_id_map(child, qualifier_id_to_type_id);
+    }
+}
+
+/// Determine mapping from qualified type to underlying unqualified type.
+///
+/// This resolves chains of qualifiers on qualified types. Note that this does
+/// not attempt to look through typedefs.
+///
+/// @param qualifier_id_to_type_id map from qualified types to underlying type
+/// ids
+static void
+resolve_qualifier_chains(
+    std::unordered_map<std::string, std::string>& qualifier_id_to_type_id)
+{
+  for (auto& [id, type_id] : qualifier_id_to_type_id)
+    {
+      std::unordered_set<std::string> seen;
+      while (true)
+        {
+          if (!seen.insert(type_id).second)
+            {
+              std::cerr << "dequalification of type with id '" << id
+                        << "' ran into a self referencing loop\n";
+              exit(1);
+            }
+          auto it = qualifier_id_to_type_id.find(type_id);
+          if (it == qualifier_id_to_type_id.end())
+            break;
+          type_id = it->second;
+        }
+    }
+}
+
+/// Removes top-level qualifiers from function parameter and return types.
+///
+/// Recursively removes top-level qualifiers from parameter and return types of
+/// all function declarations and function types found in the XML tree rooted
+/// at the given node.
+///
+/// This requires also requires a map of qualified types to the underlying type
+/// ids, which enables the unqualification of qualified types.
+///
+/// @param node node of the XML tree to process
+///
+/// @param qualifier_id_to_type_id map from qualified types to underlying type
+/// ids
+static void
+remove_function_parameter_type_qualifiers(
+    const xmlNodePtr node,
+    const std::unordered_map<std::string, std::string>& qualifier_id_to_type_id)
+{
+  if (node->type != XML_ELEMENT_NODE)
+    return;
+
+  if (strcmp(from_libxml(node->name), "function-decl") == 0 ||
+      strcmp(from_libxml(node->name), "function-type") == 0)
+    {
+      bool type_changed = false;
+      for (auto child : get_children(node))
+        if (const auto type_id = get_attribute(child, "type-id"))
+          {
+            const auto& type_id_value = type_id.value();
+            auto it = qualifier_id_to_type_id.find(type_id_value);
+            if (it != qualifier_id_to_type_id.end())
+              {
+                type_changed = true;
+                set_attribute(child, "type-id", it->second);
+
+                // Parameter or return type has been modified, making a comment
+                // describing the type for this node inconsistent. Thus the
+                // comment must be removed if it exists.
+                if (auto comment_node = get_comment_node(child))
+                  remove_node(comment_node);
+              }
+          }
+
+      if (type_changed)
+        {
+          // Parameter or return type has been modified, making a comment
+          // describing the type for this node inconsistent. Thus the comment
+          // must be removed if it exists.
+          if (auto comment_node = get_comment_node(node))
+            remove_node(comment_node);
+        }
+    }
+  else
+    {
+      for (auto child : get_children(node))
+        remove_function_parameter_type_qualifiers(child, qualifier_id_to_type_id);
+    }
+}
+
 /// Remove attributes emitted by abidw --load-all-types.
 ///
 /// With this invocation and if any user-defined types are deemed
@@ -1899,6 +2035,7 @@ main(int argc, char* argv[])
   bool opt_normalise_anonymous = false;
   bool opt_reanonymise_anonymous = false;
   bool opt_discard_naming_typedefs = false;
+  bool opt_remove_function_parameter_type_qualifiers = false;
   bool opt_prune_unreachable = false;
   bool opt_report_untyped = false;
   bool opt_abort_on_untyped = false;
@@ -1921,10 +2058,11 @@ main(int argc, char* argv[])
               << "  [-S|--symbols file]\n"
               << "  [-L|--locations {column|line|file|none}]\n"
               << "  [-I|--indentation n]\n"
-              << "  [-a|--all] (implies -n -r -t -p -u -b -e -c -s -d)\n"
+              << "  [-a|--all] (implies -n -r -t -f -p -u -b -e -c -s -d)\n"
               << "  [-n|--[no-]normalise-anonymous]\n"
               << "  [-r|--[no-]reanonymise-anonymous]\n"
               << "  [-t|--[no-]discard-naming-typedefs]\n"
+              << "  [-f|--[no-]remove-function-parameter-type-qualifiers]\n"
               << "  [-p|--[no-]prune-unreachable]\n"
               << "  [-u|--[no-]report-untyped]\n"
               << "  [-U|--abort-on-untyped-symbols]\n"
@@ -1969,6 +2107,7 @@ main(int argc, char* argv[])
       else if (arg == "-a" || arg == "--all")
         opt_normalise_anonymous = opt_reanonymise_anonymous
                                 = opt_discard_naming_typedefs
+                                = opt_remove_function_parameter_type_qualifiers
                                 = opt_prune_unreachable
                                 = opt_report_untyped
                                 = opt_clear_non_reachable
@@ -1989,6 +2128,11 @@ main(int argc, char* argv[])
         opt_discard_naming_typedefs = true;
       else if (arg == "--no-discard-naming-typedefs")
         opt_discard_naming_typedefs = false;
+      else if (arg == "-f" ||
+               arg == "--remove-function-parameter-type-qualifiers")
+        opt_remove_function_parameter_type_qualifiers = true;
+      else if (arg == "--no-remove-function-parameter-type-qualifiers")
+        opt_remove_function_parameter_type_qualifiers = false;
       else if (arg == "-p" || arg == "--prune-unreachable")
         opt_prune_unreachable = true;
       else if (arg == "--no-prune-unreachable")
@@ -2089,6 +2233,16 @@ main(int argc, char* argv[])
       || opt_discard_naming_typedefs)
     handle_anonymous_types(opt_normalise_anonymous, opt_reanonymise_anonymous,
                            opt_discard_naming_typedefs, root);
+
+  // Remove useless top-level qualifiers on function parameter and return
+  // types.
+  if (opt_remove_function_parameter_type_qualifiers)
+    {
+      std::unordered_map<std::string, std::string> qualifier_id_to_type_id;
+      build_qualifier_id_to_type_id_map(root, qualifier_id_to_type_id);
+      resolve_qualifier_chains(qualifier_id_to_type_id);
+      remove_function_parameter_type_qualifiers(root, qualifier_id_to_type_id);
+    }
 
   // Prune unreachable elements and/or report untyped symbols.
   size_t untyped_symbols = 0;
