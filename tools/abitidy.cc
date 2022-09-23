@@ -54,12 +54,30 @@ static const std::map<std::string, LocationInfo> LOCATION_INFO_NAME = {
   {"none", LocationInfo::NONE},
 };
 
-static const std::map<std::string, std::string> NAMED_TYPES = {
+static const std::map<std::string, std::string, std::less<>> NAMED_TYPES = {
   {"enum-decl", "__anonymous_enum__"},
   {"class-decl", "__anonymous_struct__"},
   {"union-decl", "__anonymous_union__"},
 };
 
+/// Compare optional strings.
+///
+/// TODO: Obsoleted by C++20 std::optional::operator<=>.
+///
+/// @param a first operand of comparison
+///
+/// @param b second operand of comparison
+///
+/// @return an integral result
+int
+compare_optional(const std::optional<std::string>& a,
+                 const std::optional<std::string>& b)
+{
+  int result = b.has_value() - a.has_value();
+  if (result)
+    return result;
+  return a ? a.value().compare(b.value()) : 0;
+}
 
 /// Cast a C string to a libxml string.
 ///
@@ -83,6 +101,22 @@ from_libxml(const xmlChar* str)
   return reinterpret_cast<const char*>(str);
 }
 
+/// Get comment node corresponding to a given node if it exists.
+///
+/// Returns nullptr if previous node does not exist or is not a comment,
+/// otherwise returns the previous node.
+///
+/// @param node the node for which comment has to be returned
+///
+/// @return pointer to the comment node
+static xmlNodePtr
+get_comment_node(xmlNodePtr node)
+{
+  xmlNodePtr previous_node = node->prev;
+  return previous_node && previous_node->type == XML_COMMENT_NODE
+      ? previous_node : nullptr;
+}
+
 /// Remove a node from its document and free its storage.
 ///
 /// @param node the node to remove
@@ -99,9 +133,8 @@ remove_node(xmlNodePtr node)
 static void
 remove_element(xmlNodePtr node)
 {
-  xmlNodePtr previous_node = node->prev;
-  if (previous_node && previous_node->type == XML_COMMENT_NODE)
-    remove_node(previous_node);
+  if (auto comment_node = get_comment_node(node))
+    remove_node(comment_node);
   remove_node(node);
 }
 
@@ -126,9 +159,8 @@ move_node(xmlNodePtr node, xmlNodePtr destination)
 static void
 move_element(xmlNodePtr node, xmlNodePtr destination)
 {
-  xmlNodePtr previous_node = node->prev;
-  if (previous_node && previous_node->type == XML_COMMENT_NODE)
-    move_node(previous_node, destination);
+  if (auto comment_node = get_comment_node(node))
+    move_node(comment_node, destination);
   move_node(node, destination);
 }
 
@@ -312,6 +344,23 @@ adjust_quotes(xmlChar* start, xmlChar* limit)
           start = end + 1;
         }
     }
+}
+
+/// Compare given attribute of 2 XML nodes.
+///
+/// @param attribute the attribute to compare
+///
+/// @param a first XML node to compare
+///
+/// @param b second XML node to compare
+///
+/// @return an integral result
+static int
+compare_attributes(
+    const char* attribute, const xmlNodePtr& a, const xmlNodePtr& b)
+{
+  return compare_optional(get_attribute(a, attribute),
+                          get_attribute(b, attribute));
 }
 
 static const std::set<std::string> DROP_IF_EMPTY = {
@@ -748,25 +797,247 @@ clear_non_reachable(xmlNodePtr node)
     clear_non_reachable(child);
 }
 
-/// The set of attributes that should be excluded from consideration
-/// when comparing XML elements.
+/// Determine the effective name of a given node.
 ///
-/// Source location attributes are omitted with --no-show-locs without
-/// changing the meaning of the ABI. They can also sometimes vary
-/// between duplicate type definitions.
+/// The effective name is same as the value of the 'name' attribute for all
+/// nodes except nodes which represent anonymous types. For anonymous types, the
+/// function returns std::nullopt.
 ///
-/// The naming-typedef-id attribute, if not already removed by another
-/// pass, is irrelevant to ABI semantics.
+/// @param node the node for which effective name has to be determined
 ///
-/// The is-non-reachable attribute, if not already removed by another
-/// pass, is irrelevant to ABI semantics.
-static const std::unordered_set<std::string> IRRELEVANT_ATTRIBUTES = {
-  {"filepath"},
-  {"line"},
-  {"column"},
-  {"naming-typedef-id"},
-  {"is-non-reachable"},
-};
+/// @return an optional name string
+std::optional<std::string>
+get_effective_name(xmlNodePtr node)
+{
+  return get_attribute(node, "is-anonymous")
+      ? std::nullopt : get_attribute(node, "name");
+}
+
+/// Record type ids for anonymous types that have to be renumbered.
+///
+/// This constructs a map from the ids that need to be renumbered to the XML
+/// node where the id is defined/declared. Also records hexadecimal hashes used
+/// by non-anonymous types.
+///
+/// @param node the node being processed
+///
+/// @param to_renumber map from ids to be renumbered to corresponding XML node
+///
+/// @param used_hashes set of hashes used by non-anonymous type ids
+static void
+record_ids_to_renumber(
+    xmlNodePtr node,
+    std::unordered_map<std::string, xmlNodePtr>& to_renumber,
+    std::unordered_set<size_t>& used_hashes)
+{
+  if (node->type != XML_ELEMENT_NODE)
+    return;
+
+  for (auto child : get_children(node))
+    record_ids_to_renumber(child, to_renumber, used_hashes);
+
+  const auto& id_attr = get_attribute(node, "id");
+  if (!id_attr)
+    return;
+
+  const auto& id = id_attr.value();
+  const std::string_view node_name(from_libxml(node->name));
+  const bool is_anonymous_type_candidate = NAMED_TYPES.count(node_name);
+  if (!is_anonymous_type_candidate || get_effective_name(node))
+    {
+      const bool is_hexadecimal = std::all_of(
+          id.begin(), id.end(), [](unsigned char c){ return std::isxdigit(c); });
+      if (id.size() == 8 && is_hexadecimal)
+        {
+          // Do not check for successful insertion since there can be multiple
+          // declarations/definitions for a type.
+          size_t hash = std::stoul(id, nullptr, 16);
+          used_hashes.insert(hash);
+        }
+    }
+  else
+    {
+      // Check for successful insertion since anonymous types are not prone to
+      // having multiple definitions/declarations.
+      if (!to_renumber.insert({id, node}).second)
+        {
+          std::cerr << "Found multiple definitions/declarations of anonmyous "
+                    << "type with id: " << id << '\n';
+          exit(1);
+        }
+    }
+}
+
+/// Compute a stable string hash.
+///
+/// This is the 32-bit FNV-1a algorithm. The algorithm, reference code
+/// and constants are all unencumbered. It is fast and has reasonable
+/// distribution properties.
+///
+/// std::hash has no portability or stability guarantees so is
+/// unsuitable where reproducibility is a requirement such as in XML
+/// output.
+///
+/// https://en.wikipedia.org/wiki/Fowler-Noll-Vo_hash_function
+///
+/// @param str the string to hash
+///
+/// @return an unsigned 32 bit hash value
+static uint32_t
+fnv_hash(const std::string& str)
+{
+  const uint32_t prime = 0x01000193;
+  const uint32_t offset_basis = 0x811c9dc5;
+  uint32_t hash = offset_basis;
+  for (const char& c : str)
+    {
+      uint8_t byte = c;
+      hash = hash ^ byte;
+      hash = hash * prime;
+    }
+  return hash;
+}
+
+/// Generate a new 32 bit type id and return its hexadecimal representation.
+///
+/// Generates hash of the given hash content. Uses linear probing to resolve
+/// hash collisions. Also, records the newly generated hash in a set of used
+/// hashes.
+///
+/// @param hash_content the string which is used to generate a hash
+///
+/// @param used_hashes the set of hashes which have already been used
+///
+/// @return the hexadecimal representation of the newly generated hash
+static std::string
+generate_new_id(const std::string& hash_content,
+                std::unordered_set<size_t>& used_hashes)
+{
+  auto hash = fnv_hash(hash_content);
+  while (!used_hashes.insert(hash).second)
+    ++hash;
+  std::ostringstream os;
+  os << std::hex << std::setfill('0') << std::setw(8) << hash;
+  return os.str();
+}
+
+/// Find the first member for a user defined type.
+///
+/// The first member for enums is the first enumerator while for structs and
+/// unions it is the variable declaration of the first data member.
+///
+/// @param node the node being processed
+///
+/// @return the node which represents the first member
+static xmlNodePtr
+find_first_member(xmlNodePtr node)
+{
+  auto first_child_by_xml_node_name =
+      [](const xmlNodePtr node, const std::string_view name) -> xmlNodePtr {
+    for (auto child : get_children(node))
+      if (child->type == XML_ELEMENT_NODE && from_libxml(child->name) == name)
+        return child;
+    return nullptr;
+  };
+
+  if (strcmp(from_libxml(node->name), "enum-decl") == 0)
+      return first_child_by_xml_node_name(node, "enumerator");
+  if (auto data_member = first_child_by_xml_node_name(node, "data-member"))
+      return first_child_by_xml_node_name(data_member, "var-decl");
+  return nullptr;
+}
+
+/// Calculate new type id for a given old type id.
+///
+/// This resolves the old type ids for anonymous types to new ones, while ids
+/// which do not belong to anonymous types are returned as they are.
+///
+/// @param type_id old type id
+///
+/// @param to_renumber map from ids to be renumbered to corresponding XML node
+///
+/// @param used_hashes set of hashes used by other type ids
+///
+/// @param type_id_map mapping from old type ids to new ones
+///
+/// @return resolved type id
+static std::string
+resolve_ids_to_renumber(
+    const std::string& type_id,
+    const std::unordered_map<std::string, xmlNodePtr>& to_renumber,
+    std::unordered_set<size_t>& used_hashes,
+    std::unordered_map<std::string, std::string>& type_id_map)
+{
+  // Check whether the given type_id needs to be renumbered. If not, the type_id
+  // can be returned since it does not represent an anonymous type.
+  const auto to_renumber_it = to_renumber.find(type_id);
+  if (to_renumber_it == to_renumber.end())
+    return type_id;
+
+  // Insert an empty string placeholder to prevent infinite loops.
+  const auto& [type_mapping, inserted] = type_id_map.insert({type_id, {}});
+  if (!inserted)
+    {
+      if (!type_mapping->second.empty())
+        return type_mapping->second;
+      std::cerr << "new type id depends on itself for type with id: "
+                << type_id << '\n';
+      exit(1);
+    }
+
+  const auto& node = to_renumber_it->second;
+  std::ostringstream hash_content;
+  hash_content << from_libxml(node->name);
+  if (auto first_member = find_first_member(node))
+    {
+      // Create hash content by combining the name & resolved type id of the
+      // first member and the kind of anonymous type.
+      if (auto name = get_effective_name(first_member))
+        hash_content << '-' << name.value();
+      if (auto type_id = get_attribute(first_member, "type-id"))
+        hash_content << '-' << resolve_ids_to_renumber(
+            type_id.value(), to_renumber, used_hashes, type_id_map);
+    }
+  else
+    {
+      // No member information available. Possibly type is empty.
+      hash_content << "__empty";
+    }
+
+  return type_mapping->second =
+      generate_new_id(hash_content.str(), used_hashes);
+}
+
+/// Replace old type ids by new ones.
+///
+/// @param node the node which is being processed
+///
+/// @param type_id_map map from old type ids to replace to new ones
+static void
+renumber_type_ids(
+    xmlNodePtr node,
+    const std::unordered_map<std::string, std::string>& type_id_map)
+{
+  if (node->type != XML_ELEMENT_NODE)
+    return;
+
+  auto maybe_replace = [&](const char* attribute_name) {
+    const auto& attribute = get_attribute(node, attribute_name);
+    if (attribute)
+      {
+        const auto it = type_id_map.find(attribute.value());
+        if (it != type_id_map.end())
+          set_attribute(node, attribute_name, it->second);
+      }
+  };
+
+  maybe_replace("id");
+  maybe_replace("type-id");
+  maybe_replace("naming-typedef-id");
+
+  for (auto child : get_children(node))
+    renumber_type_ids(child, type_id_map);
+}
 
 /// Determine whether one XML element is a subtree of another.
 ///
@@ -786,11 +1057,34 @@ static const std::unordered_set<std::string> IRRELEVANT_ATTRIBUTES = {
 bool
 sub_tree(xmlNodePtr left, xmlNodePtr right)
 {
+  // The set of attributes that should be excluded from consideration when
+  // comparing XML elements. These attributes are either irrelevant for ABI
+  // monitoring or already handled by another check.
+  static const std::unordered_set<std::string> IRRELEVANT_ATTRIBUTES = {
+    // Source location information. This can vary between duplicate type
+    // definitions.
+    "filepath",
+    "line",
+    "column",
+    // Anonymous type to typedef backlinks.
+    "naming-typedef-id",
+    // Annotation that can appear with --load-all-types.
+    "is-non-reachable",
+    // Handled while checking for effective name equivalence.
+    "name",
+    "is-anonymous",
+  };
+
   // Node names must match.
   const char* left_name = from_libxml(left->name);
   const char* right_name = from_libxml(right->name);
   if (strcmp(left_name, right_name) != 0)
     return false;
+
+  // Effective names must match.
+  if (get_effective_name(left) != get_effective_name(right))
+    return false;
+
   // Attributes may be missing on the left, but must match otherwise.
   for (auto p = left->properties; p; p = p->next)
   {
@@ -809,6 +1103,7 @@ sub_tree(xmlNodePtr left, xmlNodePtr right)
     if (!right_value || left_value.value() != right_value.value())
       return false;
   }
+
   // The left subelements must be a subsequence of the right ones.
   xmlNodePtr left_child = xmlFirstElementChild(left);
   xmlNodePtr right_child = xmlFirstElementChild(right);
@@ -821,15 +1116,16 @@ sub_tree(xmlNodePtr left, xmlNodePtr right)
   return !left_child;
 }
 
-/// Elminate non-conflicting / report conflicting type definitions.
+/// Eliminate non-conflicting / report conflicting duplicate definitions.
 ///
 /// This function can eliminate exact type duplicates and duplicates
 /// where there is at least one maximal definition. It can report the
 /// remaining, conflicting duplicate definitions.
 ///
-/// If a type has duplicate definitions in multiple namespace scopes,
-/// these should not be reordered. This function reports how many such
-/// types it finds.
+/// If a type has duplicate definitions in multiple namespace scopes or
+/// definitions with different effective names, these are considered as
+/// conflicting duplicate definitions and should not be reordered. This function
+/// reports how many such types it finds.
 ///
 /// @param eliminate whether to eliminate non-conflicting duplicates
 ///
@@ -837,7 +1133,7 @@ sub_tree(xmlNodePtr left, xmlNodePtr right)
 ///
 /// @param root the root XML element
 ///
-/// @return the number of types defined in multiple namespace scopes
+/// @return the number of conflicting duplicate definitions
 size_t handle_duplicate_types(bool eliminate, bool report, xmlNodePtr root)
 {
   // map of type-id to pair of set of namespace scopes and vector of
@@ -882,7 +1178,7 @@ size_t handle_duplicate_types(bool eliminate, bool report, xmlNodePtr root)
   };
   dfs(root);
 
-  size_t scope_conflicts = 0;
+  size_t conflicting_types = 0;
   for (const auto& [id, scopes_and_definitions] : types)
     {
       const auto& [scopes, definitions] = scopes_and_definitions;
@@ -891,7 +1187,7 @@ size_t handle_duplicate_types(bool eliminate, bool report, xmlNodePtr root)
         {
           if (report)
             std::cerr << "conflicting scopes found for type '" << id << "'\n";
-          ++scope_conflicts;
+          ++conflicting_types;
           continue;
         }
 
@@ -915,17 +1211,28 @@ size_t handle_duplicate_types(bool eliminate, bool report, xmlNodePtr root)
       // Verify the candidate is indeed maximal by scanning the
       // definitions not already known to be subtrees of it.
       bool bad = false;
+      const auto& candidate_definition = definitions[candidate];
+      const char* candidate_node_name = from_libxml(candidate_definition->name);
+      const auto& candidate_effective_name =
+          get_effective_name(candidate_definition);
       for (size_t ix = 0; ix < count; ++ix)
-        if (!ok[ix] && !sub_tree(definitions[ix], definitions[candidate]))
-          {
-            bad = true;
-            break;
-          }
+        {
+          const auto& definition = definitions[ix];
+          if (!ok[ix] && !sub_tree(definition, candidate_definition))
+            {
+              if (strcmp(from_libxml(definition->name), candidate_node_name) != 0
+                  || get_effective_name(definition) != candidate_effective_name)
+                ++conflicting_types;
+              bad = true;
+              break;
+            }
+        }
+
       if (bad)
         {
           if (report)
-            std::cerr << "conflicting definitions found for type '" << id
-                      << "'\n";
+            std::cerr << "unresolvable duplicate definitions found for type '"
+                      << id << "'\n";
           continue;
         }
 
@@ -936,7 +1243,7 @@ size_t handle_duplicate_types(bool eliminate, bool report, xmlNodePtr root)
             remove_element(definitions[ix]);
     }
 
-  return scope_conflicts;
+  return conflicting_types;
 }
 
 static const std::set<std::string> INSTR_VARIABLE_ATTRIBUTES = {
@@ -1056,53 +1363,34 @@ sort_instrs_into_corpus(
         }
     }
 
-  // Order types before declarations, types by id, declarations by name
-  // (and by mangled-name, if present).
+  // Order XML nodes by XML element names, effective names, mangled names and
+  // type ids.
   struct Compare {
     int
     cmp(xmlNodePtr a, xmlNodePtr b) const
     {
-      // NOTE: This must not reorder type definitions with the same id.
-      // In particular, we cannot do anything nice and easy like order
-      // by element tag first.
-      //
-      // TODO: Replace compare and subtraction with <=>.
       int result;
 
-      auto a_id = get_attribute(a, "id");
-      auto b_id = get_attribute(b, "id");
-      // types before non-types
-      result = b_id.has_value() - a_id.has_value();
+      // Compare XML element names.
+      result = strcmp(from_libxml(a->name), from_libxml(b->name));
+      if (result)
+          return result;
+
+      // Compare effective names.
+      const auto a_effective_name = get_effective_name(a);
+      const auto b_effective_name = get_effective_name(b);
+
+      result = compare_optional(a_effective_name, b_effective_name);
       if (result)
         return result;
-      if (a_id)
-        // sort types by id
-        return a_id.value().compare(b_id.value());
 
-      auto a_name = get_attribute(a, "name");
-      auto b_name = get_attribute(b, "name");
-      // declarations before non-declarations
-      result = b_name.has_value() - a_name.has_value();
+      // Compare declarations using mangled names.
+      result = compare_attributes("mangled-name", a, b);
       if (result)
         return result;
-      if (a_name)
-        {
-          // sort declarations by name
-          result = a_name.value().compare(b_name.value());
-          if (result)
-            return result;
-          auto a_mangled = get_attribute(a, "mangled-name");
-          auto b_mangled = get_attribute(b, "mangled-name");
-          // without mangled-name first
-          result = a_mangled.has_value() - b_mangled.has_value();
-          if (result)
-            return result;
-          // and by mangled-name if present
-          return !a_mangled ? 0 : a_mangled.value().compare(b_mangled.value());
-        }
 
-      // a and b are not types or declarations; should not be reached
-      return 0;
+      // Compare types using ids.
+      return compare_attributes("id", a, b);
     }
 
     bool
@@ -1620,6 +1908,11 @@ main(int argc, char* argv[])
   bool opt_sort = false;
   bool opt_drop_empty = false;
 
+  // Experimental flags. These are not part of --all.
+  //
+  // TODO: Move out of experimental status when stable.
+  bool opt_renumber_anonymous_types = false;
+
   // Process command line.
   auto usage = [&]() -> int {
     std::cerr << "usage: " << argv[0] << '\n'
@@ -1639,7 +1932,9 @@ main(int argc, char* argv[])
               << "  [-e|--[no-]eliminate-duplicates]\n"
               << "  [-c|--[no-]report-conflicts]\n"
               << "  [-s|--[no-]sort]\n"
-              << "  [-d|--[no-]drop-empty]\n";
+              << "  [-d|--[no-]drop-empty]\n"
+              << "\nExperimental flags, not part of --all\n"
+              << "  [-M|--[no-]renumber-anonymous-types]\n";
     return 1;
   };
   int opt_index = 1;
@@ -1724,6 +2019,10 @@ main(int argc, char* argv[])
         opt_drop_empty = true;
       else if (arg == "--no-drop-empty")
         opt_drop_empty = false;
+      else if (arg == "-M" || arg == "--renumber-anonymous-types")
+        opt_renumber_anonymous_types = true;
+      else if (arg == "--no-renumber-anonymous-types")
+        opt_renumber_anonymous_types = false;
       else
         exit(usage());
     }
@@ -1767,6 +2066,22 @@ main(int argc, char* argv[])
   // Get corpus -> alias -> main mapping and remove unlisted symbols.
   const auto alias_map = filter_symbols(opt_symbols, root);
 
+  // Record type ids which correspond to anonymous types.
+  // Renumber recorded type ids using information about the type.
+  // Replace recorded type ids by renumbered ones.
+  if (opt_renumber_anonymous_types)
+    {
+      std::unordered_map<std::string, xmlNodePtr> to_renumber;
+      std::unordered_set<size_t> used_hashes;
+      record_ids_to_renumber(root, to_renumber, used_hashes);
+
+      std::unordered_map<std::string, std::string> type_id_map;
+      for (const auto& [type_id, node] : to_renumber)
+        resolve_ids_to_renumber(type_id, to_renumber, used_hashes, type_id_map);
+
+      renumber_type_ids(root, type_id_map);
+    }
+
   // Normalise anonymous type names.
   // Reanonymise anonymous types.
   // Discard naming typedef backlinks.
@@ -1795,18 +2110,18 @@ main(int argc, char* argv[])
     clear_non_reachable(root);
 
   // Eliminate complete duplicates and extra fragments of types.
-  // Report conflicting type defintions.
-  // Record whether there are namespace scope conflicts.
-  size_t scope_conflicts = 0;
+  // Report conflicting duplicate defintions.
+  // Record whether there are conflicting duplicate definitions.
+  size_t conflicting_types = 0;
   if (opt_eliminate_duplicates || opt_report_conflicts || opt_sort)
-    scope_conflicts += handle_duplicate_types(
+    conflicting_types += handle_duplicate_types(
         opt_eliminate_duplicates, opt_report_conflicts, root);
 
   // Sort namespaces, types and declarations.
   if (opt_sort)
     {
-      if (scope_conflicts)
-        std::cerr << "found type definition scope conflicts, skipping sort\n";
+      if (conflicting_types)
+        std::cerr << "found type definition conflicts, skipping sort\n";
       else
         sort_namespaces_types_and_declarations(root);
     }
