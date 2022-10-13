@@ -2880,6 +2880,9 @@ write_elf_symbol(const elf_symbol_sptr&	sym,
       << std::hex << std::showbase << sym->get_crc().value()
       << std::dec << std::noshowbase << "'";
 
+  if (sym->get_namespace().has_value())
+    o << " namespace='" << sym->get_namespace().value() << "'";
+
   o << "/>\n";
 
   return true;
