@@ -921,7 +921,7 @@ private:
 	     const version&	ve,
 	     visibility		vi,
 	     bool		is_in_ksymtab = false,
-	     const abg_compat::optional<uint64_t>&	crc = {},
+	     const abg_compat::optional<uint32_t>&	crc = {},
 	     const abg_compat::optional<std::string>&	ns = {},
 	     bool		is_suppressed = false);
 
@@ -947,7 +947,7 @@ public:
 	 const version&	    ve,
 	 visibility	    vi,
 	 bool		    is_in_ksymtab = false,
-	 const abg_compat::optional<uint64_t>&		crc = {},
+	 const abg_compat::optional<uint32_t>&		crc = {},
 	 const abg_compat::optional<std::string>&	ns = {},
 	 bool		    is_suppressed = false);
 
@@ -1020,11 +1020,11 @@ public:
   void
   set_is_in_ksymtab(bool is_in_ksymtab);
 
-  const abg_compat::optional<uint64_t>&
+  const abg_compat::optional<uint32_t>&
   get_crc() const;
 
   void
-  set_crc(const abg_compat::optional<uint64_t>& crc);
+  set_crc(const abg_compat::optional<uint32_t>& crc);
 
   const abg_compat::optional<std::string>&
   get_namespace() const;
