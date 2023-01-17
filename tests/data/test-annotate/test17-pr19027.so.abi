@@ -537,12 +537,12 @@
     <type-decl name='int' size-in-bits='32' id='type-id-9'/>
     <!-- long int -->
     <type-decl name='long int' size-in-bits='64' id='type-id-10'/>
+    <!-- long unsigned int -->
+    <type-decl name='long unsigned int' size-in-bits='64' id='type-id-4'/>
     <!-- unnamed&#45;enum&#45;underlying&#45;type&#45;32 -->
     <type-decl name='unnamed-enum-underlying-type-32' is-anonymous='yes' size-in-bits='32' alignment-in-bits='32' id='type-id-11'/>
     <!-- unsigned int -->
     <type-decl name='unsigned int' size-in-bits='32' id='type-id-12'/>
-    <!-- unsigned long int -->
-    <type-decl name='unsigned long int' size-in-bits='64' id='type-id-4'/>
     <!-- typedef int hb_atomic_int_t -->
     <typedef-decl name='hb_atomic_int_t' type-id='type-id-9' filepath='/tmp/legendre/spack-stage/spack-stage-04g73E/harfbuzz-0.9.37/src/hb-atomic-private.hh' line='94' column='1' id='type-id-13'/>
     <!-- enum hb_memory_mode_t -->
@@ -1232,32 +1232,32 @@
     </array-type-def>
     <!-- short int -->
     <type-decl name='short int' size-in-bits='16' id='type-id-72'/>
+    <!-- short unsigned int -->
+    <type-decl name='short unsigned int' size-in-bits='16' id='type-id-73'/>
     <!-- signed char -->
-    <type-decl name='signed char' size-in-bits='8' id='type-id-73'/>
+    <type-decl name='signed char' size-in-bits='8' id='type-id-74'/>
     <!-- uint16_t[2] -->
-    <array-type-def dimensions='1' type-id='type-id-74' size-in-bits='32' id='type-id-75'>
+    <array-type-def dimensions='1' type-id='type-id-75' size-in-bits='32' id='type-id-76'>
       <!-- <anonymous range>[2] -->
       <subrange length='2' type-id='type-id-4' id='type-id-8'/>
     </array-type-def>
     <!-- uint8_t[4] -->
-    <array-type-def dimensions='1' type-id='type-id-76' size-in-bits='32' id='type-id-77'>
+    <array-type-def dimensions='1' type-id='type-id-77' size-in-bits='32' id='type-id-78'>
       <!-- <anonymous range>[4] -->
       <subrange length='4' type-id='type-id-4' id='type-id-71'/>
     </array-type-def>
     <!-- uint8_t[8] -->
-    <array-type-def dimensions='1' type-id='type-id-76' size-in-bits='64' id='type-id-78'>
+    <array-type-def dimensions='1' type-id='type-id-77' size-in-bits='64' id='type-id-79'>
       <!-- <anonymous range>[8] -->
       <subrange length='8' type-id='type-id-4' id='type-id-63'/>
     </array-type-def>
     <!-- unsigned char -->
-    <type-decl name='unsigned char' size-in-bits='8' id='type-id-79'/>
+    <type-decl name='unsigned char' size-in-bits='8' id='type-id-80'/>
     <!-- unsigned int[2] -->
-    <array-type-def dimensions='1' type-id='type-id-12' size-in-bits='64' id='type-id-80'>
+    <array-type-def dimensions='1' type-id='type-id-12' size-in-bits='64' id='type-id-81'>
       <!-- <anonymous range>[2] -->
       <subrange length='2' type-id='type-id-4' id='type-id-8'/>
     </array-type-def>
-    <!-- unsigned short int -->
-    <type-decl name='unsigned short int' size-in-bits='16' id='type-id-81'/>
     <!-- struct hb_buffer_t -->
     <class-decl name='hb_buffer_t' size-in-bits='2752' is-struct='yes' visibility='default' filepath='/tmp/legendre/spack-stage/spack-stage-04g73E/harfbuzz-0.9.37/src/hb-buffer-private.hh' line='46' column='1' id='type-id-82'>
       <member-type access='public'>
@@ -1334,7 +1334,7 @@
       </data-member>
       <data-member access='public' layout-offset-in-bits='1760'>
         <!-- uint8_t hb_buffer_t::allocated_var_bytes[8] -->
-        <var-decl name='allocated_var_bytes' type-id='type-id-78' visibility='default' filepath='/tmp/legendre/spack-stage/spack-stage-04g73E/harfbuzz-0.9.37/src/hb-buffer-private.hh' line='86' column='1'/>
+        <var-decl name='allocated_var_bytes' type-id='type-id-79' visibility='default' filepath='/tmp/legendre/spack-stage/spack-stage-04g73E/harfbuzz-0.9.37/src/hb-buffer-private.hh' line='86' column='1'/>
       </data-member>
       <data-member access='public' layout-offset-in-bits='1856'>
         <!-- const char* hb_buffer_t::allocated_var_owner[8] -->
@@ -1350,7 +1350,7 @@
       </data-member>
       <data-member access='public' layout-offset-in-bits='2688'>
         <!-- unsigned int hb_buffer_t::context_len[2] -->
-        <var-decl name='context_len' type-id='type-id-80' visibility='default' filepath='/tmp/legendre/spack-stage/spack-stage-04g73E/harfbuzz-0.9.37/src/hb-buffer-private.hh' line='94' column='1'/>
+        <var-decl name='context_len' type-id='type-id-81' visibility='default' filepath='/tmp/legendre/spack-stage/spack-stage-04g73E/harfbuzz-0.9.37/src/hb-buffer-private.hh' line='94' column='1'/>
       </data-member>
       <member-function access='public'>
         <!-- void hb_buffer_t::clear_context(unsigned int) -->
@@ -1925,7 +1925,7 @@
       </data-member>
       <data-member access='public'>
         <!-- uint16_t _hb_var_int_t::u16[2] -->
-        <var-decl name='u16' type-id='type-id-75' visibility='default' filepath='/tmp/legendre/spack-stage/spack-stage-04g73E/harfbuzz-0.9.37/src/hb-common.h' line='82' column='1'/>
+        <var-decl name='u16' type-id='type-id-76' visibility='default' filepath='/tmp/legendre/spack-stage/spack-stage-04g73E/harfbuzz-0.9.37/src/hb-common.h' line='82' column='1'/>
       </data-member>
       <data-member access='public'>
         <!-- int16_t _hb_var_int_t::i16[2] -->
@@ -1933,7 +1933,7 @@
       </data-member>
       <data-member access='public'>
         <!-- uint8_t _hb_var_int_t::u8[4] -->
-        <var-decl name='u8' type-id='type-id-77' visibility='default' filepath='/tmp/legendre/spack-stage/spack-stage-04g73E/harfbuzz-0.9.37/src/hb-common.h' line='84' column='1'/>
+        <var-decl name='u8' type-id='type-id-78' visibility='default' filepath='/tmp/legendre/spack-stage/spack-stage-04g73E/harfbuzz-0.9.37/src/hb-common.h' line='84' column='1'/>
       </data-member>
       <data-member access='public'>
         <!-- int8_t _hb_var_int_t::i8[4] -->
@@ -2953,15 +2953,15 @@
     <!-- typedef unsigned int (hb_unicode_funcs_t*, typedef hb_codepoint_t, hb_codepoint_t*, void*)* hb_unicode_decompose_compatibility_func_t -->
     <typedef-decl name='hb_unicode_decompose_compatibility_func_t' type-id='type-id-147' filepath='/tmp/legendre/spack-stage/spack-stage-04g73E/harfbuzz-0.9.37/src/hb-unicode.h' line='270' column='1' id='type-id-134'/>
     <!-- typedef signed char int8_t -->
-    <typedef-decl name='int8_t' type-id='type-id-73' filepath='/usr/include/stdint.h' line='37' column='1' id='type-id-69'/>
+    <typedef-decl name='int8_t' type-id='type-id-74' filepath='/usr/include/stdint.h' line='37' column='1' id='type-id-69'/>
     <!-- typedef short int int16_t -->
     <typedef-decl name='int16_t' type-id='type-id-72' filepath='/usr/include/stdint.h' line='38' column='1' id='type-id-67'/>
     <!-- typedef int int32_t -->
     <typedef-decl name='int32_t' type-id='type-id-9' filepath='/usr/include/stdint.h' line='39' column='1' id='type-id-113'/>
     <!-- typedef unsigned char uint8_t -->
-    <typedef-decl name='uint8_t' type-id='type-id-79' filepath='/usr/include/stdint.h' line='49' column='1' id='type-id-76'/>
-    <!-- typedef unsigned short int uint16_t -->
-    <typedef-decl name='uint16_t' type-id='type-id-81' filepath='/usr/include/stdint.h' line='50' column='1' id='type-id-74'/>
+    <typedef-decl name='uint8_t' type-id='type-id-80' filepath='/usr/include/stdint.h' line='49' column='1' id='type-id-77'/>
+    <!-- typedef short unsigned int uint16_t -->
+    <typedef-decl name='uint16_t' type-id='type-id-73' filepath='/usr/include/stdint.h' line='50' column='1' id='type-id-75'/>
     <!-- typedef unsigned int uint32_t -->
     <typedef-decl name='uint32_t' type-id='type-id-12' filepath='/usr/include/stdint.h' line='52' column='1' id='type-id-100'/>
     <!-- const char** -->
@@ -3321,7 +3321,7 @@
     <!-- const hb_segment_properties_t* -->
     <pointer-type-def type-id='type-id-171' size-in-bits='64' id='type-id-172'/>
     <!-- const uint16_t -->
-    <qualified-type-def type-id='type-id-74' const='yes' id='type-id-173'/>
+    <qualified-type-def type-id='type-id-75' const='yes' id='type-id-173'/>
     <!-- const uint16_t* -->
     <pointer-type-def type-id='type-id-173' size-in-bits='64' id='type-id-170'/>
     <!-- const uint32_t -->
@@ -3329,7 +3329,7 @@
     <!-- const uint32_t* -->
     <pointer-type-def type-id='type-id-174' size-in-bits='64' id='type-id-166'/>
     <!-- const uint8_t -->
-    <qualified-type-def type-id='type-id-76' const='yes' id='type-id-175'/>
+    <qualified-type-def type-id='type-id-77' const='yes' id='type-id-175'/>
     <!-- const uint8_t* -->
     <pointer-type-def type-id='type-id-175' size-in-bits='64' id='type-id-168'/>
     <!-- hb_segment_properties_t* -->
@@ -3880,7 +3880,7 @@
       <subrange length='1' type-id='type-id-4' id='type-id-178'/>
     </array-type-def>
     <!-- uint8_t[2] -->
-    <array-type-def dimensions='1' type-id='type-id-76' size-in-bits='16' id='type-id-189'>
+    <array-type-def dimensions='1' type-id='type-id-77' size-in-bits='16' id='type-id-189'>
       <!-- <anonymous range>[2] -->
       <subrange length='2' type-id='type-id-4' id='type-id-8'/>
     </array-type-def>
@@ -7619,7 +7619,7 @@
       <class-decl name='BEInt&lt;int, 4&gt;' size-in-bits='32' is-struct='yes' visibility='default' filepath='/tmp/legendre/spack-stage/spack-stage-04g73E/harfbuzz-0.9.37/src/hb-open-type-private.hh' line='532' column='1' id='type-id-239'>
         <data-member access='private' layout-offset-in-bits='0'>
           <!-- uint8_t OT::BEInt<int, 4>::v[4] -->
-          <var-decl name='v' type-id='type-id-77' visibility='default' filepath='/tmp/legendre/spack-stage/spack-stage-04g73E/harfbuzz-0.9.37/src/hb-open-type-private.hh' line='607' column='1'/>
+          <var-decl name='v' type-id='type-id-78' visibility='default' filepath='/tmp/legendre/spack-stage/spack-stage-04g73E/harfbuzz-0.9.37/src/hb-open-type-private.hh' line='607' column='1'/>
         </data-member>
       </class-decl>
       <!-- struct OT::BEInt<short int, 2> -->
@@ -7656,21 +7656,21 @@
           <var-decl name='v' type-id='type-id-189' visibility='default' filepath='/tmp/legendre/spack-stage/spack-stage-04g73E/harfbuzz-0.9.37/src/hb-open-type-private.hh' line='554' column='1'/>
         </data-member>
         <member-function access='public'>
-          <!-- unsigned short int OT::BEInt<short unsigned int, 2>::operator short unsigned int() -->
+          <!-- short unsigned int OT::BEInt<short unsigned int, 2>::operator short unsigned int() -->
           <function-decl name='operator short unsigned int' mangled-name='_ZNK2OT5BEIntItLi2EEcvtEv' filepath='/tmp/legendre/spack-stage/spack-stage-04g73E/harfbuzz-0.9.37/src/hb-open-type-private.hh' line='543' column='1' visibility='default' binding='global' size-in-bits='64'>
             <!-- implicit parameter of type 'const OT::BEInt<short unsigned int, 2>*' -->
             <parameter type-id='type-id-295' is-artificial='yes'/>
-            <!-- unsigned short int -->
-            <return type-id='type-id-81'/>
+            <!-- short unsigned int -->
+            <return type-id='type-id-73'/>
           </function-decl>
         </member-function>
         <member-function access='public'>
-          <!-- void OT::BEInt<short unsigned int, 2>::set(unsigned short int) -->
+          <!-- void OT::BEInt<short unsigned int, 2>::set(short unsigned int) -->
           <function-decl name='set' mangled-name='_ZN2OT5BEIntItLi2EE3setEt' filepath='/tmp/legendre/spack-stage/spack-stage-04g73E/harfbuzz-0.9.37/src/hb-open-type-private.hh' line='538' column='1' visibility='default' binding='global' size-in-bits='64'>
             <!-- implicit parameter of type 'OT::BEInt<short unsigned int, 2>*' -->
             <parameter type-id='type-id-244' is-artificial='yes'/>
-            <!-- parameter of type 'unsigned short int' -->
-            <parameter type-id='type-id-81'/>
+            <!-- parameter of type 'short unsigned int' -->
+            <parameter type-id='type-id-73'/>
             <!-- void -->
             <return type-id='type-id-26'/>
           </function-decl>
@@ -7680,7 +7680,7 @@
       <class-decl name='BEInt&lt;unsigned int, 4&gt;' size-in-bits='32' is-struct='yes' visibility='default' filepath='/tmp/legendre/spack-stage/spack-stage-04g73E/harfbuzz-0.9.37/src/hb-open-type-private.hh' line='532' column='1' id='type-id-245'>
         <data-member access='private' layout-offset-in-bits='0'>
           <!-- uint8_t OT::BEInt<unsigned int, 4>::v[4] -->
-          <var-decl name='v' type-id='type-id-77' visibility='default' filepath='/tmp/legendre/spack-stage/spack-stage-04g73E/harfbuzz-0.9.37/src/hb-open-type-private.hh' line='607' column='1'/>
+          <var-decl name='v' type-id='type-id-78' visibility='default' filepath='/tmp/legendre/spack-stage/spack-stage-04g73E/harfbuzz-0.9.37/src/hb-open-type-private.hh' line='607' column='1'/>
         </data-member>
         <member-function access='public'>
           <!-- unsigned int OT::BEInt<unsigned int, 4>::operator unsigned int() -->
@@ -7790,12 +7790,12 @@
           <var-decl name='min_size' type-id='type-id-90' visibility='default' filepath='/tmp/legendre/spack-stage/spack-stage-04g73E/harfbuzz-0.9.37/src/hb-open-type-private.hh' line='628' column='1'/>
         </data-member>
         <member-function access='public'>
-          <!-- unsigned short int OT::IntType<short unsigned int, 2u>::operator short unsigned int() -->
+          <!-- short unsigned int OT::IntType<short unsigned int, 2u>::operator short unsigned int() -->
           <function-decl name='operator short unsigned int' mangled-name='_ZNK2OT7IntTypeItLj2EEcvtEv' filepath='/tmp/legendre/spack-stage/spack-stage-04g73E/harfbuzz-0.9.37/src/hb-open-type-private.hh' line='615' column='1' visibility='default' binding='global' size-in-bits='64'>
             <!-- implicit parameter of type 'const OT::IntType<short unsigned int, 2u>*' -->
             <parameter type-id='type-id-311' is-artificial='yes'/>
-            <!-- unsigned short int -->
-            <return type-id='type-id-81'/>
+            <!-- short unsigned int -->
+            <return type-id='type-id-73'/>
           </function-decl>
         </member-function>
         <member-function access='public'>
@@ -7810,12 +7810,12 @@
           </function-decl>
         </member-function>
         <member-function access='public'>
-          <!-- void OT::IntType<short unsigned int, 2u>::set(unsigned short int) -->
+          <!-- void OT::IntType<short unsigned int, 2u>::set(short unsigned int) -->
           <function-decl name='set' mangled-name='_ZN2OT7IntTypeItLj2EE3setEt' filepath='/tmp/legendre/spack-stage/spack-stage-04g73E/harfbuzz-0.9.37/src/hb-open-type-private.hh' line='614' column='1' visibility='default' binding='global' size-in-bits='64'>
             <!-- implicit parameter of type 'OT::IntType<short unsigned int, 2u>*' -->
             <parameter type-id='type-id-256' is-artificial='yes'/>
-            <!-- parameter of type 'unsigned short int' -->
-            <parameter type-id='type-id-81'/>
+            <!-- parameter of type 'short unsigned int' -->
+            <parameter type-id='type-id-73'/>
             <!-- void -->
             <return type-id='type-id-26'/>
           </function-decl>
@@ -7832,12 +7832,12 @@
           </function-decl>
         </member-function>
         <member-function access='public'>
-          <!-- int OT::IntType<short unsigned int, 2u>::cmp(unsigned short int) -->
+          <!-- int OT::IntType<short unsigned int, 2u>::cmp(short unsigned int) -->
           <function-decl name='cmp' mangled-name='_ZNK2OT7IntTypeItLj2EE3cmpEt' filepath='/tmp/legendre/spack-stage/spack-stage-04g73E/harfbuzz-0.9.37/src/hb-open-type-private.hh' line='620' column='1' visibility='default' binding='global' size-in-bits='64'>
             <!-- implicit parameter of type 'const OT::IntType<short unsigned int, 2u>*' -->
             <parameter type-id='type-id-311' is-artificial='yes'/>
-            <!-- parameter of type 'unsigned short int' -->
-            <parameter type-id='type-id-81'/>
+            <!-- parameter of type 'short unsigned int' -->
+            <parameter type-id='type-id-73'/>
             <!-- int -->
             <return type-id='type-id-9'/>
           </function-decl>
@@ -9613,7 +9613,7 @@
     </union-decl>
     <!-- typedef FT_StreamDesc_ FT_StreamDesc -->
     <typedef-decl name='FT_StreamDesc' type-id='type-id-643' filepath='/collab/usr/global/tools/order/spack/opt/chaos_5_x86_64_ib/gcc@4.4.7/freetype@2.5.3-77fab1b8/include/freetype2/ftsystem.h' line='214' column='1' id='type-id-644'/>
-    <!-- typedef unsigned long int (typedef FT_Stream, unsigned long int, unsigned char*, unsigned long int)* FT_Stream_IoFunc -->
+    <!-- typedef long unsigned int (typedef FT_Stream, long unsigned int, unsigned char*, long unsigned int)* FT_Stream_IoFunc -->
     <typedef-decl name='FT_Stream_IoFunc' type-id='type-id-645' filepath='/collab/usr/global/tools/order/spack/opt/chaos_5_x86_64_ib/gcc@4.4.7/freetype@2.5.3-77fab1b8/include/freetype2/ftsystem.h' line='251' column='1' id='type-id-646'/>
     <!-- typedef void (typedef FT_Stream)* FT_Stream_CloseFunc -->
     <typedef-decl name='FT_Stream_CloseFunc' type-id='type-id-647' filepath='/collab/usr/global/tools/order/spack/opt/chaos_5_x86_64_ib/gcc@4.4.7/freetype@2.5.3-77fab1b8/include/freetype2/ftsystem.h' line='268' column='1' id='type-id-648'/>
@@ -9624,11 +9624,11 @@
         <var-decl name='base' type-id='type-id-629' visibility='default' filepath='/collab/usr/global/tools/order/spack/opt/chaos_5_x86_64_ib/gcc@4.4.7/freetype@2.5.3-77fab1b8/include/freetype2/ftsystem.h' line='323' column='1'/>
       </data-member>
       <data-member access='public' layout-offset-in-bits='64'>
-        <!-- unsigned long int FT_StreamRec_::size -->
+        <!-- long unsigned int FT_StreamRec_::size -->
         <var-decl name='size' type-id='type-id-4' visibility='default' filepath='/collab/usr/global/tools/order/spack/opt/chaos_5_x86_64_ib/gcc@4.4.7/freetype@2.5.3-77fab1b8/include/freetype2/ftsystem.h' line='324' column='1'/>
       </data-member>
       <data-member access='public' layout-offset-in-bits='128'>
-        <!-- unsigned long int FT_StreamRec_::pos -->
+        <!-- long unsigned int FT_StreamRec_::pos -->
         <var-decl name='pos' type-id='type-id-4' visibility='default' filepath='/collab/usr/global/tools/order/spack/opt/chaos_5_x86_64_ib/gcc@4.4.7/freetype@2.5.3-77fab1b8/include/freetype2/ftsystem.h' line='325' column='1'/>
       </data-member>
       <data-member access='public' layout-offset-in-bits='192'>
@@ -9664,8 +9664,8 @@
     <typedef-decl name='FT_String' type-id='type-id-2' filepath='/collab/usr/global/tools/order/spack/opt/chaos_5_x86_64_ib/gcc@4.4.7/freetype@2.5.3-77fab1b8/include/freetype2/fttypes.h' line='183' column='1' id='type-id-650'/>
     <!-- typedef short int FT_Short -->
     <typedef-decl name='FT_Short' type-id='type-id-72' filepath='/collab/usr/global/tools/order/spack/opt/chaos_5_x86_64_ib/gcc@4.4.7/freetype@2.5.3-77fab1b8/include/freetype2/fttypes.h' line='194' column='1' id='type-id-579'/>
-    <!-- typedef unsigned short int FT_UShort -->
-    <typedef-decl name='FT_UShort' type-id='type-id-81' filepath='/collab/usr/global/tools/order/spack/opt/chaos_5_x86_64_ib/gcc@4.4.7/freetype@2.5.3-77fab1b8/include/freetype2/fttypes.h' line='205' column='1' id='type-id-596'/>
+    <!-- typedef short unsigned int FT_UShort -->
+    <typedef-decl name='FT_UShort' type-id='type-id-73' filepath='/collab/usr/global/tools/order/spack/opt/chaos_5_x86_64_ib/gcc@4.4.7/freetype@2.5.3-77fab1b8/include/freetype2/fttypes.h' line='205' column='1' id='type-id-596'/>
     <!-- typedef int FT_Int -->
     <typedef-decl name='FT_Int' type-id='type-id-9' filepath='/collab/usr/global/tools/order/spack/opt/chaos_5_x86_64_ib/gcc@4.4.7/freetype@2.5.3-77fab1b8/include/freetype2/fttypes.h' line='216' column='1' id='type-id-602'/>
     <!-- typedef unsigned int FT_UInt -->
@@ -9753,12 +9753,12 @@
     <pointer-type-def type-id='type-id-662' size-in-bits='64' id='type-id-616'/>
     <!-- FT_Vector* -->
     <pointer-type-def type-id='type-id-622' size-in-bits='64' id='type-id-631'/>
+    <!-- long unsigned int (typedef FT_Stream, long unsigned int, unsigned char*, long unsigned int)* -->
+    <pointer-type-def type-id='type-id-663' size-in-bits='64' id='type-id-645'/>
     <!-- short int* -->
     <pointer-type-def type-id='type-id-72' size-in-bits='64' id='type-id-632'/>
     <!-- unsigned char* -->
-    <pointer-type-def type-id='type-id-79' size-in-bits='64' id='type-id-629'/>
-    <!-- unsigned long int (typedef FT_Stream, unsigned long int, unsigned char*, unsigned long int)* -->
-    <pointer-type-def type-id='type-id-663' size-in-bits='64' id='type-id-645'/>
+    <pointer-type-def type-id='type-id-80' size-in-bits='64' id='type-id-629'/>
     <!-- void (typedef FT_Memory, void*)* -->
     <pointer-type-def type-id='type-id-664' size-in-bits='64' id='type-id-637'/>
     <!-- void (typedef FT_Stream)* -->
@@ -9818,17 +9818,17 @@
       <!-- typedef FT_Face -->
       <return type-id='type-id-586'/>
     </function-decl>
-    <!-- unsigned long int (FT_Stream, unsigned long int, unsigned char*, unsigned long int) -->
+    <!-- long unsigned int (FT_Stream, long unsigned int, unsigned char*, long unsigned int) -->
     <function-type size-in-bits='64' id='type-id-663'>
       <!-- parameter of type 'typedef FT_Stream' -->
       <parameter type-id='type-id-608'/>
-      <!-- parameter of type 'unsigned long int' -->
+      <!-- parameter of type 'long unsigned int' -->
       <parameter type-id='type-id-4'/>
       <!-- parameter of type 'unsigned char*' -->
       <parameter type-id='type-id-629'/>
-      <!-- parameter of type 'unsigned long int' -->
+      <!-- parameter of type 'long unsigned int' -->
       <parameter type-id='type-id-4'/>
-      <!-- unsigned long int -->
+      <!-- long unsigned int -->
       <return type-id='type-id-4'/>
     </function-type>
     <!-- void (FT_Memory, void*) -->
@@ -10074,7 +10074,7 @@
       <subrange length='1' type-id='type-id-4' id='type-id-178'/>
     </array-type-def>
     <!-- uint8_t[3] -->
-    <array-type-def dimensions='1' type-id='type-id-76' size-in-bits='24' id='type-id-687'>
+    <array-type-def dimensions='1' type-id='type-id-77' size-in-bits='24' id='type-id-687'>
       <!-- <anonymous range>[3] -->
       <subrange length='3' type-id='type-id-4' id='type-id-688'/>
     </array-type-def>
@@ -10618,7 +10618,7 @@
         </member-function>
       </class-decl>
       <!-- typedef uint8_t OT::BYTE -->
-      <typedef-decl name='BYTE' type-id='type-id-76' filepath='/tmp/legendre/spack-stage/spack-stage-04g73E/harfbuzz-0.9.37/src/hb-open-type-private.hh' line='631' column='1' id='type-id-669'/>
+      <typedef-decl name='BYTE' type-id='type-id-77' filepath='/tmp/legendre/spack-stage/spack-stage-04g73E/harfbuzz-0.9.37/src/hb-open-type-private.hh' line='631' column='1' id='type-id-669'/>
       <!-- typedef OT::IntType<unsigned int, 3u> OT::UINT24 -->
       <typedef-decl name='UINT24' type-id='type-id-734' filepath='/tmp/legendre/spack-stage/spack-stage-04g73E/harfbuzz-0.9.37/src/hb-open-type-private.hh' line='636' column='1' id='type-id-831'/>
       <!-- typedef OT::SHORT OT::FWORD -->
@@ -12515,11 +12515,11 @@
           </data-member>
           <data-member access='public' layout-offset-in-bits='32'>
             <!-- unsigned int hb_ot_map_t::feature_map_t::index[2] -->
-            <var-decl name='index' type-id='type-id-80' visibility='default' filepath='/tmp/legendre/spack-stage/spack-stage-04g73E/harfbuzz-0.9.37/src/hb-ot-map-private.hh' line='47' column='1'/>
+            <var-decl name='index' type-id='type-id-81' visibility='default' filepath='/tmp/legendre/spack-stage/spack-stage-04g73E/harfbuzz-0.9.37/src/hb-ot-map-private.hh' line='47' column='1'/>
           </data-member>
           <data-member access='public' layout-offset-in-bits='96'>
             <!-- unsigned int hb_ot_map_t::feature_map_t::stage[2] -->
-            <var-decl name='stage' type-id='type-id-80' visibility='default' filepath='/tmp/legendre/spack-stage/spack-stage-04g73E/harfbuzz-0.9.37/src/hb-ot-map-private.hh' line='48' column='1'/>
+            <var-decl name='stage' type-id='type-id-81' visibility='default' filepath='/tmp/legendre/spack-stage/spack-stage-04g73E/harfbuzz-0.9.37/src/hb-ot-map-private.hh' line='48' column='1'/>
           </data-member>
           <data-member access='public' layout-offset-in-bits='160'>
             <!-- unsigned int hb_ot_map_t::feature_map_t::shift -->
@@ -12558,12 +12558,12 @@
         <!-- struct hb_ot_map_t::lookup_map_t -->
         <class-decl name='lookup_map_t' size-in-bits='64' is-struct='yes' visibility='default' filepath='/tmp/legendre/spack-stage/spack-stage-04g73E/harfbuzz-0.9.37/src/hb-ot-map-private.hh' line='59' column='1' id='type-id-908'>
           <data-member access='public' layout-offset-in-bits='0'>
-            <!-- unsigned short int hb_ot_map_t::lookup_map_t::index -->
-            <var-decl name='index' type-id='type-id-81' visibility='default' filepath='/tmp/legendre/spack-stage/spack-stage-04g73E/harfbuzz-0.9.37/src/hb-ot-map-private.hh' line='60' column='1'/>
+            <!-- short unsigned int hb_ot_map_t::lookup_map_t::index -->
+            <var-decl name='index' type-id='type-id-73' visibility='default' filepath='/tmp/legendre/spack-stage/spack-stage-04g73E/harfbuzz-0.9.37/src/hb-ot-map-private.hh' line='60' column='1'/>
           </data-member>
           <data-member access='public' layout-offset-in-bits='16'>
-            <!-- unsigned short int hb_ot_map_t::lookup_map_t::auto_zwj -->
-            <var-decl name='auto_zwj' type-id='type-id-81' visibility='default' filepath='/tmp/legendre/spack-stage/spack-stage-04g73E/harfbuzz-0.9.37/src/hb-ot-map-private.hh' line='61' column='1'/>
+            <!-- short unsigned int hb_ot_map_t::lookup_map_t::auto_zwj -->
+            <var-decl name='auto_zwj' type-id='type-id-73' visibility='default' filepath='/tmp/legendre/spack-stage/spack-stage-04g73E/harfbuzz-0.9.37/src/hb-ot-map-private.hh' line='61' column='1'/>
           </data-member>
           <data-member access='public' layout-offset-in-bits='32'>
             <!-- hb_mask_t hb_ot_map_t::lookup_map_t::mask -->
@@ -13192,15 +13192,15 @@
         <var-decl name='num_bits' type-id='type-id-90' visibility='default' filepath='/tmp/legendre/spack-stage/spack-stage-04g73E/harfbuzz-0.9.37/src/hb-set-private.hh' line='55' column='1'/>
       </data-member>
       <data-member access='private' layout-offset-in-bits='0'>
-        <!-- unsigned long int hb_set_digest_lowest_bits_t<long unsigned int, 0u>::mask -->
+        <!-- long unsigned int hb_set_digest_lowest_bits_t<long unsigned int, 0u>::mask -->
         <var-decl name='mask' type-id='type-id-4' visibility='default' filepath='/tmp/legendre/spack-stage/spack-stage-04g73E/harfbuzz-0.9.37/src/hb-set-private.hh' line='87' column='1'/>
       </data-member>
       <member-function access='private' static='yes'>
-        <!-- unsigned long int hb_set_digest_lowest_bits_t<long unsigned int, 0u>::mask_for() -->
+        <!-- long unsigned int hb_set_digest_lowest_bits_t<long unsigned int, 0u>::mask_for() -->
         <function-decl name='mask_for' mangled-name='_ZN27hb_set_digest_lowest_bits_tImLj0EE8mask_forEj' filepath='/tmp/legendre/spack-stage/spack-stage-04g73E/harfbuzz-0.9.37/src/hb-set-private.hh' line='84' column='1' visibility='default' binding='global' size-in-bits='64'>
           <!-- parameter of type 'unsigned int' -->
           <parameter type-id='type-id-12'/>
-          <!-- unsigned long int -->
+          <!-- long unsigned int -->
           <return type-id='type-id-4'/>
         </function-decl>
       </member-function>
@@ -13264,15 +13264,15 @@
         <var-decl name='num_bits' type-id='type-id-90' visibility='default' filepath='/tmp/legendre/spack-stage/spack-stage-04g73E/harfbuzz-0.9.37/src/hb-set-private.hh' line='55' column='1'/>
       </data-member>
       <data-member access='private' layout-offset-in-bits='0'>
-        <!-- unsigned long int hb_set_digest_lowest_bits_t<long unsigned int, 4u>::mask -->
+        <!-- long unsigned int hb_set_digest_lowest_bits_t<long unsigned int, 4u>::mask -->
         <var-decl name='mask' type-id='type-id-4' visibility='default' filepath='/tmp/legendre/spack-stage/spack-stage-04g73E/harfbuzz-0.9.37/src/hb-set-private.hh' line='87' column='1'/>
       </data-member>
       <member-function access='private' static='yes'>
-        <!-- unsigned long int hb_set_digest_lowest_bits_t<long unsigned int, 4u>::mask_for() -->
+        <!-- long unsigned int hb_set_digest_lowest_bits_t<long unsigned int, 4u>::mask_for() -->
         <function-decl name='mask_for' mangled-name='_ZN27hb_set_digest_lowest_bits_tImLj4EE8mask_forEj' filepath='/tmp/legendre/spack-stage/spack-stage-04g73E/harfbuzz-0.9.37/src/hb-set-private.hh' line='84' column='1' visibility='default' binding='global' size-in-bits='64'>
           <!-- parameter of type 'unsigned int' -->
           <parameter type-id='type-id-12'/>
-          <!-- unsigned long int -->
+          <!-- long unsigned int -->
           <return type-id='type-id-4'/>
         </function-decl>
       </member-function>
@@ -13336,15 +13336,15 @@
         <var-decl name='num_bits' type-id='type-id-90' visibility='default' filepath='/tmp/legendre/spack-stage/spack-stage-04g73E/harfbuzz-0.9.37/src/hb-set-private.hh' line='55' column='1'/>
       </data-member>
       <data-member access='private' layout-offset-in-bits='0'>
-        <!-- unsigned long int hb_set_digest_lowest_bits_t<long unsigned int, 9u>::mask -->
+        <!-- long unsigned int hb_set_digest_lowest_bits_t<long unsigned int, 9u>::mask -->
         <var-decl name='mask' type-id='type-id-4' visibility='default' filepath='/tmp/legendre/spack-stage/spack-stage-04g73E/harfbuzz-0.9.37/src/hb-set-private.hh' line='87' column='1'/>
       </data-member>
       <member-function access='private' static='yes'>
-        <!-- unsigned long int hb_set_digest_lowest_bits_t<long unsigned int, 9u>::mask_for() -->
+        <!-- long unsigned int hb_set_digest_lowest_bits_t<long unsigned int, 9u>::mask_for() -->
         <function-decl name='mask_for' mangled-name='_ZN27hb_set_digest_lowest_bits_tImLj9EE8mask_forEj' filepath='/tmp/legendre/spack-stage/spack-stage-04g73E/harfbuzz-0.9.37/src/hb-set-private.hh' line='84' column='1' visibility='default' binding='global' size-in-bits='64'>
           <!-- parameter of type 'unsigned int' -->
           <parameter type-id='type-id-12'/>
-          <!-- unsigned long int -->
+          <!-- long unsigned int -->
           <return type-id='type-id-4'/>
         </function-decl>
       </member-function>
@@ -19769,7 +19769,7 @@
                 <!-- implicit parameter of type 'OT::CoverageFormat1::Iter*' -->
                 <parameter type-id='type-id-1120' is-artificial='yes'/>
                 <!-- typedef uint16_t -->
-                <return type-id='type-id-74'/>
+                <return type-id='type-id-75'/>
               </function-decl>
             </member-function>
             <member-function access='public'>
@@ -19807,7 +19807,7 @@
                 <!-- implicit parameter of type 'OT::CoverageFormat1::Iter*' -->
                 <parameter type-id='type-id-1120' is-artificial='yes'/>
                 <!-- typedef uint16_t -->
-                <return type-id='type-id-74'/>
+                <return type-id='type-id-75'/>
               </function-decl>
             </member-function>
           </class-decl>
@@ -19924,7 +19924,7 @@
                 <!-- implicit parameter of type 'OT::CoverageFormat2::Iter*' -->
                 <parameter type-id='type-id-1123' is-artificial='yes'/>
                 <!-- typedef uint16_t -->
-                <return type-id='type-id-74'/>
+                <return type-id='type-id-75'/>
               </function-decl>
             </member-function>
             <member-function access='public'>
@@ -19962,7 +19962,7 @@
                 <!-- implicit parameter of type 'OT::CoverageFormat2::Iter*' -->
                 <parameter type-id='type-id-1123' is-artificial='yes'/>
                 <!-- typedef uint16_t -->
-                <return type-id='type-id-74'/>
+                <return type-id='type-id-75'/>
               </function-decl>
             </member-function>
           </class-decl>
@@ -20102,7 +20102,7 @@
                 <!-- implicit parameter of type 'OT::Coverage::Iter*' -->
                 <parameter type-id='type-id-1117' is-artificial='yes'/>
                 <!-- typedef uint16_t -->
-                <return type-id='type-id-74'/>
+                <return type-id='type-id-75'/>
               </function-decl>
             </member-function>
             <member-function access='public'>
@@ -20131,7 +20131,7 @@
                 <!-- implicit parameter of type 'OT::Coverage::Iter*' -->
                 <parameter type-id='type-id-1117' is-artificial='yes'/>
                 <!-- typedef uint16_t -->
-                <return type-id='type-id-74'/>
+                <return type-id='type-id-75'/>
               </function-decl>
             </member-function>
           </class-decl>
@@ -25851,7 +25851,7 @@
             </data-member>
             <data-member access='protected' layout-offset-in-bits='96'>
               <!-- uint8_t OT::hb_apply_context_t::matcher_t::syllable -->
-              <var-decl name='syllable' type-id='type-id-76' visibility='default' filepath='/tmp/legendre/spack-stage/spack-stage-04g73E/harfbuzz-0.9.37/src/hb-ot-layout-gsubgpos-private.hh' line='388' column='1'/>
+              <var-decl name='syllable' type-id='type-id-77' visibility='default' filepath='/tmp/legendre/spack-stage/spack-stage-04g73E/harfbuzz-0.9.37/src/hb-ot-layout-gsubgpos-private.hh' line='388' column='1'/>
             </data-member>
             <data-member access='protected' layout-offset-in-bits='128'>
               <!-- OT::hb_apply_context_t::matcher_t::match_func_t OT::hb_apply_context_t::matcher_t::match_func -->
@@ -25920,7 +25920,7 @@
                 <!-- implicit parameter of type 'OT::hb_apply_context_t::matcher_t*' -->
                 <parameter type-id='type-id-1378' is-artificial='yes'/>
                 <!-- parameter of type 'typedef uint8_t' -->
-                <parameter type-id='type-id-76'/>
+                <parameter type-id='type-id-77'/>
                 <!-- void -->
                 <return type-id='type-id-26'/>
               </function-decl>
@@ -28721,7 +28721,7 @@
           </data-member>
           <data-member access='public' layout-offset-in-bits='160'>
             <!-- unsigned int hb_ot_map_builder_t::feature_info_t::stage[2] -->
-            <var-decl name='stage' type-id='type-id-80' visibility='default' filepath='/tmp/legendre/spack-stage/spack-stage-04g73E/harfbuzz-0.9.37/src/hb-ot-map-private.hh' line='216' column='1'/>
+            <var-decl name='stage' type-id='type-id-81' visibility='default' filepath='/tmp/legendre/spack-stage/spack-stage-04g73E/harfbuzz-0.9.37/src/hb-ot-map-private.hh' line='216' column='1'/>
           </data-member>
           <member-function access='public' static='yes'>
             <!-- int hb_ot_map_builder_t::feature_info_t::cmp(const hb_ot_map_builder_t::feature_info_t*) -->
@@ -28767,15 +28767,15 @@
       </data-member>
       <data-member access='public' layout-offset-in-bits='416'>
         <!-- unsigned int hb_ot_map_builder_t::script_index[2] -->
-        <var-decl name='script_index' type-id='type-id-80' visibility='default' filepath='/tmp/legendre/spack-stage/spack-stage-04g73E/harfbuzz-0.9.37/src/hb-ot-map-private.hh' line='236' column='1'/>
+        <var-decl name='script_index' type-id='type-id-81' visibility='default' filepath='/tmp/legendre/spack-stage/spack-stage-04g73E/harfbuzz-0.9.37/src/hb-ot-map-private.hh' line='236' column='1'/>
       </data-member>
       <data-member access='public' layout-offset-in-bits='480'>
         <!-- unsigned int hb_ot_map_builder_t::language_index[2] -->
-        <var-decl name='language_index' type-id='type-id-80' visibility='default' filepath='/tmp/legendre/spack-stage/spack-stage-04g73E/harfbuzz-0.9.37/src/hb-ot-map-private.hh' line='236' column='1'/>
+        <var-decl name='language_index' type-id='type-id-81' visibility='default' filepath='/tmp/legendre/spack-stage/spack-stage-04g73E/harfbuzz-0.9.37/src/hb-ot-map-private.hh' line='236' column='1'/>
       </data-member>
       <data-member access='private' layout-offset-in-bits='544'>
         <!-- unsigned int hb_ot_map_builder_t::current_stage[2] -->
-        <var-decl name='current_stage' type-id='type-id-80' visibility='default' filepath='/tmp/legendre/spack-stage/spack-stage-04g73E/harfbuzz-0.9.37/src/hb-ot-map-private.hh' line='240' column='1'/>
+        <var-decl name='current_stage' type-id='type-id-81' visibility='default' filepath='/tmp/legendre/spack-stage/spack-stage-04g73E/harfbuzz-0.9.37/src/hb-ot-map-private.hh' line='240' column='1'/>
       </data-member>
       <data-member access='private' layout-offset-in-bits='640'>
         <!-- hb_prealloced_array_t<hb_ot_map_builder_t::feature_info_t, 32u> hb_ot_map_builder_t::feature_infos -->
