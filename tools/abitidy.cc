@@ -1157,6 +1157,54 @@ renumber_type_ids(
     renumber_type_ids(child, type_id_map);
 }
 
+/// Determine whether one XML element is the same as another.
+///
+/// XML elements representing members are sometimes emitted multiple
+/// times, identically.
+///
+/// @param left the first element to compare
+///
+/// @param right the second element to compare
+///
+/// @return whether the first element is the same as the second
+bool
+equal_tree(xmlNodePtr left, xmlNodePtr right)
+{
+  // Node names must match.
+  const char* left_name = from_libxml(left->name);
+  const char* right_name = from_libxml(right->name);
+  if (strcmp(left_name, right_name) != 0)
+    return false;
+
+  // Attributes must match.
+  std::unordered_set<std::string> attributes;
+  for (auto properties : {left->properties, right->properties})
+    for (auto property = properties; property; property = property->next)
+      attributes.insert(from_libxml(property->name));
+  for (const auto& attribute : attributes)
+    {
+      const char* name = attribute.c_str();
+      const auto left_value = get_attribute(left, name);
+      const auto right_value = get_attribute(right, name);
+      if (left_value != right_value)
+        return false;
+    }
+
+  // The left subelements must be the same as the right ones.
+  xmlNodePtr left_child = xmlFirstElementChild(left);
+  xmlNodePtr right_child = xmlFirstElementChild(right);
+  while (left_child && right_child)
+    {
+      if (!equal_tree(left_child, right_child))
+        return false;
+      left_child = xmlNextElementSibling(left_child);
+      right_child = xmlNextElementSibling(right_child);
+    }
+  if (left_child || right_child)
+    return false;
+  return true;
+}
+
 /// Determine whether one XML element is a subtree of another.
 ///
 /// XML elements representing types are sometimes emitted multiple
@@ -1232,6 +1280,67 @@ sub_tree(xmlNodePtr left, xmlNodePtr right)
       right_child = xmlNextElementSibling(right_child);
     }
   return !left_child;
+}
+
+
+/// Handle excess data members.
+///
+/// @param eliminate whether to eliminate
+///
+/// @param root the root XML element
+///
+/// @return the number of excess members
+size_t handle_excess_members(bool eliminate, xmlNodePtr root)
+{
+  std::vector<xmlNodePtr> types;
+
+  // find all structs and unions
+  std::function<void(xmlNodePtr)> dfs = [&](xmlNodePtr node) {
+    if (node->type != XML_ELEMENT_NODE)
+      return;
+    const char* node_name = from_libxml(node->name);
+    // preorder in case we delete a nested type
+    for (auto child : get_children(node))
+      dfs(child);
+    if (strcmp(node_name, "class-decl") || strcmp(node_name, "union-decl"))
+      types.push_back(node);
+  };
+  dfs(root);
+
+  size_t count = 0;
+  for (const auto& node : types)
+    {
+      // filter data members (skipping things like comments)
+      std::vector<xmlNodePtr> data_members;
+      for (auto child : get_children(node))
+        if (strcmp(from_libxml(child->name), "data-member") == 0)
+          data_members.push_back(child);
+      // look for identical duplicate data members - O(n^2)
+      for (size_t i = 0; i < data_members.size(); ++i)
+        {
+          const xmlNodePtr i_node = data_members[i];
+          bool duplicate = false;
+          for (size_t j = 0; j < i; ++j)
+            {
+              const xmlNodePtr j_node = data_members[j];
+              if (j_node != nullptr && equal_tree(i_node, j_node))
+                {
+                  duplicate = true;
+                  break;
+                }
+            }
+          if (duplicate)
+            {
+              std::cerr << "found duplicate data-member\n";
+              if (eliminate) {
+                remove_element(i_node);
+                data_members[i] = nullptr;
+              }
+              ++count;
+            }
+        }
+    }
+  return count;
 }
 
 /// Eliminate non-conflicting / report conflicting duplicate definitions.
@@ -1917,6 +2026,7 @@ main(int argc, char* argv[])
   bool opt_report_untyped = false;
   bool opt_abort_on_untyped = false;
   bool opt_clear_non_reachable = false;
+  bool opt_eliminate_excess_members = false;
   bool opt_eliminate_duplicates = false;
   bool opt_report_conflicts = false;
   bool opt_sort = false;
@@ -1935,7 +2045,7 @@ main(int argc, char* argv[])
               << "  [-S|--symbols file]\n"
               << "  [-L|--locations {column|line|file|none}]\n"
               << "  [-I|--indentation n]\n"
-              << "  [-a|--all] (implies -n -r -t -f -p -u -b -e -c -s -d)\n"
+              << "  [-a|--all] (implies -n -r -t -f -p -u -b -x -e -c -s -d)\n"
               << "  [-n|--[no-]normalise-anonymous]\n"
               << "  [-r|--[no-]reanonymise-anonymous]\n"
               << "  [-t|--[no-]discard-naming-typedefs]\n"
@@ -1944,6 +2054,7 @@ main(int argc, char* argv[])
               << "  [-u|--[no-]report-untyped]\n"
               << "  [-U|--abort-on-untyped-symbols]\n"
               << "  [-b|--[no-]clear-non-reachable]\n"
+              << "  [-x|--[no-]eliminate-excess-members\n"
               << "  [-e|--[no-]eliminate-duplicates]\n"
               << "  [-c|--[no-]report-conflicts]\n"
               << "  [-s|--[no-]sort]\n"
@@ -1988,6 +2099,7 @@ main(int argc, char* argv[])
                                 = opt_prune_unreachable
                                 = opt_report_untyped
                                 = opt_clear_non_reachable
+                                = opt_eliminate_excess_members
                                 = opt_eliminate_duplicates
                                 = opt_report_conflicts
                                 = opt_sort
@@ -2024,6 +2136,10 @@ main(int argc, char* argv[])
         opt_clear_non_reachable = true;
       else if (arg == "--no-clear-non-reachable")
         opt_clear_non_reachable = false;
+      else if (arg == "-x" || arg == "--eliminate-excess-members")
+        opt_eliminate_excess_members = true;
+      else if (arg == "--no-eliminate-excess-members")
+        opt_eliminate_excess_members = false;
       else if (arg == "-e" || arg == "--eliminate-duplicates")
         opt_eliminate_duplicates = true;
       else if (arg == "--no-eliminate-duplicates")
@@ -2139,6 +2255,9 @@ main(int argc, char* argv[])
   // Clear unwanted non-reachable attributes.
   if (opt_clear_non_reachable)
     clear_non_reachable(root);
+
+  // Handle excess data members.
+  handle_excess_members(opt_eliminate_excess_members, root);
 
   // Eliminate complete duplicates and extra fragments of types.
   // Report conflicting duplicate defintions.
