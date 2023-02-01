@@ -21,6 +21,7 @@
 #include <functional>
 #include <set>
 #include <unordered_map>
+#include "abg-cxx-compat.h"
 #include "abg-fwd.h"
 #include "abg-hash.h"
 #include "abg-traverse.h"
@@ -920,7 +921,8 @@ private:
 	     const version&	ve,
 	     visibility		vi,
 	     bool		is_in_ksymtab = false,
-	     uint64_t		crc = 0,
+	     const abg_compat::optional<uint32_t>&	crc = {},
+	     const abg_compat::optional<std::string>&	ns = {},
 	     bool		is_suppressed = false);
 
   elf_symbol(const elf_symbol&);
@@ -945,7 +947,8 @@ public:
 	 const version&	    ve,
 	 visibility	    vi,
 	 bool		    is_in_ksymtab = false,
-	 uint64_t	    crc = 0,
+	 const abg_compat::optional<uint32_t>&		crc = {},
+	 const abg_compat::optional<std::string>&	ns = {},
 	 bool		    is_suppressed = false);
 
   const environment*
@@ -1017,11 +1020,17 @@ public:
   void
   set_is_in_ksymtab(bool is_in_ksymtab);
 
-  uint64_t
+  const abg_compat::optional<uint32_t>&
   get_crc() const;
 
   void
-  set_crc(uint64_t crc);
+  set_crc(const abg_compat::optional<uint32_t>& crc);
+
+  const abg_compat::optional<std::string>&
+  get_namespace() const;
+
+  void
+  set_namespace(const abg_compat::optional<std::string>& ns);
 
   bool
   is_suppressed() const;

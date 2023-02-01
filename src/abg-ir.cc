@@ -1729,7 +1729,8 @@ struct elf_symbol::priv
   //     STT_COMMON definition of that name that has the largest size.
   bool			is_common_;
   bool			is_in_ksymtab_;
-  uint64_t		crc_;
+  abg_compat::optional<uint32_t>	crc_;
+  abg_compat::optional<std::string>	namespace_;
   bool			is_suppressed_;
   elf_symbol_wptr	main_symbol_;
   elf_symbol_wptr	next_alias_;
@@ -1746,7 +1747,8 @@ struct elf_symbol::priv
       is_defined_(false),
       is_common_(false),
       is_in_ksymtab_(false),
-      crc_(0),
+      crc_(),
+      namespace_(),
       is_suppressed_(false)
   {}
 
@@ -1761,7 +1763,8 @@ struct elf_symbol::priv
        const elf_symbol::version& ve,
        elf_symbol::visibility	  vi,
        bool			  is_in_ksymtab,
-       uint64_t			  crc,
+       const abg_compat::optional<uint32_t>&	crc,
+       const abg_compat::optional<std::string>&	ns,
        bool			  is_suppressed)
     : env_(e),
       index_(i),
@@ -1775,6 +1778,7 @@ struct elf_symbol::priv
       is_common_(c),
       is_in_ksymtab_(is_in_ksymtab),
       crc_(crc),
+      namespace_(ns),
       is_suppressed_(is_suppressed)
   {
     if (!is_common_)
@@ -1820,6 +1824,8 @@ elf_symbol::elf_symbol()
 /// @param vi the visibility of the symbol.
 ///
 /// @param crc the CRC (modversions) value of Linux Kernel symbols
+///
+/// @param ns the namespace of Linux Kernel symbols, if any
 elf_symbol::elf_symbol(const environment* e,
 		       size_t		  i,
 		       size_t		  s,
@@ -1831,7 +1837,8 @@ elf_symbol::elf_symbol(const environment* e,
 		       const version&	  ve,
 		       visibility	  vi,
 		       bool		  is_in_ksymtab,
-		       uint64_t		  crc,
+		       const abg_compat::optional<uint32_t>&	crc,
+		       const abg_compat::optional<std::string>&	ns,
 		       bool		  is_suppressed)
   : priv_(new priv(e,
 		   i,
@@ -1845,6 +1852,7 @@ elf_symbol::elf_symbol(const environment* e,
 		   vi,
 		   is_in_ksymtab,
 		   crc,
+		   ns,
 		   is_suppressed))
 {}
 
@@ -1888,6 +1896,8 @@ elf_symbol::create()
 ///
 /// @param crc the CRC (modversions) value of Linux Kernel symbols
 ///
+/// @param ns the namespace of Linux Kernel symbols, if any
+///
 /// @return a (smart) pointer to a newly created instance of @ref
 /// elf_symbol.
 elf_symbol_sptr
@@ -1902,11 +1912,12 @@ elf_symbol::create(const environment* e,
 		   const version&     ve,
 		   visibility	      vi,
 		   bool		      is_in_ksymtab,
-		   uint64_t	      crc,
+		   const abg_compat::optional<uint32_t>&	crc,
+		   const abg_compat::optional<std::string>&	ns,
 		   bool		      is_suppressed)
 {
   elf_symbol_sptr sym(new elf_symbol(e, i, s, n, t, b, d, c, ve, vi,
-				     is_in_ksymtab, crc, is_suppressed));
+				     is_in_ksymtab, crc, ns, is_suppressed));
   sym->priv_->main_symbol_ = sym;
   return sym;
 }
@@ -1928,8 +1939,8 @@ textually_equals(const elf_symbol&l,
 		 && l.is_defined() == r.is_defined()
 		 && l.is_common_symbol() == r.is_common_symbol()
 		 && l.get_version() == r.get_version()
-		 && (l.get_crc() == 0 || r.get_crc() == 0
-		     || l.get_crc() == r.get_crc()));
+		 && l.get_crc() == r.get_crc()
+		 && l.get_namespace() == r.get_namespace());
 
   if (equals && l.is_variable())
     // These are variable symbols.  Let's compare their symbol size.
@@ -2137,8 +2148,8 @@ elf_symbol::set_is_in_ksymtab(bool is_in_ksymtab)
 
 /// Getter of the 'crc' property.
 ///
-/// @return the CRC (modversions) value for Linux Kernel symbols (if present)
-uint64_t
+/// @return the CRC (modversions) value for Linux Kernel symbols, if any
+const abg_compat::optional<uint32_t>&
 elf_symbol::get_crc() const
 {return priv_->crc_;}
 
@@ -2146,8 +2157,22 @@ elf_symbol::get_crc() const
 ///
 /// @param crc the new CRC (modversions) value for Linux Kernel symbols
 void
-elf_symbol::set_crc(uint64_t crc)
+elf_symbol::set_crc(const abg_compat::optional<uint32_t>& crc)
 {priv_->crc_ = crc;}
+
+/// Getter of the 'namespace' property.
+///
+/// @return the namespace for Linux Kernel symbols, if any
+const abg_compat::optional<std::string>&
+elf_symbol::get_namespace() const
+{return priv_->namespace_;}
+
+/// Setter of the 'namespace' property.
+///
+/// @param ns the new namespace for Linux Kernel symbols, if any
+void
+elf_symbol::set_namespace(const abg_compat::optional<std::string>& ns)
+{priv_->namespace_ = ns;}
 
 /// Getter for the 'is-suppressed' property.
 ///
@@ -6572,9 +6597,8 @@ strip_typedef(const type_base_sptr type)
 /// Strip qualification from a qualified type, when it makes sense.
 ///
 /// DWARF constructs "const reference".  This is redundant because a
-/// reference is always const.  It also constructs the useless "const
-/// void" type.  The issue is these redundant types then leak into the
-/// IR and make for bad diagnostics.
+/// reference is always const.  The issue is this redundant type then
+/// leaks into the IR and make for bad diagnostics.
 ///
 /// This function thus strips the const qualifier from the type in
 /// that case.  It might contain code to strip other cases like this
@@ -6595,15 +6619,12 @@ strip_useless_const_qualification(const qualified_type_def_sptr t)
 
   if ((t->get_cv_quals() & qualified_type_def::CV_CONST
        && (is_reference_type(u)))
-      || (t->get_cv_quals() & qualified_type_def::CV_CONST
-	  && env->is_void_type(u))
       || t->get_cv_quals() == qualified_type_def::CV_NONE)
     // Let's strip the const qualifier because a reference is always
-    // 'const' and a const void doesn't make sense.  They will just
-    // lead to spurious changes later down the pipeline, that we'll
-    // have to deal with by doing painful and error-prone editing of
-    // the diff IR.  Dropping that useless and inconsistent artefact
-    // right here seems to be a good way to go.
+    // 'const'.  It will just lead to spurious changes later down the
+    // pipeline, that we'll have to deal with by doing painful and
+    // error-prone editing of the diff IR.  Dropping that useless and
+    // inconsistent artefact right here seems to be a good way to go.
     result = is_decl(u);
 
   return result;
@@ -14343,6 +14364,7 @@ parse_integral_type(const string&			type_name,
 bool
 parse_integral_type(const string& str, integral_type& type)
 {
+  return false;  // Disable all integral type name interpretation.
   integral_type::base_type base_type = integral_type::INT_BASE_TYPE;
   integral_type::modifiers_type modifiers = integral_type::NO_MODIFIER;
 
