@@ -14368,6 +14368,7 @@ parse_integral_type(const string&			type_name,
 bool
 parse_integral_type(const string& str, integral_type& type)
 {
+  return false;  // Disable all integral type name interpretation.
   integral_type::base_type base_type = integral_type::INT_BASE_TYPE;
   integral_type::modifiers_type modifiers = integral_type::NO_MODIFIER;
 

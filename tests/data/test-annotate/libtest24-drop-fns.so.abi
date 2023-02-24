@@ -60,19 +60,19 @@
     <type-decl name='long long int' size-in-bits='64' id='type-id-14'/>
     <!-- long long unsigned int -->
     <type-decl name='long long unsigned int' size-in-bits='64' id='type-id-15'/>
+    <!-- long unsigned int -->
+    <type-decl name='long unsigned int' size-in-bits='64' id='type-id-16'/>
+    <!-- long unsigned int[] -->
+    <array-type-def dimensions='1' type-id='type-id-16' size-in-bits='infinite' id='type-id-17'>
+      <!-- <anonymous range>[] -->
+      <subrange length='infinite' id='type-id-18'/>
+    </array-type-def>
     <!-- short int -->
-    <type-decl name='short int' size-in-bits='16' id='type-id-16'/>
+    <type-decl name='short int' size-in-bits='16' id='type-id-19'/>
     <!-- sizetype -->
     <type-decl name='sizetype' size-in-bits='64' id='type-id-4'/>
     <!-- unsigned int -->
     <type-decl name='unsigned int' size-in-bits='32' id='type-id-7'/>
-    <!-- unsigned long int -->
-    <type-decl name='unsigned long int' size-in-bits='64' id='type-id-17'/>
-    <!-- unsigned long int[] -->
-    <array-type-def dimensions='1' type-id='type-id-17' size-in-bits='infinite' id='type-id-18'>
-      <!-- <anonymous range>[] -->
-      <subrange length='infinite' id='type-id-19'/>
-    </array-type-def>
     <!-- wchar_t -->
     <type-decl name='wchar_t' size-in-bits='32' id='type-id-20'/>
     <!-- typedef int __int32_t -->
@@ -255,12 +255,12 @@
     <typedef-decl name='__mbstate_t' type-id='type-id-30' filepath='/usr/include/wchar.h' line='94' column='1' id='type-id-29'/>
     <!-- typedef __mbstate_t mbstate_t -->
     <typedef-decl name='mbstate_t' type-id='type-id-29' filepath='/usr/include/wchar.h' line='106' column='1' id='type-id-32'/>
-    <!-- typedef unsigned long int wctype_t -->
-    <typedef-decl name='wctype_t' type-id='type-id-17' filepath='/usr/include/wctype.h' line='52' column='1' id='type-id-33'/>
+    <!-- typedef long unsigned int wctype_t -->
+    <typedef-decl name='wctype_t' type-id='type-id-16' filepath='/usr/include/wctype.h' line='52' column='1' id='type-id-33'/>
     <!-- typedef const __int32_t* wctrans_t -->
     <typedef-decl name='wctrans_t' type-id='type-id-34' filepath='/usr/include/wctype.h' line='186' column='1' id='type-id-35'/>
-    <!-- typedef unsigned long int size_t -->
-    <typedef-decl name='size_t' type-id='type-id-17' filepath='/usr/lib/gcc/x86_64-redhat-linux/5.3.1/include/stddef.h' line='216' column='1' id='type-id-36'/>
+    <!-- typedef long unsigned int size_t -->
+    <typedef-decl name='size_t' type-id='type-id-16' filepath='/usr/lib/gcc/x86_64-redhat-linux/5.3.1/include/stddef.h' line='216' column='1' id='type-id-36'/>
     <!-- typedef unsigned int wint_t -->
     <typedef-decl name='wint_t' type-id='type-id-7' filepath='/usr/lib/gcc/x86_64-redhat-linux/5.3.1/include/stddef.h' line='357' column='1' id='type-id-37'/>
     <!-- __FILE* -->
@@ -295,48 +295,48 @@
     <qualified-type-def type-id='type-id-11' const='yes' id='type-id-50'/>
     <!-- const long int -->
     <qualified-type-def type-id='type-id-13' const='yes' id='type-id-51'/>
+    <!-- const long unsigned int -->
+    <qualified-type-def type-id='type-id-16' const='yes' id='type-id-52'/>
     <!-- const mbstate_t -->
-    <qualified-type-def type-id='type-id-32' const='yes' id='type-id-52'/>
+    <qualified-type-def type-id='type-id-32' const='yes' id='type-id-53'/>
     <!-- const mbstate_t* -->
-    <pointer-type-def type-id='type-id-52' size-in-bits='64' id='type-id-53'/>
+    <pointer-type-def type-id='type-id-53' size-in-bits='64' id='type-id-54'/>
     <!-- const short int -->
-    <qualified-type-def type-id='type-id-16' const='yes' id='type-id-54'/>
+    <qualified-type-def type-id='type-id-19' const='yes' id='type-id-55'/>
     <!-- const std::allocator<char> -->
-    <qualified-type-def type-id='type-id-55' const='yes' id='type-id-56'/>
+    <qualified-type-def type-id='type-id-56' const='yes' id='type-id-57'/>
     <!-- const std::allocator<char>& -->
-    <reference-type-def kind='lvalue' type-id='type-id-56' size-in-bits='64' id='type-id-57'/>
+    <reference-type-def kind='lvalue' type-id='type-id-57' size-in-bits='64' id='type-id-58'/>
     <!-- const std::basic_string<char, std::char_traits<char>, std::allocator<char> > -->
-    <qualified-type-def type-id='type-id-58' const='yes' id='type-id-59'/>
+    <qualified-type-def type-id='type-id-59' const='yes' id='type-id-60'/>
     <!-- const std::basic_string<char, std::char_traits<char>, std::allocator<char> >& -->
-    <reference-type-def kind='lvalue' type-id='type-id-59' size-in-bits='64' id='type-id-60'/>
+    <reference-type-def kind='lvalue' type-id='type-id-60' size-in-bits='64' id='type-id-61'/>
     <!-- const std::basic_string<char, std::char_traits<char>, std::allocator<char> >* -->
-    <pointer-type-def type-id='type-id-59' size-in-bits='64' id='type-id-61'/>
+    <pointer-type-def type-id='type-id-60' size-in-bits='64' id='type-id-62'/>
     <!-- const std::basic_string<char, std::char_traits<char>, std::allocator<char> >::_Rep -->
-    <qualified-type-def type-id='type-id-62' const='yes' id='type-id-63'/>
+    <qualified-type-def type-id='type-id-63' const='yes' id='type-id-64'/>
     <!-- const std::basic_string<char, std::char_traits<char>, std::allocator<char> >::_Rep* -->
-    <pointer-type-def type-id='type-id-63' size-in-bits='64' id='type-id-64'/>
+    <pointer-type-def type-id='type-id-64' size-in-bits='64' id='type-id-65'/>
     <!-- const std::basic_string<char, std::char_traits<char>, std::allocator<char> >::size_type -->
-    <qualified-type-def type-id='type-id-65' const='yes' id='type-id-66'/>
+    <qualified-type-def type-id='type-id-66' const='yes' id='type-id-67'/>
     <!-- const std::char_traits<char>::char_type -->
-    <qualified-type-def type-id='type-id-67' const='yes' id='type-id-68'/>
+    <qualified-type-def type-id='type-id-68' const='yes' id='type-id-69'/>
     <!-- const std::char_traits<char>::char_type& -->
-    <reference-type-def kind='lvalue' type-id='type-id-68' size-in-bits='64' id='type-id-69'/>
+    <reference-type-def kind='lvalue' type-id='type-id-69' size-in-bits='64' id='type-id-70'/>
     <!-- const std::char_traits<char>::char_type* -->
-    <pointer-type-def type-id='type-id-68' size-in-bits='64' id='type-id-70'/>
+    <pointer-type-def type-id='type-id-69' size-in-bits='64' id='type-id-71'/>
     <!-- const std::char_traits<char>::int_type -->
-    <qualified-type-def type-id='type-id-71' const='yes' id='type-id-72'/>
+    <qualified-type-def type-id='type-id-72' const='yes' id='type-id-73'/>
     <!-- const std::char_traits<char>::int_type& -->
-    <reference-type-def kind='lvalue' type-id='type-id-72' size-in-bits='64' id='type-id-73'/>
+    <reference-type-def kind='lvalue' type-id='type-id-73' size-in-bits='64' id='type-id-74'/>
     <!-- const std::string -->
-    <qualified-type-def type-id='type-id-74' const='yes' id='type-id-75'/>
+    <qualified-type-def type-id='type-id-75' const='yes' id='type-id-76'/>
     <!-- const std::string& -->
-    <reference-type-def kind='lvalue' type-id='type-id-75' size-in-bits='64' id='type-id-76'/>
+    <reference-type-def kind='lvalue' type-id='type-id-76' size-in-bits='64' id='type-id-77'/>
     <!-- const tm -->
-    <qualified-type-def type-id='type-id-27' const='yes' id='type-id-77'/>
+    <qualified-type-def type-id='type-id-27' const='yes' id='type-id-78'/>
     <!-- const tm* -->
-    <pointer-type-def type-id='type-id-77' size-in-bits='64' id='type-id-78'/>
-    <!-- const unsigned long int -->
-    <qualified-type-def type-id='type-id-17' const='yes' id='type-id-79'/>
+    <pointer-type-def type-id='type-id-78' size-in-bits='64' id='type-id-79'/>
     <!-- const wchar_t -->
     <qualified-type-def type-id='type-id-20' const='yes' id='type-id-80'/>
     <!-- const wchar_t* -->
@@ -348,21 +348,21 @@
     <!-- mbstate_t* -->
     <pointer-type-def type-id='type-id-32' size-in-bits='64' id='type-id-84'/>
     <!-- std::allocator<char>* -->
-    <pointer-type-def type-id='type-id-55' size-in-bits='64' id='type-id-85'/>
+    <pointer-type-def type-id='type-id-56' size-in-bits='64' id='type-id-85'/>
     <!-- std::basic_string<char, std::char_traits<char>, std::allocator<char> >& -->
-    <reference-type-def kind='lvalue' type-id='type-id-58' size-in-bits='64' id='type-id-86'/>
+    <reference-type-def kind='lvalue' type-id='type-id-59' size-in-bits='64' id='type-id-86'/>
     <!-- std::basic_string<char, std::char_traits<char>, std::allocator<char> >* -->
-    <pointer-type-def type-id='type-id-58' size-in-bits='64' id='type-id-87'/>
+    <pointer-type-def type-id='type-id-59' size-in-bits='64' id='type-id-87'/>
     <!-- std::basic_string<char, std::char_traits<char>, std::allocator<char> >::_Alloc_hider* -->
     <pointer-type-def type-id='type-id-88' size-in-bits='64' id='type-id-89'/>
     <!-- std::basic_string<char, std::char_traits<char>, std::allocator<char> >::_Rep& -->
-    <reference-type-def kind='lvalue' type-id='type-id-62' size-in-bits='64' id='type-id-90'/>
+    <reference-type-def kind='lvalue' type-id='type-id-63' size-in-bits='64' id='type-id-90'/>
     <!-- std::basic_string<char, std::char_traits<char>, std::allocator<char> >::_Rep* -->
-    <pointer-type-def type-id='type-id-62' size-in-bits='64' id='type-id-91'/>
+    <pointer-type-def type-id='type-id-63' size-in-bits='64' id='type-id-91'/>
     <!-- std::char_traits<char>::char_type& -->
-    <reference-type-def kind='lvalue' type-id='type-id-67' size-in-bits='64' id='type-id-92'/>
+    <reference-type-def kind='lvalue' type-id='type-id-68' size-in-bits='64' id='type-id-92'/>
     <!-- std::char_traits<char>::char_type* -->
-    <pointer-type-def type-id='type-id-67' size-in-bits='64' id='type-id-93'/>
+    <pointer-type-def type-id='type-id-68' size-in-bits='64' id='type-id-93'/>
     <!-- std::ostream* -->
     <pointer-type-def type-id='type-id-94' size-in-bits='64' id='type-id-95'/>
     <!-- typedef __va_list_tag __va_list_tag* -->
@@ -378,7 +378,7 @@
     <!-- namespace std -->
     <namespace-decl name='std'>
       <!-- class std::allocator<char> -->
-      <class-decl name='allocator&lt;char&gt;' size-in-bits='8' visibility='default' filepath='/usr/include/c++/5.3.1/bits/allocator.h' line='92' column='1' id='type-id-55'>
+      <class-decl name='allocator&lt;char&gt;' size-in-bits='8' visibility='default' filepath='/usr/include/c++/5.3.1/bits/allocator.h' line='92' column='1' id='type-id-56'>
         <!-- class __gnu_cxx::new_allocator<char> -->
         <base-class access='public' layout-offset-in-bits='0' type-id='type-id-39'/>
         <member-type access='public'>
@@ -395,14 +395,14 @@
         </member-type>
       </class-decl>
       <!-- class std::basic_string<char, std::char_traits<char>, std::allocator<char> > -->
-      <class-decl name='basic_string&lt;char, std::char_traits&lt;char&gt;, std::allocator&lt;char&gt; &gt;' size-in-bits='64' visibility='default' filepath='/usr/include/c++/5.3.1/bits/basic_string.h' line='2510' column='1' id='type-id-58'>
+      <class-decl name='basic_string&lt;char, std::char_traits&lt;char&gt;, std::allocator&lt;char&gt; &gt;' size-in-bits='64' visibility='default' filepath='/usr/include/c++/5.3.1/bits/basic_string.h' line='2510' column='1' id='type-id-59'>
         <member-type access='public'>
           <!-- typedef std::allocator<char> std::basic_string<char, std::char_traits<char>, std::allocator<char> >::allocator_type -->
-          <typedef-decl name='allocator_type' type-id='type-id-55' filepath='/usr/include/c++/5.3.1/bits/basic_string.h' line='2518' column='1' id='type-id-104'/>
+          <typedef-decl name='allocator_type' type-id='type-id-56' filepath='/usr/include/c++/5.3.1/bits/basic_string.h' line='2518' column='1' id='type-id-104'/>
         </member-type>
         <member-type access='public'>
           <!-- typedef std::allocator<char>::size_type std::basic_string<char, std::char_traits<char>, std::allocator<char> >::size_type -->
-          <typedef-decl name='size_type' type-id='type-id-101' filepath='/usr/include/c++/5.3.1/bits/basic_string.h' line='2519' column='1' id='type-id-65'/>
+          <typedef-decl name='size_type' type-id='type-id-101' filepath='/usr/include/c++/5.3.1/bits/basic_string.h' line='2519' column='1' id='type-id-66'/>
         </member-type>
         <member-type access='public'>
           <!-- typedef std::allocator<char>::reference std::basic_string<char, std::char_traits<char>, std::allocator<char> >::reference -->
@@ -433,11 +433,11 @@
           <class-decl name='_Rep_base' size-in-bits='192' is-struct='yes' visibility='default' filepath='/usr/include/c++/5.3.1/bits/basic_string.h' line='2546' column='1' id='type-id-115'>
             <data-member access='public' layout-offset-in-bits='0'>
               <!-- std::basic_string<char, std::char_traits<char>, std::allocator<char> >::size_type std::basic_string<char, std::char_traits<char>, std::allocator<char> >::_Rep_base::_M_length -->
-              <var-decl name='_M_length' type-id='type-id-65' visibility='default' filepath='/usr/include/c++/5.3.1/bits/basic_string.h' line='2548' column='1'/>
+              <var-decl name='_M_length' type-id='type-id-66' visibility='default' filepath='/usr/include/c++/5.3.1/bits/basic_string.h' line='2548' column='1'/>
             </data-member>
             <data-member access='public' layout-offset-in-bits='64'>
               <!-- std::basic_string<char, std::char_traits<char>, std::allocator<char> >::size_type std::basic_string<char, std::char_traits<char>, std::allocator<char> >::_Rep_base::_M_capacity -->
-              <var-decl name='_M_capacity' type-id='type-id-65' visibility='default' filepath='/usr/include/c++/5.3.1/bits/basic_string.h' line='2549' column='1'/>
+              <var-decl name='_M_capacity' type-id='type-id-66' visibility='default' filepath='/usr/include/c++/5.3.1/bits/basic_string.h' line='2549' column='1'/>
             </data-member>
             <data-member access='public' layout-offset-in-bits='128'>
               <!-- _Atomic_word std::basic_string<char, std::char_traits<char>, std::allocator<char> >::_Rep_base::_M_refcount -->
@@ -447,20 +447,20 @@
         </member-type>
         <member-type access='private'>
           <!-- struct std::basic_string<char, std::char_traits<char>, std::allocator<char> >::_Rep -->
-          <class-decl name='_Rep' size-in-bits='192' is-struct='yes' visibility='default' filepath='/usr/include/c++/5.3.1/bits/basic_string.h' line='2553' column='1' id='type-id-62'>
+          <class-decl name='_Rep' size-in-bits='192' is-struct='yes' visibility='default' filepath='/usr/include/c++/5.3.1/bits/basic_string.h' line='2553' column='1' id='type-id-63'>
             <!-- struct std::basic_string<char, std::char_traits<char>, std::allocator<char> >::_Rep_base -->
             <base-class access='public' layout-offset-in-bits='0' type-id='type-id-115'/>
             <data-member access='public' static='yes'>
               <!-- static const std::basic_string<char, std::char_traits<char>, std::allocator<char> >::size_type std::basic_string<char, std::char_traits<char>, std::allocator<char> >::_Rep::_S_max_size -->
-              <var-decl name='_S_max_size' type-id='type-id-66' visibility='default' filepath='/usr/include/c++/5.3.1/bits/basic_string.tcc' line='494' column='1'/>
+              <var-decl name='_S_max_size' type-id='type-id-67' visibility='default' filepath='/usr/include/c++/5.3.1/bits/basic_string.tcc' line='494' column='1'/>
             </data-member>
             <data-member access='public' static='yes'>
               <!-- static const char std::basic_string<char, std::char_traits<char>, std::allocator<char> >::_Rep::_S_terminal -->
               <var-decl name='_S_terminal' type-id='type-id-47' visibility='default' filepath='/usr/include/c++/5.3.1/bits/basic_string.tcc' line='499' column='1'/>
             </data-member>
             <data-member access='public' static='yes'>
-              <!-- static unsigned long int std::basic_string<char, std::char_traits<char>, std::allocator<char> >::_Rep::_S_empty_rep_storage[] -->
-              <var-decl name='_S_empty_rep_storage' type-id='type-id-18' visibility='default' filepath='/usr/include/c++/5.3.1/bits/basic_string.tcc' line='510' column='1'/>
+              <!-- static long unsigned int std::basic_string<char, std::char_traits<char>, std::allocator<char> >::_Rep::_S_empty_rep_storage[] -->
+              <var-decl name='_S_empty_rep_storage' type-id='type-id-17' visibility='default' filepath='/usr/include/c++/5.3.1/bits/basic_string.tcc' line='510' column='1'/>
             </data-member>
           </class-decl>
         </member-type>
@@ -468,7 +468,7 @@
           <!-- struct std::basic_string<char, std::char_traits<char>, std::allocator<char> >::_Alloc_hider -->
           <class-decl name='_Alloc_hider' size-in-bits='64' is-struct='yes' visibility='default' filepath='/usr/include/c++/5.3.1/bits/basic_string.h' line='2670' column='1' id='type-id-88'>
             <!-- class std::allocator<char> -->
-            <base-class access='public' layout-offset-in-bits='0' type-id='type-id-55'/>
+            <base-class access='public' layout-offset-in-bits='0' type-id='type-id-56'/>
             <data-member access='public' layout-offset-in-bits='0'>
               <!-- char* std::basic_string<char, std::char_traits<char>, std::allocator<char> >::_Alloc_hider::_M_p -->
               <var-decl name='_M_p' type-id='type-id-24' visibility='default' filepath='/usr/include/c++/5.3.1/bits/basic_string.h' line='2675' column='1'/>
@@ -477,7 +477,7 @@
         </member-type>
         <data-member access='public' static='yes'>
           <!-- static const std::basic_string<char, std::char_traits<char>, std::allocator<char> >::size_type std::basic_string<char, std::char_traits<char>, std::allocator<char> >::npos -->
-          <var-decl name='npos' type-id='type-id-66' visibility='default' filepath='/usr/include/c++/5.3.1/bits/basic_string.h' line='2683' column='1'/>
+          <var-decl name='npos' type-id='type-id-67' visibility='default' filepath='/usr/include/c++/5.3.1/bits/basic_string.h' line='2683' column='1'/>
         </data-member>
         <data-member access='private' layout-offset-in-bits='0'>
           <!-- std::basic_string<char, std::char_traits<char>, std::allocator<char> >::_Alloc_hider std::basic_string<char, std::char_traits<char>, std::allocator<char> >::_M_dataplus -->
@@ -488,28 +488,28 @@
       <class-decl name='char_traits&lt;char&gt;' size-in-bits='8' is-struct='yes' visibility='default' filepath='/usr/include/c++/5.3.1/bits/char_traits.h' line='233' column='1' id='type-id-116'>
         <member-type access='public'>
           <!-- typedef char std::char_traits<char>::char_type -->
-          <typedef-decl name='char_type' type-id='type-id-2' filepath='/usr/include/c++/5.3.1/bits/char_traits.h' line='235' column='1' id='type-id-67'/>
+          <typedef-decl name='char_type' type-id='type-id-2' filepath='/usr/include/c++/5.3.1/bits/char_traits.h' line='235' column='1' id='type-id-68'/>
         </member-type>
         <member-type access='public'>
           <!-- typedef int std::char_traits<char>::int_type -->
-          <typedef-decl name='int_type' type-id='type-id-11' filepath='/usr/include/c++/5.3.1/bits/char_traits.h' line='236' column='1' id='type-id-71'/>
+          <typedef-decl name='int_type' type-id='type-id-11' filepath='/usr/include/c++/5.3.1/bits/char_traits.h' line='236' column='1' id='type-id-72'/>
         </member-type>
         <member-function access='public' static='yes'>
           <!-- std::size_t std::char_traits<char>::length() -->
           <function-decl name='length' mangled-name='_ZNSt11char_traitsIcE6lengthEPKc' filepath='/usr/include/c++/5.3.1/bits/char_traits.h' line='266' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZNSt11char_traitsIcE6lengthEPKc'>
             <!-- parameter of type 'const std::char_traits<char>::char_type*' -->
-            <parameter type-id='type-id-70'/>
+            <parameter type-id='type-id-71'/>
             <!-- typedef std::size_t -->
             <return type-id='type-id-100'/>
           </function-decl>
         </member-function>
       </class-decl>
       <!-- typedef std::basic_string<char, std::char_traits<char>, std::allocator<char> > std::string -->
-      <typedef-decl name='string' type-id='type-id-58' filepath='/usr/include/c++/5.3.1/bits/stringfwd.h' line='74' column='1' id='type-id-74'/>
+      <typedef-decl name='string' type-id='type-id-59' filepath='/usr/include/c++/5.3.1/bits/stringfwd.h' line='74' column='1' id='type-id-75'/>
       <!-- typedef std::basic_ostream<char, std::char_traits<char> > std::ostream -->
       <typedef-decl name='ostream' type-id='type-id-117' filepath='/usr/include/c++/5.3.1/iosfwd' line='141' column='1' id='type-id-94'/>
-      <!-- typedef unsigned long int std::size_t -->
-      <typedef-decl name='size_t' type-id='type-id-17' filepath='/usr/include/c++/5.3.1/x86_64-redhat-linux/bits/c++config.h' line='1969' column='1' id='type-id-100'/>
+      <!-- typedef long unsigned int std::size_t -->
+      <typedef-decl name='size_t' type-id='type-id-16' filepath='/usr/include/c++/5.3.1/x86_64-redhat-linux/bits/c++config.h' line='1969' column='1' id='type-id-100'/>
       <!-- class std::basic_ostream<char, std::char_traits<char> > -->
       <class-decl name='basic_ostream&lt;char, std::char_traits&lt;char&gt; &gt;' visibility='default' is-declaration-only='yes' id='type-id-117'/>
       <!-- class std::reverse_iterator<__gnu_cxx::__normal_iterator<char const*, std::basic_string<char, std::char_traits<char>, std::allocator<char> > > > -->
@@ -521,22 +521,22 @@
         <!-- parameter of type 'const char*' -->
         <parameter type-id='type-id-28' name='__lhs' filepath='/usr/include/c++/5.3.1/bits/basic_string.tcc' line='1151' column='1'/>
         <!-- parameter of type 'const std::basic_string<char, std::char_traits<char>, std::allocator<char> >&' -->
-        <parameter type-id='type-id-60' name='__rhs' filepath='/usr/include/c++/5.3.1/bits/basic_string.tcc' line='1152' column='1'/>
+        <parameter type-id='type-id-61' name='__rhs' filepath='/usr/include/c++/5.3.1/bits/basic_string.tcc' line='1152' column='1'/>
         <!-- class std::basic_string<char, std::char_traits<char>, std::allocator<char> > -->
-        <return type-id='type-id-58'/>
+        <return type-id='type-id-59'/>
       </function-decl>
     </namespace-decl>
     <!-- std::string foo(const std::string&) -->
     <function-decl name='foo' mangled-name='_Z3fooRKSs' filepath='/home/dodji/git/libabigail.git/suppr/tests/data/test-read-dwarf/test24-drop-fns.cc' line='14' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_Z3fooRKSs'>
       <!-- parameter of type 'const std::string&' -->
-      <parameter type-id='type-id-76' name='s' filepath='/home/dodji/git/libabigail.git/suppr/tests/data/test-read-dwarf/test24-drop-fns.cc' line='14' column='1'/>
+      <parameter type-id='type-id-77' name='s' filepath='/home/dodji/git/libabigail.git/suppr/tests/data/test-read-dwarf/test24-drop-fns.cc' line='14' column='1'/>
       <!-- typedef std::string -->
-      <return type-id='type-id-74'/>
+      <return type-id='type-id-75'/>
     </function-decl>
     <!-- std::ostream* bar(const std::string&) -->
     <function-decl name='bar' mangled-name='_Z3barRKSs' filepath='/home/dodji/git/libabigail.git/suppr/tests/data/test-read-dwarf/test24-drop-fns.cc' line='21' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_Z3barRKSs'>
       <!-- parameter of type 'const std::string&' -->
-      <parameter type-id='type-id-76' name='str' filepath='/home/dodji/git/libabigail.git/suppr/tests/data/test-read-dwarf/test24-drop-fns.cc' line='21' column='1'/>
+      <parameter type-id='type-id-77' name='str' filepath='/home/dodji/git/libabigail.git/suppr/tests/data/test-read-dwarf/test24-drop-fns.cc' line='21' column='1'/>
       <!-- std::ostream* -->
       <return type-id='type-id-95'/>
     </function-decl>
@@ -625,12 +625,12 @@
       <!-- struct __gnu_cxx::__numeric_traits_integer<long unsigned int> -->
       <class-decl name='__numeric_traits_integer&lt;long unsigned int&gt;' size-in-bits='8' is-struct='yes' visibility='default' filepath='/usr/include/c++/5.3.1/ext/numeric_traits.h' line='55' column='1' id='type-id-126'>
         <data-member access='public' static='yes'>
-          <!-- static const unsigned long int __gnu_cxx::__numeric_traits_integer<long unsigned int>::__min -->
-          <var-decl name='__min' type-id='type-id-79' visibility='default' filepath='/usr/include/c++/5.3.1/ext/numeric_traits.h' line='58' column='1'/>
+          <!-- static const long unsigned int __gnu_cxx::__numeric_traits_integer<long unsigned int>::__min -->
+          <var-decl name='__min' type-id='type-id-52' visibility='default' filepath='/usr/include/c++/5.3.1/ext/numeric_traits.h' line='58' column='1'/>
         </data-member>
         <data-member access='public' static='yes'>
-          <!-- static const unsigned long int __gnu_cxx::__numeric_traits_integer<long unsigned int>::__max -->
-          <var-decl name='__max' type-id='type-id-79' visibility='default' filepath='/usr/include/c++/5.3.1/ext/numeric_traits.h' line='59' column='1'/>
+          <!-- static const long unsigned int __gnu_cxx::__numeric_traits_integer<long unsigned int>::__max -->
+          <var-decl name='__max' type-id='type-id-52' visibility='default' filepath='/usr/include/c++/5.3.1/ext/numeric_traits.h' line='59' column='1'/>
         </data-member>
         <data-member access='public' static='yes'>
           <!-- static const bool __gnu_cxx::__numeric_traits_integer<long unsigned int>::__is_signed -->
@@ -645,11 +645,11 @@
       <class-decl name='__numeric_traits_integer&lt;short int&gt;' size-in-bits='8' is-struct='yes' visibility='default' filepath='/usr/include/c++/5.3.1/ext/numeric_traits.h' line='55' column='1' id='type-id-127'>
         <data-member access='public' static='yes'>
           <!-- static const short int __gnu_cxx::__numeric_traits_integer<short int>::__min -->
-          <var-decl name='__min' type-id='type-id-54' mangled-name='_ZN9__gnu_cxx24__numeric_traits_integerIsE5__minE' visibility='default' filepath='/usr/include/c++/5.3.1/ext/numeric_traits.h' line='58' column='1'/>
+          <var-decl name='__min' type-id='type-id-55' mangled-name='_ZN9__gnu_cxx24__numeric_traits_integerIsE5__minE' visibility='default' filepath='/usr/include/c++/5.3.1/ext/numeric_traits.h' line='58' column='1'/>
         </data-member>
         <data-member access='public' static='yes'>
           <!-- static const short int __gnu_cxx::__numeric_traits_integer<short int>::__max -->
-          <var-decl name='__max' type-id='type-id-54' mangled-name='_ZN9__gnu_cxx24__numeric_traits_integerIsE5__maxE' visibility='default' filepath='/usr/include/c++/5.3.1/ext/numeric_traits.h' line='59' column='1'/>
+          <var-decl name='__max' type-id='type-id-55' mangled-name='_ZN9__gnu_cxx24__numeric_traits_integerIsE5__maxE' visibility='default' filepath='/usr/include/c++/5.3.1/ext/numeric_traits.h' line='59' column='1'/>
         </data-member>
         <data-member access='public' static='yes'>
           <!-- static const bool __gnu_cxx::__numeric_traits_integer<short int>::__is_signed -->
@@ -856,7 +856,7 @@
     <!-- int mbsinit(const mbstate_t*) -->
     <function-decl name='mbsinit' filepath='/usr/include/wchar.h' line='361' column='1' visibility='default' binding='global' size-in-bits='64'>
       <!-- parameter of type 'const mbstate_t*' -->
-      <parameter type-id='type-id-53'/>
+      <parameter type-id='type-id-54'/>
       <!-- int -->
       <return type-id='type-id-11'/>
     </function-decl>
@@ -959,7 +959,7 @@
       <!-- long int -->
       <return type-id='type-id-13'/>
     </function-decl>
-    <!-- unsigned long int wcstoul(const wchar_t*, wchar_t**, int) -->
+    <!-- long unsigned int wcstoul(const wchar_t*, wchar_t**, int) -->
     <function-decl name='wcstoul' filepath='/usr/include/wchar.h' line='473' column='1' visibility='default' binding='global' size-in-bits='64'>
       <!-- parameter of type 'const wchar_t*' -->
       <parameter type-id='type-id-81'/>
@@ -967,8 +967,8 @@
       <parameter type-id='type-id-99'/>
       <!-- parameter of type 'int' -->
       <parameter type-id='type-id-11'/>
-      <!-- unsigned long int -->
-      <return type-id='type-id-17'/>
+      <!-- long unsigned int -->
+      <return type-id='type-id-16'/>
     </function-decl>
     <!-- long long int wcstoll(const wchar_t*, wchar_t**, int) -->
     <function-decl name='wcstoll' filepath='/usr/include/wchar.h' line='483' column='1' visibility='default' binding='global' size-in-bits='64'>
@@ -1205,7 +1205,7 @@
       <!-- parameter of type 'const wchar_t*' -->
       <parameter type-id='type-id-81'/>
       <!-- parameter of type 'const tm*' -->
-      <parameter type-id='type-id-78'/>
+      <parameter type-id='type-id-79'/>
       <!-- typedef size_t -->
       <return type-id='type-id-36'/>
     </function-decl>

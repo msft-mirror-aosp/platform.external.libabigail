@@ -263,8 +263,8 @@
                                                                                                                       'CRYPTO_EX_DATA ex_data', at offset 3200 (in bits) at ssl.h:1217:1
                                                                                                                       'stack_st_X509_NAME* client_CA', at offset 3328 (in bits) at ssl.h:1220:1
                                                                                                                       'int references', at offset 3392 (in bits) at ssl.h:1222:1
-                                                                                                                      'unsigned long int options', at offset 3456 (in bits) at ssl.h:1223:1
-                                                                                                                      'unsigned long int mode', at offset 3520 (in bits) at ssl.h:1224:1
+                                                                                                                      'long unsigned int options', at offset 3456 (in bits) at ssl.h:1223:1
+                                                                                                                      'long unsigned int mode', at offset 3520 (in bits) at ssl.h:1224:1
                                                                                                                       'long int max_cert_list', at offset 3584 (in bits) at ssl.h:1225:1
                                                                                                                       'int first_packet', at offset 3648 (in bits) at ssl.h:1226:1
                                                                                                                       'int client_version', at offset 3680 (in bits) at ssl.h:1227:1
