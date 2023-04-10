@@ -231,7 +231,7 @@
                                                                                                                       'ssl3_state_st* s3', at offset 1024 (in bits) at ssl.h:1129:1
                                                                                                                       'dtls1_state_st* d1', at offset 1088 (in bits) at ssl.h:1130:1
                                                                                                                       'int read_ahead', at offset 1152 (in bits) at ssl.h:1132:1
-                                                                                                                      'void (int, int, int, const void*, typedef size_t, SSL*, void*)* msg_callback', at offset 1216 (in bits) at ssl.h:1136:1
+                                                                                                                      'void (int, int, int, void*, typedef size_t, SSL*, void*)* msg_callback', at offset 1216 (in bits) at ssl.h:1136:1
                                                                                                                       'void* msg_callback_arg', at offset 1280 (in bits) at ssl.h:1137:1
                                                                                                                       'int hit', at offset 1344 (in bits) at ssl.h:1139:1
                                                                                                                       'X509_VERIFY_PARAM* param', at offset 1408 (in bits) at ssl.h:1141:1

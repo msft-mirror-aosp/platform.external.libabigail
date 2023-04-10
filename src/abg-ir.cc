@@ -6597,8 +6597,9 @@ strip_typedef(const type_base_sptr type)
 /// Strip qualification from a qualified type, when it makes sense.
 ///
 /// DWARF constructs "const reference".  This is redundant because a
-/// reference is always const.  The issue is this redundant type then
-/// leaks into the IR and make for bad diagnostics.
+/// reference is always const.  It also constructs the useless "const
+/// void" type.  The issue is these redundant types then leak into the
+/// IR and make for bad diagnostics.
 ///
 /// This function thus strips the const qualifier from the type in
 /// that case.  It might contain code to strip other cases like this
@@ -6619,12 +6620,15 @@ strip_useless_const_qualification(const qualified_type_def_sptr t)
 
   if ((t->get_cv_quals() & qualified_type_def::CV_CONST
        && (is_reference_type(u)))
+      || (t->get_cv_quals() & qualified_type_def::CV_CONST
+	  && env->is_void_type(u))
       || t->get_cv_quals() == qualified_type_def::CV_NONE)
     // Let's strip the const qualifier because a reference is always
-    // 'const'.  It will just lead to spurious changes later down the
-    // pipeline, that we'll have to deal with by doing painful and
-    // error-prone editing of the diff IR.  Dropping that useless and
-    // inconsistent artefact right here seems to be a good way to go.
+    // 'const' and a const void doesn't make sense.  They will just
+    // lead to spurious changes later down the pipeline, that we'll
+    // have to deal with by doing painful and error-prone editing of
+    // the diff IR.  Dropping that useless and inconsistent artefact
+    // right here seems to be a good way to go.
     result = is_decl(u);
 
   return result;

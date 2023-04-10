@@ -75,7 +75,7 @@
         <function-decl name='s0' filepath='/home/dodji/git/libabigail/dwarf/tests/data/test-read-dwarf/test1.cc' line='21' column='1' visibility='default' binding='global' size-in-bits='64'>
           <parameter type-id='a1a34114' is-artificial='yes'/>
           <parameter type-id='95e97e5e' is-artificial='yes'/>
-          <parameter type-id='3ebc20d2' is-artificial='yes'/>
+          <parameter type-id='63e171df' is-artificial='yes'/>
           <return type-id='48b5725f'/>
         </function-decl>
       </member-function>
@@ -83,7 +83,7 @@
         <function-decl name='~s0' filepath='/home/dodji/git/libabigail/dwarf/tests/data/test-read-dwarf/test1.cc' line='27' column='1' visibility='default' binding='global' size-in-bits='64'>
           <parameter type-id='a1a34114' is-artificial='yes'/>
           <parameter type-id='95e97e5e' is-artificial='yes'/>
-          <parameter type-id='3ebc20d2' is-artificial='yes'/>
+          <parameter type-id='63e171df' is-artificial='yes'/>
           <return type-id='48b5725f'/>
         </function-decl>
       </member-function>
@@ -91,7 +91,7 @@
         <function-decl name='s0' mangled-name='_ZN2s0C1Ev' filepath='/home/dodji/git/libabigail/dwarf/tests/data/test-read-dwarf/test1.cc' line='21' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZN2s0C1Ev'>
           <parameter type-id='a1a34114' is-artificial='yes'/>
           <parameter type-id='95e97e5e' is-artificial='yes'/>
-          <parameter type-id='3ebc20d2' is-artificial='yes'/>
+          <parameter type-id='63e171df' is-artificial='yes'/>
           <return type-id='48b5725f'/>
         </function-decl>
       </member-function>
@@ -99,7 +99,7 @@
         <function-decl name='~s0' mangled-name='_ZN2s0D1Ev' filepath='/home/dodji/git/libabigail/dwarf/tests/data/test-read-dwarf/test1.cc' line='27' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZN2s0D1Ev'>
           <parameter type-id='a1a34114' is-artificial='yes'/>
           <parameter type-id='95e97e5e' is-artificial='yes'/>
-          <parameter type-id='3ebc20d2' is-artificial='yes'/>
+          <parameter type-id='63e171df' is-artificial='yes'/>
           <return type-id='48b5725f'/>
         </function-decl>
       </member-function>
@@ -110,11 +110,10 @@
         </function-decl>
       </member-function>
     </class-decl>
-    <qualified-type-def type-id='48b5725f' const='yes' id='8581546e'/>
-    <pointer-type-def type-id='8581546e' size-in-bits='64' id='6e97a70c'/>
-    <pointer-type-def type-id='6e97a70c' size-in-bits='64' id='3ebc20d2'/>
     <reference-type-def kind='lvalue' type-id='10ec88de' size-in-bits='64' id='95a32e30'/>
     <pointer-type-def type-id='10ec88de' size-in-bits='64' id='a1a34114'/>
+    <pointer-type-def type-id='48b5725f' size-in-bits='64' id='eaa32e2f'/>
+    <pointer-type-def type-id='eaa32e2f' size-in-bits='64' id='63e171df'/>
     <function-decl name='foo' mangled-name='_Z3fooR2s0' filepath='/home/dodji/git/libabigail/dwarf/tests/data/test-read-dwarf/test1.cc' line='42' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_Z3fooR2s0'>
       <parameter type-id='95a32e30' name='s' filepath='/home/dodji/git/libabigail/dwarf/tests/data/test-read-dwarf/test1.cc' line='42' column='1'/>
       <return type-id='48b5725f'/>
