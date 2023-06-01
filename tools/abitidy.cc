@@ -1302,7 +1302,8 @@ size_t handle_excess_members(bool eliminate, xmlNodePtr root)
     // preorder in case we delete a nested type
     for (auto child : get_children(node))
       dfs(child);
-    if (strcmp(node_name, "class-decl") || strcmp(node_name, "union-decl"))
+    if (strcmp(node_name, "class-decl") == 0
+        || strcmp(node_name, "union-decl") == 0)
       types.push_back(node);
   };
   dfs(root);
