@@ -629,32 +629,8 @@
             <return type-id='cefbbcdb'/>
           </function-decl>
         </member-function>
-        <member-function access='public' constructor='yes'>
-          <function-decl name='IMountService' mangled-name='_ZN7android13IMountServiceC2Ev' filepath='frameworks/base/libs/storage/include/storage/IMountService.h' line='34' column='1' visibility='default' binding='global' size-in-bits='32'>
-            <parameter type-id='9cb9149f' is-artificial='yes'/>
-            <return type-id='48b5725f'/>
-          </function-decl>
-        </member-function>
         <member-function access='public' destructor='yes' vtable-offset='0'>
           <function-decl name='~IMountService' mangled-name='_ZN7android13IMountServiceD0Ev' filepath='frameworks/base/libs/storage/include/storage/IMountService.h' line='34' column='1' visibility='default' binding='global' size-in-bits='32'>
-            <parameter type-id='9cb9149f' is-artificial='yes'/>
-            <return type-id='48b5725f'/>
-          </function-decl>
-        </member-function>
-        <member-function access='public' destructor='yes' vtable-offset='0'>
-          <function-decl name='~IMountService' mangled-name='_ZN7android13IMountServiceD0Ev' filepath='frameworks/base/libs/storage/include/storage/IMountService.h' line='34' column='1' visibility='default' binding='global' size-in-bits='32'>
-            <parameter type-id='9cb9149f' is-artificial='yes'/>
-            <return type-id='48b5725f'/>
-          </function-decl>
-        </member-function>
-        <member-function access='public' destructor='yes' vtable-offset='0'>
-          <function-decl name='~IMountService' mangled-name='_ZN7android13IMountServiceD1Ev' filepath='frameworks/base/libs/storage/include/storage/IMountService.h' line='34' column='1' visibility='default' binding='global' size-in-bits='32'>
-            <parameter type-id='9cb9149f' is-artificial='yes'/>
-            <return type-id='48b5725f'/>
-          </function-decl>
-        </member-function>
-        <member-function access='public' destructor='yes' vtable-offset='0'>
-          <function-decl name='~IMountService' mangled-name='_ZN7android13IMountServiceD2Ev' filepath='frameworks/base/libs/storage/include/storage/IMountService.h' line='34' column='1' visibility='default' binding='global' size-in-bits='32'>
             <parameter type-id='9cb9149f' is-artificial='yes'/>
             <return type-id='48b5725f'/>
           </function-decl>
@@ -993,32 +969,8 @@
             <return type-id='fcd3f6e5'/>
           </function-decl>
         </member-function>
-        <member-function access='public' constructor='yes'>
-          <function-decl name='IObbActionListener' mangled-name='_ZN7android18IObbActionListenerC2Ev' filepath='frameworks/base/libs/storage/include/storage/IObbActionListener.h' line='30' column='1' visibility='default' binding='global' size-in-bits='32'>
-            <parameter type-id='c70198d4' is-artificial='yes'/>
-            <return type-id='48b5725f'/>
-          </function-decl>
-        </member-function>
         <member-function access='public' destructor='yes' vtable-offset='0'>
           <function-decl name='~IObbActionListener' mangled-name='_ZN7android18IObbActionListenerD0Ev' filepath='frameworks/base/libs/storage/include/storage/IObbActionListener.h' line='30' column='1' visibility='default' binding='global' size-in-bits='32'>
-            <parameter type-id='c70198d4' is-artificial='yes'/>
-            <return type-id='48b5725f'/>
-          </function-decl>
-        </member-function>
-        <member-function access='public' destructor='yes' vtable-offset='0'>
-          <function-decl name='~IObbActionListener' mangled-name='_ZN7android18IObbActionListenerD0Ev' filepath='frameworks/base/libs/storage/include/storage/IObbActionListener.h' line='30' column='1' visibility='default' binding='global' size-in-bits='32'>
-            <parameter type-id='c70198d4' is-artificial='yes'/>
-            <return type-id='48b5725f'/>
-          </function-decl>
-        </member-function>
-        <member-function access='public' destructor='yes' vtable-offset='0'>
-          <function-decl name='~IObbActionListener' mangled-name='_ZN7android18IObbActionListenerD1Ev' filepath='frameworks/base/libs/storage/include/storage/IObbActionListener.h' line='30' column='1' visibility='default' binding='global' size-in-bits='32'>
-            <parameter type-id='c70198d4' is-artificial='yes'/>
-            <return type-id='48b5725f'/>
-          </function-decl>
-        </member-function>
-        <member-function access='public' destructor='yes' vtable-offset='0'>
-          <function-decl name='~IObbActionListener' mangled-name='_ZN7android18IObbActionListenerD2Ev' filepath='frameworks/base/libs/storage/include/storage/IObbActionListener.h' line='30' column='1' visibility='default' binding='global' size-in-bits='32'>
             <parameter type-id='c70198d4' is-artificial='yes'/>
             <return type-id='48b5725f'/>
           </function-decl>
@@ -1074,24 +1026,6 @@
         </member-function>
         <member-function access='public' destructor='yes' vtable-offset='0'>
           <function-decl name='~ObbInfo' mangled-name='_ZN7android7ObbInfoD0Ev' filepath='frameworks/base/libs/storage/include/storage/ObbInfo.h' line='32' column='1' visibility='default' binding='global' size-in-bits='32'>
-            <parameter type-id='5a61729d' is-artificial='yes'/>
-            <return type-id='48b5725f'/>
-          </function-decl>
-        </member-function>
-        <member-function access='public' destructor='yes' vtable-offset='0'>
-          <function-decl name='~ObbInfo' mangled-name='_ZN7android7ObbInfoD0Ev' filepath='frameworks/base/libs/storage/include/storage/ObbInfo.h' line='32' column='1' visibility='default' binding='global' size-in-bits='32'>
-            <parameter type-id='5a61729d' is-artificial='yes'/>
-            <return type-id='48b5725f'/>
-          </function-decl>
-        </member-function>
-        <member-function access='public' destructor='yes' vtable-offset='0'>
-          <function-decl name='~ObbInfo' mangled-name='_ZN7android7ObbInfoD1Ev' filepath='frameworks/base/libs/storage/include/storage/ObbInfo.h' line='32' column='1' visibility='default' binding='global' size-in-bits='32'>
-            <parameter type-id='5a61729d' is-artificial='yes'/>
-            <return type-id='48b5725f'/>
-          </function-decl>
-        </member-function>
-        <member-function access='public' destructor='yes' vtable-offset='0'>
-          <function-decl name='~ObbInfo' mangled-name='_ZN7android7ObbInfoD2Ev' filepath='frameworks/base/libs/storage/include/storage/ObbInfo.h' line='32' column='1' visibility='default' binding='global' size-in-bits='32'>
             <parameter type-id='5a61729d' is-artificial='yes'/>
             <return type-id='48b5725f'/>
           </function-decl>
@@ -2175,32 +2109,8 @@
             <return type-id='fcd3f6e5'/>
           </function-decl>
         </member-function>
-        <member-function access='public' constructor='yes'>
-          <function-decl name='IObbActionListener' mangled-name='_ZN7android18IObbActionListenerC2Ev' filepath='frameworks/base/libs/storage/include/storage/IObbActionListener.h' line='30' column='1' visibility='default' binding='global' size-in-bits='32'>
-            <parameter type-id='c70198d4' is-artificial='yes'/>
-            <return type-id='48b5725f'/>
-          </function-decl>
-        </member-function>
         <member-function access='public' destructor='yes' vtable-offset='0'>
           <function-decl name='~IObbActionListener' mangled-name='_ZN7android18IObbActionListenerD0Ev' filepath='frameworks/base/libs/storage/include/storage/IObbActionListener.h' line='30' column='1' visibility='default' binding='global' size-in-bits='32'>
-            <parameter type-id='c70198d4' is-artificial='yes'/>
-            <return type-id='48b5725f'/>
-          </function-decl>
-        </member-function>
-        <member-function access='public' destructor='yes' vtable-offset='0'>
-          <function-decl name='~IObbActionListener' mangled-name='_ZN7android18IObbActionListenerD0Ev' filepath='frameworks/base/libs/storage/include/storage/IObbActionListener.h' line='30' column='1' visibility='default' binding='global' size-in-bits='32'>
-            <parameter type-id='c70198d4' is-artificial='yes'/>
-            <return type-id='48b5725f'/>
-          </function-decl>
-        </member-function>
-        <member-function access='public' destructor='yes' vtable-offset='0'>
-          <function-decl name='~IObbActionListener' mangled-name='_ZN7android18IObbActionListenerD1Ev' filepath='frameworks/base/libs/storage/include/storage/IObbActionListener.h' line='30' column='1' visibility='default' binding='global' size-in-bits='32'>
-            <parameter type-id='c70198d4' is-artificial='yes'/>
-            <return type-id='48b5725f'/>
-          </function-decl>
-        </member-function>
-        <member-function access='public' destructor='yes' vtable-offset='0'>
-          <function-decl name='~IObbActionListener' mangled-name='_ZN7android18IObbActionListenerD2Ev' filepath='frameworks/base/libs/storage/include/storage/IObbActionListener.h' line='30' column='1' visibility='default' binding='global' size-in-bits='32'>
             <parameter type-id='c70198d4' is-artificial='yes'/>
             <return type-id='48b5725f'/>
           </function-decl>
@@ -3214,24 +3124,6 @@
         </member-function>
         <member-function access='public' destructor='yes' vtable-offset='0'>
           <function-decl name='~ObbInfo' mangled-name='_ZN7android7ObbInfoD0Ev' filepath='frameworks/base/libs/storage/include/storage/ObbInfo.h' line='32' column='1' visibility='default' binding='global' size-in-bits='32'>
-            <parameter type-id='5a61729d' is-artificial='yes'/>
-            <return type-id='48b5725f'/>
-          </function-decl>
-        </member-function>
-        <member-function access='public' destructor='yes' vtable-offset='0'>
-          <function-decl name='~ObbInfo' mangled-name='_ZN7android7ObbInfoD0Ev' filepath='frameworks/base/libs/storage/include/storage/ObbInfo.h' line='32' column='1' visibility='default' binding='global' size-in-bits='32'>
-            <parameter type-id='5a61729d' is-artificial='yes'/>
-            <return type-id='48b5725f'/>
-          </function-decl>
-        </member-function>
-        <member-function access='public' destructor='yes' vtable-offset='0'>
-          <function-decl name='~ObbInfo' mangled-name='_ZN7android7ObbInfoD1Ev' filepath='frameworks/base/libs/storage/include/storage/ObbInfo.h' line='32' column='1' visibility='default' binding='global' size-in-bits='32'>
-            <parameter type-id='5a61729d' is-artificial='yes'/>
-            <return type-id='48b5725f'/>
-          </function-decl>
-        </member-function>
-        <member-function access='public' destructor='yes' vtable-offset='0'>
-          <function-decl name='~ObbInfo' mangled-name='_ZN7android7ObbInfoD2Ev' filepath='frameworks/base/libs/storage/include/storage/ObbInfo.h' line='32' column='1' visibility='default' binding='global' size-in-bits='32'>
             <parameter type-id='5a61729d' is-artificial='yes'/>
             <return type-id='48b5725f'/>
           </function-decl>
@@ -19076,13 +18968,6 @@
             <return type-id='8693cef9'/>
           </function-decl>
         </member-function>
-        <member-function access='private' constructor='yes'>
-          <function-decl name='Choreographer' mangled-name='_ZN7android13ChoreographerC1ERKNS_2spINS_6LooperEEE' filepath='frameworks/base/native/android/choreographer.cpp' line='69' column='1' visibility='default' binding='global' size-in-bits='32'>
-            <parameter type-id='8693cef9' is-artificial='yes'/>
-            <parameter type-id='f73d2e96'/>
-            <return type-id='48b5725f'/>
-          </function-decl>
-        </member-function>
         <member-function access='public'>
           <function-decl name='postFrameCallbackDelayed' mangled-name='_ZN7android13Choreographer24postFrameCallbackDelayedEPFvlPvEPFvxS1_ES1_x' filepath='frameworks/base/native/android/choreographer.cpp' line='54' column='1' visibility='default' binding='global' size-in-bits='32'>
             <parameter type-id='8693cef9' is-artificial='yes'/>
@@ -19095,18 +18980,6 @@
         </member-function>
         <member-function access='private'>
           <function-decl name='scheduleCallbacks' mangled-name='_ZN7android13Choreographer17scheduleCallbacksEv' filepath='frameworks/base/native/android/choreographer.cpp' line='77' column='1' visibility='default' binding='global' size-in-bits='32'>
-            <parameter type-id='8693cef9' is-artificial='yes'/>
-            <return type-id='48b5725f'/>
-          </function-decl>
-        </member-function>
-        <member-function access='protected' destructor='yes' vtable-offset='0'>
-          <function-decl name='~Choreographer' mangled-name='_ZN7android13ChoreographerD0Ev' filepath='frameworks/base/native/android/choreographer.cpp' line='66' column='1' visibility='default' binding='global' size-in-bits='32'>
-            <parameter type-id='8693cef9' is-artificial='yes'/>
-            <return type-id='48b5725f'/>
-          </function-decl>
-        </member-function>
-        <member-function access='protected' destructor='yes' vtable-offset='0'>
-          <function-decl name='~Choreographer' mangled-name='_ZN7android13ChoreographerD1Ev' filepath='frameworks/base/native/android/choreographer.cpp' line='66' column='1' visibility='default' binding='global' size-in-bits='32'>
             <parameter type-id='8693cef9' is-artificial='yes'/>
             <return type-id='48b5725f'/>
           </function-decl>
@@ -19327,18 +19200,6 @@
       </class-decl>
       <typedef-decl name='PhysicalDisplayId' type-id='9c313c2d' filepath='frameworks/native/libs/ui/include/ui/GraphicTypes.h' line='30' column='1' id='da7eb231'/>
       <class-decl name='DisplayEventDispatcher' visibility='default' is-declaration-only='yes' id='5671eca3'>
-        <member-function access='protected' destructor='yes' vtable-offset='0'>
-          <function-decl name='~DisplayEventDispatcher' mangled-name='_ZN7android22DisplayEventDispatcherD0Ev' filepath='frameworks/base/libs/androidfw/include/androidfw/DisplayEventDispatcher.h' line='34' column='1' visibility='default' binding='global' size-in-bits='32'>
-            <parameter type-id='ddc6bda3' is-artificial='yes'/>
-            <return type-id='48b5725f'/>
-          </function-decl>
-        </member-function>
-        <member-function access='protected' destructor='yes' vtable-offset='0'>
-          <function-decl name='~DisplayEventDispatcher' mangled-name='_ZN7android22DisplayEventDispatcherD1Ev' filepath='frameworks/base/libs/androidfw/include/androidfw/DisplayEventDispatcher.h' line='34' column='1' visibility='default' binding='global' size-in-bits='32'>
-            <parameter type-id='ddc6bda3' is-artificial='yes'/>
-            <return type-id='48b5725f'/>
-          </function-decl>
-        </member-function>
         <member-function access='protected' destructor='yes' vtable-offset='0'>
           <function-decl name='~DisplayEventDispatcher' mangled-name='_ZN7android22DisplayEventDispatcherD2Ev' filepath='frameworks/base/libs/androidfw/include/androidfw/DisplayEventDispatcher.h' line='34' column='1' visibility='default' binding='global' size-in-bits='32'>
             <parameter type-id='ddc6bda3' is-artificial='yes'/>
@@ -23191,12 +23052,6 @@
         </member-function>
         <member-function access='public' destructor='yes' vtable-offset='0'>
           <function-decl name='~Vector' mangled-name='_ZN7android6VectorIP11ObbCallbackED0Ev' filepath='system/core/libutils/include/utils/Vector.h' line='69' column='1' visibility='default' binding='global' size-in-bits='32'>
-            <parameter type-id='3b89821f' is-artificial='yes'/>
-            <return type-id='48b5725f'/>
-          </function-decl>
-        </member-function>
-        <member-function access='public' destructor='yes' vtable-offset='0'>
-          <function-decl name='~Vector' mangled-name='_ZN7android6VectorIP11ObbCallbackED2Ev' filepath='system/core/libutils/include/utils/Vector.h' line='69' column='1' visibility='default' binding='global' size-in-bits='32'>
             <parameter type-id='3b89821f' is-artificial='yes'/>
             <return type-id='48b5725f'/>
           </function-decl>
@@ -27097,12 +26952,6 @@
         </member-function>
         <member-function access='public' destructor='yes' vtable-offset='0'>
           <function-decl name='~SortedVector' mangled-name='_ZN7android12SortedVectorINS_12DisplayStateEED0Ev' filepath='system/core/libutils/include/utils/SortedVector.h' line='49' column='1' visibility='default' binding='global' size-in-bits='32'>
-            <parameter type-id='c88d6cd2' is-artificial='yes'/>
-            <return type-id='48b5725f'/>
-          </function-decl>
-        </member-function>
-        <member-function access='public' destructor='yes' vtable-offset='0'>
-          <function-decl name='~SortedVector' mangled-name='_ZN7android12SortedVectorINS_12DisplayStateEED2Ev' filepath='system/core/libutils/include/utils/SortedVector.h' line='49' column='1' visibility='default' binding='global' size-in-bits='32'>
             <parameter type-id='c88d6cd2' is-artificial='yes'/>
             <return type-id='48b5725f'/>
           </function-decl>

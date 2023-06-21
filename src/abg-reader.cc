@@ -3461,6 +3461,16 @@ build_function_decl(reader&	rdr,
   if (xml_char_sptr s = XML_NODE_GET_ATTRIBUTE(node, "mangled-name"))
     mangled_name = xml::unescape_xml_string(CHAR_STR(s));
 
+  if (as_method_decl
+      && !mangled_name.empty()
+      && as_method_decl->find_member_function_sptr(mangled_name))
+    {
+      function_decl_sptr result =
+	as_method_decl->find_member_function_sptr(mangled_name);
+      if (result)
+	return result;
+    }
+
   string inline_prop;
   if (xml_char_sptr s = XML_NODE_GET_ATTRIBUTE(node, "declared-inline"))
     inline_prop = CHAR_STR(s);
@@ -3569,12 +3579,12 @@ build_function_decl(reader&	rdr,
 /// completion.  If the function was suppressed by a suppression
 /// specification then returns nil.
 static function_decl_sptr
-build_function_decl_if_not_suppressed(reader&	rdr,
-				      const xmlNodePtr	node,
-				      class_or_union_sptr as_method_decl,
-				      bool		add_to_current_scope)
+build_function_decl_if_not_suppressed(reader&			rdr,
+				      const xmlNodePtr		node,
+				      class_or_union_sptr	as_method_decl,
+				      bool			add_to_current_scope)
 {
-    function_decl_sptr fn;
+  function_decl_sptr fn;
 
   if (function_is_suppressed(rdr, node))
     // The function was suppressed by at least one suppression
@@ -5108,8 +5118,6 @@ build_class_decl(reader&		rdr,
 	}
       else if (xmlStrEqual(n->name, BAD_CAST("member-function")))
 	{
-	  rdr.map_xml_node_to_decl(n, decl);
-
 	  access_specifier access =
 	    is_struct
 	    ? public_access
@@ -5149,6 +5157,7 @@ build_class_decl(reader&		rdr,
 		  set_member_function_is_ctor(m, is_ctor);
 		  set_member_function_is_dtor(m, is_dtor);
 		  set_member_function_is_const(m, is_const);
+		  rdr.map_xml_node_to_decl(n, decl);
 		  break;
 		}
 	    }

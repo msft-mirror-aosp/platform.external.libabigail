@@ -15847,7 +15847,8 @@ build_ir_node_from_die(reader&	rdr,
 		  {
 		    fn = dynamic_pointer_cast<function_decl>(d);
 		    if (has_abstract_origin
-			&& (linkage_name != spec_linkage_name))
+			&& (linkage_name != spec_linkage_name)
+			&& !c->find_member_function_sptr(linkage_name))
 		      // The current DIE has 'd' as abstract orign,
 		      // and has a linkage name that is different
 		      // from from the linkage name of 'd'.  That

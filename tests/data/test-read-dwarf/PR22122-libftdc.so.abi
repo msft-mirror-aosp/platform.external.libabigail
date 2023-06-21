@@ -1323,13 +1323,13 @@
             </function-decl>
           </member-function>
           <member-function access='public' destructor='yes' vtable-offset='0'>
-            <function-decl name='~basic_stringstream' filepath='/usr/bin/../lib/gcc/x86_64-linux-gnu/5.4.0/../../../../include/c++/5.4.0/sstream' line='717' column='1' visibility='default' binding='global' size-in-bits='64'>
+            <function-decl name='~basic_stringstream' mangled-name='_ZNSt7__cxx1118basic_stringstreamIcSt11char_traitsIcESaIcEED1Ev' filepath='/usr/bin/../lib/gcc/x86_64-linux-gnu/5.4.0/../../../../include/c++/5.4.0/sstream' line='717' column='1' visibility='default' binding='global' size-in-bits='64'>
               <parameter type-id='type-id-107' is-artificial='yes'/>
               <return type-id='type-id-180'/>
             </function-decl>
           </member-function>
           <member-function access='public' destructor='yes' vtable-offset='0'>
-            <function-decl name='~basic_stringstream' mangled-name='_ZNSt7__cxx1118basic_stringstreamIcSt11char_traitsIcESaIcEED1Ev' filepath='/usr/bin/../lib/gcc/x86_64-linux-gnu/5.4.0/../../../../include/c++/5.4.0/sstream' line='717' column='1' visibility='default' binding='global' size-in-bits='64'>
+            <function-decl name='~basic_stringstream' mangled-name='_ZNSt7__cxx1118basic_stringstreamIcSt11char_traitsIcESaIcEED2Ev' filepath='/usr/bin/../lib/gcc/x86_64-linux-gnu/5.4.0/../../../../include/c++/5.4.0/sstream' line='717' column='1' visibility='default' binding='global' size-in-bits='64'>
               <parameter type-id='type-id-107' is-artificial='yes'/>
               <return type-id='type-id-180'/>
             </function-decl>
@@ -4282,7 +4282,7 @@
           <class-decl name='__anonymous_struct__' is-struct='yes' is-anonymous='yes' visibility='default' is-declaration-only='yes' id='type-id-390'/>
         </member-type>
         <member-function access='public'>
-          <function-decl name='StringData' mangled-name='_ZN5mongo10StringDataC2EPKc' filepath='src/mongo/base/string_data.h' line='78' column='1' visibility='default' binding='global' size-in-bits='64'>
+          <function-decl name='StringData' mangled-name='_ZN5mongo10StringDataC2EPKc' filepath='src/mongo/base/string_data.h' line='78' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZN5mongo10StringDataC2EPKc'>
             <parameter type-id='type-id-298' is-artificial='yes'/>
             <parameter type-id='type-id-61'/>
             <return type-id='type-id-180'/>
@@ -4309,13 +4309,6 @@
             <parameter type-id='type-id-298' is-artificial='yes'/>
             <parameter type-id='type-id-61'/>
             <parameter type-id='type-id-39'/>
-            <return type-id='type-id-180'/>
-          </function-decl>
-        </member-function>
-        <member-function access='public'>
-          <function-decl name='StringData' mangled-name='_ZN5mongo10StringDataC2EPKc' filepath='src/mongo/base/string_data.h' line='78' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZN5mongo10StringDataC2EPKc'>
-            <parameter type-id='type-id-298' is-artificial='yes'/>
-            <parameter type-id='type-id-61'/>
             <return type-id='type-id-180'/>
           </function-decl>
         </member-function>
@@ -6485,13 +6478,7 @@
         <member-type access='private'>
           <class-decl name='__anonymous_struct__2' is-struct='yes' is-anonymous='yes' visibility='default' is-declaration-only='yes' id='type-id-792'>
             <member-function access='public' destructor='yes' vtable-offset='0'>
-              <function-decl name='~_Impl_base' mangled-name='_ZNSt6thread10_Impl_baseD0Ev' filepath='/usr/bin/../lib/gcc/x86_64-linux-gnu/5.4.0/../../../../include/c++/5.4.0/thread' line='101' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZNSt6thread10_Impl_baseD0Ev'>
-                <parameter type-id='type-id-793' is-artificial='yes'/>
-                <return type-id='type-id-180'/>
-              </function-decl>
-            </member-function>
-            <member-function access='public' destructor='yes' vtable-offset='0'>
-              <function-decl name='~_Impl_base' mangled-name='_ZNSt6thread10_Impl_baseD2Ev' filepath='/usr/bin/../lib/gcc/x86_64-linux-gnu/5.4.0/../../../../include/c++/5.4.0/thread' line='101' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZNSt6thread10_Impl_baseD2Ev'>
+              <function-decl name='~_Impl_base' mangled-name='_ZNSt6thread10_Impl_baseD0Ev' filepath='/usr/bin/../lib/gcc/x86_64-linux-gnu/5.4.0/../../../../include/c++/5.4.0/thread' line='101' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZNSt6thread10_Impl_baseD2Ev'>
                 <parameter type-id='type-id-793' is-artificial='yes'/>
                 <return type-id='type-id-180'/>
               </function-decl>
@@ -9668,13 +9655,13 @@
           </function-decl>
         </member-function>
         <member-function access='public' destructor='yes' vtable-offset='0'>
-          <function-decl name='~basic_ofstream' filepath='/usr/bin/../lib/gcc/x86_64-linux-gnu/5.4.0/../../../../include/c++/5.4.0/fstream' line='737' column='1' visibility='default' binding='global' size-in-bits='64'>
+          <function-decl name='~basic_ofstream' mangled-name='_ZNSt14basic_ofstreamIcSt11char_traitsIcEED1Ev' filepath='/usr/bin/../lib/gcc/x86_64-linux-gnu/5.4.0/../../../../include/c++/5.4.0/fstream' line='737' column='1' visibility='default' binding='global' size-in-bits='64'>
             <parameter type-id='type-id-1063' is-artificial='yes'/>
             <return type-id='type-id-180'/>
           </function-decl>
         </member-function>
         <member-function access='public' destructor='yes' vtable-offset='0'>
-          <function-decl name='~basic_ofstream' mangled-name='_ZNSt14basic_ofstreamIcSt11char_traitsIcEED1Ev' filepath='/usr/bin/../lib/gcc/x86_64-linux-gnu/5.4.0/../../../../include/c++/5.4.0/fstream' line='737' column='1' visibility='default' binding='global' size-in-bits='64'>
+          <function-decl name='~basic_ofstream' mangled-name='_ZNSt14basic_ofstreamIcSt11char_traitsIcEED2Ev' filepath='/usr/bin/../lib/gcc/x86_64-linux-gnu/5.4.0/../../../../include/c++/5.4.0/fstream' line='737' column='1' visibility='default' binding='global' size-in-bits='64'>
             <parameter type-id='type-id-1063' is-artificial='yes'/>
             <return type-id='type-id-180'/>
           </function-decl>
@@ -12284,12 +12271,6 @@
           <typedef-decl name='iterator' type-id='type-id-1423' filepath='/usr/bin/../lib/gcc/x86_64-linux-gnu/5.4.0/../../../../include/c++/5.4.0/bits/stl_vector.h' line='231' column='1' id='type-id-1553'/>
         </member-type>
         <member-function access='public' destructor='yes'>
-          <function-decl name='~vector' mangled-name='_ZNSt6vectorIN5mongo7BSONObjESaIS1_EED2Ev' filepath='/usr/bin/../lib/gcc/x86_64-linux-gnu/5.4.0/../../../../include/c++/5.4.0/bits/stl_vector.h' line='423' column='1' visibility='default' binding='global' size-in-bits='64'>
-            <parameter type-id='type-id-1538' is-artificial='yes'/>
-            <return type-id='type-id-180'/>
-          </function-decl>
-        </member-function>
-        <member-function access='public' destructor='yes'>
           <function-decl name='~vector' mangled-name='_ZNSt6vectorIN5mongo7BSONObjESaIS1_EED2Ev' filepath='/usr/bin/../lib/gcc/x86_64-linux-gnu/5.4.0/../../../../include/c++/5.4.0/bits/stl_vector.h' line='423' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZNSt6vectorIN5mongo7BSONObjESaIS1_EED2Ev'>
             <parameter type-id='type-id-1538' is-artificial='yes'/>
             <return type-id='type-id-180'/>
@@ -12375,12 +12356,6 @@
         <member-type access='private'>
           <typedef-decl name='size_type' type-id='type-id-40' filepath='/usr/bin/../lib/gcc/x86_64-linux-gnu/5.4.0/../../../../include/c++/5.4.0/bits/stl_vector.h' line='236' column='1' id='type-id-1559'/>
         </member-type>
-        <member-function access='public' destructor='yes'>
-          <function-decl name='~vector' mangled-name='_ZNSt6vectorIcSaIcEED2Ev' filepath='/usr/bin/../lib/gcc/x86_64-linux-gnu/5.4.0/../../../../include/c++/5.4.0/bits/stl_vector.h' line='423' column='1' visibility='default' binding='global' size-in-bits='64'>
-            <parameter type-id='type-id-1529' is-artificial='yes'/>
-            <return type-id='type-id-180'/>
-          </function-decl>
-        </member-function>
         <member-function access='public' destructor='yes'>
           <function-decl name='~vector' mangled-name='_ZNSt6vectorIcSaIcEED2Ev' filepath='/usr/bin/../lib/gcc/x86_64-linux-gnu/5.4.0/../../../../include/c++/5.4.0/bits/stl_vector.h' line='423' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZNSt6vectorIcSaIcEED2Ev'>
             <parameter type-id='type-id-1529' is-artificial='yes'/>
@@ -15747,7 +15722,7 @@
           </function-decl>
         </member-function>
         <member-function access='public'>
-          <function-decl name='_BufBuilder' mangled-name='_ZN5mongo11_BufBuilderINS_21SharedBufferAllocatorEEC2Ei' filepath='src/mongo/bson/util/builder.h' line='158' column='1' visibility='default' binding='global' size-in-bits='64'>
+          <function-decl name='_BufBuilder' mangled-name='_ZN5mongo11_BufBuilderINS_21SharedBufferAllocatorEEC2Ei' filepath='src/mongo/bson/util/builder.h' line='158' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZN5mongo11_BufBuilderINS_21SharedBufferAllocatorEEC2Ei'>
             <parameter type-id='type-id-1816' is-artificial='yes'/>
             <parameter type-id='type-id-16'/>
             <return type-id='type-id-180'/>
@@ -15757,13 +15732,6 @@
           <function-decl name='buf' mangled-name='_ZNK5mongo11_BufBuilderINS_21SharedBufferAllocatorEE3bufEv' filepath='src/mongo/bson/util/builder.h' line='196' column='1' visibility='default' binding='global' size-in-bits='64'>
             <parameter type-id='type-id-245' is-artificial='yes'/>
             <return type-id='type-id-61'/>
-          </function-decl>
-        </member-function>
-        <member-function access='public'>
-          <function-decl name='_BufBuilder' mangled-name='_ZN5mongo11_BufBuilderINS_21SharedBufferAllocatorEEC2Ei' filepath='src/mongo/bson/util/builder.h' line='158' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZN5mongo11_BufBuilderINS_21SharedBufferAllocatorEEC2Ei'>
-            <parameter type-id='type-id-1816' is-artificial='yes'/>
-            <parameter type-id='type-id-16'/>
-            <return type-id='type-id-180'/>
           </function-decl>
         </member-function>
         <member-function access='private'>
@@ -15869,13 +15837,6 @@
             <parameter type-id='type-id-1820' is-artificial='yes'/>
             <parameter type-id='type-id-61'/>
             <parameter type-id='type-id-39'/>
-            <return type-id='type-id-180'/>
-          </function-decl>
-        </member-function>
-        <member-function access='public'>
-          <function-decl name='StringData' mangled-name='_ZN5mongo10StringDataC2EPKc' filepath='src/mongo/base/string_data.h' line='78' column='1' visibility='default' binding='global' size-in-bits='64'>
-            <parameter type-id='type-id-1820' is-artificial='yes'/>
-            <parameter type-id='type-id-61'/>
             <return type-id='type-id-180'/>
           </function-decl>
         </member-function>

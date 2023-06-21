@@ -14668,6 +14668,7 @@ compare_canonical_type_against_candidate(const type_base& canonical_type,
   // Restore the state of the on-the-fly-canonicalization and
   // the decl-only-class-being-equal-to-a-matching-definition
   // flags.
+  env.priv_->clear_type_comparison_results_cache();
   env.priv_->allow_type_comparison_results_caching(false);
   env.do_on_the_fly_canonicalization(false);
   env.decl_only_class_equals_definition
@@ -23738,6 +23739,7 @@ method_decl::method_decl(const string&		name,
 void
 method_decl::set_linkage_name(const string& l)
 {
+  string old_lname = get_linkage_name();
   decl_base::set_linkage_name(l);
   // Update the linkage_name -> member function map of the containing
   // class declaration.
@@ -23747,6 +23749,14 @@ method_decl::set_linkage_name(const string& l)
       class_or_union_sptr cl = t->get_class_type();
       method_decl_sptr m(this, sptr_utils::noop_deleter());
       cl->priv_->mem_fns_map_[l] = m;
+      if (!old_lname.empty())
+	{
+	  if (method_decl_sptr m = cl->find_member_function_sptr(old_lname))
+	    {
+	      if (m.get() == this)
+		cl->priv_->mem_fns_map_.erase(old_lname);
+	    }
+	}
     }
 }
 
