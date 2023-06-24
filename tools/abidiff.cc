@@ -13,6 +13,7 @@
 #include <memory>
 #include <string>
 #include <vector>
+#include <set>
 #include "abg-config.h"
 #include "abg-comp-filter.h"
 #include "abg-suppression.h"
@@ -28,6 +29,7 @@
 #endif
 
 using std::vector;
+using std::set;
 using std::string;
 using std::ostream;
 using std::cout;
@@ -60,6 +62,10 @@ using abigail::tools_utils::load_default_system_suppressions;
 using abigail::tools_utils::load_default_user_suppressions;
 using abigail::tools_utils::abidiff_status;
 using abigail::tools_utils::create_best_elf_based_reader;
+using abigail::tools_utils::stick_corpus_and_dependencies_into_corpus_group;
+using abigail::tools_utils::stick_corpus_and_binaries_into_corpus_group;
+using abigail::tools_utils::add_dependencies_into_corpus_group;
+using abigail::tools_utils::get_dependencies;
 
 using namespace abigail;
 
@@ -115,6 +121,8 @@ struct options
   bool			assume_odr_for_cplusplus;
   bool			leverage_dwarf_factorization;
   bool			perform_change_categorization;
+  bool			follow_dependencies;
+  bool			list_dependencies;
   bool			dump_diff_tree;
   bool			show_stats;
   bool			do_log;
@@ -134,6 +142,10 @@ struct options
   vector<char*> di_root_paths2;
   vector<char**> prepared_di_root_paths1;
   vector<char**> prepared_di_root_paths2;
+  vector<string> added_bins_dirs1;
+  vector<string> added_bins_dirs2;
+  vector<string> added_bins1;
+  vector<string> added_bins2;
 
   options()
     : display_usage(),
@@ -172,6 +184,8 @@ struct options
       assume_odr_for_cplusplus(true),
       leverage_dwarf_factorization(true),
       perform_change_categorization(true),
+      follow_dependencies(),
+      list_dependencies(),
       dump_diff_tree(),
       show_stats(),
       do_log()
@@ -224,6 +238,15 @@ display_usage(const string& prog_name, ostream& out)
     << " --header-file1|--hf1 <path>  the path to one header of file1\n"
     << " --headers-dir2|--hd2 <path>  the path to headers of file2\n"
     << " --header-file2|--hf2 <path>  the path to one header of file2\n"
+    << " --added-binaries-dir1  the path to the dependencies of file1\n"
+    << " --added-binaries-dir2  the path to the dependencies of file2\n"
+    << " --add-binaries1 <bin1,bin2,.>. build corpus groups with "
+    "extra binaries added to the first one and compare them\n"
+    << " --add-binaries2 <bin1,bin2,..> build corpus groups with "
+    "extra binaries added to the second one and compare them\n"
+    << " --follow-dependencies|--fdeps build corpus groups with the "
+    "dependencies of the input files\n"
+    << " --list-dependencies|--ldeps show the dependencies of the input files\n"
     << " --drop-private-types  drop private types from "
     "internal representation\n"
     << "  --exported-interfaces-only  analyze exported interfaces only\n"
@@ -421,6 +444,80 @@ parse_command_line(int argc, char* argv[], options& opts)
 	      return true;
 	    }
 	  opts.header_files2.push_back(argv[j]);
+	  ++i;
+	}
+      else if (!strcmp(argv[i], "--follow-dependencies")
+	       || !strcmp(argv[i], "--fdeps"))
+	opts.follow_dependencies = true;
+      else if (!strcmp(argv[i], "--list-dependencies")
+	       || !strcmp(argv[i], "--ldeps"))
+	opts.list_dependencies = true;
+      else if (!strcmp(argv[i], "--added-binaries-dir1")
+	       || !strcmp(argv[i], "--abd1"))
+	{
+	  int j = i + 1;
+	  if (j >= argc)
+	    {
+	      opts.missing_operand = true;
+	      opts.wrong_option = argv[i];
+	      return true;
+	    }
+	  opts.added_bins_dirs1.push_back(argv[j]);
+	  ++i;
+	}
+      else if (!strcmp(argv[i], "--added-binaries-dir2")
+	       || !strcmp(argv[i], "--abd2"))
+	{
+	  int j = i + 1;
+	  if (j >= argc)
+	    {
+	      opts.missing_operand = true;
+	      opts.wrong_option = argv[i];
+	      return true;
+	    }
+	  opts.added_bins_dirs2.push_back(argv[j]);
+	  ++i;
+	}
+      else if (!strncmp(argv[i], "--add-binaries1=",
+			strlen("--add-binaries1=")))
+	tools_utils::get_comma_separated_args_of_option(argv[i],
+							"--add-binaries1=",
+							opts.added_bins1);
+      else if (!strcmp(argv[i], "--add-binaries1"))
+	{
+	  int j = i + 1;
+	  if (j >= argc)
+	    {
+	      opts.missing_operand = true;
+	      opts.wrong_option = argv[i];
+	      return true;
+	    }
+	  string s = argv[j];
+	  if (s.find(','))
+	    tools_utils::split_string(s, ",", opts.added_bins1);
+	  else
+	    opts.added_bins1.push_back(s);
+	  ++i;
+	}
+      else if (!strncmp(argv[i], "--add-binaries2=",
+			strlen("--add-binaries2=")))
+	tools_utils::get_comma_separated_args_of_option(argv[i],
+							"--add-binaries2=",
+							opts.added_bins2);
+      else if (!strcmp(argv[i], "--add-binaries2"))
+	{
+	  int j = i + 1;
+	  if (j >= argc)
+	    {
+	      opts.missing_operand = true;
+	      opts.wrong_option = argv[i];
+	      return true;
+	    }
+	  string s = argv[j];
+	  if (s.find(','))
+	    tools_utils::split_string(s, ",", opts.added_bins2);
+	  else
+	    opts.added_bins2.push_back(s);
 	  ++i;
 	}
       else if (!strcmp(argv[i], "--kmi-whitelist")
@@ -1156,6 +1253,63 @@ emit_incompatible_format_version_error_message(const string& file_path1,
     << "'" << file_path2 << "' (" << version2 << ")\n";
 }
 
+/// Display the dependencies of two corpora.
+///
+/// @param prog_name the name of the current abidiff program.
+///
+/// @param corp1 the first corpus to consider.
+///
+/// @param corp2 the second corpus to consider.
+///
+/// @param deps1 the dependencies to display.
+///
+/// @param deps2 the dependencies to display.
+static void
+display_dependencies(const string& prog_name,
+		     const corpus_sptr& corp1,
+		     const corpus_sptr& corp2,
+		     const set<string>& deps1,
+		     const set<string>& deps2)
+{
+  if (deps1.empty())
+    emit_prefix(prog_name, cout)
+    << "No dependencies found for '" << corp1->get_path() << "':\n";
+  else
+    {
+      emit_prefix(prog_name, cout)
+	<< "dependencies of '" << corp1->get_path() << "':\n\t";
+
+      int n = 0;
+      for (const auto& dep : deps1)
+	{
+	  if (n)
+	    cout << ", ";
+	  cout << dep;
+	  ++n;
+	}
+      cout << "\n";
+    }
+
+  if (deps2.empty())
+    emit_prefix(prog_name, cout)
+      << "No dependencies found for '" << corp2->get_path() << "':\n";
+  else
+    {
+      emit_prefix(prog_name, cout)
+	<< "dependencies of '" << corp2->get_path() << "':\n\t";
+
+      int n = 0;
+      for (const auto& dep : deps2)
+	{
+	  if (n)
+	    cout << ", ";
+	  cout << dep;
+	  ++n;
+	}
+      cout << "\n";
+    }
+}
+
 int
 main(int argc, char* argv[])
 {
@@ -1287,6 +1441,20 @@ main(int argc, char* argv[])
 	      return handle_error(c1_status, rdr.get(),
 				  argv[0], opts);
 
+	    if (!opts.added_bins1.empty())
+	      g1 = stick_corpus_and_binaries_into_corpus_group(rdr, c1,
+							       opts.added_bins1,
+							       opts.added_bins_dirs1);
+	    if (opts.follow_dependencies)
+	      {
+		if (g1)
+		  add_dependencies_into_corpus_group(rdr, *c1,
+						     opts.added_bins_dirs1,
+						     *g1);
+		else
+		  g1 = stick_corpus_and_dependencies_into_corpus_group(rdr, c1,
+								       opts.added_bins_dirs1);
+	      }
 	  }
 	  break;
 	case abigail::tools_utils::FILE_TYPE_XML_CORPUS:
@@ -1304,8 +1472,7 @@ main(int argc, char* argv[])
 	case abigail::tools_utils::FILE_TYPE_XML_CORPUS_GROUP:
 	  {
 	    abigail::fe_iface_sptr rdr =
-	      abixml::create_reader(opts.file1,
-							   env);
+	      abixml::create_reader(opts.file1, env);
 	    assert(rdr);
 	    set_suppressions(*rdr, opts);
 	    set_native_xml_reader_options(*rdr, opts);
@@ -1364,6 +1531,21 @@ main(int argc, char* argv[])
 		    && (c2_status & abigail::fe_iface::STATUS_ALT_DEBUG_INFO_NOT_FOUND)
 		    && (c2_status & abigail::fe_iface::STATUS_DEBUG_INFO_NOT_FOUND)))
 	      return handle_error(c2_status, rdr.get(), argv[0], opts);
+
+	  if (!opts.added_bins2.empty())
+	    g2 = stick_corpus_and_binaries_into_corpus_group(rdr, c2,
+							     opts.added_bins2,
+							     opts.added_bins_dirs2);
+	  if (opts.follow_dependencies)
+	    {
+	      if (g2)
+		add_dependencies_into_corpus_group(rdr, *c2,
+						   opts.added_bins_dirs2,
+						   *g2);
+	      else
+		g2 = stick_corpus_and_dependencies_into_corpus_group(rdr, c2,
+								     opts.added_bins_dirs2);
+	    }
 	  }
 	  break;
 	case abigail::tools_utils::FILE_TYPE_XML_CORPUS:
@@ -1395,6 +1577,34 @@ main(int argc, char* argv[])
 	case abigail::tools_utils::FILE_TYPE_DIR:
 	case abigail::tools_utils::FILE_TYPE_TAR:
 	  break;
+	}
+
+      if (!opts.added_bins1.empty()
+	  || !opts.added_bins2.empty())
+	{
+	  // We were requested to compare a set of binaries against
+	  // another set of binaries.  Let's make sure we construct
+	  // two ABI construct groups in all cases.
+
+	  if (!g1 && c1)
+	    {
+	      // We don't have a corpus group for the first argument.
+	      // Let's build one and stick the ABI corpus at hand in
+	      // it.
+	      g1.reset(new corpus_group(c1->get_environment(),
+					c1->get_path()));
+	      g1->add_corpus(c1);
+	    }
+
+	  if (!g2 && c2)
+	    {
+	      // We don't have a corpus group for the second argument.
+	      // Let's build one and stick the ABI corpus at hand in
+	      // it.
+	      g2.reset(new corpus_group(c2->get_environment(),
+					c2->get_path()));
+	      g2->add_corpus(c1);
+	    }
 	}
 
       if (!!c1 != !!c2
@@ -1445,105 +1655,6 @@ main(int argc, char* argv[])
 		{
 		  t.start();
 		  std::cerr << "Computing the report ...\n";
-		}
-
-	      diff->report(cout);
-
-	      if (opts.do_log)
-		{
-		  t.stop();
-		  std::cerr << "Report computed!:" << t << "\n";
-		}
-	    }
-	}
-      else if (c1)
-	{
-	  if (opts.show_symtabs)
-	    {
-	      display_symtabs(c1, c2, cout);
-	      return abigail::tools_utils::ABIDIFF_OK;
-	    }
-
-	  const auto c1_version = c1->get_format_major_version_number();
-	  const auto c2_version = c2->get_format_major_version_number();
-	  if (c1_version != c2_version)
-	    {
-	      emit_incompatible_format_version_error_message(opts.file1,
-							     c1_version,
-							     opts.file2,
-							     c2_version,
-							     argv[0]);
-	      return abigail::tools_utils::ABIDIFF_ERROR;
-	    }
-
-	  set_corpus_keep_drop_regex_patterns(opts, c1);
-	  set_corpus_keep_drop_regex_patterns(opts, c2);
-
-	  tools_utils::timer t;
-	  if (opts.do_log)
-	    {
-	      t.start();
-	      std::cerr << "Compute diff ...\n";
-	    }
-
-	  corpus_diff_sptr diff = compute_diff(c1, c2, ctxt);
-
-	  if (opts.do_log)
-	    {
-	      t.stop();
-	      std::cerr << "diff computed!:" << t << "\n";
-	    }
-
-	  if (opts.do_log)
-	    {
-	      t.start();
-	      std::cerr << "Computing net changes ...\n";
-	    }
-
-	  if (diff->has_net_changes())
-	    {
-	      if (opts.do_log)
-		{
-		  t.stop();
-		  std::cerr << "net changes computed!: "<< t << "\n";
-		}
-	      status = abigail::tools_utils::ABIDIFF_ABI_CHANGE;
-	    }
-
-	  if (opts.do_log)
-	    {
-	      t.start();
-	      std::cerr << "Computing incompatible changes ...\n";
-	    }
-
-	  if (diff->has_incompatible_changes())
-	    {
-	      if (opts.do_log)
-		{
-		  t.stop();
-		  std::cerr << "incompatible changes computed!: "<< t << "\n";
-		}
-	      status |= abigail::tools_utils::ABIDIFF_ABI_INCOMPATIBLE_CHANGE;
-	    }
-
-	  if (opts.do_log)
-	    {
-	      t.start();
-	      std::cerr << "Computing changes ...\n";
-	    }
-
-	  if (diff->has_changes())
-	    {
-	      if (opts.do_log)
-		{
-		  t.stop();
-		  std::cerr << "changes computed!: "<< t << "\n";
-		}
-
-	      if (opts.do_log)
-		{
-		  t.start();
-		  std::cerr << "Computing report ...\n";
 		}
 
 	      diff->report(cout);
@@ -1658,6 +1769,120 @@ main(int argc, char* argv[])
 		}
 	    }
 
+	  if (opts.list_dependencies)
+	    {
+	      set<string> deps1, deps2;
+	      get_dependencies(*c1, opts.added_bins_dirs1, deps1);
+	      get_dependencies(*c2, opts.added_bins_dirs2, deps2);
+	      display_dependencies(argv[0], c1, c2, deps1, deps2);
+	    }
+	}
+      else if (c1)
+	{
+	  if (opts.show_symtabs)
+	    {
+	      display_symtabs(c1, c2, cout);
+	      return abigail::tools_utils::ABIDIFF_OK;
+	    }
+
+	  if (opts.list_dependencies)
+	    {
+	      set<string> deps1, deps2;
+	      get_dependencies(*c1, opts.added_bins_dirs1, deps1);
+	      get_dependencies(*c2, opts.added_bins_dirs2, deps2);
+	      display_dependencies(argv[0], c1, c2, deps1, deps2);
+	      return abigail::tools_utils::ABIDIFF_OK;
+	    }
+	  const auto c1_version = c1->get_format_major_version_number();
+	  const auto c2_version = c2->get_format_major_version_number();
+	  if (c1_version != c2_version)
+	    {
+	      emit_incompatible_format_version_error_message(opts.file1,
+							     c1_version,
+							     opts.file2,
+							     c2_version,
+							     argv[0]);
+	      return abigail::tools_utils::ABIDIFF_ERROR;
+	    }
+
+	  set_corpus_keep_drop_regex_patterns(opts, c1);
+	  set_corpus_keep_drop_regex_patterns(opts, c2);
+
+	  tools_utils::timer t;
+	  if (opts.do_log)
+	    {
+	      t.start();
+	      std::cerr << "Compute diff ...\n";
+	    }
+
+	  corpus_diff_sptr diff = compute_diff(c1, c2, ctxt);
+
+	  if (opts.do_log)
+	    {
+	      t.stop();
+	      std::cerr << "diff computed!:" << t << "\n";
+	    }
+
+	  if (opts.do_log)
+	    {
+	      t.start();
+	      std::cerr << "Computing net changes ...\n";
+	    }
+
+	  if (diff->has_net_changes())
+	    {
+	      if (opts.do_log)
+		{
+		  t.stop();
+		  std::cerr << "net changes computed!: "<< t << "\n";
+		}
+	      status = abigail::tools_utils::ABIDIFF_ABI_CHANGE;
+	    }
+
+	  if (opts.do_log)
+	    {
+	      t.start();
+	      std::cerr << "Computing incompatible changes ...\n";
+	    }
+
+	  if (diff->has_incompatible_changes())
+	    {
+	      if (opts.do_log)
+		{
+		  t.stop();
+		  std::cerr << "incompatible changes computed!: "<< t << "\n";
+		}
+	      status |= abigail::tools_utils::ABIDIFF_ABI_INCOMPATIBLE_CHANGE;
+	    }
+
+	  if (opts.do_log)
+	    {
+	      t.start();
+	      std::cerr << "Computing changes ...\n";
+	    }
+
+	  if (diff->has_changes())
+	    {
+	      if (opts.do_log)
+		{
+		  t.stop();
+		  std::cerr << "changes computed!: "<< t << "\n";
+		}
+
+	      if (opts.do_log)
+		{
+		  t.start();
+		  std::cerr << "Computing report ...\n";
+		}
+
+	      diff->report(cout);
+
+	      if (opts.do_log)
+		{
+		  t.stop();
+		  std::cerr << "Report computed!:" << t << "\n";
+		}
+	    }
 	}
       else
 	status = abigail::tools_utils::ABIDIFF_ERROR;
