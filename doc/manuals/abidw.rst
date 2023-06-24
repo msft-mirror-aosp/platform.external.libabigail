@@ -44,13 +44,48 @@ Options
 
     Display a short help about the command and exit.
 
-  * `--version | -v`
+  * ``--version | -v``
 
     Display the version of the program and exit.
 
-  * `--abixml-version`
+  * ``--abixml-version``
 
     Display the version of the ABIXML format emitted by this program and exit.
+
+  * ``--add-binaries`` <*bin1,bin2,...*>
+
+    For each of the comma-separated binaries given in argument to this
+    option, if the binary is found in the directory specified by the
+    `--added-binaries-dir` option, then load the ABI corpus of the
+    binary and add it to a set of ABI corpora (called a ABI Corpus
+    Group) made of the binary denoted by the Argument of
+    ``abidw``.  That corpus group is then serialized out.
+
+  * ``--follow-dependencies``
+
+    For each dependency of the input binary of ``abidw``, if it is
+    found in the directory specified by the ``--added-binaries-dir``
+    option, then construct an ABI corpus out of the dependency and add
+    it to a set of ABI corpora (called an ABI Corpus Group) along with
+    the ABI corpus of the input binary of the program.  The ABI Corpus
+    Group is then serialized out.
+
+  * ``--list-dependencies``
+
+    For each dependency of the input binary of``abidw``, if it's found
+    in the directory specified by the ``--added-binaries-dir`` option,
+    then the name of the dependency is printed out.
+
+  * ``--added-binaries-dir | --abd`` <*dir-path*>
+
+    This option is to be used in conjunction with the
+    ``--add-binaries``, the ``--follow-dependencies`` or the
+    ``--list-dependencies`` option.  Binaries listed as arguments of
+    the ``--add-binaries`` option or being dependencies of the input
+    binary in the case of the ``--follow-dependencies`` option and
+    found in the directory <*dir-path*> are going to be loaded as ABI
+    corpus and added to the set of ABI corpora (called an ABI corpus
+    group) built and serialized.
 
   * ``--debug-info-dir | -d`` <*dir-path*>
 
@@ -367,6 +402,39 @@ Options
 
     Emit verbose logs about the progress of miscellaneous internal
     things.
+
+Usage examples
+==============
+
+  1. Emitting an ``ABIXML`` representation of a binary: ::
+
+       $ abidw binary > binary.abi
+
+
+  2. Emitting an ``ABIXML`` representation of a set of binaries
+     specified on the command line: ::
+
+       $ abidw --added-binaries=bin1,bin2,bin3  \
+      	       --added-binaries-dir /some/where \
+	       binary > binaries.abi
+
+     Note that the binaries bin1, bin2 and bin3 are to be found in the
+     directory ``/some/where``.  A representation of the ABI of the
+     set of binaries ``binary, bin1, bin2`` and ``bin3`` called an
+     ``ABI corpus group`` is serialized in the file binaries.abi.
+
+  3. Emitting an ``ABIXML`` representation of a binary and its
+     dependencies: ::
+
+       $ abidw --follow-dependencies              \
+               --added-binaries-dir /some/where   \
+               binary > binary.abi
+
+     Note that only the dependencies that are found in the directory
+     ``/some/where`` are analysed.  Their ABIs, along with the ABI the
+     binary named ``binary`` are represented as an ABI corpus group
+     and serialized in the file ``binary.abi``, in the ABIXML format.
+
 
 Notes
 =====
