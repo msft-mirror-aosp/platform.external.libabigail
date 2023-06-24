@@ -74,8 +74,8 @@ protected:
 
   virtual ~fe_iface();
 
-  void
-  reset(const std::string& corpus_path, environment& e);
+  virtual void
+  initialize(const std::string& corpus_path);
 
   const options_type&
   options() const;

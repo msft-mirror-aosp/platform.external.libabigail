@@ -237,7 +237,7 @@ protected:
 	     bool			load_all_types,
 	     bool			linux_kernel_mode)
   {
-    reset(elf_path, debug_info_root_paths);
+    elf_based_reader::initialize(elf_path, debug_info_root_paths);
     btf__free(btf_handle_);
     options().load_all_types = load_all_types;
     options().load_in_linux_kernel_mode = linux_kernel_mode;

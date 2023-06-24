@@ -288,7 +288,7 @@ public:
   {
     load_all_types = load_all_types;
     linux_kernel_mode = linux_kernel_mode;
-    reset(elf_path, debug_info_root_paths);
+    elf_based_reader::initialize(elf_path, debug_info_root_paths);
   }
 
   /// Setter of the current translation unit.

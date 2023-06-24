@@ -2018,7 +2018,7 @@ public:
 	     bool			load_all_types,
 	     bool			linux_kernel_mode)
   {
-    reset(elf_path, debug_info_root_paths);
+    elf_based_reader::initialize(elf_path, debug_info_root_paths);
     initialize(load_all_types, linux_kernel_mode);
   }
 

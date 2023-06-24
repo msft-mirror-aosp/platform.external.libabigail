@@ -527,8 +527,8 @@ reader::reader(const string&		elf_path,
 reader::~reader()
 {delete priv_;}
 
-/// Resets (erase) the resources used by the current @ref
-/// elf::reader type.
+/// Re-initialize the resources used by the current @ref elf::reader
+/// type.
 ///
 /// This lets the reader in a state where it's ready to read from
 /// another ELF file.
@@ -538,16 +538,29 @@ reader::~reader()
 /// @param debug_info_roots a vector of directory paths to look into
 /// for split debug information files.
 void
-reader::reset(const std::string&	elf_path,
-	      const vector<char**>&	debug_info_roots)
+reader::initialize(const std::string&		elf_path,
+		   const vector<char**>&	debug_info_roots)
 {
-  fe_iface::options_type opts = options();
-  fe_iface::reset(elf_path, opts.env);
+  fe_iface::initialize(elf_path);
   corpus_path(elf_path);
   priv_->initialize(debug_info_roots);
   priv_->crack_open_elf_file();
   priv_->locate_dwarf_debug_info();
   priv_->locate_ctf_debug_info();
+}
+
+/// Re-initialize the resources used by the current @ref elf::reader
+/// type.
+///
+/// This lets the reader in a state where it's ready to read from
+/// another ELF file.
+///
+/// @param elf_path the new ELF path to read from.
+void
+reader::initialize(const std::string&	elf_path)
+{
+  vector<char**> v;
+  initialize(elf_path, v);
 }
 
 /// Getter of the vector of directory paths to look into for split

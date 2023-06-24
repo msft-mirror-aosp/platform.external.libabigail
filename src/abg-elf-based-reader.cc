@@ -61,7 +61,7 @@ elf_based_reader::elf_based_reader(const std::string& elf_path,
 elf_based_reader::~elf_based_reader()
 {delete priv_;}
 
-/// Reset (re-initialize) the resources used by the current reader.
+/// (re)Initialize) the resources used by the current reader.
 ///
 /// This frees the resources of the current reader and gets it ready
 /// to read data from another ELF file.
@@ -71,11 +71,26 @@ elf_based_reader::~elf_based_reader()
 /// @param debug_info_root_paths a vector of paths to look into for
 /// split debug info files.
 void
-elf_based_reader::reset(const std::string& elf_path,
-			const vector<char**>& debug_info_root_paths)
+elf_based_reader::initialize(const std::string& elf_path,
+			     const vector<char**>& debug_info_root_paths)
 {
-  elf::reader::reset(elf_path, debug_info_root_paths);
+  elf::reader::initialize(elf_path, debug_info_root_paths);
   priv_->initialize();
+}
+
+/// (re)Initialize the resources used by the current reader.
+///
+/// This invokes fe_iface::initialize as wel as the virtual pure
+/// elf_based_reader::initialize() interface.
+///
+/// @param corpus_path path to the corpus to be built.
+void
+elf_based_reader::initialize(const std::string& corpus_path)
+{
+  fe_iface::initialize(corpus_path);
+  vector<char**> v;
+  initialize(corpus_path, v, /*load_all_type=*/false,
+	     /*linux_kernel_mode=*/false);
 }
 
 /// Read an ABI corpus and add it to a given corpus group.

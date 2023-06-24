@@ -72,9 +72,12 @@ class reader : public fe_iface
 
   ~reader();
 
-  void
-  reset(const std::string&	elf_path,
-	 const vector<char**>&	debug_info_roots);
+  virtual void
+  initialize(const std::string&	elf_path,
+	     const vector<char**>&	debug_info_roots);
+
+  virtual void
+  initialize(const std::string& elf_path);
 
   const vector<char**>&
   debug_info_root_paths() const;

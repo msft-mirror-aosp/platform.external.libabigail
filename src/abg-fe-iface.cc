@@ -43,11 +43,11 @@ struct fe_iface::priv
   void
   initialize()
   {
-    //TODO: initialize the options.
     corpus_path.clear();
     dt_soname.clear();
     suppressions.clear();
     corpus_group.reset();
+    corpus.reset();
   }
 }; //end struct fe_iface::priv
 
@@ -78,14 +78,11 @@ fe_iface::~fe_iface()
 ///
 /// @param corpus_path the path to the file for which a new corpus is
 /// to be created.
-///
-/// @param e the environment in which the Front End operates.
 void
-fe_iface::reset(const std::string& corpus_path,
-		environment& e)
+fe_iface::initialize(const std::string& corpus_path)
 {
-  delete priv_;
-  priv_ = new fe_iface::priv(corpus_path, e);
+  priv_->initialize();
+  priv_->corpus_path = corpus_path;
 }
 
 /// Getter of the the options of the current Front End Interface.
