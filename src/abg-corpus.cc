@@ -13,6 +13,7 @@
 #include <cstring>
 #include <stdexcept>
 #include <unordered_map>
+#include <set>
 
 #include "abg-internal.h"
 
@@ -1654,6 +1655,7 @@ operator&=(corpus::origin &l, corpus::origin r)
 /// Type of the private data of @ref corpus_group
 struct corpus_group::priv
 {
+  std::set<string>		corpora_paths;
   corpora_type			corpora;
   istring_function_decl_ptr_map_type fns_map;
   vector<function_decl*>	fns;
@@ -1743,6 +1745,10 @@ corpus_group::add_corpus(const corpus_sptr& corp)
   if (!corp)
     return;
 
+  if (!corp->get_path().empty()
+      && has_corpus(corp->get_path()))
+    return;
+
   // Ensure the new architecture name matches the current one.
   string cur_arch = get_architecture_name(),
     corp_arch = corp->get_architecture_name();
@@ -1758,11 +1764,26 @@ corpus_group::add_corpus(const corpus_sptr& corp)
 
   priv_->corpora.push_back(corp);
   corp->set_group(this);
+  priv_->corpora_paths.insert(corp->get_path());
 
   /// Add the unreferenced function and variable symbols of this
   /// corpus to the unreferenced symbols of the current corpus group.
   priv_->add_unref_fun_symbols(get_unreferenced_function_symbols());
   priv_->add_unref_var_symbols(get_unreferenced_variable_symbols());
+}
+
+/// Test if a corpus of a given path has been added to the group.
+///
+/// @param path the path to the corpus to consider.
+///
+/// @return true iff a corpus with path @p path is already present in
+/// the group⋅
+bool
+corpus_group::has_corpus(const string& path)
+{
+  if (priv_->corpora_paths.find(path) != priv_->corpora_paths.end())
+    return true;
+  return false;
 }
 
 /// Getter of the vector of corpora held by the current @ref

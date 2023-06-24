@@ -71,6 +71,9 @@ bool sorted_strings_common_prefix(vector<string>&, string&);
 string get_library_version_string();
 string get_abixml_version_string();
 bool execute_command_and_get_output(const string&, vector<string>&);
+void get_comma_separated_args_of_option(const string& input_str,
+					const string& option,
+					vector<string>& arguments);
 bool get_dsos_provided_by_rpm(const string& rpm_path,
 			      set<string>& provided_dsos);
 string trim_white_space(const string&);
@@ -124,6 +127,38 @@ bool
 find_file_under_dir(const string& root_dir,
 		    const string& file_path_to_look_for,
 		    string& result);
+
+bool
+find_file_under_dirs(const vector<string>& root_dirs,
+		     const string& file_path_to_look_for,
+		     string& result);
+
+bool
+get_dependencies(const corpus&, const vector<string>&, set<string>&);
+
+void
+add_binaries_into_corpus_group(const fe_iface_sptr&	reader,
+			       const vector<string>&	binaries,
+			       const vector<string>&	deps_dirs,
+			       corpus_group&		group);
+
+void
+add_dependencies_into_corpus_group(const fe_iface_sptr&	reader,
+				   const corpus&		korpus,
+				   const vector<string>&	deps_dirs,
+				   corpus_group&		group);
+
+corpus_group_sptr
+stick_corpus_and_binaries_into_corpus_group(const fe_iface_sptr&	reader,
+					    const corpus_sptr&		korpus,
+					    const vector<string>&	binaries,
+					    const vector<string>&	deps_dirs);
+
+corpus_group_sptr
+stick_corpus_and_dependencies_into_corpus_group(const fe_iface_sptr&	reader,
+						const corpus_sptr&	korpus,
+						const vector<string>&	deps_dirs);
+
 
 class temp_file;
 

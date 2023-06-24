@@ -1235,6 +1235,34 @@ execute_command_and_get_output(const string& cmd, vector<string>& lines)
   return true;
 }
 
+/// Get a vector of arguments from a string containing a
+/// comma-separated list of those arguments.
+///
+/// @param input_str the input string containing the comma-separated
+/// list of arguments The input string has the form
+/// "option=arg1,arg2,arg3,arg4".
+///
+/// @param option if the content of the input string @p input_str is
+/// "option=arg1,arg2,arg3", then this parameter should be "option".
+///
+/// @param arguments this is set by the fonction the the arguments
+/// that were a comma-separated list of arguments on the right hand
+/// side of the '=' sign in the string @p input_str.
+void
+get_comma_separated_args_of_option(const string& input_str,
+				   const string& option,
+				   vector<string>& arguments)
+{
+  string s = input_str;
+
+  string_suffix(s, option, s);
+  if (string_begins_with(s, "\""))
+    s = s.substr(1);
+  if (string_ends_with(s, "\""))
+    s = s.substr(0, s.size() - 1);
+  split_string(s, ",", arguments);
+}
+
 /// Get the SONAMEs of the DSOs advertised as being "provided" by a
 /// given RPM.  That set can be considered as being the set of
 /// "public" DSOs of the RPM.
@@ -2363,22 +2391,233 @@ find_file_under_dir(const string& root_dir,
   FTSENT *entry;
   while ((entry = fts_read(file_hierarchy)))
     {
+      if (entry_of_file_with_name(entry, file_path_to_look_for, r))
+	{
+	  result = entry->fts_path;
+	  return true;
+	}
       // Skip descendents of symbolic links.
       if (entry->fts_info == FTS_SL || entry->fts_info == FTS_SLNONE)
 	{
 	  fts_set(file_hierarchy, entry, FTS_SKIP);
 	  continue;
 	}
-      if (entry_of_file_with_name(entry, file_path_to_look_for, r))
-	{
-	  result = entry->fts_path;
-	  return true;
-	}
     }
 
   fts_close(file_hierarchy);
   return false;
 }
+
+/// Find a given file possibly under a set of directories and return
+/// its absolute path.
+///
+/// @param root_dirs the vector of root directories under which to
+/// look for.
+///
+/// @param file_path_to_look_for the file to look for under the
+/// directory @p root_dir.
+///
+/// @param result the resulting path to @p file_path_to_look_for.
+/// This is set iff the file has been found.
+bool
+find_file_under_dirs(const vector<string>& root_dirs,
+		     const string& file_path_to_look_for,
+		     string& result)
+{
+  if (root_dirs.empty())
+    return find_file_under_dir(".", file_path_to_look_for, result);
+
+  for (const auto& root_dir : root_dirs)
+    if (find_file_under_dir(root_dir, file_path_to_look_for, result))
+      return true;
+
+  return false;
+}
+
+/// Get the dependencies of an ABI corpus, which are found in a set of
+/// directories.  Note that the dependencies are listed as properties
+/// of the ABI corpus.
+///
+/// If the corpus has a dependency that is not found under any of the
+/// given directories, then the dependency is ignored and not
+/// returned.
+///
+/// @param korpus the ABI corpus to consider.
+///
+/// @param deps_dirs the list of directories where to look for the
+/// dependencies.
+///
+/// @param dependencies output parameter that is set the dependencies
+/// of the corpus denoted by @p korpus which are found in the
+/// directories @p deps_dirs.  This is set iff the function returns
+/// true.
+///
+/// @return true iff some dependencies of the corpus @p korpus were
+/// found in directories @p deps_dirs.
+bool
+get_dependencies(const corpus&		korpus,
+		 const vector<string>&	deps_dirs,
+		 set<string>&		dependencies)
+{
+  const vector<string>& set_of_needed = korpus.get_needed();
+  if (set_of_needed.empty())
+    return false;
+
+  bool found_at_least_one_dependency =false;
+  for (const auto& n :set_of_needed)
+    {
+      string dependency;
+      if (dependencies.find(n) == dependencies.end()
+	  && find_file_under_dirs(deps_dirs, n, dependency))
+	{
+	  dependencies.insert(dependency);
+	  found_at_least_one_dependency = true;
+	}
+    }
+
+  return found_at_least_one_dependency;
+}
+
+/// For each binary of a vector of binaries, if the binary is present
+/// in at least one of the directories listed in a given vector,
+/// construct a corpus and add it to a corpus group.
+///
+/// @param reader the reader used to read the binaries into an ABI corpus.
+///
+/// @param binaries the vector of binaries to read and add to a corpus
+/// group.
+///
+/// @param deps_dirs the vector of directories where to look for the
+/// binaries in @p binaries.
+///
+/// @param group the corpus group to add the corpus.
+void
+add_binaries_into_corpus_group(const fe_iface_sptr&	reader,
+			       const vector<string>&	binaries,
+			       const vector<string>&	deps_dirs,
+			       corpus_group&		group)
+{
+  vector<string> bins;
+
+  for (const auto& b : binaries)
+    {
+      string bin;
+      if (find_file_under_dirs(deps_dirs, b, bin))
+	bins.push_back(bin);
+    }
+
+  for (const auto& b : bins)
+    {
+      if (group.has_corpus(b))
+	continue;
+
+      reader->initialize(b);
+      fe_iface::status stat = fe_iface::STATUS_UNKNOWN;
+      corpus_sptr c = reader->read_corpus(stat);
+      if (c && (stat & fe_iface::STATUS_OK))
+	group.add_corpus(c);
+    }
+}
+
+/// For each dependency of a given corpus, if it is present in at
+/// least one of the directories listed in a given vector, construct a
+/// corpus and add it to a corpus group.
+///
+/// @param reader the reader used to read the binaries into an ABI corpus.
+///
+/// @param korpus the corpus to consider.
+///
+/// @param deps_dirs the vector of directories where to look for the
+/// dependencies of @p korpus.
+///
+/// @param group the corpus group to add the corpus.
+void
+add_dependencies_into_corpus_group(const fe_iface_sptr&	reader,
+				   const corpus&		korpus,
+				   const vector<string>&	deps_dirs,
+				   corpus_group&		group)
+
+{
+  set<string> deps;
+  if (!get_dependencies(korpus, deps_dirs, deps))
+    return;
+
+  for (const auto& dep: deps)
+    {
+      if (group.has_corpus(dep))
+	continue;
+
+      reader->initialize(dep);
+      fe_iface::status stat = fe_iface::STATUS_UNKNOWN;
+      corpus_sptr c = reader->read_corpus(stat);
+      if (c && (stat & fe_iface::STATUS_OK))
+	{
+	  group.add_corpus(c);
+	  add_dependencies_into_corpus_group(reader, *c, deps_dirs, group);
+	}
+    }
+}
+
+/// Create a corpus group made of a given korpus and a set of binaries
+/// found in a set of directories.
+///
+/// @param reader the reader to use to read the binaries.
+///
+/// @param korpus the ABI corpus to add to the corpus group.
+///
+/// @param binaries the set of binaries to add to the corpus group, if
+/// they are present one of the directories denoted by the vector @p
+/// deps_dirs.
+///
+/// @param bins_dirs the directories where the binaries listed in @p
+/// binaries are to be found.
+///
+/// @return a corpus group made of @p korpus and the binaries listed
+/// in @p binaries and found in at least one of the directories found
+/// in @p bins_dirs.
+corpus_group_sptr
+stick_corpus_and_binaries_into_corpus_group(const fe_iface_sptr&	reader,
+					    const corpus_sptr&		korpus,
+					    const vector<string>&	binaries,
+					    const vector<string>&	bins_dirs)
+{
+    corpus_group_sptr result (new corpus_group(korpus->get_environment(),
+					       korpus->get_path()));
+    result->add_corpus(korpus);
+
+    add_binaries_into_corpus_group(reader, binaries, bins_dirs, *result);
+
+    return result;
+}
+
+/// Create a corpus group made of a given korpus and the subset of its
+/// dependencies that can be found found in a set of directories.
+///
+/// @param reader the reader to use to read the binaries.
+///
+/// @param korpus the ABI corpus to add to the corpus group along with
+/// its dependencies that can be found in a subset of directories.
+///
+/// @param deps_dirs the directories where the dependencies of the ABI
+/// corpus denoted by @p korpus binaries are to be found.
+///
+/// @return a corpus group made of @p korpus and the subset of its
+/// dependencies found in at least one of the directories denoted by
+/// @p deps_dirs.
+corpus_group_sptr
+stick_corpus_and_dependencies_into_corpus_group(const fe_iface_sptr&	reader,
+						const corpus_sptr&	korpus,
+						const vector<string>&	deps_dirs)
+{
+  corpus_group_sptr result (new corpus_group(korpus->get_environment(),
+					     korpus->get_path()));
+  result->add_corpus(korpus);
+
+  add_dependencies_into_corpus_group(reader, *korpus, deps_dirs, *result);
+
+  return result;
+}
+
 /// If we were given suppression specification files or kabi whitelist
 /// files, this function parses those, come up with suppression
 /// specifications as a result, and set them to the read context.
@@ -2399,10 +2638,10 @@ find_file_under_dir(const string& root_dir,
 ///
 /// @param opts the options to consider.
 static void
-load_generate_apply_suppressions(elf_based_reader &rdr,
-				 vector<string>& suppr_paths,
-				 vector<string>& kabi_whitelist_paths,
-				 suppressions_type& supprs)
+load_generate_apply_suppressions(elf_based_reader&	rdr,
+				 vector<string>&	suppr_paths,
+				 vector<string>&	kabi_whitelist_paths,
+				 suppressions_type&	supprs)
 {
   if (supprs.empty())
     {

@@ -366,6 +366,8 @@ public:
 
   void add_corpus(const corpus_sptr&);
 
+  bool has_corpus(const string&);
+
   const corpora_type&
   get_corpora() const;
 
