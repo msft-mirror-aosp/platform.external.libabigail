@@ -662,7 +662,8 @@ class Brew(object):
         # I am instructing the http client to avoid verifying SSL
         # certificates by default as some Koji server instance might
         # use self-signed certficates that can't be easily verified.
-        self.session.opts.setdefault('no_ssl_verify', True)
+        if (hasattr(self.session, 'opts')):
+            self.session.opts.setdefault('no_ssl_verify', True)
 
     @log_call
     def listRPMs(self, buildID=None, arches=None, selector=None):
