@@ -659,6 +659,10 @@ class Brew(object):
         used to access koji XMLRPC APIs.
         """
         self.session = koji.ClientSession(baseurl)
+        # I am instructing the http client to avoid verifying SSL
+        # certificates by default as some Koji server instance might
+        # use self-signed certficates that can't be easily verified.
+        self.session.opts.setdefault('no_ssl_verify', True)
 
     @log_call
     def listRPMs(self, buildID=None, arches=None, selector=None):
