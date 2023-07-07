@@ -28,7 +28,7 @@ Variables changes summary: 0 Removed, 0 Changed, 3 Added variables
   [A] 'function void lttng_event_destroy(lttng_event*)'
   [A] 'function const lttng_userspace_probe_location* lttng_event_get_userspace_probe_location(const lttng_event*)'
   [A] 'function int lttng_event_set_userspace_probe_location(lttng_event*, lttng_userspace_probe_location*)'
-  [A] 'function lttng_notification_channel_status lttng_notification_channel_has_pending_notification(lttng_notification_channel*, bool*)'
+  [A] 'function lttng_notification_channel_status lttng_notification_channel_has_pending_notification(lttng_notification_channel*, _Bool*)'
   [A] 'function int lttng_rotate_session(const char*, lttng_rotation_immediate_descriptor*, lttng_rotation_handle**)'
   [A] 'function void lttng_rotation_handle_destroy(lttng_rotation_handle*)'
   [A] 'function lttng_rotation_status lttng_rotation_handle_get_archive_location(lttng_rotation_handle*, const lttng_trace_archive_location**)'
@@ -91,8 +91,8 @@ Variables changes summary: 0 Removed, 0 Changed, 3 Added variables
         type size hasn't changed
         3 data member changes:
           type of 'action_validate_cb validate' changed:
-            underlying type 'bool (lttng_action*)*' changed:
-              in pointed to type 'function type bool (lttng_action*)':
+            underlying type '_Bool (lttng_action*)*' changed:
+              in pointed to type 'function type _Bool (lttng_action*)':
                 parameter 1 of type 'lttng_action*' has sub-type changes:
                   pointed to type 'struct lttng_action' changed, as being reported
           type of 'action_serialize_cb serialize' changed:
@@ -146,8 +146,8 @@ Variables changes summary: 0 Removed, 0 Changed, 3 Added variables
                 'lttng_condition_type::LTTNG_CONDITION_TYPE_SESSION_ROTATION_ONGOING' value '103'
                 'lttng_condition_type::LTTNG_CONDITION_TYPE_SESSION_ROTATION_COMPLETED' value '104'
             type of 'condition_validate_cb validate' changed:
-              underlying type 'bool (const lttng_condition*)*' changed:
-                in pointed to type 'function type bool (const lttng_condition*)':
+              underlying type '_Bool (const lttng_condition*)*' changed:
+                in pointed to type 'function type _Bool (const lttng_condition*)':
                   parameter 1 of type 'const lttng_condition*' has sub-type changes:
                     in pointed to type 'const lttng_condition':
                       unqualified underlying type 'struct lttng_condition' changed, as being reported
@@ -166,8 +166,8 @@ Variables changes summary: 0 Removed, 0 Changed, 3 Added variables
                       entity changed from 'char' to 'struct lttng_dynamic_buffer'
                       type size changed from 8 to 192 (in bits)
             type of 'condition_equal_cb equal' changed:
-              underlying type 'bool (const lttng_condition*, const lttng_condition*)*' changed:
-                in pointed to type 'function type bool (const lttng_condition*, const lttng_condition*)':
+              underlying type '_Bool (const lttng_condition*, const lttng_condition*)*' changed:
+                in pointed to type 'function type _Bool (const lttng_condition*, const lttng_condition*)':
                   parameter 1 of type 'const lttng_condition*' has sub-type changes:
                     in pointed to type 'const lttng_condition':
                       unqualified underlying type 'struct lttng_condition' changed, as being reported
@@ -360,7 +360,7 @@ Variables changes summary: 0 Removed, 0 Changed, 3 Added variables
         in pointed to type 'struct lttng_notification':
           type size changed from 192 to 128 (in bits)
           1 data member deletion:
-            'bool owns_elements', at offset 128 (in bits)
+            '_Bool owns_elements', at offset 128 (in bits)
           2 data member changes:
             type of 'lttng_condition* condition' changed:
               pointed to type 'struct lttng_condition' changed, as reported earlier
