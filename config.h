@@ -249,6 +249,9 @@
 /* has rpm/zstd support */
 #define WITH_RPM_ZSTD 1
 
+/* compile support of abilint --show-type-use */
+/* #undef WITH_SHOW_TYPE_USE_IN_ABILINT */
+
 /* compile the GNU tar archive support in abipkgdiff */
 #define WITH_TAR 1
 
