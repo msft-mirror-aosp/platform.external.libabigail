@@ -739,13 +739,15 @@ if test x$CHECK_DEPS_FOR_FEDABIPKGDIFF = xyes; then
   # urllib.parse.  Oh well.
   if test x$PYTHON = xpython3; then
      URLPARSE_MODULE=urllib.parse
+     IMPORT_MODULE=importlib.machinery
   else
      URLPARSE_MODULE=urlparse
+     IMPORT_MODULE=imp
   fi
 
   REQUIRED_PYTHON_MODULES_FOR_FEDABIPKGDIFF="\
    argparse logging os re subprocess sys $URLPARSE_MODULE \
-   xdg koji mock rpm imp tempfile mimetypes shutil six"
+   xdg koji mock rpm $IMPORT_MODULE tempfile mimetypes shutil six"
 
   AX_CHECK_PYTHON_MODULES([$REQUIRED_PYTHON_MODULES_FOR_FEDABIPKGDIFF],
 			  [$PYTHON],
