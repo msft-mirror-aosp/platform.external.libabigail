@@ -1,0 +1,81 @@
+Functions changes summary: 0 Removed, 17 Changed, 0 Added functions
+Variables changes summary: 0 Removed, 3 Changed, 0 Added variables
+
+17 functions with some indirect sub-type change:
+
+  [C] 'function void* aligned_alloc(size_t, size_t)' has some indirect sub-type changes:
+    parameter 1 of type 'typedef size_t' changed:
+      underlying type 'long unsigned int' changed:
+        type name changed from 'long unsigned int' to 'unsigned long'
+        type size hasn't changed
+    parameter 2 of type 'typedef size_t' changed:
+      underlying type 'long unsigned int' changed:
+        type name changed from 'long unsigned int' to 'unsigned long'
+        type size hasn't changed
+
+  [C] 'function void* calloc(size_t, size_t)' has some indirect sub-type changes:
+
+  [C] 'function int mallctl(const char*, void*, size_t*, void*, size_t)' has some indirect sub-type changes:
+    parameter 3 of type 'size_t*' changed:
+      pointed to type 'typedef size_t' changed, as reported earlier
+    parameter 5 of type 'typedef size_t' changed:
+      underlying type 'long unsigned int' changed:
+        type name changed from 'long unsigned int' to 'unsigned long'
+        type size hasn't changed
+
+  [C] 'function int mallctlbymib(const size_t*, size_t, void*, size_t*, void*, size_t)' has some indirect sub-type changes:
+    parameter 1 of type 'const size_t*' changed:
+      in pointed to type 'const size_t':
+    parameter 4 of type 'size_t*' changed:
+      pointed to type 'typedef size_t' changed, as reported earlier
+    parameter 6 of type 'typedef size_t' changed:
+      underlying type 'long unsigned int' changed:
+        type name changed from 'long unsigned int' to 'unsigned long'
+        type size hasn't changed
+
+  [C] 'function int mallctlnametomib(const char*, size_t*, size_t*)' has some indirect sub-type changes:
+    parameter 2 of type 'size_t*' changed:
+      pointed to type 'typedef size_t' changed, as reported earlier
+
+  [C] 'function void* malloc(size_t)' has some indirect sub-type changes:
+
+  [C] 'function size_t malloc_usable_size(void*)' has some indirect sub-type changes:
+
+  [C] 'function void* mallocx(size_t, int)' has some indirect sub-type changes:
+
+  [C] 'function void* memalign(size_t, size_t)' has some indirect sub-type changes:
+
+  [C] 'function size_t nallocx(size_t, int)' has some indirect sub-type changes:
+
+  [C] 'function int posix_memalign(void**, size_t, size_t)' has some indirect sub-type changes:
+    parameter 3 of type 'typedef size_t' changed:
+      underlying type 'long unsigned int' changed:
+        type name changed from 'long unsigned int' to 'unsigned long'
+        type size hasn't changed
+
+  [C] 'function void* rallocx(void*, size_t, int)' has some indirect sub-type changes:
+
+  [C] 'function void* realloc(void*, size_t)' has some indirect sub-type changes:
+
+  [C] 'function size_t sallocx(void*, int)' has some indirect sub-type changes:
+
+  [C] 'function void sdallocx(void*, size_t, int)' has some indirect sub-type changes:
+
+  [C] 'function void* valloc(size_t)' has some indirect sub-type changes:
+
+  [C] 'function size_t xallocx(void*, size_t, size_t, int)' has some indirect sub-type changes:
+
+3 Changed variables:
+
+  [C] 'void* (typedef size_t)* __malloc_hook' was changed:
+    type of variable changed:
+      in pointed to type 'function type void* (typedef size_t)':
+
+  [C] 'void* (typedef size_t, typedef size_t)* __memalign_hook' was changed:
+    type of variable changed:
+      in pointed to type 'function type void* (typedef size_t, typedef size_t)':
+
+  [C] 'void* (void*, typedef size_t)* __realloc_hook' was changed:
+    type of variable changed:
+      in pointed to type 'function type void* (void*, typedef size_t)':
+
