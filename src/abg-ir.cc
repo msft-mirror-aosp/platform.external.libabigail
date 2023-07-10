@@ -23753,8 +23753,8 @@ method_decl::set_linkage_name(const string& l)
 	{
 	  if (method_decl_sptr m = cl->find_member_function_sptr(old_lname))
 	    {
-	      if (m.get() == this)
-		cl->priv_->mem_fns_map_.erase(old_lname);
+	      ABG_ASSERT(m.get() == this);
+	      cl->priv_->mem_fns_map_.erase(old_lname);
 	    }
 	}
     }
