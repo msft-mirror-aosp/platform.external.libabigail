@@ -5157,7 +5157,7 @@ build_class_decl(reader&		rdr,
 		  set_member_function_is_ctor(m, is_ctor);
 		  set_member_function_is_dtor(m, is_dtor);
 		  set_member_function_is_const(m, is_const);
-		  rdr.map_xml_node_to_decl(n, decl);
+		  rdr.map_xml_node_to_decl(p, m);
 		  break;
 		}
 	    }
