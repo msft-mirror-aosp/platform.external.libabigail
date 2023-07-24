@@ -2184,7 +2184,7 @@ public:
       tools_utils::timer t;
       if (do_log())
 	{
-	  cerr << "building the libabigail internal representation ...";
+	  cerr << "building the libabigail internal representation ...\n";
 	  t.start();
 	}
       // And now walk all the DIEs again to build the libabigail IR.
@@ -2216,8 +2216,9 @@ public:
       if (do_log())
 	{
 	  t.stop();
-	  cerr << " DONE@" << corpus()->get_path()
-	       << ":"
+	  cerr << "building the libabigail internal representation "
+	       << "DONE for corpus << corpus()->get_path()"
+	       << " in :"
 	       << t
 	       << "\n";
 
@@ -2308,9 +2309,9 @@ public:
       if (do_log())
 	{
 	  t.stop();
-	  cerr << "late type canonicalizing DONE@"
+	  cerr << "late type canonicalizing DONE for "
 	       << corpus()->get_path()
-	       << ":"
+	       << " in :"
 	       << t
 	       << "\n";
 	}
@@ -4595,10 +4596,10 @@ public:
     tools_utils::timer cn_timer;
     if (do_log())
       {
-	cerr << "going to canonicalize types";
+	cerr << "DWARF Reader is going to canonicalize types";
 	corpus_sptr c = corpus();
 	if (c)
-	  cerr << " of corpus " << corpus()->get_path();
+	  cerr << " of corpus " << corpus()->get_path() << "\n";
 	cn_timer.start();
       }
 
