@@ -15039,7 +15039,23 @@ canonicalize(type_base_sptr t)
   if (t->get_canonical_type())
     return t->get_canonical_type();
 
+  if (t->get_environment().priv_->do_log())
+    std::cerr << "Canonicalization of type '"
+	      << t->get_pretty_representation(true, true)
+	      << "/@#" << std::hex << t.get() << ": ";
+
+  tools_utils::timer tmr;
+
+  if (t->get_environment().priv_->do_log())
+    tmr.start();
   type_base_sptr canonical = type_base::get_canonical_type_for(t);
+
+  if (t->get_environment().priv_->do_log())
+    tmr.stop();
+
+  if (t->get_environment().priv_->do_log())
+    std::cerr << tmr << "\n";
+
   maybe_adjust_canonical_type(canonical, t);
 
   t->priv_->canonical_type = canonical;

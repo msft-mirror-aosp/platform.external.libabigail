@@ -494,6 +494,7 @@ struct environment::priv
   bool					decl_only_class_equals_definition_;
   bool					use_enum_binary_only_equality_;
   bool					allow_type_comparison_results_caching_;
+  bool					do_log_;
   optional<bool>			analyze_exported_interfaces_only_;
 #ifdef WITH_DEBUG_SELF_COMPARISON
   bool					self_comparison_debug_on_;
@@ -520,7 +521,8 @@ struct environment::priv
       do_on_the_fly_canonicalization_(true),
       decl_only_class_equals_definition_(false),
       use_enum_binary_only_equality_(true),
-      allow_type_comparison_results_caching_(false)
+      allow_type_comparison_results_caching_(false),
+      do_log_(false)
 #ifdef WITH_DEBUG_SELF_COMPARISON
     ,
       self_comparison_debug_on_(false)
@@ -552,6 +554,14 @@ struct environment::priv
   bool
   allow_type_comparison_results_caching() const
   {return allow_type_comparison_results_caching_;}
+
+  void
+  do_log(bool f)
+  {do_log_ = f;}
+
+  bool
+  do_log() const
+  {return do_log_;}
 
   /// Cache the result of comparing two sub-types.
   ///
@@ -1321,8 +1331,13 @@ canonicalize_types(const input_iterator& begin,
     return;
 
   // First, let's compute the canonical type of this type.
-  for (auto t = begin; t != end; ++t)
-    canonicalize(deref(t));
+  for (auto t = begin, i = 0; t != end; ++t, ++i)
+    {
+      if (deref(t)->get_environment().priv_->do_log())
+	std::cerr << "#" << std::dec << i << " ";
+
+      canonicalize(deref(t));
+    }
 
 #ifdef WITH_DEBUG_CT_PROPAGATION
   // Then now, make sure that all types -- which propagated canonical

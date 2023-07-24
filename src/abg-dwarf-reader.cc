@@ -2154,6 +2154,8 @@ public:
       env().set_self_comparison_debug_input(corpus());
 #endif
 
+    env().priv_->do_log(do_log());
+
     // Walk all the DIEs of the debug info to build a DIE -> parent map
     // useful for get_die_parent() to work.
     {
