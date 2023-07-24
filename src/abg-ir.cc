@@ -1479,6 +1479,8 @@ translation_unit::bind_function_type_life_time(function_type_sptr ftype) const
     ABG_ASSERT(existing_tu == this);
   else
     ftype->set_translation_unit(const_cast<translation_unit*>(this));
+
+  maybe_update_types_lookup_map(ftype);
 }
 
 /// This implements the ir_traversable_base::traverse virtual
@@ -14198,6 +14200,8 @@ maybe_update_types_lookup_map(const decl_base_sptr& decl)
     maybe_update_types_lookup_map(array_type);
   else if (array_type_def::subrange_sptr subrange_type = is_subrange_type(decl))
     maybe_update_types_lookup_map(subrange_type);
+  else if (function_type_sptr fn_type = is_function_type(decl))
+    maybe_update_types_lookup_map(fn_type);
   else
     ABG_ASSERT_NOT_REACHED;
 }
@@ -14218,6 +14222,8 @@ maybe_update_types_lookup_map(const type_base_sptr& type)
 {
   if (decl_base_sptr decl = get_type_declaration(type))
     maybe_update_types_lookup_map(decl);
+  else if (function_type_sptr fn_type = is_function_type(type))
+    maybe_update_types_lookup_map(fn_type);
   else
     ABG_ASSERT_NOT_REACHED;
 }
