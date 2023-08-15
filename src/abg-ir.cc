@@ -1041,7 +1041,10 @@ return_comparison_result(T& l, T& r, bool value,
 	  // eventually fails.
 	  env.priv_->add_to_types_with_non_confirmed_propagated_ct(is_type(&r));
 	}
-      else if (value == true && env.priv_->right_type_comp_operands_.empty())
+      else if (value == true
+	       && env.priv_->right_type_comp_operands_.empty()
+	       && is_type(&r)->priv_->canonical_type_propagated()
+	       && !is_type(&r)->priv_->propagated_canonical_type_confirmed())
 	{
 	  // The type provided in the 'r' argument is the type that is
 	  // being canonicalized; 'r' is not a mere subtype being
@@ -1052,7 +1055,9 @@ return_comparison_result(T& l, T& r, bool value,
 	  // "canonical type propagation" optimization.
 	  env.priv_->confirm_ct_propagation(&r);
 	}
-      else if (value == true)
+      else if (value == true
+	       && is_type(&r)->priv_->canonical_type_propagated()
+	       && !is_type(&r)->priv_->propagated_canonical_type_confirmed())
 	// In any other case, we are not sure if propagated types
 	// should be confirmed yet.  So let's mark them as such.
 	env.priv_->add_to_types_with_non_confirmed_propagated_ct(is_type(&r));
