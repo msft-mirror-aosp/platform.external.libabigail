@@ -4214,16 +4214,16 @@ build_function_type(reader&	rdr,
     {
       method_class_type =
 	is_class_or_union_type(rdr.build_or_get_type_decl(method_class_id,
-							   /*add_decl_to_scope=*/true));
+							  /*add_decl_to_scope=*/true));
       ABG_ASSERT(method_class_type);
     }
 
- function_type_sptr fn_type(is_method_t
-			    ? new method_type(method_class_type,
-					      /*is_const=*/false,
-					      size, align)
-			    : new function_type(return_type,
-						parms, size, align));
+  function_type_sptr fn_type(is_method_t
+			     ? new method_type(method_class_type,
+					       /*is_const=*/false,
+					       size, align)
+			     : new function_type(return_type,
+						 parms, size, align));
 
   rdr.get_translation_unit()->bind_function_type_life_time(fn_type);
   rdr.key_type_decl(fn_type, id);
