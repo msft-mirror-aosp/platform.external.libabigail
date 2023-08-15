@@ -20257,8 +20257,8 @@ equals(const function_type& l, const function_type& r, change_kind* k)
     // comparing them all over again.
     bool cached_result = false;
     if (l.get_environment().priv_->is_type_comparison_cached(l, r,
-							      cached_result))
-      return cached_result;
+							     cached_result))
+      ABG_RETURN(cached_result);
   }
 
   mark_types_as_being_compared(l, r);
@@ -24251,7 +24251,7 @@ equals(const class_decl& l, const class_decl& r, change_kind* k)
     // over again.
     bool result = false;
     if (l.get_environment().priv_->is_type_comparison_cached(l, r, result))
-      return result;
+      ABG_RETURN(result);
   }
 
   // if one of the classes is declaration-only then we take a fast
@@ -25438,7 +25438,7 @@ equals(const union_decl& l, const union_decl& r, change_kind* k)
     // over again.
     bool result = false;
     if (l.get_environment().priv_->is_type_comparison_cached(l, r, result))
-      return result;
+      ABG_RETURN(result);
   }
 
   bool result = equals(static_cast<const class_or_union&>(l),
