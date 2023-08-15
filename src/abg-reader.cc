@@ -1397,11 +1397,11 @@ build_function_parameter (reader&, const xmlNodePtr);
 
 static function_decl_sptr
 build_function_decl(reader&, const xmlNodePtr,
-		    class_or_union_sptr, bool);
+		    class_or_union_sptr, bool, bool);
 
 static function_decl_sptr
 build_function_decl_if_not_suppressed(reader&, const xmlNodePtr,
-				      class_or_union_sptr, bool);
+				      class_or_union_sptr, bool, bool);
 
 static bool
 function_is_suppressed(const reader& rdr,
@@ -3440,16 +3440,21 @@ build_function_parameter(reader& rdr, const xmlNodePtr node)
 /// shared_ptr<function_decl> that is returned is then really a
 /// shared_ptr<method_decl>.
 ///
-/// @param add_to_current_scope if set to yes, the resulting of
+/// @param add_to_current_scope if set to yes, the result of
 /// this function is added to its current scope.
+///
+/// @param add_to_exported_decls if set to yes, the resulting of this
+/// function is added to the set of decls exported by the current
+/// corpus being built.
 ///
 /// @return a pointer to a newly created function_decl upon successful
 /// completion, a null pointer otherwise.
 static function_decl_sptr
-build_function_decl(reader&	rdr,
+build_function_decl(reader&		rdr,
 		    const xmlNodePtr	node,
 		    class_or_union_sptr as_method_decl,
-		    bool		add_to_current_scope)
+		    bool		add_to_current_scope,
+		    bool		add_to_exported_decls)
 {
   function_decl_sptr nil;
 
@@ -3555,7 +3560,8 @@ build_function_decl(reader&	rdr,
 
   rdr.maybe_canonicalize_type(fn_type, !add_to_current_scope);
 
-  rdr.maybe_add_fn_to_exported_decls(fn_decl.get());
+  if (add_to_exported_decls)
+    rdr.maybe_add_fn_to_exported_decls(fn_decl.get());
 
   return fn_decl;
 }
@@ -3578,6 +3584,10 @@ build_function_decl(reader&	rdr,
 /// @param add_to_current_scope if set to yes, the resulting of
 /// this function is added to its current scope.
 ///
+/// @param add_to_exported_decls if set to yes, the resulting of this
+/// function is added to the set of decls exported by the current
+/// corpus being built.
+///
 /// @return a pointer to a newly created function_decl upon successful
 /// completion.  If the function was suppressed by a suppression
 /// specification then returns nil.
@@ -3585,7 +3595,8 @@ static function_decl_sptr
 build_function_decl_if_not_suppressed(reader&			rdr,
 				      const xmlNodePtr		node,
 				      class_or_union_sptr	as_method_decl,
-				      bool			add_to_current_scope)
+				      bool			add_to_current_scope,
+				      bool			add_to_exported_decls)
 {
   function_decl_sptr fn;
 
@@ -3596,7 +3607,8 @@ build_function_decl_if_not_suppressed(reader&			rdr,
     ;
   else
     fn = build_function_decl(rdr, node, as_method_decl,
-			     add_to_current_scope);
+			     add_to_current_scope,
+			     add_to_exported_decls);
   return fn;
 }
 
@@ -5148,7 +5160,8 @@ build_class_decl(reader&		rdr,
 	    {
 	      if (function_decl_sptr f =
 		  build_function_decl_if_not_suppressed(rdr, p, decl,
-							/*add_to_cur_sc=*/true))
+							/*add_to_cur_sc=*/true,
+							/*add_to_exported_decls=*/false))
 		{
 		  method_decl_sptr m = is_method_decl(f);
 		  ABG_ASSERT(m);
@@ -5161,6 +5174,7 @@ build_class_decl(reader&		rdr,
 		  set_member_function_is_dtor(m, is_dtor);
 		  set_member_function_is_const(m, is_const);
 		  rdr.map_xml_node_to_decl(p, m);
+		  rdr.maybe_add_fn_to_exported_decls(f.get());
 		  break;
 		}
 	    }
@@ -5505,7 +5519,8 @@ build_union_decl(reader& rdr,
 	    {
 	      if (function_decl_sptr f =
 		  build_function_decl_if_not_suppressed(rdr, p, decl,
-							/*add_to_cur_sc=*/true))
+							/*add_to_cur_sc=*/true,
+							/*add_to_exported_decls=*/false))
 		{
 		  method_decl_sptr m = is_method_decl(f);
 		  ABG_ASSERT(m);
@@ -5514,6 +5529,7 @@ build_union_decl(reader& rdr,
 		  set_member_function_is_ctor(m, is_ctor);
 		  set_member_function_is_dtor(m, is_dtor);
 		  set_member_function_is_const(m, is_const);
+		  rdr.maybe_add_fn_to_exported_decls(f.get());
 		  break;
 		}
 	    }
@@ -5626,7 +5642,8 @@ build_function_tdecl(reader& rdr,
 	}
       else if (function_decl_sptr f =
 	       build_function_decl_if_not_suppressed(rdr, n, class_decl_sptr(),
-					 /*add_to_current_scope=*/true))
+						     /*add_to_current_scope=*/true,
+						     /*add_to_exported_decls=*/true))
 	fn_tmpl_decl->set_pattern(f);
     }
 
@@ -6204,7 +6221,8 @@ handle_function_decl(reader&	rdr,
 		     bool		add_to_current_scope)
 {
   return build_function_decl_if_not_suppressed(rdr, node, class_decl_sptr(),
-					       add_to_current_scope);
+					       add_to_current_scope,
+					       /*add_to_exported_decls=*/true);
 }
 
 /// Parse a 'class-decl' xml element.

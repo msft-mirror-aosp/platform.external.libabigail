@@ -10564,6 +10564,21 @@ is_declaration_only_class_or_union_type(const type_base *t,
   return false;
 }
 
+
+/// Test wheter a type is a declaration-only class.
+///
+/// @param t the type to considier.
+///
+/// @param look_through_decl_only if true, then look through the
+/// decl-only class to see if it actually has a class definition in
+/// the same ABI corpus.
+///
+/// @return true iff @p t is a declaration-only class.
+bool
+is_declaration_only_class_or_union_type(const type_base_sptr& t,
+					bool look_through_decl_only)
+{return is_declaration_only_class_or_union_type(t.get(), look_through_decl_only);}
+
 /// Test wheter a type is a declaration-only class.
 ///
 /// @param t the type to considier.
@@ -21366,6 +21381,19 @@ function_decl::get_id() const
       const environment& env = get_type()->get_environment();
       if (elf_symbol_sptr s = get_symbol())
 	{
+	  string virtual_member_suffix;
+	  if (is_member_function(this))
+	      {
+		method_decl* m = is_method_decl(this);
+		ABG_ASSERT(m);
+		if (get_member_function_is_virtual(m))
+		  {
+		    if (is_declaration_only_class_or_union_type
+			(m->get_type()->get_class_type(),
+			 /*look_through_decl_only=*/true))
+		      virtual_member_suffix += "/o";
+		  }
+	      }
 	  if (s->has_aliases())
 	    // The symbol has several aliases, so let's use a scheme
 	    // that allows all aliased functions to have different
@@ -21374,6 +21402,9 @@ function_decl::get_id() const
 	  else
 	    // Let's use the full symbol name with its version as ID.
 	    priv_->id_ = env.intern(s->get_id_string());
+
+	  if (!virtual_member_suffix.empty())
+	    priv_->id_ = env.intern(priv_->id_ + virtual_member_suffix);
 	}
       else if (!get_linkage_name().empty())
 	priv_->id_= env.intern(get_linkage_name());
