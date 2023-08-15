@@ -15006,7 +15006,11 @@ maybe_adjust_canonical_type(const type_base_sptr& canonical,
 		  // class doesn't have that member function.  Let's
 		  // copy that member function to the canonical class
 		  // then.
-		  copy_member_function (canonical_class, *i);
+		  {
+		    method_decl_sptr method =
+		      copy_member_function (canonical_class, *i);
+		    canonicalize(method->get_type());
+		  }
 	      }
 	}
     }
@@ -22873,7 +22877,7 @@ copy_member_function(const class_or_union_sptr& t, const method_decl* method)
 					    old_type->get_is_const(),
 					    old_type->get_size_in_bits(),
 					    old_type->get_alignment_in_bits()));
-  keep_type_alive(new_type);
+  t->get_translation_unit()->bind_function_type_life_time(new_type);
 
   method_decl_sptr
     new_method(new method_decl(method->get_name(),
