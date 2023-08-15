@@ -4720,13 +4720,6 @@ build_typedef_decl(reader&	rdr,
     id = CHAR_STR(s);
   ABG_ASSERT(!id.empty());
 
-  if (type_base_sptr t = rdr.get_type_decl(id))
-    {
-      typedef_decl_sptr result = is_typedef(t);
-      ABG_ASSERT(result);
-      return result;
-    }
-
   string name;
   if (xml_char_sptr s = XML_NODE_GET_ATTRIBUTE(node, "name"))
     name = xml::unescape_xml_string(CHAR_STR(s));

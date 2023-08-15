@@ -15464,13 +15464,9 @@ build_ir_node_from_die(reader&	rdr,
 
     case DW_TAG_typedef:
       {
-	typedef_decl_sptr t;
-	t = is_typedef(scope->find_member_type(die_name(die)));
-
-	if (!t)
-	  t = build_typedef_type(rdr, die,
-				 called_from_public_decl,
-				 where_offset);
+	typedef_decl_sptr t = build_typedef_type(rdr, die,
+						 called_from_public_decl,
+						 where_offset);
 
 	result = add_decl_to_scope(t, scope);
 	if (result)
