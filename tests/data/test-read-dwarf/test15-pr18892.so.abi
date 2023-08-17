@@ -17126,19 +17126,6 @@
             </data-member>
           </class-decl>
         </member-type>
-        <member-type access='private'>
-          <class-decl name='TransferBatch' size-in-bits='8320' is-struct='yes' visibility='default' filepath='../../.././libsanitizer/sanitizer_common/sanitizer_allocator.h' line='103' column='1' id='type-id-1355'>
-            <data-member access='public' layout-offset-in-bits='0'>
-              <var-decl name='next' type-id='type-id-1356' visibility='default' filepath='../../.././libsanitizer/sanitizer_common/sanitizer_allocator.h' line='104' column='1'/>
-            </data-member>
-            <data-member access='public' layout-offset-in-bits='64'>
-              <var-decl name='count' type-id='type-id-86' visibility='default' filepath='../../.././libsanitizer/sanitizer_common/sanitizer_allocator.h' line='105' column='1'/>
-            </data-member>
-            <data-member access='public' layout-offset-in-bits='128'>
-              <var-decl name='batch' type-id='type-id-183' visibility='default' filepath='../../.././libsanitizer/sanitizer_common/sanitizer_allocator.h' line='106' column='1'/>
-            </data-member>
-          </class-decl>
-        </member-type>
         <data-member access='private' static='yes'>
           <var-decl name='kMinSizeLog' type-id='type-id-141' visibility='default' filepath='../../.././libsanitizer/sanitizer_common/sanitizer_allocator.h' line='90' column='1'/>
         </data-member>
@@ -17199,19 +17186,6 @@
       </class-decl>
       <class-decl name='SizeClassMap&lt;17ul, 64ul, 14ul&gt;' size-in-bits='8' visibility='default' filepath='../../.././libsanitizer/sanitizer_common/sanitizer_allocator.h' line='89' column='1' id='type-id-1496'>
         <member-type access='public'>
-          <class-decl name='TransferBatch' size-in-bits='4224' is-struct='yes' visibility='default' filepath='../../.././libsanitizer/sanitizer_common/sanitizer_allocator.h' line='103' column='1' id='type-id-185'>
-            <data-member access='public' layout-offset-in-bits='0'>
-              <var-decl name='next' type-id='type-id-1357' visibility='default' filepath='../../.././libsanitizer/sanitizer_common/sanitizer_allocator.h' line='104' column='1'/>
-            </data-member>
-            <data-member access='public' layout-offset-in-bits='64'>
-              <var-decl name='count' type-id='type-id-86' visibility='default' filepath='../../.././libsanitizer/sanitizer_common/sanitizer_allocator.h' line='105' column='1'/>
-            </data-member>
-            <data-member access='public' layout-offset-in-bits='128'>
-              <var-decl name='batch' type-id='type-id-1497' visibility='default' filepath='../../.././libsanitizer/sanitizer_common/sanitizer_allocator.h' line='106' column='1'/>
-            </data-member>
-          </class-decl>
-        </member-type>
-        <member-type access='private'>
           <class-decl name='TransferBatch' size-in-bits='4224' is-struct='yes' visibility='default' filepath='../../.././libsanitizer/sanitizer_common/sanitizer_allocator.h' line='103' column='1' id='type-id-185'>
             <data-member access='public' layout-offset-in-bits='0'>
               <var-decl name='next' type-id='type-id-1357' visibility='default' filepath='../../.././libsanitizer/sanitizer_common/sanitizer_allocator.h' line='104' column='1'/>
@@ -21350,22 +21324,6 @@
             </data-member>
             <data-member access='public' layout-offset-in-bits='256'>
               <var-decl name='by_size_log' type-id='type-id-1522' visibility='default' filepath='../../.././libsanitizer/sanitizer_common/sanitizer_allocator.h' line='1216' column='1'/>
-            </data-member>
-          </class-decl>
-        </member-type>
-        <member-type access='private'>
-          <class-decl name='Header' size-in-bits='256' is-struct='yes' visibility='default' filepath='../../.././libsanitizer/sanitizer_common/sanitizer_allocator.h' line='1186' column='1' id='type-id-1530'>
-            <data-member access='public' layout-offset-in-bits='0'>
-              <var-decl name='map_beg' type-id='type-id-86' visibility='default' filepath='../../.././libsanitizer/sanitizer_common/sanitizer_allocator.h' line='1187' column='1'/>
-            </data-member>
-            <data-member access='public' layout-offset-in-bits='64'>
-              <var-decl name='map_size' type-id='type-id-86' visibility='default' filepath='../../.././libsanitizer/sanitizer_common/sanitizer_allocator.h' line='1188' column='1'/>
-            </data-member>
-            <data-member access='public' layout-offset-in-bits='128'>
-              <var-decl name='size' type-id='type-id-86' visibility='default' filepath='../../.././libsanitizer/sanitizer_common/sanitizer_allocator.h' line='1189' column='1'/>
-            </data-member>
-            <data-member access='public' layout-offset-in-bits='192'>
-              <var-decl name='chunk_idx' type-id='type-id-86' visibility='default' filepath='../../.././libsanitizer/sanitizer_common/sanitizer_allocator.h' line='1190' column='1'/>
             </data-member>
           </class-decl>
         </member-type>

@@ -296,8 +296,6 @@
     <pointer-type-def type-id='862099c6' size-in-bits='64' id='fa310c7c'/>
     <pointer-type-def type-id='a84c031d' size-in-bits='64' id='26a90f95'/>
     <pointer-type-def type-id='26a90f95' size-in-bits='64' id='9b23c9ad'/>
-    <qualified-type-def type-id='e5af4ed4' const='yes' id='a56b5b8f'/>
-    <pointer-type-def type-id='a56b5b8f' size-in-bits='64' id='0d0144bf'/>
     <qualified-type-def type-id='f74dc428' const='yes' id='fd5524d9'/>
     <reference-type-def kind='lvalue' type-id='fd5524d9' size-in-bits='64' id='cc093d6d'/>
     <pointer-type-def type-id='fd5524d9' size-in-bits='64' id='c0092a89'/>
@@ -345,6 +343,8 @@
     <pointer-type-def type-id='5f3aabfe' size-in-bits='64' id='8b0056d4'/>
     <pointer-type-def type-id='c1fdb0b3' size-in-bits='64' id='b01a1663'/>
     <pointer-type-def type-id='c1fdb0b3' size-in-bits='64' id='b01a1664'/>
+    <qualified-type-def type-id='e5af4ed4' const='yes' id='a56b5b8f'/>
+    <pointer-type-def type-id='a56b5b8f' size-in-bits='64' id='0d0144bf'/>
     <namespace-decl name='aaudio'>
       <typedef-decl name='aaudio_stream_id_t' type-id='8f92235e' filepath='frameworks/av/media/libaaudio/src/core/AudioStream.h' line='41' column='1' id='a5eeae98'/>
       <class-decl name='AAudioStreamParameters' visibility='default' is-declaration-only='yes' id='84aa4341'>

@@ -10683,65 +10683,22 @@ pointer_type_def_sptr
 is_pointer_type(const type_or_decl_base_sptr &t)
 {return dynamic_pointer_cast<pointer_type_def>(t);}
 
-/// Test if a type is a pointer to a decl-only class/union.
+
+/// Test if a type is a typedef, pointer or reference to a decl-only
+/// class/union.
+///
+/// This looks into qualified types too.
 ///
 /// @param t the type to consider.
 ///
-/// @return true iff @p t is a pointer to a decl-only class/union.
+/// @return true iff @p t is a type is a typedef, pointer or reference
+/// to a decl-only class/union.
 bool
-is_pointer_to_decl_only_class_or_union_type(const type_or_decl_base* t)
+is_typedef_ptr_or_ref_to_decl_only_class_or_union_type(const type_base* t)
 {
-  const pointer_type_def* ptr = is_pointer_type(t);
-  if (!ptr)
-    return false;
+  const type_base * type =
+    peel_typedef_pointer_or_reference_type(t, /*peel_qual_type=*/true);
 
-  const type_base* type = peel_pointer_type(ptr);
-
-  type = peel_typedef_type(type);
-
-  if (is_declaration_only_class_or_union_type(type,
-					      /*look_through_decl_only=*/true))
-    return true;
-
-  return false;
-}
-
-/// Test if a type is a reference to a decl-only class/union.
-///
-/// @param t the type to consider.
-///
-/// @return true iff @p t is a reference to a decl-only class/union.
-bool
-is_reference_to_decl_only_class_or_union_type(const type_or_decl_base* t)
-{
-    const reference_type_def* ref = is_reference_type(t);
-  if (!ref)
-    return false;
-
-  const type_base* type = peel_reference_type(ref);
-
-  type = peel_typedef_type(type);
-
-  if (is_declaration_only_class_or_union_type(type,
-					      /*look_through_decl_only=*/true))
-    return true;
-
-  return false;
-}
-
-/// Test if a type is a typedef to a decl-only class/union.
-///
-/// @param t the type to consider.
-///
-/// @return true iff @p t is a typedef to a decl-only class/union.
-bool
-is_typedef_to_decl_only_class_or_union_type(const type_or_decl_base* t)
-{
-  const typedef_decl* typdef = is_typedef(t);
-  if (!typdef)
-    return false;
-
-  const type_base* type = peel_typedef_type(typdef);
   if (is_declaration_only_class_or_union_type(type,
 					      /*look_through_decl_only=*/true))
     return true;
@@ -23806,7 +23763,7 @@ method_decl::set_linkage_name(const string& l)
       class_or_union_sptr cl = t->get_class_type();
       method_decl_sptr m(this, sptr_utils::noop_deleter());
       cl->priv_->mem_fns_map_[l] = m;
-      if (!old_lname.empty())
+      if (!old_lname.empty() && l != old_lname)
 	{
 	  if (method_decl_sptr m = cl->find_member_function_sptr(old_lname))
 	    {
@@ -26728,10 +26685,9 @@ is_non_canonicalized_type(const type_base *t)
 	  // that would make a decl-only type co-exists with several
 	  // different definitions of the type in the ABI corpus.
 	  || is_void_pointer_type_equivalent(t)
-	  || is_declaration_only_class_or_union_type(t)
-	  || is_typedef_to_decl_only_class_or_union_type(t)
-	  || is_pointer_to_decl_only_class_or_union_type(t)
-	  || is_reference_to_decl_only_class_or_union_type(t));
+	  || is_declaration_only_class_or_union_type(t,
+						     /*look_through_decl_only=*/true)
+	  || is_typedef_ptr_or_ref_to_decl_only_class_or_union_type(t));
 
 }
 

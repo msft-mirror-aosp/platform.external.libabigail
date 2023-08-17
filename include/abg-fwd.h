@@ -520,13 +520,7 @@ pointer_type_def_sptr
 is_pointer_type(const type_or_decl_base_sptr&);
 
 bool
-is_pointer_to_decl_only_class_or_union_type(const type_or_decl_base*);
-
-bool
-is_reference_to_decl_only_class_or_union_type(const type_or_decl_base*);
-
-bool
-is_typedef_to_decl_only_class_or_union_type(const type_or_decl_base* t);
+is_typedef_ptr_or_ref_to_decl_only_class_or_union_type(const type_base* t);
 
 reference_type_def*
 is_reference_type(type_or_decl_base*);

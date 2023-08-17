@@ -8636,22 +8636,18 @@
     <pointer-type-def type-id='type-id-402' size-in-bits='64' id='type-id-228'/>
     <!-- const cpp_token** -->
     <pointer-type-def type-id='type-id-228' size-in-bits='64' id='type-id-392'/>
-    <!-- const directive -->
-    <qualified-type-def type-id='type-id-403' const='yes' id='type-id-404'/>
-    <!-- const directive* -->
-    <pointer-type-def type-id='type-id-404' size-in-bits='64' id='type-id-361'/>
     <!-- const time_t -->
-    <qualified-type-def type-id='type-id-390' const='yes' id='type-id-405'/>
+    <qualified-type-def type-id='type-id-390' const='yes' id='type-id-403'/>
     <!-- const time_t* -->
-    <pointer-type-def type-id='type-id-405' size-in-bits='64' id='type-id-406'/>
+    <pointer-type-def type-id='type-id-403' size-in-bits='64' id='type-id-404'/>
     <!-- const tm -->
-    <qualified-type-def type-id='type-id-377' const='yes' id='type-id-407'/>
+    <qualified-type-def type-id='type-id-377' const='yes' id='type-id-405'/>
     <!-- const tm* -->
-    <pointer-type-def type-id='type-id-407' size-in-bits='64' id='type-id-408'/>
+    <pointer-type-def type-id='type-id-405' size-in-bits='64' id='type-id-406'/>
     <!-- const uchar -->
-    <qualified-type-def type-id='type-id-391' const='yes' id='type-id-409'/>
+    <qualified-type-def type-id='type-id-391' const='yes' id='type-id-407'/>
     <!-- const uchar* -->
-    <pointer-type-def type-id='type-id-409' size-in-bits='64' id='type-id-220'/>
+    <pointer-type-def type-id='type-id-407' size-in-bits='64' id='type-id-220'/>
     <!-- cpp_buffer* -->
     <pointer-type-def type-id='type-id-323' size-in-bits='64' id='type-id-325'/>
     <!-- cpp_buffer* -->
@@ -8665,9 +8661,9 @@
     <!-- cpp_dir* -->
     <pointer-type-def type-id='type-id-385' size-in-bits='64' id='type-id-251'/>
     <!-- cpp_dir** -->
-    <pointer-type-def type-id='type-id-251' size-in-bits='64' id='type-id-410'/>
+    <pointer-type-def type-id='type-id-251' size-in-bits='64' id='type-id-408'/>
     <!-- cpp_hashnode* (cpp_reader*, const cpp_token*)* -->
-    <pointer-type-def type-id='type-id-411' size-in-bits='64' id='type-id-339'/>
+    <pointer-type-def type-id='type-id-409' size-in-bits='64' id='type-id-339'/>
     <!-- cpp_reader* -->
     <pointer-type-def type-id='type-id-358' size-in-bits='64' id='type-id-285'/>
     <!-- cpp_reader* -->
@@ -8685,21 +8681,21 @@
     <!-- ht_identifier* -->
     <pointer-type-def type-id='type-id-142' size-in-bits='64' id='type-id-388'/>
     <!-- int (cpp_reader*, const char*, int)* -->
-    <pointer-type-def type-id='type-id-412' size-in-bits='64' id='type-id-336'/>
+    <pointer-type-def type-id='type-id-410' size-in-bits='64' id='type-id-336'/>
     <!-- macro_context* -->
     <pointer-type-def type-id='type-id-375' size-in-bits='64' id='type-id-347'/>
     <!-- op* -->
     <pointer-type-def type-id='type-id-263' size-in-bits='64' id='type-id-265'/>
     <!-- time_t* -->
-    <pointer-type-def type-id='type-id-390' size-in-bits='64' id='type-id-413'/>
+    <pointer-type-def type-id='type-id-390' size-in-bits='64' id='type-id-411'/>
     <!-- tm* -->
-    <pointer-type-def type-id='type-id-377' size-in-bits='64' id='type-id-414'/>
+    <pointer-type-def type-id='type-id-377' size-in-bits='64' id='type-id-412'/>
     <!-- tokenrun* -->
     <pointer-type-def type-id='type-id-378' size-in-bits='64' id='type-id-379'/>
     <!-- tokenrun* -->
     <pointer-type-def type-id='type-id-363' size-in-bits='64' id='type-id-293'/>
     <!-- typedef hashnode (hash_table*)* -->
-    <pointer-type-def type-id='type-id-415' size-in-bits='64' id='type-id-374'/>
+    <pointer-type-def type-id='type-id-413' size-in-bits='64' id='type-id-374'/>
     <!-- uchar* -->
     <pointer-type-def type-id='type-id-391' size-in-bits='64' id='type-id-231'/>
     <!-- unsigned char* -->
@@ -8707,23 +8703,27 @@
     <!-- void (cpp_reader*)* -->
     <pointer-type-def type-id='type-id-260' size-in-bits='64' id='type-id-242'/>
     <!-- void (cpp_reader*, const char*)* -->
-    <pointer-type-def type-id='type-id-416' size-in-bits='64' id='type-id-331'/>
+    <pointer-type-def type-id='type-id-414' size-in-bits='64' id='type-id-331'/>
     <!-- void (cpp_reader*, const char*, int, const char*)* -->
-    <pointer-type-def type-id='type-id-417' size-in-bits='64' id='type-id-337'/>
+    <pointer-type-def type-id='type-id-415' size-in-bits='64' id='type-id-337'/>
     <!-- void (cpp_reader*, const cpp_token*, int)* -->
-    <pointer-type-def type-id='type-id-418' size-in-bits='64' id='type-id-329'/>
+    <pointer-type-def type-id='type-id-416' size-in-bits='64' id='type-id-329'/>
     <!-- void (cpp_reader*, const line_map*)* -->
-    <pointer-type-def type-id='type-id-419' size-in-bits='64' id='type-id-330'/>
+    <pointer-type-def type-id='type-id-417' size-in-bits='64' id='type-id-330'/>
     <!-- void (cpp_reader*, typedef source_location)* -->
-    <pointer-type-def type-id='type-id-420' size-in-bits='64' id='type-id-335'/>
+    <pointer-type-def type-id='type-id-418' size-in-bits='64' id='type-id-335'/>
     <!-- void (cpp_reader*, typedef source_location, const cpp_string*)* -->
-    <pointer-type-def type-id='type-id-421' size-in-bits='64' id='type-id-334'/>
+    <pointer-type-def type-id='type-id-419' size-in-bits='64' id='type-id-334'/>
     <!-- void (cpp_reader*, typedef source_location, const unsigned char*, const char*, int, const cpp_token**)* -->
-    <pointer-type-def type-id='type-id-422' size-in-bits='64' id='type-id-332'/>
+    <pointer-type-def type-id='type-id-420' size-in-bits='64' id='type-id-332'/>
     <!-- void (cpp_reader*, typedef source_location, cpp_hashnode*)* -->
-    <pointer-type-def type-id='type-id-423' size-in-bits='64' id='type-id-333'/>
+    <pointer-type-def type-id='type-id-421' size-in-bits='64' id='type-id-333'/>
     <!-- _cpp_strbuf* -->
-    <pointer-type-def type-id='type-id-424' size-in-bits='64' id='type-id-425'/>
+    <pointer-type-def type-id='type-id-422' size-in-bits='64' id='type-id-423'/>
+    <!-- const directive -->
+    <qualified-type-def type-id='type-id-424' const='yes' id='type-id-425'/>
+    <!-- const directive* -->
+    <pointer-type-def type-id='type-id-425' size-in-bits='64' id='type-id-361'/>
     <!-- cpp_savedstate* -->
     <pointer-type-def type-id='type-id-426' size-in-bits='64' id='type-id-367'/>
     <!-- file_hash_entry_pool* -->
@@ -8733,11 +8733,11 @@
     <!-- pragma_entry* -->
     <pointer-type-def type-id='type-id-429' size-in-bits='64' id='type-id-364'/>
     <!-- struct _cpp_strbuf -->
-    <class-decl name='_cpp_strbuf' is-struct='yes' visibility='default' is-declaration-only='yes' id='type-id-424'/>
+    <class-decl name='_cpp_strbuf' is-struct='yes' visibility='default' is-declaration-only='yes' id='type-id-422'/>
     <!-- struct cpp_savedstate -->
     <class-decl name='cpp_savedstate' is-struct='yes' visibility='default' is-declaration-only='yes' id='type-id-426'/>
     <!-- struct directive -->
-    <class-decl name='directive' is-struct='yes' visibility='default' is-declaration-only='yes' id='type-id-403'/>
+    <class-decl name='directive' is-struct='yes' visibility='default' is-declaration-only='yes' id='type-id-424'/>
     <!-- struct file_hash_entry_pool -->
     <class-decl name='file_hash_entry_pool' is-struct='yes' visibility='default' is-declaration-only='yes' id='type-id-427'/>
     <!-- struct if_stack -->
@@ -8899,21 +8899,21 @@
     <!-- time_t time(time_t*) -->
     <function-decl name='time' filepath='/usr/include/time.h' line='186' column='1' visibility='default' binding='global' size-in-bits='64'>
       <!-- parameter of type 'time_t*' -->
-      <parameter type-id='type-id-413'/>
+      <parameter type-id='type-id-411'/>
       <!-- typedef time_t -->
       <return type-id='type-id-390'/>
     </function-decl>
     <!-- tm* localtime(const time_t*) -->
     <function-decl name='localtime' filepath='/usr/include/time.h' line='237' column='1' visibility='default' binding='global' size-in-bits='64'>
       <!-- parameter of type 'const time_t*' -->
-      <parameter type-id='type-id-406'/>
+      <parameter type-id='type-id-404'/>
       <!-- tm* -->
-      <return type-id='type-id-414'/>
+      <return type-id='type-id-412'/>
     </function-decl>
     <!-- char* asctime(const tm*) -->
     <function-decl name='asctime' filepath='/usr/include/time.h' line='255' column='1' visibility='default' binding='global' size-in-bits='64'>
       <!-- parameter of type 'const tm*' -->
-      <parameter type-id='type-id-408'/>
+      <parameter type-id='type-id-406'/>
       <!-- char* -->
       <return type-id='type-id-3'/>
     </function-decl>
@@ -8954,7 +8954,7 @@
       <!-- parameter of type 'typedef size_t' -->
       <parameter type-id='type-id-4'/>
       <!-- parameter of type '_cpp_strbuf*' -->
-      <parameter type-id='type-id-425'/>
+      <parameter type-id='type-id-423'/>
       <!-- bool -->
       <return type-id='type-id-5'/>
     </function-type>
@@ -8974,12 +8974,12 @@
       <!-- parameter of type 'const char*' -->
       <parameter type-id='type-id-1'/>
       <!-- parameter of type 'cpp_dir**' -->
-      <parameter type-id='type-id-410'/>
+      <parameter type-id='type-id-408'/>
       <!-- const char* -->
       <return type-id='type-id-1'/>
     </function-type>
     <!-- cpp_hashnode* (cpp_reader*, const cpp_token*) -->
-    <function-type size-in-bits='64' id='type-id-411'>
+    <function-type size-in-bits='64' id='type-id-409'>
       <!-- parameter of type 'cpp_reader*' -->
       <parameter type-id='type-id-222'/>
       <!-- parameter of type 'const cpp_token*' -->
@@ -8988,14 +8988,14 @@
       <return type-id='type-id-230'/>
     </function-type>
     <!-- hashnode (hash_table*) -->
-    <function-type size-in-bits='64' id='type-id-415'>
+    <function-type size-in-bits='64' id='type-id-413'>
       <!-- parameter of type 'hash_table*' -->
       <parameter type-id='type-id-284'/>
       <!-- typedef hashnode -->
       <return type-id='type-id-286'/>
     </function-type>
     <!-- int (cpp_reader*, const char*, int) -->
-    <function-type size-in-bits='64' id='type-id-412'>
+    <function-type size-in-bits='64' id='type-id-410'>
       <!-- parameter of type 'cpp_reader*' -->
       <parameter type-id='type-id-222'/>
       <!-- parameter of type 'const char*' -->
@@ -9006,7 +9006,7 @@
       <return type-id='type-id-2'/>
     </function-type>
     <!-- void (cpp_reader*, const char*) -->
-    <function-type size-in-bits='64' id='type-id-416'>
+    <function-type size-in-bits='64' id='type-id-414'>
       <!-- parameter of type 'cpp_reader*' -->
       <parameter type-id='type-id-222'/>
       <!-- parameter of type 'const char*' -->
@@ -9015,7 +9015,7 @@
       <return type-id='type-id-99'/>
     </function-type>
     <!-- void (cpp_reader*, const char*, int, const char*) -->
-    <function-type size-in-bits='64' id='type-id-417'>
+    <function-type size-in-bits='64' id='type-id-415'>
       <!-- parameter of type 'cpp_reader*' -->
       <parameter type-id='type-id-222'/>
       <!-- parameter of type 'const char*' -->
@@ -9028,7 +9028,7 @@
       <return type-id='type-id-99'/>
     </function-type>
     <!-- void (cpp_reader*, const cpp_token*, int) -->
-    <function-type size-in-bits='64' id='type-id-418'>
+    <function-type size-in-bits='64' id='type-id-416'>
       <!-- parameter of type 'cpp_reader*' -->
       <parameter type-id='type-id-222'/>
       <!-- parameter of type 'const cpp_token*' -->
@@ -9039,7 +9039,7 @@
       <return type-id='type-id-99'/>
     </function-type>
     <!-- void (cpp_reader*, const line_map*) -->
-    <function-type size-in-bits='64' id='type-id-419'>
+    <function-type size-in-bits='64' id='type-id-417'>
       <!-- parameter of type 'cpp_reader*' -->
       <parameter type-id='type-id-222'/>
       <!-- parameter of type 'const line_map*' -->
@@ -9048,7 +9048,7 @@
       <return type-id='type-id-99'/>
     </function-type>
     <!-- void (cpp_reader*, source_location) -->
-    <function-type size-in-bits='64' id='type-id-420'>
+    <function-type size-in-bits='64' id='type-id-418'>
       <!-- parameter of type 'cpp_reader*' -->
       <parameter type-id='type-id-222'/>
       <!-- parameter of type 'typedef source_location' -->
@@ -9057,7 +9057,7 @@
       <return type-id='type-id-99'/>
     </function-type>
     <!-- void (cpp_reader*, source_location, const cpp_string*) -->
-    <function-type size-in-bits='64' id='type-id-421'>
+    <function-type size-in-bits='64' id='type-id-419'>
       <!-- parameter of type 'cpp_reader*' -->
       <parameter type-id='type-id-222'/>
       <!-- parameter of type 'typedef source_location' -->
@@ -9068,7 +9068,7 @@
       <return type-id='type-id-99'/>
     </function-type>
     <!-- void (cpp_reader*, source_location, const unsigned char*, const char*, int, const cpp_token**) -->
-    <function-type size-in-bits='64' id='type-id-422'>
+    <function-type size-in-bits='64' id='type-id-420'>
       <!-- parameter of type 'cpp_reader*' -->
       <parameter type-id='type-id-222'/>
       <!-- parameter of type 'typedef source_location' -->
@@ -9085,7 +9085,7 @@
       <return type-id='type-id-99'/>
     </function-type>
     <!-- void (cpp_reader*, source_location, cpp_hashnode*) -->
-    <function-type size-in-bits='64' id='type-id-423'>
+    <function-type size-in-bits='64' id='type-id-421'>
       <!-- parameter of type 'cpp_reader*' -->
       <parameter type-id='type-id-222'/>
       <!-- parameter of type 'typedef source_location' -->
