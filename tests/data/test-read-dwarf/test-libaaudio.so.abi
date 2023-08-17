@@ -346,7 +346,7 @@
     <qualified-type-def type-id='e5af4ed4' const='yes' id='a56b5b8f'/>
     <pointer-type-def type-id='a56b5b8f' size-in-bits='64' id='0d0144bf'/>
     <namespace-decl name='aaudio'>
-      <typedef-decl name='aaudio_stream_id_t' type-id='8f92235e' filepath='frameworks/av/media/libaaudio/src/core/AudioStream.h' line='41' column='1' id='a5eeae98'/>
+      <typedef-decl name='aaudio_stream_id_t' type-id='8f92235e' filepath='frameworks/av/media/libaaudio/src/core/AudioStream.h' line='41' column='1' id='68aa1c07'/>
       <class-decl name='AAudioStreamParameters' visibility='default' is-declaration-only='yes' id='84aa4341'>
         <member-function access='public'>
           <function-decl name='setDeviceId' mangled-name='_ZN6aaudio22AAudioStreamParameters11setDeviceIdEi' filepath='frameworks/av/media/libaaudio/src/core/AAudioStreamParameters.h' line='36' column='1' visibility='default' binding='global' size-in-bits='64'>
@@ -440,7 +440,7 @@
         <member-function access='public'>
           <function-decl name='getId' mangled-name='_ZN6aaudio11AudioStream5getIdEv' filepath='frameworks/av/media/libaaudio/src/core/AudioStream.h' line='168' column='1' visibility='default' binding='global' size-in-bits='64'>
             <parameter type-id='b4bea132' is-artificial='yes'/>
-            <return type-id='a5eeae98'/>
+            <return type-id='68aa1c07'/>
           </function-decl>
         </member-function>
         <member-function access='public'>

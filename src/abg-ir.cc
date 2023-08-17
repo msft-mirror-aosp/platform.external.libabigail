@@ -5241,7 +5241,8 @@ get_decl_name_for_comparison(const decl_base &d)
     }
 
   interned_string n = (is_anonymous_or_typedef_named(d)
-		       || d.get_has_anonymous_parent())
+		       || d.get_has_anonymous_parent()
+		       || is_typedef(&d))
     ? d.get_name()
     : d.get_qualified_name(/*internal=*/true);
   return n;
@@ -8850,6 +8851,9 @@ get_type_name(const type_base* t, bool qualified, bool internal)
 	  r += get_generic_anonymous_internal_type_name(d);
 	  return t->get_environment().intern(r);
 	}
+
+      if (is_typedef(t))
+	return d->get_name();
 
       if (qualified)
 	return d->get_qualified_name(internal);
@@ -17011,7 +17015,10 @@ pointer_type_def::get_qualified_name(bool internal) const
 	    if (pointed_to_type)
 	      priv_->internal_qualified_name_ =
 		get_name_of_pointer_to_type(*pointed_to_type,
-					    /*qualified_name=*/true,
+					    /*qualified_name=*/
+					    is_typedef(pointed_to_type)
+					    ? false
+					    : true,
 					    /*internal=*/true);
 	  return priv_->internal_qualified_name_;
 	}
@@ -17024,7 +17031,10 @@ pointer_type_def::get_qualified_name(bool internal) const
 	  if (pointed_to_type)
 	    priv_->temp_internal_qualified_name_ =
 	      get_name_of_pointer_to_type(*pointed_to_type,
-					  /*qualified_name=*/true,
+					  /*qualified_name=*/
+					  is_typedef(pointed_to_type)
+					  ? false
+					  : true,
 					  /*internal=*/true);
 	  return priv_->temp_internal_qualified_name_;
 	}
@@ -17129,6 +17139,27 @@ operator!=(const pointer_type_def_sptr& l, const pointer_type_def_sptr& r)
 
 // <reference_type_def definitions>
 
+/// Private data structure of the @ref reference_type_def type.
+struct reference_type_def::priv
+{
+
+  type_base_wptr	pointed_to_type_;
+  bool			is_lvalue_;
+  interned_string	internal_qualified_name_;
+  interned_string	temp_internal_qualified_name_;
+
+  priv(const type_base_sptr& t, bool is_lvalue)
+    : pointed_to_type_(type_or_void(t, t->get_environment())),
+      is_lvalue_(is_lvalue)
+  {}
+
+  priv(bool is_lvalue)
+    : is_lvalue_(is_lvalue)
+  {}
+
+  priv() = delete;
+};
+
 /// This function is automatically invoked whenever an instance of
 /// this type is canonicalized.
 ///
@@ -17163,7 +17194,7 @@ reference_type_def::reference_type_def(const type_base_sptr	pointed_to,
 		      | ABSTRACT_DECL_BASE),
     type_base(pointed_to->get_environment(), size_in_bits, align_in_bits),
     decl_base(pointed_to->get_environment(), "", locus, ""),
-    is_lvalue_(lvalue)
+    priv_(new priv(pointed_to, lvalue))
 {
   runtime_type_instance(this);
 
@@ -17184,10 +17215,6 @@ reference_type_def::reference_type_def(const type_base_sptr	pointed_to,
 	name += "&";
       const environment& env = pointed_to->get_environment();
       set_name(env.intern(name));
-
-      pointed_to_type_ =
-	type_base_wptr(type_or_void(pointed_to,
-				    pointed_to->get_environment()));
     }
   catch (...)
     {}
@@ -17220,7 +17247,7 @@ reference_type_def::reference_type_def(const environment& env, bool lvalue,
 		      | ABSTRACT_DECL_BASE),
     type_base(env, size_in_bits, alignment_in_bits),
     decl_base(env, "", locus, ""),
-    is_lvalue_(lvalue)
+    priv_(new priv(lvalue))
 {
   runtime_type_instance(this);
   string name = "void&";
@@ -17228,7 +17255,7 @@ reference_type_def::reference_type_def(const environment& env, bool lvalue,
     name += "&";
 
   set_name(env.intern(name));
-  pointed_to_type_ = type_base_wptr(env.get_void_type());
+  priv_->pointed_to_type_ = type_base_wptr(env.get_void_type());
 }
 
 /// Setter of the pointed_to type of the current reference type.
@@ -17238,7 +17265,7 @@ void
 reference_type_def::set_pointed_to_type(type_base_sptr& pointed_to_type)
 {
   ABG_ASSERT(pointed_to_type);
-  pointed_to_type_ = pointed_to_type;
+  priv_->pointed_to_type_ = pointed_to_type;
 
   decl_base_sptr pto;
   try
@@ -17346,11 +17373,11 @@ reference_type_def::operator==(const reference_type_def& o) const
 
 type_base_sptr
 reference_type_def::get_pointed_to_type() const
-{return pointed_to_type_.lock();}
+{return priv_->pointed_to_type_.lock();}
 
 bool
 reference_type_def::is_lvalue() const
-{return is_lvalue_;}
+{return priv_->is_lvalue_;}
 
 /// Build and return the qualified name of the current instance of the
 /// @ref reference_type_def.
@@ -17380,14 +17407,69 @@ reference_type_def::get_qualified_name(interned_string& qn, bool internal) const
 const interned_string&
 reference_type_def::get_qualified_name(bool internal) const
 {
-  if (peek_qualified_name().empty()
-      || !get_canonical_type())
-    set_qualified_name(get_name_of_reference_to_type
-		       (*look_through_decl_only(get_pointed_to_type()),
-			is_lvalue(),
-			/*qualified_name=*/true,
-			internal));
-  return peek_qualified_name();
+  type_base_sptr pointed_to_type = get_pointed_to_type();
+  pointed_to_type = look_through_decl_only(pointed_to_type);
+
+  if (internal)
+    {
+      if (get_canonical_type())
+	{
+	  if (priv_->internal_qualified_name_.empty())
+	    if (pointed_to_type)
+	      priv_->internal_qualified_name_ =
+		get_name_of_reference_to_type(*pointed_to_type,
+					      is_lvalue(),
+					      /*qualified_name=*/
+					      is_typedef(pointed_to_type)
+					      ? false
+					      : true,
+					      /*internal=*/true);
+	  return priv_->internal_qualified_name_;
+	}
+      else
+	{
+	  // As the type hasn't yet been canonicalized, its structure
+	  // (and so its name) can change.  So let's invalidate the
+	  // cache where we store its name at each invocation of this
+	  // function.
+	  if (pointed_to_type)
+	    priv_->temp_internal_qualified_name_ =
+	      get_name_of_reference_to_type(*pointed_to_type,
+					    is_lvalue(),
+					    /*qualified_name=*/
+					    is_typedef(pointed_to_type)
+					    ? false
+					    : true,
+					    /*internal=*/true);
+	  return priv_->temp_internal_qualified_name_;
+	}
+    }
+  else
+    {
+      if (get_naked_canonical_type())
+	{
+	  set_qualified_name
+	    (get_name_of_reference_to_type(*pointed_to_type,
+					   is_lvalue(),
+					   /*qualified_name=*/true,
+					   /*internal=*/false));
+	  return decl_base::peek_qualified_name();
+	}
+      else
+	{
+	  // As the type hasn't yet been canonicalized, its structure
+	  // (and so its name) can change.  So let's invalidate the
+	  // cache where we store its name at each invocation of this
+	  // function.
+	  if (pointed_to_type)
+	    set_qualified_name
+	      (get_name_of_reference_to_type(*pointed_to_type,
+					     is_lvalue(),
+					     /*qualified_name=*/true,
+					     /*internal=*/false));
+	  return decl_base::peek_qualified_name();
+	}
+    }
 }
 
 /// Get the pretty representation of the current instance of @ref
@@ -19180,8 +19262,6 @@ enum_type_decl::enumerator::set_enum_type(enum_type_decl* e)
 struct typedef_decl::priv
 {
   type_base_wptr	underlying_type_;
-  string		internal_qualified_name_;
-  string		temp_internal_qualified_name_;
 
   priv(const type_base_sptr& t)
     : underlying_type_(t)
@@ -19379,10 +19459,15 @@ typedef_decl::get_pretty_representation(bool internal,
 {
 
   string result = "typedef ";
-  if (qualified_name)
-    result += get_qualified_name(internal);
-  else
+  if (internal)
     result += get_name();
+  else
+    {
+      if (qualified_name)
+	result += get_qualified_name(internal);
+      else
+	result += get_name();
+    }
 
   return result;
 }
@@ -19403,6 +19488,38 @@ typedef_decl::set_underlying_type(const type_base_sptr& t)
   priv_->underlying_type_ = t;
   set_size_in_bits(t->get_size_in_bits());
   set_alignment_in_bits(t->get_alignment_in_bits());
+}
+
+/// Implementation of the virtual "get_qualified_name" method.
+///
+/// @param qualified_name the resuling qualified name of the typedef type.
+///
+/// @param internal if true, then it means the qualified name is for
+/// "internal" purposes, meaning mainly for type canonicalization
+/// purposes.
+void
+typedef_decl::get_qualified_name(interned_string& qualified_name,
+				 bool internal) const
+{qualified_name = get_qualified_name(internal);}
+
+/// Implementation of the virtual "get_qualified_name" method.
+///
+/// @param internal if true, then it means the qualified name is for
+/// "internal" purposes, meaning mainly for type canonicalization
+/// purposes.
+///
+/// @return the qualified name.
+const interned_string&
+typedef_decl::get_qualified_name(bool internal) const
+{
+  // Note that the qualified name has been already set by
+  // qualified_name_setter::do_update, which is invoked by
+  // update_qualified_name.  The latter is itself invoked whenever the
+  // typedef is added to its scope, in scope_decl::add_member_decl.
+  if (internal)
+    return decl_base::priv_->internal_qualified_name_;
+  else
+    return decl_base::priv_->qualified_name_;
 }
 
 /// This implements the ir_traversable_base::traverse pure virtual
@@ -20866,7 +20983,7 @@ function_decl::function_decl(const string&	name,
 /// @return the pretty representation for a function.
 string
 function_decl::get_pretty_representation(bool internal,
-					 bool /*qualified_name*/) const
+					 bool qualified_name) const
 {
   const method_decl* mem_fn =
     dynamic_cast<const method_decl*>(this);
@@ -20890,7 +21007,9 @@ function_decl::get_pretty_representation(bool internal,
       : get_type_declaration(get_type()->get_return_type());
 
   if (type)
-    result += type->get_qualified_name(internal) + " ";
+    result += get_type_name(is_type(type).get(),
+			    qualified_name,
+			    internal) + " ";
 
   result += get_pretty_representation_of_declarator(internal);
 
@@ -27676,8 +27795,11 @@ qualified_name_setter::do_update(abigail::ir::decl_base* d)
       if (d->get_name().empty())
 	d->priv_->qualified_name_ = abigail::interned_string();
       else
-	d->priv_->qualified_name_ =
-	  env.intern(d->priv_->qualified_parent_name_ + "::" + d->get_name());
+	{
+	  d->priv_->qualified_name_ =
+	    env.intern(d->priv_->qualified_parent_name_ + "::" + d->get_name());
+	  d->priv_->internal_qualified_name_ = env.intern(d->get_name());
+	}
     }
 
   if (d->priv_->scoped_name_.empty())

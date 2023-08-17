@@ -2395,8 +2395,8 @@ equals(const reference_type_def&, const reference_type_def&, change_kind*);
 /// Abstracts a reference type.
 class reference_type_def : public virtual type_base, public virtual decl_base
 {
-  type_base_wptr	pointed_to_type_;
-  bool			is_lvalue_;
+  struct			priv;
+  std::unique_ptr<priv>	priv_;
 
   // Forbidden.
   reference_type_def();
@@ -2875,6 +2875,13 @@ public:
 
   void
   set_underlying_type(const type_base_sptr&);
+
+  virtual void
+  get_qualified_name(interned_string& qualified_name,
+		     bool internal = false) const;
+
+  virtual const interned_string&
+  get_qualified_name(bool internal = false) const;
 
   virtual bool
   traverse(ir_node_visitor&);
