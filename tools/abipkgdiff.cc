@@ -3887,6 +3887,8 @@ main(int argc, char* argv[])
 	      | abigail::tools_utils::ABIDIFF_ERROR);
     }
 
+  abigail::tools_utils::initialize();
+
   if (opts.self_check)
     return compare_to_self(first_package, opts);
 

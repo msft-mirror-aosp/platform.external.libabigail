@@ -33,7 +33,8 @@
 #include <ctype.h>
 #include <errno.h>
 #include <libgen.h>
-
+#include <libxml/parser.h>
+#include <libxml/xmlversion.h>
 #include <algorithm>
 #include <cstdlib>
 #include <cstring>
@@ -75,6 +76,20 @@ using namespace abigail::ini;
 /// on libabigail.
 namespace tools_utils
 {
+
+/// This function needs to be called before any libabigail function.
+///
+/// Users of libabigail must call it prior to using any of the
+/// functions of the library.
+///
+/// It intends to initialize the underlying libraries that might need
+/// initialization, especially, libxml2, in multi-threaded environments.
+void
+initialize()
+{
+  LIBXML_TEST_VERSION;
+  xmlInitParser();
+}
 
 /// Get the value of $libdir variable of the autotools build
 /// system.  This is where shared libraries are usually installed.

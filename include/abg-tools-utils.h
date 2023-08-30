@@ -30,6 +30,7 @@ using std::string;
 using std::set;
 using std::shared_ptr;
 
+void initialize();
 const char* get_system_libdir();
 const char* get_anonymous_struct_internal_name_prefix();
 const char* get_anonymous_union_internal_name_prefix();
