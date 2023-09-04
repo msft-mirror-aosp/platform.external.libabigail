@@ -978,12 +978,12 @@ reader::read_corpus(status& status)
   // See if we could find symbol tables.
   if (!symtab())
     {
-      status |= STATUS_NO_SYMBOLS_FOUND;
+      status |= STATUS_NO_SYMBOLS_FOUND | STATUS_OK;
       // We found no ELF symbol, so we can't handle the binary.  Note
       // that we could have found a symbol table with no defined &
-      // exported ELF symbols in it.  That case is handled as an empty
-      // corpus, which is different from this case.
-      return corpus_sptr();
+      // exported ELF symbols in it.  Both cases are handled as an
+      // empty corpus.
+      return corpus();
     }
 
   // Set symbols information to the corpus.

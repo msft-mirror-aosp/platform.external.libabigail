@@ -3272,12 +3272,15 @@ build_elf_symbol_from_reference(reader& rdr, const xmlNodePtr node)
       if (name.empty())
 	return nil;
 
-      const elf_symbols& symbols =
-	  rdr.corpus()->get_symtab()->lookup_symbol(name);
+      if (rdr.corpus()->get_symtab())
+	{
+	  const elf_symbols& symbols =
+	    rdr.corpus()->get_symtab()->lookup_symbol(name);
 
-      for (const auto& symbol : symbols)
-	if (symbol->get_id_string() == sym_id)
-	  return symbol;
+	  for (const auto& symbol : symbols)
+	    if (symbol->get_id_string() == sym_id)
+	      return symbol;
+	}
     }
 
   return nil;

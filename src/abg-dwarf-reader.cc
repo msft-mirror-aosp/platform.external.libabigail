@@ -2072,12 +2072,12 @@ public:
     // Load the generic ELF parts of the corpus.
     elf::reader::read_corpus(status);
 
-    if ((status & STATUS_NO_SYMBOLS_FOUND)
-	|| !(status & STATUS_OK))
-      // Either we couldn't find ELF symbols or something went badly
-      // wrong.  There is nothing we can do with this ELF file.  Bail
-      // out.
+    if (!(status & STATUS_OK))
+      {
+	// Something went badly wrong.  There is nothing we can do
+	// with this ELF file.  Bail out.
       return corpus_sptr();
+      }
 
     // If we couldn't find debug info from the elf path, then say it.
     if (dwarf_debug_info() == nullptr)
@@ -2143,6 +2143,7 @@ public:
     // Get out now if no debug info is found or if the symbol table is
     // empty.
     if (!dwarf_debug_info()
+	|| !corpus()->get_symtab()
 	|| !corpus()->get_symtab()->has_symbols())
       return corpus();
 
