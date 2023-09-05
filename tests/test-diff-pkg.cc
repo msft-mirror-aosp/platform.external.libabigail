@@ -150,6 +150,18 @@ static InOutSpec in_out_specs[] =
     "output/test-diff-pkg/dirpkg-3-report-2.txt"
   },
   {
+    "data/test-diff-pkg/symlink-dir-test1/dir1",
+    "data/test-diff-pkg/symlink-dir-test1/dir2",
+    "--no-default-suppression ",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "data/test-diff-pkg/symlink-dir-test1-report0.txt",
+    "output/test-diff-pkg/symlink-dir-test1-report0.txt"
+  },
+  {
     "data/test-diff-pkg/symlink-dir-test1/dir1/symlinks",
     "data/test-diff-pkg/symlink-dir-test1/dir2/symlinks",
     "--no-default-suppression ",
@@ -158,8 +170,8 @@ static InOutSpec in_out_specs[] =
     "",
     "",
     "",
-    "data/test-diff-pkg/symlink-dir-test1-report0.txt ",
-    "output/test-diff-pkg/symlink-dir-test1-report0.txt "
+    "data/test-diff-pkg/symlink-dir-test1-report1.txt",
+    "output/test-diff-pkg/symlink-dir-test1-report1.txt"
   },
 #if WITH_TAR
   {
@@ -865,6 +877,18 @@ static InOutSpec in_out_specs[] =
     "output/test-diff-pkg-ctf/dirpkg-3-report-2.txt"
   },
   {
+    "data/test-diff-pkg-ctf/symlink-dir-test1/dir1",
+    "data/test-diff-pkg-ctf/symlink-dir-test1/dir2",
+    "--ctf --no-default-suppression ",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "data/test-diff-pkg-ctf/symlink-dir-test1-report0.txt",
+    "output/test-diff-pkg-ctf/symlink-dir-test1-report0.txt"
+  },
+  {
     "data/test-diff-pkg-ctf/symlink-dir-test1/dir1/symlinks",
     "data/test-diff-pkg-ctf/symlink-dir-test1/dir2/symlinks",
     "--ctf --no-default-suppression ",
@@ -873,8 +897,8 @@ static InOutSpec in_out_specs[] =
     "",
     "",
     "",
-    "data/test-diff-pkg-ctf/symlink-dir-test1-report0.txt ",
-    "output/test-diff-pkg-ctf/symlink-dir-test1-report0.txt "
+    "data/test-diff-pkg-ctf/symlink-dir-test1-report1.txt",
+    "output/test-diff-pkg-ctf/symlink-dir-test1-report1.txt"
   },
 #if WITH_TAR
   {

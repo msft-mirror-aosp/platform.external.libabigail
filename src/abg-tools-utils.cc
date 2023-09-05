@@ -723,9 +723,6 @@ maybe_get_symlink_target_file_path(const string& file_path,
   if (!get_stat(file_path, &st))
     return false;
 
-  if (!S_ISLNK(st.st_mode))
-    return false;
-
   char *link_target_path = realpath(file_path.c_str(), NULL);
   if (!link_target_path)
     return false;

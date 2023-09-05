@@ -2323,14 +2323,20 @@ typedef shared_ptr<self_compare_task> self_compare_task_sptr;
 /// function only looks for a file name which name is the same as the
 /// value of this parameter.
 ///
+/// @param parent_dir_name the name of the directory that the file
+/// name denoted by @p entry should belong to.  If it doesn't (because
+/// it's a symlink that resolves to a file outside of that directory)
+/// then the vector of paths of is not updated.
+///
 /// @param paths out parameter.  This is the set of meaningful paths
 /// of the current directory tree being analyzed.  These paths are
 /// those that are going to be involved in ABI comparison.
 static void
-maybe_update_package_content(const FTSENT *entry,
-			     options &opts,
-			     const string& file_name_to_look_for,
-			     unordered_set<string>& paths)
+maybe_update_package_content(const FTSENT*		entry,
+			     options&			opts,
+			     const string&		file_name_to_look_for,
+			     const string&		parent_dir_name,
+			     unordered_set<string>&	paths)
 {
   if (entry == NULL
       || (entry->fts_info != FTS_F && entry->fts_info != FTS_SL)
@@ -2340,6 +2346,15 @@ maybe_update_package_content(const FTSENT *entry,
 
   string path = entry->fts_path;
   maybe_get_symlink_target_file_path(path, path);
+  string parent_dir = parent_dir_name;
+  maybe_get_symlink_target_file_path(parent_dir, parent_dir);
+
+  if (!parent_dir_name.empty())
+    {
+      string s;
+      if (!string_suffix(path, parent_dir, s))
+	return;
+    }
 
   if (!file_name_to_look_for.empty())
     {
@@ -2391,7 +2406,7 @@ get_interesting_files_under_dir(const string dir,
   FTSENT *entry;
   unordered_set<string> files;
   while ((entry = fts_read(file_hierarchy)))
-    maybe_update_package_content(entry, opts, file_name_to_look_for, files);
+    maybe_update_package_content(entry, opts, file_name_to_look_for, dir, files);
 
   for (unordered_set<string>::const_iterator i = files.begin();
        i != files.end();

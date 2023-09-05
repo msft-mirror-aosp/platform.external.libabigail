@@ -2055,6 +2055,7 @@ test-diff-pkg/dirpkg-3-report-1.txt \
 test-diff-pkg/dirpkg-3-report-2.txt \
 test-diff-pkg/dirpkg-3.suppr \
 test-diff-pkg/symlink-dir-test1-report0.txt \
+test-diff-pkg/symlink-dir-test1-report1.txt \
 test-diff-pkg/symlink-dir-test1/dir1/symlinks/foo.o \
 test-diff-pkg/symlink-dir-test1/dir1/symlinks/libfoo.so \
 test-diff-pkg/symlink-dir-test1/dir1/targets/foo.c \
@@ -2300,6 +2301,7 @@ test-diff-pkg-ctf/cracklib-2.9.6-15-ol8u0.x86_64.rpm \
 test-diff-pkg-ctf/isl-debuginfo-0.16.1-6.x86_64.rpm	\
 test-diff-pkg-ctf/tarpkg-1-dir1.tar.gz \
 test-diff-pkg-ctf/symlink-dir-test1-report0.txt \
+test-diff-pkg-ctf/symlink-dir-test1-report1.txt \
 \
 test-fedabipkgdiff/dbus-glib-0.104-3.fc23.x86_64.rpm \
 test-fedabipkgdiff/dbus-glib-debuginfo-0.104-3.fc23.x86_64.rpm \
