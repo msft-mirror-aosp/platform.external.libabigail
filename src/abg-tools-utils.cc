@@ -1067,9 +1067,9 @@ split_string(const string& input_string,
 /// @return true iff the function could find a prefix for the suffix
 /// @p suffix in the input string @p input_string.
 bool
-string_suffix(const string& input_string,
-	      const string& prefix,
-	      string& suffix)
+string_suffix(const string&	input_string,
+	      const string&	prefix,
+	      string&		suffix)
 {
   // Some basic sanity check before we start hostilities.
   if (prefix.length() >= input_string.length())
