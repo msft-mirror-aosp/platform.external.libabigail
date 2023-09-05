@@ -567,10 +567,18 @@ is_dir(const string& path)
   if (S_ISDIR(st.st_mode))
     return true;
 
-  string symlink_target_path;
-  if (maybe_get_symlink_target_file_path(path, symlink_target_path))
-    return is_dir(symlink_target_path);
+  if (S_ISLNK(st.st_mode))
+    {
+      string symlink_target_path;
+      if (maybe_get_symlink_target_file_path(path, symlink_target_path))
+	{
+	  if (!get_stat(path, &st))
+	    return false;
 
+	  if (S_ISDIR(st.st_mode))
+	    return true;
+	}
+    }
   return false;
 }
 
