@@ -62,6 +62,16 @@ AM_MAINTAINER_MODE([enable])
 
 AM_SILENT_RULES([yes])
 
+dnl By default, the tar command used by 'make dist and make distcheck'
+dnl is "tar --format=ustar -chf" where the "-h" option actually
+dnl follows symbolic links. So it copies the targets of the symlinks
+dnl that are present in the tarball.  Unfortunately, there are
+dnl tests that need to keep the symlinks intact in the tarball.
+dnl
+dnl So let's define a tar command without the -h option.
+
+am__tar='tar --format=ustar -cf - "$$tardir"'
+
 VERSION_MAJOR=version_major
 VERSION_MINOR=version_minor
 VERSION_REVISION=0
@@ -517,6 +527,13 @@ else
 fi
 
 AM_CONDITIONAL(ENABLE_RPM, test x$ENABLE_RPM = xyes)
+
+dnl There is a test that needs symlinks support in the distribution tarball.  If symlinks are
+dnl removed from the tarball, then the test should be disabled.
+m4_define([symlink_file], [tests/data/test-diff-pkg/symlink-dir-test1/dir1/symlinks/foo.o])
+if test -L "$srcdir"/symlink_file; then
+   AC_DEFINE([WITH_SYMLINKS_KEPT_IN_DIST], 1, [symbolic links are kept in the distribution tarball])
+fi
 
 dnl enable the debugging of self comparison when doing abidw --debug-abidiff <binary>
 if test x$ENABLE_DEBUG_SELF_COMPARISON = xyes; then
