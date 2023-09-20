@@ -1330,8 +1330,10 @@ canonicalize_types(const input_iterator& begin,
   if (begin == end)
     return;
 
+  int i;
+  input_iterator t;
   // First, let's compute the canonical type of this type.
-  for (auto t = begin, i = 0; t != end; ++t, ++i)
+  for (t = begin,i = 0; t != end; ++t, ++i)
     {
       if (deref(t)->get_environment().priv_->do_log())
 	std::cerr << "#" << std::dec << i << " ";

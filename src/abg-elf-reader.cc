@@ -311,7 +311,7 @@ struct reader::priv
     dt_needed.clear();
     symt.reset();
     debug_info_root_paths = debug_info_roots;
-    offline_callbacks = {};
+    memset(&offline_callbacks, 0, sizeof(offline_callbacks));
     dwfl_handle.reset();
     elf_module = nullptr;
     dwarf_handle = nullptr;
