@@ -9653,7 +9653,7 @@ get_debug_representation(const type_or_decl_base* artifact)
     {
       string name = e->get_qualified_name();
       std::ostringstream o;
-      o << "union " << name
+      o << "enum " << name
 	<< " : "
 	<< e->get_underlying_type()->get_pretty_representation(/*internal=*/false,
 							       true)
