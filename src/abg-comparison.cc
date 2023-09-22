@@ -9551,7 +9551,8 @@ corpus_diff::priv::ensure_lookup_tables_populated()
 	if (!is_user_defined_type(t))
 	  continue;
 
-	string repr = abigail::ir::get_pretty_representation(t, true);
+	string repr =
+	  abigail::ir::get_pretty_representation(t, /*internal=*/false);
 	deleted_unreachable_types_[repr] = t;
       }
 
@@ -9573,7 +9574,8 @@ corpus_diff::priv::ensure_lookup_tables_populated()
 	    if (!is_user_defined_type(t))
 	      continue;
 
-	    string repr = abigail::ir::get_pretty_representation(t, true);
+	    string repr =
+	      abigail::ir::get_pretty_representation(t, /*internal=*/false);
 
 	    // Let's see if the inserted type we are looking at was
 	    // reported as deleted as well.
@@ -9857,7 +9859,7 @@ corpus_diff::priv::added_unreachable_type_is_suppressed(const type_base *t)const
   if (!t)
     return false;
 
-  string repr = abigail::ir::get_pretty_representation(t, /*internal=*/true);
+  string repr = abigail::ir::get_pretty_representation(t, /*internal=*/false);
   string_type_base_sptr_map::const_iterator i =
     suppressed_added_unreachable_types_.find(repr);
   if (i == suppressed_added_unreachable_types_.end())
@@ -9879,7 +9881,7 @@ corpus_diff::priv::deleted_unreachable_type_is_suppressed(const type_base *t) co
   if (!t)
     return false;
 
-  string repr = abigail::ir::get_pretty_representation(t, /*internal=*/true);
+  string repr = abigail::ir::get_pretty_representation(t, /*internal=*/false);
   string_type_base_sptr_map::const_iterator i =
     suppressed_deleted_unreachable_types_.find(repr);
   if (i == suppressed_deleted_unreachable_types_.end())

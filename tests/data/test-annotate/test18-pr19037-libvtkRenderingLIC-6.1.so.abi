@@ -8146,7 +8146,7 @@
       <!-- class std::_Deque_base<vtkPixelExtent, std::allocator<vtkPixelExtent> > -->
       <class-decl name='_Deque_base&lt;vtkPixelExtent, std::allocator&lt;vtkPixelExtent&gt; &gt;' size-in-bits='640' visibility='default' filepath='/usr/lib/gcc/x86_64-redhat-linux/4.4.7/../../../../include/c++/4.4.7/bits/stl_deque.h' line='362' column='1' id='type-id-152'>
         <member-type access='protected'>
-          <!-- enum std::_Deque_base<vtkPixelExtent, std::allocator<vtkPixelExtent> >::__anonymous_enum__ -->
+          <!-- enum {_S_initial_map_size=8, } -->
           <enum-decl name='__anonymous_enum__' is-anonymous='yes' filepath='/usr/lib/gcc/x86_64-redhat-linux/4.4.7/../../../../include/c++/4.4.7/bits/stl_deque.h' line='465' column='1' id='type-id-258'>
             <underlying-type type-id='type-id-127'/>
             <enumerator name='_S_initial_map_size' value='8'/>
@@ -12813,7 +12813,7 @@
       <!-- class vtkObject -->
       <base-class access='public' layout-offset-in-bits='0' type-id='type-id-321'/>
       <member-type access='private'>
-        <!-- enum vtkLineIntegralConvolution2D::__anonymous_enum__ -->
+        <!-- enum {ENHANCE_CONTRAST_OFF=0, ENHANCE_CONTRAST_ON=1, } -->
         <enum-decl name='__anonymous_enum__' is-anonymous='yes' filepath='/tmp/legendre/spack-stage/spack-stage-R_crTC/VTK-6.1.0/Rendering/LIC/vtkLineIntegralConvolution2D.h' line='149' column='1' id='type-id-322'>
           <underlying-type type-id='type-id-127'/>
           <enumerator name='ENHANCE_CONTRAST_OFF' value='0'/>
@@ -21260,23 +21260,23 @@
         </class-decl>
       </member-type>
       <member-type access='private'>
-        <!-- enum vtkSurfaceLICPainter::__anonymous_enum__ -->
-        <enum-decl name='__anonymous_enum__' is-anonymous='yes' filepath='/tmp/legendre/spack-stage/spack-stage-R_crTC/VTK-6.1.0/Rendering/LIC/vtkSurfaceLICPainter.h' line='210' column='1' id='type-id-686'>
-          <underlying-type type-id='type-id-127'/>
-          <enumerator name='ENHANCE_CONTRAST_OFF' value='0'/>
-          <enumerator name='ENHANCE_CONTRAST_LIC' value='1'/>
-          <enumerator name='ENHANCE_CONTRAST_COLOR' value='3'/>
-          <enumerator name='ENHANCE_CONTRAST_BOTH' value='4'/>
-        </enum-decl>
-      </member-type>
-      <member-type access='private'>
-        <!-- enum vtkSurfaceLICPainter::__anonymous_enum__1 -->
-        <enum-decl name='__anonymous_enum__1' is-anonymous='yes' filepath='/tmp/legendre/spack-stage/spack-stage-R_crTC/VTK-6.1.0/Rendering/LIC/vtkSurfaceLICPainter.h' line='374' column='1' id='type-id-687'>
+        <!-- enum {COMPOSITE_AUTO=3, COMPOSITE_BALANCED=2, COMPOSITE_INPLACE=0, COMPOSITE_INPLACE_DISJOINT=1, } -->
+        <enum-decl name='__anonymous_enum__1' is-anonymous='yes' filepath='/tmp/legendre/spack-stage/spack-stage-R_crTC/VTK-6.1.0/Rendering/LIC/vtkSurfaceLICPainter.h' line='374' column='1' id='type-id-686'>
           <underlying-type type-id='type-id-127'/>
           <enumerator name='COMPOSITE_INPLACE' value='0'/>
           <enumerator name='COMPOSITE_INPLACE_DISJOINT' value='1'/>
           <enumerator name='COMPOSITE_BALANCED' value='2'/>
           <enumerator name='COMPOSITE_AUTO' value='3'/>
+        </enum-decl>
+      </member-type>
+      <member-type access='private'>
+        <!-- enum {ENHANCE_CONTRAST_BOTH=4, ENHANCE_CONTRAST_COLOR=3, ENHANCE_CONTRAST_LIC=1, ENHANCE_CONTRAST_OFF=0, } -->
+        <enum-decl name='__anonymous_enum__' is-anonymous='yes' filepath='/tmp/legendre/spack-stage/spack-stage-R_crTC/VTK-6.1.0/Rendering/LIC/vtkSurfaceLICPainter.h' line='210' column='1' id='type-id-687'>
+          <underlying-type type-id='type-id-127'/>
+          <enumerator name='ENHANCE_CONTRAST_OFF' value='0'/>
+          <enumerator name='ENHANCE_CONTRAST_LIC' value='1'/>
+          <enumerator name='ENHANCE_CONTRAST_COLOR' value='3'/>
+          <enumerator name='ENHANCE_CONTRAST_BOTH' value='4'/>
         </enum-decl>
       </member-type>
       <data-member access='protected' layout-offset-in-bits='1088'>
@@ -24118,23 +24118,23 @@
         </class-decl>
       </member-type>
       <member-type access='private'>
-        <!-- enum vtkSurfaceLICPainter::__anonymous_enum__ -->
-        <enum-decl name='__anonymous_enum__' is-anonymous='yes' filepath='/tmp/legendre/spack-stage/spack-stage-R_crTC/VTK-6.1.0/Rendering/LIC/vtkSurfaceLICPainter.h' line='210' column='1' id='type-id-686'>
-          <underlying-type type-id='type-id-127'/>
-          <enumerator name='ENHANCE_CONTRAST_OFF' value='0'/>
-          <enumerator name='ENHANCE_CONTRAST_LIC' value='1'/>
-          <enumerator name='ENHANCE_CONTRAST_COLOR' value='3'/>
-          <enumerator name='ENHANCE_CONTRAST_BOTH' value='4'/>
-        </enum-decl>
-      </member-type>
-      <member-type access='private'>
-        <!-- enum vtkSurfaceLICPainter::__anonymous_enum__1 -->
-        <enum-decl name='__anonymous_enum__1' is-anonymous='yes' filepath='/tmp/legendre/spack-stage/spack-stage-R_crTC/VTK-6.1.0/Rendering/LIC/vtkSurfaceLICPainter.h' line='374' column='1' id='type-id-687'>
+        <!-- enum {COMPOSITE_AUTO=3, COMPOSITE_BALANCED=2, COMPOSITE_INPLACE=0, COMPOSITE_INPLACE_DISJOINT=1, } -->
+        <enum-decl name='__anonymous_enum__1' is-anonymous='yes' filepath='/tmp/legendre/spack-stage/spack-stage-R_crTC/VTK-6.1.0/Rendering/LIC/vtkSurfaceLICPainter.h' line='374' column='1' id='type-id-686'>
           <underlying-type type-id='type-id-127'/>
           <enumerator name='COMPOSITE_INPLACE' value='0'/>
           <enumerator name='COMPOSITE_INPLACE_DISJOINT' value='1'/>
           <enumerator name='COMPOSITE_BALANCED' value='2'/>
           <enumerator name='COMPOSITE_AUTO' value='3'/>
+        </enum-decl>
+      </member-type>
+      <member-type access='private'>
+        <!-- enum {ENHANCE_CONTRAST_BOTH=4, ENHANCE_CONTRAST_COLOR=3, ENHANCE_CONTRAST_LIC=1, ENHANCE_CONTRAST_OFF=0, } -->
+        <enum-decl name='__anonymous_enum__' is-anonymous='yes' filepath='/tmp/legendre/spack-stage/spack-stage-R_crTC/VTK-6.1.0/Rendering/LIC/vtkSurfaceLICPainter.h' line='210' column='1' id='type-id-687'>
+          <underlying-type type-id='type-id-127'/>
+          <enumerator name='ENHANCE_CONTRAST_OFF' value='0'/>
+          <enumerator name='ENHANCE_CONTRAST_LIC' value='1'/>
+          <enumerator name='ENHANCE_CONTRAST_COLOR' value='3'/>
+          <enumerator name='ENHANCE_CONTRAST_BOTH' value='4'/>
         </enum-decl>
       </member-type>
       <data-member access='protected' layout-offset-in-bits='1088'>
@@ -27487,7 +27487,7 @@
       <!-- class vtkSurfaceLICPainterUtil::RandomNoise2D -->
       <class-decl name='RandomNoise2D' size-in-bits='128' visibility='default' filepath='/tmp/legendre/spack-stage/spack-stage-R_crTC/VTK-6.1.0/Rendering/LIC/vtkSurfaceLICPainter.cxx' line='299' column='1' id='type-id-820'>
         <member-type access='private'>
-          <!-- enum vtkSurfaceLICPainterUtil::RandomNoise2D::__anonymous_enum__ -->
+          <!-- enum {GAUSSIAN=1, PERLIN=2, UNIFORM=0, } -->
           <enum-decl name='__anonymous_enum__' is-anonymous='yes' filepath='/tmp/legendre/spack-stage/spack-stage-R_crTC/VTK-6.1.0/Rendering/LIC/vtkSurfaceLICPainter.cxx' line='319' column='1' id='type-id-926'>
             <underlying-type type-id='type-id-127'/>
             <enumerator name='UNIFORM' value='0'/>

@@ -2728,6 +2728,9 @@ public:
   const enumerators&
   get_enumerators() const;
 
+  const enumerators&
+  get_sorted_enumerators() const;
+
   enumerators&
   get_enumerators();
 

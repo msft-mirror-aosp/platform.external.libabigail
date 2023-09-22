@@ -12933,21 +12933,21 @@
         </class-decl>
       </member-type>
       <member-type access='private'>
-        <enum-decl name='__anonymous_enum__' is-anonymous='yes' filepath='/tmp/legendre/spack-stage/spack-stage-R_crTC/VTK-6.1.0/Rendering/LIC/vtkSurfaceLICPainter.h' line='210' column='1' id='type-id-686'>
-          <underlying-type type-id='type-id-127'/>
-          <enumerator name='ENHANCE_CONTRAST_OFF' value='0'/>
-          <enumerator name='ENHANCE_CONTRAST_LIC' value='1'/>
-          <enumerator name='ENHANCE_CONTRAST_COLOR' value='3'/>
-          <enumerator name='ENHANCE_CONTRAST_BOTH' value='4'/>
-        </enum-decl>
-      </member-type>
-      <member-type access='private'>
-        <enum-decl name='__anonymous_enum__1' is-anonymous='yes' filepath='/tmp/legendre/spack-stage/spack-stage-R_crTC/VTK-6.1.0/Rendering/LIC/vtkSurfaceLICPainter.h' line='374' column='1' id='type-id-687'>
+        <enum-decl name='__anonymous_enum__1' is-anonymous='yes' filepath='/tmp/legendre/spack-stage/spack-stage-R_crTC/VTK-6.1.0/Rendering/LIC/vtkSurfaceLICPainter.h' line='374' column='1' id='type-id-686'>
           <underlying-type type-id='type-id-127'/>
           <enumerator name='COMPOSITE_INPLACE' value='0'/>
           <enumerator name='COMPOSITE_INPLACE_DISJOINT' value='1'/>
           <enumerator name='COMPOSITE_BALANCED' value='2'/>
           <enumerator name='COMPOSITE_AUTO' value='3'/>
+        </enum-decl>
+      </member-type>
+      <member-type access='private'>
+        <enum-decl name='__anonymous_enum__' is-anonymous='yes' filepath='/tmp/legendre/spack-stage/spack-stage-R_crTC/VTK-6.1.0/Rendering/LIC/vtkSurfaceLICPainter.h' line='210' column='1' id='type-id-687'>
+          <underlying-type type-id='type-id-127'/>
+          <enumerator name='ENHANCE_CONTRAST_OFF' value='0'/>
+          <enumerator name='ENHANCE_CONTRAST_LIC' value='1'/>
+          <enumerator name='ENHANCE_CONTRAST_COLOR' value='3'/>
+          <enumerator name='ENHANCE_CONTRAST_BOTH' value='4'/>
         </enum-decl>
       </member-type>
       <data-member access='protected' layout-offset-in-bits='1088'>
@@ -14796,21 +14796,21 @@
         </class-decl>
       </member-type>
       <member-type access='private'>
-        <enum-decl name='__anonymous_enum__' is-anonymous='yes' filepath='/tmp/legendre/spack-stage/spack-stage-R_crTC/VTK-6.1.0/Rendering/LIC/vtkSurfaceLICPainter.h' line='210' column='1' id='type-id-686'>
-          <underlying-type type-id='type-id-127'/>
-          <enumerator name='ENHANCE_CONTRAST_OFF' value='0'/>
-          <enumerator name='ENHANCE_CONTRAST_LIC' value='1'/>
-          <enumerator name='ENHANCE_CONTRAST_COLOR' value='3'/>
-          <enumerator name='ENHANCE_CONTRAST_BOTH' value='4'/>
-        </enum-decl>
-      </member-type>
-      <member-type access='private'>
-        <enum-decl name='__anonymous_enum__1' is-anonymous='yes' filepath='/tmp/legendre/spack-stage/spack-stage-R_crTC/VTK-6.1.0/Rendering/LIC/vtkSurfaceLICPainter.h' line='374' column='1' id='type-id-687'>
+        <enum-decl name='__anonymous_enum__1' is-anonymous='yes' filepath='/tmp/legendre/spack-stage/spack-stage-R_crTC/VTK-6.1.0/Rendering/LIC/vtkSurfaceLICPainter.h' line='374' column='1' id='type-id-686'>
           <underlying-type type-id='type-id-127'/>
           <enumerator name='COMPOSITE_INPLACE' value='0'/>
           <enumerator name='COMPOSITE_INPLACE_DISJOINT' value='1'/>
           <enumerator name='COMPOSITE_BALANCED' value='2'/>
           <enumerator name='COMPOSITE_AUTO' value='3'/>
+        </enum-decl>
+      </member-type>
+      <member-type access='private'>
+        <enum-decl name='__anonymous_enum__' is-anonymous='yes' filepath='/tmp/legendre/spack-stage/spack-stage-R_crTC/VTK-6.1.0/Rendering/LIC/vtkSurfaceLICPainter.h' line='210' column='1' id='type-id-687'>
+          <underlying-type type-id='type-id-127'/>
+          <enumerator name='ENHANCE_CONTRAST_OFF' value='0'/>
+          <enumerator name='ENHANCE_CONTRAST_LIC' value='1'/>
+          <enumerator name='ENHANCE_CONTRAST_COLOR' value='3'/>
+          <enumerator name='ENHANCE_CONTRAST_BOTH' value='4'/>
         </enum-decl>
       </member-type>
       <data-member access='protected' layout-offset-in-bits='1088'>

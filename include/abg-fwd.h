@@ -1098,6 +1098,33 @@ get_class_or_union_flat_representation(const class_or_union_sptr& cou,
 				       bool qualified_name = true);
 
 string
+get_enum_flat_representation(const enum_type_decl& enum_type,
+			     const string& indent,
+			     bool one_line,
+			     bool internal,
+			     bool qualified_names);
+
+string
+get_enum_flat_representation(const enum_type_decl* enum_type,
+			     const string& indent,
+			     bool one_line,
+			     bool internal,
+			     bool qualified_names);
+
+string
+get_enum_flat_representation(const enum_type_decl_sptr& enum_type,
+			     const string& indent,
+			     bool one_line,
+			     bool qualified_names);
+
+string
+get_class_or_enum_flat_representation(const type_base& coe,
+				      const string& indent,
+				      bool one_line,
+				      bool internal,
+				      bool qualified_name);
+
+string
 get_debug_representation(const type_or_decl_base*);
 
 var_decl_sptr

@@ -8845,6 +8845,8 @@ get_type_name(const type_base* t, bool qualified, bool internal)
       return fn_type->get_cached_name(internal);
     }
 
+  const environment&env = d->get_environment();
+
   // All anonymous types of a given kind get to have the same internal
   // name for internal purpose.  This to allow them to be compared
   // among themselves during type canonicalization.
@@ -8863,8 +8865,16 @@ get_type_name(const type_base* t, bool qualified, bool internal)
       if (qualified)
 	return d->get_qualified_name(internal);
 
-      const environment&env = d->get_environment();
       return env.intern(get_internal_integral_type_name(t));
+    }
+
+  if (d->get_is_anonymous())
+    {
+      if (is_class_or_union_type(t) || is_enum_type(t))
+	return env.intern
+	  (get_class_or_enum_flat_representation (*t, "",
+						  /*one_line=*/true,
+						  internal, qualified));
     }
 
   if (qualified)
@@ -9562,6 +9572,165 @@ get_class_or_union_flat_representation(const class_or_union_sptr& cou,
 					       one_line,
 					       internal,
 					       qualified_names);}
+
+/// Get the flat representation of an instance of @ref enum_type_decl
+/// type.
+///
+/// The flat representation of a given @ref enum_type_decl type is the
+/// actual definition of the type, for instance:
+///
+///   enum {E_0 =0, E_1 = 1}
+///
+///@param enum_type the enum type to consider.
+///
+///@param indent the identation spaces to use in the representation.
+///
+///@param one_line if true, then the flat representation stands on one
+///line.  Otherwise, it stands on multiple lines.
+///
+///@param qualified_names use qualified names when applicable.
+///Typically, if this is true, the name of the enum is going to be
+///qualified.
+///
+///@return the resulting flat representation.
+string
+get_enum_flat_representation(const enum_type_decl& enum_type,
+			     const string& indent, bool one_line,
+			     bool qualified_names)
+{
+  string repr;
+  std::ostringstream o;
+  string local_indent = "  ";
+
+  repr = indent + "enum ";
+
+  if (!enum_type.get_is_anonymous())
+    o << (qualified_names
+	  ? enum_type.get_qualified_name()
+	  : enum_type.get_name()) + " ";
+
+  o << "{";
+
+  if (!one_line)
+    o << "\n";
+
+  for (const auto &enumerator : enum_type.get_sorted_enumerators())
+    {
+      if (!one_line)
+	o << "\n" + indent;
+
+      o << enumerator.get_name() + "="  << enumerator.get_value() << ", ";
+    }
+
+  if (!one_line)
+    o << "\n" + indent << "}";
+  else
+    o << "}";
+
+  repr =o.str();
+
+  return repr;
+}
+
+/// Get the flat representation of an instance of @ref enum_type_decl
+/// type.
+///
+/// The flat representation of a given @ref enum_type_decl type is the
+/// actual definition of the type, for instance:
+///
+///   enum {E_0 =0, E_1 = 1}
+///
+///@param enum_type the enum type to consider.
+///
+///@param indent the identation spaces to use in the representation.
+///
+///@param one_line if true, then the flat representation stands on one
+///line.  Otherwise, it stands on multiple lines.
+///
+///@param qualified_names use qualified names when applicable.
+///Typically, if this is true, the name of the enum is going to be
+///qualified.
+///
+///@return the resulting flat representation.
+string
+get_enum_flat_representation(const enum_type_decl* enum_type,
+			     const string& indent, bool one_line,
+			     bool qualified_names)
+{
+  if (!enum_type)
+    return "";
+
+  return get_enum_flat_representation(*enum_type, indent,
+				      one_line, qualified_names);
+}
+
+/// Get the flat representation of an instance of @ref enum_type_decl
+/// type.
+///
+/// The flat representation of a given @ref enum_type_decl type is the
+/// actual definition of the type, for instance:
+///
+///   enum {E_0 =0, E_1 = 1}
+///
+///@param enum_type the enum type to consider.
+///
+///@param indent the identation spaces to use in the representation.
+///
+///@param one_line if true, then the flat representation stands on one
+///line.  Otherwise, it stands on multiple lines.
+///
+///@param qualified_names use qualified names when applicable.
+///Typically, if this is true, the name of the enum is going to be
+///qualified.
+///
+///@return the resulting flat representation.
+string
+get_enum_flat_representation(const enum_type_decl_sptr& enum_type,
+			     const string& indent, bool one_line,
+			     bool qualified_names)
+{
+  return get_enum_flat_representation(enum_type.get(),
+				      indent, one_line,
+				      qualified_names);
+}
+
+/// Get the flat representation of an instance of @ref enum_type_decl
+/// type.
+///
+/// The flat representation of a given @ref enum_type_decl type is the
+/// actual definition of the type, for instance:
+///
+///   enum {E_0 =0, E_1 = 1}
+///
+///@param enum_type the enum type to consider.
+///
+///@param indent the identation spaces to use in the representation.
+///
+///@param one_line if true, then the flat representation stands on one
+///line.  Otherwise, it stands on multiple lines.
+///
+///@param qualified_names use qualified names when applicable.
+///Typically, if this is true, the name of the enum is going to be
+///qualified.
+///
+///@return the resulting flat representation.
+string
+get_class_or_enum_flat_representation(const type_base& coe,
+				      const string& indent,
+				      bool one_line,
+				      bool internal,
+				      bool qualified_name)
+
+{
+  string repr;
+  if (const class_or_union* cou = is_class_or_union_type(&coe))
+    repr = get_class_or_union_flat_representation(cou, indent, one_line,
+						  internal, qualified_name);
+  else if (const enum_type_decl* enom = is_enum_type(&coe))
+    repr = get_enum_flat_representation(*enom, indent, one_line, qualified_name);
+
+  return repr;
+}
 
 /// Get the textual representation of a type for debugging purposes.
 ///
@@ -18578,6 +18747,7 @@ class enum_type_decl::priv
 {
   type_base_sptr	underlying_type_;
   enumerators		enumerators_;
+  mutable enumerators	sorted_enumerators_;
 
   friend class enum_type_decl;
 
@@ -18643,6 +18813,33 @@ enum_type_decl::enumerators&
 enum_type_decl::get_enumerators()
 {return priv_->enumerators_;}
 
+/// Get the lexicographically sorted vector of enumerators.
+///
+/// @return the lexicographically sorted vector of enumerators.
+const enum_type_decl::enumerators&
+enum_type_decl::get_sorted_enumerators() const
+{
+  if (priv_->sorted_enumerators_.empty())
+    {
+      for (auto e = get_enumerators().rbegin();
+	   e != get_enumerators().rend();
+	   ++e)
+	priv_->sorted_enumerators_.push_back(*e);
+
+      std::sort(priv_->sorted_enumerators_.begin(),
+		priv_->sorted_enumerators_.end(),
+		[](enum_type_decl::enumerator& l,
+		   enum_type_decl::enumerator& r)
+		{
+		  if (l.get_name() == r.get_name())
+		    return l.get_value() < r.get_value();
+		  return (l.get_name() < r.get_name());
+		});
+    }
+
+  return priv_->sorted_enumerators_;
+}
+
 /// Get the pretty representation of the current instance of @ref
 /// enum_type_decl.
 ///
@@ -18668,6 +18865,10 @@ enum_type_decl::get_pretty_representation(bool internal,
 
   if (internal && get_is_anonymous())
     r += get_type_name(this, qualified_name, /*internal=*/true);
+  else if (get_is_anonymous())
+    r += get_enum_flat_representation(*this, "",
+				      /*one_line=*/true,
+				      qualified_name);
   else
     r += decl_base::get_pretty_representation(internal,
 					      qualified_name);

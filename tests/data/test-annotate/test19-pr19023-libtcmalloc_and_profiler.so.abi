@@ -20183,7 +20183,7 @@
     <!-- class ProfileHandler -->
     <class-decl name='ProfileHandler' size-in-bits='448' visibility='default' filepath='src/profile-handler.cc' line='84' column='1' id='type-id-1168'>
       <member-type access='private'>
-        <!-- enum ProfileHandler::__anonymous_enum__ -->
+        <!-- enum {TIMERS_ONE_SET=1, TIMERS_SEPARATE=3, TIMERS_SHARED=2, TIMERS_UNTOUCHED=0, } -->
         <enum-decl name='__anonymous_enum__' is-anonymous='yes' filepath='src/profile-handler.cc' line='166' column='1' id='type-id-1169'>
           <underlying-type type-id='type-id-96'/>
           <enumerator name='TIMERS_UNTOUCHED' value='0'/>
@@ -25068,21 +25068,21 @@
     <!-- class SpinLock -->
     <class-decl name='SpinLock' size-in-bits='32' visibility='default' filepath='./src/base/spinlock.h' line='48' column='1' id='type-id-290'>
       <member-type access='private'>
-        <!-- enum SpinLock::__anonymous_enum__ -->
+        <!-- enum {kSpinLockFree=0, } -->
         <enum-decl name='__anonymous_enum__' is-anonymous='yes' filepath='src/base/spinlock.h' line='114' column='1' id='type-id-1411'>
           <underlying-type type-id='type-id-96'/>
           <enumerator name='kSpinLockFree' value='0'/>
         </enum-decl>
       </member-type>
       <member-type access='private'>
-        <!-- enum SpinLock::__anonymous_enum__1 -->
+        <!-- enum {kSpinLockHeld=1, } -->
         <enum-decl name='__anonymous_enum__1' is-anonymous='yes' filepath='src/base/spinlock.h' line='115' column='1' id='type-id-1412'>
           <underlying-type type-id='type-id-96'/>
           <enumerator name='kSpinLockHeld' value='1'/>
         </enum-decl>
       </member-type>
       <member-type access='private'>
-        <!-- enum SpinLock::__anonymous_enum__30 -->
+        <!-- enum {kSpinLockSleeper=2, } -->
         <enum-decl name='__anonymous_enum__30' is-anonymous='yes' filepath='./src/base/spinlock.h' line='116' column='1' id='type-id-1413'>
           <underlying-type type-id='type-id-96'/>
           <enumerator name='kSpinLockSleeper' value='2'/>
@@ -32572,7 +32572,7 @@
           </class-decl>
         </member-type>
         <member-type access='private'>
-          <!-- enum tcmalloc::ThreadCache::__anonymous_enum__ -->
+          <!-- enum {have_tls=1, } -->
           <enum-decl name='__anonymous_enum__' is-anonymous='yes' filepath='src/thread_cache.h' line='69' column='1' id='type-id-1620'>
             <underlying-type type-id='type-id-96'/>
             <enumerator name='have_tls' value='1'/>

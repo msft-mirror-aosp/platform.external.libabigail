@@ -10883,7 +10883,7 @@
     <!-- struct ioctl_desc -->
     <class-decl name='ioctl_desc' size-in-bits='128' is-struct='yes' visibility='default' filepath='../../.././libsanitizer/sanitizer_common/sanitizer_common_interceptors_ioctl.inc' line='13' column='1' id='type-id-380'>
       <member-type access='public'>
-        <!-- enum ioctl_desc::__anonymous_enum__ -->
+        <!-- enum {CUSTOM=3, NONE=0, READ=1, WRITE=2, } -->
         <enum-decl name='__anonymous_enum__' is-anonymous='yes' filepath='../../.././libsanitizer/sanitizer_common/sanitizer_common_interceptors_ioctl.inc' line='16' column='1' id='type-id-389'>
           <underlying-type type-id='type-id-56'/>
           <enumerator name='NONE' value='0'/>
@@ -35469,7 +35469,7 @@
       <!-- <anonymous range>[64] -->
       <subrange length='64' lower-bound='0' upper-bound='63' type-id='type-id-46' id='type-id-366'/>
     </array-type-def>
-    <!-- __tsan::__anonymous_struct__* -->
+    <!-- struct {__tsan::MD5_u32plus lo; __tsan::MD5_u32plus hi; __tsan::MD5_u32plus a; __tsan::MD5_u32plus b; __tsan::MD5_u32plus c; __tsan::MD5_u32plus d; unsigned char buffer[64]; unsigned int block[16];}* -->
     <pointer-type-def type-id='type-id-1507' size-in-bits='64' id='type-id-1508'/>
     <!-- unsigned char* -->
     <pointer-type-def type-id='type-id-18' size-in-bits='64' id='type-id-1509'/>
@@ -35517,9 +35517,9 @@
       <typedef-decl name='MD5_u32plus' type-id='type-id-172' filepath='../../.././libsanitizer/tsan/tsan_md5.cc' line='30' column='1' id='type-id-1510'/>
       <!-- typedef unsigned long int __tsan::ulong_t -->
       <typedef-decl name='ulong_t' type-id='type-id-1' filepath='../../.././libsanitizer/tsan/tsan_md5.cc' line='31' column='1' id='type-id-1511'/>
-      <!-- void __tsan::MD5_Init(__tsan::__anonymous_struct__*) -->
+      <!-- void __tsan::MD5_Init(struct {__tsan::MD5_u32plus lo; __tsan::MD5_u32plus hi; __tsan::MD5_u32plus a; __tsan::MD5_u32plus b; __tsan::MD5_u32plus c; __tsan::MD5_u32plus d; unsigned char buffer[64]; unsigned int block[16];}*) -->
       <function-decl name='MD5_Init' filepath='../../.././libsanitizer/tsan/tsan_md5.cc' line='142' column='1' visibility='default' binding='global' size-in-bits='64'>
-        <!-- parameter of type '__tsan::__anonymous_struct__*' -->
+        <!-- parameter of type 'struct {__tsan::MD5_u32plus lo; __tsan::MD5_u32plus hi; __tsan::MD5_u32plus a; __tsan::MD5_u32plus b; __tsan::MD5_u32plus c; __tsan::MD5_u32plus d; unsigned char buffer[64]; unsigned int block[16];}*' -->
         <parameter type-id='type-id-1508'/>
         <!-- void -->
         <return type-id='type-id-27'/>

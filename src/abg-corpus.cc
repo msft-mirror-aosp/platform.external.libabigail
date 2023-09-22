@@ -774,7 +774,7 @@ corpus::recording_types_reachable_from_public_interface_supported()
 void
 corpus::record_type_as_reachable_from_public_interfaces(const type_base& t)
 {
-  string repr = get_pretty_representation(&t, /*internal=*/true);
+  string repr = get_pretty_representation(&t, /*internal=*/false);
   interned_string s = t.get_environment().intern(repr);
   priv_->get_public_types_pretty_representations()->insert(s);
 }
@@ -792,7 +792,7 @@ corpus::record_type_as_reachable_from_public_interfaces(const type_base& t)
 bool
 corpus::type_is_reachable_from_public_interfaces(const type_base& t) const
 {
-  string repr = get_pretty_representation(&t, /*internal=*/true);
+  string repr = get_pretty_representation(&t, /*internal=*/false);
   interned_string s = t.get_environment().intern(repr);
 
   return (priv_->get_public_types_pretty_representations()->find(s)

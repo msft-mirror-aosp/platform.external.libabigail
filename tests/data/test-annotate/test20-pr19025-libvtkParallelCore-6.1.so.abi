@@ -21731,7 +21731,7 @@
       <!-- class std::_Deque_base<unsigned char, std::allocator<unsigned char> > -->
       <class-decl name='_Deque_base&lt;unsigned char, std::allocator&lt;unsigned char&gt; &gt;' size-in-bits='640' visibility='default' filepath='/usr/lib/gcc/x86_64-redhat-linux/4.4.7/../../../../include/c++/4.4.7/bits/stl_deque.h' line='362' column='1' id='type-id-1155'>
         <member-type access='protected'>
-          <!-- enum std::_Deque_base<unsigned char, std::allocator<unsigned char> >::__anonymous_enum__ -->
+          <!-- enum {_S_initial_map_size = 8,} -->
           <enum-decl name='__anonymous_enum__' is-anonymous='yes' filepath='/usr/lib/gcc/x86_64-redhat-linux/4.4.7/../../../../include/c++/4.4.7/bits/stl_deque.h' line='465' column='1' id='type-id-1184'>
             <underlying-type type-id='type-id-28'/>
             <enumerator name='_S_initial_map_size' value='8'/>

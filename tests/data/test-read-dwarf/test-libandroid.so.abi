@@ -8037,17 +8037,7 @@
           </enum-decl>
         </member-type>
         <member-type access='public'>
-          <enum-decl name='__anonymous_enum__1' is-anonymous='yes' filepath='frameworks/base/libs/androidfw/include/androidfw/ResourceTypes.h' line='1037' column='1' id='08f5ca18'>
-            <underlying-type type-id='9cac1fee'/>
-            <enumerator name='MASK_NAVHIDDEN' value='12'/>
-            <enumerator name='SHIFT_NAVHIDDEN' value='2'/>
-            <enumerator name='NAVHIDDEN_ANY' value='0'/>
-            <enumerator name='NAVHIDDEN_NO' value='4'/>
-            <enumerator name='NAVHIDDEN_YES' value='8'/>
-          </enum-decl>
-        </member-type>
-        <member-type access='public'>
-          <enum-decl name='__anonymous_enum__2' is-anonymous='yes' filepath='frameworks/base/libs/androidfw/include/androidfw/ResourceTypes.h' line='1089' column='1' id='08f5ca19'>
+          <enum-decl name='__anonymous_enum__2' is-anonymous='yes' filepath='frameworks/base/libs/androidfw/include/androidfw/ResourceTypes.h' line='1089' column='1' id='08f5ca18'>
             <underlying-type type-id='9cac1fee'/>
             <enumerator name='MASK_SCREENSIZE' value='15'/>
             <enumerator name='SCREENSIZE_ANY' value='0'/>
@@ -8065,6 +8055,16 @@
             <enumerator name='LAYOUTDIR_ANY' value='0'/>
             <enumerator name='LAYOUTDIR_LTR' value='64'/>
             <enumerator name='LAYOUTDIR_RTL' value='128'/>
+          </enum-decl>
+        </member-type>
+        <member-type access='public'>
+          <enum-decl name='__anonymous_enum__1' is-anonymous='yes' filepath='frameworks/base/libs/androidfw/include/androidfw/ResourceTypes.h' line='1037' column='1' id='08f5ca19'>
+            <underlying-type type-id='9cac1fee'/>
+            <enumerator name='MASK_NAVHIDDEN' value='12'/>
+            <enumerator name='SHIFT_NAVHIDDEN' value='2'/>
+            <enumerator name='NAVHIDDEN_ANY' value='0'/>
+            <enumerator name='NAVHIDDEN_NO' value='4'/>
+            <enumerator name='NAVHIDDEN_YES' value='8'/>
           </enum-decl>
         </member-type>
         <member-type access='public'>
@@ -18980,7 +18980,6 @@
     <typedef-decl name='pthread_t' type-id='95e97e5f' filepath='bionic/libc/include/bits/pthread_types.h' line='104' column='1' id='4051f5e7'/>
     <typedef-decl name='uint64_t' type-id='8910171f' filepath='bionic/libc/include/stdint.h' line='68' column='1' id='9c313c2d'/>
     <typedef-decl name='uintmax_t' type-id='9c313c2d' filepath='bionic/libc/include/stdint.h' line='103' column='1' id='f8b828c9'/>
-    <pointer-type-def type-id='e7f43f7b' size-in-bits='32' id='8567d8b0'/>
     <pointer-type-def type-id='18a91261' size-in-bits='32' id='8693cef9'/>
     <reference-type-def kind='lvalue' type-id='a78ceb8e' size-in-bits='32' id='e6ba8810'/>
     <pointer-type-def type-id='a78ceb8e' size-in-bits='32' id='f2ba9af4'/>
@@ -19098,6 +19097,7 @@
     <pointer-type-def type-id='c86a67a1' size-in-bits='32' id='0e0ce4d9'/>
     <reference-type-def kind='rvalue' type-id='62e477cd' size-in-bits='32' id='82aceccd'/>
     <pointer-type-def type-id='62e477cd' size-in-bits='32' id='e8fa2672'/>
+    <pointer-type-def type-id='e7f43f7b' size-in-bits='32' id='8567d8b0'/>
     <pointer-type-def type-id='7b5ced03' size-in-bits='32' id='f1eb0faf'/>
     <pointer-type-def type-id='7b5ced04' size-in-bits='32' id='f1eb0fb0'/>
     <pointer-type-def type-id='7b0c0278' size-in-bits='32' id='136b85b5'/>
@@ -24528,6 +24528,8 @@
     <pointer-type-def type-id='c58985b9' size-in-bits='32' id='9680af21'/>
     <pointer-type-def type-id='1a4a01cf' size-in-bits='32' id='e13b5c87'/>
     <pointer-type-def type-id='d8cb99c5' size-in-bits='32' id='b98edb26'/>
+    <reference-type-def kind='lvalue' type-id='7a0d17e7' size-in-bits='32' id='6bbc46fb'/>
+    <reference-type-def kind='rvalue' type-id='7a0d17e7' size-in-bits='32' id='76638de7'/>
     <pointer-type-def type-id='7a0d17e7' size-in-bits='32' id='67bc40af'/>
     <pointer-type-def type-id='d684da9f' size-in-bits='32' id='3d8087e7'/>
     <reference-type-def kind='lvalue' type-id='3af595a3' size-in-bits='32' id='8b9865b7'/>
@@ -25770,7 +25772,7 @@
     <pointer-type-def type-id='766bcfe9' size-in-bits='32' id='81dc4c31'/>
     <pointer-type-def type-id='25e1a861' size-in-bits='32' id='61908449'/>
     <reference-type-def kind='rvalue' type-id='749c7aaa' size-in-bits='32' id='b1948937'/>
-    <reference-type-def kind='rvalue' type-id='d871c7fc' size-in-bits='32' id='76638de7'/>
+    <reference-type-def kind='rvalue' type-id='d871c7fc' size-in-bits='32' id='76638de8'/>
     <reference-type-def kind='lvalue' type-id='4c30ca01' size-in-bits='32' id='151635cd'/>
     <pointer-type-def type-id='4c30ca01' size-in-bits='32' id='091622e9'/>
     <reference-type-def kind='lvalue' type-id='eb9aac9f' size-in-bits='32' id='3ce17e43'/>
@@ -30500,7 +30502,7 @@
         </class-decl>
         <class-decl name='__tuple_leaf&lt;0, (lambda at frameworks/base/native/android/surface_control.cpp:282:57) &amp;&amp;, false&gt;' size-in-bits='32' visibility='default' filepath='external/libcxx/include/tuple' line='171' column='1' id='23f669c2'>
           <data-member access='private' layout-offset-in-bits='0'>
-            <var-decl name='__value_' type-id='98980936' visibility='default' filepath='external/libcxx/include/tuple' line='173' column='1'/>
+            <var-decl name='__value_' type-id='76638de7' visibility='default' filepath='external/libcxx/include/tuple' line='173' column='1'/>
           </data-member>
           <member-function access='public'>
             <function-decl name='__tuple_leaf' filepath='external/libcxx/include/tuple' line='186' column='1' visibility='default' binding='global' size-in-bits='32'>
@@ -31186,7 +31188,7 @@
             <typedef-decl name='pointer' type-id='67bc40af' filepath='external/libcxx/include/memory' line='1786' column='1' id='0504ba27'/>
           </member-type>
           <member-type access='private'>
-            <typedef-decl name='reference' type-id='9167eb94' filepath='external/libcxx/include/memory' line='1788' column='1' id='3a1429ea'/>
+            <typedef-decl name='reference' type-id='6bbc46fb' filepath='external/libcxx/include/memory' line='1788' column='1' id='3a1429ea'/>
           </member-type>
           <member-function access='public'>
             <function-decl name='allocator' filepath='external/libcxx/include/memory' line='1798' column='1' visibility='default' binding='global' size-in-bits='32'>
@@ -35836,7 +35838,7 @@
         <class-decl name='__invoke_void_return_wrapper&lt;void&gt;' size-in-bits='8' is-struct='yes' visibility='default' filepath='external/libcxx/include/__functional_base' line='344' column='1' id='e354cd9b'>
           <member-function access='public' static='yes'>
             <function-decl name='__call&lt;(lambda at frameworks/base/native/android/surface_control.cpp:282:57) &amp;, void *, long long, const android::sp&lt;android::Fence&gt; &amp;, const std::__1::vector&lt;android::SurfaceControlStats, std::__1::allocator&lt;android::SurfaceControlStats&gt; &gt; &amp;&gt;' mangled-name='_ZNSt3__128__invoke_void_return_wrapperIvE6__callIJRZ33ASurfaceTransaction_setOnCompleteE3$_0PvxRKN7android2spINS6_5FenceEEERKNS_6vectorINS6_19SurfaceControlStatsENS_9allocatorISD_EEEEEEEvDpOT_' filepath='external/libcxx/include/__functional_base' line='348' column='1' visibility='default' binding='global' size-in-bits='32'>
-              <parameter type-id='9167eb94'/>
+              <parameter type-id='6bbc46fb'/>
               <parameter type-id='94effc77'/>
               <parameter type-id='75f9e64b'/>
               <parameter type-id='bac2bb80'/>
@@ -37487,7 +37489,7 @@
             <member-function access='public'>
               <function-decl name='__alloc_func' filepath='external/libcxx/include/functional' line='1496' column='1' visibility='default' binding='global' size-in-bits='32'>
                 <parameter type-id='61908449' is-artificial='yes'/>
-                <parameter type-id='76638de7'/>
+                <parameter type-id='76638de8'/>
                 <return type-id='48b5725f'/>
               </function-decl>
             </member-function>
@@ -37510,7 +37512,7 @@
             <member-function access='public'>
               <function-decl name='__alloc_func' mangled-name='_ZNSt3__110__function12__alloc_funcIZ33ASurfaceTransaction_setOnCompleteE3$_0NS_9allocatorIS2_EEFvPvxRKN7android2spINS6_5FenceEEERKNS_6vectorINS6_19SurfaceControlStatsENS3_ISD_EEEEEEC2EOS2_OS4_' filepath='external/libcxx/include/functional' line='1517' column='1' visibility='default' binding='global' size-in-bits='32'>
                 <parameter type-id='61908449' is-artificial='yes'/>
-                <parameter type-id='76638de7'/>
+                <parameter type-id='76638de8'/>
                 <parameter type-id='b1948937'/>
                 <return type-id='48b5725f'/>
               </function-decl>
@@ -37590,7 +37592,7 @@
             <member-function access='public'>
               <function-decl name='__func' filepath='external/libcxx/include/functional' line='1583' column='1' visibility='default' binding='global' size-in-bits='32'>
                 <parameter type-id='48e19127' is-artificial='yes'/>
-                <parameter type-id='98980936'/>
+                <parameter type-id='76638de7'/>
                 <return type-id='48b5725f'/>
               </function-decl>
             </member-function>
@@ -37613,7 +37615,7 @@
             <member-function access='public'>
               <function-decl name='__func' mangled-name='_ZNSt3__110__function6__funcIZ33ASurfaceTransaction_setOnCompleteE3$_0NS_9allocatorIS2_EEFvPvxRKN7android2spINS6_5FenceEEERKNS_6vectorINS6_19SurfaceControlStatsENS3_ISD_EEEEEEC2EOS2_OS4_' filepath='external/libcxx/include/functional' line='1595' column='1' visibility='default' binding='global' size-in-bits='32'>
                 <parameter type-id='48e19127' is-artificial='yes'/>
-                <parameter type-id='98980936'/>
+                <parameter type-id='76638de7'/>
                 <parameter type-id='2dd38501'/>
                 <return type-id='48b5725f'/>
               </function-decl>
@@ -37693,7 +37695,7 @@
             <member-function access='public'>
               <function-decl name='__value_func&lt;(lambda at frameworks/base/native/android/surface_control.cpp:282:57), std::__1::allocator&lt;(lambda at frameworks/base/native/android/surface_control.cpp:282:57)&gt; &gt;' mangled-name='_ZNSt3__110__function12__value_funcIFvPvxRKN7android2spINS3_5FenceEEERKNS_6vectorINS3_19SurfaceControlStatsENS_9allocatorISA_EEEEEEC2IZ33ASurfaceTransaction_setOnCompleteE3$_0NSB_ISJ_EEEEOT_T0_' filepath='external/libcxx/include/functional' line='1695' column='1' visibility='default' binding='global' size-in-bits='32'>
                 <parameter type-id='c458ede8' is-artificial='yes'/>
-                <parameter type-id='98980936'/>
+                <parameter type-id='76638de7'/>
                 <parameter type-id='7d748444'/>
                 <return type-id='48b5725f'/>
               </function-decl>
