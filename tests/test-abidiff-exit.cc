@@ -1032,6 +1032,38 @@ InOutSpec in_out_specs[] =
     "data/test-abidiff-exit/test-enumerator-changes1-report-1.txt",
     "output/test-abidiff-exit/test-enumerator-changes1-report-1.txt"
   },
+  {
+    "data/test-abidiff-exit/test-anonymous-enums-change-v0.o",
+    "data/test-abidiff-exit/test-anonymous-enums-change-v1.o",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "--no-default-suppression --non-reachable-types",
+    abigail::tools_utils::ABIDIFF_ABI_CHANGE
+    | abigail::tools_utils::ABIDIFF_ABI_INCOMPATIBLE_CHANGE,
+    "data/test-abidiff-exit/test-anonymous-enums-change-report-v0.txt",
+    "output/test-abidiff-exit/test-anonymous-enums-change-report-v0.txt"
+  },
+  {
+    "data/test-abidiff-exit/test-anonymous-enums-change-v0.o",
+    "data/test-abidiff-exit/test-anonymous-enums-change-v1.o",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "--no-default-suppression --harmless --non-reachable-types",
+    abigail::tools_utils::ABIDIFF_ABI_CHANGE
+    | abigail::tools_utils::ABIDIFF_ABI_INCOMPATIBLE_CHANGE,
+    "data/test-abidiff-exit/test-anonymous-enums-change-report-v1.txt",
+    "output/test-abidiff-exit/test-anonymous-enums-change-report-v1.txt"
+  },
 #ifdef WITH_BTF
   {
     "data/test-abidiff-exit/btf/test0-v0.o",

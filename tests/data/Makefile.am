@@ -356,6 +356,12 @@ test-abidiff-exit/test-enumerator-changes1-v0.c \
 test-abidiff-exit/test-enumerator-changes1-v0.o \
 test-abidiff-exit/test-enumerator-changes1-v1.c \
 test-abidiff-exit/test-enumerator-changes1-v1.o \
+test-abidiff-exit/test-anonymous-enums-change-report-v0.txt \
+test-abidiff-exit/test-anonymous-enums-change-report-v1.txt \
+test-abidiff-exit/test-anonymous-enums-change-v0.c \
+test-abidiff-exit/test-anonymous-enums-change-v0.o \
+test-abidiff-exit/test-anonymous-enums-change-v1.c \
+test-abidiff-exit/test-anonymous-enums-change-v1.o \
 \
 test-diff-dwarf/test0-v0.cc		\
 test-diff-dwarf/test0-v0.o			\

@@ -14,6 +14,7 @@
 #include <libgen.h>
 #include <algorithm>
 #include <sstream>
+#include <set>
 
 #include "abg-comparison-priv.h"
 #include "abg-reporter-priv.h"
@@ -9619,6 +9620,81 @@ corpus_diff::priv::ensure_lookup_tables_populated()
 	      added_unreachable_types_[repr] = t;
 	  }
       }
+
+    // Handle anonymous enums that got changed.  An anonymous enum is
+    // designated by its flat textual representation. So a change to
+    // any of its enumerators results in a different enum.  That is
+    // represented by a deletion of the previous anonymous enum, and
+    // the addition of a new one.  For the user however, it's the same
+    // enum that changed.  Let's massage this "added/removed" pattern
+    // to show what the user expects, namely, a changed anonymous
+    // enum.
+    {
+      std::set<enum_type_decl_sptr> deleted_anon_enums;
+      std::set<enum_type_decl_sptr> added_anon_enums;
+
+      for (auto entry : deleted_unreachable_types_)
+	if (is_enum_type(entry.second)
+	    && is_enum_type(entry.second)->get_is_anonymous())
+	  deleted_anon_enums.insert(is_enum_type(entry.second));
+
+      for (auto entry : added_unreachable_types_)
+	if (is_enum_type(entry.second)
+	    && is_enum_type(entry.second)->get_is_anonymous())
+	  added_anon_enums.insert(is_enum_type(entry.second));
+
+      string_type_base_sptr_map added_anon_enum_to_erase;
+      string_type_base_sptr_map removed_anon_enum_to_erase;
+
+      // Look for deleted anonymous enums which have enumerators
+      // present in an added anonymous enums ...
+      for (auto deleted_enum : deleted_anon_enums)
+	{
+	  // Look for any enumerator of 'deleted_enum' that is also
+	  // present in an added anonymous enum.
+	  for (auto enr : deleted_enum->get_enumerators())
+	    {
+	      bool this_enum_got_changed = false;
+	      for (auto added_enum : added_anon_enums)
+		{
+		  if (is_enumerator_present_in_enum(enr, *added_enum))
+		    {
+		      // So the enumerator 'enr' from the
+		      // 'deleted_enum' enum is also present in the
+		      // 'added_enum' enum so we assume that
+		      // 'deleted_enum' and 'added_enum' are the same
+		      // enum that got changed.  Let's represent it
+		      // using a diff node.
+		      diff_sptr d = compute_diff(deleted_enum,
+						 added_enum, ctxt);
+		      ABG_ASSERT(d->has_changes());
+		      string repr =
+			abigail::ir::get_pretty_representation(is_type(deleted_enum),
+							       /*internal=*/false);
+		      changed_unreachable_types_[repr]= d;
+		      this_enum_got_changed = true;
+		      string r1 = abigail::ir::get_pretty_representation(is_type(deleted_enum));
+		      string r2 = abigail::ir::get_pretty_representation(is_type(added_enum));
+		      removed_anon_enum_to_erase[r1] = deleted_enum;
+		      added_anon_enum_to_erase[r2] = added_enum;
+		      break;
+		    }
+		}
+	      if (this_enum_got_changed)
+		break;
+	    }
+	}
+
+      // Now remove the added/removed anonymous enums from their maps,
+      // as they are now represented as a changed enum, not an added
+      // and removed enum.
+
+      for (auto entry : added_anon_enum_to_erase)
+	added_unreachable_types_.erase(entry.first);
+
+      for (auto entry : removed_anon_enum_to_erase)
+	deleted_unreachable_types_.erase(entry.first);
+    }
   }
 }
 

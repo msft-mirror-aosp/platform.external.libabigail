@@ -18997,7 +18997,7 @@ enum_has_non_name_change(const enum_type_decl& l,
 ///
 /// @return true iff the enumerator @p enr is present in the enum @p
 /// enom.
-static bool
+bool
 is_enumerator_present_in_enum(const enum_type_decl::enumerator &enr,
 			      const enum_type_decl &enom)
 {

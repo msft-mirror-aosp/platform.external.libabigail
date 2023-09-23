@@ -2814,6 +2814,10 @@ public:
 }; // end class enum_type_def::enumerator
 
 bool
+is_enumerator_present_in_enum(const enum_type_decl::enumerator &enr,
+			      const enum_type_decl &enom);
+
+bool
 equals(const typedef_decl&, const typedef_decl&, change_kind*);
 
 /// The abstraction of a typedef declaration.
