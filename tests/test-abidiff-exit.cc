@@ -1092,8 +1092,12 @@ main()
 	bool is_ok = true;
 	in_elfv0_path = source_dir_prefix + s->in_elfv0_path;
 	in_elfv1_path = source_dir_prefix + s->in_elfv1_path;
-	in_elfv0_debug_dir = source_dir_prefix + s->in_elfv0_debug_dir;
-	in_elfv1_debug_dir = source_dir_prefix + s->in_elfv1_debug_dir;
+	in_elfv0_debug_dir.clear();
+	in_elfv1_debug_dir.clear();
+	if (s->in_elfv0_debug_dir && strcmp(s->in_elfv0_debug_dir, ""))
+	  in_elfv0_debug_dir = source_dir_prefix + s->in_elfv0_debug_dir;
+	if (s->in_elfv1_debug_dir && strcmp(s->in_elfv1_debug_dir, ""))
+	  in_elfv1_debug_dir = source_dir_prefix + s->in_elfv1_debug_dir;
 	in_elfv0_headers_dirs.clear();
 	in_elfv1_headers_dirs.clear();
 	in_elfv0_added_bins_dir.clear();
