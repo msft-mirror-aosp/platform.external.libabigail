@@ -1159,6 +1159,9 @@ struct corpus_diff::priv
 			       size_t &num_filtered_removed,
 			       size_t &num_filtered_changed);
 
+  const string_diff_sptr_map&
+  changed_unreachable_types() const;
+
   const vector<diff_sptr>&
   changed_unreachable_types_sorted() const;
 

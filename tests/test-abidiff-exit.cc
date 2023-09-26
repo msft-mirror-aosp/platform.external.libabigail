@@ -1017,6 +1017,21 @@ InOutSpec in_out_specs[] =
     "data/test-abidiff-exit/test-PR30034/test-PR30034-report-1.txt",
     "output/test-abidiff-exit/test-PR30034/test-PR30034-report-1.txt"
   },
+  {
+    "data/test-abidiff-exit/test-enumerator-changes1-v0.o",
+    "data/test-abidiff-exit/test-enumerator-changes1-v1.o",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "--no-default-suppression --non-reachable-types --harmless",
+    abigail::tools_utils::ABIDIFF_ABI_CHANGE,
+    "data/test-abidiff-exit/test-enumerator-changes1-report-1.txt",
+    "output/test-abidiff-exit/test-enumerator-changes1-report-1.txt"
+  },
 #ifdef WITH_BTF
   {
     "data/test-abidiff-exit/btf/test0-v0.o",

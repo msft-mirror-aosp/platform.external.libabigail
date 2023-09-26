@@ -10129,6 +10129,14 @@ corpus_diff::priv::count_unreachable_types(size_t &num_added,
       ++num_filtered_changed;
 }
 
+/// Get the map of diff nodes representing changed unreachable types.
+///
+/// @return the map of diff nodes representing changed unreachable
+/// types.
+const string_diff_sptr_map&
+corpus_diff::priv::changed_unreachable_types() const
+{return changed_unreachable_types_;}
+
 /// Get the sorted vector of diff nodes representing changed
 /// unreachable types.
 ///
@@ -10239,14 +10247,11 @@ corpus_diff::priv::apply_filters_and_compute_diff_stats(diff_stats& stat)
 
       // walk the changed unreachable types to apply categorization
       // filters
-      for (diff_sptrs_type::const_iterator i =
-	     changed_unreachable_types_sorted().begin();
-	   i != changed_unreachable_types_sorted().end();
-	   ++i)
-	{
-	  diff_sptr diff = *i;
-	  ctxt->maybe_apply_filters(diff);
-	}
+      for (auto& diff : changed_unreachable_types_sorted())
+	ctxt->maybe_apply_filters(diff);
+
+      for (auto& entry : changed_unreachable_types())
+	ctxt->maybe_apply_filters(entry.second);
 
       if (get_context()->do_log())
 	{
@@ -11194,7 +11199,8 @@ corpus_diff::has_incompatible_changes() const
   const diff_stats& stats = const_cast<corpus_diff*>(this)->
     apply_filters_and_suppressions_before_reporting();
 
-  return (soname_changed() || architecture_changed()
+  bool has_incompatible_changes  =
+    (soname_changed() || architecture_changed()
 	  || stats.net_num_func_removed() != 0
 	  || (stats.num_func_with_virtual_offset_changes() != 0
 	      // If all reports about functions with sub-type changes
@@ -11205,8 +11211,34 @@ corpus_diff::has_incompatible_changes() const
 	  || stats.net_num_vars_removed() != 0
 	  || stats.net_num_removed_func_syms() != 0
 	  || stats.net_num_removed_var_syms() != 0
-	  || stats.net_num_removed_unreachable_types() != 0
-	  || stats.net_num_changed_unreachable_types() != 0);
+	  || stats.net_num_removed_unreachable_types() != 0);
+
+  // If stats.net_num_changed_unreachable_types() != 0 then walk the
+  // corpus_diff::priv::changed_unreachable_types_, and see if there
+  // is one that is harmful by bitwise and-ing their category with
+  // abigail::comparison::get_default_harmful_categories_bitmap().
+  if (!has_incompatible_changes
+      && stats.net_num_changed_unreachable_types())
+    {
+      // The changed unreachable types can carry harmful changes.
+      // Let's figure if they actually do.
+
+      diff_context_sptr ctxt = context();
+      for (auto &entry : priv_->changed_unreachable_types())
+	{
+	  diff_sptr dif = entry.second;
+
+	  // Let's see if any of the categories of this diff node
+	  // belong to the "harmful" ones.
+	  if (dif->get_category() & get_default_harmful_categories_bitmap())
+	    {
+	      has_incompatible_changes |= true;
+	      break;
+	    }
+	}
+    }
+
+  return has_incompatible_changes;
 }
 
 /// Test if the current instance of @ref corpus_diff carries subtype

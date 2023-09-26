@@ -351,6 +351,11 @@ test-abidiff-exit/test-PR30034/split/lib64/librte_telemetry.so \
 test-abidiff-exit/test-PR30034/split/lib64/librte_telemetry.so.23 \
 test-abidiff-exit/test-PR30034/split/lib64/librte_telemetry.so.23.2 \
 test-abidiff-exit/test-PR30034/test-PR30034-report-1.txt \
+test-abidiff-exit/test-enumerator-changes1-report-1.txt \
+test-abidiff-exit/test-enumerator-changes1-v0.c \
+test-abidiff-exit/test-enumerator-changes1-v0.o \
+test-abidiff-exit/test-enumerator-changes1-v1.c \
+test-abidiff-exit/test-enumerator-changes1-v1.o \
 \
 test-diff-dwarf/test0-v0.cc		\
 test-diff-dwarf/test0-v0.o			\
