@@ -965,7 +965,8 @@ report_name_size_and_alignment_changes(decl_base_sptr		first,
   string fn = first->get_qualified_name(),
     sn = second->get_qualified_name();
 
-  if (fn != sn)
+  if (!(first->get_is_anonymous() && second->get_is_anonymous())
+      && fn != sn)
     {
       if (!(ctxt->get_allowed_category() & HARMLESS_DECL_NAME_CHANGE_CATEGORY)
 	  && filtering::has_harmless_name_change(first, second))

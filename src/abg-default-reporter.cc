@@ -162,7 +162,9 @@ default_reporter::report(const enum_diff& d, ostream& out,
 	{
 	  out << indent
 	      << "  '"
-	      << i->get_qualified_name()
+	      << (first->get_is_anonymous()
+		  ? i->get_name()
+		  : i->get_qualified_name())
 	      << "' value '"
 	      << i->get_value()
 	      << "'";
@@ -181,7 +183,9 @@ default_reporter::report(const enum_diff& d, ostream& out,
 	{
 	  out << indent
 	      << "  '"
-	      << i->get_qualified_name()
+	      << (second->get_is_anonymous()
+		  ? i->get_name()
+		  :i->get_qualified_name())
 	      << "' value '"
 	      << i->get_value()
 	      << "'";
@@ -201,7 +205,9 @@ default_reporter::report(const enum_diff& d, ostream& out,
 	{
 	  out << indent
 	      << "  '"
-	      << i->first.get_qualified_name()
+	      << (first->get_is_anonymous()
+		  ? i->first.get_name()
+		  : i->first.get_qualified_name())
 	      << "' from value '"
 	      << i->first.get_value() << "' to '"
 	      << i->second.get_value() << "'";
