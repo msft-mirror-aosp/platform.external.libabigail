@@ -1837,6 +1837,66 @@ InOutSpec in_out_specs[] =
     "output/test-diff-suppr/test40-enumerator-changes-report-0.txt"
   },
   {
+    "data/test-diff-suppr/test40.1-enumerator-changes-enumerator-changes-v0.o",
+    "data/test-diff-suppr/test40.1-enumerator-changes-enumerator-changes-v1.o",
+    "",
+    "",
+    "",
+    "--no-default-suppression",
+    "data/test-diff-suppr/test40.1-enumerator-changes-enumerator-changes-report-0.txt",
+    "output/test-diff-suppr/test40.1-enumerator-changes-enumerator-changes-report-0.txt"
+  },
+  {
+    "data/test-diff-suppr/test40.1-enumerator-changes-enumerator-changes-v0.o",
+    "data/test-diff-suppr/test40.1-enumerator-changes-enumerator-changes-v1.o",
+    "",
+    "",
+    "data/test-diff-suppr/test40.1-enumerator-changes-enumerator-changes-1.suppr",
+    "--no-default-suppression",
+    "data/test-diff-suppr/test40.1-enumerator-changes-enumerator-changes-report-1.txt",
+    "output/test-diff-suppr/test40.1-enumerator-changes-enumerator-changes-report-1.txt"
+  },
+  {
+    "data/test-diff-suppr/test40.1-enumerator-changes-enumerator-changes-v0.o",
+    "data/test-diff-suppr/test40.1-enumerator-changes-enumerator-changes-v1.o",
+    "",
+    "",
+    "data/test-diff-suppr/test40.1-enumerator-changes-enumerator-changes-2.suppr",
+    "--no-default-suppression",
+    "data/test-diff-suppr/test40.1-enumerator-changes-enumerator-changes-report-2.txt",
+    "output/test-diff-suppr/test40.1-enumerator-changes-enumerator-changes-report-2.txt"
+  },
+  {
+    "data/test-diff-suppr/test40.1-enumerator-changes-enumerator-changes-v0.o",
+    "data/test-diff-suppr/test40.1-enumerator-changes-enumerator-changes-v1.o",
+    "",
+    "",
+    "data/test-diff-suppr/test40.1-enumerator-changes-enumerator-changes-3.suppr",
+    "--no-default-suppression",
+    "data/test-diff-suppr/test40.1-enumerator-changes-enumerator-changes-report-3.txt",
+    "output/test-diff-suppr/test40.1-enumerator-changes-enumerator-changes-report-3.txt"
+  },
+  {
+    "data/test-diff-suppr/test40.1-enumerator-changes-enumerator-changes-v0.o",
+    "data/test-diff-suppr/test40.1-enumerator-changes-enumerator-changes-v1.o",
+    "",
+    "",
+    "data/test-diff-suppr/test40.1-enumerator-changes-enumerator-changes-4.suppr",
+    "--no-default-suppression",
+    "data/test-diff-suppr/test40.1-enumerator-changes-enumerator-changes-report-4.txt",
+    "output/test-diff-suppr/test40.1-enumerator-changes-enumerator-changes-report-4.txt"
+  },
+  {
+    "data/test-diff-suppr/test40.1-enumerator-changes-enumerator-changes-v0.o",
+    "data/test-diff-suppr/test40.1-enumerator-changes-enumerator-changes-v1.o",
+    "",
+    "",
+    "data/test-diff-suppr/test40.1-enumerator-changes-enumerator-changes-5.suppr",
+    "--no-default-suppression",
+    "data/test-diff-suppr/test40.1-enumerator-changes-enumerator-changes-report-5.txt",
+    "output/test-diff-suppr/test40.1-enumerator-changes-enumerator-changes-report-5.txt"
+  },
+  {
     "data/test-diff-suppr/libtest41-enumerator-changes-v0.so",
     "data/test-diff-suppr/libtest41-enumerator-changes-v1.so",
     "",

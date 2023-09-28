@@ -770,6 +770,28 @@ void
 type_suppression::set_changed_enumerator_names(const vector<string>& n)
 {priv_->changed_enumerator_names_ = n;}
 
+/// Getter of the vector of the regular expression strings for changed
+/// enumerators that are supposed to be suppressed. Note that this
+/// will be "valid" only if the type suppression has the
+/// 'type_kind = enum' property.
+///
+/// @return the vector of the regular expression strings that are
+/// supposed to match enumertor names to be suppressed.
+const vector<regex::regex_t_sptr>&
+type_suppression::get_changed_enumerators_regexp() const
+{return priv_->changed_enumerators_regexp_;}
+
+/// Setter of the vector of the regular expression strings for changed
+/// enumerators that are supposed to be suppressed. Note that this
+/// will be "valid" only if the type suppression has the
+/// 'type_kind = enum' property.
+///
+/// @param n the vector of the regular expression strings that are
+/// supposed to match enumertor names to be suppressed.
+void
+type_suppression::set_changed_enumerators_regexp(const vector<regex::regex_t_sptr>& n)
+{priv_->changed_enumerators_regexp_ = n;}
+
 /// Evaluate this suppression specification on a given diff node and
 /// say if the diff node should be suppressed or not.
 ///
@@ -1002,9 +1024,12 @@ type_suppression::suppresses_diff(const diff* diff) const
       // ... and yet carries some changed enumerators!
       && !enum_dif->changed_enumerators().empty())
     {
-      // Make sure that all changed enumerators are listed in the
-      // vector of enumerator names returned by the
-      // get_changed_enumerator_names() member function.
+
+      // Make sure that all changed enumerators are either:
+      //  1. listed in the vector of enumerator names returned
+      //     by the get_changed_enumerator_names() member function
+      //  2. match a regular expression returned by the
+      //     get_changed_enumerators_regexp() member function
       bool matched = true;
       for (string_changed_enumerator_map::const_iterator i =
 	     enum_dif->changed_enumerators().begin();
@@ -1012,13 +1037,20 @@ type_suppression::suppresses_diff(const diff* diff) const
 	   ++i)
 	{
 	  matched &= true;
-	  if (std::find(get_changed_enumerator_names().begin(),
-			get_changed_enumerator_names().end(),
-			i->first) == get_changed_enumerator_names().end())
-	    {
-	      matched &= false;
-	      break;
-	    }
+	  if ((std::find(get_changed_enumerator_names().begin(),
+			 get_changed_enumerator_names().end(),
+			 i->first) == get_changed_enumerator_names().end())
+	     &&
+	      (std::find_if(get_changed_enumerators_regexp().begin(),
+			    get_changed_enumerators_regexp().end(),
+			    [&] (const regex_t_sptr& enum_regexp)
+		{
+		  return regex::match(enum_regexp, i->first);
+		}) == get_changed_enumerators_regexp().end()))
+	  {
+	    matched &= false;
+	    break;
+	  }
 	}
       if (!matched)
 	return false;
@@ -2162,6 +2194,34 @@ read_type_suppression(const ini::config::section& section)
 	changed_enumerator_names.push_back(p->get_value()->as_string());
     }
 
+  /// Support 'changed_enumerators_regexp = .*_foo, bar_[0-9]+, baz'
+  ///
+  /// If the current type is an enum and if it carries changed
+  /// enumerators that match regular expressions listed in the
+  /// changed_enumerators_regexp property value then it should be
+  /// suppressed.
+
+  ini::property_sptr changed_enumerators_regexp_prop =
+    section.find_property("changed_enumerators_regexp");
+
+  vector<regex_t_sptr> changed_enumerators_regexp;
+  if (changed_enumerators_regexp_prop)
+    {
+      if (ini::list_property_sptr p =
+	  is_list_property(changed_enumerators_regexp_prop))
+      {
+	for (string e : p->get_value()->get_content())
+	  changed_enumerators_regexp.push_back(regex::compile(e));
+      }
+      else if (ini::simple_property_sptr p =
+	       is_simple_property(changed_enumerators_regexp_prop))
+      {
+	changed_enumerators_regexp.push_back(
+	  regex::compile(p->get_value()->as_string())
+	);
+      }
+    }
+
   if (section.get_name() == "suppress_type")
     result.reset(new type_suppression(label_str, name_regex_str, name_str));
   else if (section.get_name() == "allow_type")
@@ -2224,6 +2284,10 @@ read_type_suppression(const ini::config::section& section)
   if (result->get_type_kind() == type_suppression::ENUM_TYPE_KIND
       && !changed_enumerator_names.empty())
     result->set_changed_enumerator_names(changed_enumerator_names);
+
+  if (result->get_type_kind() == type_suppression::ENUM_TYPE_KIND
+      && !changed_enumerators_regexp.empty())
+    result->set_changed_enumerators_regexp(changed_enumerators_regexp);
 
   return result;
 }

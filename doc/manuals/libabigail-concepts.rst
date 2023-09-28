@@ -353,6 +353,31 @@ The potential properties of this sections are listed below:
       changed_enumerators = LAST_ENUMERATORS0, LAST_ENUMERATOR1
 
 
+.. _suppr_changed_enumerators_regexp_label:
+
+* ``changed_enumerators_regexp``
+
+  Usage:
+
+    ``changed_enumerators_regexp`` ``=`` <list-of-enumerator-regular-expressions>
+
+  Suppresses change reports involving changes in the value of
+  enumerators of a given enum type.  This property is applied if the
+  ``type_kind`` property is set to the value ``enum``, at least.  The
+  value of the ``changed_enumerators_regexp`` property is a
+  comma-separated list of regular expressions that should match the
+  names of the enumerators that the user expects to change.  For
+  instance: ::
+
+      changed_enumerators_regexp = .*_MAX$, .*_LAST$, .*_NUM$, .*_NBITS$
+
+  In the example above, change reports to any enumerator which name
+  ends with _MAX, _LAST, _NUM or _NBITS will be suppressed.
+
+  Note that for this property to be applied to changes to an enum
+  type, the size of the enum type must *NOT* have changed.
+
+
 * ``drop``
 
  Usage:

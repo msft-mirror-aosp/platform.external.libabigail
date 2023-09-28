@@ -585,6 +585,7 @@ class type_suppression::priv
   string				source_location_to_keep_regex_str_;
   mutable regex::regex_t_sptr		source_location_to_keep_regex_;
   mutable vector<string>		changed_enumerator_names_;
+  mutable vector<regex::regex_t_sptr>	changed_enumerators_regexp_;
 
   priv();
 

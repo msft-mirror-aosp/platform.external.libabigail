@@ -330,6 +330,12 @@ public:
   void
   set_changed_enumerator_names(const vector<string>&);
 
+  const vector<regex::regex_t_sptr>&
+  get_changed_enumerators_regexp() const;
+
+  void
+  set_changed_enumerators_regexp(const vector<regex::regex_t_sptr>&);
+
   virtual bool
   suppresses_diff(const diff* diff) const;
 
