@@ -1380,9 +1380,6 @@ diff_context::maybe_apply_filters(diff_sptr diff)
   if (!diff)
     return;
 
-  if (get_allowed_category() == EVERYTHING_CATEGORY)
-    return;
-
   if (!diff->has_changes())
     return;
 
