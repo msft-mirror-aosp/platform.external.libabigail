@@ -343,7 +343,7 @@ The potential properties of this sections are listed below:
   Usage:
 
     ``changed_enumerators`` ``=`` <list-of-enumerators>
-    
+
   Suppresses change reports involving changes in the value of
   enumerators of a given enum type.  This property is applied if the
   ``type_kind`` property is set to the value ``enum``, at least.  The
