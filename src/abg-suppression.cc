@@ -1553,7 +1553,8 @@ is_integer_boundary(type_suppression::insertion_range::boundary_sptr b)
 {return dynamic_pointer_cast<type_suppression::insertion_range::integer_boundary>(b);}
 
 /// Tests if a given instance of @ref
-/// type_suppression::insertion_range::boundary is actually an function call expression boundary.
+/// type_suppression::insertion_range::boundary is actually a
+/// function call expression boundary.
 ///
 /// @param b the boundary to test.
 ///
