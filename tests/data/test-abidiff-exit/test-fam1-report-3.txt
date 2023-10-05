@@ -1,0 +1,14 @@
+Functions changes summary: 0 Removed, 1 Changed, 0 Added function
+Variables changes summary: 0 Removed, 0 Changed, 0 Added variable
+
+1 function with some indirect sub-type change:
+
+  [C] 'function void foo(foo*)' at test-fam1-v0.c:8:1 has some indirect sub-type changes:
+    parameter 1 of type 'foo*' has sub-type changes:
+      in pointed to type 'struct foo' at test-fam1-v1.c:1:1:
+        type size changed from 32 to 64 (in bits)
+        1 data member insertion:
+          'char member1', at offset 32 (in bits) at test-fam1-v1.c:4:1
+        1 data member change:
+          'char pad[]' offset changed from 32 to 40 (in bits) (by +8 bits)
+

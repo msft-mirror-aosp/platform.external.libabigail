@@ -43,6 +43,14 @@ using namespace comparison;
 using std::dynamic_pointer_cast;
 using regex::regex_t_sptr;
 
+/// @return the string constant "offset_of_flexible_array_data_member".
+static const string&
+OFFSET_OF_FLEXIBLE_ARRAY_DATA_MEMBER_STRING()
+{
+  static string s = "offset_of_flexible_array_data_member";
+  return s;
+}
+
 // <parsing stuff>
 
 // section parsing
@@ -1482,6 +1490,25 @@ type_suppression::insertion_range::create_fn_call_expr_boundary(const string& s)
   return result;
 }
 
+/// Create a named boundary.
+///
+/// The return value is to be used as a boundary for an instance of
+/// @ref type_suppression::insertion_range.  The value of that
+/// boundary is a named constant that is to be evaluated to an integer
+/// value, in the context of a @ref class_decl.  That evaluate is
+/// performed by the function
+/// type_suppression::insertion_range::eval_boundary().
+///
+/// @param name the name of the boundary.
+///
+/// @return the newly created named boundary.
+type_suppression::insertion_range::named_boundary_sptr
+type_suppression::insertion_range::create_named_boundary(const string& name)
+{
+  named_boundary_sptr result(new named_boundary(name));
+  return result;
+}
+
 /// Evaluate an insertion range boundary to get a resulting integer
 /// value.
 ///
@@ -1563,6 +1590,19 @@ type_suppression::insertion_range::eval_boundary(const boundary_sptr	boundary,
 	    }
 	}
     }
+  else if (named_boundary_sptr b = is_named_boundary(boundary))
+    {
+      if (b->get_name() == OFFSET_OF_FLEXIBLE_ARRAY_DATA_MEMBER_STRING())
+	{
+	  // Look at the last data member of 'context' and make sure
+	  // its type is an array with non-finite size.
+	  if (var_decl_sptr dm = has_flexible_array_data_member(is_class_type(context)))
+	    {
+	      value = get_data_member_offset(dm);
+	      return true;
+	    }
+	}
+    }
   return false;
 }
 
@@ -1604,6 +1644,18 @@ is_integer_boundary(type_suppression::insertion_range::boundary_sptr b)
 type_suppression::insertion_range::fn_call_expr_boundary_sptr
 is_fn_call_expr_boundary(type_suppression::insertion_range::boundary_sptr b)
 {return dynamic_pointer_cast<type_suppression::insertion_range::fn_call_expr_boundary>(b);}
+
+/// Test if a given instance of @ref
+/// type_suppression::insertion_range::boundary is actually a named boundary.
+///
+/// @param b the boundary to consider.
+///
+/// @return the instance of @ref
+/// type_suppression::insertion_range::named_boundary if @p b is a
+/// named boundary, or nil.
+type_suppression::insertion_range::named_boundary_sptr
+is_named_boundary(type_suppression::insertion_range::boundary_sptr b)
+{return dynamic_pointer_cast<type_suppression::insertion_range::named_boundary>(b);}
 
 /// The private data type of @ref
 /// type_suppression::insertion_range::boundary.
@@ -1705,6 +1757,35 @@ type_suppression::insertion_range::fn_call_expr_boundary::operator ini::function
 /// type_suppression::insertion_range::fn_call_expr_boundary.
 type_suppression::insertion_range::fn_call_expr_boundary::~fn_call_expr_boundary()
 {}
+
+/// The private data type for the @ref
+/// type_suppression::insertion_range::named_boundary.
+struct type_suppression::insertion_range::named_boundary::priv
+{
+  string name_;
+
+  priv()
+  {}
+
+  priv(const string& name)
+    : name_(name)
+  {}
+}; // end struct type_suppression::insertion_range::named_boundary::priv
+
+/// Constructor for @ref
+/// type_suppression::insertion_range::named_boundary
+///
+/// @param name the name of the @ref named_boundary type.
+type_suppression::insertion_range::named_boundary::named_boundary(const string& name)
+  : priv_(new priv(name))
+{}
+
+/// Getter for the name of the named boundary.
+///
+/// @return the name of the named boundary.
+const string&
+type_suppression::insertion_range::named_boundary::get_name() const
+{return priv_->name_;}
 
 /// Test if an instance of @ref suppression is an instance of @ref
 /// type_suppression.
@@ -2021,6 +2102,8 @@ read_type_suppression(const ini::config::section& section)
       type_suppression::insertion_range::boundary_sptr begin, end;
       if (ins_point == "end")
 	begin = type_suppression::insertion_range::create_integer_boundary(-1);
+      else if (ins_point == OFFSET_OF_FLEXIBLE_ARRAY_DATA_MEMBER_STRING())
+	begin = type_suppression::insertion_range::create_named_boundary(ins_point);
       else if (isdigit(ins_point[0]))
 	begin = type_suppression::insertion_range::create_integer_boundary
 	  (atoi(ins_point.c_str()));

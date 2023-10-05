@@ -10760,6 +10760,67 @@ class_decl_sptr
 is_class_type(const type_or_decl_base_sptr& d)
 {return dynamic_pointer_cast<class_decl>(d);}
 
+/// Test if the last data member of a class is an array with
+/// non-finite data member.
+///
+/// The flexible data member idiom is a well known C idiom:
+/// https://en.wikipedia.org/wiki/Flexible_array_member.
+///
+/// @param klass the class to consider.
+///
+/// @return the data member which type is a flexible array, if any, or
+/// nil.
+var_decl_sptr
+has_flexible_array_data_member(const class_decl& klass)
+{
+  var_decl_sptr nil;
+  const class_or_union::data_members& dms = klass.get_data_members();
+  if (dms.empty())
+    return nil;
+
+  if (array_type_def_sptr array = is_array_type(dms.back()->get_type()))
+    {// The type of the last data member is an array.
+      if (array->is_infinite())
+	// The array has a non-finite size.  We are thus looking at a
+	// flexible array data member.  Let's return it.
+	return dms.back();
+    }
+
+  return nil;
+}
+
+/// Test if the last data member of a class is an array with
+/// non-finite data member.
+///
+/// The flexible data member idiom is a well known C idiom:
+/// https://en.wikipedia.org/wiki/Flexible_array_member.
+///
+/// @param klass the class to consider.
+///
+/// @return the data member which type is a flexible array, if any, or
+/// nil.
+var_decl_sptr
+has_flexible_array_data_member(const class_decl* klass)
+{
+  if (!klass)
+    return var_decl_sptr();
+
+  return has_flexible_array_data_member(*klass);
+}
+
+/// Test if the last data member of a class is an array with
+/// non-finite data member.
+///
+/// The flexible data member idiom is a well known C idiom:
+/// https://en.wikipedia.org/wiki/Flexible_array_member.
+///
+/// @param klass the class to consider.
+///
+/// @return the data member which type is a flexible array, if any, or
+/// nil.
+var_decl_sptr
+has_flexible_array_data_member(const class_decl_sptr& klass)
+{return has_flexible_array_data_member(klass.get());}
 
 /// Test wheter a type is a declaration-only class.
 ///

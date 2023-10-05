@@ -367,6 +367,24 @@ test-abidiff-exit/test-anon-types-v0.c \
 test-abidiff-exit/test-anon-types-v0.o \
 test-abidiff-exit/test-anon-types-v1.c \
 test-abidiff-exit/test-anon-types-v1.o \
+test-abidiff-exit/test-fam1-report-1.txt \
+test-abidiff-exit/test-fam1-report-2.txt \
+test-abidiff-exit/test-fam1-report-3.txt \
+test-abidiff-exit/test-fam1-report-4.txt \
+test-abidiff-exit/test-fam1-report-5.txt \
+test-abidiff-exit/test-fam1-suppr-1.abignore \
+test-abidiff-exit/test-fam1-suppr-2.abignore \
+test-abidiff-exit/test-fam1-suppr-3.abignore \
+test-abidiff-exit/test-fam1-suppr-4.abignore \
+test-abidiff-exit/test-fam1-v0.c \
+test-abidiff-exit/test-fam1-v0.o \
+test-abidiff-exit/test-fam1-v1.c \
+test-abidiff-exit/test-fam1-v1.o \
+test-abidiff-exit/test-fam2-report-1.txt \
+test-abidiff-exit/test-fam2-v0.c \
+test-abidiff-exit/test-fam2-v0.o \
+test-abidiff-exit/test-fam2-v1.c \
+test-abidiff-exit/test-fam2-v1.o \
 \
 test-diff-dwarf/test0-v0.cc		\
 test-diff-dwarf/test0-v0.o			\

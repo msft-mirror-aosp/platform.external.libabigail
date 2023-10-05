@@ -500,6 +500,11 @@ names start with the string "private_data_member".
 	       value equals the offset of the end of the structure or
 	       class.
 
+	     - the keyword ``offset_of_flexible_array_data_member``
+               which is a named constant that evaluates to the offset
+               of the flexible array data member contained in the
+               relevant structure.
+
 	     - the function call expression
 	       ``offset_of(data-member-name)`` where `data-member-name` is
 	       the name of a given data member of the relevant structure

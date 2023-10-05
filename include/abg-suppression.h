@@ -366,6 +366,7 @@ public:
   class boundary;
   class integer_boundary;
   class fn_call_expr_boundary;
+  class named_boundary;
 
   /// Convenience typedef for a shared_ptr to @ref boundary
   typedef shared_ptr<boundary> boundary_sptr;
@@ -376,6 +377,10 @@ public:
   /// Convenience typedef for a shared_ptr to a @ref
   /// fn_call_expr_boundary
   typedef shared_ptr<fn_call_expr_boundary> fn_call_expr_boundary_sptr;
+
+  /// Convenience typedef for a shared_ptr to a @ref
+  /// named_boundary
+  typedef shared_ptr<named_boundary> named_boundary_sptr;
 
   insertion_range();
 
@@ -396,6 +401,9 @@ public:
   static insertion_range::fn_call_expr_boundary_sptr
   create_fn_call_expr_boundary(const string&);
 
+  static insertion_range::named_boundary_sptr
+  create_named_boundary(const string&);
+
   static bool
   eval_boundary(const boundary_sptr	boundary,
 		const class_or_union*	context,
@@ -410,6 +418,9 @@ is_integer_boundary(type_suppression::insertion_range::boundary_sptr);
 
 type_suppression::insertion_range::fn_call_expr_boundary_sptr
 is_fn_call_expr_boundary(type_suppression::insertion_range::boundary_sptr);
+
+type_suppression::insertion_range::named_boundary_sptr
+is_named_boundary(type_suppression::insertion_range::boundary_sptr);
 
 /// The abstraction of the boundary of an @ref insertion_range, in the
 /// context of a @ref type_suppression
@@ -457,6 +468,22 @@ public:
   operator ini::function_call_expr_sptr () const;
   ~fn_call_expr_boundary();
 }; //end class type_suppression::insertion_range::fn_call_expr_boundary
+
+/// An @ref insertion_range boundary that is expressed as a named
+/// constant that is to be evaluated later in the context of a given
+/// type and resolved to a bit offset.
+class type_suppression::insertion_range::named_boundary
+  : public type_suppression::insertion_range::boundary
+{
+  struct priv;
+  std::unique_ptr<priv> priv_;
+
+  named_boundary();
+
+public:
+  named_boundary(const string& name);
+  const string& get_name() const;
+}; //end class type_suppression::insertion_range::named_boundary
 
 /// Abstraction of a negated type suppression specification.
 ///
