@@ -471,8 +471,8 @@ names start with the string "private_data_member".
 
 	 - data member offset selector expressions, such as:
 
-	     - the keyword ``end`` which is a named constant which value
-	       equals the offset of the end of the of the structure or
+	     - the keyword ``end`` which is a named constant which
+	       value equals the offset of the end of the structure or
 	       class.
 
 	     - the function call expression
