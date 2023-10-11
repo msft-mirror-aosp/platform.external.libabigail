@@ -1880,6 +1880,12 @@ test-diff-suppr/test-has-data-member-inserted-between-1-v3.o \
 test-diff-suppr/test-has-data-member-inserted-between-1-v4.c \
 test-diff-suppr/test-has-data-member-inserted-between-1-v4.o \
 test-diff-suppr/test-has-data-member-inserted-between-1.suppr \
+test-diff-suppr/test-has-data-member-inserted-at-1-report-1.txt \
+test-diff-suppr/test-has-data-member-inserted-at-1-v0.c \
+test-diff-suppr/test-has-data-member-inserted-at-1-v0.o \
+test-diff-suppr/test-has-data-member-inserted-at-1-v1.c \
+test-diff-suppr/test-has-data-member-inserted-at-1-v1.o \
+test-diff-suppr/test-has-data-member-inserted-at-1.1.suppr \
 \
 test-diff-dwarf-abixml/test0-pr19026-libvtkIOSQL-6.1.so.1 \
 test-diff-dwarf-abixml/test0-pr19026-libvtkIOSQL-6.1.so.1.abi \

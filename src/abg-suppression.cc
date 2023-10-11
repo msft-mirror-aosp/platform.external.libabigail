@@ -1468,10 +1468,11 @@ type_suppression::insertion_range::eval_boundary(const boundary_sptr	boundary,
   else if (fn_call_expr_boundary_sptr b = is_fn_call_expr_boundary(boundary))
     {
       ini::function_call_expr_sptr fn_call = b->as_function_call_expr();
-      if ((fn_call->get_name() == "offset_of"
-	   || fn_call->get_name() == "offset_after"
-	   || fn_call->get_name() == "offset_of_first_data_member_regexp"
-	   || fn_call->get_name() == "offset_of_last_data_member_regexp")
+      if (fn_call
+	  && (fn_call->get_name() == "offset_of"
+	      || fn_call->get_name() == "offset_after"
+	      || fn_call->get_name() == "offset_of_first_data_member_regexp"
+	      || fn_call->get_name() == "offset_of_last_data_member_regexp")
 	  && fn_call->get_arguments().size() == 1)
 	{
 	  if (fn_call->get_name() == "offset_of"
