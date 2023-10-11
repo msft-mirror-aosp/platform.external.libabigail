@@ -1365,7 +1365,7 @@ public:
   ///
   /// A string is just a contiguous set of characters that test
   /// positive when passed to
-  /// read_context::char_is_property_name_char().
+  /// read_context::char_is_property_value_char().
   ///
   /// Note that all escaped characters are suitable to be in a string.
   ///
