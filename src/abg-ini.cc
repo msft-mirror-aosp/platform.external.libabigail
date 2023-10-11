@@ -145,7 +145,7 @@ char_is_function_name_char(int b)
 static bool
 char_is_function_argument_char(int b)
 {
-  if (char_is_delimiter(b) || b == '(' || b == ')')
+  if (b == '(' || b == ')')
     return false;
   return true;
 }

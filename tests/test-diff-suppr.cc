@@ -2266,6 +2266,16 @@ InOutSpec in_out_specs[] =
     "data/test-diff-suppr/test-has-data-member-inserted-at-1-report-1.txt",
     "output/test-diff-suppr/test-has-data-member-inserted-at-1-report-1.txt"
   },
+  {
+    "data/test-diff-suppr/test-has-data-member-inserted-at-1-v0.o",
+    "data/test-diff-suppr/test-has-data-member-inserted-at-1-v1.o",
+    "",
+    "",
+    "data/test-diff-suppr/test-has-data-member-inserted-at-1.2.suppr",
+    "--drop-private-types --no-default-suppression --non-reachable-types",
+    "data/test-diff-suppr/test-has-data-member-inserted-at-1-report-2.txt",
+    "output/test-diff-suppr/test-has-data-member-inserted-at-1-report-2.txt"
+  },
   // This should be the last entry
   {NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL}
 };

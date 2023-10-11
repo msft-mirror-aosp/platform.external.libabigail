@@ -1893,6 +1893,8 @@ test-diff-dwarf-abixml/test0-pr19026-libvtkIOSQL-6.1.so.1-report-0.txt \
 test-diff-dwarf-abixml/PR25409-librte_bus_dpaa.so.20.0 \
 test-diff-dwarf-abixml/PR25409-librte_bus_dpaa.so.20.0.abi \
 test-diff-dwarf-abixml/PR25409-librte_bus_dpaa.so.20.0-report-0.txt \
+test-diff-suppr/test-has-data-member-inserted-at-1-report-2.txt \
+test-diff-suppr/test-has-data-member-inserted-at-1.2.suppr \
 \
 test-lookup-syms/test0.cc		\
 test-lookup-syms/test0.o		\
