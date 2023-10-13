@@ -6061,6 +6061,47 @@ is_anonymous_data_member(const var_decl& d)
 	  && is_class_or_union_type(d.get_type()));
 }
 
+/// Test if a @ref var_decl is a data member belonging to an anonymous
+/// type.
+///
+/// @param d the @ref var_decl to consider.
+///
+/// @return true iff @p d is a data member belonging to an anonymous
+/// type.
+bool
+is_data_member_of_anonymous_class_or_union(const var_decl& d)
+{
+  if (is_data_member(d))
+    {
+      scope_decl* scope = d.get_scope();
+      if (scope && scope->get_is_anonymous())
+	return true;
+    }
+  return false;
+}
+
+/// Test if a @ref var_decl is a data member belonging to an anonymous
+/// type.
+///
+/// @param d the @ref var_decl to consider.
+///
+/// @return true iff @p d is a data member belonging to an anonymous
+/// type.
+bool
+is_data_member_of_anonymous_class_or_union(const var_decl* d)
+{return is_data_member_of_anonymous_class_or_union(*d);}
+
+/// Test if a @ref var_decl is a data member belonging to an anonymous
+/// type.
+///
+/// @param d the @ref var_decl to consider.
+///
+/// @return true iff @p d is a data member belonging to an anonymous
+/// type.
+bool
+is_data_member_of_anonymous_class_or_union(const var_decl_sptr& d)
+{return is_data_member_of_anonymous_class_or_union(d.get());}
+
 /// Get the @ref class_or_union type of a given anonymous data member.
 ///
 /// @param d the anonymous data member to consider.
@@ -10790,6 +10831,36 @@ is_class_or_union_type(const type_or_decl_base* t)
 shared_ptr<class_or_union>
 is_class_or_union_type(const shared_ptr<type_or_decl_base>& t)
 {return dynamic_pointer_cast<class_or_union>(t);}
+
+/// Test if two class or union types are of the same kind.
+///
+/// @param first the first type to consider.
+///
+/// @param second the second type to consider.
+///
+/// @return true iff @p first is of the same kind as @p second.
+bool
+class_or_union_types_of_same_kind(const class_or_union* first,
+				  const class_or_union* second)
+{
+  if ((is_class_type(first) && is_class_type(second))
+      || (is_union_type(first) && is_union_type(second)))
+    return true;
+
+  return false;
+}
+
+/// Test if two class or union types are of the same kind.
+///
+/// @param first the first type to consider.
+///
+/// @param second the second type to consider.
+///
+/// @return true iff @p first is of the same kind as @p second.
+bool
+class_or_union_types_of_same_kind(const class_or_union_sptr& first,
+				  const class_or_union_sptr& second)
+{return class_or_union_types_of_same_kind(first.get(), second.get());}
 
 /// Test if a type is a @ref union_decl.
 ///
@@ -27428,6 +27499,27 @@ lookup_data_member(const type_base* type,
     return 0;
 
   return cou->find_data_member(dm_name).get();
+}
+
+/// Look for a data member of a given class, struct or union type and
+/// return it.
+///
+/// The data member is designated by its name.
+///
+/// @param type the class, struct or union type to consider.
+///
+/// @param dm the data member to lookup.
+///
+/// @return the data member iff it was found in @type or NULL if no
+/// data member with that name was found.
+const var_decl_sptr
+lookup_data_member(const type_base_sptr& type, const var_decl_sptr& dm)
+{
+  class_or_union_sptr cou = is_class_or_union_type(type);
+  if (!cou)
+    return var_decl_sptr();
+
+  return cou->find_data_member(dm);
 }
 
 /// Get the function parameter designated by its index.

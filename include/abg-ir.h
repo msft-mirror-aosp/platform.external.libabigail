@@ -4626,6 +4626,10 @@ const var_decl*
 lookup_data_member(const type_base* type,
 		   const char* dm_name);
 
+const var_decl_sptr
+lookup_data_member(const type_base_sptr& type,
+		   const var_decl_sptr&  dm);
+
 const function_decl::parameter*
 get_function_parameter(const decl_base* fun,
 		       unsigned parm_num);

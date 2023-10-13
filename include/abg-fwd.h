@@ -496,6 +496,14 @@ class_or_union_sptr
 is_class_or_union_type(const type_or_decl_base_sptr&);
 
 bool
+class_or_union_types_of_same_kind(const class_or_union *,
+				  const class_or_union*);
+
+bool
+class_or_union_types_of_same_kind(const class_or_union_sptr&,
+				  const class_or_union_sptr&);
+
+bool
 is_union_type(const type_or_decl_base&);
 
 union_decl*
@@ -730,6 +738,15 @@ is_anonymous_data_member(const var_decl*);
 
 bool
 is_anonymous_data_member(const var_decl&);
+
+bool
+is_data_member_of_anonymous_class_or_union(const var_decl&);
+
+bool
+is_data_member_of_anonymous_class_or_union(const var_decl*);
+
+bool
+is_data_member_of_anonymous_class_or_union(const var_decl_sptr&);
 
 const var_decl_sptr
 get_first_non_anonymous_data_member(const var_decl_sptr);

@@ -9630,69 +9630,135 @@ corpus_diff::priv::ensure_lookup_tables_populated()
     // to show what the user expects, namely, a changed anonymous
     // enum.
     {
-      std::set<enum_type_decl_sptr> deleted_anon_enums;
-      std::set<enum_type_decl_sptr> added_anon_enums;
+      std::set<type_base_sptr> deleted_anon_types;
+      std::set<type_base_sptr> added_anon_types;
 
       for (auto entry : deleted_unreachable_types_)
-	if (is_enum_type(entry.second)
-	    && is_enum_type(entry.second)->get_is_anonymous())
-	  deleted_anon_enums.insert(is_enum_type(entry.second));
+	{
+	  if ((is_enum_type(entry.second)
+	       && is_enum_type(entry.second)->get_is_anonymous())
+	      || (is_class_or_union_type(entry.second)
+		  && is_class_or_union_type(entry.second)->get_is_anonymous()))
+	  deleted_anon_types.insert(entry.second);
+	}
+
 
       for (auto entry : added_unreachable_types_)
-	if (is_enum_type(entry.second)
-	    && is_enum_type(entry.second)->get_is_anonymous())
-	  added_anon_enums.insert(is_enum_type(entry.second));
+	if ((is_enum_type(entry.second)
+	     && is_enum_type(entry.second)->get_is_anonymous())
+	    || (is_class_or_union_type(entry.second)
+		&& is_class_or_union_type(entry.second)->get_is_anonymous()))
+	  added_anon_types.insert(entry.second);
 
-      string_type_base_sptr_map added_anon_enum_to_erase;
-      string_type_base_sptr_map removed_anon_enum_to_erase;
+      string_type_base_sptr_map added_anon_types_to_erase;
+      string_type_base_sptr_map removed_anon_types_to_erase;
+      enum_type_decl_sptr deleted_enum;
+      class_or_union_sptr deleted_class;
 
-      // Look for deleted anonymous enums which have enumerators
-      // present in an added anonymous enums ...
-      for (auto deleted_enum : deleted_anon_enums)
+      // Look for deleted anonymous types (enums, unions, structs &
+      // classes) which have enumerators or data members present in an
+      // added anonymous type ...
+      for (auto deleted: deleted_anon_types)
 	{
-	  // Look for any enumerator of 'deleted_enum' that is also
-	  // present in an added anonymous enum.
-	  for (auto enr : deleted_enum->get_enumerators())
+	  deleted_enum = is_enum_type(deleted);
+	  deleted_class = is_class_or_union_type(deleted);
+
+	  // For enums, look for any enumerator of 'deleted_enum' that
+	  // is also present in an added anonymous enum.
+	  if (deleted_enum)
 	    {
-	      bool this_enum_got_changed = false;
-	      for (auto added_enum : added_anon_enums)
+	      for (auto enr : deleted_enum->get_enumerators())
 		{
-		  if (is_enumerator_present_in_enum(enr, *added_enum))
+		  bool this_enum_got_changed = false;
+		  for (auto t : added_anon_types)
 		    {
-		      // So the enumerator 'enr' from the
-		      // 'deleted_enum' enum is also present in the
-		      // 'added_enum' enum so we assume that
-		      // 'deleted_enum' and 'added_enum' are the same
-		      // enum that got changed.  Let's represent it
-		      // using a diff node.
-		      diff_sptr d = compute_diff(deleted_enum,
-						 added_enum, ctxt);
-		      ABG_ASSERT(d->has_changes());
-		      string repr =
-			abigail::ir::get_pretty_representation(is_type(deleted_enum),
-							       /*internal=*/false);
-		      changed_unreachable_types_[repr]= d;
-		      this_enum_got_changed = true;
-		      string r1 = abigail::ir::get_pretty_representation(is_type(deleted_enum));
-		      string r2 = abigail::ir::get_pretty_representation(is_type(added_enum));
-		      removed_anon_enum_to_erase[r1] = deleted_enum;
-		      added_anon_enum_to_erase[r2] = added_enum;
-		      break;
+		      if (enum_type_decl_sptr added_enum = is_enum_type(t))
+			if (is_enumerator_present_in_enum(enr, *added_enum))
+			  {
+			    // So the enumerator 'enr' from the
+			    // 'deleted_enum' enum is also present in the
+			    // 'added_enum' enum so we assume that
+			    // 'deleted_enum' and 'added_enum' are the same
+			    // enum that got changed.  Let's represent it
+			    // using a diff node.
+			    diff_sptr d = compute_diff(deleted_enum,
+						       added_enum, ctxt);
+			    ABG_ASSERT(d->has_changes());
+			    string repr =
+			      abigail::ir::get_pretty_representation(is_type(deleted_enum),
+								     /*internal=*/false);
+			    changed_unreachable_types_[repr]= d;
+			    this_enum_got_changed = true;
+			    string r1 =
+			      abigail::ir::get_pretty_representation(is_type(deleted_enum),
+								     /*internal=*/false);
+			    string r2 =
+			      abigail::ir::get_pretty_representation(is_type(added_enum),
+								     /*internal=*/false);
+			    removed_anon_types_to_erase[r1] = deleted_enum;
+			    added_anon_types_to_erase[r2] = added_enum;
+			    break;
+			  }
 		    }
+		  if (this_enum_got_changed)
+		    break;
 		}
-	      if (this_enum_got_changed)
-		break;
+	    }
+	  else if (deleted_class)
+	    {
+	      // For unions, structs & classes, look for any data
+	      // member of 'deleted_class' that is also present in an
+	      // added anonymous class.
+	      for (auto dm : deleted_class->get_data_members())
+		{
+		  bool this_class_got_changed = false;
+		  for (auto klass : added_anon_types)
+		    {
+		      if (class_or_union_sptr added_class =
+			  is_class_or_union_type(klass))
+			if (class_or_union_types_of_same_kind(deleted_class,
+							      added_class)
+			    && lookup_data_member(added_class, dm))
+			  {
+			    // So the data member 'dm' from the
+			    // 'deleted_class' class is also present in
+			    // the 'added_class' class so we assume that
+			    // 'deleted_class' and 'added_class' are the
+			    // same anonymous class that got changed.
+			    // Let's represent it using a diff node.
+			    diff_sptr d = compute_diff(is_type(deleted_class),
+						       is_type(added_class),
+						       ctxt);
+			    ABG_ASSERT(d->has_changes());
+			    string repr =
+			      abigail::ir::get_pretty_representation(is_type(deleted_class),
+								     /*internal=*/false);
+			    changed_unreachable_types_[repr]= d;
+			    this_class_got_changed = true;
+			    string r1 =
+			      abigail::ir::get_pretty_representation(is_type(deleted_class),
+								     /*internal=*/false);
+			    string r2 =
+			      abigail::ir::get_pretty_representation(is_type(added_class),
+								     /*internal=*/false);
+			    removed_anon_types_to_erase[r1] = deleted_class;
+			    added_anon_types_to_erase[r2] = added_class;
+			    break;
+			  }
+		    }
+		  if (this_class_got_changed)
+		    break;
+		}
 	    }
 	}
 
-      // Now remove the added/removed anonymous enums from their maps,
-      // as they are now represented as a changed enum, not an added
-      // and removed enum.
-
-      for (auto entry : added_anon_enum_to_erase)
+      // Now remove the added/removed anonymous types from their maps,
+      // as they are now represented as a changed type, not an added
+      // and removed anonymous type.
+      for (auto entry : added_anon_types_to_erase)
 	added_unreachable_types_.erase(entry.first);
 
-      for (auto entry : removed_anon_enum_to_erase)
+      for (auto entry : removed_anon_types_to_erase)
 	deleted_unreachable_types_.erase(entry.first);
     }
   }

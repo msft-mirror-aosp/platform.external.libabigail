@@ -402,8 +402,12 @@ represent(const var_diff_sptr	&diff,
   const bool o_anon = !!is_anonymous_data_member(o);
   const bool n_anon = !!is_anonymous_data_member(n);
   const bool is_strict_anonymous_data_member_change = o_anon && n_anon;
-  const string o_name = o->get_qualified_name();
-  const string n_name = n->get_qualified_name();
+  const string o_name = (is_data_member_of_anonymous_class_or_union(o)
+			 ? o->get_name()
+			 : o->get_qualified_name());
+  const string n_name = (is_data_member_of_anonymous_class_or_union(n)
+			 ? n->get_name()
+			 : n->get_qualified_name());
   const uint64_t o_size = get_var_size_in_bits(o);
   const uint64_t n_size = get_var_size_in_bits(n);
   const uint64_t o_offset = get_data_member_offset(o);
