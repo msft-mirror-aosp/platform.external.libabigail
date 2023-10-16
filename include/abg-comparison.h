@@ -1711,6 +1711,12 @@ public:
   const string_decl_base_sptr_map&
   deleted_data_members() const;
 
+  const unsigned_var_diff_sptr_map&
+  changed_data_members() const;
+
+  const var_diff_sptrs_type&
+  sorted_changed_data_members() const;
+
   const edit_script&
   member_fns_changes() const;
 
@@ -1725,9 +1731,6 @@ public:
 
   const string_member_function_sptr_map&
   inserted_member_fns() const;
-
-  const var_diff_sptrs_type&
-  sorted_changed_data_members() const;
 
   size_t
   count_filtered_changed_data_members(bool local_only = false) const;

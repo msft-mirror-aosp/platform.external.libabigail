@@ -2276,6 +2276,46 @@ InOutSpec in_out_specs[] =
     "data/test-diff-suppr/test-has-data-member-inserted-at-1-report-2.txt",
     "output/test-diff-suppr/test-has-data-member-inserted-at-1-report-2.txt"
   },
+  {
+    "data/test-diff-suppr/test-has-data-member-inserted-at-2-v0.o",
+    "data/test-diff-suppr/test-has-data-member-inserted-at-2-v1.o",
+    "",
+    "",
+    "data/test-diff-suppr/test-has-data-member-inserted-at-2.suppr",
+    "--drop-private-types --no-default-suppression --non-reachable-types",
+    "data/test-diff-suppr/test-has-data-member-inserted-at-2-report.txt",
+    "output/test-diff-suppr/test-has-data-member-inserted-at-2-report.txt"
+  },
+  {
+    "data/test-diff-suppr/test-has-data-member-inserted-at-2-v0.o",
+    "data/test-diff-suppr/test-has-data-member-inserted-at-2-v1.o",
+    "",
+    "",
+    "data/test-diff-suppr/test-has-data-member-inserted-at-2.2.suppr",
+    "--drop-private-types --no-default-suppression --non-reachable-types",
+    "data/test-diff-suppr/test-has-data-member-inserted-at-2-report.1.txt",
+    "output/test-diff-suppr/test-has-data-member-inserted-at-2-report.1.txt"
+  },
+  {
+    "data/test-diff-suppr/test-has-data-member-inserted-at-3-v0.o",
+    "data/test-diff-suppr/test-has-data-member-inserted-at-3-v1.o",
+    "",
+    "",
+    "data/test-diff-suppr/test-has-data-member-inserted-at-2.suppr",
+    "--drop-private-types --no-default-suppression --non-reachable-types",
+    "data/test-diff-suppr/test-has-data-member-inserted-at-2-report.2.txt",
+    "output/test-diff-suppr/test-has-data-member-inserted-at-2-report.2.txt"
+  },
+  {
+    "data/test-diff-suppr/test-has-data-member-inserted-at-3-v0.o",
+    "data/test-diff-suppr/test-has-data-member-inserted-at-3-v1.o",
+    "",
+    "",
+    "data/test-diff-suppr/test-has-data-member-inserted-at-2.2.suppr",
+    "--drop-private-types --no-default-suppression --non-reachable-types",
+    "data/test-diff-suppr/test-has-data-member-inserted-at-2-report.3.txt",
+    "output/test-diff-suppr/test-has-data-member-inserted-at-2-report.3.txt"
+  },
   // This should be the last entry
   {NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL}
 };

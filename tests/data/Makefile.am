@@ -1895,6 +1895,20 @@ test-diff-dwarf-abixml/PR25409-librte_bus_dpaa.so.20.0.abi \
 test-diff-dwarf-abixml/PR25409-librte_bus_dpaa.so.20.0-report-0.txt \
 test-diff-suppr/test-has-data-member-inserted-at-1-report-2.txt \
 test-diff-suppr/test-has-data-member-inserted-at-1.2.suppr \
+test-diff-suppr/test-has-data-member-inserted-at-2-report.1.txt \
+test-diff-suppr/test-has-data-member-inserted-at-2-report.2.txt \
+test-diff-suppr/test-has-data-member-inserted-at-2-report.3.txt \
+test-diff-suppr/test-has-data-member-inserted-at-2-report.txt \
+test-diff-suppr/test-has-data-member-inserted-at-2-v0.c \
+test-diff-suppr/test-has-data-member-inserted-at-2-v0.o \
+test-diff-suppr/test-has-data-member-inserted-at-2-v1.c \
+test-diff-suppr/test-has-data-member-inserted-at-2-v1.o \
+test-diff-suppr/test-has-data-member-inserted-at-2.2.suppr \
+test-diff-suppr/test-has-data-member-inserted-at-2.suppr \
+test-diff-suppr/test-has-data-member-inserted-at-3-v0.c \
+test-diff-suppr/test-has-data-member-inserted-at-3-v0.o \
+test-diff-suppr/test-has-data-member-inserted-at-3-v1.c \
+test-diff-suppr/test-has-data-member-inserted-at-3-v1.o \
 \
 test-lookup-syms/test0.cc		\
 test-lookup-syms/test0.o		\

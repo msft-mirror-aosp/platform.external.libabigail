@@ -5359,6 +5359,16 @@ const string_member_function_sptr_map&
 class_or_union_diff::inserted_member_fns() const
 {return get_priv()->inserted_member_functions_;}
 
+/// Getter of the map of data members that got replaced by another
+/// data member.  The key of the map is the offset at which the
+/// element got replaced and the value is a pointer to the @ref
+/// var_diff representing the replacement of the data member.
+///
+/// @return sorted vector of changed data member.
+const unsigned_var_diff_sptr_map&
+class_or_union_diff::changed_data_members() const
+{return get_priv()->changed_dm_;}
+
 /// Getter of the sorted vector of data members that got replaced by
 /// another data member.
 ///

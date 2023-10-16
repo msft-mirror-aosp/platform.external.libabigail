@@ -946,6 +946,13 @@ type_suppression::suppresses_diff(const diff* diff) const
 	      const class_decl_sptr& first_type_decl =
 		klass_diff->first_class_decl();
 
+	      if (klass_diff->inserted_data_members().empty()
+		  && klass_diff->changed_data_members().empty())
+		// So there is a has_data_member_inserted_* clause,
+		// but no data member was inserted.  That means the
+		// clause is falsified.
+		return false;
+
 	      // All inserted data members must be in an allowed
 	      // insertion range.
 	      for (const auto& m : klass_diff->inserted_data_members())
@@ -963,16 +970,15 @@ type_suppression::suppresses_diff(const diff* diff) const
 		    return false;
 		}
 
-	      // Similarly, all deleted data members must be in an
-	      // allowed insertion range.
-	      for (const auto& m : klass_diff->deleted_data_members())
+	      // Similarly, each data member that replaced another one
+	      // must be in an allowed insertion range.
+	      for (const auto& m : klass_diff->changed_data_members())
 		{
-		  decl_base_sptr member = m.second;
+		  var_decl_sptr member = m.second->second_var();
 		  bool matched = false;
 
 		  for (const auto& range : get_data_member_insertion_ranges())
-		    if (is_data_member_offset_in_range(is_var_decl(member),
-						       range,
+		    if (is_data_member_offset_in_range(member, range,
 						       first_type_decl.get()))
 		      matched = true;
 
