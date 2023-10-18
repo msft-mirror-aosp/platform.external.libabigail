@@ -51,6 +51,14 @@ OFFSET_OF_FLEXIBLE_ARRAY_DATA_MEMBER_STRING()
   return s;
 }
 
+/// @return the string constant "end";
+static const string&
+END_STRING()
+{
+  static string s = "end";
+  return s;
+}
+
 // <parsing stuff>
 
 // section parsing
@@ -1602,6 +1610,14 @@ type_suppression::insertion_range::eval_boundary(const boundary_sptr	boundary,
 	      return true;
 	    }
 	}
+      else if (b->get_name() == END_STRING())
+	{
+	  // The 'end' of a struct is represented by the value
+	  // std::numeric_limits<uint64_t>::max(), recognized by
+	  // type_suppression::insertion_range::boundary_value_is_end.
+	  value = std::numeric_limits<uint64_t>::max();
+	  return true;
+	}
     }
   return false;
 }
@@ -2100,8 +2116,8 @@ read_type_suppression(const ini::config::section& section)
       //   has_data_member_inserted_at = <one-string-property-value>
       string ins_point = prop->get_value()->as_string();
       type_suppression::insertion_range::boundary_sptr begin, end;
-      if (ins_point == "end")
-	begin = type_suppression::insertion_range::create_integer_boundary(-1);
+      if (ins_point == END_STRING())
+	begin = type_suppression::insertion_range::create_named_boundary(ins_point);
       else if (ins_point == OFFSET_OF_FLEXIBLE_ARRAY_DATA_MEMBER_STRING())
 	begin = type_suppression::insertion_range::create_named_boundary(ins_point);
       else if (isdigit(ins_point[0]))
