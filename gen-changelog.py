@@ -104,7 +104,7 @@ def output_commits():
             hash = lin[16:].strip()
             try:
                 rel = release_refs[hash]
-                print("=== release %d.%d.%d ===\n" % (int(rel[0]), int(rel[1]), int(rel[2])))
+
             except:
                 pass
             buf = []
