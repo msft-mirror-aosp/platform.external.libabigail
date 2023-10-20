@@ -18960,8 +18960,8 @@ enum_type_decl::get_sorted_enumerators() const
 
       std::sort(priv_->sorted_enumerators_.begin(),
 		priv_->sorted_enumerators_.end(),
-		[](enum_type_decl::enumerator& l,
-		   enum_type_decl::enumerator& r)
+		[](const enum_type_decl::enumerator& l,
+		   const enum_type_decl::enumerator& r)
 		{
 		  if (l.get_name() == r.get_name())
 		    return l.get_value() < r.get_value();
