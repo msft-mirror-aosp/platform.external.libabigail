@@ -1,3 +1,82 @@
+2.4
+===
+Dmitry V. Levin (1):
+      elf-helpers: make sure config.h is included first
+
+Dodji Seketeli (58):
+      Update website for the 2.3 release
+      release-text-template.txt: Modernize a little bit.
+      dwarf-reader: Don't compute canonical type while propagating one
+      Bug 29693 - clang-libs from f37 fails self test
+      Bug 30466 - harfbuzz fails self-check on f38
+      Bug 30467 - enlightenment fails self check on f38
+      configure.ac: Bump to 2.4 version
+      Bug 30503 - Fail to compare non-anonymous struct vs named struct data members
+      Bug 30461 - insight fails self-compare
+      fedabipkgdiff: Don't choke Koji servers with self-signed SSL certs
+      fedabipkgdiff: Fix previous commit
+      Make fe_iface::initialize independent from the kind of interface
+      corpus,tools-utils: Support loading a corpus, its deps & other binaries
+      abidw: Add --{follow,list}-dependencies & --add-binaries support
+      abidiff: Add --{follow,list}-dependencies & add-binaries{1,2} support
+      reader: Fix a long standing Thinko
+      ir: Remove an unnecessary comparison
+      reader: fix indentation
+      tools-utils: Fix indentation
+      dwarf-reader,ir: Make logging a property of the middle end
+      dwarf-reader: Fix some logging
+      abipkgdiff: Initialize libxml2 to use it in a multi-thread context
+      tools-utils: Avoid endless loop
+      {dwarf,elf}reader: Don't consider no symbol table as an error
+      abipkgdiff: Avoid comparing binaries that are outside of the package
+      ir: Add missing ABG_RETURN in the comparison engine
+      ir: Add fn types to type lookup maps
+      ir: Fix forgetting canonicalizing some function types
+      ir: Avoid forgetting potential seemingly duplicated member functions
+      ir: Really avoid canonicalizing decl-only classes
+      ir: Use non qualified typedef name for type canonicalization
+      ir: Fix qualification as non-confirmed propagated canonical types
+      dwarf-reader: Do not re-use typedefs in a scope
+      elf-reader, ir: Fix compilation on GCC 4.8.5
+      configure,test-diff-pkg.cc: Handle symlinks presence in dist tarball
+      libabigail-concepts.rst:  Sort the properties of the directives
+      libabigail-concepts.rst: Remove trailing white spaces
+      test-abidiff-exit: Do not use debuginfo dir when its empty
+      ir: Fix output of 'debug(enum-type)'
+      comparison: Always apply filters on the diff graph
+      abg-comparison[-priv]: Better detection of incompatible unreachable type changes
+      doc/manuals/libabigail-concepts.rst: Fix typo
+      suppression: Fix indentation
+      suppression: Fix a typo in apidoc
+      Bug 30959 - Crash on malformed fn call expression
+      ini: Support '[' and ']' in arguments of function call expressions
+      init: Fix thinko in apidoc
+      ir: Remove redundant virtual member functions
+      Bug 30971 - Wrong interpretation of "has_data_member_inserted_at"
+      default-reporter,reporter-priv: Do not report names of anonymous enums
+      ir,comparison,corpus: Better support anonymous enums comparison
+      ir,comparison: Represent changed anonymous enums
+      comparison: Represent changed unreachable anonymous unions, structs & enums
+      Support suppressing data member insertion before a flexible array member
+      suppression: Make the "end" data member offset selector be named boundary
+      ir: Fix compilation error with GCC 4.8.5
+      gen-changelog.py: Don't escaping '/' with '\' in regexp
+      gen-changelog.py: Fix a long standing typo
+
+Giuliano Procida (1):
+      operator!= fixes for C++-20
+
+John Moon (1):
+      suppression: Add "changed_enumerators_regexp" property
+
+Matthias Maennich (2):
+      symtab reader: use C++11 `using` syntax instead of typedefs
+      symtab reader: fix symtab iterator to support C++20
+
+Yaakov Selkowitz (1):
+      Fix fedabipkgdiff configure check for Python 3.12
+
+
 2.3
 ===
 Aleksei Vetrov (1):
