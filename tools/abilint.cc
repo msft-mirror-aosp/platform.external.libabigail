@@ -81,6 +81,7 @@ struct options
   bool				read_tu;
   bool				diff;
   bool				noout;
+  bool				annotate;
 #ifdef WITH_CTF
   bool				use_ctf;
 #endif
@@ -97,7 +98,8 @@ struct options
       read_from_stdin(false),
       read_tu(false),
       diff(false),
-      noout(false)
+      noout(false),
+      annotate(false)
 #ifdef WITH_CTF
     ,
       use_ctf(false)
@@ -493,6 +495,7 @@ display_usage(const string& prog_name, ostream& out)
     << "  --diff  for xml inputs, perform a text diff between "
     "the input and the memory model saved back to disk\n"
     << "  --noout  do not display anything on stdout\n"
+    << "  --annotate  annotate the ABI artifacts emitted in the output\n"
     << "  --stdin  read abi-file content from stdin\n"
     << "  --tu  expect a single translation unit file\n"
 #ifdef WITH_CTF
@@ -583,6 +586,8 @@ parse_command_line(int argc, char* argv[], options& opts)
 	  opts.diff = true;
 	else if (!strcmp(argv[i], "--noout"))
 	  opts.noout = true;
+	else if (!strcmp(argv[i], "--annotate"))
+	  opts.annotate = true;
 #ifdef WITH_SHOW_TYPE_USE_IN_ABILINT
       else if (!strcmp(argv[i], "--show-type-use"))
 	{
@@ -723,6 +728,7 @@ main(int argc, char* argv[])
 	    {
 	      const write_context_sptr& ctxt
 		  = create_write_context(env, cout);
+	      set_annotate(*ctxt, opts.annotate);
 	      write_translation_unit(*ctxt, *tu, 0);
 	    }
 	  return 0;
@@ -739,6 +745,7 @@ main(int argc, char* argv[])
 	    {
 	      const write_context_sptr& ctxt
 		  = create_write_context(env, cout);
+	      set_annotate(*ctxt, opts.annotate);
 	      write_corpus(*ctxt, corp, /*indent=*/0);
 	    }
 	  return 0;
@@ -879,6 +886,7 @@ main(int argc, char* argv[])
 	    {
 	      if (!opts.noout)
 		{
+		  set_annotate(*ctxt, opts.annotate);
 		  if (corp)
 		    is_ok = write_corpus(*ctxt, corp, 0);
 		  else if (group)

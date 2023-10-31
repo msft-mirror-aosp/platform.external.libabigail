@@ -27,6 +27,13 @@ Invocation
 Options
 =======
 
+  * ``--annotate``
+
+    Annotate the ABIXML output with comments above most elements.  The
+    comments are made of the pretty-printed form of types, declaration
+    or even ELF symbols.  The purpose is to make the ABIXML output
+    more human-readable for debugging or documenting purposes.
+
   * ``--help``
 
     Display a short help message and exits.
