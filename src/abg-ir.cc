@@ -10840,6 +10840,88 @@ var_decl_sptr
 has_flexible_array_data_member(const class_decl_sptr& klass)
 {return has_flexible_array_data_member(klass.get());}
 
+/// Test if the last data member of a class is an array with
+/// one element.
+///
+/// An array with one element is a way to mimic the flexible data
+/// member idiom that was later standardized in C99.
+///
+/// To learn more about the flexible data member idiom, please
+/// consider reading :
+/// https://en.wikipedia.org/wiki/Flexible_array_member.
+///
+/// The various ways of representing that idiom pre-standardization
+/// are presented in this article:
+/// https://developers.redhat.com/articles/2022/09/29/benefits-limitations-flexible-array-members#
+///
+/// @param klass the class to consider.
+///
+/// @return the data member which type is a fake flexible array, if
+/// any, or nil.
+var_decl_sptr
+has_fake_flexible_array_data_member(const class_decl& klass)
+{
+  var_decl_sptr nil;
+  const class_or_union::data_members& dms = klass.get_data_members();
+  if (dms.empty())
+    return nil;
+
+  if (array_type_def_sptr array = is_array_type(dms.back()->get_type()))
+    {// The type of the last data member is an array.
+      if (array->get_subranges().size() == 1
+	  && array->get_subranges()[0]->get_length() == 1)
+	// The array has a size of one. We are thus looking at a
+	// "fake" flexible array data member.  Let's return it.
+	return dms.back();
+    }
+
+  return nil;
+}
+
+/// Test if the last data member of a class is an array with
+/// one element.
+///
+/// An array with one element is a way to mimic the flexible data
+/// member idiom that was later standardized in C99.
+///
+/// To learn more about the flexible data member idiom, please
+/// consider reading :
+/// https://en.wikipedia.org/wiki/Flexible_array_member.
+///
+/// The various ways of representing that idiom pre-standardization
+/// are presented in this article:
+/// https://developers.redhat.com/articles/2022/09/29/benefits-limitations-flexible-array-members#
+///
+/// @param klass the class to consider.
+///
+/// @return the data member which type is a fake flexible array, if
+/// any, or nil.
+var_decl_sptr
+has_fake_flexible_array_data_member(const class_decl* klass)
+{return has_fake_flexible_array_data_member(*klass);}
+
+/// Test if the last data member of a class is an array with
+/// one element.
+///
+/// An array with one element is a way to mimic the flexible data
+/// member idiom that was later standardized in C99.
+///
+/// To learn more about the flexible data member idiom, please
+/// consider reading :
+/// https://en.wikipedia.org/wiki/Flexible_array_member.
+///
+/// The various ways of representing that idiom pre-standardization
+/// are presented in this article:
+/// https://developers.redhat.com/articles/2022/09/29/benefits-limitations-flexible-array-members#
+///
+/// @param klass the class to consider.
+///
+/// @return the data member which type is a fake flexible array, if
+/// any, or nil.
+var_decl_sptr
+has_fake_flexible_array_data_member(const class_decl_sptr& klass)
+{return has_fake_flexible_array_data_member(klass.get());}
+
 /// Test wheter a type is a declaration-only class.
 ///
 /// @param t the type to considier.
@@ -10861,7 +10943,6 @@ is_declaration_only_class_or_union_type(const type_base *t,
     }
   return false;
 }
-
 
 /// Test wheter a type is a declaration-only class.
 ///

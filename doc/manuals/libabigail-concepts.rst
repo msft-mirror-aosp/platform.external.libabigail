@@ -619,9 +619,28 @@ names start with the string "private_data_member".
 	  {72, end}
      }
 
+.. _suppr_has_strict_flexible_array_data_member_conversion_label:
 
 
- .. _suppr_has_size_change_property_label:
+* ``has_strict_flexible_array_data_member_conversion``
+
+ Usage:
+
+   ``has_strict_flexible_array_data_member_conversion`` ``=`` yes | no
+
+ Suppresses change reports involving a type which has a "fake"
+ flexible array member at the end of the struct which is converted
+ to a real flexible array member. This would be a member like
+ ``data[1]`` being converted to ``data[]``.
+
+ Please note that if the size of the type changed, then the type
+ change will *NOT* be suppressed by the evaluation of this property,
+ unless the
+ :ref:`has_size_change<suppr_has_size_change_property_label>` property
+ is present and set to ``yes``.
+
+.. _suppr_has_size_change_property_label:
+
 
 * ``has_size_change``
 
@@ -631,9 +650,10 @@ names start with the string "private_data_member".
 
 
 This property is to be used in conjunction with the properties
-:ref:`has_data_member_inserted_between<suppr_has_data_member_inserted_between_label>`
+:ref:`has_data_member_inserted_between<suppr_has_data_member_inserted_between_label>`,
+:ref:`has_data_members_inserted_between<suppr_has_data_members_inserted_between_label>`,
 and
-:ref:`has_data_members_inserted_between<suppr_has_data_members_inserted_between_label>`.
+:ref:`has_strict_flexible_array_data_member_conversion<suppr_has_strict_flexible_array_data_member_conversion_label>`
 Those properties will not match a type change if the size of the type
 changes, unless the ``has_size_changes`` property is set to ``yes``.
 

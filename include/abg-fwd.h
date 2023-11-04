@@ -490,6 +490,15 @@ has_flexible_array_data_member(const class_decl*);
 var_decl_sptr
 has_flexible_array_data_member(const class_decl_sptr&);
 
+var_decl_sptr
+has_fake_flexible_array_data_member(const class_decl&);
+
+var_decl_sptr
+has_fake_flexible_array_data_member(const class_decl*);
+
+var_decl_sptr
+has_fake_flexible_array_data_member(const class_decl_sptr&);
+
 bool
 is_declaration_only_class_or_union_type(const type_base *t,
 					bool look_through_decl_only = false);

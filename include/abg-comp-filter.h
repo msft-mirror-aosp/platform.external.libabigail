@@ -98,6 +98,13 @@ bool
 is_var_1_dim_unknown_size_array_change(const var_decl_sptr& var1,
 				       const var_decl_sptr& var2);
 
+bool
+has_strict_fam_conversion(const class_decl_sptr& first,
+			  const class_decl_sptr& second);
+
+bool
+has_strict_fam_conversion(const diff *d);
+
 struct filter_base;
 /// Convenience typedef for a shared pointer to filter_base
 typedef shared_ptr<filter_base> filter_base_sptr;

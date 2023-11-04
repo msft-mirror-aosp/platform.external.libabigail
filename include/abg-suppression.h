@@ -336,6 +336,12 @@ public:
   void
   set_changed_enumerators_regexp(const vector<regex::regex_t_sptr>&);
 
+  bool
+  has_strict_fam_conversion () const;
+
+  void
+  set_has_strict_fam_conversion(bool);
+
   virtual bool
   suppresses_diff(const diff* diff) const;
 

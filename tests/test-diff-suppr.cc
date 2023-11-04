@@ -2376,6 +2376,26 @@ InOutSpec in_out_specs[] =
     "data/test-diff-suppr/test-has-data-member-inserted-at-2-report.3.txt",
     "output/test-diff-suppr/test-has-data-member-inserted-at-2-report.3.txt"
   },
+  {
+    "data/test-diff-suppr/test-has-strict-flexible-array-data-member-conversion-v0.o",
+    "data/test-diff-suppr/test-has-strict-flexible-array-data-member-conversion-v1.o",
+    "",
+    "",
+    "data/test-diff-suppr/test-has-strict-flexible-array-data-member-conversion-1.suppr",
+    "--drop-private-types --no-default-suppression --non-reachable-types",
+    "data/test-diff-suppr/test-has-strict-flexible-array-data-member-conversion-report-1.txt",
+    "output/test-diff-suppr/test-has-strict-flexible-array-data-member-conversion-report-1.txt",
+  },
+  {
+    "data/test-diff-suppr/test-has-strict-flexible-array-data-member-conversion-v0.o",
+    "data/test-diff-suppr/test-has-strict-flexible-array-data-member-conversion-v1.o",
+    "",
+    "",
+    "data/test-diff-suppr/test-has-strict-flexible-array-data-member-conversion-2.suppr",
+    "--drop-private-types --no-default-suppression --non-reachable-types",
+    "data/test-diff-suppr/test-has-strict-flexible-array-data-member-conversion-report-2.txt",
+    "output/test-diff-suppr/test-has-strict-flexible-array-data-member-conversion-report-2.txt",
+  },
   // This should be the last entry
   {NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL}
 };

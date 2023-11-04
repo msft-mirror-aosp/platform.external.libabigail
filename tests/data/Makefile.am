@@ -1934,6 +1934,14 @@ test-diff-suppr/test-has-data-member-inserted-at-1-v0.o \
 test-diff-suppr/test-has-data-member-inserted-at-1-v1.c \
 test-diff-suppr/test-has-data-member-inserted-at-1-v1.o \
 test-diff-suppr/test-has-data-member-inserted-at-1.1.suppr \
+test-diff-suppr/test-has-strict-flexible-array-data-member-conversion-1.suppr \
+test-diff-suppr/test-has-strict-flexible-array-data-member-conversion-2.suppr \
+test-diff-suppr/test-has-strict-flexible-array-data-member-conversion-report-1.txt \
+test-diff-suppr/test-has-strict-flexible-array-data-member-conversion-report-2.txt \
+test-diff-suppr/test-has-strict-flexible-array-data-member-conversion-v0.c \
+test-diff-suppr/test-has-strict-flexible-array-data-member-conversion-v1.c \
+test-diff-suppr/test-has-strict-flexible-array-data-member-conversion-v0.o \
+test-diff-suppr/test-has-strict-flexible-array-data-member-conversion-v1.o \
 \
 test-diff-dwarf-abixml/test0-pr19026-libvtkIOSQL-6.1.so.1 \
 test-diff-dwarf-abixml/test0-pr19026-libvtkIOSQL-6.1.so.1.abi \

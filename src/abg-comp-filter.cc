@@ -712,6 +712,55 @@ is_var_1_dim_unknown_size_array_change(const diff* diff)
   return is_var_1_dim_unknown_size_array_change(f, s);
 }
 
+/// Test if a class with a fake flexible data member got changed into
+/// a class with a real fexible data member.
+///
+/// A fake flexible array data member is a data member that is the
+/// last of the class/struct which type is an array of one element.
+/// This was used before C99 standardized flexible array data members.
+///
+/// @param first the first version of the class to consider.
+///
+/// @param second the second version of the class to consider.
+///
+/// @return true iff @p first has a fake flexible array data member
+/// that got changed into @p second with a real flexible array data
+/// member.
+bool
+has_strict_fam_conversion(const class_decl_sptr& first,
+			  const class_decl_sptr& second)
+{
+  if (has_fake_flexible_array_data_member(first)
+      && has_flexible_array_data_member(second))
+    // A fake flexible array member has been changed into
+    // a real flexible array ...
+    return true;
+  return false;
+}
+
+/// Test if a diff node carries a change from class with a fake
+/// flexible data member into a class with a real fexible data member.
+///
+/// A fake flexible array data member is a data member that is the
+/// last of the class/struct which type is an array of one element.
+/// This was used before C99 standardized flexible array data members.
+///
+/// @param the diff node to consider.
+///
+/// @return true iff @p dif carries a change from class with a fake
+/// flexible data member into a class with a real fexible data member.
+/// member.
+bool
+has_strict_fam_conversion(const diff *dif)
+{
+  const class_diff* d = is_class_diff(dif);
+  if (!d)
+    return false;
+
+  return has_strict_fam_conversion(d->first_class_decl(),
+				   d->second_class_decl());
+}
+
 /// Test if a class_diff node has static members added or removed.
 ///
 /// @param diff the diff node to consider.
