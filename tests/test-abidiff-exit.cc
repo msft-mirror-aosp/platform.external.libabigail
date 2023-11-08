@@ -1185,6 +1185,21 @@ InOutSpec in_out_specs[] =
     "data/test-abidiff-exit/test-fam2-report-1.txt",
     "output/test-abidiff-exit/test-fam2-report-1.txt"
   },
+  {
+    "data/test-abidiff-exit/PR31045/zfs-abigail-2.4/libnvpair.abi",
+    "data/test-abidiff-exit/PR31045/zfs-abigail-2.4/libnvpair.so",
+    "data/test-abidiff-exit/PR31045/zfs-abigail-2.4/libnvpair.suppr",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "--no-default-suppression",
+    abigail::tools_utils::ABIDIFF_OK,
+    "data/test-abidiff-exit/PR31045/zfs-abigail-2.4/test-PR31045-report-1.txt",
+    "output/test-abidiff-exit/PR31045/zfs-abigail-2.4/test-PR31045-report-1.txt"
+  },
 #ifdef WITH_BTF
   {
     "data/test-abidiff-exit/btf/test0-v0.o",

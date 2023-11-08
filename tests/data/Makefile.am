@@ -385,6 +385,10 @@ test-abidiff-exit/test-fam2-v0.c \
 test-abidiff-exit/test-fam2-v0.o \
 test-abidiff-exit/test-fam2-v1.c \
 test-abidiff-exit/test-fam2-v1.o \
+test-abidiff-exit/PR31045/zfs-abigail-2.4/libnvpair.abi \
+test-abidiff-exit/PR31045/zfs-abigail-2.4/libnvpair.so \
+test-abidiff-exit/PR31045/zfs-abigail-2.4/libnvpair.suppr \
+test-abidiff-exit/PR31045/zfs-abigail-2.4/test-PR31045-report-1.txt \
 \
 test-diff-dwarf/test0-v0.cc		\
 test-diff-dwarf/test0-v0.o			\

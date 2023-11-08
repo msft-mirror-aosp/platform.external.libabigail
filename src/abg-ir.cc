@@ -7974,6 +7974,34 @@ scope_decl::is_empty() const
 	  && get_canonical_types().empty());
 }
 
+/// Set the translation unit of a decl
+///
+/// It also perform some IR integrity checks.
+///
+/// This is a sub-routine of scope_decl::{insert,add}_member_decl.
+///
+/// @param decl the decl to set the translation unit for.
+///
+/// @param tu the translation unit to set.
+static void
+maybe_set_translation_unit(const decl_base_sptr& decl,
+			   translation_unit*     tu)
+{
+  if (translation_unit* existing_tu = decl->get_translation_unit())
+    // The decl already belongs to a translation unit.
+    // Either:
+    //
+    //   1/ it's a unique type, in which case we should not add it to
+    // any translation unique since unique types are "logically"
+    // supposed to belong to no translation unit in particular, as
+    // they are unique.
+    //
+    // 2/ or the decl was already added to this translation unit.
+    ABG_ASSERT(tu == existing_tu || is_unique_type(is_type(decl)));
+  else
+    decl->set_translation_unit(tu);
+}
+
 /// Add a member decl to this scope.  Note that user code should not
 /// use this, but rather use add_decl_to_scope.
 ///
@@ -7999,12 +8027,7 @@ scope_decl::add_member_decl(const decl_base_sptr& member)
   update_qualified_name(member);
 
   if (translation_unit* tu = get_translation_unit())
-    {
-      if (translation_unit* existing_tu = member->get_translation_unit())
-	ABG_ASSERT(tu == existing_tu);
-      else
-	member->set_translation_unit(tu);
-    }
+    maybe_set_translation_unit(member, tu);
 
   maybe_update_types_lookup_map(member);
 
@@ -8141,12 +8164,7 @@ scope_decl::insert_member_decl(decl_base_sptr member,
   update_qualified_name(member);
 
   if (translation_unit* tu = get_translation_unit())
-    {
-      if (translation_unit* existing_tu = member->get_translation_unit())
-	ABG_ASSERT(tu == existing_tu);
-      else
-	member->set_translation_unit(tu);
-    }
+    maybe_set_translation_unit(member, tu);
 
   maybe_update_types_lookup_map(member);
 
