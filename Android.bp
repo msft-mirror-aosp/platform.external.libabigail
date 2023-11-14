@@ -101,14 +101,3 @@ cc_binary_host {
         "libabigail",
     ],
 }
-
-cc_binary_host {
-    name: "abitidy",
-    defaults: ["libabigail_defaults"],
-    srcs: [
-        "tools/abitidy.cc",
-    ],
-    static_libs: [
-        "libabigail",
-    ],
-}

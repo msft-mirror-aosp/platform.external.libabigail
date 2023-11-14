@@ -1,7 +1,7 @@
 ## SPDX-License-Identifier: Apache-2.0 WITH LLVM-exception
 h=$(abs_srcdir)
 
-bin_PROGRAMS = abidiff abilint abidw abicompat abipkgdiff kmidiff abitidy
+bin_PROGRAMS = abidiff abilint abidw abicompat abipkgdiff kmidiff
 
 if ENABLE_FEDABIPKGDIFF
   dist_bin_SCRIPTS = fedabipkgdiff
@@ -45,10 +45,6 @@ kmidiff_SOURCES = kmidiff.cc
 kmidiffdir = $(bindir)
 kmidiff_LDADD = $(abs_top_builddir)/src/libabigail.la
 kmidiff_LDFLAGS = -pthread
-
-abitidy_SOURCES = abitidy.cc
-abitidydir = $(bindir)
-abitidy_LDADD = $(abs_top_builddir)/src/libabigail.la
 
 AM_CXXFLAGS = \
 $(DEPS_CPPFLAGS) $(VISIBILITY_FLAGS) -I$(abs_top_srcdir)/include \
