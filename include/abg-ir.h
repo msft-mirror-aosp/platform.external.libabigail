@@ -2197,6 +2197,10 @@ public:
   virtual bool
   operator==(const qualified_type_def&) const;
 
+  virtual bool
+  operator!=(const qualified_type_def& other) const
+  {return !(*this == other);}
+
   CV
   get_cv_quals() const;
 
@@ -2297,6 +2301,10 @@ public:
   bool
   operator==(const pointer_type_def&) const;
 
+  bool
+  operator!=(const pointer_type_def& other) const
+  {return !(*this == other);}
+
   const type_base_sptr
   get_pointed_to_type() const;
 
@@ -2360,6 +2368,10 @@ public:
 
   bool
   operator==(const reference_type_def&) const;
+
+  bool
+  operator!=(const reference_type_def& other) const
+  {return !(*this == other);}
 
   type_base_sptr
   get_pointed_to_type() const;
@@ -4023,6 +4035,10 @@ public:
 
   virtual bool
   operator==(const class_or_union&) const;
+
+  virtual bool
+  operator !=(const class_or_union& other) const
+  {return !(*this == other);}
 
   virtual bool
   traverse(ir_node_visitor& v);
