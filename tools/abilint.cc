@@ -485,25 +485,25 @@ display_usage(const string& prog_name, ostream& out)
   emit_prefix(prog_name, out)
     << "usage: " << prog_name << " [options] [<abi-file1>]\n"
     << " where options can be:\n"
-    << "  --help  display this message\n"
-    << "  --version|-v  display program version information and exit\n"
-    << "  --debug-info-dir <path> the path under which to look for "
-    "debug info for the elf <abi-file>\n"
-    << "  --headers-dir|--hd <path> the path to headers of the elf file\n"
-    << "  --header-file|--hf <path> the path to one header of the elf file\n"
-    << "  --suppressions|--suppr <path> specify a suppression file\n"
-    << "  --diff  for xml inputs, perform a text diff between "
-    "the input and the memory model saved back to disk\n"
-    << "  --noout  do not display anything on stdout\n"
     << "  --annotate  annotate the ABI artifacts emitted in the output\n"
-    << "  --stdin  read abi-file content from stdin\n"
-    << "  --tu  expect a single translation unit file\n"
 #ifdef WITH_CTF
     << "  --ctf use CTF instead of DWARF in ELF files\n"
 #endif
+    << "  --debug-info-dir <path> the path under which to look for "
+    "debug info for the elf <abi-file>\n"
+    << "  --diff  for xml inputs, perform a text diff between "
+    "the input and the memory model saved back to disk\n"
+    << "  --header-file|--hf <path> the path to one header of the elf file\n"
+    << "  --headers-dir|--hd <path> the path to headers of the elf file\n"
+    << "  --help  display this message\n"
+    << "  --noout  do not display anything on stdout\n"
 #ifdef WITH_SHOW_TYPE_USE_IN_ABILINT
     << "  --show-type-use <type-id>  show how a type is used from the abixml file\n"
 #endif
+    << "  --stdin  read abi-file content from stdin\n"
+    << "  --suppressions|--suppr <path> specify a suppression file\n"
+    << "  --tu  expect a single translation unit file\n"
+    << "  --version|-v  display program version information and exit\n"
     ;
 }
 
