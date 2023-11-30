@@ -19,11 +19,11 @@
       <subrange length='3' lower-bound='0' upper-bound='2' type-id='4c87fef4' id='56f209d2'/>
     </array-type-def>
     <type-decl name='int' size-in-bits='32' id='95e97e5e'/>
+    <array-type-def dimensions='1' type-id='99298bf9' size-in-bits='640' id='3360f342'>
+      <subrange length='10' lower-bound='0' upper-bound='9' type-id='4c87fef4' id='487da03a'/>
+    </array-type-def>
     <array-type-def dimensions='1' type-id='7292109c' size-in-bits='256' id='5abcdf1a'>
       <subrange length='4' lower-bound='0' upper-bound='3' type-id='4c87fef4' id='16fe7105'/>
-    </array-type-def>
-    <array-type-def dimensions='1' type-id='07535890' size-in-bits='640' id='bea34bd7'>
-      <subrange length='10' lower-bound='0' upper-bound='9' type-id='4c87fef4' id='487da03a'/>
     </array-type-def>
     <array-type-def dimensions='1' type-id='95e97e5e' size-in-bits='160' id='e41e1db9'>
       <subrange length='5' lower-bound='0' upper-bound='4' type-id='4c87fef4' id='53010e10'/>
@@ -40,7 +40,7 @@
         <var-decl name='c' type-id='9ba86d8c' visibility='default' filepath='/home/ooprala/rh/u/libabigail/tests/data/test-read-dwarf/test7.cc' line='5' column='1'/>
       </data-member>
       <data-member access='public' layout-offset-in-bits='1600'>
-        <var-decl name='d' type-id='bea34bd7' visibility='default' filepath='/home/ooprala/rh/u/libabigail/tests/data/test-read-dwarf/test7.cc' line='6' column='1'/>
+        <var-decl name='d' type-id='3360f342' visibility='default' filepath='/home/ooprala/rh/u/libabigail/tests/data/test-read-dwarf/test7.cc' line='6' column='1'/>
       </data-member>
       <data-member access='public' layout-offset-in-bits='2240'>
         <var-decl name='e' type-id='89feb1ec' visibility='default' filepath='/home/ooprala/rh/u/libabigail/tests/data/test-read-dwarf/test7.cc' line='7' column='1'/>
@@ -52,7 +52,7 @@
     <reference-type-def kind='lvalue' type-id='50d9a3fa' size-in-bits='64' id='f901ef4c'/>
     <pointer-type-def type-id='a84c031d' size-in-bits='64' id='26a90f95'/>
     <pointer-type-def type-id='95e97e5e' size-in-bits='64' id='7292109c'/>
-    <pointer-type-def type-id='5abcdf1a' size-in-bits='64' id='07535890'/>
+    <pointer-type-def type-id='5abcdf1a' size-in-bits='64' id='99298bf9'/>
     <function-decl name='foo' mangled-name='_Z3fooR1S' filepath='/home/ooprala/rh/u/libabigail/tests/data/test-read-dwarf/test7.cc' line='11' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_Z3fooR1S'>
       <parameter type-id='f901ef4c'/>
       <return type-id='95e97e5e'/>

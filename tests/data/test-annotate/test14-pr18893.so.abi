@@ -186,51 +186,51 @@
         <var-decl name='global_grid_nu' type-id='type-id-10' visibility='default' filepath='libnurbs/interface/glcurveval.h' line='113' column='1'/>
       </data-member>
       <data-member access='private' layout-offset-in-bits='26688'>
-        <!-- void (typedef GLenum)* OpenGLCurveEvaluator::beginCallBackN -->
+        <!-- void(*OpenGLCurveEvaluator::beginCallBackN)(GLenum) -->
         <var-decl name='beginCallBackN' type-id='type-id-11' visibility='default' filepath='libnurbs/interface/glcurveval.h' line='128' column='1'/>
       </data-member>
       <data-member access='private' layout-offset-in-bits='26752'>
-        <!-- void ()* OpenGLCurveEvaluator::endCallBackN -->
+        <!-- void(*OpenGLCurveEvaluator::endCallBackN)(void) -->
         <var-decl name='endCallBackN' type-id='type-id-12' visibility='default' filepath='libnurbs/interface/glcurveval.h' line='129' column='1'/>
       </data-member>
       <data-member access='private' layout-offset-in-bits='26816'>
-        <!-- void (const GLfloat*)* OpenGLCurveEvaluator::vertexCallBackN -->
+        <!-- void(*OpenGLCurveEvaluator::vertexCallBackN)(const GLfloat*) -->
         <var-decl name='vertexCallBackN' type-id='type-id-13' visibility='default' filepath='libnurbs/interface/glcurveval.h' line='130' column='1'/>
       </data-member>
       <data-member access='private' layout-offset-in-bits='26880'>
-        <!-- void (const GLfloat*)* OpenGLCurveEvaluator::normalCallBackN -->
+        <!-- void(*OpenGLCurveEvaluator::normalCallBackN)(const GLfloat*) -->
         <var-decl name='normalCallBackN' type-id='type-id-13' visibility='default' filepath='libnurbs/interface/glcurveval.h' line='131' column='1'/>
       </data-member>
       <data-member access='private' layout-offset-in-bits='26944'>
-        <!-- void (const GLfloat*)* OpenGLCurveEvaluator::colorCallBackN -->
+        <!-- void(*OpenGLCurveEvaluator::colorCallBackN)(const GLfloat*) -->
         <var-decl name='colorCallBackN' type-id='type-id-13' visibility='default' filepath='libnurbs/interface/glcurveval.h' line='132' column='1'/>
       </data-member>
       <data-member access='private' layout-offset-in-bits='27008'>
-        <!-- void (const GLfloat*)* OpenGLCurveEvaluator::texcoordCallBackN -->
+        <!-- void(*OpenGLCurveEvaluator::texcoordCallBackN)(const GLfloat*) -->
         <var-decl name='texcoordCallBackN' type-id='type-id-13' visibility='default' filepath='libnurbs/interface/glcurveval.h' line='133' column='1'/>
       </data-member>
       <data-member access='private' layout-offset-in-bits='27072'>
-        <!-- void (typedef GLenum, void*)* OpenGLCurveEvaluator::beginCallBackData -->
+        <!-- void(*OpenGLCurveEvaluator::beginCallBackData)(GLenum, void*) -->
         <var-decl name='beginCallBackData' type-id='type-id-14' visibility='default' filepath='libnurbs/interface/glcurveval.h' line='135' column='1'/>
       </data-member>
       <data-member access='private' layout-offset-in-bits='27136'>
-        <!-- void (void*)* OpenGLCurveEvaluator::endCallBackData -->
+        <!-- void(*OpenGLCurveEvaluator::endCallBackData)(void*) -->
         <var-decl name='endCallBackData' type-id='type-id-15' visibility='default' filepath='libnurbs/interface/glcurveval.h' line='136' column='1'/>
       </data-member>
       <data-member access='private' layout-offset-in-bits='27200'>
-        <!-- void (const GLfloat*, void*)* OpenGLCurveEvaluator::vertexCallBackData -->
+        <!-- void(*OpenGLCurveEvaluator::vertexCallBackData)(const GLfloat*, void*) -->
         <var-decl name='vertexCallBackData' type-id='type-id-16' visibility='default' filepath='libnurbs/interface/glcurveval.h' line='137' column='1'/>
       </data-member>
       <data-member access='private' layout-offset-in-bits='27264'>
-        <!-- void (const GLfloat*, void*)* OpenGLCurveEvaluator::normalCallBackData -->
+        <!-- void(*OpenGLCurveEvaluator::normalCallBackData)(const GLfloat*, void*) -->
         <var-decl name='normalCallBackData' type-id='type-id-16' visibility='default' filepath='libnurbs/interface/glcurveval.h' line='138' column='1'/>
       </data-member>
       <data-member access='private' layout-offset-in-bits='27328'>
-        <!-- void (const GLfloat*, void*)* OpenGLCurveEvaluator::colorCallBackData -->
+        <!-- void(*OpenGLCurveEvaluator::colorCallBackData)(const GLfloat*, void*) -->
         <var-decl name='colorCallBackData' type-id='type-id-16' visibility='default' filepath='libnurbs/interface/glcurveval.h' line='139' column='1'/>
       </data-member>
       <data-member access='private' layout-offset-in-bits='27392'>
-        <!-- void (const GLfloat*, void*)* OpenGLCurveEvaluator::texcoordCallBackData -->
+        <!-- void(*OpenGLCurveEvaluator::texcoordCallBackData)(const GLfloat*, void*) -->
         <var-decl name='texcoordCallBackData' type-id='type-id-16' visibility='default' filepath='libnurbs/interface/glcurveval.h' line='140' column='1'/>
       </data-member>
       <data-member access='private' layout-offset-in-bits='27456'>
@@ -578,9 +578,9 @@
     <pointer-type-def type-id='type-id-32' size-in-bits='64' id='type-id-23'/>
     <!-- curveEvalMachine* -->
     <pointer-type-def type-id='type-id-9' size-in-bits='64' id='type-id-33'/>
-    <!-- void (const GLfloat*)* -->
+    <!-- void(*)(const GLfloat*) -->
     <pointer-type-def type-id='type-id-34' size-in-bits='64' id='type-id-13'/>
-    <!-- void (const GLfloat*, void*)* -->
+    <!-- void(*)(const GLfloat*, void*) -->
     <pointer-type-def type-id='type-id-35' size-in-bits='64' id='type-id-16'/>
     <!-- CurveMap* -->
     <pointer-type-def type-id='type-id-36' size-in-bits='64' id='type-id-20'/>
@@ -942,48 +942,48 @@
         </function-decl>
       </member-function>
       <member-function access='private' static='yes'>
-        <!-- void GLUnurbs::transform4d(GLfloat*, GLfloat[4]*) -->
+        <!-- void GLUnurbs::transform4d(GLfloat*, GLfloat(*)[4]) -->
         <function-decl name='transform4d' mangled-name='_ZN8GLUnurbs11transform4dEPfS0_PA4_f' filepath='libnurbs/interface/glrenderer.cc' line='280' column='1' visibility='default' binding='global' size-in-bits='64'>
           <!-- parameter of type 'GLfloat*' -->
           <parameter type-id='type-id-50'/>
           <!-- parameter of type 'GLfloat*' -->
           <parameter type-id='type-id-50'/>
-          <!-- parameter of type 'GLfloat[4]*' -->
+          <!-- parameter of type 'GLfloat(*)[4]' -->
           <parameter type-id='type-id-51'/>
           <!-- void -->
           <return type-id='type-id-19'/>
         </function-decl>
       </member-function>
       <member-function access='private' static='yes'>
-        <!-- void GLUnurbs::multmatrix4d(GLfloat[4]*, GLfloat[4]*) -->
+        <!-- void GLUnurbs::multmatrix4d(GLfloat(*)[4], GLfloat(*)[4]) -->
         <function-decl name='multmatrix4d' mangled-name='_ZN8GLUnurbs12multmatrix4dEPA4_fPA4_KfS4_' filepath='libnurbs/interface/glrenderer.cc' line='294' column='1' visibility='default' binding='global' size-in-bits='64'>
-          <!-- parameter of type 'GLfloat[4]*' -->
+          <!-- parameter of type 'GLfloat(*)[4]' -->
           <parameter type-id='type-id-51'/>
-          <!-- parameter of type 'GLfloat[4]*' -->
+          <!-- parameter of type 'GLfloat(*)[4]' -->
           <parameter type-id='type-id-51'/>
-          <!-- parameter of type 'GLfloat[4]*' -->
+          <!-- parameter of type 'GLfloat(*)[4]' -->
           <parameter type-id='type-id-51'/>
           <!-- void -->
           <return type-id='type-id-19'/>
         </function-decl>
       </member-function>
       <member-function access='private'>
-        <!-- void GLUnurbs::loadCullingMatrix(GLfloat[4]*) -->
+        <!-- void GLUnurbs::loadCullingMatrix(GLfloat(*)[4]) -->
         <function-decl name='loadCullingMatrix' mangled-name='_ZN8GLUnurbs17loadCullingMatrixEPA4_f' filepath='libnurbs/interface/glrenderer.cc' line='237' column='1' visibility='default' binding='global' size-in-bits='64'>
           <!-- implicit parameter of type 'GLUnurbs*' -->
           <parameter type-id='type-id-43' is-artificial='yes'/>
-          <!-- parameter of type 'GLfloat[4]*' -->
+          <!-- parameter of type 'GLfloat(*)[4]' -->
           <parameter type-id='type-id-51'/>
           <!-- void -->
           <return type-id='type-id-19'/>
         </function-decl>
       </member-function>
       <member-function access='private'>
-        <!-- void GLUnurbs::loadSamplingMatrix(GLfloat[4]*, const GLint*) -->
+        <!-- void GLUnurbs::loadSamplingMatrix(GLfloat(*)[4], const GLint*) -->
         <function-decl name='loadSamplingMatrix' mangled-name='_ZN8GLUnurbs18loadSamplingMatrixEPA4_KfPKi' filepath='libnurbs/interface/glrenderer.cc' line='194' column='1' visibility='default' binding='global' size-in-bits='64'>
           <!-- implicit parameter of type 'GLUnurbs*' -->
           <parameter type-id='type-id-43' is-artificial='yes'/>
-          <!-- parameter of type 'GLfloat[4]*' -->
+          <!-- parameter of type 'GLfloat(*)[4]' -->
           <parameter type-id='type-id-51'/>
           <!-- parameter of type 'const GLint*' -->
           <parameter type-id='type-id-52'/>
@@ -1018,7 +1018,7 @@
       <member-function access='private' static='yes'>
         <!-- void GLUnurbs::grabGLMatrix() -->
         <function-decl name='grabGLMatrix' mangled-name='_ZN8GLUnurbs12grabGLMatrixEPA4_f' filepath='libnurbs/interface/glrenderer.cc' line='159' column='1' visibility='default' binding='global' size-in-bits='64'>
-          <!-- parameter of type 'GLfloat[4]*' -->
+          <!-- parameter of type 'GLfloat(*)[4]' -->
           <parameter type-id='type-id-51'/>
           <!-- void -->
           <return type-id='type-id-19'/>
@@ -1096,51 +1096,51 @@
         <var-decl name='output_triangles' type-id='type-id-10' visibility='default' filepath='libnurbs/interface/glsurfeval.h' line='189' column='1'/>
       </data-member>
       <data-member access='private' layout-offset-in-bits='576'>
-        <!-- void (typedef GLenum)* OpenGLSurfaceEvaluator::beginCallBackN -->
+        <!-- void(*OpenGLSurfaceEvaluator::beginCallBackN)(GLenum) -->
         <var-decl name='beginCallBackN' type-id='type-id-11' visibility='default' filepath='libnurbs/interface/glsurfeval.h' line='193' column='1'/>
       </data-member>
       <data-member access='private' layout-offset-in-bits='640'>
-        <!-- void ()* OpenGLSurfaceEvaluator::endCallBackN -->
+        <!-- void(*OpenGLSurfaceEvaluator::endCallBackN)(void) -->
         <var-decl name='endCallBackN' type-id='type-id-12' visibility='default' filepath='libnurbs/interface/glsurfeval.h' line='194' column='1'/>
       </data-member>
       <data-member access='private' layout-offset-in-bits='704'>
-        <!-- void (const GLfloat*)* OpenGLSurfaceEvaluator::vertexCallBackN -->
+        <!-- void(*OpenGLSurfaceEvaluator::vertexCallBackN)(const GLfloat*) -->
         <var-decl name='vertexCallBackN' type-id='type-id-13' visibility='default' filepath='libnurbs/interface/glsurfeval.h' line='195' column='1'/>
       </data-member>
       <data-member access='private' layout-offset-in-bits='768'>
-        <!-- void (const GLfloat*)* OpenGLSurfaceEvaluator::normalCallBackN -->
+        <!-- void(*OpenGLSurfaceEvaluator::normalCallBackN)(const GLfloat*) -->
         <var-decl name='normalCallBackN' type-id='type-id-13' visibility='default' filepath='libnurbs/interface/glsurfeval.h' line='196' column='1'/>
       </data-member>
       <data-member access='private' layout-offset-in-bits='832'>
-        <!-- void (const GLfloat*)* OpenGLSurfaceEvaluator::colorCallBackN -->
+        <!-- void(*OpenGLSurfaceEvaluator::colorCallBackN)(const GLfloat*) -->
         <var-decl name='colorCallBackN' type-id='type-id-13' visibility='default' filepath='libnurbs/interface/glsurfeval.h' line='197' column='1'/>
       </data-member>
       <data-member access='private' layout-offset-in-bits='896'>
-        <!-- void (const GLfloat*)* OpenGLSurfaceEvaluator::texcoordCallBackN -->
+        <!-- void(*OpenGLSurfaceEvaluator::texcoordCallBackN)(const GLfloat*) -->
         <var-decl name='texcoordCallBackN' type-id='type-id-13' visibility='default' filepath='libnurbs/interface/glsurfeval.h' line='198' column='1'/>
       </data-member>
       <data-member access='private' layout-offset-in-bits='960'>
-        <!-- void (typedef GLenum, void*)* OpenGLSurfaceEvaluator::beginCallBackData -->
+        <!-- void(*OpenGLSurfaceEvaluator::beginCallBackData)(GLenum, void*) -->
         <var-decl name='beginCallBackData' type-id='type-id-14' visibility='default' filepath='libnurbs/interface/glsurfeval.h' line='200' column='1'/>
       </data-member>
       <data-member access='private' layout-offset-in-bits='1024'>
-        <!-- void (void*)* OpenGLSurfaceEvaluator::endCallBackData -->
+        <!-- void(*OpenGLSurfaceEvaluator::endCallBackData)(void*) -->
         <var-decl name='endCallBackData' type-id='type-id-15' visibility='default' filepath='libnurbs/interface/glsurfeval.h' line='201' column='1'/>
       </data-member>
       <data-member access='private' layout-offset-in-bits='1088'>
-        <!-- void (const GLfloat*, void*)* OpenGLSurfaceEvaluator::vertexCallBackData -->
+        <!-- void(*OpenGLSurfaceEvaluator::vertexCallBackData)(const GLfloat*, void*) -->
         <var-decl name='vertexCallBackData' type-id='type-id-16' visibility='default' filepath='libnurbs/interface/glsurfeval.h' line='202' column='1'/>
       </data-member>
       <data-member access='private' layout-offset-in-bits='1152'>
-        <!-- void (const GLfloat*, void*)* OpenGLSurfaceEvaluator::normalCallBackData -->
+        <!-- void(*OpenGLSurfaceEvaluator::normalCallBackData)(const GLfloat*, void*) -->
         <var-decl name='normalCallBackData' type-id='type-id-16' visibility='default' filepath='libnurbs/interface/glsurfeval.h' line='203' column='1'/>
       </data-member>
       <data-member access='private' layout-offset-in-bits='1216'>
-        <!-- void (const GLfloat*, void*)* OpenGLSurfaceEvaluator::colorCallBackData -->
+        <!-- void(*OpenGLSurfaceEvaluator::colorCallBackData)(const GLfloat*, void*) -->
         <var-decl name='colorCallBackData' type-id='type-id-16' visibility='default' filepath='libnurbs/interface/glsurfeval.h' line='204' column='1'/>
       </data-member>
       <data-member access='private' layout-offset-in-bits='1280'>
-        <!-- void (const GLfloat*, void*)* OpenGLSurfaceEvaluator::texcoordCallBackData -->
+        <!-- void(*OpenGLSurfaceEvaluator::texcoordCallBackData)(const GLfloat*, void*) -->
         <var-decl name='texcoordCallBackData' type-id='type-id-16' visibility='default' filepath='libnurbs/interface/glsurfeval.h' line='205' column='1'/>
       </data-member>
       <data-member access='private' layout-offset-in-bits='1344'>
@@ -2131,48 +2131,48 @@
         </function-decl>
       </member-function>
       <member-function access='private' static='yes'>
-        <!-- void GLUnurbs::transform4d(GLfloat*, GLfloat[4]*) -->
+        <!-- void GLUnurbs::transform4d(GLfloat*, GLfloat(*)[4]) -->
         <function-decl name='transform4d' mangled-name='_ZN8GLUnurbs11transform4dEPfS0_PA4_f' filepath='libnurbs/interface/glrenderer.cc' line='280' column='1' visibility='default' binding='global' size-in-bits='64'>
           <!-- parameter of type 'GLfloat*' -->
           <parameter type-id='type-id-50'/>
           <!-- parameter of type 'GLfloat*' -->
           <parameter type-id='type-id-50'/>
-          <!-- parameter of type 'GLfloat[4]*' -->
+          <!-- parameter of type 'GLfloat(*)[4]' -->
           <parameter type-id='type-id-51'/>
           <!-- void -->
           <return type-id='type-id-19'/>
         </function-decl>
       </member-function>
       <member-function access='private' static='yes'>
-        <!-- void GLUnurbs::multmatrix4d(GLfloat[4]*, GLfloat[4]*) -->
+        <!-- void GLUnurbs::multmatrix4d(GLfloat(*)[4], GLfloat(*)[4]) -->
         <function-decl name='multmatrix4d' mangled-name='_ZN8GLUnurbs12multmatrix4dEPA4_fPA4_KfS4_' filepath='libnurbs/interface/glrenderer.cc' line='294' column='1' visibility='default' binding='global' size-in-bits='64'>
-          <!-- parameter of type 'GLfloat[4]*' -->
+          <!-- parameter of type 'GLfloat(*)[4]' -->
           <parameter type-id='type-id-51'/>
-          <!-- parameter of type 'GLfloat[4]*' -->
+          <!-- parameter of type 'GLfloat(*)[4]' -->
           <parameter type-id='type-id-51'/>
-          <!-- parameter of type 'GLfloat[4]*' -->
+          <!-- parameter of type 'GLfloat(*)[4]' -->
           <parameter type-id='type-id-51'/>
           <!-- void -->
           <return type-id='type-id-19'/>
         </function-decl>
       </member-function>
       <member-function access='private'>
-        <!-- void GLUnurbs::loadCullingMatrix(GLfloat[4]*) -->
+        <!-- void GLUnurbs::loadCullingMatrix(GLfloat(*)[4]) -->
         <function-decl name='loadCullingMatrix' mangled-name='_ZN8GLUnurbs17loadCullingMatrixEPA4_f' filepath='libnurbs/interface/glrenderer.cc' line='237' column='1' visibility='default' binding='global' size-in-bits='64'>
           <!-- implicit parameter of type 'GLUnurbs*' -->
           <parameter type-id='type-id-43' is-artificial='yes'/>
-          <!-- parameter of type 'GLfloat[4]*' -->
+          <!-- parameter of type 'GLfloat(*)[4]' -->
           <parameter type-id='type-id-51'/>
           <!-- void -->
           <return type-id='type-id-19'/>
         </function-decl>
       </member-function>
       <member-function access='private'>
-        <!-- void GLUnurbs::loadSamplingMatrix(GLfloat[4]*, const GLint*) -->
+        <!-- void GLUnurbs::loadSamplingMatrix(GLfloat(*)[4], const GLint*) -->
         <function-decl name='loadSamplingMatrix' mangled-name='_ZN8GLUnurbs18loadSamplingMatrixEPA4_KfPKi' filepath='libnurbs/interface/glrenderer.cc' line='194' column='1' visibility='default' binding='global' size-in-bits='64'>
           <!-- implicit parameter of type 'GLUnurbs*' -->
           <parameter type-id='type-id-43' is-artificial='yes'/>
-          <!-- parameter of type 'GLfloat[4]*' -->
+          <!-- parameter of type 'GLfloat(*)[4]' -->
           <parameter type-id='type-id-51'/>
           <!-- parameter of type 'const GLint*' -->
           <parameter type-id='type-id-52'/>
@@ -2207,7 +2207,7 @@
       <member-function access='private' static='yes'>
         <!-- void GLUnurbs::grabGLMatrix() -->
         <function-decl name='grabGLMatrix' mangled-name='_ZN8GLUnurbs12grabGLMatrixEPA4_f' filepath='libnurbs/interface/glrenderer.cc' line='159' column='1' visibility='default' binding='global' size-in-bits='64'>
-          <!-- parameter of type 'GLfloat[4]*' -->
+          <!-- parameter of type 'GLfloat(*)[4]' -->
           <parameter type-id='type-id-51'/>
           <!-- void -->
           <return type-id='type-id-19'/>
@@ -2252,9 +2252,9 @@
         </function-decl>
       </member-function>
     </class-decl>
-    <!-- typedef void (typedef GLenum)* errorCallbackType -->
+    <!-- typedef void(*)(GLenum) errorCallbackType -->
     <typedef-decl name='errorCallbackType' type-id='type-id-11' filepath='libnurbs/interface/glrenderer.h' line='46' column='1' id='type-id-48'/>
-    <!-- GLfloat[4]* -->
+    <!-- GLfloat(*)[4] -->
     <pointer-type-def type-id='type-id-61' size-in-bits='64' id='type-id-51'/>
     <!-- class NurbsTessellator -->
     <class-decl name='NurbsTessellator' size-in-bits='47616' visibility='default' filepath='libnurbs/internals/nurbstess.h' line='53' column='1' id='type-id-47'>
@@ -2883,51 +2883,51 @@
         <var-decl name='output_triangles' type-id='type-id-10' visibility='default' filepath='libnurbs/interface/glsurfeval.h' line='189' column='1'/>
       </data-member>
       <data-member access='private' layout-offset-in-bits='576'>
-        <!-- void (typedef GLenum)* OpenGLSurfaceEvaluator::beginCallBackN -->
+        <!-- void(*OpenGLSurfaceEvaluator::beginCallBackN)(GLenum) -->
         <var-decl name='beginCallBackN' type-id='type-id-11' visibility='default' filepath='libnurbs/interface/glsurfeval.h' line='193' column='1'/>
       </data-member>
       <data-member access='private' layout-offset-in-bits='640'>
-        <!-- void ()* OpenGLSurfaceEvaluator::endCallBackN -->
+        <!-- void(*OpenGLSurfaceEvaluator::endCallBackN)(void) -->
         <var-decl name='endCallBackN' type-id='type-id-12' visibility='default' filepath='libnurbs/interface/glsurfeval.h' line='194' column='1'/>
       </data-member>
       <data-member access='private' layout-offset-in-bits='704'>
-        <!-- void (const GLfloat*)* OpenGLSurfaceEvaluator::vertexCallBackN -->
+        <!-- void(*OpenGLSurfaceEvaluator::vertexCallBackN)(const GLfloat*) -->
         <var-decl name='vertexCallBackN' type-id='type-id-13' visibility='default' filepath='libnurbs/interface/glsurfeval.h' line='195' column='1'/>
       </data-member>
       <data-member access='private' layout-offset-in-bits='768'>
-        <!-- void (const GLfloat*)* OpenGLSurfaceEvaluator::normalCallBackN -->
+        <!-- void(*OpenGLSurfaceEvaluator::normalCallBackN)(const GLfloat*) -->
         <var-decl name='normalCallBackN' type-id='type-id-13' visibility='default' filepath='libnurbs/interface/glsurfeval.h' line='196' column='1'/>
       </data-member>
       <data-member access='private' layout-offset-in-bits='832'>
-        <!-- void (const GLfloat*)* OpenGLSurfaceEvaluator::colorCallBackN -->
+        <!-- void(*OpenGLSurfaceEvaluator::colorCallBackN)(const GLfloat*) -->
         <var-decl name='colorCallBackN' type-id='type-id-13' visibility='default' filepath='libnurbs/interface/glsurfeval.h' line='197' column='1'/>
       </data-member>
       <data-member access='private' layout-offset-in-bits='896'>
-        <!-- void (const GLfloat*)* OpenGLSurfaceEvaluator::texcoordCallBackN -->
+        <!-- void(*OpenGLSurfaceEvaluator::texcoordCallBackN)(const GLfloat*) -->
         <var-decl name='texcoordCallBackN' type-id='type-id-13' visibility='default' filepath='libnurbs/interface/glsurfeval.h' line='198' column='1'/>
       </data-member>
       <data-member access='private' layout-offset-in-bits='960'>
-        <!-- void (typedef GLenum, void*)* OpenGLSurfaceEvaluator::beginCallBackData -->
+        <!-- void(*OpenGLSurfaceEvaluator::beginCallBackData)(GLenum, void*) -->
         <var-decl name='beginCallBackData' type-id='type-id-14' visibility='default' filepath='libnurbs/interface/glsurfeval.h' line='200' column='1'/>
       </data-member>
       <data-member access='private' layout-offset-in-bits='1024'>
-        <!-- void (void*)* OpenGLSurfaceEvaluator::endCallBackData -->
+        <!-- void(*OpenGLSurfaceEvaluator::endCallBackData)(void*) -->
         <var-decl name='endCallBackData' type-id='type-id-15' visibility='default' filepath='libnurbs/interface/glsurfeval.h' line='201' column='1'/>
       </data-member>
       <data-member access='private' layout-offset-in-bits='1088'>
-        <!-- void (const GLfloat*, void*)* OpenGLSurfaceEvaluator::vertexCallBackData -->
+        <!-- void(*OpenGLSurfaceEvaluator::vertexCallBackData)(const GLfloat*, void*) -->
         <var-decl name='vertexCallBackData' type-id='type-id-16' visibility='default' filepath='libnurbs/interface/glsurfeval.h' line='202' column='1'/>
       </data-member>
       <data-member access='private' layout-offset-in-bits='1152'>
-        <!-- void (const GLfloat*, void*)* OpenGLSurfaceEvaluator::normalCallBackData -->
+        <!-- void(*OpenGLSurfaceEvaluator::normalCallBackData)(const GLfloat*, void*) -->
         <var-decl name='normalCallBackData' type-id='type-id-16' visibility='default' filepath='libnurbs/interface/glsurfeval.h' line='203' column='1'/>
       </data-member>
       <data-member access='private' layout-offset-in-bits='1216'>
-        <!-- void (const GLfloat*, void*)* OpenGLSurfaceEvaluator::colorCallBackData -->
+        <!-- void(*OpenGLSurfaceEvaluator::colorCallBackData)(const GLfloat*, void*) -->
         <var-decl name='colorCallBackData' type-id='type-id-16' visibility='default' filepath='libnurbs/interface/glsurfeval.h' line='204' column='1'/>
       </data-member>
       <data-member access='private' layout-offset-in-bits='1280'>
-        <!-- void (const GLfloat*, void*)* OpenGLSurfaceEvaluator::texcoordCallBackData -->
+        <!-- void(*OpenGLSurfaceEvaluator::texcoordCallBackData)(const GLfloat*, void*) -->
         <var-decl name='texcoordCallBackData' type-id='type-id-16' visibility='default' filepath='libnurbs/interface/glsurfeval.h' line='205' column='1'/>
       </data-member>
       <data-member access='private' layout-offset-in-bits='1344'>
@@ -3878,7 +3878,7 @@
     <pointer-type-def type-id='type-id-53' size-in-bits='64' id='type-id-100'/>
     <!-- GLenum* -->
     <pointer-type-def type-id='type-id-21' size-in-bits='64' id='type-id-95'/>
-    <!-- REAL[3]* -->
+    <!-- REAL(*)[3] -->
     <pointer-type-def type-id='type-id-84' size-in-bits='64' id='type-id-101'/>
     <!-- StoredVertex* -->
     <pointer-type-def type-id='type-id-88' size-in-bits='64' id='type-id-87'/>
@@ -13565,9 +13565,9 @@
     <pointer-type-def type-id='type-id-234' size-in-bits='64' id='type-id-165'/>
     <!-- Quiltspec* -->
     <pointer-type-def type-id='type-id-219' size-in-bits='64' id='type-id-239'/>
-    <!-- REAL[5]* -->
+    <!-- REAL(*)[5] -->
     <pointer-type-def type-id='type-id-223' size-in-bits='64' id='type-id-242'/>
-    <!-- float[4]* -->
+    <!-- float(*)[4] -->
     <pointer-type-def type-id='type-id-230' size-in-bits='64' id='type-id-243'/>
     <reference-type-def kind='lvalue' type-id='type-id-244' size-in-bits='64' id='type-id-245'/>
     <!-- struct Flist -->
@@ -14368,7 +14368,7 @@
     <!-- struct PFVS -->
     <class-decl name='PFVS' size-in-bits='128' is-struct='yes' naming-typedef-id='type-id-261' visibility='default' filepath='libnurbs/internals/displaylist.h' line='46' column='1' id='type-id-263'>
       <data-member access='public' layout-offset-in-bits='0'>
-        <!-- void (NurbsTessellator*, void*)* PFVS::__pfn -->
+        <!-- void(*PFVS::__pfn)(NurbsTessellator*, void*) -->
         <var-decl name='__pfn' type-id='type-id-264' visibility='default' filepath='libnurbs/internals/displaylist.h' line='46' column='1'/>
       </data-member>
       <data-member access='public' layout-offset-in-bits='64'>
@@ -14386,7 +14386,7 @@
     <pointer-type-def type-id='type-id-259' size-in-bits='64' id='type-id-260'/>
     <!-- NurbsTessellator* -->
     <pointer-type-def type-id='type-id-47' size-in-bits='64' id='type-id-79'/>
-    <!-- void (NurbsTessellator*, void*)* -->
+    <!-- void(*)(NurbsTessellator*, void*) -->
     <pointer-type-def type-id='type-id-265' size-in-bits='64' id='type-id-264'/>
     <!-- void (NurbsTessellator*, void*) -->
     <function-type size-in-bits='64' id='type-id-265'>
@@ -14885,7 +14885,7 @@
       <member-function access='private' static='yes'>
         <!-- void Mapdesc::copy(long int, float*, long int, long int) -->
         <function-decl name='copy' mangled-name='_ZN7Mapdesc4copyEPA5_flPfll' filepath='libnurbs/internals/mapdesc.h' line='134' column='1' visibility='default' binding='global' size-in-bits='64'>
-          <!-- parameter of type 'REAL[5]*' -->
+          <!-- parameter of type 'REAL(*)[5]' -->
           <parameter type-id='type-id-242'/>
           <!-- parameter of type 'long int' -->
           <parameter type-id='type-id-24'/>
@@ -14919,11 +14919,11 @@
         </function-decl>
       </member-function>
       <member-function access='private'>
-        <!-- void Mapdesc::xformRational(REAL[5]*, REAL*, REAL*) -->
+        <!-- void Mapdesc::xformRational(REAL(*)[5], REAL*, REAL*) -->
         <function-decl name='xformRational' mangled-name='_ZN7Mapdesc13xformRationalEPA5_fPfS2_' filepath='libnurbs/internals/mapdesc.h' line='144' column='1' visibility='default' binding='global' size-in-bits='64'>
           <!-- implicit parameter of type 'Mapdesc*' -->
           <parameter type-id='type-id-274' is-artificial='yes'/>
-          <!-- parameter of type 'REAL[5]*' -->
+          <!-- parameter of type 'REAL(*)[5]' -->
           <parameter type-id='type-id-242'/>
           <!-- parameter of type 'REAL*' -->
           <parameter type-id='type-id-25'/>
@@ -14934,11 +14934,11 @@
         </function-decl>
       </member-function>
       <member-function access='private'>
-        <!-- void Mapdesc::xformNonrational(REAL[5]*, REAL*, REAL*) -->
+        <!-- void Mapdesc::xformNonrational(REAL(*)[5], REAL*, REAL*) -->
         <function-decl name='xformNonrational' mangled-name='_ZN7Mapdesc16xformNonrationalEPA5_fPfS2_' filepath='libnurbs/internals/mapdesc.h' line='145' column='1' visibility='default' binding='global' size-in-bits='64'>
           <!-- implicit parameter of type 'Mapdesc*' -->
           <parameter type-id='type-id-274' is-artificial='yes'/>
-          <!-- parameter of type 'REAL[5]*' -->
+          <!-- parameter of type 'REAL(*)[5]' -->
           <parameter type-id='type-id-242'/>
           <!-- parameter of type 'REAL*' -->
           <parameter type-id='type-id-25'/>
@@ -14949,11 +14949,11 @@
         </function-decl>
       </member-function>
       <member-function access='private'>
-        <!-- void Mapdesc::xformMat(REAL[5]*, REAL*, int, int, REAL*, int) -->
+        <!-- void Mapdesc::xformMat(REAL(*)[5], REAL*, int, int, REAL*, int) -->
         <function-decl name='xformMat' mangled-name='_ZN7Mapdesc8xformMatEPA5_fPfiiS2_i' filepath='libnurbs/internals/mapdesc.h' line='76' column='1' visibility='default' binding='global' size-in-bits='64'>
           <!-- implicit parameter of type 'Mapdesc*' -->
           <parameter type-id='type-id-274' is-artificial='yes'/>
-          <!-- parameter of type 'REAL[5]*' -->
+          <!-- parameter of type 'REAL(*)[5]' -->
           <parameter type-id='type-id-242'/>
           <!-- parameter of type 'REAL*' -->
           <parameter type-id='type-id-25'/>
@@ -15027,11 +15027,11 @@
         </function-decl>
       </member-function>
       <member-function access='private'>
-        <!-- void Mapdesc::xformMat(REAL[5]*, REAL*, int, int, int, int, REAL*, int, int) -->
+        <!-- void Mapdesc::xformMat(REAL(*)[5], REAL*, int, int, int, int, REAL*, int, int) -->
         <function-decl name='xformMat' mangled-name='_ZN7Mapdesc8xformMatEPA5_fPfiiiiS2_ii' filepath='libnurbs/internals/mapdesc.h' line='88' column='1' visibility='default' binding='global' size-in-bits='64'>
           <!-- implicit parameter of type 'Mapdesc*' -->
           <parameter type-id='type-id-274' is-artificial='yes'/>
-          <!-- parameter of type 'REAL[5]*' -->
+          <!-- parameter of type 'REAL(*)[5]' -->
           <parameter type-id='type-id-242'/>
           <!-- parameter of type 'REAL*' -->
           <parameter type-id='type-id-25'/>
@@ -15173,11 +15173,11 @@
         </function-decl>
       </member-function>
       <member-function access='private'>
-        <!-- void Mapdesc::bbox(REAL[5]*, REAL*, int, int, int, int) -->
+        <!-- void Mapdesc::bbox(REAL(*)[5], REAL*, int, int, int, int) -->
         <function-decl name='bbox' mangled-name='_ZN7Mapdesc4bboxEPA5_fPfiiii' filepath='libnurbs/internals/mapdesc.h' line='132' column='1' visibility='default' binding='global' size-in-bits='64'>
           <!-- implicit parameter of type 'Mapdesc*' -->
           <parameter type-id='type-id-274' is-artificial='yes'/>
-          <!-- parameter of type 'REAL[5]*' -->
+          <!-- parameter of type 'REAL(*)[5]' -->
           <parameter type-id='type-id-242'/>
           <!-- parameter of type 'REAL*' -->
           <parameter type-id='type-id-25'/>
@@ -15323,7 +15323,7 @@
         </function-decl>
       </member-function>
       <member-function access='private'>
-        <!-- int Mapdesc::bboxTooBig(REAL*, int, int, int, int, REAL[5]*) -->
+        <!-- int Mapdesc::bboxTooBig(REAL*, int, int, int, int, REAL(*)[5]) -->
         <function-decl name='bboxTooBig' mangled-name='_ZN7Mapdesc10bboxTooBigEPfiiiiPA5_f' filepath='libnurbs/internals/mapdesc.h' line='93' column='1' visibility='default' binding='global' size-in-bits='64'>
           <!-- implicit parameter of type 'Mapdesc*' -->
           <parameter type-id='type-id-274' is-artificial='yes'/>
@@ -15337,7 +15337,7 @@
           <parameter type-id='type-id-10'/>
           <!-- parameter of type 'int' -->
           <parameter type-id='type-id-10'/>
-          <!-- parameter of type 'REAL[5]*' -->
+          <!-- parameter of type 'REAL(*)[5]' -->
           <parameter type-id='type-id-242'/>
           <!-- int -->
           <return type-id='type-id-10'/>
@@ -15399,22 +15399,22 @@
         </function-decl>
       </member-function>
       <member-function access='private'>
-        <!-- void Mapdesc::surfbbox(REAL[5]*) -->
+        <!-- void Mapdesc::surfbbox(REAL(*)[5]) -->
         <function-decl name='surfbbox' mangled-name='_ZN7Mapdesc8surfbboxEPA5_f' filepath='libnurbs/internals/mapdesc.h' line='91' column='1' visibility='default' binding='global' size-in-bits='64'>
           <!-- implicit parameter of type 'Mapdesc*' -->
           <parameter type-id='type-id-274' is-artificial='yes'/>
-          <!-- parameter of type 'REAL[5]*' -->
+          <!-- parameter of type 'REAL(*)[5]' -->
           <parameter type-id='type-id-242'/>
           <!-- void -->
           <return type-id='type-id-19'/>
         </function-decl>
       </member-function>
       <member-function access='private'>
-        <!-- void Mapdesc::identify(REAL[5]*) -->
+        <!-- void Mapdesc::identify(REAL(*)[5]) -->
         <function-decl name='identify' mangled-name='_ZN7Mapdesc8identifyEPA5_f' filepath='libnurbs/internals/mapdesc.h' line='96' column='1' visibility='default' binding='global' size-in-bits='64'>
           <!-- implicit parameter of type 'Mapdesc*' -->
           <parameter type-id='type-id-274' is-artificial='yes'/>
-          <!-- parameter of type 'REAL[5]*' -->
+          <!-- parameter of type 'REAL(*)[5]' -->
           <parameter type-id='type-id-242'/>
           <!-- void -->
           <return type-id='type-id-19'/>
@@ -16402,11 +16402,11 @@
         </function-decl>
       </member-function>
       <member-function access='private' constructor='yes'>
-        <!-- vertexArray::vertexArray(Real[2]*, Int) -->
+        <!-- vertexArray::vertexArray(Real(*)[2], Int) -->
         <function-decl name='vertexArray' filepath='libnurbs/nurbtess/monoTriangulation.h' line='83' column='1' visibility='default' binding='global' size-in-bits='64'>
           <!-- implicit parameter of type 'vertexArray*' -->
           <parameter type-id='type-id-293' is-artificial='yes'/>
-          <!-- parameter of type 'Real[2]*' -->
+          <!-- parameter of type 'Real(*)[2]' -->
           <parameter type-id='type-id-294'/>
           <!-- parameter of type 'typedef Int' -->
           <parameter type-id='type-id-287'/>
@@ -16455,11 +16455,11 @@
         </function-decl>
       </member-function>
       <member-function access='private' constructor='yes'>
-        <!-- vertexArray::vertexArray(Real[2]*, Int) -->
+        <!-- vertexArray::vertexArray(Real(*)[2], Int) -->
         <function-decl name='vertexArray' filepath='libnurbs/nurbtess/monoTriangulation.h' line='83' column='1' visibility='default' binding='global' size-in-bits='64'>
           <!-- implicit parameter of type 'vertexArray*' -->
           <parameter type-id='type-id-293' is-artificial='yes'/>
-          <!-- parameter of type 'Real[2]*' -->
+          <!-- parameter of type 'Real(*)[2]' -->
           <parameter type-id='type-id-294'/>
           <!-- parameter of type 'typedef Int' -->
           <parameter type-id='type-id-287'/>
@@ -16620,11 +16620,11 @@
         </function-decl>
       </member-function>
       <member-function access='private' constructor='yes'>
-        <!-- vertexArray::vertexArray(Real[2]*, Int) -->
+        <!-- vertexArray::vertexArray(Real(*)[2], Int) -->
         <function-decl name='vertexArray' filepath='libnurbs/nurbtess/monoTriangulation.h' line='83' column='1' visibility='default' binding='global' size-in-bits='64'>
           <!-- implicit parameter of type 'vertexArray*' -->
           <parameter type-id='type-id-293' is-artificial='yes'/>
-          <!-- parameter of type 'Real[2]*' -->
+          <!-- parameter of type 'Real(*)[2]' -->
           <parameter type-id='type-id-294'/>
           <!-- parameter of type 'typedef Int' -->
           <parameter type-id='type-id-287'/>
@@ -16655,11 +16655,11 @@
         </function-decl>
       </member-function>
       <member-function access='private' constructor='yes'>
-        <!-- vertexArray::vertexArray(Real[2]*, Int) -->
+        <!-- vertexArray::vertexArray(Real(*)[2], Int) -->
         <function-decl name='vertexArray' filepath='libnurbs/nurbtess/monoTriangulation.h' line='83' column='1' visibility='default' binding='global' size-in-bits='64'>
           <!-- implicit parameter of type 'vertexArray*' -->
           <parameter type-id='type-id-293' is-artificial='yes'/>
-          <!-- parameter of type 'Real[2]*' -->
+          <!-- parameter of type 'Real(*)[2]' -->
           <parameter type-id='type-id-294'/>
           <!-- parameter of type 'typedef Int' -->
           <parameter type-id='type-id-287'/>
@@ -16690,11 +16690,11 @@
         </function-decl>
       </member-function>
       <member-function access='private' constructor='yes'>
-        <!-- vertexArray::vertexArray(Real[2]*, Int) -->
+        <!-- vertexArray::vertexArray(Real(*)[2], Int) -->
         <function-decl name='vertexArray' filepath='libnurbs/nurbtess/monoTriangulation.h' line='83' column='1' visibility='default' binding='global' size-in-bits='64'>
           <!-- implicit parameter of type 'vertexArray*' -->
           <parameter type-id='type-id-293' is-artificial='yes'/>
-          <!-- parameter of type 'Real[2]*' -->
+          <!-- parameter of type 'Real(*)[2]' -->
           <parameter type-id='type-id-294'/>
           <!-- parameter of type 'typedef Int' -->
           <parameter type-id='type-id-287'/>
@@ -16725,11 +16725,11 @@
         </function-decl>
       </member-function>
       <member-function access='private' constructor='yes'>
-        <!-- vertexArray::vertexArray(Real[2]*, Int) -->
+        <!-- vertexArray::vertexArray(Real(*)[2], Int) -->
         <function-decl name='vertexArray' filepath='libnurbs/nurbtess/monoTriangulation.h' line='83' column='1' visibility='default' binding='global' size-in-bits='64'>
           <!-- implicit parameter of type 'vertexArray*' -->
           <parameter type-id='type-id-293' is-artificial='yes'/>
-          <!-- parameter of type 'Real[2]*' -->
+          <!-- parameter of type 'Real(*)[2]' -->
           <parameter type-id='type-id-294'/>
           <!-- parameter of type 'typedef Int' -->
           <parameter type-id='type-id-287'/>
@@ -16760,11 +16760,11 @@
         </function-decl>
       </member-function>
       <member-function access='private' constructor='yes'>
-        <!-- vertexArray::vertexArray(Real[2]*, Int) -->
+        <!-- vertexArray::vertexArray(Real(*)[2], Int) -->
         <function-decl name='vertexArray' filepath='libnurbs/nurbtess/monoTriangulation.h' line='83' column='1' visibility='default' binding='global' size-in-bits='64'>
           <!-- implicit parameter of type 'vertexArray*' -->
           <parameter type-id='type-id-293' is-artificial='yes'/>
-          <!-- parameter of type 'Real[2]*' -->
+          <!-- parameter of type 'Real(*)[2]' -->
           <parameter type-id='type-id-294'/>
           <!-- parameter of type 'typedef Int' -->
           <parameter type-id='type-id-287'/>
@@ -16795,11 +16795,11 @@
         </function-decl>
       </member-function>
       <member-function access='private' constructor='yes'>
-        <!-- vertexArray::vertexArray(Real[2]*, Int) -->
+        <!-- vertexArray::vertexArray(Real(*)[2], Int) -->
         <function-decl name='vertexArray' filepath='libnurbs/nurbtess/monoTriangulation.h' line='83' column='1' visibility='default' binding='global' size-in-bits='64'>
           <!-- implicit parameter of type 'vertexArray*' -->
           <parameter type-id='type-id-293' is-artificial='yes'/>
-          <!-- parameter of type 'Real[2]*' -->
+          <!-- parameter of type 'Real(*)[2]' -->
           <parameter type-id='type-id-294'/>
           <!-- parameter of type 'typedef Int' -->
           <parameter type-id='type-id-287'/>
@@ -16827,14 +16827,14 @@
     <typedef-decl name='Real2' type-id='type-id-283' filepath='libnurbs/nurbtess/definitions.h' line='38' column='1' id='type-id-295'/>
     <!-- Int* -->
     <pointer-type-def type-id='type-id-287' size-in-bits='64' id='type-id-285'/>
+    <!-- Real(*)[2] -->
+    <pointer-type-def type-id='type-id-283' size-in-bits='64' id='type-id-294'/>
     <!-- Real* -->
     <pointer-type-def type-id='type-id-282' size-in-bits='64' id='type-id-286'/>
     <!-- Real** -->
     <pointer-type-def type-id='type-id-286' size-in-bits='64' id='type-id-292'/>
     <!-- Real2* -->
     <pointer-type-def type-id='type-id-295' size-in-bits='64' id='type-id-289'/>
-    <!-- Real[2]* -->
-    <pointer-type-def type-id='type-id-283' size-in-bits='64' id='type-id-294'/>
     <!-- primStream* -->
     <pointer-type-def type-id='type-id-284' size-in-bits='64' id='type-id-187'/>
     <!-- reflexChain* -->
@@ -21338,13 +21338,13 @@
         </function-decl>
       </member-function>
       <member-function access='private' constructor='yes'>
-        <!-- sampledLine::sampledLine(Int, Real[2]*) -->
+        <!-- sampledLine::sampledLine(Int, Real(*)[2]) -->
         <function-decl name='sampledLine' filepath='libnurbs/nurbtess/sampledLine.h' line='44' column='1' visibility='default' binding='global' size-in-bits='64'>
           <!-- implicit parameter of type 'sampledLine*' -->
           <parameter type-id='type-id-357' is-artificial='yes'/>
           <!-- parameter of type 'typedef Int' -->
           <parameter type-id='type-id-287'/>
-          <!-- parameter of type 'Real[2]*' -->
+          <!-- parameter of type 'Real(*)[2]' -->
           <parameter type-id='type-id-294'/>
           <!-- void -->
           <return type-id='type-id-19'/>
@@ -21413,13 +21413,13 @@
         </function-decl>
       </member-function>
       <member-function access='private' constructor='yes'>
-        <!-- sampledLine::sampledLine(Int, Real[2]*) -->
+        <!-- sampledLine::sampledLine(Int, Real(*)[2]) -->
         <function-decl name='sampledLine' filepath='libnurbs/nurbtess/sampledLine.h' line='44' column='1' visibility='default' binding='global' size-in-bits='64'>
           <!-- implicit parameter of type 'sampledLine*' -->
           <parameter type-id='type-id-357' is-artificial='yes'/>
           <!-- parameter of type 'typedef Int' -->
           <parameter type-id='type-id-287'/>
-          <!-- parameter of type 'Real[2]*' -->
+          <!-- parameter of type 'Real(*)[2]' -->
           <parameter type-id='type-id-294'/>
           <!-- void -->
           <return type-id='type-id-19'/>
@@ -21470,13 +21470,13 @@
         </function-decl>
       </member-function>
       <member-function access='private' constructor='yes'>
-        <!-- sampledLine::sampledLine(Int, Real[2]*) -->
+        <!-- sampledLine::sampledLine(Int, Real(*)[2]) -->
         <function-decl name='sampledLine' filepath='libnurbs/nurbtess/sampledLine.h' line='44' column='1' visibility='default' binding='global' size-in-bits='64'>
           <!-- implicit parameter of type 'sampledLine*' -->
           <parameter type-id='type-id-357' is-artificial='yes'/>
           <!-- parameter of type 'typedef Int' -->
           <parameter type-id='type-id-287'/>
-          <!-- parameter of type 'Real[2]*' -->
+          <!-- parameter of type 'Real(*)[2]' -->
           <parameter type-id='type-id-294'/>
           <!-- void -->
           <return type-id='type-id-19'/>
@@ -21527,13 +21527,13 @@
         </function-decl>
       </member-function>
       <member-function access='private' constructor='yes'>
-        <!-- sampledLine::sampledLine(Int, Real[2]*) -->
+        <!-- sampledLine::sampledLine(Int, Real(*)[2]) -->
         <function-decl name='sampledLine' filepath='libnurbs/nurbtess/sampledLine.h' line='44' column='1' visibility='default' binding='global' size-in-bits='64'>
           <!-- implicit parameter of type 'sampledLine*' -->
           <parameter type-id='type-id-357' is-artificial='yes'/>
           <!-- parameter of type 'typedef Int' -->
           <parameter type-id='type-id-287'/>
-          <!-- parameter of type 'Real[2]*' -->
+          <!-- parameter of type 'Real(*)[2]' -->
           <parameter type-id='type-id-294'/>
           <!-- void -->
           <return type-id='type-id-19'/>
@@ -21584,13 +21584,13 @@
         </function-decl>
       </member-function>
       <member-function access='private' constructor='yes'>
-        <!-- sampledLine::sampledLine(Int, Real[2]*) -->
+        <!-- sampledLine::sampledLine(Int, Real(*)[2]) -->
         <function-decl name='sampledLine' filepath='libnurbs/nurbtess/sampledLine.h' line='44' column='1' visibility='default' binding='global' size-in-bits='64'>
           <!-- implicit parameter of type 'sampledLine*' -->
           <parameter type-id='type-id-357' is-artificial='yes'/>
           <!-- parameter of type 'typedef Int' -->
           <parameter type-id='type-id-287'/>
-          <!-- parameter of type 'Real[2]*' -->
+          <!-- parameter of type 'Real(*)[2]' -->
           <parameter type-id='type-id-294'/>
           <!-- void -->
           <return type-id='type-id-19'/>
@@ -21641,13 +21641,13 @@
         </function-decl>
       </member-function>
       <member-function access='private' constructor='yes'>
-        <!-- sampledLine::sampledLine(Int, Real[2]*) -->
+        <!-- sampledLine::sampledLine(Int, Real(*)[2]) -->
         <function-decl name='sampledLine' filepath='libnurbs/nurbtess/sampledLine.h' line='44' column='1' visibility='default' binding='global' size-in-bits='64'>
           <!-- implicit parameter of type 'sampledLine*' -->
           <parameter type-id='type-id-357' is-artificial='yes'/>
           <!-- parameter of type 'typedef Int' -->
           <parameter type-id='type-id-287'/>
-          <!-- parameter of type 'Real[2]*' -->
+          <!-- parameter of type 'Real(*)[2]' -->
           <parameter type-id='type-id-294'/>
           <!-- void -->
           <return type-id='type-id-19'/>
@@ -21698,13 +21698,13 @@
         </function-decl>
       </member-function>
       <member-function access='private' constructor='yes'>
-        <!-- sampledLine::sampledLine(Int, Real[2]*) -->
+        <!-- sampledLine::sampledLine(Int, Real(*)[2]) -->
         <function-decl name='sampledLine' filepath='libnurbs/nurbtess/sampledLine.h' line='44' column='1' visibility='default' binding='global' size-in-bits='64'>
           <!-- implicit parameter of type 'sampledLine*' -->
           <parameter type-id='type-id-357' is-artificial='yes'/>
           <!-- parameter of type 'typedef Int' -->
           <parameter type-id='type-id-287'/>
-          <!-- parameter of type 'Real[2]*' -->
+          <!-- parameter of type 'Real(*)[2]' -->
           <parameter type-id='type-id-294'/>
           <!-- void -->
           <return type-id='type-id-19'/>
@@ -21755,13 +21755,13 @@
         </function-decl>
       </member-function>
       <member-function access='private' constructor='yes'>
-        <!-- sampledLine::sampledLine(Int, Real[2]*) -->
+        <!-- sampledLine::sampledLine(Int, Real(*)[2]) -->
         <function-decl name='sampledLine' filepath='libnurbs/nurbtess/sampledLine.h' line='44' column='1' visibility='default' binding='global' size-in-bits='64'>
           <!-- implicit parameter of type 'sampledLine*' -->
           <parameter type-id='type-id-357' is-artificial='yes'/>
           <!-- parameter of type 'typedef Int' -->
           <parameter type-id='type-id-287'/>
-          <!-- parameter of type 'Real[2]*' -->
+          <!-- parameter of type 'Real(*)[2]' -->
           <parameter type-id='type-id-294'/>
           <!-- void -->
           <return type-id='type-id-19'/>
@@ -21812,13 +21812,13 @@
         </function-decl>
       </member-function>
       <member-function access='private' constructor='yes'>
-        <!-- sampledLine::sampledLine(Int, Real[2]*) -->
+        <!-- sampledLine::sampledLine(Int, Real(*)[2]) -->
         <function-decl name='sampledLine' filepath='libnurbs/nurbtess/sampledLine.h' line='44' column='1' visibility='default' binding='global' size-in-bits='64'>
           <!-- implicit parameter of type 'sampledLine*' -->
           <parameter type-id='type-id-357' is-artificial='yes'/>
           <!-- parameter of type 'typedef Int' -->
           <parameter type-id='type-id-287'/>
-          <!-- parameter of type 'Real[2]*' -->
+          <!-- parameter of type 'Real(*)[2]' -->
           <parameter type-id='type-id-294'/>
           <!-- void -->
           <return type-id='type-id-19'/>
@@ -22310,7 +22310,7 @@
         <var-decl name='frame' type-id='type-id-17' visibility='default' filepath='libtess/dict.h' line='96' column='1'/>
       </data-member>
       <data-member access='public' layout-offset-in-bits='256'>
-        <!-- int (void*, typedef DictListKey, typedef DictListKey)* DictList::leq -->
+        <!-- int(*DictList::leq)(void*, DictListKey, DictListKey) -->
         <var-decl name='leq' type-id='type-id-383' visibility='default' filepath='libtess/dict.h' line='97' column='1'/>
       </data-member>
     </class-decl>
@@ -22429,7 +22429,7 @@
         <var-decl name='mesh' type-id='type-id-396' visibility='default' filepath='libtess/tess.h' line='66' column='1'/>
       </data-member>
       <data-member access='public' layout-offset-in-bits='192'>
-        <!-- void (typedef GLenum)* GLUtesselator::callError -->
+        <!-- void(*GLUtesselator::callError)(GLenum) -->
         <var-decl name='callError' type-id='type-id-11' visibility='default' filepath='libtess/tess.h' line='69' column='1'/>
       </data-member>
       <data-member access='public' layout-offset-in-bits='256'>
@@ -22469,7 +22469,7 @@
         <var-decl name='event' type-id='type-id-389' visibility='default' filepath='libtess/tess.h' line='85' column='1'/>
       </data-member>
       <data-member access='public' layout-offset-in-bits='1152'>
-        <!-- void (GLdouble*, void**, GLfloat*, void**)* GLUtesselator::callCombine -->
+        <!-- void(*GLUtesselator::callCombine)(GLdouble*, void**, GLfloat*, void**) -->
         <var-decl name='callCombine' type-id='type-id-399' visibility='default' filepath='libtess/tess.h' line='87' column='1'/>
       </data-member>
       <data-member access='public' layout-offset-in-bits='1216'>
@@ -22485,23 +22485,23 @@
         <var-decl name='lonelyTriList' type-id='type-id-387' visibility='default' filepath='libtess/tess.h' line='94' column='1'/>
       </data-member>
       <data-member access='public' layout-offset-in-bits='1344'>
-        <!-- void (typedef GLenum)* GLUtesselator::callBegin -->
+        <!-- void(*GLUtesselator::callBegin)(GLenum) -->
         <var-decl name='callBegin' type-id='type-id-11' visibility='default' filepath='libtess/tess.h' line='97' column='1'/>
       </data-member>
       <data-member access='public' layout-offset-in-bits='1408'>
-        <!-- void (typedef GLboolean)* GLUtesselator::callEdgeFlag -->
+        <!-- void(*GLUtesselator::callEdgeFlag)(GLboolean) -->
         <var-decl name='callEdgeFlag' type-id='type-id-400' visibility='default' filepath='libtess/tess.h' line='98' column='1'/>
       </data-member>
       <data-member access='public' layout-offset-in-bits='1472'>
-        <!-- void (void*)* GLUtesselator::callVertex -->
+        <!-- void(*GLUtesselator::callVertex)(void*) -->
         <var-decl name='callVertex' type-id='type-id-15' visibility='default' filepath='libtess/tess.h' line='99' column='1'/>
       </data-member>
       <data-member access='public' layout-offset-in-bits='1536'>
-        <!-- void ()* GLUtesselator::callEnd -->
+        <!-- void(*GLUtesselator::callEnd)(void) -->
         <var-decl name='callEnd' type-id='type-id-12' visibility='default' filepath='libtess/tess.h' line='100' column='1'/>
       </data-member>
       <data-member access='public' layout-offset-in-bits='1600'>
-        <!-- void (GLUmesh*)* GLUtesselator::callMesh -->
+        <!-- void(*GLUtesselator::callMesh)(GLUmesh*) -->
         <var-decl name='callMesh' type-id='type-id-401' visibility='default' filepath='libtess/tess.h' line='101' column='1'/>
       </data-member>
       <data-member access='public' layout-offset-in-bits='1664'>
@@ -22517,27 +22517,27 @@
         <var-decl name='cache' type-id='type-id-368' visibility='default' filepath='libtess/tess.h' line='108' column='1'/>
       </data-member>
       <data-member access='public' layout-offset-in-bits='27328'>
-        <!-- void (typedef GLenum, void*)* GLUtesselator::callBeginData -->
+        <!-- void(*GLUtesselator::callBeginData)(GLenum, void*) -->
         <var-decl name='callBeginData' type-id='type-id-14' visibility='default' filepath='libtess/tess.h' line='111' column='1'/>
       </data-member>
       <data-member access='public' layout-offset-in-bits='27392'>
-        <!-- void (typedef GLboolean, void*)* GLUtesselator::callEdgeFlagData -->
+        <!-- void(*GLUtesselator::callEdgeFlagData)(GLboolean, void*) -->
         <var-decl name='callEdgeFlagData' type-id='type-id-402' visibility='default' filepath='libtess/tess.h' line='112' column='1'/>
       </data-member>
       <data-member access='public' layout-offset-in-bits='27456'>
-        <!-- void (void*, void*)* GLUtesselator::callVertexData -->
+        <!-- void(*GLUtesselator::callVertexData)(void*, void*) -->
         <var-decl name='callVertexData' type-id='type-id-403' visibility='default' filepath='libtess/tess.h' line='114' column='1'/>
       </data-member>
       <data-member access='public' layout-offset-in-bits='27520'>
-        <!-- void (void*)* GLUtesselator::callEndData -->
+        <!-- void(*GLUtesselator::callEndData)(void*) -->
         <var-decl name='callEndData' type-id='type-id-15' visibility='default' filepath='libtess/tess.h' line='115' column='1'/>
       </data-member>
       <data-member access='public' layout-offset-in-bits='27584'>
-        <!-- void (typedef GLenum, void*)* GLUtesselator::callErrorData -->
+        <!-- void(*GLUtesselator::callErrorData)(GLenum, void*) -->
         <var-decl name='callErrorData' type-id='type-id-14' visibility='default' filepath='libtess/tess.h' line='116' column='1'/>
       </data-member>
       <data-member access='public' layout-offset-in-bits='27648'>
-        <!-- void (GLdouble*, void**, GLfloat*, void**, void*)* GLUtesselator::callCombineData -->
+        <!-- void(*GLUtesselator::callCombineData)(GLdouble*, void**, GLfloat*, void**, void*) -->
         <var-decl name='callCombineData' type-id='type-id-404' visibility='default' filepath='libtess/tess.h' line='117' column='1'/>
       </data-member>
       <data-member access='public' layout-offset-in-bits='27712'>
@@ -22629,7 +22629,7 @@
         <var-decl name='initialized' type-id='type-id-10' visibility='default' filepath='libtess/priorityq-heap.h' line='91' column='1'/>
       </data-member>
       <data-member access='public' layout-offset-in-bits='384'>
-        <!-- int (typedef PQHeapKey, typedef PQHeapKey)* PriorityQHeap::leq -->
+        <!-- int(*PriorityQHeap::leq)(PQHeapKey, PQHeapKey) -->
         <var-decl name='leq' type-id='type-id-416' visibility='default' filepath='libtess/priorityq-heap.h' line='92' column='1'/>
       </data-member>
     </class-decl>
@@ -22660,7 +22660,7 @@
         <var-decl name='initialized' type-id='type-id-10' visibility='default' filepath='libtess/priorityq.h' line='102' column='1'/>
       </data-member>
       <data-member access='public' layout-offset-in-bits='384'>
-        <!-- int (typedef PQSortKey, typedef PQSortKey)* PriorityQSort::leq -->
+        <!-- int(*PriorityQSort::leq)(PQSortKey, PQSortKey) -->
         <var-decl name='leq' type-id='type-id-416' visibility='default' filepath='libtess/priorityq.h' line='103' column='1'/>
       </data-member>
     </class-decl>
@@ -22763,27 +22763,27 @@
     <pointer-type-def type-id='type-id-428' size-in-bits='64' id='type-id-418'/>
     <!-- PriorityQSort* -->
     <pointer-type-def type-id='type-id-429' size-in-bits='64' id='type-id-398'/>
-    <!-- int (typedef PQHeapKey, typedef PQHeapKey)* -->
+    <!-- int(*)(PQHeapKey, PQHeapKey) -->
     <pointer-type-def type-id='type-id-433' size-in-bits='64' id='type-id-416'/>
-    <!-- int (void*, typedef DictListKey, typedef DictListKey)* -->
+    <!-- int(*)(void*, DictListKey, DictListKey) -->
     <pointer-type-def type-id='type-id-434' size-in-bits='64' id='type-id-383'/>
-    <!-- void (GLUmesh*)* -->
+    <!-- void(*)(GLUmesh*) -->
     <pointer-type-def type-id='type-id-435' size-in-bits='64' id='type-id-401'/>
-    <!-- void (GLdouble*, void**, GLfloat*, void**)* -->
-    <pointer-type-def type-id='type-id-436' size-in-bits='64' id='type-id-399'/>
-    <!-- void (GLdouble*, void**, GLfloat*, void**, void*)* -->
-    <pointer-type-def type-id='type-id-437' size-in-bits='64' id='type-id-404'/>
-    <!-- void (typedef GLboolean)* -->
-    <pointer-type-def type-id='type-id-438' size-in-bits='64' id='type-id-400'/>
-    <!-- void (typedef GLboolean, void*)* -->
-    <pointer-type-def type-id='type-id-439' size-in-bits='64' id='type-id-402'/>
-    <!-- void (typedef GLenum)* -->
+    <!-- void(*)(GLboolean) -->
+    <pointer-type-def type-id='type-id-436' size-in-bits='64' id='type-id-400'/>
+    <!-- void(*)(GLboolean, void*) -->
+    <pointer-type-def type-id='type-id-437' size-in-bits='64' id='type-id-402'/>
+    <!-- void(*)(GLdouble*, void**, GLfloat*, void**) -->
+    <pointer-type-def type-id='type-id-438' size-in-bits='64' id='type-id-399'/>
+    <!-- void(*)(GLdouble*, void**, GLfloat*, void**, void*) -->
+    <pointer-type-def type-id='type-id-439' size-in-bits='64' id='type-id-404'/>
+    <!-- void(*)(GLenum) -->
     <pointer-type-def type-id='type-id-39' size-in-bits='64' id='type-id-11'/>
-    <!-- void (typedef GLenum, void*)* -->
+    <!-- void(*)(GLenum, void*) -->
     <pointer-type-def type-id='type-id-40' size-in-bits='64' id='type-id-14'/>
-    <!-- void (void*)* -->
+    <!-- void(*)(void*) -->
     <pointer-type-def type-id='type-id-41' size-in-bits='64' id='type-id-15'/>
-    <!-- void (void*, void*)* -->
+    <!-- void(*)(void*, void*) -->
     <pointer-type-def type-id='type-id-440' size-in-bits='64' id='type-id-403'/>
     <!-- void** -->
     <pointer-type-def type-id='type-id-17' size-in-bits='64' id='type-id-184'/>
@@ -22943,7 +22943,7 @@
       <return type-id='type-id-19'/>
     </function-type>
     <!-- void (GLdouble*, void**, GLfloat*, void**) -->
-    <function-type size-in-bits='64' id='type-id-436'>
+    <function-type size-in-bits='64' id='type-id-438'>
       <!-- parameter of type 'GLdouble*' -->
       <parameter type-id='type-id-441'/>
       <!-- parameter of type 'void**' -->
@@ -22956,7 +22956,7 @@
       <return type-id='type-id-19'/>
     </function-type>
     <!-- void (GLdouble*, void**, GLfloat*, void**, void*) -->
-    <function-type size-in-bits='64' id='type-id-437'>
+    <function-type size-in-bits='64' id='type-id-439'>
       <!-- parameter of type 'GLdouble*' -->
       <parameter type-id='type-id-441'/>
       <!-- parameter of type 'void**' -->
@@ -22971,14 +22971,14 @@
       <return type-id='type-id-19'/>
     </function-type>
     <!-- void (GLboolean) -->
-    <function-type size-in-bits='64' id='type-id-438'>
+    <function-type size-in-bits='64' id='type-id-436'>
       <!-- parameter of type 'typedef GLboolean' -->
       <parameter type-id='type-id-49'/>
       <!-- void -->
       <return type-id='type-id-19'/>
     </function-type>
     <!-- void (GLboolean, void*) -->
-    <function-type size-in-bits='64' id='type-id-439'>
+    <function-type size-in-bits='64' id='type-id-437'>
       <!-- parameter of type 'typedef GLboolean' -->
       <parameter type-id='type-id-49'/>
       <!-- parameter of type 'void*' -->
@@ -23370,7 +23370,7 @@
         <var-decl name='drawStyle' type-id='type-id-60' visibility='default' filepath='libutil/quad.c' line='49' column='1'/>
       </data-member>
       <data-member access='public' layout-offset-in-bits='128'>
-        <!-- void (typedef GLint)* GLUquadric::errorCallback -->
+        <!-- void(*GLUquadric::errorCallback)(GLint) -->
         <var-decl name='errorCallback' type-id='type-id-455' visibility='default' filepath='libutil/quad.c' line='50' column='1'/>
       </data-member>
     </class-decl>
@@ -23378,14 +23378,14 @@
     <typedef-decl name='GLUquadric' type-id='type-id-454' filepath='../../../include/GL/glu.h' line='275' column='1' id='type-id-456'/>
     <!-- typedef unsigned char GLboolean -->
     <typedef-decl name='GLboolean' type-id='type-id-443' filepath='../../../include/GL/gl.h' line='150' column='1' id='type-id-49'/>
-    <!-- typedef void ()* _GLUfuncptr -->
+    <!-- typedef void(*)(void) _GLUfuncptr -->
     <typedef-decl name='_GLUfuncptr' type-id='type-id-12' filepath='../../../include/GL/glu.h' line='287' column='1' id='type-id-22'/>
     <!-- GLUquadric* -->
     <pointer-type-def type-id='type-id-456' size-in-bits='64' id='type-id-457'/>
-    <!-- void ()* -->
-    <pointer-type-def type-id='type-id-442' size-in-bits='64' id='type-id-12'/>
-    <!-- void (typedef GLint)* -->
+    <!-- void(*)(GLint) -->
     <pointer-type-def type-id='type-id-458' size-in-bits='64' id='type-id-455'/>
+    <!-- void(*)(void) -->
+    <pointer-type-def type-id='type-id-442' size-in-bits='64' id='type-id-12'/>
     <!-- GLUquadric* gluNewQuadric() -->
     <function-decl name='gluNewQuadric' mangled-name='gluNewQuadric' filepath='libutil/quad.c' line='54' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='gluNewQuadric'>
       <!-- GLUquadric* -->

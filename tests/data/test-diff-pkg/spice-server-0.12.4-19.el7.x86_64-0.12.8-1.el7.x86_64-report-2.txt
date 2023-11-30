@@ -35,77 +35,77 @@
                           underlying type 'struct QXLInterface' at spice.h:230:1 changed:
                             type size hasn't changed
                             15 data member changes:
-                              type of 'void (QXLInstance*, QXLWorker*)* attache_worker' changed:
+                              type of 'void (* attache_worker)(QXLInstance*, QXLWorker*)' changed:
                                 in pointed to type 'function type void (QXLInstance*, QXLWorker*)':
                                   parameter 1 of type 'QXLInstance*' has sub-type changes:
                                     in pointed to type 'typedef QXLInstance' at spice-qxl.h:34:1:
                                       underlying type 'struct QXLInstance' changed, as being reported
-                              type of 'void (QXLInstance*, int)* set_compression_level' changed:
+                              type of 'void (* set_compression_level)(QXLInstance*, int)' changed:
                                 in pointed to type 'function type void (QXLInstance*, int)':
                                   parameter 1 of type 'QXLInstance*' has sub-type changes:
                                     in pointed to type 'typedef QXLInstance' at spice-qxl.h:34:1:
                                       underlying type 'struct QXLInstance' changed, as being reported
-                              type of 'void (QXLInstance*, typedef uint32_t)* set_mm_time' changed:
-                                in pointed to type 'function type void (QXLInstance*, typedef uint32_t)':
+                              type of 'void (* set_mm_time)(QXLInstance*, uint32_t)' changed:
+                                in pointed to type 'function type void (QXLInstance*, uint32_t)':
                                   parameter 1 of type 'QXLInstance*' has sub-type changes:
                                     in pointed to type 'typedef QXLInstance' at spice-qxl.h:34:1:
                                       underlying type 'struct QXLInstance' changed, as being reported
-                              type of 'void (QXLInstance*, QXLDevInitInfo*)* get_init_info' changed:
+                              type of 'void (* get_init_info)(QXLInstance*, QXLDevInitInfo*)' changed:
                                 in pointed to type 'function type void (QXLInstance*, QXLDevInitInfo*)':
                                   parameter 1 of type 'QXLInstance*' has sub-type changes:
                                     in pointed to type 'typedef QXLInstance' at spice-qxl.h:34:1:
                                       underlying type 'struct QXLInstance' changed, as being reported
-                              type of 'int (QXLInstance*, QXLCommandExt*)* get_command' changed:
+                              type of 'int (* get_command)(QXLInstance*, QXLCommandExt*)' changed:
                                 in pointed to type 'function type int (QXLInstance*, QXLCommandExt*)':
                                   parameter 1 of type 'QXLInstance*' has sub-type changes:
                                     in pointed to type 'typedef QXLInstance' at spice-qxl.h:34:1:
                                       underlying type 'struct QXLInstance' changed, as being reported
-                              type of 'int (QXLInstance*)* req_cmd_notification' changed:
+                              type of 'int (* req_cmd_notification)(QXLInstance*)' changed:
                                 in pointed to type 'function type int (QXLInstance*)':
                                   parameter 1 of type 'QXLInstance*' has sub-type changes:
                                     in pointed to type 'typedef QXLInstance' at spice-qxl.h:34:1:
                                       underlying type 'struct QXLInstance' changed, as being reported
-                              type of 'void (QXLInstance*, struct QXLReleaseInfoExt)* release_resource' changed:
-                                in pointed to type 'function type void (QXLInstance*, struct QXLReleaseInfoExt)':
+                              type of 'void (* release_resource)(QXLInstance*, QXLReleaseInfoExt)' changed:
+                                in pointed to type 'function type void (QXLInstance*, QXLReleaseInfoExt)':
                                   parameter 1 of type 'QXLInstance*' has sub-type changes:
                                     in pointed to type 'typedef QXLInstance' at spice-qxl.h:34:1:
                                       underlying type 'struct QXLInstance' changed, as being reported
-                              type of 'int (QXLInstance*, QXLCommandExt*)* get_cursor_command' changed:
+                              type of 'int (* get_cursor_command)(QXLInstance*, QXLCommandExt*)' changed:
                                 in pointed to type 'function type int (QXLInstance*, QXLCommandExt*)':
                                   parameter 1 of type 'QXLInstance*' has sub-type changes:
                                     in pointed to type 'typedef QXLInstance' at spice-qxl.h:34:1:
                                       underlying type 'struct QXLInstance' changed, as being reported
-                              type of 'int (QXLInstance*)* req_cursor_notification' changed:
+                              type of 'int (* req_cursor_notification)(QXLInstance*)' changed:
                                 in pointed to type 'function type int (QXLInstance*)':
                                   parameter 1 of type 'QXLInstance*' has sub-type changes:
                                     in pointed to type 'typedef QXLInstance' at spice-qxl.h:34:1:
                                       underlying type 'struct QXLInstance' changed, as being reported
-                              type of 'void (QXLInstance*, typedef uint32_t)* notify_update' changed:
-                                in pointed to type 'function type void (QXLInstance*, typedef uint32_t)':
+                              type of 'void (* notify_update)(QXLInstance*, uint32_t)' changed:
+                                in pointed to type 'function type void (QXLInstance*, uint32_t)':
                                   parameter 1 of type 'QXLInstance*' has sub-type changes:
                                     in pointed to type 'typedef QXLInstance' at spice-qxl.h:34:1:
                                       underlying type 'struct QXLInstance' changed, as being reported
-                              type of 'int (QXLInstance*)* flush_resources' changed:
+                              type of 'int (* flush_resources)(QXLInstance*)' changed:
                                 in pointed to type 'function type int (QXLInstance*)':
                                   parameter 1 of type 'QXLInstance*' has sub-type changes:
                                     in pointed to type 'typedef QXLInstance' at spice-qxl.h:34:1:
                                       underlying type 'struct QXLInstance' changed, as being reported
-                              type of 'void (QXLInstance*, typedef uint64_t)* async_complete' changed:
-                                in pointed to type 'function type void (QXLInstance*, typedef uint64_t)':
+                              type of 'void (* async_complete)(QXLInstance*, uint64_t)' changed:
+                                in pointed to type 'function type void (QXLInstance*, uint64_t)':
                                   parameter 1 of type 'QXLInstance*' has sub-type changes:
                                     in pointed to type 'typedef QXLInstance' at spice-qxl.h:34:1:
                                       underlying type 'struct QXLInstance' changed, as being reported
-                              type of 'void (QXLInstance*, typedef uint32_t, QXLRect*, typedef uint32_t)* update_area_complete' changed:
-                                in pointed to type 'function type void (QXLInstance*, typedef uint32_t, QXLRect*, typedef uint32_t)':
+                              type of 'void (* update_area_complete)(QXLInstance*, uint32_t, QXLRect*, uint32_t)' changed:
+                                in pointed to type 'function type void (QXLInstance*, uint32_t, QXLRect*, uint32_t)':
                                   parameter 1 of type 'QXLInstance*' has sub-type changes:
                                     in pointed to type 'typedef QXLInstance' at spice-qxl.h:34:1:
                                       underlying type 'struct QXLInstance' changed, as being reported
-                              type of 'void (QXLInstance*, typedef uint8_t, uint8_t*)* set_client_capabilities' changed:
-                                in pointed to type 'function type void (QXLInstance*, typedef uint8_t, uint8_t*)':
+                              type of 'void (* set_client_capabilities)(QXLInstance*, uint8_t, uint8_t*)' changed:
+                                in pointed to type 'function type void (QXLInstance*, uint8_t, uint8_t*)':
                                   parameter 1 of type 'QXLInstance*' has sub-type changes:
                                     in pointed to type 'typedef QXLInstance' at spice-qxl.h:34:1:
                                       underlying type 'struct QXLInstance' changed, as being reported
-                              type of 'int (QXLInstance*, VDAgentMonitorsConfig*)* client_monitors_config' changed:
+                              type of 'int (* client_monitors_config)(QXLInstance*, VDAgentMonitorsConfig*)' changed:
                                 in pointed to type 'function type int (QXLInstance*, VDAgentMonitorsConfig*)':
                                   parameter 1 of type 'QXLInstance*' has sub-type changes:
                                     in pointed to type 'typedef QXLInstance' at spice-qxl.h:34:1:
@@ -128,8 +128,8 @@
                                       underlying type 'struct SpiceCoreInterface' at spice.h:82:1 changed:
                                         type size hasn't changed
                                         3 data member changes:
-                                          type of 'SpiceWatch* (int, int, typedef SpiceWatchFunc, void*)* watch_add' changed:
-                                            in pointed to type 'function type SpiceWatch* (int, int, typedef SpiceWatchFunc, void*)':
+                                          type of 'SpiceWatch* (* watch_add)(int, int, SpiceWatchFunc, void*)' changed:
+                                            in pointed to type 'function type SpiceWatch* (int, int, SpiceWatchFunc, void*)':
                                               return type changed:
                                                 in pointed to type 'typedef SpiceWatch' at spice-core.h:68:1:
                                                   underlying type 'struct SpiceWatch' at red_worker.c:268:1 changed:
@@ -165,7 +165,7 @@
                                                                                     type size hasn't changed
                                                                                     10 data member changes:
                                                                                       type of 'channel_configure_socket_proc config_socket' changed:
-                                                                                        underlying type 'int (RedChannelClient*)*' changed:
+                                                                                        underlying type 'int (*)(RedChannelClient*)' changed:
                                                                                           in pointed to type 'function type int (RedChannelClient*)':
                                                                                             parameter 1 of type 'RedChannelClient*' has sub-type changes:
                                                                                               in pointed to type 'typedef RedChannelClient' at red_channel.h:131:1:
@@ -194,9 +194,9 @@
                                                                                                           5 data member deletions:
                                                                                                             'RedsSASL sasl', at offset 256 (in bits) at reds.h:78:1
                                                                                                             'SpiceChannelEventInfo* info', at offset 1024 (in bits) at reds.h:85:1
-                                                                                                            'typedef ssize_t (RedsStream*, void*, typedef size_t)* read', at offset 1088 (in bits) at reds.h:88:1
-                                                                                                            'typedef ssize_t (RedsStream*, void*, typedef size_t)* write', at offset 1152 (in bits) at reds.h:89:1
-                                                                                                            'typedef ssize_t (RedsStream*, const iovec*, int)* writev', at offset 1216 (in bits) at reds.h:90:1
+                                                                                                            'ssize_t (* read)(RedsStream*, void*, size_t)', at offset 1088 (in bits) at reds.h:88:1
+                                                                                                            'ssize_t (* write)(RedsStream*, void*, size_t)', at offset 1152 (in bits) at reds.h:89:1
+                                                                                                            'ssize_t (* writev)(RedsStream*, const iovec*, int)', at offset 1216 (in bits) at reds.h:90:1
                                                                                                           2 data member changes:
                                                                                                             type of 'SSL* ssl' changed:
                                                                                                               in pointed to type 'typedef SSL' at reds_stream.h:32:1:
@@ -213,7 +213,7 @@
                                                                                                                     'BIO* bbio', at offset 256 (in bits) at ssl.h:1082:1
                                                                                                                     'int rwstate', at offset 320 (in bits) at ssl.h:1093:1
                                                                                                                     'int in_handshake', at offset 352 (in bits) at ssl.h:1096:1
-                                                                                                                    'int (SSL*)* handshake_func', at offset 384 (in bits) at ssl.h:1097:1
+                                                                                                                    'int (* handshake_func)(SSL*)', at offset 384 (in bits) at ssl.h:1097:1
                                                                                                                     'int server', at offset 448 (in bits) at ssl.h:1107:1
                                                                                                                     'int new_session', at offset 480 (in bits) at ssl.h:1109:1
                                                                                                                     'int quiet_shutdown', at offset 512 (in bits) at ssl.h:1113:1
@@ -230,7 +230,7 @@
                                                                                                                     'ssl3_state_st* s3', at offset 1024 (in bits) at ssl.h:1129:1
                                                                                                                     'dtls1_state_st* d1', at offset 1088 (in bits) at ssl.h:1130:1
                                                                                                                     'int read_ahead', at offset 1152 (in bits) at ssl.h:1132:1
-                                                                                                                    'void (int, int, int, void*, typedef size_t, SSL*, void*)* msg_callback', at offset 1216 (in bits) at ssl.h:1136:1
+                                                                                                                    'void (* msg_callback)(int, int, int, void*, size_t, SSL*, void*)', at offset 1216 (in bits) at ssl.h:1136:1
                                                                                                                     'void* msg_callback_arg', at offset 1280 (in bits) at ssl.h:1137:1
                                                                                                                     'int hit', at offset 1344 (in bits) at ssl.h:1139:1
                                                                                                                     'X509_VERIFY_PARAM* param', at offset 1408 (in bits) at ssl.h:1141:1
@@ -249,13 +249,13 @@
                                                                                                                     'SSL_SESSION* session', at offset 2432 (in bits) at ssl.h:1183:1
                                                                                                                     'GEN_SESSION_CB generate_session_id', at offset 2496 (in bits) at ssl.h:1186:1
                                                                                                                     'int verify_mode', at offset 2560 (in bits) at ssl.h:1189:1
-                                                                                                                    'int (int, X509_STORE_CTX*)* verify_callback', at offset 2624 (in bits) at ssl.h:1191:1
-                                                                                                                    'void (const SSL*, int, int)* info_callback', at offset 2688 (in bits) at ssl.h:1193:1
+                                                                                                                    'int (* verify_callback)(int, X509_STORE_CTX*)', at offset 2624 (in bits) at ssl.h:1191:1
+                                                                                                                    'void (* info_callback)(const SSL*, int, int)', at offset 2688 (in bits) at ssl.h:1193:1
                                                                                                                     'int error', at offset 2752 (in bits) at ssl.h:1195:1
                                                                                                                     'int error_code', at offset 2784 (in bits) at ssl.h:1196:1
                                                                                                                     'KSSL_CTX* kssl_ctx', at offset 2816 (in bits) at ssl.h:1199:1
-                                                                                                                    'unsigned int (SSL*, const char*, char*, unsigned int, unsigned char*, unsigned int)* psk_client_callback', at offset 2880 (in bits) at ssl.h:1203:1
-                                                                                                                    'unsigned int (SSL*, const char*, unsigned char*, unsigned int)* psk_server_callback', at offset 2944 (in bits) at ssl.h:1206:1
+                                                                                                                    'unsigned int (* psk_client_callback)(SSL*, const char*, char*, unsigned int, unsigned char*, unsigned int)', at offset 2880 (in bits) at ssl.h:1203:1
+                                                                                                                    'unsigned int (* psk_server_callback)(SSL*, const char*, unsigned char*, unsigned int)', at offset 2944 (in bits) at ssl.h:1206:1
                                                                                                                     'SSL_CTX* ctx', at offset 3008 (in bits) at ssl.h:1210:1
                                                                                                                     'int debug', at offset 3072 (in bits) at ssl.h:1213:1
                                                                                                                     'long int verify_result', at offset 3136 (in bits) at ssl.h:1216:1
@@ -268,7 +268,7 @@
                                                                                                                     'int first_packet', at offset 3648 (in bits) at ssl.h:1226:1
                                                                                                                     'int client_version', at offset 3680 (in bits) at ssl.h:1227:1
                                                                                                                     'unsigned int max_send_fragment', at offset 3712 (in bits) at ssl.h:1229:1
-                                                                                                                    'void (SSL*, int, int, unsigned char*, int, void*)* tlsext_debug_cb', at offset 3776 (in bits) at ssl.h:1232:1
+                                                                                                                    'void (* tlsext_debug_cb)(SSL*, int, int, unsigned char*, int, void*)', at offset 3776 (in bits) at ssl.h:1232:1
                                                                                                                     'void* tlsext_debug_arg', at offset 3840 (in bits) at ssl.h:1235:1
                                                                                                                     'char* tlsext_hostname', at offset 3904 (in bits) at ssl.h:1236:1
                                                                                                                     'int servername_done', at offset 3968 (in bits) at ssl.h:1237:1
@@ -304,48 +304,48 @@
                                                                                                               in pointed to type 'typedef SpiceWatch' at spice-core.h:68:1:
                                                                                                                 underlying type 'struct SpiceWatch' changed, as being reported
                                                                                       type of 'channel_disconnect_proc on_disconnect' changed:
-                                                                                        underlying type 'void (RedChannelClient*)*' changed:
+                                                                                        underlying type 'void (*)(RedChannelClient*)' changed:
                                                                                           in pointed to type 'function type void (RedChannelClient*)':
                                                                                             parameter 1 of type 'RedChannelClient*' has sub-type changes:
                                                                                               pointed to type 'typedef RedChannelClient' changed at red_channel.h:136:1, as reported earlier
                                                                                       type of 'channel_send_pipe_item_proc send_item' changed:
-                                                                                        underlying type 'void (RedChannelClient*, PipeItem*)*' changed:
+                                                                                        underlying type 'void (*)(RedChannelClient*, PipeItem*)' changed:
                                                                                           in pointed to type 'function type void (RedChannelClient*, PipeItem*)':
                                                                                             parameter 1 of type 'RedChannelClient*' has sub-type changes:
                                                                                               pointed to type 'typedef RedChannelClient' changed at red_channel.h:136:1, as reported earlier
                                                                                       type of 'channel_hold_pipe_item_proc hold_item' changed:
-                                                                                        underlying type 'void (RedChannelClient*, PipeItem*)*' changed:
+                                                                                        underlying type 'void (*)(RedChannelClient*, PipeItem*)' changed:
                                                                                           in pointed to type 'function type void (RedChannelClient*, PipeItem*)':
                                                                                             parameter 1 of type 'RedChannelClient*' has sub-type changes:
                                                                                               pointed to type 'typedef RedChannelClient' changed at red_channel.h:136:1, as reported earlier
                                                                                       type of 'channel_release_pipe_item_proc release_item' changed:
-                                                                                        underlying type 'void (RedChannelClient*, PipeItem*, int)*' changed:
+                                                                                        underlying type 'void (*)(RedChannelClient*, PipeItem*, int)' changed:
                                                                                           in pointed to type 'function type void (RedChannelClient*, PipeItem*, int)':
                                                                                             parameter 1 of type 'RedChannelClient*' has sub-type changes:
                                                                                               pointed to type 'typedef RedChannelClient' changed at red_channel.h:136:1, as reported earlier
                                                                                       type of 'channel_alloc_msg_recv_buf_proc alloc_recv_buf' changed:
-                                                                                        underlying type 'uint8_t* (RedChannelClient*, typedef uint16_t, typedef uint32_t)*' changed:
-                                                                                          in pointed to type 'function type uint8_t* (RedChannelClient*, typedef uint16_t, typedef uint32_t)':
+                                                                                        underlying type 'uint8_t* (*)(RedChannelClient*, uint16_t, uint32_t)' changed:
+                                                                                          in pointed to type 'function type uint8_t* (RedChannelClient*, uint16_t, uint32_t)':
                                                                                             parameter 1 of type 'RedChannelClient*' has sub-type changes:
                                                                                               pointed to type 'typedef RedChannelClient' changed at red_channel.h:136:1, as reported earlier
                                                                                       type of 'channel_release_msg_recv_buf_proc release_recv_buf' changed:
-                                                                                        underlying type 'void (RedChannelClient*, typedef uint16_t, typedef uint32_t, uint8_t*)*' changed:
-                                                                                          in pointed to type 'function type void (RedChannelClient*, typedef uint16_t, typedef uint32_t, uint8_t*)':
+                                                                                        underlying type 'void (*)(RedChannelClient*, uint16_t, uint32_t, uint8_t*)' changed:
+                                                                                          in pointed to type 'function type void (RedChannelClient*, uint16_t, uint32_t, uint8_t*)':
                                                                                             parameter 1 of type 'RedChannelClient*' has sub-type changes:
                                                                                               pointed to type 'typedef RedChannelClient' changed at red_channel.h:136:1, as reported earlier
                                                                                       type of 'channel_handle_migrate_flush_mark_proc handle_migrate_flush_mark' changed:
-                                                                                        underlying type 'int (RedChannelClient*)*' changed:
+                                                                                        underlying type 'int (*)(RedChannelClient*)' changed:
                                                                                           in pointed to type 'function type int (RedChannelClient*)':
                                                                                             parameter 1 of type 'RedChannelClient*' has sub-type changes:
                                                                                               pointed to type 'typedef RedChannelClient' changed at red_channel.h:136:1, as reported earlier
                                                                                       type of 'channel_handle_migrate_data_proc handle_migrate_data' changed:
-                                                                                        underlying type 'int (RedChannelClient*, typedef uint32_t, void*)*' changed:
-                                                                                          in pointed to type 'function type int (RedChannelClient*, typedef uint32_t, void*)':
+                                                                                        underlying type 'int (*)(RedChannelClient*, uint32_t, void*)' changed:
+                                                                                          in pointed to type 'function type int (RedChannelClient*, uint32_t, void*)':
                                                                                             parameter 1 of type 'RedChannelClient*' has sub-type changes:
                                                                                               pointed to type 'typedef RedChannelClient' changed at red_channel.h:136:1, as reported earlier
                                                                                       type of 'channel_handle_migrate_data_get_serial_proc handle_migrate_data_get_serial' changed:
-                                                                                        underlying type 'typedef uint64_t (RedChannelClient*, typedef uint32_t, void*)*' changed:
-                                                                                          in pointed to type 'function type typedef uint64_t (RedChannelClient*, typedef uint32_t, void*)':
+                                                                                        underlying type 'uint64_t (*)(RedChannelClient*, uint32_t, void*)' changed:
+                                                                                          in pointed to type 'function type typedef uint64_t (RedChannelClient*, uint32_t, void*)':
                                                                                             parameter 1 of type 'RedChannelClient*' has sub-type changes:
                                                                                               pointed to type 'typedef RedChannelClient' changed at red_channel.h:136:1, as reported earlier
                                                                                 type of 'ClientCbs client_cbs' changed:
@@ -353,7 +353,7 @@
                                                                                     type size hasn't changed
                                                                                     3 data member changes:
                                                                                       type of 'channel_client_connect_proc connect' changed:
-                                                                                        underlying type 'void (RedChannel*, RedClient*, RedsStream*, int, int, uint32_t*, int, uint32_t*)*' changed:
+                                                                                        underlying type 'void (*)(RedChannel*, RedClient*, RedsStream*, int, int, uint32_t*, int, uint32_t*)' changed:
                                                                                           in pointed to type 'function type void (RedChannel*, RedClient*, RedsStream*, int, int, uint32_t*, int, uint32_t*)':
                                                                                             parameter 1 of type 'RedChannel*' has sub-type changes:
                                                                                               in pointed to type 'typedef RedChannel' at red_channel.h:130:1:
@@ -363,12 +363,12 @@
                                                                                             parameter 3 of type 'RedsStream*' has sub-type changes:
                                                                                               pointed to type 'typedef RedsStream' changed at red_channel.h:134:1, as reported earlier
                                                                                       type of 'channel_client_disconnect_proc disconnect' changed:
-                                                                                        underlying type 'void (RedChannelClient*)*' changed:
+                                                                                        underlying type 'void (*)(RedChannelClient*)' changed:
                                                                                           in pointed to type 'function type void (RedChannelClient*)':
                                                                                             parameter 1 of type 'RedChannelClient*' has sub-type changes:
                                                                                               pointed to type 'typedef RedChannelClient' changed at red_channel.h:136:1, as reported earlier
                                                                                       type of 'channel_client_migrate_proc migrate' changed:
-                                                                                        underlying type 'void (RedChannelClient*)*' changed:
+                                                                                        underlying type 'void (*)(RedChannelClient*)' changed:
                                                                                           in pointed to type 'function type void (RedChannelClient*)':
                                                                                             parameter 1 of type 'RedChannelClient*' has sub-type changes:
                                                                                               pointed to type 'typedef RedChannelClient' changed at red_channel.h:136:1, as reported earlier
@@ -575,11 +575,11 @@
                                                             'uint64_t* command_counter' offset changed from 15520064 to 14876800 (in bits) (by -643264 bits)
                                                             'int driver_cap_monitors_config' offset changed from 15520128 to 14876864 (in bits) (by -643264 bits)
                                                             'int set_client_capabilities_pending' offset changed from 15520160 to 14876896 (in bits) (by -643264 bits)
-                                          type of 'void (SpiceWatch*, int)* watch_update_mask' changed:
+                                          type of 'void (* watch_update_mask)(SpiceWatch*, int)' changed:
                                             in pointed to type 'function type void (SpiceWatch*, int)':
                                               parameter 1 of type 'SpiceWatch*' has sub-type changes:
                                                 pointed to type 'typedef SpiceWatch' changed at spice.h:61:1, as reported earlier
-                                          type of 'void (SpiceWatch*)* watch_remove' changed:
+                                          type of 'void (* watch_remove)(SpiceWatch*)' changed:
                                             in pointed to type 'function type void (SpiceWatch*)':
                                               parameter 1 of type 'SpiceWatch*' has sub-type changes:
                                                 pointed to type 'typedef SpiceWatch' changed at spice.h:61:1, as reported earlier
@@ -744,19 +744,19 @@
                               underlying type 'struct SpiceCharDeviceCallbacks' at char_device.h:81:1 changed:
                                 type size hasn't changed
                                 4 data member changes:
-                                  type of 'SpiceCharDeviceMsgToClient* (SpiceCharDeviceInstance*, void*)* read_one_msg_from_device' changed:
+                                  type of 'SpiceCharDeviceMsgToClient* (* read_one_msg_from_device)(SpiceCharDeviceInstance*, void*)' changed:
                                     in pointed to type 'function type SpiceCharDeviceMsgToClient* (SpiceCharDeviceInstance*, void*)':
                                       parameter 1 of type 'SpiceCharDeviceInstance*' has sub-type changes:
                                         pointed to type 'typedef SpiceCharDeviceInstance' changed at spice.h:399:1, as reported earlier
-                                  type of 'void (SpiceCharDeviceMsgToClient*, RedClient*, void*)* send_msg_to_client' changed:
+                                  type of 'void (* send_msg_to_client)(SpiceCharDeviceMsgToClient*, RedClient*, void*)' changed:
                                     in pointed to type 'function type void (SpiceCharDeviceMsgToClient*, RedClient*, void*)':
                                       parameter 2 of type 'RedClient*' has sub-type changes:
                                         pointed to type 'typedef RedClient' changed at red_channel.h:137:1, as reported earlier
-                                  type of 'void (RedClient*, typedef uint32_t, void*)* send_tokens_to_client' changed:
-                                    in pointed to type 'function type void (RedClient*, typedef uint32_t, void*)':
+                                  type of 'void (* send_tokens_to_client)(RedClient*, uint32_t, void*)' changed:
+                                    in pointed to type 'function type void (RedClient*, uint32_t, void*)':
                                       parameter 1 of type 'RedClient*' has sub-type changes:
                                         pointed to type 'typedef RedClient' changed at red_channel.h:137:1, as reported earlier
-                                  type of 'void (RedClient*, void*)* remove_client' changed:
+                                  type of 'void (* remove_client)(RedClient*, void*)' changed:
                                     in pointed to type 'function type void (RedClient*, void*)':
                                       parameter 1 of type 'RedClient*' has sub-type changes:
                                         pointed to type 'typedef RedClient' changed at red_channel.h:137:1, as reported earlier
@@ -846,7 +846,7 @@
       parameter 1 of type 'SpiceServer*' has sub-type changes:
         pointed to type 'typedef SpiceServer' changed at spice.h:440:1, as reported earlier
 
-    [C] 'function SpiceServer* spice_server_new()' at reds.c:4089:1 has some indirect sub-type changes:
+    [C] 'function SpiceServer* spice_server_new(void)' at reds.c:4089:1 has some indirect sub-type changes:
       return type changed:
         pointed to type 'typedef SpiceServer' changed at spice.h:440:1, as reported earlier
 
@@ -881,19 +881,19 @@
                                   type of 'RedChannelClient* channel_client' changed:
                                     pointed to type 'typedef RedChannelClient' changed at red_channel.h:136:1, as reported earlier
                                   type of 'snd_channel_handle_message_proc handle_message' changed:
-                                    underlying type 'int (SndChannel*, typedef size_t, typedef uint32_t, void*)*' changed:
-                                      in pointed to type 'function type int (SndChannel*, typedef size_t, typedef uint32_t, void*)':
+                                    underlying type 'int (*)(SndChannel*, size_t, uint32_t, void*)' changed:
+                                      in pointed to type 'function type int (SndChannel*, size_t, uint32_t, void*)':
                                         parameter 1 of type 'SndChannel*' has sub-type changes:
                                           in pointed to type 'typedef SndChannel' at snd_worker.c:74:1:
                                             underlying type 'struct SndChannel' changed, as being reported
                                   type of 'snd_channel_on_message_done_proc on_message_done' changed:
-                                    underlying type 'void (SndChannel*)*' changed:
+                                    underlying type 'void (*)(SndChannel*)' changed:
                                       in pointed to type 'function type void (SndChannel*)':
                                         parameter 1 of type 'SndChannel*' has sub-type changes:
                                           in pointed to type 'typedef SndChannel' at snd_worker.c:74:1:
                                             underlying type 'struct SndChannel' changed, as being reported
                                   type of 'snd_channel_cleanup_channel_proc cleanup' changed:
-                                    underlying type 'void (SndChannel*)*' changed:
+                                    underlying type 'void (*)(SndChannel*)' changed:
                                       in pointed to type 'function type void (SndChannel*)':
                                         parameter 1 of type 'SndChannel*' has sub-type changes:
                                           in pointed to type 'typedef SndChannel' at snd_worker.c:74:1:

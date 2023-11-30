@@ -8,7 +8,7 @@
     [A] 'function gboolean flatpak_installation_add_remote(FlatpakInstallation*, FlatpakRemote*, gboolean, GCancellable*, GError**)'    {flatpak_installation_add_remote}
     [A] 'function FlatpakRemoteRef* flatpak_installation_fetch_remote_ref_sync_full(FlatpakInstallation*, const char*, FlatpakRefKind, const char*, const char*, const char*, FlatpakQueryFlags, GCancellable*, GError**)'    {flatpak_installation_fetch_remote_ref_sync_full}
     [A] 'function GPtrArray* flatpak_installation_list_remote_refs_sync_full(FlatpakInstallation*, const char*, FlatpakQueryFlags, GCancellable*, GError**)'    {flatpak_installation_list_remote_refs_sync_full}
-    [A] 'function GType flatpak_query_flags_get_type()'    {flatpak_query_flags_get_type}
+    [A] 'function GType flatpak_query_flags_get_type(void)'    {flatpak_query_flags_get_type}
     [A] 'function char* flatpak_remote_get_comment(FlatpakRemote*)'    {flatpak_remote_get_comment}
     [A] 'function char* flatpak_remote_get_description(FlatpakRemote*)'    {flatpak_remote_get_description}
     [A] 'function char* flatpak_remote_get_filter(FlatpakRemote*)'    {flatpak_remote_get_filter}
@@ -33,11 +33,11 @@
     [C] 'struct _FlatpakTransactionClass' changed:
       type size changed from 2176 to 2240 (in bits)
       1 data member insertion:
-        'typedef gboolean (FlatpakTransaction*, const char*, const char*, const char*, const char*, const char**)* end_of_lifed_with_rebase', at offset 1408 (in bits) at flatpak-transaction.h:117:1
+        'gboolean (* end_of_lifed_with_rebase)(FlatpakTransaction*, const char*, const char*, const char*, const char*, const char**)', at offset 1408 (in bits) at flatpak-transaction.h:117:1
       4 data member changes (3 filtered):
-        'typedef gboolean (FlatpakTransaction*)* ready' offset changed from 1408 to 1472 (in bits) (by +64 bits)
-        'typedef gboolean (FlatpakTransaction*, typedef FlatpakTransactionRemoteReason, const char*, const char*, const char*)* add_new_remote' offset changed from 1472 to 1536 (in bits) (by +64 bits)
-        'typedef gboolean (FlatpakTransaction*, GCancellable*, GError**)* run' offset changed from 1536 to 1600 (in bits) (by +64 bits)
+        'gboolean (* ready)(FlatpakTransaction*)' offset changed from 1408 to 1472 (in bits) (by +64 bits)
+        'gboolean (* add_new_remote)(FlatpakTransaction*, FlatpakTransactionRemoteReason, const char*, const char*, const char*)' offset changed from 1472 to 1536 (in bits) (by +64 bits)
+        'gboolean (* run)(FlatpakTransaction*, GCancellable*, GError**)' offset changed from 1536 to 1600 (in bits) (by +64 bits)
         'gpointer padding[9]' offset changed from 1600 to 1664 (in bits) (by +64 bits)
 
   6 added types unreachable from any public interface:

@@ -126,8 +126,8 @@
       type of variable changed:
         type size hasn't changed
         1 data member change:
-          type of 'typedef mp_limb_t (typedef mp_srcptr, typedef mp_size_t, typedef mp_limb_t)* gcd_1' changed:
-            in pointed to type 'function type typedef mp_limb_t (typedef mp_srcptr, typedef mp_size_t, typedef mp_limb_t)':
+          type of 'mp_limb_t (* gcd_1)(mp_srcptr, mp_size_t, mp_limb_t)' changed:
+            in pointed to type 'function type typedef mp_limb_t (mp_srcptr, mp_size_t, mp_limb_t)':
               parameter 1 of type 'typedef mp_srcptr' changed:
                 typedef name changed from mp_srcptr to mp_limb_t
                 underlying type 'const mp_limb_t*' changed:

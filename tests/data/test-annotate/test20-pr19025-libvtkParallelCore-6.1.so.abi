@@ -4000,7 +4000,7 @@
     <typedef-decl name='_IO_lock_t' type-id='type-id-13' filepath='/usr/include/libio.h' line='180' column='1' id='type-id-153'/>
     <!-- typedef _IO_FILE __FILE -->
     <typedef-decl name='__FILE' type-id='type-id-137' filepath='/usr/include/stdio.h' line='65' column='1' id='type-id-154'/>
-    <!-- typedef int (void*, void*)* __compar_fn_t -->
+    <!-- typedef int (*)(void*, void*) __compar_fn_t -->
     <typedef-decl name='__compar_fn_t' type-id='type-id-155' filepath='/usr/include/stdlib.h' line='742' column='1' id='type-id-156'/>
     <!-- typedef int __int32_t -->
     <typedef-decl name='__int32_t' type-id='type-id-19' filepath='/usr/include/bits/types.h' line='41' column='1' id='type-id-157'/>
@@ -4334,7 +4334,7 @@
     <reference-type-def kind='lvalue' type-id='type-id-105' size-in-bits='64' id='type-id-94'/>
     <!-- fpos_t* -->
     <pointer-type-def type-id='type-id-158' size-in-bits='64' id='type-id-309'/>
-    <!-- int (void*, void*)* -->
+    <!-- int (*)(void*, void*) -->
     <pointer-type-def type-id='type-id-310' size-in-bits='64' id='type-id-155'/>
     <!-- int& -->
     <reference-type-def kind='lvalue' type-id='type-id-19' size-in-bits='64' id='type-id-93'/>
@@ -4396,7 +4396,7 @@
     <reference-type-def kind='lvalue' type-id='type-id-262' size-in-bits='64' id='type-id-339'/>
     <!-- std::allocator<unsigned char>* -->
     <pointer-type-def type-id='type-id-262' size-in-bits='64' id='type-id-340'/>
-    <!-- std::basic_ostream<char, std::char_traits<char> >& (std::basic_ostream<char, std::char_traits<char> >&)* -->
+    <!-- std::basic_ostream<char, std::char_traits<char> >& (*)(std::basic_ostream<char, std::char_traits<char> >&) -->
     <pointer-type-def type-id='type-id-341' size-in-bits='64' id='type-id-342'/>
     <!-- std::basic_string<char, std::char_traits<char>, std::allocator<char> >& -->
     <reference-type-def kind='lvalue' type-id='type-id-265' size-in-bits='64' id='type-id-343'/>
@@ -4442,7 +4442,7 @@
     <reference-type-def kind='lvalue' type-id='type-id-35' size-in-bits='64' id='type-id-98'/>
     <!-- unsigned long int* -->
     <pointer-type-def type-id='type-id-4' size-in-bits='64' id='type-id-358'/>
-    <!-- void ()* -->
+    <!-- void (*)(void) -->
     <pointer-type-def type-id='type-id-359' size-in-bits='64' id='type-id-360'/>
     <!-- vtkBoundingBox& -->
     <reference-type-def kind='lvalue' type-id='type-id-10' size-in-bits='64' id='type-id-361'/>
@@ -7802,11 +7802,11 @@
       <!-- struct std::basic_ostream<char, std::char_traits<char> > -->
       <class-decl name='basic_ostream&lt;char, std::char_traits&lt;char&gt; &gt;' is-struct='yes' visibility='default' is-declaration-only='yes' id='type-id-450'>
         <member-function access='public'>
-          <!-- std::basic_ostream<char, std::char_traits<char> >& std::basic_ostream<char, std::char_traits<char> >::operator<<(std::basic_ostream<char, std::char_traits<char> >& (std::basic_ostream<char, std::char_traits<char> >&)*) -->
+          <!-- std::basic_ostream<char, std::char_traits<char> >& std::basic_ostream<char, std::char_traits<char> >::operator<<(std::basic_ostream<char, std::char_traits<char> >& (*)(std::basic_ostream<char, std::char_traits<char> >&)) -->
           <function-decl name='operator&lt;&lt;' mangled-name='_ZNSolsEPFRSoS_E' filepath='/usr/lib/gcc/x86_64-redhat-linux/4.4.7/../../../../include/c++/4.4.7/ostream' line='108' column='1' visibility='default' binding='global' size-in-bits='64'>
             <!-- implicit parameter of type 'std::basic_ostream<char, std::char_traits<char> >*' -->
             <parameter type-id='type-id-451' is-artificial='yes'/>
-            <!-- parameter of type 'std::basic_ostream<char, std::char_traits<char> >& (std::basic_ostream<char, std::char_traits<char> >&)*' -->
+            <!-- parameter of type 'std::basic_ostream<char, std::char_traits<char> >& (*)(std::basic_ostream<char, std::char_traits<char> >&)' -->
             <parameter type-id='type-id-342'/>
             <!-- std::basic_ostream<char, std::char_traits<char> >& -->
             <return type-id='type-id-452'/>
@@ -8923,9 +8923,9 @@
       <!-- void -->
       <return type-id='type-id-13'/>
     </function-decl>
-    <!-- int atexit(void ()*) -->
+    <!-- int atexit(void (*)(void)) -->
     <function-decl name='atexit' filepath='/usr/include/stdlib.h' line='518' column='1' visibility='default' binding='global' size-in-bits='64'>
-      <!-- parameter of type 'void ()*' -->
+      <!-- parameter of type 'void (*)(void)' -->
       <parameter type-id='type-id-360'/>
       <!-- int -->
       <return type-id='type-id-19'/>
@@ -10519,7 +10519,7 @@
         </function-decl>
       </member-function>
     </class-decl>
-    <!-- typedef void (void*, void*, int, int)* vtkRMIFunctionType -->
+    <!-- typedef void (*)(void*, void*, int, int) vtkRMIFunctionType -->
     <typedef-decl name='vtkRMIFunctionType' type-id='type-id-494' filepath='/tmp/legendre/spack-stage/spack-stage-R_crTC/VTK-6.1.0/Parallel/Core/vtkMultiProcessController.h' line='58' column='1' id='type-id-495'/>
     <!-- char*** -->
     <pointer-type-def type-id='type-id-178' size-in-bits='64' id='type-id-493'/>
@@ -10529,7 +10529,7 @@
     <reference-type-def kind='lvalue' type-id='type-id-496' size-in-bits='64' id='type-id-490'/>
     <!-- const vtkDummyController* -->
     <pointer-type-def type-id='type-id-496' size-in-bits='64' id='type-id-491'/>
-    <!-- void (void*, void*, int, int)* -->
+    <!-- void (*)(void*, void*, int, int) -->
     <pointer-type-def type-id='type-id-497' size-in-bits='64' id='type-id-494'/>
     <!-- vtkDummyController* -->
     <pointer-type-def type-id='type-id-487' size-in-bits='64' id='type-id-489'/>
@@ -10649,11 +10649,11 @@
           </function-decl>
         </member-function>
         <member-function access='public'>
-          <!-- std::basic_ostream<char, std::char_traits<char> >& std::basic_ostream<char, std::char_traits<char> >::operator<<(std::basic_ostream<char, std::char_traits<char> >& (std::basic_ostream<char, std::char_traits<char> >&)*) -->
+          <!-- std::basic_ostream<char, std::char_traits<char> >& std::basic_ostream<char, std::char_traits<char> >::operator<<(std::basic_ostream<char, std::char_traits<char> >& (*)(std::basic_ostream<char, std::char_traits<char> >&)) -->
           <function-decl name='operator&lt;&lt;' mangled-name='_ZNSolsEPFRSoS_E' filepath='/usr/lib/gcc/x86_64-redhat-linux/4.4.7/../../../../include/c++/4.4.7/ostream' line='108' column='1' visibility='default' binding='global' size-in-bits='64'>
             <!-- implicit parameter of type 'std::basic_ostream<char, std::char_traits<char> >*' -->
             <parameter type-id='type-id-512' is-artificial='yes'/>
-            <!-- parameter of type 'std::basic_ostream<char, std::char_traits<char> >& (std::basic_ostream<char, std::char_traits<char> >&)*' -->
+            <!-- parameter of type 'std::basic_ostream<char, std::char_traits<char> >& (*)(std::basic_ostream<char, std::char_traits<char> >&)' -->
             <parameter type-id='type-id-342'/>
             <!-- std::basic_ostream<char, std::char_traits<char> >& -->
             <return type-id='type-id-452'/>
@@ -11722,11 +11722,11 @@
       <!-- struct std::basic_ostream<char, std::char_traits<char> > -->
       <class-decl name='basic_ostream&lt;char, std::char_traits&lt;char&gt; &gt;' is-struct='yes' visibility='default' is-declaration-only='yes' id='type-id-563'>
         <member-function access='public'>
-          <!-- std::basic_ostream<char, std::char_traits<char> >& std::basic_ostream<char, std::char_traits<char> >::operator<<(std::basic_ostream<char, std::char_traits<char> >& (std::basic_ostream<char, std::char_traits<char> >&)*) -->
+          <!-- std::basic_ostream<char, std::char_traits<char> >& std::basic_ostream<char, std::char_traits<char> >::operator<<(std::basic_ostream<char, std::char_traits<char> >& (*)(std::basic_ostream<char, std::char_traits<char> >&)) -->
           <function-decl name='operator&lt;&lt;' mangled-name='_ZNSolsEPFRSoS_E' filepath='/usr/lib/gcc/x86_64-redhat-linux/4.4.7/../../../../include/c++/4.4.7/ostream' line='108' column='1' visibility='default' binding='global' size-in-bits='64'>
             <!-- implicit parameter of type 'std::basic_ostream<char, std::char_traits<char> >*' -->
             <parameter type-id='type-id-564' is-artificial='yes'/>
-            <!-- parameter of type 'std::basic_ostream<char, std::char_traits<char> >& (std::basic_ostream<char, std::char_traits<char> >&)*' -->
+            <!-- parameter of type 'std::basic_ostream<char, std::char_traits<char> >& (*)(std::basic_ostream<char, std::char_traits<char> >&)' -->
             <parameter type-id='type-id-342'/>
             <!-- std::basic_ostream<char, std::char_traits<char> >& -->
             <return type-id='type-id-452'/>
@@ -12707,7 +12707,7 @@
         </function-decl>
       </member-function>
     </class-decl>
-    <!-- typedef void (vtkMultiProcessController*, void*)* vtkProcessFunctionType -->
+    <!-- typedef void (*)(vtkMultiProcessController*, void*) vtkProcessFunctionType -->
     <typedef-decl name='vtkProcessFunctionType' type-id='type-id-585' filepath='/tmp/legendre/spack-stage/spack-stage-R_crTC/VTK-6.1.0/Parallel/Core/vtkMultiProcessController.h' line='53' column='1' id='type-id-523'/>
     <!-- __gnu_cxx::__normal_iterator<const vtkMultiProcessController::vtkInternal::vtkRMICallback*, std::vector<vtkMultiProcessController::vtkInternal::vtkRMICallback, std::allocator<vtkMultiProcessController::vtkInternal::vtkRMICallback> > >& -->
     <reference-type-def kind='lvalue' type-id='type-id-427' size-in-bits='64' id='type-id-586'/>
@@ -13325,13 +13325,13 @@
     <pointer-type-def type-id='type-id-820' size-in-bits='64' id='type-id-958'/>
     <!-- unsigned long int& -->
     <reference-type-def kind='lvalue' type-id='type-id-4' size-in-bits='64' id='type-id-959'/>
-    <!-- void (vtkMultiProcessController*, void*)* -->
+    <!-- void (*)(vtkMultiProcessController*, void*) -->
     <pointer-type-def type-id='type-id-960' size-in-bits='64' id='type-id-585'/>
-    <!-- void (vtkMultiProcessController*, void*)* const -->
+    <!-- void (*)(vtkMultiProcessController*, void*) const -->
     <qualified-type-def type-id='type-id-585' const='yes' id='type-id-961'/>
-    <!-- void (vtkMultiProcessController*, void*)* const& -->
+    <!-- void (*)(vtkMultiProcessController*, void*) const& -->
     <reference-type-def kind='lvalue' type-id='type-id-961' size-in-bits='64' id='type-id-962'/>
-    <!-- void (vtkMultiProcessController*, void*)*& -->
+    <!-- void (*)(vtkMultiProcessController*, void*)& -->
     <reference-type-def kind='lvalue' type-id='type-id-585' size-in-bits='64' id='type-id-963'/>
     <!-- void* const& -->
     <reference-type-def kind='lvalue' type-id='type-id-964' size-in-bits='64' id='type-id-965'/>
@@ -17704,7 +17704,7 @@
           <var-decl name='first' type-id='type-id-200' visibility='default' filepath='/usr/lib/gcc/x86_64-redhat-linux/4.4.7/../../../../include/c++/4.4.7/bits/stl_pair.h' line='72' column='1'/>
         </data-member>
         <data-member access='public' layout-offset-in-bits='64'>
-          <!-- void (vtkMultiProcessController*, void*)* std::pair<const int, void (*)(vtkMultiProcessController*, void*)>::second -->
+          <!-- void (* std::pair<const int, void (*)(vtkMultiProcessController*, void*)>::second)(vtkMultiProcessController*, void*) -->
           <var-decl name='second' type-id='type-id-585' visibility='default' filepath='/usr/lib/gcc/x86_64-redhat-linux/4.4.7/../../../../include/c++/4.4.7/bits/stl_pair.h' line='73' column='1'/>
         </data-member>
         <member-function access='public'>
@@ -17717,13 +17717,13 @@
           </function-decl>
         </member-function>
         <member-function access='public'>
-          <!-- void std::pair<const int, void (*)(vtkMultiProcessController*, void*)>::pair(const int&, void (vtkMultiProcessController*, void*)* const&) -->
+          <!-- void std::pair<const int, void (*)(vtkMultiProcessController*, void*)>::pair(const int&, void (*)(vtkMultiProcessController*, void*) const&) -->
           <function-decl name='pair' filepath='/usr/lib/gcc/x86_64-redhat-linux/4.4.7/../../../../include/c++/4.4.7/bits/stl_pair.h' line='83' column='1' visibility='default' binding='global' size-in-bits='64'>
             <!-- implicit parameter of type 'std::pair<const int, void (*)(vtkMultiProcessController*, void*)>*' -->
             <parameter type-id='type-id-940' is-artificial='yes'/>
             <!-- parameter of type 'const int&' -->
             <parameter type-id='type-id-431'/>
-            <!-- parameter of type 'void (vtkMultiProcessController*, void*)* const&' -->
+            <!-- parameter of type 'void (*)(vtkMultiProcessController*, void*) const&' -->
             <parameter type-id='type-id-962'/>
             <!-- void -->
             <return type-id='type-id-13'/>
@@ -17855,11 +17855,11 @@
       <!-- struct std::basic_ostream<char, std::char_traits<char> > -->
       <class-decl name='basic_ostream&lt;char, std::char_traits&lt;char&gt; &gt;' is-struct='yes' visibility='default' is-declaration-only='yes' id='type-id-1103'>
         <member-function access='public'>
-          <!-- std::basic_ostream<char, std::char_traits<char> >& std::basic_ostream<char, std::char_traits<char> >::operator<<(std::basic_ostream<char, std::char_traits<char> >& (std::basic_ostream<char, std::char_traits<char> >&)*) -->
+          <!-- std::basic_ostream<char, std::char_traits<char> >& std::basic_ostream<char, std::char_traits<char> >::operator<<(std::basic_ostream<char, std::char_traits<char> >& (*)(std::basic_ostream<char, std::char_traits<char> >&)) -->
           <function-decl name='operator&lt;&lt;' mangled-name='_ZNSolsEPFRSoS_E' filepath='/usr/lib/gcc/x86_64-redhat-linux/4.4.7/../../../../include/c++/4.4.7/ostream' line='108' column='1' visibility='default' binding='global' size-in-bits='64'>
             <!-- implicit parameter of type 'std::basic_ostream<char, std::char_traits<char> >*' -->
             <parameter type-id='type-id-1104' is-artificial='yes'/>
-            <!-- parameter of type 'std::basic_ostream<char, std::char_traits<char> >& (std::basic_ostream<char, std::char_traits<char> >&)*' -->
+            <!-- parameter of type 'std::basic_ostream<char, std::char_traits<char> >& (*)(std::basic_ostream<char, std::char_traits<char> >&)' -->
             <parameter type-id='type-id-342'/>
             <!-- std::basic_ostream<char, std::char_traits<char> >& -->
             <return type-id='type-id-452'/>
@@ -19305,13 +19305,13 @@
           </function-decl>
         </member-function>
         <member-function access='private'>
-          <!-- void (vtkMultiProcessController*, void*)*& vtksys::hash_map<int, void (*)(vtkMultiProcessController*, void*), vtksys::hash<int>, std::equal_to<int>, std::allocator<char> >::operator[](const int&) -->
+          <!-- void (*)(vtkMultiProcessController*, void*)& vtksys::hash_map<int, void (*)(vtkMultiProcessController*, void*), vtksys::hash<int>, std::equal_to<int>, std::allocator<char> >::operator[](const int&) -->
           <function-decl name='operator[]' mangled-name='_ZN6vtksys8hash_mapIiPFvP25vtkMultiProcessControllerPvENS_4hashIiEESt8equal_toIiESaIcEEixERKi' filepath='/tmp/legendre/spack-stage/spack-stage-R_crTC/VTK-6.1.0/spack-build/Utilities/KWSys/vtksys/hash_map.hxx' line='212' column='1' visibility='default' binding='global' size-in-bits='64'>
             <!-- implicit parameter of type 'vtksys::hash_map<int, void (*)(vtkMultiProcessController*, void*), vtksys::hash<int>, std::equal_to<int>, std::allocator<char> >*' -->
             <parameter type-id='type-id-982' is-artificial='yes'/>
             <!-- parameter of type 'const int&' -->
             <parameter type-id='type-id-431'/>
-            <!-- void (vtkMultiProcessController*, void*)*& -->
+            <!-- void (*)(vtkMultiProcessController*, void*)& -->
             <return type-id='type-id-963'/>
           </function-decl>
         </member-function>
@@ -21731,7 +21731,7 @@
       <!-- class std::_Deque_base<unsigned char, std::allocator<unsigned char> > -->
       <class-decl name='_Deque_base&lt;unsigned char, std::allocator&lt;unsigned char&gt; &gt;' size-in-bits='640' visibility='default' filepath='/usr/lib/gcc/x86_64-redhat-linux/4.4.7/../../../../include/c++/4.4.7/bits/stl_deque.h' line='362' column='1' id='type-id-1155'>
         <member-type access='protected'>
-          <!-- enum {_S_initial_map_size = 8,} -->
+          <!-- enum {_S_initial_map_size=8, } -->
           <enum-decl name='__anonymous_enum__' is-anonymous='yes' filepath='/usr/lib/gcc/x86_64-redhat-linux/4.4.7/../../../../include/c++/4.4.7/bits/stl_deque.h' line='465' column='1' id='type-id-1184'>
             <underlying-type type-id='type-id-28'/>
             <enumerator name='_S_initial_map_size' value='8'/>
@@ -24016,11 +24016,11 @@
       <!-- struct std::basic_ostream<char, std::char_traits<char> > -->
       <class-decl name='basic_ostream&lt;char, std::char_traits&lt;char&gt; &gt;' is-struct='yes' visibility='default' is-declaration-only='yes' id='type-id-1221'>
         <member-function access='public'>
-          <!-- std::basic_ostream<char, std::char_traits<char> >& std::basic_ostream<char, std::char_traits<char> >::operator<<(std::basic_ostream<char, std::char_traits<char> >& (std::basic_ostream<char, std::char_traits<char> >&)*) -->
+          <!-- std::basic_ostream<char, std::char_traits<char> >& std::basic_ostream<char, std::char_traits<char> >::operator<<(std::basic_ostream<char, std::char_traits<char> >& (*)(std::basic_ostream<char, std::char_traits<char> >&)) -->
           <function-decl name='operator&lt;&lt;' mangled-name='_ZNSolsEPFRSoS_E' filepath='/usr/lib/gcc/x86_64-redhat-linux/4.4.7/../../../../include/c++/4.4.7/ostream' line='108' column='1' visibility='default' binding='global' size-in-bits='64'>
             <!-- implicit parameter of type 'std::basic_ostream<char, std::char_traits<char> >*' -->
             <parameter type-id='type-id-1222' is-artificial='yes'/>
-            <!-- parameter of type 'std::basic_ostream<char, std::char_traits<char> >& (std::basic_ostream<char, std::char_traits<char> >&)*' -->
+            <!-- parameter of type 'std::basic_ostream<char, std::char_traits<char> >& (*)(std::basic_ostream<char, std::char_traits<char> >&)' -->
             <parameter type-id='type-id-342'/>
             <!-- std::basic_ostream<char, std::char_traits<char> >& -->
             <return type-id='type-id-452'/>
@@ -24416,11 +24416,11 @@
           </function-decl>
         </member-function>
         <member-function access='public'>
-          <!-- std::basic_ostream<char, std::char_traits<char> >& std::basic_ostream<char, std::char_traits<char> >::operator<<(std::basic_ostream<char, std::char_traits<char> >& (std::basic_ostream<char, std::char_traits<char> >&)*) -->
+          <!-- std::basic_ostream<char, std::char_traits<char> >& std::basic_ostream<char, std::char_traits<char> >::operator<<(std::basic_ostream<char, std::char_traits<char> >& (*)(std::basic_ostream<char, std::char_traits<char> >&)) -->
           <function-decl name='operator&lt;&lt;' mangled-name='_ZNSolsEPFRSoS_E' filepath='/usr/lib/gcc/x86_64-redhat-linux/4.4.7/../../../../include/c++/4.4.7/ostream' line='108' column='1' visibility='default' binding='global' size-in-bits='64'>
             <!-- implicit parameter of type 'std::basic_ostream<char, std::char_traits<char> >*' -->
             <parameter type-id='type-id-1237' is-artificial='yes'/>
-            <!-- parameter of type 'std::basic_ostream<char, std::char_traits<char> >& (std::basic_ostream<char, std::char_traits<char> >&)*' -->
+            <!-- parameter of type 'std::basic_ostream<char, std::char_traits<char> >& (*)(std::basic_ostream<char, std::char_traits<char> >&)' -->
             <parameter type-id='type-id-342'/>
             <!-- std::basic_ostream<char, std::char_traits<char> >& -->
             <return type-id='type-id-452'/>
@@ -28072,11 +28072,11 @@
           </function-decl>
         </member-function>
         <member-function access='public'>
-          <!-- std::basic_ostream<char, std::char_traits<char> >& std::basic_ostream<char, std::char_traits<char> >::operator<<(std::basic_ostream<char, std::char_traits<char> >& (std::basic_ostream<char, std::char_traits<char> >&)*) -->
+          <!-- std::basic_ostream<char, std::char_traits<char> >& std::basic_ostream<char, std::char_traits<char> >::operator<<(std::basic_ostream<char, std::char_traits<char> >& (*)(std::basic_ostream<char, std::char_traits<char> >&)) -->
           <function-decl name='operator&lt;&lt;' mangled-name='_ZNSolsEPFRSoS_E' filepath='/usr/lib/gcc/x86_64-redhat-linux/4.4.7/../../../../include/c++/4.4.7/ostream' line='108' column='1' visibility='default' binding='global' size-in-bits='64'>
             <!-- implicit parameter of type 'std::basic_ostream<char, std::char_traits<char> >*' -->
             <parameter type-id='type-id-1480' is-artificial='yes'/>
-            <!-- parameter of type 'std::basic_ostream<char, std::char_traits<char> >& (std::basic_ostream<char, std::char_traits<char> >&)*' -->
+            <!-- parameter of type 'std::basic_ostream<char, std::char_traits<char> >& (*)(std::basic_ostream<char, std::char_traits<char> >&)' -->
             <parameter type-id='type-id-342'/>
             <!-- std::basic_ostream<char, std::char_traits<char> >& -->
             <return type-id='type-id-452'/>
@@ -29701,11 +29701,11 @@
           </function-decl>
         </member-function>
         <member-function access='public'>
-          <!-- std::basic_ostream<char, std::char_traits<char> >& std::basic_ostream<char, std::char_traits<char> >::operator<<(std::basic_ostream<char, std::char_traits<char> >& (std::basic_ostream<char, std::char_traits<char> >&)*) -->
+          <!-- std::basic_ostream<char, std::char_traits<char> >& std::basic_ostream<char, std::char_traits<char> >::operator<<(std::basic_ostream<char, std::char_traits<char> >& (*)(std::basic_ostream<char, std::char_traits<char> >&)) -->
           <function-decl name='operator&lt;&lt;' mangled-name='_ZNSolsEPFRSoS_E' filepath='/usr/lib/gcc/x86_64-redhat-linux/4.4.7/../../../../include/c++/4.4.7/ostream' line='108' column='1' visibility='default' binding='global' size-in-bits='64'>
             <!-- implicit parameter of type 'std::basic_ostream<char, std::char_traits<char> >*' -->
             <parameter type-id='type-id-1519' is-artificial='yes'/>
-            <!-- parameter of type 'std::basic_ostream<char, std::char_traits<char> >& (std::basic_ostream<char, std::char_traits<char> >&)*' -->
+            <!-- parameter of type 'std::basic_ostream<char, std::char_traits<char> >& (*)(std::basic_ostream<char, std::char_traits<char> >&)' -->
             <parameter type-id='type-id-342'/>
             <!-- std::basic_ostream<char, std::char_traits<char> >& -->
             <return type-id='type-id-452'/>
@@ -30462,11 +30462,11 @@
       <!-- struct std::basic_ostream<char, std::char_traits<char> > -->
       <class-decl name='basic_ostream&lt;char, std::char_traits&lt;char&gt; &gt;' is-struct='yes' visibility='default' is-declaration-only='yes' id='type-id-1540'>
         <member-function access='public'>
-          <!-- std::basic_ostream<char, std::char_traits<char> >& std::basic_ostream<char, std::char_traits<char> >::operator<<(std::basic_ostream<char, std::char_traits<char> >& (std::basic_ostream<char, std::char_traits<char> >&)*) -->
+          <!-- std::basic_ostream<char, std::char_traits<char> >& std::basic_ostream<char, std::char_traits<char> >::operator<<(std::basic_ostream<char, std::char_traits<char> >& (*)(std::basic_ostream<char, std::char_traits<char> >&)) -->
           <function-decl name='operator&lt;&lt;' mangled-name='_ZNSolsEPFRSoS_E' filepath='/usr/lib/gcc/x86_64-redhat-linux/4.4.7/../../../../include/c++/4.4.7/ostream' line='108' column='1' visibility='default' binding='global' size-in-bits='64'>
             <!-- implicit parameter of type 'std::basic_ostream<char, std::char_traits<char> >*' -->
             <parameter type-id='type-id-1541' is-artificial='yes'/>
-            <!-- parameter of type 'std::basic_ostream<char, std::char_traits<char> >& (std::basic_ostream<char, std::char_traits<char> >&)*' -->
+            <!-- parameter of type 'std::basic_ostream<char, std::char_traits<char> >& (*)(std::basic_ostream<char, std::char_traits<char> >&)' -->
             <parameter type-id='type-id-342'/>
             <!-- std::basic_ostream<char, std::char_traits<char> >& -->
             <return type-id='type-id-452'/>

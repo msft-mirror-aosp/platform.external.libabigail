@@ -22,7 +22,7 @@ Variables changes summary: 0 Removed, 0 Changed, 0 Added variable
       in pointed to type 'class S' at test30-pub-lib-v1.h:1:1:
         type size hasn't changed
         1 data member change:
-          type of 'S::priv_type* priv' changed:
+          type of 'priv_type* priv' changed:
             in pointed to type 'class S::priv_type' at test30-pub-lib-v1.cc:14:1:
               type size changed from 64 to 128 (in bits)
               1 data member insertion:

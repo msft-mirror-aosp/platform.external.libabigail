@@ -8,12 +8,12 @@ Variables changes summary: 0 Removed, 1 Changed, 0 Added variable
     type of variable changed:
       type size changed from 448 to 128 (in bits)
       5 data member deletions:
-        'int (int)* f01', at offset 0 (in bits) at PR30048-test-v0.c:2:1
-        'int (const int*)* f02', at offset 64 (in bits) at PR30048-test-v0.c:3:1
-        'int (int* const)* f03', at offset 128 (in bits) at PR30048-test-v0.c:4:1
-        'int (int* restrict)* f04', at offset 192 (in bits) at PR30048-test-v0.c:5:1
-        'int (const int* restrict)* f05', at offset 256 (in bits) at PR30048-test-v0.c:6:1
+        'int (* f01)(int)', at offset 0 (in bits) at PR30048-test-v0.c:2:1
+        'int (* f02)(const int*)', at offset 64 (in bits) at PR30048-test-v0.c:3:1
+        'int (* f03)(int* const)', at offset 128 (in bits) at PR30048-test-v0.c:4:1
+        'int (* f04)(int* restrict)', at offset 192 (in bits) at PR30048-test-v0.c:5:1
+        'int (* f05)(const int* restrict)', at offset 256 (in bits) at PR30048-test-v0.c:6:1
       2 data member changes:
-        'int (int* restrict const)* f06' offset changed from 320 to 0 (in bits) (by -320 bits)
-        'int (int* restrict const)* f07' offset changed from 384 to 64 (in bits) (by -320 bits)
+        'int (* f06)(int* restrict const)' offset changed from 320 to 0 (in bits) (by -320 bits)
+        'int (* f07)(int* restrict const)' offset changed from 384 to 64 (in bits) (by -320 bits)
 

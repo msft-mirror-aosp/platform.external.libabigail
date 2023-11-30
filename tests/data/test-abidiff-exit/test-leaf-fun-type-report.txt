@@ -6,5 +6,5 @@ Removed/Changed/Added variables summary: 0 Removed, 0 Changed, 0 Added variable
 'struct ops' changed:
   type size hasn't changed
   there are data member changes:
-    type 'void (int)*' of 'ops::munge' changed:
-      pointer type changed from: 'void (int)*' to: 'char (long int, bool)*'
+    type 'void (*)(int)' of 'ops::munge' changed:
+      pointer type changed from: 'void (*)(int)' to: 'char (*)(long int, bool)'

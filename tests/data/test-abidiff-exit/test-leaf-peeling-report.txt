@@ -24,8 +24,8 @@ Removed/Changed/Added variables summary: 0 Removed, 0 Changed, 0 Added variable
 'struct ops3 at test-leaf-peeling-v0.cc:14:1' changed:
   type size hasn't changed
   there are data member changes:
-    type 'void (int&)*' of 'ops3::spong' changed:
-      pointer type changed from: 'void (int&)*' to: 'void (int&&)*'
+    type 'void (*)(int&)' of 'ops3::spong' changed:
+      pointer type changed from: 'void (*)(int&)' to: 'void (*)(int&&)'
 
 'struct ops4 at test-leaf-peeling-v0.cc:18:1' changed:
   type size hasn't changed

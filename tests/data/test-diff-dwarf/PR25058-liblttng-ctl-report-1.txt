@@ -3,14 +3,14 @@ Variables changes summary: 0 Removed, 0 Changed, 3 Added variables
 
 79 Added functions:
 
-  [A] 'function lttng_condition* lttng_condition_session_consumed_size_create()'
+  [A] 'function lttng_condition* lttng_condition_session_consumed_size_create(void)'
   [A] 'function lttng_condition_status lttng_condition_session_consumed_size_get_session_name(const lttng_condition*, const char**)'
   [A] 'function lttng_condition_status lttng_condition_session_consumed_size_get_threshold(const lttng_condition*, uint64_t*)'
   [A] 'function lttng_condition_status lttng_condition_session_consumed_size_set_session_name(lttng_condition*, const char*)'
   [A] 'function lttng_condition_status lttng_condition_session_consumed_size_set_threshold(lttng_condition*, uint64_t)'
-  [A] 'function lttng_condition* lttng_condition_session_rotation_completed_create()'
+  [A] 'function lttng_condition* lttng_condition_session_rotation_completed_create(void)'
   [A] 'function lttng_condition_status lttng_condition_session_rotation_get_session_name(const lttng_condition*, const char**)'
-  [A] 'function lttng_condition* lttng_condition_session_rotation_ongoing_create()'
+  [A] 'function lttng_condition* lttng_condition_session_rotation_ongoing_create(void)'
   [A] 'function lttng_condition_status lttng_condition_session_rotation_set_session_name(lttng_condition*, const char*)'
   [A] 'function lttng_error_code lttng_create_session_ext(lttng_session_descriptor*)'
   [A] 'function lttng_error_code lttng_destroy_session_ext(const char*, lttng_destruction_handle**)'
@@ -24,7 +24,7 @@ Variables changes summary: 0 Removed, 0 Changed, 3 Added variables
   [A] 'function lttng_evaluation_status lttng_evaluation_session_consumed_size_get_consumed_size(const lttng_evaluation*, uint64_t*)'
   [A] 'function lttng_evaluation_status lttng_evaluation_session_rotation_completed_get_location(const lttng_evaluation*, const lttng_trace_archive_location**)'
   [A] 'function lttng_evaluation_status lttng_evaluation_session_rotation_get_id(const lttng_evaluation*, uint64_t*)'
-  [A] 'function lttng_event* lttng_event_create()'
+  [A] 'function lttng_event* lttng_event_create(void)'
   [A] 'function void lttng_event_destroy(lttng_event*)'
   [A] 'function const lttng_userspace_probe_location* lttng_event_get_userspace_probe_location(const lttng_event*)'
   [A] 'function int lttng_event_set_userspace_probe_location(lttng_event*, lttng_userspace_probe_location*)'
@@ -35,10 +35,10 @@ Variables changes summary: 0 Removed, 0 Changed, 3 Added variables
   [A] 'function lttng_rotation_status lttng_rotation_handle_get_state(lttng_rotation_handle*, lttng_rotation_state*)'
   [A] 'function void lttng_rotation_schedule_destroy(lttng_rotation_schedule*)'
   [A] 'function lttng_rotation_schedule_type lttng_rotation_schedule_get_type(const lttng_rotation_schedule*)'
-  [A] 'function lttng_rotation_schedule* lttng_rotation_schedule_periodic_create()'
+  [A] 'function lttng_rotation_schedule* lttng_rotation_schedule_periodic_create(void)'
   [A] 'function lttng_rotation_status lttng_rotation_schedule_periodic_get_period(const lttng_rotation_schedule*, uint64_t*)'
   [A] 'function lttng_rotation_status lttng_rotation_schedule_periodic_set_period(lttng_rotation_schedule*, uint64_t)'
-  [A] 'function lttng_rotation_schedule* lttng_rotation_schedule_size_threshold_create()'
+  [A] 'function lttng_rotation_schedule* lttng_rotation_schedule_size_threshold_create(void)'
   [A] 'function lttng_rotation_status lttng_rotation_schedule_size_threshold_get_threshold(const lttng_rotation_schedule*, uint64_t*)'
   [A] 'function lttng_rotation_status lttng_rotation_schedule_size_threshold_set_threshold(lttng_rotation_schedule*, uint64_t)'
   [A] 'function void lttng_rotation_schedules_destroy(lttng_rotation_schedules*)'
@@ -74,9 +74,9 @@ Variables changes summary: 0 Removed, 0 Changed, 3 Added variables
   [A] 'function const lttng_userspace_probe_location_lookup_method* lttng_userspace_probe_location_get_lookup_method(const lttng_userspace_probe_location*)'
   [A] 'function lttng_userspace_probe_location_type lttng_userspace_probe_location_get_type(const lttng_userspace_probe_location*)'
   [A] 'function void lttng_userspace_probe_location_lookup_method_destroy(lttng_userspace_probe_location_lookup_method*)'
-  [A] 'function lttng_userspace_probe_location_lookup_method* lttng_userspace_probe_location_lookup_method_function_elf_create()'
+  [A] 'function lttng_userspace_probe_location_lookup_method* lttng_userspace_probe_location_lookup_method_function_elf_create(void)'
   [A] 'function lttng_userspace_probe_location_lookup_method_type lttng_userspace_probe_location_lookup_method_get_type(const lttng_userspace_probe_location_lookup_method*)'
-  [A] 'function lttng_userspace_probe_location_lookup_method* lttng_userspace_probe_location_lookup_method_tracepoint_sdt_create()'
+  [A] 'function lttng_userspace_probe_location_lookup_method* lttng_userspace_probe_location_lookup_method_tracepoint_sdt_create(void)'
   [A] 'function lttng_userspace_probe_location* lttng_userspace_probe_location_tracepoint_create(const char*, const char*, const char*, lttng_userspace_probe_location_lookup_method*)'
   [A] 'function int lttng_userspace_probe_location_tracepoint_get_binary_fd(const lttng_userspace_probe_location*)'
   [A] 'function const char* lttng_userspace_probe_location_tracepoint_get_binary_path(const lttng_userspace_probe_location*)'
@@ -91,12 +91,12 @@ Variables changes summary: 0 Removed, 0 Changed, 3 Added variables
         type size hasn't changed
         3 data member changes:
           type of 'action_validate_cb validate' changed:
-            underlying type 'bool (lttng_action*)*' changed:
+            underlying type 'bool (*)(lttng_action*)' changed:
               in pointed to type 'function type bool (lttng_action*)':
                 parameter 1 of type 'lttng_action*' has sub-type changes:
                   pointed to type 'struct lttng_action' changed, as being reported
           type of 'action_serialize_cb serialize' changed:
-            underlying type 'typedef ssize_t (lttng_action*, char*)*' changed:
+            underlying type 'ssize_t (*)(lttng_action*, char*)' changed:
               in pointed to type 'function type typedef ssize_t (lttng_action*, char*)':
                 return type changed:
                   entity changed from 'typedef ssize_t' to compatible type 'int'
@@ -109,7 +109,7 @@ Variables changes summary: 0 Removed, 0 Changed, 3 Added variables
                     entity changed from 'char' to 'struct lttng_dynamic_buffer'
                     type size changed from 8 to 192 (in bits)
           type of 'action_destroy_cb destroy' changed:
-            underlying type 'void (lttng_action*)*' changed:
+            underlying type 'void (*)(lttng_action*)' changed:
               in pointed to type 'function type void (lttng_action*)':
                 parameter 1 of type 'lttng_action*' has sub-type changes:
                   pointed to type 'struct lttng_action' changed, as being reported
@@ -118,7 +118,7 @@ Variables changes summary: 0 Removed, 0 Changed, 3 Added variables
     parameter 1 of type 'lttng_action*' has sub-type changes:
       pointed to type 'struct lttng_action' changed, as reported earlier
 
-  [C] 'function lttng_action* lttng_action_notify_create()' has some indirect sub-type changes:
+  [C] 'function lttng_action* lttng_action_notify_create(void)' has some indirect sub-type changes:
     return type changed:
       pointed to type 'struct lttng_action' changed, as reported earlier
 
@@ -146,13 +146,13 @@ Variables changes summary: 0 Removed, 0 Changed, 3 Added variables
                 'lttng_condition_type::LTTNG_CONDITION_TYPE_SESSION_ROTATION_ONGOING' value '103'
                 'lttng_condition_type::LTTNG_CONDITION_TYPE_SESSION_ROTATION_COMPLETED' value '104'
             type of 'condition_validate_cb validate' changed:
-              underlying type 'bool (const lttng_condition*)*' changed:
+              underlying type 'bool (*)(const lttng_condition*)' changed:
                 in pointed to type 'function type bool (const lttng_condition*)':
                   parameter 1 of type 'const lttng_condition*' has sub-type changes:
                     in pointed to type 'const lttng_condition':
                       unqualified underlying type 'struct lttng_condition' changed, as being reported
             type of 'condition_serialize_cb serialize' changed:
-              underlying type 'typedef ssize_t (const lttng_condition*, char*)*' changed:
+              underlying type 'ssize_t (*)(const lttng_condition*, char*)' changed:
                 in pointed to type 'function type typedef ssize_t (const lttng_condition*, char*)':
                   return type changed:
                     entity changed from 'typedef ssize_t' to compatible type 'int'
@@ -166,7 +166,7 @@ Variables changes summary: 0 Removed, 0 Changed, 3 Added variables
                       entity changed from 'char' to 'struct lttng_dynamic_buffer'
                       type size changed from 8 to 192 (in bits)
             type of 'condition_equal_cb equal' changed:
-              underlying type 'bool (const lttng_condition*, const lttng_condition*)*' changed:
+              underlying type 'bool (*)(const lttng_condition*, const lttng_condition*)' changed:
                 in pointed to type 'function type bool (const lttng_condition*, const lttng_condition*)':
                   parameter 1 of type 'const lttng_condition*' has sub-type changes:
                     in pointed to type 'const lttng_condition':
@@ -175,7 +175,7 @@ Variables changes summary: 0 Removed, 0 Changed, 3 Added variables
                     in pointed to type 'const lttng_condition':
                       unqualified underlying type 'struct lttng_condition' changed, as being reported
             type of 'condition_destroy_cb destroy' changed:
-              underlying type 'void (lttng_condition*)*' changed:
+              underlying type 'void (*)(lttng_condition*)' changed:
                 in pointed to type 'function type void (lttng_condition*)':
                   parameter 1 of type 'lttng_condition*' has sub-type changes:
                     pointed to type 'struct lttng_condition' changed, as being reported
@@ -200,11 +200,11 @@ Variables changes summary: 0 Removed, 0 Changed, 3 Added variables
       in pointed to type 'const lttng_condition':
         unqualified underlying type 'struct lttng_condition' changed, as reported earlier
 
-  [C] 'function lttng_condition* lttng_condition_buffer_usage_high_create()' has some indirect sub-type changes:
+  [C] 'function lttng_condition* lttng_condition_buffer_usage_high_create(void)' has some indirect sub-type changes:
     return type changed:
       pointed to type 'struct lttng_condition' changed, as reported earlier
 
-  [C] 'function lttng_condition* lttng_condition_buffer_usage_low_create()' has some indirect sub-type changes:
+  [C] 'function lttng_condition* lttng_condition_buffer_usage_low_create(void)' has some indirect sub-type changes:
     return type changed:
       pointed to type 'struct lttng_condition' changed, as reported earlier
 
@@ -269,7 +269,7 @@ Variables changes summary: 0 Removed, 0 Changed, 3 Added variables
           3 data member changes:
             type of 'lttng_condition_type type' changed, as reported earlier
             type of 'evaluation_serialize_cb serialize' changed:
-              underlying type 'typedef ssize_t (lttng_evaluation*, char*)*' changed:
+              underlying type 'ssize_t (*)(lttng_evaluation*, char*)' changed:
                 in pointed to type 'function type typedef ssize_t (lttng_evaluation*, char*)':
                   return type changed:
                     entity changed from 'typedef ssize_t' to compatible type 'int'
@@ -284,7 +284,7 @@ Variables changes summary: 0 Removed, 0 Changed, 3 Added variables
                       entity changed from 'char' to 'struct lttng_dynamic_buffer'
                       type size changed from 8 to 192 (in bits)
             type of 'evaluation_destroy_cb destroy' changed:
-              underlying type 'void (lttng_evaluation*)*' changed:
+              underlying type 'void (*)(lttng_evaluation*)' changed:
                 in pointed to type 'function type void (lttng_evaluation*)':
                   parameter 1 of type 'lttng_evaluation*' has sub-type changes:
                     pointed to type 'struct lttng_evaluation' changed, as being reported

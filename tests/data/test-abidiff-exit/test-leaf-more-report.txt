@@ -5,15 +5,15 @@ Removed/Changed/Added variables summary: 1 Removed, 1 Changed, 1 Added variable
 
 1 Removed function:
 
-  [D] 'function int deleted_fun()'    {_Z11deleted_funv}
+  [D] 'function int deleted_fun(void)'    {_Z11deleted_funv}
 
 1 Added function:
 
-  [A] 'function long int added_fun()'    {_Z9added_funv}
+  [A] 'function long int added_fun(void)'    {_Z9added_funv}
 
 1 function with some sub-type change:
 
-  [C] 'function int directly_changed_fun()' has some sub-type changes:
+  [C] 'function int directly_changed_fun(void)' has some sub-type changes:
     return type changed:
       type name changed from 'int' to 'long int'
       type size changed from 32 to 64 (in bits)

@@ -7255,7 +7255,7 @@
     <typedef-decl name='_IO_lock_t' type-id='type-id-18' filepath='/usr/include/libio.h' line='180' column='1' id='type-id-115'/>
     <!-- typedef _IO_FILE __FILE -->
     <typedef-decl name='__FILE' type-id='type-id-100' filepath='/usr/include/stdio.h' line='65' column='1' id='type-id-116'/>
-    <!-- typedef int (void*, void*)* __compar_fn_t -->
+    <!-- typedef int (*)(void*, void*) __compar_fn_t -->
     <typedef-decl name='__compar_fn_t' type-id='type-id-117' filepath='/usr/include/stdlib.h' line='742' column='1' id='type-id-118'/>
     <!-- typedef int __int32_t -->
     <typedef-decl name='__int32_t' type-id='type-id-13' filepath='/usr/include/bits/types.h' line='41' column='1' id='type-id-119'/>
@@ -7429,7 +7429,7 @@
     <pointer-type-def type-id='type-id-50' size-in-bits='64' id='type-id-44'/>
     <!-- fpos_t* -->
     <pointer-type-def type-id='type-id-120' size-in-bits='64' id='type-id-192'/>
-    <!-- int (void*, void*)* -->
+    <!-- int (*)(void*, void*) -->
     <pointer-type-def type-id='type-id-193' size-in-bits='64' id='type-id-117'/>
     <!-- int& -->
     <reference-type-def kind='lvalue' type-id='type-id-13' size-in-bits='64' id='type-id-40'/>
@@ -7465,7 +7465,7 @@
     <pointer-type-def type-id='type-id-113' size-in-bits='64' id='type-id-208'/>
     <!-- unsigned int* -->
     <pointer-type-def type-id='type-id-43' size-in-bits='64' id='type-id-41'/>
-    <!-- void ()* -->
+    <!-- void (*)(void) -->
     <pointer-type-def type-id='type-id-209' size-in-bits='64' id='type-id-210'/>
     <!-- vtkImageDataLIC2D* -->
     <pointer-type-def type-id='type-id-10' size-in-bits='64' id='type-id-17'/>
@@ -10627,9 +10627,9 @@
       <!-- void -->
       <return type-id='type-id-18'/>
     </function-decl>
-    <!-- int atexit(void ()*) -->
+    <!-- int atexit(void (*)(void)) -->
     <function-decl name='atexit' filepath='/usr/include/stdlib.h' line='518' column='1' visibility='default' binding='global' size-in-bits='64'>
-      <!-- parameter of type 'void ()*' -->
+      <!-- parameter of type 'void (*)(void)' -->
       <parameter type-id='type-id-210'/>
       <!-- int -->
       <return type-id='type-id-13'/>
@@ -12069,7 +12069,7 @@
     <qualified-type-def type-id='type-id-240' const='yes' id='type-id-293'/>
     <!-- const vtkWeakPointer<vtkImageDataLIC2D>* -->
     <pointer-type-def type-id='type-id-293' size-in-bits='64' id='type-id-289'/>
-    <!-- std::basic_ostream<char, std::char_traits<char> >& (std::basic_ostream<char, std::char_traits<char> >&)* -->
+    <!-- std::basic_ostream<char, std::char_traits<char> >& (*)(std::basic_ostream<char, std::char_traits<char> >&) -->
     <pointer-type-def type-id='type-id-294' size-in-bits='64' id='type-id-295'/>
     <!-- vtkImageDataLIC2D& -->
     <reference-type-def kind='lvalue' type-id='type-id-10' size-in-bits='64' id='type-id-296'/>
@@ -12400,11 +12400,11 @@
       <!-- struct std::basic_ostream<char, std::char_traits<char> > -->
       <class-decl name='basic_ostream&lt;char, std::char_traits&lt;char&gt; &gt;' is-struct='yes' visibility='default' is-declaration-only='yes' id='type-id-311'>
         <member-function access='public'>
-          <!-- std::basic_ostream<char, std::char_traits<char> >& std::basic_ostream<char, std::char_traits<char> >::operator<<(std::basic_ostream<char, std::char_traits<char> >& (std::basic_ostream<char, std::char_traits<char> >&)*) -->
+          <!-- std::basic_ostream<char, std::char_traits<char> >& std::basic_ostream<char, std::char_traits<char> >::operator<<(std::basic_ostream<char, std::char_traits<char> >& (*)(std::basic_ostream<char, std::char_traits<char> >&)) -->
           <function-decl name='operator&lt;&lt;' mangled-name='_ZNSolsEPFRSoS_E' filepath='/usr/lib/gcc/x86_64-redhat-linux/4.4.7/../../../../include/c++/4.4.7/ostream' line='108' column='1' visibility='default' binding='global' size-in-bits='64'>
             <!-- implicit parameter of type 'std::basic_ostream<char, std::char_traits<char> >*' -->
             <parameter type-id='type-id-312' is-artificial='yes'/>
-            <!-- parameter of type 'std::basic_ostream<char, std::char_traits<char> >& (std::basic_ostream<char, std::char_traits<char> >&)*' -->
+            <!-- parameter of type 'std::basic_ostream<char, std::char_traits<char> >& (*)(std::basic_ostream<char, std::char_traits<char> >&)' -->
             <parameter type-id='type-id-295'/>
             <!-- std::basic_ostream<char, std::char_traits<char> >& -->
             <return type-id='type-id-278'/>
@@ -16332,11 +16332,11 @@
           </function-decl>
         </member-function>
         <member-function access='public'>
-          <!-- std::basic_ostream<char, std::char_traits<char> >& std::basic_ostream<char, std::char_traits<char> >::operator<<(std::basic_ostream<char, std::char_traits<char> >& (std::basic_ostream<char, std::char_traits<char> >&)*) -->
+          <!-- std::basic_ostream<char, std::char_traits<char> >& std::basic_ostream<char, std::char_traits<char> >::operator<<(std::basic_ostream<char, std::char_traits<char> >& (*)(std::basic_ostream<char, std::char_traits<char> >&)) -->
           <function-decl name='operator&lt;&lt;' mangled-name='_ZNSolsEPFRSoS_E' filepath='/usr/lib/gcc/x86_64-redhat-linux/4.4.7/../../../../include/c++/4.4.7/ostream' line='108' column='1' visibility='default' binding='global' size-in-bits='64'>
             <!-- implicit parameter of type 'std::basic_ostream<char, std::char_traits<char> >*' -->
             <parameter type-id='type-id-468' is-artificial='yes'/>
-            <!-- parameter of type 'std::basic_ostream<char, std::char_traits<char> >& (std::basic_ostream<char, std::char_traits<char> >&)*' -->
+            <!-- parameter of type 'std::basic_ostream<char, std::char_traits<char> >& (*)(std::basic_ostream<char, std::char_traits<char> >&)' -->
             <parameter type-id='type-id-295'/>
             <!-- std::basic_ostream<char, std::char_traits<char> >& -->
             <return type-id='type-id-278'/>
@@ -18085,11 +18085,11 @@
           </function-decl>
         </member-function>
         <member-function access='public'>
-          <!-- std::basic_ostream<char, std::char_traits<char> >& std::basic_ostream<char, std::char_traits<char> >::operator<<(std::basic_ostream<char, std::char_traits<char> >& (std::basic_ostream<char, std::char_traits<char> >&)*) -->
+          <!-- std::basic_ostream<char, std::char_traits<char> >& std::basic_ostream<char, std::char_traits<char> >::operator<<(std::basic_ostream<char, std::char_traits<char> >& (*)(std::basic_ostream<char, std::char_traits<char> >&)) -->
           <function-decl name='operator&lt;&lt;' mangled-name='_ZNSolsEPFRSoS_E' filepath='/usr/lib/gcc/x86_64-redhat-linux/4.4.7/../../../../include/c++/4.4.7/ostream' line='108' column='1' visibility='default' binding='global' size-in-bits='64'>
             <!-- implicit parameter of type 'std::basic_ostream<char, std::char_traits<char> >*' -->
             <parameter type-id='type-id-558' is-artificial='yes'/>
-            <!-- parameter of type 'std::basic_ostream<char, std::char_traits<char> >& (std::basic_ostream<char, std::char_traits<char> >&)*' -->
+            <!-- parameter of type 'std::basic_ostream<char, std::char_traits<char> >& (*)(std::basic_ostream<char, std::char_traits<char> >&)' -->
             <parameter type-id='type-id-295'/>
             <!-- std::basic_ostream<char, std::char_traits<char> >& -->
             <return type-id='type-id-278'/>
@@ -19329,11 +19329,11 @@
       <!-- struct std::basic_ostream<char, std::char_traits<char> > -->
       <class-decl name='basic_ostream&lt;char, std::char_traits&lt;char&gt; &gt;' is-struct='yes' visibility='default' is-declaration-only='yes' id='type-id-625'>
         <member-function access='public'>
-          <!-- std::basic_ostream<char, std::char_traits<char> >& std::basic_ostream<char, std::char_traits<char> >::operator<<(std::basic_ostream<char, std::char_traits<char> >& (std::basic_ostream<char, std::char_traits<char> >&)*) -->
+          <!-- std::basic_ostream<char, std::char_traits<char> >& std::basic_ostream<char, std::char_traits<char> >::operator<<(std::basic_ostream<char, std::char_traits<char> >& (*)(std::basic_ostream<char, std::char_traits<char> >&)) -->
           <function-decl name='operator&lt;&lt;' mangled-name='_ZNSolsEPFRSoS_E' filepath='/usr/lib/gcc/x86_64-redhat-linux/4.4.7/../../../../include/c++/4.4.7/ostream' line='108' column='1' visibility='default' binding='global' size-in-bits='64'>
             <!-- implicit parameter of type 'std::basic_ostream<char, std::char_traits<char> >*' -->
             <parameter type-id='type-id-626' is-artificial='yes'/>
-            <!-- parameter of type 'std::basic_ostream<char, std::char_traits<char> >& (std::basic_ostream<char, std::char_traits<char> >&)*' -->
+            <!-- parameter of type 'std::basic_ostream<char, std::char_traits<char> >& (*)(std::basic_ostream<char, std::char_traits<char> >&)' -->
             <parameter type-id='type-id-295'/>
             <!-- std::basic_ostream<char, std::char_traits<char> >& -->
             <return type-id='type-id-278'/>
@@ -22597,11 +22597,11 @@
           </function-decl>
         </member-function>
         <member-function access='public'>
-          <!-- std::basic_ostream<char, std::char_traits<char> >& std::basic_ostream<char, std::char_traits<char> >::operator<<(std::basic_ostream<char, std::char_traits<char> >& (std::basic_ostream<char, std::char_traits<char> >&)*) -->
+          <!-- std::basic_ostream<char, std::char_traits<char> >& std::basic_ostream<char, std::char_traits<char> >::operator<<(std::basic_ostream<char, std::char_traits<char> >& (*)(std::basic_ostream<char, std::char_traits<char> >&)) -->
           <function-decl name='operator&lt;&lt;' mangled-name='_ZNSolsEPFRSoS_E' filepath='/usr/lib/gcc/x86_64-redhat-linux/4.4.7/../../../../include/c++/4.4.7/ostream' line='108' column='1' visibility='default' binding='global' size-in-bits='64'>
             <!-- implicit parameter of type 'std::basic_ostream<char, std::char_traits<char> >*' -->
             <parameter type-id='type-id-707' is-artificial='yes'/>
-            <!-- parameter of type 'std::basic_ostream<char, std::char_traits<char> >& (std::basic_ostream<char, std::char_traits<char> >&)*' -->
+            <!-- parameter of type 'std::basic_ostream<char, std::char_traits<char> >& (*)(std::basic_ostream<char, std::char_traits<char> >&)' -->
             <parameter type-id='type-id-295'/>
             <!-- std::basic_ostream<char, std::char_traits<char> >& -->
             <return type-id='type-id-278'/>
@@ -26533,11 +26533,11 @@
       <!-- struct std::basic_ostream<char, std::char_traits<char> > -->
       <class-decl name='basic_ostream&lt;char, std::char_traits&lt;char&gt; &gt;' is-struct='yes' visibility='default' is-declaration-only='yes' id='type-id-899'>
         <member-function access='public'>
-          <!-- std::basic_ostream<char, std::char_traits<char> >& std::basic_ostream<char, std::char_traits<char> >::operator<<(std::basic_ostream<char, std::char_traits<char> >& (std::basic_ostream<char, std::char_traits<char> >&)*) -->
+          <!-- std::basic_ostream<char, std::char_traits<char> >& std::basic_ostream<char, std::char_traits<char> >::operator<<(std::basic_ostream<char, std::char_traits<char> >& (*)(std::basic_ostream<char, std::char_traits<char> >&)) -->
           <function-decl name='operator&lt;&lt;' mangled-name='_ZNSolsEPFRSoS_E' filepath='/usr/lib/gcc/x86_64-redhat-linux/4.4.7/../../../../include/c++/4.4.7/ostream' line='108' column='1' visibility='default' binding='global' size-in-bits='64'>
             <!-- implicit parameter of type 'std::basic_ostream<char, std::char_traits<char> >*' -->
             <parameter type-id='type-id-900' is-artificial='yes'/>
-            <!-- parameter of type 'std::basic_ostream<char, std::char_traits<char> >& (std::basic_ostream<char, std::char_traits<char> >&)*' -->
+            <!-- parameter of type 'std::basic_ostream<char, std::char_traits<char> >& (*)(std::basic_ostream<char, std::char_traits<char> >&)' -->
             <parameter type-id='type-id-295'/>
             <!-- std::basic_ostream<char, std::char_traits<char> >& -->
             <return type-id='type-id-278'/>

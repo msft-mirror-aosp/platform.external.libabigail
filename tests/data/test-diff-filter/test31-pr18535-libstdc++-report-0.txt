@@ -5,8 +5,8 @@ Variable symbols changes summary: 0 Removed, 6 Added variable symbols not refere
 
 13 Added functions:
 
-  [A] 'function void __cxxabiv1::__cxa_throw_bad_array_length()'
-  [A] 'function void __cxxabiv1::__cxa_throw_bad_array_new_length()'
+  [A] 'function void __cxxabiv1::__cxa_throw_bad_array_length(void)'
+  [A] 'function void __cxxabiv1::__cxa_throw_bad_array_new_length(void)'
   [A] 'function void std::__throw_out_of_range_fmt(const char*, ...)'
   [A] 'method virtual const char* std::bad_array_length::what() const'
     note that this adds a new entry to the vtable of class std::bad_array_length
@@ -20,25 +20,25 @@ Variable symbols changes summary: 0 Removed, 6 Added variable symbols not refere
     note that this adds a new entry to the vtable of class std::bad_array_new_length
   [A] 'method virtual std::bad_array_new_length::~bad_array_new_length(int)'
     note that this adds a new entry to the vtable of class std::bad_array_new_length
-  [A] 'function std::new_handler std::get_new_handler()'
-  [A] 'function std::terminate_handler std::get_terminate()'
-  [A] 'function std::unexpected_handler std::get_unexpected()'
+  [A] 'function std::new_handler std::get_new_handler(void)'
+  [A] 'function std::terminate_handler std::get_terminate(void)'
+  [A] 'function std::unexpected_handler std::get_unexpected(void)'
   [A] 'method std::regex_error::regex_error(std::regex_constants::error_type)'
 
 2 functions with some indirect sub-type change:
 
-  [C] 'function __cxxabiv1::__cxa_dependent_exception* __cxxabiv1::__cxa_allocate_dependent_exception()' has some indirect sub-type changes:
+  [C] 'function __cxxabiv1::__cxa_dependent_exception* __cxxabiv1::__cxa_allocate_dependent_exception(void)' has some indirect sub-type changes:
     return type changed:
       in pointed to type 'struct __cxxabiv1::__cxa_dependent_exception':
         type size hasn't changed
         1 data member insertion:
-          'void (void*)* __padding', at offset 32 (in bits)
+          'void (* __padding)(void*)', at offset 32 (in bits)
         6 data member changes:
           'std::unexpected_handler unexpectedHandler' offset changed from 32 to 64 (in bits) (by +32 bits)
           'std::terminate_handler terminateHandler' offset changed from 64 to 96 (in bits) (by +32 bits)
-          '__cxxabiv1::__cxa_exception* nextException' offset changed from 96 to 128 (in bits) (by +32 bits)
+          '__cxa_exception* nextException' offset changed from 96 to 128 (in bits) (by +32 bits)
           'int handlerCount' offset changed from 128 to 160 (in bits) (by +32 bits)
-          '__cxxabiv1::__cxa_exception* nextPropagatingException' offset changed from 160 to 192 (in bits) (by +32 bits)
+          '__cxa_exception* nextPropagatingException' offset changed from 160 to 192 (in bits) (by +32 bits)
           'int propagationCount' offset changed from 192 to 224 (in bits) (by +32 bits)
 
   [C] 'function void std::__throw_regex_error(std::regex_constants::error_type)' has some indirect sub-type changes:

@@ -436,6 +436,9 @@ is_anonymous_type(const type_base*);
 bool
 is_anonymous_type(const type_base_sptr&);
 
+bool
+is_npaf_type(const type_base_sptr&);
+
 const type_decl*
 is_type_decl(const type_or_decl_base*);
 
@@ -536,26 +539,35 @@ is_compatible_with_class_type(const type_base_sptr&);
 class_decl_sptr
 is_compatible_with_class_type(const decl_base_sptr&);
 
-pointer_type_def*
-is_pointer_type(type_or_decl_base*);
-
 const pointer_type_def*
-is_pointer_type(const type_or_decl_base*);
+is_pointer_type(const type_or_decl_base*,
+		bool look_through_qualifiers=false);
 
 pointer_type_def_sptr
-is_pointer_type(const type_or_decl_base_sptr&);
+is_pointer_type(const type_or_decl_base_sptr&,
+		bool look_through_qualifiers=false);
+
+pointer_type_def_sptr
+is_pointer_to_function_type(const type_base_sptr&);
+
+pointer_type_def_sptr
+is_pointer_to_array_type(const type_base_sptr&);
+
+pointer_type_def_sptr
+is_pointer_to_npaf_type(const type_base_sptr&);
 
 bool
 is_typedef_ptr_or_ref_to_decl_only_class_or_union_type(const type_base* t);
 
 reference_type_def*
-is_reference_type(type_or_decl_base*);
+is_reference_type(type_or_decl_base*, bool look_through_qualifiers=false);
 
 const reference_type_def*
-is_reference_type(const type_or_decl_base*);
+is_reference_type(const type_or_decl_base*, bool look_through_qualifiers=false);
 
 reference_type_def_sptr
-is_reference_type(const type_or_decl_base_sptr&);
+is_reference_type(const type_or_decl_base_sptr&,
+		  bool look_through_qualifiers=false);
 
 const type_base*
 is_void_pointer_type(const type_base*);
@@ -799,10 +811,12 @@ const class_or_union_sptr
 data_member_has_anonymous_type(const var_decl_sptr& d);
 
 array_type_def*
-is_array_type(const type_or_decl_base* decl);
+is_array_type(const type_or_decl_base* decl,
+	      bool look_through_qualifiers = false);
 
 array_type_def_sptr
-is_array_type(const type_or_decl_base_sptr& decl);
+is_array_type(const type_or_decl_base_sptr& decl,
+	      bool look_through_qualifiers = false);
 
 array_type_def_sptr
 is_array_of_qualified_element(const type_base_sptr&);

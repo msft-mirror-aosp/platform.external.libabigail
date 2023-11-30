@@ -6,7 +6,7 @@ Comparing the ABI of binaries between vte291-0.39.1-1.fc22.x86_64.rpm and vte291
 
   3 Added functions:
 
-    [A] 'function const char* vte_get_features()'    {vte_get_features}
+    [A] 'function const char* vte_get_features(void)'    {vte_get_features}
     [A] 'function const char* vte_terminal_get_word_char_exceptions(VteTerminal*)'    {vte_terminal_get_word_char_exceptions}
     [A] 'function void vte_terminal_set_word_char_exceptions(VteTerminal*, const char*)'    {vte_terminal_set_word_char_exceptions}
 

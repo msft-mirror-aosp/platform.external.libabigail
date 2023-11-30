@@ -221,6 +221,49 @@ update_qualified_name(decl_base * d);
 static void
 update_qualified_name(decl_base_sptr d);
 
+static interned_string
+pointer_declaration_name(const type_base* ptr,
+			 const string& variable_name,
+			 bool qualified, bool internal);
+
+static interned_string
+pointer_declaration_name(const type_base_sptr& ptr,
+			 const string& variable_name,
+			 bool qualified, bool internal);
+
+static interned_string
+array_declaration_name(const array_type_def* array,
+		       const string& variable_name,
+		       bool qualified, bool internal);
+
+static interned_string
+array_declaration_name(const array_type_def_sptr& array,
+		       const string& variable_name,
+		       bool qualified, bool internal);
+
+static void
+stream_pretty_representation_of_fn_parms(const function_type& fn_type,
+					 ostream& o, bool qualified,
+					 bool internal);
+static string
+add_outer_pointer_to_fn_type_expr(const type_base* pointer_to_fn,
+				  const string& input, bool qualified,
+				  bool internal);
+
+static string
+add_outer_pointer_to_fn_type_expr(const type_base_sptr& pointer_to_fn,
+				  const string& input, bool qualified,
+				  bool internal);
+
+static string
+add_outer_pointer_to_array_type_expr(const type_base* pointer_to_ar,
+				     const string& input, bool qualified,
+				     bool internal);
+
+static string
+add_outer_pointer_to_array_type_expr(const type_base_sptr& pointer_to_ar,
+				     const string& input, bool qualified,
+				     bool internal);
 void
 push_composite_type_comparison_operands(const type_base& left,
 					const type_base& right);
@@ -9121,24 +9164,10 @@ get_function_type_name(const function_type& fn_type,
     : fn_type.get_return_type();
   const environment& env = fn_type.get_environment();
 
-  o <<  get_pretty_representation(return_type, internal);
-
-  o << " (";
-  type_base_sptr type;
-  for (function_type::parameters::const_iterator i =
-	 fn_type.get_parameters().begin();
-       i != fn_type.get_parameters().end();
-       ++i)
-    {
-      if (i != fn_type.get_parameters().begin())
-	o << ", ";
-      type = (*i)->get_type();
-      if (internal)
-	type = peel_typedef_type(type);
-      o << get_pretty_representation(type, internal);
-    }
-  o <<")";
-
+  o <<  get_pretty_representation(return_type, internal) << " ";
+  stream_pretty_representation_of_fn_parms(fn_type, o,
+					   /*qualified=*/true,
+					   internal);
   return env.intern(o.str());
 }
 
@@ -9236,28 +9265,10 @@ get_method_type_name(const method_type& fn_type,
   class_or_union_sptr class_type = fn_type.get_class_type();
   ABG_ASSERT(class_type);
 
-  o << " (" << class_type->get_qualified_name(internal) << "::*)"
-    << " (";
-
-  type_base_sptr type;
-  for (function_type::parameters::const_iterator i =
-	 fn_type.get_parameters().begin();
-       i != fn_type.get_parameters().end();
-       ++i)
-    {
-      if (i != fn_type.get_parameters().begin())
-	o << ", ";
-      type = (*i)->get_type();
-      if (internal)
-	type = peel_typedef_type(type);
-      if (*i)
-	o << type->get_cached_pretty_representation(internal);
-      else
-	// There are still some abixml files out there in which "void"
-	// can be expressed as an empty type.
-	o << "void";
-    }
-  o <<")";
+  o << " (" << class_type->get_qualified_name(internal) << "::*) ";
+  stream_pretty_representation_of_fn_parms(fn_type, o,
+					   /*qualified=*/true,
+					   internal);
 
   return env.intern(o.str());
 }
@@ -10563,6 +10574,21 @@ bool
 is_anonymous_type(const type_base_sptr& t)
 {return is_anonymous_type(t.get());}
 
+/// Test if a type is a neither a pointer, an array nor a function
+/// type.
+///
+/// @param t the type to consider.
+///
+/// @return true if the @p t is NOT a pointer, an array nor a
+/// function.
+bool
+is_npaf_type(const type_base_sptr& t)
+{
+  if (!(is_pointer_type(t) || is_array_type(t) || is_function_type(t)))
+    return true;
+  return false;
+}
+
 /// Test whether a type is a type_decl (a builtin type).
 ///
 /// @return the type_decl* for @t if it's type_decl, otherwise, return
@@ -11055,43 +11081,97 @@ is_union_type(const shared_ptr<type_or_decl_base>& t)
 ///
 /// @param t the type to test.
 ///
-/// @return the @ref pointer_type_def_sptr if @p t is a
-/// pointer_type_def, null otherwise.
-pointer_type_def*
-is_pointer_type(type_or_decl_base* t)
-{
-  if (!t)
-    return 0;
-
-  if (t->kind() & type_or_decl_base::POINTER_TYPE)
-    return reinterpret_cast<pointer_type_def*>
-      (const_cast<type_or_decl_base*>(t)->runtime_type_instance());
-
-  return 0;
-}
-
-/// Test whether a type is a pointer_type_def.
-///
-/// @param t the type to test.
+/// @param look_through_decl_only if this is true, then look through
+/// qualified types to see if the underlying type is a
+/// pointer_type_def.
 ///
 /// @return the @ref pointer_type_def_sptr if @p t is a
 /// pointer_type_def, null otherwise.
 const pointer_type_def*
-is_pointer_type(const type_or_decl_base* t)
+is_pointer_type(const type_or_decl_base* t,
+		bool look_through_qualifiers)
 {
-  return is_pointer_type(const_cast<type_or_decl_base*>(t));
+  if (!t)
+    return 0;
+
+  const type_base* type = is_type(t);
+  if (look_through_qualifiers)
+    type = peel_qualified_type(is_type(t));
+
+  return dynamic_cast<pointer_type_def*>(const_cast<type_base*>(type));
 }
 
 /// Test whether a type is a pointer_type_def.
 ///
 /// @param t the type to test.
 ///
+/// @param look_through_decl_only if this is true, then look through
+/// qualified types to see if the underlying type is a
+/// pointer_type_def.
+///
 /// @return the @ref pointer_type_def_sptr if @p t is a
 /// pointer_type_def, null otherwise.
 pointer_type_def_sptr
-is_pointer_type(const type_or_decl_base_sptr &t)
-{return dynamic_pointer_cast<pointer_type_def>(t);}
+is_pointer_type(const type_or_decl_base_sptr &t,
+		bool look_through_qualifiers)
+{
+  type_base_sptr type = is_type(t);
+  if (look_through_qualifiers)
+    type = peel_qualified_type(type);
+  return dynamic_pointer_cast<pointer_type_def>(type);
+}
 
+/// Test if a type is a pointer to function type.
+///
+/// @param t the type to consider.
+///
+/// @return the @ref pointer_type_def_sptr iff @p t is a pointer to
+/// function type.
+pointer_type_def_sptr
+is_pointer_to_function_type(const type_base_sptr& t)
+{
+  if (pointer_type_def_sptr p = is_pointer_type(t))
+    {
+      if (is_function_type(p->get_pointed_to_type()))
+	return p;
+    }
+  return pointer_type_def_sptr();
+}
+
+/// Test if a type is a pointer to array type.
+///
+/// @param t the type to consider.
+///
+/// @return the pointer_type_def_sptr iff @p t is a pointer to array
+/// type.
+pointer_type_def_sptr
+is_pointer_to_array_type(const type_base_sptr& t)
+{
+  if (pointer_type_def_sptr p = is_pointer_type(t))
+    {
+      if (is_array_type(p->get_pointed_to_type()))
+	return p;
+    }
+  return pointer_type_def_sptr();
+}
+
+/// Test if we are looking at a pointer to a
+/// neither-a-pointer-to-an-array-nor-a-function type.
+///
+/// @param t the type to consider.
+///
+/// @return the @ref pointer_type_def_sptr type iff @p t is a
+/// neither-a-pointer-an-array-nor-a-function type.
+pointer_type_def_sptr
+is_pointer_to_npaf_type(const type_base_sptr& t)
+{
+  if (pointer_type_def_sptr p = is_pointer_type(t))
+    {
+      if (is_npaf_type(p->get_pointed_to_type()))
+	return p;
+    }
+  return pointer_type_def_sptr();
+}
 
 /// Test if a type is a typedef, pointer or reference to a decl-only
 /// class/union.
@@ -11119,31 +11199,65 @@ is_typedef_ptr_or_ref_to_decl_only_class_or_union_type(const type_base* t)
 ///
 /// @param t the type to test.
 ///
+/// @param look_through_decl_only if this is true, then look through
+/// qualified types to see if the underlying type is a
+/// reference_type_def.
+///
 /// @return the @ref reference_type_def_sptr if @p t is a
 /// reference_type_def, null otherwise.
 reference_type_def*
-is_reference_type(type_or_decl_base* t)
-{return dynamic_cast<reference_type_def*>(t);}
+is_reference_type(type_or_decl_base* t,
+		  bool look_through_qualifiers)
+{
+  const type_base* type = is_type(t);
+  if (!type)
+    return nullptr;
+
+  if (look_through_qualifiers)
+    type = peel_qualified_type(type);
+  return dynamic_cast<reference_type_def*>(const_cast<type_base*>(type));
+}
 
 /// Test whether a type is a reference_type_def.
 ///
 /// @param t the type to test.
+///
+/// @param look_through_decl_only if this is true, then look through
+/// qualified types to see if the underlying type is a
+/// reference_type_def.
 ///
 /// @return the @ref reference_type_def_sptr if @p t is a
 /// reference_type_def, null otherwise.
 const reference_type_def*
-is_reference_type(const type_or_decl_base* t)
-{return dynamic_cast<const reference_type_def*>(t);}
+is_reference_type(const type_or_decl_base* t,
+		  bool look_through_qualifiers)
+{
+  const type_base* type = is_type(t);
+
+  if (look_through_qualifiers)
+    type = peel_qualified_type(type);
+  return dynamic_cast<const reference_type_def*>(type);
+}
 
 /// Test whether a type is a reference_type_def.
 ///
 /// @param t the type to test.
 ///
+/// @param look_through_decl_only if this is true, then look through
+/// qualified types to see if the underlying type is a
+/// reference_type_def.
+///
 /// @return the @ref reference_type_def_sptr if @p t is a
 /// reference_type_def, null otherwise.
 reference_type_def_sptr
-is_reference_type(const type_or_decl_base_sptr& t)
-{return dynamic_pointer_cast<reference_type_def>(t);}
+is_reference_type(const type_or_decl_base_sptr& t,
+		  bool look_through_qualifiers)
+{
+  type_base_sptr type = is_type(t);
+  if (look_through_qualifiers)
+    type = peel_qualified_type(type);
+  return dynamic_pointer_cast<reference_type_def>(type);
+}
 
 /// Test if a type is equivalent to a pointer to void type.
 ///
@@ -11226,7 +11340,7 @@ is_void_pointer_type(const type_base_sptr& t)
   if (t->get_environment().get_void_pointer_type().get() == t.get())
     return t;
 
-  pointer_type_def* ptr = is_pointer_type(t.get());
+  const pointer_type_def* ptr = is_pointer_type(t.get());
   if (!ptr)
     return nil;
 
@@ -11528,8 +11642,15 @@ is_function_template_pattern(const shared_ptr<decl_base> decl)
 ///
 /// @return true iff @p type is an array_type_def.
 array_type_def*
-is_array_type(const type_or_decl_base* type)
-{return dynamic_cast<array_type_def*>(const_cast<type_or_decl_base*>(type));}
+is_array_type(const type_or_decl_base* type,
+	      bool look_through_qualifiers)
+{
+  const type_base* t = is_type(type);
+
+  if (look_through_qualifiers)
+    t = peel_qualified_type(t);
+  return dynamic_cast<array_type_def*>(const_cast<type_base*>(t));
+}
 
 /// Test if a type is an array_type_def.
 ///
@@ -11537,8 +11658,15 @@ is_array_type(const type_or_decl_base* type)
 ///
 /// @return true iff @p type is an array_type_def.
 array_type_def_sptr
-is_array_type(const type_or_decl_base_sptr& type)
-{return dynamic_pointer_cast<array_type_def>(type);}
+is_array_type(const type_or_decl_base_sptr& type,
+	      bool look_through_qualifiers)
+{
+  type_base_sptr t = is_type(type);
+
+  if (look_through_qualifiers)
+    t = peel_qualified_type(t);
+  return dynamic_pointer_cast<array_type_def>(t);
+}
 
 /// Tests if the element of a given array is a qualified type.
 ///
@@ -17419,13 +17547,14 @@ pointer_type_def::get_qualified_name(bool internal) const
 	  if (priv_->internal_qualified_name_.empty())
 	    if (pointed_to_type)
 	      priv_->internal_qualified_name_ =
-		get_name_of_pointer_to_type(*pointed_to_type,
-					    /*qualified_name=*/
-					    is_typedef(pointed_to_type)
-					    ? false
-					    : true,
-					    /*internal=*/true);
-	  return priv_->internal_qualified_name_;
+		pointer_declaration_name(this,
+					 /*variable_name=*/"",
+					 /*qualified_name=*/
+					 is_typedef(pointed_to_type)
+					 ? false
+					 : true,
+					 /*internal=*/true);
+		return priv_->internal_qualified_name_;
 	}
       else
 	{
@@ -17435,12 +17564,13 @@ pointer_type_def::get_qualified_name(bool internal) const
 	  // function.
 	  if (pointed_to_type)
 	    priv_->temp_internal_qualified_name_ =
-	      get_name_of_pointer_to_type(*pointed_to_type,
-					  /*qualified_name=*/
-					  is_typedef(pointed_to_type)
-					  ? false
-					  : true,
-					  /*internal=*/true);
+		pointer_declaration_name(this,
+					 /*variable_name=*/"",
+					 /*qualified_name=*/
+					 is_typedef(pointed_to_type)
+					 ? false
+					 : true,
+					 /*internal=*/true);
 	  return priv_->temp_internal_qualified_name_;
 	}
     }
@@ -17450,9 +17580,10 @@ pointer_type_def::get_qualified_name(bool internal) const
 	{
 	  if (decl_base::peek_qualified_name().empty())
 	    set_qualified_name
-	      (get_name_of_pointer_to_type(*pointed_to_type,
-					   /*qualified_name=*/true,
-					   /*internal=*/false));
+	      (pointer_declaration_name(this,
+					/*variable_name=*/"",
+					/*qualified_name=*/true,
+					/*internal=*/false));
 	  return decl_base::peek_qualified_name();
 	}
       else
@@ -17463,9 +17594,10 @@ pointer_type_def::get_qualified_name(bool internal) const
 	  // function.
 	  if (pointed_to_type)
 	    set_qualified_name
-	      (get_name_of_pointer_to_type(*pointed_to_type,
-					   /*qualified_name=*/true,
-					   /*internal=*/false));
+	      (pointer_declaration_name(this,
+					/*variable_name=*/"",
+					/*qualified_name=*/true,
+					/*internal=*/false));
 	  return decl_base::peek_qualified_name();
 	}
     }
@@ -18598,48 +18730,6 @@ array_type_def::get_subrange_representation() const
   return r;
 }
 
-/// Get the string representation of an @ref array_type_def.
-///
-/// @param a the array type to consider.
-///
-/// @param internal set to true if the call is intended for an
-/// internal use (for technical use inside the library itself), false
-/// otherwise.  If you don't know what this is for, then set it to
-/// false.
-static string
-get_type_representation(const array_type_def& a, bool internal)
-{
-  type_base_sptr e_type = a.get_element_type();
-  decl_base_sptr d = get_type_declaration(e_type);
-  string r;
-
-  if (is_ada_language(a.get_language()))
-    {
-      std::ostringstream o;
-      o << "array ("
-	<< a.get_subrange_representation()
-	<< ") of "
-	<<  e_type ? e_type->get_pretty_representation(internal):string("void");
-    }
-  else
-    {
-      if (internal)
-	r = (e_type
-	     ? get_type_name(e_type,
-			     /*qualified=*/true,
-			     /*internal=*/true)
-	     : string("void"))
-	  + a.get_subrange_representation();
-      else
-	r = (e_type
-	     ? get_type_name(e_type, /*qualified=*/true, /*internal=*/false)
-	     : string("void"))
-	  + a.get_subrange_representation();
-    }
-
-  return r;
-}
-
 /// Get the pretty representation of the current instance of @ref
 /// array_type_def.
 ///
@@ -18660,8 +18750,11 @@ get_type_representation(const array_type_def& a, bool internal)
 /// @return the pretty representation of the ABI artifact.
 string
 array_type_def::get_pretty_representation(bool internal,
-					  bool /*qualified_name*/) const
-{return get_type_representation(*this, internal);}
+					  bool qualified_name) const
+{
+  return array_declaration_name(this, /*variable_name=*/"",
+				qualified_name, internal);
+}
 
 /// Compares two instances of @ref array_type_def.
 ///
@@ -18891,22 +18984,22 @@ array_type_def::get_qualified_name(interned_string& qn, bool internal) const
 const interned_string&
 array_type_def::get_qualified_name(bool internal) const
 {
-  const environment& env = get_environment();
-
-
   if (internal)
     {
       if (get_canonical_type())
 	{
 	  if (priv_->internal_qualified_name_.empty())
 	    priv_->internal_qualified_name_ =
-	      env.intern(get_type_representation(*this, /*internal=*/true));
+	      array_declaration_name(this, /*variable_name=*/"",
+				     /*qualified=*/false,
+				     /*internal=*/true);
 	  return priv_->internal_qualified_name_;
 	}
       else
 	{
 	  priv_->temp_internal_qualified_name_ =
-	    env.intern(get_type_representation(*this, /*internal=*/true));
+	    array_declaration_name(this, /*variable_name=*/"",
+				   /*qualified*/false, /*internal*/true);
 	  return priv_->temp_internal_qualified_name_;
 	}
     }
@@ -18915,15 +19008,18 @@ array_type_def::get_qualified_name(bool internal) const
       if (get_canonical_type())
 	{
 	  if (decl_base::peek_qualified_name().empty())
-	    set_qualified_name(env.intern(get_type_representation
-					   (*this, /*internal=*/false)));
+	    set_qualified_name(array_declaration_name(this,
+						      /*variable_name=*/"",
+						      /*qualified=*/false,
+						      /*internal=*/false));
 	  return decl_base::peek_qualified_name();
 	}
       else
 	{
-	  set_temporary_qualified_name(env.intern(get_type_representation
-						   (*this,
-						    /*internal=*/false)));
+	  set_temporary_qualified_name
+	    (array_declaration_name(this, /*variable_name=*/"",
+				    /*qualified=*/false,
+				    /*internal=*/false));
 	  return decl_base::peek_temporary_qualified_name();
 	}
     }
@@ -20433,7 +20529,10 @@ var_decl::get_pretty_representation(bool internal, bool qualified_name) const
     if (scope->get_is_anonymous())
       member_of_anonymous_class = true;
 
-  if (array_type_def_sptr t = is_array_type(get_type()))
+  type_base_sptr type = get_type();
+  if (is_array_type(type, /*look_through_qualifiers=*/true)
+      || is_pointer_type(type, /*look_through_qualifiers=*/true)
+      || is_reference_type(type, /*look_through_qualifiers=*/true))
     {
       string name;
       if (member_of_anonymous_class || !qualified_name)
@@ -20441,12 +20540,22 @@ var_decl::get_pretty_representation(bool internal, bool qualified_name) const
       else
 	name = get_qualified_name(internal);
 
-      type_base_sptr et = t->get_element_type();
-      ABG_ASSERT(et);
-      decl_base_sptr decl = get_type_declaration(et);
-      ABG_ASSERT(decl);
-      result += decl->get_qualified_name(internal)
-	+ " " + name + t->get_subrange_representation();
+      if (qualified_type_def_sptr q = is_qualified_type(type))
+	{
+	  string quals_repr =
+	    get_string_representation_of_cv_quals(q->get_cv_quals());
+	  if (!quals_repr.empty())
+	    name = quals_repr + " " + name;
+	  type = peel_qualified_type(type);
+	}
+
+      name = string(" ") + name;
+      if (array_type_def_sptr t = is_array_type(type))
+	result += array_declaration_name(t, name, qualified_name, internal);
+      else if (pointer_type_def_sptr t = is_pointer_type(type))
+	result += pointer_declaration_name(t, name, qualified_name, internal);
+      else if (reference_type_def_sptr t = is_reference_type(type))
+	result += pointer_declaration_name(t, name, qualified_name, internal);
     }
   else
     {
@@ -21425,32 +21534,48 @@ function_decl::get_pretty_representation(bool internal,
   const method_decl* mem_fn =
     dynamic_cast<const method_decl*>(this);
 
-  string result = mem_fn ? "method ": "function ";
+  string fn_prefix = mem_fn ? "method ": "function ";
+  string result;
 
   if (mem_fn
       && is_member_function(mem_fn)
       && get_member_function_is_virtual(mem_fn))
-    result += "virtual ";
+    fn_prefix += "virtual ";
 
-  decl_base_sptr type;
+  decl_base_sptr return_type;
   if ((mem_fn
        && is_member_function(mem_fn)
        && (get_member_function_is_dtor(*mem_fn)
 	   || get_member_function_is_ctor(*mem_fn))))
     /*cdtors do not have return types.  */;
   else
-    type = mem_fn
+    return_type = mem_fn
       ? get_type_declaration(mem_fn->get_type()->get_return_type())
       : get_type_declaration(get_type()->get_return_type());
 
-  if (type)
-    result += get_type_name(is_type(type).get(),
-			    qualified_name,
-			    internal) + " ";
+  result = get_pretty_representation_of_declarator(internal);
+  if (return_type)
+    {
+      if (is_npaf_type(is_type(return_type))
+	  || !(is_pointer_to_function_type(is_type(return_type))
+	       || is_pointer_to_array_type(is_type(return_type))))
+	result = get_type_name(is_type(return_type).get(), qualified_name,
+			       internal) + " " + result;
+      else if (pointer_type_def_sptr p =
+	       is_pointer_to_function_type(is_type(return_type)))
+	result = add_outer_pointer_to_fn_type_expr(p, result,
+						   /*qualified=*/true,
+						   internal);
+      else if(pointer_type_def_sptr p =
+	      is_pointer_to_array_type(is_type(return_type)))
+	result = add_outer_pointer_to_array_type_expr(p, result,
+						      qualified_name,
+						      internal);
+      else
+	ABG_ASSERT_NOT_REACHED;
+    }
 
-  result += get_pretty_representation_of_declarator(internal);
-
-  return result;
+  return fn_prefix + result;
 }
 
 /// Compute and return the pretty representation for the part of the
@@ -21486,35 +21611,12 @@ function_decl::get_pretty_representation_of_declarator (bool internal) const
   else
     result += get_qualified_name();
 
-  result += "(";
-
-  parameters::const_iterator i = get_parameters().begin(),
-    end = get_parameters().end();
-
-  // Skip the first parameter if this is a method.
-  if (mem_fn && i != end)
-    ++i;
-  parameter_sptr parm;
-  parameter_sptr first_parm;
-  if (i != end)
-    first_parm = *i;
-  for (; i != end; ++i)
-    {
-      parm = *i;
-      if (parm.get() != first_parm.get())
-	result += ", ";
-      if (parm->get_variadic_marker()
-	  || get_environment().is_variadic_parameter_type(parm->get_type()))
-	result += "...";
-      else
-	{
-	  type_base_sptr type = parm->get_type();
-	  if (internal)
-	    type = peel_typedef_type(type);
-	  result += get_type_name(type, /*qualified=*/true, internal);
-	}
-    }
-  result += ")";
+  std::ostringstream fn_parms;
+  stream_pretty_representation_of_fn_parms(*get_type(),
+					   fn_parms,
+					   /*qualified=*/true,
+					   internal);
+  result += fn_parms.str();
 
   if (mem_fn
       &&((is_member_function(mem_fn) && get_member_function_is_const(*mem_fn))
@@ -22326,7 +22428,7 @@ function_decl::parameter::get_qualified_name(interned_string& qualified_name,
 /// function parameter.
 string
 function_decl::parameter::get_pretty_representation(bool internal,
-						    bool /*qualified_name*/) const
+						    bool qualified_name) const
 {
   const environment& env = get_environment();
 
@@ -22337,7 +22439,7 @@ function_decl::parameter::get_pretty_representation(bool internal,
   else if (env.is_variadic_parameter_type(t))
     type_repr = "...";
   else
-    type_repr = ir::get_pretty_representation(t, internal);
+    type_repr = ir::get_type_name(t, qualified_name, internal);
 
   string result = type_repr;
   string parm_name = get_name_id();
@@ -27775,6 +27877,545 @@ find_last_data_member_matching_regexp(const class_or_union& t,
   return var_decl_sptr();
 }
 
+/// Emit the pretty representation of the parameters of a function
+/// type.
+///
+/// @param fn_type the function type to consider.
+///
+/// @param o the output stream to emit the pretty representation to.
+///
+/// @param qualified if true, emit fully qualified names.
+///
+/// @param internal if true, then the result is to be used for the
+/// purpose of type canonicalization.
+static void
+stream_pretty_representation_of_fn_parms(const function_type& fn_type,
+					 ostream& o, bool qualified,
+					 bool internal)
+{
+  o << "(";
+  if (fn_type.get_parameters().empty())
+    o << "void";
+  else
+    {
+      type_base_sptr type;
+      auto end = fn_type.get_parameters().end();
+      auto first_parm = fn_type.get_first_non_implicit_parm();
+      function_decl::parameter_sptr parm;
+      const environment& env = fn_type.get_environment();
+      for (auto i = fn_type.get_first_non_implicit_parm(); i != end; ++i)
+	{
+	  if (i != first_parm)
+	    o << ", ";
+	  parm = *i;
+	  type = parm->get_type();
+	  if (env.is_variadic_parameter_type(type))
+	    o << "...";
+	  else
+	    {
+	      if (internal)
+		type = peel_typedef_type(type);
+	      o << get_type_name(type, qualified, internal);
+	    }
+	}
+    }
+  o << ")";
+}
+
+/// When constructing the name of a pointer to function type, add the
+/// return type to the left of the existing type identifier, and the
+/// parameters declarator to the right.
+///
+/// This function considers the name of the type as an expression.
+///
+/// The resulting type expr is going to be made of three parts:
+/// left_expr inner_expr right_expr.
+///
+/// Suppose we want to build the type expression representing:
+///
+///   "an array of pointer to function taking a char parameter and
+///    returning an int".
+///
+/// It's going to look like:
+///
+///   int(*a[])(char);
+///
+/// Suppose the caller of this function started to emit the inner
+/// "a[]" part of the expression already.  It thus calls this
+/// function with that input "a[]" part.  We consider that "a[]" as
+/// the "type identifier".
+///
+/// So the inner_expr is going to be "(*a[])".
+///
+/// The left_expr part is "int".  The right_expr part is "(char)".
+///
+/// In other words, this function adds the left_expr and right_expr to
+/// the inner_expr.  left_expr and right_expr are called "outer
+/// pointer to function type expression".
+///
+/// This is a sub-routine of @ref pointer_declaration_name() and @ref
+/// array_declaration_name()
+///
+/// @param p the pointer to function type to consider.
+///
+/// @param input the type-id to use as the inner expression of the
+/// overall pointer-to-function type expression
+///
+/// @param qualified if true then use qualified names in the resulting
+/// type name.
+///
+/// @param internal if true then the resulting type name is going to
+/// be used for type canonicalization purposes.
+///
+/// @return the name of the pointer to function type.
+static string
+add_outer_pointer_to_fn_type_expr(const type_base* p,
+				  const string& input,
+				  bool qualified, bool internal)
+{
+  if (!p)
+    return "";
+
+  function_type_sptr pointed_to_fn;
+  string star_or_ref;
+
+  if (const pointer_type_def* ptr = is_pointer_type(p))
+    {
+      pointed_to_fn = is_function_type(ptr->get_pointed_to_type());
+      star_or_ref= "*";
+    }
+  else if (const reference_type_def* ref = is_reference_type(p))
+    {
+      star_or_ref = "&";
+      pointed_to_fn = is_function_type(ref->get_pointed_to_type());
+    }
+
+  if (!pointed_to_fn)
+    return "";
+
+  std::ostringstream left, right, inner;
+
+  inner <<  "(" << star_or_ref  << input << ")";
+
+  type_base_sptr type;
+  stream_pretty_representation_of_fn_parms(*pointed_to_fn, right,
+					   qualified, internal);
+  type_base_sptr return_type =
+    internal
+    ? peel_typedef_type(pointed_to_fn->get_return_type())
+    : pointed_to_fn->get_return_type();
+
+  string result;
+
+  if (is_npaf_type(return_type)
+      || !(is_pointer_to_function_type(return_type)
+	   || is_pointer_to_array_type(return_type)))
+    {
+      if (return_type)
+	left << get_type_name(return_type, qualified, internal);
+      result = left.str() + " " + inner.str() + right.str();
+    }
+  else if (pointer_type_def_sptr p = is_pointer_to_function_type(return_type))
+    {
+      string inner_string = inner.str() + right.str();
+      result = add_outer_pointer_to_fn_type_expr(p, inner_string,
+						 qualified, internal);
+    }
+  else if (pointer_type_def_sptr p = is_pointer_to_array_type(return_type))
+    {
+      string inner_string = inner.str() + right.str();
+      result = add_outer_pointer_to_array_type_expr(p, inner_string,
+						    qualified, internal);
+    }
+  else
+    ABG_ASSERT_NOT_REACHED;
+
+  return result;
+}
+
+/// When constructing the name of a pointer to function type, add the
+/// return type to the left of the existing type identifier, and the
+/// parameters declarator to the right.
+///
+/// This function considers the name of the type as an expression.
+///
+/// The resulting type expr is going to be made of three parts:
+/// left_expr inner_expr right_expr.
+///
+/// Suppose we want to build the type expression representing:
+///
+///   "an array of pointer to function taking a char parameter and
+///    returning an int".
+///
+/// It's going to look like:
+///
+///   int(*a[])(char);
+///
+/// Suppose the caller of this function started to emit the inner
+/// "a[]" part of the expression already.  It thus calls this
+/// function with that input "a[]" part.  We consider that "a[]" as
+/// the "type identifier".
+///
+/// So the inner_expr is going to be "(*a[])".
+///
+/// The left_expr part is "int".  The right_expr part is "(char)".
+///
+/// In other words, this function adds the left_expr and right_expr to
+/// the inner_expr.  left_expr and right_expr are called "outer
+/// pointer to function type expression".
+///
+/// This is a sub-routine of @ref pointer_declaration_name() and @ref
+/// array_declaration_name()
+///
+/// @param p the pointer to function type to consider.
+///
+/// @param input the type-id to use as the inner expression of the
+/// overall pointer-to-function type expression
+///
+/// @param qualified if true then use qualified names in the resulting
+/// type name.
+///
+/// @param internal if true then the resulting type name is going to
+/// be used for type canonicalization purposes.
+///
+/// @return the name of the pointer to function type.
+static string
+add_outer_pointer_to_fn_type_expr(const type_base_sptr& p,
+				  const string& input,
+				  bool qualified, bool internal)
+{return add_outer_pointer_to_fn_type_expr(p.get(), input, qualified, internal);}
+
+/// When constructing the name of a pointer to array type, add the
+/// array element type type to the left of the existing type
+/// identifier, and the array declarator part to the right.
+///
+/// This function considers the name of the type as an expression.
+///
+/// The resulting type expr is going to be made of three parts:
+/// left_expr inner_expr right_expr.
+///
+/// Suppose we want to build the type expression representing:
+///
+///   "a pointer to an array of int".
+///
+/// It's going to look like:
+///
+///   int(*foo)[];
+///
+/// Suppose the caller of this function started to emit the inner
+/// "foo" part of the expression already.  It thus calls this function
+/// with that input "foo" part.  We consider that "foo" as the "type
+/// identifier".
+///
+/// So we are passed an input string that is "foo" and it's going to
+/// be turned into the inner_expr part, which is going to be "(*foo)".
+///
+/// The left_expr part is "int".  The right_expr part is "[]".
+///
+/// In other words, this function adds the left_expr and right_expr to
+/// the inner_expr.  left_expr and right_expr are called "outer
+/// pointer to array type expression".
+///
+/// The model of this function was taken from the article "Reading C
+/// type declaration", from Steve Friedl at
+/// http://unixwiz.net/techtips/reading-cdecl.html.
+///
+/// This is a sub-routine of @ref pointer_declaration_name() and @ref
+/// array_declaration_name()
+///
+/// @param p the pointer to array type to consider.
+///
+/// @param input the type-id to start from as the inner part of the
+/// final type name.
+///
+/// @param qualified if true then use qualified names in the resulting
+/// type name.
+///
+/// @param internal if true then the resulting type name is going to
+/// be used for type canonicalization purposes.
+///
+/// @return the name of the pointer to array type.
+static string
+add_outer_pointer_to_array_type_expr(const type_base* p,
+				     const string& input, bool qualified,
+				     bool internal)
+{
+  if (!p)
+    return "";
+
+  string star_or_ref;
+  type_base_sptr pointed_to_type;
+
+  if (const pointer_type_def *ptr = is_pointer_type(p))
+    {
+      pointed_to_type = ptr->get_pointed_to_type();
+      star_or_ref = "*";
+    }
+  else if (const reference_type_def *ref = is_reference_type(p))
+    {
+      pointed_to_type = ref->get_pointed_to_type();
+      star_or_ref = "&";
+    }
+
+  array_type_def_sptr array = is_array_type(pointed_to_type);
+  if (!array)
+    return "";
+
+  std::ostringstream left, right, inner;
+  inner <<  "(" << star_or_ref  << input << ")";
+  right << array->get_subrange_representation();
+  string result;
+
+  type_base_sptr array_element_type = array->get_element_type();
+
+  if (is_npaf_type(array_element_type)
+      || !(is_pointer_to_function_type(array_element_type)
+	   || is_pointer_to_array_type(array_element_type)))
+    {
+      left << get_type_name(array_element_type, qualified, internal);
+      result = left.str() + inner.str() + right.str();
+    }
+  else if (pointer_type_def_sptr p =
+	   is_pointer_to_function_type(array_element_type))
+    {
+      string r = inner.str() + right.str();
+      result = add_outer_pointer_to_fn_type_expr(p, r, qualified, internal);
+    }
+  else if (pointer_type_def_sptr p =
+	   is_pointer_to_array_type(array_element_type))
+    {
+      string inner_string = inner.str() + right.str();
+      result = add_outer_pointer_to_array_type_expr(p, inner_string,
+						    qualified, internal);
+    }
+  else
+    ABG_ASSERT_NOT_REACHED;
+
+  return result;
+}
+
+/// When constructing the name of a pointer to array type, add the
+/// array element type type to the left of the existing type
+/// identifier, and the array declarator part to the right.
+///
+/// This function considers the name of the type as an expression.
+///
+/// The resulting type expr is going to be made of three parts:
+/// left_expr inner_expr right_expr.
+///
+/// Suppose we want to build the type expression representing:
+///
+///   "a pointer to an array of int".
+///
+/// It's going to look like:
+///
+///   int(*foo)[];
+///
+/// Suppose the caller of this function started to emit the inner
+/// "foo" part of the expression already.  It thus calls this function
+/// with that input "foo" part.  We consider that "foo" as the "type
+/// identifier".
+///
+/// So we are passed an input string that is "foo" and it's going to
+/// be turned into the inner_expr part, which is going to be "(*foo)".
+///
+/// The left_expr part is "int".  The right_expr part is "[]".
+///
+/// In other words, this function adds the left_expr and right_expr to
+/// the inner_expr.  left_expr and right_expr are called "outer
+/// pointer to array type expression".
+///
+/// The model of this function was taken from the article "Reading C
+/// type declaration", from Steve Friedl at
+/// http://unixwiz.net/techtips/reading-cdecl.html.
+///
+/// This is a sub-routine of @ref pointer_declaration_name() and @ref
+/// array_declaration_name()
+///
+/// @param p the pointer to array type to consider.
+///
+/// @param input the type-id to start from as the inner part of the
+/// final type name.
+///
+/// @param qualified if true then use qualified names in the resulting
+/// type name.
+///
+/// @param internal if true then the resulting type name is going to
+/// be used for type canonicalization purposes.
+///
+/// @return the name of the pointer to array type.
+static string
+add_outer_pointer_to_array_type_expr(const type_base_sptr& pointer_to_ar,
+				     const string& input, bool qualified,
+				     bool internal)
+{return add_outer_pointer_to_array_type_expr(pointer_to_ar.get(),
+					     input, qualified, internal);}
+
+/// Emit the name of a pointer declaration.
+///
+/// @param the pointer to consider.
+///
+/// @param idname the name of the variable that has @p as a type or
+/// the id of the type.  If it's empty then the resulting name is
+/// going to be the abstract name of the type.
+///
+/// @param qualified if true then the type name is going to be
+/// fully qualified.
+///
+/// @param internal if true then the type name is going to be used for
+/// type canonicalization purposes.
+static interned_string
+pointer_declaration_name(const type_base* ptr,
+			 const string& idname,
+			 bool qualified, bool internal)
+{
+  if (!ptr)
+    return interned_string();
+
+  type_base_sptr pointed_to_type;
+  string star_or_ref;
+  if (const pointer_type_def* p = is_pointer_type(ptr))
+    {
+      pointed_to_type = p->get_pointed_to_type();
+      star_or_ref = "*";
+    }
+  else if (const reference_type_def* p = is_reference_type(ptr))
+    {
+      pointed_to_type = p->get_pointed_to_type();
+      star_or_ref = "&";
+    }
+
+  if (!pointed_to_type)
+    return interned_string();
+
+  string result;
+  if (is_npaf_type(pointed_to_type)
+      || !(is_function_type(pointed_to_type)
+	   || is_array_type(pointed_to_type)))
+    {
+      result = get_type_name(pointed_to_type,
+			     qualified,
+			     internal)
+	+ star_or_ref;
+
+      if (!idname.empty())
+	result += idname;
+    }
+  else
+    {
+      // derived type
+      if (is_function_type(pointed_to_type))
+	result = add_outer_pointer_to_fn_type_expr(ptr, idname,
+						   qualified, internal);
+      else if (is_array_type(pointed_to_type))
+	result = add_outer_pointer_to_array_type_expr(ptr, idname,
+						      qualified, internal);
+      else
+	ABG_ASSERT_NOT_REACHED;
+    }
+  return ptr->get_environment().intern(result);
+}
+
+
+/// Emit the name of a pointer declaration.
+///
+/// @param the pointer to consider.
+///
+/// @param the name of the variable that has @p as a type.  If it's
+/// empty then the resulting name is going to be the abstract name of
+/// the type.
+///
+/// @param qualified if true then the type name is going to be
+/// fully qualified.
+///
+/// @param internal if true then the type name is going to be used for
+/// type canonicalization purposes.
+static interned_string
+pointer_declaration_name(const type_base_sptr& ptr,
+			 const string& variable_name,
+			 bool qualified, bool internal)
+{return pointer_declaration_name(ptr.get(), variable_name,
+				 qualified, internal);}
+
+/// Emit the name of a array declaration.
+///
+/// @param the array to consider.
+///
+/// @param the name of the variable that has @p as a type.  If it's
+/// empty then the resulting name is going to be the abstract name of
+/// the type.
+///
+/// @param qualified if true then the type name is going to be
+/// fully qualified.
+///
+/// @param internal if true then the type name is going to be used for
+/// type canonicalization purposes.
+static interned_string
+array_declaration_name(const array_type_def* array,
+		       const string& variable_name,
+		       bool qualified, bool internal)
+{
+  if (!array)
+    return interned_string();
+
+  type_base_sptr e_type = array->get_element_type();
+  string e_type_repr =
+    (e_type
+     ? get_type_name(e_type, qualified, internal)
+     : string("void"));
+
+  string result;
+  if (is_ada_language(array->get_language()))
+    {
+      std::ostringstream o;
+      if (!variable_name.empty())
+	o << variable_name << " is ";
+      o << "array ("
+	<< array->get_subrange_representation()
+	<< ") of " << e_type_repr;
+      result = o.str();
+    }
+  else
+    {
+      if (is_npaf_type(e_type)
+	  || !(is_pointer_to_function_type(e_type)
+	       || is_pointer_to_array_type(e_type)))
+	{
+	  result = e_type_repr;
+	  if (!variable_name.empty())
+	    result += variable_name;
+	  result += array->get_subrange_representation();
+	}
+      else if (pointer_type_def_sptr p = is_pointer_type(e_type))
+	{
+	  string s = variable_name + array->get_subrange_representation();
+	  result = pointer_declaration_name(p, s, qualified, internal);
+	}
+      else
+	ABG_ASSERT_NOT_REACHED;
+    }
+  return array->get_environment().intern(result);
+}
+
+/// Emit the name of a array declaration.
+///
+/// @param the array to consider.
+///
+/// @param the name of the variable that has @p as a type.  If it's
+/// empty then the resulting name is going to be the abstract name of
+/// the type.
+///
+/// @param qualified if true then the type name is going to be
+/// fully qualified.
+///
+/// @param internal if true then the type name is going to be used for
+/// type canonicalization purposes.
+static interned_string
+array_declaration_name(const array_type_def_sptr& array,
+		       const string& variable_name,
+		       bool qualified, bool internal)
+{return array_declaration_name(array.get(), variable_name,
+			       qualified, internal);}
 bool
 ir_traversable_base::traverse(ir_node_visitor&)
 {return true;}

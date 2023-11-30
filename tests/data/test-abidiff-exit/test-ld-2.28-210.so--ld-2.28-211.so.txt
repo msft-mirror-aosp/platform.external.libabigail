@@ -7,10 +7,10 @@ Variables changes summary: 0 Removed, 1 Changed, 0 Added variable
     type of variable changed:
       type size hasn't changed
       6 data member changes:
-        'int (const char**, const char**, bool*, void (void*)*, void*)* _dl_catch_error' offset changed from 5120 to 5376 (in bits) (by +256 bits)
-        'void (void*)* _dl_error_free' offset changed from 5184 to 5440 (in bits) (by +256 bits)
-        'void* (link_map*)* _dl_tls_get_addr_soft' offset changed from 5248 to 5120 (in bits) (by -128 bits)
-        'int ()* _dl_discover_osversion' offset changed from 5312 to 5184 (in bits) (by -128 bits)
+        'int (* _dl_catch_error)(const char**, const char**, bool*, void*, void*)' offset changed from 5120 to 5376 (in bits) (by +256 bits)
+        'void (* _dl_error_free)(void*)' offset changed from 5184 to 5440 (in bits) (by +256 bits)
+        'void* (* _dl_tls_get_addr_soft)(link_map*)' offset changed from 5248 to 5120 (in bits) (by -128 bits)
+        'int (* _dl_discover_osversion)(void)' offset changed from 5312 to 5184 (in bits) (by -128 bits)
         'audit_ifaces* _dl_audit' offset changed from 5376 to 5248 (in bits) (by -128 bits)
         'unsigned int _dl_naudit' offset changed from 5440 to 5312 (in bits) (by -128 bits)
 

@@ -5,15 +5,15 @@ Removed/Changed/Added variables summary: 1 Removed, 1 Changed, 1 Added variable
 
 1 Removed function:
 
-  [D] 'function int fun_removed()'    {fun_removed}
+  [D] 'function int fun_removed(void)'    {fun_removed}
 
 1 Added function:
 
-  [A] 'function long int fun_added()'    {fun_added}
+  [A] 'function long int fun_added(void)'    {fun_added}
 
 1 function with some sub-type change:
 
-  [C] 'function int fun_changed()' has some sub-type changes:
+  [C] 'function int fun_changed(void)' has some sub-type changes:
     return type changed:
       type name changed from 'int' to 'long int'
       type size changed from 32 to 64 (in bits)

@@ -1485,9 +1485,6 @@ public:
   friend class_decl*
   is_class_type(const type_or_decl_base*);
 
-  friend pointer_type_def*
-  is_pointer_type(type_or_decl_base*);
-
   friend type_base*
   is_type(const type_or_decl_base*);
 

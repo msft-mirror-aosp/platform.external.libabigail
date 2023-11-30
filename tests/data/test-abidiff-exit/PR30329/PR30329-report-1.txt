@@ -142,7 +142,7 @@ Variables changes summary: 0 Removed, 0 Changed, 0 Added variable
                                   'void* pTrueEnd', at offset 704 (in bits) at sqlite3.c:16849:1
                             'sqlite3_xauth xAuth' offset changed from 3968 to 4032 (in bits) (by +64 bits)
                             'void* pAuthArg' offset changed from 4032 to 4096 (in bits) (by +64 bits)
-                            'int (void*)* xProgress' offset changed from 4096 to 4160 (in bits) (by +64 bits)
+                            'int (* xProgress)(void*)' offset changed from 4096 to 4160 (in bits) (by +64 bits)
                             'void* pProgressArg' offset changed from 4160 to 4224 (in bits) (by +64 bits)
                             'unsigned int nProgressOps' offset changed from 4224 to 4288 (in bits) (by +64 bits)
                             'int nVTrans' offset changed from 4256 to 4320 (in bits) (by +64 bits)
@@ -165,6 +165,6 @@ Variables changes summary: 0 Removed, 0 Changed, 0 Added variable
                             'sqlite3* pBlockingConnection' offset changed from 6144 to 6208 (in bits) (by +64 bits)
                             'sqlite3* pUnlockConnection' offset changed from 6208 to 6272 (in bits) (by +64 bits)
                             'void* pUnlockArg' offset changed from 6272 to 6336 (in bits) (by +64 bits)
-                            'void (void**, int)* xUnlockNotify' offset changed from 6336 to 6400 (in bits) (by +64 bits)
+                            'void (* xUnlockNotify)(void**, int)' offset changed from 6336 to 6400 (in bits) (by +64 bits)
                             'sqlite3* pNextBlocked' offset changed from 6400 to 6464 (in bits) (by +64 bits)
 

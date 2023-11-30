@@ -5,8 +5,8 @@ Variable symbols changes summary: 0 Removed, 0 Added variable symbol not referen
 
 82 Removed functions:
 
-  [D] 'function void COI::fini()'
-  [D] 'function bool COI::init()'
+  [D] 'function void COI::fini(void)'
+  [D] 'function bool COI::init(void)'
   [D] 'function void* DL_sym(void*, const char*, const char*)'
   [D] 'method COIRESULT Engine::compute(const std::__cxx11::list<coibuffer*, std::allocator<coibuffer*> >&, void*, uint16_t, void*, uint16_t, uint32_t, const COIEVENT*, COIEVENT*)'
   [D] 'method void FuncList::dump()'
@@ -24,7 +24,7 @@ Variable symbols changes summary: 0 Removed, 0 Added variable symbol not referen
   [D] 'method void MicEnvVar::mic_parse_env_var_list(int, char*)'
   [D] 'method MicEnvVar::~MicEnvVar(int)'
   [D] 'method bool MyoWrapper::LoadLibrary()'
-  [D] 'function void ORSL::init()'
+  [D] 'function void ORSL::init(void)'
   [D] 'function void ORSL::release(int)'
   [D] 'function bool ORSL::reserve(int)'
   [D] 'function bool ORSL::try_reserve(int)'
@@ -40,7 +40,7 @@ Variable symbols changes summary: 0 Removed, 0 Added variable symbol not referen
   [D] 'method bool OffloadDescriptor::wait_dependencies(void**, int)'
   [D] 'function void Offload_Report_Epilog(OffloadHostTimerData*)'
   [D] 'function void Offload_Report_Prolog(OffloadHostTimerData*)'
-  [D] 'function void Offload_Timer_Print()'
+  [D] 'function void Offload_Timer_Print(void)'
   [D] 'method void VarList::dump()'
   [D] 'method void VarList::table_copy(void*, int64_t)'
   [D] 'method void VarList::table_patch_names(int64_t)'
@@ -54,8 +54,8 @@ Variable symbols changes summary: 0 Removed, 0 Added variable symbol not referen
   [D] 'function bool __dv_is_allocated(const ArrDesc*)'
   [D] 'function bool __dv_is_contiguous(const ArrDesc*)'
   [D] 'function void __liboffload_error_support(error_types, ...)'
-  [D] 'function int __offload_init_library()'
-  [D] 'function void __offload_myoFini()'
+  [D] 'function int __offload_init_library(void)'
+  [D] 'function void __offload_myoFini(void)'
   [D] 'function bool __offload_parse_int_string(const char*, int64_t&)'
   [D] 'function bool __offload_parse_size_string(const char*, uint64_t&)'
   [D] 'function int64_t cean_get_transf_size(CeanReadRanges*)'
@@ -308,13 +308,13 @@ Variable symbols changes summary: 0 Removed, 0 Added variable symbol not referen
   [A] 'method __gnu_cxx::__normal_iterator<const VarTable::Entry**, std::vector<const VarTable::Entry*, std::allocator<const VarTable::Entry*> > >& __gnu_cxx::__normal_iterator<const VarTable::Entry**, std::vector<const VarTable::Entry*, std::allocator<const VarTable::Entry*> > >::operator++()'
   [A] 'method __gnu_cxx::__normal_iterator<const VarTable::Entry**, std::vector<const VarTable::Entry*, std::allocator<const VarTable::Entry*> > > __gnu_cxx::__normal_iterator<const VarTable::Entry**, std::vector<const VarTable::Entry*, std::allocator<const VarTable::Entry*> > >::operator-(__gnu_cxx::__normal_iterator<const VarTable::Entry**, std::vector<const VarTable::Entry*, std::allocator<const VarTable::Entry*> > >::difference_type) const'
   [A] 'method __gnu_cxx::__normal_iterator<const VarTable::Entry**, std::vector<const VarTable::Entry*, std::allocator<const VarTable::Entry*> > >& __gnu_cxx::__normal_iterator<const VarTable::Entry**, std::vector<const VarTable::Entry*, std::allocator<const VarTable::Entry*> > >::operator--()'
-  [A] 'method void __gnu_cxx::__ops::_Iter_comp_iter<bool (*)(const VarTable::Entry*, const VarTable::Entry*)>::_Iter_comp_iter(bool (const VarTable::Entry*, const VarTable::Entry*)*)'
+  [A] 'method void __gnu_cxx::__ops::_Iter_comp_iter<bool (*)(const VarTable::Entry*, const VarTable::Entry*)>::_Iter_comp_iter(bool (*)(const VarTable::Entry*, const VarTable::Entry*))'
   [A] 'method bool __gnu_cxx::__ops::_Iter_comp_iter<bool (*)(const VarTable::Entry*, const VarTable::Entry*)>::operator()<__gnu_cxx::__normal_iterator<const VarTable::Entry**, std::vector<const VarTable::Entry*> >, __gnu_cxx::__normal_iterator<const VarTable::Entry**, std::vector<const VarTable::Entry*> > >(__gnu_cxx::__normal_iterator<const VarTable::Entry**, std::vector<const VarTable::Entry*, std::allocator<const VarTable::Entry*> > >, __gnu_cxx::__normal_iterator<const VarTable::Entry**, std::vector<const VarTable::Entry*, std::allocator<const VarTable::Entry*> > >)'
-  [A] 'method void __gnu_cxx::__ops::_Iter_comp_val<bool (*)(const VarTable::Entry*, const VarTable::Entry*)>::_Iter_comp_val(bool (const VarTable::Entry*, const VarTable::Entry*)*)'
+  [A] 'method void __gnu_cxx::__ops::_Iter_comp_val<bool (*)(const VarTable::Entry*, const VarTable::Entry*)>::_Iter_comp_val(bool (*)(const VarTable::Entry*, const VarTable::Entry*))'
   [A] 'method bool __gnu_cxx::__ops::_Iter_comp_val<bool (*)(const VarTable::Entry*, const VarTable::Entry*)>::operator()<__gnu_cxx::__normal_iterator<const VarTable::Entry**, std::vector<const VarTable::Entry*> >, const VarTable::Entry*>(__gnu_cxx::__normal_iterator<const VarTable::Entry**, std::vector<const VarTable::Entry*, std::allocator<const VarTable::Entry*> > >, const VarTable::Entry*&)'
-  [A] 'method void __gnu_cxx::__ops::_Val_comp_iter<bool (*)(const VarTable::Entry*, const VarTable::Entry*)>::_Val_comp_iter(bool (const VarTable::Entry*, const VarTable::Entry*)*)'
+  [A] 'method void __gnu_cxx::__ops::_Val_comp_iter<bool (*)(const VarTable::Entry*, const VarTable::Entry*)>::_Val_comp_iter(bool (*)(const VarTable::Entry*, const VarTable::Entry*))'
   [A] 'method bool __gnu_cxx::__ops::_Val_comp_iter<bool (*)(const VarTable::Entry*, const VarTable::Entry*)>::operator()<const VarTable::Entry*, __gnu_cxx::__normal_iterator<const VarTable::Entry**, std::vector<const VarTable::Entry*> > >(const VarTable::Entry*&, __gnu_cxx::__normal_iterator<const VarTable::Entry**, std::vector<const VarTable::Entry*, std::allocator<const VarTable::Entry*> > >)'
-  [A] 'function __gnu_cxx::__ops::_Iter_comp_iter<bool (*)(const VarTable::Entry*, const VarTable::Entry*)> __gnu_cxx::__ops::__iter_comp_iter<bool (*)(const VarTable::Entry*, const VarTable::Entry*)>(bool (const VarTable::Entry*, const VarTable::Entry*)*)'
+  [A] 'function __gnu_cxx::__ops::_Iter_comp_iter<bool (*)(const VarTable::Entry*, const VarTable::Entry*)> __gnu_cxx::__ops::__iter_comp_iter<bool (*)(const VarTable::Entry*, const VarTable::Entry*)>(bool (*)(const VarTable::Entry*, const VarTable::Entry*))'
   [A] 'function __gnu_cxx::__ops::_Iter_comp_val<bool (*)(const VarTable::Entry*, const VarTable::Entry*)> __gnu_cxx::__ops::__iter_comp_val<bool (*)(const VarTable::Entry*, const VarTable::Entry*)>(__gnu_cxx::__ops::_Iter_comp_iter<bool (*)(const VarTable::Entry*, const VarTable::Entry*)>)'
   [A] 'function __gnu_cxx::__ops::_Val_comp_iter<bool (*)(const VarTable::Entry*, const VarTable::Entry*)> __gnu_cxx::__ops::__val_comp_iter<bool (*)(const VarTable::Entry*, const VarTable::Entry*)>(__gnu_cxx::__ops::_Iter_comp_iter<bool (*)(const VarTable::Entry*, const VarTable::Entry*)>)'
   [A] 'method __gnu_cxx::new_allocator<const VarTable::Entry*>::pointer __gnu_cxx::new_allocator<const VarTable::Entry*>::allocate(__gnu_cxx::new_allocator<const VarTable::Entry*>::size_type, void*)'
@@ -1154,7 +1154,7 @@ Variable symbols changes summary: 0 Removed, 0 Added variable symbol not referen
   [A] 'method std::pair<std::_Rb_tree_const_iterator<PtrData>, bool> std::set<PtrData, std::less<PtrData>, std::allocator<PtrData> >::insert(std::set<PtrData, std::less<PtrData>, std::allocator<PtrData> >::value_type&)'
   [A] 'method void std::set<PtrData, std::less<PtrData>, std::allocator<PtrData> >::set()'
   [A] 'function std::_Setprecision std::setprecision(int)'
-  [A] 'function void std::sort<__gnu_cxx::__normal_iterator<const VarTable::Entry**, std::vector<const VarTable::Entry*> >, bool (*)(const VarTable::Entry*, const VarTable::Entry*)>(__gnu_cxx::__normal_iterator<const VarTable::Entry**, std::vector<const VarTable::Entry*, std::allocator<const VarTable::Entry*> > >, __gnu_cxx::__normal_iterator<const VarTable::Entry**, std::vector<const VarTable::Entry*, std::allocator<const VarTable::Entry*> > >, bool (const VarTable::Entry*, const VarTable::Entry*)*)'
+  [A] 'function void std::sort<__gnu_cxx::__normal_iterator<const VarTable::Entry**, std::vector<const VarTable::Entry*> >, bool (*)(const VarTable::Entry*, const VarTable::Entry*)>(__gnu_cxx::__normal_iterator<const VarTable::Entry**, std::vector<const VarTable::Entry*, std::allocator<const VarTable::Entry*> > >, __gnu_cxx::__normal_iterator<const VarTable::Entry**, std::vector<const VarTable::Entry*, std::allocator<const VarTable::Entry*> > >, bool (*)(const VarTable::Entry*, const VarTable::Entry*))'
   [A] 'function void std::swap<const VarTable::Entry*>(const VarTable::Entry*&, const VarTable::Entry*&)'
   [A] 'method void std::tuple<long unsigned int const&>::tuple(std::tuple<long unsigned int const&>&)'
   [A] 'method void std::tuple<long unsigned int const&>::tuple<void, 1u>(const unsigned long int&)'
@@ -1263,7 +1263,7 @@ Variable symbols changes summary: 0 Removed, 0 Added variable symbol not referen
                       struct {uint32_t is_static; uint32_t is_static_dstn; uint32_t has_length; uint32_t is_stack_buf; uint32_t sink_addr; uint32_t alloc_disp; uint32_t is_noncont_src; uint32_t is_noncont_dst;}
                     to:
                       struct {uint32_t is_static; uint32_t is_static_dstn; uint32_t has_length; uint32_t is_stack_buf; uint32_t targetptr; uint32_t preallocated; uint32_t is_pointer; uint32_t sink_addr; uint32_t alloc_disp; uint32_t is_noncont_src; uint32_t is_noncont_dst; uint32_t always_copy; uint32_t always_delete; uint32_t pin;}
-          type of 'OffloadDescriptor::VarExtra* m_vars_extra' changed:
+          type of 'VarExtra* m_vars_extra' changed:
             in pointed to type 'struct OffloadDescriptor::VarExtra' at offload_host.h:216:1:
               type size changed from 0x48 to 0x50 (in bytes)
               2 data member insertions:
@@ -1418,8 +1418,8 @@ Variable symbols changes summary: 0 Removed, 0 Added variable symbol not referen
         entity changed from 'struct InitTableEntry' to compatible type 'typedef InitTableEntry' at offload_table.h:296:1
           type size hasn't changed
           1 data member change:
-            type of 'void ()* func' changed:
-              in pointed to type 'function type void ()':
+            type of 'void (* func)(void)' changed:
+              in pointed to type 'function type void (void)':
                 parameter 1 of type 'typedef MyoArena' was added
 
   [C] 'function void __offload_register_image(void*)' at offload_host.cpp:4245:1 has some indirect sub-type changes:
@@ -1435,28 +1435,28 @@ Variable symbols changes summary: 0 Removed, 0 Added variable symbol not referen
 
 47 Removed variables:
 
-  [D] 'typedef COIRESULT (typedef COIBUFFER, typedef COIBUFFER, typedef uint64_t, typedef uint64_t, typedef uint64_t, typedef COI_COPY_TYPE, typedef uint32_t, const COIEVENT*, COIEVENT*)* COI::BufferCopy'
-  [D] 'typedef COIRESULT (typedef uint64_t, typedef COI_BUFFER_TYPE, typedef uint32_t, void*, typedef uint32_t, const COIPROCESS*, COIBUFFER*)* COI::BufferCreate'
-  [D] 'typedef COIRESULT (typedef uint64_t, typedef COI_BUFFER_TYPE, typedef uint32_t, void*, typedef uint32_t, const COIPROCESS*, COIBUFFER*)* COI::BufferCreateFromMemory'
-  [D] 'typedef COIRESULT (typedef COIBUFFER)* COI::BufferDestroy'
-  [D] 'typedef COIRESULT (typedef COIBUFFER, uint64_t*)* COI::BufferGetSinkAddress'
-  [D] 'typedef COIRESULT (typedef COIBUFFER, typedef uint64_t, typedef uint64_t, typedef COI_MAP_TYPE, typedef uint32_t, const COIEVENT*, COIEVENT*, COIMAPINSTANCE*, void**)* COI::BufferMap'
-  [D] 'typedef COIRESULT (typedef COIBUFFER, typedef uint64_t, void*, typedef uint64_t, typedef COI_COPY_TYPE, typedef uint32_t, const COIEVENT*, COIEVENT*)* COI::BufferRead'
-  [D] 'typedef COIRESULT (typedef COIBUFFER, typedef COIPROCESS, typedef COI_BUFFER_STATE, typedef COI_BUFFER_MOVE_FLAG, typedef uint32_t, const COIEVENT*, COIEVENT*)* COI::BufferSetState'
-  [D] 'typedef COIRESULT (typedef COIMAPINSTANCE, typedef uint32_t, const COIEVENT*, COIEVENT*)* COI::BufferUnmap'
-  [D] 'typedef COIRESULT (typedef COIBUFFER, typedef uint64_t, void*, typedef uint64_t, typedef COI_COPY_TYPE, typedef uint32_t, const COIEVENT*, COIEVENT*)* COI::BufferWrite'
-  [D] 'typedef COIRESULT (typedef COI_ISA_TYPE, uint32_t*)* COI::EngineGetCount'
-  [D] 'typedef COIRESULT (typedef COI_ISA_TYPE, typedef uint32_t, COIENGINE*)* COI::EngineGetHandle'
-  [D] 'typedef COIRESULT (typedef uint16_t, const COIEVENT*, typedef int32_t, typedef uint8_t, uint32_t*, uint32_t*)* COI::EventWait'
-  [D] 'typedef uint64_t ()* COI::PerfGetCycleFrequency'
-  [D] 'typedef COIRESULT (typedef COIPROCESS, uint64_t*, typedef uint32_t, COIPIPELINE*)* COI::PipelineCreate'
-  [D] 'typedef COIRESULT (typedef COIPIPELINE)* COI::PipelineDestroy'
-  [D] 'typedef COIRESULT (typedef COIPIPELINE, typedef COIFUNCTION, typedef uint32_t, const COIBUFFER*, const COI_ACCESS_FLAGS*, typedef uint32_t, const COIEVENT*, void*, typedef uint16_t, void*, typedef uint16_t, COIEVENT*)* COI::PipelineRunFunction'
-  [D] 'typedef COIRESULT (typedef COIENGINE, const char*, void*, typedef uint64_t, int, const char**, typedef uint8_t, const char**, typedef uint8_t, const char*, typedef uint64_t, const char*, const char*, typedef uint64_t, COIPROCESS*)* COI::ProcessCreateFromMemory'
-  [D] 'typedef COIRESULT (typedef COIPROCESS, typedef int32_t, typedef uint8_t, int8_t*, uint32_t*)* COI::ProcessDestroy'
-  [D] 'typedef COIRESULT (typedef COIPROCESS, typedef uint32_t, const char**, COIFUNCTION*)* COI::ProcessGetFunctionHandles'
-  [D] 'typedef COIRESULT (typedef COIPROCESS, void*, typedef uint64_t, const char*, const char*, const char*, typedef uint64_t, typedef uint32_t, COILIBRARY*)* COI::ProcessLoadLibraryFromMemory'
-  [D] 'typedef COIRESULT (typedef uint32_t, void**, const uint64_t*, const char**, const uint64_t*)* COI::ProcessRegisterLibraries'
+  [D] 'COIRESULT (* COI::BufferCopy)(COIBUFFER, COIBUFFER, uint64_t, uint64_t, uint64_t, COI_COPY_TYPE, uint32_t, const COIEVENT*, COIEVENT*)'
+  [D] 'COIRESULT (* COI::BufferCreate)(uint64_t, COI_BUFFER_TYPE, uint32_t, void*, uint32_t, const COIPROCESS*, COIBUFFER*)'
+  [D] 'COIRESULT (* COI::BufferCreateFromMemory)(uint64_t, COI_BUFFER_TYPE, uint32_t, void*, uint32_t, const COIPROCESS*, COIBUFFER*)'
+  [D] 'COIRESULT (* COI::BufferDestroy)(COIBUFFER)'
+  [D] 'COIRESULT (* COI::BufferGetSinkAddress)(COIBUFFER, uint64_t*)'
+  [D] 'COIRESULT (* COI::BufferMap)(COIBUFFER, uint64_t, uint64_t, COI_MAP_TYPE, uint32_t, const COIEVENT*, COIEVENT*, COIMAPINSTANCE*, void**)'
+  [D] 'COIRESULT (* COI::BufferRead)(COIBUFFER, uint64_t, void*, uint64_t, COI_COPY_TYPE, uint32_t, const COIEVENT*, COIEVENT*)'
+  [D] 'COIRESULT (* COI::BufferSetState)(COIBUFFER, COIPROCESS, COI_BUFFER_STATE, COI_BUFFER_MOVE_FLAG, uint32_t, const COIEVENT*, COIEVENT*)'
+  [D] 'COIRESULT (* COI::BufferUnmap)(COIMAPINSTANCE, uint32_t, const COIEVENT*, COIEVENT*)'
+  [D] 'COIRESULT (* COI::BufferWrite)(COIBUFFER, uint64_t, void*, uint64_t, COI_COPY_TYPE, uint32_t, const COIEVENT*, COIEVENT*)'
+  [D] 'COIRESULT (* COI::EngineGetCount)(COI_ISA_TYPE, uint32_t*)'
+  [D] 'COIRESULT (* COI::EngineGetHandle)(COI_ISA_TYPE, uint32_t, COIENGINE*)'
+  [D] 'COIRESULT (* COI::EventWait)(uint16_t, const COIEVENT*, int32_t, uint8_t, uint32_t*, uint32_t*)'
+  [D] 'uint64_t (* COI::PerfGetCycleFrequency)(void)'
+  [D] 'COIRESULT (* COI::PipelineCreate)(COIPROCESS, uint64_t*, uint32_t, COIPIPELINE*)'
+  [D] 'COIRESULT (* COI::PipelineDestroy)(COIPIPELINE)'
+  [D] 'COIRESULT (* COI::PipelineRunFunction)(COIPIPELINE, COIFUNCTION, uint32_t, const COIBUFFER*, const COI_ACCESS_FLAGS*, uint32_t, const COIEVENT*, void*, uint16_t, void*, uint16_t, COIEVENT*)'
+  [D] 'COIRESULT (* COI::ProcessCreateFromMemory)(COIENGINE, const char*, void*, uint64_t, int, const char**, uint8_t, const char**, uint8_t, const char*, uint64_t, const char*, const char*, uint64_t, COIPROCESS*)'
+  [D] 'COIRESULT (* COI::ProcessDestroy)(COIPROCESS, int32_t, uint8_t, int8_t*, uint32_t*)'
+  [D] 'COIRESULT (* COI::ProcessGetFunctionHandles)(COIPROCESS, uint32_t, const char**, COIFUNCTION*)'
+  [D] 'COIRESULT (* COI::ProcessLoadLibraryFromMemory)(COIPROCESS, void*, uint64_t, const char*, const char*, const char*, uint64_t, uint32_t, COILIBRARY*)'
+  [D] 'COIRESULT (* COI::ProcessRegisterLibraries)(uint32_t, void**, const uint64_t*, const char**, const uint64_t*)'
   [D] 'bool COI::is_available'
   [D] 'static const int MicEnvVar::any_card'
   [D] 'FuncList __offload_entries'
@@ -1485,10 +1485,10 @@ Variable symbols changes summary: 0 Removed, 0 Added variable symbol not referen
 
 11 Added variables:
 
-  [A] 'typedef COIRESULT (typedef COIENGINE, typedef uint32_t, COI_ENGINE_INFO*)* COI::EngineGetInfo'
-  [A] 'typedef COIRESULT (typedef COIEVENT, void (typedef COIEVENT, typedef COIRESULT, void*)*, void*, typedef uint64_t)* COI::EventRegisterCallback'
-  [A] 'typedef COIRESULT (uint64_t*)* COI::PipelineClearCPUMask'
-  [A] 'typedef COIRESULT (typedef COIPROCESS, typedef uint32_t, typedef uint8_t, uint64_t*)* COI::PipelineSetCPUMask'
+  [A] 'COIRESULT (* COI::EngineGetInfo)(COIENGINE, uint32_t, COI_ENGINE_INFO*)'
+  [A] 'COIRESULT (* COI::EventRegisterCallback)(COIEVENT, void (*)(COIEVENT, COIRESULT, void*), void*, uint64_t)'
+  [A] 'COIRESULT (* COI::PipelineClearCPUMask)(uint64_t*)'
+  [A] 'COIRESULT (* COI::PipelineSetCPUMask)(COIPROCESS, uint32_t, uint8_t, uint64_t*)'
   [A] 'static Stream::StreamMap Stream::all_streams'
   [A] 'static mutex_t Stream::m_stream_lock'
   [A] 'static uint64_t Stream::m_streams_count'

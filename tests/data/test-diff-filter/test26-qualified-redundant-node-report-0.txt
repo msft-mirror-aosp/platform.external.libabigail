@@ -11,7 +11,7 @@ Variables changes summary: 0 Removed, 0 Changed, 0 Added variable
             underlying type 'struct S' changed:
               type size hasn't changed
               1 data member changes (1 filtered):
-                type of 'FooStruct::Embedded* m1' changed:
+                type of 'Embedded* m1' changed:
                   in pointed to type 'struct FooStruct::Embedded':
                     type size hasn't changed
                     1 data member insertion:

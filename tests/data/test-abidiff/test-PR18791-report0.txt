@@ -16,11 +16,11 @@ Variables changes summary: 0 Removed, 0 Changed, 0 Added variable
       in pointed to type 'struct sigc::connection':
         type size hasn't changed
         1 data member change:
-          type of 'sigc::slot_base* slot_' changed:
+          type of 'slot_base* slot_' changed:
             in pointed to type 'class sigc::slot_base':
               type size hasn't changed
               1 data member change:
-                type of 'sigc::slot_base::rep_type* rep_' changed:
+                type of 'rep_type* rep_' changed:
                   in pointed to type 'typedef sigc::slot_base::rep_type':
                     underlying type 'struct sigc::internal::slot_rep' changed:
                       type size hasn't changed
@@ -28,7 +28,7 @@ Variables changes summary: 0 Removed, 0 Changed, 0 Added variable
                         'struct sigc::trackable' changed:
                           type size hasn't changed
                           1 data member change:
-                            type of 'sigc::internal::trackable_callback_list* callback_list_' changed:
+                            type of 'trackable_callback_list* callback_list_' changed:
                               in pointed to type 'struct sigc::internal::trackable_callback_list':
                                 type size changed from 192 to 256 (in bits)
                                 2 data member changes:
@@ -169,7 +169,7 @@ Variables changes summary: 0 Removed, 0 Changed, 0 Added variable
           'struct sigc::trackable' changed:
             details were reported earlier
         1 data member change:
-          type of 'sigc::internal::signal_impl* impl_' changed:
+          type of 'signal_impl* impl_' changed:
             pointed to type 'struct sigc::internal::signal_impl' changed, as reported earlier
 
   [C] 'method bool sigc::signal_base::blocked()' has some indirect sub-type changes:

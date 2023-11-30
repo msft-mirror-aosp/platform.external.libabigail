@@ -11,15 +11,15 @@ Variables changes summary: 0 Removed, 0 Changed, 0 Added variable
 
 3 functions with some indirect sub-type change:
 
-  [C] 'function callback fn0()' has some indirect sub-type changes:
+  [C] 'function callback fn0(void)' has some indirect sub-type changes:
     return type changed:
-      underlying type 'int (int)*' changed:
+      underlying type 'int (*)(int)' changed:
         in pointed to type 'function type int (int)':
           return type changed:
             type name changed from 'int' to 'void'
             type size changed from 32 to 0 (in bits)
 
-  [C] 'function double (int)* fn1()' has some indirect sub-type changes:
+  [C] 'function double (*fn1(void))(int)' has some indirect sub-type changes:
     return type changed:
       in pointed to type 'function type double (int)':
         return type changed:
@@ -30,14 +30,14 @@ Variables changes summary: 0 Removed, 0 Changed, 0 Added variable
     parameter 1 of type 'class S' has sub-type changes:
       type size hasn't changed
       3 data member changes:
-        type of 'int ()* fnptr0' changed:
-          in pointed to type 'function type int ()':
+        type of 'int (* fnptr0)(void)' changed:
+          in pointed to type 'function type int (void)':
             parameter 1 of type 'double' was added
-        type of 'int ()* fnptr1' changed:
-          in pointed to type 'function type int ()':
-            entity changed from 'function type int ()' to 'void'
+        type of 'int (* fnptr1)(void)' changed:
+          in pointed to type 'function type int (void)':
+            entity changed from 'function type int (void)' to 'void'
             type size changed from 64 to 0 (in bits)
-        type of 'int ()* fnptr2' changed:
-          entity changed from 'int ()*' to 'int'
+        type of 'int (* fnptr2)(void)' changed:
+          entity changed from 'int (*)(void)' to 'int'
           type size changed from 64 to 32 (in bits)
 

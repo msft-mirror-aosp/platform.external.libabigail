@@ -40,7 +40,7 @@ Variable symbols changes summary: 0 Removed, 0 Added variable symbol not referen
     return type changed:
       type size hasn't changed
       1 data member change:
-        type of 'std::__cxx11::string* raw_' changed:
+        type of 'string* raw_' changed:
           in pointed to type 'typedef std::__cxx11::string' at stringfwd.h:74:1:
             underlying type 'class std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >' at basic_string.h:72:1 changed:
               type size hasn't changed

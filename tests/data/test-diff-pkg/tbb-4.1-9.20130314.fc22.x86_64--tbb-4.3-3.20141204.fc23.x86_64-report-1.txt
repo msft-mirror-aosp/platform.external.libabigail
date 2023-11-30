@@ -6,7 +6,7 @@
 
   17 Added functions:
 
-    [A] 'method int tbb::interface7::internal::task_arena_base::internal_current_slot()'    {_ZN3tbb10interface78internal15task_arena_base21internal_current_slotEv}
+    [A] 'method int tbb::interface7::internal::task_arena_base::internal_current_slot(void)'    {_ZN3tbb10interface78internal15task_arena_base21internal_current_slotEv}
     [A] 'method void tbb::interface7::internal::task_arena_base::internal_enqueue(tbb::task&, intptr_t) const'    {_ZNK3tbb10interface78internal15task_arena_base16internal_enqueueERNS_4taskEl}
     [A] 'method void tbb::interface7::internal::task_arena_base::internal_execute(tbb::interface7::internal::delegate_base&) const'    {_ZNK3tbb10interface78internal15task_arena_base16internal_executeERNS1_13delegate_baseE}
     [A] 'method void tbb::interface7::internal::task_arena_base::internal_initialize()'    {_ZN3tbb10interface78internal15task_arena_base19internal_initializeEv}
@@ -32,7 +32,7 @@
           in unqualified underlying type 'class tbb::internal::allocate_root_with_context_proxy' at task.h:131:1:
             type size hasn't changed
             1 data member change:
-              type of 'tbb::task_group_context& my_context' changed:
+              type of 'task_group_context& my_context' changed:
                 in referenced type 'class tbb::task_group_context' at task.h:302:1:
                   type size hasn't changed
                   1 data member insertion:
@@ -116,8 +116,8 @@
     [D] 'function int rml::internal::__TBB_internal_posix_memalign(void**, size_t, size_t)'    {__TBB_internal_posix_memalign}
     [D] 'function void* rml::internal::__TBB_internal_realloc(void*, size_t)'    {__TBB_internal_realloc}
     [D] 'function void* safer_scalable_aligned_realloc(void*, size_t, size_t, void*)'    {safer_scalable_aligned_realloc}
-    [D] 'function void safer_scalable_free(void*, void (void*)*)'    {safer_scalable_free}
-    [D] 'function size_t safer_scalable_msize(void*, typedef size_t (void*)*)'    {safer_scalable_msize}
+    [D] 'function void safer_scalable_free(void*, void (*)(void*))'    {safer_scalable_free}
+    [D] 'function size_t safer_scalable_msize(void*, size_t (*)(void*))'    {safer_scalable_msize}
     [D] 'function void* safer_scalable_realloc(void*, size_t, void*)'    {safer_scalable_realloc}
 
   27 Added function symbols not referenced by debug info:

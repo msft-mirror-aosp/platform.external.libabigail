@@ -17,11 +17,11 @@
         in pointed to type 'struct sigc::connection':
           type size hasn't changed
           1 data member change:
-            type of 'sigc::slot_base* slot_' changed:
+            type of 'slot_base* slot_' changed:
               in pointed to type 'class sigc::slot_base':
                 type size hasn't changed
                 1 data member change:
-                  type of 'sigc::slot_base::rep_type* rep_' changed:
+                  type of 'rep_type* rep_' changed:
                     in pointed to type 'typedef sigc::slot_base::rep_type':
                       underlying type 'struct sigc::internal::slot_rep' changed:
                         type size hasn't changed
@@ -29,7 +29,7 @@
                           'struct sigc::trackable' changed:
                             type size hasn't changed
                             1 data member change:
-                              type of 'sigc::internal::trackable_callback_list* callback_list_' changed:
+                              type of 'trackable_callback_list* callback_list_' changed:
                                 in pointed to type 'struct sigc::internal::trackable_callback_list':
                                   type size changed from 192 to 256 (in bits)
                                   2 data member changes:

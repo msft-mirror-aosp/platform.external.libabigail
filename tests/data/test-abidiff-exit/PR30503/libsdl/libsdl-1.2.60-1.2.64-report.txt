@@ -9,10 +9,10 @@ Variables changes summary: 0 Removed, 0 Changed, 0 Added variable
         underlying type 'struct SDL12_AudioCVT' at SDL12_compat.c:880:1 changed:
           type size hasn't changed
           1 data member change:
-            type of 'void (SDL_AudioCVT*, typedef Uint16)* filters[10]' changed:
-              array element type 'void (SDL_AudioCVT*, typedef Uint16)*' changed:
-                entity changed from 'void (SDL_AudioCVT*, typedef Uint16)*' to compatible type 'typedef SDL12_AudioCVTFilter' at SDL12_compat.c:903:1
-                  in pointed to type 'function type void (SDL_AudioCVT*, typedef SDL_AudioFormat)':
+            type of 'void (* filters[10])(SDL_AudioCVT*, Uint16)' changed:
+              array element type 'void (*)(SDL_AudioCVT*, Uint16)' changed:
+                entity changed from 'void (*)(SDL_AudioCVT*, Uint16)' to compatible type 'typedef SDL12_AudioCVTFilter' at SDL12_compat.c:903:1
+                  in pointed to type 'function type void (SDL_AudioCVT*, SDL_AudioFormat)':
                     parameter 1 of type 'SDL_AudioCVT*' changed:
                       in pointed to type 'struct SDL_AudioCVT' at SDL12_compat.c:907:1:
                         type name changed from 'SDL_AudioCVT' to 'SDL12_AudioCVT'
@@ -21,6 +21,6 @@ Variables changes summary: 0 Removed, 0 Changed, 0 Added variable
                           'double len_ratio' offset changed from 288 to 320 (in bits) (by +32 bits)
                           name of 'SDL_AudioCVT::filters' changed to 'SDL12_AudioCVT::filters' at SDL12_compat.c:918:1, offset changed from 352 to 384 (in bits) (by +32 bits)
                           'int filter_index' offset changed from 992 to 1024 (in bits) (by +32 bits)
-              type name changed from 'void (SDL_AudioCVT*, typedef Uint16)*[10]' to 'SDL12_AudioCVTFilter[10]'
+              type name changed from 'void (*[10])(SDL_AudioCVT*, Uint16)' to 'SDL12_AudioCVTFilter[10]'
               type size hasn't changed
 
