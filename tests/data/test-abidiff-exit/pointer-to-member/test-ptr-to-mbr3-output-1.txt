@@ -1,0 +1,20 @@
+Functions changes summary: 0 Removed, 0 Changed, 0 Added function
+Variables changes summary: 0 Removed, 1 Changed, 0 Added variable
+
+1 Changed variable:
+
+  [C] 'int S::* pm' was changed to 'signed char U::* pm' at test-ptr-to-mbr3-v1.cc:6:1:
+    type of variable changed:
+      pointer-to-member type changed from: 'int S::* to: 'signed char U::*'
+      in data member type 'int' of pointed-to-member type 'int S::*':
+        type name changed from 'int' to 'signed char'
+        type size changed from 32 to 8 (in bits)
+      in containing type 'struct S' of pointed-to-member type 'int S::*' at test-ptr-to-mbr3-v1.cc:1:1:
+        type name changed from 'S' to 'U'
+        type size changed from 32 to 8 (in bits)
+        1 data member change:
+          type of 'int m' changed:
+            type name changed from 'int' to 'signed char'
+            type size changed from 32 to 8 (in bits)
+          and name of 'S::m' changed to 'U::c' at test-ptr-to-mbr3-v1.cc:3:1
+

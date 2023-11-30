@@ -638,6 +638,12 @@ public:
   pointer_types() const;
 
   istring_type_base_wptrs_map_type&
+  ptr_to_mbr_types();
+
+  const istring_type_base_wptrs_map_type&
+  ptr_to_mbr_types() const;
+
+  istring_type_base_wptrs_map_type&
   reference_types();
 
   const istring_type_base_wptrs_map_type&
@@ -1382,13 +1388,14 @@ protected:
     QUALIFIED_TYPE = 1 << 12,
     POINTER_TYPE = 1 << 13,
     REFERENCE_TYPE = 1 << 14,
-    ARRAY_TYPE = 1 << 15,
-    ENUM_TYPE = 1 << 16,
-    TYPEDEF_TYPE = 1 << 17,
-    CLASS_TYPE = 1 << 18,
-    UNION_TYPE = 1 << 19,
-    FUNCTION_TYPE = 1 << 20,
-    METHOD_TYPE = 1 << 21,
+    POINTER_TO_MEMBER_TYPE = 1 << 15,
+    ARRAY_TYPE = 1 << 16,
+    ENUM_TYPE = 1 << 17,
+    TYPEDEF_TYPE = 1 << 18,
+    CLASS_TYPE = 1 << 19,
+    UNION_TYPE = 1 << 20,
+    FUNCTION_TYPE = 1 << 21,
+    METHOD_TYPE = 1 << 22,
   }; // end enum type_or_decl_kind
 
   enum type_or_decl_kind
@@ -2443,6 +2450,57 @@ operator==(const reference_type_def_sptr&, const reference_type_def_sptr&);
 
 bool
 operator!=(const reference_type_def_sptr&, const reference_type_def_sptr&);
+
+/// The abstraction of a pointer-to-member type.
+class ptr_to_mbr_type : public virtual type_base,
+			public virtual decl_base
+{
+  struct priv;
+  std::unique_ptr<priv> priv_;
+
+  // Forbidden
+  ptr_to_mbr_type() = delete;
+
+  public:
+  ptr_to_mbr_type(const environment&		env,
+		  const type_base_sptr&	member_type,
+		  const type_base_sptr&	containing_type,
+		  size_t			size_in_bits,
+		  size_t			alignment_in_bits,
+		  const location&		locus);
+
+  const type_base_sptr&
+  get_member_type() const;
+
+  const type_base_sptr&
+  get_containing_type() const;
+
+  bool
+  operator==(const ptr_to_mbr_type&) const;
+
+  virtual bool
+  operator==(const type_base&) const;
+
+  virtual bool
+  operator==(const decl_base&) const;
+
+  virtual void
+  get_qualified_name(interned_string& qualified_name,
+		     bool internal = false) const;
+
+  virtual const interned_string&
+  get_qualified_name(bool internal = false) const;
+
+  virtual bool
+  traverse(ir_node_visitor& v);
+
+  virtual ~ptr_to_mbr_type();
+}; // end class ptr_to_mbr_type
+
+bool
+equals(const ptr_to_mbr_type&,
+       const ptr_to_mbr_type&,
+       change_kind*);
 
 bool
 equals(const array_type_def&, const array_type_def&, change_kind*);
@@ -4924,6 +4982,9 @@ public:
 
   virtual bool visit_begin(reference_type_def*);
   virtual bool visit_end(reference_type_def*);
+
+  virtual bool visit_begin(ptr_to_mbr_type*);
+  virtual bool visit_end(ptr_to_mbr_type*);
 
   virtual bool visit_begin(array_type_def*);
   virtual bool visit_end(array_type_def*);

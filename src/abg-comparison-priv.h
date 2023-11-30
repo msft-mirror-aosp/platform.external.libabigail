@@ -443,6 +443,19 @@ struct reference_diff::priv
   {}
 };//end struct reference_diff::priv
 
+/// The private data of the @ref ptr_to_mbr_diff type.
+struct ptr_to_mbr_diff::priv
+{
+  diff_sptr member_type_diff_;
+  diff_sptr containing_type_diff_;
+
+  priv(const diff_sptr& member_type_diff,
+       const diff_sptr& containing_type_diff)
+    : member_type_diff_(member_type_diff),
+      containing_type_diff_(containing_type_diff)
+  {}
+};//end ptr_to_mbr_diff::priv
+
 struct qualified_type_diff::priv
 {
   diff_sptr underlying_type_diff;

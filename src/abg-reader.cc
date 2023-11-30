@@ -1429,6 +1429,9 @@ build_pointer_type_def(reader&, const xmlNodePtr, bool);
 static shared_ptr<reference_type_def>
 build_reference_type_def(reader&, const xmlNodePtr, bool);
 
+static ptr_to_mbr_type_sptr
+build_ptr_to_mbr_type(reader&, const xmlNodePtr, bool);
+
 static shared_ptr<function_type>
 build_function_type(reader&, const xmlNodePtr, bool);
 
@@ -4184,6 +4187,87 @@ build_reference_type_def(reader&		rdr,
   return t;
 }
 
+/// Build a @ref ptr_to_mbr_type from a pointer to
+/// 'pointer-to-member-type' xml node.
+///
+/// @param rdr the reader used for parsing.
+///
+/// @param node the xml node to build the reference_type_def from.
+///
+/// @param add_to_current_scope if set to yes, the resulting of
+/// this function is added to its current scope.
+///
+/// @return a pointer to a newly built @ref ptr_to_mbr_type upon
+/// successful completio, a null pointer otherwise.
+static ptr_to_mbr_type_sptr
+build_ptr_to_mbr_type(reader&		rdr,
+		      const xmlNodePtr	node,
+		      bool		add_to_current_scope)
+{
+  ptr_to_mbr_type_sptr result, nil;
+
+  if (!xmlStrEqual(node->name, BAD_CAST("pointer-to-member-type")))
+    return nil;
+
+  if (decl_base_sptr d = rdr.get_decl_for_xml_node(node))
+    {
+      result = is_ptr_to_mbr_type(d);
+      ABG_ASSERT(result);
+      return result;
+    }
+
+  string id;
+  if (xml_char_sptr s = XML_NODE_GET_ATTRIBUTE(node, "id"))
+    id = CHAR_STR(s);
+
+  if (id.empty())
+    return nil;
+
+  if (type_base_sptr d = rdr.get_type_decl(id))
+    {
+      result = is_ptr_to_mbr_type(d);
+      ABG_ASSERT(result);
+      return result;
+    }
+
+  size_t size_in_bits = rdr.get_translation_unit()->get_address_size();
+  size_t alignment_in_bits = 0;
+  read_size_and_alignment(node, size_in_bits, alignment_in_bits);
+
+  location loc;
+  read_location(rdr, node, loc);
+
+  string member_type_id;
+  if (xml_char_sptr s = XML_NODE_GET_ATTRIBUTE(node, "member-type-id"))
+    member_type_id = CHAR_STR(s);
+  if (member_type_id.empty())
+    return nil;
+  type_base_sptr member_type =
+    is_type(rdr.build_or_get_type_decl(member_type_id, true));
+  if (!member_type)
+    return nil;
+
+  string containing_type_id;
+  if (xml_char_sptr s = XML_NODE_GET_ATTRIBUTE(node, "containing-type-id"))
+    containing_type_id = CHAR_STR(s);
+  if (containing_type_id.empty())
+    return nil;
+  type_base_sptr containing_type =
+    rdr.build_or_get_type_decl(containing_type_id, true);
+  if (!is_typedef_of_maybe_qualified_class_or_union_type(containing_type))
+    return nil;
+
+  result.reset(new ptr_to_mbr_type(rdr.get_environment(),
+				   member_type, containing_type,
+				   size_in_bits, alignment_in_bits,
+				   loc));
+
+  if (rdr.push_and_key_type_decl(result, node, add_to_current_scope))
+    rdr.map_xml_node_to_decl(node, result);
+
+  return result;
+}
+
 /// Build a function_type from a pointer to 'function-type'
 /// xml node.
 ///
@@ -6001,6 +6085,7 @@ build_type(reader&	rdr,
    || (t = build_qualified_type_decl(rdr, node, add_to_current_scope))
    || (t = build_pointer_type_def(rdr, node, add_to_current_scope))
    || (t = build_reference_type_def(rdr, node , add_to_current_scope))
+   || (t = build_ptr_to_mbr_type(rdr, node , add_to_current_scope))
    || (t = build_function_type(rdr, node, add_to_current_scope))
    || (t = build_array_type_def(rdr, node, add_to_current_scope))
    || (t = build_subrange_type(rdr, node, add_to_current_scope))

@@ -522,6 +522,100 @@ default_reporter::report(const reference_diff& d, ostream& out,
       }
 }
 
+/// Report the local changes carried by a @ref ptr_to_mbr_diff diff
+/// node.
+///
+/// This is a subroutine of the method default_reporter::report() that
+/// emits change report for @ref ptr_to_mbr_diff node.
+///
+/// @param d the diff node to consider
+///
+/// @param out the output stream to emit the report to.
+///
+/// @param indent the indentation string (spaces) to use in the
+/// report.
+///
+/// @return truf iff a report was emitted to the output stream.
+bool
+default_reporter::report_local_ptr_to_mbr_type_changes(const ptr_to_mbr_diff& d,
+						       std::ostream& out,
+						       const std::string& indent) const
+{
+  if (!d.to_be_reported())
+    return false;
+
+  ptr_to_mbr_type_sptr f = d.first_ptr_to_mbr_type(),
+    s = d.second_ptr_to_mbr_type();
+
+  enum change_kind k = ir::NO_CHANGE_KIND;
+  equals(*d.first_ptr_to_mbr_type(), *d.second_ptr_to_mbr_type(), &k);
+
+  if (k & ALL_LOCAL_CHANGES_MASK)
+    {
+      string f_repr = f->get_pretty_representation(),
+	s_repr = s->get_pretty_representation();
+
+      out << indent;
+      out << "pointer-to-member type changed from: '"
+	  << f_repr << " to: '"<< s_repr << "'\n";
+      return true;
+    }
+  return false;
+}
+
+
+/// Emit a textual report about the changes carried by a @ref
+/// ptr_to_mbr_diff diff node.
+///
+/// @param out the output stream to emit the report to.
+///
+/// @param indent the indentation string to use for the report.
+void
+default_reporter::report(const ptr_to_mbr_diff& d,
+			 std::ostream& out,
+			 const std::string& indent) const
+{
+  if (!d.to_be_reported())
+    return;
+
+  report_local_ptr_to_mbr_type_changes(d, out, indent);
+
+  if (diff_sptr dif = d.member_type_diff())
+    {
+      RETURN_IF_BEING_REPORTED_OR_WAS_REPORTED_EARLIER2
+	(dif,"data member type of pointer-to-member");
+      if (dif->to_be_reported())
+	{
+	  out << indent
+	      << "in data member type '"
+	      << dif->first_subject()->get_pretty_representation()
+	      << "' of pointed-to-member type '"
+	      << d.first_ptr_to_mbr_type()->get_pretty_representation()
+	      << "'";
+	  report_loc_info(dif->second_subject(), *d.context(), out);
+	  out << ":\n";
+	  dif->report(out, indent + "  ");
+	}
+    }
+  if (diff_sptr dif = d.containing_type_diff())
+    {
+      RETURN_IF_BEING_REPORTED_OR_WAS_REPORTED_EARLIER2
+	(dif,"containing type of pointer-to-member");
+      if (dif->to_be_reported())
+	{
+	  out << indent
+	      << "in containing type '"
+	      << dif->first_subject()->get_pretty_representation()
+	      << "' of pointed-to-member type '"
+	      << d.first_ptr_to_mbr_type()->get_pretty_representation()
+	      << "'";
+	  report_loc_info(dif->second_subject(), *d.context(), out);
+	  out << ":\n";
+	  dif->report(out, indent + "  ");
+	}
+    }
+}
+
 /// Emit a textual report about the a @ref fn_parm_diff instance.
 ///
 /// @param d the @ref fn_parm_diff to consider.

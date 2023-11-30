@@ -13994,6 +13994,81 @@ build_reference_type(reader&	rdr,
   return result;
 }
 
+/// Build an instance of @ref ptr_to_mbr_type from a DIE of tag
+/// DW_TAG_ptr_to_member_type.
+///
+/// @param the DWARF reader touse.
+///
+/// @param the DIE to consider.  It must carry the tag
+/// DW_TAG_ptr_to_member_type.
+///
+/// @param called_from_public_decl true if this function was called
+/// from a context where either a public function or a public variable
+/// is being built.
+///
+/// @param where_offset the offset of the DIE where we are "logically"
+/// positionned at, in the DIE tree.  This is useful when @p die is
+/// e.g, DW_TAG_partial_unit that can be included in several places in
+/// the DIE tree.
+///
+/// @return a pointer to the resulting @ref ptr_to_mbr_type.
+static ptr_to_mbr_type_sptr
+build_ptr_to_mbr_type(reader&		rdr,
+		      Dwarf_Die*	die,
+		      bool		called_from_public_decl,
+		      size_t		where_offset)
+{
+  ptr_to_mbr_type_sptr result;
+
+  if (!die)
+    return result;
+
+  unsigned tag = dwarf_tag(die);
+  if (tag != DW_TAG_ptr_to_member_type)
+    return result;
+
+  Dwarf_Die data_member_type_die, containing_type_die;
+
+  if (!die_die_attribute(die, DW_AT_type, data_member_type_die)
+      || !die_die_attribute(die, DW_AT_containing_type, containing_type_die))
+    return result;
+
+  type_or_decl_base_sptr data_member_type =
+    build_ir_node_from_die(rdr, &data_member_type_die,
+			   called_from_public_decl, where_offset);
+  if (!data_member_type)
+    return result;
+
+  type_or_decl_base_sptr containing_type =
+    build_ir_node_from_die(rdr, &containing_type_die,
+			   called_from_public_decl, where_offset);
+  if (!containing_type)
+    return result;
+
+  if (!is_typedef_of_maybe_qualified_class_or_union_type
+      (is_type(containing_type)))
+    return result;
+
+  if (type_base_sptr t = rdr.lookup_type_from_die(die))
+    {
+      result = is_ptr_to_mbr_type(t);
+      ABG_ASSERT(result);
+      return result;
+    }
+
+  uint64_t size_in_bits = rdr.cur_transl_unit()->get_address_size();
+
+  result.reset(new ptr_to_mbr_type(data_member_type->get_environment(),
+				   is_type(data_member_type),
+				   is_type(containing_type),
+				   size_in_bits,
+				   /*alignment=*/0,
+				   location()));
+
+  rdr.associate_die_to_type(die, result, where_offset);
+  return result;
+}
+
 /// Build a subroutine type from a DW_TAG_subroutine_type DIE.
 ///
 /// @param rdr the DWARF reader to consider.
@@ -15511,6 +15586,20 @@ build_ir_node_from_die(reader&	rdr,
       }
       break;
 
+    case DW_TAG_ptr_to_member_type:
+      {
+	ptr_to_mbr_type_sptr p =
+	  build_ptr_to_mbr_type(rdr, die, called_from_public_decl,
+				where_offset);
+	if (p)
+	  {
+	    result =
+	      add_decl_to_scope(p, rdr.cur_transl_unit()->get_global_scope());
+	    maybe_canonicalize_type(p, rdr);
+	  }
+      }
+      break;
+
     case DW_TAG_const_type:
     case DW_TAG_volatile_type:
     case DW_TAG_restrict_type:
@@ -15706,8 +15795,6 @@ build_ir_node_from_die(reader&	rdr,
     case DW_TAG_set_type:
       break;
     case DW_TAG_file_type:
-      break;
-    case DW_TAG_ptr_to_member_type:
       break;
     case DW_TAG_thrown_type:
       break;

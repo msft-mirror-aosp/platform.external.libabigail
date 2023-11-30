@@ -232,6 +232,16 @@ pointer_declaration_name(const type_base_sptr& ptr,
 			 bool qualified, bool internal);
 
 static interned_string
+ptr_to_mbr_declaration_name(const ptr_to_mbr_type* ptr,
+			    const string& variable_name,
+			    bool qualified, bool internal);
+
+static interned_string
+ptr_to_mbr_declaration_name(const ptr_to_mbr_type_sptr& ptr,
+			    const string& variable_name,
+			    bool qualified, bool internal);
+
+static interned_string
 array_declaration_name(const array_type_def* array,
 		       const string& variable_name,
 		       bool qualified, bool internal);
@@ -264,6 +274,22 @@ static string
 add_outer_pointer_to_array_type_expr(const type_base_sptr& pointer_to_ar,
 				     const string& input, bool qualified,
 				     bool internal);
+
+static string
+add_outer_ptr_to_mbr_type_expr(const ptr_to_mbr_type* p,
+			       const  string& input, bool qualified,
+			       bool internal);
+
+static string
+add_outer_ptr_to_mbr_type_expr(const ptr_to_mbr_type_sptr& p,
+			       const  string& input, bool qualified,
+			       bool internal);
+
+static string
+add_outer_pointer_to_ptr_to_mbr_type_expr(const type_base* p,
+					  const  string& input,
+					  bool qualified, bool internal);
+
 void
 push_composite_type_comparison_operands(const type_base& left,
 					const type_base& right);
@@ -540,6 +566,7 @@ struct type_maps::priv
   mutable istring_type_base_wptrs_map_type	typedef_types_;
   mutable istring_type_base_wptrs_map_type	qualified_types_;
   mutable istring_type_base_wptrs_map_type	pointer_types_;
+  mutable istring_type_base_wptrs_map_type	ptr_to_mbr_types_;
   mutable istring_type_base_wptrs_map_type	reference_types_;
   mutable istring_type_base_wptrs_map_type	array_types_;
   mutable istring_type_base_wptrs_map_type	subrange_types_;
@@ -659,6 +686,20 @@ type_maps::qualified_types() const
 istring_type_base_wptrs_map_type&
 type_maps::pointer_types()
 {return priv_->pointer_types_;}
+
+/// Getter for the map that associates the name of a pointer-to-member
+/// type to the vector of instances of @ref ptr_to_mbr_type_sptr that
+/// represents that type.
+istring_type_base_wptrs_map_type&
+type_maps::ptr_to_mbr_types()
+{return priv_->ptr_to_mbr_types_;}
+
+/// Getter for the map that associates the name of a pointer-to-member
+/// type to the vector of instances of @ref ptr_to_mbr_type_sptr that
+/// represents that type.
+const istring_type_base_wptrs_map_type&
+type_maps::ptr_to_mbr_types() const
+{return priv_->ptr_to_mbr_types_;}
 
 /// Getter for the map that associates the name of a pointer type to
 /// the vector of instances of @ref pointer_type_def_sptr that
@@ -10584,7 +10625,10 @@ is_anonymous_type(const type_base_sptr& t)
 bool
 is_npaf_type(const type_base_sptr& t)
 {
-  if (!(is_pointer_type(t) || is_array_type(t) || is_function_type(t)))
+  if (!(is_pointer_type(t)
+	|| is_array_type(t)
+	|| is_function_type(t)
+	|| is_ptr_to_mbr_type(t)))
     return true;
   return false;
 }
@@ -11173,6 +11217,23 @@ is_pointer_to_npaf_type(const type_base_sptr& t)
   return pointer_type_def_sptr();
 }
 
+/// Test if we are looking at a pointer to pointer to member type.
+///
+/// @param t the type to consider.
+///
+/// @return the @ref pointer_type_def_sptr type iff @p t is a pointer
+/// to pointer to member type.
+pointer_type_def_sptr
+is_pointer_to_ptr_to_mbr_type(const type_base_sptr& t)
+{
+  if (pointer_type_def_sptr p = is_pointer_type(t))
+    {
+      if (is_ptr_to_mbr_type(p->get_pointed_to_type()))
+	return p;
+    }
+  return pointer_type_def_sptr();
+}
+
 /// Test if a type is a typedef, pointer or reference to a decl-only
 /// class/union.
 ///
@@ -11194,6 +11255,43 @@ is_typedef_ptr_or_ref_to_decl_only_class_or_union_type(const type_base* t)
 
   return false;
 }
+
+/// Test if a type is a typedef of a class or union type, or a typedef
+/// of a qualified class or union type.
+///
+/// Note that if the type is directly a class or union type, the
+/// function returns true as well.
+///
+/// @param t the type to consider.
+///
+/// @return true iff @p t is a typedef of a class or union type, or a
+/// typedef of a qualified class or union type.
+bool
+is_typedef_of_maybe_qualified_class_or_union_type(const type_base* t)
+{
+  if (!t)
+    return false;
+
+  t = peel_qualified_or_typedef_type(t);
+  if (is_class_or_union_type(t))
+    return true;
+
+return false;
+}
+
+/// Test if a type is a typedef of a class or union type, or a typedef
+/// of a qualified class or union type.
+///
+/// Note that if the type is directly a class or union type, the
+/// function returns true as well.
+///
+/// @param t the type to consider.
+///
+/// @return true iff @p t is a typedef of a class or union type, or a
+/// typedef of a qualified class or union type.
+bool
+is_typedef_of_maybe_qualified_class_or_union_type(const type_base_sptr& t)
+{return is_typedef_of_maybe_qualified_class_or_union_type(t.get());}
 
 /// Test whether a type is a reference_type_def.
 ///
@@ -11257,6 +11355,42 @@ is_reference_type(const type_or_decl_base_sptr& t,
   if (look_through_qualifiers)
     type = peel_qualified_type(type);
   return dynamic_pointer_cast<reference_type_def>(type);
+}
+
+/// Test whether a type is a @ref ptr_to_mbr_type.
+///
+/// @param t the type to test.
+///
+/// @return the @ref ptr_to_mbr_type* if @p t is a @ref
+/// ptr_to_mbr_type type, null otherwise.
+const ptr_to_mbr_type*
+is_ptr_to_mbr_type(const type_or_decl_base* t,
+		   bool look_through_qualifiers)
+{
+  const type_base* type = is_type(t);
+  if (look_through_qualifiers)
+    type = peel_qualified_type(type);
+  return dynamic_cast<const ptr_to_mbr_type*>(type);
+}
+
+/// Test whether a type is a @ref ptr_to_mbr_type_sptr.
+///
+/// @param t the type to test.
+///
+/// @param look_through_decl_only if this is true, then look through
+/// qualified types to see if the underlying type is a
+/// ptr_to_mbr_type..
+///
+/// @return the @ref ptr_to_mbr_type_sptr if @p t is a @ref
+/// ptr_to_mbr_type type, null otherwise.
+ptr_to_mbr_type_sptr
+is_ptr_to_mbr_type(const type_or_decl_base_sptr& t,
+		   bool look_through_qualifiers)
+{
+  type_base_sptr type = is_type(t);
+  if (look_through_qualifiers)
+    type = peel_qualified_type(type);
+  return dynamic_pointer_cast<ptr_to_mbr_type>(type);
 }
 
 /// Test if a type is equivalent to a pointer to void type.
@@ -14519,6 +14653,39 @@ maybe_update_types_lookup_map(const pointer_type_def_sptr& pointer_type)
 }
 
 /// Update the map that associates the fully qualified name of a
+/// pointer-to-member type with the type itself.
+///
+/// The per-translation unit type map is updated if no type with this
+/// name was already existing in that map.
+///
+/// If no type with this name did already exist in the per-corpus type
+/// map, then that per-corpus type map is updated. Otherwise, that
+/// type is erased from that per-corpus map.
+///
+/// @param ptr_to_mbr_type the type to consider.
+void
+maybe_update_types_lookup_map(const ptr_to_mbr_type_sptr& ptr_to_member)
+{
+  if (translation_unit *tu = ptr_to_member->get_translation_unit())
+    maybe_update_types_lookup_map<ptr_to_mbr_type>
+      (ptr_to_member, tu->get_types().ptr_to_mbr_types());
+
+  if (corpus *type_corpus = ptr_to_member->get_corpus())
+    {
+      maybe_update_types_lookup_map<ptr_to_mbr_type>
+	(ptr_to_member,
+	 type_corpus->priv_->get_types().ptr_to_mbr_types());
+
+      if (corpus *group = type_corpus->get_group())
+	{
+	  maybe_update_types_lookup_map<ptr_to_mbr_type>
+	    (ptr_to_member,
+	     group->priv_->get_types().ptr_to_mbr_types());
+	}
+    }
+}
+
+/// Update the map that associates the fully qualified name of a
 /// reference type with the type itself.
 ///
 /// The per-translation unit type map is updated if no type with this
@@ -14703,6 +14870,8 @@ maybe_update_types_lookup_map(const decl_base_sptr& decl)
     maybe_update_types_lookup_map(qualified_type);
   else if (pointer_type_def_sptr pointer_type = is_pointer_type(decl))
     maybe_update_types_lookup_map(pointer_type);
+  else if (ptr_to_mbr_type_sptr ptr_to_member = is_ptr_to_mbr_type(decl))
+    maybe_update_types_lookup_map(ptr_to_member);
   else if (reference_type_def_sptr reference_type = is_reference_type(decl))
     maybe_update_types_lookup_map(reference_type);
   else if (array_type_def_sptr array_type = is_array_type(decl))
@@ -18111,6 +18280,280 @@ operator!=(const reference_type_def_sptr& l, const reference_type_def_sptr& r)
 
 // </reference_type_def definitions>
 
+// <ptr_to_mbr_type definitions>
+
+/// The private data type of @ref ptr_to_mbr_type.
+struct ptr_to_mbr_type::priv
+{
+  // The type of the data member this pointer-to-member-type
+  // designates.
+  type_base_sptr dm_type_;
+  // The class (or typedef to potentially qualified class) containing
+  // the data member this pointer-to-member-type designates.
+  type_base_sptr containing_type_;
+  interned_string internal_qualified_name_;
+  interned_string temp_internal_qualified_name_;
+
+  priv()
+  {}
+
+  priv(const type_base_sptr& dm_type, const type_base_sptr& containing_type)
+    :  dm_type_(dm_type),
+       containing_type_(containing_type)
+  {}
+};// end struct ptr_to_mbr_type::priv
+
+/// A constructor for a @ref ptr_to_mbr_type type.
+///
+/// @param env the environment to construct the @ref ptr_to_mbr_type in.
+///
+/// @param member_type the member type of the of the @ref
+/// ptr_to_mbr_type to construct.
+///
+/// @param containing_type the containing type of the @ref
+/// ptr_to_mbr_type to construct.
+///
+/// @param size_in_bits the size (in bits) of the resulting type.
+///
+/// @param alignment_in_bits the alignment (in bits) of the resulting
+/// type.
+///
+/// @param locus the source location of the definition of the
+/// resulting type.
+ptr_to_mbr_type::ptr_to_mbr_type(const environment&		env,
+				 const type_base_sptr&		member_type,
+				 const type_base_sptr&		containing_type,
+				 size_t			size_in_bits,
+				 size_t			alignment_in_bits,
+				 const location&		locus)
+  : type_or_decl_base(env,
+		      POINTER_TO_MEMBER_TYPE
+		      | ABSTRACT_TYPE_BASE
+		      | ABSTRACT_DECL_BASE),
+    type_base(env, size_in_bits, alignment_in_bits),
+    decl_base(env, "", locus, ""),
+    priv_(new priv(member_type, containing_type))
+{
+  runtime_type_instance(this);
+  ABG_ASSERT(member_type);
+  ABG_ASSERT(containing_type);
+  interned_string name = ptr_to_mbr_declaration_name(this, "",
+						     /*qualified=*/true,
+						     /*internal=*/false);
+  set_name(name);
+}
+
+/// Getter of the member type of the current @ref ptr_to_mbr_type.
+///
+/// @return the type of the member referred to by the current
+/// @ptr_to_mbr_type.
+const type_base_sptr&
+ptr_to_mbr_type::get_member_type() const
+{return priv_->dm_type_;}
+
+/// Getter of the type containing the member pointed-to by the current
+/// @ref ptr_to_mbr_type.
+///
+/// @return the type containing the member pointed-to by the current
+/// @ref ptr_to_mbr_type.
+const type_base_sptr&
+ptr_to_mbr_type::get_containing_type() const
+{return priv_->containing_type_;}
+
+/// Equality operator for the current @ref ptr_to_mbr_type.
+///
+///@param o the other instance of @ref ptr_to_mbr_type to compare the
+///current instance to.
+///
+/// @return true iff the current @ref ptr_to_mbr_type equals @p o.
+bool
+ptr_to_mbr_type::operator==(const decl_base& o) const
+{
+  const ptr_to_mbr_type* other =
+    dynamic_cast<const ptr_to_mbr_type*>(&o);
+  if (!other)
+    return false;
+  return try_canonical_compare(this, other);
+}
+
+/// Equality operator for the current @ref ptr_to_mbr_type.
+///
+///@param o the other instance of @ref ptr_to_mbr_type to compare the
+///current instance to.
+///
+/// @return true iff the current @ref ptr_to_mbr_type equals @p o.
+bool
+ptr_to_mbr_type::operator==(const type_base& o) const
+{
+  const decl_base* other = dynamic_cast<const decl_base*>(&o);
+  if (!other)
+    return false;
+  return *this == *other;
+}
+
+/// Equality operator for the current @ref ptr_to_mbr_type.
+///
+///@param o the other instance of @ref ptr_to_mbr_type to compare the
+///current instance to.
+///
+/// @return true iff the current @ref ptr_to_mbr_type equals @p o.
+bool
+ptr_to_mbr_type::operator==(const ptr_to_mbr_type& o) const
+{
+  const decl_base* other = dynamic_cast<const decl_base*>(&o);
+  if (!other)
+    return false;
+  return *this == *other;
+}
+
+/// Get the qualified name for the current @ref ptr_to_mbr_type.
+///
+/// @param qualified_name out parameter.  This is set to the name of
+/// the current @ref ptr_to_mbr_type.
+///
+/// @param internal if this is true, then the qualified name is for
+/// the purpose of type canoicalization.
+void
+ptr_to_mbr_type::get_qualified_name(interned_string& qualified_name,
+				    bool internal) const
+{qualified_name = get_qualified_name(internal);}
+
+/// Get the qualified name for the current @ref ptr_to_mbr_type.
+///
+/// @param internal if this is true, then the qualified name is for
+/// the purpose of type canoicalization.
+///
+/// @return the qualified name for the current @ref ptr_to_mbr_type.
+const interned_string&
+ptr_to_mbr_type::get_qualified_name(bool internal) const
+{
+  type_base_sptr member_type = get_member_type();
+  type_base_sptr containing_type = get_containing_type();
+
+  if (internal)
+    {
+      if (get_canonical_type())
+	{
+	  if (priv_->internal_qualified_name_.empty())
+	    priv_->internal_qualified_name_ =
+	      ptr_to_mbr_declaration_name(this, "",
+					  /*qualified=*/true,
+					  internal);
+	  return  priv_->internal_qualified_name_;
+	}
+      else
+	{
+	  priv_->temp_internal_qualified_name_ =
+	    ptr_to_mbr_declaration_name(this, "", /*qualified=*/true, internal);
+	  return priv_->temp_internal_qualified_name_;
+	}
+    }
+  else
+    {
+      set_qualified_name
+	(ptr_to_mbr_declaration_name(this, "", /*qualified=*/true,
+				     /*internal=*/false));
+      return decl_base::peek_qualified_name();
+    }
+}
+
+/// This implements the ir_traversable_base::traverse pure virtual
+/// function for @ref ptr_to_mbr_type.
+///
+/// @param v the visitor used on the current instance.
+///
+/// @return true if the entire IR node tree got traversed, false
+/// otherwise.
+bool
+ptr_to_mbr_type::traverse(ir_node_visitor& v)
+{
+  if (v.type_node_has_been_visited(this))
+    return true;
+
+  if (visiting())
+    return true;
+
+  if (v.visit_begin(this))
+    {
+      visiting(true);
+      if (type_base_sptr t = get_member_type())
+	t->traverse(v);
+
+      if (type_base_sptr t = get_containing_type())
+	t->traverse(v);
+      visiting(false);
+    }
+
+  bool result = v.visit_end(this);
+  v.mark_type_node_as_visited(this);
+  return result;
+}
+
+/// Desctructor for @ref ptr_to_mbr_type.
+ptr_to_mbr_type::~ptr_to_mbr_type()
+{}
+
+
+/// Compares two instances of @ref ptr_to_mbr_type.
+///
+/// If the two intances are different, set a bitfield to give some
+/// insight about the kind of differences there are.
+///
+/// @param l the first artifact of the comparison.
+///
+/// @param r the second artifact of the comparison.
+///
+/// @param k a pointer to a bitfield that gives information about the
+/// kind of changes there are between @p l and @p r.  This one is set
+/// iff @p k is non-null and the function returns false.
+///
+/// Please note that setting k to a non-null value does have a
+/// negative performance impact because even if @p l and @p r are not
+/// equal, the function keeps up the comparison in order to determine
+/// the different kinds of ways in which they are different.
+///
+/// @return true if @p l equals @p r, false otherwise.
+bool
+equals(const ptr_to_mbr_type& l, const ptr_to_mbr_type& r, change_kind* k)
+{
+  bool result = true;
+
+  if (!(l.decl_base::operator==(r)))
+    {
+      result = false;
+      if (k)
+	*k |= LOCAL_TYPE_CHANGE_KIND;
+      else
+	result = false;
+    }
+
+  if (l.get_member_type() != r.get_member_type())
+    {
+      if (k)
+	{
+	  if (!types_have_similar_structure(&l, &r))
+	    *k |= LOCAL_TYPE_CHANGE_KIND;
+	  *k |= SUBTYPE_CHANGE_KIND;
+	}
+      result = false;
+    }
+
+  if (l.get_containing_type() != r.get_containing_type())
+    {
+      if (k)
+	{
+	  if (!types_have_similar_structure(&l, &r))
+	    *k |= LOCAL_TYPE_CHANGE_KIND;
+	  *k |= SUBTYPE_CHANGE_KIND;
+	}
+      result = false;
+    }
+
+  ABG_RETURN(result);
+}
+
+// </ptr_to_mbr_type definitions>
+
 // <array_type_def definitions>
 
 // <array_type_def::subrange_type>
@@ -20532,7 +20975,8 @@ var_decl::get_pretty_representation(bool internal, bool qualified_name) const
   type_base_sptr type = get_type();
   if (is_array_type(type, /*look_through_qualifiers=*/true)
       || is_pointer_type(type, /*look_through_qualifiers=*/true)
-      || is_reference_type(type, /*look_through_qualifiers=*/true))
+      || is_reference_type(type, /*look_through_qualifiers=*/true)
+      || is_ptr_to_mbr_type(type, /*look_through_qualifiers=*/true))
     {
       string name;
       if (member_of_anonymous_class || !qualified_name)
@@ -20556,6 +21000,10 @@ var_decl::get_pretty_representation(bool internal, bool qualified_name) const
 	result += pointer_declaration_name(t, name, qualified_name, internal);
       else if (reference_type_def_sptr t = is_reference_type(type))
 	result += pointer_declaration_name(t, name, qualified_name, internal);
+      else if (ptr_to_mbr_type_sptr t = is_ptr_to_mbr_type(type))
+	result += ptr_to_mbr_declaration_name(t, name,
+					      qualified_name,
+					      internal);
     }
   else
     {
@@ -27609,6 +28057,18 @@ types_have_similar_structure(const type_base* first,
 					  /*indirect_type=*/true);
     }
 
+  // Peel off matching pointer-to-member types.
+  if (const ptr_to_mbr_type* ty1 = is_ptr_to_mbr_type(first))
+    {
+      const ptr_to_mbr_type* ty2 = is_ptr_to_mbr_type(second);
+      return (types_have_similar_structure(ty1->get_member_type(),
+					   ty2->get_member_type(),
+					   /*indirect_type=*/true)
+	      && types_have_similar_structure(ty1->get_containing_type(),
+					      ty2->get_containing_type(),
+					      /*indirect_type=*/true));
+    }
+
   if (const type_decl* ty1 = is_type_decl(first))
     {
       const type_decl* ty2 = is_type_decl(second);
@@ -28251,6 +28711,218 @@ add_outer_pointer_to_array_type_expr(const type_base_sptr& pointer_to_ar,
 {return add_outer_pointer_to_array_type_expr(pointer_to_ar.get(),
 					     input, qualified, internal);}
 
+/// When constructing the name of a pointer to mebmer type, add the
+/// return type to the left of the existing type identifier, and the
+/// parameters declarator to the right.
+///
+/// This function considers the name of the type as an expression.
+///
+/// The resulting type expr is going to be made of three parts:
+/// left_expr inner_expr right_expr.
+///
+/// Suppose we want to build the type expression representing:
+///
+///   "an array of pointer to member function (of a containing struct
+///    X) taking a char parameter and returning an int".
+///
+/// It's going to look like:
+///
+///   int (X::* a[])(char);
+///
+/// Suppose the caller of this function started to emit the inner
+/// "a[]" part of the expression already.  It thus calls this
+/// function with that input "a[]" part.  We consider that "a[]" as
+/// the "type identifier".
+///
+/// So the inner_expr is going to be "(X::* a[])".
+///
+/// The left_expr part is "int".  The right_expr part is "(char)".
+///
+/// In other words, this function adds the left_expr and right_expr to
+/// the inner_expr.  left_expr and right_expr are called "outer
+/// pointer to member type expression".
+///
+/// This is a sub-routine of @ref ptr_to_mbr_declaration_name().
+///
+/// @param p the pointer to member type to consider.
+///
+/// @param input the type-id to use as the inner expression of the
+/// overall pointer-to-member type expression
+///
+/// @param qualified if true then use qualified names in the resulting
+/// type name.
+///
+/// @param internal if true then the resulting type name is going to
+/// be used for type canonicalization purposes.
+///
+/// @return the name of the pointer to member type.
+static string
+add_outer_ptr_to_mbr_type_expr(const ptr_to_mbr_type* p,
+			       const  string& input, bool qualified,
+			       bool internal)
+{
+  if (!p)
+    return "";
+
+  std::ostringstream left, right, inner;
+  string containing_type_name = get_type_name(p->get_containing_type(),
+					      qualified, internal);
+  type_base_sptr mbr_type = p->get_member_type();
+  string result;
+  if (function_type_sptr fn_type = is_function_type(mbr_type))
+    {
+      inner << "(" << containing_type_name << "::*" << input << ")";
+      stream_pretty_representation_of_fn_parms(*fn_type, right,
+					       qualified, internal);
+      type_base_sptr return_type = fn_type->get_return_type();
+      if (is_npaf_type(return_type)
+	  || !(is_pointer_to_function_type(return_type)
+	       || is_pointer_to_array_type(return_type)
+	       || is_pointer_to_ptr_to_mbr_type(return_type)
+	       || is_ptr_to_mbr_type(return_type)))
+	{
+	  left << get_type_name(return_type, qualified, internal) << " ";;
+	  result = left.str() + inner.str() + right.str();
+	}
+      else if (pointer_type_def_sptr p = is_pointer_type(return_type))
+	{
+	  string inner_str = inner.str() + right.str();
+	  result = pointer_declaration_name(p, inner_str, qualified, internal);
+	}
+      else if (ptr_to_mbr_type_sptr p = is_ptr_to_mbr_type(return_type))
+	{
+	  string inner_str = inner.str() + right.str();
+	  result = add_outer_ptr_to_mbr_type_expr(p, inner_str,
+						  qualified, internal);
+	}
+      else
+	ABG_ASSERT_NOT_REACHED;
+    }
+  else if (ptr_to_mbr_type_sptr ptr_mbr_type = is_ptr_to_mbr_type(mbr_type))
+    {
+      inner << "(" << containing_type_name << "::*" << input << ")";
+      stream_pretty_representation_of_fn_parms(*fn_type, right,
+					       qualified, internal);
+      string inner_str = inner.str() + right.str();
+      result = add_outer_ptr_to_mbr_type_expr(ptr_mbr_type, inner_str,
+					      qualified, internal);
+    }
+  else
+    {
+      left << get_type_name(p->get_member_type(), qualified, internal) << " ";
+      inner << containing_type_name << "::*" << input;
+      result = left.str()+ inner.str();
+    }
+
+  return result;
+}
+
+/// When constructing the name of a pointer to mebmer type, add the
+/// return type to the left of the existing type identifier, and the
+/// parameters declarator to the right.
+///
+/// This function considers the name of the type as an expression.
+///
+/// The resulting type expr is going to be made of three parts:
+/// left_expr inner_expr right_expr.
+///
+/// Suppose we want to build the type expression representing:
+///
+///   "an array of pointer to member function (of a containing struct
+///    X) taking a char parameter and returning an int".
+///
+/// It's going to look like:
+///
+///   int (X::* a[])(char);
+///
+/// Suppose the caller of this function started to emit the inner
+/// "a[]" part of the expression already.  It thus calls this
+/// function with that input "a[]" part.  We consider that "a[]" as
+/// the "type identifier".
+///
+/// So the inner_expr is going to be "(X::* a[])".
+///
+/// The left_expr part is "int".  The right_expr part is "(char)".
+///
+/// In other words, this function adds the left_expr and right_expr to
+/// the inner_expr.  left_expr and right_expr are called "outer
+/// pointer to member type expression".
+///
+/// This is a sub-routine of @ref ptr_to_mbr_declaration_name().
+///
+/// @param p the pointer to member type to consider.
+///
+/// @param input the type-id to use as the inner expression of the
+/// overall pointer-to-member type expression
+///
+/// @param qualified if true then use qualified names in the resulting
+/// type name.
+///
+/// @param internal if true then the resulting type name is going to
+/// be used for type canonicalization purposes.
+///
+/// @return the name of the pointer to member type.
+static string
+add_outer_ptr_to_mbr_type_expr(const ptr_to_mbr_type_sptr& p,
+			       const string& input, bool qualified,
+			       bool internal)
+{return add_outer_ptr_to_mbr_type_expr(p.get(), input, qualified, internal);}
+
+/// This adds the outer parts of a pointer to a pointer-to-member
+/// expression.
+///
+/// Please read the comments of @ref add_outer_ptr_to_mbr_type_expr to
+/// learn more about this function, which is similar.
+///
+/// This is a sub-routine of @ref pointer_declaration_name().
+///
+/// @param a pointer (or reference) to a pointer-to-member type.
+///
+/// @param input the inner type-id to add the outer parts to.
+///
+/// @param qualified if true then use qualified names in the resulting
+/// type name.
+///
+/// @param internal if true then the resulting type name is going to
+/// be used for type canonicalization purposes.
+static string
+add_outer_pointer_to_ptr_to_mbr_type_expr(const type_base* p,
+					  const string& input, bool qualified,
+					  bool internal)
+{
+  if (!p)
+    return "";
+
+  string star_or_ref;
+  type_base_sptr pointed_to_type;
+
+  if (const pointer_type_def* ptr = is_pointer_type(p))
+    {
+      pointed_to_type = ptr->get_pointed_to_type();
+      star_or_ref = "*";
+    }
+  else if (const reference_type_def* ref = is_reference_type(p))
+    {
+      pointed_to_type= ref->get_pointed_to_type();
+      star_or_ref = "&";
+    }
+
+  if (!pointed_to_type)
+    return "";
+
+  ptr_to_mbr_type_sptr pointed_to_ptr_to_mbr =
+    is_ptr_to_mbr_type(pointed_to_type);
+  if (!pointed_to_ptr_to_mbr)
+    return "";
+
+  std::ostringstream inner;
+  inner << star_or_ref << input;
+  string result = add_outer_ptr_to_mbr_type_expr(pointed_to_ptr_to_mbr,
+						 inner.str(),
+						 qualified, internal);
+  return result;
+}
+
 /// Emit the name of a pointer declaration.
 ///
 /// @param the pointer to consider.
@@ -28291,7 +28963,8 @@ pointer_declaration_name(const type_base* ptr,
   string result;
   if (is_npaf_type(pointed_to_type)
       || !(is_function_type(pointed_to_type)
-	   || is_array_type(pointed_to_type)))
+	   || is_array_type(pointed_to_type)
+	   || is_ptr_to_mbr_type(pointed_to_type)))
     {
       result = get_type_name(pointed_to_type,
 			     qualified,
@@ -28310,6 +28983,9 @@ pointer_declaration_name(const type_base* ptr,
       else if (is_array_type(pointed_to_type))
 	result = add_outer_pointer_to_array_type_expr(ptr, idname,
 						      qualified, internal);
+      else if (is_ptr_to_mbr_type(pointed_to_type))
+	result = add_outer_pointer_to_ptr_to_mbr_type_expr(ptr, idname,
+							   qualified, internal);
       else
 	ABG_ASSERT_NOT_REACHED;
     }
@@ -28379,7 +29055,9 @@ array_declaration_name(const array_type_def* array,
     {
       if (is_npaf_type(e_type)
 	  || !(is_pointer_to_function_type(e_type)
-	       || is_pointer_to_array_type(e_type)))
+	       || is_pointer_to_array_type(e_type)
+	       || is_pointer_to_ptr_to_mbr_type(e_type)
+	       || is_ptr_to_mbr_type(e_type)))
 	{
 	  result = e_type_repr;
 	  if (!variable_name.empty())
@@ -28390,6 +29068,11 @@ array_declaration_name(const array_type_def* array,
 	{
 	  string s = variable_name + array->get_subrange_representation();
 	  result = pointer_declaration_name(p, s, qualified, internal);
+	}
+      else if (ptr_to_mbr_type_sptr p = is_ptr_to_mbr_type(e_type))
+	{
+	  string s = variable_name + array->get_subrange_representation();
+	  result = ptr_to_mbr_declaration_name(p, s, qualified, internal);
 	}
       else
 	ABG_ASSERT_NOT_REACHED;
@@ -28416,6 +29099,56 @@ array_declaration_name(const array_type_def_sptr& array,
 		       bool qualified, bool internal)
 {return array_declaration_name(array.get(), variable_name,
 			       qualified, internal);}
+
+/// Emit the name of a pointer-to-member declaration.
+///
+/// @param ptr the pointer-to-member to consider.
+///
+/// @param variable_name the name of the variable that has @p as a
+/// type.  If it's empty then the resulting name is going to be the
+/// abstract name of the type.
+///
+/// @param qualified if true then the type name is going to be
+/// fully qualified.
+///
+/// @param internal if true then the type name is going to be used for
+/// type canonicalization purposes.
+static interned_string
+ptr_to_mbr_declaration_name(const ptr_to_mbr_type* ptr,
+			    const string& variable_name,
+			    bool qualified, bool internal)
+{
+  if (!ptr)
+    return interned_string();
+
+  string input = variable_name;
+  string result = add_outer_ptr_to_mbr_type_expr(ptr, input,
+						 qualified, internal);
+  return ptr->get_environment().intern(result);
+}
+
+/// Emit the name of a pointer-to-member declaration.
+///
+/// @param ptr the pointer-to-member to consider.
+///
+/// @param variable_name the name of the variable that has @p as a
+/// type.  If it's empty then the resulting name is going to be the
+/// abstract name of the type.
+///
+/// @param qualified if true then the type name is going to be
+/// fully qualified.
+///
+/// @param internal if true then the type name is going to be used for
+/// type canonicalization purposes.
+static interned_string
+ptr_to_mbr_declaration_name(const ptr_to_mbr_type_sptr& ptr,
+			    const string& variable_name,
+			    bool qualified, bool internal)
+{
+  return ptr_to_mbr_declaration_name(ptr.get(), variable_name,
+				     qualified, internal);
+}
+
 bool
 ir_traversable_base::traverse(ir_node_visitor&)
 {return true;}
@@ -28588,6 +29321,14 @@ ir_node_visitor::visit_begin(reference_type_def* t)
 
 bool
 ir_node_visitor::visit_end(reference_type_def* t)
+{return visit_end(static_cast<type_base*>(t));}
+
+bool
+ir_node_visitor::visit_begin(ptr_to_mbr_type* t)
+{return visit_begin(static_cast<type_base*>(t));}
+
+bool
+ir_node_visitor::visit_end(ptr_to_mbr_type* t)
 {return visit_end(static_cast<type_base*>(t));}
 
 bool

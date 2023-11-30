@@ -256,6 +256,21 @@ leaf_reporter::report(const reference_diff& d,
   report_local_reference_type_changes(d, out, indent);
 }
 
+/// Report the changes carried by a @ref ptr_to_mbr_diff node.
+///
+/// @param out the output stream to report to.
+///
+/// @param indent the white space string to use for indentation.
+void
+leaf_reporter::report(const ptr_to_mbr_diff& d, std::ostream& out,
+		      const std::string& indent) const
+{
+  if (!diff_to_be_reported(&d))
+    return;
+
+  report_local_ptr_to_mbr_type_changes(d, out, indent);
+}
+
 /// Report the changes carried by a @ref fn_parm_diff node.
 ///
 /// @param out the output stream to report to.

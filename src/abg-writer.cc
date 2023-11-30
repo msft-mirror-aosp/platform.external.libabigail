@@ -919,6 +919,8 @@ static bool write_pointer_type_def(const pointer_type_def_sptr&,
 				   write_context&, unsigned);
 static bool write_reference_type_def(const reference_type_def_sptr&,
 				     write_context&, unsigned);
+static bool write_ptr_to_mbr_type(const ptr_to_mbr_type_sptr&,
+				  write_context&, unsigned);
 static bool write_array_type_def(const array_type_def_sptr&,
 			         write_context&, unsigned);
 static bool write_array_subrange_type(const array_type_def::subrange_sptr&,
@@ -1928,6 +1930,9 @@ write_type(const type_base_sptr& type, write_context& ctxt, unsigned indent)
 				ctxt, indent)
       || write_reference_type_def(dynamic_pointer_cast
 				  <reference_type_def>(type), ctxt, indent)
+      || write_ptr_to_mbr_type(dynamic_pointer_cast
+			       <ptr_to_mbr_type>(type),
+			       ctxt, indent)
       || write_array_type_def(dynamic_pointer_cast
 			      <array_type_def>(type), ctxt, indent)
       || write_enum_type_decl(dynamic_pointer_cast<enum_type_decl>(type),
@@ -1970,6 +1975,9 @@ write_decl(const decl_base_sptr& decl, write_context& ctxt, unsigned indent)
 				ctxt, indent)
       || write_reference_type_def(dynamic_pointer_cast
 				  <reference_type_def>(decl), ctxt, indent)
+      || write_ptr_to_mbr_type(dynamic_pointer_cast
+			       <ptr_to_mbr_type>(decl),
+			       ctxt, indent)
       || write_array_type_def(dynamic_pointer_cast
 			      <array_type_def>(decl), ctxt, indent)
       || write_array_subrange_type(dynamic_pointer_cast
@@ -2873,6 +2881,78 @@ write_reference_type_def(const reference_type_def_sptr&	decl,
 			 write_context&			ctxt,
 			 unsigned				indent)
 {return write_reference_type_def(decl, "", ctxt, indent);}
+
+/// Serialize a pointer to an instance of @ref ptr_to_mbr_type.
+///
+/// @param decl a pointer to the @ref ptr_to_mbr_type to serialize.
+///
+/// @param id the ID of the type.  If it's an empty string then a new
+/// ID is generated.
+///
+/// @param ctxt the context of the serialization.
+///
+/// @param indent the number of indentation white spaces to use.
+///
+/// @return true upon succesful completion, false otherwise.
+static bool
+write_ptr_to_mbr_type(const ptr_to_mbr_type_sptr& decl,
+		      const string& id, write_context& ctxt,
+		      unsigned indent)
+{
+  if (!decl)
+    return false;
+
+  annotate(decl->get_canonical_type(), ctxt, indent);
+
+  ostream& o = ctxt.get_ostream();
+
+  do_indent(o, indent);
+
+  o << "<pointer-to-member-type";
+
+  write_size_and_alignment(decl, o,
+			   (ctxt.get_write_default_sizes()
+			    ? 0
+			    : decl->get_translation_unit()->get_address_size()),
+			   0);
+
+  write_location(static_pointer_cast<decl_base>(decl), ctxt);
+
+  type_base_sptr member_type = decl->get_member_type();
+  string i = ctxt.get_id_for_type(member_type);
+  o << " member-type-id='" << i << "'";
+  ctxt.record_type_as_referenced(member_type);
+
+  type_base_sptr containing_type = decl->get_containing_type();
+  i = ctxt.get_id_for_type(containing_type);
+  o << " containing-type-id='" << i << "'";
+  ctxt.record_type_as_referenced(containing_type);
+
+  i = id;
+  if (i.empty())
+    i = ctxt.get_id_for_type(decl);
+  o << " id ='" << i << "'";
+
+  o << "/>\n";
+
+  ctxt.record_type_as_emitted(decl);
+
+  return true;
+}
+
+/// Serialize a pointer to an instance of @ref ptr_to_mbr_type.
+///
+/// @param decl a pointer to the @ref ptr_to_mbr_type to serialize.
+///
+/// @param ctxt the context of the serialization.
+///
+/// @param indent the number of indentation white spaces to use.
+///
+/// @return true upon succesful completion, false otherwise.
+static bool
+write_ptr_to_mbr_type(const ptr_to_mbr_type_sptr& decl,
+		      write_context& ctxt, unsigned indent)
+{return write_ptr_to_mbr_type(decl, "", ctxt, indent);}
 
 /// Serialize an instance of @ref array_type_def::subrange_type.
 ///
@@ -4179,21 +4259,23 @@ write_member_type(const type_base_sptr& t, write_context& ctxt, unsigned indent)
 
   unsigned nb_ws = get_indent_to_level(ctxt, indent, 1);
   ABG_ASSERT(write_qualified_type_def(dynamic_pointer_cast<qualified_type_def>(t),
-				  id, ctxt, nb_ws)
-	 || write_pointer_type_def(dynamic_pointer_cast<pointer_type_def>(t),
+				      id, ctxt, nb_ws)
+	     || write_pointer_type_def(dynamic_pointer_cast<pointer_type_def>(t),
 				   id, ctxt, nb_ws)
-	 || write_reference_type_def(dynamic_pointer_cast<reference_type_def>(t),
+	     || write_reference_type_def(dynamic_pointer_cast<reference_type_def>(t),
+					 id, ctxt, nb_ws)
+	     || write_ptr_to_mbr_type(dynamic_pointer_cast<ptr_to_mbr_type>(t),
+				      id, ctxt, nb_ws)
+	     || write_array_type_def(dynamic_pointer_cast<array_type_def>(t),
 				     id, ctxt, nb_ws)
-	 || write_array_type_def(dynamic_pointer_cast<array_type_def>(t),
-			         id, ctxt, nb_ws)
-	 || write_enum_type_decl(dynamic_pointer_cast<enum_type_decl>(t),
+	     || write_enum_type_decl(dynamic_pointer_cast<enum_type_decl>(t),
+				     id, ctxt, nb_ws)
+	     || write_typedef_decl(dynamic_pointer_cast<typedef_decl>(t),
+				   id, ctxt, nb_ws)
+	     || write_union_decl(dynamic_pointer_cast<union_decl>(t),
 				 id, ctxt, nb_ws)
-	 || write_typedef_decl(dynamic_pointer_cast<typedef_decl>(t),
-			       id, ctxt, nb_ws)
-	 || write_union_decl(dynamic_pointer_cast<union_decl>(t),
-			     id, ctxt, nb_ws)
-	 || write_class_decl(dynamic_pointer_cast<class_decl>(t),
-			     id, ctxt, nb_ws));
+	     || write_class_decl(dynamic_pointer_cast<class_decl>(t),
+				 id, ctxt, nb_ws));
 
   do_indent_to_level(ctxt, indent, 0);
   o << "</member-type>\n";

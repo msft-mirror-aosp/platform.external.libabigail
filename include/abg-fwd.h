@@ -231,6 +231,10 @@ class reference_type_def;
 /// Convenience typedef for a shared pointer on a @ref reference_type_def
 typedef shared_ptr<reference_type_def> reference_type_def_sptr;
 
+class ptr_to_mbr_type;
+/// Convenience typedef for a shared pointer to a @ref ptr_to_mbr_type
+typedef shared_ptr<ptr_to_mbr_type> ptr_to_mbr_type_sptr;
+
 class array_type_def;
 
 /// Convenience typedef for a shared pointer on a @ref array_type_def
@@ -554,10 +558,19 @@ pointer_type_def_sptr
 is_pointer_to_array_type(const type_base_sptr&);
 
 pointer_type_def_sptr
+is_pointer_to_ptr_to_mbr_type(const type_base_sptr&);
+
+pointer_type_def_sptr
 is_pointer_to_npaf_type(const type_base_sptr&);
 
 bool
 is_typedef_ptr_or_ref_to_decl_only_class_or_union_type(const type_base* t);
+
+bool
+is_typedef_of_maybe_qualified_class_or_union_type(const type_base* t);
+
+bool
+is_typedef_of_maybe_qualified_class_or_union_type(const type_base_sptr& t);
 
 reference_type_def*
 is_reference_type(type_or_decl_base*, bool look_through_qualifiers=false);
@@ -568,6 +581,14 @@ is_reference_type(const type_or_decl_base*, bool look_through_qualifiers=false);
 reference_type_def_sptr
 is_reference_type(const type_or_decl_base_sptr&,
 		  bool look_through_qualifiers=false);
+
+const ptr_to_mbr_type*
+is_ptr_to_mbr_type(const type_or_decl_base*,
+		   bool look_through_qualifiers=false);
+
+ptr_to_mbr_type_sptr
+is_ptr_to_mbr_type(const type_or_decl_base_sptr&,
+		   bool look_through_qualifiers=false);
 
 const type_base*
 is_void_pointer_type(const type_base*);

@@ -389,6 +389,31 @@ test-abidiff-exit/PR31045/zfs-abigail-2.4/libnvpair.abi \
 test-abidiff-exit/PR31045/zfs-abigail-2.4/libnvpair.so \
 test-abidiff-exit/PR31045/zfs-abigail-2.4/libnvpair.suppr \
 test-abidiff-exit/PR31045/zfs-abigail-2.4/test-PR31045-report-1.txt \
+test-abidiff-exit/pointer-to-member/test-ptr-to-mbr1-output-1.txt \
+test-abidiff-exit/pointer-to-member/test-ptr-to-mbr1-v0.cc \
+test-abidiff-exit/pointer-to-member/test-ptr-to-mbr1-v0.o \
+test-abidiff-exit/pointer-to-member/test-ptr-to-mbr1-v1.cc \
+test-abidiff-exit/pointer-to-member/test-ptr-to-mbr1-v1.o \
+test-abidiff-exit/pointer-to-member/test-ptr-to-mbr2-output-1.txt \
+test-abidiff-exit/pointer-to-member/test-ptr-to-mbr2-v0.cc \
+test-abidiff-exit/pointer-to-member/test-ptr-to-mbr2-v0.o \
+test-abidiff-exit/pointer-to-member/test-ptr-to-mbr2-v1.cc \
+test-abidiff-exit/pointer-to-member/test-ptr-to-mbr2-v1.o \
+test-abidiff-exit/pointer-to-member/test-ptr-to-mbr3-output-1.txt \
+test-abidiff-exit/pointer-to-member/test-ptr-to-mbr3-v0.cc \
+test-abidiff-exit/pointer-to-member/test-ptr-to-mbr3-v0.o \
+test-abidiff-exit/pointer-to-member/test-ptr-to-mbr3-v1.cc \
+test-abidiff-exit/pointer-to-member/test-ptr-to-mbr3-v1.o \
+test-abidiff-exit/pointer-to-member/test-ptr-to-mbr4-output-1.txt \
+test-abidiff-exit/pointer-to-member/test-ptr-to-mbr4-v0.cc \
+test-abidiff-exit/pointer-to-member/test-ptr-to-mbr4-v0.o \
+test-abidiff-exit/pointer-to-member/test-ptr-to-mbr4-v1.cc \
+test-abidiff-exit/pointer-to-member/test-ptr-to-mbr4-v1.o \
+test-abidiff-exit/pointer-to-member/test-ptr-to-mbr5-output-1.txt \
+test-abidiff-exit/pointer-to-member/test-ptr-to-mbr5-v0.cc \
+test-abidiff-exit/pointer-to-member/test-ptr-to-mbr5-v0.o \
+test-abidiff-exit/pointer-to-member/test-ptr-to-mbr5-v1.cc \
+test-abidiff-exit/pointer-to-member/test-ptr-to-mbr5-v1.o \
 \
 test-diff-dwarf/test0-v0.cc		\
 test-diff-dwarf/test0-v0.o			\
@@ -759,6 +784,9 @@ test-read-dwarf/test-fallback.c		\
 test-read-dwarf/test-fallback.o		\
 test-read-dwarf/PR29692-kdelibs3-libkjava.so.1.0.0 \
 test-read-dwarf/PR29692-kdelibs3-libkjava.so.1.0.0.abi \
+test-read-dwarf/test-pointer-to-member-1.cc \
+test-read-dwarf/test-pointer-to-member-1.o \
+test-read-dwarf/test-pointer-to-member-1.o.abi \
 \
 test-read-ctf/test0		\
 test-read-ctf/test0.abi		\
@@ -901,6 +929,7 @@ test-annotate/test-anonymous-members-0.cc    \
 test-annotate/test-anonymous-members-0.o     \
 test-annotate/test-anonymous-members-0.o.abi \
 test-annotate/PR29443-missing-xx.o.annotated.abi \
+test-annotate/test-pointer-to-member-1.o.annotated.abi \
 \
 test-types-stability/pr19434-elf0 \
 test-types-stability/pr19139-DomainNeighborMapInst.o \

@@ -1416,6 +1416,68 @@ compute_diff(reference_type_def_sptr first,
 	     diff_context_sptr ctxt);
 
 
+class ptr_to_mbr_diff;
+
+/// Typedef of a shared_ptr to @ref ptr_to_mbr_diff
+typedef shared_ptr<ptr_to_mbr_diff> ptr_to_mbr_diff_sptr;
+
+/// The abstraction of a diff between two @ref ptr_to_mbr_type.
+class ptr_to_mbr_diff : public type_diff_base
+{
+  struct priv;
+  std::unique_ptr<priv> priv_;
+
+  ptr_to_mbr_diff()  = default;
+
+protected:
+  ptr_to_mbr_diff(const ptr_to_mbr_type_sptr& first,
+		  const ptr_to_mbr_type_sptr& second,
+		  const diff_sptr&	      member_type_diff,
+		  const diff_sptr&	      containing_type_diff,
+		  diff_context_sptr	      ctxt);
+
+public:
+
+  ptr_to_mbr_type_sptr
+  first_ptr_to_mbr_type() const;
+
+  ptr_to_mbr_type_sptr
+  second_ptr_to_mbr_type() const;
+
+  const diff_sptr
+  member_type_diff() const;
+
+  const diff_sptr
+  containing_type_diff() const;
+
+  virtual bool
+  has_changes() const;
+
+  virtual enum change_kind
+  has_local_changes() const;
+
+  virtual const string&
+  get_pretty_representation() const;
+
+  virtual void
+  report(ostream&, const string& indent = "") const;
+
+  virtual void
+  chain_into_hierarchy();
+
+  virtual ~ptr_to_mbr_diff();
+
+  friend ptr_to_mbr_diff_sptr
+  compute_diff(const ptr_to_mbr_type_sptr& first,
+	       const ptr_to_mbr_type_sptr& second,
+	       diff_context_sptr&		  ctxt);
+}; // end class ptr_to_mbr_diff
+
+ptr_to_mbr_diff_sptr
+compute_diff(const ptr_to_mbr_type_sptr& first,
+	     const ptr_to_mbr_type_sptr& second,
+	     diff_context_sptr&	 ctxt);
+
 class subrange_diff;
 
 /// A convenience typedef for a shared pointer to subrange_diff type.

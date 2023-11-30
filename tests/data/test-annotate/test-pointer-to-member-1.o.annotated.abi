@@ -1,0 +1,99 @@
+<abi-corpus version='2.2'>
+  <elf-function-symbols>
+    <!-- main -->
+    <elf-symbol name='main' type='func-type' binding='global-binding' visibility='default-visibility' is-defined='yes'/>
+  </elf-function-symbols>
+  <elf-variable-symbols>
+    <!-- pmc -->
+    <elf-symbol name='pmc' size='8' type='object-type' binding='global-binding' visibility='default-visibility' is-defined='yes'/>
+    <!-- pmcu -->
+    <elf-symbol name='pmcu' size='8' type='object-type' binding='global-binding' visibility='default-visibility' is-defined='yes'/>
+    <!-- pmd -->
+    <elf-symbol name='pmd' size='8' type='object-type' binding='global-binding' visibility='default-visibility' is-defined='yes'/>
+    <!-- pmf -->
+    <elf-symbol name='pmf' size='16' type='object-type' binding='global-binding' visibility='default-visibility' is-defined='yes'/>
+    <!-- pmi -->
+    <elf-symbol name='pmi' size='8' type='object-type' binding='global-binding' visibility='default-visibility' is-defined='yes'/>
+    <!-- pmu -->
+    <elf-symbol name='pmu' size='8' type='object-type' binding='global-binding' visibility='default-visibility' is-defined='yes'/>
+    <!-- pmy -->
+    <elf-symbol name='pmy' size='8' type='object-type' binding='global-binding' visibility='default-visibility' is-defined='yes'/>
+  </elf-variable-symbols>
+  <abi-instr address-size='64' path='test-pointer-to-member-1.cc' comp-dir-path='/home/dodji/git/libabigail/PR30260/tests/data/test-read-dwarf' language='LANG_C_plus_plus_14'>
+    <!-- char -->
+    <type-decl name='char' size-in-bits='8' id='type-id-1'/>
+    <!-- char Y::* -->
+    <pointer-to-member-type size-in-bits='64' member-type-id='type-id-1' containing-type-id='type-id-2' id ='type-id-3'/>
+    <!-- double -->
+    <type-decl name='double' size-in-bits='64' id='type-id-4'/>
+    <!-- double X::* -->
+    <pointer-to-member-type size-in-bits='64' member-type-id='type-id-4' containing-type-id='type-id-5' id ='type-id-6'/>
+    <!-- int -->
+    <type-decl name='int' size-in-bits='32' id='type-id-7'/>
+    <!-- int T::* -->
+    <pointer-to-member-type size-in-bits='64' member-type-id='type-id-7' containing-type-id='type-id-8' id ='type-id-9'/>
+    <!-- int U::* -->
+    <pointer-to-member-type size-in-bits='64' member-type-id='type-id-7' containing-type-id='type-id-10' id ='type-id-11'/>
+    <!-- int X::* -->
+    <pointer-to-member-type size-in-bits='64' member-type-id='type-id-7' containing-type-id='type-id-5' id ='type-id-12'/>
+    <!-- struct T -->
+    <class-decl name='T' size-in-bits='32' is-struct='yes' naming-typedef-id='type-id-8' visibility='default' filepath='/home/dodji/git/libabigail/PR30260/tests/data/test-read-dwarf/test-pointer-to-member-1.cc' line='12' column='1' id='type-id-13'>
+      <data-member access='public' layout-offset-in-bits='0'>
+        <!-- int T::t -->
+        <var-decl name='t' type-id='type-id-7' visibility='default' filepath='/home/dodji/git/libabigail/PR30260/tests/data/test-read-dwarf/test-pointer-to-member-1.cc' line='12' column='1'/>
+      </data-member>
+    </class-decl>
+    <!-- struct X -->
+    <class-decl name='X' size-in-bits='32' is-struct='yes' visibility='default' filepath='/home/dodji/git/libabigail/PR30260/tests/data/test-read-dwarf/test-pointer-to-member-1.cc' line='1' column='1' id='type-id-5'>
+      <data-member access='public' layout-offset-in-bits='0'>
+        <!-- int X::a -->
+        <var-decl name='a' type-id='type-id-7' visibility='default' filepath='/home/dodji/git/libabigail/PR30260/tests/data/test-read-dwarf/test-pointer-to-member-1.cc' line='3' column='1'/>
+      </data-member>
+    </class-decl>
+    <!-- typedef T T -->
+    <typedef-decl name='T' type-id='type-id-13' filepath='/home/dodji/git/libabigail/PR30260/tests/data/test-read-dwarf/test-pointer-to-member-1.cc' line='12' column='1' id='type-id-8'/>
+    <!-- union U -->
+    <union-decl name='U' size-in-bits='32' visibility='default' filepath='/home/dodji/git/libabigail/PR30260/tests/data/test-read-dwarf/test-pointer-to-member-1.cc' line='20' column='1' id='type-id-10'>
+      <data-member access='public'>
+        <!-- int U::u -->
+        <var-decl name='u' type-id='type-id-7' visibility='default' filepath='/home/dodji/git/libabigail/PR30260/tests/data/test-read-dwarf/test-pointer-to-member-1.cc' line='20' column='1'/>
+      </data-member>
+    </union-decl>
+    <!-- void (X::*)(int) -->
+    <pointer-to-member-type size-in-bits='64' member-type-id='type-id-14' containing-type-id='type-id-5' id ='type-id-15'/>
+    <!-- X* -->
+    <pointer-type-def type-id='type-id-5' size-in-bits='64' id='type-id-16'/>
+    <!-- struct Y -->
+    <class-decl name='Y' is-struct='yes' visibility='default' is-declaration-only='yes' id='type-id-2'/>
+    <!-- int X::* pmi -->
+    <var-decl name='pmi' type-id='type-id-12' mangled-name='pmi' visibility='default' filepath='/home/dodji/git/libabigail/PR30260/tests/data/test-read-dwarf/test-pointer-to-member-1.cc' line='7' column='1' elf-symbol-id='pmi'/>
+    <!-- void -->
+    <type-decl name='void' id='type-id-17'/>
+    <!-- void (X::* pmf)(int) -->
+    <var-decl name='pmf' type-id='type-id-15' mangled-name='pmf' visibility='default' filepath='/home/dodji/git/libabigail/PR30260/tests/data/test-read-dwarf/test-pointer-to-member-1.cc' line='8' column='1' elf-symbol-id='pmf'/>
+    <!-- double X::* pmd -->
+    <var-decl name='pmd' type-id='type-id-6' mangled-name='pmd' visibility='default' filepath='/home/dodji/git/libabigail/PR30260/tests/data/test-read-dwarf/test-pointer-to-member-1.cc' line='9' column='1' elf-symbol-id='pmd'/>
+    <!-- char Y::* pmc -->
+    <var-decl name='pmc' type-id='type-id-3' mangled-name='pmc' visibility='default' filepath='/home/dodji/git/libabigail/PR30260/tests/data/test-read-dwarf/test-pointer-to-member-1.cc' line='10' column='1' elf-symbol-id='pmc'/>
+    <!-- int T::* pmy -->
+    <var-decl name='pmy' type-id='type-id-9' mangled-name='pmy' visibility='default' filepath='/home/dodji/git/libabigail/PR30260/tests/data/test-read-dwarf/test-pointer-to-member-1.cc' line='13' column='1' elf-symbol-id='pmy'/>
+    <!-- int U::* pmu -->
+    <var-decl name='pmu' type-id='type-id-11' mangled-name='pmu' visibility='default' filepath='/home/dodji/git/libabigail/PR30260/tests/data/test-read-dwarf/test-pointer-to-member-1.cc' line='21' column='1' elf-symbol-id='pmu'/>
+    <!-- int U::* pmcu -->
+    <var-decl name='pmcu' type-id='type-id-11' mangled-name='pmcu' visibility='default' filepath='/home/dodji/git/libabigail/PR30260/tests/data/test-read-dwarf/test-pointer-to-member-1.cc' line='24' column='1' elf-symbol-id='pmcu'/>
+    <!-- int main() -->
+    <function-decl name='main' mangled-name='main' filepath='/home/dodji/git/libabigail/PR30260/tests/data/test-read-dwarf/test-pointer-to-member-1.cc' line='27' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='main'>
+      <!-- int -->
+      <return type-id='type-id-7'/>
+    </function-decl>
+    <!-- void (int) -->
+    <function-type size-in-bits='64' method-class-id='type-id-5' id='type-id-14'>
+      <!-- implicit parameter of type 'X*' -->
+      <parameter type-id='type-id-16' is-artificial='yes'/>
+      <!-- parameter of type 'int' -->
+      <parameter type-id='type-id-7'/>
+      <!-- void -->
+      <return type-id='type-id-17'/>
+    </function-type>
+  </abi-instr>
+</abi-corpus>

@@ -3041,6 +3041,7 @@ compute_diff_for_types(const type_or_decl_base_sptr& first,
    ||(d = try_to_diff<class_decl>(f, s,ctxt))
    ||(d = try_to_diff<pointer_type_def>(f, s, ctxt))
    ||(d = try_to_diff<reference_type_def>(f, s, ctxt))
+   ||(d = try_to_diff<ptr_to_mbr_type>(f, s, ctxt))
    ||(d = try_to_diff<array_type_def::subrange_type>(f, s, ctxt))
    ||(d = try_to_diff<array_type_def>(f, s, ctxt))
    ||(d = try_to_diff<qualified_type_def>(f, s, ctxt))
@@ -4142,6 +4143,166 @@ compute_diff(reference_type_def_sptr	first,
   return result;
 }
 // </reference_type_def>
+
+// <ptr_to_mbr_diff stuff>
+
+
+/// Constructor of @ref ptr_to_mbr_diff.
+///
+/// @param first the first pointer-to-member subject of the diff.
+///
+/// @param second the second pointer-to-member subject of the diff.
+///
+/// @param member_type_diff the diff node carrying changes to the
+/// member type of the pointer-to-member we are considering.
+///
+/// @param containing_type_diff the diff node carrying changes to the
+/// containing type of the pointer-to-member we are considering.
+///
+/// @param ctxt the context of the diff we are considering.
+ptr_to_mbr_diff::ptr_to_mbr_diff(const ptr_to_mbr_type_sptr& first,
+				 const ptr_to_mbr_type_sptr& second,
+				 const diff_sptr&	     member_type_diff,
+				 const diff_sptr&	     containing_type_diff,
+				 diff_context_sptr	     ctxt)
+  : type_diff_base(first, second, ctxt),
+    priv_(new priv(member_type_diff, containing_type_diff))
+{}
+
+/// Getter of the first pointer-to-member subject of the current diff
+/// node.
+///
+/// @return the first pointer-to-member subject of the current diff
+/// node.
+ptr_to_mbr_type_sptr
+ptr_to_mbr_diff::first_ptr_to_mbr_type() const
+{return dynamic_pointer_cast<ptr_to_mbr_type>(first_subject());}
+
+/// Getter of the second pointer-to-member subject of the current diff
+/// node.
+///
+/// @return the second pointer-to-member subject of the current diff
+/// node.
+ptr_to_mbr_type_sptr
+ptr_to_mbr_diff::second_ptr_to_mbr_type() const
+{return dynamic_pointer_cast<ptr_to_mbr_type>(second_subject());}
+
+/// Getter of the diff node carrying changes to the member type of
+/// first subject of the current diff node.
+///
+/// @return The diff node carrying changes to the member type of first
+/// subject of the current diff node.
+const diff_sptr
+ptr_to_mbr_diff::member_type_diff() const
+{return priv_->member_type_diff_;}
+
+/// Getter of the diff node carrying changes to the containing type of
+/// first subject of the current diff node.
+///
+/// @return The diff node carrying changes to the containing type of
+/// first subject of the current diff node.
+const diff_sptr
+ptr_to_mbr_diff::containing_type_diff() const
+{return priv_->containing_type_diff_;}
+
+/// Test whether the current diff node carries any change.
+///
+/// @return true iff the current diff node carries any change.
+bool
+ptr_to_mbr_diff::has_changes() const
+{
+  return first_ptr_to_mbr_type() != second_ptr_to_mbr_type();
+}
+
+/// Test whether the current diff node carries any local change.
+///
+/// @return true iff the current diff node carries any local change.
+enum change_kind
+ptr_to_mbr_diff::has_local_changes() const
+{
+  ir::change_kind k = ir::NO_CHANGE_KIND;
+  if (!equals(*first_ptr_to_mbr_type(), *second_ptr_to_mbr_type(), &k))
+    return k & ir::ALL_LOCAL_CHANGES_MASK;
+  return ir::NO_CHANGE_KIND;
+}
+
+/// Get the pretty representation of the current @ref ptr_to_mbr_diff
+/// node.
+///
+/// @return the pretty representation of the current diff node.
+const string&
+ptr_to_mbr_diff::get_pretty_representation() const
+{
+  if (diff::priv_->pretty_representation_.empty())
+    {
+      std::ostringstream o;
+      o << "ptr_to_mbr_diff["
+	<< first_subject()->get_pretty_representation()
+	<< ", "
+	<< second_subject()->get_pretty_representation()
+	<< "]";
+      diff::priv_->pretty_representation_ = o.str();
+    }
+  return diff::priv_->pretty_representation_;
+}
+
+void
+ptr_to_mbr_diff::report(ostream& out, const string& indent) const
+{
+  context()->get_reporter()->report(*this, out, indent);
+}
+
+/// Populate the vector of children node of the @ref diff base type
+/// sub-object of this instance of @ref ptr_to_mbr_diff.
+///
+/// The children node can then later be retrieved using
+/// diff::children_node().
+void
+ptr_to_mbr_diff::chain_into_hierarchy()
+{
+  append_child_node(member_type_diff());
+  append_child_node(containing_type_diff());
+}
+
+/// Destructor of @ref ptr_to_mbr_diff.
+ptr_to_mbr_diff::~ptr_to_mbr_diff()
+{
+}
+
+/// Compute the diff between two @ref ptr_to_mbr_type types.
+///
+/// Note that the two types must have been created in the same @ref
+/// environment, otherwise, this function aborts.
+///
+/// @param first the first pointer-to-member type to consider for the diff.
+///
+/// @param second the second pointer-to-member type to consider for the diff.
+///
+/// @param ctxt the diff context to use.
+ptr_to_mbr_diff_sptr
+compute_diff(const ptr_to_mbr_type_sptr& first,
+	     const ptr_to_mbr_type_sptr& second,
+	     diff_context_sptr&	 ctxt)
+{
+  diff_sptr member_type_diff =
+    compute_diff(is_type(first->get_member_type()),
+		 is_type(second->get_member_type()),
+		 ctxt);
+
+  diff_sptr containing_type_diff =
+    compute_diff(is_type(first->get_containing_type()),
+		 is_type(second->get_containing_type()),
+		 ctxt);
+
+  ptr_to_mbr_diff_sptr result(new ptr_to_mbr_diff(first, second,
+						  member_type_diff,
+						  containing_type_diff,
+						  ctxt));
+  ctxt->initialize_canonical_diff(result);
+  return result;
+}
+
+// </ptr_to_mbr_diff stuff>
 
 // <qualified_type_diff stuff>
 
