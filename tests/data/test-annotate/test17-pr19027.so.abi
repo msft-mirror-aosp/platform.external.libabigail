@@ -1,4 +1,4 @@
-<abi-corpus version='2.2' soname='libharfbuzz.so.0'>
+<abi-corpus version='2.3' soname='libharfbuzz.so.0'>
   <elf-needed>
     <dependency name='libglib-2.0.so.0'/>
     <dependency name='libfreetype.so.6'/>
@@ -973,7 +973,7 @@
     <typedef-decl name='hb_blob_t' type-id='type-id-15' filepath='/tmp/legendre/spack-stage/spack-stage-04g73E/harfbuzz-0.9.37/src/hb-blob.h' line='65' column='1' id='type-id-43'/>
     <!-- typedef int hb_bool_t -->
     <typedef-decl name='hb_bool_t' type-id='type-id-11' filepath='/tmp/legendre/spack-stage/spack-stage-04g73E/harfbuzz-0.9.37/src/hb-common.h' line='73' column='1' id='type-id-40'/>
-    <!-- typedef void(*)(void*) hb_destroy_func_t -->
+    <!-- typedef void (*)(void*) hb_destroy_func_t -->
     <typedef-decl name='hb_destroy_func_t' type-id='type-id-44' filepath='/tmp/legendre/spack-stage/spack-stage-04g73E/harfbuzz-0.9.37/src/hb-common.h' line='339' column='1' id='type-id-20'/>
     <!-- typedef pthread_mutex_t hb_mutex_impl_t -->
     <typedef-decl name='hb_mutex_impl_t' type-id='type-id-45' filepath='/tmp/legendre/spack-stage/spack-stage-04g73E/harfbuzz-0.9.37/src/hb-mutex-private.hh' line='59' column='1' id='type-id-29'/>
@@ -1085,7 +1085,7 @@
     <pointer-type-def type-id='type-id-46' size-in-bits='64' id='type-id-26'/>
     <!-- unsigned int* -->
     <pointer-type-def type-id='type-id-18' size-in-bits='64' id='type-id-60'/>
-    <!-- void(*)(void*) -->
+    <!-- void (*)(void*) -->
     <pointer-type-def type-id='type-id-61' size-in-bits='64' id='type-id-44'/>
     <!-- hb_blob_t* hb_blob_create(const char*, unsigned int, hb_memory_mode_t, void*, hb_destroy_func_t) -->
     <function-decl name='hb_blob_create' mangled-name='hb_blob_create' filepath='/tmp/legendre/spack-stage/spack-stage-04g73E/harfbuzz-0.9.37/src/hb-blob.cc' line='97' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='hb_blob_create'>
@@ -2395,23 +2395,23 @@
     <typedef-decl name='hb_position_t' type-id='type-id-126' filepath='/tmp/legendre/spack-stage/spack-stage-04g73E/harfbuzz-0.9.37/src/hb-common.h' line='76' column='1' id='type-id-103'/>
     <!-- typedef hb_segment_properties_t hb_segment_properties_t -->
     <typedef-decl name='hb_segment_properties_t' type-id='type-id-104' filepath='/tmp/legendre/spack-stage/spack-stage-04g73E/harfbuzz-0.9.37/src/hb-buffer.h' line='72' column='1' id='type-id-85'/>
-    <!-- typedef hb_unicode_combining_class_t(*)(hb_unicode_funcs_t*, hb_codepoint_t, void*) hb_unicode_combining_class_func_t -->
+    <!-- typedef hb_unicode_combining_class_t (*)(hb_unicode_funcs_t*, hb_codepoint_t, void*) hb_unicode_combining_class_func_t -->
     <typedef-decl name='hb_unicode_combining_class_func_t' type-id='type-id-127' filepath='/tmp/legendre/spack-stage/spack-stage-04g73E/harfbuzz-0.9.37/src/hb-unicode.h' line='224' column='1' id='type-id-109'/>
-    <!-- typedef hb_bool_t(*)(hb_unicode_funcs_t*, hb_codepoint_t, hb_codepoint_t, hb_codepoint_t*, void*) hb_unicode_compose_func_t -->
+    <!-- typedef hb_bool_t (*)(hb_unicode_funcs_t*, hb_codepoint_t, hb_codepoint_t, hb_codepoint_t*, void*) hb_unicode_compose_func_t -->
     <typedef-decl name='hb_unicode_compose_func_t' type-id='type-id-128' filepath='/tmp/legendre/spack-stage/spack-stage-04g73E/harfbuzz-0.9.37/src/hb-unicode.h' line='242' column='1' id='type-id-114'/>
-    <!-- typedef unsigned int(*)(hb_unicode_funcs_t*, hb_codepoint_t, hb_codepoint_t*, void*) hb_unicode_decompose_compatibility_func_t -->
+    <!-- typedef unsigned int (*)(hb_unicode_funcs_t*, hb_codepoint_t, hb_codepoint_t*, void*) hb_unicode_decompose_compatibility_func_t -->
     <typedef-decl name='hb_unicode_decompose_compatibility_func_t' type-id='type-id-129' filepath='/tmp/legendre/spack-stage/spack-stage-04g73E/harfbuzz-0.9.37/src/hb-unicode.h' line='270' column='1' id='type-id-116'/>
-    <!-- typedef hb_bool_t(*)(hb_unicode_funcs_t*, hb_codepoint_t, hb_codepoint_t*, hb_codepoint_t*, void*) hb_unicode_decompose_func_t -->
+    <!-- typedef hb_bool_t (*)(hb_unicode_funcs_t*, hb_codepoint_t, hb_codepoint_t*, hb_codepoint_t*, void*) hb_unicode_decompose_func_t -->
     <typedef-decl name='hb_unicode_decompose_func_t' type-id='type-id-130' filepath='/tmp/legendre/spack-stage/spack-stage-04g73E/harfbuzz-0.9.37/src/hb-unicode.h' line='247' column='1' id='type-id-115'/>
-    <!-- typedef unsigned int(*)(hb_unicode_funcs_t*, hb_codepoint_t, void*) hb_unicode_eastasian_width_func_t -->
+    <!-- typedef unsigned int (*)(hb_unicode_funcs_t*, hb_codepoint_t, void*) hb_unicode_eastasian_width_func_t -->
     <typedef-decl name='hb_unicode_eastasian_width_func_t' type-id='type-id-131' filepath='/tmp/legendre/spack-stage/spack-stage-04g73E/harfbuzz-0.9.37/src/hb-unicode.h' line='227' column='1' id='type-id-110'/>
     <!-- typedef hb_unicode_funcs_t hb_unicode_funcs_t -->
     <typedef-decl name='hb_unicode_funcs_t' type-id='type-id-106' filepath='/tmp/legendre/spack-stage/spack-stage-04g73E/harfbuzz-0.9.37/src/hb-unicode.h' line='171' column='1' id='type-id-132'/>
-    <!-- typedef hb_unicode_general_category_t(*)(hb_unicode_funcs_t*, hb_codepoint_t, void*) hb_unicode_general_category_func_t -->
+    <!-- typedef hb_unicode_general_category_t (*)(hb_unicode_funcs_t*, hb_codepoint_t, void*) hb_unicode_general_category_func_t -->
     <typedef-decl name='hb_unicode_general_category_func_t' type-id='type-id-133' filepath='/tmp/legendre/spack-stage/spack-stage-04g73E/harfbuzz-0.9.37/src/hb-unicode.h' line='230' column='1' id='type-id-111'/>
-    <!-- typedef hb_codepoint_t(*)(hb_unicode_funcs_t*, hb_codepoint_t, void*) hb_unicode_mirroring_func_t -->
+    <!-- typedef hb_codepoint_t (*)(hb_unicode_funcs_t*, hb_codepoint_t, void*) hb_unicode_mirroring_func_t -->
     <typedef-decl name='hb_unicode_mirroring_func_t' type-id='type-id-131' filepath='/tmp/legendre/spack-stage/spack-stage-04g73E/harfbuzz-0.9.37/src/hb-unicode.h' line='233' column='1' id='type-id-112'/>
-    <!-- typedef hb_script_t(*)(hb_unicode_funcs_t*, hb_codepoint_t, void*) hb_unicode_script_func_t -->
+    <!-- typedef hb_script_t (*)(hb_unicode_funcs_t*, hb_codepoint_t, void*) hb_unicode_script_func_t -->
     <typedef-decl name='hb_unicode_script_func_t' type-id='type-id-134' filepath='/tmp/legendre/spack-stage/spack-stage-04g73E/harfbuzz-0.9.37/src/hb-unicode.h' line='236' column='1' id='type-id-113'/>
     <!-- typedef _hb_var_int_t hb_var_int_t -->
     <typedef-decl name='hb_var_int_t' type-id='type-id-135' filepath='/tmp/legendre/spack-stage/spack-stage-04g73E/harfbuzz-0.9.37/src/hb-common.h' line='86' column='1' id='type-id-101'/>
@@ -2502,9 +2502,9 @@
     <pointer-type-def type-id='type-id-148' size-in-bits='64' id='type-id-149'/>
     <!-- const unsigned int -->
     <qualified-type-def type-id='type-id-18' const='yes' id='type-id-89'/>
-    <!-- hb_bool_t(*)(hb_unicode_funcs_t*, hb_codepoint_t, hb_codepoint_t*, hb_codepoint_t*, void*) -->
+    <!-- hb_bool_t (*)(hb_unicode_funcs_t*, hb_codepoint_t, hb_codepoint_t*, hb_codepoint_t*, void*) -->
     <pointer-type-def type-id='type-id-150' size-in-bits='64' id='type-id-130'/>
-    <!-- hb_bool_t(*)(hb_unicode_funcs_t*, hb_codepoint_t, hb_codepoint_t, hb_codepoint_t*, void*) -->
+    <!-- hb_bool_t (*)(hb_unicode_funcs_t*, hb_codepoint_t, hb_codepoint_t, hb_codepoint_t*, void*) -->
     <pointer-type-def type-id='type-id-151' size-in-bits='64' id='type-id-128'/>
     <!-- hb_buffer_t* -->
     <pointer-type-def type-id='type-id-82' size-in-bits='64' id='type-id-91'/>
@@ -2524,19 +2524,19 @@
     <reference-type-def kind='lvalue' type-id='type-id-124' size-in-bits='64' id='type-id-98'/>
     <!-- hb_glyph_position_t* -->
     <pointer-type-def type-id='type-id-124' size-in-bits='64' id='type-id-87'/>
-    <!-- hb_script_t(*)(hb_unicode_funcs_t*, hb_codepoint_t, void*) -->
+    <!-- hb_script_t (*)(hb_unicode_funcs_t*, hb_codepoint_t, void*) -->
     <pointer-type-def type-id='type-id-154' size-in-bits='64' id='type-id-134'/>
-    <!-- hb_unicode_combining_class_t(*)(hb_unicode_funcs_t*, hb_codepoint_t, void*) -->
+    <!-- hb_unicode_combining_class_t (*)(hb_unicode_funcs_t*, hb_codepoint_t, void*) -->
     <pointer-type-def type-id='type-id-155' size-in-bits='64' id='type-id-127'/>
     <!-- hb_unicode_funcs_t* -->
     <pointer-type-def type-id='type-id-106' size-in-bits='64' id='type-id-118'/>
     <!-- hb_unicode_funcs_t* -->
     <pointer-type-def type-id='type-id-132' size-in-bits='64' id='type-id-84'/>
-    <!-- hb_unicode_general_category_t(*)(hb_unicode_funcs_t*, hb_codepoint_t, void*) -->
+    <!-- hb_unicode_general_category_t (*)(hb_unicode_funcs_t*, hb_codepoint_t, void*) -->
     <pointer-type-def type-id='type-id-156' size-in-bits='64' id='type-id-133'/>
-    <!-- unsigned int(*)(hb_unicode_funcs_t*, hb_codepoint_t, hb_codepoint_t*, void*) -->
+    <!-- unsigned int (*)(hb_unicode_funcs_t*, hb_codepoint_t, hb_codepoint_t*, void*) -->
     <pointer-type-def type-id='type-id-157' size-in-bits='64' id='type-id-129'/>
-    <!-- unsigned int(*)(hb_unicode_funcs_t*, hb_codepoint_t, void*) -->
+    <!-- unsigned int (*)(hb_unicode_funcs_t*, hb_codepoint_t, void*) -->
     <pointer-type-def type-id='type-id-158' size-in-bits='64' id='type-id-131'/>
     <!-- struct hb_font_t -->
     <class-decl name='hb_font_t' size-in-bits='1536' is-struct='yes' visibility='default' filepath='/tmp/legendre/spack-stage/spack-stage-04g73E/harfbuzz-0.9.37/src/hb-font-private.hh' line='91' column='1' id='type-id-121'>
@@ -4826,15 +4826,15 @@
     <typedef-decl name='hb_feature_t' type-id='type-id-198' filepath='/tmp/legendre/spack-stage/spack-stage-04g73E/harfbuzz-0.9.37/src/hb-shape.h' line='48' column='1' id='type-id-219'/>
     <!-- typedef hb_font_funcs_t hb_font_funcs_t -->
     <typedef-decl name='hb_font_funcs_t' type-id='type-id-199' filepath='/tmp/legendre/spack-stage/spack-stage-04g73E/harfbuzz-0.9.37/src/hb-font.h' line='47' column='1' id='type-id-220'/>
-    <!-- typedef hb_position_t(*)(hb_font_t*, void*, hb_codepoint_t, void*) hb_font_get_glyph_advance_func_t -->
+    <!-- typedef hb_position_t (*)(hb_font_t*, void*, hb_codepoint_t, void*) hb_font_get_glyph_advance_func_t -->
     <typedef-decl name='hb_font_get_glyph_advance_func_t' type-id='type-id-221' filepath='/tmp/legendre/spack-stage/spack-stage-04g73E/harfbuzz-0.9.37/src/hb-font.h' line='102' column='1' id='type-id-222'/>
-    <!-- typedef hb_bool_t(*)(hb_font_t*, void*, hb_codepoint_t, unsigned int, hb_position_t*, hb_position_t*, void*) hb_font_get_glyph_contour_point_func_t -->
+    <!-- typedef hb_bool_t (*)(hb_font_t*, void*, hb_codepoint_t, unsigned int, hb_position_t*, hb_position_t*, void*) hb_font_get_glyph_contour_point_func_t -->
     <typedef-decl name='hb_font_get_glyph_contour_point_func_t' type-id='type-id-223' filepath='/tmp/legendre/spack-stage/spack-stage-04g73E/harfbuzz-0.9.37/src/hb-font.h' line='127' column='1' id='type-id-210'/>
-    <!-- typedef hb_bool_t(*)(hb_font_t*, void*, hb_codepoint_t, hb_glyph_extents_t*, void*) hb_font_get_glyph_extents_func_t -->
+    <!-- typedef hb_bool_t (*)(hb_font_t*, void*, hb_codepoint_t, hb_glyph_extents_t*, void*) hb_font_get_glyph_extents_func_t -->
     <typedef-decl name='hb_font_get_glyph_extents_func_t' type-id='type-id-224' filepath='/tmp/legendre/spack-stage/spack-stage-04g73E/harfbuzz-0.9.37/src/hb-font.h' line='123' column='1' id='type-id-209'/>
-    <!-- typedef hb_bool_t(*)(hb_font_t*, void*, const char*, int, hb_codepoint_t*, void*) hb_font_get_glyph_from_name_func_t -->
+    <!-- typedef hb_bool_t (*)(hb_font_t*, void*, const char*, int, hb_codepoint_t*, void*) hb_font_get_glyph_from_name_func_t -->
     <typedef-decl name='hb_font_get_glyph_from_name_func_t' type-id='type-id-225' filepath='/tmp/legendre/spack-stage/spack-stage-04g73E/harfbuzz-0.9.37/src/hb-font.h' line='137' column='1' id='type-id-212'/>
-    <!-- typedef hb_bool_t(*)(hb_font_t*, void*, hb_codepoint_t, hb_codepoint_t, hb_codepoint_t*, void*) hb_font_get_glyph_func_t -->
+    <!-- typedef hb_bool_t (*)(hb_font_t*, void*, hb_codepoint_t, hb_codepoint_t, hb_codepoint_t*, void*) hb_font_get_glyph_func_t -->
     <typedef-decl name='hb_font_get_glyph_func_t' type-id='type-id-226' filepath='/tmp/legendre/spack-stage/spack-stage-04g73E/harfbuzz-0.9.37/src/hb-font.h' line='97' column='1' id='type-id-202'/>
     <!-- typedef hb_font_get_glyph_advance_func_t hb_font_get_glyph_h_advance_func_t -->
     <typedef-decl name='hb_font_get_glyph_h_advance_func_t' type-id='type-id-222' filepath='/tmp/legendre/spack-stage/spack-stage-04g73E/harfbuzz-0.9.37/src/hb-font.h' line='103' column='1' id='type-id-203'/>
@@ -4842,11 +4842,11 @@
     <typedef-decl name='hb_font_get_glyph_h_kerning_func_t' type-id='type-id-227' filepath='/tmp/legendre/spack-stage/spack-stage-04g73E/harfbuzz-0.9.37/src/hb-font.h' line='116' column='1' id='type-id-207'/>
     <!-- typedef hb_font_get_glyph_origin_func_t hb_font_get_glyph_h_origin_func_t -->
     <typedef-decl name='hb_font_get_glyph_h_origin_func_t' type-id='type-id-228' filepath='/tmp/legendre/spack-stage/spack-stage-04g73E/harfbuzz-0.9.37/src/hb-font.h' line='110' column='1' id='type-id-205'/>
-    <!-- typedef hb_position_t(*)(hb_font_t*, void*, hb_codepoint_t, hb_codepoint_t, void*) hb_font_get_glyph_kerning_func_t -->
+    <!-- typedef hb_position_t (*)(hb_font_t*, void*, hb_codepoint_t, hb_codepoint_t, void*) hb_font_get_glyph_kerning_func_t -->
     <typedef-decl name='hb_font_get_glyph_kerning_func_t' type-id='type-id-229' filepath='/tmp/legendre/spack-stage/spack-stage-04g73E/harfbuzz-0.9.37/src/hb-font.h' line='115' column='1' id='type-id-227'/>
-    <!-- typedef hb_bool_t(*)(hb_font_t*, void*, hb_codepoint_t, char*, unsigned int, void*) hb_font_get_glyph_name_func_t -->
+    <!-- typedef hb_bool_t (*)(hb_font_t*, void*, hb_codepoint_t, char*, unsigned int, void*) hb_font_get_glyph_name_func_t -->
     <typedef-decl name='hb_font_get_glyph_name_func_t' type-id='type-id-230' filepath='/tmp/legendre/spack-stage/spack-stage-04g73E/harfbuzz-0.9.37/src/hb-font.h' line='133' column='1' id='type-id-211'/>
-    <!-- typedef hb_bool_t(*)(hb_font_t*, void*, hb_codepoint_t, hb_position_t*, hb_position_t*, void*) hb_font_get_glyph_origin_func_t -->
+    <!-- typedef hb_bool_t (*)(hb_font_t*, void*, hb_codepoint_t, hb_position_t*, hb_position_t*, void*) hb_font_get_glyph_origin_func_t -->
     <typedef-decl name='hb_font_get_glyph_origin_func_t' type-id='type-id-231' filepath='/tmp/legendre/spack-stage/spack-stage-04g73E/harfbuzz-0.9.37/src/hb-font.h' line='109' column='1' id='type-id-228'/>
     <!-- typedef hb_font_get_glyph_advance_func_t hb_font_get_glyph_v_advance_func_t -->
     <typedef-decl name='hb_font_get_glyph_v_advance_func_t' type-id='type-id-222' filepath='/tmp/legendre/spack-stage/spack-stage-04g73E/harfbuzz-0.9.37/src/hb-font.h' line='104' column='1' id='type-id-204'/>
@@ -4856,7 +4856,7 @@
     <typedef-decl name='hb_font_get_glyph_v_origin_func_t' type-id='type-id-228' filepath='/tmp/legendre/spack-stage/spack-stage-04g73E/harfbuzz-0.9.37/src/hb-font.h' line='111' column='1' id='type-id-206'/>
     <!-- typedef hb_glyph_extents_t hb_glyph_extents_t -->
     <typedef-decl name='hb_glyph_extents_t' type-id='type-id-214' filepath='/tmp/legendre/spack-stage/spack-stage-04g73E/harfbuzz-0.9.37/src/hb-font.h' line='89' column='1' id='type-id-232'/>
-    <!-- typedef hb_blob_t*(*)(hb_face_t*, hb_tag_t, void*) hb_reference_table_func_t -->
+    <!-- typedef hb_blob_t* (*)(hb_face_t*, hb_tag_t, void*) hb_reference_table_func_t -->
     <typedef-decl name='hb_reference_table_func_t' type-id='type-id-233' filepath='/tmp/legendre/spack-stage/spack-stage-04g73E/harfbuzz-0.9.37/src/hb-face.h' line='50' column='1' id='type-id-196'/>
     <!-- typedef typedef hb_bool_t (hb_shape_plan_t*, hb_font_t*, hb_buffer_t*, const hb_feature_t*, unsigned int) hb_shape_func_t -->
     <typedef-decl name='hb_shape_func_t' type-id='type-id-234' filepath='/tmp/legendre/spack-stage/spack-stage-04g73E/harfbuzz-0.9.37/src/hb-shaper-private.hh' line='36' column='1' id='type-id-235'/>
@@ -5067,19 +5067,19 @@
     <reference-type-def kind='lvalue' type-id='type-id-358' size-in-bits='64' id='type-id-359'/>
     <!-- hb_auto_trace_t<0, bool>* -->
     <pointer-type-def type-id='type-id-190' size-in-bits='64' id='type-id-191'/>
-    <!-- hb_blob_t*(*)(hb_face_t*, hb_tag_t, void*) -->
+    <!-- hb_blob_t* (*)(hb_face_t*, hb_tag_t, void*) -->
     <pointer-type-def type-id='type-id-360' size-in-bits='64' id='type-id-233'/>
-    <!-- hb_bool_t(*)(hb_font_t*, void*, const char*, int, hb_codepoint_t*, void*) -->
+    <!-- hb_bool_t (*)(hb_font_t*, void*, const char*, int, hb_codepoint_t*, void*) -->
     <pointer-type-def type-id='type-id-361' size-in-bits='64' id='type-id-225'/>
-    <!-- hb_bool_t(*)(hb_font_t*, void*, hb_codepoint_t, char*, unsigned int, void*) -->
+    <!-- hb_bool_t (*)(hb_font_t*, void*, hb_codepoint_t, char*, unsigned int, void*) -->
     <pointer-type-def type-id='type-id-362' size-in-bits='64' id='type-id-230'/>
-    <!-- hb_bool_t(*)(hb_font_t*, void*, hb_codepoint_t, hb_codepoint_t, hb_codepoint_t*, void*) -->
+    <!-- hb_bool_t (*)(hb_font_t*, void*, hb_codepoint_t, hb_codepoint_t, hb_codepoint_t*, void*) -->
     <pointer-type-def type-id='type-id-363' size-in-bits='64' id='type-id-226'/>
-    <!-- hb_bool_t(*)(hb_font_t*, void*, hb_codepoint_t, hb_glyph_extents_t*, void*) -->
+    <!-- hb_bool_t (*)(hb_font_t*, void*, hb_codepoint_t, hb_glyph_extents_t*, void*) -->
     <pointer-type-def type-id='type-id-364' size-in-bits='64' id='type-id-224'/>
-    <!-- hb_bool_t(*)(hb_font_t*, void*, hb_codepoint_t, hb_position_t*, hb_position_t*, void*) -->
+    <!-- hb_bool_t (*)(hb_font_t*, void*, hb_codepoint_t, hb_position_t*, hb_position_t*, void*) -->
     <pointer-type-def type-id='type-id-365' size-in-bits='64' id='type-id-231'/>
-    <!-- hb_bool_t(*)(hb_font_t*, void*, hb_codepoint_t, unsigned int, hb_position_t*, hb_position_t*, void*) -->
+    <!-- hb_bool_t (*)(hb_font_t*, void*, hb_codepoint_t, unsigned int, hb_position_t*, hb_position_t*, void*) -->
     <pointer-type-def type-id='type-id-366' size-in-bits='64' id='type-id-223'/>
     <!-- hb_face_t* -->
     <pointer-type-def type-id='type-id-218' size-in-bits='64' id='type-id-160'/>
@@ -5093,9 +5093,9 @@
     <pointer-type-def type-id='type-id-121' size-in-bits='64' id='type-id-159'/>
     <!-- hb_glyph_extents_t* -->
     <pointer-type-def type-id='type-id-232' size-in-bits='64' id='type-id-164'/>
-    <!-- hb_position_t(*)(hb_font_t*, void*, hb_codepoint_t, hb_codepoint_t, void*) -->
+    <!-- hb_position_t (*)(hb_font_t*, void*, hb_codepoint_t, hb_codepoint_t, void*) -->
     <pointer-type-def type-id='type-id-367' size-in-bits='64' id='type-id-229'/>
-    <!-- hb_position_t(*)(hb_font_t*, void*, hb_codepoint_t, void*) -->
+    <!-- hb_position_t (*)(hb_font_t*, void*, hb_codepoint_t, void*) -->
     <pointer-type-def type-id='type-id-368' size-in-bits='64' id='type-id-221'/>
     <!-- hb_position_t* -->
     <pointer-type-def type-id='type-id-103' size-in-bits='64' id='type-id-163'/>
@@ -10262,7 +10262,7 @@
         <var-decl name='y' type-id='type-id-579' visibility='default' filepath='/collab/usr/global/tools/order/spack/opt/chaos_5_x86_64_ib/gcc@4.4.7/freetype@2.5.3-77fab1b8/include/freetype2/ftimage.h' line='77' column='1'/>
       </data-member>
     </class-decl>
-    <!-- typedef void*(*)(FT_Memory, long int) FT_Alloc_Func -->
+    <!-- typedef void* (*)(FT_Memory, long int) FT_Alloc_Func -->
     <typedef-decl name='FT_Alloc_Func' type-id='type-id-637' filepath='/collab/usr/global/tools/order/spack/opt/chaos_5_x86_64_ib/gcc@4.4.7/freetype@2.5.3-77fab1b8/include/freetype2/ftsystem.h' line='90' column='1' id='type-id-622'/>
     <!-- typedef FT_BBox_ FT_BBox -->
     <typedef-decl name='FT_BBox' type-id='type-id-578' filepath='/collab/usr/global/tools/order/spack/opt/chaos_5_x86_64_ib/gcc@4.4.7/freetype@2.5.3-77fab1b8/include/freetype2/ftimage.h' line='120' column='1' id='type-id-595'/>
@@ -10278,11 +10278,11 @@
     <typedef-decl name='FT_Face' type-id='type-id-640' filepath='/collab/usr/global/tools/order/spack/opt/chaos_5_x86_64_ib/gcc@4.4.7/freetype@2.5.3-77fab1b8/include/freetype2/freetype.h' line='440' column='1' id='type-id-585'/>
     <!-- typedef long int FT_Fixed -->
     <typedef-decl name='FT_Fixed' type-id='type-id-12' filepath='/collab/usr/global/tools/order/spack/opt/chaos_5_x86_64_ib/gcc@4.4.7/freetype@2.5.3-77fab1b8/include/freetype2/fttypes.h' line='284' column='1' id='type-id-610'/>
-    <!-- typedef void(*)(FT_Memory, void*) FT_Free_Func -->
+    <!-- typedef void (*)(FT_Memory, void*) FT_Free_Func -->
     <typedef-decl name='FT_Free_Func' type-id='type-id-641' filepath='/collab/usr/global/tools/order/spack/opt/chaos_5_x86_64_ib/gcc@4.4.7/freetype@2.5.3-77fab1b8/include/freetype2/ftsystem.h' line='111' column='1' id='type-id-623'/>
     <!-- typedef FT_Generic_ FT_Generic -->
     <typedef-decl name='FT_Generic' type-id='type-id-604' filepath='/collab/usr/global/tools/order/spack/opt/chaos_5_x86_64_ib/gcc@4.4.7/freetype@2.5.3-77fab1b8/include/freetype2/fttypes.h' line='460' column='1' id='type-id-594'/>
-    <!-- typedef void(*)(void*) FT_Generic_Finalizer -->
+    <!-- typedef void (*)(void*) FT_Generic_Finalizer -->
     <typedef-decl name='FT_Generic_Finalizer' type-id='type-id-44' filepath='/collab/usr/global/tools/order/spack/opt/chaos_5_x86_64_ib/gcc@4.4.7/freetype@2.5.3-77fab1b8/include/freetype2/fttypes.h' line='424' column='1' id='type-id-605'/>
     <!-- typedef FT_GlyphSlotRec_* FT_GlyphSlot -->
     <typedef-decl name='FT_GlyphSlot' type-id='type-id-642' filepath='/collab/usr/global/tools/order/spack/opt/chaos_5_x86_64_ib/gcc@4.4.7/freetype@2.5.3-77fab1b8/include/freetype2/freetype.h' line='492' column='1' id='type-id-596'/>
@@ -10304,7 +10304,7 @@
     <typedef-decl name='FT_Outline' type-id='type-id-625' filepath='/collab/usr/global/tools/order/spack/opt/chaos_5_x86_64_ib/gcc@4.4.7/freetype@2.5.3-77fab1b8/include/freetype2/ftimage.h' line='403' column='1' id='type-id-614'/>
     <!-- typedef long int FT_Pos -->
     <typedef-decl name='FT_Pos' type-id='type-id-12' filepath='/collab/usr/global/tools/order/spack/opt/chaos_5_x86_64_ib/gcc@4.4.7/freetype@2.5.3-77fab1b8/include/freetype2/ftimage.h' line='58' column='1' id='type-id-579'/>
-    <!-- typedef void*(*)(FT_Memory, long int, long int, void*) FT_Realloc_Func -->
+    <!-- typedef void* (*)(FT_Memory, long int, long int, void*) FT_Realloc_Func -->
     <typedef-decl name='FT_Realloc_Func' type-id='type-id-645' filepath='/collab/usr/global/tools/order/spack/opt/chaos_5_x86_64_ib/gcc@4.4.7/freetype@2.5.3-77fab1b8/include/freetype2/ftsystem.h' line='146' column='1' id='type-id-624'/>
     <!-- typedef short int FT_Short -->
     <typedef-decl name='FT_Short' type-id='type-id-80' filepath='/collab/usr/global/tools/order/spack/opt/chaos_5_x86_64_ib/gcc@4.4.7/freetype@2.5.3-77fab1b8/include/freetype2/fttypes.h' line='194' column='1' id='type-id-583'/>
@@ -10316,9 +10316,9 @@
     <typedef-decl name='FT_Stream' type-id='type-id-647' filepath='/collab/usr/global/tools/order/spack/opt/chaos_5_x86_64_ib/gcc@4.4.7/freetype@2.5.3-77fab1b8/include/freetype2/ftsystem.h' line='196' column='1' id='type-id-601'/>
     <!-- typedef FT_StreamDesc_ FT_StreamDesc -->
     <typedef-decl name='FT_StreamDesc' type-id='type-id-648' filepath='/collab/usr/global/tools/order/spack/opt/chaos_5_x86_64_ib/gcc@4.4.7/freetype@2.5.3-77fab1b8/include/freetype2/ftsystem.h' line='214' column='1' id='type-id-633'/>
-    <!-- typedef void(*)(FT_Stream) FT_Stream_CloseFunc -->
+    <!-- typedef void (*)(FT_Stream) FT_Stream_CloseFunc -->
     <typedef-decl name='FT_Stream_CloseFunc' type-id='type-id-649' filepath='/collab/usr/global/tools/order/spack/opt/chaos_5_x86_64_ib/gcc@4.4.7/freetype@2.5.3-77fab1b8/include/freetype2/ftsystem.h' line='268' column='1' id='type-id-635'/>
-    <!-- typedef unsigned long int(*)(FT_Stream, unsigned long int, unsigned char*, unsigned long int) FT_Stream_IoFunc -->
+    <!-- typedef unsigned long int (*)(FT_Stream, unsigned long int, unsigned char*, unsigned long int) FT_Stream_IoFunc -->
     <typedef-decl name='FT_Stream_IoFunc' type-id='type-id-650' filepath='/collab/usr/global/tools/order/spack/opt/chaos_5_x86_64_ib/gcc@4.4.7/freetype@2.5.3-77fab1b8/include/freetype2/ftsystem.h' line='251' column='1' id='type-id-634'/>
     <!-- typedef char FT_String -->
     <typedef-decl name='FT_String' type-id='type-id-2' filepath='/collab/usr/global/tools/order/spack/opt/chaos_5_x86_64_ib/gcc@4.4.7/freetype@2.5.3-77fab1b8/include/freetype2/fttypes.h' line='183' column='1' id='type-id-651'/>
@@ -10365,15 +10365,15 @@
     <pointer-type-def type-id='type-id-80' size-in-bits='64' id='type-id-627'/>
     <!-- unsigned char* -->
     <pointer-type-def type-id='type-id-138' size-in-bits='64' id='type-id-581'/>
-    <!-- unsigned long int(*)(FT_Stream, unsigned long int, unsigned char*, unsigned long int) -->
+    <!-- unsigned long int (*)(FT_Stream, unsigned long int, unsigned char*, unsigned long int) -->
     <pointer-type-def type-id='type-id-652' size-in-bits='64' id='type-id-650'/>
-    <!-- void(*)(FT_Memory, void*) -->
+    <!-- void (*)(FT_Memory, void*) -->
     <pointer-type-def type-id='type-id-653' size-in-bits='64' id='type-id-641'/>
-    <!-- void(*)(FT_Stream) -->
+    <!-- void (*)(FT_Stream) -->
     <pointer-type-def type-id='type-id-654' size-in-bits='64' id='type-id-649'/>
-    <!-- void*(*)(FT_Memory, long int) -->
+    <!-- void* (*)(FT_Memory, long int) -->
     <pointer-type-def type-id='type-id-655' size-in-bits='64' id='type-id-637'/>
-    <!-- void*(*)(FT_Memory, long int, long int, void*) -->
+    <!-- void* (*)(FT_Memory, long int, long int, void*) -->
     <pointer-type-def type-id='type-id-656' size-in-bits='64' id='type-id-645'/>
     <!-- FT_DriverRec_* -->
     <pointer-type-def type-id='type-id-657' size-in-bits='64' id='type-id-658'/>
@@ -13329,7 +13329,7 @@
         <!-- struct hb_ot_map_t::stage_map_t -->
         <class-decl name='stage_map_t' size-in-bits='128' is-struct='yes' visibility='default' filepath='/tmp/legendre/spack-stage/spack-stage-04g73E/harfbuzz-0.9.37/src/hb-ot-map-private.hh' line='70' column='1' id='type-id-921'>
           <member-type access='public'>
-            <!-- typedef void(*)(const hb_ot_shape_plan_t*, hb_font_t*, hb_buffer_t*) hb_ot_map_t::stage_map_t::pause_func_t -->
+            <!-- typedef void (*)(const hb_ot_shape_plan_t*, hb_font_t*, hb_buffer_t*) hb_ot_map_t::stage_map_t::pause_func_t -->
             <typedef-decl name='pause_func_t' type-id='type-id-957' filepath='/tmp/legendre/spack-stage/spack-stage-04g73E/harfbuzz-0.9.37/src/hb-ot-map-private.hh' line='68' column='1' id='type-id-956'/>
           </member-type>
           <data-member access='public' layout-offset-in-bits='0'>
@@ -14644,7 +14644,7 @@
     <pointer-type-def type-id='type-id-1323' size-in-bits='64' id='type-id-1324'/>
     <!-- OT::hb_apply_context_t::matcher_t* -->
     <pointer-type-def type-id='type-id-1325' size-in-bits='64' id='type-id-1326'/>
-    <!-- OT::hb_apply_context_t::return_t(*)(OT::hb_apply_context_t*, unsigned int) -->
+    <!-- OT::hb_apply_context_t::return_t (*)(OT::hb_apply_context_t*, unsigned int) -->
     <pointer-type-def type-id='type-id-1327' size-in-bits='64' id='type-id-1328'/>
     <!-- OT::hb_apply_context_t::skipping_backward_iterator_t* -->
     <pointer-type-def type-id='type-id-1329' size-in-bits='64' id='type-id-1330'/>
@@ -14652,19 +14652,19 @@
     <pointer-type-def type-id='type-id-1331' size-in-bits='64' id='type-id-1332'/>
     <!-- OT::hb_closure_context_t* -->
     <pointer-type-def type-id='type-id-1333' size-in-bits='64' id='type-id-1334'/>
-    <!-- OT::hb_closure_context_t::return_t(*)(OT::hb_closure_context_t*, unsigned int) -->
+    <!-- OT::hb_closure_context_t::return_t (*)(OT::hb_closure_context_t*, unsigned int) -->
     <pointer-type-def type-id='type-id-1335' size-in-bits='64' id='type-id-1336'/>
     <!-- OT::hb_collect_glyphs_context_t* -->
     <pointer-type-def type-id='type-id-1337' size-in-bits='64' id='type-id-1338'/>
-    <!-- OT::hb_collect_glyphs_context_t::return_t(*)(OT::hb_collect_glyphs_context_t*, unsigned int) -->
+    <!-- OT::hb_collect_glyphs_context_t::return_t (*)(OT::hb_collect_glyphs_context_t*, unsigned int) -->
     <pointer-type-def type-id='type-id-1339' size-in-bits='64' id='type-id-1340'/>
     <!-- OT::hb_get_coverage_context_t* -->
     <pointer-type-def type-id='type-id-1341' size-in-bits='64' id='type-id-1342'/>
     <!-- OT::hb_would_apply_context_t* -->
     <pointer-type-def type-id='type-id-1343' size-in-bits='64' id='type-id-1344'/>
-    <!-- bool(*)(hb_codepoint_t, const OT::USHORT&, void*) -->
+    <!-- bool (*)(hb_codepoint_t, const OT::USHORT&, void*) -->
     <pointer-type-def type-id='type-id-1345' size-in-bits='64' id='type-id-1346'/>
-    <!-- bool(*)(hb_set_t*, const OT::USHORT&, void*) -->
+    <!-- bool (*)(hb_set_t*, const OT::USHORT&, void*) -->
     <pointer-type-def type-id='type-id-1347' size-in-bits='64' id='type-id-1348'/>
     <!-- bool* -->
     <pointer-type-def type-id='type-id-1' size-in-bits='64' id='type-id-1349'/>
@@ -15714,9 +15714,9 @@
     <pointer-type-def type-id='type-id-982' size-in-bits='64' id='type-id-994'/>
     <!-- hb_set_digest_t* -->
     <pointer-type-def type-id='type-id-948' size-in-bits='64' id='type-id-1744'/>
-    <!-- void(*)(const hb_ot_shape_plan_t*, hb_font_t*, hb_buffer_t*) -->
+    <!-- void (*)(const hb_ot_shape_plan_t*, hb_font_t*, hb_buffer_t*) -->
     <pointer-type-def type-id='type-id-1745' size-in-bits='64' id='type-id-957'/>
-    <!-- void(*)(hb_set_t*, const OT::USHORT&, void*) -->
+    <!-- void (*)(hb_set_t*, const OT::USHORT&, void*) -->
     <pointer-type-def type-id='type-id-1746' size-in-bits='64' id='type-id-1747'/>
     <reference-type-def kind='lvalue' type-id='type-id-1748' size-in-bits='64' id='type-id-1749'/>
     <reference-type-def kind='lvalue' type-id='type-id-1750' size-in-bits='64' id='type-id-1751'/>
@@ -27178,7 +27178,7 @@
               </enum-decl>
             </member-type>
             <member-type access='public'>
-              <!-- typedef bool(*)(hb_codepoint_t, const OT::USHORT&, void*) OT::hb_apply_context_t::matcher_t::match_func_t -->
+              <!-- typedef bool (*)(hb_codepoint_t, const OT::USHORT&, void*) OT::hb_apply_context_t::matcher_t::match_func_t -->
               <typedef-decl name='match_func_t' type-id='type-id-1346' filepath='/tmp/legendre/spack-stage/spack-stage-04g73E/harfbuzz-0.9.37/src/hb-ot-layout-gsubgpos-private.hh' line='331' column='1' id='type-id-1837'/>
             </member-type>
             <data-member access='protected' layout-offset-in-bits='0'>
@@ -27515,7 +27515,7 @@
           </class-decl>
         </member-type>
         <member-type access='public'>
-          <!-- typedef OT::hb_apply_context_t::return_t(*)(OT::hb_apply_context_t*, unsigned int) OT::hb_apply_context_t::recurse_func_t -->
+          <!-- typedef OT::hb_apply_context_t::return_t (*)(OT::hb_apply_context_t*, unsigned int) OT::hb_apply_context_t::recurse_func_t -->
           <typedef-decl name='recurse_func_t' type-id='type-id-1328' filepath='/tmp/legendre/spack-stage/spack-stage-04g73E/harfbuzz-0.9.37/src/hb-ot-layout-gsubgpos-private.hh' line='266' column='1' id='type-id-1889'/>
         </member-type>
         <data-member access='public' static='yes'>
@@ -28029,7 +28029,7 @@
       <!-- struct OT::hb_closure_context_t -->
       <class-decl name='hb_closure_context_t' size-in-bits='256' is-struct='yes' visibility='default' filepath='/tmp/legendre/spack-stage/spack-stage-04g73E/harfbuzz-0.9.37/src/hb-ot-layout-gsubgpos-private.hh' line='56' column='1' id='type-id-1333'>
         <member-type access='public'>
-          <!-- typedef OT::hb_closure_context_t::return_t(*)(OT::hb_closure_context_t*, unsigned int) OT::hb_closure_context_t::recurse_func_t -->
+          <!-- typedef OT::hb_closure_context_t::return_t (*)(OT::hb_closure_context_t*, unsigned int) OT::hb_closure_context_t::recurse_func_t -->
           <typedef-decl name='recurse_func_t' type-id='type-id-1336' filepath='/tmp/legendre/spack-stage/spack-stage-04g73E/harfbuzz-0.9.37/src/hb-ot-layout-gsubgpos-private.hh' line='60' column='1' id='type-id-1891'/>
         </member-type>
         <member-type access='public'>
@@ -28260,7 +28260,7 @@
       <!-- struct OT::hb_collect_glyphs_context_t -->
       <class-decl name='hb_collect_glyphs_context_t' size-in-bits='66944' is-struct='yes' visibility='default' filepath='/tmp/legendre/spack-stage/spack-stage-04g73E/harfbuzz-0.9.37/src/hb-ot-layout-gsubgpos-private.hh' line='144' column='1' id='type-id-1337'>
         <member-type access='public'>
-          <!-- typedef OT::hb_collect_glyphs_context_t::return_t(*)(OT::hb_collect_glyphs_context_t*, unsigned int) OT::hb_collect_glyphs_context_t::recurse_func_t -->
+          <!-- typedef OT::hb_collect_glyphs_context_t::return_t (*)(OT::hb_collect_glyphs_context_t*, unsigned int) OT::hb_collect_glyphs_context_t::recurse_func_t -->
           <typedef-decl name='recurse_func_t' type-id='type-id-1340' filepath='/tmp/legendre/spack-stage/spack-stage-04g73E/harfbuzz-0.9.37/src/hb-ot-layout-gsubgpos-private.hh' line='148' column='1' id='type-id-1892'/>
         </member-type>
         <data-member access='public' static='yes'>
@@ -29213,9 +29213,9 @@
       <typedef-decl name='Value' type-id='type-id-371' filepath='/tmp/legendre/spack-stage/spack-stage-04g73E/harfbuzz-0.9.37/src/hb-ot-layout-gpos-table.hh' line='45' column='1' id='type-id-912'/>
       <!-- typedef Value[1] OT::ValueRecord -->
       <typedef-decl name='ValueRecord' type-id='type-id-913' filepath='/tmp/legendre/spack-stage/spack-stage-04g73E/harfbuzz-0.9.37/src/hb-ot-layout-gpos-table.hh' line='47' column='1' id='type-id-1871'/>
-      <!-- typedef void(*)(hb_set_t*, const OT::USHORT&, void*) OT::collect_glyphs_func_t -->
+      <!-- typedef void (*)(hb_set_t*, const OT::USHORT&, void*) OT::collect_glyphs_func_t -->
       <typedef-decl name='collect_glyphs_func_t' type-id='type-id-1747' filepath='/tmp/legendre/spack-stage/spack-stage-04g73E/harfbuzz-0.9.37/src/hb-ot-layout-gsubgpos-private.hh' line='627' column='1' id='type-id-1839'/>
-      <!-- typedef bool(*)(hb_set_t*, const OT::USHORT&, void*) OT::intersects_func_t -->
+      <!-- typedef bool (*)(hb_set_t*, const OT::USHORT&, void*) OT::intersects_func_t -->
       <typedef-decl name='intersects_func_t' type-id='type-id-1348' filepath='/tmp/legendre/spack-stage/spack-stage-04g73E/harfbuzz-0.9.37/src/hb-ot-layout-gsubgpos-private.hh' line='626' column='1' id='type-id-1838'/>
       <!-- struct OT::Supplier<OT::EntryExitRecord> -->
       <class-decl name='Supplier&lt;OT::EntryExitRecord&gt;' is-struct='yes' visibility='default' is-declaration-only='yes' id='type-id-1748'/>
@@ -30768,23 +30768,23 @@
         <var-decl name='name' type-id='type-id-2013' visibility='default' filepath='/tmp/legendre/spack-stage/spack-stage-04g73E/harfbuzz-0.9.37/src/hb-ot-shape-complex-private.hh' line='70' column='1'/>
       </data-member>
       <data-member access='public' layout-offset-in-bits='64'>
-        <!-- void(*hb_ot_complex_shaper_t::collect_features)(hb_ot_shape_planner_t*) -->
+        <!-- void (* hb_ot_complex_shaper_t::collect_features)(hb_ot_shape_planner_t*) -->
         <var-decl name='collect_features' type-id='type-id-2017' visibility='default' filepath='/tmp/legendre/spack-stage/spack-stage-04g73E/harfbuzz-0.9.37/src/hb-ot-shape-complex-private.hh' line='77' column='1'/>
       </data-member>
       <data-member access='public' layout-offset-in-bits='128'>
-        <!-- void(*hb_ot_complex_shaper_t::override_features)(hb_ot_shape_planner_t*) -->
+        <!-- void (* hb_ot_complex_shaper_t::override_features)(hb_ot_shape_planner_t*) -->
         <var-decl name='override_features' type-id='type-id-2017' visibility='default' filepath='/tmp/legendre/spack-stage/spack-stage-04g73E/harfbuzz-0.9.37/src/hb-ot-shape-complex-private.hh' line='85' column='1'/>
       </data-member>
       <data-member access='public' layout-offset-in-bits='192'>
-        <!-- void*(*hb_ot_complex_shaper_t::data_create)(const hb_ot_shape_plan_t*) -->
+        <!-- void* (* hb_ot_complex_shaper_t::data_create)(const hb_ot_shape_plan_t*) -->
         <var-decl name='data_create' type-id='type-id-2018' visibility='default' filepath='/tmp/legendre/spack-stage/spack-stage-04g73E/harfbuzz-0.9.37/src/hb-ot-shape-complex-private.hh' line='93' column='1'/>
       </data-member>
       <data-member access='public' layout-offset-in-bits='256'>
-        <!-- void(*hb_ot_complex_shaper_t::data_destroy)(void*) -->
+        <!-- void (* hb_ot_complex_shaper_t::data_destroy)(void*) -->
         <var-decl name='data_destroy' type-id='type-id-44' visibility='default' filepath='/tmp/legendre/spack-stage/spack-stage-04g73E/harfbuzz-0.9.37/src/hb-ot-shape-complex-private.hh' line='101' column='1'/>
       </data-member>
       <data-member access='public' layout-offset-in-bits='320'>
-        <!-- void(*hb_ot_complex_shaper_t::preprocess_text)(const hb_ot_shape_plan_t*, hb_buffer_t*, hb_font_t*) -->
+        <!-- void (* hb_ot_complex_shaper_t::preprocess_text)(const hb_ot_shape_plan_t*, hb_buffer_t*, hb_font_t*) -->
         <var-decl name='preprocess_text' type-id='type-id-2019' visibility='default' filepath='/tmp/legendre/spack-stage/spack-stage-04g73E/harfbuzz-0.9.37/src/hb-ot-shape-complex-private.hh' line='111' column='1'/>
       </data-member>
       <data-member access='public' layout-offset-in-bits='384'>
@@ -30792,15 +30792,15 @@
         <var-decl name='normalization_preference' type-id='type-id-2014' visibility='default' filepath='/tmp/legendre/spack-stage/spack-stage-04g73E/harfbuzz-0.9.37/src/hb-ot-shape-complex-private.hh' line='114' column='1'/>
       </data-member>
       <data-member access='public' layout-offset-in-bits='448'>
-        <!-- bool(*hb_ot_complex_shaper_t::decompose)(const hb_ot_shape_normalize_context_t*, hb_codepoint_t, hb_codepoint_t*, hb_codepoint_t*) -->
+        <!-- bool (* hb_ot_complex_shaper_t::decompose)(const hb_ot_shape_normalize_context_t*, hb_codepoint_t, hb_codepoint_t*, hb_codepoint_t*) -->
         <var-decl name='decompose' type-id='type-id-2020' visibility='default' filepath='/tmp/legendre/spack-stage/spack-stage-04g73E/harfbuzz-0.9.37/src/hb-ot-shape-complex-private.hh' line='123' column='1'/>
       </data-member>
       <data-member access='public' layout-offset-in-bits='512'>
-        <!-- bool(*hb_ot_complex_shaper_t::compose)(const hb_ot_shape_normalize_context_t*, hb_codepoint_t, hb_codepoint_t, hb_codepoint_t*) -->
+        <!-- bool (* hb_ot_complex_shaper_t::compose)(const hb_ot_shape_normalize_context_t*, hb_codepoint_t, hb_codepoint_t, hb_codepoint_t*) -->
         <var-decl name='compose' type-id='type-id-2021' visibility='default' filepath='/tmp/legendre/spack-stage/spack-stage-04g73E/harfbuzz-0.9.37/src/hb-ot-shape-complex-private.hh' line='132' column='1'/>
       </data-member>
       <data-member access='public' layout-offset-in-bits='576'>
-        <!-- void(*hb_ot_complex_shaper_t::setup_masks)(const hb_ot_shape_plan_t*, hb_buffer_t*, hb_font_t*) -->
+        <!-- void (* hb_ot_complex_shaper_t::setup_masks)(const hb_ot_shape_plan_t*, hb_buffer_t*, hb_font_t*) -->
         <var-decl name='setup_masks' type-id='type-id-2019' visibility='default' filepath='/tmp/legendre/spack-stage/spack-stage-04g73E/harfbuzz-0.9.37/src/hb-ot-shape-complex-private.hh' line='142' column='1'/>
       </data-member>
       <data-member access='public' layout-offset-in-bits='640'>
@@ -30831,11 +30831,11 @@
         <var-decl name='unicode' type-id='type-id-84' visibility='default' filepath='/tmp/legendre/spack-stage/spack-stage-04g73E/harfbuzz-0.9.37/src/hb-ot-shape-normalize-private.hh' line='57' column='1'/>
       </data-member>
       <data-member access='public' layout-offset-in-bits='256'>
-        <!-- bool(*hb_ot_shape_normalize_context_t::decompose)(const hb_ot_shape_normalize_context_t*, hb_codepoint_t, hb_codepoint_t*, hb_codepoint_t*) -->
+        <!-- bool (* hb_ot_shape_normalize_context_t::decompose)(const hb_ot_shape_normalize_context_t*, hb_codepoint_t, hb_codepoint_t*, hb_codepoint_t*) -->
         <var-decl name='decompose' type-id='type-id-2020' visibility='default' filepath='/tmp/legendre/spack-stage/spack-stage-04g73E/harfbuzz-0.9.37/src/hb-ot-shape-normalize-private.hh' line='61' column='1'/>
       </data-member>
       <data-member access='public' layout-offset-in-bits='320'>
-        <!-- bool(*hb_ot_shape_normalize_context_t::compose)(const hb_ot_shape_normalize_context_t*, hb_codepoint_t, hb_codepoint_t, hb_codepoint_t*) -->
+        <!-- bool (* hb_ot_shape_normalize_context_t::compose)(const hb_ot_shape_normalize_context_t*, hb_codepoint_t, hb_codepoint_t, hb_codepoint_t*) -->
         <var-decl name='compose' type-id='type-id-2021' visibility='default' filepath='/tmp/legendre/spack-stage/spack-stage-04g73E/harfbuzz-0.9.37/src/hb-ot-shape-normalize-private.hh' line='65' column='1'/>
       </data-member>
     </class-decl>
@@ -31001,9 +31001,9 @@
         </function-decl>
       </member-function>
     </class-decl>
-    <!-- bool(*)(const hb_ot_shape_normalize_context_t*, hb_codepoint_t, hb_codepoint_t*, hb_codepoint_t*) -->
+    <!-- bool (*)(const hb_ot_shape_normalize_context_t*, hb_codepoint_t, hb_codepoint_t*, hb_codepoint_t*) -->
     <pointer-type-def type-id='type-id-2028' size-in-bits='64' id='type-id-2020'/>
-    <!-- bool(*)(const hb_ot_shape_normalize_context_t*, hb_codepoint_t, hb_codepoint_t, hb_codepoint_t*) -->
+    <!-- bool (*)(const hb_ot_shape_normalize_context_t*, hb_codepoint_t, hb_codepoint_t, hb_codepoint_t*) -->
     <pointer-type-def type-id='type-id-2029' size-in-bits='64' id='type-id-2021'/>
     <!-- const hb_ot_complex_shaper_t -->
     <qualified-type-def type-id='type-id-2016' const='yes' id='type-id-2030'/>
@@ -31029,11 +31029,11 @@
     <reference-type-def kind='lvalue' type-id='type-id-2023' size-in-bits='64' id='type-id-2035'/>
     <!-- hb_ot_shape_planner_t* -->
     <pointer-type-def type-id='type-id-2023' size-in-bits='64' id='type-id-2024'/>
-    <!-- void(*)(const hb_ot_shape_plan_t*, hb_buffer_t*, hb_font_t*) -->
+    <!-- void (*)(const hb_ot_shape_plan_t*, hb_buffer_t*, hb_font_t*) -->
     <pointer-type-def type-id='type-id-2036' size-in-bits='64' id='type-id-2019'/>
-    <!-- void(*)(hb_ot_shape_planner_t*) -->
+    <!-- void (*)(hb_ot_shape_planner_t*) -->
     <pointer-type-def type-id='type-id-2037' size-in-bits='64' id='type-id-2017'/>
-    <!-- void*(*)(const hb_ot_shape_plan_t*) -->
+    <!-- void* (*)(const hb_ot_shape_plan_t*) -->
     <pointer-type-def type-id='type-id-2038' size-in-bits='64' id='type-id-2018'/>
     <!-- void hb_ot_shape_plan_collect_lookups(hb_shape_plan_t*, hb_tag_t, hb_set_t*) -->
     <function-decl name='hb_ot_shape_plan_collect_lookups' mangled-name='hb_ot_shape_plan_collect_lookups' filepath='/tmp/legendre/spack-stage/spack-stage-04g73E/harfbuzz-0.9.37/src/hb-ot-shape.cc' line='740' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='hb_ot_shape_plan_collect_lookups'>

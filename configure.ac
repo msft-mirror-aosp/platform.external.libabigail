@@ -84,7 +84,7 @@ dnl The minor version number of the abixml version should be changed
 dnl each time and old version of libabigail can't handle a new version
 dnl of abixml.  Note however that when the major version number is
 dnl changed, the minor version number should be set to zero.
-ABIXML_VERSION_MINOR=2
+ABIXML_VERSION_MINOR=3
 LIBABIGAIL_SO_CURRENT=libabigail_so_current
 LIBABIGAIL_SO_REVISION=libabigail_so_revision
 LIBABIGAIL_SO_AGE=libabigail_so_age
