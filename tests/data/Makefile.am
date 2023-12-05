@@ -2592,4 +2592,8 @@ test-symtab/kernel-5.6/single_variable_gpl.c \
 test-symtab/kernel-5.6/single_variable_gpl.ko \
 test-symtab/kernel-modversions/Makefile \
 test-symtab/kernel-modversions/one_of_each.c \
-test-symtab/kernel-modversions/one_of_each.ko
+test-symtab/kernel-modversions/one_of_each.ko \
+\
+test-abidb/abidb2client.c \
+test-abidb/abidb2so.c \
+test-abidb/abidb2soBAD.c

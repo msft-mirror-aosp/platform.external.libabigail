@@ -12,6 +12,13 @@ FEDABIPKGDIFF_TEST += runtestfedabipkgdiff.py
 endif
 endif
 
+ABIDB_TESTS =
+if ENABLE_ABIDB
+ABIDB_TESTS += runtestabidb1.sh runtestabidb2.sh
+endif
+
+
+
 RUN_TEST_SLOW_SELF_COMPARE=runtestslowselfcompare.sh
 
 # rather expensive tests (keep in this order), > 1s runtime
@@ -24,7 +31,8 @@ runtestdiffpkg			\
 runtestannotate			\
 runtestdifffilter		\
 runtestreaddwarf	        \
-runtestcanonicalizetypes.sh
+runtestcanonicalizetypes.sh     \
+$(ABIDB_TESTS)
 
 if CTF_READER
 TESTS += runtestreadctf
@@ -72,6 +80,10 @@ if ENABLE_RUNNING_TESTS_WITH_PY3
 EXTRA_DIST += \
 runtestfedabipkgdiffpy3.sh.in 	\
 runtestdefaultsupprspy3.sh.in
+endif
+
+if ENABLE_ABIDB
+EXTRA_DIST += runtestabidb1.sh.in runtestabidb2.sh.in
 endif
 
 CLEANFILES = \
@@ -211,6 +223,13 @@ runtestfedabipkgdiffpy3.sh$(EXEEXT):
 
 runtestdefaultsupprspy3_sh_SOURCES =
 runtestdefaultsupprspy3.sh$(EXEEXT):
+
+runtestabidb1_sh_SOURCES =
+runtestabidb1.sh$(EXEEXT):
+
+runtestabidb2_sh_SOURCES =
+runtestabidb2.sh$(EXEEXT):
+
 
 AM_CPPFLAGS=-I${abs_top_srcdir}/include -I${abs_top_srcdir}/src \
 -I${abs_top_builddir}/include -I${abs_top_srcdir}/tools -fPIC

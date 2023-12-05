@@ -816,6 +816,23 @@ except koji.ConfigurationError:
   fi
 fi
 
+dnl abidb checks
+ENABLE_ABIDB=no
+if test x$PYTHON3_INTERPRETER != xno; then
+  AX_CHECK_PYTHON_MODULES([git libarchive],
+			  [$PYTHON],
+			  [FOUND_ALL_PYTHON_MODULES=yes],
+			  [FOUND_ALL_PYTHON_MODULES=no])
+
+  if test x$FOUND_ALL_PYTHON_MODULES = xno; then
+    AC_MSG_NOTICE([missing python modules: $MISSING_PYTHON_MODULES])
+    AC_MSG_NOTICE([disabling abidb as a result])
+  else
+    ENABLE_ABIDB=yes
+  fi
+fi
+AM_CONDITIONAL(ENABLE_ABIDB, test x$ENABLE_ABIDB = xyes)
+
 AM_CONDITIONAL(ENABLE_FEDABIPKGDIFF, test x$ENABLE_FEDABIPKGDIFF = xyes)
 AM_CONDITIONAL(ENABLE_RUNNING_TESTS_WITH_PY3, test x$RUN_TESTS_WITH_PY3 = xyes)
 AM_CONDITIONAL(ENABLE_PYTHON3_INTERPRETER, test x$PYTHON3_INTERPRETER != xno)
@@ -1194,6 +1211,10 @@ AC_CONFIG_FILES([tests/runtestdefaultsupprs.py],
 		[chmod +x tests/runtestdefaultsupprs.py])
 AC_CONFIG_FILES([tests/runtestdefaultsupprspy3.sh],
 		[chmod +x tests/runtestdefaultsupprspy3.sh])
+AC_CONFIG_FILES([tests/runtestabidb1.sh],
+		[chmod +x tests/runtestabidb1.sh])
+AC_CONFIG_FILES([tests/runtestabidb2.sh],
+		[chmod +x tests/runtestabidb2.sh])
 
 AC_OUTPUT
 
@@ -1225,6 +1246,7 @@ AC_MSG_NOTICE([
     Enable GNU tar archive support in abipkgdiff   : ${ENABLE_TAR}
     Enable bash completion	                   : ${ENABLE_BASH_COMPLETION}
     Enable fedabipkgdiff                           : ${ENABLE_FEDABIPKGDIFF}
+    Enable abidb                                   : ${ENABLE_ABIDB}    
     Enable python 3				   : ${ENABLE_PYTHON3}
     Enable CTF front-end                           : ${ENABLE_CTF}
     Enable BTF front-end                           : ${ENABLE_BTF}

@@ -1,0 +1,47 @@
+#! /bin/sh
+
+# Run an abidb test based on the binaries right here
+
+# test prereqs
+type git 2>/dev/null || (echo "need git" ; exit 77)
+type ldd 2>/dev/null || (echo "need ldd" ; exit 77)
+type eu-readelf 2>/dev/null || (echo "need eu-readelf" ; exit 77)
+type debuginfod-find 2>/dev/null || (echo "need debuginfod-find" ; exit 77)
+
+toolssrcdir=@abs_top_srcdir@/tools
+toolsdir=@abs_top_builddir@/tools
+PATH=$toolsdir:$PATH
+export PATH
+
+type $toolsdir/abidw && ABIDW=$toolsdir/abidw
+type $toolsdir/abidiff && ABIDIFF=$toolsdir/abidiff
+type $toolssrcdir/abidb && ABIDB=$toolssrcdir/abidb
+datadir=@abs_top_srcdir@/tests/data
+
+set -x
+set -e
+
+gitdir=$(mktemp -d --tmpdir abidb-XXXXXXXX)
+
+function clean_env
+{
+    rm -rf "$gitdir"
+}
+
+trap "clean_env" EXIT
+
+git init $gitdir
+
+# Run a quick test against the local distribution, presumed via debuginfod
+unset DEBUGINFOD_VERBOSE DEBUGINFOD_PROGRESS
+for targetbin in /bin/sh /bin/ls /bin/make
+do
+    debuginfod-find debuginfo "$targetbin" || continue # skip if debuginfo not available or file does not exist
+    for solib in `ldd "$targetbin" | grep -F '=>' | awk '{print $3}'`;
+    do
+        $ABIDB --loglevel=debug --git $gitdir --submit "$solib"
+    done
+    $ABIDB --loglevel=debug --git $gitdir --check "$targetbin"
+done
+# How many shared libraries did we collect?
+(cd $gitdir; git ls-files)
