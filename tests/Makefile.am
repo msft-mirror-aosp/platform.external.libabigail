@@ -75,7 +75,7 @@ endif
 # are logically not related to the type hashing commit will fix the
 # issues and as a result, these test will PASS again.  For now, let's
 # mark them as being XFAIL.
-XFAIL_TESTS = runtestdifffilter runtestabidiffexit
+XFAIL_TESTS = runtestabidiffexit
 
 EXTRA_DIST = \
 runtestcanonicalizetypes.sh.in \

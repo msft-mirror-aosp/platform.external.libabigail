@@ -17596,16 +17596,6 @@ pointer_type_def::set_pointed_to_type(const type_base_sptr& t)
 bool
 equals(const pointer_type_def& l, const pointer_type_def& r, change_kind* k)
 {
-  // In C and C++ languages, a pointer to void equals all other
-  // pointers.
-  if (l.get_translation_unit()
-      && r.get_translation_unit()
-      && is_c_language(l.get_translation_unit()->get_language())
-      && is_c_language(r.get_translation_unit()->get_language())
-      && (is_void_pointer_type_equivalent(&l)
-	  || is_void_pointer_type_equivalent(&r)))
-    return true;
-
   bool result = l.get_pointed_to_type() == r.get_pointed_to_type();
   if (!result)
     if (k)

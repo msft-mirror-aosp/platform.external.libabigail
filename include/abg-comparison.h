@@ -382,61 +382,63 @@ enum diff_category
   /// incompatible change to a vtable.
   VIRTUAL_MEMBER_CHANGE_CATEGORY = 1 << 12,
 
+  REFERENCE_LVALUENESS_CHANGE_CATEGORY = 1 << 13,
+
   /// A diff node in this category is redundant.  That means it's
   /// present as a child of a other nodes in the diff tree.
-  REDUNDANT_CATEGORY = 1 << 13,
+  REDUNDANT_CATEGORY = 1 << 14,
 
   /// This means that a diff node in the sub-tree carries a type that
   /// was declaration-only and that is now defined, or vice versa.
-  TYPE_DECL_ONLY_DEF_CHANGE_CATEGORY = 1 << 14,
+  TYPE_DECL_ONLY_DEF_CHANGE_CATEGORY = 1 << 15,
 
   /// A diff node in this category is a function parameter type which
   /// top cv-qualifiers change.
-  FN_PARM_TYPE_TOP_CV_CHANGE_CATEGORY = 1 << 15,
+  FN_PARM_TYPE_TOP_CV_CHANGE_CATEGORY = 1 << 16,
 
   /// A diff node in this category has a function parameter type with a
   /// cv-qualifiers change.
-  FN_PARM_TYPE_CV_CHANGE_CATEGORY = 1 << 16,
+  FN_PARM_TYPE_CV_CHANGE_CATEGORY = 1 << 17,
 
   /// A diff node in this category is a function return type with a
   /// cv-qualifier change.
-  FN_RETURN_TYPE_CV_CHANGE_CATEGORY = 1 << 17,
+  FN_RETURN_TYPE_CV_CHANGE_CATEGORY = 1 << 18,
 
   /// A diff node in this category is a function (or function type)
   /// with at least one parameter added or removed.
-  FN_PARM_ADD_REMOVE_CHANGE_CATEGORY = 1 << 18,
+  FN_PARM_ADD_REMOVE_CHANGE_CATEGORY = 1 << 19,
 
   /// A diff node in this category is for a variable which type holds
   /// a cv-qualifier change.
-  VAR_TYPE_CV_CHANGE_CATEGORY = 1 << 19,
+  VAR_TYPE_CV_CHANGE_CATEGORY = 1 << 20,
 
   /// A diff node in this category carries a change from void pointer
   /// to non-void pointer.
-  VOID_PTR_TO_PTR_CHANGE_CATEGORY = 1 << 20,
+  VOID_PTR_TO_PTR_CHANGE_CATEGORY = 1 << 21,
 
   /// A diff node in this category carries a change in the size of the
   /// array type of a global variable, but the ELF size of the
   /// variable didn't change.
-  BENIGN_INFINITE_ARRAY_CHANGE_CATEGORY = 1 << 21,
+  BENIGN_INFINITE_ARRAY_CHANGE_CATEGORY = 1 << 22,
 
   /// A diff node in this category carries a change that must be
   /// reported, even if the diff node is also in the
   /// SUPPRESSED_CATEGORY or PRIVATE_TYPE_CATEGORY categories.
   /// Typically, this node matches a suppression specification like
   /// the [allow_type] directive.
-  HAS_ALLOWED_CHANGE_CATEGORY = 1 << 22,
+  HAS_ALLOWED_CHANGE_CATEGORY = 1 << 23,
 
   /// A diff node in this category has a descendant node that is in
   /// the HAS_ALLOWED_CHANGE_CATEGORY category.  Nodes in this
   /// category must be reported, even if they are also in the
   /// SUPPRESSED_CATEGORY or PRIVATE_TYPE_CATEGORY categories.
-  HAS_DESCENDANT_WITH_ALLOWED_CHANGE_CATEGORY = 1 << 23,
+  HAS_DESCENDANT_WITH_ALLOWED_CHANGE_CATEGORY = 1 << 24,
 
   /// A diff node in this category has a parent node that is in the
   /// HAS_ALLOWED_CHANGE_CATEGORY category.  Nodes in this category
   /// must be reported, even if they are also in the
   /// SUPPRESSED_CATEGORY or PRIVATE_TYPE_CATEGORY categories.
-  HAS_PARENT_WITH_ALLOWED_CHANGE_CATEGORY = 1 << 24,
+  HAS_PARENT_WITH_ALLOWED_CHANGE_CATEGORY = 1 << 25,
 
   /// A special enumerator that is the logical 'or' all the
   /// enumerators above.
@@ -457,6 +459,7 @@ enum diff_category
   | PRIVATE_TYPE_CATEGORY
   | SIZE_OR_OFFSET_CHANGE_CATEGORY
   | VIRTUAL_MEMBER_CHANGE_CATEGORY
+  | REFERENCE_LVALUENESS_CHANGE_CATEGORY
   | REDUNDANT_CATEGORY
   | TYPE_DECL_ONLY_DEF_CHANGE_CATEGORY
   | FN_PARM_TYPE_TOP_CV_CHANGE_CATEGORY

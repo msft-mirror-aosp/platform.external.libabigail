@@ -1,4 +1,4 @@
-Functions changes summary: 82 Removed, 6 Changed (33 filtered out), 0 Added (1081 filtered out) functions
+Functions changes summary: 82 Removed, 7 Changed (32 filtered out), 0 Added (1081 filtered out) functions
 Variables changes summary: 47 Removed, 1 Changed, 0 Added (11 filtered out) variables
 Function symbols changes summary: 7 Removed, 0 Added (76 filtered out) function symbols not referenced by debug info
 Variable symbols changes summary: 0 Removed, 0 Added variable symbol not referenced by debug info
@@ -88,7 +88,7 @@ Variable symbols changes summary: 0 Removed, 0 Added variable symbol not referen
   [D] 'function void std::__unguarded_linear_insert<VarList::BufEntry*, __gnu_cxx::__ops::_Val_comp_iter<bool (*)(const VarList::BufEntry&, const VarList::BufEntry&)> >(VarList::BufEntry*, __gnu_cxx::__ops::_Val_comp_iter<bool (*)(const VarList::BufEntry&, const VarList::BufEntry&)>)'
   [D] 'function void write_message(FILE*, int, __va_list_tag*)'
 
-6 functions with some indirect sub-type change:
+7 functions with some indirect sub-type change:
 
   [C] 'method void Engine::fini_process(bool)' has some indirect sub-type changes:
     implicit parameter 0 of type 'Engine*' has sub-type changes:
@@ -176,7 +176,7 @@ Variable symbols changes summary: 0 Removed, 0 Added variable symbol not referen
                 type of 'union {struct {uint32_t is_static; uint32_t is_static_dstn; uint32_t has_length; uint32_t is_stack_buf; uint32_t sink_addr; uint32_t alloc_disp; uint32_t is_noncont_src; uint32_t is_noncont_dst;}; uint32_t bits;} flags' changed:
                   type name changed from 'VarDesc::__anonymous_union__2' to 'varDescFlags'
                   type size hasn't changed
-                  1 data member changes (1 filtered):
+                  1 data member change:
                     anonymous data member at offset 0 (in bits) changed from:
                       struct {uint32_t is_static; uint32_t is_static_dstn; uint32_t has_length; uint32_t is_stack_buf; uint32_t sink_addr; uint32_t alloc_disp; uint32_t is_noncont_src; uint32_t is_noncont_dst;}
                     to:
@@ -344,6 +344,10 @@ Variable symbols changes summary: 0 Removed, 0 Added variable symbol not referen
     return type changed:
       type name changed from 'void' to 'bool'
       type size changed from 0 to 8 (in bits)
+
+  [C] 'method std::pair<std::_Rb_tree_iterator<PtrData>, bool> std::_Rb_tree<PtrData, PtrData, std::_Identity<PtrData>, std::less<PtrData>, std::allocator<PtrData> >::_M_insert_unique<PtrData>(PtrData&&)' has some indirect sub-type changes:
+    parameter 1 of type 'PtrData&&' changed:
+      rvalue reference type 'PtrData&& became an lvalue reference type: 'PtrData&'
 
   [C] 'method void std::vector<const VarTable::Entry*, std::allocator<const VarTable::Entry*> >::_M_emplace_back_aux<const VarTable::Entry*>(const VarTable::Entry*&&)' has some indirect sub-type changes:
     Please note that the symbol of this function is _ZNSt6vectorIPKN8VarTable5EntryESaIS3_EE19_M_emplace_back_auxIJS3_EEEvDpOT_

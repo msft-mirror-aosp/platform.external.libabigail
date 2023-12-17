@@ -1030,6 +1030,26 @@ has_strict_fam_conversion(const diff *dif)
 				   d->second_class_decl());
 }
 
+/// Test if a diff node carries a change where an lvalue reference
+/// changed into a rvalue reference, or vice versa.
+///
+/// @param dif the diff node to consider.
+///
+/// @return true iff @p dif carries a change where an lvalue reference
+/// changed into a rvalue reference, or vice versa.
+bool
+has_lvalue_reference_ness_change(const diff *dif)
+{
+  const reference_diff* d = is_reference_diff(dif);
+  if (!d)
+    return false;
+
+  if (d->first_reference()->is_lvalue() == d->second_reference()->is_lvalue())
+    return false;
+
+  return true;
+}
+
 /// Test if a class_diff node has static members added or removed.
 ///
 /// @param diff the diff node to consider.
@@ -2189,6 +2209,9 @@ categorize_harmful_diff_node(diff *d, bool pre)
 
       if (has_virtual_mem_fn_change(d))
 	category |= VIRTUAL_MEMBER_CHANGE_CATEGORY;
+
+      if (has_lvalue_reference_ness_change(d))
+	category |= REFERENCE_LVALUENESS_CHANGE_CATEGORY;
 
       if (has_added_or_removed_function_parameters(d))
 	category |= FN_PARM_ADD_REMOVE_CHANGE_CATEGORY;

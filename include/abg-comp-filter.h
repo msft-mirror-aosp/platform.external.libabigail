@@ -105,6 +105,9 @@ has_strict_fam_conversion(const class_decl_sptr& first,
 bool
 has_strict_fam_conversion(const diff *d);
 
+bool
+has_lvalue_reference_ness_change(const diff *d);
+
 struct filter_base;
 /// Convenience typedef for a shared pointer to filter_base
 typedef shared_ptr<filter_base> filter_base_sptr;
