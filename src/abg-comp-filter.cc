@@ -2008,7 +2008,8 @@ has_void_ptr_to_ptr_change(const diff* dif)
       if (is_void_pointer_type_equivalent(f)
 	  && is_pointer_type(s)
 	  && !is_void_pointer_type_equivalent(s)
-	  && f->get_size_in_bits() == s->get_size_in_bits())
+	  && ((f->get_size_in_bits() == 0)
+	      || (f->get_size_in_bits() == s->get_size_in_bits())))
 	return true;
     }
   else if (const pointer_diff *d = is_pointer_diff(dif))
@@ -2022,7 +2023,8 @@ has_void_ptr_to_ptr_change(const diff* dif)
       if (is_void_pointer_type_equivalent(f)
 	  && is_pointer_type(s)
 	  && !is_void_pointer_type_equivalent(s)
-	  && f->get_size_in_bits() == s->get_size_in_bits())
+	  && ((f->get_size_in_bits() == 0)
+	      || (f->get_size_in_bits() == s->get_size_in_bits())))
 	return true;
     }
   else if (const qualified_type_diff *d = is_qualified_type_diff(dif))
@@ -2036,7 +2038,8 @@ has_void_ptr_to_ptr_change(const diff* dif)
       if (is_void_pointer_type_equivalent(f)
 	  && is_pointer_type(s)
 	  && !is_void_pointer_type_equivalent(s)
-	  && f->get_size_in_bits() == s->get_size_in_bits())
+	  && ((f->get_size_in_bits() == 0)
+	      || (f->get_size_in_bits() == s->get_size_in_bits())))
 	return true;
     }
 
