@@ -13806,17 +13806,6 @@
           <return type-id='type-id-18'/>
         </function-decl>
       </member-function>
-      <member-function access='private' destructor='yes' vtable-offset='-1'>
-        <!-- vtkPainterCommunicator::~vtkPainterCommunicator(int) -->
-        <function-decl name='~vtkPainterCommunicator' filepath='/tmp/legendre/spack-stage/spack-stage-R_crTC/VTK-6.1.0/Rendering/LIC/vtkPainterCommunicator.h' line='33' column='1' visibility='default' binding='global' size-in-bits='64'>
-          <!-- implicit parameter of type 'vtkPainterCommunicator*' -->
-          <parameter type-id='type-id-323' is-artificial='yes'/>
-          <!-- artificial parameter of type 'int' -->
-          <parameter type-id='type-id-13' is-artificial='yes'/>
-          <!-- void -->
-          <return type-id='type-id-18'/>
-        </function-decl>
-      </member-function>
       <member-function access='private' vtable-offset='2'>
         <!-- void vtkPainterCommunicator::Copy(const vtkPainterCommunicator*, bool) -->
         <function-decl name='Copy' mangled-name='_ZN22vtkPainterCommunicator4CopyEPKS_b' filepath='/tmp/legendre/spack-stage/spack-stage-R_crTC/VTK-6.1.0/Rendering/LIC/vtkPainterCommunicator.h' line='48' column='1' visibility='default' binding='global' size-in-bits='64'>

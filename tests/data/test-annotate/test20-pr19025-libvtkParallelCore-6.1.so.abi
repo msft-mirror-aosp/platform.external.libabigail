@@ -894,28 +894,6 @@
               <return type-id='type-id-13'/>
             </function-decl>
           </member-function>
-          <member-function access='private' destructor='yes' vtable-offset='-1'>
-            <!-- vtkCommunicator::Operation::~Operation(int) -->
-            <function-decl name='~Operation' filepath='/tmp/legendre/spack-stage/spack-stage-R_crTC/VTK-6.1.0/Parallel/Core/vtkCommunicator.h' line='113' column='1' visibility='default' binding='global' size-in-bits='64'>
-              <!-- implicit parameter of type 'vtkCommunicator::Operation*' -->
-              <parameter type-id='type-id-24' is-artificial='yes'/>
-              <!-- artificial parameter of type 'int' -->
-              <parameter type-id='type-id-19' is-artificial='yes'/>
-              <!-- void -->
-              <return type-id='type-id-13'/>
-            </function-decl>
-          </member-function>
-          <member-function access='private' destructor='yes' vtable-offset='-1'>
-            <!-- vtkCommunicator::Operation::~Operation(int) -->
-            <function-decl name='~Operation' filepath='/tmp/legendre/spack-stage/spack-stage-R_crTC/VTK-6.1.0/Parallel/Core/vtkCommunicator.h' line='113' column='1' visibility='default' binding='global' size-in-bits='64'>
-              <!-- implicit parameter of type 'vtkCommunicator::Operation*' -->
-              <parameter type-id='type-id-24' is-artificial='yes'/>
-              <!-- artificial parameter of type 'int' -->
-              <parameter type-id='type-id-19' is-artificial='yes'/>
-              <!-- void -->
-              <return type-id='type-id-13'/>
-            </function-decl>
-          </member-function>
           <member-function access='private' vtable-offset='0'>
             <!-- void vtkCommunicator::Operation::Function(void*, void*, vtkIdType, int) -->
             <function-decl name='Function' mangled-name='_ZN15vtkCommunicator9Operation8FunctionEPKvPvxi' filepath='/tmp/legendre/spack-stage/spack-stage-R_crTC/VTK-6.1.0/Parallel/Core/vtkCommunicator.h' line='105' column='1' visibility='default' binding='global' size-in-bits='64'>

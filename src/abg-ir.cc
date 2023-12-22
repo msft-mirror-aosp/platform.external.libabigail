@@ -25128,7 +25128,8 @@ fixup_virtual_member_function(method_decl_sptr method)
   for (m = klass->priv_->virtual_mem_fns_.begin();
        m != klass->priv_->virtual_mem_fns_.end();
        ++m)
-    if (m->get() == method.get())
+    if (m->get() == method.get()
+	|| (*m)->get_linkage_name() == method->get_linkage_name())
       break;
   if (m == klass->priv_->virtual_mem_fns_.end())
     klass->priv_->virtual_mem_fns_.push_back(method);
@@ -25150,7 +25151,8 @@ fixup_virtual_member_function(method_decl_sptr method)
   else
     {
       for (m = i->second.begin() ; m != i->second.end(); ++m)
-	if (m->get() == method.get())
+	if (m->get() == method.get()
+	    || (*m)->get_linkage_name() == method->get_linkage_name())
 	  break;
       if (m == i->second.end())
 	i->second.push_back(method);
