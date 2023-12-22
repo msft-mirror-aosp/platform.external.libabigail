@@ -867,7 +867,7 @@ load_corpus_and_write_abixml(char* argv[],
       if (corp_group)
 	corp_group2 = abixml::read_corpus_group_from_input(*rdr);
       else
-      corp2 = rdr->read_corpus(sts);
+	corp2 = rdr->read_corpus(sts);
 
       t.stop();
       if (opts.do_log)
