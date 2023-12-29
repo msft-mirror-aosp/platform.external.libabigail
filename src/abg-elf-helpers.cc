@@ -287,6 +287,11 @@ e_machine_to_string(GElf_Half e_machine)
       return "elf-tilera-tilegx";
 #endif
 
+#ifdef HAVE_EM_RISCV_MACRO
+    case EM_RISCV:
+      return "elf-riscv";
+#endif
+
     case EM_NUM:
       return "elf-last-arch-number";
     case EM_ALPHA:

@@ -947,6 +947,18 @@ if test x$HAS_EM_TILEGX = xyes; then
             [Defined to 1 if elf.h has EM_TILEGX macro defined])
 fi
 
+HAS_EM_RISCV=no
+AC_CHECK_DECL([EM_RISCV],
+              [HAS_EM_RISCV=yes],
+              [HAS_EM_RISCV=no],
+              [[#include <elf.h>]])
+
+if test x$HAS_EM_RISCV = xyes; then
+  AC_DEFINE([HAVE_EM_RISCV_MACRO],
+                 1,
+            [Defined to 1 if elf.h has EM_RISCV macro defined])
+fi
+
 HAS_R_AARCH64_ABS64=no
 AC_CHECK_DECL([R_AARCH64_ABS64],
 	      [HAS_R_AARCH64_ABS64=yes],
