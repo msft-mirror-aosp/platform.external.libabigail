@@ -15822,7 +15822,7 @@ build_ir_node_from_die(reader&	rdr,
 	bool var_is_cloned = false;
 
 	if (tag == DW_TAG_member)
-	  ABG_ASSERT(!is_c_language(rdr.cur_transl_unit()->get_language()));
+	  ABG_ASSERT(!rdr.die_is_in_c(die));
 
 	if (die_die_attribute(die, DW_AT_specification, spec_die, false)
 	    || (var_is_cloned = die_die_attribute(die, DW_AT_abstract_origin,
