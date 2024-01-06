@@ -5322,7 +5322,7 @@ get_decl_name_for_comparison(const decl_base &d)
   if (has_generic_anonymous_internal_type_name(&d)
       && d.get_is_anonymous())
     {
-      // The decl is anonymous.   It should have the same name ass the
+      // The decl is anonymous.   It should have the same name as the
       // other anymous types of the same kind.
       string r;
       r += get_generic_anonymous_internal_type_name(&d);
@@ -23315,7 +23315,7 @@ class_or_union::add_data_member(var_decl_sptr v, access_specifier access,
   if (!is_static)
     {
       // If this is a non-static variable, add it to the set of
-      // non-static variables, if it's not only in there.
+      // non-static variables, if it's not already in there.
       bool is_already_in = false;
       for (data_members::const_iterator i =
 	     priv_->non_static_data_members_.begin();
