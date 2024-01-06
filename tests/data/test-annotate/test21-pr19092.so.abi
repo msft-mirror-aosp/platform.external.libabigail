@@ -5773,77 +5773,6 @@
       <!-- <anonymous range>[256] -->
       <subrange length='256' lower-bound='0' upper-bound='255' type-id='type-id-8' id='type-id-267'/>
     </array-type-def>
-    <!-- struct _cpp_file -->
-    <class-decl name='_cpp_file' size-in-bits='1856' is-struct='yes' visibility='default' filepath='../.././libcpp/files.c' line='56' column='1' id='type-id-248'>
-      <data-member access='public' layout-offset-in-bits='0'>
-        <!-- const char* _cpp_file::name -->
-        <var-decl name='name' type-id='type-id-1' visibility='default' filepath='../.././libcpp/files.c' line='59' column='1'/>
-      </data-member>
-      <data-member access='public' layout-offset-in-bits='64'>
-        <!-- const char* _cpp_file::path -->
-        <var-decl name='path' type-id='type-id-1' visibility='default' filepath='../.././libcpp/files.c' line='62' column='1'/>
-      </data-member>
-      <data-member access='public' layout-offset-in-bits='128'>
-        <!-- const char* _cpp_file::pchname -->
-        <var-decl name='pchname' type-id='type-id-1' visibility='default' filepath='../.././libcpp/files.c' line='65' column='1'/>
-      </data-member>
-      <data-member access='public' layout-offset-in-bits='192'>
-        <!-- const char* _cpp_file::dir_name -->
-        <var-decl name='dir_name' type-id='type-id-1' visibility='default' filepath='../.././libcpp/files.c' line='69' column='1'/>
-      </data-member>
-      <data-member access='public' layout-offset-in-bits='256'>
-        <!-- _cpp_file* _cpp_file::next_file -->
-        <var-decl name='next_file' type-id='type-id-249' visibility='default' filepath='../.././libcpp/files.c' line='72' column='1'/>
-      </data-member>
-      <data-member access='public' layout-offset-in-bits='320'>
-        <!-- const uchar* _cpp_file::buffer -->
-        <var-decl name='buffer' type-id='type-id-220' visibility='default' filepath='../.././libcpp/files.c' line='75' column='1'/>
-      </data-member>
-      <data-member access='public' layout-offset-in-bits='384'>
-        <!-- const uchar* _cpp_file::buffer_start -->
-        <var-decl name='buffer_start' type-id='type-id-220' visibility='default' filepath='../.././libcpp/files.c' line='79' column='1'/>
-      </data-member>
-      <data-member access='public' layout-offset-in-bits='448'>
-        <!-- const cpp_hashnode* _cpp_file::cmacro -->
-        <var-decl name='cmacro' type-id='type-id-250' visibility='default' filepath='../.././libcpp/files.c' line='82' column='1'/>
-      </data-member>
-      <data-member access='public' layout-offset-in-bits='512'>
-        <!-- cpp_dir* _cpp_file::dir -->
-        <var-decl name='dir' type-id='type-id-251' visibility='default' filepath='../.././libcpp/files.c' line='87' column='1'/>
-      </data-member>
-      <data-member access='public' layout-offset-in-bits='576'>
-        <!-- stat _cpp_file::st -->
-        <var-decl name='st' type-id='type-id-82' visibility='default' filepath='../.././libcpp/files.c' line='90' column='1'/>
-      </data-member>
-      <data-member access='public' layout-offset-in-bits='1728'>
-        <!-- int _cpp_file::fd -->
-        <var-decl name='fd' type-id='type-id-2' visibility='default' filepath='../.././libcpp/files.c' line='93' column='1'/>
-      </data-member>
-      <data-member access='public' layout-offset-in-bits='1760'>
-        <!-- int _cpp_file::err_no -->
-        <var-decl name='err_no' type-id='type-id-2' visibility='default' filepath='../.././libcpp/files.c' line='97' column='1'/>
-      </data-member>
-      <data-member access='public' layout-offset-in-bits='1792'>
-        <!-- unsigned short int _cpp_file::stack_count -->
-        <var-decl name='stack_count' type-id='type-id-36' visibility='default' filepath='../.././libcpp/files.c' line='100' column='1'/>
-      </data-member>
-      <data-member access='public' layout-offset-in-bits='1808'>
-        <!-- bool _cpp_file::once_only -->
-        <var-decl name='once_only' type-id='type-id-5' visibility='default' filepath='../.././libcpp/files.c' line='103' column='1'/>
-      </data-member>
-      <data-member access='public' layout-offset-in-bits='1816'>
-        <!-- bool _cpp_file::dont_read -->
-        <var-decl name='dont_read' type-id='type-id-5' visibility='default' filepath='../.././libcpp/files.c' line='106' column='1'/>
-      </data-member>
-      <data-member access='public' layout-offset-in-bits='1824'>
-        <!-- bool _cpp_file::main_file -->
-        <var-decl name='main_file' type-id='type-id-5' visibility='default' filepath='../.././libcpp/files.c' line='109' column='1'/>
-      </data-member>
-      <data-member access='public' layout-offset-in-bits='1832'>
-        <!-- bool _cpp_file::buffer_valid -->
-        <var-decl name='buffer_valid' type-id='type-id-5' visibility='default' filepath='../.././libcpp/files.c' line='112' column='1'/>
-      </data-member>
-    </class-decl>
     <!-- struct dirent -->
     <class-decl name='dirent' size-in-bits='2240' is-struct='yes' visibility='default' filepath='/usr/include/bits/dirent.h' line='23' column='1' id='type-id-268'>
       <data-member access='public' layout-offset-in-bits='0'>
@@ -6919,37 +6848,6 @@
       <data-member access='public' layout-offset-in-bits='128'>
         <!-- cpp_token answer::first[1] -->
         <var-decl name='first' type-id='type-id-303' visibility='default' filepath='../.././libcpp/include/cpp-id-data.h' line='31' column='1'/>
-      </data-member>
-    </class-decl>
-    <!-- struct cpp_hashnode -->
-    <class-decl name='cpp_hashnode' size-in-bits='256' is-struct='yes' visibility='default' filepath='../.././libcpp/include/cpplib.h' line='676' column='1' id='type-id-122'>
-      <data-member access='public' layout-offset-in-bits='0'>
-        <!-- ht_identifier cpp_hashnode::ident -->
-        <var-decl name='ident' type-id='type-id-142' visibility='default' filepath='../.././libcpp/include/cpplib.h' line='677' column='1'/>
-      </data-member>
-      <data-member access='public' layout-offset-in-bits='128'>
-        <!-- unsigned int cpp_hashnode::is_directive -->
-        <var-decl name='is_directive' type-id='type-id-52' visibility='default' filepath='../.././libcpp/include/cpplib.h' line='678' column='1'/>
-      </data-member>
-      <data-member access='public' layout-offset-in-bits='129'>
-        <!-- unsigned int cpp_hashnode::directive_index -->
-        <var-decl name='directive_index' type-id='type-id-52' visibility='default' filepath='../.././libcpp/include/cpplib.h' line='679' column='1'/>
-      </data-member>
-      <data-member access='public' layout-offset-in-bits='136'>
-        <!-- unsigned char cpp_hashnode::rid_code -->
-        <var-decl name='rid_code' type-id='type-id-69' visibility='default' filepath='../.././libcpp/include/cpplib.h' line='682' column='1'/>
-      </data-member>
-      <data-member access='public' layout-offset-in-bits='144'>
-        <!-- node_type cpp_hashnode::type -->
-        <var-decl name='type' type-id='type-id-143' visibility='default' filepath='../.././libcpp/include/cpplib.h' line='683' column='1'/>
-      </data-member>
-      <data-member access='public' layout-offset-in-bits='150'>
-        <!-- unsigned int cpp_hashnode::flags -->
-        <var-decl name='flags' type-id='type-id-52' visibility='default' filepath='../.././libcpp/include/cpplib.h' line='684' column='1'/>
-      </data-member>
-      <data-member access='public' layout-offset-in-bits='192'>
-        <!-- _cpp_hashnode_value cpp_hashnode::value -->
-        <var-decl name='value' type-id='type-id-144' visibility='default' filepath='../.././libcpp/include/cpplib.h' line='686' column='1'/>
       </data-member>
     </class-decl>
     <!-- struct cpp_identifier -->
@@ -9097,49 +8995,6 @@
     </function-type>
   </abi-instr>
   <abi-instr address-size='64' path='../.././libcpp/mkdeps.c' comp-dir-path='/tmp/legendre/spack-stage/spack-stage-wfh0ig/gcc-4.7.4/host-x86_64-unknown-linux-gnu/libcpp' language='LANG_C_plus_plus'>
-    <!-- struct deps -->
-    <class-decl name='deps' size-in-bits='448' is-struct='yes' visibility='default' filepath='../.././libcpp/mkdeps.c' line='30' column='1' id='type-id-252'>
-      <data-member access='public' layout-offset-in-bits='0'>
-        <!-- const char** deps::targetv -->
-        <var-decl name='targetv' type-id='type-id-253' visibility='default' filepath='../.././libcpp/mkdeps.c' line='32' column='1'/>
-      </data-member>
-      <data-member access='public' layout-offset-in-bits='64'>
-        <!-- unsigned int deps::ntargets -->
-        <var-decl name='ntargets' type-id='type-id-52' visibility='default' filepath='../.././libcpp/mkdeps.c' line='33' column='1'/>
-      </data-member>
-      <data-member access='public' layout-offset-in-bits='96'>
-        <!-- unsigned int deps::targets_size -->
-        <var-decl name='targets_size' type-id='type-id-52' visibility='default' filepath='../.././libcpp/mkdeps.c' line='34' column='1'/>
-      </data-member>
-      <data-member access='public' layout-offset-in-bits='128'>
-        <!-- const char** deps::depv -->
-        <var-decl name='depv' type-id='type-id-253' visibility='default' filepath='../.././libcpp/mkdeps.c' line='36' column='1'/>
-      </data-member>
-      <data-member access='public' layout-offset-in-bits='192'>
-        <!-- unsigned int deps::ndeps -->
-        <var-decl name='ndeps' type-id='type-id-52' visibility='default' filepath='../.././libcpp/mkdeps.c' line='37' column='1'/>
-      </data-member>
-      <data-member access='public' layout-offset-in-bits='224'>
-        <!-- unsigned int deps::deps_size -->
-        <var-decl name='deps_size' type-id='type-id-52' visibility='default' filepath='../.././libcpp/mkdeps.c' line='38' column='1'/>
-      </data-member>
-      <data-member access='public' layout-offset-in-bits='256'>
-        <!-- const char** deps::vpathv -->
-        <var-decl name='vpathv' type-id='type-id-253' visibility='default' filepath='../.././libcpp/mkdeps.c' line='40' column='1'/>
-      </data-member>
-      <data-member access='public' layout-offset-in-bits='320'>
-        <!-- size_t* deps::vpathlv -->
-        <var-decl name='vpathlv' type-id='type-id-174' visibility='default' filepath='../.././libcpp/mkdeps.c' line='41' column='1'/>
-      </data-member>
-      <data-member access='public' layout-offset-in-bits='384'>
-        <!-- unsigned int deps::nvpaths -->
-        <var-decl name='nvpaths' type-id='type-id-52' visibility='default' filepath='../.././libcpp/mkdeps.c' line='42' column='1'/>
-      </data-member>
-      <data-member access='public' layout-offset-in-bits='416'>
-        <!-- unsigned int deps::vpaths_size -->
-        <var-decl name='vpaths_size' type-id='type-id-52' visibility='default' filepath='../.././libcpp/mkdeps.c' line='43' column='1'/>
-      </data-member>
-    </class-decl>
     <!-- const deps -->
     <qualified-type-def type-id='type-id-252' const='yes' id='type-id-430'/>
     <!-- const deps* -->
@@ -10635,85 +10490,6 @@
       <data-member access='public' layout-offset-in-bits='512'>
         <!-- void (* pex_funcs::cleanup)(pex_obj*) -->
         <var-decl name='cleanup' type-id='type-id-497' visibility='default' filepath='../.././libiberty/pex-common.h' line='147' column='1'/>
-      </data-member>
-    </class-decl>
-    <!-- struct pex_obj -->
-    <class-decl name='pex_obj' size-in-bits='1152' is-struct='yes' visibility='default' filepath='../.././libiberty/pex-common.h' line='54' column='1' id='type-id-127'>
-      <data-member access='public' layout-offset-in-bits='0'>
-        <!-- int pex_obj::flags -->
-        <var-decl name='flags' type-id='type-id-2' visibility='default' filepath='../.././libiberty/pex-common.h' line='57' column='1'/>
-      </data-member>
-      <data-member access='public' layout-offset-in-bits='64'>
-        <!-- const char* pex_obj::pname -->
-        <var-decl name='pname' type-id='type-id-1' visibility='default' filepath='../.././libiberty/pex-common.h' line='59' column='1'/>
-      </data-member>
-      <data-member access='public' layout-offset-in-bits='128'>
-        <!-- const char* pex_obj::tempbase -->
-        <var-decl name='tempbase' type-id='type-id-1' visibility='default' filepath='../.././libiberty/pex-common.h' line='61' column='1'/>
-      </data-member>
-      <data-member access='public' layout-offset-in-bits='192'>
-        <!-- int pex_obj::next_input -->
-        <var-decl name='next_input' type-id='type-id-2' visibility='default' filepath='../.././libiberty/pex-common.h' line='63' column='1'/>
-      </data-member>
-      <data-member access='public' layout-offset-in-bits='256'>
-        <!-- char* pex_obj::next_input_name -->
-        <var-decl name='next_input_name' type-id='type-id-3' visibility='default' filepath='../.././libiberty/pex-common.h' line='65' column='1'/>
-      </data-member>
-      <data-member access='public' layout-offset-in-bits='320'>
-        <!-- int pex_obj::next_input_name_allocated -->
-        <var-decl name='next_input_name_allocated' type-id='type-id-2' visibility='default' filepath='../.././libiberty/pex-common.h' line='67' column='1'/>
-      </data-member>
-      <data-member access='public' layout-offset-in-bits='352'>
-        <!-- int pex_obj::stderr_pipe -->
-        <var-decl name='stderr_pipe' type-id='type-id-2' visibility='default' filepath='../.././libiberty/pex-common.h' line='69' column='1'/>
-      </data-member>
-      <data-member access='public' layout-offset-in-bits='384'>
-        <!-- int pex_obj::count -->
-        <var-decl name='count' type-id='type-id-2' visibility='default' filepath='../.././libiberty/pex-common.h' line='71' column='1'/>
-      </data-member>
-      <data-member access='public' layout-offset-in-bits='448'>
-        <!-- pid_t* pex_obj::children -->
-        <var-decl name='children' type-id='type-id-145' visibility='default' filepath='../.././libiberty/pex-common.h' line='73' column='1'/>
-      </data-member>
-      <data-member access='public' layout-offset-in-bits='512'>
-        <!-- int* pex_obj::status -->
-        <var-decl name='status' type-id='type-id-51' visibility='default' filepath='../.././libiberty/pex-common.h' line='75' column='1'/>
-      </data-member>
-      <data-member access='public' layout-offset-in-bits='576'>
-        <!-- pex_time* pex_obj::time -->
-        <var-decl name='time' type-id='type-id-146' visibility='default' filepath='../.././libiberty/pex-common.h' line='77' column='1'/>
-      </data-member>
-      <data-member access='public' layout-offset-in-bits='640'>
-        <!-- int pex_obj::number_waited -->
-        <var-decl name='number_waited' type-id='type-id-2' visibility='default' filepath='../.././libiberty/pex-common.h' line='79' column='1'/>
-      </data-member>
-      <data-member access='public' layout-offset-in-bits='704'>
-        <!-- FILE* pex_obj::input_file -->
-        <var-decl name='input_file' type-id='type-id-76' visibility='default' filepath='../.././libiberty/pex-common.h' line='81' column='1'/>
-      </data-member>
-      <data-member access='public' layout-offset-in-bits='768'>
-        <!-- FILE* pex_obj::read_output -->
-        <var-decl name='read_output' type-id='type-id-76' visibility='default' filepath='../.././libiberty/pex-common.h' line='83' column='1'/>
-      </data-member>
-      <data-member access='public' layout-offset-in-bits='832'>
-        <!-- FILE* pex_obj::read_err -->
-        <var-decl name='read_err' type-id='type-id-76' visibility='default' filepath='../.././libiberty/pex-common.h' line='85' column='1'/>
-      </data-member>
-      <data-member access='public' layout-offset-in-bits='896'>
-        <!-- int pex_obj::remove_count -->
-        <var-decl name='remove_count' type-id='type-id-2' visibility='default' filepath='../.././libiberty/pex-common.h' line='87' column='1'/>
-      </data-member>
-      <data-member access='public' layout-offset-in-bits='960'>
-        <!-- char** pex_obj::remove -->
-        <var-decl name='remove' type-id='type-id-118' visibility='default' filepath='../.././libiberty/pex-common.h' line='90' column='1'/>
-      </data-member>
-      <data-member access='public' layout-offset-in-bits='1024'>
-        <!-- const pex_funcs* pex_obj::funcs -->
-        <var-decl name='funcs' type-id='type-id-147' visibility='default' filepath='../.././libiberty/pex-common.h' line='92' column='1'/>
-      </data-member>
-      <data-member access='public' layout-offset-in-bits='1088'>
-        <!-- void* pex_obj::sysdep -->
-        <var-decl name='sysdep' type-id='type-id-39' visibility='default' filepath='../.././libiberty/pex-common.h' line='94' column='1'/>
       </data-member>
     </class-decl>
     <!-- struct pex_time -->

@@ -2276,6 +2276,8 @@ write_canonical_types_of_scope(const scope_decl	&scope,
        i != canonical_types.end();
        ++i)
     {
+      if (ctxt.type_is_emitted(*i))
+	continue;
       if (is_member_type)
 	write_member_type(*i, ctxt, indent);
       else

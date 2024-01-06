@@ -6128,7 +6128,6 @@
     <array-type-def dimensions='1' type-id='type-id-10' size-in-bits='288' id='type-id-655'>
       <subrange length='36' lower-bound='0' upper-bound='35' type-id='type-id-4' id='type-id-653'/>
     </array-type-def>
-    <class-decl name='div_t' size-in-bits='64' is-struct='yes' naming-typedef-id='type-id-32' visibility='default' id='type-id-25'/>
     <typedef-decl name='ldiv_t' type-id='type-id-25' filepath='/usr/include/stdlib.h' line='109' column='1' id='type-id-656'/>
     <reference-type-def kind='lvalue' type-id='type-id-654' size-in-bits='64' id='type-id-657'/>
     <reference-type-def kind='lvalue' type-id='type-id-655' size-in-bits='64' id='type-id-658'/>

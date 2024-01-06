@@ -4100,11 +4100,6 @@
     </namespace-decl>
     <!-- namespace tcmalloc -->
     <namespace-decl name='tcmalloc'>
-      <!-- class tcmalloc::LogItem -->
-      <class-decl name='LogItem' visibility='default' id='type-id-172'>
-      </class-decl>
-      <!-- class tcmalloc::SizeMap -->
-      <class-decl name='SizeMap' visibility='default' id='type-id-173'/>
       <!-- int tcmalloc::AlignmentForSize(size_t) -->
       <function-decl name='AlignmentForSize' mangled-name='_ZN8tcmalloc16AlignmentForSizeEm' filepath='src/common.cc' line='77' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZN8tcmalloc16AlignmentForSizeEm'>
         <!-- parameter of type 'typedef size_t' -->
@@ -14229,8 +14224,6 @@
       </namespace-decl>
       <!-- namespace base::internal -->
       <namespace-decl name='internal'>
-        <!-- struct base::internal::HookList<void (*)(const void*)> -->
-        <class-decl name='HookList&lt;void (*)(const void*)&gt;' is-struct='yes' visibility='default' id='type-id-97'/>
         <!-- struct base::internal::HookList<void (*)(const void*, const void*, size_t, int, int, int, off_t)> -->
         <class-decl name='HookList&lt;void (*)(const void*, const void*, size_t, int, int, int, off_t)&gt;' size-in-bits='576' is-struct='yes' visibility='default' filepath='src/malloc_hook-inl.h' line='59' column='1' id='type-id-424'>
           <data-member access='public' layout-offset-in-bits='0'>
@@ -14399,8 +14392,6 @@
             </function-decl>
           </member-function>
         </class-decl>
-        <!-- struct base::internal::HookList<void (*)(const void*, size_t)> -->
-        <class-decl name='HookList&lt;void (*)(const void*, size_t)&gt;' is-struct='yes' visibility='default' id='type-id-98'/>
       </namespace-decl>
     </namespace-decl>
     <!-- namespace FLAG__namespace_do_not_use_directly_use_DECLARE_string_instead -->
@@ -17819,8 +17810,6 @@
       <class-decl name='vector&lt;MallocExtension::FreeListInfo, std::allocator&lt;MallocExtension::FreeListInfo&gt; &gt;' visibility='default' id='type-id-1031'/>
       <!-- struct std::_Vector_base<MallocExtension::FreeListInfo, std::allocator<MallocExtension::FreeListInfo> > -->
       <class-decl name='_Vector_base&lt;MallocExtension::FreeListInfo, std::allocator&lt;MallocExtension::FreeListInfo&gt; &gt;' is-struct='yes' visibility='default' id='type-id-1032'/>
-      <!-- struct std::char_traits<char> -->
-      <class-decl name='char_traits&lt;char&gt;' is-struct='yes' visibility='default' id='type-id-996'/>
       <!-- class std::reverse_iterator<__gnu_cxx::__normal_iterator<MallocExtension::FreeListInfo*, std::vector<MallocExtension::FreeListInfo, std::allocator<MallocExtension::FreeListInfo> > > > -->
       <class-decl name='reverse_iterator&lt;__gnu_cxx::__normal_iterator&lt;MallocExtension::FreeListInfo*, std::vector&lt;MallocExtension::FreeListInfo, std::allocator&lt;MallocExtension::FreeListInfo&gt; &gt; &gt; &gt;' visibility='default' is-declaration-only='yes' id='type-id-1033'/>
       <!-- class std::reverse_iterator<__gnu_cxx::__normal_iterator<char*, std::basic_string<char, std::char_traits<char>, std::allocator<char> > > > -->
@@ -19038,8 +19027,6 @@
     <pointer-type-def type-id='type-id-1102' size-in-bits='64' id='type-id-1103'/>
     <!-- namespace std -->
     <namespace-decl name='std'>
-      <!-- struct std::allocator<char> -->
-      <class-decl name='allocator&lt;char&gt;' is-struct='yes' visibility='default' id='type-id-995'/>
       <!-- class std::reverse_iterator<__gnu_cxx::__normal_iterator<char*, std::basic_string<char, std::char_traits<char>, std::allocator<char> > > > -->
       <class-decl name='reverse_iterator&lt;__gnu_cxx::__normal_iterator&lt;char*, std::basic_string&lt;char, std::char_traits&lt;char&gt;, std::allocator&lt;char&gt; &gt; &gt; &gt;' visibility='default' is-declaration-only='yes' id='type-id-1104'/>
       <!-- class std::reverse_iterator<__gnu_cxx::__normal_iterator<const char*, std::basic_string<char, std::char_traits<char>, std::allocator<char> > > > -->
@@ -19785,53 +19772,6 @@
             <parameter type-id='type-id-302'/>
             <!-- const MemoryRegionMap::Region& -->
             <return type-id='type-id-302'/>
-          </function-decl>
-        </member-function>
-      </class-decl>
-      <!-- struct std::_Rb_tree_iterator<MemoryRegionMap::Region> -->
-      <class-decl name='_Rb_tree_iterator&lt;MemoryRegionMap::Region&gt;' size-in-bits='64' is-struct='yes' visibility='default' filepath='/usr/lib/gcc/x86_64-redhat-linux/4.4.7/../../../../include/c++/4.4.7/bits/stl_tree.h' line='154' column='1' id='type-id-533'>
-        <data-member access='public' layout-offset-in-bits='0'>
-          <!-- std::_Rb_tree_node_base::_Base_ptr std::_Rb_tree_iterator<MemoryRegionMap::Region>::_M_node -->
-          <var-decl name='_M_node' type-id='type-id-777' visibility='default' filepath='/usr/lib/gcc/x86_64-redhat-linux/4.4.7/../../../../include/c++/4.4.7/bits/stl_tree.h' line='219' column='1'/>
-        </data-member>
-        <member-function access='public'>
-          <!-- void std::_Rb_tree_iterator<MemoryRegionMap::Region>::_Rb_tree_iterator() -->
-          <function-decl name='_Rb_tree_iterator' filepath='/usr/lib/gcc/x86_64-redhat-linux/4.4.7/../../../../include/c++/4.4.7/bits/stl_tree.h' line='166' column='1' visibility='default' binding='global' size-in-bits='64'>
-            <!-- implicit parameter of type 'std::_Rb_tree_iterator<MemoryRegionMap::Region>*' -->
-            <parameter type-id='type-id-820' is-artificial='yes'/>
-            <!-- void -->
-            <return type-id='type-id-75'/>
-          </function-decl>
-        </member-function>
-        <member-function access='public'>
-          <!-- void std::_Rb_tree_iterator<MemoryRegionMap::Region>::_Rb_tree_iterator(std::_Rb_tree_node<MemoryRegionMap::Region>*) -->
-          <function-decl name='_Rb_tree_iterator' filepath='/usr/lib/gcc/x86_64-redhat-linux/4.4.7/../../../../include/c++/4.4.7/bits/stl_tree.h' line='170' column='1' visibility='default' binding='global' size-in-bits='64'>
-            <!-- implicit parameter of type 'std::_Rb_tree_iterator<MemoryRegionMap::Region>*' -->
-            <parameter type-id='type-id-820' is-artificial='yes'/>
-            <!-- parameter of type 'std::_Rb_tree_node<MemoryRegionMap::Region>*' -->
-            <parameter type-id='type-id-821'/>
-            <!-- void -->
-            <return type-id='type-id-75'/>
-          </function-decl>
-        </member-function>
-        <member-function access='public'>
-          <!-- bool std::_Rb_tree_iterator<MemoryRegionMap::Region>::operator==(const std::_Rb_tree_iterator<MemoryRegionMap::Region>&) -->
-          <function-decl name='operator==' mangled-name='_ZNKSt17_Rb_tree_iteratorIN15MemoryRegionMap6RegionEEeqERKS2_' filepath='/usr/lib/gcc/x86_64-redhat-linux/4.4.7/../../../../include/c++/4.4.7/bits/stl_tree.h' line='212' column='1' visibility='default' binding='global' size-in-bits='64'>
-            <!-- implicit parameter of type 'const std::_Rb_tree_iterator<MemoryRegionMap::Region>*' -->
-            <parameter type-id='type-id-822' is-artificial='yes'/>
-            <!-- parameter of type 'const std::_Rb_tree_iterator<MemoryRegionMap::Region>&' -->
-            <parameter type-id='type-id-535'/>
-            <!-- bool -->
-            <return type-id='type-id-76'/>
-          </function-decl>
-        </member-function>
-        <member-function access='public'>
-          <!-- std::_Rb_tree_iterator<MemoryRegionMap::Region>& std::_Rb_tree_iterator<MemoryRegionMap::Region>::operator&#45;&#45;() -->
-          <function-decl name='operator--' mangled-name='_ZNSt17_Rb_tree_iteratorIN15MemoryRegionMap6RegionEEmmEv' filepath='/usr/lib/gcc/x86_64-redhat-linux/4.4.7/../../../../include/c++/4.4.7/bits/stl_tree.h' line='197' column='1' visibility='default' binding='global' size-in-bits='64'>
-            <!-- implicit parameter of type 'std::_Rb_tree_iterator<MemoryRegionMap::Region>*' -->
-            <parameter type-id='type-id-820' is-artificial='yes'/>
-            <!-- std::_Rb_tree_iterator<MemoryRegionMap::Region>& -->
-            <return type-id='type-id-823'/>
           </function-decl>
         </member-function>
       </class-decl>
@@ -22779,444 +22719,6 @@
     <pointer-type-def type-id='type-id-1365' size-in-bits='64' id='type-id-971'/>
     <!-- namespace std -->
     <namespace-decl name='std'>
-      <!-- class std::_Rb_tree<const void*, std::pair<const void* const, const char*>, std::_Select1st<std::pair<const void* const, const char*> >, std::less<const void*>, std::allocator<std::pair<const void* const, const char*> > > -->
-      <class-decl name='_Rb_tree&lt;const void*, std::pair&lt;const void* const, const char*&gt;, std::_Select1st&lt;std::pair&lt;const void* const, const char*&gt; &gt;, std::less&lt;const void*&gt;, std::allocator&lt;std::pair&lt;const void* const, const char*&gt; &gt; &gt;' size-in-bits='384' visibility='default' filepath='/usr/lib/gcc/x86_64-redhat-linux/4.4.7/../../../../include/c++/4.4.7/bits/stl_tree.h' line='323' column='1' id='type-id-958'>
-        <member-type access='protected'>
-          <!-- struct std::_Rb_tree<const void*, std::pair<const void* const, const char*>, std::_Select1st<std::pair<const void* const, const char*> >, std::less<const void*>, std::allocator<std::pair<const void* const, const char*> > >::_Rb_tree_impl<std::less<const void*>, false> -->
-          <class-decl name='_Rb_tree_impl&lt;std::less&lt;const void*&gt;, false&gt;' size-in-bits='384' is-struct='yes' visibility='default' filepath='/usr/lib/gcc/x86_64-redhat-linux/4.4.7/../../../../include/c++/4.4.7/bits/stl_tree.h' line='427' column='1' id='type-id-959'>
-            <!-- class std::allocator<std::_Rb_tree_node<std::pair<const void* const, const char*> > > -->
-            <base-class access='public' layout-offset-in-bits='0' type-id='type-id-960'/>
-            <data-member access='public' layout-offset-in-bits='0'>
-              <!-- std::less<const void*> std::_Rb_tree<const void*, std::pair<const void* const, const char*>, std::_Select1st<std::pair<const void* const, const char*> >, std::less<const void*>, std::allocator<std::pair<const void* const, const char*> > >::_Rb_tree_impl<std::less<const void*>, false>::_M_key_compare -->
-              <var-decl name='_M_key_compare' type-id='type-id-961' visibility='default' filepath='/usr/lib/gcc/x86_64-redhat-linux/4.4.7/../../../../include/c++/4.4.7/bits/stl_tree.h' line='428' column='1'/>
-            </data-member>
-            <data-member access='public' layout-offset-in-bits='64'>
-              <!-- std::_Rb_tree_node_base std::_Rb_tree<const void*, std::pair<const void* const, const char*>, std::_Select1st<std::pair<const void* const, const char*> >, std::less<const void*>, std::allocator<std::pair<const void* const, const char*> > >::_Rb_tree_impl<std::less<const void*>, false>::_M_header -->
-              <var-decl name='_M_header' type-id='type-id-552' visibility='default' filepath='/usr/lib/gcc/x86_64-redhat-linux/4.4.7/../../../../include/c++/4.4.7/bits/stl_tree.h' line='429' column='1'/>
-            </data-member>
-            <data-member access='public' layout-offset-in-bits='320'>
-              <!-- size_t std::_Rb_tree<const void*, std::pair<const void* const, const char*>, std::_Select1st<std::pair<const void* const, const char*> >, std::less<const void*>, std::allocator<std::pair<const void* const, const char*> > >::_Rb_tree_impl<std::less<const void*>, false>::_M_node_count -->
-              <var-decl name='_M_node_count' type-id='type-id-7' visibility='default' filepath='/usr/lib/gcc/x86_64-redhat-linux/4.4.7/../../../../include/c++/4.4.7/bits/stl_tree.h' line='430' column='1'/>
-            </data-member>
-            <member-function access='public'>
-              <!-- void std::_Rb_tree<const void*, std::pair<const void* const, const char*>, std::_Select1st<std::pair<const void* const, const char*> >, std::less<const void*>, std::allocator<std::pair<const void* const, const char*> > >::_Rb_tree_impl<std::less<const void*>, false>::_Rb_tree_impl() -->
-              <function-decl name='_Rb_tree_impl' filepath='/usr/lib/gcc/x86_64-redhat-linux/4.4.7/../../../../include/c++/4.4.7/bits/stl_tree.h' line='432' column='1' visibility='default' binding='global' size-in-bits='64'>
-                <!-- implicit parameter of type 'std::_Rb_tree<const void*, std::pair<const void* const, const char*>, std::_Select1st<std::pair<const void* const, const char*> >, std::less<const void*>, std::allocator<std::pair<const void* const, const char*> > >::_Rb_tree_impl<std::less<const void*>, false>*' -->
-                <parameter type-id='type-id-962' is-artificial='yes'/>
-                <!-- void -->
-                <return type-id='type-id-75'/>
-              </function-decl>
-            </member-function>
-            <member-function access='public'>
-              <!-- void std::_Rb_tree<const void*, std::pair<const void* const, const char*>, std::_Select1st<std::pair<const void* const, const char*> >, std::less<const void*>, std::allocator<std::pair<const void* const, const char*> > >::_Rb_tree_impl<std::less<const void*>, false>::_Rb_tree_impl(const std::less<const void*>&, const std::allocator<std::_Rb_tree_node<std::pair<const void* const, const char*> > >&) -->
-              <function-decl name='_Rb_tree_impl' filepath='/usr/lib/gcc/x86_64-redhat-linux/4.4.7/../../../../include/c++/4.4.7/bits/stl_tree.h' line='437' column='1' visibility='default' binding='global' size-in-bits='64'>
-                <!-- implicit parameter of type 'std::_Rb_tree<const void*, std::pair<const void* const, const char*>, std::_Select1st<std::pair<const void* const, const char*> >, std::less<const void*>, std::allocator<std::pair<const void* const, const char*> > >::_Rb_tree_impl<std::less<const void*>, false>*' -->
-                <parameter type-id='type-id-962' is-artificial='yes'/>
-                <!-- parameter of type 'const std::less<const void*>&' -->
-                <parameter type-id='type-id-963'/>
-                <!-- parameter of type 'const std::allocator<std::_Rb_tree_node<std::pair<const void* const, const char*> > >&' -->
-                <parameter type-id='type-id-964'/>
-                <!-- void -->
-                <return type-id='type-id-75'/>
-              </function-decl>
-            </member-function>
-            <member-function access='public'>
-              <!-- void std::_Rb_tree<const void*, std::pair<const void* const, const char*>, std::_Select1st<std::pair<const void* const, const char*> >, std::less<const void*>, std::allocator<std::pair<const void* const, const char*> > >::_Rb_tree_impl<std::less<const void*>, false>::_Rb_tree_impl() -->
-              <function-decl name='_Rb_tree_impl' filepath='/usr/lib/gcc/x86_64-redhat-linux/4.4.7/../../../../include/c++/4.4.7/bits/stl_tree.h' line='432' column='1' visibility='default' binding='global' size-in-bits='64'>
-                <!-- implicit parameter of type 'std::_Rb_tree<const void*, std::pair<const void* const, const char*>, std::_Select1st<std::pair<const void* const, const char*> >, std::less<const void*>, std::allocator<std::pair<const void* const, const char*> > >::_Rb_tree_impl<std::less<const void*>, false>*' -->
-                <parameter type-id='type-id-962' is-artificial='yes'/>
-                <!-- void -->
-                <return type-id='type-id-75'/>
-              </function-decl>
-            </member-function>
-            <member-function access='public'>
-              <!-- void std::_Rb_tree<const void*, std::pair<const void* const, const char*>, std::_Select1st<std::pair<const void* const, const char*> >, std::less<const void*>, std::allocator<std::pair<const void* const, const char*> > >::_Rb_tree_impl<std::less<const void*>, false>::_Rb_tree_impl(const std::less<const void*>&, const std::allocator<std::_Rb_tree_node<std::pair<const void* const, const char*> > >&) -->
-              <function-decl name='_Rb_tree_impl' filepath='/usr/lib/gcc/x86_64-redhat-linux/4.4.7/../../../../include/c++/4.4.7/bits/stl_tree.h' line='437' column='1' visibility='default' binding='global' size-in-bits='64'>
-                <!-- implicit parameter of type 'std::_Rb_tree<const void*, std::pair<const void* const, const char*>, std::_Select1st<std::pair<const void* const, const char*> >, std::less<const void*>, std::allocator<std::pair<const void* const, const char*> > >::_Rb_tree_impl<std::less<const void*>, false>*' -->
-                <parameter type-id='type-id-962' is-artificial='yes'/>
-                <!-- parameter of type 'const std::less<const void*>&' -->
-                <parameter type-id='type-id-963'/>
-                <!-- parameter of type 'const std::allocator<std::_Rb_tree_node<std::pair<const void* const, const char*> > >&' -->
-                <parameter type-id='type-id-964'/>
-                <!-- void -->
-                <return type-id='type-id-75'/>
-              </function-decl>
-            </member-function>
-            <member-function access='private'>
-              <!-- void std::_Rb_tree<const void*, std::pair<const void* const, const char*>, std::_Select1st<std::pair<const void* const, const char*> >, std::less<const void*>, std::allocator<std::pair<const void* const, const char*> > >::_Rb_tree_impl<std::less<const void*>, false>::_M_initialize() -->
-              <function-decl name='_M_initialize' mangled-name='_ZNSt8_Rb_treeIPKvSt4pairIKS1_PKcESt10_Select1stIS6_ESt4lessIS1_ESaIS6_EE13_Rb_tree_implISA_Lb0EE13_M_initializeEv' filepath='/usr/lib/gcc/x86_64-redhat-linux/4.4.7/../../../../include/c++/4.4.7/bits/stl_tree.h' line='444' column='1' visibility='default' binding='global' size-in-bits='64'>
-                <!-- implicit parameter of type 'std::_Rb_tree<const void*, std::pair<const void* const, const char*>, std::_Select1st<std::pair<const void* const, const char*> >, std::less<const void*>, std::allocator<std::pair<const void* const, const char*> > >::_Rb_tree_impl<std::less<const void*>, false>*' -->
-                <parameter type-id='type-id-962' is-artificial='yes'/>
-                <!-- void -->
-                <return type-id='type-id-75'/>
-              </function-decl>
-            </member-function>
-          </class-decl>
-        </member-type>
-        <data-member access='protected' layout-offset-in-bits='0'>
-          <!-- std::_Rb_tree<const void*, std::pair<const void* const, const char*>, std::_Select1st<std::pair<const void* const, const char*> >, std::less<const void*>, std::allocator<std::pair<const void* const, const char*> > >::_Rb_tree_impl<std::less<const void*>, false> std::_Rb_tree<const void*, std::pair<const void* const, const char*>, std::_Select1st<std::pair<const void* const, const char*> >, std::less<const void*>, std::allocator<std::pair<const void* const, const char*> > >::_M_impl -->
-          <var-decl name='_M_impl' type-id='type-id-959' visibility='default' filepath='/usr/lib/gcc/x86_64-redhat-linux/4.4.7/../../../../include/c++/4.4.7/bits/stl_tree.h' line='453' column='1'/>
-        </data-member>
-        <member-function access='private'>
-          <!-- void std::_Rb_tree<const void*, std::pair<const void* const, const char*>, std::_Select1st<std::pair<const void* const, const char*> >, std::less<const void*>, std::allocator<std::pair<const void* const, const char*> > >::_Rb_tree() -->
-          <function-decl name='_Rb_tree' filepath='/usr/lib/gcc/x86_64-redhat-linux/4.4.7/../../../../include/c++/4.4.7/bits/stl_tree.h' line='591' column='1' visibility='default' binding='global' size-in-bits='64'>
-            <!-- implicit parameter of type 'std::_Rb_tree<const void*, std::pair<const void* const, const char*>, std::_Select1st<std::pair<const void* const, const char*> >, std::less<const void*>, std::allocator<std::pair<const void* const, const char*> > >*' -->
-            <parameter type-id='type-id-965' is-artificial='yes'/>
-            <!-- void -->
-            <return type-id='type-id-75'/>
-          </function-decl>
-        </member-function>
-        <member-function access='private'>
-          <!-- void std::_Rb_tree<const void*, std::pair<const void* const, const char*>, std::_Select1st<std::pair<const void* const, const char*> >, std::less<const void*>, std::allocator<std::pair<const void* const, const char*> > >::_Rb_tree(const std::less<const void*>&, const std::allocator<std::pair<const void* const, const char*> >&) -->
-          <function-decl name='_Rb_tree' filepath='/usr/lib/gcc/x86_64-redhat-linux/4.4.7/../../../../include/c++/4.4.7/bits/stl_tree.h' line='593' column='1' visibility='default' binding='global' size-in-bits='64'>
-            <!-- implicit parameter of type 'std::_Rb_tree<const void*, std::pair<const void* const, const char*>, std::_Select1st<std::pair<const void* const, const char*> >, std::less<const void*>, std::allocator<std::pair<const void* const, const char*> > >*' -->
-            <parameter type-id='type-id-965' is-artificial='yes'/>
-            <!-- parameter of type 'const std::less<const void*>&' -->
-            <parameter type-id='type-id-963'/>
-            <!-- parameter of type 'const std::allocator<std::pair<const void* const, const char*> >&' -->
-            <parameter type-id='type-id-966'/>
-            <!-- void -->
-            <return type-id='type-id-75'/>
-          </function-decl>
-        </member-function>
-        <member-function access='private'>
-          <!-- void std::_Rb_tree<const void*, std::pair<const void* const, const char*>, std::_Select1st<std::pair<const void* const, const char*> >, std::less<const void*>, std::allocator<std::pair<const void* const, const char*> > >::_Rb_tree(const std::_Rb_tree<const void*, std::pair<const void* const, const char*>, std::_Select1st<std::pair<const void* const, const char*> >, std::less<const void*>, std::allocator<std::pair<const void* const, const char*> > >&) -->
-          <function-decl name='_Rb_tree' filepath='/usr/lib/gcc/x86_64-redhat-linux/4.4.7/../../../../include/c++/4.4.7/bits/stl_tree.h' line='597' column='1' visibility='default' binding='global' size-in-bits='64'>
-            <!-- implicit parameter of type 'std::_Rb_tree<const void*, std::pair<const void* const, const char*>, std::_Select1st<std::pair<const void* const, const char*> >, std::less<const void*>, std::allocator<std::pair<const void* const, const char*> > >*' -->
-            <parameter type-id='type-id-965' is-artificial='yes'/>
-            <!-- parameter of type 'const std::_Rb_tree<const void*, std::pair<const void* const, const char*>, std::_Select1st<std::pair<const void* const, const char*> >, std::less<const void*>, std::allocator<std::pair<const void* const, const char*> > >&' -->
-            <parameter type-id='type-id-967'/>
-            <!-- void -->
-            <return type-id='type-id-75'/>
-          </function-decl>
-        </member-function>
-        <member-function access='private' destructor='yes'>
-          <!-- std::_Rb_tree<const void*, std::pair<const void* const, const char*>, std::_Select1st<std::pair<const void* const, const char*> >, std::less<const void*>, std::allocator<std::pair<const void* const, const char*> > >::~_Rb_tree(int) -->
-          <function-decl name='~_Rb_tree' filepath='/usr/lib/gcc/x86_64-redhat-linux/4.4.7/../../../../include/c++/4.4.7/bits/stl_tree.h' line='613' column='1' visibility='default' binding='global' size-in-bits='64'>
-            <!-- implicit parameter of type 'std::_Rb_tree<const void*, std::pair<const void* const, const char*>, std::_Select1st<std::pair<const void* const, const char*> >, std::less<const void*>, std::allocator<std::pair<const void* const, const char*> > >*' -->
-            <parameter type-id='type-id-965' is-artificial='yes'/>
-            <!-- artificial parameter of type 'int' -->
-            <parameter type-id='type-id-1' is-artificial='yes'/>
-            <!-- void -->
-            <return type-id='type-id-75'/>
-          </function-decl>
-        </member-function>
-        <member-function access='private'>
-          <!-- size_t std::_Rb_tree<const void*, std::pair<const void* const, const char*>, std::_Select1st<std::pair<const void* const, const char*> >, std::less<const void*>, std::allocator<std::pair<const void* const, const char*> > >::size() -->
-          <function-decl name='size' mangled-name='_ZNKSt8_Rb_treeIPKvSt4pairIKS1_PKcESt10_Select1stIS6_ESt4lessIS1_ESaIS6_EE4sizeEv' filepath='/usr/lib/gcc/x86_64-redhat-linux/4.4.7/../../../../include/c++/4.4.7/bits/stl_tree.h' line='670' column='1' visibility='default' binding='global' size-in-bits='64'>
-            <!-- implicit parameter of type 'const std::_Rb_tree<const void*, std::pair<const void* const, const char*>, std::_Select1st<std::pair<const void* const, const char*> >, std::less<const void*>, std::allocator<std::pair<const void* const, const char*> > >*' -->
-            <parameter type-id='type-id-968' is-artificial='yes'/>
-            <!-- typedef size_t -->
-            <return type-id='type-id-7'/>
-          </function-decl>
-        </member-function>
-        <member-function access='private'>
-          <!-- std::less<const void*> std::_Rb_tree<const void*, std::pair<const void* const, const char*>, std::_Select1st<std::pair<const void* const, const char*> >, std::less<const void*>, std::allocator<std::pair<const void* const, const char*> > >::key_comp() -->
-          <function-decl name='key_comp' mangled-name='_ZNKSt8_Rb_treeIPKvSt4pairIKS1_PKcESt10_Select1stIS6_ESt4lessIS1_ESaIS6_EE8key_compEv' filepath='/usr/lib/gcc/x86_64-redhat-linux/4.4.7/../../../../include/c++/4.4.7/bits/stl_tree.h' line='621' column='1' visibility='default' binding='global' size-in-bits='64'>
-            <!-- implicit parameter of type 'const std::_Rb_tree<const void*, std::pair<const void* const, const char*>, std::_Select1st<std::pair<const void* const, const char*> >, std::less<const void*>, std::allocator<std::pair<const void* const, const char*> > >*' -->
-            <parameter type-id='type-id-968' is-artificial='yes'/>
-            <!-- struct std::less<const void*> -->
-            <return type-id='type-id-961'/>
-          </function-decl>
-        </member-function>
-        <member-function access='private'>
-          <!-- std::_Rb_tree_iterator<std::pair<const void* const, const char*> > std::_Rb_tree<const void*, std::pair<const void* const, const char*>, std::_Select1st<std::pair<const void* const, const char*> >, std::less<const void*>, std::allocator<std::pair<const void* const, const char*> > >::end() -->
-          <function-decl name='end' mangled-name='_ZNSt8_Rb_treeIPKvSt4pairIKS1_PKcESt10_Select1stIS6_ESt4lessIS1_ESaIS6_EE3endEv' filepath='/usr/lib/gcc/x86_64-redhat-linux/4.4.7/../../../../include/c++/4.4.7/bits/stl_tree.h' line='639' column='1' visibility='default' binding='global' size-in-bits='64'>
-            <!-- implicit parameter of type 'std::_Rb_tree<const void*, std::pair<const void* const, const char*>, std::_Select1st<std::pair<const void* const, const char*> >, std::less<const void*>, std::allocator<std::pair<const void* const, const char*> > >*' -->
-            <parameter type-id='type-id-965' is-artificial='yes'/>
-            <!-- struct std::_Rb_tree_iterator<std::pair<const void* const, const char*> > -->
-            <return type-id='type-id-969'/>
-          </function-decl>
-        </member-function>
-        <member-function access='private'>
-          <!-- std::_Rb_tree_iterator<std::pair<const void* const, const char*> > std::_Rb_tree<const void*, std::pair<const void* const, const char*>, std::_Select1st<std::pair<const void* const, const char*> >, std::less<const void*>, std::allocator<std::pair<const void* const, const char*> > >::begin() -->
-          <function-decl name='begin' mangled-name='_ZNSt8_Rb_treeIPKvSt4pairIKS1_PKcESt10_Select1stIS6_ESt4lessIS1_ESaIS6_EE5beginEv' filepath='/usr/lib/gcc/x86_64-redhat-linux/4.4.7/../../../../include/c++/4.4.7/bits/stl_tree.h' line='625' column='1' visibility='default' binding='global' size-in-bits='64'>
-            <!-- implicit parameter of type 'std::_Rb_tree<const void*, std::pair<const void* const, const char*>, std::_Select1st<std::pair<const void* const, const char*> >, std::less<const void*>, std::allocator<std::pair<const void* const, const char*> > >*' -->
-            <parameter type-id='type-id-965' is-artificial='yes'/>
-            <!-- struct std::_Rb_tree_iterator<std::pair<const void* const, const char*> > -->
-            <return type-id='type-id-969'/>
-          </function-decl>
-        </member-function>
-        <member-function access='protected' static='yes'>
-          <!-- const std::pair<const void* const, const char*>& std::_Rb_tree<const void*, std::pair<const void* const, const char*>, std::_Select1st<std::pair<const void* const, const char*> >, std::less<const void*>, std::allocator<std::pair<const void* const, const char*> > >::_S_value() -->
-          <function-decl name='_S_value' mangled-name='_ZNSt8_Rb_treeIPKvSt4pairIKS1_PKcESt10_Select1stIS6_ESt4lessIS1_ESaIS6_EE8_S_valueEPKSt18_Rb_tree_node_base' filepath='/usr/lib/gcc/x86_64-redhat-linux/4.4.7/../../../../include/c++/4.4.7/bits/stl_tree.h' line='524' column='1' visibility='default' binding='global' size-in-bits='64'>
-            <!-- parameter of type 'const std::_Rb_tree_node_base*' -->
-            <parameter type-id='type-id-554'/>
-            <!-- const std::pair<const void* const, const char*>& -->
-            <return type-id='type-id-970'/>
-          </function-decl>
-        </member-function>
-        <member-function access='private'>
-          <!-- const std::allocator<std::_Rb_tree_node<std::pair<const void* const, const char*> > >& std::_Rb_tree<const void*, std::pair<const void* const, const char*>, std::_Select1st<std::pair<const void* const, const char*> >, std::less<const void*>, std::allocator<std::pair<const void* const, const char*> > >::_M_get_Node_allocator() -->
-          <function-decl name='_M_get_Node_allocator' mangled-name='_ZNKSt8_Rb_treeIPKvSt4pairIKS1_PKcESt10_Select1stIS6_ESt4lessIS1_ESaIS6_EE21_M_get_Node_allocatorEv' filepath='/usr/lib/gcc/x86_64-redhat-linux/4.4.7/../../../../include/c++/4.4.7/bits/stl_tree.h' line='349' column='1' visibility='default' binding='global' size-in-bits='64'>
-            <!-- implicit parameter of type 'const std::_Rb_tree<const void*, std::pair<const void* const, const char*>, std::_Select1st<std::pair<const void* const, const char*> >, std::less<const void*>, std::allocator<std::pair<const void* const, const char*> > >*' -->
-            <parameter type-id='type-id-968' is-artificial='yes'/>
-            <!-- const std::allocator<std::_Rb_tree_node<std::pair<const void* const, const char*> > >& -->
-            <return type-id='type-id-964'/>
-          </function-decl>
-        </member-function>
-        <member-function access='protected' static='yes'>
-          <!-- const std::pair<const void* const, const char*>& std::_Rb_tree<const void*, std::pair<const void* const, const char*>, std::_Select1st<std::pair<const void* const, const char*> >, std::less<const void*>, std::allocator<std::pair<const void* const, const char*> > >::_S_value() -->
-          <function-decl name='_S_value' mangled-name='_ZNSt8_Rb_treeIPKvSt4pairIKS1_PKcESt10_Select1stIS6_ESt4lessIS1_ESaIS6_EE8_S_valueEPKSt13_Rb_tree_nodeIS6_E' filepath='/usr/lib/gcc/x86_64-redhat-linux/4.4.7/../../../../include/c++/4.4.7/bits/stl_tree.h' line='500' column='1' visibility='default' binding='global' size-in-bits='64'>
-            <!-- parameter of type 'const std::_Rb_tree_node<std::pair<const void* const, const char*> >*' -->
-            <parameter type-id='type-id-971'/>
-            <!-- const std::pair<const void* const, const char*>& -->
-            <return type-id='type-id-970'/>
-          </function-decl>
-        </member-function>
-        <member-function access='protected' static='yes'>
-          <!-- void* const& std::_Rb_tree<const void*, std::pair<const void* const, const char*>, std::_Select1st<std::pair<const void* const, const char*> >, std::less<const void*>, std::allocator<std::pair<const void* const, const char*> > >::_S_key() -->
-          <function-decl name='_S_key' mangled-name='_ZNSt8_Rb_treeIPKvSt4pairIKS1_PKcESt10_Select1stIS6_ESt4lessIS1_ESaIS6_EE6_S_keyEPKSt13_Rb_tree_nodeIS6_E' filepath='/usr/lib/gcc/x86_64-redhat-linux/4.4.7/../../../../include/c++/4.4.7/bits/stl_tree.h' line='504' column='1' visibility='default' binding='global' size-in-bits='64'>
-            <!-- parameter of type 'const std::_Rb_tree_node<std::pair<const void* const, const char*> >*' -->
-            <parameter type-id='type-id-971'/>
-            <!-- void* const& -->
-            <return type-id='type-id-369'/>
-          </function-decl>
-        </member-function>
-        <member-function access='protected' static='yes'>
-          <!-- std::_Rb_tree_node<std::pair<const void* const, const char*> >* std::_Rb_tree<const void*, std::pair<const void* const, const char*>, std::_Select1st<std::pair<const void* const, const char*> >, std::less<const void*>, std::allocator<std::pair<const void* const, const char*> > >::_S_left() -->
-          <function-decl name='_S_left' mangled-name='_ZNSt8_Rb_treeIPKvSt4pairIKS1_PKcESt10_Select1stIS6_ESt4lessIS1_ESaIS6_EE7_S_leftEPSt18_Rb_tree_node_base' filepath='/usr/lib/gcc/x86_64-redhat-linux/4.4.7/../../../../include/c++/4.4.7/bits/stl_tree.h' line='508' column='1' visibility='default' binding='global' size-in-bits='64'>
-            <!-- parameter of type 'std::_Rb_tree_node_base*' -->
-            <parameter type-id='type-id-676'/>
-            <!-- std::_Rb_tree_node<std::pair<const void* const, const char*> >* -->
-            <return type-id='type-id-972'/>
-          </function-decl>
-        </member-function>
-        <member-function access='protected' static='yes'>
-          <!-- std::_Rb_tree_node<std::pair<const void* const, const char*> >* std::_Rb_tree<const void*, std::pair<const void* const, const char*>, std::_Select1st<std::pair<const void* const, const char*> >, std::less<const void*>, std::allocator<std::pair<const void* const, const char*> > >::_S_right() -->
-          <function-decl name='_S_right' mangled-name='_ZNSt8_Rb_treeIPKvSt4pairIKS1_PKcESt10_Select1stIS6_ESt4lessIS1_ESaIS6_EE8_S_rightEPSt18_Rb_tree_node_base' filepath='/usr/lib/gcc/x86_64-redhat-linux/4.4.7/../../../../include/c++/4.4.7/bits/stl_tree.h' line='516' column='1' visibility='default' binding='global' size-in-bits='64'>
-            <!-- parameter of type 'std::_Rb_tree_node_base*' -->
-            <parameter type-id='type-id-676'/>
-            <!-- std::_Rb_tree_node<std::pair<const void* const, const char*> >* -->
-            <return type-id='type-id-972'/>
-          </function-decl>
-        </member-function>
-        <member-function access='protected'>
-          <!-- std::_Rb_tree_node<std::pair<const void* const, const char*> >* std::_Rb_tree<const void*, std::pair<const void* const, const char*>, std::_Select1st<std::pair<const void* const, const char*> >, std::less<const void*>, std::allocator<std::pair<const void* const, const char*> > >::_M_end() -->
-          <function-decl name='_M_end' mangled-name='_ZNSt8_Rb_treeIPKvSt4pairIKS1_PKcESt10_Select1stIS6_ESt4lessIS1_ESaIS6_EE6_M_endEv' filepath='/usr/lib/gcc/x86_64-redhat-linux/4.4.7/../../../../include/c++/4.4.7/bits/stl_tree.h' line='492' column='1' visibility='default' binding='global' size-in-bits='64'>
-            <!-- implicit parameter of type 'std::_Rb_tree<const void*, std::pair<const void* const, const char*>, std::_Select1st<std::pair<const void* const, const char*> >, std::less<const void*>, std::allocator<std::pair<const void* const, const char*> > >*' -->
-            <parameter type-id='type-id-965' is-artificial='yes'/>
-            <!-- std::_Rb_tree_node<std::pair<const void* const, const char*> >* -->
-            <return type-id='type-id-972'/>
-          </function-decl>
-        </member-function>
-        <member-function access='protected'>
-          <!-- std::_Rb_tree_node<std::pair<const void* const, const char*> >* std::_Rb_tree<const void*, std::pair<const void* const, const char*>, std::_Select1st<std::pair<const void* const, const char*> >, std::less<const void*>, std::allocator<std::pair<const void* const, const char*> > >::_M_begin() -->
-          <function-decl name='_M_begin' mangled-name='_ZNSt8_Rb_treeIPKvSt4pairIKS1_PKcESt10_Select1stIS6_ESt4lessIS1_ESaIS6_EE8_M_beginEv' filepath='/usr/lib/gcc/x86_64-redhat-linux/4.4.7/../../../../include/c++/4.4.7/bits/stl_tree.h' line='481' column='1' visibility='default' binding='global' size-in-bits='64'>
-            <!-- implicit parameter of type 'std::_Rb_tree<const void*, std::pair<const void* const, const char*>, std::_Select1st<std::pair<const void* const, const char*> >, std::less<const void*>, std::allocator<std::pair<const void* const, const char*> > >*' -->
-            <parameter type-id='type-id-965' is-artificial='yes'/>
-            <!-- std::_Rb_tree_node<std::pair<const void* const, const char*> >* -->
-            <return type-id='type-id-972'/>
-          </function-decl>
-        </member-function>
-        <member-function access='private'>
-          <!-- std::_Rb_tree_iterator<std::pair<const void* const, const char*> > std::_Rb_tree<const void*, std::pair<const void* const, const char*>, std::_Select1st<std::pair<const void* const, const char*> >, std::less<const void*>, std::allocator<std::pair<const void* const, const char*> > >::_M_lower_bound(std::_Rb_tree_node<std::pair<const void* const, const char*> >*, std::_Rb_tree_node<std::pair<const void* const, const char*> >*, void* const&) -->
-          <function-decl name='_M_lower_bound' mangled-name='_ZNSt8_Rb_treeIPKvSt4pairIKS1_PKcESt10_Select1stIS6_ESt4lessIS1_ESaIS6_EE14_M_lower_boundEPSt13_Rb_tree_nodeIS6_ESF_RS3_' filepath='/usr/lib/gcc/x86_64-redhat-linux/4.4.7/../../../../include/c++/4.4.7/bits/stl_tree.h' line='981' column='1' visibility='default' binding='global' size-in-bits='64'>
-            <!-- implicit parameter of type 'std::_Rb_tree<const void*, std::pair<const void* const, const char*>, std::_Select1st<std::pair<const void* const, const char*> >, std::less<const void*>, std::allocator<std::pair<const void* const, const char*> > >*' -->
-            <parameter type-id='type-id-965' is-artificial='yes'/>
-            <!-- parameter of type 'std::_Rb_tree_node<std::pair<const void* const, const char*> >*' -->
-            <parameter type-id='type-id-972'/>
-            <!-- parameter of type 'std::_Rb_tree_node<std::pair<const void* const, const char*> >*' -->
-            <parameter type-id='type-id-972'/>
-            <!-- parameter of type 'void* const&' -->
-            <parameter type-id='type-id-369'/>
-            <!-- struct std::_Rb_tree_iterator<std::pair<const void* const, const char*> > -->
-            <return type-id='type-id-969'/>
-          </function-decl>
-        </member-function>
-        <member-function access='private'>
-          <!-- std::_Rb_tree_iterator<std::pair<const void* const, const char*> > std::_Rb_tree<const void*, std::pair<const void* const, const char*>, std::_Select1st<std::pair<const void* const, const char*> >, std::less<const void*>, std::allocator<std::pair<const void* const, const char*> > >::lower_bound(void* const&) -->
-          <function-decl name='lower_bound' mangled-name='_ZNSt8_Rb_treeIPKvSt4pairIKS1_PKcESt10_Select1stIS6_ESt4lessIS1_ESaIS6_EE11lower_boundERS3_' filepath='/usr/lib/gcc/x86_64-redhat-linux/4.4.7/../../../../include/c++/4.4.7/bits/stl_tree.h' line='744' column='1' visibility='default' binding='global' size-in-bits='64'>
-            <!-- implicit parameter of type 'std::_Rb_tree<const void*, std::pair<const void* const, const char*>, std::_Select1st<std::pair<const void* const, const char*> >, std::less<const void*>, std::allocator<std::pair<const void* const, const char*> > >*' -->
-            <parameter type-id='type-id-965' is-artificial='yes'/>
-            <!-- parameter of type 'void* const&' -->
-            <parameter type-id='type-id-369'/>
-            <!-- struct std::_Rb_tree_iterator<std::pair<const void* const, const char*> > -->
-            <return type-id='type-id-969'/>
-          </function-decl>
-        </member-function>
-        <member-function access='protected'>
-          <!-- std::_Rb_tree_node<std::pair<const void* const, const char*> >* std::_Rb_tree<const void*, std::pair<const void* const, const char*>, std::_Select1st<std::pair<const void* const, const char*> >, std::less<const void*>, std::allocator<std::pair<const void* const, const char*> > >::_M_get_node() -->
-          <function-decl name='_M_get_node' mangled-name='_ZNSt8_Rb_treeIPKvSt4pairIKS1_PKcESt10_Select1stIS6_ESt4lessIS1_ESaIS6_EE11_M_get_nodeEv' filepath='/usr/lib/gcc/x86_64-redhat-linux/4.4.7/../../../../include/c++/4.4.7/bits/stl_tree.h' line='358' column='1' visibility='default' binding='global' size-in-bits='64'>
-            <!-- implicit parameter of type 'std::_Rb_tree<const void*, std::pair<const void* const, const char*>, std::_Select1st<std::pair<const void* const, const char*> >, std::less<const void*>, std::allocator<std::pair<const void* const, const char*> > >*' -->
-            <parameter type-id='type-id-965' is-artificial='yes'/>
-            <!-- std::_Rb_tree_node<std::pair<const void* const, const char*> >* -->
-            <return type-id='type-id-972'/>
-          </function-decl>
-        </member-function>
-        <member-function access='private'>
-          <!-- std::allocator<std::pair<const void* const, const char*> > std::_Rb_tree<const void*, std::pair<const void* const, const char*>, std::_Select1st<std::pair<const void* const, const char*> >, std::less<const void*>, std::allocator<std::pair<const void* const, const char*> > >::get_allocator() -->
-          <function-decl name='get_allocator' mangled-name='_ZNKSt8_Rb_treeIPKvSt4pairIKS1_PKcESt10_Select1stIS6_ESt4lessIS1_ESaIS6_EE13get_allocatorEv' filepath='/usr/lib/gcc/x86_64-redhat-linux/4.4.7/../../../../include/c++/4.4.7/bits/stl_tree.h' line='353' column='1' visibility='default' binding='global' size-in-bits='64'>
-            <!-- implicit parameter of type 'const std::_Rb_tree<const void*, std::pair<const void* const, const char*>, std::_Select1st<std::pair<const void* const, const char*> >, std::less<const void*>, std::allocator<std::pair<const void* const, const char*> > >*' -->
-            <parameter type-id='type-id-968' is-artificial='yes'/>
-            <!-- class std::allocator<std::pair<const void* const, const char*> > -->
-            <return type-id='type-id-973'/>
-          </function-decl>
-        </member-function>
-        <member-function access='protected' static='yes'>
-          <!-- void* const& std::_Rb_tree<const void*, std::pair<const void* const, const char*>, std::_Select1st<std::pair<const void* const, const char*> >, std::less<const void*>, std::allocator<std::pair<const void* const, const char*> > >::_S_key() -->
-          <function-decl name='_S_key' mangled-name='_ZNSt8_Rb_treeIPKvSt4pairIKS1_PKcESt10_Select1stIS6_ESt4lessIS1_ESaIS6_EE6_S_keyEPKSt18_Rb_tree_node_base' filepath='/usr/lib/gcc/x86_64-redhat-linux/4.4.7/../../../../include/c++/4.4.7/bits/stl_tree.h' line='528' column='1' visibility='default' binding='global' size-in-bits='64'>
-            <!-- parameter of type 'const std::_Rb_tree_node_base*' -->
-            <parameter type-id='type-id-554'/>
-            <!-- void* const& -->
-            <return type-id='type-id-369'/>
-          </function-decl>
-        </member-function>
-        <member-function access='protected'>
-          <!-- std::_Rb_tree_node<std::pair<const void* const, const char*> >* std::_Rb_tree<const void*, std::pair<const void* const, const char*>, std::_Select1st<std::pair<const void* const, const char*> >, std::less<const void*>, std::allocator<std::pair<const void* const, const char*> > >::_M_create_node(const std::pair<const void* const, const char*>&) -->
-          <function-decl name='_M_create_node' mangled-name='_ZNSt8_Rb_treeIPKvSt4pairIKS1_PKcESt10_Select1stIS6_ESt4lessIS1_ESaIS6_EE14_M_create_nodeERKS6_' filepath='/usr/lib/gcc/x86_64-redhat-linux/4.4.7/../../../../include/c++/4.4.7/bits/stl_tree.h' line='367' column='1' visibility='default' binding='global' size-in-bits='64'>
-            <!-- implicit parameter of type 'std::_Rb_tree<const void*, std::pair<const void* const, const char*>, std::_Select1st<std::pair<const void* const, const char*> >, std::less<const void*>, std::allocator<std::pair<const void* const, const char*> > >*' -->
-            <parameter type-id='type-id-965' is-artificial='yes'/>
-            <!-- parameter of type 'const std::pair<const void* const, const char*>&' -->
-            <parameter type-id='type-id-970'/>
-            <!-- std::_Rb_tree_node<std::pair<const void* const, const char*> >* -->
-            <return type-id='type-id-972'/>
-          </function-decl>
-        </member-function>
-        <member-function access='protected'>
-          <!-- std::_Rb_tree_node_base*& std::_Rb_tree<const void*, std::pair<const void* const, const char*>, std::_Select1st<std::pair<const void* const, const char*> >, std::less<const void*>, std::allocator<std::pair<const void* const, const char*> > >::_M_rightmost() -->
-          <function-decl name='_M_rightmost' mangled-name='_ZNSt8_Rb_treeIPKvSt4pairIKS1_PKcESt10_Select1stIS6_ESt4lessIS1_ESaIS6_EE12_M_rightmostEv' filepath='/usr/lib/gcc/x86_64-redhat-linux/4.4.7/../../../../include/c++/4.4.7/bits/stl_tree.h' line='473' column='1' visibility='default' binding='global' size-in-bits='64'>
-            <!-- implicit parameter of type 'std::_Rb_tree<const void*, std::pair<const void* const, const char*>, std::_Select1st<std::pair<const void* const, const char*> >, std::less<const void*>, std::allocator<std::pair<const void* const, const char*> > >*' -->
-            <parameter type-id='type-id-965' is-artificial='yes'/>
-            <!-- std::_Rb_tree_node_base*& -->
-            <return type-id='type-id-677'/>
-          </function-decl>
-        </member-function>
-        <member-function access='protected'>
-          <!-- std::_Rb_tree_node_base*& std::_Rb_tree<const void*, std::pair<const void* const, const char*>, std::_Select1st<std::pair<const void* const, const char*> >, std::less<const void*>, std::allocator<std::pair<const void* const, const char*> > >::_M_leftmost() -->
-          <function-decl name='_M_leftmost' mangled-name='_ZNSt8_Rb_treeIPKvSt4pairIKS1_PKcESt10_Select1stIS6_ESt4lessIS1_ESaIS6_EE11_M_leftmostEv' filepath='/usr/lib/gcc/x86_64-redhat-linux/4.4.7/../../../../include/c++/4.4.7/bits/stl_tree.h' line='465' column='1' visibility='default' binding='global' size-in-bits='64'>
-            <!-- implicit parameter of type 'std::_Rb_tree<const void*, std::pair<const void* const, const char*>, std::_Select1st<std::pair<const void* const, const char*> >, std::less<const void*>, std::allocator<std::pair<const void* const, const char*> > >*' -->
-            <parameter type-id='type-id-965' is-artificial='yes'/>
-            <!-- std::_Rb_tree_node_base*& -->
-            <return type-id='type-id-677'/>
-          </function-decl>
-        </member-function>
-        <member-function access='protected' static='yes'>
-          <!-- const std::_Rb_tree_node<std::pair<const void* const, const char*> >* std::_Rb_tree<const void*, std::pair<const void* const, const char*>, std::_Select1st<std::pair<const void* const, const char*> >, std::less<const void*>, std::allocator<std::pair<const void* const, const char*> > >::_S_right() -->
-          <function-decl name='_S_right' mangled-name='_ZNSt8_Rb_treeIPKvSt4pairIKS1_PKcESt10_Select1stIS6_ESt4lessIS1_ESaIS6_EE8_S_rightEPKSt18_Rb_tree_node_base' filepath='/usr/lib/gcc/x86_64-redhat-linux/4.4.7/../../../../include/c++/4.4.7/bits/stl_tree.h' line='520' column='1' visibility='default' binding='global' size-in-bits='64'>
-            <!-- parameter of type 'const std::_Rb_tree_node_base*' -->
-            <parameter type-id='type-id-554'/>
-            <!-- const std::_Rb_tree_node<std::pair<const void* const, const char*> >* -->
-            <return type-id='type-id-971'/>
-          </function-decl>
-        </member-function>
-        <member-function access='private'>
-          <!-- std::_Rb_tree_iterator<std::pair<const void* const, const char*> > std::_Rb_tree<const void*, std::pair<const void* const, const char*>, std::_Select1st<std::pair<const void* const, const char*> >, std::less<const void*>, std::allocator<std::pair<const void* const, const char*> > >::_M_insert_(const std::_Rb_tree_node_base*, const std::_Rb_tree_node_base*, const std::pair<const void* const, const char*>&) -->
-          <function-decl name='_M_insert_' mangled-name='_ZNSt8_Rb_treeIPKvSt4pairIKS1_PKcESt10_Select1stIS6_ESt4lessIS1_ESaIS6_EE10_M_insert_EPKSt18_Rb_tree_node_baseSF_RKS6_' filepath='/usr/lib/gcc/x86_64-redhat-linux/4.4.7/../../../../include/c++/4.4.7/bits/stl_tree.h' line='874' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZNSt8_Rb_treeIPKvSt4pairIKS1_PKcESt10_Select1stIS6_ESt4lessIS1_ESaIS6_EE10_M_insert_EPKSt18_Rb_tree_node_baseSF_RKS6_'>
-            <!-- implicit parameter of type 'std::_Rb_tree<const void*, std::pair<const void* const, const char*>, std::_Select1st<std::pair<const void* const, const char*> >, std::less<const void*>, std::allocator<std::pair<const void* const, const char*> > >*' -->
-            <parameter type-id='type-id-965' is-artificial='yes'/>
-            <!-- parameter of type 'const std::_Rb_tree_node_base*' -->
-            <parameter type-id='type-id-554'/>
-            <!-- parameter of type 'const std::_Rb_tree_node_base*' -->
-            <parameter type-id='type-id-554'/>
-            <!-- parameter of type 'const std::pair<const void* const, const char*>&' -->
-            <parameter type-id='type-id-970'/>
-            <!-- struct std::_Rb_tree_iterator<std::pair<const void* const, const char*> > -->
-            <return type-id='type-id-969'/>
-          </function-decl>
-        </member-function>
-        <member-function access='private'>
-          <!-- std::pair<std::_Rb_tree_iterator<std::pair<const void* const, const char*> >, bool> std::_Rb_tree<const void*, std::pair<const void* const, const char*>, std::_Select1st<std::pair<const void* const, const char*> >, std::less<const void*>, std::allocator<std::pair<const void* const, const char*> > >::_M_insert_unique(const std::pair<const void* const, const char*>&) -->
-          <function-decl name='_M_insert_unique' mangled-name='_ZNSt8_Rb_treeIPKvSt4pairIKS1_PKcESt10_Select1stIS6_ESt4lessIS1_ESaIS6_EE16_M_insert_uniqueERKS6_' filepath='/usr/lib/gcc/x86_64-redhat-linux/4.4.7/../../../../include/c++/4.4.7/bits/stl_tree.h' line='1161' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZNSt8_Rb_treeIPKvSt4pairIKS1_PKcESt10_Select1stIS6_ESt4lessIS1_ESaIS6_EE16_M_insert_uniqueERKS6_'>
-            <!-- implicit parameter of type 'std::_Rb_tree<const void*, std::pair<const void* const, const char*>, std::_Select1st<std::pair<const void* const, const char*> >, std::less<const void*>, std::allocator<std::pair<const void* const, const char*> > >*' -->
-            <parameter type-id='type-id-965' is-artificial='yes'/>
-            <!-- parameter of type 'const std::pair<const void* const, const char*>&' -->
-            <parameter type-id='type-id-970'/>
-            <!-- struct std::pair<std::_Rb_tree_iterator<std::pair<const void* const, const char*> >, bool> -->
-            <return type-id='type-id-974'/>
-          </function-decl>
-        </member-function>
-        <member-function access='private'>
-          <!-- std::_Rb_tree_iterator<std::pair<const void* const, const char*> > std::_Rb_tree<const void*, std::pair<const void* const, const char*>, std::_Select1st<std::pair<const void* const, const char*> >, std::less<const void*>, std::allocator<std::pair<const void* const, const char*> > >::_M_insert_unique_(std::_Rb_tree_const_iterator<std::pair<const void* const, const char*> >, const std::pair<const void* const, const char*>&) -->
-          <function-decl name='_M_insert_unique_' mangled-name='_ZNSt8_Rb_treeIPKvSt4pairIKS1_PKcESt10_Select1stIS6_ESt4lessIS1_ESaIS6_EE17_M_insert_unique_ESt23_Rb_tree_const_iteratorIS6_ERKS6_' filepath='/usr/lib/gcc/x86_64-redhat-linux/4.4.7/../../../../include/c++/4.4.7/bits/stl_tree.h' line='1206' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZNSt8_Rb_treeIPKvSt4pairIKS1_PKcESt10_Select1stIS6_ESt4lessIS1_ESaIS6_EE17_M_insert_unique_ESt23_Rb_tree_const_iteratorIS6_ERKS6_'>
-            <!-- implicit parameter of type 'std::_Rb_tree<const void*, std::pair<const void* const, const char*>, std::_Select1st<std::pair<const void* const, const char*> >, std::less<const void*>, std::allocator<std::pair<const void* const, const char*> > >*' -->
-            <parameter type-id='type-id-965' is-artificial='yes'/>
-            <!-- parameter of type 'struct std::_Rb_tree_const_iterator<std::pair<const void* const, const char*> >' -->
-            <parameter type-id='type-id-975'/>
-            <!-- parameter of type 'const std::pair<const void* const, const char*>&' -->
-            <parameter type-id='type-id-970'/>
-            <!-- struct std::_Rb_tree_iterator<std::pair<const void* const, const char*> > -->
-            <return type-id='type-id-969'/>
-          </function-decl>
-        </member-function>
-        <member-function access='private'>
-          <!-- void std::_Rb_tree<const void*, std::pair<const void* const, const char*>, std::_Select1st<std::pair<const void* const, const char*> >, std::less<const void*>, std::allocator<std::pair<const void* const, const char*> > >::_Rb_tree() -->
-          <function-decl name='_Rb_tree' filepath='/usr/lib/gcc/x86_64-redhat-linux/4.4.7/../../../../include/c++/4.4.7/bits/stl_tree.h' line='591' column='1' visibility='default' binding='global' size-in-bits='64'>
-            <!-- implicit parameter of type 'std::_Rb_tree<const void*, std::pair<const void* const, const char*>, std::_Select1st<std::pair<const void* const, const char*> >, std::less<const void*>, std::allocator<std::pair<const void* const, const char*> > >*' -->
-            <parameter type-id='type-id-965' is-artificial='yes'/>
-            <!-- void -->
-            <return type-id='type-id-75'/>
-          </function-decl>
-        </member-function>
-        <member-function access='private'>
-          <!-- void std::_Rb_tree<const void*, std::pair<const void* const, const char*>, std::_Select1st<std::pair<const void* const, const char*> >, std::less<const void*>, std::allocator<std::pair<const void* const, const char*> > >::_Rb_tree(const std::less<const void*>&, const std::allocator<std::pair<const void* const, const char*> >&) -->
-          <function-decl name='_Rb_tree' filepath='/usr/lib/gcc/x86_64-redhat-linux/4.4.7/../../../../include/c++/4.4.7/bits/stl_tree.h' line='593' column='1' visibility='default' binding='global' size-in-bits='64'>
-            <!-- implicit parameter of type 'std::_Rb_tree<const void*, std::pair<const void* const, const char*>, std::_Select1st<std::pair<const void* const, const char*> >, std::less<const void*>, std::allocator<std::pair<const void* const, const char*> > >*' -->
-            <parameter type-id='type-id-965' is-artificial='yes'/>
-            <!-- parameter of type 'const std::less<const void*>&' -->
-            <parameter type-id='type-id-963'/>
-            <!-- parameter of type 'const std::allocator<std::pair<const void* const, const char*> >&' -->
-            <parameter type-id='type-id-966'/>
-            <!-- void -->
-            <return type-id='type-id-75'/>
-          </function-decl>
-        </member-function>
-        <member-function access='private'>
-          <!-- void std::_Rb_tree<const void*, std::pair<const void* const, const char*>, std::_Select1st<std::pair<const void* const, const char*> >, std::less<const void*>, std::allocator<std::pair<const void* const, const char*> > >::_Rb_tree(const std::_Rb_tree<const void*, std::pair<const void* const, const char*>, std::_Select1st<std::pair<const void* const, const char*> >, std::less<const void*>, std::allocator<std::pair<const void* const, const char*> > >&) -->
-          <function-decl name='_Rb_tree' filepath='/usr/lib/gcc/x86_64-redhat-linux/4.4.7/../../../../include/c++/4.4.7/bits/stl_tree.h' line='597' column='1' visibility='default' binding='global' size-in-bits='64'>
-            <!-- implicit parameter of type 'std::_Rb_tree<const void*, std::pair<const void* const, const char*>, std::_Select1st<std::pair<const void* const, const char*> >, std::less<const void*>, std::allocator<std::pair<const void* const, const char*> > >*' -->
-            <parameter type-id='type-id-965' is-artificial='yes'/>
-            <!-- parameter of type 'const std::_Rb_tree<const void*, std::pair<const void* const, const char*>, std::_Select1st<std::pair<const void* const, const char*> >, std::less<const void*>, std::allocator<std::pair<const void* const, const char*> > >&' -->
-            <parameter type-id='type-id-967'/>
-            <!-- void -->
-            <return type-id='type-id-75'/>
-          </function-decl>
-        </member-function>
-        <member-function access='private' destructor='yes'>
-          <!-- std::_Rb_tree<const void*, std::pair<const void* const, const char*>, std::_Select1st<std::pair<const void* const, const char*> >, std::less<const void*>, std::allocator<std::pair<const void* const, const char*> > >::~_Rb_tree(int) -->
-          <function-decl name='~_Rb_tree' filepath='/usr/lib/gcc/x86_64-redhat-linux/4.4.7/../../../../include/c++/4.4.7/bits/stl_tree.h' line='613' column='1' visibility='default' binding='global' size-in-bits='64'>
-            <!-- implicit parameter of type 'std::_Rb_tree<const void*, std::pair<const void* const, const char*>, std::_Select1st<std::pair<const void* const, const char*> >, std::less<const void*>, std::allocator<std::pair<const void* const, const char*> > >*' -->
-            <parameter type-id='type-id-965' is-artificial='yes'/>
-            <!-- artificial parameter of type 'int' -->
-            <parameter type-id='type-id-1' is-artificial='yes'/>
-            <!-- void -->
-            <return type-id='type-id-75'/>
-          </function-decl>
-        </member-function>
-        <member-function access='protected'>
-          <!-- void std::_Rb_tree<const void*, std::pair<const void* const, const char*>, std::_Select1st<std::pair<const void* const, const char*> >, std::less<const void*>, std::allocator<std::pair<const void* const, const char*> > >::_M_put_node(std::_Rb_tree_node<std::pair<const void* const, const char*> >*) -->
-          <function-decl name='_M_put_node' mangled-name='_ZNSt8_Rb_treeIPKvSt4pairIKS1_PKcESt10_Select1stIS6_ESt4lessIS1_ESaIS6_EE11_M_put_nodeEPSt13_Rb_tree_nodeIS6_E' filepath='/usr/lib/gcc/x86_64-redhat-linux/4.4.7/../../../../include/c++/4.4.7/bits/stl_tree.h' line='362' column='1' visibility='default' binding='global' size-in-bits='64'>
-            <!-- implicit parameter of type 'std::_Rb_tree<const void*, std::pair<const void* const, const char*>, std::_Select1st<std::pair<const void* const, const char*> >, std::less<const void*>, std::allocator<std::pair<const void* const, const char*> > >*' -->
-            <parameter type-id='type-id-965' is-artificial='yes'/>
-            <!-- parameter of type 'std::_Rb_tree_node<std::pair<const void* const, const char*> >*' -->
-            <parameter type-id='type-id-976'/>
-            <!-- void -->
-            <return type-id='type-id-75'/>
-          </function-decl>
-        </member-function>
-        <member-function access='protected'>
-          <!-- void std::_Rb_tree<const void*, std::pair<const void* const, const char*>, std::_Select1st<std::pair<const void* const, const char*> >, std::less<const void*>, std::allocator<std::pair<const void* const, const char*> > >::_M_destroy_node(std::_Rb_tree_node<std::pair<const void* const, const char*> >*) -->
-          <function-decl name='_M_destroy_node' mangled-name='_ZNSt8_Rb_treeIPKvSt4pairIKS1_PKcESt10_Select1stIS6_ESt4lessIS1_ESaIS6_EE15_M_destroy_nodeEPSt13_Rb_tree_nodeIS6_E' filepath='/usr/lib/gcc/x86_64-redhat-linux/4.4.7/../../../../include/c++/4.4.7/bits/stl_tree.h' line='381' column='1' visibility='default' binding='global' size-in-bits='64'>
-            <!-- implicit parameter of type 'std::_Rb_tree<const void*, std::pair<const void* const, const char*>, std::_Select1st<std::pair<const void* const, const char*> >, std::less<const void*>, std::allocator<std::pair<const void* const, const char*> > >*' -->
-            <parameter type-id='type-id-965' is-artificial='yes'/>
-            <!-- parameter of type 'std::_Rb_tree_node<std::pair<const void* const, const char*> >*' -->
-            <parameter type-id='type-id-976'/>
-            <!-- void -->
-            <return type-id='type-id-75'/>
-          </function-decl>
-        </member-function>
-        <member-function access='private'>
-          <!-- void std::_Rb_tree<const void*, std::pair<const void* const, const char*>, std::_Select1st<std::pair<const void* const, const char*> >, std::less<const void*>, std::allocator<std::pair<const void* const, const char*> > >::_M_erase(std::_Rb_tree_node<std::pair<const void* const, const char*> >*) -->
-          <function-decl name='_M_erase' mangled-name='_ZNSt8_Rb_treeIPKvSt4pairIKS1_PKcESt10_Select1stIS6_ESt4lessIS1_ESaIS6_EE8_M_eraseEPSt13_Rb_tree_nodeIS6_E' filepath='/usr/lib/gcc/x86_64-redhat-linux/4.4.7/../../../../include/c++/4.4.7/bits/stl_tree.h' line='964' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZNSt8_Rb_treeIPKvSt4pairIKS1_PKcESt10_Select1stIS6_ESt4lessIS1_ESaIS6_EE8_M_eraseEPSt13_Rb_tree_nodeIS6_E'>
-            <!-- implicit parameter of type 'std::_Rb_tree<const void*, std::pair<const void* const, const char*>, std::_Select1st<std::pair<const void* const, const char*> >, std::less<const void*>, std::allocator<std::pair<const void* const, const char*> > >*' -->
-            <parameter type-id='type-id-965' is-artificial='yes'/>
-            <!-- parameter of type 'std::_Rb_tree_node<std::pair<const void* const, const char*> >*' -->
-            <parameter type-id='type-id-976'/>
-            <!-- void -->
-            <return type-id='type-id-75'/>
-          </function-decl>
-        </member-function>
-      </class-decl>
       <!-- class std::allocator<std::_Rb_tree_node<std::pair<const void* const, const char*> > > -->
       <class-decl name='allocator&lt;std::_Rb_tree_node&lt;std::pair&lt;const void* const, const char*&gt; &gt; &gt;' size-in-bits='8' visibility='default' filepath='/usr/lib/gcc/x86_64-redhat-linux/4.4.7/../../../../include/c++/4.4.7/bits/allocator.h' line='87' column='1' id='type-id-960'>
         <!-- class __gnu_cxx::new_allocator<std::_Rb_tree_node<std::pair<const void* const, const char*> > > -->
@@ -23525,160 +23027,6 @@
           </function-decl>
         </member-function>
       </class-decl>
-      <!-- struct std::_Rb_tree_const_iterator<std::pair<const void* const, const char*> > -->
-      <class-decl name='_Rb_tree_const_iterator&lt;std::pair&lt;const void* const, const char*&gt; &gt;' size-in-bits='64' is-struct='yes' visibility='default' filepath='/usr/lib/gcc/x86_64-redhat-linux/4.4.7/../../../../include/c++/4.4.7/bits/stl_tree.h' line='224' column='1' id='type-id-975'>
-        <data-member access='public' layout-offset-in-bits='0'>
-          <!-- std::_Rb_tree_node_base::_Const_Base_ptr std::_Rb_tree_const_iterator<std::pair<const void* const, const char*> >::_M_node -->
-          <var-decl name='_M_node' type-id='type-id-775' visibility='default' filepath='/usr/lib/gcc/x86_64-redhat-linux/4.4.7/../../../../include/c++/4.4.7/bits/stl_tree.h' line='294' column='1'/>
-        </data-member>
-        <member-function access='public'>
-          <!-- void std::_Rb_tree_const_iterator<std::pair<const void* const, const char*> >::_Rb_tree_const_iterator() -->
-          <function-decl name='_Rb_tree_const_iterator' filepath='/usr/lib/gcc/x86_64-redhat-linux/4.4.7/../../../../include/c++/4.4.7/bits/stl_tree.h' line='238' column='1' visibility='default' binding='global' size-in-bits='64'>
-            <!-- implicit parameter of type 'std::_Rb_tree_const_iterator<std::pair<const void* const, const char*> >*' -->
-            <parameter type-id='type-id-983' is-artificial='yes'/>
-            <!-- void -->
-            <return type-id='type-id-75'/>
-          </function-decl>
-        </member-function>
-        <member-function access='public'>
-          <!-- void std::_Rb_tree_const_iterator<std::pair<const void* const, const char*> >::_Rb_tree_const_iterator(const std::_Rb_tree_node<std::pair<const void* const, const char*> >*) -->
-          <function-decl name='_Rb_tree_const_iterator' filepath='/usr/lib/gcc/x86_64-redhat-linux/4.4.7/../../../../include/c++/4.4.7/bits/stl_tree.h' line='242' column='1' visibility='default' binding='global' size-in-bits='64'>
-            <!-- implicit parameter of type 'std::_Rb_tree_const_iterator<std::pair<const void* const, const char*> >*' -->
-            <parameter type-id='type-id-983' is-artificial='yes'/>
-            <!-- parameter of type 'const std::_Rb_tree_node<std::pair<const void* const, const char*> >*' -->
-            <parameter type-id='type-id-971'/>
-            <!-- void -->
-            <return type-id='type-id-75'/>
-          </function-decl>
-        </member-function>
-        <member-function access='public'>
-          <!-- void std::_Rb_tree_const_iterator<std::pair<const void* const, const char*> >::_Rb_tree_const_iterator(const std::_Rb_tree_iterator<std::pair<const void* const, const char*> >&) -->
-          <function-decl name='_Rb_tree_const_iterator' filepath='/usr/lib/gcc/x86_64-redhat-linux/4.4.7/../../../../include/c++/4.4.7/bits/stl_tree.h' line='245' column='1' visibility='default' binding='global' size-in-bits='64'>
-            <!-- implicit parameter of type 'std::_Rb_tree_const_iterator<std::pair<const void* const, const char*> >*' -->
-            <parameter type-id='type-id-983' is-artificial='yes'/>
-            <!-- parameter of type 'const std::_Rb_tree_iterator<std::pair<const void* const, const char*> >&' -->
-            <parameter type-id='type-id-984'/>
-            <!-- void -->
-            <return type-id='type-id-75'/>
-          </function-decl>
-        </member-function>
-        <member-function access='public'>
-          <!-- const std::pair<const void* const, const char*>* std::_Rb_tree_const_iterator<std::pair<const void* const, const char*> >::operator&#45;>() -->
-          <function-decl name='operator-&gt;' mangled-name='_ZNKSt23_Rb_tree_const_iteratorISt4pairIKPKvPKcEEptEv' filepath='/usr/lib/gcc/x86_64-redhat-linux/4.4.7/../../../../include/c++/4.4.7/bits/stl_tree.h' line='253' column='1' visibility='default' binding='global' size-in-bits='64'>
-            <!-- implicit parameter of type 'const std::_Rb_tree_const_iterator<std::pair<const void* const, const char*> >*' -->
-            <parameter type-id='type-id-985' is-artificial='yes'/>
-            <!-- const std::pair<const void* const, const char*>* -->
-            <return type-id='type-id-986'/>
-          </function-decl>
-        </member-function>
-        <member-function access='public'>
-          <!-- std::_Rb_tree_const_iterator<std::pair<const void* const, const char*> >& std::_Rb_tree_const_iterator<std::pair<const void* const, const char*> >::operator++() -->
-          <function-decl name='operator++' mangled-name='_ZNSt23_Rb_tree_const_iteratorISt4pairIKPKvPKcEEppEv' filepath='/usr/lib/gcc/x86_64-redhat-linux/4.4.7/../../../../include/c++/4.4.7/bits/stl_tree.h' line='257' column='1' visibility='default' binding='global' size-in-bits='64'>
-            <!-- implicit parameter of type 'std::_Rb_tree_const_iterator<std::pair<const void* const, const char*> >*' -->
-            <parameter type-id='type-id-983' is-artificial='yes'/>
-            <!-- std::_Rb_tree_const_iterator<std::pair<const void* const, const char*> >& -->
-            <return type-id='type-id-987'/>
-          </function-decl>
-        </member-function>
-        <member-function access='public'>
-          <!-- bool std::_Rb_tree_const_iterator<std::pair<const void* const, const char*> >::operator!=(const std::_Rb_tree_const_iterator<std::pair<const void* const, const char*> >&) -->
-          <function-decl name='operator!=' mangled-name='_ZNKSt23_Rb_tree_const_iteratorISt4pairIKPKvPKcEEneERKS7_' filepath='/usr/lib/gcc/x86_64-redhat-linux/4.4.7/../../../../include/c++/4.4.7/bits/stl_tree.h' line='291' column='1' visibility='default' binding='global' size-in-bits='64'>
-            <!-- implicit parameter of type 'const std::_Rb_tree_const_iterator<std::pair<const void* const, const char*> >*' -->
-            <parameter type-id='type-id-985' is-artificial='yes'/>
-            <!-- parameter of type 'const std::_Rb_tree_const_iterator<std::pair<const void* const, const char*> >&' -->
-            <parameter type-id='type-id-988'/>
-            <!-- bool -->
-            <return type-id='type-id-76'/>
-          </function-decl>
-        </member-function>
-        <member-function access='public'>
-          <!-- std::_Rb_tree_const_iterator<std::pair<const void* const, const char*> >& std::_Rb_tree_const_iterator<std::pair<const void* const, const char*> >::operator&#45;&#45;() -->
-          <function-decl name='operator--' mangled-name='_ZNSt23_Rb_tree_const_iteratorISt4pairIKPKvPKcEEmmEv' filepath='/usr/lib/gcc/x86_64-redhat-linux/4.4.7/../../../../include/c++/4.4.7/bits/stl_tree.h' line='272' column='1' visibility='default' binding='global' size-in-bits='64'>
-            <!-- implicit parameter of type 'std::_Rb_tree_const_iterator<std::pair<const void* const, const char*> >*' -->
-            <parameter type-id='type-id-983' is-artificial='yes'/>
-            <!-- std::_Rb_tree_const_iterator<std::pair<const void* const, const char*> >& -->
-            <return type-id='type-id-987'/>
-          </function-decl>
-        </member-function>
-      </class-decl>
-      <!-- struct std::_Rb_tree_iterator<std::pair<const void* const, const char*> > -->
-      <class-decl name='_Rb_tree_iterator&lt;std::pair&lt;const void* const, const char*&gt; &gt;' size-in-bits='64' is-struct='yes' visibility='default' filepath='/usr/lib/gcc/x86_64-redhat-linux/4.4.7/../../../../include/c++/4.4.7/bits/stl_tree.h' line='154' column='1' id='type-id-969'>
-        <data-member access='public' layout-offset-in-bits='0'>
-          <!-- std::_Rb_tree_node_base::_Base_ptr std::_Rb_tree_iterator<std::pair<const void* const, const char*> >::_M_node -->
-          <var-decl name='_M_node' type-id='type-id-777' visibility='default' filepath='/usr/lib/gcc/x86_64-redhat-linux/4.4.7/../../../../include/c++/4.4.7/bits/stl_tree.h' line='219' column='1'/>
-        </data-member>
-        <member-function access='public'>
-          <!-- void std::_Rb_tree_iterator<std::pair<const void* const, const char*> >::_Rb_tree_iterator() -->
-          <function-decl name='_Rb_tree_iterator' filepath='/usr/lib/gcc/x86_64-redhat-linux/4.4.7/../../../../include/c++/4.4.7/bits/stl_tree.h' line='166' column='1' visibility='default' binding='global' size-in-bits='64'>
-            <!-- implicit parameter of type 'std::_Rb_tree_iterator<std::pair<const void* const, const char*> >*' -->
-            <parameter type-id='type-id-989' is-artificial='yes'/>
-            <!-- void -->
-            <return type-id='type-id-75'/>
-          </function-decl>
-        </member-function>
-        <member-function access='public'>
-          <!-- void std::_Rb_tree_iterator<std::pair<const void* const, const char*> >::_Rb_tree_iterator(std::_Rb_tree_node<std::pair<const void* const, const char*> >*) -->
-          <function-decl name='_Rb_tree_iterator' filepath='/usr/lib/gcc/x86_64-redhat-linux/4.4.7/../../../../include/c++/4.4.7/bits/stl_tree.h' line='170' column='1' visibility='default' binding='global' size-in-bits='64'>
-            <!-- implicit parameter of type 'std::_Rb_tree_iterator<std::pair<const void* const, const char*> >*' -->
-            <parameter type-id='type-id-989' is-artificial='yes'/>
-            <!-- parameter of type 'std::_Rb_tree_node<std::pair<const void* const, const char*> >*' -->
-            <parameter type-id='type-id-972'/>
-            <!-- void -->
-            <return type-id='type-id-75'/>
-          </function-decl>
-        </member-function>
-        <member-function access='public'>
-          <!-- std::pair<const void* const, const char*>* std::_Rb_tree_iterator<std::pair<const void* const, const char*> >::operator&#45;>() -->
-          <function-decl name='operator-&gt;' mangled-name='_ZNKSt17_Rb_tree_iteratorISt4pairIKPKvPKcEEptEv' filepath='/usr/lib/gcc/x86_64-redhat-linux/4.4.7/../../../../include/c++/4.4.7/bits/stl_tree.h' line='178' column='1' visibility='default' binding='global' size-in-bits='64'>
-            <!-- implicit parameter of type 'const std::_Rb_tree_iterator<std::pair<const void* const, const char*> >*' -->
-            <parameter type-id='type-id-990' is-artificial='yes'/>
-            <!-- std::pair<const void* const, const char*>* -->
-            <return type-id='type-id-991'/>
-          </function-decl>
-        </member-function>
-        <member-function access='public'>
-          <!-- std::_Rb_tree_iterator<std::pair<const void* const, const char*> > std::_Rb_tree_iterator<std::pair<const void* const, const char*> >::operator++(int) -->
-          <function-decl name='operator++' mangled-name='_ZNSt17_Rb_tree_iteratorISt4pairIKPKvPKcEEppEi' filepath='/usr/lib/gcc/x86_64-redhat-linux/4.4.7/../../../../include/c++/4.4.7/bits/stl_tree.h' line='189' column='1' visibility='default' binding='global' size-in-bits='64'>
-            <!-- implicit parameter of type 'std::_Rb_tree_iterator<std::pair<const void* const, const char*> >*' -->
-            <parameter type-id='type-id-989' is-artificial='yes'/>
-            <!-- parameter of type 'int' -->
-            <parameter type-id='type-id-1'/>
-            <!-- struct std::_Rb_tree_iterator<std::pair<const void* const, const char*> > -->
-            <return type-id='type-id-969'/>
-          </function-decl>
-        </member-function>
-        <member-function access='public'>
-          <!-- bool std::_Rb_tree_iterator<std::pair<const void* const, const char*> >::operator==(const std::_Rb_tree_iterator<std::pair<const void* const, const char*> >&) -->
-          <function-decl name='operator==' mangled-name='_ZNKSt17_Rb_tree_iteratorISt4pairIKPKvPKcEEeqERKS7_' filepath='/usr/lib/gcc/x86_64-redhat-linux/4.4.7/../../../../include/c++/4.4.7/bits/stl_tree.h' line='212' column='1' visibility='default' binding='global' size-in-bits='64'>
-            <!-- implicit parameter of type 'const std::_Rb_tree_iterator<std::pair<const void* const, const char*> >*' -->
-            <parameter type-id='type-id-990' is-artificial='yes'/>
-            <!-- parameter of type 'const std::_Rb_tree_iterator<std::pair<const void* const, const char*> >&' -->
-            <parameter type-id='type-id-984'/>
-            <!-- bool -->
-            <return type-id='type-id-76'/>
-          </function-decl>
-        </member-function>
-        <member-function access='public'>
-          <!-- std::_Rb_tree_iterator<std::pair<const void* const, const char*> >& std::_Rb_tree_iterator<std::pair<const void* const, const char*> >::operator&#45;&#45;() -->
-          <function-decl name='operator--' mangled-name='_ZNSt17_Rb_tree_iteratorISt4pairIKPKvPKcEEmmEv' filepath='/usr/lib/gcc/x86_64-redhat-linux/4.4.7/../../../../include/c++/4.4.7/bits/stl_tree.h' line='197' column='1' visibility='default' binding='global' size-in-bits='64'>
-            <!-- implicit parameter of type 'std::_Rb_tree_iterator<std::pair<const void* const, const char*> >*' -->
-            <parameter type-id='type-id-989' is-artificial='yes'/>
-            <!-- std::_Rb_tree_iterator<std::pair<const void* const, const char*> >& -->
-            <return type-id='type-id-992'/>
-          </function-decl>
-        </member-function>
-        <member-function access='public'>
-          <!-- std::pair<const void* const, const char*>& std::_Rb_tree_iterator<std::pair<const void* const, const char*> >::operator*() -->
-          <function-decl name='operator*' mangled-name='_ZNKSt17_Rb_tree_iteratorISt4pairIKPKvPKcEEdeEv' filepath='/usr/lib/gcc/x86_64-redhat-linux/4.4.7/../../../../include/c++/4.4.7/bits/stl_tree.h' line='174' column='1' visibility='default' binding='global' size-in-bits='64'>
-            <!-- implicit parameter of type 'const std::_Rb_tree_iterator<std::pair<const void* const, const char*> >*' -->
-            <parameter type-id='type-id-990' is-artificial='yes'/>
-            <!-- std::pair<const void* const, const char*>& -->
-            <return type-id='type-id-993'/>
-          </function-decl>
-        </member-function>
-      </class-decl>
-      <!-- struct std::_Rb_tree_node_base -->
-      <class-decl name='_Rb_tree_node_base' is-struct='yes' visibility='default' id='type-id-994'/>
       <!-- struct std::_Select1st<std::pair<const void* const, const char*> > -->
       <class-decl name='_Select1st&lt;std::pair&lt;const void* const, const char*&gt; &gt;' size-in-bits='8' is-struct='yes' visibility='default' filepath='/usr/lib/gcc/x86_64-redhat-linux/4.4.7/../../../../include/c++/4.4.7/bits/stl_function.h' line='482' column='1' id='type-id-1346'>
         <!-- struct std::unary_function<std::pair<const void* const, const char*>, const void* const> -->
@@ -23765,39 +23113,6 @@
             <parameter type-id='type-id-369'/>
             <!-- parameter of type 'const char* const&' -->
             <parameter type-id='type-id-493'/>
-            <!-- void -->
-            <return type-id='type-id-75'/>
-          </function-decl>
-        </member-function>
-      </class-decl>
-      <!-- struct std::pair<std::_Rb_tree_iterator<std::pair<const void* const, const char*> >, bool> -->
-      <class-decl name='pair&lt;std::_Rb_tree_iterator&lt;std::pair&lt;const void* const, const char*&gt; &gt;, bool&gt;' size-in-bits='128' is-struct='yes' visibility='default' filepath='/usr/lib/gcc/x86_64-redhat-linux/4.4.7/../../../../include/c++/4.4.7/bits/stl_pair.h' line='68' column='1' id='type-id-974'>
-        <data-member access='public' layout-offset-in-bits='0'>
-          <!-- std::_Rb_tree_iterator<std::pair<const void* const, const char*> > std::pair<std::_Rb_tree_iterator<std::pair<const void* const, const char*> >, bool>::first -->
-          <var-decl name='first' type-id='type-id-969' visibility='default' filepath='/usr/lib/gcc/x86_64-redhat-linux/4.4.7/../../../../include/c++/4.4.7/bits/stl_pair.h' line='72' column='1'/>
-        </data-member>
-        <data-member access='public' layout-offset-in-bits='64'>
-          <!-- bool std::pair<std::_Rb_tree_iterator<std::pair<const void* const, const char*> >, bool>::second -->
-          <var-decl name='second' type-id='type-id-76' visibility='default' filepath='/usr/lib/gcc/x86_64-redhat-linux/4.4.7/../../../../include/c++/4.4.7/bits/stl_pair.h' line='73' column='1'/>
-        </data-member>
-        <member-function access='public'>
-          <!-- void std::pair<std::_Rb_tree_iterator<std::pair<const void* const, const char*> >, bool>::pair() -->
-          <function-decl name='pair' filepath='/usr/lib/gcc/x86_64-redhat-linux/4.4.7/../../../../include/c++/4.4.7/bits/stl_pair.h' line='79' column='1' visibility='default' binding='global' size-in-bits='64'>
-            <!-- implicit parameter of type 'std::pair<std::_Rb_tree_iterator<std::pair<const void* const, const char*> >, bool>*' -->
-            <parameter type-id='type-id-1000' is-artificial='yes'/>
-            <!-- void -->
-            <return type-id='type-id-75'/>
-          </function-decl>
-        </member-function>
-        <member-function access='public'>
-          <!-- void std::pair<std::_Rb_tree_iterator<std::pair<const void* const, const char*> >, bool>::pair(const std::_Rb_tree_iterator<std::pair<const void* const, const char*> >&, const bool&) -->
-          <function-decl name='pair' filepath='/usr/lib/gcc/x86_64-redhat-linux/4.4.7/../../../../include/c++/4.4.7/bits/stl_pair.h' line='83' column='1' visibility='default' binding='global' size-in-bits='64'>
-            <!-- implicit parameter of type 'std::pair<std::_Rb_tree_iterator<std::pair<const void* const, const char*> >, bool>*' -->
-            <parameter type-id='type-id-1000' is-artificial='yes'/>
-            <!-- parameter of type 'const std::_Rb_tree_iterator<std::pair<const void* const, const char*> >&' -->
-            <parameter type-id='type-id-984'/>
-            <!-- parameter of type 'const bool&' -->
-            <parameter type-id='type-id-492'/>
             <!-- void -->
             <return type-id='type-id-75'/>
           </function-decl>
@@ -26424,125 +25739,6 @@
         <var-decl name='pageheap' type-id='type-id-1441' visibility='default' filepath='src/tcmalloc.cc' line='300' column='1'/>
       </data-member>
     </class-decl>
-    <!-- struct _IO_FILE -->
-    <class-decl name='_IO_FILE' size-in-bits='1728' is-struct='yes' visibility='default' filepath='/usr/include/libio.h' line='271' column='1' id='type-id-149'>
-      <data-member access='public' layout-offset-in-bits='0'>
-        <!-- int _IO_FILE::_flags -->
-        <var-decl name='_flags' type-id='type-id-1' visibility='default' filepath='/usr/include/libio.h' line='272' column='1'/>
-      </data-member>
-      <data-member access='public' layout-offset-in-bits='64'>
-        <!-- char* _IO_FILE::_IO_read_ptr -->
-        <var-decl name='_IO_read_ptr' type-id='type-id-3' visibility='default' filepath='/usr/include/libio.h' line='277' column='1'/>
-      </data-member>
-      <data-member access='public' layout-offset-in-bits='128'>
-        <!-- char* _IO_FILE::_IO_read_end -->
-        <var-decl name='_IO_read_end' type-id='type-id-3' visibility='default' filepath='/usr/include/libio.h' line='278' column='1'/>
-      </data-member>
-      <data-member access='public' layout-offset-in-bits='192'>
-        <!-- char* _IO_FILE::_IO_read_base -->
-        <var-decl name='_IO_read_base' type-id='type-id-3' visibility='default' filepath='/usr/include/libio.h' line='279' column='1'/>
-      </data-member>
-      <data-member access='public' layout-offset-in-bits='256'>
-        <!-- char* _IO_FILE::_IO_write_base -->
-        <var-decl name='_IO_write_base' type-id='type-id-3' visibility='default' filepath='/usr/include/libio.h' line='280' column='1'/>
-      </data-member>
-      <data-member access='public' layout-offset-in-bits='320'>
-        <!-- char* _IO_FILE::_IO_write_ptr -->
-        <var-decl name='_IO_write_ptr' type-id='type-id-3' visibility='default' filepath='/usr/include/libio.h' line='281' column='1'/>
-      </data-member>
-      <data-member access='public' layout-offset-in-bits='384'>
-        <!-- char* _IO_FILE::_IO_write_end -->
-        <var-decl name='_IO_write_end' type-id='type-id-3' visibility='default' filepath='/usr/include/libio.h' line='282' column='1'/>
-      </data-member>
-      <data-member access='public' layout-offset-in-bits='448'>
-        <!-- char* _IO_FILE::_IO_buf_base -->
-        <var-decl name='_IO_buf_base' type-id='type-id-3' visibility='default' filepath='/usr/include/libio.h' line='283' column='1'/>
-      </data-member>
-      <data-member access='public' layout-offset-in-bits='512'>
-        <!-- char* _IO_FILE::_IO_buf_end -->
-        <var-decl name='_IO_buf_end' type-id='type-id-3' visibility='default' filepath='/usr/include/libio.h' line='284' column='1'/>
-      </data-member>
-      <data-member access='public' layout-offset-in-bits='576'>
-        <!-- char* _IO_FILE::_IO_save_base -->
-        <var-decl name='_IO_save_base' type-id='type-id-3' visibility='default' filepath='/usr/include/libio.h' line='286' column='1'/>
-      </data-member>
-      <data-member access='public' layout-offset-in-bits='640'>
-        <!-- char* _IO_FILE::_IO_backup_base -->
-        <var-decl name='_IO_backup_base' type-id='type-id-3' visibility='default' filepath='/usr/include/libio.h' line='287' column='1'/>
-      </data-member>
-      <data-member access='public' layout-offset-in-bits='704'>
-        <!-- char* _IO_FILE::_IO_save_end -->
-        <var-decl name='_IO_save_end' type-id='type-id-3' visibility='default' filepath='/usr/include/libio.h' line='288' column='1'/>
-      </data-member>
-      <data-member access='public' layout-offset-in-bits='768'>
-        <!-- _IO_marker* _IO_FILE::_markers -->
-        <var-decl name='_markers' type-id='type-id-150' visibility='default' filepath='/usr/include/libio.h' line='290' column='1'/>
-      </data-member>
-      <data-member access='public' layout-offset-in-bits='832'>
-        <!-- _IO_FILE* _IO_FILE::_chain -->
-        <var-decl name='_chain' type-id='type-id-151' visibility='default' filepath='/usr/include/libio.h' line='292' column='1'/>
-      </data-member>
-      <data-member access='public' layout-offset-in-bits='896'>
-        <!-- int _IO_FILE::_fileno -->
-        <var-decl name='_fileno' type-id='type-id-1' visibility='default' filepath='/usr/include/libio.h' line='294' column='1'/>
-      </data-member>
-      <data-member access='public' layout-offset-in-bits='928'>
-        <!-- int _IO_FILE::_flags2 -->
-        <var-decl name='_flags2' type-id='type-id-1' visibility='default' filepath='/usr/include/libio.h' line='298' column='1'/>
-      </data-member>
-      <data-member access='public' layout-offset-in-bits='960'>
-        <!-- __off_t _IO_FILE::_old_offset -->
-        <var-decl name='_old_offset' type-id='type-id-152' visibility='default' filepath='/usr/include/libio.h' line='300' column='1'/>
-      </data-member>
-      <data-member access='public' layout-offset-in-bits='1024'>
-        <!-- unsigned short int _IO_FILE::_cur_column -->
-        <var-decl name='_cur_column' type-id='type-id-42' visibility='default' filepath='/usr/include/libio.h' line='304' column='1'/>
-      </data-member>
-      <data-member access='public' layout-offset-in-bits='1040'>
-        <!-- signed char _IO_FILE::_vtable_offset -->
-        <var-decl name='_vtable_offset' type-id='type-id-153' visibility='default' filepath='/usr/include/libio.h' line='305' column='1'/>
-      </data-member>
-      <data-member access='public' layout-offset-in-bits='1048'>
-        <!-- char _IO_FILE::_shortbuf[1] -->
-        <var-decl name='_shortbuf' type-id='type-id-154' visibility='default' filepath='/usr/include/libio.h' line='306' column='1'/>
-      </data-member>
-      <data-member access='public' layout-offset-in-bits='1088'>
-        <!-- _IO_lock_t* _IO_FILE::_lock -->
-        <var-decl name='_lock' type-id='type-id-155' visibility='default' filepath='/usr/include/libio.h' line='310' column='1'/>
-      </data-member>
-      <data-member access='public' layout-offset-in-bits='1152'>
-        <!-- __off64_t _IO_FILE::_offset -->
-        <var-decl name='_offset' type-id='type-id-156' visibility='default' filepath='/usr/include/libio.h' line='319' column='1'/>
-      </data-member>
-      <data-member access='public' layout-offset-in-bits='1216'>
-        <!-- void* _IO_FILE::__pad1 -->
-        <var-decl name='__pad1' type-id='type-id-73' visibility='default' filepath='/usr/include/libio.h' line='328' column='1'/>
-      </data-member>
-      <data-member access='public' layout-offset-in-bits='1280'>
-        <!-- void* _IO_FILE::__pad2 -->
-        <var-decl name='__pad2' type-id='type-id-73' visibility='default' filepath='/usr/include/libio.h' line='329' column='1'/>
-      </data-member>
-      <data-member access='public' layout-offset-in-bits='1344'>
-        <!-- void* _IO_FILE::__pad3 -->
-        <var-decl name='__pad3' type-id='type-id-73' visibility='default' filepath='/usr/include/libio.h' line='330' column='1'/>
-      </data-member>
-      <data-member access='public' layout-offset-in-bits='1408'>
-        <!-- void* _IO_FILE::__pad4 -->
-        <var-decl name='__pad4' type-id='type-id-73' visibility='default' filepath='/usr/include/libio.h' line='331' column='1'/>
-      </data-member>
-      <data-member access='public' layout-offset-in-bits='1472'>
-        <!-- size_t _IO_FILE::__pad5 -->
-        <var-decl name='__pad5' type-id='type-id-7' visibility='default' filepath='/usr/include/libio.h' line='332' column='1'/>
-      </data-member>
-      <data-member access='public' layout-offset-in-bits='1536'>
-        <!-- int _IO_FILE::_mode -->
-        <var-decl name='_mode' type-id='type-id-1' visibility='default' filepath='/usr/include/libio.h' line='334' column='1'/>
-      </data-member>
-      <data-member access='public' layout-offset-in-bits='1568'>
-        <!-- char _IO_FILE::_unused2[20] -->
-        <var-decl name='_unused2' type-id='type-id-157' visibility='default' filepath='/usr/include/libio.h' line='336' column='1'/>
-      </data-member>
-    </class-decl>
     <!-- struct _IO_marker -->
     <class-decl name='_IO_marker' size-in-bits='192' is-struct='yes' visibility='default' filepath='/usr/include/libio.h' line='186' column='1' id='type-id-1442'>
       <data-member access='public' layout-offset-in-bits='0'>
@@ -27315,73 +26511,6 @@
           <function-decl name='~allocator' filepath='/usr/lib/gcc/x86_64-redhat-linux/4.4.7/../../../../include/c++/4.4.7/bits/allocator.h' line='109' column='1' visibility='default' binding='global' size-in-bits='64'>
             <!-- implicit parameter of type 'std::allocator<MallocExtension::FreeListInfo>*' -->
             <parameter type-id='type-id-1548' is-artificial='yes'/>
-            <!-- artificial parameter of type 'int' -->
-            <parameter type-id='type-id-1' is-artificial='yes'/>
-            <!-- void -->
-            <return type-id='type-id-75'/>
-          </function-decl>
-        </member-function>
-      </class-decl>
-      <!-- class std::allocator<char> -->
-      <class-decl name='allocator&lt;char&gt;' size-in-bits='8' visibility='default' filepath='/usr/lib/gcc/x86_64-redhat-linux/4.4.7/../../../../include/c++/4.4.7/bits/allocator.h' line='87' column='1' id='type-id-834'>
-        <!-- class __gnu_cxx::new_allocator<char> -->
-        <base-class access='public' layout-offset-in-bits='0' type-id='type-id-835'/>
-        <member-function access='private'>
-          <!-- void std::allocator<char>::allocator() -->
-          <function-decl name='allocator' filepath='/usr/lib/gcc/x86_64-redhat-linux/4.4.7/../../../../include/c++/4.4.7/bits/allocator.h' line='101' column='1' visibility='default' binding='global' size-in-bits='64'>
-            <!-- implicit parameter of type 'std::allocator<char>*' -->
-            <parameter type-id='type-id-836' is-artificial='yes'/>
-            <!-- void -->
-            <return type-id='type-id-75'/>
-          </function-decl>
-        </member-function>
-        <member-function access='private'>
-          <!-- void std::allocator<char>::allocator(const std::allocator<char>&) -->
-          <function-decl name='allocator' filepath='/usr/lib/gcc/x86_64-redhat-linux/4.4.7/../../../../include/c++/4.4.7/bits/allocator.h' line='103' column='1' visibility='default' binding='global' size-in-bits='64'>
-            <!-- implicit parameter of type 'std::allocator<char>*' -->
-            <parameter type-id='type-id-836' is-artificial='yes'/>
-            <!-- parameter of type 'const std::allocator<char>&' -->
-            <parameter type-id='type-id-837'/>
-            <!-- void -->
-            <return type-id='type-id-75'/>
-          </function-decl>
-        </member-function>
-        <member-function access='private' destructor='yes'>
-          <!-- std::allocator<char>::~allocator(int) -->
-          <function-decl name='~allocator' filepath='/usr/lib/gcc/x86_64-redhat-linux/4.4.7/../../../../include/c++/4.4.7/bits/allocator.h' line='109' column='1' visibility='default' binding='global' size-in-bits='64'>
-            <!-- implicit parameter of type 'std::allocator<char>*' -->
-            <parameter type-id='type-id-836' is-artificial='yes'/>
-            <!-- artificial parameter of type 'int' -->
-            <parameter type-id='type-id-1' is-artificial='yes'/>
-            <!-- void -->
-            <return type-id='type-id-75'/>
-          </function-decl>
-        </member-function>
-        <member-function access='private'>
-          <!-- void std::allocator<char>::allocator() -->
-          <function-decl name='allocator' filepath='/usr/lib/gcc/x86_64-redhat-linux/4.4.7/../../../../include/c++/4.4.7/bits/allocator.h' line='101' column='1' visibility='default' binding='global' size-in-bits='64'>
-            <!-- implicit parameter of type 'std::allocator<char>*' -->
-            <parameter type-id='type-id-836' is-artificial='yes'/>
-            <!-- void -->
-            <return type-id='type-id-75'/>
-          </function-decl>
-        </member-function>
-        <member-function access='private'>
-          <!-- void std::allocator<char>::allocator(const std::allocator<char>&) -->
-          <function-decl name='allocator' filepath='/usr/lib/gcc/x86_64-redhat-linux/4.4.7/../../../../include/c++/4.4.7/bits/allocator.h' line='103' column='1' visibility='default' binding='global' size-in-bits='64'>
-            <!-- implicit parameter of type 'std::allocator<char>*' -->
-            <parameter type-id='type-id-836' is-artificial='yes'/>
-            <!-- parameter of type 'const std::allocator<char>&' -->
-            <parameter type-id='type-id-837'/>
-            <!-- void -->
-            <return type-id='type-id-75'/>
-          </function-decl>
-        </member-function>
-        <member-function access='private' destructor='yes'>
-          <!-- std::allocator<char>::~allocator(int) -->
-          <function-decl name='~allocator' filepath='/usr/lib/gcc/x86_64-redhat-linux/4.4.7/../../../../include/c++/4.4.7/bits/allocator.h' line='109' column='1' visibility='default' binding='global' size-in-bits='64'>
-            <!-- implicit parameter of type 'std::allocator<char>*' -->
-            <parameter type-id='type-id-836' is-artificial='yes'/>
             <!-- artificial parameter of type 'int' -->
             <parameter type-id='type-id-1' is-artificial='yes'/>
             <!-- void -->
@@ -29131,8 +28260,6 @@
           </function-decl>
         </member-function>
       </class-decl>
-      <!-- typedef std::basic_string<char, std::char_traits<char>, std::allocator<char> > std::string -->
-      <typedef-decl name='string' type-id='type-id-833' filepath='/usr/lib/gcc/x86_64-redhat-linux/4.4.7/../../../../include/c++/4.4.7/bits/stringfwd.h' line='56' column='1' id='type-id-838'/>
       <!-- class std::bad_alloc -->
       <class-decl name='bad_alloc' visibility='default' is-declaration-only='yes' id='type-id-1600'>
         <member-function access='private' constructor='yes'>
@@ -29306,11 +28433,6 @@
     <pointer-type-def type-id='type-id-1608' size-in-bits='64' id='type-id-1609'/>
     <!-- namespace base -->
     <namespace-decl name='base'>
-      <!-- enum base::LinkerInitialized -->
-      <enum-decl name='LinkerInitialized' filepath='src/base/basictypes.h' line='381' column='1' id='type-id-95'>
-        <underlying-type type-id='type-id-96'/>
-        <enumerator name='LINKER_INITIALIZED' value='0'/>
-      </enum-decl>
       <!-- struct base::MallocRange -->
       <class-decl name='MallocRange' size-in-bits='256' is-struct='yes' visibility='default' filepath='./src/gperftools/malloc_extension.h' line='399' column='1' id='type-id-1475'>
         <member-type access='public'>
@@ -29342,8 +28464,6 @@
       </class-decl>
       <!-- namespace base::subtle -->
       <namespace-decl name='subtle'>
-        <!-- typedef int64_t base::subtle::Atomic64 -->
-        <typedef-decl name='Atomic64' type-id='type-id-90' filepath='./src/base/atomicops-internals-x86.h' line='70' column='1' id='type-id-91'/>
         <!-- Atomic32 base::subtle::NoBarrier_CompareAndSwap(volatile Atomic32*, Atomic32, Atomic32) -->
         <function-decl name='NoBarrier_CompareAndSwap' filepath='./src/base/atomicops-internals-x86.h' line='74' column='1' visibility='default' binding='global' size-in-bits='64'>
           <!-- parameter of type 'volatile Atomic32*' -->
@@ -29566,51 +28686,6 @@
     </namespace-decl>
     <!-- namespace __gnu_cxx -->
     <namespace-decl name='__gnu_cxx'>
-      <!-- class __gnu_cxx::__normal_iterator<MallocExtension::FreeListInfo*, std::vector<MallocExtension::FreeListInfo, std::allocator<MallocExtension::FreeListInfo> > > -->
-      <class-decl name='__normal_iterator&lt;MallocExtension::FreeListInfo*, std::vector&lt;MallocExtension::FreeListInfo, std::allocator&lt;MallocExtension::FreeListInfo&gt; &gt; &gt;' size-in-bits='64' visibility='default' filepath='/usr/lib/gcc/x86_64-redhat-linux/4.4.7/../../../../include/c++/4.4.7/bits/stl_iterator.h' line='669' column='1' id='type-id-1039'>
-        <data-member access='protected' layout-offset-in-bits='0'>
-          <!-- MallocExtension::FreeListInfo* __gnu_cxx::__normal_iterator<MallocExtension::FreeListInfo*, std::vector<MallocExtension::FreeListInfo, std::allocator<MallocExtension::FreeListInfo> > >::_M_current -->
-          <var-decl name='_M_current' type-id='type-id-1037' visibility='default' filepath='/usr/lib/gcc/x86_64-redhat-linux/4.4.7/../../../../include/c++/4.4.7/bits/stl_iterator.h' line='671' column='1'/>
-        </data-member>
-        <member-function access='private'>
-          <!-- void __gnu_cxx::__normal_iterator<MallocExtension::FreeListInfo*, std::vector<MallocExtension::FreeListInfo, std::allocator<MallocExtension::FreeListInfo> > >::__normal_iterator() -->
-          <function-decl name='__normal_iterator' filepath='/usr/lib/gcc/x86_64-redhat-linux/4.4.7/../../../../include/c++/4.4.7/bits/stl_iterator.h' line='683' column='1' visibility='default' binding='global' size-in-bits='64'>
-            <!-- implicit parameter of type '__gnu_cxx::__normal_iterator<MallocExtension::FreeListInfo*, std::vector<MallocExtension::FreeListInfo, std::allocator<MallocExtension::FreeListInfo> > >*' -->
-            <parameter type-id='type-id-1040' is-artificial='yes'/>
-            <!-- void -->
-            <return type-id='type-id-75'/>
-          </function-decl>
-        </member-function>
-        <member-function access='private'>
-          <!-- void __gnu_cxx::__normal_iterator<MallocExtension::FreeListInfo*, std::vector<MallocExtension::FreeListInfo, std::allocator<MallocExtension::FreeListInfo> > >::__normal_iterator(MallocExtension::FreeListInfo* const&) -->
-          <function-decl name='__normal_iterator' filepath='/usr/lib/gcc/x86_64-redhat-linux/4.4.7/../../../../include/c++/4.4.7/bits/stl_iterator.h' line='686' column='1' visibility='default' binding='global' size-in-bits='64'>
-            <!-- implicit parameter of type '__gnu_cxx::__normal_iterator<MallocExtension::FreeListInfo*, std::vector<MallocExtension::FreeListInfo, std::allocator<MallocExtension::FreeListInfo> > >*' -->
-            <parameter type-id='type-id-1040' is-artificial='yes'/>
-            <!-- parameter of type 'MallocExtension::FreeListInfo* const&' -->
-            <parameter type-id='type-id-1041'/>
-            <!-- void -->
-            <return type-id='type-id-75'/>
-          </function-decl>
-        </member-function>
-        <member-function access='private'>
-          <!-- MallocExtension::FreeListInfo* const& __gnu_cxx::__normal_iterator<MallocExtension::FreeListInfo*, std::vector<MallocExtension::FreeListInfo, std::allocator<MallocExtension::FreeListInfo> > >::base() -->
-          <function-decl name='base' mangled-name='_ZNK9__gnu_cxx17__normal_iteratorIPN15MallocExtension12FreeListInfoESt6vectorIS2_SaIS2_EEE4baseEv' filepath='/usr/lib/gcc/x86_64-redhat-linux/4.4.7/../../../../include/c++/4.4.7/bits/stl_iterator.h' line='750' column='1' visibility='default' binding='global' size-in-bits='64'>
-            <!-- implicit parameter of type 'const __gnu_cxx::__normal_iterator<MallocExtension::FreeListInfo*, std::vector<MallocExtension::FreeListInfo, std::allocator<MallocExtension::FreeListInfo> > >*' -->
-            <parameter type-id='type-id-1042' is-artificial='yes'/>
-            <!-- MallocExtension::FreeListInfo* const& -->
-            <return type-id='type-id-1041'/>
-          </function-decl>
-        </member-function>
-        <member-function access='private'>
-          <!-- MallocExtension::FreeListInfo& __gnu_cxx::__normal_iterator<MallocExtension::FreeListInfo*, std::vector<MallocExtension::FreeListInfo, std::allocator<MallocExtension::FreeListInfo> > >::operator*() -->
-          <function-decl name='operator*' mangled-name='_ZNK9__gnu_cxx17__normal_iteratorIPN15MallocExtension12FreeListInfoESt6vectorIS2_SaIS2_EEEdeEv' filepath='/usr/lib/gcc/x86_64-redhat-linux/4.4.7/../../../../include/c++/4.4.7/bits/stl_iterator.h' line='698' column='1' visibility='default' binding='global' size-in-bits='64'>
-            <!-- implicit parameter of type 'const __gnu_cxx::__normal_iterator<MallocExtension::FreeListInfo*, std::vector<MallocExtension::FreeListInfo, std::allocator<MallocExtension::FreeListInfo> > >*' -->
-            <parameter type-id='type-id-1042' is-artificial='yes'/>
-            <!-- MallocExtension::FreeListInfo& -->
-            <return type-id='type-id-1043'/>
-          </function-decl>
-        </member-function>
-      </class-decl>
       <!-- class __gnu_cxx::new_allocator<MallocExtension::FreeListInfo> -->
       <class-decl name='new_allocator&lt;MallocExtension::FreeListInfo&gt;' size-in-bits='8' visibility='default' filepath='/usr/lib/gcc/x86_64-redhat-linux/4.4.7/../../../../include/c++/4.4.7/ext/new_allocator.h' line='52' column='1' id='type-id-1472'>
         <member-function access='private'>
@@ -32961,13 +32036,6 @@
           </function-decl>
         </member-function>
       </class-decl>
-      <!-- enum tcmalloc::LogMode -->
-      <enum-decl name='LogMode' filepath='src/internal_logging.h' line='61' column='1' id='type-id-1019'>
-        <underlying-type type-id='type-id-96'/>
-        <enumerator name='kLog' value='0'/>
-        <enumerator name='kCrash' value='1'/>
-        <enumerator name='kCrashWithStats' value='2'/>
-      </enum-decl>
       <!-- struct tcmalloc::Span -->
       <class-decl name='Span' size-in-bits='384' is-struct='yes' visibility='default' filepath='src/span.h' line='45' column='1' id='type-id-144'>
         <data-member access='public' layout-offset-in-bits='0'>
