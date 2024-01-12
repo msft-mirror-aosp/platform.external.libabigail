@@ -16181,7 +16181,7 @@ build_ir_node_from_die(reader&	rdr,
   if (!die)
     return decl_base_sptr();
 
-  if (is_c_language(rdr.cur_transl_unit()->get_language()))
+  if (rdr.die_is_in_c(die))
     {
       const scope_decl_sptr& scop = rdr.global_scope();
       return build_ir_node_from_die(rdr, die, scop.get(),
