@@ -4486,7 +4486,7 @@ public:
     if (!corp)
       return false;
 
-    string id = fn->get_id_string();
+    interned_string id = corp->get_environment().intern(fn->get_id_string());
 
     const std::unordered_set<function_decl*> *fns = corp->lookup_functions(id);
     if (!fns)

@@ -184,7 +184,7 @@ corpus::exported_decls_builder::maybe_add_var_to_exported_vars(const var_decl* v
   if (!var->get_is_in_public_symbol_table())
     return;
 
-  const string& var_id = priv_->get_id(*var);
+  const interned_string& var_id = priv_->get_id(*var);
   ABG_ASSERT(!var_id.empty());
 
   if (priv_->var_id_is_in_id_var_map(var_id))
@@ -628,6 +628,34 @@ corpus::priv::get_public_types_pretty_representations()
     pub_type_pretty_reprs_ =
 	new unordered_set<interned_string, hash_interned_string>;
   return pub_type_pretty_reprs_;
+}
+
+/// Lookup the function which has a given function ID.
+///
+/// Note that there can have been several functions with the same ID.
+/// This is because debug info can declare the same function in
+/// several different translation units.  Normally, all these function
+/// should be equal.  But still, this function returns all these
+/// functions.
+///
+/// @param id the ID of the function to lookup.  This ID must be
+/// either the result of invoking function::get_id() of
+/// elf_symbol::get_id_string().
+///
+/// @return the set of functions which ID is @p id, or nil if no
+/// function with that ID was found.
+std::unordered_set<function_decl*>*
+corpus::priv::lookup_functions(const interned_string& id)
+{
+  exported_decls_builder_sptr &b = exported_decls_builder;
+  if (b)
+    {
+      auto i = b->priv_->id_fns_map_.find(id);
+      if (i == b->priv_->id_fns_map_.end())
+	return 0;
+      return &i->second;
+    }
+  return nullptr;
 }
 
 /// Destructor of the @ref corpus::priv type.
@@ -1335,16 +1363,20 @@ corpus::get_functions() const
 /// either the result of invoking function::get_id() of
 /// elf_symbol::get_id_string().
 ///
-/// @return the vector functions which ID is @p id, or nil if no
+/// @return the set of functions which ID is @p id, or nil if no
 /// function with that ID was found.
 const std::unordered_set<function_decl*>*
-corpus::lookup_functions(const string& id) const
+corpus::lookup_functions(const interned_string& id) const
+{return priv_->lookup_functions(id);}
+
+const std::unordered_set<function_decl*>*
+corpus::lookup_functions(const char* id) const
 {
-  exported_decls_builder_sptr b = get_exported_decls_builder();
-  auto i = b->priv_->id_fns_map_.find(id);
-  if (i == b->priv_->id_fns_map_.end())
-    return 0;
-  return &i->second;
+  if (!id)
+    return nullptr;
+
+  interned_string string_id = priv_->env.intern(id);
+  return lookup_functions(string_id);
 }
 
 /// Sort the set of functions exported by this corpus.

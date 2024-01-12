@@ -219,7 +219,10 @@ public:
   get_functions() const;
 
   const std::unordered_set<function_decl*>*
-  lookup_functions(const string& id) const;
+  lookup_functions(const interned_string& id) const;
+
+  const std::unordered_set<function_decl*>*
+  lookup_functions(const char* id) const;
 
   void
   sort_functions();

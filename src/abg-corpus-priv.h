@@ -19,6 +19,7 @@
 #include "abg-regex.h"
 #include "abg-sptr-utils.h"
 #include "abg-symtab-reader.h"
+#include "abg-interned-str.h"
 
 namespace abigail
 {
@@ -46,9 +47,21 @@ typedef unordered_map<string, vector<function_decl*> > str_fn_ptrs_map_type;
 typedef unordered_map<string, std::unordered_set<function_decl*> >
 str_fn_ptr_set_map_type;
 
+/// Convenience typedef for a hash map which key is an interned_string
+/// and which data is a set of abigail::ir::function_decl*
+typedef unordered_map<interned_string,
+		      std::unordered_set<function_decl*>,
+		      hash_interned_string> istr_fn_ptr_set_map_type;
+
 /// Convenience typedef for a hash map which key is a string and
 /// which data is an abigail::ir::var_decl*.
 typedef unordered_map<string, var_decl*> str_var_ptr_map_type;
+
+/// Convenience typedef for a hash map which key is an interned_string
+/// and which data is an abigail::ir::var_decl*.
+typedef unordered_map<interned_string,
+		      var_decl*,
+		      hash_interned_string> istr_var_ptr_map_type;
 
 /// The type of the private data of @ref
 /// corpus::exported_decls_builder type.
@@ -69,8 +82,8 @@ class corpus::exported_decls_builder::priv
   // template parameters of the second instantiation are just typedefs
   // of the first instantiation, for instance.  So there can be cases
   // where one ID appertains to more than one function.
-  str_fn_ptr_set_map_type	id_fns_map_;
-  str_var_ptr_map_type	id_var_map_;
+  istr_fn_ptr_set_map_type	id_fns_map_;
+  istr_var_ptr_map_type	id_var_map_;
   strings_type&	fns_suppress_regexps_;
   regex_t_sptrs_type	compiled_fns_suppress_regexp_;
   strings_type&	vars_suppress_regexps_;
@@ -203,7 +216,7 @@ public:
   ///
   /// @return a map which key is a string and which data is a pointer
   /// to a function.
-  const str_fn_ptr_set_map_type&
+  const istr_fn_ptr_set_map_type&
   id_fns_map() const
   {return id_fns_map_;}
 
@@ -216,7 +229,7 @@ public:
   ///
   /// @return a map which key is a string and which data is a pointer
   /// to a function.
-  str_fn_ptr_set_map_type&
+  istr_fn_ptr_set_map_type&
   id_fns_map()
   {return id_fns_map_;}
 
@@ -229,7 +242,7 @@ public:
   ///
   /// @return a map which key is a string and which data is a pointer
   /// to a function.
-  const str_var_ptr_map_type&
+  const istr_var_ptr_map_type&
   id_var_map() const
   {return id_var_map_;}
 
@@ -242,7 +255,7 @@ public:
   ///
   /// @return a map which key is a string and which data is a pointer
   /// to a function.
-  str_var_ptr_map_type&
+  istr_var_ptr_map_type&
   id_var_map()
   {return id_var_map_;}
 
@@ -274,10 +287,10 @@ public:
   /// @return the pointer to the vector of functions with ID @p fn_id,
   /// or nil if no function with that ID exists.
   std::unordered_set<function_decl*>*
-  fn_id_is_in_id_fns_map(const string& fn_id)
+  fn_id_is_in_id_fns_map(const interned_string& fn_id)
   {
-    str_fn_ptr_set_map_type& m = id_fns_map();
-    str_fn_ptr_set_map_type::iterator i = m.find(fn_id);
+    istr_fn_ptr_set_map_type& m = id_fns_map();
+    auto i = m.find(fn_id);
     if (i == m.end())
       return 0;
     return &i->second;
@@ -295,7 +308,7 @@ public:
   std::unordered_set<function_decl*>*
   fn_id_is_in_id_fns_map(const function_decl* fn)
   {
-    string fn_id = fn->get_id();
+    interned_string fn_id = fn->get_id();
     return fn_id_is_in_id_fns_map(fn_id);
   }
 
@@ -389,7 +402,7 @@ public:
       return;
 
     // First associate the function id to the function.
-    string fn_id = fn->get_id();
+    interned_string fn_id = fn->get_id();
     std::unordered_set<function_decl*>* fns = fn_id_is_in_id_fns_map(fn_id);
     if (!fns)
       fns = &(id_fns_map()[fn_id] = std::unordered_set<function_decl*>());
@@ -424,10 +437,10 @@ public:
   /// @return true iff the variable designated by @p fn_id is present
   /// in the set of exported variables.
   bool
-  var_id_is_in_id_var_map(const string& var_id) const
+  var_id_is_in_id_var_map(const interned_string& var_id) const
   {
-    const str_var_ptr_map_type& m = id_var_map();
-    str_var_ptr_map_type::const_iterator i = m.find(var_id);
+    const istr_var_ptr_map_type& m = id_var_map();
+    auto i = m.find(var_id);
     return i != m.end();
   }
 
@@ -440,7 +453,7 @@ public:
   {
     if (var)
       {
-	const string& var_id = get_id(*var);
+	const interned_string& var_id = get_id(*var);
 	id_var_map()[var_id] = var;
       }
   }
@@ -464,7 +477,7 @@ public:
   void
   add_var_to_exported(const var_decl* var)
   {
-    const string& id = get_id(*var);
+    const interned_string& id = get_id(*var);
     if (!var_id_is_in_id_var_map(id))
       {
 	vars_.push_back(const_cast<var_decl*>(var));
@@ -812,6 +825,9 @@ public:
 
   unordered_set<interned_string, hash_interned_string>*
   get_public_types_pretty_representations();
+
+  std::unordered_set<function_decl*>*
+  lookup_functions(const interned_string& id);
 
   ~priv();
 }; // end struct corpus::priv
