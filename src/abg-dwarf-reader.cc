@@ -13582,6 +13582,9 @@ add_or_update_union_type(reader&	 rdr,
 	      if (n.empty() && result->find_data_member(dm))
 		continue;
 
+	      if (!n.empty() && lookup_var_decl_in_scope(n, result))
+		continue;
+
 	      result->add_data_member(dm, access, /*is_laid_out=*/true,
 				      /*is_static=*/false,
 				      offset_in_bits);
