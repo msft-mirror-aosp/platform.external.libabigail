@@ -8288,6 +8288,9 @@ scope_decl::remove_member_decl(decl_base_sptr member)
 	    }
 	}
     }
+
+  member->set_scope(nullptr);
+  member->set_translation_unit(nullptr);
 }
 
 /// Return the hash value for the current instance of scope_decl.
@@ -8526,7 +8529,6 @@ remove_decl_from_scope(decl_base_sptr decl)
 
   scope_decl* scope = decl->get_scope();
   scope->remove_member_decl(decl);
-  decl->set_scope(0);
 }
 
 /// Inserts a declaration into a given scope, before a given IR child
