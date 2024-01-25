@@ -3990,7 +3990,12 @@ public:
   maybe_schedule_declaration_only_class_for_resolution(const class_or_union_sptr& cou)
   {
     if (cou->get_is_declaration_only()
-	&& cou->get_definition_of_declaration() == 0)
+	&& cou->get_definition_of_declaration() == 0
+	// Make sure the class is not anonymous.  Anonymous classes
+	// are usually later named by a typedef.  At that time, after
+	// being named by a typedef, this method is going to be called
+	// with the class being named by the typedef.
+	&& !cou->get_qualified_name().empty())
       {
 	string qn = cou->get_qualified_name();
 	string_classes_or_unions_map::iterator record =
@@ -4013,8 +4018,10 @@ public:
   is_decl_only_class_scheduled_for_resolution(const class_or_union_sptr& cou)
   {
     if (cou->get_is_declaration_only())
-      return (declaration_only_classes().find(cou->get_qualified_name())
-	      != declaration_only_classes().end());
+      return ((declaration_only_classes().find(cou->get_qualified_name())
+	       != declaration_only_classes().end())
+	      || (declaration_only_classes().find(cou->get_name())
+		  != declaration_only_classes().end()));
 
     return false;
   }
@@ -4250,10 +4257,15 @@ public:
   ///
   /// @param enom the enum to consider.
   void
-  maybe_schedule_declaration_only_enum_for_resolution(enum_type_decl_sptr& enom)
+  maybe_schedule_declaration_only_enum_for_resolution(const enum_type_decl_sptr& enom)
   {
     if (enom->get_is_declaration_only()
-	&& enom->get_definition_of_declaration() == 0)
+	&& enom->get_definition_of_declaration() == 0
+	// Make sure the enum is not anonymous.  Anonymous enums are
+	// usually later named by a typedef.  At that time, after
+	// being named by a typedef, this method is going to be called
+	// with the enum being named by the typedef.
+	&& !enom->get_qualified_name().empty())
       {
 	string qn = enom->get_qualified_name();
 	string_enums_map::iterator record =
@@ -13209,7 +13221,14 @@ add_or_update_class_type(reader&	 rdr,
 					      (b, access,
 					       is_offset_present ? offset : -1,
 					       is_virt));
-	      if (b->get_is_declaration_only())
+	      if (b->get_is_declaration_only()
+		  // Only non-anonymous decl-only classes are
+		  // scheduled for resolution to their definition.
+		  // Anonymous classes that are decl-only are likely
+		  // only artificially created by
+		  // get_opaque_version_of_type, from anonymous fully
+		  // defined classes.  Those are never defined.
+		  && !b->get_qualified_name().empty())
 		ABG_ASSERT(rdr.is_decl_only_class_scheduled_for_resolution(b));
 	      if (result->find_base_class(b->get_qualified_name()))
 		continue;
@@ -14617,6 +14636,12 @@ build_typedef_type(reader&	rdr,
 	  decl_base_sptr decl = is_decl(utype);
 	  ABG_ASSERT(decl);
 	  decl->set_naming_typedef(result);
+	  if (is_class_or_union_type(utype))
+	    rdr.maybe_schedule_declaration_only_class_for_resolution
+	      (is_class_or_union_type(utype));
+	  else if (is_enum_type(utype))
+	    rdr.maybe_schedule_declaration_only_enum_for_resolution
+	      (is_enum_type(utype));
 	}
     }
 
@@ -15107,9 +15132,9 @@ type_is_suppressed(const reader& rdr,
 /// nil if no opaque version was found.
 static type_or_decl_base_sptr
 get_opaque_version_of_type(reader	&rdr,
-			   scope_decl		*scope,
-			   Dwarf_Die		*type_die,
-			   size_t		where_offset)
+			   scope_decl	*scope,
+			   Dwarf_Die	*type_die,
+			   size_t	where_offset)
 {
   type_or_decl_base_sptr result;
 
