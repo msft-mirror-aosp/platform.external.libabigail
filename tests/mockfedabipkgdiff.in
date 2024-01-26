@@ -42,7 +42,7 @@ import tempfile
 import six
 
 try:
-    from mock import patch
+    from unittest.mock import patch
 except ImportError:
     import sys
     six.print_('mock is required to run tests. Please install before running'
