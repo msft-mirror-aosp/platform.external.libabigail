@@ -17241,7 +17241,8 @@ qualified_type_def::get_qualified_name(bool internal) const
 	  // We are asked to return a temporary *internal* name.
 	  // Lets compute it and return a reference to where it's
 	  // stored.
-	  priv_->temporary_internal_name_ =
+	  if (priv_->temporary_internal_name_.empty())
+	    priv_->temporary_internal_name_ =
 	      env.intern(build_name(true, /*internal=*/true));
 	  return priv_->temporary_internal_name_;
 	}
@@ -17734,7 +17735,8 @@ pointer_type_def::get_qualified_name(bool internal) const
 	  // cache where we store its name at each invocation of this
 	  // function.
 	  if (pointed_to_type)
-	    priv_->temp_internal_qualified_name_ =
+	    if (priv_->temp_internal_qualified_name_.empty())
+	      priv_->temp_internal_qualified_name_ =
 		pointer_declaration_name(this,
 					 /*variable_name=*/"",
 					 /*qualified_name=*/
@@ -18141,14 +18143,15 @@ reference_type_def::get_qualified_name(bool internal) const
 	  // cache where we store its name at each invocation of this
 	  // function.
 	  if (pointed_to_type)
-	    priv_->temp_internal_qualified_name_ =
-	      get_name_of_reference_to_type(*pointed_to_type,
-					    is_lvalue(),
-					    /*qualified_name=*/
-					    is_typedef(pointed_to_type)
-					    ? false
-					    : true,
-					    /*internal=*/true);
+	    if (priv_->temp_internal_qualified_name_.empty())
+	      priv_->temp_internal_qualified_name_ =
+		get_name_of_reference_to_type(*pointed_to_type,
+					      is_lvalue(),
+					      /*qualified_name=*/
+					      is_typedef(pointed_to_type)
+					      ? false
+					      : true,
+					      /*internal=*/true);
 	  return priv_->temp_internal_qualified_name_;
 	}
     }
@@ -21550,9 +21553,9 @@ function_type::get_cached_name(bool internal) const
 	}
       else
 	{
-	  priv_->temp_internal_cached_name_ =
-	    get_function_type_name(this,
-				   /*internal=*/true);
+	  if (priv_->temp_internal_cached_name_.empty())
+	    priv_->temp_internal_cached_name_ =
+	      get_function_type_name(this, /*internal=*/true);
 	  return priv_->temp_internal_cached_name_;
 	}
     }
