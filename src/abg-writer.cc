@@ -2059,30 +2059,47 @@ write_decl_in_scope(const decl_base_sptr&	decl,
 	{
 	  c = is_class_type(look_through_decl_only_class(c));
 	  class_decl_sptr class_type(c, noop_deleter());
-	  write_class_decl_opening_tag(class_type, "", ctxt, indent,
-				       /*prepare_to_handle_empty=*/false);
-	  closing_tags.push("</class-decl>");
-	  closing_indents.push(indent);
+	  if (!ctxt.type_is_emitted(c))
+	    {
+	      write_type(class_type, ctxt, initial_indent);
+	      break;
+	    }
+	  else
+	    {
+	      write_class_decl_opening_tag(class_type, "", ctxt, indent,
+					   /*prepare_to_handle_empty=*/false);
+	      closing_tags.push("</class-decl>");
+	      closing_indents.push(indent);
 
-	  unsigned nb_ws = get_indent_to_level(ctxt, indent, 1);
-	  write_member_type_opening_tag(type, ctxt, nb_ws);
-	  indent = nb_ws;
-	  closing_tags.push("</member-type>");
-	  closing_indents.push(nb_ws);
+	      unsigned nb_ws = get_indent_to_level(ctxt, indent, 1);
+	      write_member_type_opening_tag(type, ctxt, nb_ws);
+	      indent = nb_ws;
+	      closing_tags.push("</member-type>");
+	      closing_indents.push(nb_ws);
+	    }
 	}
       else if (union_decl *u = is_union_type(*i))
 	{
+	  u = is_union_type(look_through_decl_only(u));
 	  union_decl_sptr union_type(u, noop_deleter());
-	  write_union_decl_opening_tag(union_type, "", ctxt, indent,
-				       /*prepare_to_handle_empty=*/false);
-	  closing_tags.push("</union-decl>");
-	  closing_indents.push(indent);
+	  if (!ctxt.type_is_emitted(u))
+	    {
+	      write_type(union_type, ctxt, initial_indent);
+	      break;
+	    }
+	  else
+	    {
+	      write_union_decl_opening_tag(union_type, "", ctxt, indent,
+					   /*prepare_to_handle_empty=*/false);
+	      closing_tags.push("</union-decl>");
+	      closing_indents.push(indent);
 
-	  unsigned nb_ws = get_indent_to_level(ctxt, indent, 1);
-	  write_member_type_opening_tag(type, ctxt, nb_ws);
-	  indent = nb_ws;
-	  closing_tags.push("</member-type>");
-	  closing_indents.push(nb_ws);
+	      unsigned nb_ws = get_indent_to_level(ctxt, indent, 1);
+	      write_member_type_opening_tag(type, ctxt, nb_ws);
+	      indent = nb_ws;
+	      closing_tags.push("</member-type>");
+	      closing_indents.push(nb_ws);
+	    }
 	}
       else
 	// We should never reach this point.
@@ -2090,7 +2107,20 @@ write_decl_in_scope(const decl_base_sptr&	decl,
       indent += c.get_xml_element_indent();
     }
 
-  write_decl(decl, ctxt, indent);
+  bool do_write = false;
+  if (type_base_sptr type = is_type(decl))
+    {
+      if (!ctxt.type_is_emitted(type))
+	do_write= true;
+    }
+  else
+    {
+      if (!ctxt.decl_is_emitted(decl))
+	do_write= true;
+    }
+
+  if (do_write)
+    write_decl(decl, ctxt, indent);
 
   while (!closing_tags.empty())
     {
