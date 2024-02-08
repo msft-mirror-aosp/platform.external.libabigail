@@ -18700,7 +18700,7 @@ array_type_def::subrange_type::subrange_type(const environment& env,
 					     const type_base_sptr& utype,
 					     const location&	loc,
 					     translation_unit::language l)
-  : type_or_decl_base(env, ABSTRACT_TYPE_BASE | ABSTRACT_DECL_BASE),
+  : type_or_decl_base(env, SUBRANGE_TYPE | ABSTRACT_TYPE_BASE | ABSTRACT_DECL_BASE),
     type_base(env,
 	      upper_bound.get_unsigned_value()
 	      - lower_bound.get_unsigned_value(),
@@ -18731,7 +18731,7 @@ array_type_def::subrange_type::subrange_type(const environment& env,
 					     bound_value	upper_bound,
 					     const location&	loc,
 					     translation_unit::language l)
-  : type_or_decl_base(env, ABSTRACT_TYPE_BASE | ABSTRACT_DECL_BASE),
+  : type_or_decl_base(env, SUBRANGE_TYPE | ABSTRACT_TYPE_BASE | ABSTRACT_DECL_BASE),
     type_base(env,
 	      upper_bound.get_unsigned_value()
 	      - lower_bound.get_unsigned_value(), 0),
@@ -18758,7 +18758,7 @@ array_type_def::subrange_type::subrange_type(const environment& env,
 					     bound_value	upper_bound,
 					     const location&	loc,
 					     translation_unit::language l)
-  : type_or_decl_base(env, ABSTRACT_TYPE_BASE | ABSTRACT_DECL_BASE),
+  : type_or_decl_base(env, SUBRANGE_TYPE | ABSTRACT_TYPE_BASE | ABSTRACT_DECL_BASE),
     type_base(env, upper_bound.get_unsigned_value(), 0),
     decl_base(env, name, loc, ""),
     priv_(new priv(upper_bound, l))
