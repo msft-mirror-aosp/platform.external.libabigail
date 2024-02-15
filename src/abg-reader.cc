@@ -4441,8 +4441,9 @@ build_subrange_type(reader&		rdr,
   location loc;
   read_location(rdr, node, loc);
 
-  // Note that DWARF would actually have a lower_bound of -1 for an
-  // array of length 0.
+  // Note that DWARF would actually have a upper_bound of -1 for an
+  // array of length 0.  In the past (before ABIXML version 2.3), the
+  // IR would reflect that, so let's stay compatible with that.
   array_type_def::subrange_type::bound_value max_bound;
   array_type_def::subrange_type::bound_value min_bound;
   if (!is_infinite)

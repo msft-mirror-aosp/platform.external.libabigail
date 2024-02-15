@@ -14371,7 +14371,7 @@ build_subrange_type(reader&		rdr,
   array_type_def::subrange_type::bound_value upper_bound;
   uint64_t count = 0;
   bool is_infinite = false;
-  bool count_present = false;
+  bool non_zero_count_present = false;
 
   // The DWARF 4 specifications says, in [5.11 Subrange
   // Type Entries]:
@@ -14407,15 +14407,23 @@ build_subrange_type(reader&		rdr,
       // case, let's see if there is a DW_AT_count.
       if (die_unsigned_constant_attribute(die, DW_AT_count, count))
 	{
-	  count_present = true;
-	  // We can deduce the upper_bound from the
-	  // lower_bound and the number of elements of the
-	  // array:
+	  if (count)
+	    // DW_AT_count can be present and be set to zero.  This is
+	    // for instance the case to model this gcc extension to
+	    // represent flexible arrays:
+	    // https://gcc.gnu.org/onlinedocs/gcc/Zero-Length.html.
+	    // For instance: int flex_array[0];
+	    non_zero_count_present = true;
+
+	  // When the count is present and non-zero, we can deduce the
+	  // upper_bound from the lower_bound and the number of
+	  // elements of the array:
 	  int64_t u = lower_bound.get_signed_value() + count;
-	  upper_bound = u - 1;
+	  if (u)
+	    upper_bound = u - 1;
 	}
 
-      if (!count_present)
+      if (!non_zero_count_present)
 	// No upper_bound nor count was present on the DIE, this means
 	// the array is considered to have an infinite (or rather not
 	// known) size.

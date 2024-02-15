@@ -414,7 +414,11 @@ test-abidiff-exit/pointer-to-member/test-ptr-to-mbr5-v0.cc \
 test-abidiff-exit/pointer-to-member/test-ptr-to-mbr5-v0.o \
 test-abidiff-exit/pointer-to-member/test-ptr-to-mbr5-v1.cc \
 test-abidiff-exit/pointer-to-member/test-ptr-to-mbr5-v1.o \
-\
+test-abidiff-exit/PR31377/flex/include/rte_pipeline.h \
+test-abidiff-exit/PR31377/flex/lib64/librte_pipeline.so.24.1 \
+test-abidiff-exit/PR31377/reference/include/rte_pipeline.h \
+test-abidiff-exit/PR31377/reference/lib64/librte_pipeline.so.24.0 \
+test-abidiff-exit/PR31377/test-PR31377-report-1.txt \
 test-diff-dwarf/test0-v0.cc		\
 test-diff-dwarf/test0-v0.o			\
 test-diff-dwarf/test0-v1.cc		\

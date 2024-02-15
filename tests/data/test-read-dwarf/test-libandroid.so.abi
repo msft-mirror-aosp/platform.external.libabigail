@@ -3196,7 +3196,7 @@
       <subrange length='16' lower-bound='0' upper-bound='15' type-id='7ff19f0f' id='848d0938'/>
     </array-type-def>
     <array-type-def dimensions='1' type-id='71ad5e8a' size-in-bits='unknown' id='86626492'>
-      <subrange length='unknown' lower-bound='0' upper-bound='-1' type-id='7ff19f0f' id='031f2035'/>
+      <subrange length='unknown' lower-bound='0' upper-bound='0' type-id='7ff19f0f' id='031f2035'/>
     </array-type-def>
     <array-type-def dimensions='1' type-id='2d5c5fc5' size-in-bits='512' id='98ae5868'>
       <subrange length='16' lower-bound='0' upper-bound='15' type-id='7ff19f0f' id='848d0938'/>
@@ -3219,7 +3219,7 @@
     </class-decl>
     <class-decl name='_jobject' size-in-bits='8' visibility='default' filepath='libnativehelper/include_jni/jni.h' line='46' column='1' id='baffb083'/>
     <array-type-def dimensions='1' type-id='bfebf634' size-in-bits='unknown' id='b51730a0'>
-      <subrange length='unknown' lower-bound='0' upper-bound='-1' type-id='7ff19f0f' id='031f2035'/>
+      <subrange length='unknown' lower-bound='0' upper-bound='0' type-id='7ff19f0f' id='031f2035'/>
     </array-type-def>
     <type-decl name='double' size-in-bits='64' id='a0eb0f08'/>
     <enum-decl name='jobjectRefType' filepath='libnativehelper/include_jni/jni.h' line='121' column='1' id='4f771c8a'>
@@ -4150,7 +4150,7 @@
     <typedef-decl name='wctype_t' type-id='95e97e5f' filepath='bionic/libc/include/bits/wctype.h' line='56' column='1' id='ba50424d'/>
     <typedef-decl name='wint_t' type-id='f0981eed' filepath='bionic/libc/include/bits/wctype.h' line='36' column='1' id='6dd37369'/>
     <array-type-def dimensions='1' type-id='8f92235e' size-in-bits='unknown' id='1e7b9b2b'>
-      <subrange length='unknown' lower-bound='0' upper-bound='-1' type-id='7ff19f0f' id='031f2035'/>
+      <subrange length='unknown' lower-bound='0' upper-bound='0' type-id='7ff19f0f' id='031f2035'/>
     </array-type-def>
     <array-type-def dimensions='1' type-id='b96825af' size-in-bits='2048' id='62946659'>
       <subrange length='256' lower-bound='0' upper-bound='255' type-id='7ff19f0f' id='36e5b9fa'/>
@@ -21169,7 +21169,7 @@
   </abi-instr>
   <abi-instr address-size='32' path='frameworks/base/native/android/native_window_jni.cpp' language='LANG_C_plus_plus_14'>
     <array-type-def dimensions='1' type-id='95e97e5e' size-in-bits='unknown' id='1fdc7fa6'>
-      <subrange length='unknown' lower-bound='0' upper-bound='-1' type-id='7ff19f0f' id='031f2035'/>
+      <subrange length='unknown' lower-bound='0' upper-bound='0' type-id='7ff19f0f' id='031f2035'/>
     </array-type-def>
     <array-type-def dimensions='1' type-id='33dbba72' size-in-bits='128' id='1595aa6b'>
       <subrange length='4' lower-bound='0' upper-bound='3' type-id='7ff19f0f' id='16fe7105'/>

@@ -1186,6 +1186,21 @@ InOutSpec in_out_specs[] =
     "output/test-abidiff-exit/test-fam2-report-1.txt"
   },
   {
+    "data/test-abidiff-exit/PR31377/reference/lib64/librte_pipeline.so.24.0",
+    "data/test-abidiff-exit/PR31377/flex/lib64/librte_pipeline.so.24.1",
+    "",
+    "data/test-abidiff-exit/PR31377/reference/include",
+    "data/test-abidiff-exit/PR31377/flex/include",
+    "",
+    "",
+    "",
+    "",
+    "--no-default-suppression --no-added-syms",
+    abigail::tools_utils::ABIDIFF_OK,
+    "data/test-abidiff-exit/PR31377/test-PR31377-report-1.txt",
+    "output/test-abidiff-exit/PR31377/test-PR31377-report-1.txt"
+  },
+  {
     "data/test-abidiff-exit/PR31045/zfs-abigail-2.4/libnvpair.abi",
     "data/test-abidiff-exit/PR31045/zfs-abigail-2.4/libnvpair.so",
     "data/test-abidiff-exit/PR31045/zfs-abigail-2.4/libnvpair.suppr",
