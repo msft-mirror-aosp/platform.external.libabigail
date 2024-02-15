@@ -789,13 +789,13 @@ public:
     if (!underlying_type)
       return type_or_decl_base_sptr();
 
-    uint64_t lower_boud = 0;
+    uint64_t lower_bound = 0;
     // Note that arr->nelems can be 0;
     uint64_t upper_bound = arr->nelems ? arr->nelems - 1: 0;
 
     array_type_def::subrange_sptr subrange(new array_type_def::subrange_type
 					   (env(), /*name=*/"",
-					    lower_boud, upper_bound,
+					    lower_bound, upper_bound,
 					    location()));
     add_decl_to_scope(subrange, cur_tu()->get_global_scope());
     canonicalize(subrange);
