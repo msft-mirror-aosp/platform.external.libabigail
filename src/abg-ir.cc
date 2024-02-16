@@ -7630,7 +7630,7 @@ clone_array(const array_type_def_sptr& array)
 					   (*i)->get_underlying_type(),
 					   (*i)->get_location(),
 					   (*i)->get_language()));
-      subrange->is_infinite((*i)->is_infinite());
+      subrange->is_non_finite((*i)->is_non_finite());
       if (scope_decl *scope = (*i)->get_scope())
 	add_decl_to_scope(subrange, scope);
       subranges.push_back(subrange);
@@ -10870,7 +10870,7 @@ has_flexible_array_data_member(const class_decl& klass)
 
   if (array_type_def_sptr array = is_array_type(dms.back()->get_type()))
     {// The type of the last data member is an array.
-      if (array->is_infinite())
+      if (array->is_non_finite())
 	// The array has a non-finite size.  We are thus looking at a
 	// flexible array data member.  Let's return it.
 	return dms.back();
@@ -18825,7 +18825,7 @@ array_type_def::subrange_type::set_lower_bound(int64_t lb)
 uint64_t
 array_type_def::subrange_type::get_length() const
 {
-  if (is_infinite())
+  if (is_non_finite())
     return 0;
 
   // A subrange can have an upper bound that is lower than its lower
@@ -18840,7 +18840,7 @@ array_type_def::subrange_type::get_length() const
 ///
 /// @return true iff the length of the subrange type is infinite.
 bool
-array_type_def::subrange_type::is_infinite() const
+array_type_def::subrange_type::is_non_finite() const
 {return priv_->infinite_;}
 
 /// Set the infinite-ness status of the subrange type.
@@ -18848,7 +18848,7 @@ array_type_def::subrange_type::is_infinite() const
 /// @param f true iff the length of the subrange type should be set to
 /// being infinite.
 void
-array_type_def::subrange_type::is_infinite(bool f)
+array_type_def::subrange_type::is_non_finite(bool f)
 {priv_->infinite_ = f;}
 
 /// Getter of the language that generated this type.
@@ -18873,7 +18873,7 @@ array_type_def::subrange_type::as_string() const
 	o << ir::get_pretty_representation(underlying_type, false) << " ";
       o << "range "<< get_lower_bound() << " .. " << get_upper_bound();
     }
-  else if (is_infinite())
+  else if (is_non_finite())
     o << "[]";
   else
     o << "["  << get_length() << "]";
@@ -19388,7 +19388,7 @@ array_type_def::append_subranges(const std::vector<subrange_sptr>& subs)
 /// if the array has no sub-range at all, also meaning that the size
 /// of the array is infinite.
 bool
-array_type_def::is_infinite() const
+array_type_def::is_non_finite() const
 {
   if (priv_->subranges_.empty())
     return true;
@@ -19397,7 +19397,7 @@ array_type_def::is_infinite() const
 	 priv_->subranges_.begin();
        i != priv_->subranges_.end();
        ++i)
-    if ((*i)->is_infinite())
+    if ((*i)->is_non_finite())
       return true;
 
   return false;

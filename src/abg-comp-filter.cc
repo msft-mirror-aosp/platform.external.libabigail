@@ -667,7 +667,7 @@ is_var_1_dim_unknown_size_array_change(const var_decl_sptr& var1,
   // be of unknown size.
   if (fat->get_subranges().size() != 1
       || sat->get_subranges().size() != 1
-      || (!fat->is_infinite() && !sat->is_infinite()))
+      || (!fat->is_non_finite() && !sat->is_non_finite()))
     return false;
 
   // The variables must be equal modulo their type.

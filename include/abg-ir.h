@@ -2624,10 +2624,10 @@ public:
     get_length() const;
 
     bool
-    is_infinite() const;
+    is_non_finite() const;
 
     void
-    is_infinite(bool);
+    is_non_finite(bool);
 
     translation_unit::language
     get_language() const;
@@ -2701,7 +2701,7 @@ public:
   get_dimension_count() const;
 
   virtual bool
-  is_infinite() const;
+  is_non_finite() const;
 
   virtual string
   get_pretty_representation(bool internal = false,

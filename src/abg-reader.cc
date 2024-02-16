@@ -4405,11 +4405,11 @@ build_subrange_type(reader&		rdr,
 
   uint64_t length = 0;
   string length_str;
-  bool is_infinite = false;
+  bool is_non_finite = false;
   if (xml_char_sptr s = XML_NODE_GET_ATTRIBUTE(node, "length"))
     {
       if (string(CHAR_STR(s)) == "infinite" || string(CHAR_STR(s)) == "unknown")
-	is_infinite = true;
+	is_non_finite = true;
       else
 	length = strtoull(CHAR_STR(s), NULL, 0);
     }
@@ -4423,7 +4423,7 @@ build_subrange_type(reader&		rdr,
       if (!string(CHAR_STR(s)).empty())
 	upper_bound = strtoll(CHAR_STR(s), NULL, 0);
       bounds_present = true;
-      ABG_ASSERT(is_infinite
+      ABG_ASSERT(is_non_finite
 		 || (length == (uint64_t) upper_bound - lower_bound + 1));
     }
 
@@ -4446,7 +4446,7 @@ build_subrange_type(reader&		rdr,
   // IR would reflect that, so let's stay compatible with that.
   array_type_def::subrange_type::bound_value max_bound;
   array_type_def::subrange_type::bound_value min_bound;
-  if (!is_infinite)
+  if (!is_non_finite)
     if (length > 0)
       // By default, if no 'lower-bound/upper-bound' attributes are
       // set, we assume that the lower bound is 0 and the upper bound
@@ -4466,7 +4466,7 @@ build_subrange_type(reader&		rdr,
 				       name, min_bound, max_bound,
 				       underlying_type, loc));
   maybe_set_artificial_location(rdr, node, p);
-  p->is_infinite(is_infinite);
+  p->is_non_finite(is_non_finite);
 
   if (rdr.push_and_key_type_decl(p, node, add_to_current_scope))
     rdr.map_xml_node_to_decl(node, p);

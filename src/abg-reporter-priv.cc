@@ -837,12 +837,12 @@ report_size_and_alignment_changes(type_or_decl_base_sptr	first,
 	      // We are looking at size or alignment changes between two
 	      // arrays ...
 	      out << indent << "array type size changed from ";
-	      if (first_array->is_infinite())
+	      if (first_array->is_non_finite())
 		out << "\'unknown\'";
 	      else
 		emit_num_value(first_array->get_size_in_bits(), *ctxt, out);
 	      out << " to ";
-	      if (second_array->is_infinite())
+	      if (second_array->is_non_finite())
 		out << "\'unknown\'";
 	      else
 		emit_num_value(second_array->get_size_in_bits(), *ctxt, out);
@@ -871,14 +871,14 @@ report_size_and_alignment_changes(type_or_decl_base_sptr	first,
 			  << i - first_array->get_subranges().begin() + 1
 			  << " changed length from ";
 
-		      if ((*i)->is_infinite())
+		      if ((*i)->is_non_finite())
 			out << "\'unknown\'";
 		      else
 			out << (*i)->get_length();
 
 		      out << " to ";
 
-		      if ((*j)->is_infinite())
+		      if ((*j)->is_non_finite())
 			out << "\'unknown\'";
 		      else
 			out << (*j)->get_length();

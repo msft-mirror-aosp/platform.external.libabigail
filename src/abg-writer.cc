@@ -1511,7 +1511,7 @@ write_size_and_alignment(const shared_ptr<type_base> decl, ostream& o,
 static void
 write_array_size_and_alignment(const shared_ptr<array_type_def> decl, ostream& o)
 {
-  if (decl->is_infinite())
+  if (decl->is_non_finite())
     o << " size-in-bits='" << "unknown" << "'";
   else {
     size_t size_in_bits = decl->get_size_in_bits();
@@ -3015,14 +3015,14 @@ write_array_subrange_type(const array_type_def::subrange_sptr&	decl,
     o << " name='" << decl->get_name() << "'";
 
   o << " length='";
-  if (decl->is_infinite())
+  if (decl->is_non_finite())
     o << "unknown";
   else
     o << decl->get_length();
 
   o << "'";
 
-  ABG_ASSERT(decl->is_infinite()
+  ABG_ASSERT(decl->is_non_finite()
 	     || decl->get_length() == 0
 	     || (decl->get_length() ==
 		 (uint64_t) (decl->get_upper_bound()

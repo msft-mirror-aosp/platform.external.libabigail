@@ -797,6 +797,7 @@ public:
 					   (env(), /*name=*/"",
 					    lower_bound, upper_bound,
 					    location()));
+    subrange->is_non_finite(!arr->nelems);
     add_decl_to_scope(subrange, cur_tu()->get_global_scope());
     canonicalize(subrange);
     array_type_def::subranges_type subranges = {subrange};

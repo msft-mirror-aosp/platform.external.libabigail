@@ -14370,7 +14370,7 @@ build_subrange_type(reader&		rdr,
     get_default_array_lower_bound(language);
   array_type_def::subrange_type::bound_value upper_bound;
   uint64_t count = 0;
-  bool is_infinite = false;
+  bool is_non_finite = false;
   bool non_zero_count_present = false;
 
   // The DWARF 4 specifications says, in [5.11 Subrange
@@ -14427,13 +14427,13 @@ build_subrange_type(reader&		rdr,
 	// No upper_bound nor count was present on the DIE, this means
 	// the array is considered to have an infinite (or rather not
 	// known) size.
-	is_infinite = true;
+	is_non_finite = true;
     }
 
   if (UINT64_MAX == upper_bound.get_unsigned_value())
     // If the upper_bound size is the max of the integer value
     // then it most certainly means unknown size.
-    is_infinite = true;
+    is_non_finite = true;
 
   result.reset
     (new array_type_def::subrange_type(rdr.env(),
@@ -14441,13 +14441,13 @@ build_subrange_type(reader&		rdr,
 				       lower_bound,
 				       upper_bound,
 				       location()));
-  result->is_infinite(is_infinite);
+  result->is_non_finite(is_non_finite);
 
   if (underlying_type)
     result->set_underlying_type(underlying_type);
 
   // Let's ensure the resulting subrange looks metabolically healhty.
-  ABG_ASSERT(result->is_infinite()
+  ABG_ASSERT(result->is_non_finite()
 	     || (result->get_length() ==
 		 (uint64_t) (result->get_upper_bound()
 			     - result->get_lower_bound() + 1)));

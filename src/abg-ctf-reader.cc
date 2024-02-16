@@ -1231,7 +1231,7 @@ static array_type_def::subrange_sptr
 build_array_ctf_range(reader *rdr, ctf_dict_t *dic,
                       ctf_id_t index, uint64_t nelems)
 {
-  bool is_infinite = false;
+  bool is_non_finite = false;
   corpus_sptr corp = rdr->corpus();
   translation_unit_sptr tunit = rdr->cur_transl_unit();
   array_type_def::subrange_sptr subrange;
@@ -1247,7 +1247,7 @@ build_array_ctf_range(reader *rdr, ctf_dict_t *dic,
 
   /* for VLAs number of array elements is 0 */
   if (upper_bound.get_unsigned_value() == 0 && nelems == 0)
-    is_infinite = true;
+    is_non_finite = true;
 
   subrange.reset(new array_type_def::subrange_type(rdr->env(),
                                                    "",
@@ -1259,7 +1259,7 @@ build_array_ctf_range(reader *rdr, ctf_dict_t *dic,
   if (!subrange)
     return nullptr;
 
-  subrange->is_infinite(is_infinite);
+  subrange->is_non_finite(is_non_finite);
   add_decl_to_scope(subrange, tunit->get_global_scope());
   canonicalize(subrange);
 
