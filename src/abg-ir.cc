@@ -9221,13 +9221,13 @@ get_function_type_name(const function_type& fn_type,
 ///
 /// @return the function ID of pretty representation of @p fn.
 interned_string
-get_function_id_or_pretty_representation(function_decl *fn)
+get_function_id_or_pretty_representation(const function_decl *fn)
 {
   ABG_ASSERT(fn);
 
   interned_string result = fn->get_environment().intern(fn->get_id());
 
-  if (corpus *c = fn->get_corpus())
+  if (const corpus *c = fn->get_corpus())
     {
       corpus::exported_decls_builder_sptr b =
 	c->get_exported_decls_builder();

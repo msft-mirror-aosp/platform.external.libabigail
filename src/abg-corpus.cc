@@ -122,7 +122,7 @@ corpus::exported_decls_builder::exported_functions()
 /// @return the set of functions designated by the ELF symbol of @p
 /// fn, or nullptr if the function ID maps to just @p fn.
 std::unordered_set<function_decl*>*
-corpus::exported_decls_builder::fn_id_maps_to_several_fns(function_decl* fn)
+corpus::exported_decls_builder::fn_id_maps_to_several_fns(const function_decl* fn)
 {
   std::unordered_set<function_decl*> *fns_for_id =
     priv_->fn_id_is_in_id_fns_map(fn);
@@ -1570,11 +1570,9 @@ corpus::maybe_drop_some_exported_decls()
 {
   string sym_name, sym_version;
 
-  vector<function_decl*> fns_to_keep;
+  functions fns_to_keep;
   exported_decls_builder* b = get_exported_decls_builder().get();
-  for (vector<function_decl*>::iterator f = priv_->fns.begin();
-       f != priv_->fns.end();
-       ++f)
+  for (auto f = priv_->fns.begin(); f != priv_->fns.end(); ++f)
     {
       if (b->priv_->keep_wrt_id_of_fns_to_keep(*f)
 	  && b->priv_->keep_wrt_regex_of_fns_to_suppress(*f)
@@ -1583,10 +1581,8 @@ corpus::maybe_drop_some_exported_decls()
     }
   priv_->fns = fns_to_keep;
 
-  vector<var_decl*> vars_to_keep;
-  for (vector<var_decl*>::iterator v = priv_->vars.begin();
-       v != priv_->vars.end();
-       ++v)
+  variables vars_to_keep;
+  for (auto v = priv_->vars.begin(); v != priv_->vars.end(); ++v)
     {
       if (b->priv_->keep_wrt_id_of_vars_to_keep(*v)
 	  && b->priv_->keep_wrt_regex_of_vars_to_suppress(*v)
@@ -1690,9 +1686,9 @@ struct corpus_group::priv
   std::set<string>		corpora_paths;
   corpora_type			corpora;
   istring_function_decl_ptr_map_type fns_map;
-  vector<function_decl*>	fns;
+  corpus::functions		fns;
   istring_var_decl_ptr_map_type vars_map;
-  vector<var_decl*>		vars;
+  corpus::variables		vars;
   string_elf_symbols_map_type	var_symbol_map;
   string_elf_symbols_map_type	fun_symbol_map;
   elf_symbols			sorted_var_symbols;

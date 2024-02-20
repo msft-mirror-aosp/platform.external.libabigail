@@ -28,10 +28,10 @@ public:
   typedef vector<string> strings_type;
 
   /// Convenience typedef for std::vector<abigail::ir::function_decl*>
-  typedef vector<function_decl*> functions;
+  typedef vector<const function_decl*> functions;
 
   ///Convenience typedef for std::vector<abigail::ir::var_decl*>
-  typedef vector<var_decl*> variables;
+  typedef vector<const var_decl*> variables;
 
   class exported_decls_builder;
 
@@ -331,7 +331,7 @@ public:
   exported_functions();
 
   std::unordered_set<function_decl*>*
-  fn_id_maps_to_several_fns(function_decl*);
+  fn_id_maps_to_several_fns(const function_decl*);
 
   const variables&
   exported_variables() const;

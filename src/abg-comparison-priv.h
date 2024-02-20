@@ -1422,7 +1422,7 @@ sort_changed_data_members(changed_var_sptrs_type& input);
 
 void
 sort_string_function_ptr_map(const string_function_ptr_map& map,
-			     vector<function_decl*>& sorted);
+			     vector<const function_decl*>& sorted);
 
 void
 sort_string_member_function_sptr_map(const string_member_function_sptr_map& map,
@@ -1447,7 +1447,7 @@ sort_string_elf_symbol_map(const string_elf_symbol_map& map,
 
 void
 sort_string_var_ptr_map(const string_var_ptr_map& map,
-			vector<var_decl*>& sorted);
+			vector<const var_decl*>& sorted);
 
 void
 sort_string_data_member_diff_sptr_map(const string_var_diff_sptr_map& map,

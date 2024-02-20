@@ -1074,32 +1074,29 @@ leaf_reporter::report(const corpus_diff& d,
 	out << indent << s.net_num_func_removed() << " Removed functions:\n\n";
 
       bool emitted = false;
-      vector<function_decl*>sorted_deleted_fns;
+      corpus::functions sorted_deleted_fns;
       sort_string_function_ptr_map(d.priv_->deleted_fns_, sorted_deleted_fns);
-      for (vector<function_decl*>::const_iterator i =
-	     sorted_deleted_fns.begin();
-	   i != sorted_deleted_fns.end();
-	   ++i)
+      for (auto f : sorted_deleted_fns)
 	{
-	  if (d.priv_->deleted_function_is_suppressed(*i))
+	  if (d.priv_->deleted_function_is_suppressed(f))
 	    continue;
 
 	  out << indent
 	      << "  ";
 	  out << "[D] ";
-	  out << "'" << (*i)->get_pretty_representation() << "'";
+	  out << "'" << f->get_pretty_representation() << "'";
 	  if (ctxt->show_linkage_names())
 	    {
 	      out << "    {";
-	      show_linkage_name_and_aliases(out, "", *(*i)->get_symbol(),
+	      show_linkage_name_and_aliases(out, "", *f->get_symbol(),
 					    d.first_corpus()->get_fun_symbol_map());
 	      out << "}";
 	    }
 	  out << "\n";
-	  if (is_member_function(*i) && get_member_function_is_virtual(*i))
+	  if (is_member_function(f) && get_member_function_is_virtual(f))
 	    {
 	      class_decl_sptr c =
-		is_class_type(is_method_type((*i)->get_type())->get_class_type());
+		is_class_type(is_method_type(f->get_type())->get_class_type());
 	      out << indent
 		  << "    "
 		  << "note that this removes an entry from the vtable of "
@@ -1120,13 +1117,11 @@ leaf_reporter::report(const corpus_diff& d,
 	out << indent << s.net_num_func_added()
 	    << " Added functions:\n\n";
       bool emitted = false;
-      vector<function_decl*> sorted_added_fns;
+      corpus::functions sorted_added_fns;
       sort_string_function_ptr_map(d.priv_->added_fns_, sorted_added_fns);
-      for (vector<function_decl*>::const_iterator i = sorted_added_fns.begin();
-	   i != sorted_added_fns.end();
-	   ++i)
+      for (auto f : sorted_added_fns)
 	{
-	  if (d.priv_->added_function_is_suppressed(*i))
+	  if (d.priv_->added_function_is_suppressed(f))
 	    continue;
 
 	  out
@@ -1134,21 +1129,21 @@ leaf_reporter::report(const corpus_diff& d,
 	    << "  ";
 	  out << "[A] ";
 	  out << "'"
-	      << (*i)->get_pretty_representation()
+	      << f->get_pretty_representation()
 	      << "'";
 	  if (ctxt->show_linkage_names())
 	    {
 	      out << "    {";
 	      show_linkage_name_and_aliases
-		(out, "", *(*i)->get_symbol(),
+		(out, "", *f->get_symbol(),
 		 d.second_corpus()->get_fun_symbol_map());
 	      out << "}";
 	    }
 	  out << "\n";
-	  if (is_member_function(*i) && get_member_function_is_virtual(*i))
+	  if (is_member_function(f) && get_member_function_is_virtual(f))
 	    {
 	      class_decl_sptr c =
-		is_class_type(is_method_type((*i)->get_type())->get_class_type());
+		is_class_type(is_method_type(f->get_type())->get_class_type());
 	      out << indent
 		  << "    "
 		  << "note that this adds a new entry to the vtable of "
@@ -1239,17 +1234,14 @@ leaf_reporter::report(const corpus_diff& d,
 	    << " Removed variables:\n\n";
       string n;
       bool emitted = false;
-      vector<var_decl*> sorted_deleted_vars;
+      corpus::variables  sorted_deleted_vars;
       sort_string_var_ptr_map(d.priv_->deleted_vars_, sorted_deleted_vars);
-      for (vector<var_decl*>::const_iterator i =
-	     sorted_deleted_vars.begin();
-	   i != sorted_deleted_vars.end();
-	   ++i)
+      for (auto v : sorted_deleted_vars)
 	{
-	  if (d.priv_->deleted_variable_is_suppressed(*i))
+	  if (d.priv_->deleted_variable_is_suppressed(v))
 	    continue;
 
-	  n = (*i)->get_pretty_representation();
+	  n = v->get_pretty_representation();
 
 	  out << indent
 	      << "  ";
@@ -1260,7 +1252,7 @@ leaf_reporter::report(const corpus_diff& d,
 	  if (ctxt->show_linkage_names())
 	    {
 	      out << "    {";
-	      show_linkage_name_and_aliases(out, "", *(*i)->get_symbol(),
+	      show_linkage_name_and_aliases(out, "", *v->get_symbol(),
 					    d.first_corpus()->get_var_symbol_map());
 	      out << "}";
 	    }
@@ -1280,17 +1272,14 @@ leaf_reporter::report(const corpus_diff& d,
 	    << " Added variables:\n\n";
       string n;
       bool emitted = false;
-      vector<var_decl*> sorted_added_vars;
+      corpus::variables sorted_added_vars;
       sort_string_var_ptr_map(d.priv_->added_vars_, sorted_added_vars);
-      for (vector<var_decl*>::const_iterator i =
-	     sorted_added_vars.begin();
-	   i != sorted_added_vars.end();
-	   ++i)
+      for (auto v : sorted_added_vars)
 	{
-	  if (d.priv_->added_variable_is_suppressed(*i))
+	  if (d.priv_->added_variable_is_suppressed(v))
 	    continue;
 
-	  n = (*i)->get_pretty_representation();
+	  n = v->get_pretty_representation();
 
 	  out << indent
 	      << "  ";
@@ -1299,7 +1288,7 @@ leaf_reporter::report(const corpus_diff& d,
 	  if (ctxt->show_linkage_names())
 	    {
 	      out << "    {";
-	      show_linkage_name_and_aliases(out, "", *(*i)->get_symbol(),
+	      show_linkage_name_and_aliases(out, "", *v->get_symbol(),
 					    d.second_corpus()->get_var_symbol_map());
 	      out << "}";
 	    }
@@ -1319,12 +1308,9 @@ leaf_reporter::report(const corpus_diff& d,
 	out << indent << num_changed
 	    << " Changed variables:\n\n";
       string n1, n2;
-      for (var_diff_sptrs_type::const_iterator i =
-	     d.priv_->sorted_changed_vars_.begin();
-	   i != d.priv_->sorted_changed_vars_.end();
-	   ++i)
+      for (auto d : d.priv_->sorted_changed_vars_)
 	{
-	  diff_sptr diff = *i;
+	  diff_sptr diff = d;
 
 	  if (!diff)
 	    continue;

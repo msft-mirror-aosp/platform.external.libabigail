@@ -435,14 +435,14 @@ perform_compat_check_in_normal_mode(options& opts,
 /// the differences found in the type of that function.
 struct fn_change
 {
-  function_decl* decl;
+  const function_decl* decl;
   function_type_diff_sptr diff;
 
   fn_change()
     : decl()
   {}
 
-  fn_change(function_decl* decl,
+  fn_change(const function_decl* decl,
 	    function_type_diff_sptr difference)
     : decl(decl),
       diff(difference)
@@ -454,14 +454,14 @@ struct fn_change
 /// the differences found in the type of that variable.
 struct var_change
 {
-  var_decl* decl;
+  const var_decl* decl;
   diff_sptr diff;
 
   var_change()
     : decl()
   {}
 
-  var_change(var_decl* var,
+  var_change(const var_decl* var,
 	     diff_sptr difference)
     : decl(var),
       diff(difference)

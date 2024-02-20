@@ -176,7 +176,7 @@ sort_changed_data_members(changed_var_sptrs_type& to_sort)
 /// @param sorted the resulting sorted vector.
 void
 sort_string_function_ptr_map(const string_function_ptr_map& map,
-			     vector<function_decl*>& sorted)
+			     vector<const function_decl*>& sorted)
 {
   sorted.reserve(map.size());
   for (string_function_ptr_map::const_iterator i = map.begin();
@@ -283,7 +283,7 @@ sort_string_elf_symbol_map(const string_elf_symbol_map& map,
 /// @param sorted out parameter; the sorted vector of @ref var_decl.
 void
 sort_string_var_ptr_map(const string_var_ptr_map& map,
-			vector<var_decl*>& sorted)
+			vector<const var_decl*>& sorted)
 {
   for (string_var_ptr_map::const_iterator i = map.begin();
        i != map.end();
@@ -9382,7 +9382,7 @@ corpus_diff::priv::ensure_lookup_tables_populated()
 	unsigned i = it->index();
 	ABG_ASSERT(i < first_->get_functions().size());
 
-	function_decl* deleted_fn = first_->get_functions()[i];
+	const function_decl* deleted_fn = first_->get_functions()[i];
 	string n = get_function_id_or_pretty_representation(deleted_fn);
 	ABG_ASSERT(!n.empty());
 	// The below is commented out because there can be several
@@ -9402,7 +9402,7 @@ corpus_diff::priv::ensure_lookup_tables_populated()
 	     ++iit)
 	  {
 	    unsigned i = *iit;
-	    function_decl* added_fn = second_->get_functions()[i];
+	    const function_decl* added_fn = second_->get_functions()[i];
 	    string n = get_function_id_or_pretty_representation(added_fn);
 	    ABG_ASSERT(!n.empty());
 	    // The below is commented out because there can be several
@@ -9413,8 +9413,10 @@ corpus_diff::priv::ensure_lookup_tables_populated()
 	      deleted_fns_.find(n);
 	    if (j != deleted_fns_.end())
 	      {
-		function_decl_sptr f(j->second, noop_deleter());
-		function_decl_sptr s(added_fn, noop_deleter());
+		function_decl_sptr f(const_cast<function_decl*>(j->second),
+				     noop_deleter());
+		function_decl_sptr s(const_cast<function_decl*>(added_fn),
+				     noop_deleter());
 		function_decl_diff_sptr d = compute_diff(f, s, ctxt);
 		if (*j->second != *added_fn)
 		  changed_fns_map_[j->first] = d;
@@ -9482,7 +9484,7 @@ corpus_diff::priv::ensure_lookup_tables_populated()
 	unsigned i = it->index();
 	ABG_ASSERT(i < first_->get_variables().size());
 
-	var_decl* deleted_var = first_->get_variables()[i];
+	const var_decl* deleted_var = first_->get_variables()[i];
 	string n = deleted_var->get_id();
 	ABG_ASSERT(!n.empty());
 	ABG_ASSERT(deleted_vars_.find(n) == deleted_vars_.end());
@@ -9499,7 +9501,7 @@ corpus_diff::priv::ensure_lookup_tables_populated()
 	     ++iit)
 	  {
 	    unsigned i = *iit;
-	    var_decl* added_var = second_->get_variables()[i];
+	    const var_decl* added_var = second_->get_variables()[i];
 	    string n = added_var->get_id();
 	    ABG_ASSERT(!n.empty());
 	    {
@@ -9517,8 +9519,10 @@ corpus_diff::priv::ensure_lookup_tables_populated()
 	      {
 		if (*j->second != *added_var)
 		  {
-		    var_decl_sptr f(j->second, noop_deleter());
-		    var_decl_sptr s(added_var, noop_deleter());
+		    var_decl_sptr f(const_cast<var_decl*>(j->second),
+				    noop_deleter());
+		    var_decl_sptr s(const_cast<var_decl*>(added_var),
+				    noop_deleter());
 		    changed_vars_map_[n] = compute_diff(f, s, ctxt);
 		  }
 		deleted_vars_.erase(j);
@@ -10045,7 +10049,7 @@ corpus_diff::priv::apply_supprs_to_added_removed_fns_vars_unreachable_types()
 	    if (is_member_function(e->second)
 		&& get_member_function_is_virtual(e->second))
 	      {
-		function_decl *f = e->second;
+		const function_decl *f = e->second;
 		class_decl_sptr c =
 		  is_class_type(is_method_type(f->get_type())->get_class_type());
 		ABG_ASSERT(c);
@@ -10059,7 +10063,7 @@ corpus_diff::priv::apply_supprs_to_added_removed_fns_vars_unreachable_types()
 	    if (is_member_function(e->second)
 		&& get_member_function_is_virtual(e->second))
 	      {
-		function_decl *f = e->second;
+		const function_decl *f = e->second;
 		class_decl_sptr c =
 		  is_class_type(is_method_type(f->get_type())->get_class_type());
 		ABG_ASSERT(c);

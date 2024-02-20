@@ -742,8 +742,8 @@ struct corpus::priv
   string					architecture_name;
   translation_units				members;
   string_tu_map_type				path_tu_map;
-  vector<function_decl*>			fns;
-  vector<var_decl*>				vars;
+  vector<const function_decl*>			fns;
+  vector<const var_decl*>			vars;
   symtab_reader::symtab_sptr			symtab_;
   // The type maps contained in this data member are populated if the
   // corpus follows the One Definition Rule and thus if there is only

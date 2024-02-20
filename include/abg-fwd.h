@@ -255,10 +255,6 @@ typedef shared_ptr<var_decl> var_decl_sptr;
 /// Convenience typedef for a weak pointer on a @ref var_decl
 typedef weak_ptr<var_decl> var_decl_wptr;
 
-typedef unordered_map<interned_string,
-		      var_decl*,
-		      hash_interned_string> istring_var_decl_ptr_map_type;
-
 class scope_decl;
 
 /// Convenience typedef for a shared pointer on a @ref scope_decl.
@@ -268,10 +264,6 @@ class function_decl;
 
 /// Convenience typedef for a shared pointer on a @ref function_decl
 typedef shared_ptr<function_decl> function_decl_sptr;
-
-typedef unordered_map<interned_string,
-		      function_decl*,
-		      hash_interned_string> istring_function_decl_ptr_map_type;
 
 class method_decl;
 
@@ -1096,7 +1088,7 @@ interned_string
 get_function_type_name(const function_type&, bool internal = false);
 
 interned_string
-get_function_id_or_pretty_representation(function_decl *fn);
+get_function_id_or_pretty_representation(const function_decl *fn);
 
 interned_string
 get_method_type_name(const method_type_sptr&, bool internal = false);
