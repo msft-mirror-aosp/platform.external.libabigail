@@ -506,12 +506,12 @@ public:
     if (function_decl_sptr fn = is_function_decl(result))
       {
 	if (fn->get_is_in_public_symbol_table())
-	  maybe_add_fn_to_exported_decls(fn.get());
+	  add_fn_to_exported_or_undefined_decls(fn.get());
       }
     else if (var_decl_sptr var = is_var_decl(result))
       {
 	if (var->get_is_in_public_symbol_table())
-	  maybe_add_var_to_exported_decls(var.get());
+	  add_var_to_exported_or_undefined_decls(var.get());
       }
 
     return result;

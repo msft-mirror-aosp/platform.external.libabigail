@@ -2089,12 +2089,13 @@ test-abicompat/test5-fn-changed-report-0.txt \
 test-abicompat/test5-fn-changed-report-1.txt \
 test-abicompat/libtest6-var-changed-libapp-v0.so \
 test-abicompat/libtest6-var-changed-libapp-v1.so \
-test-abicompat/test6-var-changed-app \
-test-abicompat/test6-var-changed-app.cc \
+test-abicompat/libtest6-undefined-var.so \
+test-abicompat/test6-undefined-var.cc \
 test-abicompat/test6-var-changed-libapp-v0.cc \
 test-abicompat/test6-var-changed-libapp-v1.cc \
 test-abicompat/test6-var-changed-report-0.txt \
 test-abicompat/test6-var-changed-report-1.txt \
+test-abicompat/test6-var-changed-report-2.txt \
 test-abicompat/libtest7-fn-changed-libapp-v0.so \
 test-abicompat/libtest7-fn-changed-libapp-v1.so \
 test-abicompat/test7-fn-changed-app \

@@ -115,6 +115,83 @@ symtab::lookup_symbol(GElf_Addr symbol_addr) const
   return empty_result;
 }
 
+/// Lookup an undefined function symbol with a given name.
+///
+/// @param sym_name the name of the function symbol to lookup.
+///
+/// @return the undefined function symbol found or nil if none was
+/// found.
+const elf_symbol_sptr
+symtab::lookup_undefined_function_symbol(const std::string& sym_name)
+{
+  symtab_filter f = make_filter();
+  f.set_variables(false);
+  f.set_public_symbols(false);
+  f.set_functions(true);
+  f.set_undefined_symbols(true);
+
+  elf_symbol_sptr result;
+  for (auto sym : filtered_symtab(*this, f))
+    if (sym_name == sym->get_name())
+      {
+	result = sym;
+	break;
+      }
+
+  return result;
+}
+
+/// Lookup an undefined variable symbol with a given name.
+///
+/// @param sym_name the name of the variable symbol to lookup.
+///
+/// @return the undefined variable symbol found or nil if none was
+/// found.
+const elf_symbol_sptr
+symtab::lookup_undefined_variable_symbol(const std::string& sym_name)
+{
+  symtab_filter f = make_filter();
+  f.set_functions(false);
+  f.set_public_symbols(false);
+  f.set_undefined_symbols(true);
+  f.set_variables(true);
+
+  elf_symbol_sptr result;
+  for (auto sym : filtered_symtab(*this, f))
+    if (sym_name == sym->get_name())
+      {
+	result = sym;
+	break;
+      }
+  return result;
+}
+
+/// Test if a name is a the name of an undefined function symbol.
+///
+/// @param sym_name the symbol name to consider.
+///
+/// @return true iff @p sym_name is the name of a an undefined
+/// function symbol.
+bool
+symtab::function_symbol_is_undefined(const string& sym_name)
+{
+  collect_undefined_fns_and_vars_linkage_names();
+  return undefined_function_linkage_names_.count(sym_name);
+}
+
+/// Test if a name is a the name of an undefined variable symbol.
+///
+/// @param sym_name the symbol name to consider.
+///
+/// @return true iff @p sym_name is the name of a an undefined
+/// variable symbol.
+bool
+symtab::variable_symbol_is_undefined(const string& sym_name)
+{
+  collect_undefined_fns_and_vars_linkage_names();
+  return undefined_variable_linkage_names_.count(sym_name);
+}
+
 /// A symbol sorting functor.
 static struct
 {
@@ -173,7 +250,8 @@ symtab::load(string_elf_symbols_map_sptr function_symbol_map,
 
 /// Default constructor of the @ref symtab type.
 symtab::symtab()
-  : is_kernel_binary_(false), has_ksymtab_entries_(false)
+  : is_kernel_binary_(false), has_ksymtab_entries_(false),
+    cached_undefined_symbol_names_(false)
 {}
 
 /// Load the symtab representation from an Elf binary presented to us by an
@@ -350,6 +428,9 @@ symtab::load_(Elf*	       elf_handle,
 	    // section it refers to cannot be absolute.
 	    // Otherwise that OBJECT is not a variable.
 	    || (sym_type == STT_OBJECT && sym->st_shndx != SHN_ABS)
+	    // Undefined global variable symbols have symbol type
+	    // STT_NOTYPE.  No idea why.
+	    || (sym_type == STT_NOTYPE && sym->st_shndx == SHN_UNDEF)
 	    || sym_type == STT_TLS))
 	continue;
 
@@ -736,5 +817,37 @@ symtab::add_alternative_address_lookups(Elf* elf_handle)
     }
 }
 
+/// Collect the names of the variable and function symbols that are
+/// undefined.  Cache those names into sets to speed up their lookup.
+///
+/// Once the names are cached into sets, subsequent invocations of
+/// this function are essentially a no-op.
+void
+symtab::collect_undefined_fns_and_vars_linkage_names()
+{
+  if (!cached_undefined_symbol_names_)
+    {
+      {
+	symtab_filter f = make_filter();
+	f.set_variables(false);
+	f.set_functions(true);
+	f.set_public_symbols(false);
+	f.set_undefined_symbols(true);
+	for (auto sym : filtered_symtab(*this, f))
+	  undefined_function_linkage_names_.insert(sym->get_name());
+      }
+
+      {
+	symtab_filter f = make_filter();
+	f.set_variables(true);
+	f.set_functions(false);
+	f.set_public_symbols(false);
+	f.set_undefined_symbols(true);
+	for (auto sym : filtered_symtab(*this, f))
+	  undefined_variable_linkage_names_.insert(sym->get_name());
+      }
+    }
+  cached_undefined_symbol_names_ = true;
+}
 } // end namespace symtab_reader
 } // end namespace abigail

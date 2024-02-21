@@ -31,6 +31,14 @@ using suppr::suppressions_type;
 static const std::string test_data_dir =
     std::string(abigail::tests::get_src_dir()) + "/tests/data/test-symtab/";
 
+// There are 4 undefined global variables per binary, at least in this
+// testsuite. For instance, here are the undefined global variables
+// what we see in the
+// "tests/data/test-symtab/basic/single_variable.so" binary:
+// __cxa_finalize, _ITM_registerTMCloneTable,
+// _ITM_deregisterTMCloneTable, __gmon_start__.
+static const int NB_UNDEFINED_VARS_PER_BINARY = 4;
+
 fe_iface::status
 read_corpus(const std::string&		    path,
 	    corpus_sptr&		    result,
@@ -154,7 +162,8 @@ TEST_CASE("Symtab::SimpleSymtabs", "[symtab, basic]")
   GIVEN("a binary with a single exported function")
   {
     const std::string	   binary = "basic/single_function.so";
-    const corpus_sptr&	   corpus = assert_symbol_count(binary, 1, 0);
+    const corpus_sptr&	   corpus =
+      assert_symbol_count(binary, 1, 0, 0, NB_UNDEFINED_VARS_PER_BINARY);
     const elf_symbol_sptr& symbol =
 	corpus->lookup_function_symbol("exported_function");
     REQUIRE(symbol);
@@ -166,7 +175,8 @@ TEST_CASE("Symtab::SimpleSymtabs", "[symtab, basic]")
   GIVEN("a binary with a single exported variable")
   {
     const std::string	   binary = "basic/single_variable.so";
-    const corpus_sptr&	   corpus = assert_symbol_count(binary, 0, 1);
+    const corpus_sptr&	   corpus =
+      assert_symbol_count(binary, 0, 1, 0, NB_UNDEFINED_VARS_PER_BINARY);
     const elf_symbol_sptr& symbol =
 	corpus->lookup_variable_symbol("exported_variable");
     REQUIRE(symbol);
@@ -178,7 +188,8 @@ TEST_CASE("Symtab::SimpleSymtabs", "[symtab, basic]")
   GIVEN("a binary with one function and one variable exported")
   {
     const std::string  binary = "basic/one_function_one_variable.so";
-    const corpus_sptr& corpus = assert_symbol_count(binary, 1, 1);
+    const corpus_sptr& corpus =
+      assert_symbol_count(binary, 1, 1, 0, NB_UNDEFINED_VARS_PER_BINARY);
     CHECK(corpus->lookup_function_symbol("exported_function"));
     CHECK(!corpus->lookup_variable_symbol("exported_function"));
     CHECK(corpus->lookup_variable_symbol("exported_variable"));
@@ -188,19 +199,22 @@ TEST_CASE("Symtab::SimpleSymtabs", "[symtab, basic]")
   GIVEN("a binary with a single undefined function")
   {
     const std::string  binary = "basic/single_undefined_function.so";
-    const corpus_sptr corpus = assert_symbol_count(binary, 0, 0, 1, 0);
+    const corpus_sptr corpus =
+      assert_symbol_count(binary, 0, 0, 1, NB_UNDEFINED_VARS_PER_BINARY);
   }
 
   GIVEN("a binary with a single undefined variable")
   {
     const std::string  binary = "basic/single_undefined_variable.so";
-    const corpus_sptr corpus = assert_symbol_count(binary, 0, 0, 0, 1);
+    const corpus_sptr corpus =
+      assert_symbol_count(binary, 0, 0, 0, NB_UNDEFINED_VARS_PER_BINARY + 1);
   }
 
   GIVEN("a binary with one function and one variable undefined")
   {
     const std::string  binary = "basic/one_function_one_variable_undefined.so";
-    const corpus_sptr corpus = assert_symbol_count(binary, 0, 0, 1, 1);
+    const corpus_sptr corpus =
+      assert_symbol_count(binary, 0, 0, 1, NB_UNDEFINED_VARS_PER_BINARY + 1);
   }
 }
 
@@ -212,7 +226,8 @@ TEST_CASE("Symtab::SymtabWithWhitelist", "[symtab, whitelist]")
 
     GIVEN("we read the binary without any whitelists")
     {
-      const corpus_sptr& corpus = assert_symbol_count(binary, 1, 1);
+      const corpus_sptr& corpus =
+	assert_symbol_count(binary, 1, 1, 0, NB_UNDEFINED_VARS_PER_BINARY);
       CHECK(corpus->lookup_function_symbol("exported_function"));
       CHECK(!corpus->lookup_variable_symbol("exported_function"));
       CHECK(corpus->lookup_variable_symbol("exported_variable"));
@@ -225,7 +240,9 @@ TEST_CASE("Symtab::SymtabWithWhitelist", "[symtab, whitelist]")
       whitelists.push_back(test_data_dir
 			   + "basic/one_function_one_variable_all.whitelist");
       const corpus_sptr& corpus =
-	assert_symbol_count(binary, 1, 1, 0, 0, whitelists);
+	assert_symbol_count(binary, 1, 1, 0,
+			    NB_UNDEFINED_VARS_PER_BINARY,
+			    whitelists);
       CHECK(corpus->lookup_function_symbol("exported_function"));
       CHECK(!corpus->lookup_variable_symbol("exported_function"));
       CHECK(corpus->lookup_variable_symbol("exported_variable"));
@@ -251,7 +268,9 @@ TEST_CASE("Symtab::SymtabWithWhitelist", "[symtab, whitelist]")
       whitelists.push_back(
 	test_data_dir + "basic/one_function_one_variable_function.whitelist");
       const corpus_sptr& corpus =
-	assert_symbol_count(binary, 1, 0, 0, 0, whitelists);
+	assert_symbol_count(binary, 1, 0, 0,
+			    NB_UNDEFINED_VARS_PER_BINARY,
+			    whitelists);
       CHECK(corpus->lookup_function_symbol("exported_function"));
       CHECK(!corpus->lookup_variable_symbol("exported_function"));
       CHECK(!corpus->lookup_variable_symbol("exported_variable"));
@@ -264,7 +283,9 @@ TEST_CASE("Symtab::SymtabWithWhitelist", "[symtab, whitelist]")
       whitelists.push_back(
 	test_data_dir + "basic/one_function_one_variable_variable.whitelist");
       const corpus_sptr& corpus =
-	assert_symbol_count(binary, 0, 1, 0, 0, whitelists);
+	assert_symbol_count(binary, 0, 1, 0,
+			    NB_UNDEFINED_VARS_PER_BINARY,
+			    whitelists);
       CHECK(!corpus->lookup_function_symbol("exported_function"));
       CHECK(!corpus->lookup_variable_symbol("exported_function"));
       CHECK(corpus->lookup_variable_symbol("exported_variable"));
@@ -276,7 +297,9 @@ TEST_CASE("Symtab::SymtabWithWhitelist", "[symtab, whitelist]")
 TEST_CASE("Symtab::AliasedFunctionSymbols", "[symtab, functions, aliases]")
 {
   const std::string  binary = "basic/aliases.so";
-  const corpus_sptr& corpus = assert_symbol_count(binary, 5, 5);
+  const corpus_sptr& corpus =
+    assert_symbol_count(binary, 5, 5, 0,
+			NB_UNDEFINED_VARS_PER_BINARY);
 
   // The main symbol is not necessarily the one that is aliased to in the
   // code So, this can't be decided by just looking at ELF. Hence acquire the
@@ -300,7 +323,8 @@ TEST_CASE("Symtab::AliasedFunctionSymbols", "[symtab, functions, aliases]")
 TEST_CASE("Symtab::AliasedVariableSymbols", "[symtab, variables, aliases]")
 {
   const std::string  binary = "basic/aliases.so";
-  const corpus_sptr& corpus = assert_symbol_count(binary, 5, 5);
+  const corpus_sptr& corpus =
+    assert_symbol_count(binary, 5, 5, 0, NB_UNDEFINED_VARS_PER_BINARY);
   // The main symbol is not necessarily the one that is aliased to in the
   // code So, this can't be decided by just looking at ELF. Hence acquire the
   // main symbol.

@@ -133,7 +133,7 @@ InOutSpec in_out_specs[] =
     "output/test-abicompat/test5-fn-changed-report-1.txt",
   },
   {
-    "data/test-abicompat/test6-var-changed-app",
+    "data/test-abicompat/libtest6-undefined-var.so",
     "data/test-abicompat/libtest6-var-changed-libapp-v1.so",
     "",
     "",
@@ -142,13 +142,22 @@ InOutSpec in_out_specs[] =
     "output/test-abicompat/test6-var-changed-report-0.txt",
   },
   { // Previous test, but emitting loc info.
-    "data/test-abicompat/test6-var-changed-app",
+    "data/test-abicompat/libtest6-undefined-var.so",
     "data/test-abicompat/libtest6-var-changed-libapp-v1.so",
     "",
     "",
     "--show-base-names --weak-mode",
     "data/test-abicompat/test6-var-changed-report-1.txt",
     "output/test-abicompat/test6-var-changed-report-1.txt",
+  },
+  { // Previous test, but in reverse direction.
+    "data/test-abicompat/libtest6-var-changed-libapp-v1.so",
+    "data/test-abicompat/libtest6-undefined-var.so",
+    "",
+    "",
+    "--show-base-names --weak-mode",
+    "data/test-abicompat/test6-var-changed-report-2.txt",
+    "output/test-abicompat/test6-var-changed-report-2.txt",
   },
   {
     "data/test-abicompat/test7-fn-changed-app",

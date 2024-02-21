@@ -744,6 +744,10 @@ struct corpus::priv
   string_tu_map_type				path_tu_map;
   vector<const function_decl*>			fns;
   vector<const var_decl*>			vars;
+  functions_set				undefined_fns;
+  functions					sorted_undefined_fns;
+  variables_set				undefined_vars;
+  variables					sorted_undefined_vars;
   symtab_reader::symtab_sptr			symtab_;
   // The type maps contained in this data member are populated if the
   // corpus follows the One Definition Rule and thus if there is only
@@ -760,7 +764,7 @@ struct corpus::priv
   type_maps					type_per_loc_map_;
   mutable vector<type_base_wptr>		types_not_reachable_from_pub_ifaces_;
   unordered_set<interned_string, hash_interned_string> *pub_type_pretty_reprs_;
-  bool 						do_log;
+  bool 					do_log;
 
 private:
   priv();

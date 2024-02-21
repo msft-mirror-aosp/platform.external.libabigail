@@ -1,5 +1,6 @@
 // To compile this type:
 //   g++ -g -Wall -shared -o libtest6-var-changed-libapp-v1.so test6-var-changed-libapp-v1.cc
+
 #include "test6-var-changed-libapp-v1.h"
 
 S0::S0()

@@ -458,7 +458,7 @@ test_task_ctf::perform()
   abigail::elf_based_reader_sptr rdr = ctf::create_reader(in_elf_path,
 							  di_roots, env);
   ABG_ASSERT(rdr);
-
+  rdr->options().load_undefined_interfaces = false;
   corpus_sptr corp = rdr->read_corpus(status);
 
   // if there is no output and no input, assume that we do not care about the

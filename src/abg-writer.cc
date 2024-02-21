@@ -3467,7 +3467,9 @@ write_var_decl(const var_decl_sptr& decl, write_context& ctxt,
 
   write_location(decl, ctxt);
 
-  write_elf_symbol_reference(decl->get_symbol(), o);
+  if (elf_symbol_sptr sym = decl->get_symbol())
+    if (sym->is_defined())
+      write_elf_symbol_reference(decl->get_symbol(), o);
 
   o << "/>\n";
 
@@ -3523,7 +3525,9 @@ write_function_decl(const function_decl_sptr& decl, write_context& ctxt,
 			    ? 0
 			    : decl->get_translation_unit()->get_address_size()),
 			   0);
-  write_elf_symbol_reference(decl->get_symbol(), o);
+  if (elf_symbol_sptr sym = decl->get_symbol())
+    if (sym->is_defined())
+      write_elf_symbol_reference(decl->get_symbol(), o);
 
   o << ">\n";
 

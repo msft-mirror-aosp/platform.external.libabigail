@@ -242,6 +242,18 @@ public:
   const elf_symbol_sptr&
   lookup_symbol(GElf_Addr symbol_addr) const;
 
+  const elf_symbol_sptr
+  lookup_undefined_function_symbol(const std::string& name);
+
+  const elf_symbol_sptr
+  lookup_undefined_variable_symbol(const std::string& name);
+
+  bool
+  function_symbol_is_undefined(const string&);
+
+  bool
+  variable_symbol_is_undefined(const string&);
+
   static symtab_ptr
   load(Elf*		elf_handle,
        const ir::environment& env,
@@ -283,6 +295,14 @@ private:
   /// Lookup map function entry address -> symbol
   addr_symbol_map_type entry_addr_symbol_map_;
 
+  /// Set of undefined function symbol names
+  std::unordered_set<std::string> undefined_function_linkage_names_;
+
+  /// of undefined variable function symbol names
+  std::unordered_set<std::string> undefined_variable_linkage_names_;
+
+  bool cached_undefined_symbol_names_;
+
   bool
   load_(Elf* elf_handle,
 	const ir::environment& env,
@@ -304,6 +324,9 @@ private:
 
   void
   add_alternative_address_lookups(Elf* elf_handle);
+
+  void
+  collect_undefined_fns_and_vars_linkage_names();
 };
 
 /// Helper class to allow range-for loops on symtabs for C++11 and later code.

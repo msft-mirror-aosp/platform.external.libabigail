@@ -38,24 +38,6 @@
       </data-member>
       <member-function access='public' constructor='yes'>
         <!-- first_type::first_type() -->
-        <function-decl name='first_type' filepath='/home/dodji/git/libabigail/dwarf/tests/data/test-read-dwarf/test2.h' line='9' column='1' visibility='default' binding='global' size-in-bits='64'>
-          <!-- implicit parameter of type 'first_type*' -->
-          <parameter type-id='type-id-5' is-artificial='yes'/>
-          <!-- void -->
-          <return type-id='type-id-6'/>
-        </function-decl>
-      </member-function>
-      <member-function access='public' constructor='yes'>
-        <!-- first_type::first_type() -->
-        <function-decl name='first_type' filepath='/home/dodji/git/libabigail/dwarf/tests/data/test-read-dwarf/test2-0.cc' line='5' column='1' visibility='default' binding='global' size-in-bits='64'>
-          <!-- implicit parameter of type 'first_type*' -->
-          <parameter type-id='type-id-5' name='this' is-artificial='yes'/>
-          <!-- void -->
-          <return type-id='type-id-6'/>
-        </function-decl>
-      </member-function>
-      <member-function access='public' constructor='yes'>
-        <!-- first_type::first_type() -->
         <function-decl name='first_type' mangled-name='_ZN10first_typeC2Ev' filepath='/home/dodji/git/libabigail/dwarf/tests/data/test-read-dwarf/test2-0.cc' line='5' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZN10first_typeC2Ev'>
           <!-- implicit parameter of type 'first_type*' -->
           <parameter type-id='type-id-5' name='this' is-artificial='yes'/>
@@ -96,24 +78,6 @@
         <!-- character second_type::member1 -->
         <var-decl name='member1' type-id='type-id-4' visibility='default' filepath='/home/dodji/git/libabigail/dwarf/tests/data/test-read-dwarf/test2.h' line='15' column='1'/>
       </data-member>
-      <member-function access='public' constructor='yes'>
-        <!-- second_type::second_type() -->
-        <function-decl name='second_type' filepath='/home/dodji/git/libabigail/dwarf/tests/data/test-read-dwarf/test2.h' line='17' column='1' visibility='default' binding='global' size-in-bits='64'>
-          <!-- implicit parameter of type 'second_type*' -->
-          <parameter type-id='type-id-10' is-artificial='yes'/>
-          <!-- void -->
-          <return type-id='type-id-6'/>
-        </function-decl>
-      </member-function>
-      <member-function access='public' constructor='yes'>
-        <!-- second_type::second_type() -->
-        <function-decl name='second_type' filepath='/home/dodji/git/libabigail/dwarf/tests/data/test-read-dwarf/test2-1.cc' line='5' column='1' visibility='default' binding='global' size-in-bits='64'>
-          <!-- implicit parameter of type 'second_type*' -->
-          <parameter type-id='type-id-10' name='this' is-artificial='yes'/>
-          <!-- void -->
-          <return type-id='type-id-6'/>
-        </function-decl>
-      </member-function>
       <member-function access='public' constructor='yes'>
         <!-- second_type::second_type() -->
         <function-decl name='second_type' mangled-name='_ZN11second_typeC2Ev' filepath='/home/dodji/git/libabigail/dwarf/tests/data/test-read-dwarf/test2-1.cc' line='5' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZN11second_typeC2Ev'>

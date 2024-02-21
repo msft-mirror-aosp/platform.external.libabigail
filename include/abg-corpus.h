@@ -30,8 +30,14 @@ public:
   /// Convenience typedef for std::vector<abigail::ir::function_decl*>
   typedef vector<const function_decl*> functions;
 
+  /// Convenience typedef for std::unordered_set<const function_decl*>
+  typedef std::unordered_set<const function_decl*> functions_set;
+
   ///Convenience typedef for std::vector<abigail::ir::var_decl*>
   typedef vector<const var_decl*> variables;
+
+  /// Convenience typedef for std::unordered_set<const var_decl*>.
+  typedef std::unordered_set<const var_decl*> variables_set;
 
   class exported_decls_builder;
 
@@ -224,11 +230,32 @@ public:
   const std::unordered_set<function_decl*>*
   lookup_functions(const char* id) const;
 
+  const var_decl*
+  lookup_variable(const interned_string& id) const;
+
   void
   sort_functions();
 
   virtual const variables&
   get_variables() const;
+
+  const functions_set&
+  get_undefined_functions() const;
+
+  functions_set&
+  get_undefined_functions();
+
+  const functions&
+  get_sorted_undefined_functions() const;
+
+  const variables_set&
+  get_undefined_variables() const;
+
+  variables_set&
+  get_undefined_variables();
+
+  const variables&
+  get_sorted_undefined_variables() const;
 
   void
   sort_variables();
@@ -339,10 +366,10 @@ public:
   variables&
   exported_variables();
 
-  void
+  bool
   maybe_add_fn_to_exported_fns(function_decl*);
 
-  void
+  bool
   maybe_add_var_to_exported_vars(const var_decl*);
 }; //corpus::exported_decls_builder
 

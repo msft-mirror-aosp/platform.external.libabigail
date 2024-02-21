@@ -509,6 +509,10 @@ die_address_attribute(Dwarf_Die* die, unsigned attr_name, Dwarf_Addr& result);
 static string
 die_name(const Dwarf_Die* die);
 
+static void
+die_name_and_linkage_name(const Dwarf_Die*	die,
+			  string&		name,
+			  string&		linkage_name);
 static location
 die_location(const reader& rdr, const Dwarf_Die* die);
 
@@ -4850,7 +4854,7 @@ public:
   ///
   /// @param DIE the die to consider.
   bool
-  is_decl_die_with_exported_symbol(const Dwarf_Die *die)
+  is_decl_die_with_exported_symbol(const Dwarf_Die *die) const
   {
     if (!die || !die_is_decl(die))
       return false;
@@ -4873,6 +4877,33 @@ public:
 
     if (address_found)
       result = symbol_is_exported;
+
+    return result;
+  }
+
+  /// Test if a DIE is a variable or function DIE which name denotes
+  /// an undefined ELF symbol.
+  ///
+  /// @return true iff @p die represents a function or variable that
+  /// has an undefined symbol.
+  bool
+  is_decl_die_with_undefined_symbol(const Dwarf_Die *die) const
+  {
+    if (is_decl_die_with_exported_symbol(die))
+      return false;
+
+    string name, linkage_name;
+    die_name_and_linkage_name(die, name, linkage_name);
+    if (linkage_name.empty())
+      linkage_name = name;
+
+    bool result = false;
+    if ((die_is_variable_decl(die)
+	 && symtab()->variable_symbol_is_undefined(linkage_name))
+	||
+	(die_is_function_decl(die)
+	 && symtab()->function_symbol_is_undefined(linkage_name)))
+      result = true;
 
     return result;
   }
@@ -5143,6 +5174,19 @@ public:
   void
   load_in_linux_kernel_mode(bool f)
   {options().load_in_linux_kernel_mode = f;}
+
+  /// Getter of the 'load-undefined-interface' property.
+  ///
+  /// That property tells the reader if it should load the interfaces
+  /// that are undefined in the binary.  An undefined interface is a
+  /// variable or function which has a symbol that is not defined in
+  /// the binary.
+  ///
+  /// @return true iff the front-end has to load the undefined
+  /// interfaces.
+  bool
+  load_undefined_interfaces() const
+  {return options().load_undefined_interfaces;}
 
   /// Test if it's allowed to assume that the DWARF debug info has
   /// been factorized (for instance, with the DWZ tool) so that if two
@@ -5862,12 +5906,14 @@ build_or_get_var_decl_if_not_suppressed(reader&	rdr,
 					scope_decl	*scope,
 					Dwarf_Die	*die,
 					size_t	where_offset,
+					bool is_declaration_only,
 					var_decl_sptr	res = var_decl_sptr(),
 					bool is_required_decl_spec = false);
 static bool
 variable_is_suppressed(const reader& rdr,
 		       const scope_decl* scope,
 		       Dwarf_Die *variable_die,
+		       bool is_declaration_only,
 		       bool is_required_decl_spec = false);
 
 static void
@@ -6445,13 +6491,29 @@ die_name(const Dwarf_Die* die)
 ///
 /// @param linkage_name the linkage_name output parameter to set.
 static void
-die_loc_and_name(const reader&	rdr,
+die_loc_and_name(const reader&		rdr,
 		 Dwarf_Die*		die,
 		 location&		loc,
 		 string&		name,
 		 string&		linkage_name)
 {
   loc = die_location(rdr, die);
+  name = die_name(die);
+  linkage_name = die_linkage_name(die);
+}
+
+/// Return the name and the mangled name of a given DIE.
+///
+/// @param die the DIE to read location and names from.
+///
+/// @param name the name output parameter to set.
+///
+/// @param linkage_name the linkage_name output parameter to set.
+static void
+die_name_and_linkage_name(const Dwarf_Die*	die,
+			  string&		name,
+			  string&		linkage_name)
+{
   name = die_name(die);
   linkage_name = die_linkage_name(die);
 }
@@ -12282,13 +12344,27 @@ build_translation_unit_and_add_to_ir(reader&	rdr,
   result->set_is_constructed(false);
 
   do
-    // Analyze all the DIEs we encounter unless we are asked to only
-    // analyze exported interfaces and the types reachables from them.
-    if (!rdr.env().analyze_exported_interfaces_only()
-	|| rdr.is_decl_die_with_exported_symbol(&child))
-      build_ir_node_from_die(rdr, &child,
-			     die_is_public_decl(&child),
-			     dwarf_dieoffset(&child));
+    if (rdr.load_undefined_interfaces()
+	&& rdr.is_decl_die_with_undefined_symbol(&child))
+      {
+	// Analyze undefined functions & variables for the purpose of
+	// analyzing compatibility matters.
+	build_ir_node_from_die(rdr, &child,
+			       // Pretend the DIE is publicly defined
+			       // so that types that are reachable
+			       // from it get analyzed as well.
+			       /*die_is_public=*/true,
+			       dwarf_dieoffset(&child));
+      }
+    else if (!rdr.env().analyze_exported_interfaces_only()
+	     || rdr.is_decl_die_with_exported_symbol(&child))
+      {
+	// Analyze all the DIEs we encounter unless we are asked to only
+	// analyze exported interfaces and the types reachables from them.
+	build_ir_node_from_die(rdr, &child,
+			       die_is_public_decl(&child),
+			       dwarf_dieoffset(&child));
+      }
   while (dwarf_siblingof(&child, &child) == 0);
 
   if (!rdr.var_decls_to_re_add_to_tree().empty())
@@ -13325,7 +13401,8 @@ add_or_update_class_type(reader&	 rdr,
 
 	      if (is_static && variable_is_suppressed(rdr,
 						      result.get(),
-						      &child))
+						      &child,
+						      is_declaration_only))
 		continue;
 
 	      decl_base_sptr ty = is_decl(build_ir_node_from_die(rdr, &type_die,
@@ -14749,6 +14826,9 @@ build_typedef_type(reader&	rdr,
 /// e.g, DW_TAG_partial_unit that can be included in several places in
 /// the DIE tree.
 ///
+/// @param is_declaration_only if true, it means the variable DIE has
+/// the is_declaration_only only attribute.
+///
 /// @param result if this is set to an existing var_decl, this means
 /// that the function will append the new properties it sees on @p die
 /// to that exising var_decl.  Otherwise, if this parameter is NULL, a
@@ -14764,12 +14844,15 @@ static var_decl_sptr
 build_or_get_var_decl_if_not_suppressed(reader&	rdr,
 					scope_decl	*scope,
 					Dwarf_Die	*die,
-					size_t	where_offset,
+					size_t		where_offset,
+					bool		is_declaration_only,
 					var_decl_sptr	result,
-					bool is_required_decl_spec)
+					bool		is_required_decl_spec)
 {
   var_decl_sptr var;
-  if (variable_is_suppressed(rdr, scope, die, is_required_decl_spec))
+  if (variable_is_suppressed(rdr, scope, die,
+			     is_declaration_only,
+			     is_required_decl_spec))
     return var;
 
   if (class_decl* class_type = is_class_type(scope))
@@ -14879,6 +14962,21 @@ build_var_decl(reader&	rdr,
 	      || !var_sym->get_alias_from_name(linkage_name))
 	    result->set_linkage_name(var_sym->get_name());
 	  result->set_is_in_public_symbol_table(true);
+	}
+
+      if (!var_sym && rdr.is_decl_die_with_undefined_symbol(die))
+	{
+	  // We are looking at a global variable which symbol is
+	  // undefined.  Let's set its symbol.
+	  string n = result->get_linkage_name();
+	  if (n.empty())
+	    n = result->get_name();
+	  var_sym = rdr.symtab()->lookup_undefined_variable_symbol(n);
+	  if (var_sym)
+	    {
+	      result->set_symbol(var_sym);
+	      result->set_is_in_public_symbol_table(false);
+	    }
 	}
     }
 
@@ -15069,6 +15167,9 @@ build_or_get_fn_decl_if_not_suppressed(reader&	  rdr,
 ///
 /// @param variable_die the DIE representing the variable.
 ///
+/// @param is_declaration_only true if the variable is supposed to be
+/// decl-only.
+///
 /// @param is_required_decl_spec if true, means that the @p
 /// variable_die being considered is for a variable decl that is a
 /// specification for a concrete variable being built.
@@ -15076,10 +15177,11 @@ build_or_get_fn_decl_if_not_suppressed(reader&	  rdr,
 /// @return true iff @p variable_die is suppressed by at least one
 /// suppression specification attached to the @p rdr.
 static bool
-variable_is_suppressed(const reader& rdr,
-		       const scope_decl* scope,
-		       Dwarf_Die *variable_die,
-		       bool is_required_decl_spec)
+variable_is_suppressed(const reader&		rdr,
+		       const scope_decl*	scope,
+		       Dwarf_Die		*variable_die,
+		       bool			is_declaration_only,
+		       bool			is_required_decl_spec)
 {
   if (variable_die == 0
       || (dwarf_tag(variable_die) != DW_TAG_variable
@@ -15097,7 +15199,12 @@ variable_is_suppressed(const reader& rdr,
   // concrete variable, then it's suppressed.  This is a size
   // optimization; it removes useless declaration-only variables from
   // the IR.
-  if (!is_class_type(scope) && !is_required_decl_spec)
+  if (!is_class_type(scope)
+      && !is_required_decl_spec
+      // If we are asked to load undefined interfaces, then we don't
+      // suppress declaration-only variables as they might have
+      // undefined elf-symbols.
+      && (!is_declaration_only || !rdr.load_undefined_interfaces()))
     {
       Dwarf_Addr var_addr = 0;
       if (!rdr.get_variable_address(variable_die, var_addr))
@@ -15425,6 +15532,21 @@ build_function_decl(reader&	rdr,
 	    result->set_linkage_name(fn_sym->get_name());
 	  result->set_is_in_public_symbol_table(true);
 	}
+
+      if (!fn_sym && rdr.is_decl_die_with_undefined_symbol(die))
+	{
+	  // We are looking at a function which symbol is undefined.
+	  // let's set its symbol.
+	  string n = result->get_linkage_name();
+	  if (n.empty())
+	    n = result->get_name();
+	  fn_sym = rdr.symtab()->lookup_undefined_function_symbol(n);
+	  if (fn_sym)
+	    {
+	      result->set_symbol(fn_sym);
+	      result->set_is_in_public_symbol_table(false);
+	    }
+	}
     }
 
   rdr.associate_die_to_type(die, result->get_type(), where_offset);
@@ -15523,24 +15645,21 @@ maybe_set_member_type_access_specifier(decl_base_sptr member_type_declaration,
 ///
 /// @param fn the function to consider.
 ///
-/// @param scope the scope the function is intended to be added
-/// to. This might be of class type or not.
-///
 /// @param fn_die the DWARF die of @p fn.
+///
+/// @param scope the scope in which @p fn is to be added.
 ///
 /// @return true iff @p fn should be dropped on the floor.
 static bool
 potential_member_fn_should_be_dropped(const function_decl_sptr& fn,
-				      Dwarf_Die *fn_die)
+				      const Dwarf_Die *fn_die)
 {
   if (!fn || fn->get_scope())
     return false;
 
   if (// A function that is not virtual ...
       !die_is_virtual(fn_die)
-      // ... has a linkage name ...
-      && !fn->get_linkage_name().empty()
-      // .. and yet has no ELF symbol associated ...
+      // .. and yet has no defined ELF symbol associated ...
       && !fn->get_symbol())
     // Should not be added to its class scope.
     //
@@ -15970,7 +16089,7 @@ build_ir_node_from_die(reader&	rdr,
 			rdr.var_decls_to_re_add_to_tree().push_back(m);
 		      }
 		    ABG_ASSERT(m->get_scope());
-		    rdr.maybe_add_var_to_exported_decls(m.get());
+		    rdr.add_var_to_exported_or_undefined_decls(m.get());
 		    result = m;
 		  }
 	      }
@@ -15978,6 +16097,7 @@ build_ir_node_from_die(reader&	rdr,
 	else if (var_decl_sptr v =
 		 build_or_get_var_decl_if_not_suppressed(rdr, scope, die,
 							 where_offset,
+							 is_declaration_only,
 							 /*result=*/var_decl_sptr(),
 							 is_required_decl_spec))
 	  {
@@ -15987,7 +16107,7 @@ build_ir_node_from_die(reader&	rdr,
 	    ABG_ASSERT(v);
 	    ABG_ASSERT(v->get_scope());
 	    rdr.var_decls_to_re_add_to_tree().push_back(v);
-	    rdr.maybe_add_var_to_exported_decls(v.get());
+	    rdr.add_var_to_exported_or_undefined_decls(v.get());
 	  }
       }
       break;
@@ -16058,8 +16178,7 @@ build_ir_node_from_die(reader&	rdr,
 	    // We built a brand new IR for the function DIE.  Now
 	    // there should be enough information on that IR to know
 	    // if we should drop it on the floor or keep it ...
-	    if (potential_member_fn_should_be_dropped(is_function_decl(result),
-						      die)
+	    if (potential_member_fn_should_be_dropped(is_function_decl(result), die)
 		&& !is_required_decl_spec)
 	      {
 		// So apparently we should drop that function IR on
@@ -16089,7 +16208,7 @@ build_ir_node_from_die(reader&	rdr,
 	      // functions exported by the current ABI corpus *after*
 	      // the canonicalization of their parent type.  So let's
 	      // not do it here.
-	      rdr.maybe_add_fn_to_exported_decls(fn.get());
+	      rdr.add_fn_to_exported_or_undefined_decls(fn.get());
 	    rdr.associate_die_to_decl(die, fn, where_offset,
 				      /*associate_by_repr=*/false);
 	    maybe_canonicalize_type(fn->get_type(), rdr);
@@ -16311,7 +16430,7 @@ build_ir_node_from_die(reader&	rdr,
 ///
 /// @return a smart pointer to the resulting dwarf::reader.
 elf_based_reader_sptr
-create_reader(const std::string&		elf_path,
+create_reader(const std::string&	elf_path,
 	      const vector<char**>&	debug_info_root_paths,
 	      environment&		environment,
 	      bool			load_all_types,
@@ -16413,8 +16532,8 @@ read_corpus_from_elf(const std::string& elf_path,
 {
   elf_based_reader_sptr rdr =
     dwarf::reader::create(elf_path, debug_info_root_paths,
-				 environment, load_all_types,
-				 /*linux_kernel_mode=*/false);
+			  environment, load_all_types,
+			  /*linux_kernel_mode=*/false);
 
   return rdr->read_corpus(status);
 }

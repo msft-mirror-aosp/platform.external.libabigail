@@ -3564,7 +3564,7 @@ build_function_decl(reader&		rdr,
   rdr.maybe_canonicalize_type(fn_type, !add_to_current_scope);
 
   if (add_to_exported_decls)
-    rdr.maybe_add_fn_to_exported_decls(fn_decl.get());
+    rdr.add_fn_to_exported_or_undefined_decls(fn_decl.get());
 
   return fn_decl;
 }
@@ -5189,7 +5189,7 @@ build_class_decl(reader&		rdr,
 					    is_static,
 					    offset_in_bits);
 		      if (is_static)
-			rdr.maybe_add_var_to_exported_decls(v.get());
+			rdr.add_var_to_exported_or_undefined_decls(v.get());
 		      // Now let's record the fact that the data
 		      // member uses its type and that the class being
 		      // built uses the data member.
@@ -5252,7 +5252,7 @@ build_class_decl(reader&		rdr,
 		  set_member_function_is_dtor(m, is_dtor);
 		  set_member_function_is_const(m, is_const);
 		  rdr.map_xml_node_to_decl(p, m);
-		  rdr.maybe_add_fn_to_exported_decls(f.get());
+		  rdr.add_fn_to_exported_or_undefined_decls(f.get());
 		  break;
 		}
 	    }
@@ -5607,7 +5607,7 @@ build_union_decl(reader& rdr,
 		  set_member_function_is_ctor(m, is_ctor);
 		  set_member_function_is_dtor(m, is_dtor);
 		  set_member_function_is_const(m, is_const);
-		  rdr.maybe_add_fn_to_exported_decls(f.get());
+		  rdr.add_fn_to_exported_or_undefined_decls(f.get());
 		  break;
 		}
 	    }
@@ -6284,7 +6284,7 @@ handle_var_decl(reader&	rdr,
 {
   decl_base_sptr decl = build_var_decl_if_not_suppressed(rdr, node,
 							 add_to_current_scope);
-  rdr.maybe_add_var_to_exported_decls(is_var_decl(decl).get());
+  rdr.add_var_to_exported_or_undefined_decls(is_var_decl(decl).get());
   return decl;
 }
 

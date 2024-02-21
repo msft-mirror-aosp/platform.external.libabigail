@@ -2208,7 +2208,13 @@ elf_symbol::is_function() const
 /// variable symbol, false otherwise.
 bool
 elf_symbol::is_variable() const
-{return get_type() == OBJECT_TYPE || get_type() == TLS_TYPE;}
+{
+    return (get_type() == OBJECT_TYPE
+	    || get_type() == TLS_TYPE
+	    // It appears that undefined variables have NOTYPE type.
+	    || (get_type() == NOTYPE_TYPE
+		&& !is_defined()));
+}
 
 /// Getter of the 'is-in-ksymtab' property.
 ///
@@ -15762,12 +15768,16 @@ maybe_adjust_canonical_type(const type_base_sptr& canonical,
 	  for (auto& fn : canonical_class->get_member_functions())
 	    {
 	      if (elf_symbol_sptr sym = fn->get_symbol())
-		if (sym->is_defined() && sym->is_public())
-		  {
-		    fn->set_is_in_public_symbol_table(true);
-		    auto b = abi_corpus->get_exported_decls_builder();
-		    b->maybe_add_fn_to_exported_fns(fn.get());
-		  }
+		{
+		  if (sym->is_defined() && sym->is_public())
+		    {
+		      fn->set_is_in_public_symbol_table(true);
+		      auto b = abi_corpus->get_exported_decls_builder();
+		      b->maybe_add_fn_to_exported_fns(fn.get());
+		    }
+		  else if (!sym->is_defined())
+		    abi_corpus->get_undefined_functions().insert(fn.get());
+		}
 	    }
 	}
     }
