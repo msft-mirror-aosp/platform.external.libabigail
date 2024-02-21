@@ -53,6 +53,8 @@ using std::ofstream;
 using std::vector;
 using std::shared_ptr;
 
+using abigail::tools_utils::create_best_elf_based_reader;
+
 using namespace abigail;
 
 using abigail::tools_utils::emit_prefix;
@@ -672,19 +674,21 @@ read_corpus(options			opts,
       break;
     case abigail::tools_utils::FILE_TYPE_ELF:
       {
+	corpus::origin requested_fe_kind = corpus::DWARF_ORIGIN;
 #ifdef WITH_CTF
 	if (opts.use_ctf)
-	  {
-	    rdr = ctf::create_reader(path, env);
-	    ABG_ASSERT(rdr);
-
-	    retval = ctf::read_corpus(rdr.get(), status);
-	  }
-	else
+	  requested_fe_kind = corpus::CTF_ORIGIN;
 #endif
-	  retval = dwarf::read_corpus_from_elf(path, di_roots, env,
-					       /*load_all_types=*/opts.weak_mode,
-					       status);
+#ifdef WITH_BTF
+	if (opts.use_btf)
+	  requested_fe_kind = corpus::BTF_ORIGIN;
+#endif
+
+	rdr = create_best_elf_based_reader (path, di_roots, env, requested_fe_kind,
+					    /*load_all_types=*/opts.weak_mode,
+					    status);
+	ABG_ASSERT(rdr);
+	retval = rdr->read_corpus(status);
       }
       break;
     case abigail::tools_utils::FILE_TYPE_XML_CORPUS:
