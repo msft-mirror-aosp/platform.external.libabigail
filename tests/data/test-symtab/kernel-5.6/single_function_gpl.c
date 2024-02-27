@@ -1,1 +1,0 @@
-../kernel/single_function_gpl.c

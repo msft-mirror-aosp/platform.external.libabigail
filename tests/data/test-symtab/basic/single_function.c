@@ -1,1 +1,0 @@
-void exported_function(){}

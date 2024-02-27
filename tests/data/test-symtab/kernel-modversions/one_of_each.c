@@ -1,1 +1,0 @@
-../kernel/one_of_each.c
