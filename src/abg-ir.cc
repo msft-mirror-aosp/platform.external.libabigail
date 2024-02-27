@@ -25006,6 +25006,10 @@ struct virtual_member_function_less_than
     if (f_offset != s_offset) return f_offset < s_offset;
 
     string fn, sn;
+    // Try the linkage names (important for destructors).
+    fn = f.get_linkage_name();
+    sn = s.get_linkage_name();
+    if (fn != sn) return fn < sn;
 
     // If the functions have symbols, then compare their symbol-id
     // string.
@@ -25018,11 +25022,6 @@ struct virtual_member_function_less_than
 	sn = s_sym->get_id_string();
 	if (fn != sn) return fn < sn;
       }
-
-    // Try the linkage names (important for destructors).
-    fn = f.get_linkage_name();
-    sn = s.get_linkage_name();
-    if (fn != sn) return fn < sn;
 
     // None of the functions have symbols or linkage names that
     // distinguish them, so compare their pretty representation.

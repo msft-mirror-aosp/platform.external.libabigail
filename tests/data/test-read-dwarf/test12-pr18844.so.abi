@@ -25632,16 +25632,16 @@
       <typedef-decl name='BSONElementMSet' type-id='type-id-3494' filepath='src/mongo/bson/bsonobj.h' line='53' column='1' id='type-id-3523'/>
       <namespace-decl name='repl'>
         <class-decl name='ScatterGatherAlgorithm' size-in-bits='64' visibility='default' filepath='src/mongo/db/repl/scatter_gather_algorithm.h' line='55' column='1' id='type-id-3475'>
-          <member-function access='public' vtable-offset='0'>
-            <function-decl name='getRequests' mangled-name='_ZNK5mongo4repl22ScatterGatherAlgorithm11getRequestsEv' filepath='src/mongo/db/repl/scatter_gather_algorithm.h' line='60' column='1' visibility='default' binding='global' size-in-bits='64'>
-              <parameter type-id='type-id-3477' is-artificial='yes'/>
-              <return type-id='type-id-3498'/>
-            </function-decl>
-          </member-function>
           <member-function access='protected' destructor='yes' vtable-offset='0'>
             <function-decl name='~ScatterGatherAlgorithm' mangled-name='_ZN5mongo4repl22ScatterGatherAlgorithmD0Ev' filepath='src/mongo/db/repl/scatter_gather_algorithm.h' line='76' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZN5mongo4repl22ScatterGatherAlgorithmD2Ev'>
               <parameter type-id='type-id-3478' is-artificial='yes'/>
               <return type-id='type-id-2697'/>
+            </function-decl>
+          </member-function>
+          <member-function access='public' vtable-offset='0'>
+            <function-decl name='getRequests' mangled-name='_ZNK5mongo4repl22ScatterGatherAlgorithm11getRequestsEv' filepath='src/mongo/db/repl/scatter_gather_algorithm.h' line='60' column='1' visibility='default' binding='global' size-in-bits='64'>
+              <parameter type-id='type-id-3477' is-artificial='yes'/>
+              <return type-id='type-id-3498'/>
             </function-decl>
           </member-function>
           <member-function access='public' vtable-offset='1'>
