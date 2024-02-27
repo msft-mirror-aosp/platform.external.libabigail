@@ -4552,12 +4552,7 @@ public:
 	  ABG_ASSERT(is_member_function(i->second));
 	  ABG_ASSERT(get_member_function_is_virtual(i->second));
 	  i->second->set_symbol(sym);
-	  // The function_decl now has an associated (public) ELF symbol so
-	  // it ought to be advertised as being public.
-	  i->second->set_is_in_public_symbol_table(true);
-	  // Add the function to the set of exported decls of the
-	  // current corpus.
-	  maybe_add_fn_to_exported_decls(i->second.get());
+
 	  if (do_log())
 	    cerr << "fixed up '"
 		 << i->second->get_pretty_representation()
@@ -16016,7 +16011,13 @@ build_ir_node_from_die(reader&	rdr,
 
 	if (fn)
 	  {
-	    rdr.maybe_add_fn_to_exported_decls(fn.get());
+	    if (!is_member_function(fn)
+		|| !get_member_function_is_virtual(fn))
+	      // Virtual member functions are added to the set of
+	      // functions exported by the current ABI corpus *after*
+	      // the canonicalization of their parent type.  So let's
+	      // not do it here.
+	      rdr.maybe_add_fn_to_exported_decls(fn.get());
 	    rdr.associate_die_to_decl(die, fn, where_offset,
 				       /*associate_by_repr=*/false);
 	    maybe_canonicalize_type(fn->get_type(), rdr);

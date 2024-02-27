@@ -15649,18 +15649,15 @@ static void
 maybe_adjust_canonical_type(const type_base_sptr& canonical,
 			    const type_base_sptr& type)
 {
-  if (!canonical
-      // If 'type' is *NOT* a newly canonicalized type ...
-      || type->get_naked_canonical_type()
-      // ... or if 'type' is it's own canonical type, then get out.
-      || type.get() == canonical.get())
+  if (type->get_naked_canonical_type())
     return;
+
+  class_decl_sptr canonical_class = is_class_type(canonical);
 
   if (class_decl_sptr cl = is_class_type(type))
     {
-      class_decl_sptr canonical_class = is_class_type(canonical);
-
-      if (canonical_class)
+      if (canonical_class
+	  && canonical_class.get() != cl.get())
 	{
 	  // Set symbols of member functions that might be missing
 	  // theirs.
@@ -15692,6 +15689,37 @@ maybe_adjust_canonical_type(const type_base_sptr& canonical,
 		    canonicalize(method->get_type());
 		  }
 	      }
+	}
+    }
+
+  // Make sure the virtual member functions with exported symbols are
+  // all added to the set of exported functions of the corpus.
+
+  // If we are looking at a non-canonicalized class (for instance, a
+  // decl-only class that has virtual member functoins), let's pretend
+  // it does have a canonical class so that we can perform the
+  // necessary virtual  member function adjustments
+  if (class_decl_sptr cl = is_class_type(type))
+    if (is_non_canonicalized_type(cl))
+      {
+	ABG_ASSERT(!canonical_class);
+	canonical_class = cl;
+      }
+
+  if (canonical_class)
+    {
+      if (auto abi_corpus = canonical_class->get_corpus())
+	{
+	  for (auto& fn : canonical_class->get_member_functions())
+	    {
+	      if (elf_symbol_sptr sym = fn->get_symbol())
+		if (sym->is_defined() && sym->is_public())
+		  {
+		    fn->set_is_in_public_symbol_table(true);
+		    auto b = abi_corpus->get_exported_decls_builder();
+		    b->maybe_add_fn_to_exported_fns(fn.get());
+		  }
+	    }
 	}
     }
 
