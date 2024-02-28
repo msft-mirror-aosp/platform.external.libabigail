@@ -95,6 +95,7 @@ main()
   abidw = string(get_build_dir()) + "/tools/abidw";
   for (InOutSpec* s = in_out_specs; s->in_elf_path; ++s)
     {
+      is_ok = true;
       abidw_options = s->abidw_options;
       in_elf_path = string(get_src_dir()) + "/tests/" + s->in_elf_path;
       debug_info_dir =
