@@ -263,14 +263,7 @@ main()
 	is_ok = false;
 
       if (is_ok)
-        {
-	  cout << BRIGHT_YELLOW_COLOR
-               << "Test Passed:"
-               << DEFAULT_TERMINAL_COLOR
-               << cmd
-               << std::endl;
-	  cnt_passed++;
-	}
+	cnt_passed++;
       else
         {
 	  cout << BRIGHT_RED_COLOR
