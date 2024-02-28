@@ -10,15 +10,15 @@ Variable symbols changes summary: 0 Removed, 6 Added variable symbols not refere
   [A] 'function void std::__throw_out_of_range_fmt(const char*, ...)'
   [A] 'method virtual const char* std::bad_array_length::what() const'
     note that this adds a new entry to the vtable of class std::bad_array_length
-  [A] 'method virtual std::bad_array_length::~bad_array_length(int)'
+  [A] 'method virtual std::bad_array_length::~bad_array_length()'
     note that this adds a new entry to the vtable of class std::bad_array_length
-  [A] 'method virtual std::bad_array_length::~bad_array_length(int)'
+  [A] 'method virtual std::bad_array_length::~bad_array_length()'
     note that this adds a new entry to the vtable of class std::bad_array_length
   [A] 'method virtual const char* std::bad_array_new_length::what() const'
     note that this adds a new entry to the vtable of class std::bad_array_new_length
-  [A] 'method virtual std::bad_array_new_length::~bad_array_new_length(int)'
+  [A] 'method virtual std::bad_array_new_length::~bad_array_new_length()'
     note that this adds a new entry to the vtable of class std::bad_array_new_length
-  [A] 'method virtual std::bad_array_new_length::~bad_array_new_length(int)'
+  [A] 'method virtual std::bad_array_new_length::~bad_array_new_length()'
     note that this adds a new entry to the vtable of class std::bad_array_new_length
   [A] 'function std::new_handler std::get_new_handler(void)'
   [A] 'function std::terminate_handler std::get_terminate(void)'

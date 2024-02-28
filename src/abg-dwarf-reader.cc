@@ -524,6 +524,9 @@ die_die_attribute(const Dwarf_Die* die,
 		  bool recursively = true);
 
 static bool
+die_origin_die(const Dwarf_Die* die, Dwarf_Die& origin_die);
+
+static bool
 subrange_die_indirect_bound_value(const Dwarf_Die *die,
 				  unsigned attr_name,
 				  array_type_def::subrange_type::bound_value& v,
@@ -6226,6 +6229,48 @@ die_die_attribute(const Dwarf_Die* die,
   return dwarf_formref_die(&attr, &result);
 }
 
+/// Get the DIE that is the "origin" of the current one.
+///
+/// Some DIEs have a DW_AT_abstract_origin or a DW_AT_specification
+/// attribute.  Those DIEs represent a concrete instance of an
+/// abstract entity.  The concrete instance can be a concrete instance
+/// of an inline function, or the concrete implementation of an
+/// abstract interface.  On both cases, we call the abstract instance
+/// from which the concrete instance derives the "origin".
+///
+/// This function returns the ultimate origin DIE of a given DIE by
+/// following the chain of its DW_AT_abstract_origin and
+/// DW_AT_specification attributes.
+///
+/// @param die the DIE to consider.
+///
+/// @param origin_die this is an output parameter that is set by this
+/// function to the resulting origin DIE iff the function returns
+/// true.
+///
+/// @return true iff the function actually found an origin DIE and
+/// set it to the @p origin_die parameter.
+static bool
+die_origin_die(const Dwarf_Die* die, Dwarf_Die& origin_die)
+{
+  if (die_die_attribute(die, DW_AT_specification, origin_die, true)
+	 || die_die_attribute(die, DW_AT_abstract_origin, origin_die, true))
+    {
+      while (die_die_attribute(&origin_die,
+			       DW_AT_specification,
+			       origin_die, true)
+	     || die_die_attribute(&origin_die,
+				  DW_AT_abstract_origin,
+				  origin_die, true))
+	{
+	  // Keep looking for the origin die ...
+	  ;
+	}
+      return true;
+    }
+  return false;
+}
+
 /// Test if a subrange DIE indirectly references another subrange DIE
 /// through a given attribute.
 ///
@@ -11774,38 +11819,45 @@ get_parent_die(const reader&	rdr,
 /// Please note that when the DIE we are looking at has a
 /// DW_AT_specification or DW_AT_abstract_origin attribute, the scope
 /// DIE is the parent DIE of the DIE referred to by that attribute.
-/// This is the only case where a scope DIE is different from the
-/// parent DIE of a given DIE.
+/// In other words, this function returns the scope of the origin DIE
+/// of the current DIE.
+///
+/// So, the scope DIE can be different from the parent DIE of a given
+/// DIE.
 ///
 /// Also note that if the current translation unit is from C, then
 /// this returns the global scope.
 ///
 /// @param rdr the DWARF reader to use.
 ///
-/// @param die the DIE to consider.
+/// @param dye the DIE to consider.
 ///
 /// @param where_offset where we are logically at in the DIE stream.
 ///
 /// @param scope_die out parameter.  This is set to the resulting
 /// scope DIE iff the function returns true.
+///
+/// @return true iff the scope was found and returned in the @p
+/// scope_die parameter.
 static bool
 get_scope_die(const reader&	rdr,
-	      const Dwarf_Die*		die,
-	      size_t			where_offset,
-	      Dwarf_Die&		scope_die)
+	      const Dwarf_Die*	dye,
+	      size_t		where_offset,
+	      Dwarf_Die&	scope_die)
 {
-  if (is_c_language(rdr.cur_transl_unit()->get_language()))
+  Dwarf_Die origin_die_mem;
+  Dwarf_Die *die = &origin_die_mem;
+  if (!die_origin_die(dye, origin_die_mem))
+    memcpy(&origin_die_mem, dye, sizeof(origin_die_mem));
+
+  translation_unit::language die_lang = translation_unit::LANG_UNKNOWN;
+  rdr.get_die_language(die, die_lang);
+  if (is_c_language(die_lang)
+      || rdr.die_parent_map(rdr.get_die_source(die)).empty())
     {
       ABG_ASSERT(dwarf_tag(const_cast<Dwarf_Die*>(die)) != DW_TAG_member);
       return dwarf_diecu(const_cast<Dwarf_Die*>(die), &scope_die, 0, 0);
     }
-
-  Dwarf_Die logical_parent_die;
-  if (die_die_attribute(die, DW_AT_specification,
-			logical_parent_die, false)
-      || die_die_attribute(die, DW_AT_abstract_origin,
-			   logical_parent_die, false))
-    return get_scope_die(rdr, &logical_parent_die, where_offset, scope_die);
 
   if (!get_parent_die(rdr, die, scope_die, where_offset))
     return false;
@@ -11823,14 +11875,15 @@ get_scope_die(const reader&	rdr,
 /// Note that it is the logical scope that is returned.  That is, if
 /// the DIE has a DW_AT_specification or DW_AT_abstract_origin
 /// attribute, it's the scope of the referred-to DIE (via these
-/// attributes) that is returned.
+/// attributes) that is returned.  In other words, its the scope of
+/// the origin DIE that is returned.
 ///
 /// Also note that if the current translation unit is from C, then
 /// this returns the global scope.
 ///
 /// @param rdr the dwarf reader to use.
 ///
-/// @param die the DIE to get the scope for.
+/// @param dye the DIE to get the scope for.
 ///
 /// @param called_from_public_decl is true if this function has been
 /// initially called within the context of a public decl.
@@ -11839,12 +11892,22 @@ get_scope_die(const reader&	rdr,
 /// positionned at, in the DIE tree.  This is useful when @p die is
 /// e.g, DW_TAG_partial_unit that can be included in several places in
 /// the DIE tree.
+///
+/// @return the resulting scope, or nil if could not be computed.
 static scope_decl_sptr
-get_scope_for_die(reader& rdr,
-		  Dwarf_Die*	die,
+get_scope_for_die(reader&	rdr,
+		  Dwarf_Die*	dye,
 		  bool		called_for_public_decl,
 		  size_t	where_offset)
 {
+  Dwarf_Die origin_die_mem;
+  Dwarf_Die *die = &origin_die_mem;
+
+  if (!die_origin_die(dye, origin_die_mem))
+    // There was no origin DIE found, so let's make the "die" pointer
+    // above point to the content of the input "dye".
+    memcpy(&origin_die_mem, dye, sizeof(origin_die_mem));
+
   const die_source source_of_die = rdr.get_die_source(die);
 
   translation_unit::language die_lang = translation_unit::LANG_UNKNOWN;
@@ -11859,13 +11922,6 @@ get_scope_for_die(reader& rdr,
       return rdr.global_scope();
     }
 
-  Dwarf_Die cloned_die;
-  if (die_die_attribute(die, DW_AT_specification, cloned_die, false)
-      || die_die_attribute(die, DW_AT_abstract_origin, cloned_die, false))
-    return get_scope_for_die(rdr, &cloned_die,
-			     called_for_public_decl,
-			     where_offset);
-
   Dwarf_Die parent_die;
 
   if (!get_parent_die(rdr, die, parent_die, where_offset))
@@ -11879,7 +11935,7 @@ get_scope_for_die(reader& rdr,
 	  || dwarf_tag(&parent_die) == DW_TAG_type_unit)
 	{
 	  ABG_ASSERT(source_of_die == ALT_DEBUG_INFO_DIE_SOURCE
-		 || source_of_die == TYPE_UNIT_DIE_SOURCE);
+		     || source_of_die == TYPE_UNIT_DIE_SOURCE);
 	  return rdr.cur_transl_unit()->get_global_scope();
 	}
 
@@ -15916,94 +15972,87 @@ build_ir_node_from_die(reader&	rdr,
 
     case DW_TAG_subprogram:
       {
-	Dwarf_Die spec_die;
-	Dwarf_Die abstract_origin_die;
-	Dwarf_Die *interface_die = 0, *origin_die = 0;
-	scope_decl_sptr interface_scope;
 	if (die_is_artificial(die))
 	  break;
 
-	function_decl_sptr fn;
-	bool has_spec = die_die_attribute(die, DW_AT_specification,
-					  spec_die, true);
-	bool has_abstract_origin =
-	  die_die_attribute(die, DW_AT_abstract_origin,
-			    abstract_origin_die, true);
-	if (has_spec || has_abstract_origin)
+	Dwarf_Die abstract_origin_die;
+	bool has_abstract_origin = die_die_attribute(die, DW_AT_abstract_origin,
+						     abstract_origin_die,
+						     /*recursive=*/true);
+
+
+	scope_decl_sptr s = get_scope_for_die(rdr, die, called_from_public_decl,
+					      where_offset);
+	scope_decl* interface_scope = scope ? scope : s.get();
+
+	class_decl* class_scope = is_class_type(interface_scope);
+	string linkage_name = die_linkage_name(die);
+	string spec_linkage_name;
+	function_decl_sptr existing_fn;
+
+	if (class_scope)
 	  {
-	    interface_die =
-	      has_spec
-	      ? &spec_die
-	      : &abstract_origin_die;
-	    origin_die =
-	      has_abstract_origin
-	      ? &abstract_origin_die
-	      : &spec_die;
-
-	    string linkage_name = die_linkage_name(die);
-	    string spec_linkage_name = die_linkage_name(interface_die);
-
-	    interface_scope = get_scope_for_die(rdr, interface_die,
-						called_from_public_decl,
-						where_offset);
-	    if (interface_scope)
+	    // The scope of the function DIE we are looking at is a
+	    // class.  So we are looking at a member function.
+	    if (!linkage_name.empty())
 	      {
-		decl_base_sptr d;
-		class_decl_sptr c = is_class_type(interface_scope);
-		if (c && !linkage_name.empty())
-		  d = c->find_member_function_sptr(linkage_name);
-
-		if (!d)
-		  d = is_decl(build_ir_node_from_die(rdr,
-						     origin_die,
-						     interface_scope.get(),
-						     called_from_public_decl,
-						     where_offset,
-						     is_declaration_only,
-						     /*is_required_decl_spec=*/true));
-		if (d)
+		if ((existing_fn =
+		     class_scope->find_member_function_sptr(linkage_name)))
 		  {
-		    fn = dynamic_pointer_cast<function_decl>(d);
+		    // A function with the same linkage name has
+		    // already been created.  Let's see if we are a
+		    // clone of it or not.
+		    spec_linkage_name = existing_fn->get_linkage_name();
 		    if (has_abstract_origin
-			&& (linkage_name != spec_linkage_name)
-			&& !c->find_member_function_sptr(linkage_name))
-		      // The current DIE has 'd' as abstract orign,
-		      // and has a linkage name that is different
-		      // from from the linkage name of 'd'.  That
-		      // means, the current DIE represents a clone
-		      // of 'd'.
-		      fn = fn->clone();
+			&& !spec_linkage_name.empty()
+			&& linkage_name != spec_linkage_name)
+		      {
+			// The current DIE has 'existing_fn' as
+			// abstract orign, and has a linkage name that
+			// is different from from the linkage name of
+			// 'existing_fn'.  That means, the current DIE
+			// represents a clone of 'existing_fn'.
+			existing_fn = existing_fn->clone();
+		      }
 		  }
 	      }
 	  }
-	rdr.scope_stack().push(scope);
 
-	scope_decl* logical_scope =
-	  interface_scope
-	  ? interface_scope.get()
-	  : scope;
+	rdr.scope_stack().push(interface_scope);
 
-	result = build_or_get_fn_decl_if_not_suppressed(rdr, logical_scope,
-							die, where_offset,
-							is_declaration_only,
-							fn);
+	// Either we create a branch new IR for the current function
+	// DIE we are looking at, or we complete an existing IR node
+	// with the new completementary information carried by this
+	// DIE for that IR node.
+	result =
+	  build_or_get_fn_decl_if_not_suppressed(rdr, interface_scope,
+						 die, where_offset,
+						 is_declaration_only,
+						 existing_fn);
 
-	if (result && !fn)
+	if (result && !existing_fn)
 	  {
+	    // We built a brand new IR for the function DIE.  Now
+	    // there should be enough information on that IR to know
+	    // if we should drop it on the floor or keep it ...
 	    if (potential_member_fn_should_be_dropped(is_function_decl(result),
 						      die)
 		&& !is_required_decl_spec)
 	      {
+		// So apparently we should drop that function IR on
+		// the floor.  Let's do so.
 		result.reset();
 		break;
 	      }
-	    result = add_decl_to_scope(is_decl(result), logical_scope);
+	    // OK so we came to the conclusion that we need to keep
+	    // the function.  So let's add it to its scope.
+	    result = add_decl_to_scope(is_decl(result), interface_scope);
 	  }
 
-	fn = is_function_decl(result);
+	function_decl_sptr fn = is_function_decl(result);
 	if (fn && is_member_function(fn))
 	  {
-	    class_decl_sptr klass(static_cast<class_decl*>(logical_scope),
+	    class_decl_sptr klass(static_cast<class_decl*>(interface_scope),
 				  sptr_utils::noop_deleter());
 	    ABG_ASSERT(klass);
 	    finish_member_function_reading(die, fn, klass, rdr);
@@ -16019,7 +16068,7 @@ build_ir_node_from_die(reader&	rdr,
 	      // not do it here.
 	      rdr.maybe_add_fn_to_exported_decls(fn.get());
 	    rdr.associate_die_to_decl(die, fn, where_offset,
-				       /*associate_by_repr=*/false);
+				      /*associate_by_repr=*/false);
 	    maybe_canonicalize_type(fn->get_type(), rdr);
 	  }
 
@@ -16190,15 +16239,6 @@ build_ir_node_from_die(reader&	rdr,
   if (!die)
     return decl_base_sptr();
 
-  if (rdr.die_is_in_c(die))
-    {
-      const scope_decl_sptr& scop = rdr.global_scope();
-      return build_ir_node_from_die(rdr, die, scop.get(),
-				    called_from_public_decl,
-				    where_offset,
-                                    true);
-    }
-
   // Normaly, a decl that is meant to be external has a DW_AT_external
   // set.  But then some compilers fail to always emit that flag.  For
   // instance, for static data members, some compilers won't emit the
@@ -16214,8 +16254,7 @@ build_ir_node_from_die(reader&	rdr,
 					    where_offset);
   return build_ir_node_from_die(rdr, die, scope.get(),
 				called_from_public_decl,
-				where_offset,
-                                true);
+				where_offset, true);
 }
 
 /// Create a dwarf::reader.

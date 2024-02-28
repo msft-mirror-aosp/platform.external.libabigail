@@ -31,8 +31,14 @@
         </function-decl>
       </member-function>
       <member-function access='public' constructor='yes'>
-        <function-decl name='first_type' mangled-name='_ZN10first_typeC2Ev' filepath='/home/dodji/git/libabigail/dwarf/tests/data/test-read-dwarf/test2.h' line='9' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZN10first_typeC2Ev'>
-          <parameter type-id='82c95d70' is-artificial='yes'/>
+        <function-decl name='first_type' filepath='/home/dodji/git/libabigail/dwarf/tests/data/test-read-dwarf/test2-0.cc' line='5' column='1' visibility='default' binding='global' size-in-bits='64'>
+          <parameter type-id='ebe03783' name='this' is-artificial='yes'/>
+          <return type-id='48b5725f'/>
+        </function-decl>
+      </member-function>
+      <member-function access='public' constructor='yes'>
+        <function-decl name='first_type' mangled-name='_ZN10first_typeC2Ev' filepath='/home/dodji/git/libabigail/dwarf/tests/data/test-read-dwarf/test2-0.cc' line='5' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZN10first_typeC2Ev'>
+          <parameter type-id='ebe03783' name='this' is-artificial='yes'/>
           <return type-id='48b5725f'/>
         </function-decl>
       </member-function>
@@ -41,6 +47,7 @@
     <typedef-decl name='integer' type-id='95e97e5e' id='c2cab9c6'/>
     <type-decl name='unsigned char' size-in-bits='8' id='002ac4a6'/>
     <pointer-type-def type-id='55265432' size-in-bits='64' id='82c95d70'/>
+    <qualified-type-def type-id='82c95d70' const='yes' id='ebe03783'/>
     <namespace-decl name='a'>
       <function-decl name='build_first_type' mangled-name='_ZN1a16build_first_typeEv' filepath='/home/dodji/git/libabigail/dwarf/tests/data/test-read-dwarf/test2-0.cc' line='13' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZN1a16build_first_typeEv'>
         <return type-id='82c95d70'/>
@@ -63,13 +70,20 @@
         </function-decl>
       </member-function>
       <member-function access='public' constructor='yes'>
-        <function-decl name='second_type' mangled-name='_ZN11second_typeC2Ev' filepath='/home/dodji/git/libabigail/dwarf/tests/data/test-read-dwarf/test2.h' line='17' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZN11second_typeC2Ev'>
-          <parameter type-id='fc0abc74' is-artificial='yes'/>
+        <function-decl name='second_type' filepath='/home/dodji/git/libabigail/dwarf/tests/data/test-read-dwarf/test2-1.cc' line='5' column='1' visibility='default' binding='global' size-in-bits='64'>
+          <parameter type-id='4782933f' name='this' is-artificial='yes'/>
+          <return type-id='48b5725f'/>
+        </function-decl>
+      </member-function>
+      <member-function access='public' constructor='yes'>
+        <function-decl name='second_type' mangled-name='_ZN11second_typeC2Ev' filepath='/home/dodji/git/libabigail/dwarf/tests/data/test-read-dwarf/test2-1.cc' line='5' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZN11second_typeC2Ev'>
+          <parameter type-id='4782933f' name='this' is-artificial='yes'/>
           <return type-id='48b5725f'/>
         </function-decl>
       </member-function>
     </class-decl>
     <pointer-type-def type-id='cf111fae' size-in-bits='64' id='fc0abc74'/>
+    <qualified-type-def type-id='fc0abc74' const='yes' id='4782933f'/>
     <namespace-decl name='a'>
       <function-decl name='build_second_type' mangled-name='_ZN1a17build_second_typeEv' filepath='/home/dodji/git/libabigail/dwarf/tests/data/test-read-dwarf/test2-1.cc' line='13' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZN1a17build_second_typeEv'>
         <return type-id='fc0abc74'/>

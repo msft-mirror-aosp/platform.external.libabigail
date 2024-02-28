@@ -1482,14 +1482,26 @@
           <base-class access='public' layout-offset-in-bits='0' type-id='type-id-45'/>
           <member-function access='public'>
             <function-decl name='operator==' mangled-name='_ZNK5boost6system14error_categoryeqERKS1_' filepath='src/third_party/boost-1.56.0/boost/system/error_code.hpp' line='198' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZNK5boost6system14error_categoryeqERKS1_'>
-              <parameter type-id='type-id-65' is-artificial='yes'/>
-              <parameter type-id='type-id-64'/>
+              <parameter type-id='type-id-65' name='this' is-artificial='yes'/>
+              <parameter type-id='type-id-64' name='rhs' filepath='src/third_party/boost-1.56.0/boost/system/error_code.hpp' line='198' column='1'/>
               <return type-id='type-id-1'/>
             </function-decl>
           </member-function>
           <member-function access='public' destructor='yes' vtable-offset='0'>
-            <function-decl name='~error_category' mangled-name='_ZN5boost6system14error_categoryD0Ev' filepath='src/third_party/boost-1.56.0/boost/system/error_code.hpp' line='188' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZN5boost6system14error_categoryD2Ev'>
+            <function-decl name='~error_category' filepath='src/third_party/boost-1.56.0/boost/system/error_code.hpp' line='188' column='1' visibility='default' binding='global' size-in-bits='64'>
               <parameter type-id='type-id-49' is-artificial='yes'/>
+              <return type-id='type-id-118'/>
+            </function-decl>
+          </member-function>
+          <member-function access='public' destructor='yes' vtable-offset='0'>
+            <function-decl name='~error_category' mangled-name='_ZN5boost6system14error_categoryD0Ev' filepath='src/third_party/boost-1.56.0/boost/system/error_code.hpp' line='188' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZN5boost6system14error_categoryD0Ev'>
+              <parameter type-id='type-id-49' name='this' is-artificial='yes'/>
+              <return type-id='type-id-118'/>
+            </function-decl>
+          </member-function>
+          <member-function access='public' destructor='yes' vtable-offset='0'>
+            <function-decl name='~error_category' mangled-name='_ZN5boost6system14error_categoryD2Ev' filepath='src/third_party/boost-1.56.0/boost/system/error_code.hpp' line='188' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZN5boost6system14error_categoryD2Ev'>
+              <parameter type-id='type-id-49' name='this' is-artificial='yes'/>
               <return type-id='type-id-118'/>
             </function-decl>
           </member-function>
@@ -1556,24 +1568,24 @@
           </member-function>
           <member-function access='public'>
             <function-decl name='category' mangled-name='_ZNK5boost6system10error_code8categoryEv' filepath='src/third_party/boost-1.56.0/boost/system/error_code.hpp' line='355' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZNK5boost6system10error_code8categoryEv'>
-              <parameter type-id='type-id-68' is-artificial='yes'/>
+              <parameter type-id='type-id-68' name='this' is-artificial='yes'/>
               <return type-id='type-id-64'/>
             </function-decl>
           </member-function>
           <member-function access='public'>
             <function-decl name='value' mangled-name='_ZNK5boost6system10error_code5valueEv' filepath='src/third_party/boost-1.56.0/boost/system/error_code.hpp' line='354' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZNK5boost6system10error_code5valueEv'>
-              <parameter type-id='type-id-68' is-artificial='yes'/>
+              <parameter type-id='type-id-68' name='this' is-artificial='yes'/>
               <return type-id='type-id-8'/>
             </function-decl>
           </member-function>
           <member-function access='public' constructor='yes'>
-            <function-decl name='error_code' mangled-name='_ZN5boost6system10error_codeC2Ev' filepath='src/third_party/boost-1.56.0/boost/system/error_code.hpp' line='322' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZN5boost6system10error_codeC2Ev'>
+            <function-decl name='error_code' filepath='src/third_party/boost-1.56.0/boost/system/error_code.hpp' line='322' column='1' visibility='default' binding='global' size-in-bits='64'>
               <parameter type-id='type-id-51' is-artificial='yes'/>
               <return type-id='type-id-118'/>
             </function-decl>
           </member-function>
           <member-function access='public' constructor='yes'>
-            <function-decl name='error_code' mangled-name='_ZN5boost6system10error_codeC2EiRKNS0_14error_categoryE' filepath='src/third_party/boost-1.56.0/boost/system/error_code.hpp' line='323' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZN5boost6system10error_codeC2EiRKNS0_14error_categoryE'>
+            <function-decl name='error_code' filepath='src/third_party/boost-1.56.0/boost/system/error_code.hpp' line='323' column='1' visibility='default' binding='global' size-in-bits='64'>
               <parameter type-id='type-id-51' is-artificial='yes'/>
               <parameter type-id='type-id-8'/>
               <parameter type-id='type-id-64'/>
@@ -1582,27 +1594,41 @@
           </member-function>
           <member-function access='public'>
             <function-decl name='message' mangled-name='_ZNK5boost6system10error_code7messageEv' filepath='src/third_party/boost-1.56.0/boost/system/error_code.hpp' line='357' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZNK5boost6system10error_code7messageEv'>
-              <parameter type-id='type-id-68' is-artificial='yes'/>
+              <parameter type-id='type-id-68' name='this' is-artificial='yes'/>
               <return type-id='type-id-121'/>
+            </function-decl>
+          </member-function>
+          <member-function access='public' constructor='yes'>
+            <function-decl name='error_code' mangled-name='_ZN5boost6system10error_codeC2Ev' filepath='src/third_party/boost-1.56.0/boost/system/error_code.hpp' line='322' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZN5boost6system10error_codeC2Ev'>
+              <parameter type-id='type-id-51' name='this' is-artificial='yes'/>
+              <return type-id='type-id-118'/>
+            </function-decl>
+          </member-function>
+          <member-function access='public' constructor='yes'>
+            <function-decl name='error_code' mangled-name='_ZN5boost6system10error_codeC2EiRKNS0_14error_categoryE' filepath='src/third_party/boost-1.56.0/boost/system/error_code.hpp' line='323' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZN5boost6system10error_codeC2EiRKNS0_14error_categoryE'>
+              <parameter type-id='type-id-51' name='this' is-artificial='yes'/>
+              <parameter type-id='type-id-8' name='val' filepath='src/third_party/boost-1.56.0/boost/system/error_code.hpp' line='323' column='1'/>
+              <parameter type-id='type-id-64' name='cat' filepath='src/third_party/boost-1.56.0/boost/system/error_code.hpp' line='323' column='1'/>
+              <return type-id='type-id-118'/>
             </function-decl>
           </member-function>
           <member-function access='public'>
             <function-decl name='assign' mangled-name='_ZN5boost6system10error_code6assignEiRKNS0_14error_categoryE' filepath='src/third_party/boost-1.56.0/boost/system/error_code.hpp' line='333' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZN5boost6system10error_code6assignEiRKNS0_14error_categoryE'>
-              <parameter type-id='type-id-51' is-artificial='yes'/>
-              <parameter type-id='type-id-8'/>
-              <parameter type-id='type-id-64'/>
+              <parameter type-id='type-id-51' name='this' is-artificial='yes'/>
+              <parameter type-id='type-id-8' name='val' filepath='src/third_party/boost-1.56.0/boost/system/error_code.hpp' line='333' column='1'/>
+              <parameter type-id='type-id-64' name='cat' filepath='src/third_party/boost-1.56.0/boost/system/error_code.hpp' line='333' column='1'/>
               <return type-id='type-id-118'/>
             </function-decl>
           </member-function>
           <member-function access='public'>
             <function-decl name='operator void (*)()' mangled-name='_ZNK5boost6system10error_codecvPFvvEEv' filepath='src/third_party/boost-1.56.0/boost/system/error_code.hpp' line='362' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZNK5boost6system10error_codecvPFvvEEv'>
-              <parameter type-id='type-id-68' is-artificial='yes'/>
+              <parameter type-id='type-id-68' name='this' is-artificial='yes'/>
               <return type-id='type-id-120'/>
             </function-decl>
           </member-function>
           <member-function access='public'>
             <function-decl name='clear' mangled-name='_ZN5boost6system10error_code5clearEv' filepath='src/third_party/boost-1.56.0/boost/system/error_code.hpp' line='347' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZN5boost6system10error_code5clearEv'>
-              <parameter type-id='type-id-51' is-artificial='yes'/>
+              <parameter type-id='type-id-51' name='this' is-artificial='yes'/>
               <return type-id='type-id-118'/>
             </function-decl>
           </member-function>
@@ -1682,10 +1708,18 @@
             </function-decl>
           </member-function>
           <member-function access='public' constructor='yes'>
-            <function-decl name='error_condition' mangled-name='_ZN5boost6system15error_conditionC2EiRKNS0_14error_categoryE' filepath='src/third_party/boost-1.56.0/boost/system/error_code.hpp' line='236' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZN5boost6system15error_conditionC2EiRKNS0_14error_categoryE'>
+            <function-decl name='error_condition' filepath='src/third_party/boost-1.56.0/boost/system/error_code.hpp' line='236' column='1' visibility='default' binding='global' size-in-bits='64'>
               <parameter type-id='type-id-53' is-artificial='yes'/>
               <parameter type-id='type-id-8'/>
               <parameter type-id='type-id-64'/>
+              <return type-id='type-id-118'/>
+            </function-decl>
+          </member-function>
+          <member-function access='public' constructor='yes'>
+            <function-decl name='error_condition' mangled-name='_ZN5boost6system15error_conditionC2EiRKNS0_14error_categoryE' filepath='src/third_party/boost-1.56.0/boost/system/error_code.hpp' line='236' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZN5boost6system15error_conditionC2EiRKNS0_14error_categoryE'>
+              <parameter type-id='type-id-53' name='this' is-artificial='yes'/>
+              <parameter type-id='type-id-8' name='val' filepath='src/third_party/boost-1.56.0/boost/system/error_code.hpp' line='236' column='1'/>
+              <parameter type-id='type-id-64' name='cat' filepath='src/third_party/boost-1.56.0/boost/system/error_code.hpp' line='236' column='1'/>
               <return type-id='type-id-118'/>
             </function-decl>
           </member-function>
@@ -1771,7 +1805,7 @@
       <class-decl name='codecvt_error_cat' size-in-bits='64' visibility='default' filepath='src/third_party/boost-1.56.0/libs/filesystem/src/codecvt_error_category.cpp' line='34' column='1' id='type-id-58'>
         <base-class access='public' layout-offset-in-bits='0' type-id='type-id-48'/>
         <member-function access='public' constructor='yes'>
-          <function-decl name='codecvt_error_cat' mangled-name='_ZN12_GLOBAL__N_117codecvt_error_catC2Ev' filepath='src/third_party/boost-1.56.0/libs/filesystem/src/codecvt_error_category.cpp' line='37' column='1' visibility='default' binding='global' size-in-bits='64'>
+          <function-decl name='codecvt_error_cat' filepath='src/third_party/boost-1.56.0/libs/filesystem/src/codecvt_error_category.cpp' line='37' column='1' visibility='default' binding='global' size-in-bits='64'>
             <parameter type-id='type-id-59' is-artificial='yes'/>
             <return type-id='type-id-118'/>
           </function-decl>
@@ -2332,44 +2366,44 @@
         </member-type>
         <member-function access='public'>
           <function-decl name='basic_string&lt;char *&gt;' mangled-name='_ZNSsC2IPcEET_S1_RKSaIcE' filepath='/usr/bin/../lib/gcc/x86_64-linux-gnu/4.9/../../../../include/c++/4.9/bits/basic_string.h' line='540' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZNSsC2IPcEET_S1_RKSaIcE'>
-            <parameter type-id='type-id-334' is-artificial='yes'/>
-            <parameter type-id='type-id-54'/>
-            <parameter type-id='type-id-54'/>
-            <parameter type-id='type-id-319'/>
+            <parameter type-id='type-id-334' name='this' is-artificial='yes'/>
+            <parameter type-id='type-id-54' name='__beg' filepath='/usr/bin/../lib/gcc/x86_64-linux-gnu/4.9/../../../../include/c++/4.9/bits/basic_string.tcc' line='540' column='1'/>
+            <parameter type-id='type-id-54' name='__end' filepath='/usr/bin/../lib/gcc/x86_64-linux-gnu/4.9/../../../../include/c++/4.9/bits/basic_string.tcc' line='540' column='1'/>
+            <parameter type-id='type-id-319' name='__a' filepath='/usr/bin/../lib/gcc/x86_64-linux-gnu/4.9/../../../../include/c++/4.9/bits/basic_string.tcc' line='541' column='1'/>
             <return type-id='type-id-118'/>
           </function-decl>
         </member-function>
         <member-function access='public'>
           <function-decl name='append&lt;const char *&gt;' mangled-name='_ZNSs6appendIPKcEERSsT_S3_' filepath='/usr/bin/../lib/gcc/x86_64-linux-gnu/4.9/../../../../include/c++/4.9/bits/basic_string.h' line='1061' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZNSs6appendIPKcEERSsT_S3_'>
-            <parameter type-id='type-id-334' is-artificial='yes'/>
-            <parameter type-id='type-id-23'/>
-            <parameter type-id='type-id-23'/>
+            <parameter type-id='type-id-334' name='this' is-artificial='yes'/>
+            <parameter type-id='type-id-23' name='__first' filepath='/usr/bin/../lib/gcc/x86_64-linux-gnu/4.9/../../../../include/c++/4.9/bits/basic_string.h' line='1061' column='1'/>
+            <parameter type-id='type-id-23' name='__last' filepath='/usr/bin/../lib/gcc/x86_64-linux-gnu/4.9/../../../../include/c++/4.9/bits/basic_string.h' line='1061' column='1'/>
             <return type-id='type-id-333'/>
           </function-decl>
         </member-function>
         <member-function access='private' static='yes'>
           <function-decl name='_S_construct&lt;char *&gt;' mangled-name='_ZNSs12_S_constructIPcEES0_T_S1_RKSaIcE' filepath='/usr/bin/../lib/gcc/x86_64-linux-gnu/4.9/../../../../include/c++/4.9/bits/basic_string.h' line='1761' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZNSs12_S_constructIPcEES0_T_S1_RKSaIcE'>
-            <parameter type-id='type-id-54'/>
-            <parameter type-id='type-id-54'/>
-            <parameter type-id='type-id-319'/>
+            <parameter type-id='type-id-54' name='__beg' filepath='/usr/bin/../lib/gcc/x86_64-linux-gnu/4.9/../../../../include/c++/4.9/bits/basic_string.h' line='1761' column='1'/>
+            <parameter type-id='type-id-54' name='__end' filepath='/usr/bin/../lib/gcc/x86_64-linux-gnu/4.9/../../../../include/c++/4.9/bits/basic_string.h' line='1761' column='1'/>
+            <parameter type-id='type-id-319' name='__a' filepath='/usr/bin/../lib/gcc/x86_64-linux-gnu/4.9/../../../../include/c++/4.9/bits/basic_string.h' line='1761' column='1'/>
             <return type-id='type-id-54'/>
           </function-decl>
         </member-function>
         <member-function access='private' static='yes'>
           <function-decl name='_S_construct_aux&lt;char *&gt;' mangled-name='_ZNSs16_S_construct_auxIPcEES0_T_S1_RKSaIcESt12__false_type' filepath='/usr/bin/../lib/gcc/x86_64-linux-gnu/4.9/../../../../include/c++/4.9/bits/basic_string.h' line='1739' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZNSs16_S_construct_auxIPcEES0_T_S1_RKSaIcESt12__false_type'>
-            <parameter type-id='type-id-54'/>
-            <parameter type-id='type-id-54'/>
-            <parameter type-id='type-id-319'/>
-            <parameter type-id='type-id-340'/>
+            <parameter type-id='type-id-54' name='__beg' filepath='/usr/bin/../lib/gcc/x86_64-linux-gnu/4.9/../../../../include/c++/4.9/bits/basic_string.h' line='1739' column='1'/>
+            <parameter type-id='type-id-54' name='__end' filepath='/usr/bin/../lib/gcc/x86_64-linux-gnu/4.9/../../../../include/c++/4.9/bits/basic_string.h' line='1739' column='1'/>
+            <parameter type-id='type-id-319' name='__a' filepath='/usr/bin/../lib/gcc/x86_64-linux-gnu/4.9/../../../../include/c++/4.9/bits/basic_string.h' line='1740' column='1'/>
+            <parameter type-id='type-id-340' filepath='/usr/bin/../lib/gcc/x86_64-linux-gnu/4.9/../../../../include/c++/4.9/bits/basic_string.h' line='1740' column='1'/>
             <return type-id='type-id-54'/>
           </function-decl>
         </member-function>
         <member-function access='private' static='yes'>
           <function-decl name='_S_construct&lt;char *&gt;' mangled-name='_ZNSs12_S_constructIPcEES0_T_S1_RKSaIcESt20forward_iterator_tag' filepath='/usr/bin/../lib/gcc/x86_64-linux-gnu/4.9/../../../../include/c++/4.9/bits/basic_string.h' line='1777' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZNSs12_S_constructIPcEES0_T_S1_RKSaIcESt20forward_iterator_tag'>
-            <parameter type-id='type-id-54'/>
-            <parameter type-id='type-id-54'/>
-            <parameter type-id='type-id-319'/>
-            <parameter type-id='type-id-342'/>
+            <parameter type-id='type-id-54' name='__beg' filepath='/usr/bin/../lib/gcc/x86_64-linux-gnu/4.9/../../../../include/c++/4.9/bits/basic_string.tcc' line='1777' column='1'/>
+            <parameter type-id='type-id-54' name='__end' filepath='/usr/bin/../lib/gcc/x86_64-linux-gnu/4.9/../../../../include/c++/4.9/bits/basic_string.tcc' line='1777' column='1'/>
+            <parameter type-id='type-id-319' name='__a' filepath='/usr/bin/../lib/gcc/x86_64-linux-gnu/4.9/../../../../include/c++/4.9/bits/basic_string.tcc' line='1777' column='1'/>
+            <parameter type-id='type-id-342' filepath='/usr/bin/../lib/gcc/x86_64-linux-gnu/4.9/../../../../include/c++/4.9/bits/basic_string.tcc' line='1778' column='1'/>
             <return type-id='type-id-54'/>
           </function-decl>
         </member-function>
@@ -3104,41 +3138,41 @@
         </member-function>
         <member-function access='private' static='yes'>
           <function-decl name='dereference&lt;boost::filesystem::path::iterator&gt;' mangled-name='_ZN5boost20iterator_core_access11dereferenceINS_10filesystem4path8iteratorEEENT_9referenceERKS5_' filepath='src/third_party/boost-1.56.0/boost/iterator/iterator_facade.hpp' line='512' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZN5boost20iterator_core_access11dereferenceINS_10filesystem4path8iteratorEEENT_9referenceERKS5_'>
-            <parameter type-id='type-id-242'/>
+            <parameter type-id='type-id-242' name='f' filepath='src/third_party/boost-1.56.0/boost/iterator/iterator_facade.hpp' line='512' column='1'/>
             <return type-id='type-id-359'/>
           </function-decl>
         </member-function>
         <member-function access='private' static='yes'>
           <function-decl name='increment&lt;boost::filesystem::path::iterator&gt;' mangled-name='_ZN5boost20iterator_core_access9incrementINS_10filesystem4path8iteratorEEEvRT_' filepath='src/third_party/boost-1.56.0/boost/iterator/iterator_facade.hpp' line='518' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZN5boost20iterator_core_access9incrementINS_10filesystem4path8iteratorEEEvRT_'>
-            <parameter type-id='type-id-179'/>
+            <parameter type-id='type-id-179' name='f' filepath='src/third_party/boost-1.56.0/boost/iterator/iterator_facade.hpp' line='518' column='1'/>
             <return type-id='type-id-118'/>
           </function-decl>
         </member-function>
         <member-function access='private' static='yes'>
           <function-decl name='equal&lt;boost::filesystem::path::iterator, boost::filesystem::path::iterator&gt;' mangled-name='_ZN5boost20iterator_core_access5equalINS_10filesystem4path8iteratorES4_EEbRKT_RKT0_N4mpl_5bool_ILb1EEE' filepath='src/third_party/boost-1.56.0/boost/iterator/iterator_facade.hpp' line='530' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZN5boost20iterator_core_access5equalINS_10filesystem4path8iteratorES4_EEbRKT_RKT0_N4mpl_5bool_ILb1EEE'>
-            <parameter type-id='type-id-242'/>
-            <parameter type-id='type-id-242'/>
-            <parameter type-id='type-id-360'/>
+            <parameter type-id='type-id-242' name='f1' filepath='src/third_party/boost-1.56.0/boost/iterator/iterator_facade.hpp' line='530' column='1'/>
+            <parameter type-id='type-id-242' name='f2' filepath='src/third_party/boost-1.56.0/boost/iterator/iterator_facade.hpp' line='530' column='1'/>
+            <parameter type-id='type-id-360' filepath='src/third_party/boost-1.56.0/boost/iterator/iterator_facade.hpp' line='530' column='1'/>
             <return type-id='type-id-1'/>
           </function-decl>
         </member-function>
         <member-function access='private' static='yes'>
           <function-decl name='increment&lt;boost::filesystem::directory_iterator&gt;' mangled-name='_ZN5boost20iterator_core_access9incrementINS_10filesystem18directory_iteratorEEEvRT_' filepath='src/third_party/boost-1.56.0/boost/iterator/iterator_facade.hpp' line='518' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZN5boost20iterator_core_access9incrementINS_10filesystem18directory_iteratorEEEvRT_'>
-            <parameter type-id='type-id-165'/>
+            <parameter type-id='type-id-165' name='f' filepath='src/third_party/boost-1.56.0/boost/iterator/iterator_facade.hpp' line='518' column='1'/>
             <return type-id='type-id-118'/>
           </function-decl>
         </member-function>
         <member-function access='private' static='yes'>
           <function-decl name='dereference&lt;boost::filesystem::directory_iterator&gt;' mangled-name='_ZN5boost20iterator_core_access11dereferenceINS_10filesystem18directory_iteratorEEENT_9referenceERKS4_' filepath='src/third_party/boost-1.56.0/boost/iterator/iterator_facade.hpp' line='512' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZN5boost20iterator_core_access11dereferenceINS_10filesystem18directory_iteratorEEENT_9referenceERKS4_'>
-            <parameter type-id='type-id-231'/>
+            <parameter type-id='type-id-231' name='f' filepath='src/third_party/boost-1.56.0/boost/iterator/iterator_facade.hpp' line='512' column='1'/>
             <return type-id='type-id-361'/>
           </function-decl>
         </member-function>
         <member-function access='private' static='yes'>
           <function-decl name='equal&lt;boost::filesystem::directory_iterator, boost::filesystem::directory_iterator&gt;' mangled-name='_ZN5boost20iterator_core_access5equalINS_10filesystem18directory_iteratorES3_EEbRKT_RKT0_N4mpl_5bool_ILb1EEE' filepath='src/third_party/boost-1.56.0/boost/iterator/iterator_facade.hpp' line='530' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZN5boost20iterator_core_access5equalINS_10filesystem18directory_iteratorES3_EEbRKT_RKT0_N4mpl_5bool_ILb1EEE'>
-            <parameter type-id='type-id-231'/>
-            <parameter type-id='type-id-231'/>
-            <parameter type-id='type-id-360'/>
+            <parameter type-id='type-id-231' name='f1' filepath='src/third_party/boost-1.56.0/boost/iterator/iterator_facade.hpp' line='530' column='1'/>
+            <parameter type-id='type-id-231' name='f2' filepath='src/third_party/boost-1.56.0/boost/iterator/iterator_facade.hpp' line='530' column='1'/>
+            <parameter type-id='type-id-360' filepath='src/third_party/boost-1.56.0/boost/iterator/iterator_facade.hpp' line='530' column='1'/>
             <return type-id='type-id-1'/>
           </function-decl>
         </member-function>
@@ -3150,7 +3184,7 @@
         </member-function>
         <member-function access='private' static='yes'>
           <function-decl name='decrement&lt;boost::filesystem::path::iterator&gt;' mangled-name='_ZN5boost20iterator_core_access9decrementINS_10filesystem4path8iteratorEEEvRT_' filepath='src/third_party/boost-1.56.0/boost/iterator/iterator_facade.hpp' line='524' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZN5boost20iterator_core_access9decrementINS_10filesystem4path8iteratorEEEvRT_'>
-            <parameter type-id='type-id-179'/>
+            <parameter type-id='type-id-179' name='f' filepath='src/third_party/boost-1.56.0/boost/iterator/iterator_facade.hpp' line='524' column='1'/>
             <return type-id='type-id-118'/>
           </function-decl>
         </member-function>
@@ -3164,31 +3198,31 @@
         </member-type>
         <member-function access='public'>
           <function-decl name='operator-&gt;' mangled-name='_ZNK5boost15iterator_facadeINS_10filesystem18directory_iteratorENS1_15directory_entryENS_25single_pass_traversal_tagERS3_lEptEv' filepath='src/third_party/boost-1.56.0/boost/iterator/iterator_facade.hpp' line='642' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZNK5boost15iterator_facadeINS_10filesystem18directory_iteratorENS1_15directory_entryENS_25single_pass_traversal_tagERS3_lEptEv'>
-            <parameter type-id='type-id-249' is-artificial='yes'/>
+            <parameter type-id='type-id-249' name='this' is-artificial='yes'/>
             <return type-id='type-id-362'/>
           </function-decl>
         </member-function>
         <member-function access='public'>
           <function-decl name='operator++' mangled-name='_ZN5boost15iterator_facadeINS_10filesystem18directory_iteratorENS1_15directory_entryENS_25single_pass_traversal_tagERS3_lEppEv' filepath='src/third_party/boost-1.56.0/boost/iterator/iterator_facade.hpp' line='658' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZN5boost15iterator_facadeINS_10filesystem18directory_iteratorENS1_15directory_entryENS_25single_pass_traversal_tagERS3_lEppEv'>
-            <parameter type-id='type-id-186' is-artificial='yes'/>
+            <parameter type-id='type-id-186' name='this' is-artificial='yes'/>
             <return type-id='type-id-165'/>
           </function-decl>
         </member-function>
         <member-function access='private'>
           <function-decl name='derived' mangled-name='_ZN5boost15iterator_facadeINS_10filesystem18directory_iteratorENS1_15directory_entryENS_25single_pass_traversal_tagERS3_lE7derivedEv' filepath='src/third_party/boost-1.56.0/boost/iterator/iterator_facade.hpp' line='604' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZN5boost15iterator_facadeINS_10filesystem18directory_iteratorENS1_15directory_entryENS_25single_pass_traversal_tagERS3_lE7derivedEv'>
-            <parameter type-id='type-id-186' is-artificial='yes'/>
+            <parameter type-id='type-id-186' name='this' is-artificial='yes'/>
             <return type-id='type-id-165'/>
           </function-decl>
         </member-function>
         <member-function access='private'>
           <function-decl name='derived' mangled-name='_ZNK5boost15iterator_facadeINS_10filesystem18directory_iteratorENS1_15directory_entryENS_25single_pass_traversal_tagERS3_lE7derivedEv' filepath='src/third_party/boost-1.56.0/boost/iterator/iterator_facade.hpp' line='609' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZNK5boost15iterator_facadeINS_10filesystem18directory_iteratorENS1_15directory_entryENS_25single_pass_traversal_tagERS3_lE7derivedEv'>
-            <parameter type-id='type-id-249' is-artificial='yes'/>
+            <parameter type-id='type-id-249' name='this' is-artificial='yes'/>
             <return type-id='type-id-231'/>
           </function-decl>
         </member-function>
         <member-function access='public'>
           <function-decl name='operator*' mangled-name='_ZNK5boost15iterator_facadeINS_10filesystem18directory_iteratorENS1_15directory_entryENS_25single_pass_traversal_tagERS3_lEdeEv' filepath='src/third_party/boost-1.56.0/boost/iterator/iterator_facade.hpp' line='637' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZNK5boost15iterator_facadeINS_10filesystem18directory_iteratorENS1_15directory_entryENS_25single_pass_traversal_tagERS3_lEdeEv'>
-            <parameter type-id='type-id-249' is-artificial='yes'/>
+            <parameter type-id='type-id-249' name='this' is-artificial='yes'/>
             <return type-id='type-id-361'/>
           </function-decl>
         </member-function>
@@ -3205,44 +3239,44 @@
         </member-type>
         <member-function access='public'>
           <function-decl name='operator*' mangled-name='_ZNK5boost15iterator_facadeINS_10filesystem4path8iteratorEKS2_NS_27bidirectional_traversal_tagERS4_lEdeEv' filepath='src/third_party/boost-1.56.0/boost/iterator/iterator_facade.hpp' line='637' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZNK5boost15iterator_facadeINS_10filesystem4path8iteratorEKS2_NS_27bidirectional_traversal_tagERS4_lEdeEv'>
-            <parameter type-id='type-id-252' is-artificial='yes'/>
+            <parameter type-id='type-id-252' name='this' is-artificial='yes'/>
             <return type-id='type-id-359'/>
           </function-decl>
         </member-function>
         <member-function access='public'>
           <function-decl name='operator++' mangled-name='_ZN5boost15iterator_facadeINS_10filesystem4path8iteratorEKS2_NS_27bidirectional_traversal_tagERS4_lEppEv' filepath='src/third_party/boost-1.56.0/boost/iterator/iterator_facade.hpp' line='658' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZN5boost15iterator_facadeINS_10filesystem4path8iteratorEKS2_NS_27bidirectional_traversal_tagERS4_lEppEv'>
-            <parameter type-id='type-id-188' is-artificial='yes'/>
+            <parameter type-id='type-id-188' name='this' is-artificial='yes'/>
             <return type-id='type-id-179'/>
           </function-decl>
         </member-function>
         <member-function access='private'>
           <function-decl name='derived' mangled-name='_ZNK5boost15iterator_facadeINS_10filesystem4path8iteratorEKS2_NS_27bidirectional_traversal_tagERS4_lE7derivedEv' filepath='src/third_party/boost-1.56.0/boost/iterator/iterator_facade.hpp' line='609' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZNK5boost15iterator_facadeINS_10filesystem4path8iteratorEKS2_NS_27bidirectional_traversal_tagERS4_lE7derivedEv'>
-            <parameter type-id='type-id-252' is-artificial='yes'/>
+            <parameter type-id='type-id-252' name='this' is-artificial='yes'/>
             <return type-id='type-id-242'/>
           </function-decl>
         </member-function>
         <member-function access='private'>
           <function-decl name='derived' mangled-name='_ZN5boost15iterator_facadeINS_10filesystem4path8iteratorEKS2_NS_27bidirectional_traversal_tagERS4_lE7derivedEv' filepath='src/third_party/boost-1.56.0/boost/iterator/iterator_facade.hpp' line='604' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZN5boost15iterator_facadeINS_10filesystem4path8iteratorEKS2_NS_27bidirectional_traversal_tagERS4_lE7derivedEv'>
-            <parameter type-id='type-id-188' is-artificial='yes'/>
+            <parameter type-id='type-id-188' name='this' is-artificial='yes'/>
             <return type-id='type-id-179'/>
           </function-decl>
         </member-function>
         <member-function access='public'>
           <function-decl name='operator--' mangled-name='_ZN5boost15iterator_facadeINS_10filesystem4path8iteratorEKS2_NS_27bidirectional_traversal_tagERS4_lEmmEi' filepath='src/third_party/boost-1.56.0/boost/iterator/iterator_facade.hpp' line='681' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZN5boost15iterator_facadeINS_10filesystem4path8iteratorEKS2_NS_27bidirectional_traversal_tagERS4_lEmmEi'>
-            <parameter type-id='type-id-188' is-artificial='yes'/>
-            <parameter type-id='type-id-8'/>
+            <parameter type-id='type-id-188' name='this' is-artificial='yes'/>
+            <parameter type-id='type-id-8' filepath='src/third_party/boost-1.56.0/boost/iterator/iterator_facade.hpp' line='681' column='1'/>
             <return type-id='type-id-178'/>
           </function-decl>
         </member-function>
         <member-function access='public'>
           <function-decl name='operator-&gt;' mangled-name='_ZNK5boost15iterator_facadeINS_10filesystem4path8iteratorEKS2_NS_27bidirectional_traversal_tagERS4_lEptEv' filepath='src/third_party/boost-1.56.0/boost/iterator/iterator_facade.hpp' line='642' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZNK5boost15iterator_facadeINS_10filesystem4path8iteratorEKS2_NS_27bidirectional_traversal_tagERS4_lEptEv'>
-            <parameter type-id='type-id-252' is-artificial='yes'/>
+            <parameter type-id='type-id-252' name='this' is-artificial='yes'/>
             <return type-id='type-id-365'/>
           </function-decl>
         </member-function>
         <member-function access='public'>
           <function-decl name='operator--' mangled-name='_ZN5boost15iterator_facadeINS_10filesystem4path8iteratorEKS2_NS_27bidirectional_traversal_tagERS4_lEmmEv' filepath='src/third_party/boost-1.56.0/boost/iterator/iterator_facade.hpp' line='675' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZN5boost15iterator_facadeINS_10filesystem4path8iteratorEKS2_NS_27bidirectional_traversal_tagERS4_lEmmEv'>
-            <parameter type-id='type-id-188' is-artificial='yes'/>
+            <parameter type-id='type-id-188' name='this' is-artificial='yes'/>
             <return type-id='type-id-179'/>
           </function-decl>
         </member-function>
@@ -3259,22 +3293,35 @@
           </function-decl>
         </member-function>
         <member-function access='public'>
-          <function-decl name='scoped_array' mangled-name='_ZN5boost12scoped_arrayIcEC2EPc' filepath='src/third_party/boost-1.56.0/boost/smart_ptr/scoped_array.hpp' line='57' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZN5boost12scoped_arrayIcEC2EPc'>
+          <function-decl name='scoped_array' filepath='src/third_party/boost-1.56.0/boost/smart_ptr/scoped_array.hpp' line='57' column='1' visibility='default' binding='global' size-in-bits='64'>
             <parameter type-id='type-id-191' is-artificial='yes'/>
             <parameter type-id='type-id-54'/>
             <return type-id='type-id-118'/>
           </function-decl>
         </member-function>
         <member-function access='public' destructor='yes'>
-          <function-decl name='~scoped_array' mangled-name='_ZN5boost12scoped_arrayIcED2Ev' filepath='src/third_party/boost-1.56.0/boost/smart_ptr/scoped_array.hpp' line='64' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZN5boost12scoped_arrayIcED2Ev'>
+          <function-decl name='~scoped_array' filepath='src/third_party/boost-1.56.0/boost/smart_ptr/scoped_array.hpp' line='64' column='1' visibility='default' binding='global' size-in-bits='64'>
             <parameter type-id='type-id-191' is-artificial='yes'/>
             <return type-id='type-id-118'/>
           </function-decl>
         </member-function>
         <member-function access='public'>
+          <function-decl name='scoped_array' mangled-name='_ZN5boost12scoped_arrayIcEC2EPc' filepath='src/third_party/boost-1.56.0/boost/smart_ptr/scoped_array.hpp' line='57' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZN5boost12scoped_arrayIcEC2EPc'>
+            <parameter type-id='type-id-191' name='this' is-artificial='yes'/>
+            <parameter type-id='type-id-54' name='p' filepath='src/third_party/boost-1.56.0/boost/smart_ptr/scoped_array.hpp' line='57' column='1'/>
+            <return type-id='type-id-118'/>
+          </function-decl>
+        </member-function>
+        <member-function access='public'>
           <function-decl name='get' mangled-name='_ZNK5boost12scoped_arrayIcE3getEv' filepath='src/third_party/boost-1.56.0/boost/smart_ptr/scoped_array.hpp' line='85' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZNK5boost12scoped_arrayIcE3getEv'>
-            <parameter type-id='type-id-255' is-artificial='yes'/>
+            <parameter type-id='type-id-255' name='this' is-artificial='yes'/>
             <return type-id='type-id-54'/>
+          </function-decl>
+        </member-function>
+        <member-function access='public' destructor='yes'>
+          <function-decl name='~scoped_array' mangled-name='_ZN5boost12scoped_arrayIcED2Ev' filepath='src/third_party/boost-1.56.0/boost/smart_ptr/scoped_array.hpp' line='64' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZN5boost12scoped_arrayIcED2Ev'>
+            <parameter type-id='type-id-191' name='this' is-artificial='yes'/>
+            <return type-id='type-id-118'/>
           </function-decl>
         </member-function>
         <member-function access='private'>
@@ -3309,7 +3356,7 @@
           <var-decl name='pn' type-id='type-id-140' visibility='default' filepath='src/third_party/boost-1.56.0/boost/smart_ptr/shared_ptr.hpp' line='724' column='1'/>
         </data-member>
         <member-function access='public'>
-          <function-decl name='shared_ptr' mangled-name='_ZN5boost10shared_ptrINS_10filesystem6detail11dir_itr_impEEC2Ev' filepath='src/third_party/boost-1.56.0/boost/smart_ptr/shared_ptr.hpp' line='334' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZN5boost10shared_ptrINS_10filesystem6detail11dir_itr_impEEC2Ev'>
+          <function-decl name='shared_ptr' filepath='src/third_party/boost-1.56.0/boost/smart_ptr/shared_ptr.hpp' line='334' column='1' visibility='default' binding='global' size-in-bits='64'>
             <parameter type-id='type-id-195' is-artificial='yes'/>
             <return type-id='type-id-118'/>
           </function-decl>
@@ -3335,7 +3382,7 @@
           </function-decl>
         </member-function>
         <member-function access='public' constructor='yes'>
-          <function-decl name='shared_ptr&lt;boost::filesystem::detail::dir_itr_imp&gt;' mangled-name='_ZN5boost10shared_ptrINS_10filesystem6detail11dir_itr_impEEC2IS3_EEPT_' filepath='src/third_party/boost-1.56.0/boost/smart_ptr/shared_ptr.hpp' line='347' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZN5boost10shared_ptrINS_10filesystem6detail11dir_itr_impEEC2IS3_EEPT_'>
+          <function-decl name='shared_ptr&lt;boost::filesystem::detail::dir_itr_imp&gt;' filepath='src/third_party/boost-1.56.0/boost/smart_ptr/shared_ptr.hpp' line='347' column='1' visibility='default' binding='global' size-in-bits='64'>
             <parameter type-id='type-id-195' is-artificial='yes'/>
             <parameter type-id='type-id-159'/>
             <return type-id='type-id-118'/>
@@ -3343,26 +3390,39 @@
         </member-function>
         <member-function access='public'>
           <function-decl name='operator-&gt;' mangled-name='_ZNK5boost10shared_ptrINS_10filesystem6detail11dir_itr_impEEptEv' filepath='src/third_party/boost-1.56.0/boost/smart_ptr/shared_ptr.hpp' line='646' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZNK5boost10shared_ptrINS_10filesystem6detail11dir_itr_impEEptEv'>
-            <parameter type-id='type-id-258' is-artificial='yes'/>
+            <parameter type-id='type-id-258' name='this' is-artificial='yes'/>
             <return type-id='type-id-294'/>
           </function-decl>
         </member-function>
         <member-function access='public'>
           <function-decl name='reset' mangled-name='_ZN5boost10shared_ptrINS_10filesystem6detail11dir_itr_impEE5resetEv' filepath='src/third_party/boost-1.56.0/boost/smart_ptr/shared_ptr.hpp' line='612' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZN5boost10shared_ptrINS_10filesystem6detail11dir_itr_impEE5resetEv'>
-            <parameter type-id='type-id-195' is-artificial='yes'/>
+            <parameter type-id='type-id-195' name='this' is-artificial='yes'/>
             <return type-id='type-id-118'/>
           </function-decl>
         </member-function>
         <member-function access='public'>
           <function-decl name='get' mangled-name='_ZNK5boost10shared_ptrINS_10filesystem6detail11dir_itr_impEE3getEv' filepath='src/third_party/boost-1.56.0/boost/smart_ptr/shared_ptr.hpp' line='661' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZNK5boost10shared_ptrINS_10filesystem6detail11dir_itr_impEE3getEv'>
-            <parameter type-id='type-id-258' is-artificial='yes'/>
+            <parameter type-id='type-id-258' name='this' is-artificial='yes'/>
             <return type-id='type-id-197'/>
           </function-decl>
         </member-function>
         <member-function access='public'>
+          <function-decl name='shared_ptr' mangled-name='_ZN5boost10shared_ptrINS_10filesystem6detail11dir_itr_impEEC2Ev' filepath='src/third_party/boost-1.56.0/boost/smart_ptr/shared_ptr.hpp' line='334' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZN5boost10shared_ptrINS_10filesystem6detail11dir_itr_impEEC2Ev'>
+            <parameter type-id='type-id-195' name='this' is-artificial='yes'/>
+            <return type-id='type-id-118'/>
+          </function-decl>
+        </member-function>
+        <member-function access='public'>
           <function-decl name='swap' mangled-name='_ZN5boost10shared_ptrINS_10filesystem6detail11dir_itr_impEE4swapERS4_' filepath='src/third_party/boost-1.56.0/boost/smart_ptr/shared_ptr.hpp' line='679' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZN5boost10shared_ptrINS_10filesystem6detail11dir_itr_impEE4swapERS4_'>
-            <parameter type-id='type-id-195' is-artificial='yes'/>
-            <parameter type-id='type-id-193'/>
+            <parameter type-id='type-id-195' name='this' is-artificial='yes'/>
+            <parameter type-id='type-id-193' name='other' filepath='src/third_party/boost-1.56.0/boost/smart_ptr/shared_ptr.hpp' line='679' column='1'/>
+            <return type-id='type-id-118'/>
+          </function-decl>
+        </member-function>
+        <member-function access='public' constructor='yes'>
+          <function-decl name='shared_ptr&lt;boost::filesystem::detail::dir_itr_imp&gt;' mangled-name='_ZN5boost10shared_ptrINS_10filesystem6detail11dir_itr_impEEC2IS3_EEPT_' filepath='src/third_party/boost-1.56.0/boost/smart_ptr/shared_ptr.hpp' line='347' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZN5boost10shared_ptrINS_10filesystem6detail11dir_itr_impEEC2IS3_EEPT_'>
+            <parameter type-id='type-id-195' name='this' is-artificial='yes'/>
+            <parameter type-id='type-id-159' name='p' filepath='src/third_party/boost-1.56.0/boost/smart_ptr/shared_ptr.hpp' line='347' column='1'/>
             <return type-id='type-id-118'/>
           </function-decl>
         </member-function>
@@ -3378,7 +3438,7 @@
           <var-decl name='pn' type-id='type-id-140' visibility='default' filepath='src/third_party/boost-1.56.0/boost/smart_ptr/shared_ptr.hpp' line='724' column='1'/>
         </data-member>
         <member-function access='public'>
-          <function-decl name='shared_ptr' mangled-name='_ZN5boost10shared_ptrINS_10filesystem16filesystem_error5m_impEEC2Ev' filepath='src/third_party/boost-1.56.0/boost/smart_ptr/shared_ptr.hpp' line='334' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZN5boost10shared_ptrINS_10filesystem16filesystem_error5m_impEEC2Ev'>
+          <function-decl name='shared_ptr' filepath='src/third_party/boost-1.56.0/boost/smart_ptr/shared_ptr.hpp' line='334' column='1' visibility='default' binding='global' size-in-bits='64'>
             <parameter type-id='type-id-201' is-artificial='yes'/>
             <return type-id='type-id-118'/>
           </function-decl>
@@ -3404,41 +3464,54 @@
           </function-decl>
         </member-function>
         <member-function access='public' constructor='yes'>
-          <function-decl name='shared_ptr&lt;boost::filesystem::filesystem_error::m_imp&gt;' mangled-name='_ZN5boost10shared_ptrINS_10filesystem16filesystem_error5m_impEEC2IS3_EEPT_' filepath='src/third_party/boost-1.56.0/boost/smart_ptr/shared_ptr.hpp' line='347' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZN5boost10shared_ptrINS_10filesystem16filesystem_error5m_impEEC2IS3_EEPT_'>
+          <function-decl name='shared_ptr&lt;boost::filesystem::filesystem_error::m_imp&gt;' filepath='src/third_party/boost-1.56.0/boost/smart_ptr/shared_ptr.hpp' line='347' column='1' visibility='default' binding='global' size-in-bits='64'>
             <parameter type-id='type-id-201' is-artificial='yes'/>
             <parameter type-id='type-id-173'/>
+            <return type-id='type-id-118'/>
+          </function-decl>
+        </member-function>
+        <member-function access='public'>
+          <function-decl name='shared_ptr' mangled-name='_ZN5boost10shared_ptrINS_10filesystem16filesystem_error5m_impEEC2Ev' filepath='src/third_party/boost-1.56.0/boost/smart_ptr/shared_ptr.hpp' line='334' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZN5boost10shared_ptrINS_10filesystem16filesystem_error5m_impEEC2Ev'>
+            <parameter type-id='type-id-201' name='this' is-artificial='yes'/>
             <return type-id='type-id-118'/>
           </function-decl>
         </member-function>
         <member-function access='public'>
           <function-decl name='reset&lt;boost::filesystem::filesystem_error::m_imp&gt;' mangled-name='_ZN5boost10shared_ptrINS_10filesystem16filesystem_error5m_impEE5resetIS3_EEvPT_' filepath='src/third_party/boost-1.56.0/boost/smart_ptr/shared_ptr.hpp' line='617' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZN5boost10shared_ptrINS_10filesystem16filesystem_error5m_impEE5resetIS3_EEvPT_'>
-            <parameter type-id='type-id-201' is-artificial='yes'/>
-            <parameter type-id='type-id-173'/>
+            <parameter type-id='type-id-201' name='this' is-artificial='yes'/>
+            <parameter type-id='type-id-173' name='p' filepath='src/third_party/boost-1.56.0/boost/smart_ptr/shared_ptr.hpp' line='617' column='1'/>
             <return type-id='type-id-118'/>
           </function-decl>
         </member-function>
         <member-function access='public'>
           <function-decl name='reset' mangled-name='_ZN5boost10shared_ptrINS_10filesystem16filesystem_error5m_impEE5resetEv' filepath='src/third_party/boost-1.56.0/boost/smart_ptr/shared_ptr.hpp' line='612' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZN5boost10shared_ptrINS_10filesystem16filesystem_error5m_impEE5resetEv'>
-            <parameter type-id='type-id-201' is-artificial='yes'/>
+            <parameter type-id='type-id-201' name='this' is-artificial='yes'/>
             <return type-id='type-id-118'/>
           </function-decl>
         </member-function>
         <member-function access='public'>
           <function-decl name='get' mangled-name='_ZNK5boost10shared_ptrINS_10filesystem16filesystem_error5m_impEE3getEv' filepath='src/third_party/boost-1.56.0/boost/smart_ptr/shared_ptr.hpp' line='661' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZNK5boost10shared_ptrINS_10filesystem16filesystem_error5m_impEE3getEv'>
-            <parameter type-id='type-id-261' is-artificial='yes'/>
+            <parameter type-id='type-id-261' name='this' is-artificial='yes'/>
             <return type-id='type-id-203'/>
           </function-decl>
         </member-function>
         <member-function access='public'>
           <function-decl name='operator-&gt;' mangled-name='_ZNK5boost10shared_ptrINS_10filesystem16filesystem_error5m_impEEptEv' filepath='src/third_party/boost-1.56.0/boost/smart_ptr/shared_ptr.hpp' line='646' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZNK5boost10shared_ptrINS_10filesystem16filesystem_error5m_impEEptEv'>
-            <parameter type-id='type-id-261' is-artificial='yes'/>
+            <parameter type-id='type-id-261' name='this' is-artificial='yes'/>
             <return type-id='type-id-296'/>
           </function-decl>
         </member-function>
         <member-function access='public'>
           <function-decl name='swap' mangled-name='_ZN5boost10shared_ptrINS_10filesystem16filesystem_error5m_impEE4swapERS4_' filepath='src/third_party/boost-1.56.0/boost/smart_ptr/shared_ptr.hpp' line='679' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZN5boost10shared_ptrINS_10filesystem16filesystem_error5m_impEE4swapERS4_'>
-            <parameter type-id='type-id-201' is-artificial='yes'/>
-            <parameter type-id='type-id-199'/>
+            <parameter type-id='type-id-201' name='this' is-artificial='yes'/>
+            <parameter type-id='type-id-199' name='other' filepath='src/third_party/boost-1.56.0/boost/smart_ptr/shared_ptr.hpp' line='679' column='1'/>
+            <return type-id='type-id-118'/>
+          </function-decl>
+        </member-function>
+        <member-function access='public' constructor='yes'>
+          <function-decl name='shared_ptr&lt;boost::filesystem::filesystem_error::m_imp&gt;' mangled-name='_ZN5boost10shared_ptrINS_10filesystem16filesystem_error5m_impEEC2IS3_EEPT_' filepath='src/third_party/boost-1.56.0/boost/smart_ptr/shared_ptr.hpp' line='347' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZN5boost10shared_ptrINS_10filesystem16filesystem_error5m_impEEC2IS3_EEPT_'>
+            <parameter type-id='type-id-201' name='this' is-artificial='yes'/>
+            <parameter type-id='type-id-173' name='p' filepath='src/third_party/boost-1.56.0/boost/smart_ptr/shared_ptr.hpp' line='347' column='1'/>
             <return type-id='type-id-118'/>
           </function-decl>
         </member-function>
@@ -3475,7 +3548,7 @@
             <var-decl name='m_symlink_status' type-id='type-id-167' visibility='default' filepath='src/third_party/boost-1.56.0/boost/filesystem/operations.hpp' line='717' column='1'/>
           </data-member>
           <member-function access='public' constructor='yes'>
-            <function-decl name='directory_entry' mangled-name='_ZN5boost10filesystem15directory_entryC2Ev' filepath='src/third_party/boost-1.56.0/boost/filesystem/operations.hpp' line='676' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZN5boost10filesystem15directory_entryC2Ev'>
+            <function-decl name='directory_entry' filepath='src/third_party/boost-1.56.0/boost/filesystem/operations.hpp' line='676' column='1' visibility='default' binding='global' size-in-bits='64'>
               <parameter type-id='type-id-163' is-artificial='yes'/>
               <return type-id='type-id-118'/>
             </function-decl>
@@ -3491,39 +3564,45 @@
           </member-function>
           <member-function access='private'>
             <function-decl name='m_get_status' mangled-name='_ZNK5boost10filesystem15directory_entry12m_get_statusEPNS_6system10error_codeE' filepath='src/third_party/boost-1.56.0/boost/filesystem/operations.hpp' line='719' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZNK5boost10filesystem15directory_entry12m_get_statusEPNS_6system10error_codeE'>
-              <parameter type-id='type-id-229' is-artificial='yes'/>
-              <parameter type-id='type-id-51'/>
+              <parameter type-id='type-id-229' name='this' is-artificial='yes'/>
+              <parameter type-id='type-id-51' name='ec' filepath='src/third_party/boost-1.56.0/libs/filesystem/src/operations.cpp' line='1843' column='1'/>
               <return type-id='type-id-167'/>
             </function-decl>
           </member-function>
           <member-function access='private'>
             <function-decl name='m_get_symlink_status' mangled-name='_ZNK5boost10filesystem15directory_entry20m_get_symlink_statusEPNS_6system10error_codeE' filepath='src/third_party/boost-1.56.0/boost/filesystem/operations.hpp' line='720' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZNK5boost10filesystem15directory_entry20m_get_symlink_statusEPNS_6system10error_codeE'>
-              <parameter type-id='type-id-229' is-artificial='yes'/>
-              <parameter type-id='type-id-51'/>
+              <parameter type-id='type-id-229' name='this' is-artificial='yes'/>
+              <parameter type-id='type-id-51' name='ec' filepath='src/third_party/boost-1.56.0/libs/filesystem/src/operations.cpp' line='1863' column='1'/>
               <return type-id='type-id-167'/>
             </function-decl>
           </member-function>
           <member-function access='public'>
             <function-decl name='path' mangled-name='_ZNK5boost10filesystem15directory_entry4pathEv' filepath='src/third_party/boost-1.56.0/boost/filesystem/operations.hpp' line='701' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZNK5boost10filesystem15directory_entry4pathEv'>
-              <parameter type-id='type-id-229' is-artificial='yes'/>
+              <parameter type-id='type-id-229' name='this' is-artificial='yes'/>
               <return type-id='type-id-239'/>
             </function-decl>
           </member-function>
           <member-function access='public'>
             <function-decl name='assign' mangled-name='_ZN5boost10filesystem15directory_entry6assignERKNS0_4pathENS0_11file_statusES5_' filepath='src/third_party/boost-1.56.0/boost/filesystem/operations.hpp' line='682' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZN5boost10filesystem15directory_entry6assignERKNS0_4pathENS0_11file_statusES5_'>
-              <parameter type-id='type-id-163' is-artificial='yes'/>
-              <parameter type-id='type-id-239'/>
-              <parameter type-id='type-id-167'/>
-              <parameter type-id='type-id-167'/>
+              <parameter type-id='type-id-163' name='this' is-artificial='yes'/>
+              <parameter type-id='type-id-239' name='p' filepath='src/third_party/boost-1.56.0/boost/filesystem/operations.hpp' line='682' column='1'/>
+              <parameter type-id='type-id-167' name='st' filepath='src/third_party/boost-1.56.0/boost/filesystem/operations.hpp' line='683' column='1'/>
+              <parameter type-id='type-id-167' name='symlink_st' filepath='src/third_party/boost-1.56.0/boost/filesystem/operations.hpp' line='683' column='1'/>
               <return type-id='type-id-118'/>
             </function-decl>
           </member-function>
           <member-function access='public'>
             <function-decl name='replace_filename' mangled-name='_ZN5boost10filesystem15directory_entry16replace_filenameERKNS0_4pathENS0_11file_statusES5_' filepath='src/third_party/boost-1.56.0/boost/filesystem/operations.hpp' line='686' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZN5boost10filesystem15directory_entry16replace_filenameERKNS0_4pathENS0_11file_statusES5_'>
-              <parameter type-id='type-id-163' is-artificial='yes'/>
-              <parameter type-id='type-id-239'/>
-              <parameter type-id='type-id-167'/>
-              <parameter type-id='type-id-167'/>
+              <parameter type-id='type-id-163' name='this' is-artificial='yes'/>
+              <parameter type-id='type-id-239' name='p' filepath='src/third_party/boost-1.56.0/boost/filesystem/operations.hpp' line='686' column='1'/>
+              <parameter type-id='type-id-167' name='st' filepath='src/third_party/boost-1.56.0/boost/filesystem/operations.hpp' line='687' column='1'/>
+              <parameter type-id='type-id-167' name='symlink_st' filepath='src/third_party/boost-1.56.0/boost/filesystem/operations.hpp' line='687' column='1'/>
+              <return type-id='type-id-118'/>
+            </function-decl>
+          </member-function>
+          <member-function access='public' constructor='yes'>
+            <function-decl name='directory_entry' mangled-name='_ZN5boost10filesystem15directory_entryC2Ev' filepath='src/third_party/boost-1.56.0/boost/filesystem/operations.hpp' line='676' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZN5boost10filesystem15directory_entryC2Ev'>
+              <parameter type-id='type-id-163' name='this' is-artificial='yes'/>
               <return type-id='type-id-118'/>
             </function-decl>
           </member-function>
@@ -3534,13 +3613,13 @@
             <var-decl name='m_imp' type-id='type-id-192' visibility='default' filepath='src/third_party/boost-1.56.0/boost/filesystem/operations.hpp' line='816' column='1'/>
           </data-member>
           <member-function access='public' constructor='yes'>
-            <function-decl name='directory_iterator' mangled-name='_ZN5boost10filesystem18directory_iteratorC2Ev' filepath='src/third_party/boost-1.56.0/boost/filesystem/operations.hpp' line='787' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZN5boost10filesystem18directory_iteratorC2Ev'>
+            <function-decl name='directory_iterator' filepath='src/third_party/boost-1.56.0/boost/filesystem/operations.hpp' line='787' column='1' visibility='default' binding='global' size-in-bits='64'>
               <parameter type-id='type-id-166' is-artificial='yes'/>
               <return type-id='type-id-118'/>
             </function-decl>
           </member-function>
           <member-function access='public' constructor='yes'>
-            <function-decl name='directory_iterator' mangled-name='_ZN5boost10filesystem18directory_iteratorC2ERKNS0_4pathE' filepath='src/third_party/boost-1.56.0/boost/filesystem/operations.hpp' line='791' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZN5boost10filesystem18directory_iteratorC2ERKNS0_4pathE'>
+            <function-decl name='directory_iterator' filepath='src/third_party/boost-1.56.0/boost/filesystem/operations.hpp' line='791' column='1' visibility='default' binding='global' size-in-bits='64'>
               <parameter type-id='type-id-166' is-artificial='yes'/>
               <parameter type-id='type-id-239'/>
               <return type-id='type-id-118'/>
@@ -3555,34 +3634,53 @@
             </function-decl>
           </member-function>
           <member-function access='public' destructor='yes'>
-            <function-decl name='~directory_iterator' mangled-name='_ZN5boost10filesystem18directory_iteratorD2Ev' filepath='src/third_party/boost-1.56.0/boost/filesystem/operations.hpp' line='799' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZN5boost10filesystem18directory_iteratorD2Ev'>
+            <function-decl name='~directory_iterator' filepath='src/third_party/boost-1.56.0/boost/filesystem/operations.hpp' line='799' column='1' visibility='default' binding='global' size-in-bits='64'>
               <parameter type-id='type-id-166' is-artificial='yes'/>
+              <return type-id='type-id-118'/>
+            </function-decl>
+          </member-function>
+          <member-function access='public' constructor='yes'>
+            <function-decl name='directory_iterator' mangled-name='_ZN5boost10filesystem18directory_iteratorC2Ev' filepath='src/third_party/boost-1.56.0/boost/filesystem/operations.hpp' line='787' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZN5boost10filesystem18directory_iteratorC2Ev'>
+              <parameter type-id='type-id-166' name='this' is-artificial='yes'/>
+              <return type-id='type-id-118'/>
+            </function-decl>
+          </member-function>
+          <member-function access='public' destructor='yes'>
+            <function-decl name='~directory_iterator' mangled-name='_ZN5boost10filesystem18directory_iteratorD2Ev' filepath='src/third_party/boost-1.56.0/boost/filesystem/operations.hpp' line='799' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZN5boost10filesystem18directory_iteratorD2Ev'>
+              <parameter type-id='type-id-166' name='this' is-artificial='yes'/>
               <return type-id='type-id-118'/>
             </function-decl>
           </member-function>
           <member-function access='public'>
             <function-decl name='increment' mangled-name='_ZN5boost10filesystem18directory_iterator9incrementERNS_6system10error_codeE' filepath='src/third_party/boost-1.56.0/boost/filesystem/operations.hpp' line='801' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZN5boost10filesystem18directory_iterator9incrementERNS_6system10error_codeE'>
-              <parameter type-id='type-id-166' is-artificial='yes'/>
-              <parameter type-id='type-id-204'/>
+              <parameter type-id='type-id-166' name='this' is-artificial='yes'/>
+              <parameter type-id='type-id-204' name='ec' filepath='src/third_party/boost-1.56.0/boost/filesystem/operations.hpp' line='801' column='1'/>
               <return type-id='type-id-165'/>
+            </function-decl>
+          </member-function>
+          <member-function access='public' constructor='yes'>
+            <function-decl name='directory_iterator' mangled-name='_ZN5boost10filesystem18directory_iteratorC2ERKNS0_4pathE' filepath='src/third_party/boost-1.56.0/boost/filesystem/operations.hpp' line='791' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZN5boost10filesystem18directory_iteratorC2ERKNS0_4pathE'>
+              <parameter type-id='type-id-166' name='this' is-artificial='yes'/>
+              <parameter type-id='type-id-239' name='p' filepath='src/third_party/boost-1.56.0/boost/filesystem/operations.hpp' line='791' column='1'/>
+              <return type-id='type-id-118'/>
             </function-decl>
           </member-function>
           <member-function access='private'>
             <function-decl name='increment' mangled-name='_ZN5boost10filesystem18directory_iterator9incrementEv' filepath='src/third_party/boost-1.56.0/boost/filesystem/operations.hpp' line='829' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZN5boost10filesystem18directory_iterator9incrementEv'>
-              <parameter type-id='type-id-166' is-artificial='yes'/>
+              <parameter type-id='type-id-166' name='this' is-artificial='yes'/>
               <return type-id='type-id-118'/>
             </function-decl>
           </member-function>
           <member-function access='private'>
             <function-decl name='dereference' mangled-name='_ZNK5boost10filesystem18directory_iterator11dereferenceEv' filepath='src/third_party/boost-1.56.0/boost/filesystem/operations.hpp' line='823' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZNK5boost10filesystem18directory_iterator11dereferenceEv'>
-              <parameter type-id='type-id-232' is-artificial='yes'/>
+              <parameter type-id='type-id-232' name='this' is-artificial='yes'/>
               <return type-id='type-id-361'/>
             </function-decl>
           </member-function>
           <member-function access='private'>
             <function-decl name='equal' mangled-name='_ZNK5boost10filesystem18directory_iterator5equalERKS1_' filepath='src/third_party/boost-1.56.0/boost/filesystem/operations.hpp' line='831' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZNK5boost10filesystem18directory_iterator5equalERKS1_'>
-              <parameter type-id='type-id-232' is-artificial='yes'/>
-              <parameter type-id='type-id-231'/>
+              <parameter type-id='type-id-232' name='this' is-artificial='yes'/>
+              <parameter type-id='type-id-231' name='rhs' filepath='src/third_party/boost-1.56.0/boost/filesystem/operations.hpp' line='831' column='1'/>
               <return type-id='type-id-1'/>
             </function-decl>
           </member-function>
@@ -3595,13 +3693,13 @@
             <var-decl name='m_perms' type-id='type-id-181' visibility='default' filepath='src/third_party/boost-1.56.0/boost/filesystem/operations.hpp' line='277' column='1'/>
           </data-member>
           <member-function access='public' constructor='yes'>
-            <function-decl name='file_status' mangled-name='_ZN5boost10filesystem11file_statusC2Ev' filepath='src/third_party/boost-1.56.0/boost/filesystem/operations.hpp' line='259' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZN5boost10filesystem11file_statusC2Ev'>
+            <function-decl name='file_status' filepath='src/third_party/boost-1.56.0/boost/filesystem/operations.hpp' line='259' column='1' visibility='default' binding='global' size-in-bits='64'>
               <parameter type-id='type-id-168' is-artificial='yes'/>
               <return type-id='type-id-118'/>
             </function-decl>
           </member-function>
           <member-function access='public' constructor='yes'>
-            <function-decl name='file_status' mangled-name='_ZN5boost10filesystem11file_statusC2ENS0_9file_typeENS0_5permsE' filepath='src/third_party/boost-1.56.0/boost/filesystem/operations.hpp' line='260' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZN5boost10filesystem11file_statusC2ENS0_9file_typeENS0_5permsE'>
+            <function-decl name='file_status' filepath='src/third_party/boost-1.56.0/boost/filesystem/operations.hpp' line='260' column='1' visibility='default' binding='global' size-in-bits='64'>
               <parameter type-id='type-id-168' is-artificial='yes'/>
               <parameter type-id='type-id-372'/>
               <parameter type-id='type-id-181'/>
@@ -3610,14 +3708,28 @@
           </member-function>
           <member-function access='public'>
             <function-decl name='type' mangled-name='_ZNK5boost10filesystem11file_status4typeEv' filepath='src/third_party/boost-1.56.0/boost/filesystem/operations.hpp' line='264' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZNK5boost10filesystem11file_status4typeEv'>
-              <parameter type-id='type-id-235' is-artificial='yes'/>
+              <parameter type-id='type-id-235' name='this' is-artificial='yes'/>
               <return type-id='type-id-372'/>
             </function-decl>
           </member-function>
           <member-function access='public'>
             <function-decl name='permissions' mangled-name='_ZNK5boost10filesystem11file_status11permissionsEv' filepath='src/third_party/boost-1.56.0/boost/filesystem/operations.hpp' line='265' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZNK5boost10filesystem11file_status11permissionsEv'>
-              <parameter type-id='type-id-235' is-artificial='yes'/>
+              <parameter type-id='type-id-235' name='this' is-artificial='yes'/>
               <return type-id='type-id-181'/>
+            </function-decl>
+          </member-function>
+          <member-function access='public' constructor='yes'>
+            <function-decl name='file_status' mangled-name='_ZN5boost10filesystem11file_statusC2ENS0_9file_typeENS0_5permsE' filepath='src/third_party/boost-1.56.0/boost/filesystem/operations.hpp' line='260' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZN5boost10filesystem11file_statusC2ENS0_9file_typeENS0_5permsE'>
+              <parameter type-id='type-id-168' name='this' is-artificial='yes'/>
+              <parameter type-id='type-id-372' name='v' filepath='src/third_party/boost-1.56.0/boost/filesystem/operations.hpp' line='260' column='1'/>
+              <parameter type-id='type-id-181' name='prms' filepath='src/third_party/boost-1.56.0/boost/filesystem/operations.hpp' line='260' column='1'/>
+              <return type-id='type-id-118'/>
+            </function-decl>
+          </member-function>
+          <member-function access='public' constructor='yes'>
+            <function-decl name='file_status' mangled-name='_ZN5boost10filesystem11file_statusC2Ev' filepath='src/third_party/boost-1.56.0/boost/filesystem/operations.hpp' line='259' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZN5boost10filesystem11file_statusC2Ev'>
+              <parameter type-id='type-id-168' name='this' is-artificial='yes'/>
+              <return type-id='type-id-118'/>
             </function-decl>
           </member-function>
         </class-decl>
@@ -3640,35 +3752,74 @@
             <var-decl name='m_imp_ptr' type-id='type-id-198' visibility='default' filepath='src/third_party/boost-1.56.0/boost/filesystem/operations.hpp' line='165' column='1'/>
           </data-member>
           <member-function access='public' constructor='yes'>
-            <function-decl name='filesystem_error' mangled-name='_ZN5boost10filesystem16filesystem_errorC2ERKSsNS_6system10error_codeE' filepath='src/third_party/boost-1.56.0/boost/filesystem/operations.hpp' line='76' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZN5boost10filesystem16filesystem_errorC2ERKSsNS_6system10error_codeE'>
+            <function-decl name='filesystem_error' filepath='src/third_party/boost-1.56.0/boost/filesystem/operations.hpp' line='76' column='1' visibility='default' binding='global' size-in-bits='64'>
               <parameter type-id='type-id-170' is-artificial='yes'/>
               <parameter type-id='type-id-328'/>
+              <parameter type-id='type-id-50'/>
+              <return type-id='type-id-118'/>
+            </function-decl>
+          </member-function>
+          <member-function access='public' constructor='yes'>
+            <function-decl name='filesystem_error' filepath='src/third_party/boost-1.56.0/boost/filesystem/operations.hpp' line='87' column='1' visibility='default' binding='global' size-in-bits='64'>
+              <parameter type-id='type-id-170' is-artificial='yes'/>
+              <parameter type-id='type-id-328'/>
+              <parameter type-id='type-id-239'/>
+              <parameter type-id='type-id-50'/>
+              <return type-id='type-id-118'/>
+            </function-decl>
+          </member-function>
+          <member-function access='public' constructor='yes'>
+            <function-decl name='filesystem_error' filepath='src/third_party/boost-1.56.0/boost/filesystem/operations.hpp' line='100' column='1' visibility='default' binding='global' size-in-bits='64'>
+              <parameter type-id='type-id-170' is-artificial='yes'/>
+              <parameter type-id='type-id-328'/>
+              <parameter type-id='type-id-239'/>
+              <parameter type-id='type-id-239'/>
               <parameter type-id='type-id-50'/>
               <return type-id='type-id-118'/>
             </function-decl>
           </member-function>
           <member-function access='public' constructor='yes'>
             <function-decl name='filesystem_error' mangled-name='_ZN5boost10filesystem16filesystem_errorC2ERKSsRKNS0_4pathENS_6system10error_codeE' filepath='src/third_party/boost-1.56.0/boost/filesystem/operations.hpp' line='87' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZN5boost10filesystem16filesystem_errorC2ERKSsRKNS0_4pathENS_6system10error_codeE'>
-              <parameter type-id='type-id-170' is-artificial='yes'/>
-              <parameter type-id='type-id-328'/>
-              <parameter type-id='type-id-239'/>
-              <parameter type-id='type-id-50'/>
+              <parameter type-id='type-id-170' name='this' is-artificial='yes'/>
+              <parameter type-id='type-id-328' name='what_arg' filepath='src/third_party/boost-1.56.0/boost/filesystem/operations.hpp' line='88' column='1'/>
+              <parameter type-id='type-id-239' name='path1_arg' filepath='src/third_party/boost-1.56.0/boost/filesystem/operations.hpp' line='88' column='1'/>
+              <parameter type-id='type-id-50' name='ec' filepath='src/third_party/boost-1.56.0/boost/filesystem/operations.hpp' line='89' column='1'/>
               <return type-id='type-id-118'/>
             </function-decl>
           </member-function>
           <member-function access='public' constructor='yes'>
             <function-decl name='filesystem_error' mangled-name='_ZN5boost10filesystem16filesystem_errorC2ERKSsRKNS0_4pathES6_NS_6system10error_codeE' filepath='src/third_party/boost-1.56.0/boost/filesystem/operations.hpp' line='100' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZN5boost10filesystem16filesystem_errorC2ERKSsRKNS0_4pathES6_NS_6system10error_codeE'>
-              <parameter type-id='type-id-170' is-artificial='yes'/>
-              <parameter type-id='type-id-328'/>
-              <parameter type-id='type-id-239'/>
-              <parameter type-id='type-id-239'/>
-              <parameter type-id='type-id-50'/>
+              <parameter type-id='type-id-170' name='this' is-artificial='yes'/>
+              <parameter type-id='type-id-328' name='what_arg' filepath='src/third_party/boost-1.56.0/boost/filesystem/operations.hpp' line='101' column='1'/>
+              <parameter type-id='type-id-239' name='path1_arg' filepath='src/third_party/boost-1.56.0/boost/filesystem/operations.hpp' line='101' column='1'/>
+              <parameter type-id='type-id-239' name='path2_arg' filepath='src/third_party/boost-1.56.0/boost/filesystem/operations.hpp' line='102' column='1'/>
+              <parameter type-id='type-id-50' name='ec' filepath='src/third_party/boost-1.56.0/boost/filesystem/operations.hpp' line='102' column='1'/>
+              <return type-id='type-id-118'/>
+            </function-decl>
+          </member-function>
+          <member-function access='public' constructor='yes'>
+            <function-decl name='filesystem_error' mangled-name='_ZN5boost10filesystem16filesystem_errorC2ERKSsNS_6system10error_codeE' filepath='src/third_party/boost-1.56.0/boost/filesystem/operations.hpp' line='76' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZN5boost10filesystem16filesystem_errorC2ERKSsNS_6system10error_codeE'>
+              <parameter type-id='type-id-170' name='this' is-artificial='yes'/>
+              <parameter type-id='type-id-328' name='what_arg' filepath='src/third_party/boost-1.56.0/boost/filesystem/operations.hpp' line='77' column='1'/>
+              <parameter type-id='type-id-50' name='ec' filepath='src/third_party/boost-1.56.0/boost/filesystem/operations.hpp' line='77' column='1'/>
               <return type-id='type-id-118'/>
             </function-decl>
           </member-function>
           <member-function access='public' destructor='yes' vtable-offset='0'>
-            <function-decl name='~filesystem_error' mangled-name='_ZN5boost10filesystem16filesystem_errorD0Ev' filepath='src/third_party/boost-1.56.0/boost/filesystem/operations.hpp' line='114' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZN5boost10filesystem16filesystem_errorD2Ev'>
+            <function-decl name='~filesystem_error' filepath='src/third_party/boost-1.56.0/boost/filesystem/operations.hpp' line='114' column='1' visibility='default' binding='global' size-in-bits='64'>
               <parameter type-id='type-id-170' is-artificial='yes'/>
+              <return type-id='type-id-118'/>
+            </function-decl>
+          </member-function>
+          <member-function access='public' destructor='yes' vtable-offset='0'>
+            <function-decl name='~filesystem_error' mangled-name='_ZN5boost10filesystem16filesystem_errorD0Ev' filepath='src/third_party/boost-1.56.0/boost/filesystem/operations.hpp' line='114' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZN5boost10filesystem16filesystem_errorD0Ev'>
+              <parameter type-id='type-id-170' name='this' is-artificial='yes'/>
+              <return type-id='type-id-118'/>
+            </function-decl>
+          </member-function>
+          <member-function access='public' destructor='yes' vtable-offset='0'>
+            <function-decl name='~filesystem_error' mangled-name='_ZN5boost10filesystem16filesystem_errorD2Ev' filepath='src/third_party/boost-1.56.0/boost/filesystem/operations.hpp' line='114' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZN5boost10filesystem16filesystem_errorD2Ev'>
+              <parameter type-id='type-id-170' name='this' is-artificial='yes'/>
               <return type-id='type-id-118'/>
             </function-decl>
           </member-function>
@@ -3694,26 +3845,26 @@
               </data-member>
               <member-function access='private'>
                 <function-decl name='dereference' mangled-name='_ZNK5boost10filesystem4path8iterator11dereferenceEv' filepath='src/third_party/boost-1.56.0/boost/filesystem/path.hpp' line='581' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZNK5boost10filesystem4path8iterator11dereferenceEv'>
-                  <parameter type-id='type-id-243' is-artificial='yes'/>
+                  <parameter type-id='type-id-243' name='this' is-artificial='yes'/>
                   <return type-id='type-id-239'/>
                 </function-decl>
               </member-function>
               <member-function access='private'>
                 <function-decl name='increment' mangled-name='_ZN5boost10filesystem4path8iterator9incrementEv' filepath='src/third_party/boost-1.56.0/boost/filesystem/path.hpp' line='590' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZN5boost10filesystem4path8iterator9incrementEv'>
-                  <parameter type-id='type-id-180' is-artificial='yes'/>
+                  <parameter type-id='type-id-180' name='this' is-artificial='yes'/>
                   <return type-id='type-id-118'/>
                 </function-decl>
               </member-function>
               <member-function access='private'>
                 <function-decl name='equal' mangled-name='_ZNK5boost10filesystem4path8iterator5equalERKS2_' filepath='src/third_party/boost-1.56.0/boost/filesystem/path.hpp' line='583' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZNK5boost10filesystem4path8iterator5equalERKS2_'>
-                  <parameter type-id='type-id-243' is-artificial='yes'/>
-                  <parameter type-id='type-id-242'/>
+                  <parameter type-id='type-id-243' name='this' is-artificial='yes'/>
+                  <parameter type-id='type-id-242' name='rhs' filepath='src/third_party/boost-1.56.0/boost/filesystem/path.hpp' line='583' column='1'/>
                   <return type-id='type-id-1'/>
                 </function-decl>
               </member-function>
               <member-function access='private'>
                 <function-decl name='decrement' mangled-name='_ZN5boost10filesystem4path8iterator9decrementEv' filepath='src/third_party/boost-1.56.0/boost/filesystem/path.hpp' line='591' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZN5boost10filesystem4path8iterator9decrementEv'>
-                  <parameter type-id='type-id-180' is-artificial='yes'/>
+                  <parameter type-id='type-id-180' name='this' is-artificial='yes'/>
                   <return type-id='type-id-118'/>
                 </function-decl>
               </member-function>
@@ -3747,102 +3898,129 @@
             <var-decl name='m_pathname' type-id='type-id-311' visibility='default' filepath='src/third_party/boost-1.56.0/boost/filesystem/path.hpp' line='528' column='1'/>
           </data-member>
           <member-function access='public' constructor='yes'>
-            <function-decl name='path' mangled-name='_ZN5boost10filesystem4pathC2Ev' filepath='src/third_party/boost-1.56.0/boost/filesystem/path.hpp' line='130' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZN5boost10filesystem4pathC2Ev'>
+            <function-decl name='path' filepath='src/third_party/boost-1.56.0/boost/filesystem/path.hpp' line='130' column='1' visibility='default' binding='global' size-in-bits='64'>
               <parameter type-id='type-id-177' is-artificial='yes'/>
               <return type-id='type-id-118'/>
             </function-decl>
           </member-function>
           <member-function access='public' constructor='yes'>
-            <function-decl name='path' mangled-name='_ZN5boost10filesystem4pathC2ERKS1_' filepath='src/third_party/boost-1.56.0/boost/filesystem/path.hpp' line='132' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZN5boost10filesystem4pathC2ERKS1_'>
+            <function-decl name='path' filepath='src/third_party/boost-1.56.0/boost/filesystem/path.hpp' line='132' column='1' visibility='default' binding='global' size-in-bits='64'>
               <parameter type-id='type-id-177' is-artificial='yes'/>
               <parameter type-id='type-id-239'/>
               <return type-id='type-id-118'/>
             </function-decl>
           </member-function>
           <member-function access='public' constructor='yes'>
-            <function-decl name='path' mangled-name='_ZN5boost10filesystem4pathC2EPKc' filepath='src/third_party/boost-1.56.0/boost/filesystem/path.hpp' line='150' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZN5boost10filesystem4pathC2EPKc'>
+            <function-decl name='path' filepath='src/third_party/boost-1.56.0/boost/filesystem/path.hpp' line='150' column='1' visibility='default' binding='global' size-in-bits='64'>
               <parameter type-id='type-id-177' is-artificial='yes'/>
               <parameter type-id='type-id-246'/>
               <return type-id='type-id-118'/>
             </function-decl>
           </member-function>
           <member-function access='public' constructor='yes'>
-            <function-decl name='path' mangled-name='_ZN5boost10filesystem4pathC2ERKSs' filepath='src/third_party/boost-1.56.0/boost/filesystem/path.hpp' line='151' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZN5boost10filesystem4pathC2ERKSs'>
+            <function-decl name='path' filepath='src/third_party/boost-1.56.0/boost/filesystem/path.hpp' line='151' column='1' visibility='default' binding='global' size-in-bits='64'>
               <parameter type-id='type-id-177' is-artificial='yes'/>
               <parameter type-id='type-id-322'/>
               <return type-id='type-id-118'/>
             </function-decl>
           </member-function>
+          <member-function access='public' constructor='yes'>
+            <function-decl name='path' mangled-name='_ZN5boost10filesystem4pathC2EPKc' filepath='src/third_party/boost-1.56.0/boost/filesystem/path.hpp' line='150' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZN5boost10filesystem4pathC2EPKc'>
+              <parameter type-id='type-id-177' name='this' is-artificial='yes'/>
+              <parameter type-id='type-id-246' name='s' filepath='src/third_party/boost-1.56.0/boost/filesystem/path.hpp' line='150' column='1'/>
+              <return type-id='type-id-118'/>
+            </function-decl>
+          </member-function>
           <member-function access='public'>
             <function-decl name='is_absolute' mangled-name='_ZNK5boost10filesystem4path11is_absoluteEv' filepath='src/third_party/boost-1.56.0/boost/filesystem/path.hpp' line='450' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZNK5boost10filesystem4path11is_absoluteEv'>
-              <parameter type-id='type-id-240' is-artificial='yes'/>
+              <parameter type-id='type-id-240' name='this' is-artificial='yes'/>
               <return type-id='type-id-1'/>
+            </function-decl>
+          </member-function>
+          <member-function access='public' constructor='yes'>
+            <function-decl name='path' mangled-name='_ZN5boost10filesystem4pathC2ERKS1_' filepath='src/third_party/boost-1.56.0/boost/filesystem/path.hpp' line='132' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZN5boost10filesystem4pathC2ERKS1_'>
+              <parameter type-id='type-id-177' name='this' is-artificial='yes'/>
+              <parameter type-id='type-id-239' name='p' filepath='src/third_party/boost-1.56.0/boost/filesystem/path.hpp' line='132' column='1'/>
+              <return type-id='type-id-118'/>
             </function-decl>
           </member-function>
           <member-function access='public'>
             <function-decl name='empty' mangled-name='_ZNK5boost10filesystem4path5emptyEv' filepath='src/third_party/boost-1.56.0/boost/filesystem/path.hpp' line='441' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZNK5boost10filesystem4path5emptyEv'>
-              <parameter type-id='type-id-240' is-artificial='yes'/>
+              <parameter type-id='type-id-240' name='this' is-artificial='yes'/>
               <return type-id='type-id-1'/>
+            </function-decl>
+          </member-function>
+          <member-function access='public' constructor='yes'>
+            <function-decl name='path' mangled-name='_ZN5boost10filesystem4pathC2Ev' filepath='src/third_party/boost-1.56.0/boost/filesystem/path.hpp' line='130' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZN5boost10filesystem4pathC2Ev'>
+              <parameter type-id='type-id-177' name='this' is-artificial='yes'/>
+              <return type-id='type-id-118'/>
             </function-decl>
           </member-function>
           <member-function access='public'>
             <function-decl name='clear' mangled-name='_ZN5boost10filesystem4path5clearEv' filepath='src/third_party/boost-1.56.0/boost/filesystem/path.hpp' line='325' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZN5boost10filesystem4path5clearEv'>
-              <parameter type-id='type-id-177' is-artificial='yes'/>
+              <parameter type-id='type-id-177' name='this' is-artificial='yes'/>
               <return type-id='type-id-118'/>
             </function-decl>
           </member-function>
           <member-function access='public'>
             <function-decl name='operator=' mangled-name='_ZN5boost10filesystem4pathaSERKS1_' filepath='src/third_party/boost-1.56.0/boost/filesystem/path.hpp' line='184' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZN5boost10filesystem4pathaSERKS1_'>
-              <parameter type-id='type-id-177' is-artificial='yes'/>
-              <parameter type-id='type-id-239'/>
+              <parameter type-id='type-id-177' name='this' is-artificial='yes'/>
+              <parameter type-id='type-id-239' name='p' filepath='src/third_party/boost-1.56.0/boost/filesystem/path.hpp' line='184' column='1'/>
               <return type-id='type-id-176'/>
             </function-decl>
           </member-function>
           <member-function access='public'>
             <function-decl name='c_str' mangled-name='_ZNK5boost10filesystem4path5c_strEv' filepath='src/third_party/boost-1.56.0/boost/filesystem/path.hpp' line='358' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZNK5boost10filesystem4path5c_strEv'>
-              <parameter type-id='type-id-240' is-artificial='yes'/>
+              <parameter type-id='type-id-240' name='this' is-artificial='yes'/>
               <return type-id='type-id-246'/>
             </function-decl>
           </member-function>
           <member-function access='public'>
             <function-decl name='operator=&lt;char *&gt;' mangled-name='_ZN5boost10filesystem4pathaSIPcEENS_9enable_ifINS0_11path_traits11is_pathableINS_5decayIT_E4typeEEERS1_E4typeERKS8_' filepath='src/third_party/boost-1.56.0/boost/filesystem/path.hpp' line='199' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZN5boost10filesystem4pathaSIPcEENS_9enable_ifINS0_11path_traits11is_pathableINS_5decayIT_E4typeEEERS1_E4typeERKS8_'>
-              <parameter type-id='type-id-177' is-artificial='yes'/>
-              <parameter type-id='type-id-209'/>
+              <parameter type-id='type-id-177' name='this' is-artificial='yes'/>
+              <parameter type-id='type-id-209' name='source' filepath='src/third_party/boost-1.56.0/boost/filesystem/path.hpp' line='199' column='1'/>
               <return type-id='type-id-370'/>
             </function-decl>
           </member-function>
           <member-function access='public'>
             <function-decl name='assign&lt;char *&gt;' mangled-name='_ZN5boost10filesystem4path6assignIPcEERS1_T_S5_' filepath='src/third_party/boost-1.56.0/boost/filesystem/path.hpp' line='221' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZN5boost10filesystem4path6assignIPcEERS1_T_S5_'>
-              <parameter type-id='type-id-177' is-artificial='yes'/>
-              <parameter type-id='type-id-54'/>
-              <parameter type-id='type-id-54'/>
+              <parameter type-id='type-id-177' name='this' is-artificial='yes'/>
+              <parameter type-id='type-id-54' name='begin' filepath='src/third_party/boost-1.56.0/boost/filesystem/path.hpp' line='221' column='1'/>
+              <parameter type-id='type-id-54' name='end' filepath='src/third_party/boost-1.56.0/boost/filesystem/path.hpp' line='221' column='1'/>
               <return type-id='type-id-176'/>
             </function-decl>
           </member-function>
           <member-function access='public'>
             <function-decl name='native' mangled-name='_ZNK5boost10filesystem4path6nativeEv' filepath='src/third_party/boost-1.56.0/boost/filesystem/path.hpp' line='357' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZNK5boost10filesystem4path6nativeEv'>
-              <parameter type-id='type-id-240' is-artificial='yes'/>
+              <parameter type-id='type-id-240' name='this' is-artificial='yes'/>
               <return type-id='type-id-313'/>
+            </function-decl>
+          </member-function>
+          <member-function access='public' constructor='yes'>
+            <function-decl name='path' mangled-name='_ZN5boost10filesystem4pathC2ERKSs' filepath='src/third_party/boost-1.56.0/boost/filesystem/path.hpp' line='151' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZN5boost10filesystem4pathC2ERKSs'>
+              <parameter type-id='type-id-177' name='this' is-artificial='yes'/>
+              <parameter type-id='type-id-322' name='s' filepath='src/third_party/boost-1.56.0/boost/filesystem/path.hpp' line='151' column='1'/>
+              <return type-id='type-id-118'/>
             </function-decl>
           </member-function>
           <member-function access='public'>
             <function-decl name='assign&lt;char *&gt;' mangled-name='_ZN5boost10filesystem4path6assignIPcEERS1_T_S5_RKSt7codecvtIwc11__mbstate_tE' filepath='src/third_party/boost-1.56.0/boost/filesystem/path.hpp' line='227' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZN5boost10filesystem4path6assignIPcEERS1_T_S5_RKSt7codecvtIwc11__mbstate_tE'>
-              <parameter type-id='type-id-177' is-artificial='yes'/>
-              <parameter type-id='type-id-54'/>
-              <parameter type-id='type-id-54'/>
-              <parameter type-id='type-id-310'/>
+              <parameter type-id='type-id-177' name='this' is-artificial='yes'/>
+              <parameter type-id='type-id-54' name='begin' filepath='src/third_party/boost-1.56.0/boost/filesystem/path.hpp' line='227' column='1'/>
+              <parameter type-id='type-id-54' name='end' filepath='src/third_party/boost-1.56.0/boost/filesystem/path.hpp' line='227' column='1'/>
+              <parameter type-id='type-id-310' name='cvt' filepath='src/third_party/boost-1.56.0/boost/filesystem/path.hpp' line='227' column='1'/>
               <return type-id='type-id-176'/>
             </function-decl>
           </member-function>
           <member-function access='public'>
             <function-decl name='string' mangled-name='_ZNK5boost10filesystem4path6stringEv' filepath='src/third_party/boost-1.56.0/boost/filesystem/path.hpp' line='383' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZNK5boost10filesystem4path6stringEv'>
-              <parameter type-id='type-id-240' is-artificial='yes'/>
+              <parameter type-id='type-id-240' name='this' is-artificial='yes'/>
               <return type-id='type-id-328'/>
             </function-decl>
           </member-function>
           <member-function access='public'>
             <function-decl name='has_root_directory' mangled-name='_ZNK5boost10filesystem4path18has_root_directoryEv' filepath='src/third_party/boost-1.56.0/boost/filesystem/path.hpp' line='444' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZNK5boost10filesystem4path18has_root_directoryEv'>
-              <parameter type-id='type-id-240' is-artificial='yes'/>
+              <parameter type-id='type-id-240' name='this' is-artificial='yes'/>
               <return type-id='type-id-1'/>
             </function-decl>
           </member-function>
@@ -3874,7 +4052,7 @@
             </function-decl>
           </member-function>
           <member-function access='public'>
-            <function-decl name='path&lt;const char *&gt;' mangled-name='_ZN5boost10filesystem4pathC2IPKcEET_S5_' filepath='src/third_party/boost-1.56.0/boost/filesystem/path.hpp' line='161' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZN5boost10filesystem4pathC2IPKcEET_S5_'>
+            <function-decl name='path&lt;const char *&gt;' filepath='src/third_party/boost-1.56.0/boost/filesystem/path.hpp' line='161' column='1' visibility='default' binding='global' size-in-bits='64'>
               <parameter type-id='type-id-177' is-artificial='yes'/>
               <parameter type-id='type-id-23'/>
               <parameter type-id='type-id-23'/>
@@ -3883,139 +4061,147 @@
           </member-function>
           <member-function access='public'>
             <function-decl name='operator/=' mangled-name='_ZN5boost10filesystem4pathdVERKS1_' filepath='src/third_party/boost-1.56.0/boost/filesystem/path.hpp' line='293' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZN5boost10filesystem4pathdVERKS1_'>
-              <parameter type-id='type-id-177' is-artificial='yes'/>
-              <parameter type-id='type-id-239'/>
+              <parameter type-id='type-id-177' name='this' is-artificial='yes'/>
+              <parameter type-id='type-id-239' name='p' filepath='src/third_party/boost-1.56.0/libs/filesystem/src/path.cpp' line='153' column='1'/>
               <return type-id='type-id-176'/>
             </function-decl>
           </member-function>
           <member-function access='private'>
             <function-decl name='m_append_separator_if_needed' mangled-name='_ZN5boost10filesystem4path28m_append_separator_if_neededEv' filepath='src/third_party/boost-1.56.0/boost/filesystem/path.hpp' line='534' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZN5boost10filesystem4path28m_append_separator_if_neededEv'>
-              <parameter type-id='type-id-177' is-artificial='yes'/>
+              <parameter type-id='type-id-177' name='this' is-artificial='yes'/>
               <return type-id='type-id-354'/>
             </function-decl>
           </member-function>
           <member-function access='public'>
             <function-decl name='operator/=' mangled-name='_ZN5boost10filesystem4pathdVEPKc' filepath='src/third_party/boost-1.56.0/boost/filesystem/path.hpp' line='295' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZN5boost10filesystem4pathdVEPKc'>
-              <parameter type-id='type-id-177' is-artificial='yes'/>
-              <parameter type-id='type-id-246'/>
+              <parameter type-id='type-id-177' name='this' is-artificial='yes'/>
+              <parameter type-id='type-id-246' name='ptr' filepath='src/third_party/boost-1.56.0/libs/filesystem/src/path.cpp' line='173' column='1'/>
               <return type-id='type-id-176'/>
             </function-decl>
           </member-function>
           <member-function access='public'>
             <function-decl name='compare' mangled-name='_ZNK5boost10filesystem4path7compareERKS1_' filepath='src/third_party/boost-1.56.0/boost/filesystem/path.hpp' line='423' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZNK5boost10filesystem4path7compareERKS1_'>
-              <parameter type-id='type-id-240' is-artificial='yes'/>
-              <parameter type-id='type-id-239'/>
+              <parameter type-id='type-id-240' name='this' is-artificial='yes'/>
+              <parameter type-id='type-id-239' name='p' filepath='src/third_party/boost-1.56.0/libs/filesystem/src/path.cpp' line='194' column='1'/>
               <return type-id='type-id-8'/>
             </function-decl>
           </member-function>
           <member-function access='public'>
             <function-decl name='begin' mangled-name='_ZNK5boost10filesystem4path5beginEv' filepath='src/third_party/boost-1.56.0/boost/filesystem/path.hpp' line='465' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZNK5boost10filesystem4path5beginEv'>
-              <parameter type-id='type-id-240' is-artificial='yes'/>
+              <parameter type-id='type-id-240' name='this' is-artificial='yes'/>
               <return type-id='type-id-178'/>
             </function-decl>
           </member-function>
           <member-function access='public'>
             <function-decl name='end' mangled-name='_ZNK5boost10filesystem4path3endEv' filepath='src/third_party/boost-1.56.0/boost/filesystem/path.hpp' line='466' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZNK5boost10filesystem4path3endEv'>
-              <parameter type-id='type-id-240' is-artificial='yes'/>
+              <parameter type-id='type-id-240' name='this' is-artificial='yes'/>
               <return type-id='type-id-178'/>
             </function-decl>
           </member-function>
           <member-function access='private'>
             <function-decl name='m_erase_redundant_separator' mangled-name='_ZN5boost10filesystem4path27m_erase_redundant_separatorEm' filepath='src/third_party/boost-1.56.0/boost/filesystem/path.hpp' line='538' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZN5boost10filesystem4path27m_erase_redundant_separatorEm'>
-              <parameter type-id='type-id-177' is-artificial='yes'/>
-              <parameter type-id='type-id-354'/>
+              <parameter type-id='type-id-177' name='this' is-artificial='yes'/>
+              <parameter type-id='type-id-354' name='sep_pos' filepath='src/third_party/boost-1.56.0/libs/filesystem/src/path.cpp' line='236' column='1'/>
               <return type-id='type-id-118'/>
             </function-decl>
           </member-function>
           <member-function access='public'>
             <function-decl name='remove_filename' mangled-name='_ZN5boost10filesystem4path15remove_filenameEv' filepath='src/third_party/boost-1.56.0/boost/filesystem/path.hpp' line='332' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZN5boost10filesystem4path15remove_filenameEv'>
-              <parameter type-id='type-id-177' is-artificial='yes'/>
+              <parameter type-id='type-id-177' name='this' is-artificial='yes'/>
               <return type-id='type-id-176'/>
             </function-decl>
           </member-function>
           <member-function access='private'>
             <function-decl name='m_parent_path_end' mangled-name='_ZNK5boost10filesystem4path17m_parent_path_endEv' filepath='src/third_party/boost-1.56.0/boost/filesystem/path.hpp' line='539' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZNK5boost10filesystem4path17m_parent_path_endEv'>
-              <parameter type-id='type-id-240' is-artificial='yes'/>
+              <parameter type-id='type-id-240' name='this' is-artificial='yes'/>
               <return type-id='type-id-354'/>
             </function-decl>
           </member-function>
           <member-function access='public'>
             <function-decl name='replace_extension' mangled-name='_ZN5boost10filesystem4path17replace_extensionERKS1_' filepath='src/third_party/boost-1.56.0/boost/filesystem/path.hpp' line='333' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZN5boost10filesystem4path17replace_extensionERKS1_'>
-              <parameter type-id='type-id-177' is-artificial='yes'/>
-              <parameter type-id='type-id-239'/>
+              <parameter type-id='type-id-177' name='this' is-artificial='yes'/>
+              <parameter type-id='type-id-239' name='new_extension' filepath='src/third_party/boost-1.56.0/libs/filesystem/src/path.cpp' line='263' column='1'/>
               <return type-id='type-id-176'/>
             </function-decl>
           </member-function>
           <member-function access='public'>
             <function-decl name='extension' mangled-name='_ZNK5boost10filesystem4path9extensionEv' filepath='src/third_party/boost-1.56.0/boost/filesystem/path.hpp' line='437' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZNK5boost10filesystem4path9extensionEv'>
-              <parameter type-id='type-id-240' is-artificial='yes'/>
+              <parameter type-id='type-id-240' name='this' is-artificial='yes'/>
               <return type-id='type-id-175'/>
             </function-decl>
           </member-function>
           <member-function access='public'>
             <function-decl name='root_path' mangled-name='_ZNK5boost10filesystem4path9root_pathEv' filepath='src/third_party/boost-1.56.0/boost/filesystem/path.hpp' line='429' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZNK5boost10filesystem4path9root_pathEv'>
-              <parameter type-id='type-id-240' is-artificial='yes'/>
+              <parameter type-id='type-id-240' name='this' is-artificial='yes'/>
               <return type-id='type-id-175'/>
             </function-decl>
           </member-function>
           <member-function access='public'>
             <function-decl name='root_name' mangled-name='_ZNK5boost10filesystem4path9root_nameEv' filepath='src/third_party/boost-1.56.0/boost/filesystem/path.hpp' line='430' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZNK5boost10filesystem4path9root_nameEv'>
-              <parameter type-id='type-id-240' is-artificial='yes'/>
+              <parameter type-id='type-id-240' name='this' is-artificial='yes'/>
               <return type-id='type-id-175'/>
             </function-decl>
           </member-function>
           <member-function access='public'>
             <function-decl name='root_directory' mangled-name='_ZNK5boost10filesystem4path14root_directoryEv' filepath='src/third_party/boost-1.56.0/boost/filesystem/path.hpp' line='432' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZNK5boost10filesystem4path14root_directoryEv'>
-              <parameter type-id='type-id-240' is-artificial='yes'/>
+              <parameter type-id='type-id-240' name='this' is-artificial='yes'/>
               <return type-id='type-id-175'/>
             </function-decl>
           </member-function>
           <member-function access='public'>
+            <function-decl name='path&lt;const char *&gt;' mangled-name='_ZN5boost10filesystem4pathC2IPKcEET_S5_' filepath='src/third_party/boost-1.56.0/boost/filesystem/path.hpp' line='161' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZN5boost10filesystem4pathC2IPKcEET_S5_'>
+              <parameter type-id='type-id-177' name='this' is-artificial='yes'/>
+              <parameter type-id='type-id-23' name='begin' filepath='src/third_party/boost-1.56.0/boost/filesystem/path.hpp' line='161' column='1'/>
+              <parameter type-id='type-id-23' name='end' filepath='src/third_party/boost-1.56.0/boost/filesystem/path.hpp' line='161' column='1'/>
+              <return type-id='type-id-118'/>
+            </function-decl>
+          </member-function>
+          <member-function access='public'>
             <function-decl name='relative_path' mangled-name='_ZNK5boost10filesystem4path13relative_pathEv' filepath='src/third_party/boost-1.56.0/boost/filesystem/path.hpp' line='433' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZNK5boost10filesystem4path13relative_pathEv'>
-              <parameter type-id='type-id-240' is-artificial='yes'/>
+              <parameter type-id='type-id-240' name='this' is-artificial='yes'/>
               <return type-id='type-id-175'/>
             </function-decl>
           </member-function>
           <member-function access='public'>
             <function-decl name='parent_path' mangled-name='_ZNK5boost10filesystem4path11parent_pathEv' filepath='src/third_party/boost-1.56.0/boost/filesystem/path.hpp' line='434' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZNK5boost10filesystem4path11parent_pathEv'>
-              <parameter type-id='type-id-240' is-artificial='yes'/>
+              <parameter type-id='type-id-240' name='this' is-artificial='yes'/>
               <return type-id='type-id-175'/>
             </function-decl>
           </member-function>
           <member-function access='public'>
             <function-decl name='filename' mangled-name='_ZNK5boost10filesystem4path8filenameEv' filepath='src/third_party/boost-1.56.0/boost/filesystem/path.hpp' line='435' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZNK5boost10filesystem4path8filenameEv'>
-              <parameter type-id='type-id-240' is-artificial='yes'/>
+              <parameter type-id='type-id-240' name='this' is-artificial='yes'/>
               <return type-id='type-id-175'/>
             </function-decl>
           </member-function>
           <member-function access='public'>
             <function-decl name='stem' mangled-name='_ZNK5boost10filesystem4path4stemEv' filepath='src/third_party/boost-1.56.0/boost/filesystem/path.hpp' line='436' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZNK5boost10filesystem4path4stemEv'>
-              <parameter type-id='type-id-240' is-artificial='yes'/>
+              <parameter type-id='type-id-240' name='this' is-artificial='yes'/>
               <return type-id='type-id-175'/>
             </function-decl>
           </member-function>
           <member-function access='private'>
             <function-decl name='m_normalize' mangled-name='_ZN5boost10filesystem4path11m_normalizeEv' filepath='src/third_party/boost-1.56.0/boost/filesystem/path.hpp' line='541' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZN5boost10filesystem4path11m_normalizeEv'>
-              <parameter type-id='type-id-177' is-artificial='yes'/>
+              <parameter type-id='type-id-177' name='this' is-artificial='yes'/>
               <return type-id='type-id-176'/>
             </function-decl>
           </member-function>
           <member-function access='public'>
             <function-decl name='operator=&lt;std::basic_string&lt;char&gt; &gt;' mangled-name='_ZN5boost10filesystem4pathaSISsEENS_9enable_ifINS0_11path_traits11is_pathableINS_5decayIT_E4typeEEERS1_E4typeERKS7_' filepath='src/third_party/boost-1.56.0/boost/filesystem/path.hpp' line='199' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZN5boost10filesystem4pathaSISsEENS_9enable_ifINS0_11path_traits11is_pathableINS_5decayIT_E4typeEEERS1_E4typeERKS7_'>
-              <parameter type-id='type-id-177' is-artificial='yes'/>
-              <parameter type-id='type-id-322'/>
+              <parameter type-id='type-id-177' name='this' is-artificial='yes'/>
+              <parameter type-id='type-id-322' name='source' filepath='src/third_party/boost-1.56.0/boost/filesystem/path.hpp' line='199' column='1'/>
               <return type-id='type-id-370'/>
             </function-decl>
           </member-function>
           <member-function access='private' static='yes'>
             <function-decl name='m_path_iterator_increment' mangled-name='_ZN5boost10filesystem4path25m_path_iterator_incrementERNS1_8iteratorE' filepath='src/third_party/boost-1.56.0/boost/filesystem/path.hpp' line='549' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZN5boost10filesystem4path25m_path_iterator_incrementERNS1_8iteratorE'>
-              <parameter type-id='type-id-179'/>
+              <parameter type-id='type-id-179' name='it' filepath='src/third_party/boost-1.56.0/libs/filesystem/src/path.cpp' line='692' column='1'/>
               <return type-id='type-id-118'/>
             </function-decl>
           </member-function>
           <member-function access='private' static='yes'>
             <function-decl name='m_path_iterator_decrement' mangled-name='_ZN5boost10filesystem4path25m_path_iterator_decrementERNS1_8iteratorE' filepath='src/third_party/boost-1.56.0/boost/filesystem/path.hpp' line='550' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZN5boost10filesystem4path25m_path_iterator_decrementERNS1_8iteratorE'>
-              <parameter type-id='type-id-179'/>
+              <parameter type-id='type-id-179' name='it' filepath='src/third_party/boost-1.56.0/libs/filesystem/src/path.cpp' line='751' column='1'/>
               <return type-id='type-id-118'/>
             </function-decl>
           </member-function>
@@ -4026,7 +4212,7 @@
           </member-function>
           <member-function access='public' static='yes'>
             <function-decl name='imbue' mangled-name='_ZN5boost10filesystem4path5imbueERKSt6locale' filepath='src/third_party/boost-1.56.0/boost/filesystem/path.hpp' line='470' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZN5boost10filesystem4path5imbueERKSt6locale'>
-              <parameter type-id='type-id-274'/>
+              <parameter type-id='type-id-274' name='loc' filepath='src/third_party/boost-1.56.0/libs/filesystem/src/path.cpp' line='879' column='1'/>
               <return type-id='type-id-272'/>
             </function-decl>
           </member-function>
@@ -4058,7 +4244,7 @@
             </function-decl>
           </member-function>
           <member-function access='public'>
-            <function-decl name='path&lt;std::basic_string&lt;wchar_t&gt; &gt;' mangled-name='_ZN5boost10filesystem4pathC2ISbIwSt11char_traitsIwESaIwEEEERKT_PNS_9enable_ifINS0_11path_traits11is_pathableINS_5decayIS7_E4typeEEEvE4typeE' filepath='src/third_party/boost-1.56.0/boost/filesystem/path.hpp' line='135' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZN5boost10filesystem4pathC2ISbIwSt11char_traitsIwESaIwEEEERKT_PNS_9enable_ifINS0_11path_traits11is_pathableINS_5decayIS7_E4typeEEEvE4typeE'>
+            <function-decl name='path&lt;std::basic_string&lt;wchar_t&gt; &gt;' filepath='src/third_party/boost-1.56.0/boost/filesystem/path.hpp' line='135' column='1' visibility='default' binding='global' size-in-bits='64'>
               <parameter type-id='type-id-177' is-artificial='yes'/>
               <parameter type-id='type-id-381'/>
               <parameter type-id='type-id-382'/>
@@ -4067,14 +4253,22 @@
           </member-function>
           <member-function access='public'>
             <function-decl name='wstring' mangled-name='_ZNK5boost10filesystem4path7wstringEv' filepath='src/third_party/boost-1.56.0/boost/filesystem/path.hpp' line='386' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZNK5boost10filesystem4path7wstringEv'>
-              <parameter type-id='type-id-240' is-artificial='yes'/>
+              <parameter type-id='type-id-240' name='this' is-artificial='yes'/>
               <return type-id='type-id-383'/>
             </function-decl>
           </member-function>
           <member-function access='public'>
+            <function-decl name='path&lt;std::basic_string&lt;wchar_t&gt; &gt;' mangled-name='_ZN5boost10filesystem4pathC2ISbIwSt11char_traitsIwESaIwEEEERKT_PNS_9enable_ifINS0_11path_traits11is_pathableINS_5decayIS7_E4typeEEEvE4typeE' filepath='src/third_party/boost-1.56.0/boost/filesystem/path.hpp' line='135' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZN5boost10filesystem4pathC2ISbIwSt11char_traitsIwESaIwEEEERKT_PNS_9enable_ifINS0_11path_traits11is_pathableINS_5decayIS7_E4typeEEEvE4typeE'>
+              <parameter type-id='type-id-177' name='this' is-artificial='yes'/>
+              <parameter type-id='type-id-381' name='source' filepath='src/third_party/boost-1.56.0/boost/filesystem/path.hpp' line='135' column='1'/>
+              <parameter type-id='type-id-382' filepath='src/third_party/boost-1.56.0/boost/filesystem/path.hpp' line='137' column='1'/>
+              <return type-id='type-id-118'/>
+            </function-decl>
+          </member-function>
+          <member-function access='public'>
             <function-decl name='wstring' mangled-name='_ZNK5boost10filesystem4path7wstringERKSt7codecvtIwc11__mbstate_tE' filepath='src/third_party/boost-1.56.0/boost/filesystem/path.hpp' line='387' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZNK5boost10filesystem4path7wstringERKSt7codecvtIwc11__mbstate_tE'>
-              <parameter type-id='type-id-240' is-artificial='yes'/>
-              <parameter type-id='type-id-310'/>
+              <parameter type-id='type-id-240' name='this' is-artificial='yes'/>
+              <parameter type-id='type-id-310' name='cvt' filepath='src/third_party/boost-1.56.0/boost/filesystem/path.hpp' line='387' column='1'/>
               <return type-id='type-id-383'/>
             </function-decl>
           </member-function>
@@ -4238,14 +4432,26 @@
               <var-decl name='buffer' type-id='type-id-17' visibility='default' filepath='src/third_party/boost-1.56.0/boost/filesystem/operations.hpp' line='747' column='1'/>
             </data-member>
             <member-function access='public' constructor='yes'>
-              <function-decl name='dir_itr_imp' mangled-name='_ZN5boost10filesystem6detail11dir_itr_impC2Ev' filepath='src/third_party/boost-1.56.0/boost/filesystem/operations.hpp' line='750' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZN5boost10filesystem6detail11dir_itr_impC2Ev'>
+              <function-decl name='dir_itr_imp' filepath='src/third_party/boost-1.56.0/boost/filesystem/operations.hpp' line='750' column='1' visibility='default' binding='global' size-in-bits='64'>
                 <parameter type-id='type-id-159' is-artificial='yes'/>
                 <return type-id='type-id-118'/>
               </function-decl>
             </member-function>
             <member-function access='public' destructor='yes'>
-              <function-decl name='~dir_itr_imp' mangled-name='_ZN5boost10filesystem6detail11dir_itr_impD2Ev' filepath='src/third_party/boost-1.56.0/boost/filesystem/operations.hpp' line='756' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZN5boost10filesystem6detail11dir_itr_impD2Ev'>
+              <function-decl name='~dir_itr_imp' filepath='src/third_party/boost-1.56.0/boost/filesystem/operations.hpp' line='756' column='1' visibility='default' binding='global' size-in-bits='64'>
                 <parameter type-id='type-id-159' is-artificial='yes'/>
+                <return type-id='type-id-118'/>
+              </function-decl>
+            </member-function>
+            <member-function access='public' constructor='yes'>
+              <function-decl name='dir_itr_imp' mangled-name='_ZN5boost10filesystem6detail11dir_itr_impC2Ev' filepath='src/third_party/boost-1.56.0/boost/filesystem/operations.hpp' line='750' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZN5boost10filesystem6detail11dir_itr_impC2Ev'>
+                <parameter type-id='type-id-159' name='this' is-artificial='yes'/>
+                <return type-id='type-id-118'/>
+              </function-decl>
+            </member-function>
+            <member-function access='public' destructor='yes'>
+              <function-decl name='~dir_itr_imp' mangled-name='_ZN5boost10filesystem6detail11dir_itr_impD2Ev' filepath='src/third_party/boost-1.56.0/boost/filesystem/operations.hpp' line='756' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZN5boost10filesystem6detail11dir_itr_impD2Ev'>
+                <parameter type-id='type-id-159' name='this' is-artificial='yes'/>
                 <return type-id='type-id-118'/>
               </function-decl>
             </member-function>
@@ -4560,44 +4766,52 @@
             </function-decl>
           </member-function>
           <member-function access='public' constructor='yes'>
+            <function-decl name='system_error' filepath='src/third_party/boost-1.56.0/boost/system/system_error.hpp' line='30' column='1' visibility='default' binding='global' size-in-bits='64'>
+              <parameter type-id='type-id-206' is-artificial='yes'/>
+              <parameter type-id='type-id-50'/>
+              <parameter type-id='type-id-328'/>
+              <return type-id='type-id-118'/>
+            </function-decl>
+          </member-function>
+          <member-function access='public' constructor='yes'>
+            <function-decl name='system_error' filepath='src/third_party/boost-1.56.0/boost/system/system_error.hpp' line='33' column='1' visibility='default' binding='global' size-in-bits='64'>
+              <parameter type-id='type-id-206' is-artificial='yes'/>
+              <parameter type-id='type-id-50'/>
+              <parameter type-id='type-id-23'/>
+              <return type-id='type-id-118'/>
+            </function-decl>
+          </member-function>
+          <member-function access='public' constructor='yes'>
+            <function-decl name='system_error' filepath='src/third_party/boost-1.56.0/boost/system/system_error.hpp' line='36' column='1' visibility='default' binding='global' size-in-bits='64'>
+              <parameter type-id='type-id-206' is-artificial='yes'/>
+              <parameter type-id='type-id-8'/>
+              <parameter type-id='type-id-64'/>
+              <return type-id='type-id-118'/>
+            </function-decl>
+          </member-function>
+          <member-function access='public' constructor='yes'>
+            <function-decl name='system_error' filepath='src/third_party/boost-1.56.0/boost/system/system_error.hpp' line='39' column='1' visibility='default' binding='global' size-in-bits='64'>
+              <parameter type-id='type-id-206' is-artificial='yes'/>
+              <parameter type-id='type-id-8'/>
+              <parameter type-id='type-id-64'/>
+              <parameter type-id='type-id-328'/>
+              <return type-id='type-id-118'/>
+            </function-decl>
+          </member-function>
+          <member-function access='public' constructor='yes'>
+            <function-decl name='system_error' filepath='src/third_party/boost-1.56.0/boost/system/system_error.hpp' line='43' column='1' visibility='default' binding='global' size-in-bits='64'>
+              <parameter type-id='type-id-206' is-artificial='yes'/>
+              <parameter type-id='type-id-8'/>
+              <parameter type-id='type-id-64'/>
+              <parameter type-id='type-id-23'/>
+              <return type-id='type-id-118'/>
+            </function-decl>
+          </member-function>
+          <member-function access='public' constructor='yes'>
             <function-decl name='system_error' mangled-name='_ZN5boost6system12system_errorC2ENS0_10error_codeERKSs' filepath='src/third_party/boost-1.56.0/boost/system/system_error.hpp' line='30' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZN5boost6system12system_errorC2ENS0_10error_codeERKSs'>
-              <parameter type-id='type-id-206' is-artificial='yes'/>
-              <parameter type-id='type-id-50'/>
-              <parameter type-id='type-id-328'/>
-              <return type-id='type-id-118'/>
-            </function-decl>
-          </member-function>
-          <member-function access='public' constructor='yes'>
-            <function-decl name='system_error' filepath='src/third_party/boost-1.56.0/boost/system/system_error.hpp' line='33' column='1' visibility='default' binding='global' size-in-bits='64'>
-              <parameter type-id='type-id-206' is-artificial='yes'/>
-              <parameter type-id='type-id-50'/>
-              <parameter type-id='type-id-23'/>
-              <return type-id='type-id-118'/>
-            </function-decl>
-          </member-function>
-          <member-function access='public' constructor='yes'>
-            <function-decl name='system_error' filepath='src/third_party/boost-1.56.0/boost/system/system_error.hpp' line='36' column='1' visibility='default' binding='global' size-in-bits='64'>
-              <parameter type-id='type-id-206' is-artificial='yes'/>
-              <parameter type-id='type-id-8'/>
-              <parameter type-id='type-id-64'/>
-              <return type-id='type-id-118'/>
-            </function-decl>
-          </member-function>
-          <member-function access='public' constructor='yes'>
-            <function-decl name='system_error' filepath='src/third_party/boost-1.56.0/boost/system/system_error.hpp' line='39' column='1' visibility='default' binding='global' size-in-bits='64'>
-              <parameter type-id='type-id-206' is-artificial='yes'/>
-              <parameter type-id='type-id-8'/>
-              <parameter type-id='type-id-64'/>
-              <parameter type-id='type-id-328'/>
-              <return type-id='type-id-118'/>
-            </function-decl>
-          </member-function>
-          <member-function access='public' constructor='yes'>
-            <function-decl name='system_error' filepath='src/third_party/boost-1.56.0/boost/system/system_error.hpp' line='43' column='1' visibility='default' binding='global' size-in-bits='64'>
-              <parameter type-id='type-id-206' is-artificial='yes'/>
-              <parameter type-id='type-id-8'/>
-              <parameter type-id='type-id-64'/>
-              <parameter type-id='type-id-23'/>
+              <parameter type-id='type-id-206' name='this' is-artificial='yes'/>
+              <parameter type-id='type-id-50' name='ec' filepath='src/third_party/boost-1.56.0/boost/system/system_error.hpp' line='30' column='1'/>
+              <parameter type-id='type-id-328' name='what_arg' filepath='src/third_party/boost-1.56.0/boost/system/system_error.hpp' line='30' column='1'/>
               <return type-id='type-id-118'/>
             </function-decl>
           </member-function>
@@ -4687,15 +4901,24 @@
               <parameter type-id='type-id-8'/>
               <parameter type-id='type-id-64'/>
               <parameter type-id='type-id-328'/>
+              <return type-id='type-id-118'/>
+            </function-decl>
+          </member-function>
+          <member-function access='public' constructor='yes'>
+            <function-decl name='system_error' filepath='src/third_party/boost-1.56.0/boost/system/system_error.hpp' line='43' column='1' visibility='default' binding='global' size-in-bits='64'>
+              <parameter type-id='type-id-206' is-artificial='yes'/>
+              <parameter type-id='type-id-8'/>
+              <parameter type-id='type-id-64'/>
+              <parameter type-id='type-id-23'/>
               <return type-id='type-id-118'/>
             </function-decl>
           </member-function>
           <member-function access='public' constructor='yes'>
             <function-decl name='system_error' mangled-name='_ZN5boost6system12system_errorC2EiRKNS0_14error_categoryEPKc' filepath='src/third_party/boost-1.56.0/boost/system/system_error.hpp' line='43' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZN5boost6system12system_errorC2EiRKNS0_14error_categoryEPKc'>
-              <parameter type-id='type-id-206' is-artificial='yes'/>
-              <parameter type-id='type-id-8'/>
-              <parameter type-id='type-id-64'/>
-              <parameter type-id='type-id-23'/>
+              <parameter type-id='type-id-206' name='this' is-artificial='yes'/>
+              <parameter type-id='type-id-8' name='ev' filepath='src/third_party/boost-1.56.0/boost/system/system_error.hpp' line='43' column='1'/>
+              <parameter type-id='type-id-64' name='ecat' filepath='src/third_party/boost-1.56.0/boost/system/system_error.hpp' line='43' column='1'/>
+              <parameter type-id='type-id-23' name='what_arg' filepath='src/third_party/boost-1.56.0/boost/system/system_error.hpp' line='44' column='1'/>
               <return type-id='type-id-118'/>
             </function-decl>
           </member-function>
@@ -4804,14 +5027,14 @@
             </function-decl>
           </member-function>
           <member-function access='public' destructor='yes' vtable-offset='0'>
-            <function-decl name='~system_error' mangled-name='_ZN5boost6system12system_errorD0Ev' filepath='src/third_party/boost-1.56.0/boost/system/system_error.hpp' line='47' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZN5boost6system12system_errorD2Ev'>
-              <parameter type-id='type-id-206' is-artificial='yes'/>
+            <function-decl name='~system_error' mangled-name='_ZN5boost6system12system_errorD0Ev' filepath='src/third_party/boost-1.56.0/boost/system/system_error.hpp' line='47' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZN5boost6system12system_errorD0Ev'>
+              <parameter type-id='type-id-206' name='this' is-artificial='yes'/>
               <return type-id='type-id-118'/>
             </function-decl>
           </member-function>
           <member-function access='public' destructor='yes' vtable-offset='0'>
             <function-decl name='~system_error' mangled-name='_ZN5boost6system12system_errorD2Ev' filepath='src/third_party/boost-1.56.0/boost/system/system_error.hpp' line='47' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZN5boost6system12system_errorD2Ev'>
-              <parameter type-id='type-id-206' is-artificial='yes'/>
+              <parameter type-id='type-id-206' name='this' is-artificial='yes'/>
               <return type-id='type-id-118'/>
             </function-decl>
           </member-function>
@@ -4829,13 +5052,13 @@
             <var-decl name='pi_' type-id='type-id-146' visibility='default' filepath='src/third_party/boost-1.56.0/boost/smart_ptr/detail/shared_count.hpp' line='104' column='1'/>
           </data-member>
           <member-function access='public' constructor='yes'>
-            <function-decl name='shared_count' mangled-name='_ZN5boost6detail12shared_countC2Ev' filepath='src/third_party/boost-1.56.0/boost/smart_ptr/detail/shared_count.hpp' line='114' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZN5boost6detail12shared_countC2Ev'>
+            <function-decl name='shared_count' filepath='src/third_party/boost-1.56.0/boost/smart_ptr/detail/shared_count.hpp' line='114' column='1' visibility='default' binding='global' size-in-bits='64'>
               <parameter type-id='type-id-143' is-artificial='yes'/>
               <return type-id='type-id-118'/>
             </function-decl>
           </member-function>
           <member-function access='public' destructor='yes'>
-            <function-decl name='~shared_count' mangled-name='_ZN5boost6detail12shared_countD2Ev' filepath='src/third_party/boost-1.56.0/boost/smart_ptr/detail/shared_count.hpp' line='441' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZN5boost6detail12shared_countD2Ev'>
+            <function-decl name='~shared_count' filepath='src/third_party/boost-1.56.0/boost/smart_ptr/detail/shared_count.hpp' line='441' column='1' visibility='default' binding='global' size-in-bits='64'>
               <parameter type-id='type-id-143' is-artificial='yes'/>
               <return type-id='type-id-118'/>
             </function-decl>
@@ -4870,23 +5093,49 @@
             </function-decl>
           </member-function>
           <member-function access='public'>
-            <function-decl name='shared_count&lt;boost::filesystem::detail::dir_itr_imp&gt;' mangled-name='_ZN5boost6detail12shared_countC2INS_10filesystem6detail11dir_itr_impEEEPT_' filepath='src/third_party/boost-1.56.0/boost/smart_ptr/detail/shared_count.hpp' line='121' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZN5boost6detail12shared_countC2INS_10filesystem6detail11dir_itr_impEEEPT_'>
+            <function-decl name='shared_count&lt;boost::filesystem::detail::dir_itr_imp&gt;' filepath='src/third_party/boost-1.56.0/boost/smart_ptr/detail/shared_count.hpp' line='121' column='1' visibility='default' binding='global' size-in-bits='64'>
               <parameter type-id='type-id-143' is-artificial='yes'/>
               <parameter type-id='type-id-159'/>
               <return type-id='type-id-118'/>
             </function-decl>
           </member-function>
           <member-function access='public'>
-            <function-decl name='shared_count&lt;boost::filesystem::filesystem_error::m_imp&gt;' mangled-name='_ZN5boost6detail12shared_countC2INS_10filesystem16filesystem_error5m_impEEEPT_' filepath='src/third_party/boost-1.56.0/boost/smart_ptr/detail/shared_count.hpp' line='121' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZN5boost6detail12shared_countC2INS_10filesystem16filesystem_error5m_impEEEPT_'>
+            <function-decl name='shared_count&lt;boost::filesystem::filesystem_error::m_imp&gt;' filepath='src/third_party/boost-1.56.0/boost/smart_ptr/detail/shared_count.hpp' line='121' column='1' visibility='default' binding='global' size-in-bits='64'>
               <parameter type-id='type-id-143' is-artificial='yes'/>
               <parameter type-id='type-id-173'/>
               <return type-id='type-id-118'/>
             </function-decl>
           </member-function>
+          <member-function access='public' destructor='yes'>
+            <function-decl name='~shared_count' mangled-name='_ZN5boost6detail12shared_countD2Ev' filepath='src/third_party/boost-1.56.0/boost/smart_ptr/detail/shared_count.hpp' line='441' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZN5boost6detail12shared_countD2Ev'>
+              <parameter type-id='type-id-143' name='this' is-artificial='yes'/>
+              <return type-id='type-id-118'/>
+            </function-decl>
+          </member-function>
           <member-function access='public'>
             <function-decl name='swap' mangled-name='_ZN5boost6detail12shared_count4swapERS1_' filepath='src/third_party/boost-1.56.0/boost/smart_ptr/detail/shared_count.hpp' line='486' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZN5boost6detail12shared_count4swapERS1_'>
-              <parameter type-id='type-id-143' is-artificial='yes'/>
-              <parameter type-id='type-id-141'/>
+              <parameter type-id='type-id-143' name='this' is-artificial='yes'/>
+              <parameter type-id='type-id-141' name='r' filepath='src/third_party/boost-1.56.0/boost/smart_ptr/detail/shared_count.hpp' line='486' column='1'/>
+              <return type-id='type-id-118'/>
+            </function-decl>
+          </member-function>
+          <member-function access='public' constructor='yes'>
+            <function-decl name='shared_count' mangled-name='_ZN5boost6detail12shared_countC2Ev' filepath='src/third_party/boost-1.56.0/boost/smart_ptr/detail/shared_count.hpp' line='114' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZN5boost6detail12shared_countC2Ev'>
+              <parameter type-id='type-id-143' name='this' is-artificial='yes'/>
+              <return type-id='type-id-118'/>
+            </function-decl>
+          </member-function>
+          <member-function access='public'>
+            <function-decl name='shared_count&lt;boost::filesystem::detail::dir_itr_imp&gt;' mangled-name='_ZN5boost6detail12shared_countC2INS_10filesystem6detail11dir_itr_impEEEPT_' filepath='src/third_party/boost-1.56.0/boost/smart_ptr/detail/shared_count.hpp' line='121' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZN5boost6detail12shared_countC2INS_10filesystem6detail11dir_itr_impEEEPT_'>
+              <parameter type-id='type-id-143' name='this' is-artificial='yes'/>
+              <parameter type-id='type-id-159' name='p' filepath='src/third_party/boost-1.56.0/boost/smart_ptr/detail/shared_count.hpp' line='121' column='1'/>
+              <return type-id='type-id-118'/>
+            </function-decl>
+          </member-function>
+          <member-function access='public'>
+            <function-decl name='shared_count&lt;boost::filesystem::filesystem_error::m_imp&gt;' mangled-name='_ZN5boost6detail12shared_countC2INS_10filesystem16filesystem_error5m_impEEEPT_' filepath='src/third_party/boost-1.56.0/boost/smart_ptr/detail/shared_count.hpp' line='121' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZN5boost6detail12shared_countC2INS_10filesystem16filesystem_error5m_impEEEPT_'>
+              <parameter type-id='type-id-143' name='this' is-artificial='yes'/>
+              <parameter type-id='type-id-173' name='p' filepath='src/third_party/boost-1.56.0/boost/smart_ptr/detail/shared_count.hpp' line='121' column='1'/>
               <return type-id='type-id-118'/>
             </function-decl>
           </member-function>
@@ -4906,26 +5155,44 @@
             </function-decl>
           </member-function>
           <member-function access='public' constructor='yes'>
-            <function-decl name='sp_counted_base' mangled-name='_ZN5boost6detail15sp_counted_baseC2Ev' filepath='src/third_party/boost-1.56.0/boost/smart_ptr/detail/sp_counted_base_gcc_x86.hpp' line='109' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZN5boost6detail15sp_counted_baseC2Ev'>
+            <function-decl name='sp_counted_base' filepath='src/third_party/boost-1.56.0/boost/smart_ptr/detail/sp_counted_base_gcc_x86.hpp' line='109' column='1' visibility='default' binding='global' size-in-bits='64'>
               <parameter type-id='type-id-146' is-artificial='yes'/>
               <return type-id='type-id-118'/>
             </function-decl>
           </member-function>
           <member-function access='public'>
             <function-decl name='release' mangled-name='_ZN5boost6detail15sp_counted_base7releaseEv' filepath='src/third_party/boost-1.56.0/boost/smart_ptr/detail/sp_counted_base_gcc_x86.hpp' line='142' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZN5boost6detail15sp_counted_base7releaseEv'>
-              <parameter type-id='type-id-146' is-artificial='yes'/>
+              <parameter type-id='type-id-146' name='this' is-artificial='yes'/>
               <return type-id='type-id-118'/>
             </function-decl>
           </member-function>
           <member-function access='public'>
             <function-decl name='weak_release' mangled-name='_ZN5boost6detail15sp_counted_base12weak_releaseEv' filepath='src/third_party/boost-1.56.0/boost/smart_ptr/detail/sp_counted_base_gcc_x86.hpp' line='156' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZN5boost6detail15sp_counted_base12weak_releaseEv'>
+              <parameter type-id='type-id-146' name='this' is-artificial='yes'/>
+              <return type-id='type-id-118'/>
+            </function-decl>
+          </member-function>
+          <member-function access='public' constructor='yes'>
+            <function-decl name='sp_counted_base' mangled-name='_ZN5boost6detail15sp_counted_baseC2Ev' filepath='src/third_party/boost-1.56.0/boost/smart_ptr/detail/sp_counted_base_gcc_x86.hpp' line='109' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZN5boost6detail15sp_counted_baseC2Ev'>
+              <parameter type-id='type-id-146' name='this' is-artificial='yes'/>
+              <return type-id='type-id-118'/>
+            </function-decl>
+          </member-function>
+          <member-function access='public' destructor='yes' vtable-offset='0'>
+            <function-decl name='~sp_counted_base' filepath='src/third_party/boost-1.56.0/boost/smart_ptr/detail/sp_counted_base_gcc_x86.hpp' line='113' column='1' visibility='default' binding='global' size-in-bits='64'>
               <parameter type-id='type-id-146' is-artificial='yes'/>
               <return type-id='type-id-118'/>
             </function-decl>
           </member-function>
           <member-function access='public' destructor='yes' vtable-offset='0'>
-            <function-decl name='~sp_counted_base' mangled-name='_ZN5boost6detail15sp_counted_baseD0Ev' filepath='src/third_party/boost-1.56.0/boost/smart_ptr/detail/sp_counted_base_gcc_x86.hpp' line='113' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZN5boost6detail15sp_counted_baseD2Ev'>
-              <parameter type-id='type-id-146' is-artificial='yes'/>
+            <function-decl name='~sp_counted_base' mangled-name='_ZN5boost6detail15sp_counted_baseD0Ev' filepath='src/third_party/boost-1.56.0/boost/smart_ptr/detail/sp_counted_base_gcc_x86.hpp' line='113' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZN5boost6detail15sp_counted_baseD0Ev'>
+              <parameter type-id='type-id-146' name='this' is-artificial='yes'/>
+              <return type-id='type-id-118'/>
+            </function-decl>
+          </member-function>
+          <member-function access='public' destructor='yes' vtable-offset='0'>
+            <function-decl name='~sp_counted_base' mangled-name='_ZN5boost6detail15sp_counted_baseD2Ev' filepath='src/third_party/boost-1.56.0/boost/smart_ptr/detail/sp_counted_base_gcc_x86.hpp' line='113' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZN5boost6detail15sp_counted_baseD2Ev'>
+              <parameter type-id='type-id-146' name='this' is-artificial='yes'/>
               <return type-id='type-id-118'/>
             </function-decl>
           </member-function>
@@ -4968,9 +5235,16 @@
             </function-decl>
           </member-function>
           <member-function access='public'>
-            <function-decl name='sp_counted_impl_p' mangled-name='_ZN5boost6detail17sp_counted_impl_pINS_10filesystem6detail11dir_itr_impEEC2EPS4_' filepath='src/third_party/boost-1.56.0/boost/smart_ptr/detail/sp_counted_impl.hpp' line='66' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZN5boost6detail17sp_counted_impl_pINS_10filesystem6detail11dir_itr_impEEC2EPS4_'>
+            <function-decl name='sp_counted_impl_p' filepath='src/third_party/boost-1.56.0/boost/smart_ptr/detail/sp_counted_impl.hpp' line='66' column='1' visibility='default' binding='global' size-in-bits='64'>
               <parameter type-id='type-id-149' is-artificial='yes'/>
               <parameter type-id='type-id-159'/>
+              <return type-id='type-id-118'/>
+            </function-decl>
+          </member-function>
+          <member-function access='public'>
+            <function-decl name='sp_counted_impl_p' mangled-name='_ZN5boost6detail17sp_counted_impl_pINS_10filesystem6detail11dir_itr_impEEC2EPS4_' filepath='src/third_party/boost-1.56.0/boost/smart_ptr/detail/sp_counted_impl.hpp' line='66' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZN5boost6detail17sp_counted_impl_pINS_10filesystem6detail11dir_itr_impEEC2EPS4_'>
+              <parameter type-id='type-id-149' name='this' is-artificial='yes'/>
+              <parameter type-id='type-id-159' name='px' filepath='src/third_party/boost-1.56.0/boost/smart_ptr/detail/sp_counted_impl.hpp' line='66' column='1'/>
               <return type-id='type-id-118'/>
             </function-decl>
           </member-function>
@@ -5007,9 +5281,16 @@
             </function-decl>
           </member-function>
           <member-function access='public'>
-            <function-decl name='sp_counted_impl_p' mangled-name='_ZN5boost6detail17sp_counted_impl_pINS_10filesystem16filesystem_error5m_impEEC2EPS4_' filepath='src/third_party/boost-1.56.0/boost/smart_ptr/detail/sp_counted_impl.hpp' line='66' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZN5boost6detail17sp_counted_impl_pINS_10filesystem16filesystem_error5m_impEEC2EPS4_'>
+            <function-decl name='sp_counted_impl_p' filepath='src/third_party/boost-1.56.0/boost/smart_ptr/detail/sp_counted_impl.hpp' line='66' column='1' visibility='default' binding='global' size-in-bits='64'>
               <parameter type-id='type-id-152' is-artificial='yes'/>
               <parameter type-id='type-id-173'/>
+              <return type-id='type-id-118'/>
+            </function-decl>
+          </member-function>
+          <member-function access='public'>
+            <function-decl name='sp_counted_impl_p' mangled-name='_ZN5boost6detail17sp_counted_impl_pINS_10filesystem16filesystem_error5m_impEEC2EPS4_' filepath='src/third_party/boost-1.56.0/boost/smart_ptr/detail/sp_counted_impl.hpp' line='66' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZN5boost6detail17sp_counted_impl_pINS_10filesystem16filesystem_error5m_impEEC2EPS4_'>
+              <parameter type-id='type-id-152' name='this' is-artificial='yes'/>
+              <parameter type-id='type-id-173' name='px' filepath='src/third_party/boost-1.56.0/boost/smart_ptr/detail/sp_counted_impl.hpp' line='66' column='1'/>
               <return type-id='type-id-118'/>
             </function-decl>
           </member-function>
@@ -5076,35 +5357,21 @@
             <var-decl name='v_' type-id='type-id-162' visibility='default' filepath='src/third_party/boost-1.56.0/boost/core/addressof.hpp' line='27' column='1'/>
           </data-member>
           <member-function access='public'>
-            <function-decl name='addr_impl_ref' mangled-name='_ZN5boost6detail13addr_impl_refINS_10filesystem15directory_entryEEC2ERS3_' filepath='src/third_party/boost-1.56.0/boost/core/addressof.hpp' line='29' column='1' visibility='default' binding='global' size-in-bits='64'>
+            <function-decl name='addr_impl_ref' filepath='src/third_party/boost-1.56.0/boost/core/addressof.hpp' line='29' column='1' visibility='default' binding='global' size-in-bits='64'>
               <parameter type-id='type-id-139' is-artificial='yes'/>
               <parameter type-id='type-id-162'/>
               <return type-id='type-id-118'/>
             </function-decl>
           </member-function>
-          <member-function access='public'>
-            <function-decl name='operator boost::filesystem::directory_entry &amp;' mangled-name='_ZNK5boost6detail13addr_impl_refINS_10filesystem15directory_entryEEcvRS3_Ev' filepath='src/third_party/boost-1.56.0/boost/core/addressof.hpp' line='30' column='1' visibility='default' binding='global' size-in-bits='64'>
-              <parameter type-id='type-id-213' is-artificial='yes'/>
-              <return type-id='type-id-162'/>
-            </function-decl>
-          </member-function>
         </class-decl>
-        <class-decl name='addressof_impl&lt;boost::filesystem::directory_entry&gt;' size-in-bits='8' is-struct='yes' visibility='default' filepath='src/third_party/boost-1.56.0/boost/core/addressof.hpp' line='36' column='1' id='type-id-403'>
-          <member-function access='public' static='yes'>
-            <function-decl name='f' mangled-name='_ZN5boost6detail14addressof_implINS_10filesystem15directory_entryEE1fERS3_l' filepath='src/third_party/boost-1.56.0/boost/core/addressof.hpp' line='38' column='1' visibility='default' binding='global' size-in-bits='64'>
-              <parameter type-id='type-id-162'/>
-              <parameter type-id='type-id-10'/>
-              <return type-id='type-id-163'/>
-            </function-decl>
-          </member-function>
-        </class-decl>
+        <class-decl name='addressof_impl&lt;boost::filesystem::directory_entry&gt;' size-in-bits='8' is-struct='yes' visibility='default' filepath='src/third_party/boost-1.56.0/boost/core/addressof.hpp' line='36' column='1' id='type-id-403'/>
         <class-decl name='operator_arrow_dispatch&lt;boost::filesystem::directory_entry &amp;, boost::filesystem::directory_entry *&gt;' size-in-bits='8' is-struct='yes' visibility='default' filepath='src/third_party/boost-1.56.0/boost/iterator/iterator_facade.hpp' line='319' column='1' id='type-id-404'>
           <member-type access='public'>
             <typedef-decl name='result_type' type-id='type-id-163' filepath='src/third_party/boost-1.56.0/boost/iterator/iterator_facade.hpp' line='321' column='1' id='type-id-363'/>
           </member-type>
           <member-function access='public' static='yes'>
             <function-decl name='apply' mangled-name='_ZN5boost6detail23operator_arrow_dispatchIRNS_10filesystem15directory_entryEPS3_E5applyES4_' filepath='src/third_party/boost-1.56.0/boost/iterator/iterator_facade.hpp' line='322' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZN5boost6detail23operator_arrow_dispatchIRNS_10filesystem15directory_entryEPS3_E5applyES4_'>
-              <parameter type-id='type-id-162'/>
+              <parameter type-id='type-id-162' name='x' filepath='src/third_party/boost-1.56.0/boost/iterator/iterator_facade.hpp' line='322' column='1'/>
               <return type-id='type-id-363'/>
             </function-decl>
           </member-function>
@@ -5115,7 +5382,7 @@
           </member-type>
           <member-function access='public' static='yes'>
             <function-decl name='apply' mangled-name='_ZN5boost6detail23operator_arrow_dispatchIRKNS_10filesystem4pathEPS4_E5applyES5_' filepath='src/third_party/boost-1.56.0/boost/iterator/iterator_facade.hpp' line='322' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZN5boost6detail23operator_arrow_dispatchIRKNS_10filesystem4pathEPS4_E5applyES5_'>
-              <parameter type-id='type-id-239'/>
+              <parameter type-id='type-id-239' name='x' filepath='src/third_party/boost-1.56.0/boost/iterator/iterator_facade.hpp' line='322' column='1'/>
               <return type-id='type-id-366'/>
             </function-decl>
           </member-function>
@@ -5264,7 +5531,7 @@
           </function-decl>
         </member-function>
         <member-function access='public'>
-          <function-decl name='__normal_iterator' mangled-name='_ZN9__gnu_cxx17__normal_iteratorIPcSsEC2ERKS1_' filepath='/usr/bin/../lib/gcc/x86_64-linux-gnu/4.9/../../../../include/c++/4.9/bits/stl_iterator.h' line='728' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZN9__gnu_cxx17__normal_iteratorIPcSsEC2ERKS1_'>
+          <function-decl name='__normal_iterator' filepath='/usr/bin/../lib/gcc/x86_64-linux-gnu/4.9/../../../../include/c++/4.9/bits/stl_iterator.h' line='728' column='1' visibility='default' binding='global' size-in-bits='64'>
             <parameter type-id='type-id-424' is-artificial='yes'/>
             <parameter type-id='type-id-209'/>
             <return type-id='type-id-118'/>
@@ -5272,15 +5539,22 @@
         </member-function>
         <member-function access='public'>
           <function-decl name='operator-' mangled-name='_ZNK9__gnu_cxx17__normal_iteratorIPcSsEmiEl' filepath='/usr/bin/../lib/gcc/x86_64-linux-gnu/4.9/../../../../include/c++/4.9/bits/stl_iterator.h' line='789' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZNK9__gnu_cxx17__normal_iteratorIPcSsEmiEl'>
-            <parameter type-id='type-id-432' is-artificial='yes'/>
-            <parameter type-id='type-id-477'/>
+            <parameter type-id='type-id-432' name='this' is-artificial='yes'/>
+            <parameter type-id='type-id-477' name='__n' filepath='/usr/bin/../lib/gcc/x86_64-linux-gnu/4.9/../../../../include/c++/4.9/bits/stl_iterator.h' line='789' column='1'/>
             <return type-id='type-id-422'/>
           </function-decl>
         </member-function>
         <member-function access='public'>
           <function-decl name='operator*' mangled-name='_ZNK9__gnu_cxx17__normal_iteratorIPcSsEdeEv' filepath='/usr/bin/../lib/gcc/x86_64-linux-gnu/4.9/../../../../include/c++/4.9/bits/stl_iterator.h' line='741' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZNK9__gnu_cxx17__normal_iteratorIPcSsEdeEv'>
-            <parameter type-id='type-id-432' is-artificial='yes'/>
+            <parameter type-id='type-id-432' name='this' is-artificial='yes'/>
             <return type-id='type-id-476'/>
+          </function-decl>
+        </member-function>
+        <member-function access='public'>
+          <function-decl name='__normal_iterator' mangled-name='_ZN9__gnu_cxx17__normal_iteratorIPcSsEC2ERKS1_' filepath='/usr/bin/../lib/gcc/x86_64-linux-gnu/4.9/../../../../include/c++/4.9/bits/stl_iterator.h' line='728' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZN9__gnu_cxx17__normal_iteratorIPcSsEC2ERKS1_'>
+            <parameter type-id='type-id-424' name='this' is-artificial='yes'/>
+            <parameter type-id='type-id-209' name='__i' filepath='/usr/bin/../lib/gcc/x86_64-linux-gnu/4.9/../../../../include/c++/4.9/bits/stl_iterator.h' line='728' column='1'/>
+            <return type-id='type-id-118'/>
           </function-decl>
         </member-function>
       </class-decl>
@@ -5312,7 +5586,7 @@
         </member-function>
         <member-function access='public'>
           <function-decl name='operator*' mangled-name='_ZNK9__gnu_cxx17__normal_iteratorIPKcSsEdeEv' filepath='/usr/bin/../lib/gcc/x86_64-linux-gnu/4.9/../../../../include/c++/4.9/bits/stl_iterator.h' line='741' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZNK9__gnu_cxx17__normal_iteratorIPKcSsEdeEv'>
-            <parameter type-id='type-id-434' is-artificial='yes'/>
+            <parameter type-id='type-id-434' name='this' is-artificial='yes'/>
             <return type-id='type-id-480'/>
           </function-decl>
         </member-function>
@@ -5323,7 +5597,7 @@
           </function-decl>
         </member-function>
         <member-function access='public'>
-          <function-decl name='__normal_iterator' mangled-name='_ZN9__gnu_cxx17__normal_iteratorIPKcSsEC2ERKS2_' filepath='/usr/bin/../lib/gcc/x86_64-linux-gnu/4.9/../../../../include/c++/4.9/bits/stl_iterator.h' line='728' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZN9__gnu_cxx17__normal_iteratorIPKcSsEC2ERKS2_'>
+          <function-decl name='__normal_iterator' filepath='/usr/bin/../lib/gcc/x86_64-linux-gnu/4.9/../../../../include/c++/4.9/bits/stl_iterator.h' line='728' column='1' visibility='default' binding='global' size-in-bits='64'>
             <parameter type-id='type-id-427' is-artificial='yes'/>
             <parameter type-id='type-id-439'/>
             <return type-id='type-id-118'/>
@@ -5331,9 +5605,16 @@
         </member-function>
         <member-function access='public'>
           <function-decl name='operator-' mangled-name='_ZNK9__gnu_cxx17__normal_iteratorIPKcSsEmiEl' filepath='/usr/bin/../lib/gcc/x86_64-linux-gnu/4.9/../../../../include/c++/4.9/bits/stl_iterator.h' line='789' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZNK9__gnu_cxx17__normal_iteratorIPKcSsEmiEl'>
-            <parameter type-id='type-id-434' is-artificial='yes'/>
-            <parameter type-id='type-id-477'/>
+            <parameter type-id='type-id-434' name='this' is-artificial='yes'/>
+            <parameter type-id='type-id-477' name='__n' filepath='/usr/bin/../lib/gcc/x86_64-linux-gnu/4.9/../../../../include/c++/4.9/bits/stl_iterator.h' line='789' column='1'/>
             <return type-id='type-id-425'/>
+          </function-decl>
+        </member-function>
+        <member-function access='public'>
+          <function-decl name='__normal_iterator' mangled-name='_ZN9__gnu_cxx17__normal_iteratorIPKcSsEC2ERKS2_' filepath='/usr/bin/../lib/gcc/x86_64-linux-gnu/4.9/../../../../include/c++/4.9/bits/stl_iterator.h' line='728' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZN9__gnu_cxx17__normal_iteratorIPKcSsEC2ERKS2_'>
+            <parameter type-id='type-id-427' name='this' is-artificial='yes'/>
+            <parameter type-id='type-id-439' name='__i' filepath='/usr/bin/../lib/gcc/x86_64-linux-gnu/4.9/../../../../include/c++/4.9/bits/stl_iterator.h' line='728' column='1'/>
+            <return type-id='type-id-118'/>
           </function-decl>
         </member-function>
         <member-function access='public'>
@@ -5370,9 +5651,9 @@
         </member-type>
         <member-function access='public' static='yes'>
           <function-decl name='compare' mangled-name='_ZNSt11char_traitsIcE7compareEPKcS2_m' filepath='/usr/bin/../lib/gcc/x86_64-linux-gnu/4.9/../../../../include/c++/4.9/bits/char_traits.h' line='258' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZNSt11char_traitsIcE7compareEPKcS2_m'>
-            <parameter type-id='type-id-443'/>
-            <parameter type-id='type-id-443'/>
-            <parameter type-id='type-id-36'/>
+            <parameter type-id='type-id-443' name='__s1' filepath='/usr/bin/../lib/gcc/x86_64-linux-gnu/4.9/../../../../include/c++/4.9/bits/char_traits.h' line='258' column='1'/>
+            <parameter type-id='type-id-443' name='__s2' filepath='/usr/bin/../lib/gcc/x86_64-linux-gnu/4.9/../../../../include/c++/4.9/bits/char_traits.h' line='258' column='1'/>
+            <parameter type-id='type-id-36' name='__n' filepath='/usr/bin/../lib/gcc/x86_64-linux-gnu/4.9/../../../../include/c++/4.9/bits/char_traits.h' line='258' column='1'/>
             <return type-id='type-id-8'/>
           </function-decl>
         </member-function>
@@ -5389,45 +5670,37 @@
       </class-decl>
       <class-decl name='basic_string&lt;char, std::char_traits&lt;char&gt;, std::allocator&lt;char&gt; &gt;' visibility='default' is-declaration-only='yes' id='type-id-378'>
         <member-function access='public'>
-          <function-decl name='append&lt;const char *&gt;' mangled-name='_ZNSs6appendIPKcEERSsT_S3_' filepath='/usr/bin/../lib/gcc/x86_64-linux-gnu/4.9/../../../../include/c++/4.9/bits/basic_string.h' line='1061' column='1' visibility='default' binding='global' size-in-bits='64'>
-            <parameter type-id='type-id-471' is-artificial='yes'/>
-            <parameter type-id='type-id-23'/>
-            <parameter type-id='type-id-23'/>
-            <return type-id='type-id-333'/>
-          </function-decl>
-        </member-function>
-        <member-function access='public'>
           <function-decl name='basic_string&lt;const char *&gt;' mangled-name='_ZNSsC2IPKcEET_S2_RKSaIcE' filepath='/usr/bin/../lib/gcc/x86_64-linux-gnu/4.9/../../../../include/c++/4.9/bits/basic_string.h' line='540' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZNSsC2IPKcEET_S2_RKSaIcE'>
-            <parameter type-id='type-id-471' is-artificial='yes'/>
-            <parameter type-id='type-id-23'/>
-            <parameter type-id='type-id-23'/>
-            <parameter type-id='type-id-319'/>
+            <parameter type-id='type-id-471' name='this' is-artificial='yes'/>
+            <parameter type-id='type-id-23' name='__beg' filepath='/usr/bin/../lib/gcc/x86_64-linux-gnu/4.9/../../../../include/c++/4.9/bits/basic_string.tcc' line='540' column='1'/>
+            <parameter type-id='type-id-23' name='__end' filepath='/usr/bin/../lib/gcc/x86_64-linux-gnu/4.9/../../../../include/c++/4.9/bits/basic_string.tcc' line='540' column='1'/>
+            <parameter type-id='type-id-319' name='__a' filepath='/usr/bin/../lib/gcc/x86_64-linux-gnu/4.9/../../../../include/c++/4.9/bits/basic_string.tcc' line='541' column='1'/>
             <return type-id='type-id-118'/>
           </function-decl>
         </member-function>
         <member-function access='private' static='yes'>
           <function-decl name='_S_construct&lt;const char *&gt;' mangled-name='_ZNSs12_S_constructIPKcEEPcT_S3_RKSaIcE' filepath='/usr/bin/../lib/gcc/x86_64-linux-gnu/4.9/../../../../include/c++/4.9/bits/basic_string.h' line='1761' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZNSs12_S_constructIPKcEEPcT_S3_RKSaIcE'>
-            <parameter type-id='type-id-23'/>
-            <parameter type-id='type-id-23'/>
-            <parameter type-id='type-id-319'/>
+            <parameter type-id='type-id-23' name='__beg' filepath='/usr/bin/../lib/gcc/x86_64-linux-gnu/4.9/../../../../include/c++/4.9/bits/basic_string.h' line='1761' column='1'/>
+            <parameter type-id='type-id-23' name='__end' filepath='/usr/bin/../lib/gcc/x86_64-linux-gnu/4.9/../../../../include/c++/4.9/bits/basic_string.h' line='1761' column='1'/>
+            <parameter type-id='type-id-319' name='__a' filepath='/usr/bin/../lib/gcc/x86_64-linux-gnu/4.9/../../../../include/c++/4.9/bits/basic_string.h' line='1761' column='1'/>
             <return type-id='type-id-54'/>
           </function-decl>
         </member-function>
         <member-function access='private' static='yes'>
           <function-decl name='_S_construct_aux&lt;const char *&gt;' mangled-name='_ZNSs16_S_construct_auxIPKcEEPcT_S3_RKSaIcESt12__false_type' filepath='/usr/bin/../lib/gcc/x86_64-linux-gnu/4.9/../../../../include/c++/4.9/bits/basic_string.h' line='1739' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZNSs16_S_construct_auxIPKcEEPcT_S3_RKSaIcESt12__false_type'>
-            <parameter type-id='type-id-23'/>
-            <parameter type-id='type-id-23'/>
-            <parameter type-id='type-id-319'/>
-            <parameter type-id='type-id-340'/>
+            <parameter type-id='type-id-23' name='__beg' filepath='/usr/bin/../lib/gcc/x86_64-linux-gnu/4.9/../../../../include/c++/4.9/bits/basic_string.h' line='1739' column='1'/>
+            <parameter type-id='type-id-23' name='__end' filepath='/usr/bin/../lib/gcc/x86_64-linux-gnu/4.9/../../../../include/c++/4.9/bits/basic_string.h' line='1739' column='1'/>
+            <parameter type-id='type-id-319' name='__a' filepath='/usr/bin/../lib/gcc/x86_64-linux-gnu/4.9/../../../../include/c++/4.9/bits/basic_string.h' line='1740' column='1'/>
+            <parameter type-id='type-id-340' filepath='/usr/bin/../lib/gcc/x86_64-linux-gnu/4.9/../../../../include/c++/4.9/bits/basic_string.h' line='1740' column='1'/>
             <return type-id='type-id-54'/>
           </function-decl>
         </member-function>
         <member-function access='private' static='yes'>
           <function-decl name='_S_construct&lt;const char *&gt;' mangled-name='_ZNSs12_S_constructIPKcEEPcT_S3_RKSaIcESt20forward_iterator_tag' filepath='/usr/bin/../lib/gcc/x86_64-linux-gnu/4.9/../../../../include/c++/4.9/bits/basic_string.h' line='1777' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZNSs12_S_constructIPKcEEPcT_S3_RKSaIcESt20forward_iterator_tag'>
-            <parameter type-id='type-id-23'/>
-            <parameter type-id='type-id-23'/>
-            <parameter type-id='type-id-319'/>
-            <parameter type-id='type-id-342'/>
+            <parameter type-id='type-id-23' name='__beg' filepath='/usr/bin/../lib/gcc/x86_64-linux-gnu/4.9/../../../../include/c++/4.9/bits/basic_string.tcc' line='1777' column='1'/>
+            <parameter type-id='type-id-23' name='__end' filepath='/usr/bin/../lib/gcc/x86_64-linux-gnu/4.9/../../../../include/c++/4.9/bits/basic_string.tcc' line='1777' column='1'/>
+            <parameter type-id='type-id-319' name='__a' filepath='/usr/bin/../lib/gcc/x86_64-linux-gnu/4.9/../../../../include/c++/4.9/bits/basic_string.tcc' line='1777' column='1'/>
+            <parameter type-id='type-id-342' filepath='/usr/bin/../lib/gcc/x86_64-linux-gnu/4.9/../../../../include/c++/4.9/bits/basic_string.tcc' line='1778' column='1'/>
             <return type-id='type-id-54'/>
           </function-decl>
         </member-function>
@@ -5503,28 +5776,14 @@
             <var-decl name='v_' type-id='type-id-239' visibility='default' filepath='src/third_party/boost-1.56.0/boost/core/addressof.hpp' line='27' column='1'/>
           </data-member>
           <member-function access='public'>
-            <function-decl name='addr_impl_ref' mangled-name='_ZN5boost6detail13addr_impl_refIKNS_10filesystem4pathEEC2ERS4_' filepath='src/third_party/boost-1.56.0/boost/core/addressof.hpp' line='29' column='1' visibility='default' binding='global' size-in-bits='64'>
+            <function-decl name='addr_impl_ref' filepath='src/third_party/boost-1.56.0/boost/core/addressof.hpp' line='29' column='1' visibility='default' binding='global' size-in-bits='64'>
               <parameter type-id='type-id-430' is-artificial='yes'/>
               <parameter type-id='type-id-239'/>
               <return type-id='type-id-118'/>
             </function-decl>
           </member-function>
-          <member-function access='public'>
-            <function-decl name='operator const boost::filesystem::path &amp;' mangled-name='_ZNK5boost6detail13addr_impl_refIKNS_10filesystem4pathEEcvRS4_Ev' filepath='src/third_party/boost-1.56.0/boost/core/addressof.hpp' line='30' column='1' visibility='default' binding='global' size-in-bits='64'>
-              <parameter type-id='type-id-437' is-artificial='yes'/>
-              <return type-id='type-id-239'/>
-            </function-decl>
-          </member-function>
         </class-decl>
-        <class-decl name='addressof_impl&lt;const boost::filesystem::path&gt;' size-in-bits='8' is-struct='yes' visibility='default' filepath='src/third_party/boost-1.56.0/boost/core/addressof.hpp' line='36' column='1' id='type-id-487'>
-          <member-function access='public' static='yes'>
-            <function-decl name='f' mangled-name='_ZN5boost6detail14addressof_implIKNS_10filesystem4pathEE1fERS4_l' filepath='src/third_party/boost-1.56.0/boost/core/addressof.hpp' line='38' column='1' visibility='default' binding='global' size-in-bits='64'>
-              <parameter type-id='type-id-239'/>
-              <parameter type-id='type-id-10'/>
-              <return type-id='type-id-240'/>
-            </function-decl>
-          </member-function>
-        </class-decl>
+        <class-decl name='addressof_impl&lt;const boost::filesystem::path&gt;' size-in-bits='8' is-struct='yes' visibility='default' filepath='src/third_party/boost-1.56.0/boost/core/addressof.hpp' line='36' column='1' id='type-id-487'/>
         <class-decl name='operator_brackets_proxy&lt;boost::filesystem::path::iterator&gt;' visibility='default' is-declaration-only='yes' id='type-id-401'/>
       </namespace-decl>
     </namespace-decl>
@@ -5591,27 +5850,27 @@
         </member-type>
         <member-function access='public'>
           <function-decl name='out' mangled-name='_ZNKSt23__codecvt_abstract_baseIwc11__mbstate_tE3outERS0_PKwS4_RS4_PcS6_RS6_' filepath='/usr/bin/../lib/gcc/x86_64-linux-gnu/4.9/../../../../include/c++/4.9/bits/codecvt.h' line='116' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZNKSt23__codecvt_abstract_baseIwc11__mbstate_tE3outERS0_PKwS4_RS4_PcS6_RS6_'>
-            <parameter type-id='type-id-519' is-artificial='yes'/>
-            <parameter type-id='type-id-507'/>
-            <parameter type-id='type-id-500'/>
-            <parameter type-id='type-id-500'/>
-            <parameter type-id='type-id-501'/>
-            <parameter type-id='type-id-502'/>
-            <parameter type-id='type-id-502'/>
-            <parameter type-id='type-id-503'/>
+            <parameter type-id='type-id-519' name='this' is-artificial='yes'/>
+            <parameter type-id='type-id-507' name='__state' filepath='/usr/bin/../lib/gcc/x86_64-linux-gnu/4.9/../../../../include/c++/4.9/bits/codecvt.h' line='116' column='1'/>
+            <parameter type-id='type-id-500' name='__from' filepath='/usr/bin/../lib/gcc/x86_64-linux-gnu/4.9/../../../../include/c++/4.9/bits/codecvt.h' line='116' column='1'/>
+            <parameter type-id='type-id-500' name='__from_end' filepath='/usr/bin/../lib/gcc/x86_64-linux-gnu/4.9/../../../../include/c++/4.9/bits/codecvt.h' line='117' column='1'/>
+            <parameter type-id='type-id-501' name='__from_next' filepath='/usr/bin/../lib/gcc/x86_64-linux-gnu/4.9/../../../../include/c++/4.9/bits/codecvt.h' line='117' column='1'/>
+            <parameter type-id='type-id-502' name='__to' filepath='/usr/bin/../lib/gcc/x86_64-linux-gnu/4.9/../../../../include/c++/4.9/bits/codecvt.h' line='118' column='1'/>
+            <parameter type-id='type-id-502' name='__to_end' filepath='/usr/bin/../lib/gcc/x86_64-linux-gnu/4.9/../../../../include/c++/4.9/bits/codecvt.h' line='118' column='1'/>
+            <parameter type-id='type-id-503' name='__to_next' filepath='/usr/bin/../lib/gcc/x86_64-linux-gnu/4.9/../../../../include/c++/4.9/bits/codecvt.h' line='119' column='1'/>
             <return type-id='type-id-536'/>
           </function-decl>
         </member-function>
         <member-function access='public'>
           <function-decl name='in' mangled-name='_ZNKSt23__codecvt_abstract_baseIwc11__mbstate_tE2inERS0_PKcS4_RS4_PwS6_RS6_' filepath='/usr/bin/../lib/gcc/x86_64-linux-gnu/4.9/../../../../include/c++/4.9/bits/codecvt.h' line='196' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZNKSt23__codecvt_abstract_baseIwc11__mbstate_tE2inERS0_PKcS4_RS4_PwS6_RS6_'>
-            <parameter type-id='type-id-519' is-artificial='yes'/>
-            <parameter type-id='type-id-507'/>
-            <parameter type-id='type-id-496'/>
-            <parameter type-id='type-id-496'/>
-            <parameter type-id='type-id-497'/>
-            <parameter type-id='type-id-504'/>
-            <parameter type-id='type-id-504'/>
-            <parameter type-id='type-id-505'/>
+            <parameter type-id='type-id-519' name='this' is-artificial='yes'/>
+            <parameter type-id='type-id-507' name='__state' filepath='/usr/bin/../lib/gcc/x86_64-linux-gnu/4.9/../../../../include/c++/4.9/bits/codecvt.h' line='196' column='1'/>
+            <parameter type-id='type-id-496' name='__from' filepath='/usr/bin/../lib/gcc/x86_64-linux-gnu/4.9/../../../../include/c++/4.9/bits/codecvt.h' line='196' column='1'/>
+            <parameter type-id='type-id-496' name='__from_end' filepath='/usr/bin/../lib/gcc/x86_64-linux-gnu/4.9/../../../../include/c++/4.9/bits/codecvt.h' line='197' column='1'/>
+            <parameter type-id='type-id-497' name='__from_next' filepath='/usr/bin/../lib/gcc/x86_64-linux-gnu/4.9/../../../../include/c++/4.9/bits/codecvt.h' line='197' column='1'/>
+            <parameter type-id='type-id-504' name='__to' filepath='/usr/bin/../lib/gcc/x86_64-linux-gnu/4.9/../../../../include/c++/4.9/bits/codecvt.h' line='198' column='1'/>
+            <parameter type-id='type-id-504' name='__to_end' filepath='/usr/bin/../lib/gcc/x86_64-linux-gnu/4.9/../../../../include/c++/4.9/bits/codecvt.h' line='198' column='1'/>
+            <parameter type-id='type-id-505' name='__to_next' filepath='/usr/bin/../lib/gcc/x86_64-linux-gnu/4.9/../../../../include/c++/4.9/bits/codecvt.h' line='199' column='1'/>
             <return type-id='type-id-536'/>
           </function-decl>
         </member-function>
@@ -5619,9 +5878,9 @@
       <class-decl name='basic_string&lt;char, std::char_traits&lt;char&gt;, std::allocator&lt;char&gt; &gt;' visibility='default' is-declaration-only='yes' id='type-id-524'>
         <member-function access='public'>
           <function-decl name='append&lt;char *&gt;' mangled-name='_ZNSs6appendIPcEERSsT_S2_' filepath='/usr/bin/../lib/gcc/x86_64-linux-gnu/4.9/../../../../include/c++/4.9/bits/basic_string.h' line='1061' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZNSs6appendIPcEERSsT_S2_'>
-            <parameter type-id='type-id-525' is-artificial='yes'/>
-            <parameter type-id='type-id-54'/>
-            <parameter type-id='type-id-54'/>
+            <parameter type-id='type-id-525' name='this' is-artificial='yes'/>
+            <parameter type-id='type-id-54' name='__first' filepath='/usr/bin/../lib/gcc/x86_64-linux-gnu/4.9/../../../../include/c++/4.9/bits/basic_string.h' line='1061' column='1'/>
+            <parameter type-id='type-id-54' name='__last' filepath='/usr/bin/../lib/gcc/x86_64-linux-gnu/4.9/../../../../include/c++/4.9/bits/basic_string.h' line='1061' column='1'/>
             <return type-id='type-id-333'/>
           </function-decl>
         </member-function>
@@ -5629,9 +5888,9 @@
       <class-decl name='basic_string&lt;wchar_t, std::char_traits&lt;wchar_t&gt;, std::allocator&lt;wchar_t&gt; &gt;' visibility='default' is-declaration-only='yes' id='type-id-526'>
         <member-function access='public'>
           <function-decl name='append&lt;wchar_t *&gt;' mangled-name='_ZNSbIwSt11char_traitsIwESaIwEE6appendIPwEERS2_T_S6_' filepath='/usr/bin/../lib/gcc/x86_64-linux-gnu/4.9/../../../../include/c++/4.9/bits/basic_string.h' line='1061' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZNSbIwSt11char_traitsIwESaIwEE6appendIPwEERS2_T_S6_'>
-            <parameter type-id='type-id-528' is-artificial='yes'/>
-            <parameter type-id='type-id-101'/>
-            <parameter type-id='type-id-101'/>
+            <parameter type-id='type-id-528' name='this' is-artificial='yes'/>
+            <parameter type-id='type-id-101' name='__first' filepath='/usr/bin/../lib/gcc/x86_64-linux-gnu/4.9/../../../../include/c++/4.9/bits/basic_string.h' line='1061' column='1'/>
+            <parameter type-id='type-id-101' name='__last' filepath='/usr/bin/../lib/gcc/x86_64-linux-gnu/4.9/../../../../include/c++/4.9/bits/basic_string.h' line='1061' column='1'/>
             <return type-id='type-id-527'/>
           </function-decl>
         </member-function>
@@ -5655,22 +5914,35 @@
           </function-decl>
         </member-function>
         <member-function access='public'>
-          <function-decl name='scoped_array' mangled-name='_ZN5boost12scoped_arrayIwEC2EPw' filepath='src/third_party/boost-1.56.0/boost/smart_ptr/scoped_array.hpp' line='57' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZN5boost12scoped_arrayIwEC2EPw'>
+          <function-decl name='scoped_array' filepath='src/third_party/boost-1.56.0/boost/smart_ptr/scoped_array.hpp' line='57' column='1' visibility='default' binding='global' size-in-bits='64'>
             <parameter type-id='type-id-490' is-artificial='yes'/>
             <parameter type-id='type-id-101'/>
             <return type-id='type-id-118'/>
           </function-decl>
         </member-function>
         <member-function access='public' destructor='yes'>
-          <function-decl name='~scoped_array' mangled-name='_ZN5boost12scoped_arrayIwED2Ev' filepath='src/third_party/boost-1.56.0/boost/smart_ptr/scoped_array.hpp' line='64' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZN5boost12scoped_arrayIwED2Ev'>
+          <function-decl name='~scoped_array' filepath='src/third_party/boost-1.56.0/boost/smart_ptr/scoped_array.hpp' line='64' column='1' visibility='default' binding='global' size-in-bits='64'>
             <parameter type-id='type-id-490' is-artificial='yes'/>
             <return type-id='type-id-118'/>
           </function-decl>
         </member-function>
         <member-function access='public'>
+          <function-decl name='scoped_array' mangled-name='_ZN5boost12scoped_arrayIwEC2EPw' filepath='src/third_party/boost-1.56.0/boost/smart_ptr/scoped_array.hpp' line='57' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZN5boost12scoped_arrayIwEC2EPw'>
+            <parameter type-id='type-id-490' name='this' is-artificial='yes'/>
+            <parameter type-id='type-id-101' name='p' filepath='src/third_party/boost-1.56.0/boost/smart_ptr/scoped_array.hpp' line='57' column='1'/>
+            <return type-id='type-id-118'/>
+          </function-decl>
+        </member-function>
+        <member-function access='public'>
           <function-decl name='get' mangled-name='_ZNK5boost12scoped_arrayIwE3getEv' filepath='src/third_party/boost-1.56.0/boost/smart_ptr/scoped_array.hpp' line='85' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZNK5boost12scoped_arrayIwE3getEv'>
-            <parameter type-id='type-id-493' is-artificial='yes'/>
+            <parameter type-id='type-id-493' name='this' is-artificial='yes'/>
             <return type-id='type-id-101'/>
+          </function-decl>
+        </member-function>
+        <member-function access='public' destructor='yes'>
+          <function-decl name='~scoped_array' mangled-name='_ZN5boost12scoped_arrayIwED2Ev' filepath='src/third_party/boost-1.56.0/boost/smart_ptr/scoped_array.hpp' line='64' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZN5boost12scoped_arrayIwED2Ev'>
+            <parameter type-id='type-id-490' name='this' is-artificial='yes'/>
+            <return type-id='type-id-118'/>
           </function-decl>
         </member-function>
       </class-decl>
@@ -5808,7 +6080,7 @@
         </member-function>
         <member-function access='public'>
           <function-decl name='operator*' mangled-name='_ZNK9__gnu_cxx17__normal_iteratorIPKwSbIwSt11char_traitsIwESaIwEEEdeEv' filepath='/usr/bin/../lib/gcc/x86_64-linux-gnu/4.9/../../../../include/c++/4.9/bits/stl_iterator.h' line='741' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZNK9__gnu_cxx17__normal_iteratorIPKwSbIwSt11char_traitsIwESaIwEEEdeEv'>
-            <parameter type-id='type-id-557' is-artificial='yes'/>
+            <parameter type-id='type-id-557' name='this' is-artificial='yes'/>
             <return type-id='type-id-585'/>
           </function-decl>
         </member-function>
@@ -5993,34 +6265,34 @@
             </member-function>
             <member-function access='protected'>
               <function-decl name='invalid_leading_octet' mangled-name='_ZNK5boost10filesystem6detail18utf8_codecvt_facet21invalid_leading_octetEh' filepath='src/third_party/boost-1.56.0/boost/detail/utf8_codecvt_facet.hpp' line='138' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZNK5boost10filesystem6detail18utf8_codecvt_facet21invalid_leading_octetEh'>
-                <parameter type-id='type-id-597' is-artificial='yes'/>
-                <parameter type-id='type-id-592'/>
+                <parameter type-id='type-id-597' name='this' is-artificial='yes'/>
+                <parameter type-id='type-id-592' name='octet_1' filepath='src/third_party/boost-1.56.0/boost/detail/utf8_codecvt_facet.hpp' line='138' column='1'/>
                 <return type-id='type-id-1'/>
               </function-decl>
             </member-function>
             <member-function access='protected' static='yes'>
               <function-decl name='get_cont_octet_count' mangled-name='_ZN5boost10filesystem6detail18utf8_codecvt_facet20get_cont_octet_countEh' filepath='src/third_party/boost-1.56.0/boost/detail/utf8_codecvt_facet.hpp' line='144' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZN5boost10filesystem6detail18utf8_codecvt_facet20get_cont_octet_countEh'>
-                <parameter type-id='type-id-592'/>
+                <parameter type-id='type-id-592' name='lead_octet' filepath='src/third_party/boost-1.56.0/boost/detail/utf8_codecvt_facet.hpp' line='144' column='1'/>
                 <return type-id='type-id-15'/>
               </function-decl>
             </member-function>
             <member-function access='protected'>
               <function-decl name='invalid_continuing_octet' mangled-name='_ZNK5boost10filesystem6detail18utf8_codecvt_facet24invalid_continuing_octetEh' filepath='src/third_party/boost-1.56.0/boost/detail/utf8_codecvt_facet.hpp' line='134' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZNK5boost10filesystem6detail18utf8_codecvt_facet24invalid_continuing_octetEh'>
-                <parameter type-id='type-id-597' is-artificial='yes'/>
-                <parameter type-id='type-id-592'/>
+                <parameter type-id='type-id-597' name='this' is-artificial='yes'/>
+                <parameter type-id='type-id-592' name='octet_1' filepath='src/third_party/boost-1.56.0/boost/detail/utf8_codecvt_facet.hpp' line='134' column='1'/>
                 <return type-id='type-id-1'/>
               </function-decl>
             </member-function>
             <member-function access='protected'>
               <function-decl name='get_cont_octet_out_count' mangled-name='_ZNK5boost10filesystem6detail18utf8_codecvt_facet24get_cont_octet_out_countEw' filepath='src/third_party/boost-1.56.0/boost/detail/utf8_codecvt_facet.hpp' line='152' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZNK5boost10filesystem6detail18utf8_codecvt_facet24get_cont_octet_out_countEw'>
-                <parameter type-id='type-id-597' is-artificial='yes'/>
-                <parameter type-id='type-id-43'/>
+                <parameter type-id='type-id-597' name='this' is-artificial='yes'/>
+                <parameter type-id='type-id-43' name='word' filepath='src/third_party/boost-1.56.0/boost/detail/utf8_codecvt_facet.ipp' line='278' column='1'/>
                 <return type-id='type-id-8'/>
               </function-decl>
             </member-function>
             <member-function access='protected' static='yes'>
               <function-decl name='get_octet_count' mangled-name='_ZN5boost10filesystem6detail18utf8_codecvt_facet15get_octet_countEh' filepath='src/third_party/boost-1.56.0/boost/detail/utf8_codecvt_facet.hpp' line='148' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZN5boost10filesystem6detail18utf8_codecvt_facet15get_octet_countEh'>
-                <parameter type-id='type-id-592'/>
+                <parameter type-id='type-id-592' name='lead_octet' filepath='src/third_party/boost-1.56.0/boost/detail/utf8_codecvt_facet.ipp' line='205' column='1'/>
                 <return type-id='type-id-15'/>
               </function-decl>
             </member-function>
