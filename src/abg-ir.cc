@@ -22210,12 +22210,12 @@ function_decl::clone() const
     {
       method_decl_sptr
 	m(new method_decl(get_name(),
-				      get_type(),
-				      is_declared_inline(),
-				      get_location(),
-				      get_linkage_name(),
-				      get_visibility(),
-				      get_binding()));
+			  get_type(),
+			  is_declared_inline(),
+			  get_location(),
+			  get_linkage_name(),
+			  get_visibility(),
+			  get_binding()));
       class_or_union* scope = is_class_or_union_type(get_scope());
       ABG_ASSERT(scope);
       scope->add_member_function(m, get_member_access_specifier(*this),
