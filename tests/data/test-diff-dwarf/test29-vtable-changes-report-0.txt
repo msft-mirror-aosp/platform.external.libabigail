@@ -15,6 +15,9 @@ Variables changes summary: 0 Removed, 0 Changed, 0 Added variable
         1 member function insertion:
           'method virtual void S::fn1()', virtual at voffset 3/3
         4 member function changes:
+          'method virtual void S::fn0()' has some sub-type changes:
+            implicit parameter 0 of type 'S*' has sub-type changes:
+              pointed to type 'struct S' changed, as being reported
           'method virtual S::~S()' has some sub-type changes:
             implicit parameter 0 of type 'S* const' has sub-type changes:
               in unqualified underlying type 'S*':
@@ -24,9 +27,6 @@ Variables changes summary: 0 Removed, 0 Changed, 0 Added variable
               in unqualified underlying type 'S*':
                 pointed to type 'struct S' changed, as being reported
           'method virtual S::~S(int)' has some sub-type changes:
-            implicit parameter 0 of type 'S*' has sub-type changes:
-              pointed to type 'struct S' changed, as being reported
-          'method virtual void S::fn0()' has some sub-type changes:
             implicit parameter 0 of type 'S*' has sub-type changes:
               pointed to type 'struct S' changed, as being reported
 

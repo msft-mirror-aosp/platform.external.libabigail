@@ -168,6 +168,47 @@ sort_changed_data_members(changed_var_sptrs_type& to_sort)
   std::sort(to_sort.begin(), to_sort.end(), comp);
 }
 
+/// Compare two @ref function_decl_diff for the purpose of sorting.
+///
+/// @param first the first @ref function_decl_diff to consider.
+///
+/// @param second the second @ref function_decl_diff to consider.
+///
+/// @return true iff @p first compares less than @p second.
+bool
+is_less_than(const function_decl_diff& first, const function_decl_diff& second)
+{
+  function_decl_sptr f = first.first_function_decl(),
+    s = second.first_function_decl();
+
+  string fr = f->get_qualified_name(), sr = s->get_qualified_name();
+
+  if (fr != sr)
+    return fr < sr;
+
+  if (!f->get_linkage_name().empty()
+      && !s->get_linkage_name().empty())
+    {
+      fr = f->get_linkage_name();
+      sr = s->get_linkage_name();
+      if (fr != sr)
+	return fr < sr;
+    }
+
+  if (f->get_symbol() && s->get_symbol())
+    {
+      fr = f->get_symbol()->get_id_string();
+      sr = s->get_symbol()->get_id_string();
+      if (fr != sr)
+	return fr < sr;
+    }
+	
+  fr = f->get_pretty_representation(true, true);
+  sr = s->get_pretty_representation(true, true);
+
+  return fr < sr;
+}
+
 /// Sort an instance of @ref string_function_ptr_map map and stuff a
 /// resulting sorted vector of pointers to function_decl.
 ///

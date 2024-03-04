@@ -774,6 +774,9 @@ struct data_member_diff_comp
   }
 }; // end struct var_diff_comp
 
+bool
+is_less_than(const function_decl_diff& first, const function_decl_diff& second);
+
 /// A comparison functor for instances of @ref function_decl_diff that
 /// represent changes between two virtual member functions.
 struct virtual_member_function_diff_comp
@@ -785,8 +788,12 @@ struct virtual_member_function_diff_comp
     ABG_ASSERT(get_member_function_is_virtual(l.first_function_decl()));
     ABG_ASSERT(get_member_function_is_virtual(r.first_function_decl()));
 
-    return (get_member_function_vtable_offset(l.first_function_decl())
-	    < get_member_function_vtable_offset(r.first_function_decl()));
+    size_t l_offset = get_member_function_vtable_offset(l.first_function_decl());
+    size_t r_offset = get_member_function_vtable_offset(r.first_function_decl());
+    if (l_offset != r_offset)
+      return l_offset < r_offset;
+
+    return is_less_than(l, r);
   }
 
   bool
@@ -1257,30 +1264,7 @@ struct function_decl_diff_comp
   operator()(const function_decl_diff& first,
 	     const function_decl_diff& second)
   {
-    function_decl_sptr f = first.first_function_decl(),
-      s = second.first_function_decl();
-
-    string fr = f->get_qualified_name(),
-      sr = s->get_qualified_name();
-
-    if (fr == sr)
-      {
-	if (f->get_symbol())
-	  fr = f->get_symbol()->get_id_string();
-	else if (!f->get_linkage_name().empty())
-	  fr = f->get_linkage_name();
-	else
-	  fr = f->get_pretty_representation();
-
-	if (s->get_symbol())
-	  sr = s->get_symbol()->get_id_string();
-	else if (!s->get_linkage_name().empty())
-	  sr = s->get_linkage_name();
-	else
-	  sr = s->get_pretty_representation();
-      }
-
-    return (fr.compare(sr) < 0);
+    return is_less_than(first, second);
   }
 
   /// The actual less than operator.
