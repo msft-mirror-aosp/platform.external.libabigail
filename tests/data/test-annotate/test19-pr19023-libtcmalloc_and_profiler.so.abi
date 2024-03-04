@@ -4402,7 +4402,7 @@
       </member-function>
       <member-function access='private' destructor='yes'>
         <!-- HeapLeakCheckerGlobalPrePost::~HeapLeakCheckerGlobalPrePost(const int) -->
-        <function-decl name='~HeapLeakCheckerGlobalPrePost' filepath='src/heap-checker-bcad.cc' line='79' column='1' visibility='default' binding='global' size-in-bits='64'>
+        <function-decl name='~HeapLeakCheckerGlobalPrePost' filepath='src/heap-checker-bcad.cc' line='79' column='1' declared-inline='yes' visibility='default' binding='global' size-in-bits='64'>
           <!-- implicit parameter of type 'HeapLeakCheckerGlobalPrePost* const' -->
           <parameter type-id='type-id-189' name='this' is-artificial='yes'/>
           <!-- artificial parameter of type 'const int' -->
@@ -4413,7 +4413,7 @@
       </member-function>
       <member-function access='private' destructor='yes'>
         <!-- HeapLeakCheckerGlobalPrePost::~HeapLeakCheckerGlobalPrePost() -->
-        <function-decl name='~HeapLeakCheckerGlobalPrePost' mangled-name='_ZN28HeapLeakCheckerGlobalPrePostD1Ev' filepath='src/heap-checker-bcad.cc' line='79' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZN28HeapLeakCheckerGlobalPrePostD1Ev'>
+        <function-decl name='~HeapLeakCheckerGlobalPrePost' mangled-name='_ZN28HeapLeakCheckerGlobalPrePostD1Ev' filepath='src/heap-checker-bcad.cc' line='79' column='1' declared-inline='yes' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZN28HeapLeakCheckerGlobalPrePostD1Ev'>
           <!-- implicit parameter of type 'HeapLeakCheckerGlobalPrePost* const' -->
           <parameter type-id='type-id-189' name='this' is-artificial='yes'/>
           <!-- void -->
@@ -4895,7 +4895,7 @@
       </member-function>
       <member-function access='private' destructor='yes'>
         <!-- GoogleInitializer::~GoogleInitializer(const int) -->
-        <function-decl name='~GoogleInitializer' filepath='src/base/googleinit.h' line='48' column='1' visibility='default' binding='global' size-in-bits='64'>
+        <function-decl name='~GoogleInitializer' filepath='src/base/googleinit.h' line='48' column='1' declared-inline='yes' visibility='default' binding='global' size-in-bits='64'>
           <!-- implicit parameter of type 'GoogleInitializer* const' -->
           <parameter type-id='type-id-233' name='this' is-artificial='yes'/>
           <!-- artificial parameter of type 'const int' -->
@@ -4906,7 +4906,7 @@
       </member-function>
       <member-function access='private' destructor='yes'>
         <!-- GoogleInitializer::~GoogleInitializer() -->
-        <function-decl name='~GoogleInitializer' mangled-name='_ZN17GoogleInitializerD2Ev' filepath='src/base/googleinit.h' line='48' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZN17GoogleInitializerD2Ev'>
+        <function-decl name='~GoogleInitializer' mangled-name='_ZN17GoogleInitializerD2Ev' filepath='src/base/googleinit.h' line='48' column='1' declared-inline='yes' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZN17GoogleInitializerD2Ev'>
           <!-- implicit parameter of type 'GoogleInitializer* const' -->
           <parameter type-id='type-id-233' name='this' is-artificial='yes'/>
           <!-- void -->
@@ -4956,7 +4956,7 @@
       </member-function>
       <member-function access='private' destructor='yes'>
         <!-- GoogleInitializer::~GoogleInitializer(const int) -->
-        <function-decl name='~GoogleInitializer' filepath='src/base/googleinit.h' line='48' column='1' visibility='default' binding='global' size-in-bits='64'>
+        <function-decl name='~GoogleInitializer' filepath='src/base/googleinit.h' line='48' column='1' declared-inline='yes' visibility='default' binding='global' size-in-bits='64'>
           <!-- implicit parameter of type 'GoogleInitializer* const' -->
           <parameter type-id='type-id-233' name='this' is-artificial='yes'/>
           <!-- artificial parameter of type 'const int' -->
@@ -4967,7 +4967,7 @@
       </member-function>
       <member-function access='private' destructor='yes'>
         <!-- GoogleInitializer::~GoogleInitializer() -->
-        <function-decl name='~GoogleInitializer' mangled-name='_ZN17GoogleInitializerD2Ev' filepath='src/base/googleinit.h' line='48' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZN17GoogleInitializerD2Ev'>
+        <function-decl name='~GoogleInitializer' mangled-name='_ZN17GoogleInitializerD2Ev' filepath='src/base/googleinit.h' line='48' column='1' declared-inline='yes' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZN17GoogleInitializerD2Ev'>
           <!-- implicit parameter of type 'GoogleInitializer* const' -->
           <parameter type-id='type-id-233' name='this' is-artificial='yes'/>
           <!-- void -->
@@ -5017,7 +5017,7 @@
       </member-function>
       <member-function access='private' destructor='yes'>
         <!-- GoogleInitializer::~GoogleInitializer(const int) -->
-        <function-decl name='~GoogleInitializer' filepath='src/base/googleinit.h' line='48' column='1' visibility='default' binding='global' size-in-bits='64'>
+        <function-decl name='~GoogleInitializer' filepath='src/base/googleinit.h' line='48' column='1' declared-inline='yes' visibility='default' binding='global' size-in-bits='64'>
           <!-- implicit parameter of type 'GoogleInitializer* const' -->
           <parameter type-id='type-id-233' name='this' is-artificial='yes'/>
           <!-- artificial parameter of type 'const int' -->
@@ -5028,7 +5028,7 @@
       </member-function>
       <member-function access='private' destructor='yes'>
         <!-- GoogleInitializer::~GoogleInitializer() -->
-        <function-decl name='~GoogleInitializer' mangled-name='_ZN17GoogleInitializerD2Ev' filepath='src/base/googleinit.h' line='48' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZN17GoogleInitializerD2Ev'>
+        <function-decl name='~GoogleInitializer' mangled-name='_ZN17GoogleInitializerD2Ev' filepath='src/base/googleinit.h' line='48' column='1' declared-inline='yes' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZN17GoogleInitializerD2Ev'>
           <!-- implicit parameter of type 'GoogleInitializer* const' -->
           <parameter type-id='type-id-233' name='this' is-artificial='yes'/>
           <!-- void -->
@@ -5078,7 +5078,7 @@
       </member-function>
       <member-function access='private' destructor='yes'>
         <!-- GoogleInitializer::~GoogleInitializer(const int) -->
-        <function-decl name='~GoogleInitializer' filepath='src/base/googleinit.h' line='48' column='1' visibility='default' binding='global' size-in-bits='64'>
+        <function-decl name='~GoogleInitializer' filepath='src/base/googleinit.h' line='48' column='1' declared-inline='yes' visibility='default' binding='global' size-in-bits='64'>
           <!-- implicit parameter of type 'GoogleInitializer* const' -->
           <parameter type-id='type-id-233' name='this' is-artificial='yes'/>
           <!-- artificial parameter of type 'const int' -->
@@ -5089,7 +5089,7 @@
       </member-function>
       <member-function access='private' destructor='yes'>
         <!-- GoogleInitializer::~GoogleInitializer() -->
-        <function-decl name='~GoogleInitializer' mangled-name='_ZN17GoogleInitializerD2Ev' filepath='src/base/googleinit.h' line='48' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZN17GoogleInitializerD2Ev'>
+        <function-decl name='~GoogleInitializer' mangled-name='_ZN17GoogleInitializerD2Ev' filepath='src/base/googleinit.h' line='48' column='1' declared-inline='yes' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZN17GoogleInitializerD2Ev'>
           <!-- implicit parameter of type 'GoogleInitializer* const' -->
           <parameter type-id='type-id-233' name='this' is-artificial='yes'/>
           <!-- void -->
@@ -5139,7 +5139,7 @@
       </member-function>
       <member-function access='private' destructor='yes'>
         <!-- GoogleInitializer::~GoogleInitializer(const int) -->
-        <function-decl name='~GoogleInitializer' filepath='src/base/googleinit.h' line='48' column='1' visibility='default' binding='global' size-in-bits='64'>
+        <function-decl name='~GoogleInitializer' filepath='src/base/googleinit.h' line='48' column='1' declared-inline='yes' visibility='default' binding='global' size-in-bits='64'>
           <!-- implicit parameter of type 'GoogleInitializer* const' -->
           <parameter type-id='type-id-233' name='this' is-artificial='yes'/>
           <!-- artificial parameter of type 'const int' -->
@@ -5150,7 +5150,7 @@
       </member-function>
       <member-function access='private' destructor='yes'>
         <!-- GoogleInitializer::~GoogleInitializer() -->
-        <function-decl name='~GoogleInitializer' mangled-name='_ZN17GoogleInitializerD2Ev' filepath='src/base/googleinit.h' line='48' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZN17GoogleInitializerD2Ev'>
+        <function-decl name='~GoogleInitializer' mangled-name='_ZN17GoogleInitializerD2Ev' filepath='src/base/googleinit.h' line='48' column='1' declared-inline='yes' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZN17GoogleInitializerD2Ev'>
           <!-- implicit parameter of type 'GoogleInitializer* const' -->
           <parameter type-id='type-id-233' name='this' is-artificial='yes'/>
           <!-- void -->
@@ -5200,7 +5200,7 @@
       </member-function>
       <member-function access='private' destructor='yes'>
         <!-- GoogleInitializer::~GoogleInitializer(const int) -->
-        <function-decl name='~GoogleInitializer' filepath='src/base/googleinit.h' line='48' column='1' visibility='default' binding='global' size-in-bits='64'>
+        <function-decl name='~GoogleInitializer' filepath='src/base/googleinit.h' line='48' column='1' declared-inline='yes' visibility='default' binding='global' size-in-bits='64'>
           <!-- implicit parameter of type 'GoogleInitializer* const' -->
           <parameter type-id='type-id-233' name='this' is-artificial='yes'/>
           <!-- artificial parameter of type 'const int' -->
@@ -5211,7 +5211,7 @@
       </member-function>
       <member-function access='private' destructor='yes'>
         <!-- GoogleInitializer::~GoogleInitializer() -->
-        <function-decl name='~GoogleInitializer' mangled-name='_ZN17GoogleInitializerD2Ev' filepath='src/base/googleinit.h' line='48' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZN17GoogleInitializerD2Ev'>
+        <function-decl name='~GoogleInitializer' mangled-name='_ZN17GoogleInitializerD2Ev' filepath='src/base/googleinit.h' line='48' column='1' declared-inline='yes' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZN17GoogleInitializerD2Ev'>
           <!-- implicit parameter of type 'GoogleInitializer* const' -->
           <parameter type-id='type-id-233' name='this' is-artificial='yes'/>
           <!-- void -->
@@ -5261,7 +5261,7 @@
       </member-function>
       <member-function access='private' destructor='yes'>
         <!-- GoogleInitializer::~GoogleInitializer(const int) -->
-        <function-decl name='~GoogleInitializer' filepath='./src/base/googleinit.h' line='48' column='1' visibility='default' binding='global' size-in-bits='64'>
+        <function-decl name='~GoogleInitializer' filepath='./src/base/googleinit.h' line='48' column='1' declared-inline='yes' visibility='default' binding='global' size-in-bits='64'>
           <!-- implicit parameter of type 'GoogleInitializer* const' -->
           <parameter type-id='type-id-233' name='this' is-artificial='yes'/>
           <!-- artificial parameter of type 'const int' -->
@@ -5272,7 +5272,7 @@
       </member-function>
       <member-function access='private' destructor='yes'>
         <!-- GoogleInitializer::~GoogleInitializer() -->
-        <function-decl name='~GoogleInitializer' mangled-name='_ZN17GoogleInitializerD2Ev' filepath='./src/base/googleinit.h' line='48' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZN17GoogleInitializerD2Ev'>
+        <function-decl name='~GoogleInitializer' mangled-name='_ZN17GoogleInitializerD2Ev' filepath='./src/base/googleinit.h' line='48' column='1' declared-inline='yes' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZN17GoogleInitializerD2Ev'>
           <!-- implicit parameter of type 'GoogleInitializer* const' -->
           <parameter type-id='type-id-233' name='this' is-artificial='yes'/>
           <!-- void -->
@@ -5322,7 +5322,7 @@
       </member-function>
       <member-function access='private' destructor='yes'>
         <!-- GoogleInitializer::~GoogleInitializer(const int) -->
-        <function-decl name='~GoogleInitializer' filepath='src/base/googleinit.h' line='48' column='1' visibility='default' binding='global' size-in-bits='64'>
+        <function-decl name='~GoogleInitializer' filepath='src/base/googleinit.h' line='48' column='1' declared-inline='yes' visibility='default' binding='global' size-in-bits='64'>
           <!-- implicit parameter of type 'GoogleInitializer* const' -->
           <parameter type-id='type-id-233' name='this' is-artificial='yes'/>
           <!-- artificial parameter of type 'const int' -->
@@ -5333,7 +5333,7 @@
       </member-function>
       <member-function access='private' destructor='yes'>
         <!-- GoogleInitializer::~GoogleInitializer() -->
-        <function-decl name='~GoogleInitializer' mangled-name='_ZN17GoogleInitializerD2Ev' filepath='src/base/googleinit.h' line='48' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZN17GoogleInitializerD2Ev'>
+        <function-decl name='~GoogleInitializer' mangled-name='_ZN17GoogleInitializerD2Ev' filepath='src/base/googleinit.h' line='48' column='1' declared-inline='yes' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZN17GoogleInitializerD2Ev'>
           <!-- implicit parameter of type 'GoogleInitializer* const' -->
           <parameter type-id='type-id-233' name='this' is-artificial='yes'/>
           <!-- void -->
@@ -6570,7 +6570,7 @@
       </member-function>
       <member-function access='private' static='yes'>
         <!-- void HeapProfileTable::MapArgsAllocIterator(HeapProfileTable::AllocValue*, HeapProfileTable::AllocIterator) -->
-        <function-decl name='MapArgsAllocIterator' mangled-name='_ZN16HeapProfileTable20MapArgsAllocIteratorEPKvPNS_10AllocValueEPFvS1_RKNS_9AllocInfoEE' filepath='src/heap-profile-table.h' line='276' column='1' declared-inline='yes' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZN16HeapProfileTable20MapArgsAllocIteratorEPKvPNS_10AllocValueEPFvS1_RKNS_9AllocInfoEE'>
+        <function-decl name='MapArgsAllocIterator' mangled-name='_ZN16HeapProfileTable20MapArgsAllocIteratorEPKvPNS_10AllocValueEPFvS1_RKNS_9AllocInfoEE' filepath='src/heap-profile-table.h' line='276' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZN16HeapProfileTable20MapArgsAllocIteratorEPKvPNS_10AllocValueEPFvS1_RKNS_9AllocInfoEE'>
           <!-- parameter of type 'void*' -->
           <parameter type-id='type-id-77' name='ptr' filepath='src/heap-profile-table.h' line='276' column='1'/>
           <!-- parameter of type 'HeapProfileTable::AllocValue*' -->
@@ -6620,7 +6620,7 @@
       </member-function>
       <member-function access='private' static='yes'>
         <!-- size_t HeapProfileTable::AllocValueSize() -->
-        <function-decl name='AllocValueSize' mangled-name='_ZN16HeapProfileTable14AllocValueSizeERKNS_10AllocValueE' filepath='src/heap-profile-table.h' line='222' column='1' declared-inline='yes' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZN16HeapProfileTable14AllocValueSizeERKNS_10AllocValueE'>
+        <function-decl name='AllocValueSize' mangled-name='_ZN16HeapProfileTable14AllocValueSizeERKNS_10AllocValueE' filepath='src/heap-profile-table.h' line='222' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZN16HeapProfileTable14AllocValueSizeERKNS_10AllocValueE'>
           <!-- parameter of type 'const HeapProfileTable::AllocValue&' -->
           <parameter type-id='type-id-299' name='v' filepath='src/heap-profile-table.h' line='222' column='1'/>
           <!-- typedef size_t -->
@@ -6709,7 +6709,7 @@
       </member-function>
       <member-function access='private' static='yes'>
         <!-- void HeapProfileTable::DumpNonLiveIterator(HeapProfileTable::AllocValue*, const HeapProfileTable::DumpArgs&) -->
-        <function-decl name='DumpNonLiveIterator' mangled-name='_ZN16HeapProfileTable19DumpNonLiveIteratorEPKvPNS_10AllocValueERKNS_8DumpArgsE' filepath='src/heap-profile-table.cc' line='397' column='1' declared-inline='yes' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZN16HeapProfileTable19DumpNonLiveIteratorEPKvPNS_10AllocValueERKNS_8DumpArgsE'>
+        <function-decl name='DumpNonLiveIterator' mangled-name='_ZN16HeapProfileTable19DumpNonLiveIteratorEPKvPNS_10AllocValueERKNS_8DumpArgsE' filepath='src/heap-profile-table.cc' line='397' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZN16HeapProfileTable19DumpNonLiveIteratorEPKvPNS_10AllocValueERKNS_8DumpArgsE'>
           <!-- parameter of type 'void*' -->
           <parameter type-id='type-id-77' name='ptr' filepath='src/heap-profile-table.cc' line='397' column='1'/>
           <!-- parameter of type 'HeapProfileTable::AllocValue*' -->
@@ -6722,7 +6722,7 @@
       </member-function>
       <member-function access='private' static='yes'>
         <!-- void HeapProfileTable::DumpBucketIterator(HeapProfileTable::BufferArgs*) -->
-        <function-decl name='DumpBucketIterator' mangled-name='_ZN16HeapProfileTable18DumpBucketIteratorEPK17HeapProfileBucketPNS_10BufferArgsE' filepath='src/heap-profile-table.cc' line='390' column='1' declared-inline='yes' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZN16HeapProfileTable18DumpBucketIteratorEPK17HeapProfileBucketPNS_10BufferArgsE'>
+        <function-decl name='DumpBucketIterator' mangled-name='_ZN16HeapProfileTable18DumpBucketIteratorEPK17HeapProfileBucketPNS_10BufferArgsE' filepath='src/heap-profile-table.cc' line='390' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZN16HeapProfileTable18DumpBucketIteratorEPK17HeapProfileBucketPNS_10BufferArgsE'>
           <!-- parameter of type 'const HeapProfileTable::AllocValue::Bucket*' -->
           <parameter type-id='type-id-302' name='bucket' filepath='src/heap-profile-table.cc' line='390' column='1'/>
           <!-- parameter of type 'HeapProfileTable::BufferArgs*' -->
@@ -10342,7 +10342,7 @@
         </member-function>
         <member-function access='private' destructor='yes'>
           <!-- std::basic_string<char, std::char_traits<char>, STL_Allocator<char, HeapLeakChecker::Allocator> >::~basic_string(const int) -->
-          <function-decl name='~basic_string' filepath='/usr/lib/gcc/x86_64-redhat-linux/4.4.7/../../../../include/c++/4.4.7/bits/basic_string.h' line='502' column='1' visibility='default' binding='global' size-in-bits='64'>
+          <function-decl name='~basic_string' filepath='/usr/lib/gcc/x86_64-redhat-linux/4.4.7/../../../../include/c++/4.4.7/bits/basic_string.h' line='502' column='1' declared-inline='yes' visibility='default' binding='global' size-in-bits='64'>
             <!-- implicit parameter of type 'std::basic_string<char, std::char_traits<char>, STL_Allocator<char, HeapLeakChecker::Allocator> >* const' -->
             <parameter type-id='type-id-792' name='this' is-artificial='yes'/>
             <!-- artificial parameter of type 'const int' -->
@@ -10353,7 +10353,7 @@
         </member-function>
         <member-function access='private' destructor='yes'>
           <!-- std::basic_string<char, std::char_traits<char>, STL_Allocator<char, HeapLeakChecker::Allocator> >::~basic_string() -->
-          <function-decl name='~basic_string' mangled-name='_ZNSbIcSt11char_traitsIcE13STL_AllocatorIcN15HeapLeakChecker9AllocatorEEED1Ev' filepath='/usr/lib/gcc/x86_64-redhat-linux/4.4.7/../../../../include/c++/4.4.7/bits/basic_string.h' line='502' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZNSbIcSt11char_traitsIcE13STL_AllocatorIcN15HeapLeakChecker9AllocatorEEED1Ev'>
+          <function-decl name='~basic_string' mangled-name='_ZNSbIcSt11char_traitsIcE13STL_AllocatorIcN15HeapLeakChecker9AllocatorEEED1Ev' filepath='/usr/lib/gcc/x86_64-redhat-linux/4.4.7/../../../../include/c++/4.4.7/bits/basic_string.h' line='502' column='1' declared-inline='yes' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZNSbIcSt11char_traitsIcE13STL_AllocatorIcN15HeapLeakChecker9AllocatorEEED1Ev'>
             <!-- implicit parameter of type 'std::basic_string<char, std::char_traits<char>, STL_Allocator<char, HeapLeakChecker::Allocator> >* const' -->
             <parameter type-id='type-id-792' name='this' is-artificial='yes'/>
             <!-- void -->
@@ -10702,7 +10702,7 @@
         </member-function>
         <member-function access='private' destructor='yes'>
           <!-- std::vector<AllocObject, STL_Allocator<AllocObject, HeapLeakChecker::Allocator> >::~vector(const int) -->
-          <function-decl name='~vector' filepath='/usr/lib/gcc/x86_64-redhat-linux/4.4.7/../../../../include/c++/4.4.7/bits/stl_vector.h' line='312' column='1' visibility='default' binding='global' size-in-bits='64'>
+          <function-decl name='~vector' filepath='/usr/lib/gcc/x86_64-redhat-linux/4.4.7/../../../../include/c++/4.4.7/bits/stl_vector.h' line='312' column='1' declared-inline='yes' visibility='default' binding='global' size-in-bits='64'>
             <!-- implicit parameter of type 'std::vector<AllocObject, STL_Allocator<AllocObject, HeapLeakChecker::Allocator> >* const' -->
             <parameter type-id='type-id-849' name='this' is-artificial='yes'/>
             <!-- artificial parameter of type 'const int' -->
@@ -10713,7 +10713,7 @@
         </member-function>
         <member-function access='private'>
           <!-- void std::vector<AllocObject, STL_Allocator<AllocObject, HeapLeakChecker::Allocator> >::vector(const std::vector<AllocObject, STL_Allocator<AllocObject, HeapLeakChecker::Allocator> >&) -->
-          <function-decl name='vector' filepath='/usr/lib/gcc/x86_64-redhat-linux/4.4.7/../../../../include/c++/4.4.7/bits/stl_vector.h' line='241' column='1' visibility='default' binding='global' size-in-bits='64'>
+          <function-decl name='vector' filepath='/usr/lib/gcc/x86_64-redhat-linux/4.4.7/../../../../include/c++/4.4.7/bits/stl_vector.h' line='241' column='1' declared-inline='yes' visibility='default' binding='global' size-in-bits='64'>
             <!-- implicit parameter of type 'std::vector<AllocObject, STL_Allocator<AllocObject, HeapLeakChecker::Allocator> >* const' -->
             <parameter type-id='type-id-849' name='this' is-artificial='yes'/>
             <!-- parameter of type 'const std::vector<AllocObject, STL_Allocator<AllocObject, HeapLeakChecker::Allocator> >&' -->
@@ -15926,7 +15926,7 @@
       </member-function>
       <member-function access='public' destructor='yes'>
         <!-- HeapProfileEndWriter::~HeapProfileEndWriter(const int) -->
-        <function-decl name='~HeapProfileEndWriter' filepath='src/heap-profiler.cc' line='594' column='1' visibility='default' binding='global' size-in-bits='64'>
+        <function-decl name='~HeapProfileEndWriter' filepath='src/heap-profiler.cc' line='594' column='1' declared-inline='yes' visibility='default' binding='global' size-in-bits='64'>
           <!-- implicit parameter of type 'HeapProfileEndWriter* const' -->
           <parameter type-id='type-id-1162' name='this' is-artificial='yes'/>
           <!-- artificial parameter of type 'const int' -->
@@ -15937,7 +15937,7 @@
       </member-function>
       <member-function access='public' destructor='yes'>
         <!-- HeapProfileEndWriter::~HeapProfileEndWriter() -->
-        <function-decl name='~HeapProfileEndWriter' mangled-name='_ZN20HeapProfileEndWriterD1Ev' filepath='src/heap-profiler.cc' line='594' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZN20HeapProfileEndWriterD1Ev'>
+        <function-decl name='~HeapProfileEndWriter' mangled-name='_ZN20HeapProfileEndWriterD1Ev' filepath='src/heap-profiler.cc' line='594' column='1' declared-inline='yes' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZN20HeapProfileEndWriterD1Ev'>
           <!-- implicit parameter of type 'HeapProfileEndWriter* const' -->
           <parameter type-id='type-id-1162' name='this' is-artificial='yes'/>
           <!-- void -->
@@ -23263,7 +23263,7 @@
       </member-function>
       <member-function access='private' constructor='yes'>
         <!-- SpinLockHolder::SpinLockHolder(SpinLock*) -->
-        <function-decl name='SpinLockHolder' filepath='src/base/spinlock.h' line='134' column='1' visibility='default' binding='global' size-in-bits='64'>
+        <function-decl name='SpinLockHolder' filepath='src/base/spinlock.h' line='134' column='1' declared-inline='yes' visibility='default' binding='global' size-in-bits='64'>
           <!-- implicit parameter of type 'SpinLockHolder* const' -->
           <parameter type-id='type-id-1650' name='this' is-artificial='yes'/>
           <!-- parameter of type 'SpinLock*' -->
@@ -23274,7 +23274,7 @@
       </member-function>
       <member-function access='private' constructor='yes'>
         <!-- SpinLockHolder::SpinLockHolder(SpinLock*) -->
-        <function-decl name='SpinLockHolder' mangled-name='_ZN14SpinLockHolderC2EP8SpinLock' filepath='src/base/spinlock.h' line='134' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZN14SpinLockHolderC2EP8SpinLock'>
+        <function-decl name='SpinLockHolder' mangled-name='_ZN14SpinLockHolderC2EP8SpinLock' filepath='src/base/spinlock.h' line='134' column='1' declared-inline='yes' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZN14SpinLockHolderC2EP8SpinLock'>
           <!-- implicit parameter of type 'SpinLockHolder* const' -->
           <parameter type-id='type-id-1650' name='this' is-artificial='yes'/>
           <!-- parameter of type 'SpinLock*' -->
@@ -23285,7 +23285,7 @@
       </member-function>
       <member-function access='private' destructor='yes'>
         <!-- SpinLockHolder::~SpinLockHolder(const int) -->
-        <function-decl name='~SpinLockHolder' filepath='src/base/spinlock.h' line='140' column='1' visibility='default' binding='global' size-in-bits='64'>
+        <function-decl name='~SpinLockHolder' filepath='src/base/spinlock.h' line='140' column='1' declared-inline='yes' visibility='default' binding='global' size-in-bits='64'>
           <!-- implicit parameter of type 'SpinLockHolder* const' -->
           <parameter type-id='type-id-1650' name='this' is-artificial='yes'/>
           <!-- artificial parameter of type 'const int' -->
@@ -23296,7 +23296,7 @@
       </member-function>
       <member-function access='private' destructor='yes'>
         <!-- SpinLockHolder::~SpinLockHolder() -->
-        <function-decl name='~SpinLockHolder' mangled-name='_ZN14SpinLockHolderD1Ev' filepath='src/base/spinlock.h' line='140' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZN14SpinLockHolderD1Ev'>
+        <function-decl name='~SpinLockHolder' mangled-name='_ZN14SpinLockHolderD1Ev' filepath='src/base/spinlock.h' line='140' column='1' declared-inline='yes' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZN14SpinLockHolderD1Ev'>
           <!-- implicit parameter of type 'SpinLockHolder* const' -->
           <parameter type-id='type-id-1650' name='this' is-artificial='yes'/>
           <!-- void -->
@@ -23327,7 +23327,7 @@
       </member-function>
       <member-function access='private' constructor='yes'>
         <!-- SpinLockHolder::SpinLockHolder(SpinLock*) -->
-        <function-decl name='SpinLockHolder' filepath='src/base/spinlock.h' line='134' column='1' visibility='default' binding='global' size-in-bits='64'>
+        <function-decl name='SpinLockHolder' filepath='src/base/spinlock.h' line='134' column='1' declared-inline='yes' visibility='default' binding='global' size-in-bits='64'>
           <!-- implicit parameter of type 'SpinLockHolder* const' -->
           <parameter type-id='type-id-1650' name='this' is-artificial='yes'/>
           <!-- parameter of type 'SpinLock*' -->
@@ -23338,7 +23338,7 @@
       </member-function>
       <member-function access='private' constructor='yes'>
         <!-- SpinLockHolder::SpinLockHolder(SpinLock*) -->
-        <function-decl name='SpinLockHolder' mangled-name='_ZN14SpinLockHolderC2EP8SpinLock' filepath='src/base/spinlock.h' line='134' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZN14SpinLockHolderC2EP8SpinLock'>
+        <function-decl name='SpinLockHolder' mangled-name='_ZN14SpinLockHolderC2EP8SpinLock' filepath='src/base/spinlock.h' line='134' column='1' declared-inline='yes' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZN14SpinLockHolderC2EP8SpinLock'>
           <!-- implicit parameter of type 'SpinLockHolder* const' -->
           <parameter type-id='type-id-1650' name='this' is-artificial='yes'/>
           <!-- parameter of type 'SpinLock*' -->
@@ -23349,7 +23349,7 @@
       </member-function>
       <member-function access='private' destructor='yes'>
         <!-- SpinLockHolder::~SpinLockHolder(const int) -->
-        <function-decl name='~SpinLockHolder' filepath='src/base/spinlock.h' line='140' column='1' visibility='default' binding='global' size-in-bits='64'>
+        <function-decl name='~SpinLockHolder' filepath='src/base/spinlock.h' line='140' column='1' declared-inline='yes' visibility='default' binding='global' size-in-bits='64'>
           <!-- implicit parameter of type 'SpinLockHolder* const' -->
           <parameter type-id='type-id-1650' name='this' is-artificial='yes'/>
           <!-- artificial parameter of type 'const int' -->
@@ -23360,7 +23360,7 @@
       </member-function>
       <member-function access='private' destructor='yes'>
         <!-- SpinLockHolder::~SpinLockHolder() -->
-        <function-decl name='~SpinLockHolder' mangled-name='_ZN14SpinLockHolderD1Ev' filepath='src/base/spinlock.h' line='140' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZN14SpinLockHolderD1Ev'>
+        <function-decl name='~SpinLockHolder' mangled-name='_ZN14SpinLockHolderD1Ev' filepath='src/base/spinlock.h' line='140' column='1' declared-inline='yes' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZN14SpinLockHolderD1Ev'>
           <!-- implicit parameter of type 'SpinLockHolder* const' -->
           <parameter type-id='type-id-1650' name='this' is-artificial='yes'/>
           <!-- void -->
@@ -23402,7 +23402,7 @@
       </member-function>
       <member-function access='private' destructor='yes'>
         <!-- SpinLockHolder::~SpinLockHolder(const int) -->
-        <function-decl name='~SpinLockHolder' filepath='src/base/spinlock.h' line='140' column='1' visibility='default' binding='global' size-in-bits='64'>
+        <function-decl name='~SpinLockHolder' filepath='src/base/spinlock.h' line='140' column='1' declared-inline='yes' visibility='default' binding='global' size-in-bits='64'>
           <!-- implicit parameter of type 'SpinLockHolder* const' -->
           <parameter type-id='type-id-1650' name='this' is-artificial='yes'/>
           <!-- artificial parameter of type 'const int' -->
@@ -23435,7 +23435,7 @@
       </member-function>
       <member-function access='private' destructor='yes'>
         <!-- SpinLockHolder::~SpinLockHolder(const int) -->
-        <function-decl name='~SpinLockHolder' filepath='src/base/spinlock.h' line='140' column='1' visibility='default' binding='global' size-in-bits='64'>
+        <function-decl name='~SpinLockHolder' filepath='src/base/spinlock.h' line='140' column='1' declared-inline='yes' visibility='default' binding='global' size-in-bits='64'>
           <!-- implicit parameter of type 'SpinLockHolder* const' -->
           <parameter type-id='type-id-1650' name='this' is-artificial='yes'/>
           <!-- artificial parameter of type 'const int' -->
@@ -23446,7 +23446,7 @@
       </member-function>
       <member-function access='private' destructor='yes'>
         <!-- SpinLockHolder::~SpinLockHolder() -->
-        <function-decl name='~SpinLockHolder' mangled-name='_ZN14SpinLockHolderD1Ev' filepath='src/base/spinlock.h' line='140' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZN14SpinLockHolderD1Ev'>
+        <function-decl name='~SpinLockHolder' mangled-name='_ZN14SpinLockHolderD1Ev' filepath='src/base/spinlock.h' line='140' column='1' declared-inline='yes' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZN14SpinLockHolderD1Ev'>
           <!-- implicit parameter of type 'SpinLockHolder* const' -->
           <parameter type-id='type-id-1650' name='this' is-artificial='yes'/>
           <!-- void -->
@@ -23455,7 +23455,7 @@
       </member-function>
       <member-function access='private' constructor='yes'>
         <!-- SpinLockHolder::SpinLockHolder(SpinLock*) -->
-        <function-decl name='SpinLockHolder' filepath='src/base/spinlock.h' line='134' column='1' visibility='default' binding='global' size-in-bits='64'>
+        <function-decl name='SpinLockHolder' filepath='src/base/spinlock.h' line='134' column='1' declared-inline='yes' visibility='default' binding='global' size-in-bits='64'>
           <!-- implicit parameter of type 'SpinLockHolder* const' -->
           <parameter type-id='type-id-1650' name='this' is-artificial='yes'/>
           <!-- parameter of type 'SpinLock*' -->
@@ -23752,7 +23752,7 @@
       </member-function>
       <member-function access='private' constructor='yes'>
         <!-- SpinLockHolder::SpinLockHolder(SpinLock*) -->
-        <function-decl name='SpinLockHolder' filepath='src/base/spinlock.h' line='134' column='1' visibility='default' binding='global' size-in-bits='64'>
+        <function-decl name='SpinLockHolder' filepath='src/base/spinlock.h' line='134' column='1' declared-inline='yes' visibility='default' binding='global' size-in-bits='64'>
           <!-- implicit parameter of type 'SpinLockHolder* const' -->
           <parameter type-id='type-id-1650' name='this' is-artificial='yes'/>
           <!-- parameter of type 'SpinLock*' -->
@@ -23763,51 +23763,7 @@
       </member-function>
       <member-function access='private' destructor='yes'>
         <!-- SpinLockHolder::~SpinLockHolder(const int) -->
-        <function-decl name='~SpinLockHolder' filepath='src/base/spinlock.h' line='140' column='1' visibility='default' binding='global' size-in-bits='64'>
-          <!-- implicit parameter of type 'SpinLockHolder* const' -->
-          <parameter type-id='type-id-1650' name='this' is-artificial='yes'/>
-          <!-- artificial parameter of type 'const int' -->
-          <parameter type-id='type-id-127' name='__in_chrg' is-artificial='yes'/>
-          <!-- void -->
-          <return type-id='type-id-79'/>
-        </function-decl>
-      </member-function>
-      <member-function access='private' constructor='yes'>
-        <!-- SpinLockHolder::SpinLockHolder(SpinLock*) -->
-        <function-decl name='SpinLockHolder' filepath='src/base/spinlock.h' line='134' column='1' visibility='default' binding='global' size-in-bits='64'>
-          <!-- implicit parameter of type 'SpinLockHolder*' -->
-          <parameter type-id='type-id-1649' is-artificial='yes'/>
-          <!-- parameter of type 'SpinLock*' -->
-          <parameter type-id='type-id-256'/>
-          <!-- void -->
-          <return type-id='type-id-79'/>
-        </function-decl>
-      </member-function>
-      <member-function access='private' destructor='yes'>
-        <!-- SpinLockHolder::~SpinLockHolder(int) -->
-        <function-decl name='~SpinLockHolder' filepath='src/base/spinlock.h' line='140' column='1' visibility='default' binding='global' size-in-bits='64'>
-          <!-- implicit parameter of type 'SpinLockHolder*' -->
-          <parameter type-id='type-id-1649' is-artificial='yes'/>
-          <!-- artificial parameter of type 'int' -->
-          <parameter type-id='type-id-1' is-artificial='yes'/>
-          <!-- void -->
-          <return type-id='type-id-79'/>
-        </function-decl>
-      </member-function>
-      <member-function access='private' constructor='yes'>
-        <!-- SpinLockHolder::SpinLockHolder(SpinLock*) -->
-        <function-decl name='SpinLockHolder' filepath='src/base/spinlock.h' line='134' column='1' visibility='default' binding='global' size-in-bits='64'>
-          <!-- implicit parameter of type 'SpinLockHolder* const' -->
-          <parameter type-id='type-id-1650' name='this' is-artificial='yes'/>
-          <!-- parameter of type 'SpinLock*' -->
-          <parameter type-id='type-id-256' name='l' filepath='src/base/spinlock.h' line='134' column='1'/>
-          <!-- void -->
-          <return type-id='type-id-79'/>
-        </function-decl>
-      </member-function>
-      <member-function access='private' destructor='yes'>
-        <!-- SpinLockHolder::~SpinLockHolder(const int) -->
-        <function-decl name='~SpinLockHolder' filepath='src/base/spinlock.h' line='140' column='1' visibility='default' binding='global' size-in-bits='64'>
+        <function-decl name='~SpinLockHolder' filepath='src/base/spinlock.h' line='140' column='1' declared-inline='yes' visibility='default' binding='global' size-in-bits='64'>
           <!-- implicit parameter of type 'SpinLockHolder* const' -->
           <parameter type-id='type-id-1650' name='this' is-artificial='yes'/>
           <!-- artificial parameter of type 'const int' -->
@@ -23851,7 +23807,51 @@
       </member-function>
       <member-function access='private' destructor='yes'>
         <!-- SpinLockHolder::~SpinLockHolder(const int) -->
+        <function-decl name='~SpinLockHolder' filepath='src/base/spinlock.h' line='140' column='1' declared-inline='yes' visibility='default' binding='global' size-in-bits='64'>
+          <!-- implicit parameter of type 'SpinLockHolder* const' -->
+          <parameter type-id='type-id-1650' name='this' is-artificial='yes'/>
+          <!-- artificial parameter of type 'const int' -->
+          <parameter type-id='type-id-127' name='__in_chrg' is-artificial='yes'/>
+          <!-- void -->
+          <return type-id='type-id-79'/>
+        </function-decl>
+      </member-function>
+      <member-function access='private' constructor='yes'>
+        <!-- SpinLockHolder::SpinLockHolder(SpinLock*) -->
+        <function-decl name='SpinLockHolder' filepath='src/base/spinlock.h' line='134' column='1' visibility='default' binding='global' size-in-bits='64'>
+          <!-- implicit parameter of type 'SpinLockHolder*' -->
+          <parameter type-id='type-id-1649' is-artificial='yes'/>
+          <!-- parameter of type 'SpinLock*' -->
+          <parameter type-id='type-id-256'/>
+          <!-- void -->
+          <return type-id='type-id-79'/>
+        </function-decl>
+      </member-function>
+      <member-function access='private' destructor='yes'>
+        <!-- SpinLockHolder::~SpinLockHolder(int) -->
         <function-decl name='~SpinLockHolder' filepath='src/base/spinlock.h' line='140' column='1' visibility='default' binding='global' size-in-bits='64'>
+          <!-- implicit parameter of type 'SpinLockHolder*' -->
+          <parameter type-id='type-id-1649' is-artificial='yes'/>
+          <!-- artificial parameter of type 'int' -->
+          <parameter type-id='type-id-1' is-artificial='yes'/>
+          <!-- void -->
+          <return type-id='type-id-79'/>
+        </function-decl>
+      </member-function>
+      <member-function access='private' constructor='yes'>
+        <!-- SpinLockHolder::SpinLockHolder(SpinLock*) -->
+        <function-decl name='SpinLockHolder' filepath='src/base/spinlock.h' line='134' column='1' declared-inline='yes' visibility='default' binding='global' size-in-bits='64'>
+          <!-- implicit parameter of type 'SpinLockHolder* const' -->
+          <parameter type-id='type-id-1650' name='this' is-artificial='yes'/>
+          <!-- parameter of type 'SpinLock*' -->
+          <parameter type-id='type-id-256' name='l' filepath='src/base/spinlock.h' line='134' column='1'/>
+          <!-- void -->
+          <return type-id='type-id-79'/>
+        </function-decl>
+      </member-function>
+      <member-function access='private' destructor='yes'>
+        <!-- SpinLockHolder::~SpinLockHolder(const int) -->
+        <function-decl name='~SpinLockHolder' filepath='src/base/spinlock.h' line='140' column='1' declared-inline='yes' visibility='default' binding='global' size-in-bits='64'>
           <!-- implicit parameter of type 'SpinLockHolder* const' -->
           <parameter type-id='type-id-1650' name='this' is-artificial='yes'/>
           <!-- artificial parameter of type 'const int' -->
@@ -26248,7 +26248,7 @@
         </member-function>
         <member-function access='public' destructor='yes'>
           <!-- std::basic_string<char, std::char_traits<char>, std::allocator<char> >::~basic_string(const int) -->
-          <function-decl name='~basic_string' filepath='/usr/lib/gcc/x86_64-redhat-linux/4.4.7/../../../../include/c++/4.4.7/bits/basic_string.h' line='502' column='1' visibility='default' binding='global' size-in-bits='64'>
+          <function-decl name='~basic_string' filepath='/usr/lib/gcc/x86_64-redhat-linux/4.4.7/../../../../include/c++/4.4.7/bits/basic_string.h' line='502' column='1' declared-inline='yes' visibility='default' binding='global' size-in-bits='64'>
             <!-- implicit parameter of type 'std::basic_string<char, std::char_traits<char>, std::allocator<char> >* const' -->
             <parameter type-id='type-id-800' name='this' is-artificial='yes'/>
             <!-- artificial parameter of type 'const int' -->
@@ -26610,7 +26610,7 @@
         </member-function>
         <member-function access='public' destructor='yes'>
           <!-- std::basic_string<char, std::char_traits<char>, std::allocator<char> >::~basic_string(const int) -->
-          <function-decl name='~basic_string' filepath='/usr/lib/gcc/x86_64-redhat-linux/4.4.7/../../../../include/c++/4.4.7/bits/basic_string.h' line='502' column='1' visibility='default' binding='global' size-in-bits='64'>
+          <function-decl name='~basic_string' filepath='/usr/lib/gcc/x86_64-redhat-linux/4.4.7/../../../../include/c++/4.4.7/bits/basic_string.h' line='502' column='1' declared-inline='yes' visibility='default' binding='global' size-in-bits='64'>
             <!-- implicit parameter of type 'std::basic_string<char, std::char_traits<char>, std::allocator<char> >* const' -->
             <parameter type-id='type-id-800' name='this' is-artificial='yes'/>
             <!-- artificial parameter of type 'const int' -->
@@ -26738,7 +26738,7 @@
         </member-function>
         <member-function access='public' destructor='yes'>
           <!-- std::basic_string<char, std::char_traits<char>, std::allocator<char> >::~basic_string(const int) -->
-          <function-decl name='~basic_string' filepath='/usr/lib/gcc/x86_64-redhat-linux/4.4.7/../../../../include/c++/4.4.7/bits/basic_string.h' line='502' column='1' visibility='default' binding='global' size-in-bits='64'>
+          <function-decl name='~basic_string' filepath='/usr/lib/gcc/x86_64-redhat-linux/4.4.7/../../../../include/c++/4.4.7/bits/basic_string.h' line='502' column='1' declared-inline='yes' visibility='default' binding='global' size-in-bits='64'>
             <!-- implicit parameter of type 'std::basic_string<char, std::char_traits<char>, std::allocator<char> >* const' -->
             <parameter type-id='type-id-800' name='this' is-artificial='yes'/>
             <!-- artificial parameter of type 'const int' -->
@@ -30317,7 +30317,7 @@
         </data-member>
         <member-function access='private' static='yes'>
           <!-- tcmalloc::ThreadCache* tcmalloc::ThreadCache::GetCache() -->
-          <function-decl name='GetCache' mangled-name='_ZN8tcmalloc11ThreadCache8GetCacheEv' filepath='src/thread_cache.h' line='405' column='1' declared-inline='yes' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZN8tcmalloc11ThreadCache8GetCacheEv'>
+          <function-decl name='GetCache' mangled-name='_ZN8tcmalloc11ThreadCache8GetCacheEv' filepath='src/thread_cache.h' line='405' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZN8tcmalloc11ThreadCache8GetCacheEv'>
             <!-- tcmalloc::ThreadCache* -->
             <return type-id='type-id-1824'/>
           </function-decl>

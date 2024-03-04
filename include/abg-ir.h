@@ -3193,6 +3193,9 @@ public:
   bool
   is_declared_inline() const;
 
+  void
+  is_declared_inline(bool);
+
   binding
   get_binding() const;
 

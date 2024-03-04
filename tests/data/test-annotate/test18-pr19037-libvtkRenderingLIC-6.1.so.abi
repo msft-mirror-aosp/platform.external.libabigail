@@ -9582,7 +9582,7 @@
         </member-function>
         <member-function access='private'>
           <!-- void std::deque<vtkPixelExtent, std::allocator<vtkPixelExtent> >::deque(size_t, const vtkPixelExtent&, const std::allocator<vtkPixelExtent>&) -->
-          <function-decl name='deque' filepath='/usr/lib/gcc/x86_64-redhat-linux/4.4.7/../../../../include/c++/4.4.7/bits/stl_deque.h' line='710' column='1' visibility='default' binding='global' size-in-bits='64'>
+          <function-decl name='deque' filepath='/usr/lib/gcc/x86_64-redhat-linux/4.4.7/../../../../include/c++/4.4.7/bits/stl_deque.h' line='710' column='1' declared-inline='yes' visibility='default' binding='global' size-in-bits='64'>
             <!-- implicit parameter of type 'std::deque<vtkPixelExtent, std::allocator<vtkPixelExtent> >* const' -->
             <parameter type-id='type-id-222' name='this' is-artificial='yes'/>
             <!-- parameter of type 'typedef size_t' -->
@@ -9678,7 +9678,7 @@
         </member-function>
         <member-function access='private'>
           <!-- void std::deque<vtkPixelExtent, std::allocator<vtkPixelExtent> >::deque() -->
-          <function-decl name='deque' filepath='/usr/lib/gcc/x86_64-redhat-linux/4.4.7/../../../../include/c++/4.4.7/bits/stl_deque.h' line='690' column='1' visibility='default' binding='global' size-in-bits='64'>
+          <function-decl name='deque' filepath='/usr/lib/gcc/x86_64-redhat-linux/4.4.7/../../../../include/c++/4.4.7/bits/stl_deque.h' line='690' column='1' declared-inline='yes' visibility='default' binding='global' size-in-bits='64'>
             <!-- implicit parameter of type 'std::deque<vtkPixelExtent, std::allocator<vtkPixelExtent> >* const' -->
             <parameter type-id='type-id-222' name='this' is-artificial='yes'/>
             <!-- void -->
@@ -9898,7 +9898,7 @@
         </member-function>
         <member-function access='private'>
           <!-- void std::deque<vtkPixelExtent, std::allocator<vtkPixelExtent> >::deque() -->
-          <function-decl name='deque' filepath='/usr/lib/gcc/x86_64-redhat-linux/4.4.7/../../../../include/c++/4.4.7/bits/stl_deque.h' line='690' column='1' visibility='default' binding='global' size-in-bits='64'>
+          <function-decl name='deque' filepath='/usr/lib/gcc/x86_64-redhat-linux/4.4.7/../../../../include/c++/4.4.7/bits/stl_deque.h' line='690' column='1' declared-inline='yes' visibility='default' binding='global' size-in-bits='64'>
             <!-- implicit parameter of type 'std::deque<vtkPixelExtent, std::allocator<vtkPixelExtent> >* const' -->
             <parameter type-id='type-id-222' name='this' is-artificial='yes'/>
             <!-- void -->
@@ -9907,7 +9907,7 @@
         </member-function>
         <member-function access='private'>
           <!-- void std::deque<vtkPixelExtent, std::allocator<vtkPixelExtent> >::deque(const std::deque<vtkPixelExtent, std::allocator<vtkPixelExtent> >&) -->
-          <function-decl name='deque' filepath='/usr/lib/gcc/x86_64-redhat-linux/4.4.7/../../../../include/c++/4.4.7/bits/stl_deque.h' line='722' column='1' visibility='default' binding='global' size-in-bits='64'>
+          <function-decl name='deque' filepath='/usr/lib/gcc/x86_64-redhat-linux/4.4.7/../../../../include/c++/4.4.7/bits/stl_deque.h' line='722' column='1' declared-inline='yes' visibility='default' binding='global' size-in-bits='64'>
             <!-- implicit parameter of type 'std::deque<vtkPixelExtent, std::allocator<vtkPixelExtent> >* const' -->
             <parameter type-id='type-id-222' name='this' is-artificial='yes'/>
             <!-- parameter of type 'const std::deque<vtkPixelExtent, std::allocator<vtkPixelExtent> >&' -->
@@ -9918,7 +9918,7 @@
         </member-function>
         <member-function access='private'>
           <!-- void std::deque<vtkPixelExtent, std::allocator<vtkPixelExtent> >::deque(const std::deque<vtkPixelExtent, std::allocator<vtkPixelExtent> >&) -->
-          <function-decl name='deque' mangled-name='_ZNSt5dequeI14vtkPixelExtentSaIS0_EEC2ERKS2_' filepath='/usr/lib/gcc/x86_64-redhat-linux/4.4.7/../../../../include/c++/4.4.7/bits/stl_deque.h' line='722' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZNSt5dequeI14vtkPixelExtentSaIS0_EEC2ERKS2_'>
+          <function-decl name='deque' mangled-name='_ZNSt5dequeI14vtkPixelExtentSaIS0_EEC2ERKS2_' filepath='/usr/lib/gcc/x86_64-redhat-linux/4.4.7/../../../../include/c++/4.4.7/bits/stl_deque.h' line='722' column='1' declared-inline='yes' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZNSt5dequeI14vtkPixelExtentSaIS0_EEC2ERKS2_'>
             <!-- implicit parameter of type 'std::deque<vtkPixelExtent, std::allocator<vtkPixelExtent> >* const' -->
             <parameter type-id='type-id-222' name='this' is-artificial='yes'/>
             <!-- parameter of type 'const std::deque<vtkPixelExtent, std::allocator<vtkPixelExtent> >&' -->
@@ -9940,7 +9940,7 @@
         </member-function>
         <member-function access='protected'>
           <!-- std::_Deque_iterator<vtkPixelExtent, vtkPixelExtent&, vtkPixelExtent*> std::deque<vtkPixelExtent, std::allocator<vtkPixelExtent> >::_M_reserve_elements_at_back(size_t) -->
-          <function-decl name='_M_reserve_elements_at_back' mangled-name='_ZNSt5dequeI14vtkPixelExtentSaIS0_EE27_M_reserve_elements_at_backEm' filepath='/usr/lib/gcc/x86_64-redhat-linux/4.4.7/../../../../include/c++/4.4.7/bits/stl_deque.h' line='1689' column='1' declared-inline='yes' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZNSt5dequeI14vtkPixelExtentSaIS0_EE27_M_reserve_elements_at_backEm'>
+          <function-decl name='_M_reserve_elements_at_back' mangled-name='_ZNSt5dequeI14vtkPixelExtentSaIS0_EE27_M_reserve_elements_at_backEm' filepath='/usr/lib/gcc/x86_64-redhat-linux/4.4.7/../../../../include/c++/4.4.7/bits/stl_deque.h' line='1689' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZNSt5dequeI14vtkPixelExtentSaIS0_EE27_M_reserve_elements_at_backEm'>
             <!-- implicit parameter of type 'std::deque<vtkPixelExtent, std::allocator<vtkPixelExtent> >* const' -->
             <parameter type-id='type-id-222' name='this' is-artificial='yes'/>
             <!-- parameter of type 'typedef size_t' -->
@@ -9962,7 +9962,7 @@
         </member-function>
         <member-function access='protected'>
           <!-- std::_Deque_iterator<vtkPixelExtent, vtkPixelExtent&, vtkPixelExtent*> std::deque<vtkPixelExtent, std::allocator<vtkPixelExtent> >::_M_reserve_elements_at_front(size_t) -->
-          <function-decl name='_M_reserve_elements_at_front' mangled-name='_ZNSt5dequeI14vtkPixelExtentSaIS0_EE28_M_reserve_elements_at_frontEm' filepath='/usr/lib/gcc/x86_64-redhat-linux/4.4.7/../../../../include/c++/4.4.7/bits/stl_deque.h' line='1679' column='1' declared-inline='yes' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZNSt5dequeI14vtkPixelExtentSaIS0_EE28_M_reserve_elements_at_frontEm'>
+          <function-decl name='_M_reserve_elements_at_front' mangled-name='_ZNSt5dequeI14vtkPixelExtentSaIS0_EE28_M_reserve_elements_at_frontEm' filepath='/usr/lib/gcc/x86_64-redhat-linux/4.4.7/../../../../include/c++/4.4.7/bits/stl_deque.h' line='1679' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZNSt5dequeI14vtkPixelExtentSaIS0_EE28_M_reserve_elements_at_frontEm'>
             <!-- implicit parameter of type 'std::deque<vtkPixelExtent, std::allocator<vtkPixelExtent> >* const' -->
             <parameter type-id='type-id-222' name='this' is-artificial='yes'/>
             <!-- parameter of type 'typedef size_t' -->
@@ -10193,7 +10193,7 @@
         </member-function>
         <member-function access='protected'>
           <!-- void std::deque<vtkPixelExtent, std::allocator<vtkPixelExtent> >::_M_reserve_map_at_back(size_t) -->
-          <function-decl name='_M_reserve_map_at_back' mangled-name='_ZNSt5dequeI14vtkPixelExtentSaIS0_EE22_M_reserve_map_at_backEm' filepath='/usr/lib/gcc/x86_64-redhat-linux/4.4.7/../../../../include/c++/4.4.7/bits/stl_deque.h' line='1715' column='1' declared-inline='yes' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZNSt5dequeI14vtkPixelExtentSaIS0_EE22_M_reserve_map_at_backEm'>
+          <function-decl name='_M_reserve_map_at_back' mangled-name='_ZNSt5dequeI14vtkPixelExtentSaIS0_EE22_M_reserve_map_at_backEm' filepath='/usr/lib/gcc/x86_64-redhat-linux/4.4.7/../../../../include/c++/4.4.7/bits/stl_deque.h' line='1715' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZNSt5dequeI14vtkPixelExtentSaIS0_EE22_M_reserve_map_at_backEm'>
             <!-- implicit parameter of type 'std::deque<vtkPixelExtent, std::allocator<vtkPixelExtent> >* const' -->
             <parameter type-id='type-id-222' name='this' is-artificial='yes'/>
             <!-- parameter of type 'typedef size_t' -->
@@ -13150,7 +13150,7 @@
       </member-function>
       <member-function access='private' destructor='yes'>
         <!-- vtkLICPingPongBufferManager::~vtkLICPingPongBufferManager(const int) -->
-        <function-decl name='~vtkLICPingPongBufferManager' filepath='/tmp/legendre/spack-stage/spack-stage-R_crTC/VTK-6.1.0/Rendering/LIC/vtkLineIntegralConvolution2D.cxx' line='150' column='1' visibility='default' binding='global' size-in-bits='64'>
+        <function-decl name='~vtkLICPingPongBufferManager' filepath='/tmp/legendre/spack-stage/spack-stage-R_crTC/VTK-6.1.0/Rendering/LIC/vtkLineIntegralConvolution2D.cxx' line='150' column='1' declared-inline='yes' visibility='default' binding='global' size-in-bits='64'>
           <!-- implicit parameter of type 'vtkLICPingPongBufferManager* const' -->
           <parameter type-id='type-id-360' name='this' is-artificial='yes'/>
           <!-- artificial parameter of type 'const int' -->
@@ -13161,7 +13161,7 @@
       </member-function>
       <member-function access='private' destructor='yes'>
         <!-- vtkLICPingPongBufferManager::~vtkLICPingPongBufferManager() -->
-        <function-decl name='~vtkLICPingPongBufferManager' filepath='/tmp/legendre/spack-stage/spack-stage-R_crTC/VTK-6.1.0/Rendering/LIC/vtkLineIntegralConvolution2D.cxx' line='150' column='1' visibility='default' binding='global' size-in-bits='64'>
+        <function-decl name='~vtkLICPingPongBufferManager' filepath='/tmp/legendre/spack-stage/spack-stage-R_crTC/VTK-6.1.0/Rendering/LIC/vtkLineIntegralConvolution2D.cxx' line='150' column='1' declared-inline='yes' visibility='default' binding='global' size-in-bits='64'>
           <!-- implicit parameter of type 'vtkLICPingPongBufferManager* const' -->
           <parameter type-id='type-id-360' name='this' is-artificial='yes'/>
           <!-- void -->
@@ -15063,7 +15063,7 @@
         </member-function>
         <member-function access='private'>
           <!-- void std::vector<float, std::allocator<float> >::vector(size_t, const float&, const std::allocator<float>&) -->
-          <function-decl name='vector' filepath='/usr/lib/gcc/x86_64-redhat-linux/4.4.7/../../../../include/c++/4.4.7/bits/stl_vector.h' line='227' column='1' visibility='default' binding='global' size-in-bits='64'>
+          <function-decl name='vector' filepath='/usr/lib/gcc/x86_64-redhat-linux/4.4.7/../../../../include/c++/4.4.7/bits/stl_vector.h' line='227' column='1' declared-inline='yes' visibility='default' binding='global' size-in-bits='64'>
             <!-- implicit parameter of type 'std::vector<float, std::allocator<float> >* const' -->
             <parameter type-id='type-id-483' name='this' is-artificial='yes'/>
             <!-- parameter of type 'typedef size_t' -->
@@ -16646,7 +16646,7 @@
         </member-function>
         <member-function access='public' destructor='yes'>
           <!-- std::basic_string<char, std::char_traits<char>, std::allocator<char> >::~basic_string(const int) -->
-          <function-decl name='~basic_string' filepath='/usr/lib/gcc/x86_64-redhat-linux/4.4.7/../../../../include/c++/4.4.7/bits/basic_string.h' line='502' column='1' visibility='default' binding='global' size-in-bits='64'>
+          <function-decl name='~basic_string' filepath='/usr/lib/gcc/x86_64-redhat-linux/4.4.7/../../../../include/c++/4.4.7/bits/basic_string.h' line='502' column='1' declared-inline='yes' visibility='default' binding='global' size-in-bits='64'>
             <!-- implicit parameter of type 'std::basic_string<char, std::char_traits<char>, std::allocator<char> >* const' -->
             <parameter type-id='type-id-474' name='this' is-artificial='yes'/>
             <!-- artificial parameter of type 'const int' -->
@@ -16813,7 +16813,7 @@
         </member-function>
         <member-function access='public' destructor='yes'>
           <!-- std::basic_string<char, std::char_traits<char>, std::allocator<char> >::~basic_string(const int) -->
-          <function-decl name='~basic_string' filepath='/usr/lib/gcc/x86_64-redhat-linux/4.4.7/../../../../include/c++/4.4.7/bits/basic_string.h' line='502' column='1' visibility='default' binding='global' size-in-bits='64'>
+          <function-decl name='~basic_string' filepath='/usr/lib/gcc/x86_64-redhat-linux/4.4.7/../../../../include/c++/4.4.7/bits/basic_string.h' line='502' column='1' declared-inline='yes' visibility='default' binding='global' size-in-bits='64'>
             <!-- implicit parameter of type 'std::basic_string<char, std::char_traits<char>, std::allocator<char> >* const' -->
             <parameter type-id='type-id-474' name='this' is-artificial='yes'/>
             <!-- artificial parameter of type 'const int' -->
@@ -16980,7 +16980,7 @@
         </member-function>
         <member-function access='public' destructor='yes'>
           <!-- std::basic_string<char, std::char_traits<char>, std::allocator<char> >::~basic_string(const int) -->
-          <function-decl name='~basic_string' filepath='/usr/lib/gcc/x86_64-redhat-linux/4.4.7/../../../../include/c++/4.4.7/bits/basic_string.h' line='502' column='1' visibility='default' binding='global' size-in-bits='64'>
+          <function-decl name='~basic_string' filepath='/usr/lib/gcc/x86_64-redhat-linux/4.4.7/../../../../include/c++/4.4.7/bits/basic_string.h' line='502' column='1' declared-inline='yes' visibility='default' binding='global' size-in-bits='64'>
             <!-- implicit parameter of type 'std::basic_string<char, std::char_traits<char>, std::allocator<char> >* const' -->
             <parameter type-id='type-id-474' name='this' is-artificial='yes'/>
             <!-- artificial parameter of type 'const int' -->
@@ -17044,7 +17044,7 @@
       <class-decl name='basic_ios&lt;char, std::char_traits&lt;char&gt; &gt;' is-struct='yes' visibility='default' is-declaration-only='yes' id='type-id-498'>
         <member-function access='protected'>
           <!-- void std::basic_ios<char, std::char_traits<char> >::basic_ios() -->
-          <function-decl name='basic_ios' filepath='/usr/lib/gcc/x86_64-redhat-linux/4.4.7/../../../../include/c++/4.4.7/bits/basic_ios.h' line='450' column='1' visibility='default' binding='global' size-in-bits='64'>
+          <function-decl name='basic_ios' filepath='/usr/lib/gcc/x86_64-redhat-linux/4.4.7/../../../../include/c++/4.4.7/bits/basic_ios.h' line='450' column='1' declared-inline='yes' visibility='default' binding='global' size-in-bits='64'>
             <!-- implicit parameter of type 'std::basic_ios<char, std::char_traits<char> >* const' -->
             <parameter type-id='type-id-548' name='this' is-artificial='yes'/>
             <!-- void -->
@@ -17053,7 +17053,7 @@
         </member-function>
         <member-function access='public' destructor='yes' vtable-offset='-1'>
           <!-- std::basic_ios<char, std::char_traits<char> >::~basic_ios(const int) -->
-          <function-decl name='~basic_ios' filepath='/usr/lib/gcc/x86_64-redhat-linux/4.4.7/../../../../include/c++/4.4.7/bits/basic_ios.h' line='272' column='1' visibility='default' binding='global' size-in-bits='64'>
+          <function-decl name='~basic_ios' filepath='/usr/lib/gcc/x86_64-redhat-linux/4.4.7/../../../../include/c++/4.4.7/bits/basic_ios.h' line='272' column='1' declared-inline='yes' visibility='default' binding='global' size-in-bits='64'>
             <!-- implicit parameter of type 'std::basic_ios<char, std::char_traits<char> >* const' -->
             <parameter type-id='type-id-548' name='this' is-artificial='yes'/>
             <!-- artificial parameter of type 'const int' -->
@@ -17122,7 +17122,7 @@
         </member-function>
         <member-function access='public' destructor='yes' vtable-offset='-1'>
           <!-- std::basic_ostringstream<char, std::char_traits<char>, std::allocator<char> >::~basic_ostringstream(const int, void** const) -->
-          <function-decl name='~basic_ostringstream' filepath='/usr/lib/gcc/x86_64-redhat-linux/4.4.7/../../../../include/c++/4.4.7/sstream' line='431' column='1' visibility='default' binding='global' size-in-bits='64'>
+          <function-decl name='~basic_ostringstream' filepath='/usr/lib/gcc/x86_64-redhat-linux/4.4.7/../../../../include/c++/4.4.7/sstream' line='431' column='1' declared-inline='yes' visibility='default' binding='global' size-in-bits='64'>
             <!-- implicit parameter of type 'std::basic_ostringstream<char, std::char_traits<char>, std::allocator<char> >* const' -->
             <parameter type-id='type-id-551' name='this' is-artificial='yes'/>
             <!-- artificial parameter of type 'const int' -->
@@ -17138,7 +17138,7 @@
       <class-decl name='basic_streambuf&lt;char, std::char_traits&lt;char&gt; &gt;' is-struct='yes' visibility='default' is-declaration-only='yes' id='type-id-506'>
         <member-function access='protected'>
           <!-- void std::basic_streambuf<char, std::char_traits<char> >::basic_streambuf() -->
-          <function-decl name='basic_streambuf' filepath='/usr/lib/gcc/x86_64-redhat-linux/4.4.7/../../../../include/c++/4.4.7/streambuf' line='439' column='1' visibility='default' binding='global' size-in-bits='64'>
+          <function-decl name='basic_streambuf' filepath='/usr/lib/gcc/x86_64-redhat-linux/4.4.7/../../../../include/c++/4.4.7/streambuf' line='439' column='1' declared-inline='yes' visibility='default' binding='global' size-in-bits='64'>
             <!-- implicit parameter of type 'std::basic_streambuf<char, std::char_traits<char> >* const' -->
             <parameter type-id='type-id-552' name='this' is-artificial='yes'/>
             <!-- void -->
@@ -17147,7 +17147,7 @@
         </member-function>
         <member-function access='public' destructor='yes' vtable-offset='-1'>
           <!-- std::basic_streambuf<char, std::char_traits<char> >::~basic_streambuf(const int) -->
-          <function-decl name='~basic_streambuf' filepath='/usr/lib/gcc/x86_64-redhat-linux/4.4.7/../../../../include/c++/4.4.7/streambuf' line='192' column='1' visibility='default' binding='global' size-in-bits='64'>
+          <function-decl name='~basic_streambuf' filepath='/usr/lib/gcc/x86_64-redhat-linux/4.4.7/../../../../include/c++/4.4.7/streambuf' line='192' column='1' declared-inline='yes' visibility='default' binding='global' size-in-bits='64'>
             <!-- implicit parameter of type 'std::basic_streambuf<char, std::char_traits<char> >* const' -->
             <parameter type-id='type-id-552' name='this' is-artificial='yes'/>
             <!-- artificial parameter of type 'const int' -->
@@ -17161,7 +17161,7 @@
       <class-decl name='basic_stringbuf&lt;char, std::char_traits&lt;char&gt;, std::allocator&lt;char&gt; &gt;' is-struct='yes' visibility='default' is-declaration-only='yes' id='type-id-553'>
         <member-function access='public'>
           <!-- void std::basic_stringbuf<char, std::char_traits<char>, std::allocator<char> >::basic_stringbuf(std::__basic_file<char>::openmode) -->
-          <function-decl name='basic_stringbuf' filepath='/usr/lib/gcc/x86_64-redhat-linux/4.4.7/../../../../include/c++/4.4.7/sstream' line='92' column='1' visibility='default' binding='global' size-in-bits='64'>
+          <function-decl name='basic_stringbuf' filepath='/usr/lib/gcc/x86_64-redhat-linux/4.4.7/../../../../include/c++/4.4.7/sstream' line='92' column='1' declared-inline='yes' visibility='default' binding='global' size-in-bits='64'>
             <!-- implicit parameter of type 'std::basic_stringbuf<char, std::char_traits<char>, std::allocator<char> >* const' -->
             <parameter type-id='type-id-554' name='this' is-artificial='yes'/>
             <!-- parameter of type 'typedef std::__basic_file<char>::openmode' -->
@@ -18760,7 +18760,7 @@
       <class-decl name='basic_ios&lt;char, std::char_traits&lt;char&gt; &gt;' is-struct='yes' visibility='default' is-declaration-only='yes' id='type-id-625'>
         <member-function access='protected'>
           <!-- void std::basic_ios<char, std::char_traits<char> >::basic_ios() -->
-          <function-decl name='basic_ios' filepath='/usr/lib/gcc/x86_64-redhat-linux/4.4.7/../../../../include/c++/4.4.7/bits/basic_ios.h' line='450' column='1' visibility='default' binding='global' size-in-bits='64'>
+          <function-decl name='basic_ios' filepath='/usr/lib/gcc/x86_64-redhat-linux/4.4.7/../../../../include/c++/4.4.7/bits/basic_ios.h' line='450' column='1' declared-inline='yes' visibility='default' binding='global' size-in-bits='64'>
             <!-- implicit parameter of type 'std::basic_ios<char, std::char_traits<char> >* const' -->
             <parameter type-id='type-id-648' name='this' is-artificial='yes'/>
             <!-- void -->
@@ -18830,7 +18830,7 @@
       <class-decl name='basic_streambuf&lt;char, std::char_traits&lt;char&gt; &gt;' is-struct='yes' visibility='default' is-declaration-only='yes' id='type-id-633'>
         <member-function access='protected'>
           <!-- void std::basic_streambuf<char, std::char_traits<char> >::basic_streambuf() -->
-          <function-decl name='basic_streambuf' filepath='/usr/lib/gcc/x86_64-redhat-linux/4.4.7/../../../../include/c++/4.4.7/streambuf' line='439' column='1' visibility='default' binding='global' size-in-bits='64'>
+          <function-decl name='basic_streambuf' filepath='/usr/lib/gcc/x86_64-redhat-linux/4.4.7/../../../../include/c++/4.4.7/streambuf' line='439' column='1' declared-inline='yes' visibility='default' binding='global' size-in-bits='64'>
             <!-- implicit parameter of type 'std::basic_streambuf<char, std::char_traits<char> >* const' -->
             <parameter type-id='type-id-652' name='this' is-artificial='yes'/>
             <!-- void -->
@@ -18839,7 +18839,7 @@
         </member-function>
         <member-function access='public' destructor='yes' vtable-offset='-1'>
           <!-- std::basic_streambuf<char, std::char_traits<char> >::~basic_streambuf(const int) -->
-          <function-decl name='~basic_streambuf' filepath='/usr/lib/gcc/x86_64-redhat-linux/4.4.7/../../../../include/c++/4.4.7/streambuf' line='192' column='1' visibility='default' binding='global' size-in-bits='64'>
+          <function-decl name='~basic_streambuf' filepath='/usr/lib/gcc/x86_64-redhat-linux/4.4.7/../../../../include/c++/4.4.7/streambuf' line='192' column='1' declared-inline='yes' visibility='default' binding='global' size-in-bits='64'>
             <!-- implicit parameter of type 'std::basic_streambuf<char, std::char_traits<char> >* const' -->
             <parameter type-id='type-id-652' name='this' is-artificial='yes'/>
             <!-- artificial parameter of type 'const int' -->
@@ -18853,7 +18853,7 @@
       <class-decl name='basic_stringbuf&lt;char, std::char_traits&lt;char&gt;, std::allocator&lt;char&gt; &gt;' is-struct='yes' visibility='default' is-declaration-only='yes' id='type-id-653'>
         <member-function access='public'>
           <!-- void std::basic_stringbuf<char, std::char_traits<char>, std::allocator<char> >::basic_stringbuf(std::__basic_file<char>::openmode) -->
-          <function-decl name='basic_stringbuf' filepath='/usr/lib/gcc/x86_64-redhat-linux/4.4.7/../../../../include/c++/4.4.7/sstream' line='92' column='1' visibility='default' binding='global' size-in-bits='64'>
+          <function-decl name='basic_stringbuf' filepath='/usr/lib/gcc/x86_64-redhat-linux/4.4.7/../../../../include/c++/4.4.7/sstream' line='92' column='1' declared-inline='yes' visibility='default' binding='global' size-in-bits='64'>
             <!-- implicit parameter of type 'std::basic_stringbuf<char, std::char_traits<char>, std::allocator<char> >* const' -->
             <parameter type-id='type-id-654' name='this' is-artificial='yes'/>
             <!-- parameter of type 'typedef std::__basic_file<char>::openmode' -->
@@ -21681,7 +21681,7 @@
           </member-function>
           <member-function access='private' constructor='yes'>
             <!-- vtkSurfaceLICPainter::vtkInternals::vtkInternals() -->
-            <function-decl name='vtkInternals' filepath='/tmp/legendre/spack-stage/spack-stage-R_crTC/VTK-6.1.0/Rendering/LIC/vtkSurfaceLICPainter.cxx' line='888' column='1' visibility='default' binding='global' size-in-bits='64'>
+            <function-decl name='vtkInternals' filepath='/tmp/legendre/spack-stage/spack-stage-R_crTC/VTK-6.1.0/Rendering/LIC/vtkSurfaceLICPainter.cxx' line='888' column='1' declared-inline='yes' visibility='default' binding='global' size-in-bits='64'>
               <!-- implicit parameter of type 'vtkSurfaceLICPainter::vtkInternals* const' -->
               <parameter type-id='type-id-808' name='this' is-artificial='yes'/>
               <!-- void -->
@@ -21690,7 +21690,7 @@
           </member-function>
           <member-function access='private' constructor='yes'>
             <!-- vtkSurfaceLICPainter::vtkInternals::vtkInternals() -->
-            <function-decl name='vtkInternals' filepath='/tmp/legendre/spack-stage/spack-stage-R_crTC/VTK-6.1.0/Rendering/LIC/vtkSurfaceLICPainter.cxx' line='888' column='1' visibility='default' binding='global' size-in-bits='64'>
+            <function-decl name='vtkInternals' filepath='/tmp/legendre/spack-stage/spack-stage-R_crTC/VTK-6.1.0/Rendering/LIC/vtkSurfaceLICPainter.cxx' line='888' column='1' declared-inline='yes' visibility='default' binding='global' size-in-bits='64'>
               <!-- implicit parameter of type 'vtkSurfaceLICPainter::vtkInternals* const' -->
               <parameter type-id='type-id-808' name='this' is-artificial='yes'/>
               <!-- void -->
@@ -21699,7 +21699,7 @@
           </member-function>
           <member-function access='private' destructor='yes'>
             <!-- vtkSurfaceLICPainter::vtkInternals::~vtkInternals(const int) -->
-            <function-decl name='~vtkInternals' filepath='/tmp/legendre/spack-stage/spack-stage-R_crTC/VTK-6.1.0/Rendering/LIC/vtkSurfaceLICPainter.cxx' line='927' column='1' visibility='default' binding='global' size-in-bits='64'>
+            <function-decl name='~vtkInternals' filepath='/tmp/legendre/spack-stage/spack-stage-R_crTC/VTK-6.1.0/Rendering/LIC/vtkSurfaceLICPainter.cxx' line='927' column='1' declared-inline='yes' visibility='default' binding='global' size-in-bits='64'>
               <!-- implicit parameter of type 'vtkSurfaceLICPainter::vtkInternals* const' -->
               <parameter type-id='type-id-808' name='this' is-artificial='yes'/>
               <!-- artificial parameter of type 'const int' -->
@@ -21710,7 +21710,7 @@
           </member-function>
           <member-function access='private' destructor='yes'>
             <!-- vtkSurfaceLICPainter::vtkInternals::~vtkInternals() -->
-            <function-decl name='~vtkInternals' filepath='/tmp/legendre/spack-stage/spack-stage-R_crTC/VTK-6.1.0/Rendering/LIC/vtkSurfaceLICPainter.cxx' line='927' column='1' visibility='default' binding='global' size-in-bits='64'>
+            <function-decl name='~vtkInternals' filepath='/tmp/legendre/spack-stage/spack-stage-R_crTC/VTK-6.1.0/Rendering/LIC/vtkSurfaceLICPainter.cxx' line='927' column='1' declared-inline='yes' visibility='default' binding='global' size-in-bits='64'>
               <!-- implicit parameter of type 'vtkSurfaceLICPainter::vtkInternals* const' -->
               <parameter type-id='type-id-808' name='this' is-artificial='yes'/>
               <!-- void -->
@@ -24766,7 +24766,7 @@
       <class-decl name='basic_ios&lt;char, std::char_traits&lt;char&gt; &gt;' is-struct='yes' visibility='default' is-declaration-only='yes' id='type-id-1026'>
         <member-function access='protected'>
           <!-- void std::basic_ios<char, std::char_traits<char> >::basic_ios() -->
-          <function-decl name='basic_ios' filepath='/usr/lib/gcc/x86_64-redhat-linux/4.4.7/../../../../include/c++/4.4.7/bits/basic_ios.h' line='450' column='1' visibility='default' binding='global' size-in-bits='64'>
+          <function-decl name='basic_ios' filepath='/usr/lib/gcc/x86_64-redhat-linux/4.4.7/../../../../include/c++/4.4.7/bits/basic_ios.h' line='450' column='1' declared-inline='yes' visibility='default' binding='global' size-in-bits='64'>
             <!-- implicit parameter of type 'std::basic_ios<char, std::char_traits<char> >* const' -->
             <parameter type-id='type-id-1066' name='this' is-artificial='yes'/>
             <!-- void -->
@@ -24775,7 +24775,7 @@
         </member-function>
         <member-function access='public' destructor='yes' vtable-offset='-1'>
           <!-- std::basic_ios<char, std::char_traits<char> >::~basic_ios(const int) -->
-          <function-decl name='~basic_ios' filepath='/usr/lib/gcc/x86_64-redhat-linux/4.4.7/../../../../include/c++/4.4.7/bits/basic_ios.h' line='272' column='1' visibility='default' binding='global' size-in-bits='64'>
+          <function-decl name='~basic_ios' filepath='/usr/lib/gcc/x86_64-redhat-linux/4.4.7/../../../../include/c++/4.4.7/bits/basic_ios.h' line='272' column='1' declared-inline='yes' visibility='default' binding='global' size-in-bits='64'>
             <!-- implicit parameter of type 'std::basic_ios<char, std::char_traits<char> >* const' -->
             <parameter type-id='type-id-1066' name='this' is-artificial='yes'/>
             <!-- artificial parameter of type 'const int' -->
@@ -24833,7 +24833,7 @@
         </member-function>
         <member-function access='public' destructor='yes' vtable-offset='-1'>
           <!-- std::basic_ostringstream<char, std::char_traits<char>, std::allocator<char> >::~basic_ostringstream(const int, void** const) -->
-          <function-decl name='~basic_ostringstream' filepath='/usr/lib/gcc/x86_64-redhat-linux/4.4.7/../../../../include/c++/4.4.7/sstream' line='431' column='1' visibility='default' binding='global' size-in-bits='64'>
+          <function-decl name='~basic_ostringstream' filepath='/usr/lib/gcc/x86_64-redhat-linux/4.4.7/../../../../include/c++/4.4.7/sstream' line='431' column='1' declared-inline='yes' visibility='default' binding='global' size-in-bits='64'>
             <!-- implicit parameter of type 'std::basic_ostringstream<char, std::char_traits<char>, std::allocator<char> >* const' -->
             <parameter type-id='type-id-1069' name='this' is-artificial='yes'/>
             <!-- artificial parameter of type 'const int' -->
@@ -24849,7 +24849,7 @@
       <class-decl name='basic_streambuf&lt;char, std::char_traits&lt;char&gt; &gt;' is-struct='yes' visibility='default' is-declaration-only='yes' id='type-id-1034'>
         <member-function access='protected'>
           <!-- void std::basic_streambuf<char, std::char_traits<char> >::basic_streambuf() -->
-          <function-decl name='basic_streambuf' filepath='/usr/lib/gcc/x86_64-redhat-linux/4.4.7/../../../../include/c++/4.4.7/streambuf' line='439' column='1' visibility='default' binding='global' size-in-bits='64'>
+          <function-decl name='basic_streambuf' filepath='/usr/lib/gcc/x86_64-redhat-linux/4.4.7/../../../../include/c++/4.4.7/streambuf' line='439' column='1' declared-inline='yes' visibility='default' binding='global' size-in-bits='64'>
             <!-- implicit parameter of type 'std::basic_streambuf<char, std::char_traits<char> >* const' -->
             <parameter type-id='type-id-1070' name='this' is-artificial='yes'/>
             <!-- void -->
@@ -24858,7 +24858,7 @@
         </member-function>
         <member-function access='public' destructor='yes' vtable-offset='-1'>
           <!-- std::basic_streambuf<char, std::char_traits<char> >::~basic_streambuf(const int) -->
-          <function-decl name='~basic_streambuf' filepath='/usr/lib/gcc/x86_64-redhat-linux/4.4.7/../../../../include/c++/4.4.7/streambuf' line='192' column='1' visibility='default' binding='global' size-in-bits='64'>
+          <function-decl name='~basic_streambuf' filepath='/usr/lib/gcc/x86_64-redhat-linux/4.4.7/../../../../include/c++/4.4.7/streambuf' line='192' column='1' declared-inline='yes' visibility='default' binding='global' size-in-bits='64'>
             <!-- implicit parameter of type 'std::basic_streambuf<char, std::char_traits<char> >* const' -->
             <parameter type-id='type-id-1070' name='this' is-artificial='yes'/>
             <!-- artificial parameter of type 'const int' -->
@@ -24872,7 +24872,7 @@
       <class-decl name='basic_stringbuf&lt;char, std::char_traits&lt;char&gt;, std::allocator&lt;char&gt; &gt;' is-struct='yes' visibility='default' is-declaration-only='yes' id='type-id-1071'>
         <member-function access='public'>
           <!-- void std::basic_stringbuf<char, std::char_traits<char>, std::allocator<char> >::basic_stringbuf(std::__basic_file<char>::openmode) -->
-          <function-decl name='basic_stringbuf' filepath='/usr/lib/gcc/x86_64-redhat-linux/4.4.7/../../../../include/c++/4.4.7/sstream' line='92' column='1' visibility='default' binding='global' size-in-bits='64'>
+          <function-decl name='basic_stringbuf' filepath='/usr/lib/gcc/x86_64-redhat-linux/4.4.7/../../../../include/c++/4.4.7/sstream' line='92' column='1' declared-inline='yes' visibility='default' binding='global' size-in-bits='64'>
             <!-- implicit parameter of type 'std::basic_stringbuf<char, std::char_traits<char>, std::allocator<char> >* const' -->
             <parameter type-id='type-id-1072' name='this' is-artificial='yes'/>
             <!-- parameter of type 'typedef std::__basic_file<char>::openmode' -->

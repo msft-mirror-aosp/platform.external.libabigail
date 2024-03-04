@@ -2725,7 +2725,7 @@
           </function-decl>
         </member-function>
         <member-function access='private'>
-          <function-decl name='vector' filepath='/usr/lib/gcc/x86_64-redhat-linux/4.4.7/../../../../include/c++/4.4.7/bits/stl_vector.h' line='227' column='1' visibility='default' binding='global' size-in-bits='64'>
+          <function-decl name='vector' filepath='/usr/lib/gcc/x86_64-redhat-linux/4.4.7/../../../../include/c++/4.4.7/bits/stl_vector.h' line='227' column='1' declared-inline='yes' visibility='default' binding='global' size-in-bits='64'>
             <parameter type-id='type-id-381' name='this' is-artificial='yes'/>
             <parameter type-id='type-id-141' name='__n' filepath='/usr/lib/gcc/x86_64-redhat-linux/4.4.7/../../../../include/c++/4.4.7/bits/stl_vector.h' line='227' column='1'/>
             <parameter type-id='type-id-207' name='__value' filepath='/usr/lib/gcc/x86_64-redhat-linux/4.4.7/../../../../include/c++/4.4.7/bits/stl_vector.h' line='227' column='1'/>
@@ -2734,7 +2734,7 @@
           </function-decl>
         </member-function>
         <member-function access='private' destructor='yes'>
-          <function-decl name='~vector' filepath='/usr/lib/gcc/x86_64-redhat-linux/4.4.7/../../../../include/c++/4.4.7/bits/stl_vector.h' line='312' column='1' visibility='default' binding='global' size-in-bits='64'>
+          <function-decl name='~vector' filepath='/usr/lib/gcc/x86_64-redhat-linux/4.4.7/../../../../include/c++/4.4.7/bits/stl_vector.h' line='312' column='1' declared-inline='yes' visibility='default' binding='global' size-in-bits='64'>
             <parameter type-id='type-id-381' name='this' is-artificial='yes'/>
             <parameter type-id='type-id-72' name='__in_chrg' is-artificial='yes'/>
             <return type-id='type-id-13'/>
@@ -2795,7 +2795,7 @@
           </function-decl>
         </member-function>
         <member-function access='private' destructor='yes'>
-          <function-decl name='~vector' filepath='/usr/lib/gcc/x86_64-redhat-linux/4.4.7/../../../../include/c++/4.4.7/bits/stl_vector.h' line='312' column='1' visibility='default' binding='global' size-in-bits='64'>
+          <function-decl name='~vector' filepath='/usr/lib/gcc/x86_64-redhat-linux/4.4.7/../../../../include/c++/4.4.7/bits/stl_vector.h' line='312' column='1' declared-inline='yes' visibility='default' binding='global' size-in-bits='64'>
             <parameter type-id='type-id-383' name='this' is-artificial='yes'/>
             <parameter type-id='type-id-72' name='__in_chrg' is-artificial='yes'/>
             <return type-id='type-id-13'/>
@@ -4552,7 +4552,7 @@
           </function-decl>
         </member-function>
         <member-function access='public' destructor='yes'>
-          <function-decl name='~basic_string' filepath='/usr/lib/gcc/x86_64-redhat-linux/4.4.7/../../../../include/c++/4.4.7/bits/basic_string.h' line='502' column='1' visibility='default' binding='global' size-in-bits='64'>
+          <function-decl name='~basic_string' filepath='/usr/lib/gcc/x86_64-redhat-linux/4.4.7/../../../../include/c++/4.4.7/bits/basic_string.h' line='502' column='1' declared-inline='yes' visibility='default' binding='global' size-in-bits='64'>
             <parameter type-id='type-id-464' name='this' is-artificial='yes'/>
             <parameter type-id='type-id-72' name='__in_chrg' is-artificial='yes'/>
             <return type-id='type-id-13'/>
@@ -4637,7 +4637,7 @@
           </function-decl>
         </member-function>
         <member-function access='public' destructor='yes'>
-          <function-decl name='~basic_string' filepath='/usr/lib/gcc/x86_64-redhat-linux/4.4.7/../../../../include/c++/4.4.7/bits/basic_string.h' line='502' column='1' visibility='default' binding='global' size-in-bits='64'>
+          <function-decl name='~basic_string' filepath='/usr/lib/gcc/x86_64-redhat-linux/4.4.7/../../../../include/c++/4.4.7/bits/basic_string.h' line='502' column='1' declared-inline='yes' visibility='default' binding='global' size-in-bits='64'>
             <parameter type-id='type-id-464' name='this' is-artificial='yes'/>
             <parameter type-id='type-id-72' name='__in_chrg' is-artificial='yes'/>
             <return type-id='type-id-13'/>
@@ -8749,7 +8749,7 @@
           </function-decl>
         </member-function>
         <member-function access='private'>
-          <function-decl name='vector' filepath='/usr/lib/gcc/x86_64-redhat-linux/4.4.7/../../../../include/c++/4.4.7/bits/stl_vector.h' line='227' column='1' visibility='default' binding='global' size-in-bits='64'>
+          <function-decl name='vector' filepath='/usr/lib/gcc/x86_64-redhat-linux/4.4.7/../../../../include/c++/4.4.7/bits/stl_vector.h' line='227' column='1' declared-inline='yes' visibility='default' binding='global' size-in-bits='64'>
             <parameter type-id='type-id-1108' name='this' is-artificial='yes'/>
             <parameter type-id='type-id-141' name='__n' filepath='/usr/lib/gcc/x86_64-redhat-linux/4.4.7/../../../../include/c++/4.4.7/bits/stl_vector.h' line='227' column='1'/>
             <parameter type-id='type-id-456' name='__value' filepath='/usr/lib/gcc/x86_64-redhat-linux/4.4.7/../../../../include/c++/4.4.7/bits/stl_vector.h' line='227' column='1'/>
@@ -8876,7 +8876,7 @@
           </function-decl>
         </member-function>
         <member-function access='private'>
-          <function-decl name='vector' filepath='/usr/lib/gcc/x86_64-redhat-linux/4.4.7/../../../../include/c++/4.4.7/bits/stl_vector.h' line='241' column='1' visibility='default' binding='global' size-in-bits='64'>
+          <function-decl name='vector' filepath='/usr/lib/gcc/x86_64-redhat-linux/4.4.7/../../../../include/c++/4.4.7/bits/stl_vector.h' line='241' column='1' declared-inline='yes' visibility='default' binding='global' size-in-bits='64'>
             <parameter type-id='type-id-1111' name='this' is-artificial='yes'/>
             <parameter type-id='type-id-911' name='__x' filepath='/usr/lib/gcc/x86_64-redhat-linux/4.4.7/../../../../include/c++/4.4.7/bits/stl_vector.h' line='241' column='1'/>
             <return type-id='type-id-13'/>
@@ -13821,14 +13821,14 @@
         </function-decl>
       </member-function>
       <member-function access='private' constructor='yes'>
-        <function-decl name='vtkStdString' filepath='/tmp/legendre/spack-stage/spack-stage-R_crTC/VTK-6.1.0/Common/Core/vtkStdString.h' line='55' column='1' visibility='default' binding='global' size-in-bits='64'>
+        <function-decl name='vtkStdString' filepath='/tmp/legendre/spack-stage/spack-stage-R_crTC/VTK-6.1.0/Common/Core/vtkStdString.h' line='55' column='1' declared-inline='yes' visibility='default' binding='global' size-in-bits='64'>
           <parameter type-id='type-id-1476' name='this' is-artificial='yes'/>
           <parameter type-id='type-id-1474' name='s' filepath='/tmp/legendre/spack-stage/spack-stage-R_crTC/VTK-6.1.0/Common/Core/vtkStdString.h' line='55' column='1'/>
           <return type-id='type-id-13'/>
         </function-decl>
       </member-function>
       <member-function access='private' constructor='yes'>
-        <function-decl name='vtkStdString' filepath='/tmp/legendre/spack-stage/spack-stage-R_crTC/VTK-6.1.0/Common/Core/vtkStdString.h' line='55' column='1' visibility='default' binding='global' size-in-bits='64'>
+        <function-decl name='vtkStdString' filepath='/tmp/legendre/spack-stage/spack-stage-R_crTC/VTK-6.1.0/Common/Core/vtkStdString.h' line='55' column='1' declared-inline='yes' visibility='default' binding='global' size-in-bits='64'>
           <parameter type-id='type-id-1476' name='this' is-artificial='yes'/>
           <parameter type-id='type-id-1474' name='s' filepath='/tmp/legendre/spack-stage/spack-stage-R_crTC/VTK-6.1.0/Common/Core/vtkStdString.h' line='55' column='1'/>
           <return type-id='type-id-13'/>
@@ -14181,14 +14181,14 @@
           </function-decl>
         </member-function>
         <member-function access='private' destructor='yes'>
-          <function-decl name='~_List_base' filepath='/usr/lib/gcc/x86_64-redhat-linux/4.4.7/../../../../include/c++/4.4.7/bits/stl_list.h' line='359' column='1' visibility='default' binding='global' size-in-bits='64'>
+          <function-decl name='~_List_base' filepath='/usr/lib/gcc/x86_64-redhat-linux/4.4.7/../../../../include/c++/4.4.7/bits/stl_list.h' line='359' column='1' declared-inline='yes' visibility='default' binding='global' size-in-bits='64'>
             <parameter type-id='type-id-1630' name='this' is-artificial='yes'/>
             <parameter type-id='type-id-72' name='__in_chrg' is-artificial='yes'/>
             <return type-id='type-id-13'/>
           </function-decl>
         </member-function>
         <member-function access='private' destructor='yes'>
-          <function-decl name='~_List_base' mangled-name='_ZNSt10_List_baseISt6vectorIcSaIcEESaIS2_EED1Ev' filepath='/usr/lib/gcc/x86_64-redhat-linux/4.4.7/../../../../include/c++/4.4.7/bits/stl_list.h' line='359' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZNSt10_List_baseISt6vectorIcSaIcEESaIS2_EED1Ev'>
+          <function-decl name='~_List_base' mangled-name='_ZNSt10_List_baseISt6vectorIcSaIcEESaIS2_EED1Ev' filepath='/usr/lib/gcc/x86_64-redhat-linux/4.4.7/../../../../include/c++/4.4.7/bits/stl_list.h' line='359' column='1' declared-inline='yes' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZNSt10_List_baseISt6vectorIcSaIcEESaIS2_EED1Ev'>
             <parameter type-id='type-id-1630' name='this' is-artificial='yes'/>
             <return type-id='type-id-13'/>
           </function-decl>
@@ -14571,7 +14571,7 @@
           </function-decl>
         </member-function>
         <member-function access='private'>
-          <function-decl name='list' filepath='/usr/lib/gcc/x86_64-redhat-linux/4.4.7/../../../../include/c++/4.4.7/bits/stl_list.h' line='531' column='1' visibility='default' binding='global' size-in-bits='64'>
+          <function-decl name='list' filepath='/usr/lib/gcc/x86_64-redhat-linux/4.4.7/../../../../include/c++/4.4.7/bits/stl_list.h' line='531' column='1' declared-inline='yes' visibility='default' binding='global' size-in-bits='64'>
             <parameter type-id='type-id-1677' name='this' is-artificial='yes'/>
             <parameter type-id='type-id-1609' name='__x' filepath='/usr/lib/gcc/x86_64-redhat-linux/4.4.7/../../../../include/c++/4.4.7/bits/stl_list.h' line='531' column='1'/>
             <return type-id='type-id-13'/>
@@ -15103,7 +15103,7 @@
       <class-decl name='_Rb_tree_node&lt;std::pair&lt;const int, std::list&lt;std::vector&lt;char, std::allocator&lt;char&gt; &gt;, std::allocator&lt;std::vector&lt;char, std::allocator&lt;char&gt; &gt; &gt; &gt; &gt; &gt;' is-struct='yes' visibility='default' is-declaration-only='yes' id='type-id-1708'/>
       <class-decl name='basic_ios&lt;char, std::char_traits&lt;char&gt; &gt;' is-struct='yes' visibility='default' is-declaration-only='yes' id='type-id-1712'>
         <member-function access='protected'>
-          <function-decl name='basic_ios' filepath='/usr/lib/gcc/x86_64-redhat-linux/4.4.7/../../../../include/c++/4.4.7/bits/basic_ios.h' line='450' column='1' visibility='default' binding='global' size-in-bits='64'>
+          <function-decl name='basic_ios' filepath='/usr/lib/gcc/x86_64-redhat-linux/4.4.7/../../../../include/c++/4.4.7/bits/basic_ios.h' line='450' column='1' declared-inline='yes' visibility='default' binding='global' size-in-bits='64'>
             <parameter type-id='type-id-1759' name='this' is-artificial='yes'/>
             <return type-id='type-id-13'/>
           </function-decl>
@@ -15111,7 +15111,7 @@
       </class-decl>
       <class-decl name='basic_ofstream&lt;char, std::char_traits&lt;char&gt; &gt;' is-struct='yes' visibility='default' is-declaration-only='yes' id='type-id-1760'>
         <member-function access='public'>
-          <function-decl name='basic_ofstream' filepath='/usr/lib/gcc/x86_64-redhat-linux/4.4.7/../../../../include/c++/4.4.7/fstream' line='623' column='1' visibility='default' binding='global' size-in-bits='64'>
+          <function-decl name='basic_ofstream' filepath='/usr/lib/gcc/x86_64-redhat-linux/4.4.7/../../../../include/c++/4.4.7/fstream' line='623' column='1' declared-inline='yes' visibility='default' binding='global' size-in-bits='64'>
             <parameter type-id='type-id-1761' name='this' is-artificial='yes'/>
             <parameter type-id='type-id-72' name='__in_chrg' is-artificial='yes'/>
             <parameter type-id='type-id-1694' name='__vtt_parm' is-artificial='yes'/>

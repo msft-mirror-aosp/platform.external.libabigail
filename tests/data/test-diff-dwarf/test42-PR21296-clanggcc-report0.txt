@@ -18,6 +18,7 @@ Variables changes summary: 0 Removed, 0 Changed, 0 Added variable
 
   [C] 'method void std::_Head_base<0ul, STR&&, false>::_Head_base<STR>(STR&&)' has some indirect sub-type changes:
     'method void std::_Head_base<0ul, STR&&, false>::_Head_base<STR>(STR&&) {_ZNSt10_Head_baseILm0EO3STRLb0EEC2IS0_St9true_typeEEOT_}' now becomes 'method void std::_Head_base<0, STR &&, false>::_Head_base<STR, std::true_type>(STR&&) {_ZNSt10_Head_baseILm0EO3STRLb0EEC2IS0_St9true_typeEEOT_}'
+    method void std::_Head_base<0, STR &&, false>::_Head_base<STR, std::true_type>(STR&&) is not declared inline anymore
     implicit parameter 0 of type 'std::_Head_base<0ul, STR&&, false>* const' changed:
       entity changed from 'std::_Head_base<0ul, STR&&, false>* const' to 'std::_Head_base<0, STR &&, false>*'
       type size hasn't changed

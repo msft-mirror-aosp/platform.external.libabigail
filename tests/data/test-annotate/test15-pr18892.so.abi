@@ -5282,7 +5282,7 @@
         </member-function>
         <member-function access='public'>
           <!-- void __sanitizer::InternalMmapVector<unsigned int>::InternalMmapVector(__sanitizer::uptr) -->
-          <function-decl name='InternalMmapVector' filepath='../../.././libsanitizer/sanitizer_common/sanitizer_common.h' line='322' column='1' visibility='default' binding='global' size-in-bits='64'>
+          <function-decl name='InternalMmapVector' filepath='../../.././libsanitizer/sanitizer_common/sanitizer_common.h' line='322' column='1' declared-inline='yes' visibility='default' binding='global' size-in-bits='64'>
             <!-- implicit parameter of type '__sanitizer::InternalMmapVector<unsigned int>* const' -->
             <parameter type-id='type-id-176' name='this' is-artificial='yes'/>
             <!-- parameter of type 'typedef __sanitizer::uptr' -->
@@ -5544,7 +5544,7 @@
         </member-function>
         <member-function access='public'>
           <!-- void __sanitizer::InternalMmapVector<__sanitizer::Suppression*>::InternalMmapVector(__sanitizer::uptr) -->
-          <function-decl name='InternalMmapVector' filepath='../../.././libsanitizer/sanitizer_common/sanitizer_common.h' line='322' column='1' visibility='default' binding='global' size-in-bits='64'>
+          <function-decl name='InternalMmapVector' filepath='../../.././libsanitizer/sanitizer_common/sanitizer_common.h' line='322' column='1' declared-inline='yes' visibility='default' binding='global' size-in-bits='64'>
             <!-- implicit parameter of type '__sanitizer::InternalMmapVector<__sanitizer::Suppression*>* const' -->
             <parameter type-id='type-id-204' name='this' is-artificial='yes'/>
             <!-- parameter of type 'typedef __sanitizer::uptr' -->
@@ -7712,7 +7712,7 @@
         </member-function>
         <member-function access='public'>
           <!-- void __sanitizer::InternalMmapVector<__sanitizer::StackDepotReverseMap::IdDescPair>::InternalMmapVector(__sanitizer::uptr) -->
-          <function-decl name='InternalMmapVector' filepath='../../.././libsanitizer/sanitizer_common/sanitizer_common.h' line='322' column='1' visibility='default' binding='global' size-in-bits='64'>
+          <function-decl name='InternalMmapVector' filepath='../../.././libsanitizer/sanitizer_common/sanitizer_common.h' line='322' column='1' declared-inline='yes' visibility='default' binding='global' size-in-bits='64'>
             <!-- implicit parameter of type '__sanitizer::InternalMmapVector<__sanitizer::StackDepotReverseMap::IdDescPair>* const' -->
             <parameter type-id='type-id-287' name='this' is-artificial='yes'/>
             <!-- parameter of type 'typedef __sanitizer::uptr' -->
@@ -8094,7 +8094,7 @@
         </member-function>
         <member-function access='public' constructor='yes'>
           <!-- __sanitizer::ScopedStackSpaceWithGuard::ScopedStackSpaceWithGuard(__sanitizer::uptr) -->
-          <function-decl name='ScopedStackSpaceWithGuard' filepath='../../.././libsanitizer/sanitizer_common/sanitizer_stoptheworld_linux_libcdep.cc' line='278' column='1' visibility='default' binding='global' size-in-bits='64'>
+          <function-decl name='ScopedStackSpaceWithGuard' filepath='../../.././libsanitizer/sanitizer_common/sanitizer_stoptheworld_linux_libcdep.cc' line='278' column='1' declared-inline='yes' visibility='default' binding='global' size-in-bits='64'>
             <!-- implicit parameter of type '__sanitizer::ScopedStackSpaceWithGuard* const' -->
             <parameter type-id='type-id-319' name='this' is-artificial='yes'/>
             <!-- parameter of type 'typedef __sanitizer::uptr' -->
@@ -8132,7 +8132,7 @@
         </member-function>
         <member-function access='public' constructor='yes'>
           <!-- __sanitizer::StopTheWorldScope::StopTheWorldScope() -->
-          <function-decl name='StopTheWorldScope' filepath='../../.././libsanitizer/sanitizer_common/sanitizer_stoptheworld_linux_libcdep.cc' line='309' column='1' visibility='default' binding='global' size-in-bits='64'>
+          <function-decl name='StopTheWorldScope' filepath='../../.././libsanitizer/sanitizer_common/sanitizer_stoptheworld_linux_libcdep.cc' line='309' column='1' declared-inline='yes' visibility='default' binding='global' size-in-bits='64'>
             <!-- implicit parameter of type '__sanitizer::StopTheWorldScope* const' -->
             <parameter type-id='type-id-322' name='this' is-artificial='yes'/>
             <!-- void -->
@@ -8141,7 +8141,7 @@
         </member-function>
         <member-function access='public' destructor='yes'>
           <!-- __sanitizer::StopTheWorldScope::~StopTheWorldScope(const int) -->
-          <function-decl name='~StopTheWorldScope' filepath='../../.././libsanitizer/sanitizer_common/sanitizer_stoptheworld_linux_libcdep.cc' line='339' column='1' visibility='default' binding='global' size-in-bits='64'>
+          <function-decl name='~StopTheWorldScope' filepath='../../.././libsanitizer/sanitizer_common/sanitizer_stoptheworld_linux_libcdep.cc' line='339' column='1' declared-inline='yes' visibility='default' binding='global' size-in-bits='64'>
             <!-- implicit parameter of type '__sanitizer::StopTheWorldScope* const' -->
             <parameter type-id='type-id-322' name='this' is-artificial='yes'/>
             <!-- artificial parameter of type 'const int' -->
@@ -8566,7 +8566,7 @@
         </member-function>
         <member-function access='public' constructor='yes'>
           <!-- __sanitizer::ExternalSymbolizer::ExternalSymbolizer(const char*) -->
-          <function-decl name='ExternalSymbolizer' filepath='../../.././libsanitizer/sanitizer_common/sanitizer_symbolizer_posix_libcdep.cc' line='210' column='1' visibility='default' binding='global' size-in-bits='64'>
+          <function-decl name='ExternalSymbolizer' filepath='../../.././libsanitizer/sanitizer_common/sanitizer_symbolizer_posix_libcdep.cc' line='210' column='1' declared-inline='yes' visibility='default' binding='global' size-in-bits='64'>
             <!-- implicit parameter of type '__sanitizer::ExternalSymbolizer* const' -->
             <parameter type-id='type-id-356' name='this' is-artificial='yes'/>
             <!-- parameter of type 'const char*' -->
@@ -8749,7 +8749,7 @@
         </member-function>
         <member-function access='public' vtable-offset='2'>
           <!-- bool __sanitizer::POSIXSymbolizer::IsAvailable() -->
-          <function-decl name='IsAvailable' mangled-name='_ZN11__sanitizer15POSIXSymbolizer11IsAvailableEv' filepath='../../.././libsanitizer/sanitizer_common/sanitizer_symbolizer_posix_libcdep.cc' line='490' column='1' visibility='default' binding='global' size-in-bits='64'>
+          <function-decl name='IsAvailable' mangled-name='_ZN11__sanitizer15POSIXSymbolizer11IsAvailableEv' filepath='../../.././libsanitizer/sanitizer_common/sanitizer_symbolizer_posix_libcdep.cc' line='490' column='1' declared-inline='yes' visibility='default' binding='global' size-in-bits='64'>
             <!-- implicit parameter of type '__sanitizer::POSIXSymbolizer*' -->
             <parameter type-id='type-id-362' is-artificial='yes'/>
             <!-- bool -->
@@ -9875,7 +9875,7 @@
       </member-function>
       <member-function access='public' constructor='yes'>
         <!-- BlockingCall::BlockingCall(__tsan::ThreadState*) -->
-        <function-decl name='BlockingCall' filepath='../../.././libsanitizer/tsan/tsan_interceptors.cc' line='226' column='1' visibility='default' binding='global' size-in-bits='64'>
+        <function-decl name='BlockingCall' filepath='../../.././libsanitizer/tsan/tsan_interceptors.cc' line='226' column='1' declared-inline='yes' visibility='default' binding='global' size-in-bits='64'>
           <!-- implicit parameter of type 'BlockingCall* const' -->
           <parameter type-id='type-id-440' name='this' is-artificial='yes'/>
           <!-- parameter of type '__tsan::ThreadState*' -->
@@ -9926,7 +9926,7 @@
       </member-function>
       <member-function access='public' destructor='yes'>
         <!-- ScopedSyscall::~ScopedSyscall(const int) -->
-        <function-decl name='~ScopedSyscall' filepath='../../.././libsanitizer/tsan/tsan_interceptors.cc' line='1930' column='1' visibility='default' binding='global' size-in-bits='64'>
+        <function-decl name='~ScopedSyscall' filepath='../../.././libsanitizer/tsan/tsan_interceptors.cc' line='1930' column='1' declared-inline='yes' visibility='default' binding='global' size-in-bits='64'>
           <!-- implicit parameter of type 'ScopedSyscall* const' -->
           <parameter type-id='type-id-443' name='this' is-artificial='yes'/>
           <!-- artificial parameter of type 'const int' -->
@@ -21372,7 +21372,7 @@
         </member-function>
         <member-function access='public'>
           <!-- void __sanitizer::InternalMmapVector<__sanitizer::Suppression>::InternalMmapVector(__sanitizer::uptr) -->
-          <function-decl name='InternalMmapVector' filepath='../../.././libsanitizer/sanitizer_common/sanitizer_common.h' line='322' column='1' visibility='default' binding='global' size-in-bits='64'>
+          <function-decl name='InternalMmapVector' filepath='../../.././libsanitizer/sanitizer_common/sanitizer_common.h' line='322' column='1' declared-inline='yes' visibility='default' binding='global' size-in-bits='64'>
             <!-- implicit parameter of type '__sanitizer::InternalMmapVector<__sanitizer::Suppression>* const' -->
             <parameter type-id='type-id-1287' name='this' is-artificial='yes'/>
             <!-- parameter of type 'typedef __sanitizer::uptr' -->
@@ -22065,7 +22065,7 @@
         </member-function>
         <member-function access='public' vtable-offset='0'>
           <!-- void __sanitizer::ThreadContextBase::OnDead() -->
-          <function-decl name='OnDead' mangled-name='_ZN11__sanitizer17ThreadContextBase6OnDeadEv' filepath='../../.././libsanitizer/sanitizer_common/sanitizer_thread_registry.h' line='63' column='1' visibility='default' binding='global' size-in-bits='64'>
+          <function-decl name='OnDead' mangled-name='_ZN11__sanitizer17ThreadContextBase6OnDeadEv' filepath='../../.././libsanitizer/sanitizer_common/sanitizer_thread_registry.h' line='63' column='1' declared-inline='yes' visibility='default' binding='global' size-in-bits='64'>
             <!-- implicit parameter of type '__sanitizer::ThreadContextBase*' -->
             <parameter type-id='type-id-370' is-artificial='yes'/>
             <!-- void -->
@@ -22074,7 +22074,7 @@
         </member-function>
         <member-function access='public' vtable-offset='1'>
           <!-- void __sanitizer::ThreadContextBase::OnJoined(void*) -->
-          <function-decl name='OnJoined' mangled-name='_ZN11__sanitizer17ThreadContextBase8OnJoinedEPv' filepath='../../.././libsanitizer/sanitizer_common/sanitizer_thread_registry.h' line='64' column='1' visibility='default' binding='global' size-in-bits='64'>
+          <function-decl name='OnJoined' mangled-name='_ZN11__sanitizer17ThreadContextBase8OnJoinedEPv' filepath='../../.././libsanitizer/sanitizer_common/sanitizer_thread_registry.h' line='64' column='1' declared-inline='yes' visibility='default' binding='global' size-in-bits='64'>
             <!-- implicit parameter of type '__sanitizer::ThreadContextBase*' -->
             <parameter type-id='type-id-370' is-artificial='yes'/>
             <!-- parameter of type 'void*' -->
@@ -22085,7 +22085,7 @@
         </member-function>
         <member-function access='public' vtable-offset='2'>
           <!-- void __sanitizer::ThreadContextBase::OnFinished() -->
-          <function-decl name='OnFinished' mangled-name='_ZN11__sanitizer17ThreadContextBase10OnFinishedEv' filepath='../../.././libsanitizer/sanitizer_common/sanitizer_thread_registry.h' line='65' column='1' visibility='default' binding='global' size-in-bits='64'>
+          <function-decl name='OnFinished' mangled-name='_ZN11__sanitizer17ThreadContextBase10OnFinishedEv' filepath='../../.././libsanitizer/sanitizer_common/sanitizer_thread_registry.h' line='65' column='1' declared-inline='yes' visibility='default' binding='global' size-in-bits='64'>
             <!-- implicit parameter of type '__sanitizer::ThreadContextBase*' -->
             <parameter type-id='type-id-370' is-artificial='yes'/>
             <!-- void -->
@@ -22094,7 +22094,7 @@
         </member-function>
         <member-function access='public' vtable-offset='3'>
           <!-- void __sanitizer::ThreadContextBase::OnStarted(void*) -->
-          <function-decl name='OnStarted' mangled-name='_ZN11__sanitizer17ThreadContextBase9OnStartedEPv' filepath='../../.././libsanitizer/sanitizer_common/sanitizer_thread_registry.h' line='66' column='1' visibility='default' binding='global' size-in-bits='64'>
+          <function-decl name='OnStarted' mangled-name='_ZN11__sanitizer17ThreadContextBase9OnStartedEPv' filepath='../../.././libsanitizer/sanitizer_common/sanitizer_thread_registry.h' line='66' column='1' declared-inline='yes' visibility='default' binding='global' size-in-bits='64'>
             <!-- implicit parameter of type '__sanitizer::ThreadContextBase*' -->
             <parameter type-id='type-id-370' is-artificial='yes'/>
             <!-- parameter of type 'void*' -->
@@ -22105,7 +22105,7 @@
         </member-function>
         <member-function access='public' vtable-offset='4'>
           <!-- void __sanitizer::ThreadContextBase::OnCreated(void*) -->
-          <function-decl name='OnCreated' mangled-name='_ZN11__sanitizer17ThreadContextBase9OnCreatedEPv' filepath='../../.././libsanitizer/sanitizer_common/sanitizer_thread_registry.h' line='67' column='1' visibility='default' binding='global' size-in-bits='64'>
+          <function-decl name='OnCreated' mangled-name='_ZN11__sanitizer17ThreadContextBase9OnCreatedEPv' filepath='../../.././libsanitizer/sanitizer_common/sanitizer_thread_registry.h' line='67' column='1' declared-inline='yes' visibility='default' binding='global' size-in-bits='64'>
             <!-- implicit parameter of type '__sanitizer::ThreadContextBase*' -->
             <parameter type-id='type-id-370' is-artificial='yes'/>
             <!-- parameter of type 'void*' -->
@@ -22116,7 +22116,7 @@
         </member-function>
         <member-function access='public' vtable-offset='5'>
           <!-- void __sanitizer::ThreadContextBase::OnReset() -->
-          <function-decl name='OnReset' mangled-name='_ZN11__sanitizer17ThreadContextBase7OnResetEv' filepath='../../.././libsanitizer/sanitizer_common/sanitizer_thread_registry.h' line='68' column='1' visibility='default' binding='global' size-in-bits='64'>
+          <function-decl name='OnReset' mangled-name='_ZN11__sanitizer17ThreadContextBase7OnResetEv' filepath='../../.././libsanitizer/sanitizer_common/sanitizer_thread_registry.h' line='68' column='1' declared-inline='yes' visibility='default' binding='global' size-in-bits='64'>
             <!-- implicit parameter of type '__sanitizer::ThreadContextBase*' -->
             <parameter type-id='type-id-370' is-artificial='yes'/>
             <!-- void -->
@@ -26964,7 +26964,7 @@
         </member-function>
         <member-function access='public' constructor='yes'>
           <!-- __tsan::ScopedAnnotation::ScopedAnnotation(__tsan::ThreadState*, const char*, const char*, int, __sanitizer::uptr) -->
-          <function-decl name='ScopedAnnotation' filepath='../../.././libsanitizer/tsan/tsan_interface_ann.cc' line='32' column='1' visibility='default' binding='global' size-in-bits='64'>
+          <function-decl name='ScopedAnnotation' filepath='../../.././libsanitizer/tsan/tsan_interface_ann.cc' line='32' column='1' declared-inline='yes' visibility='default' binding='global' size-in-bits='64'>
             <!-- implicit parameter of type '__tsan::ScopedAnnotation* const' -->
             <parameter type-id='type-id-1328' name='this' is-artificial='yes'/>
             <!-- parameter of type '__tsan::ThreadState*' -->
@@ -26983,7 +26983,7 @@
         </member-function>
         <member-function access='public' destructor='yes'>
           <!-- __tsan::ScopedAnnotation::~ScopedAnnotation(const int) -->
-          <function-decl name='~ScopedAnnotation' filepath='../../.././libsanitizer/tsan/tsan_interface_ann.cc' line='42' column='1' visibility='default' binding='global' size-in-bits='64'>
+          <function-decl name='~ScopedAnnotation' filepath='../../.././libsanitizer/tsan/tsan_interface_ann.cc' line='42' column='1' declared-inline='yes' visibility='default' binding='global' size-in-bits='64'>
             <!-- implicit parameter of type '__tsan::ScopedAnnotation* const' -->
             <parameter type-id='type-id-1328' name='this' is-artificial='yes'/>
             <!-- artificial parameter of type 'const int' -->
@@ -27270,7 +27270,7 @@
       </member-function>
       <member-function access='public' constructor='yes'>
         <!-- ScopedAtomic::ScopedAtomic(__tsan::ThreadState*, __sanitizer::uptr, const volatile void*, morder, const char*) -->
-        <function-decl name='ScopedAtomic' filepath='../../.././libsanitizer/tsan/tsan_interface_atomic.cc' line='55' column='1' visibility='default' binding='global' size-in-bits='64'>
+        <function-decl name='ScopedAtomic' filepath='../../.././libsanitizer/tsan/tsan_interface_atomic.cc' line='55' column='1' declared-inline='yes' visibility='default' binding='global' size-in-bits='64'>
           <!-- implicit parameter of type 'ScopedAtomic* const' -->
           <parameter type-id='type-id-1364' name='this' is-artificial='yes'/>
           <!-- parameter of type '__tsan::ThreadState*' -->
@@ -27289,7 +27289,7 @@
       </member-function>
       <member-function access='public' destructor='yes'>
         <!-- ScopedAtomic::~ScopedAtomic(const int) -->
-        <function-decl name='~ScopedAtomic' filepath='../../.././libsanitizer/tsan/tsan_interface_atomic.cc' line='64' column='1' visibility='default' binding='global' size-in-bits='64'>
+        <function-decl name='~ScopedAtomic' filepath='../../.././libsanitizer/tsan/tsan_interface_atomic.cc' line='64' column='1' declared-inline='yes' visibility='default' binding='global' size-in-bits='64'>
           <!-- implicit parameter of type 'ScopedAtomic* const' -->
           <parameter type-id='type-id-1364' name='this' is-artificial='yes'/>
           <!-- artificial parameter of type 'const int' -->
@@ -28005,7 +28005,7 @@
         </member-function>
         <member-function access='public'>
           <!-- void __sanitizer::InternalMmapVector<__tsan::FiredSuppression>::InternalMmapVector(__sanitizer::uptr) -->
-          <function-decl name='InternalMmapVector' filepath='../../.././libsanitizer/sanitizer_common/sanitizer_common.h' line='322' column='1' visibility='default' binding='global' size-in-bits='64'>
+          <function-decl name='InternalMmapVector' filepath='../../.././libsanitizer/sanitizer_common/sanitizer_common.h' line='322' column='1' declared-inline='yes' visibility='default' binding='global' size-in-bits='64'>
             <!-- implicit parameter of type '__sanitizer::InternalMmapVector<__tsan::FiredSuppression>* const' -->
             <parameter type-id='type-id-1555' name='this' is-artificial='yes'/>
             <!-- parameter of type 'typedef __sanitizer::uptr' -->
@@ -32141,7 +32141,7 @@
         </member-function>
         <member-function access='public' constructor='yes'>
           <!-- __tsan::ScopedJavaFunc::ScopedJavaFunc(__tsan::ThreadState*, __sanitizer::uptr) -->
-          <function-decl name='ScopedJavaFunc' filepath='../../.././libsanitizer/tsan/tsan_interface_java.cc' line='76' column='1' visibility='default' binding='global' size-in-bits='64'>
+          <function-decl name='ScopedJavaFunc' filepath='../../.././libsanitizer/tsan/tsan_interface_java.cc' line='76' column='1' declared-inline='yes' visibility='default' binding='global' size-in-bits='64'>
             <!-- implicit parameter of type '__tsan::ScopedJavaFunc* const' -->
             <parameter type-id='type-id-1583' name='this' is-artificial='yes'/>
             <!-- parameter of type '__tsan::ThreadState*' -->
@@ -32154,7 +32154,7 @@
         </member-function>
         <member-function access='public' destructor='yes'>
           <!-- __tsan::ScopedJavaFunc::~ScopedJavaFunc(const int) -->
-          <function-decl name='~ScopedJavaFunc' filepath='../../.././libsanitizer/tsan/tsan_interface_java.cc' line='84' column='1' visibility='default' binding='global' size-in-bits='64'>
+          <function-decl name='~ScopedJavaFunc' filepath='../../.././libsanitizer/tsan/tsan_interface_java.cc' line='84' column='1' declared-inline='yes' visibility='default' binding='global' size-in-bits='64'>
             <!-- implicit parameter of type '__tsan::ScopedJavaFunc* const' -->
             <parameter type-id='type-id-1583' name='this' is-artificial='yes'/>
             <!-- artificial parameter of type 'const int' -->
@@ -32200,7 +32200,7 @@
         </member-function>
         <member-function access='public' constructor='yes'>
           <!-- __tsan::BlockDesc::BlockDesc() -->
-          <function-decl name='BlockDesc' filepath='../../.././libsanitizer/tsan/tsan_interface_java.cc' line='33' column='1' visibility='default' binding='global' size-in-bits='64'>
+          <function-decl name='BlockDesc' filepath='../../.././libsanitizer/tsan/tsan_interface_java.cc' line='33' column='1' declared-inline='yes' visibility='default' binding='global' size-in-bits='64'>
             <!-- implicit parameter of type '__tsan::BlockDesc* const' -->
             <parameter type-id='type-id-1577' name='this' is-artificial='yes'/>
             <!-- void -->
@@ -32209,7 +32209,7 @@
         </member-function>
         <member-function access='public' destructor='yes'>
           <!-- __tsan::BlockDesc::~BlockDesc(const int) -->
-          <function-decl name='~BlockDesc' filepath='../../.././libsanitizer/tsan/tsan_interface_java.cc' line='40' column='1' visibility='default' binding='global' size-in-bits='64'>
+          <function-decl name='~BlockDesc' filepath='../../.././libsanitizer/tsan/tsan_interface_java.cc' line='40' column='1' declared-inline='yes' visibility='default' binding='global' size-in-bits='64'>
             <!-- implicit parameter of type '__tsan::BlockDesc* const' -->
             <parameter type-id='type-id-1577' name='this' is-artificial='yes'/>
             <!-- artificial parameter of type 'const int' -->
@@ -32248,7 +32248,7 @@
         </member-function>
         <member-function access='public' constructor='yes'>
           <!-- __tsan::JavaContext::JavaContext(jptr, jptr) -->
-          <function-decl name='JavaContext' filepath='../../.././libsanitizer/tsan/tsan_interface_java.cc' line='62' column='1' visibility='default' binding='global' size-in-bits='64'>
+          <function-decl name='JavaContext' filepath='../../.././libsanitizer/tsan/tsan_interface_java.cc' line='62' column='1' declared-inline='yes' visibility='default' binding='global' size-in-bits='64'>
             <!-- implicit parameter of type '__tsan::JavaContext* const' -->
             <parameter type-id='type-id-1580' name='this' is-artificial='yes'/>
             <!-- parameter of type 'typedef jptr' -->
@@ -33570,7 +33570,7 @@
         </member-function>
         <member-function access='public'>
           <!-- void __sanitizer::InternalMmapVector<int>::InternalMmapVector(__sanitizer::uptr) -->
-          <function-decl name='InternalMmapVector' filepath='../../.././libsanitizer/sanitizer_common/sanitizer_common.h' line='322' column='1' visibility='default' binding='global' size-in-bits='64'>
+          <function-decl name='InternalMmapVector' filepath='../../.././libsanitizer/sanitizer_common/sanitizer_common.h' line='322' column='1' declared-inline='yes' visibility='default' binding='global' size-in-bits='64'>
             <!-- implicit parameter of type '__sanitizer::InternalMmapVector<int>* const' -->
             <parameter type-id='type-id-313' name='this' is-artificial='yes'/>
             <!-- parameter of type 'typedef __sanitizer::uptr' -->
@@ -38226,7 +38226,7 @@
         </member-function>
         <member-function access='public' constructor='yes'>
           <!-- __tsan::Shadow::Shadow(__sanitizer::u64) -->
-          <function-decl name='Shadow' filepath='../../.././libsanitizer/tsan/tsan_rtl.h' line='235' column='1' visibility='default' binding='global' size-in-bits='64'>
+          <function-decl name='Shadow' filepath='../../.././libsanitizer/tsan/tsan_rtl.h' line='235' column='1' declared-inline='yes' visibility='default' binding='global' size-in-bits='64'>
             <!-- implicit parameter of type '__tsan::Shadow* const' -->
             <parameter type-id='type-id-1827' name='this' is-artificial='yes'/>
             <!-- parameter of type 'typedef __sanitizer::u64' -->
@@ -38766,7 +38766,7 @@
         </member-function>
         <member-function access='public' constructor='yes'>
           <!-- __tsan::Trace::Trace() -->
-          <function-decl name='Trace' filepath='../../.././libsanitizer/tsan/tsan_trace.h' line='69' column='1' visibility='default' binding='global' size-in-bits='64'>
+          <function-decl name='Trace' filepath='../../.././libsanitizer/tsan/tsan_trace.h' line='69' column='1' declared-inline='yes' visibility='default' binding='global' size-in-bits='64'>
             <!-- implicit parameter of type '__tsan::Trace* const' -->
             <parameter type-id='type-id-1779' name='this' is-artificial='yes'/>
             <!-- void -->
@@ -38821,7 +38821,7 @@
         </member-function>
         <member-function access='public' constructor='yes'>
           <!-- __tsan::TraceHeader::TraceHeader() -->
-          <function-decl name='TraceHeader' filepath='../../.././libsanitizer/tsan/tsan_trace.h' line='50' column='1' visibility='default' binding='global' size-in-bits='64'>
+          <function-decl name='TraceHeader' filepath='../../.././libsanitizer/tsan/tsan_trace.h' line='50' column='1' declared-inline='yes' visibility='default' binding='global' size-in-bits='64'>
             <!-- implicit parameter of type '__tsan::TraceHeader* const' -->
             <parameter type-id='type-id-1781' name='this' is-artificial='yes'/>
             <!-- void -->

@@ -22189,9 +22189,19 @@ const elf_symbol_sptr&
 function_decl::get_symbol() const
 {return priv_->symbol_;}
 
+/// Test if the function was declared inline.
+///
+/// @return true iff the function was declared inline.
 bool
 function_decl::is_declared_inline() const
 {return priv_->declared_inline_;}
+
+/// Set the property of the function being declared inline.
+///
+/// @param value true iff the function was declared inline.
+void
+function_decl::is_declared_inline(bool value)
+{priv_->declared_inline_ = value;}
 
 decl_base::binding
 function_decl::get_binding() const
@@ -22374,9 +22384,10 @@ equals(const function_decl& l, const function_decl& r, change_kind* k)
 	  ABG_RETURN_FALSE;
       }
 
-  // Compare the remaining properties
-  if (l.is_declared_inline() != r.is_declared_inline()
-      || l.get_binding() != r.get_binding())
+  // Compare the remaining properties.  Note that we don't take into
+  // account the fact that the function was declared inline or not as
+  // that doesn't have any impact on the final ABI.
+  if (l.get_binding() != r.get_binding())
     {
       result = false;
       if (k)

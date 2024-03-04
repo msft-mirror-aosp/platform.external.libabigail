@@ -140,7 +140,7 @@
       </member-function>
       <member-function access='public' constructor='yes'>
         <!-- s0::s0(const int, void** const) -->
-        <function-decl name='s0' filepath='/home/dodji/git/libabigail/dwarf/tests/data/test-read-dwarf/test1.cc' line='21' column='1' visibility='default' binding='global' size-in-bits='64'>
+        <function-decl name='s0' filepath='/home/dodji/git/libabigail/dwarf/tests/data/test-read-dwarf/test1.cc' line='21' column='1' declared-inline='yes' visibility='default' binding='global' size-in-bits='64'>
           <!-- implicit parameter of type 's0* const' -->
           <parameter type-id='type-id-14' name='this' is-artificial='yes'/>
           <!-- artificial parameter of type 'const int' -->
@@ -153,7 +153,7 @@
       </member-function>
       <member-function access='public' constructor='yes'>
         <!-- s0::s0() -->
-        <function-decl name='s0' mangled-name='_ZN2s0C1Ev' filepath='/home/dodji/git/libabigail/dwarf/tests/data/test-read-dwarf/test1.cc' line='21' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZN2s0C1Ev'>
+        <function-decl name='s0' mangled-name='_ZN2s0C1Ev' filepath='/home/dodji/git/libabigail/dwarf/tests/data/test-read-dwarf/test1.cc' line='21' column='1' declared-inline='yes' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZN2s0C1Ev'>
           <!-- implicit parameter of type 's0* const' -->
           <parameter type-id='type-id-14' name='this' is-artificial='yes'/>
           <!-- void -->
@@ -162,7 +162,7 @@
       </member-function>
       <member-function access='public' destructor='yes'>
         <!-- s0::~s0(const int, void** const) -->
-        <function-decl name='~s0' filepath='/home/dodji/git/libabigail/dwarf/tests/data/test-read-dwarf/test1.cc' line='27' column='1' visibility='default' binding='global' size-in-bits='64'>
+        <function-decl name='~s0' filepath='/home/dodji/git/libabigail/dwarf/tests/data/test-read-dwarf/test1.cc' line='27' column='1' declared-inline='yes' visibility='default' binding='global' size-in-bits='64'>
           <!-- implicit parameter of type 's0* const' -->
           <parameter type-id='type-id-14' name='this' is-artificial='yes'/>
           <!-- artificial parameter of type 'const int' -->
@@ -175,7 +175,7 @@
       </member-function>
       <member-function access='public' destructor='yes'>
         <!-- s0::~s0() -->
-        <function-decl name='~s0' mangled-name='_ZN2s0D1Ev' filepath='/home/dodji/git/libabigail/dwarf/tests/data/test-read-dwarf/test1.cc' line='27' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZN2s0D1Ev'>
+        <function-decl name='~s0' mangled-name='_ZN2s0D1Ev' filepath='/home/dodji/git/libabigail/dwarf/tests/data/test-read-dwarf/test1.cc' line='27' column='1' declared-inline='yes' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZN2s0D1Ev'>
           <!-- implicit parameter of type 's0* const' -->
           <parameter type-id='type-id-14' name='this' is-artificial='yes'/>
           <!-- void -->

@@ -4532,7 +4532,7 @@
         </member-function>
         <member-function access='private'>
           <!-- void std::vector<long long int, std::allocator<long long int> >::vector(size_t, const long long int&, const std::allocator<long long int>&) -->
-          <function-decl name='vector' filepath='/usr/lib/gcc/x86_64-redhat-linux/4.4.7/../../../../include/c++/4.4.7/bits/stl_vector.h' line='227' column='1' visibility='default' binding='global' size-in-bits='64'>
+          <function-decl name='vector' filepath='/usr/lib/gcc/x86_64-redhat-linux/4.4.7/../../../../include/c++/4.4.7/bits/stl_vector.h' line='227' column='1' declared-inline='yes' visibility='default' binding='global' size-in-bits='64'>
             <!-- implicit parameter of type 'std::vector<long long int, std::allocator<long long int> >* const' -->
             <parameter type-id='type-id-381' name='this' is-artificial='yes'/>
             <!-- parameter of type 'typedef size_t' -->
@@ -4547,7 +4547,7 @@
         </member-function>
         <member-function access='private' destructor='yes'>
           <!-- std::vector<long long int, std::allocator<long long int> >::~vector(const int) -->
-          <function-decl name='~vector' filepath='/usr/lib/gcc/x86_64-redhat-linux/4.4.7/../../../../include/c++/4.4.7/bits/stl_vector.h' line='312' column='1' visibility='default' binding='global' size-in-bits='64'>
+          <function-decl name='~vector' filepath='/usr/lib/gcc/x86_64-redhat-linux/4.4.7/../../../../include/c++/4.4.7/bits/stl_vector.h' line='312' column='1' declared-inline='yes' visibility='default' binding='global' size-in-bits='64'>
             <!-- implicit parameter of type 'std::vector<long long int, std::allocator<long long int> >* const' -->
             <parameter type-id='type-id-381' name='this' is-artificial='yes'/>
             <!-- artificial parameter of type 'const int' -->
@@ -4644,7 +4644,7 @@
         </member-function>
         <member-function access='private' destructor='yes'>
           <!-- std::vector<unsigned char, std::allocator<unsigned char> >::~vector(const int) -->
-          <function-decl name='~vector' filepath='/usr/lib/gcc/x86_64-redhat-linux/4.4.7/../../../../include/c++/4.4.7/bits/stl_vector.h' line='312' column='1' visibility='default' binding='global' size-in-bits='64'>
+          <function-decl name='~vector' filepath='/usr/lib/gcc/x86_64-redhat-linux/4.4.7/../../../../include/c++/4.4.7/bits/stl_vector.h' line='312' column='1' declared-inline='yes' visibility='default' binding='global' size-in-bits='64'>
             <!-- implicit parameter of type 'std::vector<unsigned char, std::allocator<unsigned char> >* const' -->
             <parameter type-id='type-id-383' name='this' is-artificial='yes'/>
             <!-- artificial parameter of type 'const int' -->
@@ -7434,7 +7434,7 @@
         </member-function>
         <member-function access='public' destructor='yes'>
           <!-- std::basic_string<char, std::char_traits<char>, std::allocator<char> >::~basic_string(const int) -->
-          <function-decl name='~basic_string' filepath='/usr/lib/gcc/x86_64-redhat-linux/4.4.7/../../../../include/c++/4.4.7/bits/basic_string.h' line='502' column='1' visibility='default' binding='global' size-in-bits='64'>
+          <function-decl name='~basic_string' filepath='/usr/lib/gcc/x86_64-redhat-linux/4.4.7/../../../../include/c++/4.4.7/bits/basic_string.h' line='502' column='1' declared-inline='yes' visibility='default' binding='global' size-in-bits='64'>
             <!-- implicit parameter of type 'std::basic_string<char, std::char_traits<char>, std::allocator<char> >* const' -->
             <parameter type-id='type-id-464' name='this' is-artificial='yes'/>
             <!-- artificial parameter of type 'const int' -->
@@ -7571,7 +7571,7 @@
         </member-function>
         <member-function access='public' destructor='yes'>
           <!-- std::basic_string<char, std::char_traits<char>, std::allocator<char> >::~basic_string(const int) -->
-          <function-decl name='~basic_string' filepath='/usr/lib/gcc/x86_64-redhat-linux/4.4.7/../../../../include/c++/4.4.7/bits/basic_string.h' line='502' column='1' visibility='default' binding='global' size-in-bits='64'>
+          <function-decl name='~basic_string' filepath='/usr/lib/gcc/x86_64-redhat-linux/4.4.7/../../../../include/c++/4.4.7/bits/basic_string.h' line='502' column='1' declared-inline='yes' visibility='default' binding='global' size-in-bits='64'>
             <!-- implicit parameter of type 'std::basic_string<char, std::char_traits<char>, std::allocator<char> >* const' -->
             <parameter type-id='type-id-464' name='this' is-artificial='yes'/>
             <!-- artificial parameter of type 'const int' -->
@@ -14466,7 +14466,7 @@
         </member-function>
         <member-function access='private'>
           <!-- void std::vector<int, std::allocator<int> >::vector(size_t, const int&, const std::allocator<int>&) -->
-          <function-decl name='vector' filepath='/usr/lib/gcc/x86_64-redhat-linux/4.4.7/../../../../include/c++/4.4.7/bits/stl_vector.h' line='227' column='1' visibility='default' binding='global' size-in-bits='64'>
+          <function-decl name='vector' filepath='/usr/lib/gcc/x86_64-redhat-linux/4.4.7/../../../../include/c++/4.4.7/bits/stl_vector.h' line='227' column='1' declared-inline='yes' visibility='default' binding='global' size-in-bits='64'>
             <!-- implicit parameter of type 'std::vector<int, std::allocator<int> >* const' -->
             <parameter type-id='type-id-1108' name='this' is-artificial='yes'/>
             <!-- parameter of type 'typedef size_t' -->
@@ -14668,7 +14668,7 @@
         </member-function>
         <member-function access='private'>
           <!-- void std::vector<vtkMultiProcessController::vtkInternal::vtkRMICallback, std::allocator<vtkMultiProcessController::vtkInternal::vtkRMICallback> >::vector(const std::vector<vtkMultiProcessController::vtkInternal::vtkRMICallback, std::allocator<vtkMultiProcessController::vtkInternal::vtkRMICallback> >&) -->
-          <function-decl name='vector' filepath='/usr/lib/gcc/x86_64-redhat-linux/4.4.7/../../../../include/c++/4.4.7/bits/stl_vector.h' line='241' column='1' visibility='default' binding='global' size-in-bits='64'>
+          <function-decl name='vector' filepath='/usr/lib/gcc/x86_64-redhat-linux/4.4.7/../../../../include/c++/4.4.7/bits/stl_vector.h' line='241' column='1' declared-inline='yes' visibility='default' binding='global' size-in-bits='64'>
             <!-- implicit parameter of type 'std::vector<vtkMultiProcessController::vtkInternal::vtkRMICallback, std::allocator<vtkMultiProcessController::vtkInternal::vtkRMICallback> >* const' -->
             <parameter type-id='type-id-1111' name='this' is-artificial='yes'/>
             <!-- parameter of type 'const std::vector<vtkMultiProcessController::vtkInternal::vtkRMICallback, std::allocator<vtkMultiProcessController::vtkInternal::vtkRMICallback> >&' -->
@@ -22784,7 +22784,7 @@
       </member-function>
       <member-function access='private' constructor='yes'>
         <!-- vtkStdString::vtkStdString(const vtkStdString::value_type*) -->
-        <function-decl name='vtkStdString' filepath='/tmp/legendre/spack-stage/spack-stage-R_crTC/VTK-6.1.0/Common/Core/vtkStdString.h' line='55' column='1' visibility='default' binding='global' size-in-bits='64'>
+        <function-decl name='vtkStdString' filepath='/tmp/legendre/spack-stage/spack-stage-R_crTC/VTK-6.1.0/Common/Core/vtkStdString.h' line='55' column='1' declared-inline='yes' visibility='default' binding='global' size-in-bits='64'>
           <!-- implicit parameter of type 'vtkStdString* const' -->
           <parameter type-id='type-id-1476' name='this' is-artificial='yes'/>
           <!-- parameter of type 'const vtkStdString::value_type*' -->
@@ -22795,7 +22795,7 @@
       </member-function>
       <member-function access='private' constructor='yes'>
         <!-- vtkStdString::vtkStdString(const vtkStdString::value_type*) -->
-        <function-decl name='vtkStdString' filepath='/tmp/legendre/spack-stage/spack-stage-R_crTC/VTK-6.1.0/Common/Core/vtkStdString.h' line='55' column='1' visibility='default' binding='global' size-in-bits='64'>
+        <function-decl name='vtkStdString' filepath='/tmp/legendre/spack-stage/spack-stage-R_crTC/VTK-6.1.0/Common/Core/vtkStdString.h' line='55' column='1' declared-inline='yes' visibility='default' binding='global' size-in-bits='64'>
           <!-- implicit parameter of type 'vtkStdString* const' -->
           <parameter type-id='type-id-1476' name='this' is-artificial='yes'/>
           <!-- parameter of type 'const vtkStdString::value_type*' -->
@@ -23428,7 +23428,7 @@
         </member-function>
         <member-function access='private' destructor='yes'>
           <!-- std::_List_base<std::vector<char, std::allocator<char> >, std::allocator<std::vector<char, std::allocator<char> > > >::~_List_base(const int) -->
-          <function-decl name='~_List_base' filepath='/usr/lib/gcc/x86_64-redhat-linux/4.4.7/../../../../include/c++/4.4.7/bits/stl_list.h' line='359' column='1' visibility='default' binding='global' size-in-bits='64'>
+          <function-decl name='~_List_base' filepath='/usr/lib/gcc/x86_64-redhat-linux/4.4.7/../../../../include/c++/4.4.7/bits/stl_list.h' line='359' column='1' declared-inline='yes' visibility='default' binding='global' size-in-bits='64'>
             <!-- implicit parameter of type 'std::_List_base<std::vector<char, std::allocator<char> >, std::allocator<std::vector<char, std::allocator<char> > > >* const' -->
             <parameter type-id='type-id-1630' name='this' is-artificial='yes'/>
             <!-- artificial parameter of type 'const int' -->
@@ -23439,7 +23439,7 @@
         </member-function>
         <member-function access='private' destructor='yes'>
           <!-- std::_List_base<std::vector<char, std::allocator<char> >, std::allocator<std::vector<char, std::allocator<char> > > >::~_List_base() -->
-          <function-decl name='~_List_base' mangled-name='_ZNSt10_List_baseISt6vectorIcSaIcEESaIS2_EED1Ev' filepath='/usr/lib/gcc/x86_64-redhat-linux/4.4.7/../../../../include/c++/4.4.7/bits/stl_list.h' line='359' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZNSt10_List_baseISt6vectorIcSaIcEESaIS2_EED1Ev'>
+          <function-decl name='~_List_base' mangled-name='_ZNSt10_List_baseISt6vectorIcSaIcEESaIS2_EED1Ev' filepath='/usr/lib/gcc/x86_64-redhat-linux/4.4.7/../../../../include/c++/4.4.7/bits/stl_list.h' line='359' column='1' declared-inline='yes' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZNSt10_List_baseISt6vectorIcSaIcEESaIS2_EED1Ev'>
             <!-- implicit parameter of type 'std::_List_base<std::vector<char, std::allocator<char> >, std::allocator<std::vector<char, std::allocator<char> > > >* const' -->
             <parameter type-id='type-id-1630' name='this' is-artificial='yes'/>
             <!-- void -->
@@ -24035,7 +24035,7 @@
         </member-function>
         <member-function access='private'>
           <!-- void std::list<std::vector<char, std::allocator<char> >, std::allocator<std::vector<char, std::allocator<char> > > >::list(const std::list<std::vector<char, std::allocator<char> >, std::allocator<std::vector<char, std::allocator<char> > > >&) -->
-          <function-decl name='list' filepath='/usr/lib/gcc/x86_64-redhat-linux/4.4.7/../../../../include/c++/4.4.7/bits/stl_list.h' line='531' column='1' visibility='default' binding='global' size-in-bits='64'>
+          <function-decl name='list' filepath='/usr/lib/gcc/x86_64-redhat-linux/4.4.7/../../../../include/c++/4.4.7/bits/stl_list.h' line='531' column='1' declared-inline='yes' visibility='default' binding='global' size-in-bits='64'>
             <!-- implicit parameter of type 'std::list<std::vector<char, std::allocator<char> >, std::allocator<std::vector<char, std::allocator<char> > > >* const' -->
             <parameter type-id='type-id-1677' name='this' is-artificial='yes'/>
             <!-- parameter of type 'const std::list<std::vector<char, std::allocator<char> >, std::allocator<std::vector<char, std::allocator<char> > > >&' -->
@@ -24862,7 +24862,7 @@
       <class-decl name='basic_ios&lt;char, std::char_traits&lt;char&gt; &gt;' is-struct='yes' visibility='default' is-declaration-only='yes' id='type-id-1712'>
         <member-function access='protected'>
           <!-- void std::basic_ios<char, std::char_traits<char> >::basic_ios() -->
-          <function-decl name='basic_ios' filepath='/usr/lib/gcc/x86_64-redhat-linux/4.4.7/../../../../include/c++/4.4.7/bits/basic_ios.h' line='450' column='1' visibility='default' binding='global' size-in-bits='64'>
+          <function-decl name='basic_ios' filepath='/usr/lib/gcc/x86_64-redhat-linux/4.4.7/../../../../include/c++/4.4.7/bits/basic_ios.h' line='450' column='1' declared-inline='yes' visibility='default' binding='global' size-in-bits='64'>
             <!-- implicit parameter of type 'std::basic_ios<char, std::char_traits<char> >* const' -->
             <parameter type-id='type-id-1759' name='this' is-artificial='yes'/>
             <!-- void -->
@@ -24874,7 +24874,7 @@
       <class-decl name='basic_ofstream&lt;char, std::char_traits&lt;char&gt; &gt;' is-struct='yes' visibility='default' is-declaration-only='yes' id='type-id-1760'>
         <member-function access='public'>
           <!-- void std::basic_ofstream<char, std::char_traits<char> >::basic_ofstream(const int, void** const, const char*, std::__basic_file<char>::openmode) -->
-          <function-decl name='basic_ofstream' filepath='/usr/lib/gcc/x86_64-redhat-linux/4.4.7/../../../../include/c++/4.4.7/fstream' line='623' column='1' visibility='default' binding='global' size-in-bits='64'>
+          <function-decl name='basic_ofstream' filepath='/usr/lib/gcc/x86_64-redhat-linux/4.4.7/../../../../include/c++/4.4.7/fstream' line='623' column='1' declared-inline='yes' visibility='default' binding='global' size-in-bits='64'>
             <!-- implicit parameter of type 'std::basic_ofstream<char, std::char_traits<char> >* const' -->
             <parameter type-id='type-id-1761' name='this' is-artificial='yes'/>
             <!-- artificial parameter of type 'const int' -->

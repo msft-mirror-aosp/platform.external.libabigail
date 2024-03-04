@@ -7653,7 +7653,8 @@ die_is_declared_inline(Dwarf_Die* die)
   uint64_t inline_value = 0;
   if (!die_unsigned_constant_attribute(die, DW_AT_inline, inline_value))
     return false;
-  return inline_value == DW_INL_declared_inlined;
+  return (inline_value == DW_INL_declared_inlined
+	  || inline_value == DW_INL_declared_not_inlined);
 }
 
 /// Compare two DWARF strings using the most accurate (and slowest)
@@ -12659,7 +12660,7 @@ static void
 finish_member_function_reading(Dwarf_Die*			die,
 			       const function_decl_sptr&	f,
 			       const class_or_union_sptr	klass,
-			       reader&			rdr)
+			       reader&				rdr)
 {
   ABG_ASSERT(klass);
 
@@ -12669,6 +12670,7 @@ finish_member_function_reading(Dwarf_Die*			die,
   method_type_sptr method_t = is_method_type(m->get_type());
   ABG_ASSERT(method_t);
 
+  size_t is_inline = die_is_declared_inline(die);
   bool is_ctor = (f->get_name() == klass->get_name());
   bool is_dtor = (!f->get_name().empty()
 		  && static_cast<string>(f->get_name())[0] == '~');
@@ -12732,6 +12734,7 @@ finish_member_function_reading(Dwarf_Die*			die,
 	  is_static = false;
       }
   }
+  m->is_declared_inline(is_inline);
   set_member_access_specifier(m, access);
   if (vindex != -1)
     set_member_function_vtable_offset(m, vindex);
@@ -15360,6 +15363,7 @@ build_function_decl(reader&	rdr,
       if (floc)
 	if (!result->get_location())
 	  result->set_location(floc);
+      result->is_declared_inline(is_inline);
     }
   else
     {
@@ -15971,6 +15975,7 @@ build_ir_node_from_die(reader&	rdr,
       break;
 
     case DW_TAG_subprogram:
+    case DW_TAG_inlined_subroutine:
       {
 	if (die_is_artificial(die))
 	  break;
@@ -16104,7 +16109,6 @@ build_ir_node_from_die(reader&	rdr,
     case DW_TAG_common_block:
     case DW_TAG_common_inclusion:
     case DW_TAG_inheritance:
-    case DW_TAG_inlined_subroutine:
     case DW_TAG_with_stmt:
     case DW_TAG_access_declaration:
     case DW_TAG_catch_block:
