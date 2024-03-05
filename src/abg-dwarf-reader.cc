@@ -14308,6 +14308,23 @@ build_function_type(reader&	rdr,
 					       where_offset));
 	    if (!parm_type)
 	      continue;
+	    if (is_method
+		&& is_const_qualified_type(parm_type)
+		&& function_parms.empty())
+	      // We are looking at the first (implicit) parameter of a
+	      // method.  This is basically the "this pointer".  For
+	      // concrete instances of abstract methods, GCC sometimes
+	      // represents that pointer as a const pointer, whereas
+	      // in the abstract interface representing that method
+	      // the this-pointer is represented as a non-qualified
+	      // pointer.  Let's trim the const qualifier away.  That
+	      // will minize the chance to have spurious
+	      // const-qualifier changes on implicit parameters when
+	      // comparing methods that otherwise have no meaningful
+	      // ABI changes.
+	      parm_type =
+		peel_const_qualified_type(is_qualified_type(parm_type));
+
 	    function_decl::parameter_sptr p
 	      (new function_decl::parameter(parm_type, name, loc,
 					    /*variadic_marker=*/false,

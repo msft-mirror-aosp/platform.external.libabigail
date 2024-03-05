@@ -600,6 +600,15 @@ is_qualified_type(const type_or_decl_base*);
 qualified_type_def_sptr
 is_qualified_type(const type_or_decl_base_sptr&);
 
+bool
+is_const_qualified_type(const type_base_sptr& t);
+
+bool
+is_const_qualified_type(const qualified_type_def_sptr&);
+
+type_base_sptr
+peel_const_qualified_type(const qualified_type_def_sptr&);
+
 function_type_sptr
 is_function_type(const type_or_decl_base_sptr&);
 

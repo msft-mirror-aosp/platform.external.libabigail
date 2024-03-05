@@ -7409,6 +7409,55 @@ peel_qualified_type(const type_base_sptr& type)
   return peel_qualified_type(t->get_underlying_type());
 }
 
+/// Test if a given qualified type is const.
+///
+/// @pram t the qualified type to consider.
+///
+/// @return true iff @p t is a const qualified type.
+bool
+is_const_qualified_type(const qualified_type_def_sptr& t)
+{
+  if (!t)
+    return false;
+
+  if (t->get_cv_quals() == qualified_type_def::CV_CONST)
+    return true;
+
+  return false;
+}
+
+/// Test if a given type is const-qualified.
+///
+/// @pram t the type to consider.
+///
+/// @return true iff @p t is a const qualified type.
+bool
+is_const_qualified_type(const type_base_sptr& t)
+{
+  qualified_type_def_sptr q = is_qualified_type(t);
+  if (!q)
+    return false;
+  return is_const_qualified_type(q);
+}
+
+/// If a qualified type is const, then return its underlying type.
+///
+/// @param q the qualified type to consider.
+///
+/// @return the underlying type of @p q if it's a const-qualified
+/// type, otherwise, return @p q itself.
+type_base_sptr
+peel_const_qualified_type(const qualified_type_def_sptr& q)
+{
+  if (!q)
+    return q;
+
+  if (is_const_qualified_type(q))
+    return q->get_underlying_type();
+
+  return q;
+}
+
 /// Return the leaf underlying type of a qualified or typedef type.
 ///
 /// If the underlying type is itself a qualified or typedef type, then

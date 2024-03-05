@@ -32,22 +32,22 @@
       </member-function>
       <member-function access='public' constructor='yes'>
         <function-decl name='first_type' filepath='/home/dodji/git/libabigail/dwarf/tests/data/test-read-dwarf/test2-0.cc' line='5' column='1' visibility='default' binding='global' size-in-bits='64'>
-          <parameter type-id='type-id-7' name='this' is-artificial='yes'/>
+          <parameter type-id='type-id-5' name='this' is-artificial='yes'/>
           <return type-id='type-id-6'/>
         </function-decl>
       </member-function>
       <member-function access='public' constructor='yes'>
         <function-decl name='first_type' mangled-name='_ZN10first_typeC2Ev' filepath='/home/dodji/git/libabigail/dwarf/tests/data/test-read-dwarf/test2-0.cc' line='5' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZN10first_typeC2Ev'>
-          <parameter type-id='type-id-7' name='this' is-artificial='yes'/>
+          <parameter type-id='type-id-5' name='this' is-artificial='yes'/>
           <return type-id='type-id-6'/>
         </function-decl>
       </member-function>
     </class-decl>
-    <typedef-decl name='character' type-id='type-id-8' id='type-id-4'/>
+    <typedef-decl name='character' type-id='type-id-7' id='type-id-4'/>
     <typedef-decl name='integer' type-id='type-id-1' id='type-id-3'/>
-    <type-decl name='unsigned char' size-in-bits='8' id='type-id-8'/>
+    <type-decl name='unsigned char' size-in-bits='8' id='type-id-7'/>
     <pointer-type-def type-id='type-id-2' size-in-bits='64' id='type-id-5'/>
-    <qualified-type-def type-id='type-id-5' const='yes' id='type-id-7'/>
+    <qualified-type-def type-id='type-id-5' const='yes' id='type-id-8'/>
     <namespace-decl name='a'>
       <function-decl name='build_first_type' mangled-name='_ZN1a16build_first_typeEv' filepath='/home/dodji/git/libabigail/dwarf/tests/data/test-read-dwarf/test2-0.cc' line='13' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZN1a16build_first_typeEv'>
         <return type-id='type-id-5'/>
@@ -71,13 +71,13 @@
       </member-function>
       <member-function access='public' constructor='yes'>
         <function-decl name='second_type' filepath='/home/dodji/git/libabigail/dwarf/tests/data/test-read-dwarf/test2-1.cc' line='5' column='1' visibility='default' binding='global' size-in-bits='64'>
-          <parameter type-id='type-id-11' name='this' is-artificial='yes'/>
+          <parameter type-id='type-id-10' name='this' is-artificial='yes'/>
           <return type-id='type-id-6'/>
         </function-decl>
       </member-function>
       <member-function access='public' constructor='yes'>
         <function-decl name='second_type' mangled-name='_ZN11second_typeC2Ev' filepath='/home/dodji/git/libabigail/dwarf/tests/data/test-read-dwarf/test2-1.cc' line='5' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZN11second_typeC2Ev'>
-          <parameter type-id='type-id-11' name='this' is-artificial='yes'/>
+          <parameter type-id='type-id-10' name='this' is-artificial='yes'/>
           <return type-id='type-id-6'/>
         </function-decl>
       </member-function>
