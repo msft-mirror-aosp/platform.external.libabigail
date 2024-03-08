@@ -15348,7 +15348,8 @@ build_function_decl(reader&	rdr,
   function_decl_sptr result = fn;
   if (!die)
     return result;
-  ABG_ASSERT(dwarf_tag(die) == DW_TAG_subprogram);
+  int tag = dwarf_tag(die);
+  ABG_ASSERT(tag == DW_TAG_subprogram || tag == DW_TAG_inlined_subroutine);
 
   if (!die_is_public_decl(die))
     return result;
