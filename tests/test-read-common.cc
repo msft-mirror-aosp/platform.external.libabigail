@@ -74,6 +74,7 @@ test_task::serialize_corpus(const string& out_abi_path,
   write_context_sptr write_ctxt
       = create_write_context(corp->get_environment(), of);
   set_type_id_style(*write_ctxt, spec.type_id_style);
+  set_write_undefined_symbols(*write_ctxt, false);
   is_ok = write_corpus(*write_ctxt, corp, /*indent=*/0);
   of.close();
 

@@ -2130,6 +2130,21 @@ test-abicompat/test9-fn-changed-v1.cc \
 test-abicompat/test9-fn-changed-v1.h \
 test-abicompat/test9-fn-changed-app \
 test-abicompat/test9-fn-changed-report-0.txt \
+test-abicompat/test10/libtest10-with-exported-symbols.so \
+test-abicompat/test10/libtest10-with-incompatible-exported-symbols.so \
+test-abicompat/test10/libtest10-with-incompatible-exported-symbols.so.abi \
+test-abicompat/test10/test10-app-with-undefined-symbols \
+test-abicompat/test10/test10-app-with-undefined-symbols.abi \
+test-abicompat/test10/test10-app-with-undefined-symbols.cc \
+test-abicompat/test10/test10-with-exported-symbols.cc \
+test-abicompat/test10/test10-with-exported-symbols.h \
+test-abicompat/test10/test10-with-incompatible-exported-symbols.cc \
+test-abicompat/test10/test10-with-incompatible-exported-symbols.h \
+test-abicompat/test10/test10-fn-changed-report-0.txt \
+test-abicompat/test10/test10-fn-changed-report-1.txt \
+test-abicompat/test10/test10-fn-changed-report-2.txt \
+test-abicompat/test10/test10-fn-changed-report-3.txt \
+test-abicompat/test10/test10-fn-changed-report-4.txt \
 \
 test-diff-pkg/dbus-glib-0.104-3.fc23.x86_64.rpm \
 test-diff-pkg/dbus-glib-0.80-3.fc12.x86_64.rpm \

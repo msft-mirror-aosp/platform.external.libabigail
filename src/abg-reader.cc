@@ -1270,7 +1270,8 @@ public:
     if (!needed.empty())
       corp.set_needed(needed);
 
-    string_elf_symbols_map_sptr fn_sym_db, var_sym_db;
+    string_elf_symbols_map_sptr fn_sym_db(new string_elf_symbols_map_type),
+      var_sym_db(new string_elf_symbols_map_type);
 
     // Read the symbol databases.
     read_symbol_db_from_input(*this, fn_sym_db, var_sym_db);
@@ -1338,6 +1339,9 @@ public:
 	set_corpus_node(node);
       }
 
+    corpus()->sort_functions();
+    corpus()->sort_variables();
+
     status = STATUS_OK;
     return corpus();
   }
@@ -1389,8 +1393,9 @@ build_elf_symbol(reader&, const xmlNodePtr, bool);
 static elf_symbol_sptr
 build_elf_symbol_from_reference(reader&, const xmlNodePtr);
 
-static string_elf_symbols_map_sptr
-build_elf_symbol_db(reader&, const xmlNodePtr, bool);
+static bool
+build_elf_symbol_db(reader&, const xmlNodePtr, bool,
+		    string_elf_symbols_map_sptr&);
 
 static function_decl::parameter_sptr
 build_function_parameter (reader&, const xmlNodePtr);
@@ -1898,9 +1903,9 @@ read_translation_unit_from_input(fe_iface& iface)
 ///
 /// @return true upon successful parsing, false otherwise.
 static bool
-read_symbol_db_from_input(reader&		 rdr,
-			  string_elf_symbols_map_sptr& fn_symdb,
-			  string_elf_symbols_map_sptr& var_symdb)
+read_symbol_db_from_input(reader&			rdr,
+			  string_elf_symbols_map_sptr&	fn_symdb,
+			  string_elf_symbols_map_sptr&	var_symdb)
 {
   xml::reader_sptr reader = rdr.get_libxml_reader();
   if (!reader)
@@ -1917,13 +1922,20 @@ read_symbol_db_from_input(reader&		 rdr,
 	if (status != 1)
 	  return false;
 
-	bool has_fn_syms = false, has_var_syms = false;
+	bool has_fn_syms = false, has_undefined_fn_syms = false,
+	  has_var_syms = false, has_undefined_var_syms = false;
 	if (xmlStrEqual (XML_READER_GET_NODE_NAME(reader).get(),
 			 BAD_CAST("elf-function-symbols")))
 	  has_fn_syms = true;
 	else if (xmlStrEqual (XML_READER_GET_NODE_NAME(reader).get(),
 			      BAD_CAST("elf-variable-symbols")))
 	  has_var_syms = true;
+	else if (xmlStrEqual (XML_READER_GET_NODE_NAME(reader).get(),
+			      BAD_CAST("undefined-elf-function-symbols")))
+	  has_undefined_fn_syms = true;
+	else if (xmlStrEqual (XML_READER_GET_NODE_NAME(reader).get(),
+			      BAD_CAST("undefined-elf-variable-symbols")))
+	  has_undefined_var_syms = true;
 	else
 	  break;
 
@@ -1932,20 +1944,30 @@ read_symbol_db_from_input(reader&		 rdr,
 	  return false;
 
 	if (has_fn_syms)
-	  fn_symdb = build_elf_symbol_db(rdr, node, true);
+	  build_elf_symbol_db(rdr, node, /*function_sym=*/true, fn_symdb);
+	else if (has_undefined_fn_syms)
+	  build_elf_symbol_db(rdr, node, /*function_sym=*/true, fn_symdb);
 	else if (has_var_syms)
-	  var_symdb = build_elf_symbol_db(rdr, node, false);
+	  build_elf_symbol_db(rdr, node, /*function_sym=*/false, var_symdb);
+	else if (has_undefined_var_syms)
+	  build_elf_symbol_db(rdr, node, /*function_sym=*/false, var_symdb);
 
 	xmlTextReaderNext(reader.get());
       }
   else
     for (xmlNodePtr n = rdr.get_corpus_node(); n; n = xmlNextElementSibling(n))
       {
-	bool has_fn_syms = false, has_var_syms = false;
+	bool has_fn_syms = false, has_undefined_fn_syms = false,
+	  has_var_syms = false, has_undefined_var_syms = false;
 	if (xmlStrEqual(n->name, BAD_CAST("elf-function-symbols")))
 	  has_fn_syms = true;
+	else if (xmlStrEqual(n->name, BAD_CAST("undefined-elf-function-symbols")))
+	  has_undefined_fn_syms = true;
 	else if (xmlStrEqual(n->name, BAD_CAST("elf-variable-symbols")))
 	  has_var_syms = true;
+	else if (xmlStrEqual(n->name,
+			     BAD_CAST("undefined-elf-variable-symbols")))
+	  has_undefined_var_syms = true;
 	else
 	  {
 	    rdr.set_corpus_node(n);
@@ -1953,9 +1975,13 @@ read_symbol_db_from_input(reader&		 rdr,
 	  }
 
 	if (has_fn_syms)
-	  fn_symdb = build_elf_symbol_db(rdr, n, true);
+	  build_elf_symbol_db(rdr, n, /*function_sym=*/true, fn_symdb);
+	else if (has_undefined_fn_syms)
+	  build_elf_symbol_db(rdr, n, /*function_sym=*/true, fn_symdb);
 	else if (has_var_syms)
-	  var_symdb = build_elf_symbol_db(rdr, n, false);
+	  build_elf_symbol_db(rdr, n, /*function_sym=*/false, var_symdb);
+	else if (has_undefined_var_syms)
+	  build_elf_symbol_db(rdr, n, /*function_sym=*/false, var_symdb);
 	else
 	  break;
       }
@@ -3300,24 +3326,30 @@ build_elf_symbol_from_reference(reader& rdr, const xmlNodePtr node)
 /// @param function_syms true if we should look for a function symbols
 /// data base, false if we should look for a variable symbols data
 /// base.
-static string_elf_symbols_map_sptr
-build_elf_symbol_db(reader& rdr,
-		    const xmlNodePtr node,
-		    bool function_syms)
+///
+/// @param map a pointer to the map to fill with the symbol database.
+///
+/// @return true if some elf symbols were found.
+static bool
+build_elf_symbol_db(reader&				rdr,
+		    const xmlNodePtr			node,
+		    bool				function_syms,
+		    string_elf_symbols_map_sptr&	map)
 {
-  string_elf_symbols_map_sptr map, nil;
   string_elf_symbol_sptr_map_type id_sym_map;
 
   if (!node)
-    return nil;
+    return false;
 
   if (function_syms
-      && !xmlStrEqual(node->name, BAD_CAST("elf-function-symbols")))
-    return nil;
+      && !xmlStrEqual(node->name, BAD_CAST("elf-function-symbols"))
+      && !xmlStrEqual(node->name, BAD_CAST("undefined-elf-function-symbols")))
+    return false;
 
   if (!function_syms
-      && !xmlStrEqual(node->name, BAD_CAST("elf-variable-symbols")))
-    return nil;
+      && !xmlStrEqual(node->name, BAD_CAST("elf-variable-symbols"))
+      && !xmlStrEqual(node->name, BAD_CAST("undefined-elf-variable-symbols")))
+    return false;
 
   rdr.set_corpus_node(node);
 
@@ -3336,9 +3368,8 @@ build_elf_symbol_db(reader& rdr,
       }
 
   if (id_sym_map.empty())
-    return nil;
+    return false;
 
-  map.reset(new string_elf_symbols_map_type);
   string_elf_symbols_map_type::iterator it;
   for (string_elf_symbol_sptr_map_type::const_iterator i = id_sym_map.begin();
        i != id_sym_map.end();
@@ -3374,7 +3405,7 @@ build_elf_symbol_db(reader& rdr,
 	}
     }
 
-  return map;
+  return true;
 }
 
 /// Build a function parameter from a 'parameter' xml element node.

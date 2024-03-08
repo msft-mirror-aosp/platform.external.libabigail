@@ -651,7 +651,7 @@ test_task_dwarf::perform()
   if (spec.type_id_style == HASH_TYPE_ID_STYLE)
     type_id_style = "hash";
 
-  string cmd = abidw + " --no-architecture "
+  string cmd = abidw + " --no-architecture --no-load-undefined-interfaces"
     + " --type-id-style " + type_id_style
     + " --no-corpus-path "
     + drop_private_types + " " + in_elf_path

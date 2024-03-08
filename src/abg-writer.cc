@@ -214,6 +214,7 @@ class write_context
   bool					m_write_corpus_path;
   bool					m_write_comp_dir;
   bool					m_write_elf_needed;
+  bool					m_write_undefined_symbols;
   bool					m_write_parameter_names;
   bool					m_short_locs;
   bool					m_write_default_sizes;
@@ -252,6 +253,7 @@ public:
       m_write_corpus_path(true),
       m_write_comp_dir(true),
       m_write_elf_needed(true),
+      m_write_undefined_symbols(true),
       m_write_parameter_names(true),
       m_short_locs(false),
       m_write_default_sizes(true),
@@ -324,6 +326,20 @@ public:
   void
   set_write_elf_needed(bool f)
   {m_write_elf_needed = f;}
+
+  /// Getter of the "undefined-symbols" option.
+  ///
+  /// @return true iff undefined symbols shall be emitted.
+  bool
+  get_write_undefined_symbols() const
+  {return m_write_undefined_symbols;}
+
+  /// Setter of the "undefined-symbols" option.
+  ///
+  /// @param f true iff undefined symbols shall be emitted.
+  void
+  set_write_undefined_symbols(bool f)
+  {m_write_undefined_symbols = f;}
 
   /// Getter of the default-sizes option.
   ///
@@ -800,6 +816,20 @@ public:
   /// @return true if the decl has already been emitted, false
   /// otherwise.
   bool
+  decl_is_emitted(const decl_base& decl) const
+  {
+    string repr = decl.get_pretty_representation(true);
+    interned_string irepr = decl.get_environment().intern(repr);
+    return m_emitted_decls_set.find(irepr) != m_emitted_decls_set.end();
+  }
+
+  /// Test if a given decl has been written out to the XML output.
+  ///
+  /// @param the decl to consider.
+  ///
+  /// @return true if the decl has already been emitted, false
+  /// otherwise.
+  bool
   decl_is_emitted(const decl_base_sptr& decl) const
   {
     ABG_ASSERT(!is_type(decl));
@@ -901,8 +931,14 @@ static void write_voffset(function_decl_sptr, ostream&);
 static void write_elf_symbol_type(elf_symbol::type, ostream&);
 static void write_elf_symbol_binding(elf_symbol::binding, ostream&);
 static bool write_elf_symbol_aliases(const elf_symbol&, ostream&);
-static bool write_elf_symbol_reference(const elf_symbol&, ostream&);
-static bool write_elf_symbol_reference(const elf_symbol_sptr, ostream&);
+static bool write_elf_symbol_reference(write_context&,
+				       const elf_symbol&,
+				       const corpus& abi,
+				       ostream&);
+static bool write_elf_symbol_reference(write_context&,
+				       const elf_symbol_sptr,
+				       const corpus& abi,
+				       ostream&);
 static void write_is_declaration_only(const decl_base_sptr&, ostream&);
 static void write_is_struct(const class_decl_sptr&, ostream&);
 static void write_is_anonymous(const decl_base_sptr&, ostream&);
@@ -1766,14 +1802,36 @@ write_elf_symbol_aliases(const elf_symbol& sym, ostream& out)
 /// Write an XML attribute for the reference to a symbol for the
 /// current decl.
 ///
+///
+/// @param ctxt the current write context to consider.
+///
 /// @param sym the symbol to consider.
+///
+/// @param abi the ABI corpus the symbol @p sym is supposed to belong
+/// to.  If the symbol doesn't belong to that corpus, then the
+/// reference is not be emitted.
 ///
 /// @param o the output stream to write the attribute to.
 ///
 /// @return true upon successful completion.
 static bool
-write_elf_symbol_reference(const elf_symbol& sym, ostream& o)
+write_elf_symbol_reference(write_context& ctxt,
+			   const elf_symbol& sym,
+			   const corpus& abi,
+			   ostream& o)
 {
+  elf_symbol_sptr s = abi.lookup_function_symbol(sym);
+  if (!s)
+    s = abi.lookup_variable_symbol(sym);
+
+  if (// If that symbol wasn't found in the current corpus ...
+      !s
+      // ... or we were NOT asked to represent undefined symbols and
+      // yet that symbol is undefined ...
+      || (!ctxt.get_write_undefined_symbols() && !s->is_defined()))
+    // Then do not emit this symbol reference.
+    return false;
+
   const elf_symbol* main = sym.get_main_symbol().get();
   const elf_symbol* alias = &sym;
   bool found = !alias->is_suppressed();
@@ -1804,18 +1862,27 @@ write_elf_symbol_reference(const elf_symbol& sym, ostream& o)
 /// Write an XML attribute for the reference to a symbol for the
 /// current decl.
 ///
+/// @param ctxt the write context to consider.
+/// 
 /// @param sym the symbol to consider.
+///
+/// @param abi the ABI corpus the symbol @p sym is supposed to belong
+/// to.  If the symbol doesn't belong to that corpus, then the
+/// reference is not be emitted.
 ///
 /// @param o the output stream to write the attribute to.
 ///
 /// @return true upon successful completion.
 static bool
-write_elf_symbol_reference(const elf_symbol_sptr sym, ostream& o)
+write_elf_symbol_reference(write_context& ctxt,
+			   const elf_symbol_sptr sym,
+			   const corpus& abi,
+			   ostream& o)
 {
   if (!sym)
     return false;
 
-  return write_elf_symbol_reference(*sym, o);
+  return write_elf_symbol_reference(ctxt, *sym, abi, o);
 }
 
 /// Serialize the attributes "constructor", "destructor" or "static"
@@ -2255,6 +2322,18 @@ void
 set_write_elf_needed(write_context& ctxt, bool flag)
 {ctxt.set_write_elf_needed(flag);}
 
+/// Set the 'undefined-symbols' flag.
+///
+/// When this flag is set then the XML writer will emit corpus
+/// information about the undefined function and variable symbols.
+///
+/// @param ctxt the context to set this flag on to.
+///
+/// @param flag the new value of the 'undefined-symbols' flag.
+void
+set_write_undefined_symbols(write_context& ctxt, bool flag)
+{ctxt.set_write_undefined_symbols(flag);}
+
 /// Set the 'default-sizes' flag.
 ///
 /// When this flag is set then the XML writer will emit default
@@ -2548,6 +2627,32 @@ write_translation_unit(write_context&		ctxt,
 	    write_decl(decl, ctxt, indent + c.get_xml_element_indent());
 	}
     }
+
+  // Write the undefined functions that belong to this translation
+  // unit
+  if (const abigail::ir::corpus* abi = tu.get_corpus())
+    for (auto undefined_function : abi->get_sorted_undefined_functions())
+      {
+	function_decl_sptr f(const_cast<function_decl*>(undefined_function),
+			     noop_deleter());
+	if (f->get_translation_unit() != &tu || ctxt.decl_is_emitted(f))
+	  continue;
+
+	write_decl(f, ctxt, indent + c.get_xml_element_indent());
+      }
+
+  // Write the undefined variables that belong to this translation
+  // unit
+  if (const abigail::ir::corpus* abi = tu.get_corpus())
+    for (auto undefined_var : abi->get_sorted_undefined_variables())
+      {
+	var_decl_sptr v(const_cast<var_decl*>(undefined_var),
+			noop_deleter());
+	if (v->get_translation_unit() != &tu || ctxt.decl_is_emitted(v))
+	  continue;
+
+	write_decl(v, ctxt, indent + c.get_xml_element_indent());
+      }
 
   write_referenced_types(ctxt, tu, indent, is_last);
 
@@ -3468,8 +3573,8 @@ write_var_decl(const var_decl_sptr& decl, write_context& ctxt,
   write_location(decl, ctxt);
 
   if (elf_symbol_sptr sym = decl->get_symbol())
-    if (sym->is_defined())
-      write_elf_symbol_reference(decl->get_symbol(), o);
+    if (corpus* abi = decl->get_corpus())
+      write_elf_symbol_reference(ctxt, decl->get_symbol(), *abi, o);
 
   o << "/>\n";
 
@@ -3526,8 +3631,8 @@ write_function_decl(const function_decl_sptr& decl, write_context& ctxt,
 			    : decl->get_translation_unit()->get_address_size()),
 			   0);
   if (elf_symbol_sptr sym = decl->get_symbol())
-    if (sym->is_defined())
-      write_elf_symbol_reference(decl->get_symbol(), o);
+    if (corpus* abi = decl->get_corpus())
+      write_elf_symbol_reference(ctxt, decl->get_symbol(), *abi, o);
 
   o << ">\n";
 
@@ -4732,6 +4837,35 @@ write_corpus(write_context&	ctxt,
 
       do_indent_to_level(ctxt, indent, 1);
       out << "</elf-variable-symbols>\n";
+    }
+
+  // Write the undefined function symbols database.
+  if (ctxt.get_write_undefined_symbols()
+      && !corpus->get_sorted_undefined_fun_symbols().empty())
+    {
+      do_indent_to_level(ctxt, indent, 1);
+      out << "<undefined-elf-function-symbols>\n";
+
+      write_elf_symbols_table(corpus->get_sorted_undefined_fun_symbols(), ctxt,
+			      get_indent_to_level(ctxt, indent, 2));
+
+      do_indent_to_level(ctxt, indent, 1);
+      out << "</undefined-elf-function-symbols>\n";
+    }
+
+
+  // Write the undefined variable symbols database.
+    if (ctxt.get_write_undefined_symbols()
+	&& !corpus->get_sorted_undefined_var_symbols().empty())
+    {
+      do_indent_to_level(ctxt, indent, 1);
+      out << "<undefined-elf-variable-symbols>\n";
+
+      write_elf_symbols_table(corpus->get_sorted_undefined_var_symbols(), ctxt,
+			      get_indent_to_level(ctxt, indent, 2));
+
+      do_indent_to_level(ctxt, indent, 1);
+      out << "</undefined-elf-variable-symbols>\n";
     }
 
   // Now write the translation units.

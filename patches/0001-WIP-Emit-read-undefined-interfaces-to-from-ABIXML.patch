@@ -1,0 +1,1051 @@
+From cab35084da3550474f5349cfc2e65d36a7f3f91b Mon Sep 17 00:00:00 2001
+From: Dodji Seketeli <dodji@redhat.com>
+Date: Wed, 6 Mar 2024 13:47:14 +0100
+Subject: [PATCH] WIP: Emit & read undefined interfaces to & from ABIXML
+
+This work-in-progress patch teaches the ABIXML writer to emit
+information about undefined interfaces.  It also teaches the ABIXML
+reader to read information about undefined interfaces.
+
+It introduces two new ABIXML elements:
+'undefined-elf-function-symbols' and 'undefined-elf-variable-symbols'
+to represent undefined function and variable symbols.
+
+Then, in the 'abi-instr' element functions and variables that
+reference undefined elf symbols now have an 'elf-symbol-id' attribute
+referencing the undefined symbol listed in the new
+'undefined-elf-variable-symbols' or 'undefined-elf-function-symbols'
+element.
+
+This work-in-progress branch comes on top of the users/dodji/abidb
+branch and should be merged into it at some point.
+
+TODO: add some tests.
+
+	* include/abg-writer.h (set_write_undefined_symbols): Declare new
+	function.
+	(set_common_options): Use the new set_write_undefined_symbols in
+	this function template.
+	* src/abg-corpus.cc (corpus::lookup_{function,variable}_symbol):
+	Lookup the symbol also among undefined symbols, not just among
+	defined symbols.
+	* src/abg-dwarf-reader.cc (reader::{get_die_language, die_is_in_c,
+	die_is_in_cplus_plus, die_is_in_c_or_cplusplus}): Move these
+	member functions into ...
+	(get_die_language, die_is_in_c, die_is_in_cplus_plus)
+	(die_is_in_c_or_cplusplus): ... these static non-member functions.
+	(fn_die_equal_by_linkage_name): Adjust and remove the now useless
+	reader parameter.
+	(compare_dies, get_scope_die, function_is_suppressed)
+	(variable_is_suppressed): Adjust.
+	(build_translation_unit_and_add_to_ir): When we are asked to load
+	undefined symbol, make sure to also analyze top-level class types
+	and if we are in C++, also analyze top-level unions and structs as
+	these might also have some undefined interfaces.
+	* src/abg-reader.cc (build_elf_symbol_db): Let's not construct and
+	return the symbol DB anymore.  Rather, let's let the caller
+	construct it, so we can just update it with the input gathered.
+	(read_symbol_db_from_input): Support getting undefined function
+	and variable symbols from the new undefined-elf-function-symbols
+	and undefined-elf-variable-symbols elements.  Note that undefined
+	and defined function symbols go into the same symbol DB whereas
+	undefined and defined variable symbols go into another symbol DB.
+	Now, we suppose that the variable & symbol DBs are allocated by
+	the caller.  We pass it down to build_elf_symbol_db that populates
+	it.  Maybe we should rename build_elf_symbol_db into
+	populate_elf_symbol_db.
+	(reader::read_corpus): Allocate the function
+	and variable symbol DB and let read_symbol_db_from_input populate
+	it.  Sort functions and variables after reading the whole ABIXML.
+	* src/abg-writer.cc (write_context::write_context): Define new
+	data member.
+	(write_context::write_context): Initialize it.
+	(write_context::{get,set}::write_undefined_symbols): Define
+	accessors.
+	(set_write_undefined_symbols): Define a new function.
+	(write_context::decl_is_emitted): Add a new overload.
+	(write_elf_symbol_reference): Add a writer context and a corpus
+	parameter.  If the symbol is not in the corpus or if the symbol is
+	undefined and we were not asked to emit undefined symbols then do
+	not emit any reference to it.
+	(write_translation_unit): Emit the undefined functions and
+	variables that belong to the current translation unit, along with
+	their reference to the undefined ELF symbol they are associated
+	to.
+	(write_var_decl, write_function_decl): Let
+	write_elf_symbol_reference decide whether it should emit the
+	reference to ELF symbol or not, as it now know how to make that
+	decision.
+	(write_corpus): Write the undefined function & variable ELF symbol
+	data bases.  These in the new 'undefined-elf-function-symbols' and
+	'undefined-elf-variable-symbols' elements.
+	* tools/abidw.cc (options::load_undefined_interfaces): Define new
+	data member.
+	(options:options): Initialize it.
+	(display_usage): Add a help string for the
+	--no-load-undefined-interfaces option.
+	(parse_command_line): Parse the --no-load-undefined-interfaces
+	option.
+	(set_generic_options): Set the
+	fe_iface::option_type::load_undefined_interfaces option.
+	* doc/manuals/abidw.rst: Document the new
+	--no-load-undefined-interfaces of abidw.
+
+Signed-off-by: Dodji Seketeli <dodji@redhat.com>
+---
+ doc/manuals/abidw.rst    |  10 +++
+ include/abg-writer.h     |   4 +
+ src/abg-corpus.cc        |  38 +++++---
+ src/abg-dwarf-reader.cc  | 189 +++++++++++++++++++++------------------
+ src/abg-reader.cc        |  81 +++++++++++------
+ src/abg-writer.cc        | 152 +++++++++++++++++++++++++++++--
+ tests/test-annotate.cc   |   2 +-
+ tests/test-read-dwarf.cc |   2 +-
+ tools/abidw.cc           |   7 ++
+ 9 files changed, 350 insertions(+), 135 deletions(-)
+
+diff --git a/doc/manuals/abidw.rst b/doc/manuals/abidw.rst
+index 1e308e66..6c399675 100644
+--- a/doc/manuals/abidw.rst
++++ b/doc/manuals/abidw.rst
+@@ -329,6 +329,16 @@ Options
+     makes ``abidw`` load *all* the types defined in the binaries, even
+     those that are not reachable from public declarations.
+ 
++    * ``--no-load-undefined-interfaces``
++
++    By default, ``libabigail`` (and thus ``abidw``) loads information
++    about undefined function and variable symbols as well as functions
++    and variables that are associated with those undefined symbols.
++    Those are called undefined interfaces.  This option however makes
++    makes ``abidw`` avoid loading information about undefined
++    interfaces.  The resulting XML file thus doesn't contain
++    information about those undefined interfaces.
++
+   *  ``--abidiff``
+ 
+     Load the ABI of the ELF binary given in argument, save it in
+diff --git a/include/abg-writer.h b/include/abg-writer.h
+index 540487e0..45508544 100644
+--- a/include/abg-writer.h
++++ b/include/abg-writer.h
+@@ -57,6 +57,9 @@ set_write_comp_dir(write_context& ctxt, bool flag);
+ void
+ set_write_elf_needed(write_context& ctxt, bool flag);
+ 
++void
++set_write_undefined_symbols(write_context& ctxt, bool flag);
++
+ void
+ set_write_default_sizes(write_context& ctxt, bool flag);
+ 
+@@ -88,6 +91,7 @@ set_common_options(write_context& ctxt, const OPTS& opts)
+   set_write_corpus_path(ctxt, opts.write_corpus_path);
+   set_write_comp_dir(ctxt, opts.write_comp_dir);
+   set_write_elf_needed(ctxt, opts.write_elf_needed);
++  set_write_undefined_symbols(ctxt, opts.load_undefined_interfaces);
+   set_write_parameter_names(ctxt, opts.write_parameter_names);
+   set_short_locs(ctxt, opts.short_locs);
+   set_write_default_sizes(ctxt, opts.default_sizes);
+diff --git a/src/abg-corpus.cc b/src/abg-corpus.cc
+index e99b23fe..76c6bbb1 100644
+--- a/src/abg-corpus.cc
++++ b/src/abg-corpus.cc
+@@ -1208,13 +1208,16 @@ corpus::get_undefined_var_symbol_map() const
+ const elf_symbol_sptr
+ corpus::lookup_function_symbol(const string& n) const
+ {
+-  if (get_fun_symbol_map().empty())
++  if (get_fun_symbol_map().empty() && get_undefined_fun_symbol_map().empty())
+     return elf_symbol_sptr();
+ 
+-  string_elf_symbols_map_type::const_iterator it =
+-    get_fun_symbol_map().find(n);
++  string_elf_symbols_map_type::const_iterator it = get_fun_symbol_map().find(n);
+   if ( it == get_fun_symbol_map().end())
+-    return elf_symbol_sptr();
++    {
++      it = get_undefined_fun_symbol_map().find(n);
++      if (it == get_undefined_fun_symbol_map().end())
++	return elf_symbol_sptr();
++    }
+   return it->second[0];
+ }
+ 
+@@ -1275,13 +1278,17 @@ const elf_symbol_sptr
+ corpus::lookup_function_symbol(const string& symbol_name,
+ 			       const elf_symbol::version& version) const
+ {
+-  if (get_fun_symbol_map().empty())
++  if (get_fun_symbol_map().empty() && get_undefined_fun_symbol_map().empty())
+     return elf_symbol_sptr();
+ 
+   string_elf_symbols_map_type::const_iterator it =
+     get_fun_symbol_map().find(symbol_name);
+   if ( it == get_fun_symbol_map().end())
+-    return elf_symbol_sptr();
++    {
++      it = get_undefined_fun_symbol_map().find(symbol_name);
++      if (it == get_undefined_fun_symbol_map().end())
++	return elf_symbol_sptr();
++    }
+ 
+   return find_symbol_by_version(version, it->second);
+ }
+@@ -1304,13 +1311,16 @@ corpus::lookup_function_symbol(const elf_symbol& symbol) const
+ const elf_symbol_sptr
+ corpus::lookup_variable_symbol(const string& n) const
+ {
+-  if (get_var_symbol_map().empty())
++  if (get_var_symbol_map().empty() && get_undefined_var_symbol_map().empty())
+     return elf_symbol_sptr();
+ 
+-  string_elf_symbols_map_type::const_iterator it =
+-    get_var_symbol_map().find(n);
++  string_elf_symbols_map_type::const_iterator it = get_var_symbol_map().find(n);
+   if ( it == get_var_symbol_map().end())
+-    return elf_symbol_sptr();
++    {
++      it = get_undefined_var_symbol_map().find(n);
++      if (it == get_undefined_var_symbol_map().end())
++	return elf_symbol_sptr();
++    }
+   return it->second[0];
+ }
+ 
+@@ -1326,13 +1336,17 @@ const elf_symbol_sptr
+ corpus::lookup_variable_symbol(const string& symbol_name,
+ 			       const elf_symbol::version& version) const
+ {
+-  if (get_var_symbol_map().empty())
++  if (get_var_symbol_map().empty() && get_undefined_var_symbol_map().empty())
+     return elf_symbol_sptr();
+ 
+   string_elf_symbols_map_type::const_iterator it =
+     get_var_symbol_map().find(symbol_name);
+   if ( it == get_var_symbol_map().end())
+-    return elf_symbol_sptr();
++    {
++      it = get_undefined_var_symbol_map().find(symbol_name);
++      if (it == get_undefined_var_symbol_map().end())
++	return elf_symbol_sptr();
++    }
+ 
+   return find_symbol_by_version(version, it->second);
+ }
+diff --git a/src/abg-dwarf-reader.cc b/src/abg-dwarf-reader.cc
+index d0aa8c29..89c7be3b 100644
+--- a/src/abg-dwarf-reader.cc
++++ b/src/abg-dwarf-reader.cc
+@@ -379,6 +379,18 @@ get_scope_die(const reader&	rdr,
+ 	      size_t			where_offset,
+ 	      Dwarf_Die&		scope_die);
+ 
++static bool
++get_die_language(const Dwarf_Die *die, translation_unit::language &lang) ;
++
++static bool
++die_is_in_c(const Dwarf_Die *die);
++
++static bool
++die_is_in_cplus_plus(const Dwarf_Die *die);
++
++static bool
++die_is_in_c_or_cplusplus(const Dwarf_Die *die);
++
+ static bool
+ die_is_anonymous(const Dwarf_Die* die);
+ 
+@@ -654,6 +666,75 @@ compare_dies_during_canonicalization(reader& rdr,
+ static bool
+ get_member_child_die(const Dwarf_Die *die, Dwarf_Die *child);
+ 
++/// Get the language used to generate a given DIE.
++///
++/// @param die the DIE to consider.
++///
++/// @param lang the resulting language.
++///
++/// @return true iff the language of the DIE was found.
++static bool
++get_die_language(const Dwarf_Die *die, translation_unit::language &lang) 
++{
++  Dwarf_Die cu_die;
++  ABG_ASSERT(dwarf_diecu(const_cast<Dwarf_Die*>(die), &cu_die, 0, 0));
++
++  uint64_t l = 0;
++  if (!die_unsigned_constant_attribute(&cu_die, DW_AT_language, l))
++    return false;
++
++  lang = dwarf_language_to_tu_language(l);
++  return true;
++}
++
++/// Test if a given DIE originates from a program written in the C
++/// language.
++///
++/// @param die the DIE to consider.
++///
++/// @return true iff @p die originates from a program in the C
++/// language.
++static bool
++die_is_in_c(const Dwarf_Die *die)
++{
++  translation_unit::language l = translation_unit::LANG_UNKNOWN;
++  if (!get_die_language(die, l))
++    return false;
++  return is_c_language(l);
++}
++
++/// Test if a given DIE originates from a program written in the C++
++/// language.
++///
++/// @param die the DIE to consider.
++///
++/// @return true iff @p die originates from a program in the C++
++/// language.
++static bool
++die_is_in_cplus_plus(const Dwarf_Die *die)
++{
++  translation_unit::language l = translation_unit::LANG_UNKNOWN;
++  if (!get_die_language(die, l))
++    return false;
++  return is_cplus_plus_language(l);
++}
++
++/// Test if a given DIE originates from a program written either in
++/// C or C++.
++///
++/// @param die the DIE to consider.
++///
++/// @return true iff @p die originates from a program written either in
++/// C or C++.
++static bool
++die_is_in_c_or_cplusplus(const Dwarf_Die *die)
++{
++  translation_unit::language l = translation_unit::LANG_UNKNOWN;
++  if (!get_die_language(die, l))
++    return false;
++  return (is_cplus_plus_language(l) || is_c_language(l));
++}
++
+ /// Compare a symbol name against another name, possibly demangling
+ /// the symbol_name before performing the comparison.
+ ///
+@@ -3320,75 +3401,6 @@ public:
+     return i->second;
+   }
+ 
+-  /// Get the language used to generate a given DIE.
+-  ///
+-  /// @param die the DIE to consider.
+-  ///
+-  /// @param lang the resulting language.
+-  ///
+-  /// @return true iff the language of the DIE was found.
+-  bool
+-  get_die_language(const Dwarf_Die *die, translation_unit::language &lang) const
+-  {
+-    Dwarf_Die cu_die;
+-    ABG_ASSERT(dwarf_diecu(const_cast<Dwarf_Die*>(die), &cu_die, 0, 0));
+-
+-    uint64_t l = 0;
+-    if (!die_unsigned_constant_attribute(&cu_die, DW_AT_language, l))
+-      return false;
+-
+-    lang = dwarf_language_to_tu_language(l);
+-    return true;
+-  }
+-
+-  /// Test if a given DIE originates from a program written in the C
+-  /// language.
+-  ///
+-  /// @param die the DIE to consider.
+-  ///
+-  /// @return true iff @p die originates from a program in the C
+-  /// language.
+-  bool
+-  die_is_in_c(const Dwarf_Die *die) const
+-  {
+-    translation_unit::language l = translation_unit::LANG_UNKNOWN;
+-    if (!get_die_language(die, l))
+-      return false;
+-    return is_c_language(l);
+-  }
+-
+-  /// Test if a given DIE originates from a program written in the C++
+-  /// language.
+-  ///
+-  /// @param die the DIE to consider.
+-  ///
+-  /// @return true iff @p die originates from a program in the C++
+-  /// language.
+-  bool
+-  die_is_in_cplus_plus(const Dwarf_Die *die) const
+-  {
+-    translation_unit::language l = translation_unit::LANG_UNKNOWN;
+-    if (!get_die_language(die, l))
+-      return false;
+-    return is_cplus_plus_language(l);
+-  }
+-
+-  /// Test if a given DIE originates from a program written either in
+-  /// C or C++.
+-  ///
+-  /// @param die the DIE to consider.
+-  ///
+-  /// @return true iff @p die originates from a program written either in
+-  /// C or C++.
+-  bool
+-  die_is_in_c_or_cplusplus(const Dwarf_Die *die) const
+-  {
+-    translation_unit::language l = translation_unit::LANG_UNKNOWN;
+-    if (!get_die_language(die, l))
+-      return false;
+-    return (is_cplus_plus_language(l) || is_c_language(l));
+-  }
+-
+   /// Check if we can assume the One Definition Rule[1] to be relevant
+   /// for the current translation unit.
+   ///
+@@ -9818,7 +9830,7 @@ die_function_signature(const reader& rdr,
+ 
+   translation_unit::language lang;
+   bool has_lang = false;
+-  if ((has_lang = rdr.get_die_language(fn_die, lang)))
++  if ((has_lang = get_die_language(fn_die, lang)))
+     {
+       // In a binary originating from the C language, it's OK to use
+       // the linkage name of the function as a key for the map which
+@@ -10324,8 +10336,6 @@ compare_as_decl_and_type_dies(const reader &rdr,
+ /// in C++ for instance, that doesn't imply that the two functions are
+ /// equal.
+ ///
+-/// @param rdr the @ref reader to consider.
+-///
+ /// @param l the first function DIE to consider.
+ ///
+ /// @param r the second function DIE to consider.
+@@ -10333,8 +10343,7 @@ compare_as_decl_and_type_dies(const reader &rdr,
+ /// @return true iff the function represented by @p l have the same
+ /// linkage name as the function represented by @p r.
+ static bool
+-fn_die_equal_by_linkage_name(const reader &rdr,
+-			     const Dwarf_Die *l,
++fn_die_equal_by_linkage_name(const Dwarf_Die *l,
+ 			     const Dwarf_Die *r)
+ {
+   if (!!l != !!r)
+@@ -10352,8 +10361,8 @@ fn_die_equal_by_linkage_name(const reader &rdr,
+   string llinkage_name = die_linkage_name(l),
+     rlinkage_name = die_linkage_name(r);
+ 
+-  if (rdr.die_is_in_c_or_cplusplus(l)
+-      && rdr.die_is_in_c_or_cplusplus(r))
++  if (die_is_in_c_or_cplusplus(l)
++      && die_is_in_c_or_cplusplus(r))
+     {
+       if (!llinkage_name.empty() && !rlinkage_name.empty())
+ 	return llinkage_name == rlinkage_name;
+@@ -11277,19 +11286,18 @@ compare_dies(const reader& rdr,
+ 	rdr.compare_count_++;
+ 
+ 	if (l_tag == DW_TAG_subprogram
+-	    && !fn_die_equal_by_linkage_name(rdr, l, r))
++	    && !fn_die_equal_by_linkage_name(l, r))
+ 	  {
+ 	    SET_RESULT_TO_FALSE(result, l, r);
+ 	    break;
+ 	  }
+ 	else if (l_tag == DW_TAG_subprogram
+-		 && rdr.die_is_in_c(l) && rdr.die_is_in_c(r)
+-		 /*&& fn_die_equal_by_linkage_name(rdr, l, r)*/)
++		 && die_is_in_c(l) && die_is_in_c(r))
+ 	  {
+ 	    result = COMPARISON_RESULT_EQUAL;
+ 	    break;
+ 	  }
+-	else if (!rdr.die_is_in_c(l) && !rdr.die_is_in_c(r))
++	else if (!die_is_in_c(l) && !die_is_in_c(r))
+ 	  {
+ 	    // In C, we cannot have two different functions with the
+ 	    // same linkage name in a given binary.  But here we are
+@@ -11914,7 +11922,7 @@ get_scope_die(const reader&	rdr,
+     memcpy(&origin_die_mem, dye, sizeof(origin_die_mem));
+ 
+   translation_unit::language die_lang = translation_unit::LANG_UNKNOWN;
+-  rdr.get_die_language(die, die_lang);
++  get_die_language(die, die_lang);
+   if (is_c_language(die_lang)
+       || rdr.die_parent_map(rdr.get_die_source(die)).empty())
+     {
+@@ -11974,7 +11982,7 @@ get_scope_for_die(reader&	rdr,
+   const die_source source_of_die = rdr.get_die_source(die);
+ 
+   translation_unit::language die_lang = translation_unit::LANG_UNKNOWN;
+-  rdr.get_die_language(die, die_lang);
++  get_die_language(die, die_lang);
+   if (is_c_language(die_lang)
+       || rdr.die_parent_map(source_of_die).empty())
+     {
+@@ -12342,10 +12350,17 @@ build_translation_unit_and_add_to_ir(reader&	rdr,
+     return result;
+ 
+   result->set_is_constructed(false);
+-
++  int tag = dwarf_tag(&child);
+   do
+     if (rdr.load_undefined_interfaces()
+-	&& rdr.is_decl_die_with_undefined_symbol(&child))
++	&& (rdr.is_decl_die_with_undefined_symbol(&child)
++	    || tag == DW_TAG_class_type // Top-level classes might
++					// have undefined interfaces
++					// that need to be
++					// represented, so let's
++					// analyze them as well.
++	    || ((tag == DW_TAG_union_type || tag == DW_TAG_structure_type)
++		&& die_is_in_cplus_plus(&child))))
+       {
+ 	// Analyze undefined functions & variables for the purpose of
+ 	// analyzing compatibility matters.
+@@ -15013,7 +15028,7 @@ function_is_suppressed(const reader& rdr,
+ 
+   string fname = die_string_attribute(function_die, DW_AT_name);
+   string flinkage_name = die_linkage_name(function_die);
+-  if (flinkage_name.empty() && rdr.die_is_in_c(function_die))
++  if (flinkage_name.empty() && die_is_in_c(function_die))
+     flinkage_name = fname;
+   string qualified_name = build_qualified_name(scope, fname);
+ 
+@@ -15190,7 +15205,7 @@ variable_is_suppressed(const reader&		rdr,
+ 
+   string name = die_string_attribute(variable_die, DW_AT_name);
+   string linkage_name = die_linkage_name(variable_die);
+-  if (linkage_name.empty() && rdr.die_is_in_c(variable_die))
++  if (linkage_name.empty() && die_is_in_c(variable_die))
+     linkage_name = name;
+   string qualified_name = build_qualified_name(scope, name);
+ 
+@@ -16049,7 +16064,7 @@ build_ir_node_from_die(reader&	rdr,
+ 	bool var_is_cloned = false;
+ 
+ 	if (tag == DW_TAG_member)
+-	  ABG_ASSERT(!rdr.die_is_in_c(die));
++	  ABG_ASSERT(!die_is_in_c(die));
+ 
+ 	if (die_die_attribute(die, DW_AT_specification, spec_die, false)
+ 	    || (var_is_cloned = die_die_attribute(die, DW_AT_abstract_origin,
+diff --git a/src/abg-reader.cc b/src/abg-reader.cc
+index b525a137..a91cfaf4 100644
+--- a/src/abg-reader.cc
++++ b/src/abg-reader.cc
+@@ -1270,7 +1270,8 @@ public:
+     if (!needed.empty())
+       corp.set_needed(needed);
+ 
+-    string_elf_symbols_map_sptr fn_sym_db, var_sym_db;
++    string_elf_symbols_map_sptr fn_sym_db(new string_elf_symbols_map_type),
++      var_sym_db(new string_elf_symbols_map_type);
+ 
+     // Read the symbol databases.
+     read_symbol_db_from_input(*this, fn_sym_db, var_sym_db);
+@@ -1338,6 +1339,9 @@ public:
+ 	set_corpus_node(node);
+       }
+ 
++    corpus()->sort_functions();
++    corpus()->sort_variables();
++
+     status = STATUS_OK;
+     return corpus();
+   }
+@@ -1389,8 +1393,9 @@ build_elf_symbol(reader&, const xmlNodePtr, bool);
+ static elf_symbol_sptr
+ build_elf_symbol_from_reference(reader&, const xmlNodePtr);
+ 
+-static string_elf_symbols_map_sptr
+-build_elf_symbol_db(reader&, const xmlNodePtr, bool);
++static bool
++build_elf_symbol_db(reader&, const xmlNodePtr, bool,
++		    string_elf_symbols_map_sptr&);
+ 
+ static function_decl::parameter_sptr
+ build_function_parameter (reader&, const xmlNodePtr);
+@@ -1898,9 +1903,9 @@ read_translation_unit_from_input(fe_iface& iface)
+ ///
+ /// @return true upon successful parsing, false otherwise.
+ static bool
+-read_symbol_db_from_input(reader&		 rdr,
+-			  string_elf_symbols_map_sptr& fn_symdb,
+-			  string_elf_symbols_map_sptr& var_symdb)
++read_symbol_db_from_input(reader&			rdr,
++			  string_elf_symbols_map_sptr&	fn_symdb,
++			  string_elf_symbols_map_sptr&	var_symdb)
+ {
+   xml::reader_sptr reader = rdr.get_libxml_reader();
+   if (!reader)
+@@ -1917,13 +1922,20 @@ read_symbol_db_from_input(reader&		 rdr,
+ 	if (status != 1)
+ 	  return false;
+ 
+-	bool has_fn_syms = false, has_var_syms = false;
++	bool has_fn_syms = false, has_undefined_fn_syms = false,
++	  has_var_syms = false, has_undefined_var_syms = false;
+ 	if (xmlStrEqual (XML_READER_GET_NODE_NAME(reader).get(),
+ 			 BAD_CAST("elf-function-symbols")))
+ 	  has_fn_syms = true;
+ 	else if (xmlStrEqual (XML_READER_GET_NODE_NAME(reader).get(),
+ 			      BAD_CAST("elf-variable-symbols")))
+ 	  has_var_syms = true;
++	else if (xmlStrEqual (XML_READER_GET_NODE_NAME(reader).get(),
++			      BAD_CAST("undefined-elf-function-symbols")))
++	  has_undefined_fn_syms = true;
++	else if (xmlStrEqual (XML_READER_GET_NODE_NAME(reader).get(),
++			      BAD_CAST("undefined-elf-variable-symbols")))
++	  has_undefined_var_syms = true;
+ 	else
+ 	  break;
+ 
+@@ -1932,20 +1944,30 @@ read_symbol_db_from_input(reader&		 rdr,
+ 	  return false;
+ 
+ 	if (has_fn_syms)
+-	  fn_symdb = build_elf_symbol_db(rdr, node, true);
++	  build_elf_symbol_db(rdr, node, /*function_sym=*/true, fn_symdb);
++	else if (has_undefined_fn_syms)
++	  build_elf_symbol_db(rdr, node, /*function_sym=*/true, fn_symdb);
+ 	else if (has_var_syms)
+-	  var_symdb = build_elf_symbol_db(rdr, node, false);
++	  build_elf_symbol_db(rdr, node, /*function_sym=*/false, var_symdb);
++	else if (has_undefined_var_syms)
++	  build_elf_symbol_db(rdr, node, /*function_sym=*/false, var_symdb);
+ 
+ 	xmlTextReaderNext(reader.get());
+       }
+   else
+     for (xmlNodePtr n = rdr.get_corpus_node(); n; n = xmlNextElementSibling(n))
+       {
+-	bool has_fn_syms = false, has_var_syms = false;
++	bool has_fn_syms = false, has_undefined_fn_syms = false,
++	  has_var_syms = false, has_undefined_var_syms = false;
+ 	if (xmlStrEqual(n->name, BAD_CAST("elf-function-symbols")))
+ 	  has_fn_syms = true;
++	else if (xmlStrEqual(n->name, BAD_CAST("undefined-elf-function-symbols")))
++	  has_undefined_fn_syms = true;
+ 	else if (xmlStrEqual(n->name, BAD_CAST("elf-variable-symbols")))
+ 	  has_var_syms = true;
++	else if (xmlStrEqual(n->name,
++			     BAD_CAST("undefined-elf-variable-symbols")))
++	  has_undefined_var_syms = true;
+ 	else
+ 	  {
+ 	    rdr.set_corpus_node(n);
+@@ -1953,9 +1975,13 @@ read_symbol_db_from_input(reader&		 rdr,
+ 	  }
+ 
+ 	if (has_fn_syms)
+-	  fn_symdb = build_elf_symbol_db(rdr, n, true);
++	  build_elf_symbol_db(rdr, n, /*function_sym=*/true, fn_symdb);
++	else if (has_undefined_fn_syms)
++	  build_elf_symbol_db(rdr, n, /*function_sym=*/true, fn_symdb);
+ 	else if (has_var_syms)
+-	  var_symdb = build_elf_symbol_db(rdr, n, false);
++	  build_elf_symbol_db(rdr, n, /*function_sym=*/false, var_symdb);
++	else if (has_undefined_var_syms)
++	  build_elf_symbol_db(rdr, n, /*function_sym=*/false, var_symdb);
+ 	else
+ 	  break;
+       }
+@@ -3300,24 +3326,30 @@ build_elf_symbol_from_reference(reader& rdr, const xmlNodePtr node)
+ /// @param function_syms true if we should look for a function symbols
+ /// data base, false if we should look for a variable symbols data
+ /// base.
+-static string_elf_symbols_map_sptr
+-build_elf_symbol_db(reader& rdr,
+-		    const xmlNodePtr node,
+-		    bool function_syms)
++///
++/// @param map a pointer to the map to fill with the symbol database.
++///
++/// @return true if some elf symbols were found.
++static bool
++build_elf_symbol_db(reader&				rdr,
++		    const xmlNodePtr			node,
++		    bool				function_syms,
++		    string_elf_symbols_map_sptr&	map)
+ {
+-  string_elf_symbols_map_sptr map, nil;
+   string_elf_symbol_sptr_map_type id_sym_map;
+ 
+   if (!node)
+-    return nil;
++    return false;
+ 
+   if (function_syms
+-      && !xmlStrEqual(node->name, BAD_CAST("elf-function-symbols")))
+-    return nil;
++      && !xmlStrEqual(node->name, BAD_CAST("elf-function-symbols"))
++      && !xmlStrEqual(node->name, BAD_CAST("undefined-elf-function-symbols")))
++    return false;
+ 
+   if (!function_syms
+-      && !xmlStrEqual(node->name, BAD_CAST("elf-variable-symbols")))
+-    return nil;
++      && !xmlStrEqual(node->name, BAD_CAST("elf-variable-symbols"))
++      && !xmlStrEqual(node->name, BAD_CAST("undefined-elf-variable-symbols")))
++    return false;
+ 
+   rdr.set_corpus_node(node);
+ 
+@@ -3336,9 +3368,8 @@ build_elf_symbol_db(reader& rdr,
+       }
+ 
+   if (id_sym_map.empty())
+-    return nil;
++    return false;
+ 
+-  map.reset(new string_elf_symbols_map_type);
+   string_elf_symbols_map_type::iterator it;
+   for (string_elf_symbol_sptr_map_type::const_iterator i = id_sym_map.begin();
+        i != id_sym_map.end();
+@@ -3374,7 +3405,7 @@ build_elf_symbol_db(reader& rdr,
+ 	}
+     }
+ 
+-  return map;
++  return true;
+ }
+ 
+ /// Build a function parameter from a 'parameter' xml element node.
+diff --git a/src/abg-writer.cc b/src/abg-writer.cc
+index 408623ab..dafe706c 100644
+--- a/src/abg-writer.cc
++++ b/src/abg-writer.cc
+@@ -214,6 +214,7 @@ class write_context
+   bool					m_write_corpus_path;
+   bool					m_write_comp_dir;
+   bool					m_write_elf_needed;
++  bool					m_write_undefined_symbols;
+   bool					m_write_parameter_names;
+   bool					m_short_locs;
+   bool					m_write_default_sizes;
+@@ -252,6 +253,7 @@ public:
+       m_write_corpus_path(true),
+       m_write_comp_dir(true),
+       m_write_elf_needed(true),
++      m_write_undefined_symbols(true),
+       m_write_parameter_names(true),
+       m_short_locs(false),
+       m_write_default_sizes(true),
+@@ -325,6 +327,20 @@ public:
+   set_write_elf_needed(bool f)
+   {m_write_elf_needed = f;}
+ 
++  /// Getter of the "undefined-symbols" option.
++  ///
++  /// @return true iff undefined symbols shall be emitted.
++  bool
++  get_write_undefined_symbols() const
++  {return m_write_undefined_symbols;}
++
++  /// Setter of the "undefined-symbols" option.
++  ///
++  /// @param f true iff undefined symbols shall be emitted.
++  void
++  set_write_undefined_symbols(bool f)
++  {m_write_undefined_symbols = f;}
++
+   /// Getter of the default-sizes option.
+   ///
+   /// @return true iff default size-in-bits needs to be emitted
+@@ -793,6 +809,20 @@ public:
+   type_is_emitted(const type_base_sptr& t) const
+   {return type_is_emitted(t.get());}
+ 
++  /// Test if a given decl has been written out to the XML output.
++  ///
++  /// @param the decl to consider.
++  ///
++  /// @return true if the decl has already been emitted, false
++  /// otherwise.
++  bool
++  decl_is_emitted(const decl_base& decl) const
++  {
++    string repr = decl.get_pretty_representation(true);
++    interned_string irepr = decl.get_environment().intern(repr);
++    return m_emitted_decls_set.find(irepr) != m_emitted_decls_set.end();
++  }
++
+   /// Test if a given decl has been written out to the XML output.
+   ///
+   /// @param the decl to consider.
+@@ -901,8 +931,14 @@ static void write_voffset(function_decl_sptr, ostream&);
+ static void write_elf_symbol_type(elf_symbol::type, ostream&);
+ static void write_elf_symbol_binding(elf_symbol::binding, ostream&);
+ static bool write_elf_symbol_aliases(const elf_symbol&, ostream&);
+-static bool write_elf_symbol_reference(const elf_symbol&, ostream&);
+-static bool write_elf_symbol_reference(const elf_symbol_sptr, ostream&);
++static bool write_elf_symbol_reference(write_context&,
++				       const elf_symbol&,
++				       const corpus& abi,
++				       ostream&);
++static bool write_elf_symbol_reference(write_context&,
++				       const elf_symbol_sptr,
++				       const corpus& abi,
++				       ostream&);
+ static void write_is_declaration_only(const decl_base_sptr&, ostream&);
+ static void write_is_struct(const class_decl_sptr&, ostream&);
+ static void write_is_anonymous(const decl_base_sptr&, ostream&);
+@@ -1766,14 +1802,36 @@ write_elf_symbol_aliases(const elf_symbol& sym, ostream& out)
+ /// Write an XML attribute for the reference to a symbol for the
+ /// current decl.
+ ///
++///
++/// @param ctxt the current write context to consider.
++///
+ /// @param sym the symbol to consider.
+ ///
++/// @param abi the ABI corpus the symbol @p sym is supposed to belong
++/// to.  If the symbol doesn't belong to that corpus, then the
++/// reference is not be emitted.
++///
+ /// @param o the output stream to write the attribute to.
+ ///
+ /// @return true upon successful completion.
+ static bool
+-write_elf_symbol_reference(const elf_symbol& sym, ostream& o)
++write_elf_symbol_reference(write_context& ctxt,
++			   const elf_symbol& sym,
++			   const corpus& abi,
++			   ostream& o)
+ {
++  elf_symbol_sptr s = abi.lookup_function_symbol(sym);
++  if (!s)
++    s = abi.lookup_variable_symbol(sym);
++
++  if (// If that symbol wasn't found in the current corpus ...
++      !s
++      // ... or we were NOT asked to represent undefined symbols and
++      // yet that symbol is undefined ...
++      || (!ctxt.get_write_undefined_symbols() && !s->is_defined()))
++    // Then do not emit this symbol reference.
++    return false;
++
+   const elf_symbol* main = sym.get_main_symbol().get();
+   const elf_symbol* alias = &sym;
+   bool found = !alias->is_suppressed();
+@@ -1804,18 +1862,27 @@ write_elf_symbol_reference(const elf_symbol& sym, ostream& o)
+ /// Write an XML attribute for the reference to a symbol for the
+ /// current decl.
+ ///
++/// @param ctxt the write context to consider.
++/// 
+ /// @param sym the symbol to consider.
+ ///
++/// @param abi the ABI corpus the symbol @p sym is supposed to belong
++/// to.  If the symbol doesn't belong to that corpus, then the
++/// reference is not be emitted.
++///
+ /// @param o the output stream to write the attribute to.
+ ///
+ /// @return true upon successful completion.
+ static bool
+-write_elf_symbol_reference(const elf_symbol_sptr sym, ostream& o)
++write_elf_symbol_reference(write_context& ctxt,
++			   const elf_symbol_sptr sym,
++			   const corpus& abi,
++			   ostream& o)
+ {
+   if (!sym)
+     return false;
+ 
+-  return write_elf_symbol_reference(*sym, o);
++  return write_elf_symbol_reference(ctxt, *sym, abi, o);
+ }
+ 
+ /// Serialize the attributes "constructor", "destructor" or "static"
+@@ -2255,6 +2322,18 @@ void
+ set_write_elf_needed(write_context& ctxt, bool flag)
+ {ctxt.set_write_elf_needed(flag);}
+ 
++/// Set the 'undefined-symbols' flag.
++///
++/// When this flag is set then the XML writer will emit corpus
++/// information about the undefined function and variable symbols.
++///
++/// @param ctxt the context to set this flag on to.
++///
++/// @param flag the new value of the 'undefined-symbols' flag.
++void
++set_write_undefined_symbols(write_context& ctxt, bool flag)
++{ctxt.set_write_undefined_symbols(flag);}
++
+ /// Set the 'default-sizes' flag.
+ ///
+ /// When this flag is set then the XML writer will emit default
+@@ -2549,6 +2628,32 @@ write_translation_unit(write_context&		ctxt,
+ 	}
+     }
+ 
++  // Write the undefined functions that belong to this translation
++  // unit
++  if (const abigail::ir::corpus* abi = tu.get_corpus())
++    for (auto undefined_function : abi->get_sorted_undefined_functions())
++      {
++	function_decl_sptr f(const_cast<function_decl*>(undefined_function),
++			     noop_deleter());
++	if (f->get_translation_unit() != &tu || ctxt.decl_is_emitted(f))
++	  continue;
++
++	write_decl(f, ctxt, indent + c.get_xml_element_indent());
++      }
++
++  // Write the undefined variables that belong to this translation
++  // unit
++  if (const abigail::ir::corpus* abi = tu.get_corpus())
++    for (auto undefined_var : abi->get_sorted_undefined_variables())
++      {
++	var_decl_sptr v(const_cast<var_decl*>(undefined_var),
++			noop_deleter());
++	if (v->get_translation_unit() != &tu || ctxt.decl_is_emitted(v))
++	  continue;
++
++	write_decl(v, ctxt, indent + c.get_xml_element_indent());
++      }
++
+   write_referenced_types(ctxt, tu, indent, is_last);
+ 
+   // Now handle all function types that were not only referenced by
+@@ -3468,8 +3573,8 @@ write_var_decl(const var_decl_sptr& decl, write_context& ctxt,
+   write_location(decl, ctxt);
+ 
+   if (elf_symbol_sptr sym = decl->get_symbol())
+-    if (sym->is_defined())
+-      write_elf_symbol_reference(decl->get_symbol(), o);
++    if (corpus* abi = decl->get_corpus())
++      write_elf_symbol_reference(ctxt, decl->get_symbol(), *abi, o);
+ 
+   o << "/>\n";
+ 
+@@ -3526,8 +3631,8 @@ write_function_decl(const function_decl_sptr& decl, write_context& ctxt,
+ 			    : decl->get_translation_unit()->get_address_size()),
+ 			   0);
+   if (elf_symbol_sptr sym = decl->get_symbol())
+-    if (sym->is_defined())
+-      write_elf_symbol_reference(decl->get_symbol(), o);
++    if (corpus* abi = decl->get_corpus())
++      write_elf_symbol_reference(ctxt, decl->get_symbol(), *abi, o);
+ 
+   o << ">\n";
+ 
+@@ -4734,6 +4839,35 @@ write_corpus(write_context&	ctxt,
+       out << "</elf-variable-symbols>\n";
+     }
+ 
++  // Write the undefined function symbols database.
++  if (ctxt.get_write_undefined_symbols()
++      && !corpus->get_sorted_undefined_fun_symbols().empty())
++    {
++      do_indent_to_level(ctxt, indent, 1);
++      out << "<undefined-elf-function-symbols>\n";
++
++      write_elf_symbols_table(corpus->get_sorted_undefined_fun_symbols(), ctxt,
++			      get_indent_to_level(ctxt, indent, 2));
++
++      do_indent_to_level(ctxt, indent, 1);
++      out << "</undefined-elf-function-symbols>\n";
++    }
++
++
++  // Write the undefined variable symbols database.
++    if (ctxt.get_write_undefined_symbols()
++	&& !corpus->get_sorted_undefined_var_symbols().empty())
++    {
++      do_indent_to_level(ctxt, indent, 1);
++      out << "<undefined-elf-variable-symbols>\n";
++
++      write_elf_symbols_table(corpus->get_sorted_undefined_var_symbols(), ctxt,
++			      get_indent_to_level(ctxt, indent, 2));
++
++      do_indent_to_level(ctxt, indent, 1);
++      out << "</undefined-elf-variable-symbols>\n";
++    }
++
+   // Now write the translation units.
+   unsigned nb_tus = corpus->get_translation_units().size(), n = 0;
+   for (translation_units::const_iterator i =
+diff --git a/tests/test-annotate.cc b/tests/test-annotate.cc
+index cb9c8af6..8ddd93fb 100644
+--- a/tests/test-annotate.cc
++++ b/tests/test-annotate.cc
+@@ -158,7 +158,7 @@ main()
+   string abidw;
+ 
+   abidw = string(get_build_dir()) + "/tools/abidw "
+-    "--annotate --no-corpus-path --no-architecture";
++    "--annotate --no-corpus-path --no-architecture --no-load-undefined-interfaces";
+   for (InOutSpec* s = in_out_specs; s->in_elf_path; ++s)
+     {
+       bool is_ok = true;
+diff --git a/tests/test-read-dwarf.cc b/tests/test-read-dwarf.cc
+index 8570d774..a391c0f1 100644
+--- a/tests/test-read-dwarf.cc
++++ b/tests/test-read-dwarf.cc
+@@ -651,7 +651,7 @@ test_task_dwarf::perform()
+   if (spec.type_id_style == HASH_TYPE_ID_STYLE)
+     type_id_style = "hash";
+ 
+-  string cmd = abidw + " --no-architecture "
++  string cmd = abidw + " --no-architecture --no-load-undefined-interfaces"
+     + " --type-id-style " + type_id_style
+     + " --no-corpus-path "
+     + drop_private_types + " " + in_elf_path
+diff --git a/tools/abidw.cc b/tools/abidw.cc
+index c8a44dda..7ea12908 100644
+--- a/tools/abidw.cc
++++ b/tools/abidw.cc
+@@ -109,6 +109,7 @@ struct options
+   bool			short_locs;
+   bool			default_sizes;
+   bool			load_all_types;
++  bool			load_undefined_interfaces;
+   bool			linux_kernel_mode;
+   bool			corpus_group_for_linux;
+   bool			show_stats;
+@@ -155,6 +156,7 @@ struct options
+       short_locs(false),
+       default_sizes(true),
+       load_all_types(),
++      load_undefined_interfaces(true),
+       linux_kernel_mode(true),
+       corpus_group_for_linux(false),
+       show_stats(),
+@@ -233,6 +235,8 @@ display_usage(const string& prog_name, ostream& out)
+     "debug info of <elf-path>, and show its base name\n"
+     << "  --load-all-types  read all types including those not reachable from "
+     "exported declarations\n"
++    << "  --no-load-undefined-interfaces  do not consider undefined "
++    "interfaces from the binary"
+     << "  --no-linux-kernel-mode  don't consider the input binary as "
+        "a Linux Kernel binary\n"
+     << "  --kmi-whitelist|-w  path to a linux kernel "
+@@ -445,6 +449,8 @@ parse_command_line(int argc, char* argv[], options& opts)
+ 	}
+       else if (!strcmp(argv[i], "--load-all-types"))
+ 	opts.load_all_types = true;
++      else if (!strcmp(argv[i], "--no-load-undefined-interfaces"))
++	opts.load_undefined_interfaces = false;
+       else if (!strcmp(argv[i], "--drop-private-types"))
+ 	opts.drop_private_types = true;
+       else if (!strcmp(argv[i], "--drop-undefined-syms"))
+@@ -614,6 +620,7 @@ set_generic_options(abigail::elf_based_reader& rdr, options& opts)
+     opts.leverage_dwarf_factorization;
+   rdr.options().assume_odr_for_cplusplus =
+     opts.assume_odr_for_cplusplus;
++  rdr.options().load_undefined_interfaces = opts.load_undefined_interfaces;
+ }
+ 
+ /// Load an ABI @ref corpus (the internal representation of the ABI of
+-- 
+2.39.3
+

@@ -380,6 +380,18 @@ get_scope_die(const reader&	rdr,
 	      Dwarf_Die&		scope_die);
 
 static bool
+get_die_language(const Dwarf_Die *die, translation_unit::language &lang) ;
+
+static bool
+die_is_in_c(const Dwarf_Die *die);
+
+static bool
+die_is_in_cplus_plus(const Dwarf_Die *die);
+
+static bool
+die_is_in_c_or_cplusplus(const Dwarf_Die *die);
+
+static bool
 die_is_anonymous(const Dwarf_Die* die);
 
 static bool
@@ -653,6 +665,75 @@ compare_dies_during_canonicalization(reader& rdr,
 
 static bool
 get_member_child_die(const Dwarf_Die *die, Dwarf_Die *child);
+
+/// Get the language used to generate a given DIE.
+///
+/// @param die the DIE to consider.
+///
+/// @param lang the resulting language.
+///
+/// @return true iff the language of the DIE was found.
+static bool
+get_die_language(const Dwarf_Die *die, translation_unit::language &lang) 
+{
+  Dwarf_Die cu_die;
+  ABG_ASSERT(dwarf_diecu(const_cast<Dwarf_Die*>(die), &cu_die, 0, 0));
+
+  uint64_t l = 0;
+  if (!die_unsigned_constant_attribute(&cu_die, DW_AT_language, l))
+    return false;
+
+  lang = dwarf_language_to_tu_language(l);
+  return true;
+}
+
+/// Test if a given DIE originates from a program written in the C
+/// language.
+///
+/// @param die the DIE to consider.
+///
+/// @return true iff @p die originates from a program in the C
+/// language.
+static bool
+die_is_in_c(const Dwarf_Die *die)
+{
+  translation_unit::language l = translation_unit::LANG_UNKNOWN;
+  if (!get_die_language(die, l))
+    return false;
+  return is_c_language(l);
+}
+
+/// Test if a given DIE originates from a program written in the C++
+/// language.
+///
+/// @param die the DIE to consider.
+///
+/// @return true iff @p die originates from a program in the C++
+/// language.
+static bool
+die_is_in_cplus_plus(const Dwarf_Die *die)
+{
+  translation_unit::language l = translation_unit::LANG_UNKNOWN;
+  if (!get_die_language(die, l))
+    return false;
+  return is_cplus_plus_language(l);
+}
+
+/// Test if a given DIE originates from a program written either in
+/// C or C++.
+///
+/// @param die the DIE to consider.
+///
+/// @return true iff @p die originates from a program written either in
+/// C or C++.
+static bool
+die_is_in_c_or_cplusplus(const Dwarf_Die *die)
+{
+  translation_unit::language l = translation_unit::LANG_UNKNOWN;
+  if (!get_die_language(die, l))
+    return false;
+  return (is_cplus_plus_language(l) || is_c_language(l));
+}
 
 /// Compare a symbol name against another name, possibly demangling
 /// the symbol_name before performing the comparison.
@@ -3318,75 +3399,6 @@ public:
     if (i == m.end())
       return type_or_decl_base_sptr();
     return i->second;
-  }
-
-  /// Get the language used to generate a given DIE.
-  ///
-  /// @param die the DIE to consider.
-  ///
-  /// @param lang the resulting language.
-  ///
-  /// @return true iff the language of the DIE was found.
-  bool
-  get_die_language(const Dwarf_Die *die, translation_unit::language &lang) const
-  {
-    Dwarf_Die cu_die;
-    ABG_ASSERT(dwarf_diecu(const_cast<Dwarf_Die*>(die), &cu_die, 0, 0));
-
-    uint64_t l = 0;
-    if (!die_unsigned_constant_attribute(&cu_die, DW_AT_language, l))
-      return false;
-
-    lang = dwarf_language_to_tu_language(l);
-    return true;
-  }
-
-  /// Test if a given DIE originates from a program written in the C
-  /// language.
-  ///
-  /// @param die the DIE to consider.
-  ///
-  /// @return true iff @p die originates from a program in the C
-  /// language.
-  bool
-  die_is_in_c(const Dwarf_Die *die) const
-  {
-    translation_unit::language l = translation_unit::LANG_UNKNOWN;
-    if (!get_die_language(die, l))
-      return false;
-    return is_c_language(l);
-  }
-
-  /// Test if a given DIE originates from a program written in the C++
-  /// language.
-  ///
-  /// @param die the DIE to consider.
-  ///
-  /// @return true iff @p die originates from a program in the C++
-  /// language.
-  bool
-  die_is_in_cplus_plus(const Dwarf_Die *die) const
-  {
-    translation_unit::language l = translation_unit::LANG_UNKNOWN;
-    if (!get_die_language(die, l))
-      return false;
-    return is_cplus_plus_language(l);
-  }
-
-  /// Test if a given DIE originates from a program written either in
-  /// C or C++.
-  ///
-  /// @param die the DIE to consider.
-  ///
-  /// @return true iff @p die originates from a program written either in
-  /// C or C++.
-  bool
-  die_is_in_c_or_cplusplus(const Dwarf_Die *die) const
-  {
-    translation_unit::language l = translation_unit::LANG_UNKNOWN;
-    if (!get_die_language(die, l))
-      return false;
-    return (is_cplus_plus_language(l) || is_c_language(l));
   }
 
   /// Check if we can assume the One Definition Rule[1] to be relevant
@@ -9818,7 +9830,7 @@ die_function_signature(const reader& rdr,
 
   translation_unit::language lang;
   bool has_lang = false;
-  if ((has_lang = rdr.get_die_language(fn_die, lang)))
+  if ((has_lang = get_die_language(fn_die, lang)))
     {
       // In a binary originating from the C language, it's OK to use
       // the linkage name of the function as a key for the map which
@@ -10324,8 +10336,6 @@ compare_as_decl_and_type_dies(const reader &rdr,
 /// in C++ for instance, that doesn't imply that the two functions are
 /// equal.
 ///
-/// @param rdr the @ref reader to consider.
-///
 /// @param l the first function DIE to consider.
 ///
 /// @param r the second function DIE to consider.
@@ -10333,8 +10343,7 @@ compare_as_decl_and_type_dies(const reader &rdr,
 /// @return true iff the function represented by @p l have the same
 /// linkage name as the function represented by @p r.
 static bool
-fn_die_equal_by_linkage_name(const reader &rdr,
-			     const Dwarf_Die *l,
+fn_die_equal_by_linkage_name(const Dwarf_Die *l,
 			     const Dwarf_Die *r)
 {
   if (!!l != !!r)
@@ -10352,8 +10361,8 @@ fn_die_equal_by_linkage_name(const reader &rdr,
   string llinkage_name = die_linkage_name(l),
     rlinkage_name = die_linkage_name(r);
 
-  if (rdr.die_is_in_c_or_cplusplus(l)
-      && rdr.die_is_in_c_or_cplusplus(r))
+  if (die_is_in_c_or_cplusplus(l)
+      && die_is_in_c_or_cplusplus(r))
     {
       if (!llinkage_name.empty() && !rlinkage_name.empty())
 	return llinkage_name == rlinkage_name;
@@ -11277,19 +11286,18 @@ compare_dies(const reader& rdr,
 	rdr.compare_count_++;
 
 	if (l_tag == DW_TAG_subprogram
-	    && !fn_die_equal_by_linkage_name(rdr, l, r))
+	    && !fn_die_equal_by_linkage_name(l, r))
 	  {
 	    SET_RESULT_TO_FALSE(result, l, r);
 	    break;
 	  }
 	else if (l_tag == DW_TAG_subprogram
-		 && rdr.die_is_in_c(l) && rdr.die_is_in_c(r)
-		 /*&& fn_die_equal_by_linkage_name(rdr, l, r)*/)
+		 && die_is_in_c(l) && die_is_in_c(r))
 	  {
 	    result = COMPARISON_RESULT_EQUAL;
 	    break;
 	  }
-	else if (!rdr.die_is_in_c(l) && !rdr.die_is_in_c(r))
+	else if (!die_is_in_c(l) && !die_is_in_c(r))
 	  {
 	    // In C, we cannot have two different functions with the
 	    // same linkage name in a given binary.  But here we are
@@ -11914,7 +11922,7 @@ get_scope_die(const reader&	rdr,
     memcpy(&origin_die_mem, dye, sizeof(origin_die_mem));
 
   translation_unit::language die_lang = translation_unit::LANG_UNKNOWN;
-  rdr.get_die_language(die, die_lang);
+  get_die_language(die, die_lang);
   if (is_c_language(die_lang)
       || rdr.die_parent_map(rdr.get_die_source(die)).empty())
     {
@@ -11974,7 +11982,7 @@ get_scope_for_die(reader&	rdr,
   const die_source source_of_die = rdr.get_die_source(die);
 
   translation_unit::language die_lang = translation_unit::LANG_UNKNOWN;
-  rdr.get_die_language(die, die_lang);
+  get_die_language(die, die_lang);
   if (is_c_language(die_lang)
       || rdr.die_parent_map(source_of_die).empty())
     {
@@ -12342,10 +12350,17 @@ build_translation_unit_and_add_to_ir(reader&	rdr,
     return result;
 
   result->set_is_constructed(false);
-
+  int tag = dwarf_tag(&child);
   do
     if (rdr.load_undefined_interfaces()
-	&& rdr.is_decl_die_with_undefined_symbol(&child))
+	&& (rdr.is_decl_die_with_undefined_symbol(&child)
+	    || tag == DW_TAG_class_type // Top-level classes might
+					// have undefined interfaces
+					// that need to be
+					// represented, so let's
+					// analyze them as well.
+	    || ((tag == DW_TAG_union_type || tag == DW_TAG_structure_type)
+		&& die_is_in_cplus_plus(&child))))
       {
 	// Analyze undefined functions & variables for the purpose of
 	// analyzing compatibility matters.
@@ -15013,7 +15028,7 @@ function_is_suppressed(const reader& rdr,
 
   string fname = die_string_attribute(function_die, DW_AT_name);
   string flinkage_name = die_linkage_name(function_die);
-  if (flinkage_name.empty() && rdr.die_is_in_c(function_die))
+  if (flinkage_name.empty() && die_is_in_c(function_die))
     flinkage_name = fname;
   string qualified_name = build_qualified_name(scope, fname);
 
@@ -15190,7 +15205,7 @@ variable_is_suppressed(const reader&		rdr,
 
   string name = die_string_attribute(variable_die, DW_AT_name);
   string linkage_name = die_linkage_name(variable_die);
-  if (linkage_name.empty() && rdr.die_is_in_c(variable_die))
+  if (linkage_name.empty() && die_is_in_c(variable_die))
     linkage_name = name;
   string qualified_name = build_qualified_name(scope, name);
 
@@ -16050,7 +16065,7 @@ build_ir_node_from_die(reader&	rdr,
 	bool var_is_cloned = false;
 
 	if (tag == DW_TAG_member)
-	  ABG_ASSERT(!rdr.die_is_in_c(die));
+	  ABG_ASSERT(!die_is_in_c(die));
 
 	if (die_die_attribute(die, DW_AT_specification, spec_die, false)
 	    || (var_is_cloned = die_die_attribute(die, DW_AT_abstract_origin,

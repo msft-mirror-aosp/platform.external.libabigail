@@ -329,6 +329,16 @@ Options
     makes ``abidw`` load *all* the types defined in the binaries, even
     those that are not reachable from public declarations.
 
+    * ``--no-load-undefined-interfaces``
+
+    By default, ``libabigail`` (and thus ``abidw``) loads information
+    about undefined function and variable symbols as well as functions
+    and variables that are associated with those undefined symbols.
+    Those are called undefined interfaces.  This option however makes
+    makes ``abidw`` avoid loading information about undefined
+    interfaces.  The resulting XML file thus doesn't contain
+    information about those undefined interfaces.
+
   *  ``--abidiff``
 
     Load the ABI of the ELF binary given in argument, save it in

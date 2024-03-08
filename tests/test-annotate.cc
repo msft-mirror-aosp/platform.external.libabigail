@@ -158,7 +158,7 @@ main()
   string abidw;
 
   abidw = string(get_build_dir()) + "/tools/abidw "
-    "--annotate --no-corpus-path --no-architecture";
+    "--annotate --no-corpus-path --no-architecture --no-load-undefined-interfaces";
   for (InOutSpec* s = in_out_specs; s->in_elf_path; ++s)
     {
       bool is_ok = true;

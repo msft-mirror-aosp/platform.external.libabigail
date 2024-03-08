@@ -1,0 +1,13 @@
+functions defined in library 'libtest10-with-incompatible-exported-symbols.so'
+have sub-types that are different from what application 'test10-app-with-undefined-symbols' expects:
+
+  method int some_type::get_first_member():
+    return type changed:
+      entity changed from 'int' to 'int*'
+      type size changed from 32 to 64 (in bits)
+
+  method char some_type::get_second_member():
+    return type changed:
+      entity changed from 'char' to 'char*'
+      type size changed from 8 to 64 (in bits)
+

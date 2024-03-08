@@ -109,6 +109,7 @@ struct options
   bool			short_locs;
   bool			default_sizes;
   bool			load_all_types;
+  bool			load_undefined_interfaces;
   bool			linux_kernel_mode;
   bool			corpus_group_for_linux;
   bool			show_stats;
@@ -155,6 +156,7 @@ struct options
       short_locs(false),
       default_sizes(true),
       load_all_types(),
+      load_undefined_interfaces(true),
       linux_kernel_mode(true),
       corpus_group_for_linux(false),
       show_stats(),
@@ -233,6 +235,8 @@ display_usage(const string& prog_name, ostream& out)
     "debug info of <elf-path>, and show its base name\n"
     << "  --load-all-types  read all types including those not reachable from "
     "exported declarations\n"
+    << "  --no-load-undefined-interfaces  do not consider undefined "
+    "interfaces from the binary"
     << "  --no-linux-kernel-mode  don't consider the input binary as "
        "a Linux Kernel binary\n"
     << "  --kmi-whitelist|-w  path to a linux kernel "
@@ -446,6 +450,8 @@ parse_command_line(int argc, char* argv[], options& opts)
 	}
       else if (!strcmp(argv[i], "--load-all-types"))
 	opts.load_all_types = true;
+      else if (!strcmp(argv[i], "--no-load-undefined-interfaces"))
+	opts.load_undefined_interfaces = false;
       else if (!strcmp(argv[i], "--drop-private-types"))
 	opts.drop_private_types = true;
       else if (!strcmp(argv[i], "--drop-undefined-syms"))
@@ -615,6 +621,7 @@ set_generic_options(abigail::elf_based_reader& rdr, options& opts)
     opts.leverage_dwarf_factorization;
   rdr.options().assume_odr_for_cplusplus =
     opts.assume_odr_for_cplusplus;
+  rdr.options().load_undefined_interfaces = opts.load_undefined_interfaces;
 }
 
 /// Load an ABI @ref corpus (the internal representation of the ABI of
