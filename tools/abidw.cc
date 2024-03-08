@@ -208,7 +208,7 @@ display_usage(const string& prog_name, ostream& out)
     << "  --debug-info-dir|-d <dir-path>  look for debug info under 'dir-path'\n"
     << "  --headers-dir|--hd <path> the path to headers of the elf file\n"
     << "  --header-file|--hf <path> the path one header of the elf file\n"
-    << "  --out-file <file-path>  write the output to 'file-path'\n"
+    << "  --out-file|-o  <file-path>  write the output to 'file-path'\n"
     << "  --noout  do not emit anything after reading the binary\n"
     << "  --suppressions|--suppr <path> specify a suppression file\n"
     << "  --no-architecture  do not emit architecture info in the output\n"
@@ -331,7 +331,8 @@ parse_command_line(int argc, char* argv[], options& opts)
 	  opts.header_files.push_back(argv[j]);
 	  ++i;
 	}
-      else if (!strcmp(argv[i], "--out-file"))
+      else if (!strcmp(argv[i], "--out-file")
+	       || !strcmp(argv[i], "-o"))
 	{
 	  if (argc <= i + 1
 	      || argv[i + 1][0] == '-'

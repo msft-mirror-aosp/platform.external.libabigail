@@ -107,7 +107,7 @@ Options
     installed by your system's package manager because then
     ``abidw`` knows where to find it.
 
-  * ``--out-file`` <*file-path*>
+  * ``--out-file | -o`` <*file-path*>
 
     This option instructs ``abidw`` to emit the XML representation of
     *path-to-elf-file* into the file *file-path*, rather than emitting
