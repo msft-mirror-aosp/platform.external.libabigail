@@ -148,6 +148,12 @@ class reader : public fe_iface
   elf_symbol_sptr
   variable_symbol_is_exported(const string& name) const;
 
+  elf_symbol_sptr
+  function_symbol_is_undefined(const string& name) const;
+
+  elf_symbol_sptr
+  variable_symbol_is_undefined(const string& name) const;
+
   void
   load_dt_soname_and_needed();
 

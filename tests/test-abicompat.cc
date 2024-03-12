@@ -168,6 +168,17 @@ InOutSpec in_out_specs[] =
     "data/test-abicompat/test7-fn-changed-report-0.txt",
     "output/test-abicompat/test7-fn-changed-report-0.txt",
   },
+#ifdef WITH_BTF
+  {
+    "data/test-abicompat/test7-fn-changed-app.btf",
+    "data/test-abicompat/libtest7-fn-changed-libapp-btf-v0.so",
+    "data/test-abicompat/libtest7-fn-changed-libapp-btf-v1.so",
+    "",
+    "--show-base-names --no-show-locs --no-redundant --btf",
+    "data/test-abicompat/test7-fn-changed-report-0.1.txt",
+    "output/test-abicompat/test7-fn-changed-report-0.1.txt",
+  },
+#endif
   {
     "data/test-abicompat/test7-fn-changed-app",
     "data/test-abicompat/libtest7-fn-changed-libapp-v1.so",
@@ -186,6 +197,17 @@ InOutSpec in_out_specs[] =
     "data/test-abicompat/test7-fn-changed-report-2.txt",
     "output/test-abicompat/test7-fn-changed-report-2.txt",
   },
+#ifdef WITH_BTF
+  {
+    "data/test-abicompat/test7-fn-changed-app.btf",
+    "data/test-abicompat/libtest7-fn-changed-libapp-btf-v1.so",
+    "",
+    "",
+    "--show-base-names --no-show-locs --weak-mode",
+    "data/test-abicompat/test7-fn-changed-report-2.1.txt",
+    "output/test-abicompat/test7-fn-changed-report-2.1.txt",
+  },
+#endif
   {
     "data/test-abicompat/test8-fn-changed-app",
     "data/test-abicompat/libtest8-fn-changed-libapp-v1.so",

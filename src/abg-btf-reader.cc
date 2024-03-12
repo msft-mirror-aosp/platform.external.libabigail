@@ -397,7 +397,8 @@ public:
       }
 
     canonicalize_types();
-
+    corpus()->sort_functions();
+    corpus()->sort_variables();
     return corpus();
   }
 
@@ -504,15 +505,9 @@ public:
     associate_artifact_to_btf_type_id(result, type_id);
 
     if (function_decl_sptr fn = is_function_decl(result))
-      {
-	if (fn->get_is_in_public_symbol_table())
-	  add_fn_to_exported_or_undefined_decls(fn.get());
-      }
+      add_fn_to_exported_or_undefined_decls(fn.get());
     else if (var_decl_sptr var = is_var_decl(result))
-      {
-	if (var->get_is_in_public_symbol_table())
-	  add_var_to_exported_or_undefined_decls(var.get());
-      }
+      add_var_to_exported_or_undefined_decls(var.get());
 
     return result;
   }
@@ -1021,10 +1016,12 @@ public:
 				   location(), /*linkage_name=*/fn_name));
 
     elf_symbol_sptr fn_sym;
-    if ((fn_sym = function_symbol_is_exported(fn_name)))
+    if ((fn_sym = function_symbol_is_exported(fn_name))
+	|| (fn_sym = function_symbol_is_undefined(fn_name)))
       {
 	result->set_symbol(fn_sym);
-	result->set_is_in_public_symbol_table(true);
+	if (fn_sym->is_defined())
+	  result->set_is_in_public_symbol_table(true);
       }
     return result;
   }
@@ -1055,10 +1052,12 @@ public:
 			      /*linkage_name=*/var_name));
 
     elf_symbol_sptr var_sym;
-    if ((var_sym = variable_symbol_is_exported(var_name)))
+    if ((var_sym = variable_symbol_is_exported(var_name))
+	|| (var_sym = variable_symbol_is_undefined(var_name)))
       {
 	result->set_symbol(var_sym);
-	result->set_is_in_public_symbol_table(true);
+	if (var_sym->is_defined())
+	  result->set_is_in_public_symbol_table(true);
       }
     return result;
   }

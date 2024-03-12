@@ -34,6 +34,7 @@
 #include <iostream>
 #include <memory>
 #include <string>
+#include "config.h"
 #include "abg-config.h"
 #include "abg-tools-utils.h"
 #include "abg-corpus.h"
@@ -43,6 +44,9 @@
 #include "abg-suppression.h"
 #ifdef WITH_CTF
 #include "abg-ctf-reader.h"
+#endif
+#ifdef WITH_BTF
+#include "abg-btf-reader.h"
 #endif
 
 using std::string;
@@ -111,6 +115,9 @@ public:
 #ifdef WITH_CTF
   bool			use_ctf;
 #endif
+#ifdef WITH_BTF
+  bool			use_btf;
+#endif
 
   options(const char* program_name)
     :prog_name(program_name),
@@ -128,6 +135,10 @@ public:
 #ifdef WITH_CTF
     ,
       use_ctf()
+#endif
+#ifdef WITH_BTF
+    ,
+      use_btf()
 #endif
   {}
 }; // end struct options
@@ -238,6 +249,9 @@ display_usage(const string& prog_name, ostream& out)
 #ifdef WITH_CTF
     << "  --ctf use CTF instead of DWARF in ELF files\n"
 #endif
+#ifdef WITH_BTF
+    << "  --btf use BTF instead of DWARF in ELF files\n"
+#endif
     ;
 }
 
@@ -344,6 +358,10 @@ parse_command_line(int argc, char* argv[], options& opts)
 #ifdef WITH_CTF
       else if (!strcmp(argv[i], "--ctf"))
         opts.use_ctf = true;
+#endif
+#ifdef WITH_BTF
+      else if (!strcmp(argv[i], "--btf"))
+        opts.use_btf = true;
 #endif
       else
 	{

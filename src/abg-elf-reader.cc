@@ -890,6 +890,25 @@ reader::variable_symbol_is_exported(const string& name) const
     }
   return elf_symbol_sptr();
 }
+
+/// Test if a name is the name of an undefined function symbol.
+///
+/// @param name the symbol name to consider.
+///
+/// @return the undefined function symbol or nil if none was found.
+elf_symbol_sptr
+reader::function_symbol_is_undefined(const string& name) const
+{return symtab()->function_symbol_is_undefined(name);}
+
+/// Test if a name is the name of an undefined variable symbol.
+///
+/// @param name the symbol name to consider.
+///
+/// @return the undefined variable symbol or nil if none was found.
+elf_symbol_sptr
+reader::variable_symbol_is_undefined(const string& name) const
+{return symtab()->variable_symbol_is_undefined(name);}
+
 /// Load the DT_NEEDED and DT_SONAME elf TAGS.
 void
 reader::load_dt_soname_and_needed()

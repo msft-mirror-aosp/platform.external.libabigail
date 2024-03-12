@@ -1,5 +1,8 @@
 // Compile this with:
 // gcc -g -Wall -fPIC -shared -o libtest7-fn-changed-libapp-v1.so test7-fn-changed-libapp-v1.c
+// Or, for BTF debug info, with:
+// gcc -gbtf -Wall -fPIC -shared -o libtest7-fn-changed-libapp-btf-v1.so test7-fn-changed-libapp-v1.c
+
 #include <stdio.h>
 #include "test7-fn-changed-libapp-v1.h"
 

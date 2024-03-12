@@ -260,10 +260,10 @@ public:
   elf_symbol_sptr
   variable_symbol_is_exported(const GElf_Addr symbol_address);
 
-  bool
+  elf_symbol_sptr
   function_symbol_is_undefined(const string&);
 
-  bool
+  elf_symbol_sptr
   variable_symbol_is_undefined(const string&);
 
   static symtab_ptr

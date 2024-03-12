@@ -257,26 +257,40 @@ symtab::variable_symbol_is_exported(const GElf_Addr symbol_address)
 ///
 /// @param sym_name the symbol name to consider.
 ///
-/// @return true iff @p sym_name is the name of a an undefined
-/// function symbol.
-bool
+/// @return the undefined symbol if found, nil otherwise.
+elf_symbol_sptr
 symtab::function_symbol_is_undefined(const string& sym_name)
 {
   collect_undefined_fns_and_vars_linkage_names();
-  return undefined_function_linkage_names_.count(sym_name);
+  if (undefined_function_linkage_names_.count(sym_name))
+    {
+      elf_symbol_sptr sym = lookup_undefined_function_symbol(sym_name);
+      ABG_ASSERT(sym);
+      ABG_ASSERT(sym->is_function());
+      ABG_ASSERT(!sym->is_defined());
+      return sym;
+    }
+  return elf_symbol_sptr();
 }
 
 /// Test if a name is a the name of an undefined variable symbol.
 ///
 /// @param sym_name the symbol name to consider.
 ///
-/// @return true iff @p sym_name is the name of a an undefined
-/// variable symbol.
-bool
+// @return the undefined symbol if found, nil otherwise.
+elf_symbol_sptr
 symtab::variable_symbol_is_undefined(const string& sym_name)
 {
   collect_undefined_fns_and_vars_linkage_names();
-  return undefined_variable_linkage_names_.count(sym_name);
+  if (undefined_variable_linkage_names_.count(sym_name))
+    {
+      elf_symbol_sptr sym = lookup_undefined_variable_symbol(sym_name);
+      ABG_ASSERT(sym);
+      ABG_ASSERT(sym->is_variable());
+      ABG_ASSERT(!sym->is_defined());
+      return sym;
+    }
+  return elf_symbol_sptr();
 }
 
 /// A symbol sorting functor.

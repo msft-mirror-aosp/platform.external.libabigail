@@ -1,5 +1,7 @@
 // Compile this with:
 // gcc -g -o test7-fn-changed-app -L. -ltest7-fn-changed-libapp-v0 test7-fn-changed-app.c
+// Or, for BTF debug info, with:
+// gcc -gbtf -o test7-fn-changed-app.btf -L. -ltest7-fn-changed-libapp-v0 test7-fn-changed-app.c
 
 #include <stdio.h>
 #include "test7-fn-changed-libapp-v0.h"
