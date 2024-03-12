@@ -248,6 +248,18 @@ public:
   const elf_symbol_sptr
   lookup_undefined_variable_symbol(const std::string& name);
 
+  elf_symbol_sptr
+  function_symbol_is_exported(const string&);
+
+  elf_symbol_sptr
+  function_symbol_is_exported(const GElf_Addr symbol_address);
+
+  elf_symbol_sptr
+  variable_symbol_is_exported(const string&);
+
+  elf_symbol_sptr
+  variable_symbol_is_exported(const GElf_Addr symbol_address);
+
   bool
   function_symbol_is_undefined(const string&);
 

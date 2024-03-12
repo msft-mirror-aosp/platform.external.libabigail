@@ -166,6 +166,93 @@ symtab::lookup_undefined_variable_symbol(const std::string& sym_name)
   return result;
 }
 
+/// Test if a given function symbol has been exported.
+///
+/// Note that this doesn't test if the symbol is defined or not, but
+/// assumes the symbol is defined.
+///
+/// @param name the name of the symbol we are looking for.
+///
+/// @return the elf symbol if found, or nil otherwise.
+elf_symbol_sptr
+symtab::function_symbol_is_exported(const string& name)
+{
+  const elf_symbols& syms = lookup_symbol(name);
+  for (auto s : syms)
+    if (s->is_function() && s->is_public())
+      return s;
+
+  return elf_symbol_sptr();
+}
+
+/// Test if a given function symbol has been exported.
+///
+/// Note that this doesn't test if the symbol is defined or not, but
+/// assumes the symbol is defined.
+///
+/// @param symbol_address the address of the symbol we are looking
+/// for.  Note that this address must be a relative offset from the
+/// beginning of the .text section, just like the kind of addresses
+/// that are present in the .symtab section.
+///
+/// @return the elf symbol if found, or nil otherwise.
+elf_symbol_sptr
+symtab::function_symbol_is_exported(const GElf_Addr symbol_address)
+{
+  elf_symbol_sptr symbol = lookup_symbol(symbol_address);
+  if (!symbol)
+    return symbol;
+
+  if (!symbol->is_function() || !symbol->is_public())
+    return elf_symbol_sptr();
+
+  return symbol;
+}
+
+/// Test if a given variable symbol has been exported.
+///
+/// Note that this assumes the symbol is exported but doesn't test for
+/// it.
+///
+/// @param name the name of the symbol we are looking
+/// for.
+///
+/// @return the elf symbol if found, or nil otherwise.
+elf_symbol_sptr
+symtab::variable_symbol_is_exported(const string& name)
+{
+  const elf_symbols& syms = lookup_symbol(name);
+  for (auto s : syms)
+    if (s->is_variable() && s->is_public())
+      return s;
+
+  return elf_symbol_sptr();
+}
+
+/// Test if a given variable symbol has been exported.
+///
+/// Note that this assumes the symbol is exported but doesn't test for
+/// it.
+///
+/// @param symbol_address the address of the symbol we are looking
+/// for.  Note that this address must be a relative offset from the
+/// beginning of the .text section, just like the kind of addresses
+/// that are present in the .symtab section.
+///
+/// @return the elf symbol if found, or nil otherwise.
+elf_symbol_sptr
+symtab::variable_symbol_is_exported(const GElf_Addr symbol_address)
+{
+  elf_symbol_sptr symbol = lookup_symbol(symbol_address);
+  if (!symbol)
+    return symbol;
+
+  if (!symbol->is_variable() || !symbol->is_public())
+    return elf_symbol_sptr();
+
+  return symbol;
+}
+
 /// Test if a name is a the name of an undefined function symbol.
 ///
 /// @param sym_name the symbol name to consider.

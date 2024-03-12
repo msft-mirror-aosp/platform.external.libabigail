@@ -788,12 +788,11 @@ reader::symtab() const
 elf_symbol_sptr
 reader::function_symbol_is_exported(GElf_Addr symbol_address) const
 {
-  elf_symbol_sptr symbol = symtab()->lookup_symbol(symbol_address);
+
+  elf_symbol_sptr symbol =
+    symtab()->function_symbol_is_exported(symbol_address);
   if (!symbol)
     return symbol;
-
-  if (!symbol->is_function() || !symbol->is_public())
-    return elf_symbol_sptr();
 
   address_set_sptr set;
   bool looking_at_linux_kernel_binary =
@@ -820,12 +819,10 @@ reader::function_symbol_is_exported(GElf_Addr symbol_address) const
 elf_symbol_sptr
 reader::variable_symbol_is_exported(GElf_Addr symbol_address) const
 {
-  elf_symbol_sptr symbol = symtab()->lookup_symbol(symbol_address);
+  elf_symbol_sptr symbol =
+    symtab()->variable_symbol_is_exported(symbol_address);
   if (!symbol)
     return symbol;
-
-  if (!symbol->is_variable() || !symbol->is_public())
-    return elf_symbol_sptr();
 
   address_set_sptr set;
   bool looking_at_linux_kernel_binary =
@@ -849,23 +846,20 @@ reader::variable_symbol_is_exported(GElf_Addr symbol_address) const
 elf_symbol_sptr
 reader::function_symbol_is_exported(const string& name) const
 {
-  const elf_symbols& syms = symtab()->lookup_symbol(name);
-  for (auto s : syms)
+  const elf_symbol_sptr s = symtab()->function_symbol_is_exported(name);
+  if (s && s->is_function() && s->is_public())
     {
-      if (s->is_function() && s->is_public())
-	{
-	  bool looking_at_linux_kernel_binary =
-	    (load_in_linux_kernel_mode()
-	     && elf_helpers::is_linux_kernel(elf_handle()));
+      bool looking_at_linux_kernel_binary =
+	(load_in_linux_kernel_mode()
+	 && elf_helpers::is_linux_kernel(elf_handle()));
 
-	  if (looking_at_linux_kernel_binary)
-	    {
-	      if (s->is_in_ksymtab())
-		return s;
-	    }
-	  else
+      if (looking_at_linux_kernel_binary)
+	{
+	  if (s->is_in_ksymtab())
 	    return s;
 	}
+      else
+	return s;
     }
   return elf_symbol_sptr();
 }
@@ -879,23 +873,20 @@ reader::function_symbol_is_exported(const string& name) const
 elf_symbol_sptr
 reader::variable_symbol_is_exported(const string& name) const
 {
-  const elf_symbols& syms = symtab()->lookup_symbol(name);
-  for (auto s : syms)
+  const elf_symbol_sptr s  = symtab()->variable_symbol_is_exported(name);
+  if (s->is_variable() && s->is_public())
     {
-      if (s->is_variable() && s->is_public())
-	{
-	  bool looking_at_linux_kernel_binary =
-	    (load_in_linux_kernel_mode()
-	     && elf_helpers::is_linux_kernel(elf_handle()));
+      bool looking_at_linux_kernel_binary =
+	(load_in_linux_kernel_mode()
+	 && elf_helpers::is_linux_kernel(elf_handle()));
 
-	  if (looking_at_linux_kernel_binary)
-	    {
-	      if (s->is_in_ksymtab())
-		return s;
-	    }
-	  else
+      if (looking_at_linux_kernel_binary)
+	{
+	  if (s->is_in_ksymtab())
 	    return s;
 	}
+      else
+	return s;
     }
   return elf_symbol_sptr();
 }
