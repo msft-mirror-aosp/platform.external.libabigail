@@ -516,7 +516,7 @@ file_has_ctf_debug_info(const string& elf_file_path,
 
   // vmlinux.ctfa could be provided with --debug-info-dir
   for (const auto& path : debug_info_root_paths)
-    if (find_file_under_dir(*path, "vmlinux.ctfa", vmlinux))
+    if (path && *path && find_file_under_dir(*path, "vmlinux.ctfa", vmlinux))
       return true;
 
   return false;
