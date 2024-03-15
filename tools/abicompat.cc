@@ -460,6 +460,7 @@ compare_expected_against_provided_functions(diff_context_sptr&		ctxt,
 					    vector<fn_change>&		fn_changes,
 					    bool			reverse_direction)
 {
+  abidiff_status status = abigail::tools_utils::ABIDIFF_OK;
   for (auto expected_fn :
 	 reverse_direction
 	 ? lib_corpus->get_sorted_undefined_functions()
@@ -483,18 +484,17 @@ compare_expected_against_provided_functions(diff_context_sptr&		ctxt,
 			     exported_fn->get_type(),
 			     ctxt);
 	      if (fn_type_diff && fn_type_diff->to_be_reported())
-		// So there is a type change between the function
-		// expected by the application and the function
-		// exported by the library.  Let's record that
-		// change so that we can report about it later.
-		fn_changes.push_back(fn_change(expected_fn, fn_type_diff, reverse_direction));
+		{
+		  // So there is a type change between the function
+		  // expected by the application and the function
+		  // exported by the library.  Let's record that
+		  // change so that we can report about it later.
+		  fn_changes.push_back(fn_change(expected_fn, fn_type_diff, reverse_direction));
+		  status |= abigail::tools_utils::ABIDIFF_ABI_CHANGE;
+		}
 	    }
 	}
     }
-
-  abidiff_status status = abigail::tools_utils::ABIDIFF_OK;
-  if (!fn_changes.empty())
-    status |= abigail::tools_utils::ABIDIFF_ABI_CHANGE;
 
   return status;
 }
@@ -534,6 +534,7 @@ compare_expected_against_provided_variables(diff_context_sptr&		ctxt,
 					    vector<var_change>&	var_changes,
 					    bool			reverse_direction)
 {
+  abidiff_status status = abigail::tools_utils::ABIDIFF_OK;
   for (auto expected_var :
 	 reverse_direction
 	 ? lib_corpus->get_sorted_undefined_variables()
@@ -555,17 +556,16 @@ compare_expected_against_provided_variables(diff_context_sptr&		ctxt,
 			 exported_var->get_type(),
 			 ctxt);
 	  if (type_diff && type_diff->to_be_reported())
-	    // So there is a type change between the variable
-	    // expected by the application and the variable
-	    // exported by the library.  Let's record that
-	    // change so that we can report about it later.
-	    var_changes.push_back(var_change(expected_var, type_diff, reverse_direction));
+	    {
+	      // So there is a type change between the variable
+	      // expected by the application and the variable
+	      // exported by the library.  Let's record that
+	      // change so that we can report about it later.
+	      var_changes.push_back(var_change(expected_var, type_diff, reverse_direction));
+	      status |= abigail::tools_utils::ABIDIFF_ABI_CHANGE;
+	    }
 	}
     }
-
-  abidiff_status status = abigail::tools_utils::ABIDIFF_OK;
-  if (!var_changes.empty())
-    status |= abigail::tools_utils::ABIDIFF_ABI_CHANGE;
 
   return status;
 }
@@ -807,8 +807,8 @@ perform_compat_check_in_weak_mode(options& opts,
 
   {
     vector<fn_change> fn_changes;
-    status = compare_expected_against_provided_functions(ctxt, app_corpus, lib_corpus,
-							 fn_changes, /*reverse_direction=*/true);
+    status |= compare_expected_against_provided_functions(ctxt, app_corpus, lib_corpus,
+							  fn_changes, /*reverse_direction=*/true);
     report_function_changes(opts, fn_changes);
   }
 

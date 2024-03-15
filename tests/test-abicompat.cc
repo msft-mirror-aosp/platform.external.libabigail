@@ -28,6 +28,7 @@
 using std::string;
 using std::cerr;
 using std::cout;
+using abigail::tools_utils::abidiff_status;
 
 struct InOutSpec
 {
@@ -36,6 +37,7 @@ struct InOutSpec
   const char* in_lib2_path;
   const char* suppressions;
   const char* options;
+  abidiff_status status;
   const char* in_report_path;
   const char* out_report_path;
 };
@@ -48,6 +50,7 @@ InOutSpec in_out_specs[] =
     "data/test-abicompat/libtest0-fn-changed-libapp-v1.so",
     "",
     "--show-base-names --no-show-locs --no-redundant",
+    abigail::tools_utils::ABIDIFF_ABI_CHANGE,
     "data/test-abicompat/test0-fn-changed-report-0.txt",
     "output/test-abicompat/test0-fn-changed-report-0.txt",
   },
@@ -57,6 +60,7 @@ InOutSpec in_out_specs[] =
     "data/test-abicompat/libtest0-fn-changed-libapp-v1.so",
     "data/test-abicompat/test0-fn-changed-0.suppr",
     "--show-base-names --no-show-locs --no-redundant",
+    abigail::tools_utils::ABIDIFF_OK,
     "data/test-abicompat/test0-fn-changed-report-1.txt",
     "output/test-abicompat/test0-fn-changed-report-1.txt",
   },
@@ -66,6 +70,7 @@ InOutSpec in_out_specs[] =
     "data/test-abicompat/libtest0-fn-changed-libapp-v1.so",
     "",
     "--show-base-names --no-redundant",
+    abigail::tools_utils::ABIDIFF_ABI_CHANGE,
     "data/test-abicompat/test0-fn-changed-report-2.txt",
     "output/test-abicompat/test0-fn-changed-report-2.txt",
   },
@@ -75,6 +80,7 @@ InOutSpec in_out_specs[] =
     "data/test-abicompat/libtest0-fn-changed-libapp-v1.so",
     "data/test-abicompat/test0-fn-changed-1.suppr",
     "--show-base-names --no-show-locs --no-redundant",
+    abigail::tools_utils::ABIDIFF_OK,
     "data/test-abicompat/test0-fn-changed-report-3.txt",
     "output/test-abicompat/test0-fn-changed-report-3.txt",
   },
@@ -84,6 +90,8 @@ InOutSpec in_out_specs[] =
     "data/test-abicompat/libtest1-fn-removed-v1.so",
     "",
     "--show-base-names --no-show-locs --no-redundant",
+    abigail::tools_utils::ABIDIFF_ABI_CHANGE
+    | abigail::tools_utils::ABIDIFF_ABI_INCOMPATIBLE_CHANGE,
     "data/test-abicompat/test1-fn-removed-report-0.txt",
     "output/test-abicompat/test1-fn-removed-report-0.txt",
   },
@@ -93,6 +101,8 @@ InOutSpec in_out_specs[] =
     "data/test-abicompat/libtest2-var-removed-v1.so",
     "",
     "--show-base-names --no-show-locs --no-redundant",
+    abigail::tools_utils::ABIDIFF_ABI_CHANGE
+    | abigail::tools_utils::ABIDIFF_ABI_INCOMPATIBLE_CHANGE,
     "data/test-abicompat/test2-var-removed-report-0.txt",
     "output/test-abicompat/test2-var-removed-report-0.txt",
   },
@@ -102,6 +112,8 @@ InOutSpec in_out_specs[] =
     "data/test-abicompat/libtest3-fn-removed-v1.so",
     "",
     "--show-base-names --no-show-locs --no-redundant",
+    abigail::tools_utils::ABIDIFF_ABI_CHANGE
+    | abigail::tools_utils::ABIDIFF_ABI_INCOMPATIBLE_CHANGE,
     "data/test-abicompat/test3-fn-removed-report-0.txt",
     "output/test-abicompat/test3-fn-removed-report-0.txt",
   },
@@ -111,6 +123,8 @@ InOutSpec in_out_specs[] =
     "data/test-abicompat/libtest4-soname-changed-v1.so",
     "",
     "--show-base-names --no-show-locs --no-redundant",
+    abigail::tools_utils::ABIDIFF_ABI_CHANGE
+    | abigail::tools_utils::ABIDIFF_ABI_INCOMPATIBLE_CHANGE,
     "data/test-abicompat/test4-soname-changed-report-0.txt",
     "output/test-abicompat/test4-soname-changed-report-0.txt",
   },
@@ -120,6 +134,7 @@ InOutSpec in_out_specs[] =
     "",
     "",
     "--show-base-names --no-show-locs --weak-mode",
+    abigail::tools_utils::ABIDIFF_ABI_CHANGE,
     "data/test-abicompat/test5-fn-changed-report-0.txt",
     "output/test-abicompat/test5-fn-changed-report-0.txt",
   },
@@ -129,6 +144,7 @@ InOutSpec in_out_specs[] =
     "",
     "",
     "--show-base-names --weak-mode",
+    abigail::tools_utils::ABIDIFF_ABI_CHANGE,
     "data/test-abicompat/test5-fn-changed-report-1.txt",
     "output/test-abicompat/test5-fn-changed-report-1.txt",
   },
@@ -138,6 +154,7 @@ InOutSpec in_out_specs[] =
     "",
     "",
     "--show-base-names --no-show-locs --weak-mode",
+    abigail::tools_utils::ABIDIFF_ABI_CHANGE,
     "data/test-abicompat/test6-var-changed-report-0.txt",
     "output/test-abicompat/test6-var-changed-report-0.txt",
   },
@@ -147,6 +164,7 @@ InOutSpec in_out_specs[] =
     "",
     "",
     "--show-base-names --weak-mode",
+    abigail::tools_utils::ABIDIFF_ABI_CHANGE,
     "data/test-abicompat/test6-var-changed-report-1.txt",
     "output/test-abicompat/test6-var-changed-report-1.txt",
   },
@@ -156,6 +174,7 @@ InOutSpec in_out_specs[] =
     "",
     "",
     "--show-base-names --weak-mode",
+    abigail::tools_utils::ABIDIFF_ABI_CHANGE,
     "data/test-abicompat/test6-var-changed-report-2.txt",
     "output/test-abicompat/test6-var-changed-report-2.txt",
   },
@@ -165,6 +184,7 @@ InOutSpec in_out_specs[] =
     "data/test-abicompat/libtest7-fn-changed-libapp-v1.so",
     "",
     "--show-base-names --no-show-locs --no-redundant",
+    abigail::tools_utils::ABIDIFF_ABI_CHANGE,
     "data/test-abicompat/test7-fn-changed-report-0.txt",
     "output/test-abicompat/test7-fn-changed-report-0.txt",
   },
@@ -175,6 +195,7 @@ InOutSpec in_out_specs[] =
     "data/test-abicompat/libtest7-fn-changed-libapp-btf-v1.so",
     "",
     "--show-base-names --no-show-locs --no-redundant --btf",
+    abigail::tools_utils::ABIDIFF_ABI_CHANGE,
     "data/test-abicompat/test7-fn-changed-report-0.1.txt",
     "output/test-abicompat/test7-fn-changed-report-0.1.txt",
   },
@@ -185,6 +206,7 @@ InOutSpec in_out_specs[] =
     "",
     "",
     "--show-base-names --no-show-locs --weak-mode",
+    abigail::tools_utils::ABIDIFF_ABI_CHANGE,
     "data/test-abicompat/test7-fn-changed-report-1.txt",
     "output/test-abicompat/test7-fn-changed-report-1.txt",
   },
@@ -194,6 +216,7 @@ InOutSpec in_out_specs[] =
     "",
     "",
     "--show-base-names --weak-mode",
+    abigail::tools_utils::ABIDIFF_ABI_CHANGE,
     "data/test-abicompat/test7-fn-changed-report-2.txt",
     "output/test-abicompat/test7-fn-changed-report-2.txt",
   },
@@ -204,6 +227,7 @@ InOutSpec in_out_specs[] =
     "",
     "",
     "--show-base-names --no-show-locs --weak-mode",
+    abigail::tools_utils::ABIDIFF_ABI_CHANGE,
     "data/test-abicompat/test7-fn-changed-report-2.1.txt",
     "output/test-abicompat/test7-fn-changed-report-2.1.txt",
   },
@@ -214,6 +238,7 @@ InOutSpec in_out_specs[] =
     "",
     "",
     "--show-base-names --weak-mode",
+    abigail::tools_utils::ABIDIFF_ABI_CHANGE,
     "data/test-abicompat/test8-fn-changed-report-0.txt",
     "output/test-abicompat/test8-fn-changed-report-0.txt",
   },
@@ -223,6 +248,7 @@ InOutSpec in_out_specs[] =
     "",
     "",
     "--show-base-names --weak-mode",
+    abigail::tools_utils::ABIDIFF_ABI_CHANGE,
     "data/test-abicompat/test9-fn-changed-report-0.txt",
     "output/test-abicompat/test9-fn-changed-report-0.txt",
   },
@@ -232,6 +258,7 @@ InOutSpec in_out_specs[] =
     "",
     "",
     "--show-base-names",
+    abigail::tools_utils::ABIDIFF_OK,
     "data/test-abicompat/test10/test10-fn-changed-report-0.txt",
     "output/test-abicompat/test10/test10-fn-changed-report-0.txt",
   },
@@ -241,6 +268,7 @@ InOutSpec in_out_specs[] =
     "",
     "",
     "--show-base-names",
+    abigail::tools_utils::ABIDIFF_OK,
     "data/test-abicompat/test10/test10-fn-changed-report-0.txt",
     "output/test-abicompat/test10/test10-fn-changed-report-0.txt",
   },
@@ -250,6 +278,7 @@ InOutSpec in_out_specs[] =
     "",
     "",
     "--show-base-names",
+    abigail::tools_utils::ABIDIFF_ABI_CHANGE,
     "data/test-abicompat/test10/test10-fn-changed-report-1.txt",
     "output/test-abicompat/test10/test10-fn-changed-report-1.txt",
   },
@@ -259,6 +288,7 @@ InOutSpec in_out_specs[] =
     "",
     "",
     "--show-base-names",
+    abigail::tools_utils::ABIDIFF_ABI_CHANGE,
     "data/test-abicompat/test10/test10-fn-changed-report-2.txt",
     "output/test-abicompat/test10/test10-fn-changed-report-2.txt",
   },
@@ -268,6 +298,7 @@ InOutSpec in_out_specs[] =
     "",
     "",
     "--show-base-names",
+    abigail::tools_utils::ABIDIFF_ABI_CHANGE,
     "data/test-abicompat/test10/test10-fn-changed-report-3.txt",
     "output/test-abicompat/test10/test10-fn-changed-report-3.txt",
   },
@@ -277,11 +308,12 @@ InOutSpec in_out_specs[] =
     "",
     "",
     "--show-base-names",
+    abigail::tools_utils::ABIDIFF_ABI_CHANGE,
     "data/test-abicompat/test10/test10-fn-changed-report-4.txt",
     "output/test-abicompat/test10/test10-fn-changed-report-4.txt",
   },
   // This entry must be the last one.
-  {0, 0, 0, 0, 0, 0, 0}
+  {0, 0, 0, 0, 0, abigail::tools_utils::ABIDIFF_OK, 0, 0}
 };
 
 int
@@ -334,8 +366,9 @@ main()
       cmd += " > " + out_report_path;
 
       bool abicompat_ok = true;
-      abidiff_status status = static_cast<abidiff_status>(system(cmd.c_str()));
-      if (abigail::tools_utils::abidiff_status_has_error(status))
+      int code = system(cmd.c_str());
+      abidiff_status status = static_cast<abidiff_status>(WEXITSTATUS(code));
+      if (status != s->status)
 	abicompat_ok = false;
 
       if (abicompat_ok)
@@ -356,6 +389,9 @@ main()
                << DEFAULT_TERMINAL_COLOR
                << cmd
                << std::endl;
+	  if (status != s->status)
+	    cout << BRIGHT_RED_COLOR
+		 << "expected abicompat exit code: " << s->status << ", got: " << status << std::endl;
 	  cnt_failed++;
 	}
       cnt_total++;
