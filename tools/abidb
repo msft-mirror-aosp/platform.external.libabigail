@@ -7,15 +7,6 @@
 #
 # Author: Frank Ch. Eigler
 
-# tolerate DEBUGINFOD_VERBOSE*
-# tolerate --submit of linker-script fake .so's like libc.so
-# option for abidw options such as >> --abidiff  << --outfile new.xml /lib64/foo.so.2
-# option for abicheck options
-# accumulate unresolved symbols
-# parallelize submissions natively - or tolerate xargs -P abidb --submit
-# 32/64-bit-filter check libraries
-# abidw -> -fvisibility filter!
-
 
 from __future__ import print_function
 
