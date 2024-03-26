@@ -116,7 +116,7 @@
         <!-- s0::s0() -->
         <function-decl name='s0' mangled-name='_ZN2s0C1Ev' filepath='/home/dodji/git/libabigail/dwarf/tests/data/test-read-dwarf/test1.cc' line='21' column='1' declared-inline='yes' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZN2s0C1Ev'>
           <!-- implicit parameter of type 's0*' -->
-          <parameter type-id='type-id-11' name='this' is-artificial='yes'/>
+          <parameter type-id='type-id-11' is-artificial='yes'/>
           <!-- void -->
           <return type-id='type-id-12'/>
         </function-decl>
@@ -125,7 +125,7 @@
         <!-- s0::~s0() -->
         <function-decl name='~s0' mangled-name='_ZN2s0D1Ev' filepath='/home/dodji/git/libabigail/dwarf/tests/data/test-read-dwarf/test1.cc' line='27' column='1' declared-inline='yes' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZN2s0D1Ev'>
           <!-- implicit parameter of type 's0*' -->
-          <parameter type-id='type-id-11' name='this' is-artificial='yes'/>
+          <parameter type-id='type-id-11' is-artificial='yes'/>
           <!-- void -->
           <return type-id='type-id-12'/>
         </function-decl>
@@ -134,7 +134,7 @@
         <!-- s0::integer s0::mem_fun() -->
         <function-decl name='mem_fun' mangled-name='_ZN2s07mem_funEv' filepath='/home/dodji/git/libabigail/dwarf/tests/data/test-read-dwarf/test1.cc' line='36' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZN2s07mem_funEv'>
           <!-- implicit parameter of type 's0*' -->
-          <parameter type-id='type-id-11' name='this' is-artificial='yes'/>
+          <parameter type-id='type-id-11' is-artificial='yes'/>
           <!-- typedef s0::integer -->
           <return type-id='type-id-10'/>
         </function-decl>
@@ -157,7 +157,7 @@
     <!-- void foo(s0&) -->
     <function-decl name='foo' mangled-name='_Z3fooR2s0' filepath='/home/dodji/git/libabigail/dwarf/tests/data/test-read-dwarf/test1.cc' line='42' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_Z3fooR2s0'>
       <!-- parameter of type 's0&' -->
-      <parameter type-id='type-id-14' name='s' filepath='/home/dodji/git/libabigail/dwarf/tests/data/test-read-dwarf/test1.cc' line='42' column='1'/>
+      <parameter type-id='type-id-14' filepath='/home/dodji/git/libabigail/dwarf/tests/data/test-read-dwarf/test1.cc' line='42' column='1'/>
       <!-- void -->
       <return type-id='type-id-12'/>
     </function-decl>

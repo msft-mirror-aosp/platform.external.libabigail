@@ -18,7 +18,7 @@
       </data-member>
       <member-function access='public' const='yes'>
         <function-decl name='foo' mangled-name='_ZNK1S3fooEv' filepath='/home/dodji/git/libabigail/master/tests/data/test-read-dwarf/test8-qualified-this-pointer.cc' line='14' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZNK1S3fooEv'>
-          <parameter type-id='type-id-3' name='this' is-artificial='yes'/>
+          <parameter type-id='type-id-3' is-artificial='yes'/>
           <return type-id='type-id-1'/>
         </function-decl>
       </member-function>

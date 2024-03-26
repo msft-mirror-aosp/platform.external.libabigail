@@ -476,7 +476,7 @@
           <!-- std::size_t std::char_traits<char>::length() -->
           <function-decl name='length' mangled-name='_ZNSt11char_traitsIcE6lengthEPKc' filepath='/usr/include/c++/5.3.1/bits/char_traits.h' line='266' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZNSt11char_traitsIcE6lengthEPKc'>
             <!-- parameter of type 'const std::char_traits<char>::char_type*' -->
-            <parameter type-id='type-id-66' name='__s' filepath='/usr/include/c++/5.3.1/bits/char_traits.h' line='266' column='1'/>
+            <parameter type-id='type-id-66' filepath='/usr/include/c++/5.3.1/bits/char_traits.h' line='266' column='1'/>
             <!-- typedef std::size_t -->
             <return type-id='type-id-111'/>
           </function-decl>
@@ -495,9 +495,9 @@
       <!-- std::basic_string<char, std::char_traits<char>, std::allocator<char> > std::operator+<char, std::char_traits<char>, std::allocator<char> >(const char*, const std::basic_string<char, std::char_traits<char>, std::allocator<char> >&) -->
       <function-decl name='operator+&lt;char, std::char_traits&lt;char&gt;, std::allocator&lt;char&gt; &gt;' mangled-name='_ZStplIcSt11char_traitsIcESaIcEESbIT_T0_T1_EPKS3_RKS6_' filepath='/usr/include/c++/5.3.1/bits/basic_string.tcc' line='1151' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZStplIcSt11char_traitsIcESaIcEESbIT_T0_T1_EPKS3_RKS6_'>
         <!-- parameter of type 'const char*' -->
-        <parameter type-id='type-id-20' name='__lhs' filepath='/usr/include/c++/5.3.1/bits/basic_string.tcc' line='1151' column='1'/>
+        <parameter type-id='type-id-20' filepath='/usr/include/c++/5.3.1/bits/basic_string.tcc' line='1151' column='1'/>
         <!-- parameter of type 'const std::basic_string<char, std::char_traits<char>, std::allocator<char> >&' -->
-        <parameter type-id='type-id-56' name='__rhs' filepath='/usr/include/c++/5.3.1/bits/basic_string.tcc' line='1152' column='1'/>
+        <parameter type-id='type-id-56' filepath='/usr/include/c++/5.3.1/bits/basic_string.tcc' line='1152' column='1'/>
         <!-- class std::basic_string<char, std::char_traits<char>, std::allocator<char> > -->
         <return type-id='type-id-54'/>
       </function-decl>
@@ -511,14 +511,14 @@
     <!-- std::string foo(const std::string&) -->
     <function-decl name='foo' mangled-name='_Z3fooRKSs' filepath='/home/dodji/git/libabigail.git/suppr/tests/data/test-read-dwarf/test24-drop-fns.cc' line='14' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_Z3fooRKSs'>
       <!-- parameter of type 'const std::string&' -->
-      <parameter type-id='type-id-72' name='s' filepath='/home/dodji/git/libabigail.git/suppr/tests/data/test-read-dwarf/test24-drop-fns.cc' line='14' column='1'/>
+      <parameter type-id='type-id-72' filepath='/home/dodji/git/libabigail.git/suppr/tests/data/test-read-dwarf/test24-drop-fns.cc' line='14' column='1'/>
       <!-- typedef std::string -->
       <return type-id='type-id-70'/>
     </function-decl>
     <!-- std::ostream* bar(const std::string&) -->
     <function-decl name='bar' mangled-name='_Z3barRKSs' filepath='/home/dodji/git/libabigail.git/suppr/tests/data/test-read-dwarf/test24-drop-fns.cc' line='21' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_Z3barRKSs'>
       <!-- parameter of type 'const std::string&' -->
-      <parameter type-id='type-id-72' name='str' filepath='/home/dodji/git/libabigail.git/suppr/tests/data/test-read-dwarf/test24-drop-fns.cc' line='21' column='1'/>
+      <parameter type-id='type-id-72' filepath='/home/dodji/git/libabigail.git/suppr/tests/data/test-read-dwarf/test24-drop-fns.cc' line='21' column='1'/>
       <!-- std::ostream* -->
       <return type-id='type-id-114'/>
     </function-decl>

@@ -546,8 +546,8 @@
         </data-member>
         <member-function access='public'>
           <function-decl name='reset&lt;boost::iostreams::detail::file_descriptor_impl&gt;' mangled-name='_ZN5boost10shared_ptrINS_9iostreams6detail20file_descriptor_implEE5resetIS3_EEvPT_' filepath='src/third_party/boost-1.60.0/boost/smart_ptr/shared_ptr.hpp' line='662' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZN5boost10shared_ptrINS_9iostreams6detail20file_descriptor_implEE5resetIS3_EEvPT_'>
-            <parameter type-id='type-id-113' name='this' is-artificial='yes'/>
-            <parameter type-id='type-id-89' name='p' filepath='src/third_party/boost-1.60.0/boost/smart_ptr/shared_ptr.hpp' line='662' column='1'/>
+            <parameter type-id='type-id-113' is-artificial='yes'/>
+            <parameter type-id='type-id-89' filepath='src/third_party/boost-1.60.0/boost/smart_ptr/shared_ptr.hpp' line='662' column='1'/>
             <return type-id='type-id-266'/>
           </function-decl>
         </member-function>
@@ -600,9 +600,9 @@
           <return type-id='type-id-266'/>
         </function-decl>
         <function-decl name='sp_pointer_construct&lt;boost::iostreams::detail::file_descriptor_impl, boost::iostreams::detail::file_descriptor_impl&gt;' mangled-name='_ZN5boost6detail20sp_pointer_constructINS_9iostreams6detail20file_descriptor_implES4_EEvPNS_10shared_ptrIT_EEPT0_RNS0_12shared_countE' filepath='src/third_party/boost-1.60.0/boost/smart_ptr/shared_ptr.hpp' line='282' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZN5boost6detail20sp_pointer_constructINS_9iostreams6detail20file_descriptor_implES4_EEvPNS_10shared_ptrIT_EEPT0_RNS0_12shared_countE'>
-          <parameter type-id='type-id-113' name='ppx' filepath='src/third_party/boost-1.60.0/boost/smart_ptr/shared_ptr.hpp' line='282' column='1'/>
-          <parameter type-id='type-id-89' name='p' filepath='src/third_party/boost-1.60.0/boost/smart_ptr/shared_ptr.hpp' line='282' column='1'/>
-          <parameter type-id='type-id-59' name='pn' filepath='src/third_party/boost-1.60.0/boost/smart_ptr/shared_ptr.hpp' line='282' column='1'/>
+          <parameter type-id='type-id-113' filepath='src/third_party/boost-1.60.0/boost/smart_ptr/shared_ptr.hpp' line='282' column='1'/>
+          <parameter type-id='type-id-89' filepath='src/third_party/boost-1.60.0/boost/smart_ptr/shared_ptr.hpp' line='282' column='1'/>
+          <parameter type-id='type-id-59' filepath='src/third_party/boost-1.60.0/boost/smart_ptr/shared_ptr.hpp' line='282' column='1'/>
           <return type-id='type-id-266'/>
         </function-decl>
       </namespace-decl>
@@ -616,13 +616,13 @@
           </member-function>
           <member-function access='public' destructor='yes' vtable-offset='0'>
             <function-decl name='~clone_base' mangled-name='_ZN5boost16exception_detail10clone_baseD0Ev' filepath='src/third_party/boost-1.60.0/boost/exception/exception.hpp' line='406' column='1' visibility='default' binding='global' size-in-bits='64'>
-              <parameter type-id='type-id-75' name='this' is-artificial='yes'/>
+              <parameter type-id='type-id-75' is-artificial='yes'/>
               <return type-id='type-id-266'/>
             </function-decl>
           </member-function>
           <member-function access='public' destructor='yes' vtable-offset='0'>
             <function-decl name='~clone_base' mangled-name='_ZN5boost16exception_detail10clone_baseD2Ev' filepath='src/third_party/boost-1.60.0/boost/exception/exception.hpp' line='406' column='1' visibility='default' binding='global' size-in-bits='64'>
-              <parameter type-id='type-id-75' name='this' is-artificial='yes'/>
+              <parameter type-id='type-id-75' is-artificial='yes'/>
               <return type-id='type-id-266'/>
             </function-decl>
           </member-function>
@@ -653,13 +653,13 @@
           </member-function>
           <member-function access='public' destructor='yes' vtable-offset='0'>
             <function-decl name='~clone_impl' mangled-name='_ZN5boost16exception_detail10clone_implINS0_19error_info_injectorINSt8ios_base7failureB5cxx11EEEED0Ev' filepath='src/third_party/boost-1.60.0/boost/exception/exception.hpp' line='462' column='1' visibility='default' binding='global' size-in-bits='64'>
-              <parameter type-id='type-id-77' name='this' is-artificial='yes'/>
+              <parameter type-id='type-id-77' is-artificial='yes'/>
               <return type-id='type-id-266'/>
             </function-decl>
           </member-function>
           <member-function access='public' destructor='yes' vtable-offset='0'>
             <function-decl name='~clone_impl' mangled-name='_ZN5boost16exception_detail10clone_implINS0_19error_info_injectorINSt8ios_base7failureB5cxx11EEEED1Ev' filepath='src/third_party/boost-1.60.0/boost/exception/exception.hpp' line='462' column='1' visibility='default' binding='global' size-in-bits='64'>
-              <parameter type-id='type-id-77' name='this' is-artificial='yes'/>
+              <parameter type-id='type-id-77' is-artificial='yes'/>
               <return type-id='type-id-266'/>
             </function-decl>
           </member-function>
@@ -698,7 +698,7 @@
           </member-function>
           <member-function access='public' destructor='yes' vtable-offset='0'>
             <function-decl name='~error_info_injector' mangled-name='_ZN5boost16exception_detail19error_info_injectorINSt8ios_base7failureB5cxx11EED0Ev' filepath='src/third_party/boost-1.60.0/boost/exception/exception.hpp' line='336' column='1' visibility='default' binding='global' size-in-bits='64'>
-              <parameter type-id='type-id-81' name='this' is-artificial='yes'/>
+              <parameter type-id='type-id-81' is-artificial='yes'/>
               <return type-id='type-id-266'/>
             </function-decl>
           </member-function>
@@ -709,13 +709,13 @@
           </member-function>
         </class-decl>
         <function-decl name='copy_boost_exception' mangled-name='_ZN5boost16exception_detail20copy_boost_exceptionEPNS_9exceptionEPKS1_' filepath='src/third_party/boost-1.60.0/boost/exception/exception.hpp' line='418' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZN5boost16exception_detail20copy_boost_exceptionEPNS_9exceptionEPKS1_'>
-          <parameter type-id='type-id-73' name='a' filepath='src/third_party/boost-1.60.0/boost/exception/exception.hpp' line='418' column='1'/>
-          <parameter type-id='type-id-139' name='b' filepath='src/third_party/boost-1.60.0/boost/exception/exception.hpp' line='418' column='1'/>
+          <parameter type-id='type-id-73' filepath='src/third_party/boost-1.60.0/boost/exception/exception.hpp' line='418' column='1'/>
+          <parameter type-id='type-id-139' filepath='src/third_party/boost-1.60.0/boost/exception/exception.hpp' line='418' column='1'/>
           <return type-id='type-id-266'/>
         </function-decl>
       </namespace-decl>
       <function-decl name='enable_current_exception&lt;boost::exception_detail::error_info_injector&lt;std::ios_base::failure&gt; &gt;' mangled-name='_ZN5boost24enable_current_exceptionINS_16exception_detail19error_info_injectorINSt8ios_base7failureB5cxx11EEEEENS1_10clone_implIT_EERKS7_' filepath='src/third_party/boost-1.60.0/boost/exception/exception.hpp' line='490' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZN5boost24enable_current_exceptionINS_16exception_detail19error_info_injectorINSt8ios_base7failureB5cxx11EEEEENS1_10clone_implIT_EERKS7_'>
-        <parameter type-id='type-id-146' name='x' filepath='src/third_party/boost-1.60.0/boost/exception/exception.hpp' line='490' column='1'/>
+        <parameter type-id='type-id-146' filepath='src/third_party/boost-1.60.0/boost/exception/exception.hpp' line='490' column='1'/>
         <return type-id='type-id-76'/>
       </function-decl>
       <namespace-decl name='iostreams'>
@@ -731,119 +731,119 @@
           </data-member>
           <member-function access='public' constructor='yes'>
             <function-decl name='file_descriptor' mangled-name='_ZN5boost9iostreams15file_descriptorC2Ev' filepath='src/third_party/boost-1.60.0/libs/iostreams/src/file_descriptor.cpp' line='360' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZN5boost9iostreams15file_descriptorC2Ev'>
-              <parameter type-id='type-id-101' name='this' is-artificial='yes'/>
+              <parameter type-id='type-id-101' is-artificial='yes'/>
               <return type-id='type-id-266'/>
             </function-decl>
           </member-function>
           <member-function access='public' constructor='yes'>
             <function-decl name='file_descriptor' mangled-name='_ZN5boost9iostreams15file_descriptorC2EiNS0_21file_descriptor_flagsE' filepath='src/third_party/boost-1.60.0/libs/iostreams/src/file_descriptor.cpp' line='362' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZN5boost9iostreams15file_descriptorC2EiNS0_21file_descriptor_flagsE'>
-              <parameter type-id='type-id-101' name='this' is-artificial='yes'/>
-              <parameter type-id='type-id-275' name='fd' filepath='src/third_party/boost-1.60.0/libs/iostreams/src/file_descriptor.cpp' line='362' column='1'/>
-              <parameter type-id='type-id-277' name='f' filepath='src/third_party/boost-1.60.0/libs/iostreams/src/file_descriptor.cpp' line='362' column='1'/>
+              <parameter type-id='type-id-101' is-artificial='yes'/>
+              <parameter type-id='type-id-275' filepath='src/third_party/boost-1.60.0/libs/iostreams/src/file_descriptor.cpp' line='362' column='1'/>
+              <parameter type-id='type-id-277' filepath='src/third_party/boost-1.60.0/libs/iostreams/src/file_descriptor.cpp' line='362' column='1'/>
               <return type-id='type-id-266'/>
             </function-decl>
           </member-function>
           <member-function access='public'>
             <function-decl name='open' mangled-name='_ZN5boost9iostreams15file_descriptor4openEiNS0_21file_descriptor_flagsE' filepath='src/third_party/boost-1.60.0/libs/iostreams/src/file_descriptor.cpp' line='400' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZN5boost9iostreams15file_descriptor4openEiNS0_21file_descriptor_flagsE'>
-              <parameter type-id='type-id-101' name='this' is-artificial='yes'/>
-              <parameter type-id='type-id-275' name='fd' filepath='src/third_party/boost-1.60.0/libs/iostreams/src/file_descriptor.cpp' line='400' column='1'/>
-              <parameter type-id='type-id-277' name='f' filepath='src/third_party/boost-1.60.0/libs/iostreams/src/file_descriptor.cpp' line='400' column='1'/>
+              <parameter type-id='type-id-101' is-artificial='yes'/>
+              <parameter type-id='type-id-275' filepath='src/third_party/boost-1.60.0/libs/iostreams/src/file_descriptor.cpp' line='400' column='1'/>
+              <parameter type-id='type-id-277' filepath='src/third_party/boost-1.60.0/libs/iostreams/src/file_descriptor.cpp' line='400' column='1'/>
               <return type-id='type-id-266'/>
             </function-decl>
           </member-function>
           <member-function access='public' constructor='yes'>
             <function-decl name='file_descriptor' mangled-name='_ZN5boost9iostreams15file_descriptorC2ERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESt13_Ios_Openmode' filepath='src/third_party/boost-1.60.0/libs/iostreams/src/file_descriptor.cpp' line='386' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZN5boost9iostreams15file_descriptorC2ERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESt13_Ios_Openmode'>
-              <parameter type-id='type-id-101' name='this' is-artificial='yes'/>
-              <parameter type-id='type-id-198' name='path' filepath='src/third_party/boost-1.60.0/libs/iostreams/src/file_descriptor.cpp' line='386' column='1'/>
-              <parameter type-id='type-id-253' name='mode' filepath='src/third_party/boost-1.60.0/libs/iostreams/src/file_descriptor.cpp' line='387' column='1'/>
+              <parameter type-id='type-id-101' is-artificial='yes'/>
+              <parameter type-id='type-id-198' filepath='src/third_party/boost-1.60.0/libs/iostreams/src/file_descriptor.cpp' line='386' column='1'/>
+              <parameter type-id='type-id-253' filepath='src/third_party/boost-1.60.0/libs/iostreams/src/file_descriptor.cpp' line='387' column='1'/>
               <return type-id='type-id-266'/>
             </function-decl>
           </member-function>
           <member-function access='public'>
             <function-decl name='open' mangled-name='_ZN5boost9iostreams15file_descriptor4openERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESt13_Ios_Openmode' filepath='src/third_party/boost-1.60.0/libs/iostreams/src/file_descriptor.cpp' line='424' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZN5boost9iostreams15file_descriptor4openERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESt13_Ios_Openmode'>
-              <parameter type-id='type-id-101' name='this' is-artificial='yes'/>
-              <parameter type-id='type-id-198' name='path' filepath='src/third_party/boost-1.60.0/libs/iostreams/src/file_descriptor.cpp' line='424' column='1'/>
-              <parameter type-id='type-id-253' name='mode' filepath='src/third_party/boost-1.60.0/libs/iostreams/src/file_descriptor.cpp' line='424' column='1'/>
+              <parameter type-id='type-id-101' is-artificial='yes'/>
+              <parameter type-id='type-id-198' filepath='src/third_party/boost-1.60.0/libs/iostreams/src/file_descriptor.cpp' line='424' column='1'/>
+              <parameter type-id='type-id-253' filepath='src/third_party/boost-1.60.0/libs/iostreams/src/file_descriptor.cpp' line='424' column='1'/>
               <return type-id='type-id-266'/>
             </function-decl>
           </member-function>
           <member-function access='private'>
             <function-decl name='open' mangled-name='_ZN5boost9iostreams15file_descriptor4openERKNS0_6detail4pathESt13_Ios_OpenmodeS6_' filepath='src/third_party/boost-1.60.0/libs/iostreams/src/file_descriptor.cpp' line='447' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZN5boost9iostreams15file_descriptor4openERKNS0_6detail4pathESt13_Ios_OpenmodeS6_'>
-              <parameter type-id='type-id-101' name='this' is-artificial='yes'/>
-              <parameter type-id='type-id-159' name='path' filepath='src/third_party/boost-1.60.0/libs/iostreams/src/file_descriptor.cpp' line='448' column='1'/>
-              <parameter type-id='type-id-253' name='mode' filepath='src/third_party/boost-1.60.0/libs/iostreams/src/file_descriptor.cpp' line='449' column='1'/>
-              <parameter type-id='type-id-253' name='base' filepath='src/third_party/boost-1.60.0/libs/iostreams/src/file_descriptor.cpp' line='450' column='1'/>
+              <parameter type-id='type-id-101' is-artificial='yes'/>
+              <parameter type-id='type-id-159' filepath='src/third_party/boost-1.60.0/libs/iostreams/src/file_descriptor.cpp' line='448' column='1'/>
+              <parameter type-id='type-id-253' filepath='src/third_party/boost-1.60.0/libs/iostreams/src/file_descriptor.cpp' line='449' column='1'/>
+              <parameter type-id='type-id-253' filepath='src/third_party/boost-1.60.0/libs/iostreams/src/file_descriptor.cpp' line='450' column='1'/>
               <return type-id='type-id-266'/>
             </function-decl>
           </member-function>
           <member-function access='public' constructor='yes'>
             <function-decl name='file_descriptor' mangled-name='_ZN5boost9iostreams15file_descriptorC2EPKcSt13_Ios_Openmode' filepath='src/third_party/boost-1.60.0/libs/iostreams/src/file_descriptor.cpp' line='391' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZN5boost9iostreams15file_descriptorC2EPKcSt13_Ios_Openmode'>
-              <parameter type-id='type-id-101' name='this' is-artificial='yes'/>
-              <parameter type-id='type-id-31' name='path' filepath='src/third_party/boost-1.60.0/libs/iostreams/src/file_descriptor.cpp' line='391' column='1'/>
-              <parameter type-id='type-id-253' name='mode' filepath='src/third_party/boost-1.60.0/libs/iostreams/src/file_descriptor.cpp' line='392' column='1'/>
+              <parameter type-id='type-id-101' is-artificial='yes'/>
+              <parameter type-id='type-id-31' filepath='src/third_party/boost-1.60.0/libs/iostreams/src/file_descriptor.cpp' line='391' column='1'/>
+              <parameter type-id='type-id-253' filepath='src/third_party/boost-1.60.0/libs/iostreams/src/file_descriptor.cpp' line='392' column='1'/>
               <return type-id='type-id-266'/>
             </function-decl>
           </member-function>
           <member-function access='public'>
             <function-decl name='open' mangled-name='_ZN5boost9iostreams15file_descriptor4openEPKcSt13_Ios_Openmode' filepath='src/third_party/boost-1.60.0/libs/iostreams/src/file_descriptor.cpp' line='427' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZN5boost9iostreams15file_descriptor4openEPKcSt13_Ios_Openmode'>
-              <parameter type-id='type-id-101' name='this' is-artificial='yes'/>
-              <parameter type-id='type-id-31' name='path' filepath='src/third_party/boost-1.60.0/libs/iostreams/src/file_descriptor.cpp' line='427' column='1'/>
-              <parameter type-id='type-id-253' name='mode' filepath='src/third_party/boost-1.60.0/libs/iostreams/src/file_descriptor.cpp' line='427' column='1'/>
+              <parameter type-id='type-id-101' is-artificial='yes'/>
+              <parameter type-id='type-id-31' filepath='src/third_party/boost-1.60.0/libs/iostreams/src/file_descriptor.cpp' line='427' column='1'/>
+              <parameter type-id='type-id-253' filepath='src/third_party/boost-1.60.0/libs/iostreams/src/file_descriptor.cpp' line='427' column='1'/>
               <return type-id='type-id-266'/>
             </function-decl>
           </member-function>
           <member-function access='public' constructor='yes'>
             <function-decl name='file_descriptor' mangled-name='_ZN5boost9iostreams15file_descriptorC2ERKS1_' filepath='src/third_party/boost-1.60.0/libs/iostreams/src/file_descriptor.cpp' line='396' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZN5boost9iostreams15file_descriptorC2ERKS1_'>
-              <parameter type-id='type-id-101' name='this' is-artificial='yes'/>
-              <parameter type-id='type-id-162' name='other' filepath='src/third_party/boost-1.60.0/libs/iostreams/src/file_descriptor.cpp' line='396' column='1'/>
+              <parameter type-id='type-id-101' is-artificial='yes'/>
+              <parameter type-id='type-id-162' filepath='src/third_party/boost-1.60.0/libs/iostreams/src/file_descriptor.cpp' line='396' column='1'/>
               <return type-id='type-id-266'/>
             </function-decl>
           </member-function>
           <member-function access='public'>
             <function-decl name='is_open' mangled-name='_ZNK5boost9iostreams15file_descriptor7is_openEv' filepath='src/third_party/boost-1.60.0/libs/iostreams/src/file_descriptor.cpp' line='430' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZNK5boost9iostreams15file_descriptor7is_openEv'>
-              <parameter type-id='type-id-163' name='this' is-artificial='yes'/>
+              <parameter type-id='type-id-163' is-artificial='yes'/>
               <return type-id='type-id-1'/>
             </function-decl>
           </member-function>
           <member-function access='public'>
             <function-decl name='close' mangled-name='_ZN5boost9iostreams15file_descriptor5closeEv' filepath='src/third_party/boost-1.60.0/libs/iostreams/src/file_descriptor.cpp' line='432' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZN5boost9iostreams15file_descriptor5closeEv'>
-              <parameter type-id='type-id-101' name='this' is-artificial='yes'/>
+              <parameter type-id='type-id-101' is-artificial='yes'/>
               <return type-id='type-id-266'/>
             </function-decl>
           </member-function>
           <member-function access='public'>
             <function-decl name='read' mangled-name='_ZN5boost9iostreams15file_descriptor4readEPcl' filepath='src/third_party/boost-1.60.0/libs/iostreams/src/file_descriptor.cpp' line='434' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZN5boost9iostreams15file_descriptor4readEPcl'>
-              <parameter type-id='type-id-101' name='this' is-artificial='yes'/>
-              <parameter type-id='type-id-103' name='s' filepath='src/third_party/boost-1.60.0/libs/iostreams/src/file_descriptor.cpp' line='434' column='1'/>
-              <parameter type-id='type-id-262' name='n' filepath='src/third_party/boost-1.60.0/libs/iostreams/src/file_descriptor.cpp' line='434' column='1'/>
+              <parameter type-id='type-id-101' is-artificial='yes'/>
+              <parameter type-id='type-id-103' filepath='src/third_party/boost-1.60.0/libs/iostreams/src/file_descriptor.cpp' line='434' column='1'/>
+              <parameter type-id='type-id-262' filepath='src/third_party/boost-1.60.0/libs/iostreams/src/file_descriptor.cpp' line='434' column='1'/>
               <return type-id='type-id-262'/>
             </function-decl>
           </member-function>
           <member-function access='public'>
             <function-decl name='write' mangled-name='_ZN5boost9iostreams15file_descriptor5writeEPKcl' filepath='src/third_party/boost-1.60.0/libs/iostreams/src/file_descriptor.cpp' line='437' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZN5boost9iostreams15file_descriptor5writeEPKcl'>
-              <parameter type-id='type-id-101' name='this' is-artificial='yes'/>
-              <parameter type-id='type-id-165' name='s' filepath='src/third_party/boost-1.60.0/libs/iostreams/src/file_descriptor.cpp' line='437' column='1'/>
-              <parameter type-id='type-id-262' name='n' filepath='src/third_party/boost-1.60.0/libs/iostreams/src/file_descriptor.cpp' line='437' column='1'/>
+              <parameter type-id='type-id-101' is-artificial='yes'/>
+              <parameter type-id='type-id-165' filepath='src/third_party/boost-1.60.0/libs/iostreams/src/file_descriptor.cpp' line='437' column='1'/>
+              <parameter type-id='type-id-262' filepath='src/third_party/boost-1.60.0/libs/iostreams/src/file_descriptor.cpp' line='437' column='1'/>
               <return type-id='type-id-262'/>
             </function-decl>
           </member-function>
           <member-function access='public'>
             <function-decl name='seek' mangled-name='_ZN5boost9iostreams15file_descriptor4seekElSt12_Ios_Seekdir' filepath='src/third_party/boost-1.60.0/libs/iostreams/src/file_descriptor.cpp' line='440' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZN5boost9iostreams15file_descriptor4seekElSt12_Ios_Seekdir'>
-              <parameter type-id='type-id-101' name='this' is-artificial='yes'/>
-              <parameter type-id='type-id-278' name='off' filepath='src/third_party/boost-1.60.0/libs/iostreams/src/file_descriptor.cpp' line='440' column='1'/>
-              <parameter type-id='type-id-255' name='way' filepath='src/third_party/boost-1.60.0/libs/iostreams/src/file_descriptor.cpp' line='440' column='1'/>
+              <parameter type-id='type-id-101' is-artificial='yes'/>
+              <parameter type-id='type-id-278' filepath='src/third_party/boost-1.60.0/libs/iostreams/src/file_descriptor.cpp' line='440' column='1'/>
+              <parameter type-id='type-id-255' filepath='src/third_party/boost-1.60.0/libs/iostreams/src/file_descriptor.cpp' line='440' column='1'/>
               <return type-id='type-id-261'/>
             </function-decl>
           </member-function>
           <member-function access='public'>
             <function-decl name='handle' mangled-name='_ZNK5boost9iostreams15file_descriptor6handleEv' filepath='src/third_party/boost-1.60.0/libs/iostreams/src/file_descriptor.cpp' line='443' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZNK5boost9iostreams15file_descriptor6handleEv'>
-              <parameter type-id='type-id-163' name='this' is-artificial='yes'/>
+              <parameter type-id='type-id-163' is-artificial='yes'/>
               <return type-id='type-id-275'/>
             </function-decl>
           </member-function>
           <member-function access='private'>
             <function-decl name='init' mangled-name='_ZN5boost9iostreams15file_descriptor4initEv' filepath='src/third_party/boost-1.60.0/libs/iostreams/src/file_descriptor.cpp' line='445' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZN5boost9iostreams15file_descriptor4initEv'>
-              <parameter type-id='type-id-101' name='this' is-artificial='yes'/>
+              <parameter type-id='type-id-101' is-artificial='yes'/>
               <return type-id='type-id-266'/>
             </function-decl>
           </member-function>
@@ -852,64 +852,64 @@
           <base-class access='private' layout-offset-in-bits='0' type-id='type-id-100'/>
           <member-function access='public' constructor='yes'>
             <function-decl name='file_descriptor_sink' mangled-name='_ZN5boost9iostreams20file_descriptor_sinkC2EiNS0_21file_descriptor_flagsE' filepath='src/third_party/boost-1.60.0/libs/iostreams/src/file_descriptor.cpp' line='531' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZN5boost9iostreams20file_descriptor_sinkC2EiNS0_21file_descriptor_flagsE'>
-              <parameter type-id='type-id-105' name='this' is-artificial='yes'/>
-              <parameter type-id='type-id-279' name='fd' filepath='src/third_party/boost-1.60.0/libs/iostreams/src/file_descriptor.cpp' line='532' column='1'/>
-              <parameter type-id='type-id-277' name='f' filepath='src/third_party/boost-1.60.0/libs/iostreams/src/file_descriptor.cpp' line='532' column='1'/>
+              <parameter type-id='type-id-105' is-artificial='yes'/>
+              <parameter type-id='type-id-279' filepath='src/third_party/boost-1.60.0/libs/iostreams/src/file_descriptor.cpp' line='532' column='1'/>
+              <parameter type-id='type-id-277' filepath='src/third_party/boost-1.60.0/libs/iostreams/src/file_descriptor.cpp' line='532' column='1'/>
               <return type-id='type-id-266'/>
             </function-decl>
           </member-function>
           <member-function access='public'>
             <function-decl name='open' mangled-name='_ZN5boost9iostreams20file_descriptor_sink4openEiNS0_21file_descriptor_flagsE' filepath='src/third_party/boost-1.60.0/libs/iostreams/src/file_descriptor.cpp' line='565' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZN5boost9iostreams20file_descriptor_sink4openEiNS0_21file_descriptor_flagsE'>
-              <parameter type-id='type-id-105' name='this' is-artificial='yes'/>
-              <parameter type-id='type-id-279' name='fd' filepath='src/third_party/boost-1.60.0/libs/iostreams/src/file_descriptor.cpp' line='565' column='1'/>
-              <parameter type-id='type-id-277' name='f' filepath='src/third_party/boost-1.60.0/libs/iostreams/src/file_descriptor.cpp' line='565' column='1'/>
+              <parameter type-id='type-id-105' is-artificial='yes'/>
+              <parameter type-id='type-id-279' filepath='src/third_party/boost-1.60.0/libs/iostreams/src/file_descriptor.cpp' line='565' column='1'/>
+              <parameter type-id='type-id-277' filepath='src/third_party/boost-1.60.0/libs/iostreams/src/file_descriptor.cpp' line='565' column='1'/>
               <return type-id='type-id-266'/>
             </function-decl>
           </member-function>
           <member-function access='public' constructor='yes'>
             <function-decl name='file_descriptor_sink' mangled-name='_ZN5boost9iostreams20file_descriptor_sinkC2ERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESt13_Ios_Openmode' filepath='src/third_party/boost-1.60.0/libs/iostreams/src/file_descriptor.cpp' line='553' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZN5boost9iostreams20file_descriptor_sinkC2ERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESt13_Ios_Openmode'>
-              <parameter type-id='type-id-105' name='this' is-artificial='yes'/>
-              <parameter type-id='type-id-198' name='path' filepath='src/third_party/boost-1.60.0/libs/iostreams/src/file_descriptor.cpp' line='554' column='1'/>
-              <parameter type-id='type-id-253' name='mode' filepath='src/third_party/boost-1.60.0/libs/iostreams/src/file_descriptor.cpp' line='554' column='1'/>
+              <parameter type-id='type-id-105' is-artificial='yes'/>
+              <parameter type-id='type-id-198' filepath='src/third_party/boost-1.60.0/libs/iostreams/src/file_descriptor.cpp' line='554' column='1'/>
+              <parameter type-id='type-id-253' filepath='src/third_party/boost-1.60.0/libs/iostreams/src/file_descriptor.cpp' line='554' column='1'/>
               <return type-id='type-id-266'/>
             </function-decl>
           </member-function>
           <member-function access='public'>
             <function-decl name='open' mangled-name='_ZN5boost9iostreams20file_descriptor_sink4openERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESt13_Ios_Openmode' filepath='src/third_party/boost-1.60.0/libs/iostreams/src/file_descriptor.cpp' line='585' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZN5boost9iostreams20file_descriptor_sink4openERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESt13_Ios_Openmode'>
-              <parameter type-id='type-id-105' name='this' is-artificial='yes'/>
-              <parameter type-id='type-id-198' name='path' filepath='src/third_party/boost-1.60.0/libs/iostreams/src/file_descriptor.cpp' line='586' column='1'/>
-              <parameter type-id='type-id-253' name='mode' filepath='src/third_party/boost-1.60.0/libs/iostreams/src/file_descriptor.cpp' line='586' column='1'/>
+              <parameter type-id='type-id-105' is-artificial='yes'/>
+              <parameter type-id='type-id-198' filepath='src/third_party/boost-1.60.0/libs/iostreams/src/file_descriptor.cpp' line='586' column='1'/>
+              <parameter type-id='type-id-253' filepath='src/third_party/boost-1.60.0/libs/iostreams/src/file_descriptor.cpp' line='586' column='1'/>
               <return type-id='type-id-266'/>
             </function-decl>
           </member-function>
           <member-function access='private'>
             <function-decl name='open' mangled-name='_ZN5boost9iostreams20file_descriptor_sink4openERKNS0_6detail4pathESt13_Ios_Openmode' filepath='src/third_party/boost-1.60.0/libs/iostreams/src/file_descriptor.cpp' line='593' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZN5boost9iostreams20file_descriptor_sink4openERKNS0_6detail4pathESt13_Ios_Openmode'>
-              <parameter type-id='type-id-105' name='this' is-artificial='yes'/>
-              <parameter type-id='type-id-159' name='path' filepath='src/third_party/boost-1.60.0/libs/iostreams/src/file_descriptor.cpp' line='594' column='1'/>
-              <parameter type-id='type-id-253' name='mode' filepath='src/third_party/boost-1.60.0/libs/iostreams/src/file_descriptor.cpp' line='594' column='1'/>
+              <parameter type-id='type-id-105' is-artificial='yes'/>
+              <parameter type-id='type-id-159' filepath='src/third_party/boost-1.60.0/libs/iostreams/src/file_descriptor.cpp' line='594' column='1'/>
+              <parameter type-id='type-id-253' filepath='src/third_party/boost-1.60.0/libs/iostreams/src/file_descriptor.cpp' line='594' column='1'/>
               <return type-id='type-id-266'/>
             </function-decl>
           </member-function>
           <member-function access='public' constructor='yes'>
             <function-decl name='file_descriptor_sink' mangled-name='_ZN5boost9iostreams20file_descriptor_sinkC2EPKcSt13_Ios_Openmode' filepath='src/third_party/boost-1.60.0/libs/iostreams/src/file_descriptor.cpp' line='557' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZN5boost9iostreams20file_descriptor_sinkC2EPKcSt13_Ios_Openmode'>
-              <parameter type-id='type-id-105' name='this' is-artificial='yes'/>
-              <parameter type-id='type-id-31' name='path' filepath='src/third_party/boost-1.60.0/libs/iostreams/src/file_descriptor.cpp' line='558' column='1'/>
-              <parameter type-id='type-id-253' name='mode' filepath='src/third_party/boost-1.60.0/libs/iostreams/src/file_descriptor.cpp' line='558' column='1'/>
+              <parameter type-id='type-id-105' is-artificial='yes'/>
+              <parameter type-id='type-id-31' filepath='src/third_party/boost-1.60.0/libs/iostreams/src/file_descriptor.cpp' line='558' column='1'/>
+              <parameter type-id='type-id-253' filepath='src/third_party/boost-1.60.0/libs/iostreams/src/file_descriptor.cpp' line='558' column='1'/>
               <return type-id='type-id-266'/>
             </function-decl>
           </member-function>
           <member-function access='public'>
             <function-decl name='open' mangled-name='_ZN5boost9iostreams20file_descriptor_sink4openEPKcSt13_Ios_Openmode' filepath='src/third_party/boost-1.60.0/libs/iostreams/src/file_descriptor.cpp' line='589' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZN5boost9iostreams20file_descriptor_sink4openEPKcSt13_Ios_Openmode'>
-              <parameter type-id='type-id-105' name='this' is-artificial='yes'/>
-              <parameter type-id='type-id-31' name='path' filepath='src/third_party/boost-1.60.0/libs/iostreams/src/file_descriptor.cpp' line='590' column='1'/>
-              <parameter type-id='type-id-253' name='mode' filepath='src/third_party/boost-1.60.0/libs/iostreams/src/file_descriptor.cpp' line='590' column='1'/>
+              <parameter type-id='type-id-105' is-artificial='yes'/>
+              <parameter type-id='type-id-31' filepath='src/third_party/boost-1.60.0/libs/iostreams/src/file_descriptor.cpp' line='590' column='1'/>
+              <parameter type-id='type-id-253' filepath='src/third_party/boost-1.60.0/libs/iostreams/src/file_descriptor.cpp' line='590' column='1'/>
               <return type-id='type-id-266'/>
             </function-decl>
           </member-function>
           <member-function access='public' constructor='yes'>
             <function-decl name='file_descriptor_sink' mangled-name='_ZN5boost9iostreams20file_descriptor_sinkC2ERKS1_' filepath='src/third_party/boost-1.60.0/libs/iostreams/src/file_descriptor.cpp' line='561' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZN5boost9iostreams20file_descriptor_sinkC2ERKS1_'>
-              <parameter type-id='type-id-105' name='this' is-artificial='yes'/>
-              <parameter type-id='type-id-167' name='other' filepath='src/third_party/boost-1.60.0/libs/iostreams/src/file_descriptor.cpp' line='561' column='1'/>
+              <parameter type-id='type-id-105' is-artificial='yes'/>
+              <parameter type-id='type-id-167' filepath='src/third_party/boost-1.60.0/libs/iostreams/src/file_descriptor.cpp' line='561' column='1'/>
               <return type-id='type-id-266'/>
             </function-decl>
           </member-function>
@@ -921,64 +921,64 @@
           </member-type>
           <member-function access='public' constructor='yes'>
             <function-decl name='file_descriptor_source' mangled-name='_ZN5boost9iostreams22file_descriptor_sourceC2EiNS0_21file_descriptor_flagsE' filepath='src/third_party/boost-1.60.0/libs/iostreams/src/file_descriptor.cpp' line='458' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZN5boost9iostreams22file_descriptor_sourceC2EiNS0_21file_descriptor_flagsE'>
-              <parameter type-id='type-id-107' name='this' is-artificial='yes'/>
-              <parameter type-id='type-id-279' name='fd' filepath='src/third_party/boost-1.60.0/libs/iostreams/src/file_descriptor.cpp' line='459' column='1'/>
-              <parameter type-id='type-id-277' name='f' filepath='src/third_party/boost-1.60.0/libs/iostreams/src/file_descriptor.cpp' line='459' column='1'/>
+              <parameter type-id='type-id-107' is-artificial='yes'/>
+              <parameter type-id='type-id-279' filepath='src/third_party/boost-1.60.0/libs/iostreams/src/file_descriptor.cpp' line='459' column='1'/>
+              <parameter type-id='type-id-277' filepath='src/third_party/boost-1.60.0/libs/iostreams/src/file_descriptor.cpp' line='459' column='1'/>
               <return type-id='type-id-266'/>
             </function-decl>
           </member-function>
           <member-function access='public'>
             <function-decl name='open' mangled-name='_ZN5boost9iostreams22file_descriptor_source4openEiNS0_21file_descriptor_flagsE' filepath='src/third_party/boost-1.60.0/libs/iostreams/src/file_descriptor.cpp' line='493' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZN5boost9iostreams22file_descriptor_source4openEiNS0_21file_descriptor_flagsE'>
-              <parameter type-id='type-id-107' name='this' is-artificial='yes'/>
-              <parameter type-id='type-id-279' name='fd' filepath='src/third_party/boost-1.60.0/libs/iostreams/src/file_descriptor.cpp' line='493' column='1'/>
-              <parameter type-id='type-id-277' name='f' filepath='src/third_party/boost-1.60.0/libs/iostreams/src/file_descriptor.cpp' line='493' column='1'/>
+              <parameter type-id='type-id-107' is-artificial='yes'/>
+              <parameter type-id='type-id-279' filepath='src/third_party/boost-1.60.0/libs/iostreams/src/file_descriptor.cpp' line='493' column='1'/>
+              <parameter type-id='type-id-277' filepath='src/third_party/boost-1.60.0/libs/iostreams/src/file_descriptor.cpp' line='493' column='1'/>
               <return type-id='type-id-266'/>
             </function-decl>
           </member-function>
           <member-function access='public' constructor='yes'>
             <function-decl name='file_descriptor_source' mangled-name='_ZN5boost9iostreams22file_descriptor_sourceC2ERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESt13_Ios_Openmode' filepath='src/third_party/boost-1.60.0/libs/iostreams/src/file_descriptor.cpp' line='480' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZN5boost9iostreams22file_descriptor_sourceC2ERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESt13_Ios_Openmode'>
-              <parameter type-id='type-id-107' name='this' is-artificial='yes'/>
-              <parameter type-id='type-id-198' name='path' filepath='src/third_party/boost-1.60.0/libs/iostreams/src/file_descriptor.cpp' line='481' column='1'/>
-              <parameter type-id='type-id-253' name='mode' filepath='src/third_party/boost-1.60.0/libs/iostreams/src/file_descriptor.cpp' line='481' column='1'/>
+              <parameter type-id='type-id-107' is-artificial='yes'/>
+              <parameter type-id='type-id-198' filepath='src/third_party/boost-1.60.0/libs/iostreams/src/file_descriptor.cpp' line='481' column='1'/>
+              <parameter type-id='type-id-253' filepath='src/third_party/boost-1.60.0/libs/iostreams/src/file_descriptor.cpp' line='481' column='1'/>
               <return type-id='type-id-266'/>
             </function-decl>
           </member-function>
           <member-function access='public'>
             <function-decl name='open' mangled-name='_ZN5boost9iostreams22file_descriptor_source4openERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESt13_Ios_Openmode' filepath='src/third_party/boost-1.60.0/libs/iostreams/src/file_descriptor.cpp' line='513' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZN5boost9iostreams22file_descriptor_source4openERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESt13_Ios_Openmode'>
-              <parameter type-id='type-id-107' name='this' is-artificial='yes'/>
-              <parameter type-id='type-id-198' name='path' filepath='src/third_party/boost-1.60.0/libs/iostreams/src/file_descriptor.cpp' line='514' column='1'/>
-              <parameter type-id='type-id-253' name='mode' filepath='src/third_party/boost-1.60.0/libs/iostreams/src/file_descriptor.cpp' line='514' column='1'/>
+              <parameter type-id='type-id-107' is-artificial='yes'/>
+              <parameter type-id='type-id-198' filepath='src/third_party/boost-1.60.0/libs/iostreams/src/file_descriptor.cpp' line='514' column='1'/>
+              <parameter type-id='type-id-253' filepath='src/third_party/boost-1.60.0/libs/iostreams/src/file_descriptor.cpp' line='514' column='1'/>
               <return type-id='type-id-266'/>
             </function-decl>
           </member-function>
           <member-function access='private'>
             <function-decl name='open' mangled-name='_ZN5boost9iostreams22file_descriptor_source4openERKNS0_6detail4pathESt13_Ios_Openmode' filepath='src/third_party/boost-1.60.0/libs/iostreams/src/file_descriptor.cpp' line='521' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZN5boost9iostreams22file_descriptor_source4openERKNS0_6detail4pathESt13_Ios_Openmode'>
-              <parameter type-id='type-id-107' name='this' is-artificial='yes'/>
-              <parameter type-id='type-id-159' name='path' filepath='src/third_party/boost-1.60.0/libs/iostreams/src/file_descriptor.cpp' line='522' column='1'/>
-              <parameter type-id='type-id-253' name='mode' filepath='src/third_party/boost-1.60.0/libs/iostreams/src/file_descriptor.cpp' line='522' column='1'/>
+              <parameter type-id='type-id-107' is-artificial='yes'/>
+              <parameter type-id='type-id-159' filepath='src/third_party/boost-1.60.0/libs/iostreams/src/file_descriptor.cpp' line='522' column='1'/>
+              <parameter type-id='type-id-253' filepath='src/third_party/boost-1.60.0/libs/iostreams/src/file_descriptor.cpp' line='522' column='1'/>
               <return type-id='type-id-266'/>
             </function-decl>
           </member-function>
           <member-function access='public' constructor='yes'>
             <function-decl name='file_descriptor_source' mangled-name='_ZN5boost9iostreams22file_descriptor_sourceC2EPKcSt13_Ios_Openmode' filepath='src/third_party/boost-1.60.0/libs/iostreams/src/file_descriptor.cpp' line='484' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZN5boost9iostreams22file_descriptor_sourceC2EPKcSt13_Ios_Openmode'>
-              <parameter type-id='type-id-107' name='this' is-artificial='yes'/>
-              <parameter type-id='type-id-31' name='path' filepath='src/third_party/boost-1.60.0/libs/iostreams/src/file_descriptor.cpp' line='485' column='1'/>
-              <parameter type-id='type-id-253' name='mode' filepath='src/third_party/boost-1.60.0/libs/iostreams/src/file_descriptor.cpp' line='485' column='1'/>
+              <parameter type-id='type-id-107' is-artificial='yes'/>
+              <parameter type-id='type-id-31' filepath='src/third_party/boost-1.60.0/libs/iostreams/src/file_descriptor.cpp' line='485' column='1'/>
+              <parameter type-id='type-id-253' filepath='src/third_party/boost-1.60.0/libs/iostreams/src/file_descriptor.cpp' line='485' column='1'/>
               <return type-id='type-id-266'/>
             </function-decl>
           </member-function>
           <member-function access='public'>
             <function-decl name='open' mangled-name='_ZN5boost9iostreams22file_descriptor_source4openEPKcSt13_Ios_Openmode' filepath='src/third_party/boost-1.60.0/libs/iostreams/src/file_descriptor.cpp' line='517' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZN5boost9iostreams22file_descriptor_source4openEPKcSt13_Ios_Openmode'>
-              <parameter type-id='type-id-107' name='this' is-artificial='yes'/>
-              <parameter type-id='type-id-31' name='path' filepath='src/third_party/boost-1.60.0/libs/iostreams/src/file_descriptor.cpp' line='518' column='1'/>
-              <parameter type-id='type-id-253' name='mode' filepath='src/third_party/boost-1.60.0/libs/iostreams/src/file_descriptor.cpp' line='518' column='1'/>
+              <parameter type-id='type-id-107' is-artificial='yes'/>
+              <parameter type-id='type-id-31' filepath='src/third_party/boost-1.60.0/libs/iostreams/src/file_descriptor.cpp' line='518' column='1'/>
+              <parameter type-id='type-id-253' filepath='src/third_party/boost-1.60.0/libs/iostreams/src/file_descriptor.cpp' line='518' column='1'/>
               <return type-id='type-id-266'/>
             </function-decl>
           </member-function>
           <member-function access='public' constructor='yes'>
             <function-decl name='file_descriptor_source' mangled-name='_ZN5boost9iostreams22file_descriptor_sourceC2ERKS1_' filepath='src/third_party/boost-1.60.0/libs/iostreams/src/file_descriptor.cpp' line='488' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZN5boost9iostreams22file_descriptor_sourceC2ERKS1_'>
-              <parameter type-id='type-id-107' name='this' is-artificial='yes'/>
-              <parameter type-id='type-id-169' name='other' filepath='src/third_party/boost-1.60.0/libs/iostreams/src/file_descriptor.cpp' line='489' column='1'/>
+              <parameter type-id='type-id-107' is-artificial='yes'/>
+              <parameter type-id='type-id-169' filepath='src/third_party/boost-1.60.0/libs/iostreams/src/file_descriptor.cpp' line='489' column='1'/>
               <return type-id='type-id-266'/>
             </function-decl>
           </member-function>
@@ -1019,7 +1019,7 @@
             </data-member>
             <member-function access='public' constructor='yes'>
               <function-decl name='file_descriptor_impl' mangled-name='_ZN5boost9iostreams6detail20file_descriptor_implC2Ev' filepath='src/third_party/boost-1.60.0/libs/iostreams/src/file_descriptor.cpp' line='79' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZN5boost9iostreams6detail20file_descriptor_implC2Ev'>
-                <parameter type-id='type-id-89' name='this' is-artificial='yes'/>
+                <parameter type-id='type-id-89' is-artificial='yes'/>
                 <return type-id='type-id-266'/>
               </function-decl>
             </member-function>
@@ -1030,80 +1030,80 @@
             </member-function>
             <member-function access='public' destructor='yes'>
               <function-decl name='~file_descriptor_impl' mangled-name='_ZN5boost9iostreams6detail20file_descriptor_implD2Ev' filepath='src/third_party/boost-1.60.0/libs/iostreams/src/file_descriptor.cpp' line='83' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZN5boost9iostreams6detail20file_descriptor_implD2Ev'>
-                <parameter type-id='type-id-89' name='this' is-artificial='yes'/>
+                <parameter type-id='type-id-89' is-artificial='yes'/>
                 <return type-id='type-id-266'/>
               </function-decl>
             </member-function>
             <member-function access='public'>
               <function-decl name='close_impl' mangled-name='_ZN5boost9iostreams6detail20file_descriptor_impl10close_implEbb' filepath='src/third_party/boost-1.60.0/libs/iostreams/src/file_descriptor.cpp' line='244' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZN5boost9iostreams6detail20file_descriptor_impl10close_implEbb'>
-                <parameter type-id='type-id-89' name='this' is-artificial='yes'/>
-                <parameter type-id='type-id-1' name='close_flag' filepath='src/third_party/boost-1.60.0/libs/iostreams/src/file_descriptor.cpp' line='244' column='1'/>
-                <parameter type-id='type-id-1' name='throw_' filepath='src/third_party/boost-1.60.0/libs/iostreams/src/file_descriptor.cpp' line='244' column='1'/>
+                <parameter type-id='type-id-89' is-artificial='yes'/>
+                <parameter type-id='type-id-1' filepath='src/third_party/boost-1.60.0/libs/iostreams/src/file_descriptor.cpp' line='244' column='1'/>
+                <parameter type-id='type-id-1' filepath='src/third_party/boost-1.60.0/libs/iostreams/src/file_descriptor.cpp' line='244' column='1'/>
                 <return type-id='type-id-266'/>
               </function-decl>
             </member-function>
             <member-function access='public'>
               <function-decl name='open' mangled-name='_ZN5boost9iostreams6detail20file_descriptor_impl4openEiNS2_5flagsE' filepath='src/third_party/boost-1.60.0/libs/iostreams/src/file_descriptor.cpp' line='88' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZN5boost9iostreams6detail20file_descriptor_impl4openEiNS2_5flagsE'>
-                <parameter type-id='type-id-89' name='this' is-artificial='yes'/>
-                <parameter type-id='type-id-276' name='fd' filepath='src/third_party/boost-1.60.0/libs/iostreams/src/file_descriptor.cpp' line='88' column='1'/>
-                <parameter type-id='type-id-280' name='f' filepath='src/third_party/boost-1.60.0/libs/iostreams/src/file_descriptor.cpp' line='88' column='1'/>
+                <parameter type-id='type-id-89' is-artificial='yes'/>
+                <parameter type-id='type-id-276' filepath='src/third_party/boost-1.60.0/libs/iostreams/src/file_descriptor.cpp' line='88' column='1'/>
+                <parameter type-id='type-id-280' filepath='src/third_party/boost-1.60.0/libs/iostreams/src/file_descriptor.cpp' line='88' column='1'/>
                 <return type-id='type-id-266'/>
               </function-decl>
             </member-function>
             <member-function access='public'>
               <function-decl name='close' mangled-name='_ZN5boost9iostreams6detail20file_descriptor_impl5closeEv' filepath='src/third_party/boost-1.60.0/libs/iostreams/src/file_descriptor.cpp' line='239' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZN5boost9iostreams6detail20file_descriptor_impl5closeEv'>
-                <parameter type-id='type-id-89' name='this' is-artificial='yes'/>
+                <parameter type-id='type-id-89' is-artificial='yes'/>
                 <return type-id='type-id-266'/>
               </function-decl>
             </member-function>
             <member-function access='public'>
               <function-decl name='open' mangled-name='_ZN5boost9iostreams6detail20file_descriptor_impl4openERKNS1_4pathESt13_Ios_Openmode' filepath='src/third_party/boost-1.60.0/libs/iostreams/src/file_descriptor.cpp' line='113' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZN5boost9iostreams6detail20file_descriptor_impl4openERKNS1_4pathESt13_Ios_Openmode'>
-                <parameter type-id='type-id-89' name='this' is-artificial='yes'/>
-                <parameter type-id='type-id-159' name='p' filepath='src/third_party/boost-1.60.0/libs/iostreams/src/file_descriptor.cpp' line='113' column='1'/>
-                <parameter type-id='type-id-253' name='mode' filepath='src/third_party/boost-1.60.0/libs/iostreams/src/file_descriptor.cpp' line='113' column='1'/>
+                <parameter type-id='type-id-89' is-artificial='yes'/>
+                <parameter type-id='type-id-159' filepath='src/third_party/boost-1.60.0/libs/iostreams/src/file_descriptor.cpp' line='113' column='1'/>
+                <parameter type-id='type-id-253' filepath='src/third_party/boost-1.60.0/libs/iostreams/src/file_descriptor.cpp' line='113' column='1'/>
                 <return type-id='type-id-266'/>
               </function-decl>
             </member-function>
             <member-function access='public'>
               <function-decl name='is_open' mangled-name='_ZNK5boost9iostreams6detail20file_descriptor_impl7is_openEv' filepath='src/third_party/boost-1.60.0/libs/iostreams/src/file_descriptor.cpp' line='236' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZNK5boost9iostreams6detail20file_descriptor_impl7is_openEv'>
-                <parameter type-id='type-id-153' name='this' is-artificial='yes'/>
+                <parameter type-id='type-id-153' is-artificial='yes'/>
                 <return type-id='type-id-1'/>
               </function-decl>
             </member-function>
             <member-function access='public'>
               <function-decl name='read' mangled-name='_ZN5boost9iostreams6detail20file_descriptor_impl4readEPcl' filepath='src/third_party/boost-1.60.0/libs/iostreams/src/file_descriptor.cpp' line='261' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZN5boost9iostreams6detail20file_descriptor_impl4readEPcl'>
-                <parameter type-id='type-id-89' name='this' is-artificial='yes'/>
-                <parameter type-id='type-id-122' name='s' filepath='src/third_party/boost-1.60.0/libs/iostreams/src/file_descriptor.cpp' line='261' column='1'/>
-                <parameter type-id='type-id-262' name='n' filepath='src/third_party/boost-1.60.0/libs/iostreams/src/file_descriptor.cpp' line='261' column='1'/>
+                <parameter type-id='type-id-89' is-artificial='yes'/>
+                <parameter type-id='type-id-122' filepath='src/third_party/boost-1.60.0/libs/iostreams/src/file_descriptor.cpp' line='261' column='1'/>
+                <parameter type-id='type-id-262' filepath='src/third_party/boost-1.60.0/libs/iostreams/src/file_descriptor.cpp' line='261' column='1'/>
                 <return type-id='type-id-262'/>
               </function-decl>
             </member-function>
             <member-function access='public'>
               <function-decl name='write' mangled-name='_ZN5boost9iostreams6detail20file_descriptor_impl5writeEPKcl' filepath='src/third_party/boost-1.60.0/libs/iostreams/src/file_descriptor.cpp' line='285' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZN5boost9iostreams6detail20file_descriptor_impl5writeEPKcl'>
-                <parameter type-id='type-id-89' name='this' is-artificial='yes'/>
-                <parameter type-id='type-id-31' name='s' filepath='src/third_party/boost-1.60.0/libs/iostreams/src/file_descriptor.cpp' line='285' column='1'/>
-                <parameter type-id='type-id-262' name='n' filepath='src/third_party/boost-1.60.0/libs/iostreams/src/file_descriptor.cpp' line='285' column='1'/>
+                <parameter type-id='type-id-89' is-artificial='yes'/>
+                <parameter type-id='type-id-31' filepath='src/third_party/boost-1.60.0/libs/iostreams/src/file_descriptor.cpp' line='285' column='1'/>
+                <parameter type-id='type-id-262' filepath='src/third_party/boost-1.60.0/libs/iostreams/src/file_descriptor.cpp' line='285' column='1'/>
                 <return type-id='type-id-262'/>
               </function-decl>
             </member-function>
             <member-function access='public'>
               <function-decl name='seek' mangled-name='_ZN5boost9iostreams6detail20file_descriptor_impl4seekElSt12_Ios_Seekdir' filepath='src/third_party/boost-1.60.0/libs/iostreams/src/file_descriptor.cpp' line='300' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZN5boost9iostreams6detail20file_descriptor_impl4seekElSt12_Ios_Seekdir'>
-                <parameter type-id='type-id-89' name='this' is-artificial='yes'/>
-                <parameter type-id='type-id-278' name='off' filepath='src/third_party/boost-1.60.0/libs/iostreams/src/file_descriptor.cpp' line='301' column='1'/>
-                <parameter type-id='type-id-255' name='way' filepath='src/third_party/boost-1.60.0/libs/iostreams/src/file_descriptor.cpp' line='301' column='1'/>
+                <parameter type-id='type-id-89' is-artificial='yes'/>
+                <parameter type-id='type-id-278' filepath='src/third_party/boost-1.60.0/libs/iostreams/src/file_descriptor.cpp' line='301' column='1'/>
+                <parameter type-id='type-id-255' filepath='src/third_party/boost-1.60.0/libs/iostreams/src/file_descriptor.cpp' line='301' column='1'/>
                 <return type-id='type-id-261'/>
               </function-decl>
             </member-function>
           </class-decl>
           <typedef-decl name='file_handle' type-id='type-id-8' filepath='src/third_party/boost-1.60.0/boost/iostreams/detail/file_handle.hpp' line='27' column='1' id='type-id-276'/>
           <function-decl name='system_failure' mangled-name='_ZN5boost9iostreams6detail14system_failureB5cxx11EPKc' filepath='src/third_party/boost-1.60.0/boost/iostreams/detail/system_failure.hpp' line='39' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZN5boost9iostreams6detail14system_failureB5cxx11EPKc'>
-            <parameter type-id='type-id-31' name='msg' filepath='src/third_party/boost-1.60.0/boost/iostreams/detail/system_failure.hpp' line='39' column='1'/>
+            <parameter type-id='type-id-31' filepath='src/third_party/boost-1.60.0/boost/iostreams/detail/system_failure.hpp' line='39' column='1'/>
             <return type-id='type-id-212'/>
           </function-decl>
         </namespace-decl>
       </namespace-decl>
       <function-decl name='throw_exception&lt;std::ios_base::failure&gt;' mangled-name='_ZN5boost15throw_exceptionINSt8ios_base7failureB5cxx11EEEvRKT_' filepath='src/third_party/boost-1.60.0/boost/throw_exception.hpp' line='62' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZN5boost15throw_exceptionINSt8ios_base7failureB5cxx11EEEvRKT_'>
-        <parameter type-id='type-id-214' name='e' filepath='src/third_party/boost-1.60.0/boost/throw_exception.hpp' line='62' column='1'/>
+        <parameter type-id='type-id-214' filepath='src/third_party/boost-1.60.0/boost/throw_exception.hpp' line='62' column='1'/>
         <return type-id='type-id-266'/>
       </function-decl>
     </namespace-decl>
@@ -1120,8 +1120,8 @@
         </data-member>
         <member-function access='public'>
           <function-decl name='reset&lt;boost::iostreams::detail::mapped_file_impl&gt;' mangled-name='_ZN5boost10shared_ptrINS_9iostreams6detail16mapped_file_implEE5resetIS3_EEvPT_' filepath='src/third_party/boost-1.60.0/boost/smart_ptr/shared_ptr.hpp' line='662' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZN5boost10shared_ptrINS_9iostreams6detail16mapped_file_implEE5resetIS3_EEvPT_'>
-            <parameter type-id='type-id-119' name='this' is-artificial='yes'/>
-            <parameter type-id='type-id-92' name='p' filepath='src/third_party/boost-1.60.0/boost/smart_ptr/shared_ptr.hpp' line='662' column='1'/>
+            <parameter type-id='type-id-119' is-artificial='yes'/>
+            <parameter type-id='type-id-92' filepath='src/third_party/boost-1.60.0/boost/smart_ptr/shared_ptr.hpp' line='662' column='1'/>
             <return type-id='type-id-266'/>
           </function-decl>
         </member-function>
@@ -1228,9 +1228,9 @@
         <typedef-decl name='atomic_int_least32_t' type-id='type-id-41' filepath='src/third_party/boost-1.60.0/boost/smart_ptr/detail/sp_counted_base_clang.hpp' line='27' column='1' id='type-id-283'/>
         <typedef-decl name='sp_typeinfo' type-id='type-id-282' filepath='src/third_party/boost-1.60.0/boost/detail/sp_typeinfo.hpp' line='28' column='1' id='type-id-245'/>
         <function-decl name='sp_pointer_construct&lt;boost::iostreams::detail::mapped_file_impl, boost::iostreams::detail::mapped_file_impl&gt;' mangled-name='_ZN5boost6detail20sp_pointer_constructINS_9iostreams6detail16mapped_file_implES4_EEvPNS_10shared_ptrIT_EEPT0_RNS0_12shared_countE' filepath='src/third_party/boost-1.60.0/boost/smart_ptr/shared_ptr.hpp' line='282' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZN5boost6detail20sp_pointer_constructINS_9iostreams6detail16mapped_file_implES4_EEvPNS_10shared_ptrIT_EEPT0_RNS0_12shared_countE'>
-          <parameter type-id='type-id-119' name='ppx' filepath='src/third_party/boost-1.60.0/boost/smart_ptr/shared_ptr.hpp' line='282' column='1'/>
-          <parameter type-id='type-id-92' name='p' filepath='src/third_party/boost-1.60.0/boost/smart_ptr/shared_ptr.hpp' line='282' column='1'/>
-          <parameter type-id='type-id-59' name='pn' filepath='src/third_party/boost-1.60.0/boost/smart_ptr/shared_ptr.hpp' line='282' column='1'/>
+          <parameter type-id='type-id-119' filepath='src/third_party/boost-1.60.0/boost/smart_ptr/shared_ptr.hpp' line='282' column='1'/>
+          <parameter type-id='type-id-92' filepath='src/third_party/boost-1.60.0/boost/smart_ptr/shared_ptr.hpp' line='282' column='1'/>
+          <parameter type-id='type-id-59' filepath='src/third_party/boost-1.60.0/boost/smart_ptr/shared_ptr.hpp' line='282' column='1'/>
           <return type-id='type-id-266'/>
         </function-decl>
       </namespace-decl>
@@ -1257,15 +1257,15 @@
           </data-member>
           <member-function access='public' constructor='yes'>
             <function-decl name='mapped_file' mangled-name='_ZN5boost9iostreams11mapped_fileC2ERKS1_' filepath='src/third_party/boost-1.60.0/libs/iostreams/src/mapped_file.cpp' line='481' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZN5boost9iostreams11mapped_fileC2ERKS1_'>
-              <parameter type-id='type-id-301' name='this' is-artificial='yes'/>
-              <parameter type-id='type-id-302' name='other' filepath='src/third_party/boost-1.60.0/libs/iostreams/src/mapped_file.cpp' line='481' column='1'/>
+              <parameter type-id='type-id-301' is-artificial='yes'/>
+              <parameter type-id='type-id-302' filepath='src/third_party/boost-1.60.0/libs/iostreams/src/mapped_file.cpp' line='481' column='1'/>
               <return type-id='type-id-266'/>
             </function-decl>
           </member-function>
           <member-function access='public'>
             <function-decl name='resize' mangled-name='_ZN5boost9iostreams11mapped_file6resizeEl' filepath='src/third_party/boost-1.60.0/libs/iostreams/src/mapped_file.cpp' line='485' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZN5boost9iostreams11mapped_file6resizeEl'>
-              <parameter type-id='type-id-301' name='this' is-artificial='yes'/>
-              <parameter type-id='type-id-278' name='new_size' filepath='src/third_party/boost-1.60.0/libs/iostreams/src/mapped_file.cpp' line='485' column='1'/>
+              <parameter type-id='type-id-301' is-artificial='yes'/>
+              <parameter type-id='type-id-278' filepath='src/third_party/boost-1.60.0/libs/iostreams/src/mapped_file.cpp' line='485' column='1'/>
               <return type-id='type-id-266'/>
             </function-decl>
           </member-function>
@@ -1284,8 +1284,8 @@
           <base-class access='private' layout-offset-in-bits='0' type-id='type-id-294'/>
           <member-function access='public' constructor='yes'>
             <function-decl name='mapped_file_sink' mangled-name='_ZN5boost9iostreams16mapped_file_sinkC2ERKS1_' filepath='src/third_party/boost-1.60.0/libs/iostreams/src/mapped_file.cpp' line='490' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZN5boost9iostreams16mapped_file_sinkC2ERKS1_'>
-              <parameter type-id='type-id-305' name='this' is-artificial='yes'/>
-              <parameter type-id='type-id-306' name='other' filepath='src/third_party/boost-1.60.0/libs/iostreams/src/mapped_file.cpp' line='490' column='1'/>
+              <parameter type-id='type-id-305' is-artificial='yes'/>
+              <parameter type-id='type-id-306' filepath='src/third_party/boost-1.60.0/libs/iostreams/src/mapped_file.cpp' line='490' column='1'/>
               <return type-id='type-id-266'/>
             </function-decl>
           </member-function>
@@ -1319,68 +1319,68 @@
           </data-member>
           <member-function access='public' constructor='yes'>
             <function-decl name='mapped_file_source' mangled-name='_ZN5boost9iostreams18mapped_file_sourceC2Ev' filepath='src/third_party/boost-1.60.0/libs/iostreams/src/mapped_file.cpp' line='440' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZN5boost9iostreams18mapped_file_sourceC2Ev'>
-              <parameter type-id='type-id-109' name='this' is-artificial='yes'/>
+              <parameter type-id='type-id-109' is-artificial='yes'/>
               <return type-id='type-id-266'/>
             </function-decl>
           </member-function>
           <member-function access='public' constructor='yes'>
             <function-decl name='mapped_file_source' mangled-name='_ZN5boost9iostreams18mapped_file_sourceC2ERKS1_' filepath='src/third_party/boost-1.60.0/libs/iostreams/src/mapped_file.cpp' line='444' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZN5boost9iostreams18mapped_file_sourceC2ERKS1_'>
-              <parameter type-id='type-id-109' name='this' is-artificial='yes'/>
-              <parameter type-id='type-id-171' name='other' filepath='src/third_party/boost-1.60.0/libs/iostreams/src/mapped_file.cpp' line='444' column='1'/>
+              <parameter type-id='type-id-109' is-artificial='yes'/>
+              <parameter type-id='type-id-171' filepath='src/third_party/boost-1.60.0/libs/iostreams/src/mapped_file.cpp' line='444' column='1'/>
               <return type-id='type-id-266'/>
             </function-decl>
           </member-function>
           <member-function access='public'>
             <function-decl name='is_open' mangled-name='_ZNK5boost9iostreams18mapped_file_source7is_openEv' filepath='src/third_party/boost-1.60.0/libs/iostreams/src/mapped_file.cpp' line='448' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZNK5boost9iostreams18mapped_file_source7is_openEv'>
-              <parameter type-id='type-id-172' name='this' is-artificial='yes'/>
+              <parameter type-id='type-id-172' is-artificial='yes'/>
               <return type-id='type-id-1'/>
             </function-decl>
           </member-function>
           <member-function access='public'>
             <function-decl name='close' mangled-name='_ZN5boost9iostreams18mapped_file_source5closeEv' filepath='src/third_party/boost-1.60.0/libs/iostreams/src/mapped_file.cpp' line='451' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZN5boost9iostreams18mapped_file_source5closeEv'>
-              <parameter type-id='type-id-109' name='this' is-artificial='yes'/>
+              <parameter type-id='type-id-109' is-artificial='yes'/>
               <return type-id='type-id-266'/>
             </function-decl>
           </member-function>
           <member-function access='public'>
             <function-decl name='operator int boost::iostreams::mapped_file_source::safe_bool_helper::*' mangled-name='_ZNK5boost9iostreams18mapped_file_sourcecvMNS1_16safe_bool_helperEiEv' filepath='src/third_party/boost-1.60.0/libs/iostreams/src/mapped_file.cpp' line='454' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZNK5boost9iostreams18mapped_file_sourcecvMNS1_16safe_bool_helperEiEv'>
-              <parameter type-id='type-id-172' name='this' is-artificial='yes'/>
+              <parameter type-id='type-id-172' is-artificial='yes'/>
               <return type-id='type-id-300'/>
             </function-decl>
           </member-function>
           <member-function access='public'>
             <function-decl name='operator!' mangled-name='_ZNK5boost9iostreams18mapped_file_sourcentEv' filepath='src/third_party/boost-1.60.0/libs/iostreams/src/mapped_file.cpp' line='457' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZNK5boost9iostreams18mapped_file_sourcentEv'>
-              <parameter type-id='type-id-172' name='this' is-artificial='yes'/>
+              <parameter type-id='type-id-172' is-artificial='yes'/>
               <return type-id='type-id-1'/>
             </function-decl>
           </member-function>
           <member-function access='public'>
             <function-decl name='flags' mangled-name='_ZNK5boost9iostreams18mapped_file_source5flagsEv' filepath='src/third_party/boost-1.60.0/libs/iostreams/src/mapped_file.cpp' line='460' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZNK5boost9iostreams18mapped_file_source5flagsEv'>
-              <parameter type-id='type-id-172' name='this' is-artificial='yes'/>
+              <parameter type-id='type-id-172' is-artificial='yes'/>
               <return type-id='type-id-303'/>
             </function-decl>
           </member-function>
           <member-function access='public'>
             <function-decl name='size' mangled-name='_ZNK5boost9iostreams18mapped_file_source4sizeEv' filepath='src/third_party/boost-1.60.0/libs/iostreams/src/mapped_file.cpp' line='463' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZNK5boost9iostreams18mapped_file_source4sizeEv'>
-              <parameter type-id='type-id-172' name='this' is-artificial='yes'/>
+              <parameter type-id='type-id-172' is-artificial='yes'/>
               <return type-id='type-id-176'/>
             </function-decl>
           </member-function>
           <member-function access='public'>
             <function-decl name='data' mangled-name='_ZNK5boost9iostreams18mapped_file_source4dataEv' filepath='src/third_party/boost-1.60.0/libs/iostreams/src/mapped_file.cpp' line='466' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZNK5boost9iostreams18mapped_file_source4dataEv'>
-              <parameter type-id='type-id-172' name='this' is-artificial='yes'/>
+              <parameter type-id='type-id-172' is-artificial='yes'/>
               <return type-id='type-id-31'/>
             </function-decl>
           </member-function>
           <member-function access='public'>
             <function-decl name='begin' mangled-name='_ZNK5boost9iostreams18mapped_file_source5beginEv' filepath='src/third_party/boost-1.60.0/libs/iostreams/src/mapped_file.cpp' line='468' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZNK5boost9iostreams18mapped_file_source5beginEv'>
-              <parameter type-id='type-id-172' name='this' is-artificial='yes'/>
+              <parameter type-id='type-id-172' is-artificial='yes'/>
               <return type-id='type-id-307'/>
             </function-decl>
           </member-function>
           <member-function access='public'>
             <function-decl name='end' mangled-name='_ZNK5boost9iostreams18mapped_file_source3endEv' filepath='src/third_party/boost-1.60.0/libs/iostreams/src/mapped_file.cpp' line='470' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZNK5boost9iostreams18mapped_file_source3endEv'>
-              <parameter type-id='type-id-172' name='this' is-artificial='yes'/>
+              <parameter type-id='type-id-172' is-artificial='yes'/>
               <return type-id='type-id-307'/>
             </function-decl>
           </member-function>
@@ -1391,14 +1391,14 @@
           </member-function>
           <member-function access='private'>
             <function-decl name='init' mangled-name='_ZN5boost9iostreams18mapped_file_source4initEv' filepath='src/third_party/boost-1.60.0/libs/iostreams/src/mapped_file.cpp' line='474' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZN5boost9iostreams18mapped_file_source4initEv'>
-              <parameter type-id='type-id-109' name='this' is-artificial='yes'/>
+              <parameter type-id='type-id-109' is-artificial='yes'/>
               <return type-id='type-id-266'/>
             </function-decl>
           </member-function>
           <member-function access='private'>
             <function-decl name='open_impl' mangled-name='_ZN5boost9iostreams18mapped_file_source9open_implERKNS0_24basic_mapped_file_paramsINS0_6detail4pathEEE' filepath='src/third_party/boost-1.60.0/libs/iostreams/src/mapped_file.cpp' line='476' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZN5boost9iostreams18mapped_file_source9open_implERKNS0_24basic_mapped_file_paramsINS0_6detail4pathEEE'>
-              <parameter type-id='type-id-109' name='this' is-artificial='yes'/>
-              <parameter type-id='type-id-175' name='p' filepath='src/third_party/boost-1.60.0/libs/iostreams/src/mapped_file.cpp' line='476' column='1'/>
+              <parameter type-id='type-id-109' is-artificial='yes'/>
+              <parameter type-id='type-id-175' filepath='src/third_party/boost-1.60.0/libs/iostreams/src/mapped_file.cpp' line='476' column='1'/>
               <return type-id='type-id-266'/>
             </function-decl>
           </member-function>
@@ -1440,74 +1440,74 @@
             </data-member>
             <member-function access='public' constructor='yes'>
               <function-decl name='mapped_file_impl' mangled-name='_ZN5boost9iostreams6detail16mapped_file_implC2Ev' filepath='src/third_party/boost-1.60.0/libs/iostreams/src/mapped_file.cpp' line='80' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZN5boost9iostreams6detail16mapped_file_implC2Ev'>
-                <parameter type-id='type-id-92' name='this' is-artificial='yes'/>
+                <parameter type-id='type-id-92' is-artificial='yes'/>
                 <return type-id='type-id-266'/>
               </function-decl>
             </member-function>
             <member-function access='private'>
               <function-decl name='clear' mangled-name='_ZN5boost9iostreams6detail16mapped_file_impl5clearEb' filepath='src/third_party/boost-1.60.0/libs/iostreams/src/mapped_file.cpp' line='370' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZN5boost9iostreams6detail16mapped_file_impl5clearEb'>
-                <parameter type-id='type-id-92' name='this' is-artificial='yes'/>
-                <parameter type-id='type-id-1' name='error' filepath='src/third_party/boost-1.60.0/libs/iostreams/src/mapped_file.cpp' line='370' column='1'/>
+                <parameter type-id='type-id-92' is-artificial='yes'/>
+                <parameter type-id='type-id-1' filepath='src/third_party/boost-1.60.0/libs/iostreams/src/mapped_file.cpp' line='370' column='1'/>
                 <return type-id='type-id-266'/>
               </function-decl>
             </member-function>
             <member-function access='public' destructor='yes'>
               <function-decl name='~mapped_file_impl' mangled-name='_ZN5boost9iostreams6detail16mapped_file_implD2Ev' filepath='src/third_party/boost-1.60.0/libs/iostreams/src/mapped_file.cpp' line='82' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZN5boost9iostreams6detail16mapped_file_implD2Ev'>
-                <parameter type-id='type-id-92' name='this' is-artificial='yes'/>
+                <parameter type-id='type-id-92' is-artificial='yes'/>
                 <return type-id='type-id-266'/>
               </function-decl>
             </member-function>
             <member-function access='public'>
               <function-decl name='close' mangled-name='_ZN5boost9iostreams6detail16mapped_file_impl5closeEv' filepath='src/third_party/boost-1.60.0/libs/iostreams/src/mapped_file.cpp' line='95' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZN5boost9iostreams6detail16mapped_file_impl5closeEv'>
-                <parameter type-id='type-id-92' name='this' is-artificial='yes'/>
+                <parameter type-id='type-id-92' is-artificial='yes'/>
                 <return type-id='type-id-266'/>
               </function-decl>
             </member-function>
             <member-function access='private'>
               <function-decl name='unmap_file' mangled-name='_ZN5boost9iostreams6detail16mapped_file_impl10unmap_fileEv' filepath='src/third_party/boost-1.60.0/libs/iostreams/src/mapped_file.cpp' line='357' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZN5boost9iostreams6detail16mapped_file_impl10unmap_fileEv'>
-                <parameter type-id='type-id-92' name='this' is-artificial='yes'/>
+                <parameter type-id='type-id-92' is-artificial='yes'/>
                 <return type-id='type-id-1'/>
               </function-decl>
             </member-function>
             <member-function access='public'>
               <function-decl name='open' mangled-name='_ZN5boost9iostreams6detail16mapped_file_impl4openENS0_24basic_mapped_file_paramsINS1_4pathEEE' filepath='src/third_party/boost-1.60.0/libs/iostreams/src/mapped_file.cpp' line='85' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZN5boost9iostreams6detail16mapped_file_impl4openENS0_24basic_mapped_file_paramsINS1_4pathEEE'>
-                <parameter type-id='type-id-92' name='this' is-artificial='yes'/>
-                <parameter type-id='type-id-93' name='p' filepath='src/third_party/boost-1.60.0/libs/iostreams/src/mapped_file.cpp' line='85' column='1'/>
+                <parameter type-id='type-id-92' is-artificial='yes'/>
+                <parameter type-id='type-id-93' filepath='src/third_party/boost-1.60.0/libs/iostreams/src/mapped_file.cpp' line='85' column='1'/>
                 <return type-id='type-id-266'/>
               </function-decl>
             </member-function>
             <member-function access='private'>
               <function-decl name='open_file' mangled-name='_ZN5boost9iostreams6detail16mapped_file_impl9open_fileENS0_24basic_mapped_file_paramsINS1_4pathEEE' filepath='src/third_party/boost-1.60.0/libs/iostreams/src/mapped_file.cpp' line='165' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZN5boost9iostreams6detail16mapped_file_impl9open_fileENS0_24basic_mapped_file_paramsINS1_4pathEEE'>
-                <parameter type-id='type-id-92' name='this' is-artificial='yes'/>
-                <parameter type-id='type-id-93' name='p' filepath='src/third_party/boost-1.60.0/libs/iostreams/src/mapped_file.cpp' line='165' column='1'/>
+                <parameter type-id='type-id-92' is-artificial='yes'/>
+                <parameter type-id='type-id-93' filepath='src/third_party/boost-1.60.0/libs/iostreams/src/mapped_file.cpp' line='165' column='1'/>
                 <return type-id='type-id-266'/>
               </function-decl>
             </member-function>
             <member-function access='private'>
               <function-decl name='map_file' mangled-name='_ZN5boost9iostreams6detail16mapped_file_impl8map_fileERNS0_24basic_mapped_file_paramsINS1_4pathEEE' filepath='src/third_party/boost-1.60.0/libs/iostreams/src/mapped_file.cpp' line='343' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZN5boost9iostreams6detail16mapped_file_impl8map_fileERNS0_24basic_mapped_file_paramsINS1_4pathEEE'>
-                <parameter type-id='type-id-92' name='this' is-artificial='yes'/>
-                <parameter type-id='type-id-94' name='p' filepath='src/third_party/boost-1.60.0/libs/iostreams/src/mapped_file.cpp' line='343' column='1'/>
+                <parameter type-id='type-id-92' is-artificial='yes'/>
+                <parameter type-id='type-id-94' filepath='src/third_party/boost-1.60.0/libs/iostreams/src/mapped_file.cpp' line='343' column='1'/>
                 <return type-id='type-id-266'/>
               </function-decl>
             </member-function>
             <member-function access='private'>
               <function-decl name='try_map_file' mangled-name='_ZN5boost9iostreams6detail16mapped_file_impl12try_map_fileENS0_24basic_mapped_file_paramsINS1_4pathEEE' filepath='src/third_party/boost-1.60.0/libs/iostreams/src/mapped_file.cpp' line='289' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZN5boost9iostreams6detail16mapped_file_impl12try_map_fileENS0_24basic_mapped_file_paramsINS1_4pathEEE'>
-                <parameter type-id='type-id-92' name='this' is-artificial='yes'/>
-                <parameter type-id='type-id-93' name='p' filepath='src/third_party/boost-1.60.0/libs/iostreams/src/mapped_file.cpp' line='289' column='1'/>
+                <parameter type-id='type-id-92' is-artificial='yes'/>
+                <parameter type-id='type-id-93' filepath='src/third_party/boost-1.60.0/libs/iostreams/src/mapped_file.cpp' line='289' column='1'/>
                 <return type-id='type-id-266'/>
               </function-decl>
             </member-function>
             <member-function access='private'>
               <function-decl name='cleanup_and_throw' mangled-name='_ZN5boost9iostreams6detail16mapped_file_impl17cleanup_and_throwEPKc' filepath='src/third_party/boost-1.60.0/libs/iostreams/src/mapped_file.cpp' line='386' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZN5boost9iostreams6detail16mapped_file_impl17cleanup_and_throwEPKc'>
-                <parameter type-id='type-id-92' name='this' is-artificial='yes'/>
-                <parameter type-id='type-id-31' name='msg' filepath='src/third_party/boost-1.60.0/libs/iostreams/src/mapped_file.cpp' line='386' column='1'/>
+                <parameter type-id='type-id-92' is-artificial='yes'/>
+                <parameter type-id='type-id-31' filepath='src/third_party/boost-1.60.0/libs/iostreams/src/mapped_file.cpp' line='386' column='1'/>
                 <return type-id='type-id-266'/>
               </function-decl>
             </member-function>
             <member-function access='public'>
               <function-decl name='resize' mangled-name='_ZN5boost9iostreams6detail16mapped_file_impl6resizeEl' filepath='src/third_party/boost-1.60.0/libs/iostreams/src/mapped_file.cpp' line='113' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZN5boost9iostreams6detail16mapped_file_impl6resizeEl'>
-                <parameter type-id='type-id-92' name='this' is-artificial='yes'/>
-                <parameter type-id='type-id-278' name='new_size' filepath='src/third_party/boost-1.60.0/libs/iostreams/src/mapped_file.cpp' line='113' column='1'/>
+                <parameter type-id='type-id-92' is-artificial='yes'/>
+                <parameter type-id='type-id-278' filepath='src/third_party/boost-1.60.0/libs/iostreams/src/mapped_file.cpp' line='113' column='1'/>
                 <return type-id='type-id-266'/>
               </function-decl>
             </member-function>
@@ -1538,7 +1538,7 @@
             </data-member>
             <member-function access='private'>
               <function-decl name='normalize' mangled-name='_ZN5boost9iostreams6detail23mapped_file_params_base9normalizeEv' filepath='src/third_party/boost-1.60.0/libs/iostreams/src/mapped_file.cpp' line='407' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZN5boost9iostreams6detail23mapped_file_params_base9normalizeEv'>
-                <parameter type-id='type-id-96' name='this' is-artificial='yes'/>
+                <parameter type-id='type-id-96' is-artificial='yes'/>
                 <return type-id='type-id-266'/>
               </function-decl>
             </member-function>

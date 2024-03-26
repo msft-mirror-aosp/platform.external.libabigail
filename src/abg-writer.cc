@@ -3746,7 +3746,7 @@ write_function_type(const function_type_sptr& fn_type,
 	    << "'";
 	  ctxt.record_type_as_referenced(parm_type);
 
-	  if (!(*pi)->get_name().empty())
+	  if (ctxt.get_write_parameter_names() && !(*pi)->get_name().empty())
 	    {
 	      string name = xml::escape_xml_string((*pi)->get_name());
 	      o << " name='" << name << "'";

@@ -313,7 +313,7 @@
         </member-type>
         <member-function access='public' static='yes'>
           <function-decl name='length' mangled-name='_ZNSt11char_traitsIcE6lengthEPKc' filepath='/usr/include/c++/5.3.1/bits/char_traits.h' line='266' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZNSt11char_traitsIcE6lengthEPKc'>
-            <parameter type-id='type-id-66' name='__s' filepath='/usr/include/c++/5.3.1/bits/char_traits.h' line='266' column='1'/>
+            <parameter type-id='type-id-66' filepath='/usr/include/c++/5.3.1/bits/char_traits.h' line='266' column='1'/>
             <return type-id='type-id-111'/>
           </function-decl>
         </member-function>
@@ -324,8 +324,8 @@
       <class-decl name='reverse_iterator&lt;__gnu_cxx::__normal_iterator&lt;char const*, std::basic_string&lt;char, std::char_traits&lt;char&gt;, std::allocator&lt;char&gt; &gt; &gt; &gt;' visibility='default' is-declaration-only='yes' id='type-id-105'/>
       <class-decl name='reverse_iterator&lt;__gnu_cxx::__normal_iterator&lt;char*, std::basic_string&lt;char, std::char_traits&lt;char&gt;, std::allocator&lt;char&gt; &gt; &gt; &gt;' visibility='default' is-declaration-only='yes' id='type-id-109'/>
       <function-decl name='operator+&lt;char, std::char_traits&lt;char&gt;, std::allocator&lt;char&gt; &gt;' mangled-name='_ZStplIcSt11char_traitsIcESaIcEESbIT_T0_T1_EPKS3_RKS6_' filepath='/usr/include/c++/5.3.1/bits/basic_string.tcc' line='1151' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZStplIcSt11char_traitsIcESaIcEESbIT_T0_T1_EPKS3_RKS6_'>
-        <parameter type-id='type-id-20' name='__lhs' filepath='/usr/include/c++/5.3.1/bits/basic_string.tcc' line='1151' column='1'/>
-        <parameter type-id='type-id-56' name='__rhs' filepath='/usr/include/c++/5.3.1/bits/basic_string.tcc' line='1152' column='1'/>
+        <parameter type-id='type-id-20' filepath='/usr/include/c++/5.3.1/bits/basic_string.tcc' line='1151' column='1'/>
+        <parameter type-id='type-id-56' filepath='/usr/include/c++/5.3.1/bits/basic_string.tcc' line='1152' column='1'/>
         <return type-id='type-id-54'/>
       </function-decl>
       <typedef-decl name='ostream' type-id='type-id-112' filepath='/usr/include/c++/5.3.1/iosfwd' line='141' column='1' id='type-id-113'/>
@@ -333,11 +333,11 @@
     <pointer-type-def type-id='type-id-113' size-in-bits='64' id='type-id-114'/>
     <class-decl name='_IO_FILE' is-struct='yes' visibility='default' is-declaration-only='yes' id='type-id-115'/>
     <function-decl name='foo' mangled-name='_Z3fooRKSs' filepath='/home/dodji/git/libabigail.git/suppr/tests/data/test-read-dwarf/test24-drop-fns.cc' line='14' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_Z3fooRKSs'>
-      <parameter type-id='type-id-72' name='s' filepath='/home/dodji/git/libabigail.git/suppr/tests/data/test-read-dwarf/test24-drop-fns.cc' line='14' column='1'/>
+      <parameter type-id='type-id-72' filepath='/home/dodji/git/libabigail.git/suppr/tests/data/test-read-dwarf/test24-drop-fns.cc' line='14' column='1'/>
       <return type-id='type-id-70'/>
     </function-decl>
     <function-decl name='bar' mangled-name='_Z3barRKSs' filepath='/home/dodji/git/libabigail.git/suppr/tests/data/test-read-dwarf/test24-drop-fns.cc' line='21' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_Z3barRKSs'>
-      <parameter type-id='type-id-72' name='str' filepath='/home/dodji/git/libabigail.git/suppr/tests/data/test-read-dwarf/test24-drop-fns.cc' line='21' column='1'/>
+      <parameter type-id='type-id-72' filepath='/home/dodji/git/libabigail.git/suppr/tests/data/test-read-dwarf/test24-drop-fns.cc' line='21' column='1'/>
       <return type-id='type-id-114'/>
     </function-decl>
     <namespace-decl name='__gnu_cxx'>

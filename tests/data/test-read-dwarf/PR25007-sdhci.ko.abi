@@ -9903,179 +9903,179 @@
     <pointer-type-def type-id='type-id-1542' size-in-bits='64' id='type-id-1547'/>
     <pointer-type-def type-id='type-id-1543' size-in-bits='64' id='type-id-945'/>
     <function-decl name='sdhci_dumpregs' mangled-name='sdhci_dumpregs' filepath='/ws/android/kernel/aosp/common-mainline/common/drivers/mmc/host/sdhci.c' line='53' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='sdhci_dumpregs'>
-      <parameter type-id='type-id-1320' name='host' filepath='/ws/android/kernel/aosp/common-mainline/common/drivers/mmc/host/sdhci.c' line='53' column='1'/>
+      <parameter type-id='type-id-1320' filepath='/ws/android/kernel/aosp/common-mainline/common/drivers/mmc/host/sdhci.c' line='53' column='1'/>
       <return type-id='type-id-1548'/>
     </function-decl>
     <function-decl name='sdhci_enable_v4_mode' mangled-name='sdhci_enable_v4_mode' filepath='/ws/android/kernel/aosp/common-mainline/common/drivers/mmc/host/sdhci.c' line='138' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='sdhci_enable_v4_mode'>
-      <parameter type-id='type-id-1320' name='host' filepath='/ws/android/kernel/aosp/common-mainline/common/drivers/mmc/host/sdhci.c' line='138' column='1'/>
+      <parameter type-id='type-id-1320' filepath='/ws/android/kernel/aosp/common-mainline/common/drivers/mmc/host/sdhci.c' line='138' column='1'/>
       <return type-id='type-id-1548'/>
     </function-decl>
     <function-decl name='sdhci_reset' mangled-name='sdhci_reset' filepath='/ws/android/kernel/aosp/common-mainline/common/drivers/mmc/host/sdhci.c' line='198' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='sdhci_reset'>
-      <parameter type-id='type-id-1320' name='host' filepath='/ws/android/kernel/aosp/common-mainline/common/drivers/mmc/host/sdhci.c' line='198' column='1'/>
-      <parameter type-id='type-id-171' name='mask' filepath='/ws/android/kernel/aosp/common-mainline/common/drivers/mmc/host/sdhci.c' line='198' column='1'/>
+      <parameter type-id='type-id-1320' filepath='/ws/android/kernel/aosp/common-mainline/common/drivers/mmc/host/sdhci.c' line='198' column='1'/>
+      <parameter type-id='type-id-171' filepath='/ws/android/kernel/aosp/common-mainline/common/drivers/mmc/host/sdhci.c' line='198' column='1'/>
       <return type-id='type-id-1548'/>
     </function-decl>
     <function-decl name='sdhci_adma_write_desc' mangled-name='sdhci_adma_write_desc' filepath='/ws/android/kernel/aosp/common-mainline/common/drivers/mmc/host/sdhci.c' line='663' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='sdhci_adma_write_desc'>
-      <parameter type-id='type-id-1320' name='host' filepath='/ws/android/kernel/aosp/common-mainline/common/drivers/mmc/host/sdhci.c' line='663' column='1'/>
-      <parameter type-id='type-id-1427' name='desc' filepath='/ws/android/kernel/aosp/common-mainline/common/drivers/mmc/host/sdhci.c' line='663' column='1'/>
-      <parameter type-id='type-id-803' name='addr' filepath='/ws/android/kernel/aosp/common-mainline/common/drivers/mmc/host/sdhci.c' line='664' column='1'/>
-      <parameter type-id='type-id-71' name='len' filepath='/ws/android/kernel/aosp/common-mainline/common/drivers/mmc/host/sdhci.c' line='664' column='1'/>
-      <parameter type-id='type-id-170' name='cmd' filepath='/ws/android/kernel/aosp/common-mainline/common/drivers/mmc/host/sdhci.c' line='664' column='1'/>
+      <parameter type-id='type-id-1320' filepath='/ws/android/kernel/aosp/common-mainline/common/drivers/mmc/host/sdhci.c' line='663' column='1'/>
+      <parameter type-id='type-id-1427' filepath='/ws/android/kernel/aosp/common-mainline/common/drivers/mmc/host/sdhci.c' line='663' column='1'/>
+      <parameter type-id='type-id-803' filepath='/ws/android/kernel/aosp/common-mainline/common/drivers/mmc/host/sdhci.c' line='664' column='1'/>
+      <parameter type-id='type-id-71' filepath='/ws/android/kernel/aosp/common-mainline/common/drivers/mmc/host/sdhci.c' line='664' column='1'/>
+      <parameter type-id='type-id-170' filepath='/ws/android/kernel/aosp/common-mainline/common/drivers/mmc/host/sdhci.c' line='664' column='1'/>
       <return type-id='type-id-1548'/>
     </function-decl>
     <function-decl name='sdhci_send_command' mangled-name='sdhci_send_command' filepath='/ws/android/kernel/aosp/common-mainline/common/drivers/mmc/host/sdhci.c' line='1342' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='sdhci_send_command'>
-      <parameter type-id='type-id-1320' name='host' filepath='/ws/android/kernel/aosp/common-mainline/common/drivers/mmc/host/sdhci.c' line='1342' column='1'/>
-      <parameter type-id='type-id-642' name='cmd' filepath='/ws/android/kernel/aosp/common-mainline/common/drivers/mmc/host/sdhci.c' line='1342' column='1'/>
+      <parameter type-id='type-id-1320' filepath='/ws/android/kernel/aosp/common-mainline/common/drivers/mmc/host/sdhci.c' line='1342' column='1'/>
+      <parameter type-id='type-id-642' filepath='/ws/android/kernel/aosp/common-mainline/common/drivers/mmc/host/sdhci.c' line='1342' column='1'/>
       <return type-id='type-id-1548'/>
     </function-decl>
     <function-decl name='sdhci_calc_clk' mangled-name='sdhci_calc_clk' filepath='/ws/android/kernel/aosp/common-mainline/common/drivers/mmc/host/sdhci.c' line='1539' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='sdhci_calc_clk'>
-      <parameter type-id='type-id-1320' name='host' filepath='/ws/android/kernel/aosp/common-mainline/common/drivers/mmc/host/sdhci.c' line='1539' column='1'/>
-      <parameter type-id='type-id-170' name='clock' filepath='/ws/android/kernel/aosp/common-mainline/common/drivers/mmc/host/sdhci.c' line='1539' column='1'/>
-      <parameter type-id='type-id-561' name='actual_clock' filepath='/ws/android/kernel/aosp/common-mainline/common/drivers/mmc/host/sdhci.c' line='1540' column='1'/>
+      <parameter type-id='type-id-1320' filepath='/ws/android/kernel/aosp/common-mainline/common/drivers/mmc/host/sdhci.c' line='1539' column='1'/>
+      <parameter type-id='type-id-170' filepath='/ws/android/kernel/aosp/common-mainline/common/drivers/mmc/host/sdhci.c' line='1539' column='1'/>
+      <parameter type-id='type-id-561' filepath='/ws/android/kernel/aosp/common-mainline/common/drivers/mmc/host/sdhci.c' line='1540' column='1'/>
       <return type-id='type-id-444'/>
     </function-decl>
     <function-decl name='sdhci_enable_clk' mangled-name='sdhci_enable_clk' filepath='/ws/android/kernel/aosp/common-mainline/common/drivers/mmc/host/sdhci.c' line='1632' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='sdhci_enable_clk'>
-      <parameter type-id='type-id-1320' name='host' filepath='/ws/android/kernel/aosp/common-mainline/common/drivers/mmc/host/sdhci.c' line='1632' column='1'/>
-      <parameter type-id='type-id-444' name='clk' filepath='/ws/android/kernel/aosp/common-mainline/common/drivers/mmc/host/sdhci.c' line='1632' column='1'/>
+      <parameter type-id='type-id-1320' filepath='/ws/android/kernel/aosp/common-mainline/common/drivers/mmc/host/sdhci.c' line='1632' column='1'/>
+      <parameter type-id='type-id-444' filepath='/ws/android/kernel/aosp/common-mainline/common/drivers/mmc/host/sdhci.c' line='1632' column='1'/>
       <return type-id='type-id-1548'/>
     </function-decl>
     <function-decl name='sdhci_set_clock' mangled-name='sdhci_set_clock' filepath='/ws/android/kernel/aosp/common-mainline/common/drivers/mmc/host/sdhci.c' line='1661' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='sdhci_set_clock'>
-      <parameter type-id='type-id-1320' name='host' filepath='/ws/android/kernel/aosp/common-mainline/common/drivers/mmc/host/sdhci.c' line='1661' column='1'/>
-      <parameter type-id='type-id-170' name='clock' filepath='/ws/android/kernel/aosp/common-mainline/common/drivers/mmc/host/sdhci.c' line='1661' column='1'/>
+      <parameter type-id='type-id-1320' filepath='/ws/android/kernel/aosp/common-mainline/common/drivers/mmc/host/sdhci.c' line='1661' column='1'/>
+      <parameter type-id='type-id-170' filepath='/ws/android/kernel/aosp/common-mainline/common/drivers/mmc/host/sdhci.c' line='1661' column='1'/>
       <return type-id='type-id-1548'/>
     </function-decl>
     <function-decl name='sdhci_set_power_noreg' mangled-name='sdhci_set_power_noreg' filepath='/ws/android/kernel/aosp/common-mainline/common/drivers/mmc/host/sdhci.c' line='1690' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='sdhci_set_power_noreg'>
-      <parameter type-id='type-id-1320' name='host' filepath='/ws/android/kernel/aosp/common-mainline/common/drivers/mmc/host/sdhci.c' line='1690' column='1'/>
-      <parameter type-id='type-id-216' name='mode' filepath='/ws/android/kernel/aosp/common-mainline/common/drivers/mmc/host/sdhci.c' line='1690' column='1'/>
-      <parameter type-id='type-id-180' name='vdd' filepath='/ws/android/kernel/aosp/common-mainline/common/drivers/mmc/host/sdhci.c' line='1691' column='1'/>
+      <parameter type-id='type-id-1320' filepath='/ws/android/kernel/aosp/common-mainline/common/drivers/mmc/host/sdhci.c' line='1690' column='1'/>
+      <parameter type-id='type-id-216' filepath='/ws/android/kernel/aosp/common-mainline/common/drivers/mmc/host/sdhci.c' line='1690' column='1'/>
+      <parameter type-id='type-id-180' filepath='/ws/android/kernel/aosp/common-mainline/common/drivers/mmc/host/sdhci.c' line='1691' column='1'/>
       <return type-id='type-id-1548'/>
     </function-decl>
     <function-decl name='sdhci_set_power' mangled-name='sdhci_set_power' filepath='/ws/android/kernel/aosp/common-mainline/common/drivers/mmc/host/sdhci.c' line='1764' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='sdhci_set_power'>
-      <parameter type-id='type-id-1320' name='host' filepath='/ws/android/kernel/aosp/common-mainline/common/drivers/mmc/host/sdhci.c' line='1764' column='1'/>
-      <parameter type-id='type-id-216' name='mode' filepath='/ws/android/kernel/aosp/common-mainline/common/drivers/mmc/host/sdhci.c' line='1764' column='1'/>
-      <parameter type-id='type-id-180' name='vdd' filepath='/ws/android/kernel/aosp/common-mainline/common/drivers/mmc/host/sdhci.c' line='1765' column='1'/>
+      <parameter type-id='type-id-1320' filepath='/ws/android/kernel/aosp/common-mainline/common/drivers/mmc/host/sdhci.c' line='1764' column='1'/>
+      <parameter type-id='type-id-216' filepath='/ws/android/kernel/aosp/common-mainline/common/drivers/mmc/host/sdhci.c' line='1764' column='1'/>
+      <parameter type-id='type-id-180' filepath='/ws/android/kernel/aosp/common-mainline/common/drivers/mmc/host/sdhci.c' line='1765' column='1'/>
       <return type-id='type-id-1548'/>
     </function-decl>
     <function-decl name='sdhci_request' mangled-name='sdhci_request' filepath='/ws/android/kernel/aosp/common-mainline/common/drivers/mmc/host/sdhci.c' line='1780' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='sdhci_request'>
-      <parameter type-id='type-id-615' name='mmc' filepath='/ws/android/kernel/aosp/common-mainline/common/drivers/mmc/host/sdhci.c' line='1780' column='1'/>
-      <parameter type-id='type-id-92' name='mrq' filepath='/ws/android/kernel/aosp/common-mainline/common/drivers/mmc/host/sdhci.c' line='1780' column='1'/>
+      <parameter type-id='type-id-615' filepath='/ws/android/kernel/aosp/common-mainline/common/drivers/mmc/host/sdhci.c' line='1780' column='1'/>
+      <parameter type-id='type-id-92' filepath='/ws/android/kernel/aosp/common-mainline/common/drivers/mmc/host/sdhci.c' line='1780' column='1'/>
       <return type-id='type-id-1548'/>
     </function-decl>
     <function-decl name='sdhci_set_bus_width' mangled-name='sdhci_set_bus_width' filepath='/ws/android/kernel/aosp/common-mainline/common/drivers/mmc/host/sdhci.c' line='1820' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='sdhci_set_bus_width'>
-      <parameter type-id='type-id-1320' name='host' filepath='/ws/android/kernel/aosp/common-mainline/common/drivers/mmc/host/sdhci.c' line='1820' column='1'/>
-      <parameter type-id='type-id-71' name='width' filepath='/ws/android/kernel/aosp/common-mainline/common/drivers/mmc/host/sdhci.c' line='1820' column='1'/>
+      <parameter type-id='type-id-1320' filepath='/ws/android/kernel/aosp/common-mainline/common/drivers/mmc/host/sdhci.c' line='1820' column='1'/>
+      <parameter type-id='type-id-71' filepath='/ws/android/kernel/aosp/common-mainline/common/drivers/mmc/host/sdhci.c' line='1820' column='1'/>
       <return type-id='type-id-1548'/>
     </function-decl>
     <function-decl name='sdhci_set_uhs_signaling' mangled-name='sdhci_set_uhs_signaling' filepath='/ws/android/kernel/aosp/common-mainline/common/drivers/mmc/host/sdhci.c' line='1840' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='sdhci_set_uhs_signaling'>
-      <parameter type-id='type-id-1320' name='host' filepath='/ws/android/kernel/aosp/common-mainline/common/drivers/mmc/host/sdhci.c' line='1840' column='1'/>
-      <parameter type-id='type-id-170' name='timing' filepath='/ws/android/kernel/aosp/common-mainline/common/drivers/mmc/host/sdhci.c' line='1840' column='1'/>
+      <parameter type-id='type-id-1320' filepath='/ws/android/kernel/aosp/common-mainline/common/drivers/mmc/host/sdhci.c' line='1840' column='1'/>
+      <parameter type-id='type-id-170' filepath='/ws/android/kernel/aosp/common-mainline/common/drivers/mmc/host/sdhci.c' line='1840' column='1'/>
       <return type-id='type-id-1548'/>
     </function-decl>
     <function-decl name='sdhci_set_ios' mangled-name='sdhci_set_ios' filepath='/ws/android/kernel/aosp/common-mainline/common/drivers/mmc/host/sdhci.c' line='1865' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='sdhci_set_ios'>
-      <parameter type-id='type-id-615' name='mmc' filepath='/ws/android/kernel/aosp/common-mainline/common/drivers/mmc/host/sdhci.c' line='1865' column='1'/>
-      <parameter type-id='type-id-1308' name='ios' filepath='/ws/android/kernel/aosp/common-mainline/common/drivers/mmc/host/sdhci.c' line='1865' column='1'/>
+      <parameter type-id='type-id-615' filepath='/ws/android/kernel/aosp/common-mainline/common/drivers/mmc/host/sdhci.c' line='1865' column='1'/>
+      <parameter type-id='type-id-1308' filepath='/ws/android/kernel/aosp/common-mainline/common/drivers/mmc/host/sdhci.c' line='1865' column='1'/>
       <return type-id='type-id-1548'/>
     </function-decl>
     <function-decl name='sdhci_enable_sdio_irq' mangled-name='sdhci_enable_sdio_irq' filepath='/ws/android/kernel/aosp/common-mainline/common/drivers/mmc/host/sdhci.c' line='2114' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='sdhci_enable_sdio_irq'>
-      <parameter type-id='type-id-615' name='mmc' filepath='/ws/android/kernel/aosp/common-mainline/common/drivers/mmc/host/sdhci.c' line='2114' column='1'/>
-      <parameter type-id='type-id-71' name='enable' filepath='/ws/android/kernel/aosp/common-mainline/common/drivers/mmc/host/sdhci.c' line='2114' column='1'/>
+      <parameter type-id='type-id-615' filepath='/ws/android/kernel/aosp/common-mainline/common/drivers/mmc/host/sdhci.c' line='2114' column='1'/>
+      <parameter type-id='type-id-71' filepath='/ws/android/kernel/aosp/common-mainline/common/drivers/mmc/host/sdhci.c' line='2114' column='1'/>
       <return type-id='type-id-1548'/>
     </function-decl>
     <function-decl name='sdhci_start_signal_voltage_switch' mangled-name='sdhci_start_signal_voltage_switch' filepath='/ws/android/kernel/aosp/common-mainline/common/drivers/mmc/host/sdhci.c' line='2147' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='sdhci_start_signal_voltage_switch'>
-      <parameter type-id='type-id-615' name='mmc' filepath='/ws/android/kernel/aosp/common-mainline/common/drivers/mmc/host/sdhci.c' line='2147' column='1'/>
-      <parameter type-id='type-id-1308' name='ios' filepath='/ws/android/kernel/aosp/common-mainline/common/drivers/mmc/host/sdhci.c' line='2148' column='1'/>
+      <parameter type-id='type-id-615' filepath='/ws/android/kernel/aosp/common-mainline/common/drivers/mmc/host/sdhci.c' line='2147' column='1'/>
+      <parameter type-id='type-id-1308' filepath='/ws/android/kernel/aosp/common-mainline/common/drivers/mmc/host/sdhci.c' line='2148' column='1'/>
       <return type-id='type-id-71'/>
     </function-decl>
     <function-decl name='sdhci_start_tuning' mangled-name='sdhci_start_tuning' filepath='/ws/android/kernel/aosp/common-mainline/common/drivers/mmc/host/sdhci.c' line='2265' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='sdhci_start_tuning'>
-      <parameter type-id='type-id-1320' name='host' filepath='/ws/android/kernel/aosp/common-mainline/common/drivers/mmc/host/sdhci.c' line='2265' column='1'/>
+      <parameter type-id='type-id-1320' filepath='/ws/android/kernel/aosp/common-mainline/common/drivers/mmc/host/sdhci.c' line='2265' column='1'/>
       <return type-id='type-id-1548'/>
     </function-decl>
     <function-decl name='sdhci_end_tuning' mangled-name='sdhci_end_tuning' filepath='/ws/android/kernel/aosp/common-mainline/common/drivers/mmc/host/sdhci.c' line='2290' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='sdhci_end_tuning'>
-      <parameter type-id='type-id-1320' name='host' filepath='/ws/android/kernel/aosp/common-mainline/common/drivers/mmc/host/sdhci.c' line='2290' column='1'/>
+      <parameter type-id='type-id-1320' filepath='/ws/android/kernel/aosp/common-mainline/common/drivers/mmc/host/sdhci.c' line='2290' column='1'/>
       <return type-id='type-id-1548'/>
     </function-decl>
     <function-decl name='sdhci_reset_tuning' mangled-name='sdhci_reset_tuning' filepath='/ws/android/kernel/aosp/common-mainline/common/drivers/mmc/host/sdhci.c' line='2297' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='sdhci_reset_tuning'>
-      <parameter type-id='type-id-1320' name='host' filepath='/ws/android/kernel/aosp/common-mainline/common/drivers/mmc/host/sdhci.c' line='2297' column='1'/>
+      <parameter type-id='type-id-1320' filepath='/ws/android/kernel/aosp/common-mainline/common/drivers/mmc/host/sdhci.c' line='2297' column='1'/>
       <return type-id='type-id-1548'/>
     </function-decl>
     <function-decl name='sdhci_send_tuning' mangled-name='sdhci_send_tuning' filepath='/ws/android/kernel/aosp/common-mainline/common/drivers/mmc/host/sdhci.c' line='2327' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='sdhci_send_tuning'>
-      <parameter type-id='type-id-1320' name='host' filepath='/ws/android/kernel/aosp/common-mainline/common/drivers/mmc/host/sdhci.c' line='2327' column='1'/>
-      <parameter type-id='type-id-178' name='opcode' filepath='/ws/android/kernel/aosp/common-mainline/common/drivers/mmc/host/sdhci.c' line='2327' column='1'/>
+      <parameter type-id='type-id-1320' filepath='/ws/android/kernel/aosp/common-mainline/common/drivers/mmc/host/sdhci.c' line='2327' column='1'/>
+      <parameter type-id='type-id-178' filepath='/ws/android/kernel/aosp/common-mainline/common/drivers/mmc/host/sdhci.c' line='2327' column='1'/>
       <return type-id='type-id-1548'/>
     </function-decl>
     <function-decl name='sdhci_execute_tuning' mangled-name='sdhci_execute_tuning' filepath='/ws/android/kernel/aosp/common-mainline/common/drivers/mmc/host/sdhci.c' line='2417' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='sdhci_execute_tuning'>
-      <parameter type-id='type-id-615' name='mmc' filepath='/ws/android/kernel/aosp/common-mainline/common/drivers/mmc/host/sdhci.c' line='2417' column='1'/>
-      <parameter type-id='type-id-178' name='opcode' filepath='/ws/android/kernel/aosp/common-mainline/common/drivers/mmc/host/sdhci.c' line='2417' column='1'/>
+      <parameter type-id='type-id-615' filepath='/ws/android/kernel/aosp/common-mainline/common/drivers/mmc/host/sdhci.c' line='2417' column='1'/>
+      <parameter type-id='type-id-178' filepath='/ws/android/kernel/aosp/common-mainline/common/drivers/mmc/host/sdhci.c' line='2417' column='1'/>
       <return type-id='type-id-71'/>
     </function-decl>
     <function-decl name='sdhci_suspend_host' mangled-name='sdhci_suspend_host' filepath='/ws/android/kernel/aosp/common-mainline/common/drivers/mmc/host/sdhci.c' line='3244' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='sdhci_suspend_host'>
-      <parameter type-id='type-id-1320' name='host' filepath='/ws/android/kernel/aosp/common-mainline/common/drivers/mmc/host/sdhci.c' line='3244' column='1'/>
+      <parameter type-id='type-id-1320' filepath='/ws/android/kernel/aosp/common-mainline/common/drivers/mmc/host/sdhci.c' line='3244' column='1'/>
       <return type-id='type-id-71'/>
     </function-decl>
     <function-decl name='sdhci_resume_host' mangled-name='sdhci_resume_host' filepath='/ws/android/kernel/aosp/common-mainline/common/drivers/mmc/host/sdhci.c' line='3263' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='sdhci_resume_host'>
-      <parameter type-id='type-id-1320' name='host' filepath='/ws/android/kernel/aosp/common-mainline/common/drivers/mmc/host/sdhci.c' line='3263' column='1'/>
+      <parameter type-id='type-id-1320' filepath='/ws/android/kernel/aosp/common-mainline/common/drivers/mmc/host/sdhci.c' line='3263' column='1'/>
       <return type-id='type-id-71'/>
     </function-decl>
     <function-decl name='sdhci_runtime_suspend_host' mangled-name='sdhci_runtime_suspend_host' filepath='/ws/android/kernel/aosp/common-mainline/common/drivers/mmc/host/sdhci.c' line='3301' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='sdhci_runtime_suspend_host'>
-      <parameter type-id='type-id-1320' name='host' filepath='/ws/android/kernel/aosp/common-mainline/common/drivers/mmc/host/sdhci.c' line='3301' column='1'/>
+      <parameter type-id='type-id-1320' filepath='/ws/android/kernel/aosp/common-mainline/common/drivers/mmc/host/sdhci.c' line='3301' column='1'/>
       <return type-id='type-id-71'/>
     </function-decl>
     <function-decl name='sdhci_runtime_resume_host' mangled-name='sdhci_runtime_resume_host' filepath='/ws/android/kernel/aosp/common-mainline/common/drivers/mmc/host/sdhci.c' line='3323' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='sdhci_runtime_resume_host'>
-      <parameter type-id='type-id-1320' name='host' filepath='/ws/android/kernel/aosp/common-mainline/common/drivers/mmc/host/sdhci.c' line='3323' column='1'/>
-      <parameter type-id='type-id-71' name='soft_reset' filepath='/ws/android/kernel/aosp/common-mainline/common/drivers/mmc/host/sdhci.c' line='3323' column='1'/>
+      <parameter type-id='type-id-1320' filepath='/ws/android/kernel/aosp/common-mainline/common/drivers/mmc/host/sdhci.c' line='3323' column='1'/>
+      <parameter type-id='type-id-71' filepath='/ws/android/kernel/aosp/common-mainline/common/drivers/mmc/host/sdhci.c' line='3323' column='1'/>
       <return type-id='type-id-71'/>
     </function-decl>
     <function-decl name='sdhci_cqe_enable' mangled-name='sdhci_cqe_enable' filepath='/ws/android/kernel/aosp/common-mainline/common/drivers/mmc/host/sdhci.c' line='3381' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='sdhci_cqe_enable'>
-      <parameter type-id='type-id-615' name='mmc' filepath='/ws/android/kernel/aosp/common-mainline/common/drivers/mmc/host/sdhci.c' line='3381' column='1'/>
+      <parameter type-id='type-id-615' filepath='/ws/android/kernel/aosp/common-mainline/common/drivers/mmc/host/sdhci.c' line='3381' column='1'/>
       <return type-id='type-id-1548'/>
     </function-decl>
     <function-decl name='sdhci_cqe_disable' mangled-name='sdhci_cqe_disable' filepath='/ws/android/kernel/aosp/common-mainline/common/drivers/mmc/host/sdhci.c' line='3425' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='sdhci_cqe_disable'>
-      <parameter type-id='type-id-615' name='mmc' filepath='/ws/android/kernel/aosp/common-mainline/common/drivers/mmc/host/sdhci.c' line='3425' column='1'/>
-      <parameter type-id='type-id-168' name='recovery' filepath='/ws/android/kernel/aosp/common-mainline/common/drivers/mmc/host/sdhci.c' line='3425' column='1'/>
+      <parameter type-id='type-id-615' filepath='/ws/android/kernel/aosp/common-mainline/common/drivers/mmc/host/sdhci.c' line='3425' column='1'/>
+      <parameter type-id='type-id-168' filepath='/ws/android/kernel/aosp/common-mainline/common/drivers/mmc/host/sdhci.c' line='3425' column='1'/>
       <return type-id='type-id-1548'/>
     </function-decl>
     <function-decl name='sdhci_cqe_irq' mangled-name='sdhci_cqe_irq' filepath='/ws/android/kernel/aosp/common-mainline/common/drivers/mmc/host/sdhci.c' line='3449' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='sdhci_cqe_irq'>
-      <parameter type-id='type-id-1320' name='host' filepath='/ws/android/kernel/aosp/common-mainline/common/drivers/mmc/host/sdhci.c' line='3449' column='1'/>
-      <parameter type-id='type-id-178' name='intmask' filepath='/ws/android/kernel/aosp/common-mainline/common/drivers/mmc/host/sdhci.c' line='3449' column='1'/>
-      <parameter type-id='type-id-907' name='cmd_error' filepath='/ws/android/kernel/aosp/common-mainline/common/drivers/mmc/host/sdhci.c' line='3449' column='1'/>
-      <parameter type-id='type-id-907' name='data_error' filepath='/ws/android/kernel/aosp/common-mainline/common/drivers/mmc/host/sdhci.c' line='3450' column='1'/>
+      <parameter type-id='type-id-1320' filepath='/ws/android/kernel/aosp/common-mainline/common/drivers/mmc/host/sdhci.c' line='3449' column='1'/>
+      <parameter type-id='type-id-178' filepath='/ws/android/kernel/aosp/common-mainline/common/drivers/mmc/host/sdhci.c' line='3449' column='1'/>
+      <parameter type-id='type-id-907' filepath='/ws/android/kernel/aosp/common-mainline/common/drivers/mmc/host/sdhci.c' line='3449' column='1'/>
+      <parameter type-id='type-id-907' filepath='/ws/android/kernel/aosp/common-mainline/common/drivers/mmc/host/sdhci.c' line='3450' column='1'/>
       <return type-id='type-id-168'/>
     </function-decl>
     <function-decl name='sdhci_alloc_host' mangled-name='sdhci_alloc_host' filepath='/ws/android/kernel/aosp/common-mainline/common/drivers/mmc/host/sdhci.c' line='3499' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='sdhci_alloc_host'>
-      <parameter type-id='type-id-182' name='dev' filepath='/ws/android/kernel/aosp/common-mainline/common/drivers/mmc/host/sdhci.c' line='3499' column='1'/>
-      <parameter type-id='type-id-161' name='priv_size' filepath='/ws/android/kernel/aosp/common-mainline/common/drivers/mmc/host/sdhci.c' line='3500' column='1'/>
+      <parameter type-id='type-id-182' filepath='/ws/android/kernel/aosp/common-mainline/common/drivers/mmc/host/sdhci.c' line='3499' column='1'/>
+      <parameter type-id='type-id-161' filepath='/ws/android/kernel/aosp/common-mainline/common/drivers/mmc/host/sdhci.c' line='3500' column='1'/>
       <return type-id='type-id-1320'/>
     </function-decl>
     <function-decl name='__sdhci_read_caps' mangled-name='__sdhci_read_caps' filepath='/ws/android/kernel/aosp/common-mainline/common/drivers/mmc/host/sdhci.c' line='3568' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='__sdhci_read_caps'>
-      <parameter type-id='type-id-1320' name='host' filepath='/ws/android/kernel/aosp/common-mainline/common/drivers/mmc/host/sdhci.c' line='3568' column='1'/>
-      <parameter type-id='type-id-1345' name='ver' filepath='/ws/android/kernel/aosp/common-mainline/common/drivers/mmc/host/sdhci.c' line='3568' column='1'/>
-      <parameter type-id='type-id-1013' name='caps' filepath='/ws/android/kernel/aosp/common-mainline/common/drivers/mmc/host/sdhci.c' line='3568' column='1'/>
-      <parameter type-id='type-id-1013' name='caps1' filepath='/ws/android/kernel/aosp/common-mainline/common/drivers/mmc/host/sdhci.c' line='3568' column='1'/>
+      <parameter type-id='type-id-1320' filepath='/ws/android/kernel/aosp/common-mainline/common/drivers/mmc/host/sdhci.c' line='3568' column='1'/>
+      <parameter type-id='type-id-1345' filepath='/ws/android/kernel/aosp/common-mainline/common/drivers/mmc/host/sdhci.c' line='3568' column='1'/>
+      <parameter type-id='type-id-1013' filepath='/ws/android/kernel/aosp/common-mainline/common/drivers/mmc/host/sdhci.c' line='3568' column='1'/>
+      <parameter type-id='type-id-1013' filepath='/ws/android/kernel/aosp/common-mainline/common/drivers/mmc/host/sdhci.c' line='3568' column='1'/>
       <return type-id='type-id-1548'/>
     </function-decl>
     <function-decl name='sdhci_setup_host' mangled-name='sdhci_setup_host' filepath='/ws/android/kernel/aosp/common-mainline/common/drivers/mmc/host/sdhci.c' line='3695' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='sdhci_setup_host'>
-      <parameter type-id='type-id-1320' name='host' filepath='/ws/android/kernel/aosp/common-mainline/common/drivers/mmc/host/sdhci.c' line='3695' column='1'/>
+      <parameter type-id='type-id-1320' filepath='/ws/android/kernel/aosp/common-mainline/common/drivers/mmc/host/sdhci.c' line='3695' column='1'/>
       <return type-id='type-id-71'/>
     </function-decl>
     <function-decl name='sdhci_cleanup_host' mangled-name='sdhci_cleanup_host' filepath='/ws/android/kernel/aosp/common-mainline/common/drivers/mmc/host/sdhci.c' line='4235' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='sdhci_cleanup_host'>
-      <parameter type-id='type-id-1320' name='host' filepath='/ws/android/kernel/aosp/common-mainline/common/drivers/mmc/host/sdhci.c' line='4235' column='1'/>
+      <parameter type-id='type-id-1320' filepath='/ws/android/kernel/aosp/common-mainline/common/drivers/mmc/host/sdhci.c' line='4235' column='1'/>
       <return type-id='type-id-1548'/>
     </function-decl>
     <function-decl name='__sdhci_add_host' mangled-name='__sdhci_add_host' filepath='/ws/android/kernel/aosp/common-mainline/common/drivers/mmc/host/sdhci.c' line='4251' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='__sdhci_add_host'>
-      <parameter type-id='type-id-1320' name='host' filepath='/ws/android/kernel/aosp/common-mainline/common/drivers/mmc/host/sdhci.c' line='4251' column='1'/>
+      <parameter type-id='type-id-1320' filepath='/ws/android/kernel/aosp/common-mainline/common/drivers/mmc/host/sdhci.c' line='4251' column='1'/>
       <return type-id='type-id-71'/>
     </function-decl>
     <function-decl name='sdhci_add_host' mangled-name='sdhci_add_host' filepath='/ws/android/kernel/aosp/common-mainline/common/drivers/mmc/host/sdhci.c' line='4313' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='sdhci_add_host'>
-      <parameter type-id='type-id-1320' name='host' filepath='/ws/android/kernel/aosp/common-mainline/common/drivers/mmc/host/sdhci.c' line='4313' column='1'/>
+      <parameter type-id='type-id-1320' filepath='/ws/android/kernel/aosp/common-mainline/common/drivers/mmc/host/sdhci.c' line='4313' column='1'/>
       <return type-id='type-id-71'/>
     </function-decl>
     <function-decl name='sdhci_remove_host' mangled-name='sdhci_remove_host' filepath='/ws/android/kernel/aosp/common-mainline/common/drivers/mmc/host/sdhci.c' line='4334' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='sdhci_remove_host'>
-      <parameter type-id='type-id-1320' name='host' filepath='/ws/android/kernel/aosp/common-mainline/common/drivers/mmc/host/sdhci.c' line='4334' column='1'/>
-      <parameter type-id='type-id-71' name='dead' filepath='/ws/android/kernel/aosp/common-mainline/common/drivers/mmc/host/sdhci.c' line='4334' column='1'/>
+      <parameter type-id='type-id-1320' filepath='/ws/android/kernel/aosp/common-mainline/common/drivers/mmc/host/sdhci.c' line='4334' column='1'/>
+      <parameter type-id='type-id-71' filepath='/ws/android/kernel/aosp/common-mainline/common/drivers/mmc/host/sdhci.c' line='4334' column='1'/>
       <return type-id='type-id-1548'/>
     </function-decl>
     <function-decl name='sdhci_free_host' mangled-name='sdhci_free_host' filepath='/ws/android/kernel/aosp/common-mainline/common/drivers/mmc/host/sdhci.c' line='4385' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='sdhci_free_host'>
-      <parameter type-id='type-id-1320' name='host' filepath='/ws/android/kernel/aosp/common-mainline/common/drivers/mmc/host/sdhci.c' line='4385' column='1'/>
+      <parameter type-id='type-id-1320' filepath='/ws/android/kernel/aosp/common-mainline/common/drivers/mmc/host/sdhci.c' line='4385' column='1'/>
       <return type-id='type-id-1548'/>
     </function-decl>
     <typedef-decl name='fl_owner_t' type-id='type-id-124' filepath='/ws/android/kernel/aosp/common-mainline/common/include/linux/fs.h' line='1012' column='1' id='type-id-361'/>

@@ -421,7 +421,7 @@
         </member-function>
         <member-function access='public' destructor='yes' vtable-offset='0'>
           <function-decl name='~basic_ios' mangled-name='_ZNSt9basic_iosIcSt11char_traitsIcEED2Ev' filepath='/usr/bin/../lib/gcc/x86_64-linux-gnu/5.4.0/../../../../include/c++/5.4.0/bits/basic_ios.h' line='282' column='1' visibility='default' binding='global' size-in-bits='64'>
-            <parameter type-id='type-id-99' name='this' is-artificial='yes'/>
+            <parameter type-id='type-id-99' is-artificial='yes'/>
             <return type-id='type-id-191'/>
           </function-decl>
         </member-function>
@@ -435,8 +435,8 @@
         </member-function>
         <member-function access='public' destructor='yes' vtable-offset='0'>
           <function-decl name='~basic_iostream' mangled-name='_ZNSdD2Ev' filepath='/usr/bin/../lib/gcc/x86_64-linux-gnu/5.4.0/../../../../include/c++/5.4.0/istream' line='856' column='1' visibility='default' binding='global' size-in-bits='64'>
-            <parameter type-id='type-id-101' name='this' is-artificial='yes'/>
-            <parameter type-id='type-id-111' name='vtt' is-artificial='yes'/>
+            <parameter type-id='type-id-101' is-artificial='yes'/>
+            <parameter type-id='type-id-111' is-artificial='yes'/>
             <return type-id='type-id-191'/>
           </function-decl>
         </member-function>
@@ -450,8 +450,8 @@
         </member-function>
         <member-function access='public' destructor='yes' vtable-offset='0'>
           <function-decl name='~basic_istream' mangled-name='_ZNSiD2Ev' filepath='/usr/bin/../lib/gcc/x86_64-linux-gnu/5.4.0/../../../../include/c++/5.4.0/istream' line='103' column='1' visibility='default' binding='global' size-in-bits='64'>
-            <parameter type-id='type-id-103' name='this' is-artificial='yes'/>
-            <parameter type-id='type-id-111' name='vtt' is-artificial='yes'/>
+            <parameter type-id='type-id-103' is-artificial='yes'/>
+            <parameter type-id='type-id-111' is-artificial='yes'/>
             <return type-id='type-id-191'/>
           </function-decl>
         </member-function>
@@ -465,7 +465,7 @@
         </member-function>
         <member-function access='public' destructor='yes' vtable-offset='0'>
           <function-decl name='~basic_streambuf' mangled-name='_ZNSt15basic_streambufIcSt11char_traitsIcEED2Ev' filepath='/usr/bin/../lib/gcc/x86_64-linux-gnu/5.4.0/../../../../include/c++/5.4.0/streambuf' line='197' column='1' visibility='default' binding='global' size-in-bits='64'>
-            <parameter type-id='type-id-105' name='this' is-artificial='yes'/>
+            <parameter type-id='type-id-105' is-artificial='yes'/>
             <return type-id='type-id-191'/>
           </function-decl>
         </member-function>
@@ -482,8 +482,8 @@
         </member-type>
         <member-function access='protected'>
           <function-decl name='_M_default_append' mangled-name='_ZNSt6vectorIhSaIhEE17_M_default_appendEm' filepath='/usr/bin/../lib/gcc/x86_64-linux-gnu/5.4.0/../../../../include/c++/5.4.0/bits/vector.tcc' line='541' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZNSt6vectorIhSaIhEE17_M_default_appendEm'>
-            <parameter type-id='type-id-122' name='this' is-artificial='yes'/>
-            <parameter type-id='type-id-40' name='__n' filepath='/usr/bin/../lib/gcc/x86_64-linux-gnu/5.4.0/../../../../include/c++/5.4.0/bits/vector.tcc' line='1400' column='1'/>
+            <parameter type-id='type-id-122' is-artificial='yes'/>
+            <parameter type-id='type-id-40' filepath='/usr/bin/../lib/gcc/x86_64-linux-gnu/5.4.0/../../../../include/c++/5.4.0/bits/vector.tcc' line='1400' column='1'/>
             <return type-id='type-id-191'/>
           </function-decl>
         </member-function>
@@ -551,7 +551,7 @@
           </member-type>
           <member-function access='public' destructor='yes'>
             <function-decl name='~basic_string' mangled-name='_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev' filepath='/usr/bin/../lib/gcc/x86_64-linux-gnu/5.4.0/../../../../include/c++/5.4.0/bits/basic_string.h' line='542' column='1' visibility='default' binding='global' size-in-bits='64'>
-              <parameter type-id='type-id-96' name='this' is-artificial='yes'/>
+              <parameter type-id='type-id-96' is-artificial='yes'/>
               <return type-id='type-id-191'/>
             </function-decl>
           </member-function>
@@ -569,14 +569,14 @@
           </member-function>
           <member-function access='public' destructor='yes' vtable-offset='0'>
             <function-decl name='~basic_stringstream' mangled-name='_ZNSt7__cxx1118basic_stringstreamIcSt11char_traitsIcESaIcEED1Ev' filepath='/usr/bin/../lib/gcc/x86_64-linux-gnu/5.4.0/../../../../include/c++/5.4.0/sstream' line='717' column='1' visibility='default' binding='global' size-in-bits='64'>
-              <parameter type-id='type-id-97' name='this' is-artificial='yes'/>
+              <parameter type-id='type-id-97' is-artificial='yes'/>
               <return type-id='type-id-191'/>
             </function-decl>
           </member-function>
           <member-function access='public' destructor='yes' vtable-offset='0'>
             <function-decl name='~basic_stringstream' mangled-name='_ZNSt7__cxx1118basic_stringstreamIcSt11char_traitsIcESaIcEED2Ev' filepath='/usr/bin/../lib/gcc/x86_64-linux-gnu/5.4.0/../../../../include/c++/5.4.0/sstream' line='717' column='1' visibility='default' binding='global' size-in-bits='64'>
-              <parameter type-id='type-id-97' name='this' is-artificial='yes'/>
-              <parameter type-id='type-id-111' name='vtt' is-artificial='yes'/>
+              <parameter type-id='type-id-97' is-artificial='yes'/>
+              <parameter type-id='type-id-111' is-artificial='yes'/>
               <return type-id='type-id-191'/>
             </function-decl>
           </member-function>
@@ -660,16 +660,16 @@
       <class-decl name='__anonymous_struct__10' is-anonymous='yes' visibility='default' is-declaration-only='yes' id='type-id-146'>
         <member-function access='public'>
           <function-decl name='compress' mangled-name='_ZN5mongo15BlockCompressor8compressENS_14ConstDataRangeE' filepath='src/mongo/db/ftdc/block_compressor.cpp' line='39' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZN5mongo15BlockCompressor8compressENS_14ConstDataRangeE'>
-            <parameter type-id='type-id-147' name='this' is-artificial='yes'/>
-            <parameter type-id='type-id-142' name='source' filepath='src/mongo/db/ftdc/block_compressor.cpp' line='39' column='1'/>
+            <parameter type-id='type-id-147' is-artificial='yes'/>
+            <parameter type-id='type-id-142' filepath='src/mongo/db/ftdc/block_compressor.cpp' line='39' column='1'/>
             <return type-id='type-id-119'/>
           </function-decl>
         </member-function>
         <member-function access='public'>
           <function-decl name='uncompress' mangled-name='_ZN5mongo15BlockCompressor10uncompressENS_14ConstDataRangeEm' filepath='src/mongo/db/ftdc/block_compressor.cpp' line='81' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZN5mongo15BlockCompressor10uncompressENS_14ConstDataRangeEm'>
-            <parameter type-id='type-id-147' name='this' is-artificial='yes'/>
-            <parameter type-id='type-id-142' name='source' filepath='src/mongo/db/ftdc/block_compressor.cpp' line='81' column='1'/>
-            <parameter type-id='type-id-39' name='uncompressedLength' filepath='src/mongo/db/ftdc/block_compressor.cpp' line='82' column='1'/>
+            <parameter type-id='type-id-147' is-artificial='yes'/>
+            <parameter type-id='type-id-142' filepath='src/mongo/db/ftdc/block_compressor.cpp' line='81' column='1'/>
+            <parameter type-id='type-id-39' filepath='src/mongo/db/ftdc/block_compressor.cpp' line='82' column='1'/>
             <return type-id='type-id-119'/>
           </function-decl>
         </member-function>
@@ -684,8 +684,8 @@
       <class-decl name='__anonymous_struct__4' is-anonymous='yes' visibility='default' is-declaration-only='yes' id='type-id-128'>
         <member-function access='private'>
           <function-decl name='grow_reallocate' mangled-name='_ZN5mongo11_BufBuilderINS_21SharedBufferAllocatorEE15grow_reallocateEi' filepath='src/mongo/bson/util/builder.h' line='342' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZN5mongo11_BufBuilderINS_21SharedBufferAllocatorEE15grow_reallocateEi'>
-            <parameter type-id='type-id-129' name='this' is-artificial='yes'/>
-            <parameter type-id='type-id-16' name='minSize' filepath='src/mongo/bson/util/builder.h' line='342' column='1'/>
+            <parameter type-id='type-id-129' is-artificial='yes'/>
+            <parameter type-id='type-id-16' filepath='src/mongo/bson/util/builder.h' line='342' column='1'/>
             <return type-id='type-id-191'/>
           </function-decl>
         </member-function>
@@ -693,9 +693,9 @@
       <class-decl name='__anonymous_struct__5' is-anonymous='yes' visibility='default' is-declaration-only='yes' id='type-id-130'>
         <member-function access='private'>
           <function-decl name='appendIntegral&lt;int&gt;' mangled-name='_ZN5mongo17StringBuilderImplINS_21SharedBufferAllocatorEE14appendIntegralIiEERS2_T_i' filepath='src/mongo/bson/util/builder.h' line='498' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZN5mongo17StringBuilderImplINS_21SharedBufferAllocatorEE14appendIntegralIiEERS2_T_i'>
-            <parameter type-id='type-id-131' name='this' is-artificial='yes'/>
-            <parameter type-id='type-id-16' name='val' filepath='src/mongo/bson/util/builder.h' line='498' column='1'/>
-            <parameter type-id='type-id-16' name='maxSize' filepath='src/mongo/bson/util/builder.h' line='498' column='1'/>
+            <parameter type-id='type-id-131' is-artificial='yes'/>
+            <parameter type-id='type-id-16' filepath='src/mongo/bson/util/builder.h' line='498' column='1'/>
+            <parameter type-id='type-id-16' filepath='src/mongo/bson/util/builder.h' line='498' column='1'/>
             <return type-id='type-id-117'/>
           </function-decl>
         </member-function>
@@ -868,8 +868,8 @@
         </member-type>
         <member-function access='protected'>
           <function-decl name='_M_emplace_back_aux&lt;std::unique_ptr&lt;mongo::FTDCCollectorInterface, std::default_delete&lt;mongo::FTDCCollectorInterface&gt; &gt; &gt;' mangled-name='_ZNSt6vectorISt10unique_ptrIN5mongo22FTDCCollectorInterfaceESt14default_deleteIS2_EESaIS5_EE19_M_emplace_back_auxIJS5_EEEvDpOT_' filepath='/usr/bin/../lib/gcc/x86_64-linux-gnu/5.4.0/../../../../include/c++/5.4.0/bits/vector.tcc' line='408' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZNSt6vectorISt10unique_ptrIN5mongo22FTDCCollectorInterfaceESt14default_deleteIS2_EESaIS5_EE19_M_emplace_back_auxIJS5_EEEvDpOT_'>
-            <parameter type-id='type-id-259' name='this' is-artificial='yes'/>
-            <parameter type-id='type-id-118' name='__args' filepath='/usr/bin/../lib/gcc/x86_64-linux-gnu/5.4.0/../../../../include/c++/5.4.0/bits/vector.tcc' line='1417' column='1'/>
+            <parameter type-id='type-id-259' is-artificial='yes'/>
+            <parameter type-id='type-id-118' filepath='/usr/bin/../lib/gcc/x86_64-linux-gnu/5.4.0/../../../../include/c++/5.4.0/bits/vector.tcc' line='1417' column='1'/>
             <return type-id='type-id-191'/>
           </function-decl>
         </member-function>
@@ -974,15 +974,15 @@
       <class-decl name='__anonymous_struct__' is-anonymous='yes' visibility='default' is-declaration-only='yes' id='type-id-266'>
         <member-function access='public'>
           <function-decl name='add' mangled-name='_ZN5mongo23FTDCCollectorCollection3addESt10unique_ptrINS_22FTDCCollectorInterfaceESt14default_deleteIS2_EE' filepath='src/mongo/db/ftdc/collector.cpp' line='45' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZN5mongo23FTDCCollectorCollection3addESt10unique_ptrINS_22FTDCCollectorInterfaceESt14default_deleteIS2_EE'>
-            <parameter type-id='type-id-267' name='this' is-artificial='yes'/>
-            <parameter type-id='type-id-260' name='collector' filepath='src/mongo/db/ftdc/collector.cpp' line='45' column='1'/>
+            <parameter type-id='type-id-267' is-artificial='yes'/>
+            <parameter type-id='type-id-260' filepath='src/mongo/db/ftdc/collector.cpp' line='45' column='1'/>
             <return type-id='type-id-191'/>
           </function-decl>
         </member-function>
         <member-function access='public'>
           <function-decl name='collect' mangled-name='_ZN5mongo23FTDCCollectorCollection7collectEPNS_6ClientE' filepath='src/mongo/db/ftdc/collector.cpp' line='50' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZN5mongo23FTDCCollectorCollection7collectEPNS_6ClientE'>
-            <parameter type-id='type-id-267' name='this' is-artificial='yes'/>
-            <parameter type-id='type-id-281' name='client' filepath='src/mongo/db/ftdc/collector.cpp' line='50' column='1'/>
+            <parameter type-id='type-id-267' is-artificial='yes'/>
+            <parameter type-id='type-id-281' filepath='src/mongo/db/ftdc/collector.cpp' line='50' column='1'/>
             <return type-id='type-id-272'/>
           </function-decl>
         </member-function>
@@ -992,40 +992,40 @@
       <class-decl name='__anonymous_struct__11' is-anonymous='yes' visibility='default' is-declaration-only='yes' id='type-id-292'>
         <member-function access='public'>
           <function-decl name='BSONObjBuilder' mangled-name='_ZN5mongo14BSONObjBuilderC2Ei' filepath='src/mongo/bson/bsonobjbuilder.h' line='67' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZN5mongo14BSONObjBuilderC2Ei'>
-            <parameter type-id='type-id-293' name='this' is-artificial='yes'/>
-            <parameter type-id='type-id-16' name='initsize' filepath='src/mongo/bson/bsonobjbuilder.h' line='67' column='1'/>
+            <parameter type-id='type-id-293' is-artificial='yes'/>
+            <parameter type-id='type-id-16' filepath='src/mongo/bson/bsonobjbuilder.h' line='67' column='1'/>
             <return type-id='type-id-191'/>
           </function-decl>
         </member-function>
         <member-function access='public'>
           <function-decl name='subobjStart' mangled-name='_ZN5mongo14BSONObjBuilder11subobjStartENS_10StringDataE' filepath='src/mongo/bson/bsonobjbuilder.h' line='233' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZN5mongo14BSONObjBuilder11subobjStartENS_10StringDataE'>
-            <parameter type-id='type-id-293' name='this' is-artificial='yes'/>
-            <parameter type-id='type-id-268' name='fieldName' filepath='src/mongo/bson/bsonobjbuilder.h' line='233' column='1'/>
+            <parameter type-id='type-id-293' is-artificial='yes'/>
+            <parameter type-id='type-id-268' filepath='src/mongo/bson/bsonobjbuilder.h' line='233' column='1'/>
             <return type-id='type-id-356'/>
           </function-decl>
         </member-function>
         <member-function access='public'>
           <function-decl name='BSONObjBuilder' mangled-name='_ZN5mongo14BSONObjBuilderC2ERNS_11_BufBuilderINS_21SharedBufferAllocatorEEE' filepath='src/mongo/bson/bsonobjbuilder.h' line='80' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZN5mongo14BSONObjBuilderC2ERNS_11_BufBuilderINS_21SharedBufferAllocatorEEE'>
-            <parameter type-id='type-id-293' name='this' is-artificial='yes'/>
-            <parameter type-id='type-id-356' name='baseBuilder' filepath='src/mongo/bson/bsonobjbuilder.h' line='80' column='1'/>
+            <parameter type-id='type-id-293' is-artificial='yes'/>
+            <parameter type-id='type-id-356' filepath='src/mongo/bson/bsonobjbuilder.h' line='80' column='1'/>
             <return type-id='type-id-191'/>
           </function-decl>
         </member-function>
         <member-function access='public' destructor='yes'>
           <function-decl name='~BSONObjBuilder' mangled-name='_ZN5mongo14BSONObjBuilderD2Ev' filepath='src/mongo/bson/bsonobjbuilder.h' line='165' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZN5mongo14BSONObjBuilderD2Ev'>
-            <parameter type-id='type-id-293' name='this' is-artificial='yes'/>
+            <parameter type-id='type-id-293' is-artificial='yes'/>
             <return type-id='type-id-191'/>
           </function-decl>
         </member-function>
         <member-function access='public'>
           <function-decl name='obj' mangled-name='_ZN5mongo14BSONObjBuilder3objEv' filepath='src/mongo/bson/bsonobjbuilder.h' line='665' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZN5mongo14BSONObjBuilder3objEv'>
-            <parameter type-id='type-id-293' name='this' is-artificial='yes'/>
+            <parameter type-id='type-id-293' is-artificial='yes'/>
             <return type-id='type-id-274'/>
           </function-decl>
         </member-function>
         <member-function access='private'>
           <function-decl name='_done' mangled-name='_ZN5mongo14BSONObjBuilder5_doneEv' filepath='src/mongo/bson/bsonobjbuilder.h' line='775' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZN5mongo14BSONObjBuilder5_doneEv'>
-            <parameter type-id='type-id-293' name='this' is-artificial='yes'/>
+            <parameter type-id='type-id-293' is-artificial='yes'/>
             <return type-id='type-id-55'/>
           </function-decl>
         </member-function>
@@ -1039,8 +1039,8 @@
         </member-type>
         <member-function access='public'>
           <function-decl name='StringData' mangled-name='_ZN5mongo10StringDataC2EPKc' filepath='src/mongo/base/string_data.h' line='78' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZN5mongo10StringDataC2EPKc'>
-            <parameter type-id='type-id-269' name='this' is-artificial='yes'/>
-            <parameter type-id='type-id-60' name='str' filepath='src/mongo/base/string_data.h' line='78' column='1'/>
+            <parameter type-id='type-id-269' is-artificial='yes'/>
+            <parameter type-id='type-id-60' filepath='src/mongo/base/string_data.h' line='78' column='1'/>
             <return type-id='type-id-191'/>
           </function-decl>
         </member-function>
@@ -1213,8 +1213,8 @@
         </member-type>
         <member-function access='protected'>
           <function-decl name='_M_default_append' mangled-name='_ZNSt6vectorImSaImEE17_M_default_appendEm' filepath='/usr/bin/../lib/gcc/x86_64-linux-gnu/5.4.0/../../../../include/c++/5.4.0/bits/vector.tcc' line='541' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZNSt6vectorImSaImEE17_M_default_appendEm'>
-            <parameter type-id='type-id-445' name='this' is-artificial='yes'/>
-            <parameter type-id='type-id-40' name='__n' filepath='/usr/bin/../lib/gcc/x86_64-linux-gnu/5.4.0/../../../../include/c++/5.4.0/bits/vector.tcc' line='1400' column='1'/>
+            <parameter type-id='type-id-445' is-artificial='yes'/>
+            <parameter type-id='type-id-40' filepath='/usr/bin/../lib/gcc/x86_64-linux-gnu/5.4.0/../../../../include/c++/5.4.0/bits/vector.tcc' line='1400' column='1'/>
             <return type-id='type-id-191'/>
           </function-decl>
         </member-function>
@@ -1292,15 +1292,15 @@
         </member-type>
         <member-function access='public'>
           <function-decl name='writeAndAdvance&lt;mongo::FTDCVarInt&gt;' mangled-name='_ZN5mongo11DataBuilder15writeAndAdvanceINS_10FTDCVarIntEEENS_6StatusERKT_' filepath='src/mongo/base/data_builder.h' line='110' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZN5mongo11DataBuilder15writeAndAdvanceINS_10FTDCVarIntEEENS_6StatusERKT_'>
-            <parameter type-id='type-id-475' name='this' is-artificial='yes'/>
-            <parameter type-id='type-id-349' name='value' filepath='src/mongo/base/data_builder.h' line='110' column='1'/>
+            <parameter type-id='type-id-475' is-artificial='yes'/>
+            <parameter type-id='type-id-349' filepath='src/mongo/base/data_builder.h' line='110' column='1'/>
             <return type-id='type-id-428'/>
           </function-decl>
         </member-function>
         <member-function access='public'>
           <function-decl name='resize' mangled-name='_ZN5mongo11DataBuilder6resizeEm' filepath='src/mongo/base/data_builder.h' line='166' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZN5mongo11DataBuilder6resizeEm'>
-            <parameter type-id='type-id-475' name='this' is-artificial='yes'/>
-            <parameter type-id='type-id-39' name='newSize' filepath='src/mongo/base/data_builder.h' line='166' column='1'/>
+            <parameter type-id='type-id-475' is-artificial='yes'/>
+            <parameter type-id='type-id-39' filepath='src/mongo/base/data_builder.h' line='166' column='1'/>
             <return type-id='type-id-191'/>
           </function-decl>
         </member-function>
@@ -1325,29 +1325,29 @@
       <class-decl name='__anonymous_struct__6' is-anonymous='yes' visibility='default' is-declaration-only='yes' id='type-id-466'>
         <member-function access='public'>
           <function-decl name='addSample' mangled-name='_ZN5mongo14FTDCCompressor9addSampleERKNS_7BSONObjENS_6Date_tE' filepath='src/mongo/db/ftdc/compressor.cpp' line='46' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZN5mongo14FTDCCompressor9addSampleERKNS_7BSONObjENS_6Date_tE'>
-            <parameter type-id='type-id-467' name='this' is-artificial='yes'/>
-            <parameter type-id='type-id-165' name='sample' filepath='src/mongo/db/ftdc/compressor.cpp' line='46' column='1'/>
-            <parameter type-id='type-id-602' name='date' filepath='src/mongo/db/ftdc/compressor.cpp' line='46' column='1'/>
+            <parameter type-id='type-id-467' is-artificial='yes'/>
+            <parameter type-id='type-id-165' filepath='src/mongo/db/ftdc/compressor.cpp' line='46' column='1'/>
+            <parameter type-id='type-id-602' filepath='src/mongo/db/ftdc/compressor.cpp' line='46' column='1'/>
             <return type-id='type-id-434'/>
           </function-decl>
         </member-function>
         <member-function access='private'>
           <function-decl name='_reset' mangled-name='_ZN5mongo14FTDCCompressor6_resetERKNS_7BSONObjENS_6Date_tE' filepath='src/mongo/db/ftdc/compressor.cpp' line='221' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZN5mongo14FTDCCompressor6_resetERKNS_7BSONObjENS_6Date_tE'>
-            <parameter type-id='type-id-467' name='this' is-artificial='yes'/>
-            <parameter type-id='type-id-165' name='referenceDoc' filepath='src/mongo/db/ftdc/compressor.cpp' line='221' column='1'/>
-            <parameter type-id='type-id-602' name='date' filepath='src/mongo/db/ftdc/compressor.cpp' line='221' column='1'/>
+            <parameter type-id='type-id-467' is-artificial='yes'/>
+            <parameter type-id='type-id-165' filepath='src/mongo/db/ftdc/compressor.cpp' line='221' column='1'/>
+            <parameter type-id='type-id-602' filepath='src/mongo/db/ftdc/compressor.cpp' line='221' column='1'/>
             <return type-id='type-id-191'/>
           </function-decl>
         </member-function>
         <member-function access='public'>
           <function-decl name='getCompressedSamples' mangled-name='_ZN5mongo14FTDCCompressor20getCompressedSamplesEv' filepath='src/mongo/db/ftdc/compressor.cpp' line='114' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZN5mongo14FTDCCompressor20getCompressedSamplesEv'>
-            <parameter type-id='type-id-467' name='this' is-artificial='yes'/>
+            <parameter type-id='type-id-467' is-artificial='yes'/>
             <return type-id='type-id-452'/>
           </function-decl>
         </member-function>
         <member-function access='public'>
           <function-decl name='reset' mangled-name='_ZN5mongo14FTDCCompressor5resetEv' filepath='src/mongo/db/ftdc/compressor.cpp' line='216' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZN5mongo14FTDCCompressor5resetEv'>
-            <parameter type-id='type-id-467' name='this' is-artificial='yes'/>
+            <parameter type-id='type-id-467' is-artificial='yes'/>
             <return type-id='type-id-191'/>
           </function-decl>
         </member-function>
@@ -1624,7 +1624,7 @@
           <class-decl name='__anonymous_struct__1' is-struct='yes' is-anonymous='yes' visibility='default' is-declaration-only='yes' id='type-id-831'>
             <member-function access='public' vtable-offset='2'>
               <function-decl name='_M_run' mangled-name='_ZNSt6thread5_ImplISt12_Bind_simpleIFSt5_BindIFSt7_Mem_fnIMN5mongo14FTDCControllerEFvvEEPS5_EEvEEE6_M_runEv' filepath='/usr/bin/../lib/gcc/x86_64-linux-gnu/5.4.0/../../../../include/c++/5.4.0/thread' line='115' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZNSt6thread5_ImplISt12_Bind_simpleIFSt5_BindIFSt7_Mem_fnIMN5mongo14FTDCControllerEFvvEEPS5_EEvEEE6_M_runEv'>
-                <parameter type-id='type-id-832' name='this' is-artificial='yes'/>
+                <parameter type-id='type-id-832' is-artificial='yes'/>
                 <return type-id='type-id-191'/>
               </function-decl>
             </member-function>
@@ -1634,13 +1634,13 @@
           <class-decl name='__anonymous_struct__2' is-struct='yes' is-anonymous='yes' visibility='default' is-declaration-only='yes' id='type-id-835'>
             <member-function access='public' destructor='yes' vtable-offset='0'>
               <function-decl name='~_Impl_base' mangled-name='_ZNSt6thread10_Impl_baseD0Ev' filepath='/usr/bin/../lib/gcc/x86_64-linux-gnu/5.4.0/../../../../include/c++/5.4.0/thread' line='208' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZNSt6thread10_Impl_baseD0Ev'>
-                <parameter type-id='type-id-836' name='this' is-artificial='yes'/>
+                <parameter type-id='type-id-836' is-artificial='yes'/>
                 <return type-id='type-id-191'/>
               </function-decl>
             </member-function>
             <member-function access='public' destructor='yes' vtable-offset='0'>
               <function-decl name='~_Impl_base' mangled-name='_ZNSt6thread10_Impl_baseD2Ev' filepath='/usr/bin/../lib/gcc/x86_64-linux-gnu/5.4.0/../../../../include/c++/5.4.0/thread' line='208' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZNSt6thread10_Impl_baseD2Ev'>
-                <parameter type-id='type-id-836' name='this' is-artificial='yes'/>
+                <parameter type-id='type-id-836' is-artificial='yes'/>
                 <return type-id='type-id-191'/>
               </function-decl>
             </member-function>
@@ -1648,8 +1648,8 @@
         </member-type>
         <member-function access='public'>
           <function-decl name='thread&lt;std::_Bind&lt;std::_Mem_fn&lt;void (mongo::FTDCController::*)()&gt; (mongo::FTDCController *)&gt;&gt;' mangled-name='_ZNSt6threadC2ISt5_BindIFSt7_Mem_fnIMN5mongo14FTDCControllerEFvvEEPS4_EEJEEEOT_DpOT0_' filepath='/usr/bin/../lib/gcc/x86_64-linux-gnu/5.4.0/../../../../include/c++/5.4.0/thread' line='133' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZNSt6threadC2ISt5_BindIFSt7_Mem_fnIMN5mongo14FTDCControllerEFvvEEPS4_EEJEEEOT_DpOT0_'>
-            <parameter type-id='type-id-690' name='this' is-artificial='yes'/>
-            <parameter type-id='type-id-118' name='__f' filepath='/usr/bin/../lib/gcc/x86_64-linux-gnu/5.4.0/../../../../include/c++/5.4.0/thread' line='133' column='1'/>
+            <parameter type-id='type-id-690' is-artificial='yes'/>
+            <parameter type-id='type-id-118' filepath='/usr/bin/../lib/gcc/x86_64-linux-gnu/5.4.0/../../../../include/c++/5.4.0/thread' line='133' column='1'/>
             <return type-id='type-id-191'/>
           </function-decl>
         </member-function>
@@ -1702,32 +1702,32 @@
       <class-decl name='__anonymous_struct__35' is-anonymous='yes' visibility='default' is-declaration-only='yes' id='type-id-729'>
         <member-function access='public' destructor='yes' vtable-offset='0'>
           <function-decl name='~_Sp_counted_ptr_inplace' mangled-name='_ZNSt23_Sp_counted_ptr_inplaceINSt6thread5_ImplISt12_Bind_simpleIFSt5_BindIFSt7_Mem_fnIMN5mongo14FTDCControllerEFvvEEPS6_EEvEEEESaISF_ELN9__gnu_cxx12_Lock_policyE2EED0Ev' filepath='/usr/bin/../lib/gcc/x86_64-linux-gnu/5.4.0/../../../../include/c++/5.4.0/bits/shared_ptr_base.h' line='526' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZNSt23_Sp_counted_ptr_inplaceINSt6thread5_ImplISt12_Bind_simpleIFSt5_BindIFSt7_Mem_fnIMN5mongo14FTDCControllerEFvvEEPS6_EEvEEEESaISF_ELN9__gnu_cxx12_Lock_policyE2EED0Ev'>
-            <parameter type-id='type-id-730' name='this' is-artificial='yes'/>
+            <parameter type-id='type-id-730' is-artificial='yes'/>
             <return type-id='type-id-191'/>
           </function-decl>
         </member-function>
         <member-function access='public' destructor='yes' vtable-offset='0'>
           <function-decl name='~_Sp_counted_ptr_inplace' mangled-name='_ZNSt23_Sp_counted_ptr_inplaceINSt6thread5_ImplISt12_Bind_simpleIFSt5_BindIFSt7_Mem_fnIMN5mongo14FTDCControllerEFvvEEPS6_EEvEEEESaISF_ELN9__gnu_cxx12_Lock_policyE2EED2Ev' filepath='/usr/bin/../lib/gcc/x86_64-linux-gnu/5.4.0/../../../../include/c++/5.4.0/bits/shared_ptr_base.h' line='526' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZNSt23_Sp_counted_ptr_inplaceINSt6thread5_ImplISt12_Bind_simpleIFSt5_BindIFSt7_Mem_fnIMN5mongo14FTDCControllerEFvvEEPS6_EEvEEEESaISF_ELN9__gnu_cxx12_Lock_policyE2EED2Ev'>
-            <parameter type-id='type-id-730' name='this' is-artificial='yes'/>
+            <parameter type-id='type-id-730' is-artificial='yes'/>
             <return type-id='type-id-191'/>
           </function-decl>
         </member-function>
         <member-function access='public' vtable-offset='2'>
           <function-decl name='_M_dispose' mangled-name='_ZNSt23_Sp_counted_ptr_inplaceINSt6thread5_ImplISt12_Bind_simpleIFSt5_BindIFSt7_Mem_fnIMN5mongo14FTDCControllerEFvvEEPS6_EEvEEEESaISF_ELN9__gnu_cxx12_Lock_policyE2EE10_M_disposeEv' filepath='/usr/bin/../lib/gcc/x86_64-linux-gnu/5.4.0/../../../../include/c++/5.4.0/bits/shared_ptr_base.h' line='529' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZNSt23_Sp_counted_ptr_inplaceINSt6thread5_ImplISt12_Bind_simpleIFSt5_BindIFSt7_Mem_fnIMN5mongo14FTDCControllerEFvvEEPS6_EEvEEEESaISF_ELN9__gnu_cxx12_Lock_policyE2EE10_M_disposeEv'>
-            <parameter type-id='type-id-730' name='this' is-artificial='yes'/>
+            <parameter type-id='type-id-730' is-artificial='yes'/>
             <return type-id='type-id-191'/>
           </function-decl>
         </member-function>
         <member-function access='public' vtable-offset='3'>
           <function-decl name='_M_destroy' mangled-name='_ZNSt23_Sp_counted_ptr_inplaceINSt6thread5_ImplISt12_Bind_simpleIFSt5_BindIFSt7_Mem_fnIMN5mongo14FTDCControllerEFvvEEPS6_EEvEEEESaISF_ELN9__gnu_cxx12_Lock_policyE2EE10_M_destroyEv' filepath='/usr/bin/../lib/gcc/x86_64-linux-gnu/5.4.0/../../../../include/c++/5.4.0/bits/shared_ptr_base.h' line='536' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZNSt23_Sp_counted_ptr_inplaceINSt6thread5_ImplISt12_Bind_simpleIFSt5_BindIFSt7_Mem_fnIMN5mongo14FTDCControllerEFvvEEPS6_EEvEEEESaISF_ELN9__gnu_cxx12_Lock_policyE2EE10_M_destroyEv'>
-            <parameter type-id='type-id-730' name='this' is-artificial='yes'/>
+            <parameter type-id='type-id-730' is-artificial='yes'/>
             <return type-id='type-id-191'/>
           </function-decl>
         </member-function>
         <member-function access='public' vtable-offset='4'>
           <function-decl name='_M_get_deleter' mangled-name='_ZNSt23_Sp_counted_ptr_inplaceINSt6thread5_ImplISt12_Bind_simpleIFSt5_BindIFSt7_Mem_fnIMN5mongo14FTDCControllerEFvvEEPS6_EEvEEEESaISF_ELN9__gnu_cxx12_Lock_policyE2EE14_M_get_deleterERKSt9type_info' filepath='/usr/bin/../lib/gcc/x86_64-linux-gnu/5.4.0/../../../../include/c++/5.4.0/bits/shared_ptr_base.h' line='545' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZNSt23_Sp_counted_ptr_inplaceINSt6thread5_ImplISt12_Bind_simpleIFSt5_BindIFSt7_Mem_fnIMN5mongo14FTDCControllerEFvvEEPS6_EEvEEEESaISF_ELN9__gnu_cxx12_Lock_policyE2EE14_M_get_deleterERKSt9type_info'>
-            <parameter type-id='type-id-730' name='this' is-artificial='yes'/>
-            <parameter type-id='type-id-777' name='__ti' filepath='/usr/bin/../lib/gcc/x86_64-linux-gnu/5.4.0/../../../../include/c++/5.4.0/bits/shared_ptr_base.h' line='545' column='1'/>
+            <parameter type-id='type-id-730' is-artificial='yes'/>
+            <parameter type-id='type-id-777' filepath='/usr/bin/../lib/gcc/x86_64-linux-gnu/5.4.0/../../../../include/c++/5.4.0/bits/shared_ptr_base.h' line='545' column='1'/>
             <return type-id='type-id-110'/>
           </function-decl>
         </member-function>
@@ -1843,88 +1843,88 @@
       <class-decl name='__class_type' naming-typedef-id='type-id-850' visibility='default' is-declaration-only='yes' id='type-id-796'>
         <member-function access='public'>
           <function-decl name='setEnabled' mangled-name='_ZN5mongo14FTDCController10setEnabledEb' filepath='src/mongo/db/ftdc/controller.cpp' line='50' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZN5mongo14FTDCController10setEnabledEb'>
-            <parameter type-id='type-id-797' name='this' is-artificial='yes'/>
-            <parameter type-id='type-id-1' name='enabled' filepath='src/mongo/db/ftdc/controller.cpp' line='50' column='1'/>
+            <parameter type-id='type-id-797' is-artificial='yes'/>
+            <parameter type-id='type-id-1' filepath='src/mongo/db/ftdc/controller.cpp' line='50' column='1'/>
             <return type-id='type-id-651'/>
           </function-decl>
         </member-function>
         <member-function access='public'>
           <function-decl name='setPeriod' mangled-name='_ZN5mongo14FTDCController9setPeriodENS_8DurationISt5ratioILl1ELl1000EEEE' filepath='src/mongo/db/ftdc/controller.cpp' line='65' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZN5mongo14FTDCController9setPeriodENS_8DurationISt5ratioILl1ELl1000EEEE'>
-            <parameter type-id='type-id-797' name='this' is-artificial='yes'/>
-            <parameter type-id='type-id-873' name='millis' filepath='src/mongo/db/ftdc/controller.cpp' line='65' column='1'/>
+            <parameter type-id='type-id-797' is-artificial='yes'/>
+            <parameter type-id='type-id-873' filepath='src/mongo/db/ftdc/controller.cpp' line='65' column='1'/>
             <return type-id='type-id-191'/>
           </function-decl>
         </member-function>
         <member-function access='public'>
           <function-decl name='setMaxDirectorySizeBytes' mangled-name='_ZN5mongo14FTDCController24setMaxDirectorySizeBytesEm' filepath='src/mongo/db/ftdc/controller.cpp' line='71' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZN5mongo14FTDCController24setMaxDirectorySizeBytesEm'>
-            <parameter type-id='type-id-797' name='this' is-artificial='yes'/>
-            <parameter type-id='type-id-416' name='size' filepath='src/mongo/db/ftdc/controller.cpp' line='71' column='1'/>
+            <parameter type-id='type-id-797' is-artificial='yes'/>
+            <parameter type-id='type-id-416' filepath='src/mongo/db/ftdc/controller.cpp' line='71' column='1'/>
             <return type-id='type-id-191'/>
           </function-decl>
         </member-function>
         <member-function access='public'>
           <function-decl name='setMaxFileSizeBytes' mangled-name='_ZN5mongo14FTDCController19setMaxFileSizeBytesEm' filepath='src/mongo/db/ftdc/controller.cpp' line='77' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZN5mongo14FTDCController19setMaxFileSizeBytesEm'>
-            <parameter type-id='type-id-797' name='this' is-artificial='yes'/>
-            <parameter type-id='type-id-416' name='size' filepath='src/mongo/db/ftdc/controller.cpp' line='77' column='1'/>
+            <parameter type-id='type-id-797' is-artificial='yes'/>
+            <parameter type-id='type-id-416' filepath='src/mongo/db/ftdc/controller.cpp' line='77' column='1'/>
             <return type-id='type-id-191'/>
           </function-decl>
         </member-function>
         <member-function access='public'>
           <function-decl name='setMaxSamplesPerArchiveMetricChunk' mangled-name='_ZN5mongo14FTDCController34setMaxSamplesPerArchiveMetricChunkEm' filepath='src/mongo/db/ftdc/controller.cpp' line='83' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZN5mongo14FTDCController34setMaxSamplesPerArchiveMetricChunkEm'>
-            <parameter type-id='type-id-797' name='this' is-artificial='yes'/>
-            <parameter type-id='type-id-39' name='size' filepath='src/mongo/db/ftdc/controller.cpp' line='83' column='1'/>
+            <parameter type-id='type-id-797' is-artificial='yes'/>
+            <parameter type-id='type-id-39' filepath='src/mongo/db/ftdc/controller.cpp' line='83' column='1'/>
             <return type-id='type-id-191'/>
           </function-decl>
         </member-function>
         <member-function access='public'>
           <function-decl name='setMaxSamplesPerInterimMetricChunk' mangled-name='_ZN5mongo14FTDCController34setMaxSamplesPerInterimMetricChunkEm' filepath='src/mongo/db/ftdc/controller.cpp' line='89' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZN5mongo14FTDCController34setMaxSamplesPerInterimMetricChunkEm'>
-            <parameter type-id='type-id-797' name='this' is-artificial='yes'/>
-            <parameter type-id='type-id-39' name='size' filepath='src/mongo/db/ftdc/controller.cpp' line='89' column='1'/>
+            <parameter type-id='type-id-797' is-artificial='yes'/>
+            <parameter type-id='type-id-39' filepath='src/mongo/db/ftdc/controller.cpp' line='89' column='1'/>
             <return type-id='type-id-191'/>
           </function-decl>
         </member-function>
         <member-function access='public'>
           <function-decl name='setDirectory' mangled-name='_ZN5mongo14FTDCController12setDirectoryERKN5boost10filesystem4pathE' filepath='src/mongo/db/ftdc/controller.cpp' line='95' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZN5mongo14FTDCController12setDirectoryERKN5boost10filesystem4pathE'>
-            <parameter type-id='type-id-797' name='this' is-artificial='yes'/>
-            <parameter type-id='type-id-165' name='path' filepath='src/mongo/db/ftdc/controller.cpp' line='95' column='1'/>
+            <parameter type-id='type-id-797' is-artificial='yes'/>
+            <parameter type-id='type-id-165' filepath='src/mongo/db/ftdc/controller.cpp' line='95' column='1'/>
             <return type-id='type-id-651'/>
           </function-decl>
         </member-function>
         <member-function access='public'>
           <function-decl name='addPeriodicCollector' mangled-name='_ZN5mongo14FTDCController20addPeriodicCollectorESt10unique_ptrINS_22FTDCCollectorInterfaceESt14default_deleteIS2_EE' filepath='src/mongo/db/ftdc/controller.cpp' line='112' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZN5mongo14FTDCController20addPeriodicCollectorESt10unique_ptrINS_22FTDCCollectorInterfaceESt14default_deleteIS2_EE'>
-            <parameter type-id='type-id-797' name='this' is-artificial='yes'/>
-            <parameter type-id='type-id-673' name='collector' filepath='src/mongo/db/ftdc/controller.cpp' line='112' column='1'/>
+            <parameter type-id='type-id-797' is-artificial='yes'/>
+            <parameter type-id='type-id-673' filepath='src/mongo/db/ftdc/controller.cpp' line='112' column='1'/>
             <return type-id='type-id-191'/>
           </function-decl>
         </member-function>
         <member-function access='public'>
           <function-decl name='addOnRotateCollector' mangled-name='_ZN5mongo14FTDCController20addOnRotateCollectorESt10unique_ptrINS_22FTDCCollectorInterfaceESt14default_deleteIS2_EE' filepath='src/mongo/db/ftdc/controller.cpp' line='121' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZN5mongo14FTDCController20addOnRotateCollectorESt10unique_ptrINS_22FTDCCollectorInterfaceESt14default_deleteIS2_EE'>
-            <parameter type-id='type-id-797' name='this' is-artificial='yes'/>
-            <parameter type-id='type-id-673' name='collector' filepath='src/mongo/db/ftdc/controller.cpp' line='121' column='1'/>
+            <parameter type-id='type-id-797' is-artificial='yes'/>
+            <parameter type-id='type-id-673' filepath='src/mongo/db/ftdc/controller.cpp' line='121' column='1'/>
             <return type-id='type-id-191'/>
           </function-decl>
         </member-function>
         <member-function access='public'>
           <function-decl name='getMostRecentPeriodicDocument' mangled-name='_ZN5mongo14FTDCController29getMostRecentPeriodicDocumentEv' filepath='src/mongo/db/ftdc/controller.cpp' line='130' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZN5mongo14FTDCController29getMostRecentPeriodicDocumentEv'>
-            <parameter type-id='type-id-797' name='this' is-artificial='yes'/>
+            <parameter type-id='type-id-797' is-artificial='yes'/>
             <return type-id='type-id-717'/>
           </function-decl>
         </member-function>
         <member-function access='public'>
           <function-decl name='start' mangled-name='_ZN5mongo14FTDCController5startEv' filepath='src/mongo/db/ftdc/controller.cpp' line='137' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZN5mongo14FTDCController5startEv'>
-            <parameter type-id='type-id-797' name='this' is-artificial='yes'/>
+            <parameter type-id='type-id-797' is-artificial='yes'/>
             <return type-id='type-id-191'/>
           </function-decl>
         </member-function>
         <member-function access='private'>
           <function-decl name='doLoop' mangled-name='_ZN5mongo14FTDCController6doLoopEv' filepath='src/mongo/db/ftdc/controller.cpp' line='186' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZN5mongo14FTDCController6doLoopEv'>
-            <parameter type-id='type-id-797' name='this' is-artificial='yes'/>
+            <parameter type-id='type-id-797' is-artificial='yes'/>
             <return type-id='type-id-191'/>
           </function-decl>
         </member-function>
         <member-function access='public'>
           <function-decl name='stop' mangled-name='_ZN5mongo14FTDCController4stopEv' filepath='src/mongo/db/ftdc/controller.cpp' line='152' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZN5mongo14FTDCController4stopEv'>
-            <parameter type-id='type-id-797' name='this' is-artificial='yes'/>
+            <parameter type-id='type-id-797' is-artificial='yes'/>
             <return type-id='type-id-191'/>
           </function-decl>
         </member-function>
@@ -1958,8 +1958,8 @@
         <class-decl name='__anonymous_struct__2' is-anonymous='yes' visibility='default' is-declaration-only='yes' id='type-id-681'>
           <member-function access='public'>
             <function-decl name='operator&lt;&lt;&lt;mongo::Status&gt;' mangled-name='_ZN5mongo6logger16LogstreamBuilderlsINS_6StatusEEERS1_RKT_' filepath='src/mongo/logger/logstream_builder.h' line='209' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZN5mongo6logger16LogstreamBuilderlsINS_6StatusEEERS1_RKT_'>
-              <parameter type-id='type-id-682' name='this' is-artificial='yes'/>
-              <parameter type-id='type-id-165' name='x' filepath='src/mongo/logger/logstream_builder.h' line='209' column='1'/>
+              <parameter type-id='type-id-682' is-artificial='yes'/>
+              <parameter type-id='type-id-165' filepath='src/mongo/logger/logstream_builder.h' line='209' column='1'/>
               <return type-id='type-id-117'/>
             </function-decl>
           </member-function>
@@ -2104,22 +2104,22 @@
         </member-type>
         <member-function access='public'>
           <function-decl name='reserve' mangled-name='_ZNSt6vectorIN5mongo7BSONObjESaIS1_EE7reserveEm' filepath='/usr/bin/../lib/gcc/x86_64-linux-gnu/5.4.0/../../../../include/c++/5.4.0/bits/vector.tcc' line='66' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZNSt6vectorIN5mongo7BSONObjESaIS1_EE7reserveEm'>
-            <parameter type-id='type-id-926' name='this' is-artificial='yes'/>
-            <parameter type-id='type-id-40' name='__n' filepath='/usr/bin/../lib/gcc/x86_64-linux-gnu/5.4.0/../../../../include/c++/5.4.0/bits/vector.tcc' line='764' column='1'/>
+            <parameter type-id='type-id-926' is-artificial='yes'/>
+            <parameter type-id='type-id-40' filepath='/usr/bin/../lib/gcc/x86_64-linux-gnu/5.4.0/../../../../include/c++/5.4.0/bits/vector.tcc' line='764' column='1'/>
             <return type-id='type-id-191'/>
           </function-decl>
         </member-function>
         <member-function access='protected'>
           <function-decl name='_M_emplace_back_aux&lt;mongo::BSONObj&gt;' mangled-name='_ZNSt6vectorIN5mongo7BSONObjESaIS1_EE19_M_emplace_back_auxIJS1_EEEvDpOT_' filepath='/usr/bin/../lib/gcc/x86_64-linux-gnu/5.4.0/../../../../include/c++/5.4.0/bits/vector.tcc' line='408' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZNSt6vectorIN5mongo7BSONObjESaIS1_EE19_M_emplace_back_auxIJS1_EEEvDpOT_'>
-            <parameter type-id='type-id-926' name='this' is-artificial='yes'/>
-            <parameter type-id='type-id-118' name='__args' filepath='/usr/bin/../lib/gcc/x86_64-linux-gnu/5.4.0/../../../../include/c++/5.4.0/bits/vector.tcc' line='1417' column='1'/>
+            <parameter type-id='type-id-926' is-artificial='yes'/>
+            <parameter type-id='type-id-118' filepath='/usr/bin/../lib/gcc/x86_64-linux-gnu/5.4.0/../../../../include/c++/5.4.0/bits/vector.tcc' line='1417' column='1'/>
             <return type-id='type-id-191'/>
           </function-decl>
         </member-function>
         <member-function access='protected'>
           <function-decl name='_M_emplace_back_aux&lt;mongo::BSONObj &amp;&gt;' mangled-name='_ZNSt6vectorIN5mongo7BSONObjESaIS1_EE19_M_emplace_back_auxIJRS1_EEEvDpOT_' filepath='/usr/bin/../lib/gcc/x86_64-linux-gnu/5.4.0/../../../../include/c++/5.4.0/bits/vector.tcc' line='408' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZNSt6vectorIN5mongo7BSONObjESaIS1_EE19_M_emplace_back_auxIJRS1_EEEvDpOT_'>
-            <parameter type-id='type-id-926' name='this' is-artificial='yes'/>
-            <parameter type-id='type-id-117' name='__args' filepath='/usr/bin/../lib/gcc/x86_64-linux-gnu/5.4.0/../../../../include/c++/5.4.0/bits/vector.tcc' line='1417' column='1'/>
+            <parameter type-id='type-id-926' is-artificial='yes'/>
+            <parameter type-id='type-id-117' filepath='/usr/bin/../lib/gcc/x86_64-linux-gnu/5.4.0/../../../../include/c++/5.4.0/bits/vector.tcc' line='1417' column='1'/>
             <return type-id='type-id-191'/>
           </function-decl>
         </member-function>
@@ -2190,7 +2190,7 @@
       <class-decl name='__anonymous_struct__' is-anonymous='yes' visibility='default' is-declaration-only='yes' id='type-id-891'>
         <member-function access='public'>
           <function-decl name='readAndAdvance&lt;mongo::Validated&lt;mongo::BSONObj&gt; &gt;' mangled-name='_ZN5mongo20ConstDataRangeCursor14readAndAdvanceINS_9ValidatedINS_7BSONObjEEEEENS_10StatusWithIT_EEv' filepath='src/mongo/base/data_range_cursor.h' line='88' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZN5mongo20ConstDataRangeCursor14readAndAdvanceINS_9ValidatedINS_7BSONObjEEEEENS_10StatusWithIT_EEv'>
-            <parameter type-id='type-id-892' name='this' is-artificial='yes'/>
+            <parameter type-id='type-id-892' is-artificial='yes'/>
             <return type-id='type-id-911'/>
           </function-decl>
         </member-function>
@@ -2211,8 +2211,8 @@
       <class-decl name='__anonymous_struct__19' is-anonymous='yes' visibility='default' is-declaration-only='yes' id='type-id-937'>
         <member-function access='public'>
           <function-decl name='uncompress' mangled-name='_ZN5mongo16FTDCDecompressor10uncompressENS_14ConstDataRangeE' filepath='src/mongo/db/ftdc/decompressor.cpp' line='44' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZN5mongo16FTDCDecompressor10uncompressENS_14ConstDataRangeE'>
-            <parameter type-id='type-id-938' name='this' is-artificial='yes'/>
-            <parameter type-id='type-id-1028' name='buf' filepath='src/mongo/db/ftdc/decompressor.cpp' line='44' column='1'/>
+            <parameter type-id='type-id-938' is-artificial='yes'/>
+            <parameter type-id='type-id-1028' filepath='src/mongo/db/ftdc/decompressor.cpp' line='44' column='1'/>
             <return type-id='type-id-897'/>
           </function-decl>
         </member-function>
@@ -2241,11 +2241,11 @@
           <class-decl name='__anonymous_struct__2' is-struct='yes' is-anonymous='yes' visibility='default' is-declaration-only='yes' id='type-id-1034'>
             <member-function access='public' static='yes'>
               <function-decl name='load' mangled-name='_ZN5mongo8DataType7HandlerINS_7BSONObjEvE4loadEPS2_PKcmPml' filepath='src/mongo/bson/bsonobj.h' line='750' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZN5mongo8DataType7HandlerINS_7BSONObjEvE4loadEPS2_PKcmPml'>
-                <parameter type-id='type-id-977' name='bson' filepath='src/mongo/bson/bsonobj.h' line='750' column='1'/>
-                <parameter type-id='type-id-60' name='ptr' filepath='src/mongo/bson/bsonobj.h' line='751' column='1'/>
-                <parameter type-id='type-id-39' name='length' filepath='src/mongo/bson/bsonobj.h' line='752' column='1'/>
-                <parameter type-id='type-id-253' name='advanced' filepath='src/mongo/bson/bsonobj.h' line='753' column='1'/>
-                <parameter type-id='type-id-194' name='debug_offset' filepath='src/mongo/bson/bsonobj.h' line='754' column='1'/>
+                <parameter type-id='type-id-977' filepath='src/mongo/bson/bsonobj.h' line='750' column='1'/>
+                <parameter type-id='type-id-60' filepath='src/mongo/bson/bsonobj.h' line='751' column='1'/>
+                <parameter type-id='type-id-39' filepath='src/mongo/bson/bsonobj.h' line='752' column='1'/>
+                <parameter type-id='type-id-253' filepath='src/mongo/bson/bsonobj.h' line='753' column='1'/>
+                <parameter type-id='type-id-194' filepath='src/mongo/bson/bsonobj.h' line='754' column='1'/>
                 <return type-id='type-id-895'/>
               </function-decl>
             </member-function>
@@ -2255,11 +2255,11 @@
           <class-decl name='__anonymous_struct__3' is-struct='yes' is-anonymous='yes' visibility='default' is-declaration-only='yes' id='type-id-1035'>
             <member-function access='public' static='yes'>
               <function-decl name='load' mangled-name='_ZN5mongo8DataType7HandlerINS_9ValidatedINS_7BSONObjEEEvE4loadEPS4_PKcmPml' filepath='src/mongo/base/data_type_validated.h' line='93' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZN5mongo8DataType7HandlerINS_9ValidatedINS_7BSONObjEEEvE4loadEPS4_PKcmPml'>
-                <parameter type-id='type-id-996' name='vt' filepath='src/mongo/base/data_type_validated.h' line='93' column='1'/>
-                <parameter type-id='type-id-60' name='ptr' filepath='src/mongo/base/data_type_validated.h' line='94' column='1'/>
-                <parameter type-id='type-id-39' name='length' filepath='src/mongo/base/data_type_validated.h' line='95' column='1'/>
-                <parameter type-id='type-id-253' name='advanced' filepath='src/mongo/base/data_type_validated.h' line='96' column='1'/>
-                <parameter type-id='type-id-194' name='debug_offset' filepath='src/mongo/base/data_type_validated.h' line='97' column='1'/>
+                <parameter type-id='type-id-996' filepath='src/mongo/base/data_type_validated.h' line='93' column='1'/>
+                <parameter type-id='type-id-60' filepath='src/mongo/base/data_type_validated.h' line='94' column='1'/>
+                <parameter type-id='type-id-39' filepath='src/mongo/base/data_type_validated.h' line='95' column='1'/>
+                <parameter type-id='type-id-253' filepath='src/mongo/base/data_type_validated.h' line='96' column='1'/>
+                <parameter type-id='type-id-194' filepath='src/mongo/base/data_type_validated.h' line='97' column='1'/>
                 <return type-id='type-id-895'/>
               </function-decl>
             </member-function>
@@ -2559,14 +2559,14 @@
         </member-function>
         <member-function access='public' destructor='yes' vtable-offset='0'>
           <function-decl name='~basic_ofstream' mangled-name='_ZNSt14basic_ofstreamIcSt11char_traitsIcEED1Ev' filepath='/usr/bin/../lib/gcc/x86_64-linux-gnu/5.4.0/../../../../include/c++/5.4.0/fstream' line='737' column='1' visibility='default' binding='global' size-in-bits='64'>
-            <parameter type-id='type-id-1081' name='this' is-artificial='yes'/>
+            <parameter type-id='type-id-1081' is-artificial='yes'/>
             <return type-id='type-id-191'/>
           </function-decl>
         </member-function>
         <member-function access='public' destructor='yes' vtable-offset='0'>
           <function-decl name='~basic_ofstream' mangled-name='_ZNSt14basic_ofstreamIcSt11char_traitsIcEED2Ev' filepath='/usr/bin/../lib/gcc/x86_64-linux-gnu/5.4.0/../../../../include/c++/5.4.0/fstream' line='737' column='1' visibility='default' binding='global' size-in-bits='64'>
-            <parameter type-id='type-id-1081' name='this' is-artificial='yes'/>
-            <parameter type-id='type-id-111' name='vtt' is-artificial='yes'/>
+            <parameter type-id='type-id-1081' is-artificial='yes'/>
+            <parameter type-id='type-id-111' is-artificial='yes'/>
             <return type-id='type-id-191'/>
           </function-decl>
         </member-function>
@@ -2592,8 +2592,8 @@
         </member-type>
         <member-function access='protected'>
           <function-decl name='_M_emplace_back_aux&lt;boost::filesystem::path&gt;' mangled-name='_ZNSt6vectorIN5boost10filesystem4pathESaIS2_EE19_M_emplace_back_auxIJS2_EEEvDpOT_' filepath='/usr/bin/../lib/gcc/x86_64-linux-gnu/5.4.0/../../../../include/c++/5.4.0/bits/vector.tcc' line='408' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZNSt6vectorIN5boost10filesystem4pathESaIS2_EE19_M_emplace_back_auxIJS2_EEEvDpOT_'>
-            <parameter type-id='type-id-1147' name='this' is-artificial='yes'/>
-            <parameter type-id='type-id-1094' name='__args' filepath='/usr/bin/../lib/gcc/x86_64-linux-gnu/5.4.0/../../../../include/c++/5.4.0/bits/vector.tcc' line='1417' column='1'/>
+            <parameter type-id='type-id-1147' is-artificial='yes'/>
+            <parameter type-id='type-id-1094' filepath='/usr/bin/../lib/gcc/x86_64-linux-gnu/5.4.0/../../../../include/c++/5.4.0/bits/vector.tcc' line='1417' column='1'/>
             <return type-id='type-id-191'/>
           </function-decl>
         </member-function>
@@ -2618,8 +2618,8 @@
         </member-type>
         <member-function access='protected'>
           <function-decl name='_M_emplace_back_aux&lt;std::tuple&lt;mongo::FTDCBSONUtil::FTDCType, mongo::BSONObj, mongo::Date_t&gt; &gt;' mangled-name='_ZNSt6vectorISt5tupleIJN5mongo12FTDCBSONUtil8FTDCTypeENS1_7BSONObjENS1_6Date_tEEESaIS6_EE19_M_emplace_back_auxIJS6_EEEvDpOT_' filepath='/usr/bin/../lib/gcc/x86_64-linux-gnu/5.4.0/../../../../include/c++/5.4.0/bits/vector.tcc' line='408' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZNSt6vectorISt5tupleIJN5mongo12FTDCBSONUtil8FTDCTypeENS1_7BSONObjENS1_6Date_tEEESaIS6_EE19_M_emplace_back_auxIJS6_EEEvDpOT_'>
-            <parameter type-id='type-id-1141' name='this' is-artificial='yes'/>
-            <parameter type-id='type-id-118' name='__args' filepath='/usr/bin/../lib/gcc/x86_64-linux-gnu/5.4.0/../../../../include/c++/5.4.0/bits/vector.tcc' line='1417' column='1'/>
+            <parameter type-id='type-id-1141' is-artificial='yes'/>
+            <parameter type-id='type-id-118' filepath='/usr/bin/../lib/gcc/x86_64-linux-gnu/5.4.0/../../../../include/c++/5.4.0/bits/vector.tcc' line='1417' column='1'/>
             <return type-id='type-id-191'/>
           </function-decl>
         </member-function>
@@ -2732,43 +2732,43 @@
       </class-decl>
       <class-decl name='__anonymous_struct__8' is-struct='yes' is-anonymous='yes' visibility='default' is-declaration-only='yes' id='type-id-1384'/>
       <function-decl name='__move_median_to_first&lt;__gnu_cxx::__normal_iterator&lt;boost::filesystem::path *, std::vector&lt;boost::filesystem::path, std::allocator&lt;boost::filesystem::path&gt; &gt; &gt;, __gnu_cxx::__ops::_Iter_less_iter&gt;' mangled-name='_ZSt22__move_median_to_firstIN9__gnu_cxx17__normal_iteratorIPN5boost10filesystem4pathESt6vectorIS4_SaIS4_EEEENS0_5__ops15_Iter_less_iterEEvT_SC_SC_SC_T0_' filepath='/usr/bin/../lib/gcc/x86_64-linux-gnu/5.4.0/../../../../include/c++/5.4.0/bits/stl_algo.h' line='78' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZSt22__move_median_to_firstIN9__gnu_cxx17__normal_iteratorIPN5boost10filesystem4pathESt6vectorIS4_SaIS4_EEEENS0_5__ops15_Iter_less_iterEEvT_SC_SC_SC_T0_'>
-        <parameter type-id='type-id-1087' name='__result' filepath='/usr/bin/../lib/gcc/x86_64-linux-gnu/5.4.0/../../../../include/c++/5.4.0/bits/stl_algo.h' line='78' column='1'/>
-        <parameter type-id='type-id-1087' name='__a' filepath='/usr/bin/../lib/gcc/x86_64-linux-gnu/5.4.0/../../../../include/c++/5.4.0/bits/stl_algo.h' line='78' column='1'/>
-        <parameter type-id='type-id-1087' name='__b' filepath='/usr/bin/../lib/gcc/x86_64-linux-gnu/5.4.0/../../../../include/c++/5.4.0/bits/stl_algo.h' line='78' column='1'/>
-        <parameter type-id='type-id-1087' name='__c' filepath='/usr/bin/../lib/gcc/x86_64-linux-gnu/5.4.0/../../../../include/c++/5.4.0/bits/stl_algo.h' line='79' column='1'/>
-        <parameter type-id='type-id-1270' name='__comp' filepath='/usr/bin/../lib/gcc/x86_64-linux-gnu/5.4.0/../../../../include/c++/5.4.0/bits/stl_algo.h' line='79' column='1'/>
+        <parameter type-id='type-id-1087' filepath='/usr/bin/../lib/gcc/x86_64-linux-gnu/5.4.0/../../../../include/c++/5.4.0/bits/stl_algo.h' line='78' column='1'/>
+        <parameter type-id='type-id-1087' filepath='/usr/bin/../lib/gcc/x86_64-linux-gnu/5.4.0/../../../../include/c++/5.4.0/bits/stl_algo.h' line='78' column='1'/>
+        <parameter type-id='type-id-1087' filepath='/usr/bin/../lib/gcc/x86_64-linux-gnu/5.4.0/../../../../include/c++/5.4.0/bits/stl_algo.h' line='78' column='1'/>
+        <parameter type-id='type-id-1087' filepath='/usr/bin/../lib/gcc/x86_64-linux-gnu/5.4.0/../../../../include/c++/5.4.0/bits/stl_algo.h' line='79' column='1'/>
+        <parameter type-id='type-id-1270' filepath='/usr/bin/../lib/gcc/x86_64-linux-gnu/5.4.0/../../../../include/c++/5.4.0/bits/stl_algo.h' line='79' column='1'/>
         <return type-id='type-id-191'/>
       </function-decl>
       <function-decl name='__unguarded_linear_insert&lt;__gnu_cxx::__normal_iterator&lt;boost::filesystem::path *, std::vector&lt;boost::filesystem::path, std::allocator&lt;boost::filesystem::path&gt; &gt; &gt;, __gnu_cxx::__ops::_Val_less_iter&gt;' mangled-name='_ZSt25__unguarded_linear_insertIN9__gnu_cxx17__normal_iteratorIPN5boost10filesystem4pathESt6vectorIS4_SaIS4_EEEENS0_5__ops14_Val_less_iterEEvT_T0_' filepath='/usr/bin/../lib/gcc/x86_64-linux-gnu/5.4.0/../../../../include/c++/5.4.0/bits/stl_algo.h' line='1816' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZSt25__unguarded_linear_insertIN9__gnu_cxx17__normal_iteratorIPN5boost10filesystem4pathESt6vectorIS4_SaIS4_EEEENS0_5__ops14_Val_less_iterEEvT_T0_'>
-        <parameter type-id='type-id-1087' name='__last' filepath='/usr/bin/../lib/gcc/x86_64-linux-gnu/5.4.0/../../../../include/c++/5.4.0/bits/stl_algo.h' line='1816' column='1'/>
-        <parameter type-id='type-id-1276' name='__comp' filepath='/usr/bin/../lib/gcc/x86_64-linux-gnu/5.4.0/../../../../include/c++/5.4.0/bits/stl_algo.h' line='1817' column='1'/>
+        <parameter type-id='type-id-1087' filepath='/usr/bin/../lib/gcc/x86_64-linux-gnu/5.4.0/../../../../include/c++/5.4.0/bits/stl_algo.h' line='1816' column='1'/>
+        <parameter type-id='type-id-1276' filepath='/usr/bin/../lib/gcc/x86_64-linux-gnu/5.4.0/../../../../include/c++/5.4.0/bits/stl_algo.h' line='1817' column='1'/>
         <return type-id='type-id-191'/>
       </function-decl>
       <function-decl name='__insertion_sort&lt;__gnu_cxx::__normal_iterator&lt;boost::filesystem::path *, std::vector&lt;boost::filesystem::path, std::allocator&lt;boost::filesystem::path&gt; &gt; &gt;, __gnu_cxx::__ops::_Iter_less_iter&gt;' mangled-name='_ZSt16__insertion_sortIN9__gnu_cxx17__normal_iteratorIPN5boost10filesystem4pathESt6vectorIS4_SaIS4_EEEENS0_5__ops15_Iter_less_iterEEvT_SC_T0_' filepath='/usr/bin/../lib/gcc/x86_64-linux-gnu/5.4.0/../../../../include/c++/5.4.0/bits/stl_algo.h' line='1835' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZSt16__insertion_sortIN9__gnu_cxx17__normal_iteratorIPN5boost10filesystem4pathESt6vectorIS4_SaIS4_EEEENS0_5__ops15_Iter_less_iterEEvT_SC_T0_'>
-        <parameter type-id='type-id-1087' name='__first' filepath='/usr/bin/../lib/gcc/x86_64-linux-gnu/5.4.0/../../../../include/c++/5.4.0/bits/stl_algo.h' line='1835' column='1'/>
-        <parameter type-id='type-id-1087' name='__last' filepath='/usr/bin/../lib/gcc/x86_64-linux-gnu/5.4.0/../../../../include/c++/5.4.0/bits/stl_algo.h' line='1836' column='1'/>
-        <parameter type-id='type-id-1270' name='__comp' filepath='/usr/bin/../lib/gcc/x86_64-linux-gnu/5.4.0/../../../../include/c++/5.4.0/bits/stl_algo.h' line='1836' column='1'/>
+        <parameter type-id='type-id-1087' filepath='/usr/bin/../lib/gcc/x86_64-linux-gnu/5.4.0/../../../../include/c++/5.4.0/bits/stl_algo.h' line='1835' column='1'/>
+        <parameter type-id='type-id-1087' filepath='/usr/bin/../lib/gcc/x86_64-linux-gnu/5.4.0/../../../../include/c++/5.4.0/bits/stl_algo.h' line='1836' column='1'/>
+        <parameter type-id='type-id-1270' filepath='/usr/bin/../lib/gcc/x86_64-linux-gnu/5.4.0/../../../../include/c++/5.4.0/bits/stl_algo.h' line='1836' column='1'/>
         <return type-id='type-id-191'/>
       </function-decl>
       <function-decl name='__introsort_loop&lt;__gnu_cxx::__normal_iterator&lt;boost::filesystem::path *, std::vector&lt;boost::filesystem::path, std::allocator&lt;boost::filesystem::path&gt; &gt; &gt;, long, __gnu_cxx::__ops::_Iter_less_iter&gt;' mangled-name='_ZSt16__introsort_loopIN9__gnu_cxx17__normal_iteratorIPN5boost10filesystem4pathESt6vectorIS4_SaIS4_EEEElNS0_5__ops15_Iter_less_iterEEvT_SC_T0_T1_' filepath='/usr/bin/../lib/gcc/x86_64-linux-gnu/5.4.0/../../../../include/c++/5.4.0/bits/stl_algo.h' line='1935' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZSt16__introsort_loopIN9__gnu_cxx17__normal_iteratorIPN5boost10filesystem4pathESt6vectorIS4_SaIS4_EEEElNS0_5__ops15_Iter_less_iterEEvT_SC_T0_T1_'>
-        <parameter type-id='type-id-1087' name='__first' filepath='/usr/bin/../lib/gcc/x86_64-linux-gnu/5.4.0/../../../../include/c++/5.4.0/bits/stl_algo.h' line='1935' column='1'/>
-        <parameter type-id='type-id-1087' name='__last' filepath='/usr/bin/../lib/gcc/x86_64-linux-gnu/5.4.0/../../../../include/c++/5.4.0/bits/stl_algo.h' line='1936' column='1'/>
-        <parameter type-id='type-id-18' name='__depth_limit' filepath='/usr/bin/../lib/gcc/x86_64-linux-gnu/5.4.0/../../../../include/c++/5.4.0/bits/stl_algo.h' line='1937' column='1'/>
-        <parameter type-id='type-id-1270' name='__comp' filepath='/usr/bin/../lib/gcc/x86_64-linux-gnu/5.4.0/../../../../include/c++/5.4.0/bits/stl_algo.h' line='1937' column='1'/>
+        <parameter type-id='type-id-1087' filepath='/usr/bin/../lib/gcc/x86_64-linux-gnu/5.4.0/../../../../include/c++/5.4.0/bits/stl_algo.h' line='1935' column='1'/>
+        <parameter type-id='type-id-1087' filepath='/usr/bin/../lib/gcc/x86_64-linux-gnu/5.4.0/../../../../include/c++/5.4.0/bits/stl_algo.h' line='1936' column='1'/>
+        <parameter type-id='type-id-18' filepath='/usr/bin/../lib/gcc/x86_64-linux-gnu/5.4.0/../../../../include/c++/5.4.0/bits/stl_algo.h' line='1937' column='1'/>
+        <parameter type-id='type-id-1270' filepath='/usr/bin/../lib/gcc/x86_64-linux-gnu/5.4.0/../../../../include/c++/5.4.0/bits/stl_algo.h' line='1937' column='1'/>
         <return type-id='type-id-191'/>
       </function-decl>
       <function-decl name='__adjust_heap&lt;__gnu_cxx::__normal_iterator&lt;boost::filesystem::path *, std::vector&lt;boost::filesystem::path, std::allocator&lt;boost::filesystem::path&gt; &gt; &gt;, long, boost::filesystem::path, __gnu_cxx::__ops::_Iter_less_iter&gt;' mangled-name='_ZSt13__adjust_heapIN9__gnu_cxx17__normal_iteratorIPN5boost10filesystem4pathESt6vectorIS4_SaIS4_EEEElS4_NS0_5__ops15_Iter_less_iterEEvT_T0_SD_T1_T2_' filepath='/usr/bin/../lib/gcc/x86_64-linux-gnu/5.4.0/../../../../include/c++/5.4.0/bits/stl_heap.h' line='207' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZSt13__adjust_heapIN9__gnu_cxx17__normal_iteratorIPN5boost10filesystem4pathESt6vectorIS4_SaIS4_EEEElS4_NS0_5__ops15_Iter_less_iterEEvT_T0_SD_T1_T2_'>
-        <parameter type-id='type-id-1087' name='__first' filepath='/usr/bin/../lib/gcc/x86_64-linux-gnu/5.4.0/../../../../include/c++/5.4.0/bits/stl_heap.h' line='207' column='1'/>
-        <parameter type-id='type-id-18' name='__holeIndex' filepath='/usr/bin/../lib/gcc/x86_64-linux-gnu/5.4.0/../../../../include/c++/5.4.0/bits/stl_heap.h' line='207' column='1'/>
-        <parameter type-id='type-id-18' name='__len' filepath='/usr/bin/../lib/gcc/x86_64-linux-gnu/5.4.0/../../../../include/c++/5.4.0/bits/stl_heap.h' line='208' column='1'/>
-        <parameter type-id='type-id-1093' name='__value' filepath='/usr/bin/../lib/gcc/x86_64-linux-gnu/5.4.0/../../../../include/c++/5.4.0/bits/stl_heap.h' line='208' column='1'/>
-        <parameter type-id='type-id-1270' name='__comp' filepath='/usr/bin/../lib/gcc/x86_64-linux-gnu/5.4.0/../../../../include/c++/5.4.0/bits/stl_heap.h' line='208' column='1'/>
+        <parameter type-id='type-id-1087' filepath='/usr/bin/../lib/gcc/x86_64-linux-gnu/5.4.0/../../../../include/c++/5.4.0/bits/stl_heap.h' line='207' column='1'/>
+        <parameter type-id='type-id-18' filepath='/usr/bin/../lib/gcc/x86_64-linux-gnu/5.4.0/../../../../include/c++/5.4.0/bits/stl_heap.h' line='207' column='1'/>
+        <parameter type-id='type-id-18' filepath='/usr/bin/../lib/gcc/x86_64-linux-gnu/5.4.0/../../../../include/c++/5.4.0/bits/stl_heap.h' line='208' column='1'/>
+        <parameter type-id='type-id-1093' filepath='/usr/bin/../lib/gcc/x86_64-linux-gnu/5.4.0/../../../../include/c++/5.4.0/bits/stl_heap.h' line='208' column='1'/>
+        <parameter type-id='type-id-1270' filepath='/usr/bin/../lib/gcc/x86_64-linux-gnu/5.4.0/../../../../include/c++/5.4.0/bits/stl_heap.h' line='208' column='1'/>
         <return type-id='type-id-191'/>
       </function-decl>
       <function-decl name='__make_heap&lt;__gnu_cxx::__normal_iterator&lt;boost::filesystem::path *, std::vector&lt;boost::filesystem::path, std::allocator&lt;boost::filesystem::path&gt; &gt; &gt;, __gnu_cxx::__ops::_Iter_less_iter&gt;' mangled-name='_ZSt11__make_heapIN9__gnu_cxx17__normal_iteratorIPN5boost10filesystem4pathESt6vectorIS4_SaIS4_EEEENS0_5__ops15_Iter_less_iterEEvT_SC_T0_' filepath='/usr/bin/../lib/gcc/x86_64-linux-gnu/5.4.0/../../../../include/c++/5.4.0/bits/stl_heap.h' line='317' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZSt11__make_heapIN9__gnu_cxx17__normal_iteratorIPN5boost10filesystem4pathESt6vectorIS4_SaIS4_EEEENS0_5__ops15_Iter_less_iterEEvT_SC_T0_'>
-        <parameter type-id='type-id-1087' name='__first' filepath='/usr/bin/../lib/gcc/x86_64-linux-gnu/5.4.0/../../../../include/c++/5.4.0/bits/stl_heap.h' line='317' column='1'/>
-        <parameter type-id='type-id-1087' name='__last' filepath='/usr/bin/../lib/gcc/x86_64-linux-gnu/5.4.0/../../../../include/c++/5.4.0/bits/stl_heap.h' line='317' column='1'/>
-        <parameter type-id='type-id-1270' name='__comp' filepath='/usr/bin/../lib/gcc/x86_64-linux-gnu/5.4.0/../../../../include/c++/5.4.0/bits/stl_heap.h' line='318' column='1'/>
+        <parameter type-id='type-id-1087' filepath='/usr/bin/../lib/gcc/x86_64-linux-gnu/5.4.0/../../../../include/c++/5.4.0/bits/stl_heap.h' line='317' column='1'/>
+        <parameter type-id='type-id-1087' filepath='/usr/bin/../lib/gcc/x86_64-linux-gnu/5.4.0/../../../../include/c++/5.4.0/bits/stl_heap.h' line='317' column='1'/>
+        <parameter type-id='type-id-1270' filepath='/usr/bin/../lib/gcc/x86_64-linux-gnu/5.4.0/../../../../include/c++/5.4.0/bits/stl_heap.h' line='318' column='1'/>
         <return type-id='type-id-191'/>
       </function-decl>
       <namespace-decl name='__cxx11'>
@@ -2839,83 +2839,83 @@
       <class-decl name='__anonymous_struct__' is-anonymous='yes' visibility='default' is-declaration-only='yes' id='type-id-1102'>
         <member-function access='private'>
           <function-decl name='FTDCFileManager' mangled-name='_ZN5mongo15FTDCFileManagerC2EPKNS_10FTDCConfigERKN5boost10filesystem4pathEPNS_23FTDCCollectorCollectionE' filepath='src/mongo/db/ftdc/file_manager.cpp' line='52' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZN5mongo15FTDCFileManagerC2EPKNS_10FTDCConfigERKN5boost10filesystem4pathEPNS_23FTDCCollectorCollectionE'>
-            <parameter type-id='type-id-1103' name='this' is-artificial='yes'/>
-            <parameter type-id='type-id-1279' name='config' filepath='src/mongo/db/ftdc/file_manager.cpp' line='52' column='1'/>
-            <parameter type-id='type-id-165' name='path' filepath='src/mongo/db/ftdc/file_manager.cpp' line='53' column='1'/>
-            <parameter type-id='type-id-1105' name='collection' filepath='src/mongo/db/ftdc/file_manager.cpp' line='54' column='1'/>
+            <parameter type-id='type-id-1103' is-artificial='yes'/>
+            <parameter type-id='type-id-1279' filepath='src/mongo/db/ftdc/file_manager.cpp' line='52' column='1'/>
+            <parameter type-id='type-id-165' filepath='src/mongo/db/ftdc/file_manager.cpp' line='53' column='1'/>
+            <parameter type-id='type-id-1105' filepath='src/mongo/db/ftdc/file_manager.cpp' line='54' column='1'/>
             <return type-id='type-id-191'/>
           </function-decl>
         </member-function>
         <member-function access='public' destructor='yes'>
           <function-decl name='~FTDCFileManager' mangled-name='_ZN5mongo15FTDCFileManagerD2Ev' filepath='src/mongo/db/ftdc/file_manager.cpp' line='57' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZN5mongo15FTDCFileManagerD2Ev'>
-            <parameter type-id='type-id-1103' name='this' is-artificial='yes'/>
+            <parameter type-id='type-id-1103' is-artificial='yes'/>
             <return type-id='type-id-191'/>
           </function-decl>
         </member-function>
         <member-function access='public'>
           <function-decl name='close' mangled-name='_ZN5mongo15FTDCFileManager5closeEv' filepath='src/mongo/db/ftdc/file_manager.cpp' line='309' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZN5mongo15FTDCFileManager5closeEv'>
-            <parameter type-id='type-id-1103' name='this' is-artificial='yes'/>
+            <parameter type-id='type-id-1103' is-artificial='yes'/>
             <return type-id='type-id-1108'/>
           </function-decl>
         </member-function>
         <member-function access='public' static='yes'>
           <function-decl name='create' mangled-name='_ZN5mongo15FTDCFileManager6createEPKNS_10FTDCConfigERKN5boost10filesystem4pathEPNS_23FTDCCollectorCollectionEPNS_6ClientE' filepath='src/mongo/db/ftdc/file_manager.cpp' line='61' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZN5mongo15FTDCFileManager6createEPKNS_10FTDCConfigERKN5boost10filesystem4pathEPNS_23FTDCCollectorCollectionEPNS_6ClientE'>
-            <parameter type-id='type-id-1279' name='config' filepath='src/mongo/db/ftdc/file_manager.cpp' line='62' column='1'/>
-            <parameter type-id='type-id-165' name='path' filepath='src/mongo/db/ftdc/file_manager.cpp' line='63' column='1'/>
-            <parameter type-id='type-id-1105' name='collection' filepath='src/mongo/db/ftdc/file_manager.cpp' line='64' column='1'/>
-            <parameter type-id='type-id-1076' name='client' filepath='src/mongo/db/ftdc/file_manager.cpp' line='65' column='1'/>
+            <parameter type-id='type-id-1279' filepath='src/mongo/db/ftdc/file_manager.cpp' line='62' column='1'/>
+            <parameter type-id='type-id-165' filepath='src/mongo/db/ftdc/file_manager.cpp' line='63' column='1'/>
+            <parameter type-id='type-id-1105' filepath='src/mongo/db/ftdc/file_manager.cpp' line='64' column='1'/>
+            <parameter type-id='type-id-1076' filepath='src/mongo/db/ftdc/file_manager.cpp' line='65' column='1'/>
             <return type-id='type-id-1130'/>
           </function-decl>
         </member-function>
         <member-function access='private'>
           <function-decl name='scanDirectory' mangled-name='_ZN5mongo15FTDCFileManager13scanDirectoryEv' filepath='src/mongo/db/ftdc/file_manager.cpp' line='109' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZN5mongo15FTDCFileManager13scanDirectoryEv'>
-            <parameter type-id='type-id-1103' name='this' is-artificial='yes'/>
+            <parameter type-id='type-id-1103' is-artificial='yes'/>
             <return type-id='type-id-1146'/>
           </function-decl>
         </member-function>
         <member-function access='private'>
           <function-decl name='recoverInterimFile' mangled-name='_ZN5mongo15FTDCFileManager18recoverInterimFileEv' filepath='src/mongo/db/ftdc/file_manager.cpp' line='227' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZN5mongo15FTDCFileManager18recoverInterimFileEv'>
-            <parameter type-id='type-id-1103' name='this' is-artificial='yes'/>
+            <parameter type-id='type-id-1103' is-artificial='yes'/>
             <return type-id='type-id-1140'/>
           </function-decl>
         </member-function>
         <member-function access='public'>
           <function-decl name='generateArchiveFileName' mangled-name='_ZN5mongo15FTDCFileManager23generateArchiveFileNameERKN5boost10filesystem4pathENS_10StringDataE' filepath='src/mongo/db/ftdc/file_manager.cpp' line='129' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZN5mongo15FTDCFileManager23generateArchiveFileNameERKN5boost10filesystem4pathENS_10StringDataE'>
-            <parameter type-id='type-id-1103' name='this' is-artificial='yes'/>
-            <parameter type-id='type-id-165' name='path' filepath='src/mongo/db/ftdc/file_manager.cpp' line='130' column='1'/>
-            <parameter type-id='type-id-1128' name='suffix' filepath='src/mongo/db/ftdc/file_manager.cpp' line='130' column='1'/>
+            <parameter type-id='type-id-1103' is-artificial='yes'/>
+            <parameter type-id='type-id-165' filepath='src/mongo/db/ftdc/file_manager.cpp' line='130' column='1'/>
+            <parameter type-id='type-id-1128' filepath='src/mongo/db/ftdc/file_manager.cpp' line='130' column='1'/>
             <return type-id='type-id-1136'/>
           </function-decl>
         </member-function>
         <member-function access='private'>
           <function-decl name='openArchiveFile' mangled-name='_ZN5mongo15FTDCFileManager15openArchiveFileEPNS_6ClientERKN5boost10filesystem4pathERKSt6vectorISt5tupleIJNS_12FTDCBSONUtil8FTDCTypeENS_7BSONObjENS_6Date_tEEESaISE_EE' filepath='src/mongo/db/ftdc/file_manager.cpp' line='166' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZN5mongo15FTDCFileManager15openArchiveFileEPNS_6ClientERKN5boost10filesystem4pathERKSt6vectorISt5tupleIJNS_12FTDCBSONUtil8FTDCTypeENS_7BSONObjENS_6Date_tEEESaISE_EE'>
-            <parameter type-id='type-id-1103' name='this' is-artificial='yes'/>
-            <parameter type-id='type-id-1076' name='client' filepath='src/mongo/db/ftdc/file_manager.cpp' line='167' column='1'/>
-            <parameter type-id='type-id-165' name='path' filepath='src/mongo/db/ftdc/file_manager.cpp' line='168' column='1'/>
-            <parameter type-id='type-id-165' name='docs' filepath='src/mongo/db/ftdc/file_manager.cpp' line='169' column='1'/>
+            <parameter type-id='type-id-1103' is-artificial='yes'/>
+            <parameter type-id='type-id-1076' filepath='src/mongo/db/ftdc/file_manager.cpp' line='167' column='1'/>
+            <parameter type-id='type-id-165' filepath='src/mongo/db/ftdc/file_manager.cpp' line='168' column='1'/>
+            <parameter type-id='type-id-165' filepath='src/mongo/db/ftdc/file_manager.cpp' line='169' column='1'/>
             <return type-id='type-id-1108'/>
           </function-decl>
         </member-function>
         <member-function access='private'>
           <function-decl name='trimDirectory' mangled-name='_ZN5mongo15FTDCFileManager13trimDirectoryERSt6vectorIN5boost10filesystem4pathESaIS4_EE' filepath='src/mongo/db/ftdc/file_manager.cpp' line='208' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZN5mongo15FTDCFileManager13trimDirectoryERSt6vectorIN5boost10filesystem4pathESaIS4_EE'>
-            <parameter type-id='type-id-1103' name='this' is-artificial='yes'/>
-            <parameter type-id='type-id-117' name='files' filepath='src/mongo/db/ftdc/file_manager.cpp' line='208' column='1'/>
+            <parameter type-id='type-id-1103' is-artificial='yes'/>
+            <parameter type-id='type-id-117' filepath='src/mongo/db/ftdc/file_manager.cpp' line='208' column='1'/>
             <return type-id='type-id-191'/>
           </function-decl>
         </member-function>
         <member-function access='public'>
           <function-decl name='rotate' mangled-name='_ZN5mongo15FTDCFileManager6rotateEPNS_6ClientE' filepath='src/mongo/db/ftdc/file_manager.cpp' line='274' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZN5mongo15FTDCFileManager6rotateEPNS_6ClientE'>
-            <parameter type-id='type-id-1103' name='this' is-artificial='yes'/>
-            <parameter type-id='type-id-1076' name='client' filepath='src/mongo/db/ftdc/file_manager.cpp' line='274' column='1'/>
+            <parameter type-id='type-id-1103' is-artificial='yes'/>
+            <parameter type-id='type-id-1076' filepath='src/mongo/db/ftdc/file_manager.cpp' line='274' column='1'/>
             <return type-id='type-id-1108'/>
           </function-decl>
         </member-function>
         <member-function access='public'>
           <function-decl name='writeSampleAndRotateIfNeeded' mangled-name='_ZN5mongo15FTDCFileManager28writeSampleAndRotateIfNeededEPNS_6ClientERKNS_7BSONObjENS_6Date_tE' filepath='src/mongo/db/ftdc/file_manager.cpp' line='293' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZN5mongo15FTDCFileManager28writeSampleAndRotateIfNeededEPNS_6ClientERKNS_7BSONObjENS_6Date_tE'>
-            <parameter type-id='type-id-1103' name='this' is-artificial='yes'/>
-            <parameter type-id='type-id-1076' name='client' filepath='src/mongo/db/ftdc/file_manager.cpp' line='293' column='1'/>
-            <parameter type-id='type-id-165' name='sample' filepath='src/mongo/db/ftdc/file_manager.cpp' line='294' column='1'/>
-            <parameter type-id='type-id-1395' name='date' filepath='src/mongo/db/ftdc/file_manager.cpp' line='295' column='1'/>
+            <parameter type-id='type-id-1103' is-artificial='yes'/>
+            <parameter type-id='type-id-1076' filepath='src/mongo/db/ftdc/file_manager.cpp' line='293' column='1'/>
+            <parameter type-id='type-id-165' filepath='src/mongo/db/ftdc/file_manager.cpp' line='294' column='1'/>
+            <parameter type-id='type-id-1395' filepath='src/mongo/db/ftdc/file_manager.cpp' line='295' column='1'/>
             <return type-id='type-id-1108'/>
           </function-decl>
         </member-function>
@@ -2935,7 +2935,7 @@
       <class-decl name='__anonymous_struct__20' is-anonymous='yes' visibility='default' is-declaration-only='yes' id='type-id-1200'>
         <member-function access='public'>
           <function-decl name='FTDCFileReader' mangled-name='_ZN5mongo14FTDCFileReaderC2Ev' filepath='src/mongo/db/ftdc/file_reader.h' line='55' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZN5mongo14FTDCFileReaderC2Ev'>
-            <parameter type-id='type-id-1201' name='this' is-artificial='yes'/>
+            <parameter type-id='type-id-1201' is-artificial='yes'/>
             <return type-id='type-id-191'/>
           </function-decl>
         </member-function>
@@ -2943,8 +2943,8 @@
       <class-decl name='__anonymous_struct__21' is-anonymous='yes' visibility='default' is-declaration-only='yes' id='type-id-1208'>
         <member-function access='public'>
           <function-decl name='FTDCCompressor' mangled-name='_ZN5mongo14FTDCCompressorC2EPKNS_10FTDCConfigE' filepath='src/mongo/db/ftdc/compressor.h' line='82' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZN5mongo14FTDCCompressorC2EPKNS_10FTDCConfigE'>
-            <parameter type-id='type-id-1209' name='this' is-artificial='yes'/>
-            <parameter type-id='type-id-1279' name='config' filepath='src/mongo/db/ftdc/compressor.h' line='82' column='1'/>
+            <parameter type-id='type-id-1209' is-artificial='yes'/>
+            <parameter type-id='type-id-1279' filepath='src/mongo/db/ftdc/compressor.h' line='82' column='1'/>
             <return type-id='type-id-191'/>
           </function-decl>
         </member-function>
@@ -2952,8 +2952,8 @@
       <class-decl name='__anonymous_struct__3' is-anonymous='yes' visibility='default' is-declaration-only='yes' id='type-id-1106'>
         <member-function access='public'>
           <function-decl name='FTDCFileWriter' mangled-name='_ZN5mongo14FTDCFileWriterC2EPKNS_10FTDCConfigE' filepath='src/mongo/db/ftdc/file_writer.h' line='64' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZN5mongo14FTDCFileWriterC2EPKNS_10FTDCConfigE'>
-            <parameter type-id='type-id-1107' name='this' is-artificial='yes'/>
-            <parameter type-id='type-id-1279' name='config' filepath='src/mongo/db/ftdc/file_writer.h' line='64' column='1'/>
+            <parameter type-id='type-id-1107' is-artificial='yes'/>
+            <parameter type-id='type-id-1279' filepath='src/mongo/db/ftdc/file_writer.h' line='64' column='1'/>
             <return type-id='type-id-191'/>
           </function-decl>
         </member-function>
@@ -3018,8 +3018,8 @@
         <class-decl name='__anonymous_struct__' is-anonymous='yes' visibility='default' is-declaration-only='yes' id='type-id-1160'>
           <member-function access='public'>
             <function-decl name='directory_iterator' mangled-name='_ZN5boost10filesystem18directory_iteratorC2ERKNS0_4pathE' filepath='src/third_party/boost-1.60.0/boost/filesystem/operations.hpp' line='901' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZN5boost10filesystem18directory_iteratorC2ERKNS0_4pathE'>
-              <parameter type-id='type-id-1161' name='this' is-artificial='yes'/>
-              <parameter type-id='type-id-165' name='p' filepath='src/third_party/boost-1.60.0/boost/filesystem/operations.hpp' line='901' column='1'/>
+              <parameter type-id='type-id-1161' is-artificial='yes'/>
+              <parameter type-id='type-id-165' filepath='src/third_party/boost-1.60.0/boost/filesystem/operations.hpp' line='901' column='1'/>
               <return type-id='type-id-191'/>
             </function-decl>
           </member-function>
@@ -3027,8 +3027,8 @@
         <class-decl name='__anonymous_struct__1' is-anonymous='yes' visibility='default' is-declaration-only='yes' id='type-id-1182'>
           <member-function access='public'>
             <function-decl name='directory_entry' mangled-name='_ZN5boost10filesystem15directory_entryC2ERKS1_' filepath='src/third_party/boost-1.60.0/boost/filesystem/operations.hpp' line='757' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZN5boost10filesystem15directory_entryC2ERKS1_'>
-              <parameter type-id='type-id-1183' name='this' is-artificial='yes'/>
-              <parameter type-id='type-id-165' name='rhs' filepath='src/third_party/boost-1.60.0/boost/filesystem/operations.hpp' line='757' column='1'/>
+              <parameter type-id='type-id-1183' is-artificial='yes'/>
+              <parameter type-id='type-id-165' filepath='src/third_party/boost-1.60.0/boost/filesystem/operations.hpp' line='757' column='1'/>
               <return type-id='type-id-191'/>
             </function-decl>
           </member-function>
@@ -3038,8 +3038,8 @@
           <class-decl name='type' is-struct='yes' naming-typedef-id='type-id-1404' visibility='default' is-declaration-only='yes' id='type-id-1091'/>
         </namespace-decl>
         <function-decl name='operator/' mangled-name='_ZN5boost10filesystemdvERKNS0_4pathES3_' filepath='src/third_party/boost-1.60.0/boost/filesystem/path.hpp' line='789' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZN5boost10filesystemdvERKNS0_4pathES3_'>
-          <parameter type-id='type-id-165' name='lhs' filepath='src/third_party/boost-1.60.0/boost/filesystem/path.hpp' line='789' column='1'/>
-          <parameter type-id='type-id-165' name='rhs' filepath='src/third_party/boost-1.60.0/boost/filesystem/path.hpp' line='789' column='1'/>
+          <parameter type-id='type-id-165' filepath='src/third_party/boost-1.60.0/boost/filesystem/path.hpp' line='789' column='1'/>
+          <parameter type-id='type-id-165' filepath='src/third_party/boost-1.60.0/boost/filesystem/path.hpp' line='789' column='1'/>
           <return type-id='type-id-1093'/>
         </function-decl>
       </namespace-decl>
@@ -3107,8 +3107,8 @@
         <class-decl name='__anonymous_struct__2' is-anonymous='yes' visibility='default' is-declaration-only='yes' id='type-id-1164'>
           <member-function access='public'>
             <function-decl name='shared_count&lt;boost::filesystem::detail::dir_itr_imp&gt;' mangled-name='_ZN5boost6detail12shared_countC2INS_10filesystem6detail11dir_itr_impEEEPT_' filepath='src/third_party/boost-1.60.0/boost/smart_ptr/detail/shared_count.hpp' line='128' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZN5boost6detail12shared_countC2INS_10filesystem6detail11dir_itr_impEEEPT_'>
-              <parameter type-id='type-id-1165' name='this' is-artificial='yes'/>
-              <parameter type-id='type-id-1092' name='p' filepath='src/third_party/boost-1.60.0/boost/smart_ptr/detail/shared_count.hpp' line='128' column='1'/>
+              <parameter type-id='type-id-1165' is-artificial='yes'/>
+              <parameter type-id='type-id-1092' filepath='src/third_party/boost-1.60.0/boost/smart_ptr/detail/shared_count.hpp' line='128' column='1'/>
               <return type-id='type-id-191'/>
             </function-decl>
           </member-function>
@@ -3116,13 +3116,13 @@
         <class-decl name='__anonymous_struct__3' is-anonymous='yes' visibility='default' is-declaration-only='yes' id='type-id-1166'>
           <member-function access='public' destructor='yes' vtable-offset='0'>
             <function-decl name='~sp_counted_base' mangled-name='_ZN5boost6detail15sp_counted_baseD2Ev' filepath='src/third_party/boost-1.60.0/boost/smart_ptr/detail/sp_counted_base_clang.hpp' line='79' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZN5boost6detail15sp_counted_baseD2Ev'>
-              <parameter type-id='type-id-1167' name='this' is-artificial='yes'/>
+              <parameter type-id='type-id-1167' is-artificial='yes'/>
               <return type-id='type-id-191'/>
             </function-decl>
           </member-function>
           <member-function access='public' vtable-offset='3'>
             <function-decl name='destroy' mangled-name='_ZN5boost6detail15sp_counted_base7destroyEv' filepath='src/third_party/boost-1.60.0/boost/smart_ptr/detail/sp_counted_base_clang.hpp' line='90' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZN5boost6detail15sp_counted_base7destroyEv'>
-              <parameter type-id='type-id-1167' name='this' is-artificial='yes'/>
+              <parameter type-id='type-id-1167' is-artificial='yes'/>
               <return type-id='type-id-191'/>
             </function-decl>
           </member-function>
@@ -3130,20 +3130,20 @@
         <class-decl name='__anonymous_struct__4' is-anonymous='yes' visibility='default' is-declaration-only='yes' id='type-id-1210'>
           <member-function access='public' vtable-offset='2'>
             <function-decl name='dispose' mangled-name='_ZN5boost6detail17sp_counted_impl_pINS_10filesystem6detail11dir_itr_impEE7disposeEv' filepath='src/third_party/boost-1.60.0/boost/smart_ptr/detail/sp_counted_impl.hpp' line='73' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZN5boost6detail17sp_counted_impl_pINS_10filesystem6detail11dir_itr_impEE7disposeEv'>
-              <parameter type-id='type-id-1211' name='this' is-artificial='yes'/>
+              <parameter type-id='type-id-1211' is-artificial='yes'/>
               <return type-id='type-id-191'/>
             </function-decl>
           </member-function>
           <member-function access='public' vtable-offset='4'>
             <function-decl name='get_deleter' mangled-name='_ZN5boost6detail17sp_counted_impl_pINS_10filesystem6detail11dir_itr_impEE11get_deleterERKSt9type_info' filepath='src/third_party/boost-1.60.0/boost/smart_ptr/detail/sp_counted_impl.hpp' line='81' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZN5boost6detail17sp_counted_impl_pINS_10filesystem6detail11dir_itr_impEE11get_deleterERKSt9type_info'>
-              <parameter type-id='type-id-1211' name='this' is-artificial='yes'/>
+              <parameter type-id='type-id-1211' is-artificial='yes'/>
               <parameter type-id='type-id-1220' filepath='src/third_party/boost-1.60.0/boost/smart_ptr/detail/sp_counted_impl.hpp' line='81' column='1'/>
               <return type-id='type-id-110'/>
             </function-decl>
           </member-function>
           <member-function access='public' vtable-offset='5'>
             <function-decl name='get_untyped_deleter' mangled-name='_ZN5boost6detail17sp_counted_impl_pINS_10filesystem6detail11dir_itr_impEE19get_untyped_deleterEv' filepath='src/third_party/boost-1.60.0/boost/smart_ptr/detail/sp_counted_impl.hpp' line='86' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZN5boost6detail17sp_counted_impl_pINS_10filesystem6detail11dir_itr_impEE19get_untyped_deleterEv'>
-              <parameter type-id='type-id-1211' name='this' is-artificial='yes'/>
+              <parameter type-id='type-id-1211' is-artificial='yes'/>
               <return type-id='type-id-110'/>
             </function-decl>
           </member-function>
@@ -3331,14 +3331,14 @@
         </member-function>
         <member-function access='public' destructor='yes' vtable-offset='0'>
           <function-decl name='~basic_ifstream' mangled-name='_ZNSt14basic_ifstreamIcSt11char_traitsIcEED1Ev' filepath='/usr/bin/../lib/gcc/x86_64-linux-gnu/5.4.0/../../../../include/c++/5.4.0/fstream' line='533' column='1' visibility='default' binding='global' size-in-bits='64'>
-            <parameter type-id='type-id-1448' name='this' is-artificial='yes'/>
+            <parameter type-id='type-id-1448' is-artificial='yes'/>
             <return type-id='type-id-191'/>
           </function-decl>
         </member-function>
         <member-function access='public' destructor='yes' vtable-offset='0'>
           <function-decl name='~basic_ifstream' mangled-name='_ZNSt14basic_ifstreamIcSt11char_traitsIcEED2Ev' filepath='/usr/bin/../lib/gcc/x86_64-linux-gnu/5.4.0/../../../../include/c++/5.4.0/fstream' line='533' column='1' visibility='default' binding='global' size-in-bits='64'>
-            <parameter type-id='type-id-1448' name='this' is-artificial='yes'/>
-            <parameter type-id='type-id-111' name='vtt' is-artificial='yes'/>
+            <parameter type-id='type-id-1448' is-artificial='yes'/>
+            <parameter type-id='type-id-111' is-artificial='yes'/>
             <return type-id='type-id-191'/>
           </function-decl>
         </member-function>
@@ -3378,14 +3378,14 @@
         </member-type>
         <member-function access='public' destructor='yes'>
           <function-decl name='~vector' mangled-name='_ZNSt6vectorIN5mongo7BSONObjESaIS1_EED2Ev' filepath='/usr/bin/../lib/gcc/x86_64-linux-gnu/5.4.0/../../../../include/c++/5.4.0/bits/stl_vector.h' line='423' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZNSt6vectorIN5mongo7BSONObjESaIS1_EED2Ev'>
-            <parameter type-id='type-id-1595' name='this' is-artificial='yes'/>
+            <parameter type-id='type-id-1595' is-artificial='yes'/>
             <return type-id='type-id-191'/>
           </function-decl>
         </member-function>
         <member-function access='public'>
           <function-decl name='operator=' mangled-name='_ZNSt6vectorIN5mongo7BSONObjESaIS1_EEaSERKS3_' filepath='/usr/bin/../lib/gcc/x86_64-linux-gnu/5.4.0/../../../../include/c++/5.4.0/bits/vector.tcc' line='168' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZNSt6vectorIN5mongo7BSONObjESaIS1_EEaSERKS3_'>
-            <parameter type-id='type-id-1595' name='this' is-artificial='yes'/>
-            <parameter type-id='type-id-1580' name='__x' filepath='/usr/bin/../lib/gcc/x86_64-linux-gnu/5.4.0/../../../../include/c++/5.4.0/bits/vector.tcc' line='436' column='1'/>
+            <parameter type-id='type-id-1595' is-artificial='yes'/>
+            <parameter type-id='type-id-1580' filepath='/usr/bin/../lib/gcc/x86_64-linux-gnu/5.4.0/../../../../include/c++/5.4.0/bits/vector.tcc' line='436' column='1'/>
             <return type-id='type-id-117'/>
           </function-decl>
         </member-function>
@@ -3404,14 +3404,14 @@
         </member-type>
         <member-function access='public' destructor='yes'>
           <function-decl name='~vector' mangled-name='_ZNSt6vectorIcSaIcEED2Ev' filepath='/usr/bin/../lib/gcc/x86_64-linux-gnu/5.4.0/../../../../include/c++/5.4.0/bits/stl_vector.h' line='423' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZNSt6vectorIcSaIcEED2Ev'>
-            <parameter type-id='type-id-1458' name='this' is-artificial='yes'/>
+            <parameter type-id='type-id-1458' is-artificial='yes'/>
             <return type-id='type-id-191'/>
           </function-decl>
         </member-function>
         <member-function access='protected'>
           <function-decl name='_M_default_append' mangled-name='_ZNSt6vectorIcSaIcEE17_M_default_appendEm' filepath='/usr/bin/../lib/gcc/x86_64-linux-gnu/5.4.0/../../../../include/c++/5.4.0/bits/vector.tcc' line='541' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZNSt6vectorIcSaIcEE17_M_default_appendEm'>
-            <parameter type-id='type-id-1458' name='this' is-artificial='yes'/>
-            <parameter type-id='type-id-40' name='__n' filepath='/usr/bin/../lib/gcc/x86_64-linux-gnu/5.4.0/../../../../include/c++/5.4.0/bits/vector.tcc' line='1400' column='1'/>
+            <parameter type-id='type-id-1458' is-artificial='yes'/>
+            <parameter type-id='type-id-40' filepath='/usr/bin/../lib/gcc/x86_64-linux-gnu/5.4.0/../../../../include/c++/5.4.0/bits/vector.tcc' line='1400' column='1'/>
             <return type-id='type-id-191'/>
           </function-decl>
         </member-function>
@@ -3462,8 +3462,8 @@
       <class-decl name='__anonymous_struct__9' is-struct='yes' is-anonymous='yes' visibility='default' is-declaration-only='yes' id='type-id-1602'>
       </class-decl>
       <function-decl name='operator+&lt;char, std::char_traits&lt;char&gt;, std::allocator&lt;char&gt; &gt;' mangled-name='_ZStplIcSt11char_traitsIcESaIcEENSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_RKS8_' filepath='/usr/bin/../lib/gcc/x86_64-linux-gnu/5.4.0/../../../../include/c++/5.4.0/bits/basic_string.tcc' line='1151' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZStplIcSt11char_traitsIcESaIcEENSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_RKS8_'>
-        <parameter type-id='type-id-60' name='__lhs' filepath='/usr/bin/../lib/gcc/x86_64-linux-gnu/5.4.0/../../../../include/c++/5.4.0/bits/basic_string.tcc' line='1151' column='1'/>
-        <parameter type-id='type-id-642' name='__rhs' filepath='/usr/bin/../lib/gcc/x86_64-linux-gnu/5.4.0/../../../../include/c++/5.4.0/bits/basic_string.tcc' line='1152' column='1'/>
+        <parameter type-id='type-id-60' filepath='/usr/bin/../lib/gcc/x86_64-linux-gnu/5.4.0/../../../../include/c++/5.4.0/bits/basic_string.tcc' line='1151' column='1'/>
+        <parameter type-id='type-id-642' filepath='/usr/bin/../lib/gcc/x86_64-linux-gnu/5.4.0/../../../../include/c++/5.4.0/bits/basic_string.tcc' line='1152' column='1'/>
         <return type-id='type-id-73'/>
       </function-decl>
       <namespace-decl name='__cxx11'>
@@ -3521,8 +3521,8 @@
       <class-decl name='__anonymous_struct__22' is-anonymous='yes' visibility='default' is-declaration-only='yes' id='type-id-1521'>
         <member-function access='public'>
           <function-decl name='read&lt;mongo::Validated&lt;mongo::BSONObj&gt; &gt;' mangled-name='_ZNK5mongo14ConstDataRange4readINS_9ValidatedINS_7BSONObjEEEEENS_10StatusWithIT_EEm' filepath='src/mongo/base/data_range.h' line='83' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZNK5mongo14ConstDataRange4readINS_9ValidatedINS_7BSONObjEEEEENS_10StatusWithIT_EEm'>
-            <parameter type-id='type-id-1571' name='this' is-artificial='yes'/>
-            <parameter type-id='type-id-39' name='offset' filepath='src/mongo/base/data_range.h' line='83' column='1'/>
+            <parameter type-id='type-id-1571' is-artificial='yes'/>
+            <parameter type-id='type-id-39' filepath='src/mongo/base/data_range.h' line='83' column='1'/>
             <return type-id='type-id-1525'/>
           </function-decl>
         </member-function>
@@ -3536,32 +3536,32 @@
       <class-decl name='__anonymous_struct__6' is-anonymous='yes' visibility='default' is-declaration-only='yes' id='type-id-1469'>
         <member-function access='public' destructor='yes'>
           <function-decl name='~FTDCFileReader' mangled-name='_ZN5mongo14FTDCFileReaderD2Ev' filepath='src/mongo/db/ftdc/file_reader.cpp' line='47' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZN5mongo14FTDCFileReaderD2Ev'>
-            <parameter type-id='type-id-1470' name='this' is-artificial='yes'/>
+            <parameter type-id='type-id-1470' is-artificial='yes'/>
             <return type-id='type-id-191'/>
           </function-decl>
         </member-function>
         <member-function access='public'>
           <function-decl name='hasNext' mangled-name='_ZN5mongo14FTDCFileReader7hasNextEv' filepath='src/mongo/db/ftdc/file_reader.cpp' line='51' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZN5mongo14FTDCFileReader7hasNextEv'>
-            <parameter type-id='type-id-1470' name='this' is-artificial='yes'/>
+            <parameter type-id='type-id-1470' is-artificial='yes'/>
             <return type-id='type-id-1473'/>
           </function-decl>
         </member-function>
         <member-function access='private'>
           <function-decl name='readDocument' mangled-name='_ZN5mongo14FTDCFileReader12readDocumentEv' filepath='src/mongo/db/ftdc/file_reader.cpp' line='147' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZN5mongo14FTDCFileReader12readDocumentEv'>
-            <parameter type-id='type-id-1470' name='this' is-artificial='yes'/>
+            <parameter type-id='type-id-1470' is-artificial='yes'/>
             <return type-id='type-id-1483'/>
           </function-decl>
         </member-function>
         <member-function access='public'>
           <function-decl name='next' mangled-name='_ZN5mongo14FTDCFileReader4nextEv' filepath='src/mongo/db/ftdc/file_reader.cpp' line='131' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZN5mongo14FTDCFileReader4nextEv'>
-            <parameter type-id='type-id-1470' name='this' is-artificial='yes'/>
+            <parameter type-id='type-id-1470' is-artificial='yes'/>
             <return type-id='type-id-1529'/>
           </function-decl>
         </member-function>
         <member-function access='public'>
           <function-decl name='open' mangled-name='_ZN5mongo14FTDCFileReader4openERKN5boost10filesystem4pathE' filepath='src/mongo/db/ftdc/file_reader.cpp' line='212' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZN5mongo14FTDCFileReader4openERKN5boost10filesystem4pathE'>
-            <parameter type-id='type-id-1470' name='this' is-artificial='yes'/>
-            <parameter type-id='type-id-165' name='file' filepath='src/mongo/db/ftdc/file_reader.cpp' line='212' column='1'/>
+            <parameter type-id='type-id-1470' is-artificial='yes'/>
+            <parameter type-id='type-id-165' filepath='src/mongo/db/ftdc/file_reader.cpp' line='212' column='1'/>
             <return type-id='type-id-1471'/>
           </function-decl>
         </member-function>
@@ -3879,64 +3879,64 @@
       <class-decl name='__anonymous_struct__2' is-anonymous='yes' visibility='default' is-declaration-only='yes' id='type-id-1716'>
         <member-function access='public' destructor='yes'>
           <function-decl name='~FTDCFileWriter' mangled-name='_ZN5mongo14FTDCFileWriterD2Ev' filepath='src/mongo/db/ftdc/file_writer.cpp' line='49' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZN5mongo14FTDCFileWriterD2Ev'>
-            <parameter type-id='type-id-1717' name='this' is-artificial='yes'/>
+            <parameter type-id='type-id-1717' is-artificial='yes'/>
             <return type-id='type-id-191'/>
           </function-decl>
         </member-function>
         <member-function access='public'>
           <function-decl name='close' mangled-name='_ZN5mongo14FTDCFileWriter5closeEv' filepath='src/mongo/db/ftdc/file_writer.cpp' line='212' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZN5mongo14FTDCFileWriter5closeEv'>
-            <parameter type-id='type-id-1717' name='this' is-artificial='yes'/>
+            <parameter type-id='type-id-1717' is-artificial='yes'/>
             <return type-id='type-id-1710'/>
           </function-decl>
         </member-function>
         <member-function access='public'>
           <function-decl name='open' mangled-name='_ZN5mongo14FTDCFileWriter4openERKN5boost10filesystem4pathE' filepath='src/mongo/db/ftdc/file_writer.cpp' line='53' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZN5mongo14FTDCFileWriter4openERKN5boost10filesystem4pathE'>
-            <parameter type-id='type-id-1717' name='this' is-artificial='yes'/>
-            <parameter type-id='type-id-165' name='file' filepath='src/mongo/db/ftdc/file_writer.cpp' line='53' column='1'/>
+            <parameter type-id='type-id-1717' is-artificial='yes'/>
+            <parameter type-id='type-id-165' filepath='src/mongo/db/ftdc/file_writer.cpp' line='53' column='1'/>
             <return type-id='type-id-1710'/>
           </function-decl>
         </member-function>
         <member-function access='private'>
           <function-decl name='writeInterimFileBuffer' mangled-name='_ZN5mongo14FTDCFileWriter22writeInterimFileBufferENS_14ConstDataRangeE' filepath='src/mongo/db/ftdc/file_writer.cpp' line='83' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZN5mongo14FTDCFileWriter22writeInterimFileBufferENS_14ConstDataRangeE'>
-            <parameter type-id='type-id-1717' name='this' is-artificial='yes'/>
-            <parameter type-id='type-id-1750' name='buf' filepath='src/mongo/db/ftdc/file_writer.cpp' line='83' column='1'/>
+            <parameter type-id='type-id-1717' is-artificial='yes'/>
+            <parameter type-id='type-id-1750' filepath='src/mongo/db/ftdc/file_writer.cpp' line='83' column='1'/>
             <return type-id='type-id-1710'/>
           </function-decl>
         </member-function>
         <member-function access='private'>
           <function-decl name='writeArchiveFileBuffer' mangled-name='_ZN5mongo14FTDCFileWriter22writeArchiveFileBufferENS_14ConstDataRangeE' filepath='src/mongo/db/ftdc/file_writer.cpp' line='120' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZN5mongo14FTDCFileWriter22writeArchiveFileBufferENS_14ConstDataRangeE'>
-            <parameter type-id='type-id-1717' name='this' is-artificial='yes'/>
-            <parameter type-id='type-id-1750' name='buf' filepath='src/mongo/db/ftdc/file_writer.cpp' line='120' column='1'/>
+            <parameter type-id='type-id-1717' is-artificial='yes'/>
+            <parameter type-id='type-id-1750' filepath='src/mongo/db/ftdc/file_writer.cpp' line='120' column='1'/>
             <return type-id='type-id-1710'/>
           </function-decl>
         </member-function>
         <member-function access='public'>
           <function-decl name='writeMetadata' mangled-name='_ZN5mongo14FTDCFileWriter13writeMetadataERKNS_7BSONObjENS_6Date_tE' filepath='src/mongo/db/ftdc/file_writer.cpp' line='148' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZN5mongo14FTDCFileWriter13writeMetadataERKNS_7BSONObjENS_6Date_tE'>
-            <parameter type-id='type-id-1717' name='this' is-artificial='yes'/>
-            <parameter type-id='type-id-165' name='metadata' filepath='src/mongo/db/ftdc/file_writer.cpp' line='148' column='1'/>
-            <parameter type-id='type-id-1839' name='date' filepath='src/mongo/db/ftdc/file_writer.cpp' line='148' column='1'/>
+            <parameter type-id='type-id-1717' is-artificial='yes'/>
+            <parameter type-id='type-id-165' filepath='src/mongo/db/ftdc/file_writer.cpp' line='148' column='1'/>
+            <parameter type-id='type-id-1839' filepath='src/mongo/db/ftdc/file_writer.cpp' line='148' column='1'/>
             <return type-id='type-id-1710'/>
           </function-decl>
         </member-function>
         <member-function access='public'>
           <function-decl name='writeSample' mangled-name='_ZN5mongo14FTDCFileWriter11writeSampleERKNS_7BSONObjENS_6Date_tE' filepath='src/mongo/db/ftdc/file_writer.cpp' line='154' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZN5mongo14FTDCFileWriter11writeSampleERKNS_7BSONObjENS_6Date_tE'>
-            <parameter type-id='type-id-1717' name='this' is-artificial='yes'/>
-            <parameter type-id='type-id-165' name='sample' filepath='src/mongo/db/ftdc/file_writer.cpp' line='154' column='1'/>
-            <parameter type-id='type-id-1839' name='date' filepath='src/mongo/db/ftdc/file_writer.cpp' line='154' column='1'/>
+            <parameter type-id='type-id-1717' is-artificial='yes'/>
+            <parameter type-id='type-id-165' filepath='src/mongo/db/ftdc/file_writer.cpp' line='154' column='1'/>
+            <parameter type-id='type-id-1839' filepath='src/mongo/db/ftdc/file_writer.cpp' line='154' column='1'/>
             <return type-id='type-id-1710'/>
           </function-decl>
         </member-function>
         <member-function access='private'>
           <function-decl name='flush' mangled-name='_ZN5mongo14FTDCFileWriter5flushERKN5boost8optionalINS_14ConstDataRangeEEENS_6Date_tE' filepath='src/mongo/db/ftdc/file_writer.cpp' line='181' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZN5mongo14FTDCFileWriter5flushERKN5boost8optionalINS_14ConstDataRangeEEENS_6Date_tE'>
-            <parameter type-id='type-id-1717' name='this' is-artificial='yes'/>
-            <parameter type-id='type-id-165' name='range' filepath='src/mongo/db/ftdc/file_writer.cpp' line='181' column='1'/>
-            <parameter type-id='type-id-1839' name='date' filepath='src/mongo/db/ftdc/file_writer.cpp' line='181' column='1'/>
+            <parameter type-id='type-id-1717' is-artificial='yes'/>
+            <parameter type-id='type-id-165' filepath='src/mongo/db/ftdc/file_writer.cpp' line='181' column='1'/>
+            <parameter type-id='type-id-1839' filepath='src/mongo/db/ftdc/file_writer.cpp' line='181' column='1'/>
             <return type-id='type-id-1710'/>
           </function-decl>
         </member-function>
         <member-function access='public'>
           <function-decl name='closeWithoutFlushForTest' mangled-name='_ZN5mongo14FTDCFileWriter24closeWithoutFlushForTestEv' filepath='src/mongo/db/ftdc/file_writer.cpp' line='224' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZN5mongo14FTDCFileWriter24closeWithoutFlushForTestEv'>
-            <parameter type-id='type-id-1717' name='this' is-artificial='yes'/>
+            <parameter type-id='type-id-1717' is-artificial='yes'/>
             <return type-id='type-id-191'/>
           </function-decl>
         </member-function>
@@ -4179,22 +4179,22 @@
         </member-type>
         <member-function access='protected'>
           <function-decl name='_M_emplace_back_aux&lt;long long&gt;' mangled-name='_ZNSt6vectorImSaImEE19_M_emplace_back_auxIJxEEEvDpOT_' filepath='/usr/bin/../lib/gcc/x86_64-linux-gnu/5.4.0/../../../../include/c++/5.4.0/bits/vector.tcc' line='408' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZNSt6vectorImSaImEE19_M_emplace_back_auxIJxEEEvDpOT_'>
-            <parameter type-id='type-id-1888' name='this' is-artificial='yes'/>
-            <parameter type-id='type-id-1882' name='__args' filepath='/usr/bin/../lib/gcc/x86_64-linux-gnu/5.4.0/../../../../include/c++/5.4.0/bits/vector.tcc' line='1417' column='1'/>
+            <parameter type-id='type-id-1888' is-artificial='yes'/>
+            <parameter type-id='type-id-1882' filepath='/usr/bin/../lib/gcc/x86_64-linux-gnu/5.4.0/../../../../include/c++/5.4.0/bits/vector.tcc' line='1417' column='1'/>
             <return type-id='type-id-191'/>
           </function-decl>
         </member-function>
         <member-function access='protected'>
           <function-decl name='_M_emplace_back_aux&lt;bool&gt;' mangled-name='_ZNSt6vectorImSaImEE19_M_emplace_back_auxIJbEEEvDpOT_' filepath='/usr/bin/../lib/gcc/x86_64-linux-gnu/5.4.0/../../../../include/c++/5.4.0/bits/vector.tcc' line='408' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZNSt6vectorImSaImEE19_M_emplace_back_auxIJbEEEvDpOT_'>
-            <parameter type-id='type-id-1888' name='this' is-artificial='yes'/>
-            <parameter type-id='type-id-1064' name='__args' filepath='/usr/bin/../lib/gcc/x86_64-linux-gnu/5.4.0/../../../../include/c++/5.4.0/bits/vector.tcc' line='1417' column='1'/>
+            <parameter type-id='type-id-1888' is-artificial='yes'/>
+            <parameter type-id='type-id-1064' filepath='/usr/bin/../lib/gcc/x86_64-linux-gnu/5.4.0/../../../../include/c++/5.4.0/bits/vector.tcc' line='1417' column='1'/>
             <return type-id='type-id-191'/>
           </function-decl>
         </member-function>
         <member-function access='protected'>
           <function-decl name='_M_emplace_back_aux&lt;unsigned int&gt;' mangled-name='_ZNSt6vectorImSaImEE19_M_emplace_back_auxIJjEEEvDpOT_' filepath='/usr/bin/../lib/gcc/x86_64-linux-gnu/5.4.0/../../../../include/c++/5.4.0/bits/vector.tcc' line='408' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZNSt6vectorImSaImEE19_M_emplace_back_auxIJjEEEvDpOT_'>
-            <parameter type-id='type-id-1888' name='this' is-artificial='yes'/>
-            <parameter type-id='type-id-1885' name='__args' filepath='/usr/bin/../lib/gcc/x86_64-linux-gnu/5.4.0/../../../../include/c++/5.4.0/bits/vector.tcc' line='1417' column='1'/>
+            <parameter type-id='type-id-1888' is-artificial='yes'/>
+            <parameter type-id='type-id-1885' filepath='/usr/bin/../lib/gcc/x86_64-linux-gnu/5.4.0/../../../../include/c++/5.4.0/bits/vector.tcc' line='1417' column='1'/>
             <return type-id='type-id-191'/>
           </function-decl>
         </member-function>
@@ -4254,8 +4254,8 @@
       <class-decl name='BufBuilder' naming-typedef-id='type-id-2061' visibility='default' is-declaration-only='yes' id='type-id-2010'>
         <member-function access='public'>
           <function-decl name='_BufBuilder' mangled-name='_ZN5mongo11_BufBuilderINS_21SharedBufferAllocatorEEC2Ei' filepath='src/mongo/bson/util/builder.h' line='158' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZN5mongo11_BufBuilderINS_21SharedBufferAllocatorEEC2Ei'>
-            <parameter type-id='type-id-2029' name='this' is-artificial='yes'/>
-            <parameter type-id='type-id-16' name='initsize' filepath='src/mongo/bson/util/builder.h' line='158' column='1'/>
+            <parameter type-id='type-id-2029' is-artificial='yes'/>
+            <parameter type-id='type-id-16' filepath='src/mongo/bson/util/builder.h' line='158' column='1'/>
             <return type-id='type-id-191'/>
           </function-decl>
         </member-function>
@@ -4274,14 +4274,14 @@
       <class-decl name='__anonymous_struct__16' is-anonymous='yes' visibility='default' is-declaration-only='yes' id='type-id-1909'>
         <member-function access='public'>
           <function-decl name='numberLong' mangled-name='_ZNK5mongo11BSONElement10numberLongEv' filepath='src/mongo/bson/bsonelement.h' line='788' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZNK5mongo11BSONElement10numberLongEv'>
-            <parameter type-id='type-id-1998' name='this' is-artificial='yes'/>
+            <parameter type-id='type-id-1998' is-artificial='yes'/>
             <return type-id='type-id-19'/>
           </function-decl>
         </member-function>
         <member-function access='private'>
           <function-decl name='chk' mangled-name='_ZNK5mongo11BSONElement3chkENS_8BSONTypeE' filepath='src/mongo/bson/bsonelement.h' line='692' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZNK5mongo11BSONElement3chkENS_8BSONTypeE'>
-            <parameter type-id='type-id-1998' name='this' is-artificial='yes'/>
-            <parameter type-id='type-id-226' name='t' filepath='src/mongo/bson/bsonelement.h' line='692' column='1'/>
+            <parameter type-id='type-id-1998' is-artificial='yes'/>
+            <parameter type-id='type-id-226' filepath='src/mongo/bson/bsonelement.h' line='692' column='1'/>
             <return type-id='type-id-165'/>
           </function-decl>
         </member-function>
@@ -4305,58 +4305,58 @@
       <class-decl name='__anonymous_struct__26' is-anonymous='yes' visibility='default' is-declaration-only='yes' id='type-id-1933'>
         <member-function access='public'>
           <function-decl name='appendObject' mangled-name='_ZN5mongo14BSONObjBuilder12appendObjectENS_10StringDataEPKci' filepath='src/mongo/bson/bsonobjbuilder.h' line='208' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZN5mongo14BSONObjBuilder12appendObjectENS_10StringDataEPKci'>
-            <parameter type-id='type-id-1934' name='this' is-artificial='yes'/>
-            <parameter type-id='type-id-1935' name='fieldName' filepath='src/mongo/bson/bsonobjbuilder.h' line='208' column='1'/>
-            <parameter type-id='type-id-60' name='objdata' filepath='src/mongo/bson/bsonobjbuilder.h' line='208' column='1'/>
-            <parameter type-id='type-id-16' name='size' filepath='src/mongo/bson/bsonobjbuilder.h' line='208' column='1'/>
+            <parameter type-id='type-id-1934' is-artificial='yes'/>
+            <parameter type-id='type-id-1935' filepath='src/mongo/bson/bsonobjbuilder.h' line='208' column='1'/>
+            <parameter type-id='type-id-60' filepath='src/mongo/bson/bsonobjbuilder.h' line='208' column='1'/>
+            <parameter type-id='type-id-16' filepath='src/mongo/bson/bsonobjbuilder.h' line='208' column='1'/>
             <return type-id='type-id-117'/>
           </function-decl>
         </member-function>
         <member-function access='public'>
           <function-decl name='appendBinData' mangled-name='_ZN5mongo14BSONObjBuilder13appendBinDataENS_10StringDataEiNS_11BinDataTypeEPKv' filepath='src/mongo/bson/bsonobjbuilder.h' line='563' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZN5mongo14BSONObjBuilder13appendBinDataENS_10StringDataEiNS_11BinDataTypeEPKv'>
-            <parameter type-id='type-id-1934' name='this' is-artificial='yes'/>
-            <parameter type-id='type-id-1935' name='fieldName' filepath='src/mongo/bson/bsonobjbuilder.h' line='563' column='1'/>
-            <parameter type-id='type-id-16' name='len' filepath='src/mongo/bson/bsonobjbuilder.h' line='564' column='1'/>
-            <parameter type-id='type-id-226' name='type' filepath='src/mongo/bson/bsonobjbuilder.h' line='565' column='1'/>
-            <parameter type-id='type-id-110' name='data' filepath='src/mongo/bson/bsonobjbuilder.h' line='566' column='1'/>
+            <parameter type-id='type-id-1934' is-artificial='yes'/>
+            <parameter type-id='type-id-1935' filepath='src/mongo/bson/bsonobjbuilder.h' line='563' column='1'/>
+            <parameter type-id='type-id-16' filepath='src/mongo/bson/bsonobjbuilder.h' line='564' column='1'/>
+            <parameter type-id='type-id-226' filepath='src/mongo/bson/bsonobjbuilder.h' line='565' column='1'/>
+            <parameter type-id='type-id-110' filepath='src/mongo/bson/bsonobjbuilder.h' line='566' column='1'/>
             <return type-id='type-id-117'/>
           </function-decl>
         </member-function>
         <member-function access='public'>
           <function-decl name='append' mangled-name='_ZN5mongo14BSONObjBuilder6appendENS_10StringDataEx' filepath='src/mongo/bson/bsonobjbuilder.h' line='299' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZN5mongo14BSONObjBuilder6appendENS_10StringDataEx'>
-            <parameter type-id='type-id-1934' name='this' is-artificial='yes'/>
-            <parameter type-id='type-id-1935' name='fieldName' filepath='src/mongo/bson/bsonobjbuilder.h' line='299' column='1'/>
-            <parameter type-id='type-id-19' name='n' filepath='src/mongo/bson/bsonobjbuilder.h' line='299' column='1'/>
+            <parameter type-id='type-id-1934' is-artificial='yes'/>
+            <parameter type-id='type-id-1935' filepath='src/mongo/bson/bsonobjbuilder.h' line='299' column='1'/>
+            <parameter type-id='type-id-19' filepath='src/mongo/bson/bsonobjbuilder.h' line='299' column='1'/>
             <return type-id='type-id-117'/>
           </function-decl>
         </member-function>
         <member-function access='public'>
           <function-decl name='append' mangled-name='_ZN5mongo14BSONObjBuilder6appendENS_10StringDataEb' filepath='src/mongo/bson/bsonobjbuilder.h' line='269' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZN5mongo14BSONObjBuilder6appendENS_10StringDataEb'>
-            <parameter type-id='type-id-1934' name='this' is-artificial='yes'/>
-            <parameter type-id='type-id-1935' name='fieldName' filepath='src/mongo/bson/bsonobjbuilder.h' line='269' column='1'/>
-            <parameter type-id='type-id-1' name='val' filepath='src/mongo/bson/bsonobjbuilder.h' line='269' column='1'/>
+            <parameter type-id='type-id-1934' is-artificial='yes'/>
+            <parameter type-id='type-id-1935' filepath='src/mongo/bson/bsonobjbuilder.h' line='269' column='1'/>
+            <parameter type-id='type-id-1' filepath='src/mongo/bson/bsonobjbuilder.h' line='269' column='1'/>
             <return type-id='type-id-117'/>
           </function-decl>
         </member-function>
         <member-function access='public'>
           <function-decl name='subarrayStart' mangled-name='_ZN5mongo14BSONObjBuilder13subarrayStartENS_10StringDataE' filepath='src/mongo/bson/bsonobjbuilder.h' line='254' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZN5mongo14BSONObjBuilder13subarrayStartENS_10StringDataE'>
-            <parameter type-id='type-id-1934' name='this' is-artificial='yes'/>
-            <parameter type-id='type-id-1935' name='fieldName' filepath='src/mongo/bson/bsonobjbuilder.h' line='254' column='1'/>
+            <parameter type-id='type-id-1934' is-artificial='yes'/>
+            <parameter type-id='type-id-1935' filepath='src/mongo/bson/bsonobjbuilder.h' line='254' column='1'/>
             <return type-id='type-id-356'/>
           </function-decl>
         </member-function>
         <member-function access='public'>
           <function-decl name='append' mangled-name='_ZN5mongo14BSONObjBuilder6appendERKNS_11BSONElementE' filepath='src/mongo/bson/bsonobjbuilder.h' line='182' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZN5mongo14BSONObjBuilder6appendERKNS_11BSONElementE'>
-            <parameter type-id='type-id-1934' name='this' is-artificial='yes'/>
-            <parameter type-id='type-id-165' name='e' filepath='src/mongo/bson/bsonobjbuilder.h' line='182' column='1'/>
+            <parameter type-id='type-id-1934' is-artificial='yes'/>
+            <parameter type-id='type-id-165' filepath='src/mongo/bson/bsonobjbuilder.h' line='182' column='1'/>
             <return type-id='type-id-117'/>
           </function-decl>
         </member-function>
         <member-function access='public'>
           <function-decl name='append' mangled-name='_ZN5mongo14BSONObjBuilder6appendENS_10StringDataEi' filepath='src/mongo/bson/bsonobjbuilder.h' line='277' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZN5mongo14BSONObjBuilder6appendENS_10StringDataEi'>
-            <parameter type-id='type-id-1934' name='this' is-artificial='yes'/>
-            <parameter type-id='type-id-1935' name='fieldName' filepath='src/mongo/bson/bsonobjbuilder.h' line='277' column='1'/>
-            <parameter type-id='type-id-16' name='n' filepath='src/mongo/bson/bsonobjbuilder.h' line='277' column='1'/>
+            <parameter type-id='type-id-1934' is-artificial='yes'/>
+            <parameter type-id='type-id-1935' filepath='src/mongo/bson/bsonobjbuilder.h' line='277' column='1'/>
+            <parameter type-id='type-id-16' filepath='src/mongo/bson/bsonobjbuilder.h' line='277' column='1'/>
             <return type-id='type-id-117'/>
           </function-decl>
         </member-function>
@@ -4367,9 +4367,9 @@
       <class-decl name='__anonymous_struct__30' is-anonymous='yes' visibility='default' is-declaration-only='yes' id='type-id-1955'>
         <member-function access='private'>
           <function-decl name='appendIntegral&lt;long long&gt;' mangled-name='_ZN5mongo17StringBuilderImplINS_21SharedBufferAllocatorEE14appendIntegralIxEERS2_T_i' filepath='src/mongo/bson/util/builder.h' line='498' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZN5mongo17StringBuilderImplINS_21SharedBufferAllocatorEE14appendIntegralIxEERS2_T_i'>
-            <parameter type-id='type-id-1956' name='this' is-artificial='yes'/>
-            <parameter type-id='type-id-19' name='val' filepath='src/mongo/bson/util/builder.h' line='498' column='1'/>
-            <parameter type-id='type-id-16' name='maxSize' filepath='src/mongo/bson/util/builder.h' line='498' column='1'/>
+            <parameter type-id='type-id-1956' is-artificial='yes'/>
+            <parameter type-id='type-id-19' filepath='src/mongo/bson/util/builder.h' line='498' column='1'/>
+            <parameter type-id='type-id-16' filepath='src/mongo/bson/util/builder.h' line='498' column='1'/>
             <return type-id='type-id-117'/>
           </function-decl>
         </member-function>
@@ -4429,60 +4429,60 @@
       <var-decl name='kFTDCCollectEndField' type-id='type-id-1866' mangled-name='_ZN5mongo20kFTDCCollectEndFieldE' visibility='default' filepath='src/mongo/db/ftdc/util.cpp' line='64' column='1' elf-symbol-id='_ZN5mongo20kFTDCCollectEndFieldE'/>
       <namespace-decl name='FTDCBSONUtil'>
         <function-decl name='extractMetricsFromDocument' mangled-name='_ZN5mongo12FTDCBSONUtil26extractMetricsFromDocumentERKNS_7BSONObjES3_PSt6vectorImSaImEE' filepath='src/mongo/db/ftdc/util.cpp' line='233' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZN5mongo12FTDCBSONUtil26extractMetricsFromDocumentERKNS_7BSONObjES3_PSt6vectorImSaImEE'>
-          <parameter type-id='type-id-165' name='referenceDoc' filepath='src/mongo/db/ftdc/util.cpp' line='233' column='1'/>
-          <parameter type-id='type-id-165' name='currentDoc' filepath='src/mongo/db/ftdc/util.cpp' line='234' column='1'/>
-          <parameter type-id='type-id-1888' name='metrics' filepath='src/mongo/db/ftdc/util.cpp' line='235' column='1'/>
+          <parameter type-id='type-id-165' filepath='src/mongo/db/ftdc/util.cpp' line='233' column='1'/>
+          <parameter type-id='type-id-165' filepath='src/mongo/db/ftdc/util.cpp' line='234' column='1'/>
+          <parameter type-id='type-id-1888' filepath='src/mongo/db/ftdc/util.cpp' line='235' column='1'/>
           <return type-id='type-id-1895'/>
         </function-decl>
         <function-decl name='constructDocumentFromMetrics' mangled-name='_ZN5mongo12FTDCBSONUtil28constructDocumentFromMetricsERKNS_7BSONObjERKSt6vectorImSaImEE' filepath='src/mongo/db/ftdc/util.cpp' line='334' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZN5mongo12FTDCBSONUtil28constructDocumentFromMetricsERKNS_7BSONObjERKSt6vectorImSaImEE'>
-          <parameter type-id='type-id-165' name='ref' filepath='src/mongo/db/ftdc/util.cpp' line='334' column='1'/>
-          <parameter type-id='type-id-165' name='metrics' filepath='src/mongo/db/ftdc/util.cpp' line='335' column='1'/>
+          <parameter type-id='type-id-165' filepath='src/mongo/db/ftdc/util.cpp' line='334' column='1'/>
+          <parameter type-id='type-id-165' filepath='src/mongo/db/ftdc/util.cpp' line='335' column='1'/>
           <return type-id='type-id-1925'/>
         </function-decl>
         <function-decl name='createBSONMetadataDocument' mangled-name='_ZN5mongo12FTDCBSONUtil26createBSONMetadataDocumentERKNS_7BSONObjENS_6Date_tE' filepath='src/mongo/db/ftdc/util.cpp' line='346' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZN5mongo12FTDCBSONUtil26createBSONMetadataDocumentERKNS_7BSONObjENS_6Date_tE'>
-          <parameter type-id='type-id-165' name='metadata' filepath='src/mongo/db/ftdc/util.cpp' line='346' column='1'/>
-          <parameter type-id='type-id-2069' name='date' filepath='src/mongo/db/ftdc/util.cpp' line='346' column='1'/>
+          <parameter type-id='type-id-165' filepath='src/mongo/db/ftdc/util.cpp' line='346' column='1'/>
+          <parameter type-id='type-id-2069' filepath='src/mongo/db/ftdc/util.cpp' line='346' column='1'/>
           <return type-id='type-id-1919'/>
         </function-decl>
         <function-decl name='createBSONMetricChunkDocument' mangled-name='_ZN5mongo12FTDCBSONUtil29createBSONMetricChunkDocumentENS_14ConstDataRangeENS_6Date_tE' filepath='src/mongo/db/ftdc/util.cpp' line='355' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZN5mongo12FTDCBSONUtil29createBSONMetricChunkDocumentENS_14ConstDataRangeENS_6Date_tE'>
-          <parameter type-id='type-id-1965' name='buf' filepath='src/mongo/db/ftdc/util.cpp' line='355' column='1'/>
-          <parameter type-id='type-id-2069' name='date' filepath='src/mongo/db/ftdc/util.cpp' line='355' column='1'/>
+          <parameter type-id='type-id-1965' filepath='src/mongo/db/ftdc/util.cpp' line='355' column='1'/>
+          <parameter type-id='type-id-2069' filepath='src/mongo/db/ftdc/util.cpp' line='355' column='1'/>
           <return type-id='type-id-1919'/>
         </function-decl>
         <function-decl name='getBSONDocumentId' mangled-name='_ZN5mongo12FTDCBSONUtil17getBSONDocumentIdERKNS_7BSONObjE' filepath='src/mongo/db/ftdc/util.cpp' line='365' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZN5mongo12FTDCBSONUtil17getBSONDocumentIdERKNS_7BSONObjE'>
-          <parameter type-id='type-id-165' name='obj' filepath='src/mongo/db/ftdc/util.cpp' line='365' column='1'/>
+          <parameter type-id='type-id-165' filepath='src/mongo/db/ftdc/util.cpp' line='365' column='1'/>
           <return type-id='type-id-1943'/>
         </function-decl>
         <function-decl name='getBSONDocumentType' mangled-name='_ZN5mongo12FTDCBSONUtil19getBSONDocumentTypeERKNS_7BSONObjE' filepath='src/mongo/db/ftdc/util.cpp' line='376' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZN5mongo12FTDCBSONUtil19getBSONDocumentTypeERKNS_7BSONObjE'>
-          <parameter type-id='type-id-165' name='obj' filepath='src/mongo/db/ftdc/util.cpp' line='376' column='1'/>
+          <parameter type-id='type-id-165' filepath='src/mongo/db/ftdc/util.cpp' line='376' column='1'/>
           <return type-id='type-id-1949'/>
         </function-decl>
         <function-decl name='getBSONDocumentFromMetadataDoc' mangled-name='_ZN5mongo12FTDCBSONUtil30getBSONDocumentFromMetadataDocERKNS_7BSONObjE' filepath='src/mongo/db/ftdc/util.cpp' line='396' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZN5mongo12FTDCBSONUtil30getBSONDocumentFromMetadataDocERKNS_7BSONObjE'>
-          <parameter type-id='type-id-165' name='obj' filepath='src/mongo/db/ftdc/util.cpp' line='396' column='1'/>
+          <parameter type-id='type-id-165' filepath='src/mongo/db/ftdc/util.cpp' line='396' column='1'/>
           <return type-id='type-id-1925'/>
         </function-decl>
         <function-decl name='getMetricsFromMetricDoc' mangled-name='_ZN5mongo12FTDCBSONUtil23getMetricsFromMetricDocERKNS_7BSONObjEPNS_16FTDCDecompressorE' filepath='src/mongo/db/ftdc/util.cpp' line='412' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZN5mongo12FTDCBSONUtil23getMetricsFromMetricDocERKNS_7BSONObjEPNS_16FTDCDecompressorE'>
-          <parameter type-id='type-id-165' name='obj' filepath='src/mongo/db/ftdc/util.cpp' line='412' column='1'/>
-          <parameter type-id='type-id-1890' name='decompressor' filepath='src/mongo/db/ftdc/util.cpp' line='413' column='1'/>
+          <parameter type-id='type-id-165' filepath='src/mongo/db/ftdc/util.cpp' line='412' column='1'/>
+          <parameter type-id='type-id-1890' filepath='src/mongo/db/ftdc/util.cpp' line='413' column='1'/>
           <return type-id='type-id-1959'/>
         </function-decl>
       </namespace-decl>
       <namespace-decl name='FTDCUtil'>
         <function-decl name='getInterimFile' mangled-name='_ZN5mongo8FTDCUtil14getInterimFileERKN5boost10filesystem4pathE' filepath='src/mongo/db/ftdc/util.cpp' line='85' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZN5mongo8FTDCUtil14getInterimFileERKN5boost10filesystem4pathE'>
-          <parameter type-id='type-id-165' name='file' filepath='src/mongo/db/ftdc/util.cpp' line='85' column='1'/>
+          <parameter type-id='type-id-165' filepath='src/mongo/db/ftdc/util.cpp' line='85' column='1'/>
           <return type-id='type-id-1891'/>
         </function-decl>
         <function-decl name='getInterimTempFile' mangled-name='_ZN5mongo8FTDCUtil18getInterimTempFileERKN5boost10filesystem4pathE' filepath='src/mongo/db/ftdc/util.cpp' line='89' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZN5mongo8FTDCUtil18getInterimTempFileERKN5boost10filesystem4pathE'>
-          <parameter type-id='type-id-165' name='file' filepath='src/mongo/db/ftdc/util.cpp' line='89' column='1'/>
+          <parameter type-id='type-id-165' filepath='src/mongo/db/ftdc/util.cpp' line='89' column='1'/>
           <return type-id='type-id-1891'/>
         </function-decl>
         <function-decl name='roundTime' mangled-name='_ZN5mongo8FTDCUtil9roundTimeENS_6Date_tENS_8DurationISt5ratioILl1ELl1000EEEE' filepath='src/mongo/db/ftdc/util.cpp' line='93' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZN5mongo8FTDCUtil9roundTimeENS_6Date_tENS_8DurationISt5ratioILl1ELl1000EEEE'>
-          <parameter type-id='type-id-2069' name='now' filepath='src/mongo/db/ftdc/util.cpp' line='93' column='1'/>
-          <parameter type-id='type-id-2062' name='period' filepath='src/mongo/db/ftdc/util.cpp' line='93' column='1'/>
+          <parameter type-id='type-id-2069' filepath='src/mongo/db/ftdc/util.cpp' line='93' column='1'/>
+          <parameter type-id='type-id-2062' filepath='src/mongo/db/ftdc/util.cpp' line='93' column='1'/>
           <return type-id='type-id-2069'/>
         </function-decl>
         <function-decl name='getMongoSPath' mangled-name='_ZN5mongo8FTDCUtil13getMongoSPathERKN5boost10filesystem4pathE' filepath='src/mongo/db/ftdc/util.cpp' line='106' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZN5mongo8FTDCUtil13getMongoSPathERKN5boost10filesystem4pathE'>
-          <parameter type-id='type-id-165' name='logFile' filepath='src/mongo/db/ftdc/util.cpp' line='106' column='1'/>
+          <parameter type-id='type-id-165' filepath='src/mongo/db/ftdc/util.cpp' line='106' column='1'/>
           <return type-id='type-id-1891'/>
         </function-decl>
       </namespace-decl>
@@ -4585,21 +4585,21 @@
           <class-decl name='__anonymous_struct__' is-struct='yes' is-anonymous='yes' visibility='default' is-declaration-only='yes' id='type-id-2112'>
             <member-function access='public' static='yes'>
               <function-decl name='load' mangled-name='_ZN5mongo8DataType7HandlerINS_10FTDCVarIntEvE4loadEPS2_PKcmPml' filepath='src/mongo/db/ftdc/varint.cpp' line='37' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZN5mongo8DataType7HandlerINS_10FTDCVarIntEvE4loadEPS2_PKcmPml'>
-                <parameter type-id='type-id-2108' name='t' filepath='src/mongo/db/ftdc/varint.cpp' line='38' column='1'/>
-                <parameter type-id='type-id-60' name='ptr' filepath='src/mongo/db/ftdc/varint.cpp' line='38' column='1'/>
-                <parameter type-id='type-id-39' name='length' filepath='src/mongo/db/ftdc/varint.cpp' line='38' column='1'/>
-                <parameter type-id='type-id-253' name='advanced' filepath='src/mongo/db/ftdc/varint.cpp' line='38' column='1'/>
-                <parameter type-id='type-id-194' name='debug_offset' filepath='src/mongo/db/ftdc/varint.cpp' line='38' column='1'/>
+                <parameter type-id='type-id-2108' filepath='src/mongo/db/ftdc/varint.cpp' line='38' column='1'/>
+                <parameter type-id='type-id-60' filepath='src/mongo/db/ftdc/varint.cpp' line='38' column='1'/>
+                <parameter type-id='type-id-39' filepath='src/mongo/db/ftdc/varint.cpp' line='38' column='1'/>
+                <parameter type-id='type-id-253' filepath='src/mongo/db/ftdc/varint.cpp' line='38' column='1'/>
+                <parameter type-id='type-id-194' filepath='src/mongo/db/ftdc/varint.cpp' line='38' column='1'/>
                 <return type-id='type-id-2099'/>
               </function-decl>
             </member-function>
             <member-function access='public' static='yes'>
               <function-decl name='store' mangled-name='_ZN5mongo8DataType7HandlerINS_10FTDCVarIntEvE5storeERKS2_PcmPml' filepath='src/mongo/db/ftdc/varint.cpp' line='59' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZN5mongo8DataType7HandlerINS_10FTDCVarIntEvE5storeERKS2_PcmPml'>
-                <parameter type-id='type-id-349' name='t' filepath='src/mongo/db/ftdc/varint.cpp' line='60' column='1'/>
-                <parameter type-id='type-id-55' name='ptr' filepath='src/mongo/db/ftdc/varint.cpp' line='60' column='1'/>
-                <parameter type-id='type-id-39' name='length' filepath='src/mongo/db/ftdc/varint.cpp' line='60' column='1'/>
-                <parameter type-id='type-id-253' name='advanced' filepath='src/mongo/db/ftdc/varint.cpp' line='60' column='1'/>
-                <parameter type-id='type-id-194' name='debug_offset' filepath='src/mongo/db/ftdc/varint.cpp' line='60' column='1'/>
+                <parameter type-id='type-id-349' filepath='src/mongo/db/ftdc/varint.cpp' line='60' column='1'/>
+                <parameter type-id='type-id-55' filepath='src/mongo/db/ftdc/varint.cpp' line='60' column='1'/>
+                <parameter type-id='type-id-39' filepath='src/mongo/db/ftdc/varint.cpp' line='60' column='1'/>
+                <parameter type-id='type-id-253' filepath='src/mongo/db/ftdc/varint.cpp' line='60' column='1'/>
+                <parameter type-id='type-id-194' filepath='src/mongo/db/ftdc/varint.cpp' line='60' column='1'/>
                 <return type-id='type-id-2099'/>
               </function-decl>
             </member-function>

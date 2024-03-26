@@ -26,7 +26,7 @@
       </data-member>
       <member-function access='public' constructor='yes'>
         <function-decl name='first_type' mangled-name='_ZN10first_typeC2Ev' filepath='/home/dodji/git/libabigail/dwarf/tests/data/test-read-dwarf/test2-0.cc' line='5' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZN10first_typeC2Ev'>
-          <parameter type-id='82c95d70' name='this' is-artificial='yes'/>
+          <parameter type-id='82c95d70' is-artificial='yes'/>
           <return type-id='48b5725f'/>
         </function-decl>
       </member-function>
@@ -53,7 +53,7 @@
       </data-member>
       <member-function access='public' constructor='yes'>
         <function-decl name='second_type' mangled-name='_ZN11second_typeC2Ev' filepath='/home/dodji/git/libabigail/dwarf/tests/data/test-read-dwarf/test2-1.cc' line='5' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZN11second_typeC2Ev'>
-          <parameter type-id='fc0abc74' name='this' is-artificial='yes'/>
+          <parameter type-id='fc0abc74' is-artificial='yes'/>
           <return type-id='48b5725f'/>
         </function-decl>
       </member-function>

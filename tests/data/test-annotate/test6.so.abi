@@ -32,7 +32,7 @@
         <!-- int B::foo() -->
         <function-decl name='foo' mangled-name='_ZN1B3fooEv' filepath='/home/skumari/Tasks/source_repo/dodji/libabigail/tests/data/test-read-dwarf/test6.cc' line='11' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZN1B3fooEv'>
           <!-- implicit parameter of type 'B*' -->
-          <parameter type-id='type-id-3' name='this' is-artificial='yes'/>
+          <parameter type-id='type-id-3' is-artificial='yes'/>
           <!-- int -->
           <return type-id='type-id-1'/>
         </function-decl>
