@@ -1065,6 +1065,45 @@
     <function-type size-in-bits='32' id='30a82da4'>
       <return type-id='48b5725f'/>
     </function-type>
+    <function-type size-in-bits='32' method-class-id='f7c5ae1e' const='yes' id='3002cd03'>
+      <parameter type-id='32d2f295' is-artificial='yes'/>
+      <return type-id='157d4f95'/>
+    </function-type>
+    <function-type size-in-bits='32' method-class-id='65c10d3d' const='yes' id='4cc4f76b'>
+      <parameter type-id='a5f3e61a' is-artificial='yes'/>
+      <parameter type-id='1a1ddb91'/>
+      <return type-id='a5a046cd'/>
+    </function-type>
+    <function-type size-in-bits='32' method-class-id='65c10d3d' id='79583a0c'>
+      <parameter type-id='5a61729d' is-artificial='yes'/>
+      <parameter type-id='79927164'/>
+      <return type-id='a5a046cd'/>
+    </function-type>
+    <function-type size-in-bits='32' method-class-id='f7c5ae1e' id='facc63b9'>
+      <parameter type-id='c70198d4' is-artificial='yes'/>
+      <return type-id='48b5725f'/>
+    </function-type>
+    <function-type size-in-bits='32' method-class-id='f7c5ae1e' id='58e4150d'>
+      <parameter type-id='c70198d4' is-artificial='yes'/>
+      <parameter type-id='157d4f95'/>
+      <parameter type-id='922df12b'/>
+      <parameter type-id='922df12b'/>
+      <return type-id='48b5725f'/>
+    </function-type>
+    <function-type size-in-bits='32' method-class-id='f7c5ae1e' id='f09ea7db'>
+      <parameter type-id='c70198d4' is-artificial='yes'/>
+      <parameter type-id='63e171df' is-artificial='yes'/>
+      <return type-id='48b5725f'/>
+    </function-type>
+    <function-type size-in-bits='32' method-class-id='65c10d3d' id='3cf3871e'>
+      <parameter type-id='5a61729d' is-artificial='yes'/>
+      <return type-id='48b5725f'/>
+    </function-type>
+    <function-type size-in-bits='32' method-class-id='65c10d3d' id='30b6456c'>
+      <parameter type-id='5a61729d' is-artificial='yes'/>
+      <parameter type-id='63e171df' is-artificial='yes'/>
+      <return type-id='48b5725f'/>
+    </function-type>
   </abi-instr>
   <abi-instr address-size='32' path='frameworks/base/libs/storage/IObbActionListener.cpp' language='LANG_C_plus_plus_14'>
     <array-type-def dimensions='1' type-id='801a266d' size-in-bits='608' id='19b37a54'>
@@ -1529,6 +1568,24 @@
     </class-decl>
     <typedef-decl name='wctrans_t' type-id='eaa32e2f' filepath='bionic/libc/include/bits/wctype.h' line='60' column='1' id='183c72c4'/>
     <typedef-decl name='FILE' type-id='8d7b2c1f' filepath='bionic/libc/include/stdio.h' line='59' column='1' id='aa12d1bb'/>
+    <function-type size-in-bits='32' method-class-id='f8f7e309' const='yes' id='ff801c86'>
+      <parameter type-id='6a9db9a0' is-artificial='yes'/>
+      <return type-id='c894953d'/>
+    </function-type>
+    <function-type size-in-bits='32' method-class-id='f8f7e309' const='yes' id='ef9ba467'>
+      <parameter type-id='6a9db9a0' is-artificial='yes'/>
+      <parameter type-id='1a1ddb91'/>
+      <return type-id='a5a046cd'/>
+    </function-type>
+    <function-type size-in-bits='32' method-class-id='f8f7e309' id='05ee5af0'>
+      <parameter type-id='f7891b51' is-artificial='yes'/>
+      <parameter type-id='79927164'/>
+      <return type-id='a5a046cd'/>
+    </function-type>
+    <function-type size-in-bits='32' method-class-id='f8f7e309' id='e4473514'>
+      <parameter type-id='f7891b51' is-artificial='yes'/>
+      <return type-id='48b5725f'/>
+    </function-type>
   </abi-instr>
   <abi-instr address-size='32' path='frameworks/base/libs/storage/ObbInfo.cpp' language='LANG_C_plus_plus_14'>
     <qualified-type-def type-id='65c10d3d' const='yes' id='dda33994'/>
@@ -12833,6 +12890,15 @@
       <parameter type-id='24159e91' filepath='frameworks/base/native/android/obb.cpp' line='52' column='1'/>
       <return type-id='3ff5601b'/>
     </function-decl>
+    <function-type size-in-bits='32' method-class-id='c73fabea' const='yes' id='10d43f71'>
+      <parameter type-id='197d55e1' is-artificial='yes'/>
+      <return type-id='b59d7dce'/>
+    </function-type>
+    <function-type size-in-bits='32' method-class-id='c73fabea' id='ea5cd5f9'>
+      <parameter type-id='26924198' is-artificial='yes'/>
+      <parameter type-id='157d4f95'/>
+      <return type-id='48b5725f'/>
+    </function-type>
   </abi-instr>
   <abi-instr address-size='32' path='frameworks/base/native/android/sensor.cpp' language='LANG_C_plus_plus_14'>
     <array-type-def dimensions='1' type-id='a6c45d85' size-in-bits='448' id='7722ba46'>
@@ -13887,6 +13953,127 @@
       <parameter type-id='80f4b756'/>
       <parameter type-id='922df12b'/>
       <parameter type-id='eaa32e2f'/>
+      <return type-id='48b5725f'/>
+    </function-type>
+    <function-type size-in-bits='32' method-class-id='bf075117' id='4da81c6e'>
+      <parameter type-id='9cb9149f' is-artificial='yes'/>
+      <return type-id='c894953d'/>
+    </function-type>
+    <function-type size-in-bits='32' method-class-id='bf075117' id='3a429a52'>
+      <parameter type-id='9cb9149f' is-artificial='yes'/>
+      <parameter type-id='157d4f95'/>
+      <return type-id='c894953d'/>
+    </function-type>
+    <function-type size-in-bits='32' method-class-id='bf075117' id='79e48c45'>
+      <parameter type-id='9cb9149f' is-artificial='yes'/>
+      <parameter type-id='157d4f95'/>
+      <parameter type-id='22923b4c'/>
+      <return type-id='c894953d'/>
+    </function-type>
+    <function-type size-in-bits='32' method-class-id='bf075117' const='yes' id='98de5d56'>
+      <parameter type-id='e4896a10' is-artificial='yes'/>
+      <return type-id='157d4f95'/>
+    </function-type>
+    <function-type size-in-bits='32' method-class-id='b4c0d64f' id='995590ca'>
+      <parameter type-id='36e31287' is-artificial='yes'/>
+      <parameter type-id='8f92235e'/>
+      <parameter type-id='6d925e80'/>
+      <parameter type-id='1a1ddb91'/>
+      <parameter type-id='8f92235e'/>
+      <return type-id='a5a046cd'/>
+    </function-type>
+    <function-type size-in-bits='32' method-class-id='bf075117' id='ab79f659'>
+      <parameter type-id='9cb9149f' is-artificial='yes'/>
+      <parameter type-id='157d4f95'/>
+      <return type-id='3ff5601b'/>
+    </function-type>
+    <function-type size-in-bits='32' method-class-id='bf075117' id='3b5a5b1e'>
+      <parameter type-id='9cb9149f' is-artificial='yes'/>
+      <parameter type-id='157d4f95'/>
+      <parameter type-id='763d7e1a'/>
+      <return type-id='3ff5601b'/>
+    </function-type>
+    <function-type size-in-bits='32' method-class-id='bf075117' id='e9c7ea01'>
+      <parameter type-id='9cb9149f' is-artificial='yes'/>
+      <parameter type-id='157d4f95'/>
+      <parameter type-id='157d4f95'/>
+      <return type-id='3ff5601b'/>
+    </function-type>
+    <function-type size-in-bits='32' method-class-id='bf075117' id='2777f989'>
+      <parameter type-id='9cb9149f' is-artificial='yes'/>
+      <parameter type-id='157d4f95'/>
+      <parameter type-id='157d4f95'/>
+      <parameter type-id='922df12b'/>
+      <return type-id='3ff5601b'/>
+    </function-type>
+    <function-type size-in-bits='32' method-class-id='bf075117' id='6c2662ee'>
+      <parameter type-id='9cb9149f' is-artificial='yes'/>
+      <parameter type-id='157d4f95'/>
+      <parameter type-id='4ab96a04'/>
+      <return type-id='3ff5601b'/>
+    </function-type>
+    <function-type size-in-bits='32' method-class-id='bf075117' id='ff8fe339'>
+      <parameter type-id='9cb9149f' is-artificial='yes'/>
+      <parameter type-id='157d4f95'/>
+      <parameter type-id='4ab96a04'/>
+      <parameter type-id='4ab96a04'/>
+      <return type-id='3ff5601b'/>
+    </function-type>
+    <function-type size-in-bits='32' method-class-id='bf075117' id='4adb99e9'>
+      <parameter type-id='9cb9149f' is-artificial='yes'/>
+      <parameter type-id='157d4f95'/>
+      <parameter type-id='922df12b'/>
+      <parameter type-id='157d4f95'/>
+      <parameter type-id='157d4f95'/>
+      <parameter type-id='922df12b'/>
+      <return type-id='3ff5601b'/>
+    </function-type>
+    <function-type size-in-bits='32' method-class-id='bf075117' id='ab944528'>
+      <parameter type-id='9cb9149f' is-artificial='yes'/>
+      <parameter type-id='157d4f95'/>
+      <parameter type-id='9aa04798'/>
+      <return type-id='3ff5601b'/>
+    </function-type>
+    <function-type size-in-bits='32' method-class-id='bf075117' id='735b9074'>
+      <parameter type-id='9cb9149f' is-artificial='yes'/>
+      <return type-id='48b5725f'/>
+    </function-type>
+    <function-type size-in-bits='32' method-class-id='bf075117' id='7392516d'>
+      <parameter type-id='9cb9149f' is-artificial='yes'/>
+      <parameter type-id='157d4f95'/>
+      <parameter type-id='157d4f95'/>
+      <parameter type-id='157d4f95'/>
+      <parameter type-id='990ef79d'/>
+      <parameter type-id='922df12b'/>
+      <parameter type-id='0c3db078'/>
+      <return type-id='48b5725f'/>
+    </function-type>
+    <function-type size-in-bits='32' method-class-id='bf075117' id='e38eb461'>
+      <parameter type-id='9cb9149f' is-artificial='yes'/>
+      <parameter type-id='157d4f95'/>
+      <parameter type-id='4ab96a04'/>
+      <parameter type-id='990ef79d'/>
+      <parameter type-id='922df12b'/>
+      <return type-id='48b5725f'/>
+    </function-type>
+    <function-type size-in-bits='32' method-class-id='bf075117' id='70de3849'>
+      <parameter type-id='9cb9149f' is-artificial='yes'/>
+      <parameter type-id='7743ab4a'/>
+      <return type-id='48b5725f'/>
+    </function-type>
+    <function-type size-in-bits='32' method-class-id='bf075117' id='b45faa62'>
+      <parameter type-id='9cb9149f' is-artificial='yes'/>
+      <parameter type-id='5f8c324f'/>
+      <return type-id='48b5725f'/>
+    </function-type>
+    <function-type size-in-bits='32' method-class-id='bf075117' id='1c886047'>
+      <parameter type-id='9cb9149f' is-artificial='yes'/>
+      <parameter type-id='4ab96a04'/>
+      <return type-id='48b5725f'/>
+    </function-type>
+    <function-type size-in-bits='32' method-class-id='bf075117' id='9954ec52'>
+      <parameter type-id='9cb9149f' is-artificial='yes'/>
+      <parameter type-id='63e171df' is-artificial='yes'/>
       <return type-id='48b5725f'/>
     </function-type>
   </abi-instr>

@@ -15811,16 +15811,18 @@ maybe_adjust_canonical_type(const type_base_sptr& canonical,
 		      m->set_symbol(s1);
 		  }
 		else
+		  if (canonical_class->get_corpus()
+		      && cl->get_corpus()
+		      && (cl->get_corpus() == canonical_class->get_corpus()))
 		  // There is a member function defined and publicly
-		  // exported in the other class, and the canonical
-		  // class doesn't have that member function.  Let's
-		  // copy that member function to the canonical class
-		  // then.
-		  {
-		    method_decl_sptr method =
-		      copy_member_function (canonical_class, *i);
-		    canonicalize(method->get_type());
-		  }
+		  // exported in the other class and the canonical
+		  // class doesn't have that member function.  This
+		  // should not have happened!  For instance, the
+		  // DWARF reader does merge the member functions of
+		  // classes having the same name so that all of them
+		  // end-up having the same member functions.  What's
+		  // going on here?
+		  ABG_ASSERT_NOT_REACHED;
 	      }
 	}
     }

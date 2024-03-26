@@ -2388,6 +2388,8 @@ public:
 	}
     }
 
+    merge_member_functions_in_classes_of_same_names();
+
     /// Now, look at the types that needs to be canonicalized after the
     /// translation has been constructed (which is just now) and
     /// canonicalize them.
@@ -4596,6 +4598,133 @@ public:
     fns_with_no_symbol.clear();
   }
 
+  /// Copy missing member functions from a source @ref class_decl to a
+  /// destination one.
+  ///
+  /// If a function is present on the source @ref class_decl and not
+  /// on the destination one, then it's copied from the source class
+  /// to the destination one.
+  void
+  copy_missing_member_functions(const class_decl_sptr& dest_class,
+				const class_decl_sptr& src_class)
+  {
+    for (auto method : src_class->get_member_functions())
+      if (!method->get_linkage_name().empty())
+	if (!dest_class->find_member_function(method->get_linkage_name()))
+	  {
+	    method_decl_sptr copied_method =
+	      copy_member_function(dest_class, method);
+	    ABG_ASSERT(copied_method);
+	    schedule_type_for_late_canonicalization(copied_method->get_type());
+	  }
+  }
+
+  /// Test if there is an interator in a given range that points to
+  /// an anonymous class.
+  ///
+  /// @param begin the start of the iterator range to consider.
+  ///
+  /// @param end the end of the iterator range to consider.  This
+  /// points to after the range.
+  template <typename iterator_type>
+  bool
+  contains_anonymous_class(const iterator_type& begin,
+			   const iterator_type& end)
+  {
+    for (auto i = begin; i < end; ++i)
+      {
+	type_base_sptr t(*i);
+	class_decl_sptr c = is_class_type(t);
+	if (c && c->get_is_anonymous())
+	  return true;
+      }
+    return false;
+  }
+
+  /// Ensure that all classes of the same name have the same virtual
+  /// member functions.  So copy the virtual member functions from a
+  /// class C that have them to another class C that doesn't.
+  ///
+  /// @param begin an iterator to the first member of the set of
+  /// classes which to merge virtual member functions for.
+  ///
+  /// @param end an iterator to the last member (one past the end
+  /// actually) of the set of classes which to merge virtual member
+  /// functions for.
+  template <typename iterator_type>
+  void
+  merge_member_functions_of_classes(const iterator_type& begin,
+				    const iterator_type& end)
+  {
+    if (contains_anonymous_class(begin, end))
+      return;
+
+    for (auto i = begin; i < end; ++i)
+      {
+	type_base_sptr t(*i);
+	class_decl_sptr reference_class = is_class_type(t);
+	if (!reference_class)
+	  continue;
+
+	string n1 = reference_class->get_pretty_representation(true, true);
+	string n2;
+	for (auto j = begin; j < end; ++j)
+	  {
+	    if (j == i)
+	      continue;
+
+	    type_base_sptr type(*j);
+	    class_decl_sptr klass = is_class_type(type);
+	    if (!klass)
+	      continue;
+
+	    n2 = klass->get_pretty_representation(true, true);
+	    ABG_ASSERT(n1 == n2);
+
+	    copy_missing_member_functions(reference_class, klass);
+	    copy_missing_member_functions(klass, reference_class);
+	  }
+      }
+  }
+
+  /// Ensure that all classes of the same name have the same virtual
+  /// member functions.  So copy the virtual member functions from a
+  /// class C that have them to another class C that doesn't.
+  void
+  merge_member_functions_in_classes_of_same_names()
+  {
+    corpus_sptr abi = corpus();
+    if (!abi)
+      return;
+
+    istring_type_base_wptrs_map_type& class_types =
+      abi->get_types().class_types();
+
+    for (auto entry : class_types)
+      {
+	auto& classes = entry.second;
+	if (classes.size() > 1)
+	  {
+	    bool a_class_has_member_fns = false;
+	    for (auto& c : classes)
+	      {
+		type_base_sptr t(c);
+		if (class_decl_sptr klass = is_class_type(t))
+		  if (!klass->get_member_functions().empty())
+		    {
+		      a_class_has_member_fns = true;
+		      break;
+		    }
+	      }
+	    if (a_class_has_member_fns)
+	      merge_member_functions_of_classes(classes.begin(),
+						classes.end());
+	  }
+      }
+  }
+
+  /// @return vectors of types created during the analysis of the
+  /// DWARF and in the need of being canonicalized.<<<<<<< HEAD
   /// Return a reference to the vector containing the types created
   /// during the binary analysis but that are not tied to a given
   /// DWARF DIE.
