@@ -147,6 +147,14 @@ class reader : public elf_based_reader
   string_type_base_sptr_map_type types_map;
   vector<type_base_sptr> types_to_canonicalize;
 
+  /// Vector of additional types created during the analysis.  These
+  /// types don't have assocaited CTF type IDs.
+  vector<type_base_sptr> additional_types_to_canonicalize;
+
+  /// The vector of types present in types_map.  This is used to sort
+  /// the types before canonicalizing them.
+  vector<type_base_sptr> types;
+
   /// A set associating unknown CTF type ids
   std::set<ctf_id_t> unknown_types_set;
 
@@ -185,6 +193,14 @@ public:
       types_to_canonicalize.push_back(type);
   }
 
+  /// Add a type to the vector of types to be (sorted and)
+  /// canonicalized.
+  ///
+  /// @param t the type to schedule for canonicalization.
+  void
+  add_type(const type_base_sptr& t)
+  {additional_types_to_canonicalize.push_back(t);}
+
   /// Insert a given CTF unknown type ID.
   ///
   /// @param ctf_type the unknown type ID to be added.
@@ -222,10 +238,14 @@ public:
   void
   canonicalize_all_types(void)
   {
-    canonicalize_types
-      (types_to_canonicalize.begin(), types_to_canonicalize.end(),
-       [](vector<type_base_sptr>::iterator& i)
-       {return *i;});
+    for (auto& t: additional_types_to_canonicalize)
+      types_to_canonicalize.push_back(t);
+    additional_types_to_canonicalize.clear();
+
+    ir::hash_and_canonicalize_types(types_to_canonicalize.begin(),
+				    types_to_canonicalize.end(),
+				    [](vector<type_base_sptr>::iterator& i)
+				    {return *i;});
   }
 
   /// Constructor.
@@ -679,7 +699,7 @@ public:
        return corpus_sptr();
 
     if (!(origin & corpus::LINUX_KERNEL_BINARY_ORIGIN)
-          && (status & fe_iface::STATUS_DEBUG_INFO_NOT_FOUND))
+	&& (status & fe_iface::STATUS_DEBUG_INFO_NOT_FOUND))
       return corp;
 
     tools_utils::timer t;
@@ -850,7 +870,6 @@ process_ctf_base_type(reader *rdr,
 								    tunit);
       type_base_sptr void_type = is_type(type_declaration);
       result = is_type_decl(type_declaration);
-      canonicalize(result);
     }
   else
     {
@@ -900,7 +919,7 @@ build_ir_node_for_variadic_parameter_type(reader &rdr,
   type_base_sptr t = env.get_variadic_parameter_type();
   decl_base_sptr type_declaration = get_type_declaration(t);
   add_decl_to_scope(type_declaration, tunit->get_global_scope());
-  canonicalize(t);
+  rdr.add_type(t);
   return type_declaration;
 }
 
@@ -921,7 +940,7 @@ build_ir_node_for_void_type(reader& rdr, const translation_unit_sptr& tunit)
   const environment& env = rdr.env();
   type_base_sptr t = env.get_void_type();
   add_decl_to_scope(is_decl(t), tunit->get_global_scope());
-  canonicalize(t);
+  rdr.add_type(t);
   return is_decl(t);
 }
 
@@ -943,7 +962,7 @@ build_ir_node_for_void_pointer_type(reader& rdr,
     const environment& env = rdr.env();
   type_base_sptr t = env.get_void_pointer_type();
   add_decl_to_scope(is_decl(t), tunit->get_global_scope());
-  canonicalize(t);
+  rdr.add_type(t);
   return is_decl(t);
 }
 
@@ -1302,8 +1321,7 @@ build_array_ctf_range(reader *rdr, ctf_dict_t *dic,
 
   subrange->is_non_finite(is_non_finite);
   add_decl_to_scope(subrange, tunit->get_global_scope());
-  canonicalize(subrange);
-
+  rdr->add_type(subrange);
   return subrange;
 }
 
@@ -1598,7 +1616,7 @@ process_ctf_enum_type(reader *rdr,
     return result;
 
   add_decl_to_scope(utype, tunit->get_global_scope());
-  canonicalize(utype);
+  rdr->add_type(utype);
 
   /* Iterate over the enum entries.  */
   enum_type_decl::enumerators enms;

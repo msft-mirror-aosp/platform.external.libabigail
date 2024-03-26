@@ -335,10 +335,32 @@ class reader : public elf_based_reader
   void
   canonicalize_types()
   {
-    ir::canonicalize_types(types_to_canonicalize_.begin(),
-			   types_to_canonicalize_.end(),
-			   [](const vector<type_base_sptr>::const_iterator& i)
-			   {return *i;});
+    tools_utils::timer cn_timer;
+    if (do_log())
+      {
+	std::cerr << "BTF Reader is going to canonicalize "
+	     << std::dec
+	     << types_to_canonicalize_.size()
+	     << " types";
+	corpus_sptr c = corpus();
+	if (c)
+	  std::cerr << " from corpus " << corpus()->get_path() << "\n";
+	cn_timer.start();
+      }
+
+    ir::hash_and_canonicalize_types(types_to_canonicalize_.begin(),
+				    types_to_canonicalize_.end(),
+				    [](const vector<type_base_sptr>::const_iterator& i)
+				    {return *i;}, do_log(), show_stats());
+
+    if (do_log())
+      {
+	cn_timer.stop();
+	std::cerr << "BTF Reader finished types "
+	     << "sorting, hashing & canonicalizing in: "
+	     << cn_timer << "\n";
+      }
+
   }
 
   /// Getter of the number of types carried by a given BTF object.

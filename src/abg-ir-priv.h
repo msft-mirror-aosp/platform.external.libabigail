@@ -17,8 +17,9 @@
 #include <iostream>
 #include <string>
 
-#include "abg-ir.h"
+#include "abg-hash.h"
 #include "abg-corpus.h"
+#include "abg-tools-utils.h"
 
 namespace abigail
 {
@@ -179,13 +180,288 @@ struct translation_unit::priv
   {return types_;}
 }; // end translation_unit::priv
 
+// <type_or_decl_base stuff>
+
+/// The private data of @ref type_or_decl_base.
+struct type_or_decl_base::priv
+{
+  // This holds the kind of dynamic type of particular instance.
+  // Yes, this is part of the implementation of a "poor man" runtime
+  // type identification.  We are doing this because profiling shows
+  // that using dynamic_cast in some places is really to slow and is
+  // constituting a hotspot.  This poor man's implementation made
+  // things be much faster.
+  enum type_or_decl_kind	kind_;
+  // This holds the runtime type instance pointer of particular
+  // instance.  In other words, this is the "this pointer" of the
+  // dynamic type of a particular instance.
+  void*			rtti_;
+  // This holds a pointer to either the type_base sub-object (if the
+  // current instance is a type) or the decl_base sub-object (if the
+  // current instance is a decl).  This is used by the is_decl() and
+  // is_type() functions, which also show up during profiling as
+  // hotspots, due to their use of dynamic_cast.
+  void*			type_or_decl_ptr_;
+  mutable hashing::hashing_state hashing_state_;
+  bool				is_recursive_artefact_;
+  hash_t			hash_value_;
+  const environment&		env_;
+  translation_unit*		translation_unit_;
+  // The location of an artifact as seen from its input by the
+  // artifact reader.  This might be different from the source
+  // location advertised by the original emitter of the artifact
+  // emitter.
+  location			artificial_location_;
+  // Flags if the current ABI artifact is artificial (i.e, *NOT*
+  // generated from the initial source code, but rather either
+  // artificially by the compiler or by libabigail itself).
+  bool				is_artificial_;
+
+  /// Constructor of the type_or_decl_base::priv private type.
+  ///
+  /// @param e the environment in which the ABI artifact was created.
+  ///
+  /// @param k the identifier of the runtime type of the current
+  /// instance of ABI artifact.
+  priv(const environment& e,
+       enum type_or_decl_kind k = ABSTRACT_TYPE_OR_DECL)
+    : kind_(k),
+      rtti_(),
+      type_or_decl_ptr_(),
+      hashing_state_(hashing::HASHING_NOT_DONE_STATE),
+      is_recursive_artefact_(),
+      env_(e),
+      translation_unit_(),
+      is_artificial_()
+  {}
+
+  /// Getter of the kind of the IR node.
+  ///
+  /// @return the kind of the IR node.
+  enum type_or_decl_kind
+  kind() const
+  {return kind_;}
+
+  /// Setter of the kind of the IR node.
+  ///
+  /// @param k the new IR node kind.
+  void
+  kind (enum type_or_decl_kind k)
+  {kind_ |= k;}
+
+  /// Getter the hashing state of the current IR node.
+  ///
+  /// @return the hashing state of the current IR node.
+  hashing::hashing_state
+  get_hashing_state() const
+  {return hashing_state_;}
+
+  /// Getter of the property which flags the current artefact as being
+  /// recursive or not.
+  ///
+  /// @return true iff the current artefact it recursive.
+  bool
+  is_recursive_artefact() const
+  {return is_recursive_artefact_;}
+
+  /// Setter of the property which flags the current artefact as being
+  /// recursive or not.
+  ///
+  /// @param f the new value of the property.
+  void
+  is_recursive_artefact(bool f)
+  {is_recursive_artefact_ = f;}
+
+  /// Setter of the hashing state of the current IR node.
+  ///
+  /// @param s the hashing state of the current IR node.
+  void
+  set_hashing_state(hashing::hashing_state s) const
+  {hashing_state_ = s;}
+
+  /// Setter of the hashing value of the current IR node.
+  ///
+  /// An empty value is just ignored.  Also, if the IR node is NEITHER
+  /// in the hashing::HASHING_STARTED_STATE nor in the
+  /// hashing::HASHING_CYCLED_TYPE_STATE, then the function does
+  /// nothing.
+  ///
+  /// @param h the new hash value.
+  void
+  set_hash_value(hash_t h)
+  {
+    hashing::hashing_state s = get_hashing_state();
+
+    ABG_ASSERT(s == hashing::HASHING_NOT_DONE_STATE
+	       || s == hashing::HASHING_CYCLED_TYPE_STATE
+	       || s == hashing::HASHING_FINISHED_STATE);
+    if (h.has_value()
+	&& (s == hashing::HASHING_NOT_DONE_STATE
+	    || s == hashing::HASHING_CYCLED_TYPE_STATE))
+      {
+	hash_value_ = h;
+	set_hashing_state(hashing::HASHING_FINISHED_STATE);
+      }
+  }
+
+  /// Setter of the hashing value of the current IR node.
+  ///
+  /// Unlike set_hash_value above, this function always sets a new
+  /// hash value regardless of the hash value or of the hashing state
+  /// of the IR node.
+  ///
+  /// @param h the new hash value.
+  void
+  force_set_hash_value(hash_t h)
+  {
+    if (h.has_value())
+    {
+      hash_value_ = h;
+      set_hashing_state(hashing::HASHING_FINISHED_STATE);
+    }
+  }
+}; // end struct type_or_decl_base::priv
+
+/// Compute the hash value of an IR node and return it.
+/// 
+/// Note that if the IR node is a non-canonicalizeable type, no hash
+/// value is computed and an empty hash is returned.  Also, if the IR
+/// node already has a hash value, then this function just returns it.
+///
+/// This is a sub-routine of the internal hashing functions defined in
+/// abg-hash.cc
+///
+/// @param tod the IR node to compute the value for.
+///
+/// @return the computed hash value computed.
+template<typename T>
+hash_t
+do_hash_value(const T& tod)
+{
+  if (type_base* type = is_type(&tod))
+    if (is_non_canonicalized_type(type))
+      // Non canonicalized types are not hashed.  They must always be
+      // compared structurally.
+      return hash_t();
+
+  typename T::hash do_hash;
+  hash_t h = do_hash(tod);
+  return h;
+}
+
+/// Compute the hash value of an IR node and return it.
+/// 
+/// Note that if the IR node is a non-canonicalizeable type, no hash
+/// value is computed and an empty hash is returned.  Also, if the IR
+/// node already has a hash value, then this function just returns it.
+///
+/// This is a sub-routine of the internal hashing functions defined in
+/// abg-hash.cc
+///
+/// @param tod the IR node to compute the value for.
+///
+/// @return the computed hash value computed.
+template<typename T>
+hash_t
+do_hash_value(const T* tod)
+{
+  if (!tod)
+    return hash_t();
+  return hash_value(*tod);
+}
+
+/// Compute the hash value of an IR node and return it.
+/// 
+/// Note that if the IR node is a non-canonicalizeable type, no hash
+/// value is computed and an empty hash is returned.  Also, if the IR
+/// node already has a hash value, then this function just returns it.
+///
+/// This is a sub-routine of the internal hashing functions defined in
+/// abg-hash.cc
+///
+/// @param tod the IR node to compute the value for.
+///
+/// @return the computed hash value computed.
+template<typename T>
+hash_t
+do_hash_value(const shared_ptr<T>& tod)
+{
+  if (!tod)
+    return hash_t();
+  return do_hash_value(*tod);
+}
+
+
+/// Set the hash value of an IR node and return it.
+///
+/// If the IR node already has a hash value set, this function just
+/// returns it.  Otherwise, the function computes a new hash value and
+/// sets it to the IR node.
+///
+/// Note that if the IR node is a non-canonicalizeable type, no hash
+/// value is computed and an empty hash is returned.
+///
+/// This is a sub-routine of the type_or_decl_base::hash_value()
+/// virtual member functions.
+///
+/// @param type_or_decl the IR node to compute the value for.
+///
+/// @return the hash value computed and set to the IR node, or the
+/// hash value the IR node already had.
+template<typename T>
+hash_t
+set_or_get_cached_hash_value(const T& tod)
+{
+  hash_t h = do_hash_value(tod);
+  const_cast<T&>(tod).set_hash_value(h);
+  return h;
+}
+
+/// Set the hash value of an IR node and return it.
+///
+/// If the IR node already has a hash value set, this function just
+/// returns it.  Otherwise, the function computes a new hash value and
+/// sets it to the IR node.
+///
+/// Note that if the IR node is a non-canonicalizeable type, no hash
+/// value is computed and an empty hash is returned.
+///
+/// This is a sub-routine of the type_or_decl_base::hash_value()
+/// virtual member functions.
+///
+/// @param type_or_decl the IR node to compute the value for.
+///
+/// @return the hash value computed and set to the IR node, or the
+/// hash value the IR node already had.
+template<typename T>
+hash_t
+set_or_get_cached_hash_value(const T* artifact)
+{
+  if (!artifact)
+    return hash_t();
+  return set_or_get_cached_hash_value(*artifact);
+}
+
+// </type_or_decl_base stuff>
+
+
 // <type_base definitions>
+
+size_t
+get_canonical_type_index(const type_base& t);
+
+size_t
+get_canonical_type_index(const type_base* t);
+
+size_t
+get_canonical_type_index(const type_base_sptr& t);
 
 /// Definition of the private data of @ref type_base.
 struct type_base::priv
 {
   size_t		size_in_bits;
   size_t		alignment_in_bits;
+  size_t		canonical_type_index;
   type_base_wptr	canonical_type;
   // The data member below holds the canonical type that is managed by
   // the smart pointer referenced by the canonical_type data member
@@ -212,6 +488,7 @@ struct type_base::priv
   priv()
     : size_in_bits(),
       alignment_in_bits(),
+      canonical_type_index(),
       naked_canonical_type(),
       canonical_type_propagated_(false),
       propagated_canonical_type_confirmed_(false)
@@ -222,6 +499,7 @@ struct type_base::priv
        type_base_sptr c = type_base_sptr())
     : size_in_bits(s),
       alignment_in_bits(a),
+      canonical_type_index(),
       canonical_type(c),
       naked_canonical_type(c.get()),
       canonical_type_propagated_(false),
@@ -352,11 +630,15 @@ struct type_base::priv
 	canonical_type.reset();
 	naked_canonical_type = nullptr;
 	set_canonical_type_propagated(false);
+	canonical_type_index = 0;
 	return true;
       }
     return false;
   }
 }; // end struct type_base::priv
+
+bool
+type_is_suitable_for_hash_computing(const type_base&);
 
 // <environment definitions>
 
@@ -368,7 +650,10 @@ struct uint64_t_pair_hash
   /// @param p the pair to hash.
   uint64_t
   operator()(const std::pair<uint64_t, uint64_t>& p) const
-  {return abigail::hashing::combine_hashes(p.first, p.second);}
+  {
+    return *abigail::hashing::combine_hashes(hash_t(p.first),
+					     hash_t(p.second));
+  }
 };
 
 /// A convenience typedef for a pair of uint64_t which is initially
@@ -585,13 +870,7 @@ struct environment::priv
   void
   cache_type_comparison_result(T& first, T& second, bool r)
   {
-    if (allow_type_comparison_results_caching()
-	&& (r == false
-	    ||
-	    (!is_recursive_type(&first)
-	     && !is_recursive_type(&second)
-	     && !is_type(&first)->priv_->depends_on_recursive_type()
-	     && !is_type(&second)->priv_->depends_on_recursive_type())))
+    if (allow_type_comparison_results_caching())
       {
 	type_comparison_results_cache_.emplace
 	  (std::make_pair(reinterpret_cast<uint64_t>(&first),
@@ -822,6 +1101,7 @@ struct environment::priv
     dest.priv_->canonical_type = canonical;
     dest.priv_->naked_canonical_type = canonical.get();
     dest.priv_->set_canonical_type_propagated(true);
+    dest.priv_->canonical_type_index = canonical->priv_->canonical_type_index;
 #ifdef WITH_DEBUG_CT_PROPAGATION
     // If dest was previously a type which propagated canonical type
     // has been cleared, let the book-keeping system know.
@@ -850,6 +1130,8 @@ struct environment::priv
 	  {
 	    to_remove.insert(i);
 	    t->priv_->set_propagated_canonical_type_confirmed(true);
+	    ABG_ASSERT(t->priv_->canonical_type_propagated_
+		       && t->priv_->naked_canonical_type);
 #ifdef WITH_DEBUG_SELF_COMPARISON
 	    check_abixml_canonical_type_propagation_during_self_comp(t);
 #endif
@@ -884,6 +1166,8 @@ struct environment::priv
     env.priv_->remove_from_types_with_non_confirmed_propagated_ct(t);
     env.priv_->set_is_not_recursive(t);
     t->priv_->set_propagated_canonical_type_confirmed(true);
+    ABG_ASSERT(t->priv_->canonical_type_propagated_
+	       && t->priv_->naked_canonical_type);
 #ifdef WITH_DEBUG_SELF_COMPARISON
     check_abixml_canonical_type_propagation_during_self_comp(t);
 #endif
@@ -905,6 +1189,8 @@ struct environment::priv
 	type_base *t = reinterpret_cast<type_base*>(i);
 	t->priv_->set_does_not_depend_on_recursive_type();
 	t->priv_->set_propagated_canonical_type_confirmed(true);
+	ABG_ASSERT(t->priv_->canonical_type_propagated_
+		   && t->priv_->naked_canonical_type);
 #ifdef WITH_DEBUG_SELF_COMPARISON
 	    check_abixml_canonical_type_propagation_during_self_comp(t);
 #endif
@@ -1310,6 +1596,27 @@ compare_using_locations(const decl_base *f,
 /// lexicographic sort.
 struct decl_topo_comp
 {
+  /// Test if a decl has an artificial or natural location.
+  ///
+  /// @param d the decl to consider
+  ///
+  /// @return true iff @p d has a location.
+  bool
+  has_artificial_or_natural_location(const decl_base* d)
+  {return get_artificial_or_natural_location(d).get_value();}
+
+  /// Test if a type has an artificial or natural location.
+  ///
+  /// @param t the type to consider
+  ///
+  /// @return true iff @p t has a location.
+  bool
+  has_artificial_or_natural_location(const type_base* t)
+  {
+    if (decl_base *d = is_decl(t))
+      return has_artificial_or_natural_location(d);
+    return false;
+  }
 
   /// The "Less Than" comparison operator of this functor.
   ///
@@ -1338,9 +1645,11 @@ struct decl_topo_comp
 
     // If both decls come from an abixml file, keep the order they
     // have from that abixml file.
-    if ((!f->get_corpus() && !s->get_corpus())
-	|| (f->get_corpus()->get_origin() == corpus::NATIVE_XML_ORIGIN
-	    && s->get_corpus()->get_origin() == corpus::NATIVE_XML_ORIGIN))
+    if (has_artificial_or_natural_location(f)
+	&& has_artificial_or_natural_location(s)
+	&& (((!f->get_corpus() && !s->get_corpus())
+	     || (f->get_corpus() && f->get_corpus()->get_origin() == corpus::NATIVE_XML_ORIGIN
+		 && s->get_corpus() && s->get_corpus()->get_origin() == corpus::NATIVE_XML_ORIGIN))))
       return compare_using_locations(f, s);
 
     // If a decl has artificial location, then use that one over the
@@ -1400,7 +1709,7 @@ struct type_topo_comp
   /// @return true iff @p d has a location.
   bool
   has_artificial_or_natural_location(const decl_base* d)
-  {return get_artificial_or_natural_location(d);}
+  {return get_artificial_or_natural_location(d).get_value();}
 
   /// Test if a type has an artificial or natural location.
   ///
@@ -1440,6 +1749,19 @@ struct type_topo_comp
   {
     if (f == s || !f || !s)
       return false;
+
+    // If both decls come from an abixml file, keep the order they
+    // have from that abixml file.
+    if (is_decl(f) && is_decl(s)
+	&& has_artificial_or_natural_location(f)
+	&& has_artificial_or_natural_location(s)
+	&& ((!f->get_corpus() && !s->get_corpus())
+	    || (f->get_corpus()
+		&& f->get_corpus()->get_origin() == corpus::NATIVE_XML_ORIGIN
+		&& s->get_corpus()
+		&& (s->get_corpus()->get_origin()
+		    == corpus::NATIVE_XML_ORIGIN))))
+      return compare_using_locations(is_decl(f), is_decl(s));
 
     bool f_is_ptr_ref_or_qual = is_ptr_ref_or_qual_type(f);
     bool s_is_ptr_ref_or_qual = is_ptr_ref_or_qual_type(s);
@@ -1555,18 +1877,170 @@ struct type_topo_comp
     if (!!fd != !!sd)
       return fd && !sd;
 
-    if (!fd)
-      return false;
+    if (!fd
+	&& f->get_translation_unit()
+	&& s->get_translation_unit())
+      {
+	string s1 = f->get_translation_unit()->get_absolute_path();
+	string s2 = s->get_translation_unit()->get_absolute_path();
+	return s1 < s2;
+      }
+
+    // If all pretty representions are equal, sort by
+    // hash value and canonical type index.
+    hash_t h_f = peek_hash_value(*f);
+    hash_t h_s = peek_hash_value(*s);
+    if (h_f && h_s && *h_f != *h_s)
+      return *h_f < *h_s;
+
+    size_t cti_f = get_canonical_type_index(*f);
+    size_t cti_s = get_canonical_type_index(*s);
+    if (cti_f != cti_s)
+      return cti_f < cti_s;
 
     // If the two types have no decls, how come we could not sort them
     // until now? Let's investigate.
-    //ABG_ASSERT(fd);
+    ABG_ASSERT(fd);
 
     // From this point, fd and sd should be non-nil
     decl_topo_comp decl_comp;
     return decl_comp(fd, sd);
   }
 }; //end struct type_topo_comp
+
+/// Functor used to sort types before hashing them.
+struct sort_for_hash_functor
+{
+  /// Return the rank of a given kind of IR node.
+  ///
+  /// The rank is used to sort a kind of IR node relative to another
+  /// one of a different kind.  For instance, a an IR node of
+  /// BASIC_TYPE kind has a lower rank than an IR node of ENUM_TYPE
+  /// kind.
+  ///
+  /// @param k the kind of a given IR node.
+  ///
+  /// @return the rank of the IR node.
+  size_t
+  rank(enum type_or_decl_base::type_or_decl_kind k)
+  {
+    size_t result = 0;
+
+    if (k & type_or_decl_base::BASIC_TYPE)
+      result = 1;
+    if (k & type_or_decl_base::SUBRANGE_TYPE)
+      result = 2;
+    else if (k & type_or_decl_base::ENUM_TYPE)
+      result = 3;
+    else if (k & type_or_decl_base::CLASS_TYPE)
+      result = 4;
+    else if (k & type_or_decl_base::UNION_TYPE)
+      result = 5;
+    else if (k & type_or_decl_base::FUNCTION_TYPE)
+      result = 6;
+    else if (k & type_or_decl_base::METHOD_TYPE)
+      result = 7;
+    else if (k & type_or_decl_base::TYPEDEF_TYPE)
+      result = 8;
+    else if (k & type_or_decl_base::QUALIFIED_TYPE)
+      result = 9;
+    else if (k & type_or_decl_base::POINTER_TYPE)
+      result = 10;
+    else if (k & type_or_decl_base::REFERENCE_TYPE)
+      result = 11;
+    else if (k & type_or_decl_base::POINTER_TO_MEMBER_TYPE)
+      result = 12;
+    else if (k & type_or_decl_base::ARRAY_TYPE)
+      result = 13;
+
+    return result;
+  }
+
+  /// "Less Than" operator for type IR nodes.
+  ///
+  /// This returns true iff the first operand is less than the second
+  /// one.
+  ///
+  /// IR nodes are first sorted using their rank.  Two IR node of the
+  /// same rank are then sorted using their qualified name.
+  ///
+  /// @param f the first operand to consider.
+  ///
+  /// @param s the second operand to consider.
+  bool
+  operator()(const type_base& f, const type_base& s)
+  {
+    size_t rank_f = rank(f.kind()),
+      rank_s = rank(s.kind());
+
+    // If rank_f or rank_s is zero, it probably means there is a new
+    // type IR kind that needs proper ranking.
+    ABG_ASSERT(rank_f != 0 && rank_s != 0);
+
+    bool result = false;
+    if (rank_f < rank_s)
+      result = true;
+    else if (rank_f == rank_s)
+      {
+	type_topo_comp comp;
+	result = comp(&f,&s);
+      }
+    return result;
+  }
+
+  /// "Less Than" operator for type IR nodes.
+  ///
+  /// This returns true iff the first operand is less than the second
+  /// one.
+  ///
+  /// IR nodes are first sorted using their rank.  Two IR node of the
+  /// same rank are then sorted using their qualified name.
+  ///
+  /// @param f the first operand to consider.
+  ///
+  /// @param s the second operand to consider.
+  bool
+  operator()(const type_base* f, const type_base* s)
+  {
+    return operator()(*f, *s);
+  }
+
+  /// "Less Than" operator for type IR nodes.
+  ///
+  /// This returns true iff the first operand is less than the second
+  /// one.
+  ///
+  /// IR nodes are first sorted using their rank.  Two IR node of the
+  /// same rank are then sorted using their qualified name.
+  ///
+  /// @param f the first operand to consider.
+  ///
+  /// @param s the second operand to consider.  
+  bool
+  operator()(const type_base_sptr& f, const type_base_sptr& s)
+  {
+    return operator()(f.get(), s.get());
+  }
+};//end struct sort_for_hash_functor
+
+/// Sort types before hashing (and then canonicalizing) them.
+///
+/// @param begin an iterator pointing to the beginning of the sequence
+/// of types to sort.
+///
+/// @param end an iterator pointing to the end of the sequence of
+/// types to sort.
+template <typename IteratorType>
+void
+sort_types_for_hash_computing_and_c14n(IteratorType begin,
+				       IteratorType end)
+{
+  sort_for_hash_functor comp;
+  return std::stable_sort(begin, end, comp);
+}
+
+void
+sort_types_for_hash_computing_and_c14n(vector<type_base_sptr>& types);
 
 /// Compute the canonical type for all the IR types of the system.
 ///
@@ -1594,7 +2068,7 @@ struct type_topo_comp
 /// @param begin an iterator pointing to the first type of the set of types
 /// to canonicalize.
 ///
-/// @param end an iterator pointing to the end (after the last type) of
+/// @param end an iterator pointing past-the-end (after the last type) of
 /// the set of types to canonicalize.
 ///
 /// @param deref a lambda function that knows how to dereference the
@@ -1604,20 +2078,26 @@ template<typename input_iterator,
 void
 canonicalize_types(const input_iterator& begin,
 		   const input_iterator& end,
-		   deref_lambda deref)
+		   deref_lambda deref,
+		   bool do_log = false,
+		   bool show_stats = false)
 {
   if (begin == end)
     return;
 
-  type_topo_comp comp;
-  std::stable_sort(begin, end, comp);
-
   int i;
   input_iterator t;
   // First, let's compute the canonical type of this type.
+  tools_utils::timer tmr;
+  if (do_log)
+    {
+      std::cerr << "Canonicalizing types ...\n";
+      tmr.start();
+    }
+
   for (t = begin,i = 0; t != end; ++t, ++i)
     {
-      if (deref(t) && deref(t)->get_environment().priv_->do_log())
+      if (do_log && show_stats)
 	std::cerr << "#" << std::dec << i << " ";
 
       canonicalize(deref(t));
@@ -1634,6 +2114,90 @@ canonicalize_types(const input_iterator& begin,
 
   ABG_ASSERT(to_canonicalize.empty());
 #endif // WITH_DEBUG_CT_PROPAGATION
+}
+
+/// Hash and canonicalize a sequence of types.
+///
+/// Note that this function first sorts the types, then hashes them
+/// and then canonicalizes them.
+///
+/// Operations must be done in that order to get predictable results.
+///
+/// @param begin an iterator pointing to the first element of the
+/// sequence of types to hash and canonicalize.
+///
+/// @param begin an iterator pointing past-the-end of the sequence of
+/// types to hash and canonicalize.
+///
+/// @param deref this is a lambda that is used to dereference the
+/// types contained in the sequence referenced by iterators @p begin
+/// and @p end.
+template <typename IteratorType,
+	  typename deref_lambda>
+void
+hash_and_canonicalize_types(IteratorType	begin,
+			    IteratorType	end,
+			    deref_lambda	deref,
+			    bool do_log = false,
+			    bool show_stats = false)
+{
+  tools_utils::timer tmr;
+  if (do_log)
+    {
+      std::cerr << "sorting types before canonicalization ... \n";
+      tmr.start();
+    }
+
+  sort_types_for_hash_computing_and_c14n(begin, end);
+
+  if (do_log)
+    {
+      tmr.stop();
+      std::cerr << "sorted types for c14n in: " << tmr << "\n\n";
+
+      std::cerr << "hashing types before c14n ...\n";
+      tmr.start();
+    }
+
+  for (IteratorType t = begin; t != end; ++t)
+    if (!peek_hash_value(*deref(t)))
+      (*t)->hash_value();
+
+  if (do_log)
+    {
+      tmr.stop();
+      std::cerr << "hashed types in: " << tmr << "\n\n";
+    }
+
+  canonicalize_types(begin, end, deref, do_log, show_stats);
+}
+
+/// Sort and canonicalize a sequence of types.
+///
+/// Note that this function does NOT hash the types.  It thus assumes
+/// that the types are allready hashed.
+///
+/// Operations must be done in that order (sorting and then
+/// canonicalizing) to get predictable results.
+///
+/// @param begin an iterator pointing to the first element of the
+/// sequence of types to hash and canonicalize.
+///
+/// @param begin an iterator pointing past-the-end of the sequence of
+/// types to hash and canonicalize.
+///
+/// @param deref this is a lambda that is used to dereference the
+/// types contained in the sequence referenced by iterators @p begin
+/// and @p end.
+template <typename IteratorType,
+	  typename deref_lambda>
+void
+sort_and_canonicalize_types(IteratorType	begin,
+			    IteratorType	end,
+			    deref_lambda	deref)
+{
+  sort_types_for_hash_computing_and_c14n(begin, end);
+  canonicalize_types(begin, end, deref);
 }
 
 // <class_or_union::priv definitions>
@@ -1889,6 +2453,10 @@ struct function_type::priv
 };// end struc function_type::priv
 
 // </function_type::priv definitions>
+
+size_t
+get_canonical_type_index(const type_base& t);
+
 
 } // end namespace ir
 

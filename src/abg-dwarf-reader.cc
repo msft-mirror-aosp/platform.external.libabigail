@@ -139,7 +139,7 @@ struct dwarf_offset_pair_hash
 {
   size_t
   operator()(const std::pair<Dwarf_Off, Dwarf_Off>& p) const
-  {return abigail::hashing::combine_hashes(p.first, p.second);}
+  {return *abigail::hashing::combine_hashes(hash_t(p.first), hash_t(p.second));}
 };// end struct dwarf_offset_pair_hash
 
 typedef unordered_set<std::pair<Dwarf_Off,
@@ -183,7 +183,10 @@ struct offset_hash
 {
   size_t
   operator()(const offset_type& p) const
-  {return abigail::hashing::combine_hashes(p.source_, p.offset_);}
+  {
+    return *abigail::hashing::combine_hashes(hash_t(p.source_),
+					     hash_t(p.offset_));
+  }
 };// end struct offset_hash
 
 /// A hasher for a pair of offset_type.  This is used as a hasher for
@@ -193,11 +196,11 @@ struct offset_pair_hash
   size_t
   operator()(const std::pair<offset_type, offset_type>& p) const
   {
-    size_t h1 = abigail::hashing::combine_hashes(p.first.source_,
-						   p.first.offset_);
-    size_t h2 = abigail::hashing::combine_hashes(p.second.source_,
-						   p.second.offset_);
-    return abigail::hashing::combine_hashes(h1, h2);
+    hash_t h1 = abigail::hashing::combine_hashes(hash_t(p.first.source_),
+						 hash_t(p.first.offset_));
+    hash_t h2 = abigail::hashing::combine_hashes(hash_t(p.second.source_),
+						 hash_t(p.second.offset_));
+    return *abigail::hashing::combine_hashes(h1, h2);
   }
 };// end struct offset_pair_hash
 
@@ -2178,7 +2181,7 @@ public:
       {
 	// Something went badly wrong.  There is nothing we can do
 	// with this ELF file.  Bail out.
-      return corpus_sptr();
+	return corpus_sptr();
       }
 
     // If we couldn't find debug info from the elf path, then say it.
@@ -2285,7 +2288,8 @@ public:
       tools_utils::timer t;
       if (do_log())
 	{
-	  cerr << "building the libabigail internal representation ...\n";
+	  cerr << "DWARF Reader: building the "
+	    "libabigail internal representation ...\n";
 	  t.start();
 	}
       // And now walk all the DIEs again to build the libabigail IR.
@@ -2317,13 +2321,14 @@ public:
       if (do_log())
 	{
 	  t.stop();
-	  cerr << "building the libabigail internal representation "
-	       << "DONE for corpus << corpus()->get_path()"
-	       << " in :"
+	  cerr << "DWARF Reader: building "
+	       << "the libabigail internal representation "
+	       << "DONE for corpus " << corpus()->get_path()
+	       << " in: "
 	       << t
 	       << "\n";
 
-	  cerr << "Number of aggregate types compared: "
+	  cerr << "DWARF Reader: Number of aggregate types compared: "
 	       << compare_count_ << "\n"
 	       << "Number of canonical types propagated: "
 	       << canonical_propagated_count_ << "\n"
@@ -2336,7 +2341,7 @@ public:
       tools_utils::timer t;
       if (do_log())
 	{
-	  cerr << "resolving declaration only classes ...";
+	  cerr << "DWARF Reader: resolving declaration only classes ...";
 	  t.start();
 	}
       resolve_declaration_only_classes();
@@ -2344,7 +2349,7 @@ public:
 	{
 	  t.stop();
 	  cerr << " DONE@" << corpus()->get_path()
-	       << ":"
+	       << " in :"
 	       << t
 	       <<"\n";
 	}
@@ -2372,7 +2377,7 @@ public:
       tools_utils::timer t;
       if (do_log())
 	{
-	  cerr << "fixing up functions with linkage name but "
+	  cerr << "DWARF Reader: fixing up functions with linkage name but "
 	       << "no advertised underlying symbols ....";
 	  t.start();
 	}
@@ -2381,7 +2386,7 @@ public:
 	{
 	  t.stop();
 	  cerr << " DONE@" << corpus()->get_path()
-	       <<":"
+	       <<" in :"
 	       << t
 	       <<"\n";
 	}
@@ -2404,7 +2409,7 @@ public:
       tools_utils::timer t;
       if (do_log())
 	{
-	  cerr << "perform late type canonicalizing ...\n";
+	  cerr << "DWARF Reader: perform late type canonicalizing ...\n";
 	  t.start();
 	}
 
@@ -2412,7 +2417,7 @@ public:
       if (do_log())
 	{
 	  t.stop();
-	  cerr << "late type canonicalizing DONE for "
+	  cerr << "DWARF Reader: late type canonicalizing DONE for "
 	       << corpus()->get_path()
 	       << " in :"
 	       << t
@@ -2426,7 +2431,7 @@ public:
       tools_utils::timer t;
       if (do_log())
 	{
-	  cerr << "sort functions and variables ...";
+	  cerr << "DWARF Reader: sort functions and variables ...";
 	  t.start();
 	}
       corpus()->sort_functions();
@@ -4763,28 +4768,29 @@ public:
     tools_utils::timer cn_timer;
     if (do_log())
       {
-	cerr << "DWARF Reader is going to canonicalize types";
+	cerr << "DWARF Reader is going to canonicalize "
+	     << std::dec
+	     << types_to_canonicalize().size()
+	     << " types";
 	corpus_sptr c = corpus();
 	if (c)
-	  cerr << " of corpus " << corpus()->get_path() << "\n";
+	  cerr << " from corpus " << corpus()->get_path() << "\n";
 	cn_timer.start();
       }
 
-    if (!types_to_canonicalize().empty())
-      canonicalize_types(types_to_canonicalize().begin(),
-			 types_to_canonicalize().end(),
-			 [](const vector<type_base_sptr>::const_iterator& i)
-			 {return *i;});
+    ir::hash_and_canonicalize_types
+      (types_to_canonicalize().begin(),
+       types_to_canonicalize().end(),
+       [](const vector<type_base_sptr>::const_iterator& i)
+       {return *i;}, do_log(), show_stats());
 
-    if (do_log())
-      {
-	cn_timer.stop();
-	cerr << "finished canonicalizing types";
-	corpus_sptr c = corpus();
-	if (c)
-	  cerr << " of corpus " << corpus()->get_path();
-	cerr << ": (" << cn_timer << ")\n";
-      }
+	if (do_log())
+	  {
+	    cn_timer.stop();
+	    cerr << "DWARF Reader finished types "
+		 << "sorting, hashing & canonicalizing in: "
+		 << cn_timer << "\n";
+	  }
   }
 
   /// Compute the number of canonicalized and missed types in the late
@@ -5363,6 +5369,7 @@ public:
 
     return *leverage_dwarf_factorization_;
   }
+
   /// Getter of the "show_stats" flag.
   ///
   /// This flag tells if we should emit statistics about various
@@ -15799,28 +15806,7 @@ maybe_canonicalize_type(const type_base_sptr& t,
   if (!t)
     return;
 
-  type_base_sptr peeled_type = peel_typedef_pointer_or_reference_type(t);
-  if (is_class_type(peeled_type)
-      || is_union_type(peeled_type)
-      || is_function_type(peeled_type)
-      || is_array_type(peeled_type)
-      || is_qualified_type(peeled_type)
-      || is_enum_type(peeled_type)
-      ||(is_decl(peeled_type) && is_decl(peeled_type)->get_is_anonymous()))
-    // We delay canonicalization of classes/unions or typedef,
-    // pointers, references and array to classes/unions.  This is
-    // because the (underlying) class might not be finished yet and we
-    // might not be able to able detect it here (thinking about
-    // classes that are work-in-progress, or classes that might be
-    // later amended by some DWARF construct).  So we err on the safe
-    // side.  We also delay canonicalization for array and qualified
-    // types because they can be edited (in particular by
-    // maybe_strip_qualification) after they are initially built.
-    rdr.schedule_type_for_late_canonicalization(t);
-  else if (type_has_non_canonicalized_subtype(t))
-    rdr.schedule_type_for_late_canonicalization(t);
-  else
-    canonicalize(t);
+  rdr.schedule_type_for_late_canonicalization(t);
 }
 
 /// If a given decl is a member type declaration, set its access

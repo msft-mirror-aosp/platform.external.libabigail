@@ -1,11 +1,11 @@
 <abi-instr path='data/test-read-write/test12.xml'>
-  <type-decl name='int' size-in-bits='32' alignment-in-bits='32' id='type-id-1'/>
+  <type-decl name='int' size-in-bits='32' alignment-in-bits='32' hash='709cbe60bab69a92' id='type-id-1'/>
   <namespace-decl name='ns0'>
     <namespace-decl name='ns1'>
       <function-template-decl id='fn-tmpl-id-2'>
         <template-type-parameter id='type-id-3' name='T'/>
         <template-type-parameter id='type-id-4' name='U'/>
-        <function-decl name='foo' binding='global' size-in-bits='8' alignment-in-bits='8'>
+        <function-decl name='foo' binding='global' size-in-bits='8' alignment-in-bits='8' hash='bd4d7b0514561a65'>
           <parameter type-id='type-id-3' name='first'/>
           <parameter type-id='type-id-4' name='second'/>
           <return type-id='type-id-1'/>
@@ -18,7 +18,7 @@
       <namespace-decl name='ns4'>
         <function-template-decl id='fn-tmpl-id-5'>
           <template-type-parameter id='type-id-6' name='T'/>
-          <function-decl name='bar' binding='global'>
+          <function-decl name='bar' binding='global' hash='c1bab0b2e7fe66d1'>
             <parameter type-id='type-id-6' name='first'/>
             <return type-id='type-id-1'/>
           </function-decl>

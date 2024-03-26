@@ -59,7 +59,7 @@ struct types_or_decls_hash
   {
     size_t h1 = hash_type_or_decl(d.first);
     size_t h2 = hash_type_or_decl(d.second);
-    return hashing::combine_hashes(h1, h2);
+    return *hashing::combine_hashes(hash_t(h1), hash_t(h2));
   }
 };
 

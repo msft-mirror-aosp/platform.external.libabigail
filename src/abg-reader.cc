@@ -21,10 +21,12 @@
 #include <memory>
 #include <sstream>
 #include <unordered_map>
+#include <algorithm>
 
 #include "abg-suppression-priv.h"
 
 #include "abg-internal.h"
+#include "abg-ir-priv.h"
 #include "abg-symtab-reader.h"
 #include "abg-ir-priv.h"
 
@@ -995,10 +997,28 @@ public:
   void
   perform_type_canonicalization()
   {
-    canonicalize_types(m_types_to_canonicalize.begin(),
-		       m_types_to_canonicalize.end(),
-		       [](const vector<type_base_sptr>::const_iterator& i)
-		       {return *i;});
+    tools_utils::timer cn_timer;
+    if (do_log())
+      {
+	std::cerr << "ABIXML Reader is going to canonicalize types";
+	corpus_sptr c = corpus();
+	if (c)
+	  std::cerr << " of corpus " << corpus()->get_path() << "\n";
+	cn_timer.start();
+      }
+
+
+    ir::hash_and_canonicalize_types(m_types_to_canonicalize.begin(),
+				    m_types_to_canonicalize.end(),
+				    [](const vector<type_base_sptr>::const_iterator& i)
+				    {return *i;},
+				    do_log());
+
+    if (do_log())
+      {
+	cn_timer.stop();
+	std::cerr << "ABIXML Reader: canonicalized all types in: " << cn_timer << "\n";
+      }
   }
 
   /// Test whether if a given function suppression matches a function
@@ -1335,7 +1355,10 @@ static bool	read_elf_symbol_type(xmlNodePtr, elf_symbol::type&);
 static bool	read_elf_symbol_binding(xmlNodePtr, elf_symbol::binding&);
 static bool	read_elf_symbol_visibility(xmlNodePtr,
 					   elf_symbol::visibility&);
-
+static bool	read_type_hash_and_cti(xmlNodePtr, uint64_t& hash,
+				       uint64_t& cti);
+static void	read_hash_and_stash(const xmlNodePtr,
+				    const type_or_decl_base_sptr&);
 static namespace_decl_sptr
 build_namespace_decl(reader&, const xmlNodePtr, bool);
 
@@ -3023,6 +3046,68 @@ read_type_id_string(xmlNodePtr node, string& type_id)
   return false;
 }
 
+/// Read the hash value and a the CTI from a (type) node.
+///
+/// The value of the 'hash' property has the form:
+/// '<hash-value-in-hexa>#cti-in-decimal'.
+///
+/// @param node the XML node to read the hash value from.
+///
+/// @param hash output parameter.  This is set to the hash value read
+/// from the XML node @p node iff the function returns true.
+///
+/// @param cti output parameter.  This is set to the value of the CTI
+/// read from the CTI part of the value of the 'hash' property.
+///
+/// @return true iff the function read a hash value and set it into
+/// the @p hash output parameter.
+static bool
+read_type_hash_and_cti(xmlNodePtr node, uint64_t& hash, uint64_t& cti)
+{
+  if (xml_char_sptr s = XML_NODE_GET_ATTRIBUTE(node, "hash"))
+    {
+      string str = CHAR_STR(s);
+      vector<string> parts;
+      tools_utils::split_string(str, "#", parts);
+      if (!parts.empty() && !parts.front().empty())
+	{
+	  hash = strtoull(parts[0].c_str(), 0, 16);
+	  if (parts.size() > 1)
+	    cti = atoll(parts[1].c_str());
+	  return true;
+	}
+    }
+  return false;
+}
+
+/// Read the hash value from an XML node and set it onto an IR node.
+///
+/// @param node the XML node to read the hash value from.
+///
+/// @param ir_node output parameter.  The IR node to set the hash
+/// value read from @p node onto.
+static void
+read_hash_and_stash(const xmlNodePtr node,
+		    const type_or_decl_base_sptr& ir_node)
+{
+  uint64_t hash = 0, cti = 0;
+  if (read_type_hash_and_cti(node, hash, cti))
+    {
+      ir_node->priv_->force_set_hash_value(hash);
+      type_base_sptr type;
+      if (function_decl_sptr fn = is_function_decl(ir_node))
+	type = fn->get_type();
+      else
+	type = is_type(ir_node);
+
+      if (type)
+	{
+	  type->type_or_decl_base::priv_->force_set_hash_value(hash);
+	  type->priv_->canonical_type_index = cti;
+	}
+    }
+}
+
 #ifdef WITH_DEBUG_SELF_COMPARISON
 /// Associate a type-id string with the type that was constructed from
 /// it.
@@ -3676,6 +3761,8 @@ build_function_decl(reader&		rdr,
 
   ABG_ASSERT(fn_type);
 
+  read_hash_and_stash(node, fn_type);
+
   fn_type->set_is_artificial(true);
 
   function_decl_sptr fn_decl(as_method_decl
@@ -4102,6 +4189,9 @@ build_type_decl(reader&		rdr,
   maybe_set_artificial_location(rdr, node, decl);
   decl->set_is_anonymous(is_anonymous);
   decl->set_is_declaration_only(is_decl_only);
+  // Read the stash from the XML node and stash it into the IR node.
+  read_hash_and_stash(node, decl);
+
   if (rdr.push_and_key_type_decl(decl, node, add_to_current_scope))
     {
       rdr.map_xml_node_to_decl(node, decl);
@@ -4193,6 +4283,8 @@ build_qualified_type_decl(reader&	rdr,
       rdr.push_and_key_type_decl(decl, node, add_to_current_scope);
       RECORD_ARTIFACT_AS_USED_BY(rdr, underlying_type, decl);
     }
+  // Read the stash from the XML node and stash it into the IR node.
+  read_hash_and_stash(node, decl);
 
   rdr.map_xml_node_to_decl(node, decl);
 
@@ -4274,6 +4366,9 @@ build_pointer_type_def(reader&	rdr,
   if (rdr.push_and_key_type_decl(t, node, add_to_current_scope))
     rdr.map_xml_node_to_decl(node, t);
 
+  // Read the stash from the XML node and stash it into the IR node.
+  read_hash_and_stash(node, t);
+
   RECORD_ARTIFACT_AS_USED_BY(rdr, pointed_to_type, t);
   return t;
 }
@@ -4336,23 +4431,27 @@ build_reference_type_def(reader&		rdr,
     type_id = CHAR_STR(s);
   ABG_ASSERT(!type_id.empty());
 
+
+  type_base_sptr pointed_to_type =
+    rdr.build_or_get_type_decl(type_id, /*add_to_current_scope=*/ true);
+  ABG_ASSERT(pointed_to_type);
+
   // Create the reference type /before/ the pointed-to type.  After
   // the creation, the type is 'keyed' using
   // rdr.push_and_key_type_decl.  This means that the type can be
   // retrieved from its type ID.  This is so that if the pointed-to
   // type indirectly uses this reference type (via recursion) then
   // that is made possible.
-  reference_type_def_sptr t(new reference_type_def(rdr.get_environment(),
+  reference_type_def_sptr t(new reference_type_def(pointed_to_type,
 						   is_lvalue, size_in_bits,
 						   alignment_in_bits, loc));
   maybe_set_artificial_location(rdr, node, t);
   ABG_ASSERT(rdr.push_and_key_type_decl(t, node, add_to_current_scope));
   rdr.map_xml_node_to_decl(node, t);
 
-  type_base_sptr pointed_to_type =
-    rdr.build_or_get_type_decl(type_id,/*add_to_current_scope=*/ true);
-  ABG_ASSERT(pointed_to_type);
-  t->set_pointed_to_type(pointed_to_type);
+  // Read the stash from the XML node and stash it into the IR node.
+  read_hash_and_stash(node, t);
+
   RECORD_ARTIFACT_AS_USED_BY(rdr, pointed_to_type, t);
 
   return t;
@@ -4433,6 +4532,9 @@ build_ptr_to_mbr_type(reader&		rdr,
 				   size_in_bits, alignment_in_bits,
 				   loc));
 
+  // Read the stash from the XML node and stash it into the IR node.
+  read_hash_and_stash(node, result);
+
   if (rdr.push_and_key_type_decl(result, node, add_to_current_scope))
     rdr.map_xml_node_to_decl(node, result);
 
@@ -4494,6 +4596,9 @@ build_function_type(reader&	rdr,
 					       size, align)
 			     : new function_type(return_type,
 						 parms, size, align));
+
+  // Read the stash from the XML node and stash it into the IR node.
+  read_hash_and_stash(node, fn_type);
 
   rdr.get_translation_unit()->bind_function_type_life_time(fn_type);
   rdr.key_type_decl(fn_type, id);
@@ -4661,6 +4766,9 @@ build_subrange_type(reader&		rdr,
   if (size_in_bits)
   p->set_size_in_bits(size_in_bits);
 
+  // Read the stash from the XML node and stash it into the IR node.
+  read_hash_and_stash(node, p);
+
   if (rdr.push_and_key_type_decl(p, node, add_to_current_scope))
     rdr.map_xml_node_to_decl(node, p);
 
@@ -4780,6 +4888,9 @@ build_array_type_def(reader&	rdr,
   ABG_ASSERT(type);
 
   array_type_def_sptr ar_type(new array_type_def(type, subranges, loc));
+  // Read the stash from the XML node and stash it into the IR node.
+  read_hash_and_stash(node, ar_type);
+
   maybe_set_artificial_location(rdr, node, ar_type);
   if (rdr.push_and_key_type_decl(ar_type, node, add_to_current_scope))
     rdr.map_xml_node_to_decl(node, ar_type);
@@ -4957,6 +5068,9 @@ build_enum_type_decl(reader&	rdr,
   t->set_is_anonymous(is_anonymous);
   t->set_is_artificial(is_artificial);
   t->set_is_declaration_only(is_decl_only);
+  // Read the stash from the XML node and stash it into the IR node.
+  read_hash_and_stash(node, t);
+
   if (rdr.push_and_key_type_decl(t, node, add_to_current_scope))
     {
       maybe_set_naming_typedef(rdr, node, t);
@@ -5015,6 +5129,10 @@ build_typedef_decl(reader&	rdr,
 
   typedef_decl_sptr t(new typedef_decl(name, underlying_type, loc));
   maybe_set_artificial_location(rdr, node, t);
+
+  // Read the hash from the XML node and stash it into the IR node.
+  read_hash_and_stash(node, t);
+
   rdr.push_and_key_type_decl(t, node, add_to_current_scope);
   rdr.map_xml_node_to_decl(node, t);
   RECORD_ARTIFACT_AS_USED_BY(rdr, underlying_type, t);
@@ -5204,6 +5322,9 @@ build_class_decl(reader&		rdr,
 
   maybe_set_artificial_location(rdr, node, decl);
   decl->set_is_artificial(is_artificial);
+
+  // Read the stash from the XML node and stash it into the IR node.
+  read_hash_and_stash(node, decl);
 
   string def_id;
   bool is_def_of_decl = false;
@@ -5618,6 +5739,9 @@ build_union_decl(reader& rdr,
 				  is_anonymous));
     }
 
+  // Read the stash from the XML node and stash it into the IR node.
+  read_hash_and_stash(node, decl);
+
   maybe_set_artificial_location(rdr, node, decl);
   decl->set_is_artificial(is_artificial);
 
@@ -5706,6 +5830,7 @@ build_union_decl(reader& rdr,
 		  ABG_ASSERT(td);
 		  set_member_access_specifier(td, access);
 		  rdr.schedule_type_for_canonicalization(t);
+
 		  xml_char_sptr i= XML_NODE_GET_ATTRIBUTE(p, "id");
 		  string id = CHAR_STR(i);
 		  ABG_ASSERT(!id.empty());

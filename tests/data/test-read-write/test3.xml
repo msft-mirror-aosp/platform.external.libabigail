@@ -1,6 +1,6 @@
 <abi-instr path='data/test-read-write/test3.xml'>
-  <type-decl name='int' size-in-bits='32' alignment-in-bits='32' id='type-id-1'/>
-  <qualified-type-def type-id='type-id-1' const='yes' id='type-id-2'/>
-  <qualified-type-def type-id='type-id-1' const='yes' volatile='yes' id='type-id-3'/>
-  <qualified-type-def type-id='type-id-1' volatile='yes' id='type-id-4'/>
+  <type-decl name='int' size-in-bits='32' alignment-in-bits='32' hash='709cbe60bab69a92' id='type-id-1'/>
+  <qualified-type-def type-id='type-id-1' const='yes' hash='85ed74d005027898' id='type-id-2'/>
+  <qualified-type-def type-id='type-id-1' const='yes' volatile='yes' hash='b33ab536a4f3b9ad' id='type-id-3'/>
+  <qualified-type-def type-id='type-id-1' volatile='yes' hash='c675e3085fd89ed2' id='type-id-4'/>
 </abi-instr>

@@ -84,7 +84,7 @@ dnl The minor version number of the abixml version should be changed
 dnl each time and old version of libabigail can't handle a new version
 dnl of abixml.  Note however that when the major version number is
 dnl changed, the minor version number should be set to zero.
-ABIXML_VERSION_MINOR=3
+ABIXML_VERSION_MINOR=4
 LIBABIGAIL_SO_CURRENT=libabigail_so_current
 LIBABIGAIL_SO_REVISION=libabigail_so_revision
 LIBABIGAIL_SO_AGE=libabigail_so_age
@@ -495,6 +495,14 @@ PKG_CHECK_MODULES(XML, libxml-2.0 >= $LIBXML2_VERSION)
 AC_SUBST(LIBXML2_VERSION)
 AC_SUBST(XML_LIBS)
 AC_SUBST(XML_CFLAGS)
+
+dnl Check for dependency: xxhash
+XXHASH_VERSION=0.8.0
+PKG_CHECK_MODULES(XXHASH, libxxhash >= $XXHASH_VERSION)
+
+AC_SUBST(XXHASH_VERSION)
+AC_SUBST(XXHASH_LIBS)
+AC_SUBST(XXHASH_CFLAGS)
 
 dnl Check for some programs like rm, mkdir, etc ...
 AC_CHECK_PROG(HAS_RM, rm, yes, no)
@@ -928,7 +936,7 @@ AX_VALGRIND_CHECK
 
 dnl Set the list of libraries libabigail depends on
 
-DEPS_LIBS="$XML_LIBS $ELF_LIBS $DW_LIBS $CTF_LIBS $BPF_LIBS"
+DEPS_LIBS="$XML_LIBS $ELF_LIBS $DW_LIBS $XXHASH_LIBS $CTF_LIBS $BPF_LIBS"
 AC_SUBST(DEPS_LIBS)
 
 if test x$ABIGAIL_DEVEL != x; then

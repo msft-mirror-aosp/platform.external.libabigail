@@ -22,7 +22,6 @@
 #include <utility> // for std::rel_ops, at least.
 #include <vector>
 #include "abg-interned-str.h"
-#include "abg-hash.h"
 
 /// Toplevel namespace for libabigail.
 namespace abigail
@@ -661,6 +660,12 @@ look_through_decl_only(decl_base*);
 decl_base_sptr
 look_through_decl_only(const decl_base_sptr&);
 
+type_base*
+look_through_decl_only_type(type_base*);
+
+type_base_sptr
+look_through_decl_only_type(const type_base_sptr&);
+
 var_decl*
 is_var_decl(const type_or_decl_base*);
 
@@ -708,8 +713,8 @@ is_member_decl(const decl_base*);
 bool
 is_member_decl(const decl_base&);
 
-scope_decl*
-is_scope_decl(decl_base*);
+const scope_decl*
+is_scope_decl(const decl_base*);
 
 scope_decl_sptr
 is_scope_decl(const decl_base_sptr&);
@@ -1578,7 +1583,7 @@ type_base_sptr
 type_or_void(const type_base_sptr, const environment&);
 
 type_base_sptr
-canonicalize(type_base_sptr);
+canonicalize(type_base_sptr type, bool do_log= false, bool show_stats= false);
 
 type_base*
 type_has_non_canonicalized_subtype(type_base_sptr t);

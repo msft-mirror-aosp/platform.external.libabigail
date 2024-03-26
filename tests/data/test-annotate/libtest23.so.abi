@@ -1,4 +1,4 @@
-<abi-corpus version='2.3'>
+<abi-corpus version='2.4'>
   <elf-needed>
     <dependency name='libstdc++.so.6'/>
     <dependency name='libm.so.6'/>
@@ -17,26 +17,26 @@
   </elf-function-symbols>
   <abi-instr address-size='64' path='test23-first-tu.cc' comp-dir-path='/home/dodji/git/libabigail/PR20369/tests/data/test-read-dwarf' language='LANG_C_plus_plus'>
     <!-- bool -->
-    <type-decl name='bool' size-in-bits='8' id='type-id-1'/>
+    <type-decl name='bool' size-in-bits='8' hash='c635872c46617578' id='type-id-1'/>
     <!-- char -->
-    <type-decl name='char' size-in-bits='8' id='type-id-2'/>
+    <type-decl name='char' size-in-bits='8' hash='7f1bbd7b0c3c186f' id='type-id-2'/>
     <!-- double -->
-    <type-decl name='double' size-in-bits='64' id='type-id-3'/>
+    <type-decl name='double' size-in-bits='64' hash='ab419e666b76dba5' id='type-id-3'/>
     <!-- float -->
-    <type-decl name='float' size-in-bits='32' id='type-id-4'/>
+    <type-decl name='float' size-in-bits='32' hash='d0241d3e33863f20' id='type-id-4'/>
     <!-- int -->
-    <type-decl name='int' size-in-bits='32' id='type-id-5'/>
+    <type-decl name='int' size-in-bits='32' hash='45e5b6264d770ae7' id='type-id-5'/>
     <!-- long double -->
-    <type-decl name='long double' size-in-bits='128' id='type-id-6'/>
+    <type-decl name='long double' size-in-bits='128' hash='3585edd3484ecff7#2' id='type-id-6'/>
     <!-- long int -->
-    <type-decl name='long int' size-in-bits='64' id='type-id-7'/>
+    <type-decl name='long int' size-in-bits='64' hash='69f1ebc3a0a3f241#2' id='type-id-7'/>
     <!-- long long int -->
-    <type-decl name='long long int' size-in-bits='64' id='type-id-8'/>
+    <type-decl name='long long int' size-in-bits='64' hash='55e6262ccf4af918#3' id='type-id-8'/>
     <!-- struct __mbstate_t -->
-    <class-decl name='__mbstate_t' size-in-bits='64' is-struct='yes' naming-typedef-id='type-id-9' visibility='default' filepath='/usr/include/wchar.h' line='83' column='1' id='type-id-10'>
+    <class-decl name='__mbstate_t' is-struct='yes' naming-typedef-id='type-id-9' visibility='default' size-in-bits='64' filepath='/usr/include/wchar.h' line='83' column='1' hash='6ebde45b350f9d6b' id='type-id-10'>
       <member-type access='public'>
         <!-- union {} -->
-        <union-decl name='__anonymous_union__' is-anonymous='yes' visibility='default' is-declaration-only='yes' id='type-id-11'/>
+        <union-decl name='__anonymous_union__' visibility='default' is-anonymous='yes' is-declaration-only='yes' id='type-id-11'/>
       </member-type>
       <data-member access='public' layout-offset-in-bits='0'>
         <!-- int __mbstate_t::__count -->
@@ -48,7 +48,7 @@
       </data-member>
     </class-decl>
     <!-- struct tm -->
-    <class-decl name='tm' size-in-bits='448' is-struct='yes' visibility='default' filepath='/usr/include/time.h' line='133' column='1' id='type-id-12'>
+    <class-decl name='tm' is-struct='yes' visibility='default' size-in-bits='448' filepath='/usr/include/time.h' line='133' column='1' hash='969be498eaf01735' id='type-id-12'>
       <data-member access='public' layout-offset-in-bits='0'>
         <!-- int tm::tm_sec -->
         <var-decl name='tm_sec' type-id='type-id-5' visibility='default' filepath='/usr/include/time.h' line='135' column='1'/>
@@ -95,7 +95,7 @@
       </data-member>
     </class-decl>
     <!-- struct typedef __va_list_tag __va_list_tag -->
-    <class-decl name='typedef __va_list_tag __va_list_tag' size-in-bits='192' is-struct='yes' visibility='default' id='type-id-14'>
+    <class-decl name='typedef __va_list_tag __va_list_tag' is-struct='yes' visibility='default' size-in-bits='192' hash='72ef92348784e081' id='type-id-14'>
       <data-member access='public' layout-offset-in-bits='0'>
         <!-- unsigned int typedef __va_list_tag __va_list_tag::gp_offset -->
         <var-decl name='gp_offset' type-id='type-id-15' visibility='default'/>
@@ -114,200 +114,200 @@
       </data-member>
     </class-decl>
     <!-- struct {} -->
-    <class-decl name='__anonymous_struct__' is-struct='yes' is-anonymous='yes' visibility='default' id='type-id-17'/>
+    <class-decl name='__anonymous_struct__' is-struct='yes' visibility='default' is-anonymous='yes' hash='bd77c6a55fb9cd2c' id='type-id-17'/>
     <!-- typedef int __int32_t -->
-    <typedef-decl name='__int32_t' type-id='type-id-5' filepath='/usr/include/bits/types.h' line='40' column='1' id='type-id-18'/>
+    <typedef-decl name='__int32_t' type-id='type-id-5' size-in-bits='32' filepath='/usr/include/bits/types.h' line='40' column='1' hash='f0c050c6f9f8032e' id='type-id-18'/>
     <!-- typedef __mbstate_t __mbstate_t -->
-    <typedef-decl name='__mbstate_t' type-id='type-id-10' filepath='/usr/include/wchar.h' line='94' column='1' id='type-id-9'/>
+    <typedef-decl name='__mbstate_t' type-id='type-id-10' size-in-bits='64' filepath='/usr/include/wchar.h' line='94' column='1' hash='61477c4d1fd8d94d' id='type-id-9'/>
     <!-- typedef __mbstate_t mbstate_t -->
-    <typedef-decl name='mbstate_t' type-id='type-id-9' filepath='/usr/include/wchar.h' line='106' column='1' id='type-id-19'/>
+    <typedef-decl name='mbstate_t' type-id='type-id-9' size-in-bits='64' filepath='/usr/include/wchar.h' line='106' column='1' hash='61477c4d1fd8d94d' id='type-id-19'/>
     <!-- typedef unsigned long int size_t -->
-    <typedef-decl name='size_t' type-id='type-id-20' filepath='/usr/lib/gcc/x86_64-redhat-linux/4.8.5/include/stddef.h' line='212' column='1' id='type-id-21'/>
+    <typedef-decl name='size_t' type-id='type-id-20' size-in-bits='64' filepath='/usr/lib/gcc/x86_64-redhat-linux/4.8.5/include/stddef.h' line='212' column='1' hash='61477c4d1fd8d94d' id='type-id-21'/>
     <!-- typedef const __int32_t* wctrans_t -->
-    <typedef-decl name='wctrans_t' type-id='type-id-22' filepath='/usr/include/wctype.h' line='186' column='1' id='type-id-23'/>
+    <typedef-decl name='wctrans_t' type-id='type-id-22' size-in-bits='64' filepath='/usr/include/wctype.h' line='186' column='1' hash='61477c4d1fd8d94d' id='type-id-23'/>
     <!-- typedef unsigned long int wctype_t -->
-    <typedef-decl name='wctype_t' type-id='type-id-20' filepath='/usr/include/wctype.h' line='52' column='1' id='type-id-24'/>
+    <typedef-decl name='wctype_t' type-id='type-id-20' size-in-bits='64' filepath='/usr/include/wctype.h' line='52' column='1' hash='61477c4d1fd8d94d' id='type-id-24'/>
     <!-- typedef unsigned int wint_t -->
-    <typedef-decl name='wint_t' type-id='type-id-15' filepath='/usr/lib/gcc/x86_64-redhat-linux/4.8.5/include/stddef.h' line='353' column='1' id='type-id-25'/>
+    <typedef-decl name='wint_t' type-id='type-id-15' size-in-bits='32' filepath='/usr/lib/gcc/x86_64-redhat-linux/4.8.5/include/stddef.h' line='353' column='1' hash='f0c050c6f9f8032e' id='type-id-25'/>
     <!-- unsigned int -->
-    <type-decl name='unsigned int' size-in-bits='32' id='type-id-15'/>
+    <type-decl name='unsigned int' size-in-bits='32' hash='3a94285d174bd537' id='type-id-15'/>
     <!-- unsigned long int -->
-    <type-decl name='unsigned long int' size-in-bits='64' id='type-id-20'/>
+    <type-decl name='unsigned long int' size-in-bits='64' hash='e7c5efcec748ba6c#2' id='type-id-20'/>
     <!-- unsigned long long int -->
-    <type-decl name='unsigned long long int' size-in-bits='64' id='type-id-26'/>
+    <type-decl name='unsigned long long int' size-in-bits='64' hash='d226d906a470de76#3' id='type-id-26'/>
     <!-- wchar_t -->
-    <type-decl name='wchar_t' size-in-bits='32' id='type-id-27'/>
+    <type-decl name='wchar_t' size-in-bits='32' hash='e03601bc1680ce34' id='type-id-27'/>
     <!-- char& -->
-    <reference-type-def kind='lvalue' type-id='type-id-2' size-in-bits='64' id='type-id-28'/>
+    <reference-type-def kind='lvalue' type-id='type-id-2' size-in-bits='64' hash='7a2267c7e220a0d4' id='type-id-28'/>
     <!-- char* -->
-    <pointer-type-def type-id='type-id-2' size-in-bits='64' id='type-id-29'/>
+    <pointer-type-def type-id='type-id-2' size-in-bits='64' hash='cbbb684bdad1404' id='type-id-29'/>
     <!-- const __int32_t -->
-    <qualified-type-def type-id='type-id-18' const='yes' id='type-id-30'/>
+    <qualified-type-def type-id='type-id-18' const='yes' hash='45b539bd47b09a31' id='type-id-30'/>
     <!-- const __int32_t* -->
-    <pointer-type-def type-id='type-id-30' size-in-bits='64' id='type-id-22'/>
+    <pointer-type-def type-id='type-id-30' size-in-bits='64' hash='e8b8dcbfb160b4c0' id='type-id-22'/>
     <!-- const char -->
-    <qualified-type-def type-id='type-id-2' const='yes' id='type-id-31'/>
+    <qualified-type-def type-id='type-id-2' const='yes' hash='2059efede605db28' id='type-id-31'/>
     <!-- const char& -->
-    <reference-type-def kind='lvalue' type-id='type-id-31' size-in-bits='64' id='type-id-32'/>
+    <reference-type-def kind='lvalue' type-id='type-id-31' size-in-bits='64' hash='15da667af2807204' id='type-id-32'/>
     <!-- const char* -->
-    <pointer-type-def type-id='type-id-31' size-in-bits='64' id='type-id-13'/>
+    <pointer-type-def type-id='type-id-31' size-in-bits='64' hash='fe474f966dd309ec' id='type-id-13'/>
     <!-- const char** -->
-    <pointer-type-def type-id='type-id-13' size-in-bits='64' id='type-id-33'/>
+    <pointer-type-def type-id='type-id-13' size-in-bits='64' hash='1d69489b117e3908' id='type-id-33'/>
     <!-- const mbstate_t -->
-    <qualified-type-def type-id='type-id-19' const='yes' id='type-id-34'/>
+    <qualified-type-def type-id='type-id-19' const='yes' hash='bd6748e8ae3e857d' id='type-id-34'/>
     <!-- const mbstate_t* -->
-    <pointer-type-def type-id='type-id-34' size-in-bits='64' id='type-id-35'/>
+    <pointer-type-def type-id='type-id-34' size-in-bits='64' hash='168359808cdff22e' id='type-id-35'/>
     <!-- const std::basic_string<char, std::char_traits<char>, std::allocator<char> > -->
-    <qualified-type-def type-id='type-id-36' const='yes' id='type-id-37'/>
+    <qualified-type-def type-id='type-id-36' const='yes' hash='83c068a11986f705' id='type-id-37'/>
     <!-- const std::basic_string<char, std::char_traits<char>, std::allocator<char> >& -->
-    <reference-type-def kind='lvalue' type-id='type-id-37' size-in-bits='64' id='type-id-38'/>
+    <reference-type-def kind='lvalue' type-id='type-id-37' size-in-bits='64' hash='5677f5b0daf9b7ec' id='type-id-38'/>
     <!-- const std::basic_string<char, std::char_traits<char>, std::allocator<char> >* -->
-    <pointer-type-def type-id='type-id-37' size-in-bits='64' id='type-id-39'/>
+    <pointer-type-def type-id='type-id-37' size-in-bits='64' hash='64bef80fb36b994d' id='type-id-39'/>
     <!-- const std::basic_string<char, std::char_traits<char>, std::allocator<char> >::size_type -->
-    <qualified-type-def type-id='type-id-40' const='yes' id='type-id-41'/>
+    <qualified-type-def type-id='type-id-40' const='yes' hash='5b83273800a290e0' id='type-id-41'/>
     <!-- const tm -->
-    <qualified-type-def type-id='type-id-12' const='yes' id='type-id-42'/>
+    <qualified-type-def type-id='type-id-12' const='yes' hash='5e1629020865d229' id='type-id-42'/>
     <!-- const tm* -->
-    <pointer-type-def type-id='type-id-42' size-in-bits='64' id='type-id-43'/>
+    <pointer-type-def type-id='type-id-42' size-in-bits='64' hash='e9817f1d96dbf0fc' id='type-id-43'/>
     <!-- const wchar_t -->
-    <qualified-type-def type-id='type-id-27' const='yes' id='type-id-44'/>
+    <qualified-type-def type-id='type-id-27' const='yes' hash='c39a006827b53b8c' id='type-id-44'/>
     <!-- const wchar_t* -->
-    <pointer-type-def type-id='type-id-44' size-in-bits='64' id='type-id-45'/>
+    <pointer-type-def type-id='type-id-44' size-in-bits='64' hash='40d2ae8fc93ab842' id='type-id-45'/>
     <!-- const wchar_t** -->
-    <pointer-type-def type-id='type-id-45' size-in-bits='64' id='type-id-46'/>
+    <pointer-type-def type-id='type-id-45' size-in-bits='64' hash='d7b662533fe382b6' id='type-id-46'/>
     <!-- mbstate_t* -->
-    <pointer-type-def type-id='type-id-19' size-in-bits='64' id='type-id-47'/>
+    <pointer-type-def type-id='type-id-19' size-in-bits='64' hash='e34b775ca165913b' id='type-id-47'/>
     <!-- std::basic_string<char, std::char_traits<char>, std::allocator<char> >& -->
-    <reference-type-def kind='lvalue' type-id='type-id-36' size-in-bits='64' id='type-id-48'/>
+    <reference-type-def kind='lvalue' type-id='type-id-36' size-in-bits='64' hash='267e36ff37d2b5fd' id='type-id-48'/>
     <!-- std::basic_string<char, std::char_traits<char>, std::allocator<char> >* -->
-    <pointer-type-def type-id='type-id-36' size-in-bits='64' id='type-id-49'/>
+    <pointer-type-def type-id='type-id-36' size-in-bits='64' hash='f363c48e6fb08837' id='type-id-49'/>
     <!-- std::string& -->
-    <reference-type-def kind='lvalue' type-id='type-id-50' size-in-bits='64' id='type-id-51'/>
+    <reference-type-def kind='lvalue' type-id='type-id-50' size-in-bits='64' hash='4aedc088de4a0082' id='type-id-51'/>
     <!-- struct {}* -->
-    <pointer-type-def type-id='type-id-17' size-in-bits='64' id='type-id-52'/>
+    <pointer-type-def type-id='type-id-17' size-in-bits='64' hash='c6e5906a4c7d10cc' id='type-id-52'/>
     <!-- typedef __va_list_tag __va_list_tag* -->
-    <pointer-type-def type-id='type-id-14' size-in-bits='64' id='type-id-53'/>
+    <pointer-type-def type-id='type-id-14' size-in-bits='64' hash='d231781369ca2ed' id='type-id-53'/>
     <!-- wchar_t* -->
-    <pointer-type-def type-id='type-id-27' size-in-bits='64' id='type-id-54'/>
+    <pointer-type-def type-id='type-id-27' size-in-bits='64' hash='2338850b8cb7ce35' id='type-id-54'/>
     <!-- wchar_t** -->
-    <pointer-type-def type-id='type-id-54' size-in-bits='64' id='type-id-55'/>
+    <pointer-type-def type-id='type-id-54' size-in-bits='64' hash='e9272a368a48a792' id='type-id-55'/>
     <!-- __FILE* -->
     <pointer-type-def type-id='type-id-56' size-in-bits='64' id='type-id-57'/>
     <!-- class allocator<char> -->
     <class-decl name='allocator&lt;char&gt;' visibility='default' is-declaration-only='yes' id='type-id-58'>
       <member-type access='public'>
         <!-- typedef const char* allocator<char>::const_pointer -->
-        <typedef-decl name='const_pointer' type-id='type-id-13' filepath='/usr/include/c++/4.8.2/bits/allocator.h' line='98' column='1' id='type-id-59'/>
+        <typedef-decl name='const_pointer' type-id='type-id-13' size-in-bits='64' filepath='/usr/include/c++/4.8.2/bits/allocator.h' line='98' column='1' hash='61477c4d1fd8d94d' id='type-id-59'/>
       </member-type>
       <member-type access='public'>
         <!-- typedef const char& allocator<char>::const_reference -->
-        <typedef-decl name='const_reference' type-id='type-id-32' filepath='/usr/include/c++/4.8.2/bits/allocator.h' line='100' column='1' id='type-id-60'/>
+        <typedef-decl name='const_reference' type-id='type-id-32' size-in-bits='64' filepath='/usr/include/c++/4.8.2/bits/allocator.h' line='100' column='1' hash='61477c4d1fd8d94d' id='type-id-60'/>
       </member-type>
       <member-type access='public'>
         <!-- typedef std::ptrdiff_t allocator<char>::difference_type -->
-        <typedef-decl name='difference_type' type-id='type-id-62' filepath='/usr/include/c++/4.8.2/bits/allocator.h' line='96' column='1' id='type-id-61'/>
+        <typedef-decl name='difference_type' type-id='type-id-62' size-in-bits='64' filepath='/usr/include/c++/4.8.2/bits/allocator.h' line='96' column='1' hash='61477c4d1fd8d94d' id='type-id-61'/>
       </member-type>
       <member-type access='public'>
         <!-- typedef char* allocator<char>::pointer -->
-        <typedef-decl name='pointer' type-id='type-id-29' filepath='/usr/include/c++/4.8.2/bits/allocator.h' line='97' column='1' id='type-id-63'/>
+        <typedef-decl name='pointer' type-id='type-id-29' size-in-bits='64' filepath='/usr/include/c++/4.8.2/bits/allocator.h' line='97' column='1' hash='61477c4d1fd8d94d' id='type-id-63'/>
       </member-type>
       <member-type access='public'>
         <!-- typedef char& allocator<char>::reference -->
-        <typedef-decl name='reference' type-id='type-id-28' filepath='/usr/include/c++/4.8.2/bits/allocator.h' line='99' column='1' id='type-id-64'/>
+        <typedef-decl name='reference' type-id='type-id-28' size-in-bits='64' filepath='/usr/include/c++/4.8.2/bits/allocator.h' line='99' column='1' hash='61477c4d1fd8d94d' id='type-id-64'/>
       </member-type>
       <member-type access='public'>
         <!-- typedef std::size_t allocator<char>::size_type -->
-        <typedef-decl name='size_type' type-id='type-id-21' filepath='/usr/include/c++/4.8.2/bits/allocator.h' line='95' column='1' id='type-id-65'/>
+        <typedef-decl name='size_type' type-id='type-id-66' size-in-bits='64' filepath='/usr/include/c++/4.8.2/bits/allocator.h' line='95' column='1' hash='61477c4d1fd8d94d' id='type-id-65'/>
       </member-type>
     </class-decl>
     <!-- const allocator<char> -->
-    <qualified-type-def type-id='type-id-58' const='yes' id='type-id-66'/>
-    <reference-type-def kind='lvalue' type-id='type-id-66' size-in-bits='64' id='type-id-67'/>
+    <qualified-type-def type-id='type-id-58' const='yes' id='type-id-67'/>
+    <reference-type-def kind='lvalue' type-id='type-id-67' size-in-bits='64' id='type-id-68'/>
     <!-- const std::basic_string<char, std::char_traits<char>, std::allocator<char> >::_Rep -->
-    <qualified-type-def type-id='type-id-68' const='yes' id='type-id-69'/>
+    <qualified-type-def type-id='type-id-69' const='yes' id='type-id-70'/>
     <!-- namespace __gnu_cxx -->
     <namespace-decl name='__gnu_cxx'>
       <!-- class __gnu_cxx::__normal_iterator<char const*, std::basic_string<char, std::char_traits<char>, std::allocator<char> > > -->
-      <class-decl name='__normal_iterator&lt;char const*, std::basic_string&lt;char, std::char_traits&lt;char&gt;, std::allocator&lt;char&gt; &gt; &gt;' visibility='default' is-declaration-only='yes' id='type-id-70'/>
+      <class-decl name='__normal_iterator&lt;char const*, std::basic_string&lt;char, std::char_traits&lt;char&gt;, std::allocator&lt;char&gt; &gt; &gt;' visibility='default' is-declaration-only='yes' id='type-id-71'/>
       <!-- class __gnu_cxx::__normal_iterator<char*, std::basic_string<char, std::char_traits<char>, std::allocator<char> > > -->
-      <class-decl name='__normal_iterator&lt;char*, std::basic_string&lt;char, std::char_traits&lt;char&gt;, std::allocator&lt;char&gt; &gt; &gt;' visibility='default' is-declaration-only='yes' id='type-id-71'/>
+      <class-decl name='__normal_iterator&lt;char*, std::basic_string&lt;char, std::char_traits&lt;char&gt;, std::allocator&lt;char&gt; &gt; &gt;' visibility='default' is-declaration-only='yes' id='type-id-72'/>
     </namespace-decl>
     <!-- namespace std -->
     <namespace-decl name='std'>
       <!-- typedef std::basic_string<char, std::char_traits<char>, std::allocator<char> > std::string -->
-      <typedef-decl name='string' type-id='type-id-36' filepath='/usr/include/c++/4.8.2/bits/stringfwd.h' line='62' column='1' id='type-id-50'/>
+      <typedef-decl name='string' type-id='type-id-36' size-in-bits='64' filepath='/usr/include/c++/4.8.2/bits/stringfwd.h' line='62' column='1' hash='61477c4d1fd8d94d' id='type-id-50'/>
     </namespace-decl>
     <!-- namespace std -->
     <namespace-decl name='std'>
       <!-- class std::basic_string<char, std::char_traits<char>, std::allocator<char> > -->
-      <class-decl name='basic_string&lt;char, std::char_traits&lt;char&gt;, std::allocator&lt;char&gt; &gt;' size-in-bits='64' visibility='default' filepath='/usr/include/c++/4.8.2/bits/basic_string.h' line='112' column='1' id='type-id-36'>
+      <class-decl name='basic_string&lt;char, std::char_traits&lt;char&gt;, std::allocator&lt;char&gt; &gt;' visibility='default' size-in-bits='64' filepath='/usr/include/c++/4.8.2/bits/basic_string.h' line='112' column='1' hash='7fb327305c7930c' id='type-id-36'>
         <member-type access='public'>
           <!-- typedef allocator<char>::const_pointer std::basic_string<char, std::char_traits<char>, std::allocator<char> >::const_pointer -->
-          <typedef-decl name='const_pointer' type-id='type-id-59' filepath='/usr/include/c++/4.8.2/bits/basic_string.h' line='126' column='1' id='type-id-72'/>
+          <typedef-decl name='const_pointer' type-id='type-id-59' size-in-bits='64' filepath='/usr/include/c++/4.8.2/bits/basic_string.h' line='126' column='1' hash='61477c4d1fd8d94d' id='type-id-73'/>
         </member-type>
         <member-type access='public'>
           <!-- typedef allocator<char>::const_reference std::basic_string<char, std::char_traits<char>, std::allocator<char> >::const_reference -->
-          <typedef-decl name='const_reference' type-id='type-id-60' filepath='/usr/include/c++/4.8.2/bits/basic_string.h' line='124' column='1' id='type-id-73'/>
+          <typedef-decl name='const_reference' type-id='type-id-60' size-in-bits='64' filepath='/usr/include/c++/4.8.2/bits/basic_string.h' line='124' column='1' hash='61477c4d1fd8d94d' id='type-id-74'/>
         </member-type>
         <member-type access='public'>
           <!-- typedef allocator<char>::difference_type std::basic_string<char, std::char_traits<char>, std::allocator<char> >::difference_type -->
-          <typedef-decl name='difference_type' type-id='type-id-61' filepath='/usr/include/c++/4.8.2/bits/basic_string.h' line='122' column='1' id='type-id-74'/>
+          <typedef-decl name='difference_type' type-id='type-id-61' size-in-bits='64' filepath='/usr/include/c++/4.8.2/bits/basic_string.h' line='122' column='1' hash='61477c4d1fd8d94d' id='type-id-75'/>
         </member-type>
         <member-type access='public'>
           <!-- typedef allocator<char>::pointer std::basic_string<char, std::char_traits<char>, std::allocator<char> >::pointer -->
-          <typedef-decl name='pointer' type-id='type-id-63' filepath='/usr/include/c++/4.8.2/bits/basic_string.h' line='125' column='1' id='type-id-75'/>
+          <typedef-decl name='pointer' type-id='type-id-63' size-in-bits='64' filepath='/usr/include/c++/4.8.2/bits/basic_string.h' line='125' column='1' hash='61477c4d1fd8d94d' id='type-id-76'/>
         </member-type>
         <member-type access='public'>
           <!-- typedef allocator<char>::reference std::basic_string<char, std::char_traits<char>, std::allocator<char> >::reference -->
-          <typedef-decl name='reference' type-id='type-id-64' filepath='/usr/include/c++/4.8.2/bits/basic_string.h' line='123' column='1' id='type-id-76'/>
+          <typedef-decl name='reference' type-id='type-id-64' size-in-bits='64' filepath='/usr/include/c++/4.8.2/bits/basic_string.h' line='123' column='1' hash='61477c4d1fd8d94d' id='type-id-77'/>
         </member-type>
         <member-type access='public'>
           <!-- typedef allocator<char>::size_type std::basic_string<char, std::char_traits<char>, std::allocator<char> >::size_type -->
-          <typedef-decl name='size_type' type-id='type-id-65' filepath='/usr/include/c++/4.8.2/bits/basic_string.h' line='121' column='1' id='type-id-40'/>
+          <typedef-decl name='size_type' type-id='type-id-65' size-in-bits='64' filepath='/usr/include/c++/4.8.2/bits/basic_string.h' line='121' column='1' hash='61477c4d1fd8d94d' id='type-id-40'/>
         </member-type>
         <member-type access='public'>
           <!-- typedef char_traits<char>::char_type std::basic_string<char, std::char_traits<char>, std::allocator<char> >::value_type -->
-          <typedef-decl name='value_type' type-id='type-id-78' filepath='/usr/include/c++/4.8.2/bits/basic_string.h' line='119' column='1' id='type-id-77'/>
+          <typedef-decl name='value_type' type-id='type-id-79' size-in-bits='8' filepath='/usr/include/c++/4.8.2/bits/basic_string.h' line='119' column='1' hash='a001c849ab2c5776' id='type-id-78'/>
         </member-type>
         <member-type access='private'>
           <!-- struct std::basic_string<char, std::char_traits<char>, std::allocator<char> >::_Alloc_hider -->
-          <class-decl name='_Alloc_hider' is-struct='yes' visibility='default' is-declaration-only='yes' id='type-id-79'/>
+          <class-decl name='_Alloc_hider' is-struct='yes' visibility='default' is-declaration-only='yes' id='type-id-80'/>
         </member-type>
         <member-type access='private'>
           <!-- struct std::basic_string<char, std::char_traits<char>, std::allocator<char> >::_Rep -->
-          <class-decl name='_Rep' is-struct='yes' visibility='default' is-declaration-only='yes' id='type-id-68'/>
+          <class-decl name='_Rep' is-struct='yes' visibility='default' is-declaration-only='yes' id='type-id-69'/>
         </member-type>
         <member-type access='private'>
           <!-- struct std::basic_string<char, std::char_traits<char>, std::allocator<char> >::_Rep_base -->
-          <class-decl name='_Rep_base' is-struct='yes' visibility='default' is-declaration-only='yes' id='type-id-80'/>
+          <class-decl name='_Rep_base' is-struct='yes' visibility='default' is-declaration-only='yes' id='type-id-81'/>
         </member-type>
         <member-type access='private'>
           <!-- typedef rebind<char>::other std::basic_string<char, std::char_traits<char>, std::allocator<char> >::_CharT_alloc_type -->
-          <typedef-decl name='_CharT_alloc_type' type-id='type-id-82' filepath='/usr/include/c++/4.8.2/bits/basic_string.h' line='114' column='1' id='type-id-81'/>
+          <typedef-decl name='_CharT_alloc_type' type-id='type-id-83' filepath='/usr/include/c++/4.8.2/bits/basic_string.h' line='114' column='1' id='type-id-82'/>
         </member-type>
         <member-type access='public'>
           <!-- typedef allocator<char> std::basic_string<char, std::char_traits<char>, std::allocator<char> >::allocator_type -->
-          <typedef-decl name='allocator_type' type-id='type-id-58' filepath='/usr/include/c++/4.8.2/bits/basic_string.h' line='120' column='1' id='type-id-83'/>
+          <typedef-decl name='allocator_type' type-id='type-id-58' filepath='/usr/include/c++/4.8.2/bits/basic_string.h' line='120' column='1' id='type-id-84'/>
         </member-type>
         <member-type access='public'>
           <!-- typedef __gnu_cxx::__normal_iterator<char const*, std::basic_string<char, std::char_traits<char>, std::allocator<char> > > std::basic_string<char, std::char_traits<char>, std::allocator<char> >::const_iterator -->
-          <typedef-decl name='const_iterator' type-id='type-id-70' filepath='/usr/include/c++/4.8.2/bits/basic_string.h' line='129' column='1' id='type-id-84'/>
+          <typedef-decl name='const_iterator' type-id='type-id-71' filepath='/usr/include/c++/4.8.2/bits/basic_string.h' line='129' column='1' id='type-id-85'/>
         </member-type>
         <member-type access='public'>
           <!-- typedef std::reverse_iterator<__gnu_cxx::__normal_iterator<char const*, std::basic_string<char, std::char_traits<char>, std::allocator<char> > > > std::basic_string<char, std::char_traits<char>, std::allocator<char> >::const_reverse_iterator -->
-          <typedef-decl name='const_reverse_iterator' type-id='type-id-86' filepath='/usr/include/c++/4.8.2/bits/basic_string.h' line='130' column='1' id='type-id-85'/>
+          <typedef-decl name='const_reverse_iterator' type-id='type-id-87' filepath='/usr/include/c++/4.8.2/bits/basic_string.h' line='130' column='1' id='type-id-86'/>
         </member-type>
         <member-type access='public'>
           <!-- typedef __gnu_cxx::__normal_iterator<char*, std::basic_string<char, std::char_traits<char>, std::allocator<char> > > std::basic_string<char, std::char_traits<char>, std::allocator<char> >::iterator -->
-          <typedef-decl name='iterator' type-id='type-id-71' filepath='/usr/include/c++/4.8.2/bits/basic_string.h' line='127' column='1' id='type-id-87'/>
+          <typedef-decl name='iterator' type-id='type-id-72' filepath='/usr/include/c++/4.8.2/bits/basic_string.h' line='127' column='1' id='type-id-88'/>
         </member-type>
         <member-type access='public'>
           <!-- typedef std::reverse_iterator<__gnu_cxx::__normal_iterator<char*, std::basic_string<char, std::char_traits<char>, std::allocator<char> > > > std::basic_string<char, std::char_traits<char>, std::allocator<char> >::reverse_iterator -->
-          <typedef-decl name='reverse_iterator' type-id='type-id-89' filepath='/usr/include/c++/4.8.2/bits/basic_string.h' line='131' column='1' id='type-id-88'/>
+          <typedef-decl name='reverse_iterator' type-id='type-id-90' filepath='/usr/include/c++/4.8.2/bits/basic_string.h' line='131' column='1' id='type-id-89'/>
         </member-type>
         <member-type access='public'>
           <!-- typedef char_traits<char> std::basic_string<char, std::char_traits<char>, std::allocator<char> >::traits_type -->
-          <typedef-decl name='traits_type' type-id='type-id-91' filepath='/usr/include/c++/4.8.2/bits/basic_string.h' line='118' column='1' id='type-id-90'/>
+          <typedef-decl name='traits_type' type-id='type-id-92' filepath='/usr/include/c++/4.8.2/bits/basic_string.h' line='118' column='1' id='type-id-91'/>
         </member-type>
         <data-member access='public' static='yes'>
           <!-- static const std::basic_string<char, std::char_traits<char>, std::allocator<char> >::size_type std::basic_string<char, std::char_traits<char>, std::allocator<char> >::npos -->
@@ -315,98 +315,100 @@
         </data-member>
         <data-member access='private' layout-offset-in-bits='0'>
           <!-- std::basic_string<char, std::char_traits<char>, std::allocator<char> >::_Alloc_hider std::basic_string<char, std::char_traits<char>, std::allocator<char> >::_M_dataplus -->
-          <var-decl name='_M_dataplus' type-id='type-id-79' visibility='default' filepath='/usr/include/c++/4.8.2/bits/basic_string.h' line='289' column='1'/>
+          <var-decl name='_M_dataplus' type-id='type-id-80' visibility='default' filepath='/usr/include/c++/4.8.2/bits/basic_string.h' line='289' column='1'/>
         </data-member>
       </class-decl>
     </namespace-decl>
     <!-- namespace std -->
     <namespace-decl name='std'>
       <!-- typedef long int std::ptrdiff_t -->
-      <typedef-decl name='ptrdiff_t' type-id='type-id-7' filepath='/usr/include/c++/4.8.2/x86_64-redhat-linux/bits/c++config.h' line='1858' column='1' id='type-id-62'/>
+      <typedef-decl name='ptrdiff_t' type-id='type-id-7' size-in-bits='64' filepath='/usr/include/c++/4.8.2/x86_64-redhat-linux/bits/c++config.h' line='1858' column='1' hash='61477c4d1fd8d94d' id='type-id-62'/>
+      <!-- typedef unsigned long int std::size_t -->
+      <typedef-decl name='size_t' type-id='type-id-20' size-in-bits='64' filepath='/usr/include/c++/4.8.2/x86_64-redhat-linux/bits/c++config.h' line='1857' column='1' hash='61477c4d1fd8d94d' id='type-id-66'/>
       <!-- class std::reverse_iterator<__gnu_cxx::__normal_iterator<char const*, std::basic_string<char, std::char_traits<char>, std::allocator<char> > > > -->
-      <class-decl name='reverse_iterator&lt;__gnu_cxx::__normal_iterator&lt;char const*, std::basic_string&lt;char, std::char_traits&lt;char&gt;, std::allocator&lt;char&gt; &gt; &gt; &gt;' visibility='default' is-declaration-only='yes' id='type-id-86'/>
+      <class-decl name='reverse_iterator&lt;__gnu_cxx::__normal_iterator&lt;char const*, std::basic_string&lt;char, std::char_traits&lt;char&gt;, std::allocator&lt;char&gt; &gt; &gt; &gt;' visibility='default' is-declaration-only='yes' id='type-id-87'/>
       <!-- class std::reverse_iterator<__gnu_cxx::__normal_iterator<char*, std::basic_string<char, std::char_traits<char>, std::allocator<char> > > > -->
-      <class-decl name='reverse_iterator&lt;__gnu_cxx::__normal_iterator&lt;char*, std::basic_string&lt;char, std::char_traits&lt;char&gt;, std::allocator&lt;char&gt; &gt; &gt; &gt;' visibility='default' is-declaration-only='yes' id='type-id-89'/>
+      <class-decl name='reverse_iterator&lt;__gnu_cxx::__normal_iterator&lt;char*, std::basic_string&lt;char, std::char_traits&lt;char&gt;, std::allocator&lt;char&gt; &gt; &gt; &gt;' visibility='default' is-declaration-only='yes' id='type-id-90'/>
     </namespace-decl>
-    <reference-type-def kind='lvalue' type-id='type-id-68' size-in-bits='64' id='type-id-92'/>
+    <reference-type-def kind='lvalue' type-id='type-id-69' size-in-bits='64' id='type-id-93'/>
     <!-- std::basic_string<char, std::char_traits<char>, std::allocator<char> >::_Rep* -->
-    <pointer-type-def type-id='type-id-68' size-in-bits='64' id='type-id-93'/>
+    <pointer-type-def type-id='type-id-69' size-in-bits='64' id='type-id-94'/>
     <!-- struct _IO_FILE -->
-    <class-decl name='_IO_FILE' is-struct='yes' visibility='default' is-declaration-only='yes' id='type-id-94'/>
+    <class-decl name='_IO_FILE' is-struct='yes' visibility='default' is-declaration-only='yes' id='type-id-95'/>
     <!-- struct char_traits<char> -->
-    <class-decl name='char_traits&lt;char&gt;' is-struct='yes' visibility='default' is-declaration-only='yes' id='type-id-91'>
+    <class-decl name='char_traits&lt;char&gt;' is-struct='yes' visibility='default' is-declaration-only='yes' id='type-id-92'>
       <member-type access='public'>
         <!-- typedef char char_traits<char>::char_type -->
-        <typedef-decl name='char_type' type-id='type-id-2' filepath='/usr/include/c++/4.8.2/bits/char_traits.h' line='235' column='1' id='type-id-78'/>
+        <typedef-decl name='char_type' type-id='type-id-2' size-in-bits='8' filepath='/usr/include/c++/4.8.2/bits/char_traits.h' line='235' column='1' hash='a001c849ab2c5776' id='type-id-79'/>
       </member-type>
     </class-decl>
     <!-- struct rebind<char> -->
-    <class-decl name='rebind&lt;char&gt;' is-struct='yes' visibility='default' is-declaration-only='yes' id='type-id-95'>
+    <class-decl name='rebind&lt;char&gt;' is-struct='yes' visibility='default' is-declaration-only='yes' id='type-id-96'>
       <member-type access='public'>
         <!-- typedef allocator<char> rebind<char>::other -->
-        <typedef-decl name='other' type-id='type-id-58' filepath='/usr/include/c++/4.8.2/bits/allocator.h' line='105' column='1' id='type-id-82'/>
+        <typedef-decl name='other' type-id='type-id-58' filepath='/usr/include/c++/4.8.2/bits/allocator.h' line='105' column='1' id='type-id-83'/>
       </member-type>
     </class-decl>
     <!-- void emit(std::string&) -->
-    <function-decl name='emit' mangled-name='_Z4emitRSs' filepath='/home/dodji/git/libabigail/PR20369/tests/data/test-read-dwarf/test23-first-tu.cc' line='12' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_Z4emitRSs'>
+    <function-decl name='emit' mangled-name='_Z4emitRSs' filepath='/home/dodji/git/libabigail/PR20369/tests/data/test-read-dwarf/test23-first-tu.cc' line='12' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_Z4emitRSs' hash='8d6dd888776a11fb'>
       <!-- parameter of type 'std::string&' -->
       <parameter type-id='type-id-51' filepath='/home/dodji/git/libabigail/PR20369/tests/data/test-read-dwarf/test23-first-tu.cc' line='12' column='1'/>
       <!-- void -->
-      <return type-id='type-id-96'/>
+      <return type-id='type-id-97'/>
     </function-decl>
     <!-- namespace __gnu_cxx -->
     <namespace-decl name='__gnu_cxx'>
       <!-- struct __gnu_cxx::__numeric_traits_integer<char> -->
-      <class-decl name='__numeric_traits_integer&lt;char&gt;' is-struct='yes' visibility='default' is-declaration-only='yes' id='type-id-97'/>
+      <class-decl name='__numeric_traits_integer&lt;char&gt;' is-struct='yes' visibility='default' is-declaration-only='yes' id='type-id-98'/>
       <!-- struct __gnu_cxx::__numeric_traits_integer<int> -->
-      <class-decl name='__numeric_traits_integer&lt;int&gt;' is-struct='yes' visibility='default' is-declaration-only='yes' id='type-id-98'/>
+      <class-decl name='__numeric_traits_integer&lt;int&gt;' is-struct='yes' visibility='default' is-declaration-only='yes' id='type-id-99'/>
       <!-- struct __gnu_cxx::__numeric_traits_integer<long int> -->
-      <class-decl name='__numeric_traits_integer&lt;long int&gt;' is-struct='yes' visibility='default' is-declaration-only='yes' id='type-id-99'/>
+      <class-decl name='__numeric_traits_integer&lt;long int&gt;' is-struct='yes' visibility='default' is-declaration-only='yes' id='type-id-100'/>
       <!-- struct __gnu_cxx::__numeric_traits_integer<long unsigned int> -->
-      <class-decl name='__numeric_traits_integer&lt;long unsigned int&gt;' is-struct='yes' visibility='default' is-declaration-only='yes' id='type-id-100'/>
+      <class-decl name='__numeric_traits_integer&lt;long unsigned int&gt;' is-struct='yes' visibility='default' is-declaration-only='yes' id='type-id-101'/>
       <!-- struct __gnu_cxx::__numeric_traits_integer<short int> -->
-      <class-decl name='__numeric_traits_integer&lt;short int&gt;' is-struct='yes' visibility='default' is-declaration-only='yes' id='type-id-101'/>
+      <class-decl name='__numeric_traits_integer&lt;short int&gt;' is-struct='yes' visibility='default' is-declaration-only='yes' id='type-id-102'/>
     </namespace-decl>
     <!-- typedef _IO_FILE __FILE -->
-    <typedef-decl name='__FILE' type-id='type-id-94' filepath='/usr/include/stdio.h' line='64' column='1' id='type-id-56'/>
+    <typedef-decl name='__FILE' type-id='type-id-95' filepath='/usr/include/stdio.h' line='64' column='1' id='type-id-56'/>
     <!-- variadic parameter type -->
-    <type-decl name='variadic parameter type' id='type-id-102'/>
+    <type-decl name='variadic parameter type' id='type-id-103'/>
     <!-- void -->
-    <type-decl name='void' id='type-id-96'/>
+    <type-decl name='void' id='type-id-97'/>
     <!-- void* -->
-    <pointer-type-def type-id='type-id-96' id='type-id-16'/>
+    <pointer-type-def type-id='type-id-97' id='type-id-16'/>
   </abi-instr>
   <abi-instr address-size='64' path='test23-second-tu.cc' comp-dir-path='/home/dodji/git/libabigail/PR20369/tests/data/test-read-dwarf' language='LANG_C_plus_plus'>
     <!-- __FILE* -->
-    <pointer-type-def type-id='type-id-103' size-in-bits='64' id='type-id-104'/>
+    <pointer-type-def type-id='type-id-104' size-in-bits='64' id='type-id-105'/>
     <!-- namespace std -->
     <namespace-decl name='std'>
     </namespace-decl>
     <!-- struct _IO_FILE -->
-    <class-decl name='_IO_FILE' is-struct='yes' visibility='default' is-declaration-only='yes' id='type-id-105'/>
+    <class-decl name='_IO_FILE' is-struct='yes' visibility='default' is-declaration-only='yes' id='type-id-106'/>
     <!-- void emit(std::string&, std::string&) -->
-    <function-decl name='emit' mangled-name='_Z4emitRSsS_' filepath='/home/dodji/git/libabigail/PR20369/tests/data/test-read-dwarf/test23-second-tu.cc' line='13' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_Z4emitRSsS_'>
+    <function-decl name='emit' mangled-name='_Z4emitRSsS_' filepath='/home/dodji/git/libabigail/PR20369/tests/data/test-read-dwarf/test23-second-tu.cc' line='13' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_Z4emitRSsS_' hash='659ced78215eae4a'>
       <!-- parameter of type 'std::string&' -->
       <parameter type-id='type-id-51' filepath='/home/dodji/git/libabigail/PR20369/tests/data/test-read-dwarf/test23-second-tu.cc' line='13' column='1'/>
       <!-- parameter of type 'std::string&' -->
       <parameter type-id='type-id-51' filepath='/home/dodji/git/libabigail/PR20369/tests/data/test-read-dwarf/test23-second-tu.cc' line='13' column='1'/>
       <!-- void -->
-      <return type-id='type-id-96'/>
+      <return type-id='type-id-97'/>
     </function-decl>
     <!-- namespace __gnu_cxx -->
     <namespace-decl name='__gnu_cxx'>
       <!-- struct __gnu_cxx::__numeric_traits_integer<char> -->
-      <class-decl name='__numeric_traits_integer&lt;char&gt;' is-struct='yes' visibility='default' is-declaration-only='yes' id='type-id-106'/>
+      <class-decl name='__numeric_traits_integer&lt;char&gt;' is-struct='yes' visibility='default' is-declaration-only='yes' id='type-id-107'/>
       <!-- struct __gnu_cxx::__numeric_traits_integer<int> -->
-      <class-decl name='__numeric_traits_integer&lt;int&gt;' is-struct='yes' visibility='default' is-declaration-only='yes' id='type-id-107'/>
+      <class-decl name='__numeric_traits_integer&lt;int&gt;' is-struct='yes' visibility='default' is-declaration-only='yes' id='type-id-108'/>
       <!-- struct __gnu_cxx::__numeric_traits_integer<long int> -->
-      <class-decl name='__numeric_traits_integer&lt;long int&gt;' is-struct='yes' visibility='default' is-declaration-only='yes' id='type-id-108'/>
+      <class-decl name='__numeric_traits_integer&lt;long int&gt;' is-struct='yes' visibility='default' is-declaration-only='yes' id='type-id-109'/>
       <!-- struct __gnu_cxx::__numeric_traits_integer<long unsigned int> -->
-      <class-decl name='__numeric_traits_integer&lt;long unsigned int&gt;' is-struct='yes' visibility='default' is-declaration-only='yes' id='type-id-109'/>
+      <class-decl name='__numeric_traits_integer&lt;long unsigned int&gt;' is-struct='yes' visibility='default' is-declaration-only='yes' id='type-id-110'/>
       <!-- struct __gnu_cxx::__numeric_traits_integer<short int> -->
-      <class-decl name='__numeric_traits_integer&lt;short int&gt;' is-struct='yes' visibility='default' is-declaration-only='yes' id='type-id-110'/>
+      <class-decl name='__numeric_traits_integer&lt;short int&gt;' is-struct='yes' visibility='default' is-declaration-only='yes' id='type-id-111'/>
     </namespace-decl>
     <!-- typedef _IO_FILE __FILE -->
-    <typedef-decl name='__FILE' type-id='type-id-105' filepath='/usr/include/stdio.h' line='64' column='1' id='type-id-103'/>
+    <typedef-decl name='__FILE' type-id='type-id-106' filepath='/usr/include/stdio.h' line='64' column='1' id='type-id-104'/>
   </abi-instr>
 </abi-corpus>

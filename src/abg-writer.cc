@@ -26,6 +26,7 @@
 #include "abg-tools-utils.h"
 #include "abg-ir-priv.h"
 
+#include "abg-ir-priv.h"
 #include "abg-internal.h"
 // <headers defining libabigail's API go under here>
 ABG_BEGIN_EXPORT_DECLARATIONS
@@ -196,13 +197,25 @@ nc_type_ptr_istr_map_type;
 /// A convenience typedef for a set of function type*.
 typedef std::unordered_set<function_type*> fn_type_ptr_set_type;
 
-typedef unordered_map<shared_ptr<function_tdecl>,
-		      string,
-		      function_tdecl::shared_ptr_hash> fn_tmpl_shared_ptr_map;
+struct function_tdecl_hash
+{
+  size_t operator()(const function_tdecl_sptr& f) const
+  {return reinterpret_cast<size_t>(f.get());}
+};
 
-typedef unordered_map<shared_ptr<class_tdecl>,
+typedef unordered_map<function_tdecl_sptr,
+		      string, function_tdecl_hash>
+fn_tmpl_shared_ptr_map;
+
+struct class_tdecl_hash
+{
+  size_t operator()(const class_tdecl_sptr& c) const
+  {return reinterpret_cast<size_t>(c.get());}
+};
+
+typedef unordered_map<class_tdecl_sptr,
 		      string,
-		      class_tdecl::shared_ptr_hash> class_tmpl_shared_ptr_map;
+		      class_tdecl_hash> class_tmpl_shared_ptr_map;
 
 class write_context
 {
@@ -488,7 +501,7 @@ public:
   /// associated to it, create a new one and return it.  Otherwise,
   /// return the existing id for that type.
   interned_string
-  get_id_for_type(type_base* type) const
+  get_id_for_type(const type_base* type) const
   {
     type_base* c = get_exemplar_type(type);
 
@@ -856,6 +869,7 @@ static bool write_elf_symbol_reference(write_context&,
 static void write_is_declaration_only(const decl_base_sptr&, ostream&);
 static void write_is_struct(const class_decl_sptr&, ostream&);
 static void write_is_anonymous(const decl_base_sptr&, ostream&);
+static void write_type_hash_and_cti(const type_base_sptr&, ostream&);
 static void write_naming_typedef(const decl_base_sptr&, write_context&);
 static bool write_decl(const decl_base_sptr&, write_context&, unsigned);
 static void write_decl_in_scope(const decl_base_sptr&,
@@ -903,6 +917,9 @@ static bool write_union_decl_opening_tag(const union_decl_sptr&, const string&,
 static bool write_union_decl(const union_decl_sptr&, const string&,
 			     write_context&, unsigned);
 static bool write_union_decl(const union_decl_sptr&, write_context&, unsigned);
+static void write_common_type_info(const type_base_sptr&, write_context&,
+				   const string& id="");
+static bool write_type(const type_base_sptr&, write_context&, unsigned);
 static bool write_type_tparameter
 (const shared_ptr<type_tparameter>, write_context&, unsigned);
 static bool write_non_type_tparameter
@@ -1856,6 +1873,24 @@ write_is_anonymous(const decl_base_sptr& decl, ostream& o)
     o << " is-anonymous='yes'";
 }
 
+/// Emit the hash value and the canonical type index of a given type.
+///
+/// @param t the type to consider.
+///
+/// @param o the output stream to emit the hash to.
+static void
+write_type_hash_and_cti(const type_base_sptr& t, ostream& o)
+{
+  hash_t hash = t->hash_value();
+  if (hash)
+    {
+      o << " hash='" << std::hex << *hash << std::dec;
+      if (t->priv_->canonical_type_index)
+	o << "#" << t->priv_->canonical_type_index;
+      o << "'";
+    }
+}
+
 /// Serialize the "naming-typedef-id" attribute, if the current
 /// instance of @ref class_decl has a naming typedef.
 ///
@@ -1876,6 +1911,47 @@ write_naming_typedef(const decl_base_sptr& decl, write_context& ctxt)
       o << " naming-typedef-id='" << id << "'";
       ctxt.record_type_as_referenced(typedef_type);
     }
+}
+
+/// Emit several XML properties related to type IR nodes.
+///
+/// @param t the type IR node to emit the XML properties for.
+///
+/// @param ctxt the write context to use.
+///
+/// @param id the type-ID to use in the XML properties emitted.
+static void
+write_common_type_info(const type_base_sptr& t,
+		       write_context& ctxt,
+		       const string& id)
+{
+  decl_base_sptr d = is_decl(t);
+
+  ostream& o = ctxt.get_ostream();
+
+  if (!d || (d && !d->get_is_declaration_only()))
+    {
+      if (!is_qualified_type(t) && !is_array_type(t))
+	write_size_and_alignment(t, o);
+      else if (array_type_def_sptr a = is_array_type(t))
+	write_array_size_and_alignment(a, o);
+    }
+
+  if (d)
+    {
+      write_is_anonymous(d, o);
+      write_is_declaration_only(d, o);
+      write_location(d, ctxt);
+    }
+
+  write_type_hash_and_cti(t, o);
+
+  string i = id;
+  if (i.empty())
+    i = ctxt.get_id_for_type(t);
+  o << " id='" << i << "'";
+
+  ctxt.record_type_as_emitted(t);
 }
 
 /// Helper to serialize a type artifact.
@@ -2615,17 +2691,9 @@ write_type_decl(const type_decl_sptr& d, write_context& ctxt, unsigned indent)
 
   o << "<type-decl name='" << xml::escape_xml_string(d->get_name()) << "'";
 
-  write_is_anonymous(d, o);
+  write_common_type_info(d, ctxt);
 
-  write_size_and_alignment(d, o);
-
-  write_is_declaration_only(d, o);
-
-  write_location(d, ctxt);
-
-  o << " id='" << ctxt.get_id_for_type(d) << "'" <<  "/>\n";
-
-  ctxt.record_type_as_emitted(d);
+  o << "/>\n";
 
   return true;
 }
@@ -2730,15 +2798,9 @@ write_qualified_type_def(const qualified_type_def_sptr&	decl,
   if (decl->get_cv_quals() & qualified_type_def::CV_RESTRICT)
     o << " restrict='yes'";
 
-  write_location(static_pointer_cast<decl_base>(decl), ctxt);
+  write_common_type_info(decl, ctxt, id);
 
-  string i = id;
-  if (i.empty())
-    i = ctxt.get_id_for_type(decl);
-
-  o << " id='" << i << "'/>\n";
-
-  ctxt.record_type_as_emitted(decl);
+  o << "/>\n";
 
   return true;
 }
@@ -2803,22 +2865,9 @@ write_pointer_type_def(const pointer_type_def_sptr&	decl,
 
   ctxt.record_type_as_referenced(pointed_to_type);
 
-  write_size_and_alignment(decl, o,
-			   (ctxt.get_write_default_sizes()
-			    ? 0
-			    : decl->get_translation_unit()->get_address_size()),
-			   0);
+  write_common_type_info(decl, ctxt, id);
 
-  i = id;
-  if (i.empty())
-    i = ctxt.get_id_for_type(decl);
-
-  o << " id='" << i << "'";
-
-  write_location(static_pointer_cast<decl_base>(decl), ctxt);
   o << "/>\n";
-
-  ctxt.record_type_as_emitted(decl);
 
   return true;
 }
@@ -2885,22 +2934,9 @@ write_reference_type_def(const reference_type_def_sptr&	decl,
   if (function_type_sptr f = is_function_type(decl->get_pointed_to_type()))
     ctxt.record_type_as_referenced(f);
 
-  write_size_and_alignment(decl, o,
-			   (ctxt.get_write_default_sizes()
-			    ? 0
-			    : decl->get_translation_unit()->get_address_size()),
-			   0);
-
-  string i = id;
-  if (i.empty())
-    i = ctxt.get_id_for_type(decl);
-  o << " id='" << i << "'";
-
-  write_location(static_pointer_cast<decl_base>(decl), ctxt);
+  write_common_type_info(decl, ctxt, id);
 
   o << "/>\n";
-
-  ctxt.record_type_as_emitted(decl);
 
   return true;
 }
@@ -2948,14 +2984,6 @@ write_ptr_to_mbr_type(const ptr_to_mbr_type_sptr& decl,
 
   o << "<pointer-to-member-type";
 
-  write_size_and_alignment(decl, o,
-			   (ctxt.get_write_default_sizes()
-			    ? 0
-			    : decl->get_translation_unit()->get_address_size()),
-			   0);
-
-  write_location(static_pointer_cast<decl_base>(decl), ctxt);
-
   type_base_sptr member_type = decl->get_member_type();
   string i = ctxt.get_id_for_type(member_type);
   o << " member-type-id='" << i << "'";
@@ -2966,14 +2994,9 @@ write_ptr_to_mbr_type(const ptr_to_mbr_type_sptr& decl,
   o << " containing-type-id='" << i << "'";
   ctxt.record_type_as_referenced(containing_type);
 
-  i = id;
-  if (i.empty())
-    i = ctxt.get_id_for_type(decl);
-  o << " id ='" << i << "'";
+  write_common_type_info(decl, ctxt, id);
 
   o << "/>\n";
-
-  ctxt.record_type_as_emitted(decl);
 
   return true;
 }
@@ -3045,13 +3068,9 @@ write_array_subrange_type(const array_type_def::subrange_sptr&	decl,
       ctxt.record_type_as_referenced(underlying_type);
     }
 
-  o << " id='" << ctxt.get_id_for_type(decl) << "'";
-
-  write_location(decl->get_location(), ctxt);
+  write_common_type_info(decl, ctxt);
 
   o << "/>\n";
-
-  ctxt.record_type_as_emitted(decl);
 
   return true;
 }
@@ -3096,14 +3115,7 @@ write_array_type_def(const array_type_def_sptr&	decl,
 
   ctxt.record_type_as_referenced(element_type);
 
-  write_array_size_and_alignment(decl, o);
-
-  string i = id;
-  if (i.empty())
-    i = ctxt.get_id_for_type(decl);
-  o << " id='" << i << "'";
-
-  write_location(static_pointer_cast<decl_base>(decl), ctxt);
+  write_common_type_info(decl, ctxt, id);
 
   if (!decl->get_dimension_count())
     o << "/>\n";
@@ -3124,8 +3136,6 @@ write_array_type_def(const array_type_def_sptr&	decl,
       do_indent(o, indent);
       o << "</array-type-def>\n";
     }
-
-  ctxt.record_type_as_emitted(decl);
 
   return true;
 }
@@ -3180,7 +3190,6 @@ write_enum_type_decl(const enum_type_decl_sptr& d,
   do_indent(o, indent);
   o << "<enum-decl name='" << xml::escape_xml_string(decl->get_name()) << "'";
 
-  write_is_anonymous(decl, o);
   write_naming_typedef(decl, ctxt);
   write_is_artificial(decl, o);
   write_is_non_reachable(is_type(decl), o);
@@ -3190,13 +3199,9 @@ write_enum_type_decl(const enum_type_decl_sptr& d,
       << xml::escape_xml_string(decl->get_linkage_name())
       << "'";
 
-  write_location(decl, ctxt);
-  write_is_declaration_only(decl, o);
+  write_common_type_info(decl, ctxt, id);
 
-  string i = id;
-  if (i.empty())
-    i = ctxt.get_id_for_type(decl);
-  o << " id='" << i << "'>\n";
+  o << ">\n";
 
   do_indent(o, indent + ctxt.get_config().get_xml_element_indent());
   o << "<underlying-type type-id='"
@@ -3218,8 +3223,6 @@ write_enum_type_decl(const enum_type_decl_sptr& d,
 
   do_indent(o, indent);
   o << "</enum-decl>\n";
-
-  ctxt.record_type_as_emitted(decl);
 
   return true;
 }
@@ -3402,15 +3405,9 @@ write_typedef_decl(const typedef_decl_sptr&	decl,
   o << " type-id='" <<  type_id << "'";
   ctxt.record_type_as_referenced(underlying_type);
 
-  write_location(decl, ctxt);
+  write_common_type_info(decl, ctxt, id);
 
-  string i = id;
-  if (i.empty())
-    i = ctxt.get_id_for_type(decl);
-
-  o << " id='" << i << "'/>\n";
-
-  ctxt.record_type_as_emitted(decl);
+  o << "/>\n";
 
   return true;
 }
@@ -3484,6 +3481,76 @@ write_var_decl(const var_decl_sptr& decl, write_context& ctxt,
   return true;
 }
 
+/// Write the parameters and return part of the ABIXML description of
+/// a function_type.
+///
+/// @param fun_type the function type to consider.
+///
+/// @param skip_first_parm if true, the function skips the first
+/// parameter of the function type.  This is useful for emitting
+/// parameters of method_type IR nodes.
+///
+/// @param ctxt the write context to use.
+///
+/// @param indent the number of indentation spaces to use.
+static void
+write_fn_parm_and_return_types(const function_type_sptr& fun_type,
+			       bool skip_first_parm,
+			       write_context& ctxt,
+			       unsigned indent)
+{
+  function_type_sptr t =
+    fun_type->get_canonical_type()
+    ? is_function_type(fun_type->get_canonical_type())
+    : fun_type;
+
+  unsigned cur_indent =
+    indent + ctxt.get_config().get_xml_element_indent();
+
+  ostream &o = ctxt.get_ostream();
+
+  type_base_sptr parm_type;
+  auto pi = t->get_parameters().begin();
+  for ((skip_first_parm && pi != t->get_parameters().end()) ? ++pi: pi;
+       pi != t->get_parameters().end();
+       ++pi)
+    {
+      if ((*pi)->get_variadic_marker())
+        {
+          do_indent(o, cur_indent);
+          o << "<parameter is-variadic='yes'";
+        }
+      else
+	{
+	  parm_type = (*pi)->get_type();
+
+          annotate(*pi, ctxt, cur_indent);
+          do_indent(o, cur_indent);
+
+	  o << "<parameter type-id='"
+	    << ctxt.get_id_for_type(parm_type)
+	    << "'";
+	  ctxt.record_type_as_referenced(parm_type);
+
+	  if (ctxt.get_write_parameter_names() && !(*pi)->get_name().empty())
+	    o << " name='" << xml::escape_xml_string((*pi)->get_name()) << "'";
+	}
+      write_is_artificial(*pi, o);
+      write_location((*pi)->get_location(), ctxt);
+      o << "/>\n";
+    }
+
+  if (shared_ptr<type_base> return_type = t->get_return_type())
+    {
+      annotate(return_type , ctxt, cur_indent);
+      do_indent(o, cur_indent);
+      o << "<return type-id='"
+	<< ctxt.get_id_for_type(return_type)
+	<< "'/>\n";
+      ctxt.record_type_as_referenced(return_type);
+    }
+}
+
 /// Serialize a pointer to a function_decl.
 ///
 /// @param decl the pointer to function_decl to serialize.
@@ -3535,50 +3602,13 @@ write_function_decl(const function_decl_sptr& decl, write_context& ctxt,
     if (corpus* abi = decl->get_corpus())
       write_elf_symbol_reference(ctxt, decl->get_symbol(), *abi, o);
 
+  write_type_hash_and_cti(decl->get_type(), o);
+
   o << ">\n";
 
-  type_base_sptr parm_type;
-  vector<shared_ptr<function_decl::parameter> >::const_iterator pi =
-    decl->get_parameters().begin();
-  for ((skip_first_parm && pi != decl->get_parameters().end()) ? ++pi: pi;
-       pi != decl->get_parameters().end();
-       ++pi)
-    {
-      if ((*pi)->get_variadic_marker())
-        {
-          do_indent(o, indent + ctxt.get_config().get_xml_element_indent());
-          o << "<parameter is-variadic='yes'";
-        }
-      else
-	{
-	  parm_type = (*pi)->get_type();
-
-          annotate(*pi, ctxt,
-		   indent + ctxt.get_config().get_xml_element_indent());
-
-          do_indent(o, indent + ctxt.get_config().get_xml_element_indent());
-
-	  o << "<parameter type-id='"
-	    << ctxt.get_id_for_type(parm_type)
-	    << "'";
-	  ctxt.record_type_as_referenced(parm_type);
-
-	  if (ctxt.get_write_parameter_names() && !(*pi)->get_name().empty())
-	    o << " name='" << xml::escape_xml_string((*pi)->get_name()) << "'";
-	}
-      write_is_artificial(*pi, o);
-      write_location((*pi)->get_location(), ctxt);
-      o << "/>\n";
-    }
-
-  if (shared_ptr<type_base> return_type = decl->get_return_type())
-    {
-      annotate(return_type , ctxt,
-	       indent + ctxt.get_config().get_xml_element_indent());
-      do_indent(o, indent + ctxt.get_config().get_xml_element_indent());
-      o << "<return type-id='" << ctxt.get_id_for_type(return_type) << "'/>\n";
-      ctxt.record_type_as_referenced(return_type);
-    }
+  write_fn_parm_and_return_types(decl->get_type(),
+				 skip_first_parm,
+				 ctxt, indent);
 
   do_indent(o, indent);
   o << "</function-decl>\n";
@@ -3590,7 +3620,7 @@ write_function_decl(const function_decl_sptr& decl, write_context& ctxt,
 
 /// Serialize a function_type.
 ///
-/// @param decl the pointer to function_type to serialize.
+/// @param fun_type the pointer to function_type to serialize.
 ///
 /// @param ctxt the context of the serialization.
 ///
@@ -3598,11 +3628,19 @@ write_function_decl(const function_decl_sptr& decl, write_context& ctxt,
 ///
 /// @return true upon succesful completion, false otherwise.
 static bool
-write_function_type(const function_type_sptr& fn_type,
+write_function_type(const function_type_sptr& fun_type,
 		    write_context& ctxt, unsigned indent)
 {
-  if (!fn_type)
+  if (!fun_type)
     return false;
+
+  ABG_ASSERT(fun_type->get_canonical_type()
+	     || is_non_canonicalized_type(fun_type));
+
+  function_type_sptr fn_type =
+    fun_type->get_canonical_type()
+    ? is_function_type(fun_type->get_canonical_type())
+    : fun_type;
 
   ostream &o = ctxt.get_ostream();
 
@@ -3612,11 +3650,6 @@ write_function_type(const function_type_sptr& fn_type,
 
   o << "<function-type";
 
-  write_size_and_alignment(fn_type, o,
-			   (ctxt.get_write_default_sizes()
-			    ? 0
-			    : fn_type->get_translation_unit()->get_address_size()),
-			   0);
 
   if (method_type_sptr method_type = is_method_type(fn_type))
     {
@@ -3629,58 +3662,17 @@ write_function_type(const function_type_sptr& fn_type,
 			       /*is_static=*/false, o);
     }
 
-  interned_string id = ctxt.get_id_for_type(fn_type);
+  write_common_type_info(fn_type, ctxt);
 
-  o << " id='"
-    <<  id << "'"
-    << ">\n";
+  o << ">\n";
 
-  type_base_sptr parm_type;
-  for (vector<function_decl::parameter_sptr>::const_iterator pi =
-	 fn_type->get_parameters().begin();
-       pi != fn_type->get_parameters().end();
-       ++pi)
-    {
-
-      if ((*pi)->get_variadic_marker())
-        {
-          do_indent(o, indent + ctxt.get_config().get_xml_element_indent());
-          o << "<parameter is-variadic='yes'";
-        }
-      else
-	{
-	  parm_type = (*pi)->get_type();
-
-          annotate(*pi, ctxt, indent + ctxt.get_config().get_xml_element_indent());
-
-          do_indent(o, indent + ctxt.get_config().get_xml_element_indent());
-	  o << "<parameter type-id='"
-	    << ctxt.get_id_for_type(parm_type)
-	    << "'";
-	  ctxt.record_type_as_referenced(parm_type);
-
-	  if (ctxt.get_write_parameter_names() && !(*pi)->get_name().empty())
-	    {
-	      string name = xml::escape_xml_string((*pi)->get_name());
-	      o << " name='" << name << "'";
-	    }
-	}
-      write_is_artificial(*pi, o);
-      o << "/>\n";
-    }
-
-  if (type_base_sptr return_type = fn_type->get_return_type())
-    {
-      annotate(return_type, ctxt, indent + ctxt.get_config().get_xml_element_indent());
-      do_indent(o, indent + ctxt.get_config().get_xml_element_indent());
-      o << "<return type-id='" << ctxt.get_id_for_type(return_type) << "'/>\n";
-      ctxt.record_type_as_referenced(return_type);
-    }
+  write_fn_parm_and_return_types(fn_type, /*skip_first_parm=*/false,
+				 ctxt, indent);
 
   do_indent(o, indent);
+
   o << "</function-type>\n";
 
-  ctxt.record_type_as_emitted(fn_type);
   return true;
 }
 
@@ -3717,11 +3709,7 @@ write_class_decl_opening_tag(const class_decl_sptr&	decl,
 
   o << "<class-decl name='" << xml::escape_xml_string(decl->get_name()) << "'";
 
-  write_size_and_alignment(decl, o);
-
   write_is_struct(decl, o);
-
-  write_is_anonymous(decl, o);
 
   write_is_artificial(decl, o);
 
@@ -3731,10 +3719,6 @@ write_class_decl_opening_tag(const class_decl_sptr&	decl,
 
   write_visibility(decl, o);
 
-  write_location(decl, ctxt);
-
-  write_is_declaration_only(decl, o);
-
   if (decl->get_earlier_declaration())
     {
       // This instance is the definition of an earlier declaration.
@@ -3743,10 +3727,7 @@ write_class_decl_opening_tag(const class_decl_sptr&	decl,
 	<< "'";
     }
 
-  string i = id;
-  if (i.empty())
-    i = ctxt.get_id_for_type(decl);
-  o << " id='" << i << "'";
+  write_common_type_info(decl, ctxt, id);
 
   if (prepare_to_handle_empty && decl->has_no_base_nor_member())
     o << "/>\n";
@@ -3789,11 +3770,6 @@ write_union_decl_opening_tag(const union_decl_sptr&	decl,
 
   o << "<union-decl name='" << xml::escape_xml_string(decl->get_name()) << "'";
 
-  if (!decl->get_is_declaration_only())
-    write_size_and_alignment(decl, o);
-
-  write_is_anonymous(decl, o);
-
   write_naming_typedef(decl, ctxt);
 
   write_visibility(decl, o);
@@ -3802,14 +3778,7 @@ write_union_decl_opening_tag(const union_decl_sptr&	decl,
 
   write_is_non_reachable(is_type(decl), o);
 
-  write_location(decl, ctxt);
-
-  write_is_declaration_only(decl, o);
-
-  string i = id;
-  if (i.empty())
-    i = ctxt.get_id_for_type(decl);
-  o << " id='" << i << "'";
+  write_common_type_info(decl, ctxt, id);
 
   if (prepare_to_handle_empty && decl->has_no_member())
     o << "/>\n";
@@ -4235,8 +4204,6 @@ write_union_decl(const union_decl_sptr& d,
 
       o << "</union-decl>\n";
     }
-
-  ctxt.record_type_as_emitted(decl);
 
   return true;
 }

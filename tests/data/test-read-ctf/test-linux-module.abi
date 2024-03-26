@@ -1,4 +1,4 @@
-<abi-corpus version='2.3' path='data/test-read-ctf/test-linux-module.ko'>
+<abi-corpus version='2.4' path='data/test-read-ctf/test-linux-module.ko'>
   <elf-function-symbols>
     <elf-symbol name='testexport' type='func-type' binding='global-binding' visibility='default-visibility' is-defined='yes' crc='0x533ba8e8'/>
     <elf-symbol name='testexport2' type='func-type' binding='global-binding' visibility='default-visibility' is-defined='yes' crc='0x65900b2f'/>
@@ -7,8 +7,8 @@
     <elf-symbol name='global_sym' size='4' type='object-type' binding='global-binding' visibility='default-visibility' is-defined='yes' crc='0x44a6713b'/>
   </elf-variable-symbols>
   <abi-instr address-size='64' language='LANG_C'>
-    <type-decl name='int' size-in-bits='32' id='type-id-1'/>
-    <class-decl name='__raw_tickets' size-in-bits='32' is-struct='yes' visibility='default' id='type-id-2'>
+    <type-decl name='int' size-in-bits='32' hash='45e5b6264d770ae7' id='type-id-1'/>
+    <class-decl name='__raw_tickets' is-struct='yes' visibility='default' size-in-bits='32' hash='b2ee70ccc0f5c3bc' id='type-id-2'>
       <data-member access='public' layout-offset-in-bits='0'>
         <var-decl name='owner' type-id='type-id-3' visibility='default'/>
       </data-member>
@@ -16,33 +16,33 @@
         <var-decl name='next' type-id='type-id-3' visibility='default'/>
       </data-member>
     </class-decl>
-    <class-decl name='arch_spinlock_t' size-in-bits='32' is-struct='yes' naming-typedef-id='type-id-4' visibility='default' id='type-id-5'>
+    <class-decl name='arch_spinlock_t' is-struct='yes' naming-typedef-id='type-id-4' visibility='default' size-in-bits='32' hash='f42a79be4bb23024' id='type-id-5'>
       <data-member access='public' layout-offset-in-bits='0'>
         <var-decl name='' type-id='type-id-6' visibility='default'/>
       </data-member>
     </class-decl>
-    <class-decl name='raw_spinlock' size-in-bits='32' is-struct='yes' visibility='default' id='type-id-7'>
+    <class-decl name='raw_spinlock' is-struct='yes' visibility='default' size-in-bits='32' hash='3f04012ead0a8d01' id='type-id-7'>
       <data-member access='public' layout-offset-in-bits='0'>
         <var-decl name='raw_lock' type-id='type-id-4' visibility='default'/>
       </data-member>
     </class-decl>
-    <class-decl name='spinlock' size-in-bits='32' is-struct='yes' visibility='default' id='type-id-8'>
+    <class-decl name='spinlock' is-struct='yes' visibility='default' size-in-bits='32' hash='1cc5d93f37bca874' id='type-id-8'>
       <data-member access='public' layout-offset-in-bits='0'>
         <var-decl name='' type-id='type-id-9' visibility='default'/>
       </data-member>
     </class-decl>
-    <typedef-decl name='__u16' type-id='type-id-10' id='type-id-11'/>
-    <typedef-decl name='__u32' type-id='type-id-12' id='type-id-13'/>
-    <typedef-decl name='arch_spinlock_t' type-id='type-id-5' id='type-id-4'/>
-    <typedef-decl name='spinlock_t' type-id='type-id-8' id='type-id-14'/>
-    <typedef-decl name='u16' type-id='type-id-11' id='type-id-3'/>
-    <typedef-decl name='u32' type-id='type-id-13' id='type-id-15'/>
-    <union-decl name='' size-in-bits='32' is-anonymous='yes' visibility='default' id='type-id-9'>
+    <typedef-decl name='__u16' type-id='type-id-10' size-in-bits='16' hash='c392bb1926b4b6c2' id='type-id-11'/>
+    <typedef-decl name='__u32' type-id='type-id-12' size-in-bits='32' hash='f0c050c6f9f8032e' id='type-id-13'/>
+    <typedef-decl name='arch_spinlock_t' type-id='type-id-5' size-in-bits='32' hash='f0c050c6f9f8032e' id='type-id-4'/>
+    <typedef-decl name='spinlock_t' type-id='type-id-8' size-in-bits='32' hash='f0c050c6f9f8032e' id='type-id-14'/>
+    <typedef-decl name='u16' type-id='type-id-11' size-in-bits='16' hash='c392bb1926b4b6c2' id='type-id-3'/>
+    <typedef-decl name='u32' type-id='type-id-13' size-in-bits='32' hash='f0c050c6f9f8032e' id='type-id-15'/>
+    <union-decl name='' visibility='default' size-in-bits='32' is-anonymous='yes' hash='4324c5ef88b3e2c2' id='type-id-9'>
       <data-member access='public'>
         <var-decl name='rlock' type-id='type-id-7' visibility='default'/>
       </data-member>
     </union-decl>
-    <union-decl name='' size-in-bits='32' is-anonymous='yes' visibility='default' id='type-id-6'>
+    <union-decl name='' visibility='default' size-in-bits='32' is-anonymous='yes' hash='5d4d9879510c9930' id='type-id-6'>
       <data-member access='public'>
         <var-decl name='slock' type-id='type-id-15' visibility='default'/>
       </data-member>
@@ -50,13 +50,13 @@
         <var-decl name='tickets' type-id='type-id-2' visibility='default'/>
       </data-member>
     </union-decl>
-    <type-decl name='unsigned int' size-in-bits='32' id='type-id-12'/>
-    <type-decl name='unsigned short int' size-in-bits='16' id='type-id-10'/>
-    <pointer-type-def type-id='type-id-14' size-in-bits='64' alignment-in-bits='64' id='type-id-16'/>
-    <function-decl name='testexport' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='testexport'>
+    <type-decl name='unsigned int' size-in-bits='32' hash='3a94285d174bd537' id='type-id-12'/>
+    <type-decl name='unsigned short int' size-in-bits='16' hash='df52e4878444404b#2' id='type-id-10'/>
+    <pointer-type-def type-id='type-id-14' size-in-bits='64' alignment-in-bits='64' hash='38498bafb9f4c49' id='type-id-16'/>
+    <function-decl name='testexport' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='testexport' hash='d97f95fe79cacdf1'>
       <return type-id='type-id-1'/>
     </function-decl>
-    <function-decl name='testexport2' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='testexport2'>
+    <function-decl name='testexport2' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='testexport2' hash='dc6fbb1fff2a95cf'>
       <parameter type-id='type-id-16'/>
       <return type-id='type-id-1'/>
     </function-decl>

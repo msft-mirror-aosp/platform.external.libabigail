@@ -1,10 +1,10 @@
 <abi-instr path='data/test-read-write/test15.xml'>
-  <type-decl name='int' size-in-bits='32' alignment-in-bits='32' id='type-id-1'/>
+  <type-decl name='int' size-in-bits='32' alignment-in-bits='32' hash='709cbe60bab69a92' id='type-id-1'/>
   <class-template-decl id='class-tmpl-id-2'>
     <template-type-parameter id='type-id-3' name='T'/>
-    <class-decl name='C' visibility='default' id='type-id-4'>
+    <class-decl name='C' visibility='default' hash='7a4e692933969e1' id='type-id-4'>
       <member-type access='public'>
-        <typedef-decl name='TINT' type-id='type-id-1' id='type-id-5'/>
+        <typedef-decl name='TINT' type-id='type-id-1' size-in-bits='32' alignment-in-bits='32' hash='815f2514db15ce85' id='type-id-5'/>
       </member-type>
       <data-member access='private'>
         <var-decl name='m_first' type-id='type-id-3'/>

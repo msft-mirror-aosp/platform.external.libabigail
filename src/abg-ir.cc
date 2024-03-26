@@ -34,7 +34,6 @@ ABG_END_EXPORT_DECLARATIONS
 // </headers defining libabigail's API>
 
 #include "abg-corpus-priv.h"
-#include "abg-tools-utils.h"
 #include "abg-comp-filter.h"
 #include "abg-ir-priv.h"
 
@@ -403,6 +402,33 @@ mark_dependant_types_compared_until(const type_base &r)
     return env.priv_->mark_dependant_types_compared_until(&r);
   return false;
 }
+
+/// Getter of the canonical type index of a given type.
+///
+/// @param t the type to consider.
+///
+/// @return the CTI of the type.
+size_t
+get_canonical_type_index(const type_base& t)
+{return t.priv_->canonical_type_index;}
+
+/// Getter of the canonical type index of a given type.
+///
+/// @param t the type to consider.
+///
+/// @return the CTI of the type.
+size_t
+get_canonical_type_index(const type_base* t)
+{return get_canonical_type_index(*t);}
+
+/// Getter of the canonical type index of a given type.
+///
+/// @param t the type to consider.
+///
+/// @return the CTI of the type.
+size_t
+get_canonical_type_index(const type_base_sptr& t)
+{return get_canonical_type_index(t.get());}
 
 /// @brief the location of a token represented in its simplest form.
 /// Instances of this type are to be stored in a sorted vector, so the
@@ -927,15 +953,32 @@ try_canonical_compare(const T *l, const T *r)
 	if (const type_base *rc = r->get_naked_canonical_type())
 	  ABG_RETURN_EQUAL(lc, rc);
     }
+
+  // If the two types have a non-empty hash value, then consider those
+  // hash values.  If the hashes are different then the two types are
+  // different.  If the hashes are equal then we'll compare then
+  // structurally.
+  if (hash_t l_hash = peek_hash_value(*l))
+    if (hash_t r_hash = peek_hash_value(*r))
+      if (l_hash != r_hash)
+	ABG_RETURN_FALSE;
+
   return equals(*l, *r, 0);
 #else
   if (const type_base *lc = l->get_naked_canonical_type())
     if (const type_base *rc = r->get_naked_canonical_type())
       ABG_RETURN_EQUAL(lc, rc);
+
+  // If the two types have a non-empty hash value, then consider those
+  // hash values.  If the hashes are different then the two types are
+  // different.  If the hashes are equal then we'll compare then
+  // structurally.
+  if (hash_t l_hash = peek_hash_value(*l))
+    if (hash_t r_hash = peek_hash_value(*r))
+      if (l_hash != r_hash)
+	ABG_RETURN_FALSE;
   return equals(*l, *r, 0);
 #endif
-
-
 }
 
 /// Detect if a recursive comparison cycle is detected while
@@ -3778,8 +3821,8 @@ environment::debug_die_canonicalization_is_on() const
 /// @return a pointer to the vector of canonical types having the
 /// representation @p name, or nullptr if no type with that
 /// representation exists.
-vector<type_base_sptr>*
-environment::get_canonical_types(const char* name)
+const vector<type_base_sptr>*
+environment::get_canonical_types(const char* name) const
 {
   auto ti = get_canonical_types_map().find(name);
   if (ti == get_canonical_types_map().end())
@@ -3804,7 +3847,7 @@ environment::get_canonical_types(const char* name)
 type_base*
 environment::get_canonical_type(const char* name, unsigned index)
 {
-  vector<type_base_sptr> *types = get_canonical_types(name);
+  const vector<type_base_sptr> *types = get_canonical_types(name);
   if (!types ||index >= types->size())
     return nullptr;
   return (*types)[index].get();
@@ -3931,65 +3974,6 @@ environment::get_canonical_type_from_type_id(const char* type_id) const
 // </environment stuff>
 
 // <type_or_decl_base stuff>
-
-/// The private data of @ref type_or_decl_base.
-struct type_or_decl_base::priv
-{
-  // This holds the kind of dynamic type of particular instance.
-  // Yes, this is part of the implementation of a "poor man" runtime
-  // type identification.  We are doing this because profiling shows
-  // that using dynamic_cast in some places is really to slow and is
-  // constituting a hotspot.  This poor man's implementation made
-  // things be much faster.
-  enum type_or_decl_kind	kind_;
-  // This holds the runtime type instance pointer of particular
-  // instance.  In other words, this is the "this pointer" of the
-  // dynamic type of a particular instance.
-  void*			rtti_;
-  // This holds a pointer to either the type_base sub-object (if the
-  // current instance is a type) or the decl_base sub-object (if the
-  // current instance is a decl).  This is used by the is_decl() and
-  // is_type() functions, which also show up during profiling as
-  // hotspots, due to their use of dynamic_cast.
-  void*			type_or_decl_ptr_;
-  bool				hashing_started_;
-  const environment&		env_;
-  translation_unit*		translation_unit_;
-  // The location of an artifact as seen from its input by the
-  // artifact reader.  This might be different from the source
-  // location advertised by the original emitter of the artifact
-  // emitter.
-  location			artificial_location_;
-  // Flags if the current ABI artifact is artificial (i.e, *NOT*
-  // generated from the initial source code, but rather either
-  // artificially by the compiler or by libabigail itself).
-  bool				is_artificial_;
-
-  /// Constructor of the type_or_decl_base::priv private type.
-  ///
-  /// @param e the environment in which the ABI artifact was created.
-  ///
-  /// @param k the identifier of the runtime type of the current
-  /// instance of ABI artifact.
-  priv(const environment& e,
-       enum type_or_decl_kind k = ABSTRACT_TYPE_OR_DECL)
-    : kind_(k),
-      rtti_(),
-      type_or_decl_ptr_(),
-      hashing_started_(),
-      env_(e),
-      translation_unit_(),
-      is_artificial_()
-  {}
-
-  enum type_or_decl_kind
-  kind() const
-  {return kind_;}
-
-  void
-  kind (enum type_or_decl_kind k)
-  {kind_ |= k;}
-}; // end struct type_or_decl_base::priv
 
 /// bitwise "OR" operator for the type_or_decl_base::type_or_decl_kind
 /// bitmap type.
@@ -4146,19 +4130,20 @@ void*
 type_or_decl_base::type_or_decl_base_pointer()
 {return priv_->type_or_decl_ptr_;}
 
-/// Getter for the 'hashing_started' property.
+/// Return the hash value of the current IR node.
 ///
-/// @return the 'hashing_started' property.
-bool
-type_or_decl_base::hashing_started() const
-{return priv_->hashing_started_;}
+/// Note that upon the first invocation, this member functions
+/// computes the hash value and returns it.  Subsequent invocations
+/// just return the hash value that was previously calculated.
+///
+/// @return the hash value of the current IR node.
+hash_t
+type_or_decl_base::hash_value() const
+{return priv_->hash_value_;}
 
-/// Setter for the 'hashing_started' property.
-///
-/// @param b the value to set the 'hashing_property' to.
 void
-type_or_decl_base::hashing_started(bool b) const
-{priv_->hashing_started_ = b;}
+type_or_decl_base::set_hash_value(hash_t h) const
+{priv_->set_hash_value(h);}
 
 /// Getter of the environment of the current ABI artifact.
 ///
@@ -4532,28 +4517,6 @@ decl_base::get_context_rel()
 void
 decl_base::set_context_rel(context_rel *c)
 {priv_->context_ = c;}
-
-/// Get the hash of a decl.  If the hash hasn't been computed yet,
-/// compute it ans store its value; otherwise, just return the hash.
-///
-/// @return the hash of the decl.
-size_t
-decl_base::get_hash() const
-{
-  size_t result = 0;
-
-  if (const type_base* t = dynamic_cast<const type_base*>(this))
-    {
-      type_base::dynamic_hash hash;
-      result = hash(t);
-    }
-  else
-    // If we reach this point, it mean we are missing a virtual
-    // overload for decl_base::get_hash.  Add it!
-    abort();
-
-  return result;
-}
 
 /// Test if the decl is defined in a ELF symbol table as a public
 /// symbol.
@@ -5102,37 +5065,6 @@ maybe_compare_as_member_decls(const decl_base& l,
   ABG_RETURN(result);
 }
 
-/// Get the name of a decl for the purpose of comparing two decl
-/// names.
-///
-/// This is a sub-routine of the 'equal' overload for decl_base.
-///
-/// This function takes into account the fact that all anonymous names
-/// shall have the same name for the purpose of comparison.
-///
-/// For decls that are part of an anonymous scope, only the
-/// non-qualified name should be taken into account.
-static interned_string
-get_decl_name_for_comparison(const decl_base &d)
-{
-  if (has_generic_anonymous_internal_type_name(&d)
-      && d.get_is_anonymous())
-    {
-      // The decl is anonymous.   It should have the same name as the
-      // other anymous types of the same kind.
-      string r;
-      r += get_generic_anonymous_internal_type_name(&d);
-      return d.get_environment().intern(r);
-    }
-
-  interned_string n = (is_anonymous_or_typedef_named(d)
-		       || d.get_has_anonymous_parent()
-		       || is_typedef(&d))
-    ? d.get_name()
-    : d.get_qualified_name(/*internal=*/true);
-  return n;
-}
-
 /// Compares two instances of @ref decl_base.
 ///
 /// If the two intances are different, set a bitfield to give some
@@ -5182,37 +5114,25 @@ equals(const decl_base& l, const decl_base& r, change_kind* k)
 	}
     }
 
-  // This is the qualified name of the decls that we want to compare.
-  // We want to use the "internal" version of the qualified name as
-  // that one is stable even for anonymous decls.
-  interned_string ln = get_decl_name_for_comparison(l);
-  interned_string rn = get_decl_name_for_comparison(r);
+    if (r.get_is_anonymous() && l.get_is_anonymous())
+      // We are looking at too anonymous types (or two members of
+      // anonymous types) with one not yet been added to the IR.  That
+      // means we want to compare just the object part of the
+      // anonymous type and not their qualified names.  This is used
+      // when looking up an anonymous type inside a class type.
+      ABG_RETURN(result);
 
-  /// If both of the current decls have an anonymous scope then let's
-  /// compare their name component by component by properly handling
-  /// anonymous scopes. That's the slow path.
-  ///
-  /// Otherwise, let's just compare their name, the obvious way.
-  /// That's the fast path because in that case the names are
-  /// interned_string and comparing them is much faster.
-  bool decls_are_same = (ln == rn);
-  if (!decls_are_same
-      && l.get_is_anonymous()
-      && !l.get_has_anonymous_parent()
-      && r.get_is_anonymous()
-      && !r.get_has_anonymous_parent())
-    // Both decls are anonymous and their scope are *NOT* anonymous.
-    // So we consider the decls to have equivalent names (both
-    // anonymous, remember).  We are still in the fast path here.
-    decls_are_same = true;
+    // This is the name of the decls that we want to compare.
+    interned_string ln = l.get_name(), rn = r.get_name();
 
-  if (!decls_are_same
-      && l.get_has_anonymous_parent()
-      && r.get_has_anonymous_parent())
-    // This is the slow path as we are comparing the decl qualified
-    // names component by component, properly handling anonymous
-    // scopes.
-    decls_are_same = tools_utils::decl_names_equal(ln, rn);
+    /// If both of the current decls have an anonymous scope then let's
+    /// compare their name component by component by properly handling
+    /// anonymous scopes. That's the slow path.
+    ///
+    /// Otherwise, let's just compare their name, the obvious way.
+    /// That's the fast path because in that case the names are
+    /// interned_string and comparing them is much faster.
+    bool decls_are_same = (ln == rn);
 
   if (!decls_are_same)
     {
@@ -5471,9 +5391,9 @@ is_member_decl(const decl_base& d)
 ///
 /// @return the a pointer to the @ref scope_decl sub-object of @p d,
 /// if d is a @ref scope_decl.
-scope_decl*
-is_scope_decl(decl_base* d)
-{return dynamic_cast<scope_decl*>(d);}
+const scope_decl*
+is_scope_decl(const decl_base* d)
+{return dynamic_cast<const scope_decl*>(d);}
 
 /// Test if a declaration is a @ref scope_decl.
 ///
@@ -8207,18 +8127,6 @@ scope_decl::remove_member_decl(decl_base_sptr member)
   member->set_translation_unit(nullptr);
 }
 
-/// Return the hash value for the current instance of scope_decl.
-///
-/// This method can trigger the computing of the hash value, if need be.
-///
-/// @return the hash value.
-size_t
-scope_decl::get_hash() const
-{
-  scope_decl::hash hash_scope;
-  return hash_scope(this);
-}
-
 /// Compares two instances of @ref scope_decl.
 ///
 /// If the two intances are different, set a bitfield to give some
@@ -8912,8 +8820,11 @@ get_type_name(const type_base* t, bool qualified, bool internal)
   // among themselves during type canonicalization.
   if (internal)
     {
-      if (d->get_is_anonymous())
+      if (d->get_is_anonymous() && !is_type_decl(t))
 	{
+	  // Note that anonymous type_decl that are used for
+	  // enumerators are not handled here because they don't have
+	  // generic internal type names.
 	  string r;
 	  r += get_generic_anonymous_internal_type_name(d);
 	  return t->get_environment().intern(r);
@@ -9773,8 +9684,9 @@ get_class_or_enum_flat_representation(const type_base& coe,
 string
 get_debug_representation(const type_or_decl_base* artifact)
 {
+  string nil_str;
   if (!artifact)
-    return string("");
+    return nil_str;
 
   class_or_union * c = is_class_or_union_type(artifact);
   if (c)
@@ -9803,7 +9715,13 @@ get_debug_representation(const type_or_decl_base* artifact)
 	      if (b->get_is_virtual())
 		o << "virtual ";
 	      o << b->get_base_class()->get_qualified_name()
-		<< std::endl;
+		<< "   // hash: ";
+	      hash_t h = peek_hash_value(*b->get_base_class());
+	      if (h)
+		o << std::hex << *h << std::dec;
+	      else
+		o << "none";
+	      o << std::endl;
 	    }
 	}
       o << std::endl
@@ -9811,10 +9729,45 @@ get_debug_representation(const type_or_decl_base* artifact)
 	<< "   // size in bits: " << c->get_size_in_bits() << "\n"
 	<< "   // is-declaration-only: " << c->get_is_declaration_only() << "\n"
 	<< "   // definition point: " << get_natural_or_artificial_location(c).expand() << "\n"
-	<< "   // translation unit: " << c->get_translation_unit()->get_absolute_path() << std::endl
+	<< "   // translation unit: "
+	<< (c->get_translation_unit()
+	    ? c->get_translation_unit()->get_absolute_path()
+	    : nil_str)
+	<< std::endl
 	<< "   // @: " << std::hex << is_type(c)
-	<< ", @canonical: " << c->get_canonical_type().get() << std::dec
-	<< "\n\n";
+	<< ", @canonical: " << c->get_canonical_type().get() << std::dec << "\n"
+	<< "   // hash: " ;
+
+      hash_t h = peek_hash_value(*c);
+      if (h)
+	o << std::hex << *h << std::dec;
+      else
+	o << "none";
+      o << "\n" <<  "   // cti: " << std::dec << get_canonical_type_index(*c);
+      o << "\n\n";
+
+
+      for (auto member_type : c->get_sorted_member_types())
+	{
+	  o << "  "
+	    << member_type->get_pretty_representation(/*internal=*/false,
+						      /*qualified=*/false)
+	    << ";";
+	  if (member_type->get_canonical_type())
+	    {
+	      o << " // uses canonical type: '@"
+		<< std::hex << member_type->get_canonical_type().get() << "'";
+	      o << " / h:";
+	      hash_t h = peek_hash_value(*member_type);
+	      o << std::hex << *h << std::dec;
+	      if (get_canonical_type_index(*member_type))
+		o << "#" << get_canonical_type_index(*member_type);
+	    }
+	  o << "\n";
+	}
+
+      if (!c->get_sorted_member_types().empty())
+	o << std::endl;
 
       for (auto m : c->get_data_members())
 	{
@@ -9828,18 +9781,36 @@ get_debug_representation(const type_or_decl_base* artifact)
 
 	  if (t && t->get_canonical_type())
 	    o << " // uses canonical type '@"
-	      << std::hex << t->get_canonical_type().get() << std::dec;
+	      << std::hex << t->get_canonical_type().get() << "'";
 
-	  o << "'" << std::endl;
+	  o << "/ h:";
+	  hash_t h = peek_hash_value(*m->get_type());
+	  if (h)
+	    o << std::hex << *h << std::dec;
+	  else
+	    o << "none";
+	  o << std::endl;
 	}
+
+      if (!c->get_data_members().empty())
+	o << std::endl;
 
       if (clazz && clazz->has_vtable())
 	{
 	  o << "  // virtual member functions\n\n";
 	  for (auto f : clazz->get_virtual_mem_fns())
-	    o << "  " << f->get_pretty_representation(/*internal=*/false,
-						      /*qualified=*/false)
-	      << ";" << std::endl;
+	    {
+	      o << "  " << f->get_pretty_representation(/*internal=*/false,
+							/*qualified=*/false)
+		<< "   // voffset: " << get_member_function_vtable_offset(f)
+		<< ", h: ";
+	      hash_t h = peek_hash_value(*f->get_type());
+	      if (h)
+		o << std::hex << *h << std::dec;
+	      else
+		o << "none";
+	      o << ";" << std::endl;
+	    }
 	}
 
       o << "};" << std::endl;
@@ -9862,8 +9833,16 @@ get_debug_representation(const type_or_decl_base* artifact)
 	<< "  // translation unit: "
 	<< e->get_translation_unit()->get_absolute_path() << "\n"
 	<< "  // @: " << std::hex << is_type(e)
-	<< ", @canonical: " << e->get_canonical_type().get() << std::dec
-	<< "\n\n";
+	<< ", @canonical: " << e->get_canonical_type().get() << std::dec << "\n"
+	<< "  // hash: ";
+
+      hash_t h = peek_hash_value(*e);
+      if (h)
+	o << std::hex << *h << std::dec;
+      else
+	o << "none";
+      o << "\n" << "  // cti: " << std::dec << get_canonical_type_index(*e);
+      o << "\n\n";
 
       for (const auto &enom : e->get_enumerators())
 	o << "  " << enom.get_name() << " = " << enom.get_value() << ",\n";
@@ -9872,6 +9851,16 @@ get_debug_representation(const type_or_decl_base* artifact)
 
       return o.str();
     }
+  else if (type_base *t = is_type(artifact))
+    {
+      std::ostringstream o;
+      o << t->get_pretty_representation(/*internal=*/true,
+					/*qualified=*/true)
+	<< " // cti: " << get_canonical_type_index(*t)
+	<< "\n";
+      return o.str();
+    }
+
   return artifact->get_pretty_representation(/*internal=*/true,
 					     /*qualified=*/true);
 }
@@ -11664,7 +11653,7 @@ look_through_decl_only(const decl_base_sptr& d)
 ///
 /// @return either the definition of the decl, or the initial type.
 type_base*
-look_through_decl_only(type_base* t)
+look_through_decl_only_type(type_base* t)
 {
   decl_base* d = is_decl(t);
   if (!d)
@@ -11680,7 +11669,7 @@ look_through_decl_only(type_base* t)
 ///
 /// @return either the definition of the decl, or the initial type.
 type_base_sptr
-look_through_decl_only(const type_base_sptr& t)
+look_through_decl_only_type(const type_base_sptr& t)
 {
   decl_base_sptr d = is_decl(t);
   if (!d)
@@ -12395,7 +12384,7 @@ pointer_type_def_sptr
 lookup_pointer_type(const type_base_sptr& pointed_to_type,
 		    const translation_unit& tu)
 {
-  type_base_sptr t = look_through_decl_only(pointed_to_type);
+  type_base_sptr t = look_through_decl_only_type(pointed_to_type);
   interned_string type_name = get_name_of_pointer_to_type(*t);
   return lookup_pointer_type(type_name, tu);
 }
@@ -12440,7 +12429,7 @@ lookup_reference_type(const type_base_sptr& pointed_to_type,
 		      const translation_unit& tu)
 {
   interned_string type_name =
-    get_name_of_reference_to_type(*look_through_decl_only(pointed_to_type),
+    get_name_of_reference_to_type(*look_through_decl_only_type(pointed_to_type),
 				  lvalue_reference);
   return lookup_reference_type(type_name, tu);
 }
@@ -15324,7 +15313,11 @@ compare_canonical_type_against_candidate(const type_base& canonical_type,
   // resolved to any of the two definitions of struct S.
   bool saved_decl_only_class_equals_definition =
     env.decl_only_class_equals_definition();
-  env.do_on_the_fly_canonicalization(true);
+  // Now that we do hash types and use the hash in comparisons, we
+  // don't do canonical-type-propagation anymore, at least for now.
+  // Let's see how we fare in terms of performance and hope we don't
+  // need this optimization moving foward.
+  env.do_on_the_fly_canonicalization(false);
   // Compare types by considering that decl-only classes don't
   // equal their definition.
   env.decl_only_class_equals_definition(false);
@@ -15398,6 +15391,79 @@ compare_canonical_type_against_candidate(const type_base_sptr& canonical_type,
 {
   return compare_canonical_type_against_candidate(canonical_type.get(),
 						  candidate_type.get());
+}
+
+/// Test if a candidate for type canonicalization coming from ABIXML
+/// matches a canonical type by first looking at their hash values.
+///
+/// If the two hash values are equal then the candidate is
+/// structurally compared to the canonical type.  If the two hashes
+/// are different then the two types are considered different and the
+/// function returns nullptr.
+///
+/// If the candidate doesn't come from ABIXML then the function
+/// returns nullptr.
+///
+/// @param cncls the vector of canonical types to consider.
+///
+/// @param type the candidate to consider for canonicalization.
+///
+/// @return the canonical type from @p cncls that matches the
+/// candidate @p type.
+static type_base_sptr
+candidate_matches_a_canonical_type_hash(const vector<type_base_sptr>&	cncls,
+					type_base&			type)
+{
+  if (type.get_corpus()
+      && type.get_corpus()->get_origin() == corpus::NATIVE_XML_ORIGIN
+      && peek_hash_value(type))
+    {
+      // The candidate type comes from ABIXML and does have a stashed
+      // hash value coming from the ABIXML.
+
+      // Let's see if we find a potential canonical type whose hash
+      // matches the stashed hash and whose canonical type index
+      // matches it too.
+      for (const auto& c : cncls)
+	if (peek_hash_value(type) == peek_hash_value(*c))
+	  if (get_canonical_type_index(type) == get_canonical_type_index(*c))
+	    // We found a potential canonical type which hash matches the
+	    // stashed hash of the candidate type.  Let's compare them to
+	    // see if they match.
+	    if (compare_canonical_type_against_candidate(*c, type))
+	      return c;
+
+      // Let's do the same things, but just consideing hash values.
+      for (const auto& c : cncls)
+	if (peek_hash_value(type) == peek_hash_value(*c))
+	  // We found a potential canonical type which hash matches the
+	  // stashed hash of the candidate type.  Let's compare them to
+	  // see if they match.
+	  if (compare_canonical_type_against_candidate(*c, type))
+	    return c;
+    }
+
+  return nullptr;
+}
+
+/// Test if we should attempt to compute a hash value for a given
+/// type.
+///
+/// For now this function returns true only for types originating from
+/// ELF.  For types originating from ABIXML, for instance, the
+/// function return false, meaning that types originating from ABIXML
+/// should NOT be hashed.
+///
+/// @param t the type to consider.
+///
+/// @return true iff @p type should be considered for hashing.
+bool
+type_is_suitable_for_hash_computing(const type_base& t)
+{
+  if (t.get_corpus()
+      && (t.get_corpus()->get_origin() & corpus::ELF_ORIGIN))
+    return true;
+  return false;
 }
 
 /// Compute the canonical type for a given instance of @ref type_base.
@@ -15490,6 +15556,7 @@ type_base::get_canonical_type_for(type_base_sptr t)
 
   type_base_sptr result;
   environment::canonical_types_map_type::iterator i = types.find(repr);
+
   if (i == types.end())
     {
       vector<type_base_sptr> v;
@@ -15500,6 +15567,12 @@ type_base::get_canonical_type_for(type_base_sptr t)
   else
     {
       vector<type_base_sptr> &v = i->second;
+      // Look at the canonical types and if the current candidate type
+      // coming from abixml has the same hash as one of the canonical
+      // types, then compare the current candidate with the one with a
+      // matching hash.
+      result = candidate_matches_a_canonical_type_hash(v, *t);
+
       // Let's compare 't' structurally (i.e, compare its sub-types
       // recursively) against the canonical types of the system. If it
       // equals a given canonical type C, then it means C is the
@@ -15507,7 +15580,7 @@ type_base::get_canonical_type_for(type_base_sptr t)
       // all the canonical types of the system, then it means 't' is a
       // canonical type itself.
       for (vector<type_base_sptr>::const_reverse_iterator it = v.rbegin();
-	   it != v.rend();
+	   !result && it != v.rend();
 	   ++it)
 	{
 	  bool equal = compare_canonical_type_against_candidate(*it, t);
@@ -15560,6 +15633,7 @@ type_base::get_canonical_type_for(type_base_sptr t)
 				<< "'.  Should have had canonical type: "
 				<< std::hex
 				<< should_have_canonical_type
+				<< std::dec
 				<< std::endl;
 		    }
 		}
@@ -15590,8 +15664,36 @@ type_base::get_canonical_type_for(type_base_sptr t)
 			    << "' from second corpus"
 			    << ", ptr: " << std::hex << t.get()
 			    << " type-id: " << type_id
+			    << " /hash="
+			    << *t->hash_value()
+			    << std::dec
 			    << std::endl;
 		}
+	    }
+	  if (result)
+	    {
+	      if (!is_type_decl(t))
+		  if (hash_t t_hash = peek_hash_value(*t))
+		    if (hash_t result_hash = peek_hash_value(*result))
+		      if (t_hash != result_hash)
+			{
+			  std::cerr << "error: type hash mismatch"
+				    << " between type: '"
+				    << repr
+				    << "' @ "
+				    << std::hex
+				    << t.get()
+				    << "/hash="
+				    << *t->hash_value()
+				    << " and its computed canonical type @"
+				    << std::hex
+				    << result.get()
+				    << "/hash="
+				    << std::hex
+				    << *result->hash_value()
+				    << std::dec
+				    << std::endl;
+			}
 	    }
 	}
 #endif //WITH_DEBUG_SELF_COMPARISON
@@ -15600,6 +15702,10 @@ type_base::get_canonical_type_for(type_base_sptr t)
 	{
 	  v.push_back(t);
 	  result = t;
+	  // we need to generate a canonical type index to sort these
+	  // types that have the same representation and potentially
+	  // same hash value but are canonically different.
+	  t->priv_->canonical_type_index = v.size();
 	}
     }
 
@@ -15736,9 +15842,15 @@ maybe_adjust_canonical_type(const type_base_sptr& canonical,
 /// t->get_canonical_type() will return the newly computed canonical
 /// type.
 ///
+/// @param do_log if true then logs are emitted about canonicalization
+/// progress.
+///
+/// @param show_stats if true and if @p do_log is true as well, then
+/// more detailed logs are emitted about canonicalization.
+///
 /// @return the canonical type computed for @p t.
 type_base_sptr
-canonicalize(type_base_sptr t)
+canonicalize(type_base_sptr t, bool do_log, bool show_stats)
 {
   if (!t)
     return t;
@@ -15746,27 +15858,31 @@ canonicalize(type_base_sptr t)
   if (t->get_canonical_type())
     return t->get_canonical_type();
 
-  if (t->get_environment().priv_->do_log())
+  if (do_log && show_stats)
     std::cerr << "Canonicalization of type '"
 	      << t->get_pretty_representation(true, true)
 	      << "/@#" << std::hex << t.get() << ": ";
 
   tools_utils::timer tmr;
 
-  if (t->get_environment().priv_->do_log())
+  if (do_log && show_stats)
     tmr.start();
   type_base_sptr canonical = type_base::get_canonical_type_for(t);
 
-  if (t->get_environment().priv_->do_log())
+  if (do_log && show_stats)
     tmr.stop();
 
-  if (t->get_environment().priv_->do_log())
+  if (do_log && show_stats)
     std::cerr << tmr << "\n";
 
   maybe_adjust_canonical_type(canonical, t);
 
   t->priv_->canonical_type = canonical;
   t->priv_->naked_canonical_type = canonical.get();
+
+  if (canonical)
+    if (!t->priv_->canonical_type_index)
+      t->priv_->canonical_type_index = canonical->priv_->canonical_type_index;
 
   // So this type is now canonicalized.
   //
@@ -15860,6 +15976,20 @@ type_base::type_base(const environment& e, size_t s, size_t a)
   : type_or_decl_base(e, ABSTRACT_TYPE_BASE|ABSTRACT_TYPE_BASE),
     priv_(new priv(s, a))
 {}
+
+/// Return the hash value of the current IR node.
+///
+/// Note that upon the first invocation, this member functions
+/// computes the hash value and returns it.  Subsequent invocations
+/// just return the hash value that was previously calculated.
+///
+/// @return the hash value of the current IR node.
+hash_t
+type_base::hash_value() const
+{
+  type_base::hash do_hash;
+  return do_hash(this);
+}
 
 /// Getter of the canonical type of the current instance of @ref
 /// type_base.
@@ -16464,6 +16594,20 @@ type_decl::type_decl(const environment& env,
       if (!get_linkage_name().empty())
 	set_linkage_name(real_type_name);
     }
+}
+
+/// Return the hash value of the current IR node.
+///
+/// Note that upon the first invocation, this member functions
+/// computes the hash value and returns it.  Subsequent invocations
+/// just return the hash value that was previously calculated.
+///
+/// @return the hash value of the current IR node.
+hash_t
+type_decl::hash_value() const
+{
+  hash_t h = set_or_get_cached_hash_value(this);
+  return h;
 }
 
 /// Compares two instances of @ref type_decl.
@@ -17113,6 +17257,20 @@ qualified_type_def::qualified_type_def(const environment& env,
   set_name(name);
 }
 
+/// Return the hash value of the current IR node.
+///
+/// Note that upon the first invocation, this member functions
+/// computes the hash value and returns it.  Subsequent invocations
+/// just return the hash value that was previously calculated.
+///
+/// @return the hash value of the current IR node.
+hash_t
+qualified_type_def::hash_value() const
+{
+  hash_t h = set_or_get_cached_hash_value(this);
+  return h;
+}
+
 /// Get the size of the qualified type def.
 ///
 /// This is an overload for type_base::get_size_in_bits().
@@ -17594,6 +17752,20 @@ pointer_type_def::pointer_type_def(const environment& env, size_t size_in_bits,
   set_name(env.intern(name));
 }
 
+/// Return the hash value of the current IR node.
+///
+/// Note that upon the first invocation, this member functions
+/// computes the hash value and returns it.  Subsequent invocations
+/// just return the hash value that was previously calculated.
+///
+/// @return the hash value of the current IR node.
+hash_t
+pointer_type_def::hash_value() const
+{
+  hash_t h = set_or_get_cached_hash_value(this);
+  return h;
+}
+
 /// Set the pointed-to type of the pointer.
 ///
 /// @param t the new pointed-to type.
@@ -17753,7 +17925,7 @@ const interned_string&
 pointer_type_def::get_qualified_name(bool internal) const
 {
   type_base* pointed_to_type = get_naked_pointed_to_type();
-  pointed_to_type = look_through_decl_only(pointed_to_type);
+  pointed_to_type = look_through_decl_only_type(pointed_to_type);
 
   if (internal)
     {
@@ -18011,6 +18183,20 @@ reference_type_def::reference_type_def(const environment& env, bool lvalue,
   priv_->pointed_to_type_ = type_base_wptr(env.get_void_type());
 }
 
+/// Return the hash value of the current IR node.
+///
+/// Note that upon the first invocation, this member functions
+/// computes the hash value and returns it.  Subsequent invocations
+/// just return the hash value that was previously calculated.
+///
+/// @return the hash value of the current IR node.
+hash_t
+reference_type_def::hash_value() const
+{
+  hash_t h = set_or_get_cached_hash_value(this);
+  return h;
+}
+
 /// Setter of the pointed_to type of the current reference type.
 ///
 /// @param pointed_to the new pointed to type.
@@ -18161,7 +18347,7 @@ const interned_string&
 reference_type_def::get_qualified_name(bool internal) const
 {
   type_base_sptr pointed_to_type = get_pointed_to_type();
-  pointed_to_type = look_through_decl_only(pointed_to_type);
+  pointed_to_type = look_through_decl_only_type(pointed_to_type);
 
   if (internal)
     {
@@ -18248,7 +18434,7 @@ reference_type_def::get_pretty_representation(bool internal,
 					      bool qualified_name) const
 {
   string result =
-    get_name_of_reference_to_type(*look_through_decl_only
+    get_name_of_reference_to_type(*look_through_decl_only_type
 				  (get_pointed_to_type()),
 				  is_lvalue(),
 				  qualified_name,
@@ -18389,6 +18575,20 @@ ptr_to_mbr_type::ptr_to_mbr_type(const environment&		env,
 						     /*qualified=*/true,
 						     /*internal=*/false);
   set_name(name);
+}
+
+/// Return the hash value of the current IR node.
+///
+/// Note that upon the first invocation, this member functions
+/// computes the hash value and returns it.  Subsequent invocations
+/// just return the hash value that was previously calculated.
+///
+/// @return the hash value of the current IR node.
+hash_t
+ptr_to_mbr_type::hash_value() const
+{
+  hash_t h = set_or_get_cached_hash_value(this);
+  return h;
 }
 
 /// Getter of the member type of the current @ref ptr_to_mbr_type.
@@ -18811,6 +19011,20 @@ array_type_def::subrange_type::subrange_type(const environment& env,
   runtime_type_instance(this);
 }
 
+/// Return the hash value of the current IR node.
+///
+/// Note that upon the first invocation, this member functions
+/// computes the hash value and returns it.  Subsequent invocations
+/// just return the hash value that was previously calculated.
+///
+/// @return the hash value of the current IR node.
+hash_t
+array_type_def::subrange_type::hash_value() const
+{
+  hash_t h = set_or_get_cached_hash_value(this);
+  return h;
+}
+
 /// Getter of the underlying type of the subrange, that is, the type
 /// that defines the range.
 ///
@@ -19203,6 +19417,20 @@ array_type_def::array_type_def(const environment&				env,
 {
   runtime_type_instance(this);
   append_subranges(subs);
+}
+
+/// Return the hash value of the current IR node.
+///
+/// Note that upon the first invocation, this member functions
+/// computes the hash value and returns it.  Subsequent invocations
+/// just return the hash value that was previously calculated.
+///
+/// @return the hash value of the current IR node.
+hash_t
+array_type_def::hash_value() const
+{
+  hash_t h = set_or_get_cached_hash_value(this);
+  return h;
 }
 
 /// Update the size of the array.
@@ -19626,6 +19854,20 @@ enum_type_decl::enum_type_decl(const string&	name,
        e != get_enumerators().end();
        ++e)
     e->set_enum_type(this);
+}
+
+/// Return the hash value of the current IR node.
+///
+/// Note that upon the first invocation, this member functions
+/// computes the hash value and returns it.  Subsequent invocations
+/// just return the hash value that was previously calculated.
+///
+/// @return the hash value of the current IR node.
+hash_t
+enum_type_decl::hash_value() const
+{
+  hash_t h = set_or_get_cached_hash_value(this);
+  return h;
 }
 
 /// Return the underlying type of the enum.
@@ -20389,6 +20631,20 @@ typedef_decl::typedef_decl(const string& name,
   runtime_type_instance(this);
 }
 
+/// Return the hash value of the current IR node.
+///
+/// Note that upon the first invocation, this member functions
+/// computes the hash value and returns it.  Subsequent invocations
+/// just return the hash value that was previously calculated.
+///
+/// @return the hash value of the current IR node.
+hash_t
+typedef_decl::hash_value() const
+{
+  hash_t h = set_or_get_cached_hash_value(this);
+  return h;
+}
+
 /// Return the size of the typedef.
 ///
 /// This function looks at the size of the underlying type and ensures
@@ -20522,15 +20778,10 @@ typedef_decl::get_pretty_representation(bool internal,
 {
 
   string result = "typedef ";
-  if (internal)
-    result += get_name();
+  if (qualified_name)
+    result += get_qualified_name(internal);
   else
-    {
-      if (qualified_name)
-	result += get_qualified_name(internal);
-      else
-	result += get_name();
-    }
+    result += get_name();
 
   return result;
 }
@@ -20978,16 +21229,6 @@ var_decl::get_id() const
   return priv_->id_;
 }
 
-/// Return the hash value for the current instance.
-///
-/// @return the hash value.
-size_t
-var_decl::get_hash() const
-{
-  var_decl::hash hash_var;
-  return hash_var(this);
-}
-
 /// Get the qualified name of a given variable or data member.
 ///
 ///
@@ -21288,6 +21529,20 @@ function_type::function_type(const environment& env,
     priv_(new priv)
 {
   runtime_type_instance(this);
+}
+
+/// Return the hash value of the current IR node.
+///
+/// Note that upon the first invocation, this member functions
+/// computes the hash value and returns it.  Subsequent invocations
+/// just return the hash value that was previously calculated.
+///
+/// @return the hash value of the current IR node.
+hash_t
+function_type::hash_value() const
+{
+  hash_t h = set_or_get_cached_hash_value(this);
+  return h;
 }
 
 /// Getter for the return type of the current instance of @ref
@@ -21875,6 +22130,20 @@ method_type::method_type(class_or_union_sptr class_type,
   runtime_type_instance(this);
   set_class_type(class_type);
   set_is_const(is_const);
+}
+
+/// Return the hash value of the current IR node.
+///
+/// Note that upon the first invocation, this member functions
+/// computes the hash value and returns it.  Subsequent invocations
+/// just return the hash value that was previously calculated.
+///
+/// @return the hash value of the current IR node.
+hash_t
+method_type::hash_value() const
+{
+  hash_t h = set_or_get_cached_hash_value(this);
+  return h;
 }
 
 /// Get the class type this method belongs to.
@@ -22547,18 +22816,6 @@ function_decl::is_variadic() const
 	  && get_parameters().back()->get_variadic_marker());
 }
 
-/// The virtual implementation of 'get_hash' for a function_decl.
-///
-/// This allows decl_base::get_hash to work for function_decls.
-///
-/// @return the hash value for function decl.
-size_t
-function_decl::get_hash() const
-{
-  function_decl::hash hash_fn;
-  return hash_fn(*this);
-}
-
 /// Return an ID that tries to uniquely identify the function inside a
 /// program or a library.
 ///
@@ -22968,17 +23225,6 @@ function_decl::parameter::traverse(ir_node_visitor& v)
   return v.visit_end(this);
 }
 
-/// Get the hash of a decl.  If the hash hasn't been computed yet,
-/// compute it ans store its value; otherwise, just return the hash.
-///
-/// @return the hash of the decl.
-size_t
-function_decl::parameter::get_hash() const
-{
-  function_decl::parameter::hash hash_fn_parm;
-  return hash_fn_parm(this);
-}
-
 /// Compute the qualified name of the parameter.
 ///
 /// @param internal set to true if the call is intended for an
@@ -23144,6 +23390,21 @@ class_or_union::class_or_union(const environment& env, const string& name,
     priv_(new priv)
 {
   set_is_declaration_only(is_declaration_only);
+}
+
+/// Return the hash value of the current IR node.
+///
+/// Note that upon the first invocation, this member functions
+/// computes the hash value and returns it.  Subsequent invocations
+/// just return the hash value that was previously calculated.
+///
+/// @return the hash value of the current IR node.
+hash_t
+class_or_union::hash_value() const
+{
+  class_or_union::hash do_hash;
+  hash_t h = do_hash(this);
+  return h;
 }
 
 /// This implements the ir_traversable_base::traverse pure virtual
@@ -24250,9 +24511,19 @@ maybe_propagate_canonical_type(const type_base& lhs_type,
 
   if (env.do_on_the_fly_canonicalization())
     if (type_base_sptr canonical_type = lhs_type.get_canonical_type())
-      if (!rhs_type.get_canonical_type())
-	if (env.priv_->propagate_ct(lhs_type, rhs_type))
-	  return true;
+      if (!rhs_type.get_canonical_type()
+	  && (!rhs_type.priv_->canonical_type_index
+	      || (rhs_type.priv_->canonical_type_index
+		  == canonical_type->priv_->canonical_type_index)))
+	  {
+#if WITH_DEBUG_CT_PROPAGATION
+	    ABG_ASSERT(!rhs_type.priv_->canonical_type_index
+		       || (rhs_type.priv_->canonical_type_index
+			   == canonical_type->priv_->canonical_type_index));
+#endif
+	    if (env.priv_->propagate_ct(lhs_type, rhs_type))
+	      return true;
+	  }
   return false;
 }
 
@@ -24704,6 +24975,20 @@ class_decl::base_spec::base_spec(const class_decl_sptr& base,
   set_qualified_name(base->get_qualified_name());
 }
 
+/// Return the hash value of the current IR node.
+///
+/// Note that upon the first invocation, this member functions
+/// computes the hash value and returns it.  Subsequent invocations
+/// just return the hash value that was previously calculated.
+///
+/// @return the hash value of the current IR node.
+hash_t
+class_decl::base_spec::hash_value() const
+{
+  hash_t h = set_or_get_cached_hash_value(this);
+  return h;
+}
+
 /// Get the base class referred to by the current base class
 /// specifier.
 ///
@@ -24725,16 +25010,6 @@ class_decl::base_spec::get_is_virtual() const
 long
 class_decl::base_spec::get_offset_in_bits() const
 {return priv_->offset_in_bits_;}
-
-/// Calculate the hash value for a class_decl::base_spec.
-///
-/// @return the hash value.
-size_t
-class_decl::base_spec::get_hash() const
-{
-  base_spec::hash h;
-  return h(*this);
-}
 
 /// Traverses an instance of @ref class_decl::base_spec, visiting all
 /// the sub-types and decls that it might contain.
@@ -25355,14 +25630,18 @@ class_decl::get_biggest_vtable_offset() const
   return offset;
 }
 
-/// Return the hash value for the current instance.
+/// Return the hash value of the current IR node.
 ///
-/// @return the hash value.
-size_t
-class_decl::get_hash() const
+/// Note that upon the first invocation, this member functions
+/// computes the hash value and returns it.  Subsequent invocations
+/// just return the hash value that was previously calculated.
+///
+/// @return the hash value of the current IR node.
+hash_t
+class_decl::hash_value() const
 {
-  class_decl::hash hash_class;
-  return hash_class(this);
+  hash_t h = set_or_get_cached_hash_value(this);
+  return h;
 }
 
 /// Test if two methods are equal without taking their symbol or
@@ -26461,6 +26740,20 @@ union_decl::union_decl(const environment& env,
   runtime_type_instance(this);
 }
 
+/// Return the hash value of the current IR node.
+///
+/// Note that upon the first invocation, this member functions
+/// computes the hash value and returns it.  Subsequent invocations
+/// just return the hash value that was previously calculated.
+///
+/// @return the hash value of the current IR node.
+hash_t
+union_decl::hash_value() const
+{
+  hash_t h = set_or_get_cached_hash_value(this);
+  return h;
+}
+
 /// Getter of the pretty representation of the current instance of
 /// @ref union_decl.
 ///
@@ -26890,13 +27183,6 @@ const template_decl_sptr
 template_parameter::get_enclosing_template_decl() const
 {return priv_->template_decl_.lock();}
 
-bool
-template_parameter::get_hashing_has_started() const
-{return priv_->hashing_started_;}
-
-void
-template_parameter::set_hashing_has_started(bool f) const
-{priv_->hashing_started_ = f;}
 
 bool
 template_parameter::operator==(const template_parameter& o) const
@@ -27113,15 +27399,6 @@ const type_base_sptr
 non_type_tparameter::get_type() const
 {return priv_->type_.lock();}
 
-/// Get the hash value of the current instance.
-///
-/// @return the hash value.
-size_t
-non_type_tparameter::get_hash() const
-{
-  non_type_tparameter::hash hash_tparm;
-  return hash_tparm(this);
-}
 
 bool
 non_type_tparameter::operator==(const decl_base& other) const
@@ -27312,16 +27589,6 @@ type_composition::get_composed_type() const
 void
 type_composition::set_composed_type(type_base_sptr t)
 {priv_->type_ = t;}
-
-/// Get the hash value for the current instance.
-///
-/// @return the hash value.
-size_t
-type_composition::get_hash() const
-{
-  type_composition::hash hash_type_composition;
-  return hash_type_composition(this);
-}
 
 type_composition::~type_composition()
 {}
@@ -27809,7 +28076,7 @@ keep_type_alive(type_base_sptr t)
 size_t
 hash_type_or_decl(const type_or_decl_base *tod)
 {
-  size_t result = 0;
+  hash_t result = 0;
 
   if (tod == 0)
     ;
@@ -27817,10 +28084,17 @@ hash_type_or_decl(const type_or_decl_base *tod)
     result = hash_type(t);
   else if (const decl_base* d = is_decl(tod))
     {
-      if (var_decl* v = is_var_decl(d))
+      if (const scope_decl* s = is_scope_decl(d))
+	{
+	  if (const global_scope* g = is_global_scope(s))
+	    result = reinterpret_cast<size_t>(g);
+	  else
+	    result = reinterpret_cast<size_t>(s);
+	}
+      else if (var_decl* v = is_var_decl(d))
 	{
 	  ABG_ASSERT(v->get_type());
-	  size_t h = hash_type_or_decl(v->get_type());
+	  hash_t h = hash_type_or_decl(v->get_type());
 	  string repr = v->get_pretty_representation(/*internal=*/true);
 	  std::hash<string> hash_string;
 	  h = hashing::combine_hashes(h, hash_string(repr));
@@ -27829,7 +28103,7 @@ hash_type_or_decl(const type_or_decl_base *tod)
       else if (function_decl* f = is_function_decl(d))
 	{
 	  ABG_ASSERT(f->get_type());
-	  size_t h = hash_type_or_decl(f->get_type());
+	  hash_t h = hash_type_or_decl(f->get_type());
 	  string repr = f->get_pretty_representation(/*internal=*/true);
 	  std::hash<string> hash_string;
 	  h = hashing::combine_hashes(h, hash_string(repr));
@@ -27841,7 +28115,7 @@ hash_type_or_decl(const type_or_decl_base *tod)
 	  ABG_ASSERT(parm_type);
 	  std::hash<bool> hash_bool;
 	  std::hash<unsigned> hash_unsigned;
-	  size_t h = hash_type_or_decl(parm_type);
+	  hash_t h = hash_type_or_decl(parm_type);
 	  h = hashing::combine_hashes(h, hash_unsigned(p->get_index()));
 	  h = hashing::combine_hashes(h, hash_bool(p->get_variadic_marker()));
 	  result = h;
@@ -27852,7 +28126,7 @@ hash_type_or_decl(const type_or_decl_base *tod)
 	  std::hash<size_t> hash_size;
 	  std::hash<bool> hash_bool;
 	  type_base_sptr type = bs->get_base_class();
-	  size_t h = hash_type_or_decl(type);
+	  hash_t h = hash_type_or_decl(type);
 	  h = hashing::combine_hashes(h, hash_member(*bs));
 	  h = hashing::combine_hashes(h, hash_size(bs->get_offset_in_bits()));
 	  h = hashing::combine_hashes(h, hash_bool(bs->get_is_virtual()));
@@ -27862,15 +28136,16 @@ hash_type_or_decl(const type_or_decl_base *tod)
 	// This is a *really* *SLOW* path.  If it shows up in a
 	// performance profile, I bet it'd be a good idea to try to
 	// avoid it altogether.
-	result = d->get_hash();
+	// TODO: recode this function or get rid of it altogethe.
+	abort();
     }
   else
     // We should never get here.
     abort();
-  return result;
+  return *result;
 }
 
-/// Hash an ABI artifact that is either a type.
+/// Hash an ABI artifact that is a type.
 ///
 /// This function intends to provides the fastest possible hashing for
 /// types while being completely correct.
@@ -27897,6 +28172,32 @@ hash_type(const type_base *t)
 size_t
 hash_type_or_decl(const type_or_decl_base_sptr& tod)
 {return hash_type_or_decl(tod.get());}
+
+/// Get the hash value associated to an IR node.
+///
+/// Unlike type_or_decl_base::hash_value(), if the IR has no
+/// associated hash value, an empty hash value is returned.
+///
+/// @param artefact the IR node to consider.
+///
+/// @return the hash value stored on the IR node or an empty hash if
+/// no hash value is stored in the @p artefact.
+hash_t
+peek_hash_value(const type_or_decl_base& artefact)
+{
+  const type_or_decl_base* artefactp = &artefact;
+  if (decl_base *d = is_decl(artefactp))
+    {
+      d = look_through_decl_only(d);
+      if (d->type_or_decl_base::priv_->get_hashing_state()
+	  == hashing::HASHING_FINISHED_STATE)
+	return d->type_or_decl_base::priv_->hash_value_;
+    }
+  else if (artefact.priv_->get_hashing_state() == hashing::HASHING_FINISHED_STATE)
+    return artefact.priv_->hash_value_;
+
+  return hash_t();
+}
 
 /// Test if a given type is allowed to be non canonicalized
 ///
@@ -29290,6 +29591,15 @@ ptr_to_mbr_declaration_name(const ptr_to_mbr_type_sptr& ptr,
 				     qualified, internal);
 }
 
+/// Sort types right before hashing and canonicalizing them.
+///
+/// @param types the vector of types to sort.
+void
+sort_types_for_hash_computing_and_c14n(vector<type_base_sptr>& types)
+{
+  sort_types_for_hash_computing_and_c14n(types.begin(), types.end());
+}
+
 bool
 ir_traversable_base::traverse(ir_node_visitor&)
 {return true;}
@@ -29627,10 +29937,20 @@ get_next_string()
   return o.str();
 }
 
+/// A hashing functor for a @ref function_decl
+struct function_decl_hash
+{
+  size_t operator()(const function_decl* f) const
+  {return reinterpret_cast<size_t>(f);}
+
+  size_t operator()(const function_decl_sptr& f) const
+  {return operator()(f.get());}
+};
+
 /// Convenience typedef for a hash map of pointer to function_decl and
 /// string.
 typedef unordered_map<const function_decl*, string,
-		      function_decl::hash,
+		      function_decl_hash,
 		      function_decl::ptr_equal> fns_to_str_map_type;
 
 /// Return a string associated to a given function.  Two functions
@@ -29792,6 +30112,11 @@ qualified_name_setter::do_update(abigail::ir::decl_base* d)
 	  d->priv_->internal_qualified_name_ = env.intern(d->get_name());
 	}
     }
+  // Make sure the internal qualified name (used for type
+  // canonicalization puroses) is always the qualified name.  For
+  // integral/real types however, only the non qualified type is used.
+  if (!is_integral_type(d))
+    d->priv_->internal_qualified_name_ = d->priv_->qualified_name_;
 
   if (d->priv_->scoped_name_.empty())
     {

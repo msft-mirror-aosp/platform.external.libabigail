@@ -1,14 +1,14 @@
-<abi-corpus version='2.3' path='data/test-read-ctf/test-const-array.o'>
+<abi-corpus version='2.4' path='data/test-read-ctf/test-const-array.o'>
   <elf-variable-symbols>
     <elf-symbol name='a' size='32' type='object-type' binding='global-binding' visibility='default-visibility' is-defined='yes'/>
   </elf-variable-symbols>
   <abi-instr address-size='64' language='LANG_C'>
-    <type-decl name='char' size-in-bits='8' id='type-id-1'/>
-    <array-type-def dimensions='1' type-id='type-id-2' size-in-bits='256' id='type-id-3'>
-      <subrange length='32' lower-bound='0' upper-bound='31' type-id='type-id-4' id='type-id-5'/>
+    <type-decl name='char' size-in-bits='8' hash='7f1bbd7b0c3c186f' id='type-id-1'/>
+    <array-type-def dimensions='1' type-id='type-id-2' size-in-bits='256' hash='916296f0220d2f7d' id='type-id-3'>
+      <subrange length='32' lower-bound='0' upper-bound='31' type-id='type-id-4' size-in-bits='64' is-anonymous='yes' hash='83b79d33f73da109' id='type-id-5'/>
     </array-type-def>
-    <type-decl name='unsigned long int' size-in-bits='64' id='type-id-4'/>
-    <qualified-type-def type-id='type-id-1' const='yes' id='type-id-2'/>
+    <type-decl name='unsigned long int' size-in-bits='64' hash='e7c5efcec748ba6c' id='type-id-4'/>
+    <qualified-type-def type-id='type-id-1' const='yes' hash='2059efede605db28' id='type-id-2'/>
     <var-decl name='a' type-id='type-id-3' mangled-name='a' visibility='default' elf-symbol-id='a'/>
   </abi-instr>
 </abi-corpus>
