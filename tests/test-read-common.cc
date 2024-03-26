@@ -103,16 +103,12 @@ test_task::run_abidw(const string& extargs)
     drop_private_types += "--headers-dir " + in_public_headers_path +
       " --drop-private-types";
   string cmd = abidw + " " + spec_options + drop_private_types +
-                 " --abidiff " + extargs + in_elf_path;
+    " --abidiff " + extargs + in_elf_path;
   if (system(cmd.c_str()))
     {
-      error_message = string("ABIs differ:\n")
-        + in_abi_path
-        + "\nand:\n"
-        + out_abi_path
-        + "\n"
+      error_message = string("self comparison with abidw failed:\n")
 	+ "command was: '" + cmd + "'\n";
-
+      std::cerr << error_message;
       return false;
     }
 
