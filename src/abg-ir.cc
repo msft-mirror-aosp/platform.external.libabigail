@@ -23920,9 +23920,7 @@ equals(const class_or_union& l, const class_or_union& r, change_kind* k)
 	    // change.
 	    return true;
 
-	  if ((l.get_environment().decl_only_class_equals_definition()
-	       || ((odr_is_relevant(l) && !def1)
-		   || (odr_is_relevant(r) && !def2)))
+	  if (l.get_environment().decl_only_class_equals_definition()
 	      && !is_anonymous_or_typedef_named(l)
 	      && !is_anonymous_or_typedef_named(r))
 	    {
