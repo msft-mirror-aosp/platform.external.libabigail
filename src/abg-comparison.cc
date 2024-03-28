@@ -5301,7 +5301,7 @@ class_or_union_diff::ensure_lookup_tables_populated(void) const
 		//
 		// 2/ It must have been deleted as well.
 		//
-		// 3/ It there must be a non-empty difference between the
+		// 3/ There must be a non-empty difference between the
 		// deleted D and the added D.
 		string_decl_base_sptr_map::const_iterator j =
 		  priv_->deleted_data_members_.find(name);
