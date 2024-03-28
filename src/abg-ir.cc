@@ -6036,6 +6036,74 @@ var_decl_sptr
 get_last_data_member(const class_or_union_sptr &klass)
 {return get_last_data_member(klass.get());}
 
+/// Collect all the non-anonymous data members of a class or union type.
+///
+/// If the class contains any anonymous data member, this function
+/// looks through it to collect the non-anonymous data members that it
+/// contains.  The function also also looks through the base classes
+/// of the current type.
+///
+/// @param cou the class or union type to consider.
+///
+/// @param dms output parameter.  This is populated by the function
+/// with a map containing the non-anonymous data members that were
+/// collected.  The key of the map is the name of the data member.
+/// This is set iff the function returns true.
+///
+/// @return true iff at least one non-anonymous data member was
+/// collected.
+bool
+collect_non_anonymous_data_members(const class_or_union* cou,
+				   string_decl_base_sptr_map& dms)
+{
+  if (!cou)
+    return false;
+
+  bool result = false;
+  class_decl* klass = is_class_type(cou);
+  if (klass)
+    // First look into base classes for data members.
+    for (class_decl::base_spec_sptr base : klass->get_base_specifiers())
+      result |= collect_non_anonymous_data_members(base->get_base_class().get(), dms);
+
+  // Then look into our data members
+  for (var_decl_sptr member : cou->get_non_static_data_members())
+    {
+      if (is_anonymous_data_member(member))
+	{
+	  class_or_union_sptr cl = anonymous_data_member_to_class_or_union(member);
+	  ABG_ASSERT(cl);
+	  result |= collect_non_anonymous_data_members(cl.get(), dms);
+	}
+      else
+	{
+	  dms[member->get_name()] = member;
+	  result = true;
+	}
+    }
+  return true;
+}
+
+/// Collect all the non-anonymous data members of a class or union type.
+///
+/// If the class contains any anonymous data member, this function
+/// looks through it to collect the non-anonymous data members that it
+/// contains.  The function also also looks through the base classes
+/// of the current type.
+///
+/// @param cou the class or union type to consider.
+///
+/// @param dms output parameter.  This is populated by the function
+/// with a map containing the non-anonymous data members that were
+/// collected.  The key of the map is the name of the data member.
+/// This is set iff the function returns true.
+///
+/// @return true iff at least one non-anonymous data member was
+/// collected.
+bool
+collect_non_anonymous_data_members(const class_or_union_sptr &cou, string_decl_base_sptr_map& dms)
+{return collect_non_anonymous_data_members(cou.get(), dms);}
+
 /// Test if a decl is an anonymous data member.
 ///
 /// @param d the decl to consider.

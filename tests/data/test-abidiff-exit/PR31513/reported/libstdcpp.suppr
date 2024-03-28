@@ -1,0 +1,19 @@
+[suppress_function]
+# Suppress libstdc++ functions added to the binary.
+ change_kind = added-function
+ name_regexp = (^std::.*|^__gnu_cxx::.*)
+
+[suppress_function]
+# Suppress libstdc++ function symbols added to the binary.
+ change_kind = added-function
+ symbol_name_regexp = ^_ZNSt7__cxx11.*
+
+[suppress_function]
+# Suppress libstdc++ function deleted from the binary
+ change_kind = deleted-function
+ name_regexp = (^std::.*|^__gnu_cxx|)
+
+[suppress_function]
+# Suppress libstdc++ function symbols deleted from the binary
+ change_kind = deleted-function
+ symbol_name_regexp = (^_init$|^_fini$)

@@ -28,6 +28,10 @@ namespace comparison
 namespace filtering
 {
 
+static bool
+has_offset_changes(const string_decl_base_sptr_map& f_data_members,
+		   const string_decl_base_sptr_map& s_data_members);
+
 using std::dynamic_pointer_cast;
 
 /// Walk the diff sub-trees of a a @ref corpus_diff and apply a filter
@@ -158,6 +162,55 @@ type_size_changed(const type_base_sptr f, const type_base_sptr s)
   return f->get_size_in_bits() != s->get_size_in_bits();
 }
 
+/// Detect if a type has offset changes.
+///
+/// The type must be either a class or a union.  This function returns
+/// true iff the type has a data member which has an offset change.
+///
+/// @param f the first version of the type to consider.
+///
+/// @param s the second version of the type to consider.
+///
+/// @return true iff the type has a data member which has an offset
+/// change.
+static bool
+type_has_offset_changes(const type_base_sptr f, const type_base_sptr s)
+{
+  if (!f || !s)
+    return false;
+
+  class_or_union_sptr first = is_class_or_union_type(f);
+  class_or_union_sptr second = is_class_or_union_type(s);
+  if (!first || !second)
+    return false;
+
+  // collect the data members
+  string_decl_base_sptr_map f_data_members, s_data_members;
+  collect_non_anonymous_data_members(first, f_data_members);
+  collect_non_anonymous_data_members(second, s_data_members);
+
+    // detect offset changes
+  if (has_offset_changes(f_data_members, s_data_members))
+    return true;
+
+  return false;
+}
+
+/// Detect if a type has offset changes.
+///
+/// The type must be either a class or a union.  This function returns
+/// true iff the type has a data member which has an offset change.
+///
+/// @param f the first version of the type to consider.
+///
+/// @param s the second version of the type to consider.
+///
+/// @return true iff the type has a data member which has an offset
+/// change.
+static bool
+type_has_offset_changes(const decl_base_sptr f, const decl_base_sptr s)
+{return type_has_offset_changes(is_type(f), is_type(s));}
+
 /// Tests if the size of a given type changed.
 ///
 /// @param f the declaration of the first version of the type to
@@ -193,6 +246,184 @@ has_type_size_change(const diff* diff)
 
   return type_size_changed(f, s);
 }
+
+/// Find a data member that is at a given offset.
+///
+/// @param data_members the set of data member to consider.
+///
+/// @param the offset to consider.
+///
+/// @return the data member found at offset @p offset of nil if none
+/// was found with that offset;
+static var_decl_sptr
+find_data_member_at_offset(const string_decl_base_sptr_map& data_members,
+			   unsigned offset)
+{
+  for (auto e : data_members)
+    {
+      var_decl_sptr dm = is_var_decl(e.second);
+      ABG_ASSERT(dm);
+      unsigned off = get_absolute_data_member_offset(dm);
+      if (offset == off)
+	return dm;
+    }
+  return var_decl_sptr();
+}
+
+/// Test if a set of data members contains at least one data member
+/// that has an offset change.
+///
+/// @param f_data_members the first version of data members to
+/// consider.
+///
+/// @param s_data_members the second version of data members to
+/// consider.
+///
+/// @return true iff there is at least one data member which has an
+/// offset change between the first version of data members and the
+/// second version.
+static bool
+has_offset_changes(const string_decl_base_sptr_map& f_data_members,
+		   const string_decl_base_sptr_map& s_data_members)
+{
+  // Compare the offsets of the data members
+  for (auto entry : f_data_members)
+    {
+      var_decl_sptr f_member = is_var_decl(entry.second);
+      ABG_ASSERT(f_member);
+      unsigned f_offset = get_absolute_data_member_offset(f_member);
+      auto i = s_data_members.find(entry.first);
+      var_decl_sptr s_member;
+      if (i == s_data_members.end())
+	{
+	  s_member = find_data_member_at_offset(s_data_members, f_offset);
+	  if (!s_member)
+	    // A data member was suppressed; that's bad; let's consider
+	    // that as an offset change.
+	    return true;
+	}
+
+      if (!s_member)
+	s_member = is_var_decl(i->second);
+      ABG_ASSERT(s_member);
+      unsigned s_offset = get_absolute_data_member_offset(s_member);
+      if (f_offset != s_offset)
+	return true;
+    }
+  return false;
+}
+
+/// Test if a set of data members contains at least one data member
+/// that has a sub-type change.
+///
+/// @param f_data_members the first version of data members to
+/// consider.
+///
+/// @param s_data_members the second version of data members to
+/// consider.
+///
+/// @return true iff there is at least one data member which has a
+/// sub-type change between the first version of data members and the
+/// second version.
+static bool
+has_subtype_changes(const string_decl_base_sptr_map& f_data_members,
+		    const string_decl_base_sptr_map& s_data_members,
+		    diff_context_sptr ctxt)
+{
+  // Now compare the offsets of the data members collected.
+  var_decl_sptr s_member;
+  for (auto entry : f_data_members)
+    {
+      var_decl_sptr f_member = is_var_decl(entry.second);
+      ABG_ASSERT(f_member);
+
+      auto i = s_data_members.find(entry.first);
+      if (i == s_data_members.end())
+	{
+	  unsigned offset = get_data_member_offset(f_member);
+	  s_member = find_data_member_at_offset(s_data_members, offset);
+	  if (!s_member)
+	    // A data member was suppressed; that's bad; let's consider
+	    // that as a sub-type change.
+	    return true;
+	}
+
+      if (!s_member)
+	s_member = is_var_decl(i->second);
+      ABG_ASSERT(s_member);
+      diff_sptr d =compute_diff(f_member->get_type(), s_member->get_type(), ctxt);
+      if (d->has_changes())
+	return true;
+    }
+  return false;
+}
+
+/// Test if the changes of a @ref class_diff are harmless.
+///
+/// Potentially harmful changes are basically:
+///   1/ name change (that changes the type altogether)
+///   2/ size change
+///   3/ offset change of any data member
+///   4/ any subtype change.
+///
+/// Thus, this function tests that the class_diff carries none of the
+/// 4 kinds of changes above.
+///
+/// @param d the @ref class_diff to consider.
+///
+/// @return true iff @p d has only harmless changes.
+static bool
+class_diff_has_only_harmless_changes(const class_diff* d)
+{
+  if (!d || !d->has_changes())
+    return true;
+
+  class_decl_sptr f = d->first_class_decl(), s = d->second_class_decl();
+
+  if (f->get_qualified_name() != s->get_qualified_name())
+    return false;
+
+  if (f->get_size_in_bits() != s->get_size_in_bits())
+    return false;
+
+  // collect the data members
+  string_decl_base_sptr_map f_data_members, s_data_members;
+  collect_non_anonymous_data_members(f, f_data_members);
+  collect_non_anonymous_data_members(s, s_data_members);
+
+  // detect offset changes
+  if (has_offset_changes(f_data_members, s_data_members))
+    return false;
+
+  // detect subtype changes
+  if (has_subtype_changes(f_data_members, s_data_members, d->context()))
+    return false;
+
+  return true;
+}
+
+/// Test if the changes of a @ref class_diff are harmless.
+///
+/// Potentially harmful changes are basically:
+///   1/ name change (that changes the type altogether)
+///   2/ size change
+///   3/ offset change of any data member
+///   4/ any subtype change.
+///
+/// Thus, this function tests that the class_diff carries none of the
+/// 4 kinds of changes above.
+///
+/// @param d the @ref class_diff to consider.
+///
+/// @return true iff @p d has only harmless changes.
+static bool
+class_diff_has_only_harmless_changes(diff* d)
+{
+  if (const class_diff* class_dif = is_class_diff(d))
+    return class_diff_has_only_harmless_changes(class_dif);
+  return false;
+}
+
 /// Tests if the access specifiers for a member declaration changed.
 ///
 /// @param f the declaration for the first version of the member
@@ -1025,27 +1256,27 @@ static bool
 has_non_virtual_mem_fn_change(const diff* diff)
 {return has_non_virtual_mem_fn_change(dynamic_cast<const class_diff*>(diff));}
 
-/// Test if a class_diff carries base classes adding or removals.
+/// Test if a class_diff carries a base class removal.
 ///
 /// @param diff the class_diff to consider.
 ///
-/// @return true iff @p diff carries base classes adding or removals.
+/// @return true iff @p diff carries a base classe removal.
 static bool
-base_classes_added_or_removed(const class_diff* diff)
+base_classes_removed(const class_diff* diff)
 {
   if (!diff)
     return false;
-  return diff->deleted_bases().size() || diff->inserted_bases().size();
+  return diff->deleted_bases().size();
 }
 
-/// Test if a class_diff carries base classes adding or removals.
+/// Test if a class_diff carries a base classes removal.
 ///
 /// @param diff the class_diff to consider.
 ///
-/// @return true iff @p diff carries base classes adding or removals.
+/// @return true iff @p diff carries a base class removal.
 static bool
-base_classes_added_or_removed(const diff* diff)
-{return base_classes_added_or_removed(dynamic_cast<const class_diff*>(diff));}
+base_classes_removed(const diff* diff)
+{return base_classes_removed(dynamic_cast<const class_diff*>(diff));}
 
 /// Test if two classes that are decl-only (have the decl-only flag
 /// and carry no data members) but are different just by their size.
@@ -1827,8 +2058,9 @@ categorize_harmless_diff_node(diff *d, bool pre)
 	  || class_diff_has_harmless_odr_violation_change(d))
 	category |= HARMLESS_DECL_NAME_CHANGE_CATEGORY;
 
-      if (union_diff_has_harmless_changes(d))
-	category |= HARMLESS_UNION_CHANGE_CATEGORY;
+      if (union_diff_has_harmless_changes(d)
+	  || class_diff_has_only_harmless_changes(d))
+	category |= HARMLESS_UNION_OR_CLASS_CHANGE_CATEGORY;
 
       if (has_non_virtual_mem_fn_change(d))
 	category |= NON_VIRT_MEM_FUN_CHANGE_CATEGORY;
@@ -1907,10 +2139,11 @@ categorize_harmful_diff_node(diff *d, bool pre)
       if (!has_class_decl_only_def_change(d)
 	  && !has_enum_decl_only_def_change(d)
 	  && (type_size_changed(f, s)
+	      || type_has_offset_changes(f, s)
 	      || data_member_offset_changed(f, s)
 	      || non_static_data_member_type_size_changed(f, s)
 	      || non_static_data_member_added_or_removed(d)
-	      || base_classes_added_or_removed(d)
+	      || base_classes_removed(d)
 	      || has_harmful_enum_change(d)
 	      || crc_changed(d)
 	      || namespace_changed(d)))

@@ -121,10 +121,6 @@ typedef shared_ptr<class_diff> class_diff_sptr;
 typedef unordered_map<size_t, size_t> pointer_map;
 
 /// Convenience typedef for a map which key is a string and which
-/// value is a @ref decl_base_sptr.
-typedef unordered_map<string, decl_base_sptr> string_decl_base_sptr_map;
-
-/// Convenience typedef for a map which key is a string and which
 /// value is a @ref type_base_sptr.
 typedef unordered_map<string, type_base_sptr> string_type_base_sptr_map;
 
@@ -357,8 +353,8 @@ enum diff_category
   HARMLESS_SYMBOL_ALIAS_CHANGE_CATEGORY = 1 << 6,
 
   /// This means that a diff node in the sub-tree carries a harmless
-  /// union change.
-  HARMLESS_UNION_CHANGE_CATEGORY = 1 << 7,
+  /// union or class change.
+  HARMLESS_UNION_OR_CLASS_CHANGE_CATEGORY = 1 << 7,
 
   /// This means that a diff node in the sub-tree carries a harmless
   /// data member change.  An example of harmless data member change
@@ -455,7 +451,7 @@ enum diff_category
   | STATIC_DATA_MEMBER_CHANGE_CATEGORY
   | HARMLESS_ENUM_CHANGE_CATEGORY
   | HARMLESS_SYMBOL_ALIAS_CHANGE_CATEGORY
-  | HARMLESS_UNION_CHANGE_CATEGORY
+  | HARMLESS_UNION_OR_CLASS_CHANGE_CATEGORY
   | HARMLESS_DATA_MEMBER_CHANGE_CATEGORY
   | SUPPRESSED_CATEGORY
   | PRIVATE_TYPE_CATEGORY

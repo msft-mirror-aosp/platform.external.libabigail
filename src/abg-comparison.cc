@@ -3144,7 +3144,7 @@ get_default_harmless_categories_bitmap()
 	  | abigail::comparison::STATIC_DATA_MEMBER_CHANGE_CATEGORY
 	  | abigail::comparison::HARMLESS_ENUM_CHANGE_CATEGORY
 	  | abigail::comparison::HARMLESS_SYMBOL_ALIAS_CHANGE_CATEGORY
-	  | abigail::comparison::HARMLESS_UNION_CHANGE_CATEGORY
+	  | abigail::comparison::HARMLESS_UNION_OR_CLASS_CHANGE_CATEGORY
 	  | abigail::comparison::HARMLESS_DATA_MEMBER_CHANGE_CATEGORY
 	  | abigail::comparison::TYPE_DECL_ONLY_DEF_CHANGE_CATEGORY
 	  | abigail::comparison::FN_PARM_TYPE_TOP_CV_CHANGE_CATEGORY
@@ -3250,11 +3250,11 @@ operator<<(ostream& o, diff_category c)
       emitted_a_category |= true;
     }
 
-  if (c & HARMLESS_UNION_CHANGE_CATEGORY)
+  if (c & HARMLESS_UNION_OR_CLASS_CHANGE_CATEGORY)
     {
       if (emitted_a_category)
 	o << "|";
-      o << "HARMLESS_UNION_CHANGE_CATEGORY";
+      o << "HARMLESS_UNION_OR_CLASS_CHANGE_CATEGORY";
       emitted_a_category |= true;
     }
 
@@ -5843,6 +5843,46 @@ class_diff::ensure_lookup_tables_populated(void) const
 	    else
 	      get_priv()->inserted_bases_[name] = b;
 	  }
+      }
+
+    // ===============================================================
+    // Detect when a data member is deleted from the class but is now
+    // present in one of the bases at the same offset.  In that case,
+    // the data member should not be considered as removed.
+    // ===============================================================
+    string_decl_base_sptr_map& deleted_data_members =
+      class_or_union_diff::priv_->deleted_data_members_;
+
+    vector<var_decl_sptr> deleted_data_members_present_in_bases;
+    for (auto entry : deleted_data_members)
+      {
+	var_decl_sptr deleted_member = is_var_decl(entry.second);
+	ABG_ASSERT(deleted_member);
+	for (class_decl::base_spec_sptr base : second_class_decl()->get_base_specifiers())
+	  {
+	    class_decl_sptr klass = base->get_base_class();
+	    var_decl_sptr member = klass->find_data_member(deleted_member->get_name());
+	    if (member)
+	      deleted_data_members_present_in_bases.push_back(member);
+	  }
+      }
+    // Walk the deleted data members that are now in one of the bases,
+    // of the new type, at the same offset, and let's see if they have
+    // sub-type changes.  In any cases, these should not be considered
+    // as being deleted.
+    for (var_decl_sptr m : deleted_data_members_present_in_bases)
+      {
+	string name = m->get_name();
+	auto it = deleted_data_members.find(name);
+	ABG_ASSERT(it != deleted_data_members.end());
+	var_decl_sptr deleted_member = is_var_decl(it->second);
+	if (*deleted_member != *m)
+	  {
+	    var_diff_sptr dif = compute_diff(deleted_member, m, context());
+	    ABG_ASSERT(dif);
+	    class_or_union_diff::priv_->subtype_changed_dm_[name]= dif;
+	  }
+	deleted_data_members.erase(name);
       }
   }
 

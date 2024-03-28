@@ -153,6 +153,10 @@ class decl_base;
 // Convenience typedef for a smart pointer on @ref decl_base.
 typedef shared_ptr<decl_base> decl_base_sptr;
 
+/// Convenience typedef for a map which key is a string and which
+/// value is a @ref decl_base_sptr.
+typedef unordered_map<string, decl_base_sptr> string_decl_base_sptr_map;
+
 class type_decl;
 /// Convenience typedef for a shared pointer on a @ref type_decl.
 typedef shared_ptr<type_decl> type_decl_sptr;
@@ -766,6 +770,12 @@ get_last_data_member(const class_or_union*);
 
 var_decl_sptr
 get_last_data_member(const class_or_union_sptr&);
+
+bool
+collect_non_anonymous_data_members(const class_or_union* cou, string_decl_base_sptr_map& dms);
+
+bool
+collect_non_anonymous_data_members(const class_or_union_sptr &cou, string_decl_base_sptr_map& dms);
 
 bool
 is_anonymous_data_member(const decl_base&);
