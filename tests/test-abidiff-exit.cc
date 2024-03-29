@@ -1380,6 +1380,36 @@ InOutSpec in_out_specs[] =
     "data/test-abidiff-exit/PR31513/non-regr/report4.txt",
     "output/test-abidiff-exit/PR31513/non-regr/report4.txt"
   },
+  {
+    "data/test-abidiff-exit/non-del-anon-dm/reported/librte_graph.so.24.0",
+    "data/test-abidiff-exit/non-del-anon-dm/reported/librte_graph.so.24.1",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "--no-default-suppression",
+    abigail::tools_utils::ABIDIFF_OK,
+    "data/test-abidiff-exit/non-del-anon-dm/reported/report0.txt",
+    "output/test-abidiff-exit/non-del-anon-dm/reported/report0.txt"
+  },
+  {
+    "data/test-abidiff-exit/non-del-anon-dm/non-regr/test0-v0.o",
+    "data/test-abidiff-exit/non-del-anon-dm/non-regr/test0-v1.o",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "--no-default-suppression",
+    abigail::tools_utils::ABIDIFF_OK,
+    "data/test-abidiff-exit/non-del-anon-dm/non-regr/report0.txt",
+    "output/test-abidiff-exit/non-del-anon-dm/non-regr/report0.txt"
+  },
 #ifdef WITH_BTF
   {
     "data/test-abidiff-exit/btf/test0-v0.o",

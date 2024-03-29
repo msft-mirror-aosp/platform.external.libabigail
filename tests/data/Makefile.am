@@ -444,6 +444,15 @@ test-abidiff-exit/PR31513/non-regr/test3-v0.cc  \
 test-abidiff-exit/PR31513/non-regr/test3-v1.cc  \
 test-abidiff-exit/PR31513/non-regr/test4-v0.cc  \
 test-abidiff-exit/PR31513/non-regr/test4-v1.cc  \
+test-abidiff-exit/non-del-anon-dm/non-regr/report0.txt \
+test-abidiff-exit/non-del-anon-dm/non-regr/test0-v0.c \
+test-abidiff-exit/non-del-anon-dm/non-regr/test0-v0.o \
+test-abidiff-exit/non-del-anon-dm/non-regr/test0-v1.c \
+test-abidiff-exit/non-del-anon-dm/non-regr/test0-v1.o \
+test-abidiff-exit/non-del-anon-dm/reported/binaries-origin.txt \
+test-abidiff-exit/non-del-anon-dm/reported/librte_graph.so.24.0 \
+test-abidiff-exit/non-del-anon-dm/reported/librte_graph.so.24.1 \
+test-abidiff-exit/non-del-anon-dm/reported/report0.txt \
 \
 test-diff-dwarf/test0-v0.cc		\
 test-diff-dwarf/test0-v0.o			\

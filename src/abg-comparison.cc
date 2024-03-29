@@ -5370,6 +5370,59 @@ class_or_union_diff::ensure_lookup_tables_populated(void) const
 	priv_->inserted_data_members_.erase
 	  (i->second->second_var()->get_anon_dm_reliable_name());
       }
+
+    // Now detect anonymous data members that might appear as deleted
+    // even though all their data members are still present.  Consider
+    // these as being non-deleted.
+    string_decl_base_sptr_map non_anonymous_dms_in_second_class;
+    collect_non_anonymous_data_members(second_class_or_union(),
+				       non_anonymous_dms_in_second_class);
+    vector<string> deleted_data_members_to_delete;
+    // Walk data members considered deleted ...
+    for (auto& entry : priv_->deleted_data_members_)
+      {
+	var_decl_sptr data_member = is_var_decl(entry.second);
+	ABG_ASSERT(data_member);
+	if (is_anonymous_data_member(data_member))
+	  {
+	    // Let's look at this anonymous data member that is
+	    // considered deleted because it's moved from where it was
+	    // initially, at very least.  If its leaf data members are
+	    // still present in the second class then, we won't
+	    // consider it as deleted.
+	    class_or_union_sptr cou = anonymous_data_member_to_class_or_union(data_member);
+	    ABG_ASSERT(cou);
+	    string_decl_base_sptr_map non_anonymous_data_members;
+	    // Lets collect the leaf data members of the anonymous
+	    // data member.
+	    collect_non_anonymous_data_members(cou, non_anonymous_data_members);
+	    bool anonymous_dm_members_present = true;
+	    // Let's see if at least one of the leaf members of the
+	    // anonymous data member is NOT present in the second
+	    // version of the class.
+	    for (auto& e : non_anonymous_data_members)
+	      {
+		if (non_anonymous_dms_in_second_class.find(e.first)
+		    == non_anonymous_dms_in_second_class.end())
+		  // Grrr, OK, it looks like at least one leaf data
+		  // member of the original anonymous data member was
+		  // removed from the class, so yeah, the anonymous
+		  // data member might have been removed after all.
+		  anonymous_dm_members_present = false;
+	      }
+	    if (anonymous_dm_members_present)
+	      // All leaf data members of the anonymous data member
+	      // are still present in the second version of the class.
+	      // So let's mark that anonymous data member as NOT being
+	      // deleted.
+	      deleted_data_members_to_delete.push_back(data_member->get_anon_dm_reliable_name());
+	  }
+      }
+    // All anonymous data members that were recognized as being NOT
+    // deleted should be removed from the set of deleted data members
+    // now.
+    for (string& name_of_dm_to_delete: deleted_data_members_to_delete)
+      priv_->deleted_data_members_.erase(name_of_dm_to_delete);
   }
   sort_string_data_member_diff_sptr_map(priv_->subtype_changed_dm_,
 					priv_->sorted_subtype_changed_dm_);
