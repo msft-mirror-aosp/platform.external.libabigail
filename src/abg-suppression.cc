@@ -3286,7 +3286,7 @@ function_suppression::suppresses_function_symbol(const elf_symbol* sym,
     return false;
 
   ABG_ASSERT(k & function_suppression::ADDED_FUNCTION_CHANGE_KIND
-	 || k & function_suppression::DELETED_FUNCTION_CHANGE_KIND);
+	     || k & function_suppression::DELETED_FUNCTION_CHANGE_KIND);
 
   // Check if the name and soname of the binaries match the current
   // suppr spect
