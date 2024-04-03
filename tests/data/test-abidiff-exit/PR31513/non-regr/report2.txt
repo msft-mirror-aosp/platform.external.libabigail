@@ -1,12 +1,3 @@
-Functions changes summary: 0 Removed, 1 Changed, 0 Added function
+Functions changes summary: 0 Removed, 0 Changed (1 filtered out), 0 Added function
 Variables changes summary: 0 Removed, 0 Changed, 0 Added variable
-
-1 function with some indirect sub-type change:
-
-  [C] 'function int foo(type&)' at test2-v0.cc:10:1 has some indirect sub-type changes:
-    parameter 1 of type 'type&' has sub-type changes:
-      in referenced type 'struct type' at test2-v1.cc:9:1:
-        type size hasn't changed
-        1 base class insertion:
-          struct base at test2-v1.cc:2:1
 

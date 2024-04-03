@@ -1331,7 +1331,7 @@ InOutSpec in_out_specs[] =
     "",
     "",
     "--no-default-suppression",
-    abigail::tools_utils::ABIDIFF_ABI_CHANGE,
+    abigail::tools_utils::ABIDIFF_OK,
     "data/test-abidiff-exit/PR31513/non-regr/report1.txt",
     "output/test-abidiff-exit/PR31513/non-regr/report1.txt"
   },
@@ -1346,7 +1346,7 @@ InOutSpec in_out_specs[] =
     "",
     "",
     "--no-default-suppression",
-    abigail::tools_utils::ABIDIFF_ABI_CHANGE,
+    abigail::tools_utils::ABIDIFF_OK,
     "data/test-abidiff-exit/PR31513/non-regr/report2.txt",
     "output/test-abidiff-exit/PR31513/non-regr/report2.txt"
   },

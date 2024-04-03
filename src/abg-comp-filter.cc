@@ -331,12 +331,12 @@ has_subtype_changes(const string_decl_base_sptr_map& f_data_members,
 		    diff_context_sptr ctxt)
 {
   // Now compare the offsets of the data members collected.
-  var_decl_sptr s_member;
   for (auto entry : f_data_members)
     {
       var_decl_sptr f_member = is_var_decl(entry.second);
       ABG_ASSERT(f_member);
 
+      var_decl_sptr s_member;
       auto i = s_data_members.find(entry.first);
       if (i == s_data_members.end())
 	{
