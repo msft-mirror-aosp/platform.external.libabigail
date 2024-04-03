@@ -760,6 +760,18 @@ static InOutSpec in_out_specs[] =
     "data/test-diff-pkg/wireshark/wireshark-cli-3.4.9-1.fc36.x86_64-self-check-report.txt",
     "output/test-diff-pkg/wireshark/wireshark-cli-3.4.9-1.fc36.x86_64-self-check-report.txt"
   } ,
+  {
+    "data/test-diff-pkg/PR29610/guestfs-tools-1.51.6-2.el9.s390x.rpm",
+    "data/test-diff-pkg/PR29610/guestfs-tools-1.51.6-2.el9.s390x.rpm",
+    "--self-check",
+    "",
+    "data/test-diff-pkg/PR29610/guestfs-tools-debuginfo-1.51.6-2.el9.s390x.rpm",
+    "data/test-diff-pkg/PR29610/guestfs-tools-debuginfo-1.51.6-2.el9.s390x.rpm",
+    "",
+    "",
+    "data/test-diff-pkg/PR29610/guestfs-tools-1.51.6-2.el9.s390x-self-check-report.txt",
+    "output/test-diff-pkg/PR29610/guestfs-tools-1.51.6-2.el9.s390x-self-check-report.txt"
+  },
 #endif // WITH_RPM_ZSTD
 #endif //WITH_RPM
 

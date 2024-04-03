@@ -55,6 +55,10 @@ using std::dynamic_pointer_cast;
 using std::vector;
 using std::istream;
 
+/// Convenience typedef for an unordered map of string to a vector of
+/// strings.
+typedef unordered_map<string, vector<string>> string_strings_map_type;
+
 class reader;
 
 static bool	read_is_declaration_only(xmlNodePtr, bool&);
@@ -93,7 +97,9 @@ read_elf_needed_from_input(reader& rdr, vector<string>& needed);
 static bool
 read_symbol_db_from_input(reader&			rdr,
 			  string_elf_symbols_map_sptr&	fn_symdb,
-			  string_elf_symbols_map_sptr&	var_symdb);
+			  string_elf_symbols_map_sptr&	var_symdb,
+			  string_strings_map_type&	non_resolved_fn_syms_aliases,
+			  string_strings_map_type&	non_resolved_var_syms_aliases);
 
 static translation_unit_sptr
 read_translation_unit_from_input(fe_iface& rdr);
@@ -103,6 +109,12 @@ build_ir_node_for_void_type(reader& rdr);
 
 static decl_base_sptr
 build_ir_node_for_void_pointer_type(reader& rdr);
+
+static void
+resolve_symbol_aliases(string_elf_symbols_map_sptr&	fn_syms,
+		       string_elf_symbols_map_sptr&	var_syms,
+		       string_strings_map_type&	non_resolved_fn_sym_aliases,
+		       string_strings_map_type&	non_resolved_var_sym_aliases);
 
 /// The ABIXML reader object.
 ///
@@ -1274,7 +1286,13 @@ public:
       var_sym_db(new string_elf_symbols_map_type);
 
     // Read the symbol databases.
-    read_symbol_db_from_input(*this, fn_sym_db, var_sym_db);
+    string_strings_map_type non_resolved_fn_syms_aliases, non_resolved_var_syms_aliases;
+    read_symbol_db_from_input(*this, fn_sym_db, var_sym_db,
+			      non_resolved_fn_syms_aliases,
+			      non_resolved_var_syms_aliases);
+    resolve_symbol_aliases(fn_sym_db, var_sym_db,
+			   non_resolved_fn_syms_aliases,
+			   non_resolved_var_syms_aliases);
 
     // Note that it's possible that both fn_sym_db and var_sym_db are nil,
     // due to potential suppression specifications.  That's fine.
@@ -1355,7 +1373,9 @@ static translation_unit_sptr get_or_read_and_add_translation_unit(reader&, xmlNo
 static translation_unit_sptr read_translation_unit_from_input(fe_iface&);
 static bool	read_symbol_db_from_input(reader&,
 					  string_elf_symbols_map_sptr&,
-					  string_elf_symbols_map_sptr&);
+					  string_elf_symbols_map_sptr&,
+					  string_strings_map_type&,
+					  string_strings_map_type&);
 static bool	read_location(const reader&, xmlNodePtr, location&);
 static bool	read_artificial_location(const reader&,
 					 xmlNodePtr, location&);
@@ -1395,7 +1415,8 @@ build_elf_symbol_from_reference(reader&, const xmlNodePtr);
 
 static bool
 build_elf_symbol_db(reader&, const xmlNodePtr, bool,
-		    string_elf_symbols_map_sptr&);
+		    string_elf_symbols_map_sptr&,
+		    string_strings_map_type&);
 
 static function_decl::parameter_sptr
 build_function_parameter (reader&, const xmlNodePtr);
@@ -1889,9 +1910,10 @@ read_translation_unit_from_input(fe_iface& iface)
 /// variable symbol databases.
 ///
 /// A function symbols database is an XML element named
-/// "elf-function-symbols" and a variable symbols database is an XML
-/// element named "elf-variable-symbols."  They contains "elf-symbol"
-/// XML elements.
+/// "elf-function-symbols" or "undefined-elf-function-symbols" and a
+/// variable symbols database is an XML element named
+/// "elf-variable-symbols." or "undefined-elf-variable-symbols".  They
+/// contains "elf-symbol" XML elements.
 ///
 /// @param rdr the reader to use for the parsing.
 ///
@@ -1901,11 +1923,41 @@ read_translation_unit_from_input(fe_iface& iface)
 /// @param var_symdb any resulting variable symbol database object, if
 /// elf-variable-symbols was present.
 ///
+/// @param non_resolved_fn_syms_aliases this is a map that associates
+/// a function symbol name N to a vector of alias symbol names that
+/// are aliases to N.  Normally, N is a function symbol that has
+/// aliases that are other symbols that are usually function symbols
+/// that should be found (or resolved) in @p fn_symdb.  If all symbol
+/// aliases resolve to symbols in @p fn_symdb then this map is empty.
+/// Otherwise, if these alias symbols are not found in @p fn_symbd,
+/// then they are stored in this map.  The caller of this function
+/// might then subsequently try to resolve these elf alias symbols to
+/// variable symbols found in @p var_symdb.  Note that a function
+/// symbol aliasing variable symbols is a feature found in ELF
+/// binaries emitted from the OCaml language on platforms like s390x
+/// or ppcle.
+///
+/// @param non_resolved_var_syms_aliases this is a map that associates
+/// a variable symbol name N to a vector of alias symbol names that
+/// are aliases to N.  Normally, N is a variable symbol that has
+/// aliases that are other symbols that are usually variable symbols
+/// that should be found (or resolved) in @p var_symdb.  If all symbol
+/// aliases resolve to symbols in @p var_symdb then this map is empty.
+/// Otherwise, if these alias symbols are not found in @p var_symbd,
+/// then they are stored in this map.  The caller of this function
+/// might then subsequently try to resolve these elf alias symbols to
+/// function symbols found in @p fn_symdb.  Note that a variable
+/// symbol aliasing function symbols is a feature found in ELF
+/// binaries emitted from the OCaml language on platforms like s390x
+/// or ppcle.
+///
 /// @return true upon successful parsing, false otherwise.
 static bool
 read_symbol_db_from_input(reader&			rdr,
 			  string_elf_symbols_map_sptr&	fn_symdb,
-			  string_elf_symbols_map_sptr&	var_symdb)
+			  string_elf_symbols_map_sptr&	var_symdb,
+			  string_strings_map_type&	non_resolved_fn_syms_aliases,
+			  string_strings_map_type&	non_resolved_var_syms_aliases)
 {
   xml::reader_sptr reader = rdr.get_libxml_reader();
   if (!reader)
@@ -1944,13 +1996,17 @@ read_symbol_db_from_input(reader&			rdr,
 	  return false;
 
 	if (has_fn_syms)
-	  build_elf_symbol_db(rdr, node, /*function_sym=*/true, fn_symdb);
+	  build_elf_symbol_db(rdr, node, /*function_sym=*/true, fn_symdb,
+			      non_resolved_fn_syms_aliases);
 	else if (has_undefined_fn_syms)
-	  build_elf_symbol_db(rdr, node, /*function_sym=*/true, fn_symdb);
+	  build_elf_symbol_db(rdr, node, /*function_sym=*/true, fn_symdb,
+			      non_resolved_fn_syms_aliases);
 	else if (has_var_syms)
-	  build_elf_symbol_db(rdr, node, /*function_sym=*/false, var_symdb);
+	  build_elf_symbol_db(rdr, node, /*function_sym=*/false, var_symdb,
+			      non_resolved_var_syms_aliases);
 	else if (has_undefined_var_syms)
-	  build_elf_symbol_db(rdr, node, /*function_sym=*/false, var_symdb);
+	  build_elf_symbol_db(rdr, node, /*function_sym=*/false, var_symdb,
+			      non_resolved_var_syms_aliases);
 
 	xmlTextReaderNext(reader.get());
       }
@@ -1975,13 +2031,17 @@ read_symbol_db_from_input(reader&			rdr,
 	  }
 
 	if (has_fn_syms)
-	  build_elf_symbol_db(rdr, n, /*function_sym=*/true, fn_symdb);
+	  build_elf_symbol_db(rdr, n, /*function_sym=*/true, fn_symdb,
+			      non_resolved_fn_syms_aliases);
 	else if (has_undefined_fn_syms)
-	  build_elf_symbol_db(rdr, n, /*function_sym=*/true, fn_symdb);
+	  build_elf_symbol_db(rdr, n, /*function_sym=*/true, fn_symdb,
+			      non_resolved_fn_syms_aliases);
 	else if (has_var_syms)
-	  build_elf_symbol_db(rdr, n, /*function_sym=*/false, var_symdb);
+	  build_elf_symbol_db(rdr, n, /*function_sym=*/false, var_symdb,
+			      non_resolved_var_syms_aliases);
 	else if (has_undefined_var_syms)
-	  build_elf_symbol_db(rdr, n, /*function_sym=*/false, var_symdb);
+	  build_elf_symbol_db(rdr, n, /*function_sym=*/false, var_symdb,
+			      non_resolved_var_syms_aliases);
 	else
 	  break;
       }
@@ -3329,12 +3389,22 @@ build_elf_symbol_from_reference(reader& rdr, const xmlNodePtr node)
 ///
 /// @param map a pointer to the map to fill with the symbol database.
 ///
+/// @param non_resolved_aliases this is a map that associates a
+/// function symbol name N to a vector of alias symbol names that are
+/// aliases to N.  Normally, N is a function symbol that has aliases
+/// that are other symbols that are usually function (resp variable)
+/// symbols that should be found (or resolved) in @p map.  If all
+/// symbol aliases resolve to symbols in @p map then this map is
+/// empty.  Otherwise, if these alias symbols are not found in @p map,
+/// then they are stored in this map.
+///
 /// @return true if some elf symbols were found.
 static bool
 build_elf_symbol_db(reader&				rdr,
 		    const xmlNodePtr			node,
 		    bool				function_syms,
-		    string_elf_symbols_map_sptr&	map)
+		    string_elf_symbols_map_sptr&	map,
+		    string_strings_map_type&		non_resolved_aliases)
 {
   string_elf_symbol_sptr_map_type id_sym_map;
 
@@ -3397,15 +3467,113 @@ build_elf_symbol_db(reader&				rdr,
 	    {
 	      string_elf_symbol_sptr_map_type::const_iterator i =
 	      id_sym_map.find(*alias);
-	      ABG_ASSERT(i != id_sym_map.end());
-	      ABG_ASSERT(i->second->is_main_symbol());
-
-	      x->second->get_main_symbol()->add_alias(i->second);
+	      if (i == id_sym_map.end())
+		// This symbol aliases a symbol that is not (yet)
+		// found in the set of symbols built so far.  So let's
+		// record this information in the "symbol ->
+		// non-resolved-symbol-aliases" map so that the
+		// aliases can be resolved later.
+		non_resolved_aliases[x->second->get_name()].push_back(*alias);
+	      else
+		{
+		  ABG_ASSERT(i->second->is_main_symbol());
+		  x->second->get_main_symbol()->add_alias(i->second);
+		}
 	    }
 	}
     }
 
   return true;
+}
+
+/// Resolve symbol aliases to their target symbols.
+///
+/// The aliases to be resolved are found in the @p
+/// non_resolved_fn_syms_aliases and @p non_resolved_var_syms_aliases
+/// parameters.
+///
+/// @param fn_syms the target function symbols to consider.
+///
+/// @param var_syms the target variable symbols to consider.
+///
+/// @param non_resolved_fn_syms_aliases is a map that associates the
+/// name of a function symbol F to its alias symbols.  The alias
+/// symbols are either function symbols (as is what is generally the
+/// case) to be found in @p fn_syms or can be variable symbols (as is
+/// sometimes the case for the OCaml language on s390x and ppcle, for
+/// instance) to be found in @p var_syms.
+///
+/// @param non_resolved_var_syms_aliases is a map that associates the
+/// name of a variable symbol V to its alias symbols.  The alias
+/// symbols are either variable symbols (as is what is generally the
+/// case) to be found in @p var_syms or can be variable symbols (as is
+/// sometimes the case for the OCaml language on s390x and ppcle, for
+/// instance) to be found in @p fn_syms.
+static void
+resolve_symbol_aliases(string_elf_symbols_map_sptr& fn_syms,
+		       string_elf_symbols_map_sptr& var_syms,
+		       string_strings_map_type& non_resolved_fn_sym_aliases,
+		       string_strings_map_type& non_resolved_var_sym_aliases)
+{
+  for (auto& entry : non_resolved_fn_sym_aliases)
+    {
+      auto i = fn_syms->find(entry.first);
+      ABG_ASSERT(i != fn_syms->end());
+      // Symbol to build the aliases for.
+      elf_symbol_sptr sym = i->second.front();
+      ABG_ASSERT(sym);
+      sym = sym->get_main_symbol();
+      elf_symbol_sptr alias_sym;
+      for (string& alias : entry.second)
+	{
+	  auto fn_a = fn_syms->find(alias);
+	  if (fn_a == fn_syms->end())
+	    {
+	      // no function symbol alias found.  Let's see if a
+	      // variable symbol aliases this function symbol.
+	      auto var_a = var_syms->find(alias);
+	      ABG_ASSERT(var_a != var_syms->end());
+	      alias_sym = var_a->second.front();
+	      ABG_ASSERT(alias_sym);
+	    }
+	  else
+	    {
+	      alias_sym = fn_a->second.front();
+	      ABG_ASSERT(alias_sym);
+	    }
+	  sym->add_alias(alias_sym);
+	}
+    }
+
+    for (auto& entry : non_resolved_var_sym_aliases)
+      {
+	auto i = var_syms->find(entry.first);
+	ABG_ASSERT(i != var_syms->end());
+	// Symbol to build the aliases for.
+	elf_symbol_sptr sym = i->second.front();
+	ABG_ASSERT(sym);
+	sym = sym->get_main_symbol();
+	elf_symbol_sptr alias_sym;
+	for (string& alias : entry.second)
+	  {
+	    auto var_a = var_syms->find(alias);
+	    if (var_a == var_syms->end())
+	      {
+		// no variable symbol alias found.  Let's see if a
+		// function symbol aliases this variable symbol.
+		auto fn_a = fn_syms->find(alias);
+		ABG_ASSERT(fn_a != fn_syms->end());
+		alias_sym = fn_a->second.front();
+		ABG_ASSERT(alias_sym);
+	      }
+	    else
+	      {
+		alias_sym = var_a->second.front();
+		ABG_ASSERT(alias_sym);
+	      }
+	    sym->add_alias(alias_sym);
+	  }
+      }
 }
 
 /// Build a function parameter from a 'parameter' xml element node.

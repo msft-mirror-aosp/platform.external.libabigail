@@ -2396,6 +2396,10 @@ test-diff-pkg/wireshark/wireshark-cli-3.4.9-1.fc36.x86_64-self-check-report.txt 
 test-diff-pkg/wireshark/wireshark-cli-3.4.9-1.fc36.x86_64.rpm \
 test-diff-pkg/wireshark/wireshark-cli-debuginfo-3.4.9-1.fc36.x86_64.rpm \
 test-diff-pkg/wireshark/wireshark-debuginfo-3.4.9-1.fc36.x86_64.rpm \
+test-diff-pkg/PR29610/guestfs-tools-1.51.6-2.el9.s390x-self-check-report.txt \
+test-diff-pkg/PR29610/guestfs-tools-1.51.6-2.el9.s390x.rpm \
+test-diff-pkg/PR29610/guestfs-tools-debuginfo-1.51.6-2.el9.s390x.rpm \
+\
 test-diff-pkg-ctf/tarpkg-0-dir1.tar \
 test-diff-pkg-ctf/dirpkg-0-report-0.txt \
 test-diff-pkg-ctf/isl-debuginfo-0.16.1-7.x86_64.rpm \
