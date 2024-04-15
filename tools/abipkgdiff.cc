@@ -1483,7 +1483,7 @@ compare(const elf_file&		elf1,
 				   opts.show_all_types);
     ABG_ASSERT(reader);
 
-    reader->add_suppressions(priv_types_supprs1);
+    reader->add_suppressions(supprs);
     set_generic_options(*reader, opts);
 
     corpus1 = reader->read_corpus(c1_status);
@@ -1664,6 +1664,9 @@ compare(const elf_file&		elf1,
 ///
 /// @param debug_dir the debug directory of the ELF file.
 ///
+/// @param priv_types_supprs type suppression specification that
+/// suppress private types.
+///
 /// @param opts the options passed the user.
 ///
 /// @param env the environment to use for the comparison.
@@ -1681,6 +1684,7 @@ compare(const elf_file&		elf1,
 static abidiff_status
 compare_to_self(const elf_file&		elf,
 		const string&			debug_dir,
+		const suppressions_type&	priv_types_supprs,
 		const options&			opts,
 		abigail::ir::environment&	env,
 		corpus_diff_sptr&		diff,
@@ -1707,6 +1711,14 @@ compare_to_self(const elf_file&		elf,
       << elf.path
       << " ...\n";
 
+  ctxt.reset(new diff_context);
+  set_diff_context_from_opts(ctxt, opts);
+  suppressions_type& supprs = ctxt->suppressions();
+
+  // Add the opaque type suppressions set to the set of suppressions.
+  for (auto& suppr : priv_types_supprs)
+    supprs.push_back(suppr);
+
   corpus_sptr corp;
   abigail::elf_based_reader_sptr reader;
   {
@@ -1726,6 +1738,7 @@ compare_to_self(const elf_file&		elf,
 				   opts.show_all_types);
     ABG_ASSERT(reader);
 
+    reader->add_suppressions(supprs);
     corp = reader->read_corpus(c_status);
 
     if (!(c_status & abigail::fe_iface::STATUS_OK))
@@ -2291,6 +2304,7 @@ public:
       abigail::fe_iface::STATUS_UNKNOWN;
 
     status |= compare_to_self(args->elf1, args->debug_dir1,
+			      args->private_types_suppr1,
 			      args->opts, env, diff, ctxt, out,
 			      &detailed_status);
 
@@ -2915,7 +2929,7 @@ compare_prepared_userspace_packages(package& first_package,
       if (iter != second_package.path_elf_file_sptr_map().end()
 	  && (iter->second->type == abigail::elf::ELF_TYPE_DSO
 	      || iter->second->type == abigail::elf::ELF_TYPE_EXEC
-              || iter->second->type == abigail::elf::ELF_TYPE_PI_EXEC
+	      || iter->second->type == abigail::elf::ELF_TYPE_PI_EXEC
 	      || iter->second->type == abigail::elf::ELF_TYPE_RELOCATABLE))
 	{
 	  if (iter->second->type != abigail::elf::ELF_TYPE_RELOCATABLE)
@@ -3069,7 +3083,6 @@ self_compare_prepared_userspace_package(package&	pkg,
       pkg.debug_info_packages().front()->extracted_dir_path() +
       relative_debug_path;
 
-  suppressions_type supprs;
   for (map<string, elf_file_sptr>::iterator it =
 	 pkg.path_elf_file_sptr_map().begin();
        it != pkg.path_elf_file_sptr_map().end();
@@ -3078,7 +3091,7 @@ self_compare_prepared_userspace_package(package&	pkg,
       if (it != pkg.path_elf_file_sptr_map().end()
 	  && (it->second->type == abigail::elf::ELF_TYPE_DSO
 	      || it->second->type == abigail::elf::ELF_TYPE_EXEC
-              || it->second->type == abigail::elf::ELF_TYPE_PI_EXEC
+	      || it->second->type == abigail::elf::ELF_TYPE_PI_EXEC
 	      || it->second->type == abigail::elf::ELF_TYPE_RELOCATABLE))
 	{
 	  if (it->second->type != abigail::elf::ELF_TYPE_RELOCATABLE)
@@ -3086,10 +3099,12 @@ self_compare_prepared_userspace_package(package&	pkg,
 	      compare_args_sptr args
 		(new compare_args(*it->second,
 				  debug_dir,
-				  supprs,
+				  create_private_types_suppressions
+				  (pkg, opts),
 				  *it->second,
 				  debug_dir,
-				  supprs,
+				  create_private_types_suppressions
+				  (pkg, opts),
 				  opts));
 	      self_compare_task_sptr t(new self_compare_task(args));
 	      self_compare_tasks.push_back(t);

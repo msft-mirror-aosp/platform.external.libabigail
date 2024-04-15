@@ -2396,6 +2396,36 @@ InOutSpec in_out_specs[] =
     "data/test-diff-suppr/test-has-strict-flexible-array-data-member-conversion-report-2.txt",
     "output/test-diff-suppr/test-has-strict-flexible-array-data-member-conversion-report-2.txt",
   },
+  {
+    "data/test-diff-suppr/PR31646/test-PR31646-v0.o",
+    "data/test-diff-suppr/PR31646/test-PR31646-v1.o",
+    "",
+    "",
+    "",
+    "--no-default-suppression ",
+    "data/test-diff-suppr/PR31646/test-PR31646-result-1.txt",
+    "output/test-diff-suppr/PR31646/test-PR31646-result-1.txt",
+  },
+  {
+    "data/test-diff-suppr/PR31646/test-PR31646-v0.o",
+    "data/test-diff-suppr/PR31646/test-PR31646-v1.o",
+    "",
+    "",
+    "data/test-diff-suppr/PR31646/test-PR31646.abignore",
+    "--no-default-suppression ",
+    "data/test-diff-suppr/PR31646/test-PR31646-result-2.txt",
+    "output/test-diff-suppr/PR31646/test-PR31646-result-2.txt",
+  },
+  {
+    "data/test-diff-suppr/PR31646/test-PR31646-v0.o",
+    "data/test-diff-suppr/PR31646/test-PR31646-v1.o",
+    "",
+    "",
+    "data/test-diff-suppr/PR31646/test-PR31646.2.abignore",
+    "--no-default-suppression ",
+    "data/test-diff-suppr/PR31646/test-PR31646-result-3.txt",
+    "output/test-diff-suppr/PR31646/test-PR31646-result-3.txt",
+  },
   // This should be the last entry
   {NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL}
 };

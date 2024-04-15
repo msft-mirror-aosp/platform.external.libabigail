@@ -2620,7 +2620,7 @@ diff::is_suppressed(bool &is_private_type) const
     if (d->suppresses_diff(this))
       {
 	do_suppress = true;
-	if (is_private_type_suppr_spec(d))
+	if (is_opaque_type_suppr_spec(d))
 	  is_private_type = true;
 	break;
       }

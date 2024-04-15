@@ -2003,7 +2003,7 @@ handle_file_entry(const string& file_path,
 {
   if (!suppr)
     {
-      suppr.reset(new type_suppression(get_private_types_suppr_spec_label(),
+      suppr.reset(new type_suppression(get_opaque_types_suppr_spec_label(),
 				       /*type_name_regexp=*/"",
 				       /*type_name=*/""));
 

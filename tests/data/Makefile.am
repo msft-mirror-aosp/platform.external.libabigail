@@ -2033,6 +2033,15 @@ test-diff-suppr/test-has-data-member-inserted-at-3-v0.c \
 test-diff-suppr/test-has-data-member-inserted-at-3-v0.o \
 test-diff-suppr/test-has-data-member-inserted-at-3-v1.c \
 test-diff-suppr/test-has-data-member-inserted-at-3-v1.o \
+test-diff-suppr/PR31646/test-PR31646.2.abignore \
+test-diff-suppr/PR31646/test-PR31646.abignore \
+test-diff-suppr/PR31646/test-PR31646-result-1.txt \
+test-diff-suppr/PR31646/test-PR31646-result-2.txt \
+test-diff-suppr/PR31646/test-PR31646-result-3.txt \
+test-diff-suppr/PR31646/test-PR31646-v0.cc \
+test-diff-suppr/PR31646/test-PR31646-v0.o \
+test-diff-suppr/PR31646/test-PR31646-v1.cc \
+test-diff-suppr/PR31646/test-PR31646-v1.o \
 \
 test-lookup-syms/test0.cc		\
 test-lookup-syms/test0.o		\

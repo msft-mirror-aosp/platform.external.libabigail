@@ -242,7 +242,8 @@ The potential properties of this sections are listed below:
 
  Define a label for the section.  A label is just an informative
  string that might be used by the tool to refer to a type suppression
- in error messages.
+ in error messages.  There can also be some special label names that
+ make the suppression system behave a certain way.
 
 
 * ``soname_regexp``
@@ -390,8 +391,17 @@ The potential properties of this sections are listed below:
  ABI being analyzed.  This property makes its enclosing suppression
  specification to be applied in the :ref:`early suppression
  specification mode <early_suppression_mode_label>`.  The net effect
- is that it potentially reduces the memory used to represent the ABI
- being analyzed.
+ is that it potentially reduces the amount of memory used to represent
+ the ABI being analyzed.
+
+ Please note that for ``struct``, ``class`` or``enum`` types matching
+ a suppression specification with this property having a value set to
+ "yes" (or to "true"), if the specification also has a ``label``
+ property with a value set to ``libabigail::OPAQUE_TYPE_LABEL``, then
+ the type is transformed into an opaque type, rather than being just
+ dropped on the floor.  That also reduces the amount of memory used to
+ represent the ABI being analyzed, but with potentially less
+ disruption in the resulting ABI representation.
 
  Please note that for this property to be effective, the enclosing
  suppression specification must have at least one of the following
@@ -665,10 +675,22 @@ changes, unless the ``has_size_changes`` property is set to ``yes``.
 
    ``label`` ``=`` <some-value>
 
- Define a label for the section.  A label is just an informative
- string that might be used by a tool to refer to a type suppression in
- error messages.
+ Define a label for the section.  In general, a label is just an
+ informative string that might be used by a tool to refer to a type
+ suppression in error messages.
 
+ Note however that there are some special label values that can
+ trigger a special kind of behavior.  Below are those special label
+ values:
+
+   * ``libabigail::OPAQUE_TYPE_LABEL``: A struct, class or enum type
+     that matches a ``[suppress_type]`` section with this label
+     property value is going to be replaced by an opaque type of the
+     same kind.  Note that an opaque type is essentially a
+     declaration-only type, thus with no member.  Also note that for a
+     ``[suppress_type]`` section with this label to trigger the
+     transformation of a type into an opaque type, the section must
+     have the ``drop`` property value set to ``yes|true``.
 
 * ``name``
 

@@ -949,13 +949,13 @@ suppression_matches_soname_or_filename(const string& soname,
 				       const suppression_base& suppr);
 
 const char*
-get_private_types_suppr_spec_label();
+get_opaque_types_suppr_spec_label();
 
 bool
-is_private_type_suppr_spec(const type_suppression&);
+is_opaque_type_suppr_spec(const type_suppression&);
 
 bool
-is_private_type_suppr_spec(const suppression_sptr& s);
+is_opaque_type_suppr_spec(const suppression_sptr& s);
 
 bool
 suppression_can_match(const fe_iface&,

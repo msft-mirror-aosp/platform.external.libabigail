@@ -15259,9 +15259,9 @@ variable_is_suppressed(const reader&		rdr,
 ///
 /// @param type_die the DIE that designates the type to consider.
 ///
-/// @param type_is_private out parameter.  If this function returns
+/// @param type_is_opaque out parameter.  If this function returns
 /// true (the type @p type_die is suppressed) and if the type was
-/// suppressed because it's private then this parameter is set to
+/// suppressed because it's opaque then this parameter is set to
 /// true.
 ///
 /// @return true iff the type designated by the DIE @p type_die, in
@@ -15271,7 +15271,7 @@ static bool
 type_is_suppressed(const reader& rdr,
 		   const scope_decl* scope,
 		   Dwarf_Die *type_die,
-		   bool &type_is_private)
+		   bool &type_is_opaque)
 {
   if (type_die == 0
       || (dwarf_tag(type_die) != DW_TAG_enumeration_type
@@ -15288,7 +15288,7 @@ type_is_suppressed(const reader& rdr,
   return suppr::is_type_suppressed(rdr,
 				   qualified_name,
 				   type_location,
-				   type_is_private,
+				   type_is_opaque,
 				   /*require_drop_property=*/true);
 }
 
@@ -15310,8 +15310,8 @@ type_is_suppressed(const reader& rdr,
 		   const scope_decl* scope,
 		   Dwarf_Die *type_die)
 {
-  bool type_is_private = false;
-  return type_is_suppressed(rdr, scope, type_die, type_is_private);
+  bool type_is_opaque = false;
+  return type_is_suppressed(rdr, scope, type_die, type_is_opaque);
 }
 
 /// Get the opaque version of a type that was suppressed because it's
@@ -15355,8 +15355,6 @@ get_opaque_version_of_type(reader	&rdr,
   string type_name, linkage_name;
   location type_location;
   die_loc_and_name(rdr, type_die, type_location, type_name, linkage_name);
-  if (!type_location)
-    return result;
 
   string qualified_name = build_qualified_name(scope, type_name);
 
@@ -15874,10 +15872,10 @@ build_ir_node_from_die(reader&	rdr,
 
     case DW_TAG_enumeration_type:
       {
-	bool type_is_private = false;
+	bool type_is_opaque = false;
 	bool type_suppressed =
-	  type_is_suppressed(rdr, scope, die, type_is_private);
-	if (type_suppressed && type_is_private)
+	  type_is_suppressed(rdr, scope, die, type_is_opaque);
+	if (type_suppressed && type_is_opaque)
 	  {
 	    // The type is suppressed because it's private.  If other
 	    // non-suppressed and declaration-only instances of this
@@ -15906,11 +15904,11 @@ build_ir_node_from_die(reader&	rdr,
     case DW_TAG_class_type:
     case DW_TAG_structure_type:
       {
-	bool type_is_private = false;
+	bool type_is_opaque = false;
 	bool type_suppressed=
-	  type_is_suppressed(rdr, scope, die, type_is_private);
+	  type_is_suppressed(rdr, scope, die, type_is_opaque);
 
-	if (type_suppressed && type_is_private)
+	if (type_suppressed && type_is_opaque)
 	  {
 	    // The type is suppressed because it's private.  If other
 	    // non-suppressed and declaration-only instances of this
