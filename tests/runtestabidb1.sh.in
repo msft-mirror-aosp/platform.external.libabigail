@@ -31,6 +31,9 @@ function clean_env
 trap "clean_env" EXIT
 
 git init $gitdir
+cd $gitdir
+git config  user.email "john@tester.doe.com"
+git config  user.name "John Tester Doe"
 
 # Run a quick test against the local distribution, presumed via debuginfod
 unset DEBUGINFOD_VERBOSE DEBUGINFOD_PROGRESS
