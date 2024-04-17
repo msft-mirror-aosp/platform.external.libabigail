@@ -1,3 +1,76 @@
+2.5
+===
+Dodji Seketeli (55):
+      configure: Bump development version to 2.5
+      Bug 31045 - Don't try setting translation unit for unique types
+      suppression: Add "has_strict_flexible_array_data_member_conversion" property
+      abilint: Support --annotate
+      abilint: Alphabetically sort programs options
+      Improve type naming
+      Bug 30260 - Support pointer-to-member type
+      Bump abixml version to 2.3
+      Bump LIBABIGAIL_SO_CURRENT version to 4
+      Bug 31236 - Fix removing a member declaration from its scope
+      Bug 31279 - Acknowledge that opaque types are always decl-only
+      Remove python3-mock dependency and use unittest.mock instead
+      abidw: Fix indentation
+      ir: Fix wording of several comments
+      ir: Avoid duplicates when reading member functions
+      dwarf-reader: Avoid duplicating union members
+      dwarf-reader: Fix detection of C language DIEs
+      writer: Avoid emitting a canonical type twice
+      writer: Don't forget data members when emitting referenced types
+      ir: Introduce a missing IR kind for subrange types
+      ir: Cache internal name for several types
+      dwarf-reader,corpus: Use interned string to lookup corpus interfaces by ID.
+      dwarf-reader: Bug 31377 - Fix the IR for zero length arrays
+      PR25409-librte_bus_dpaa.so.20.0.abi: Update to 2.3
+      btr-reader: Fix wording typo
+      ir,{btf,ctf,dwarf}-reader: Rename {subrange_type,array_type_def}::is_infinite.
+      test-alt-dwarf-file.cc: Fix test result accounting
+      test-abicomat.cc: Don't show details about PASSing tests.
+      ir: Fix indentation
+      ir,corpus,comparison: Const-iffy the access to corpus interfaces
+      abicompat: Port this to the multi-front-end architecture
+      ir: Use linkage name to sort virtual function members
+      dwarf-reader, ir: Add member fns to exported corpus fns after c14n
+      dwarf-reader: Fix DIE origin handling & scope getting
+      tests/data/test-diff-pkg: Update dpkg related reference output
+      ir,dwarf-reader: Better handle inline-ness setting or detection
+      comparison: Better sort function difference report
+      ir,dwarf-reader: Peel const-qualifier from const this pointers
+      dwarf-reader: Support creating functions from DW_TAG_inlined_subroutine
+      abidw: Add a -o short option for --out-file
+      tools-utils.cc: Fix potential crash when testing for CTF debug info
+      Represent undefined corpus interfaces to analyze app compatibility
+      Factorize elf-reader::{variable,function}_symbol_is_exported into symtab
+      Add support for undefined symbols in the BTF reader
+      Emit & read undefined interfaces to & from ABIXML
+      abicompat: Fix exit code in weak mode
+      ir: Fix Emacs C++ mode header
+      comparison: Fix typo
+      suppression: Fix indentation
+      abidiff: Fix indentation of help string
+      Bug 31513 - abidiff considers data members moved to base class as harmful
+      comparison: Fix erroneous detection of deleted anonymous data members
+      Bug 31513 - Fix fallout of initial patch
+      Bug 29160 - support fn symbol aliasing a var symbol
+      Bug 31646: Fix type suppression tactics for webkit2gtk3
+      tests/runtestabidb?.sh.in: Fix git initialization
+      configure: Add option to disable abidb
+
+Frank Ch. Eigler (2):
+      abidb: Introduce a tool to manage the ABI of a Linux distribution
+      abidb: drop the TODO items from the python script
+
+Giuliano Procida (1):
+      website: doxygen: set PROJECT_NAME to libabigail
+
+Mark Wielaard (2):
+      Fix ABG_ASSERT in build_ir_node_from_die for DW_TAG_member
+      Recognize EM_RISCV in e_machine_to_string
+
+
 2.4
 ===
 Dmitry V. Levin (1):
