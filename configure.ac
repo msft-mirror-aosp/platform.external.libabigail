@@ -182,6 +182,12 @@ AC_ARG_ENABLE([fedabipkgdiff],
 	      ENABLE_FEDABIPKGDIFF=$enableval,
 	      ENABLE_FEDABIPKGDIFF=auto)
 
+AC_ARG_ENABLE(abidb,
+	      AS_HELP_STRING([--enable-abidb=yes|no|auto],
+			     [enable the support of the abidb tool (default is auto)]),
+	      ENABLE_ABIDB=$enableval,
+	      ENABLE_ABIDB=auto)
+
 AC_ARG_ENABLE([python3],
 	      AS_HELP_STRING([--enable-python3=yes|no|auto],
 			     [enable running abigail tools with python3 (default is auto)]),
@@ -817,8 +823,7 @@ except koji.ConfigurationError:
 fi
 
 dnl abidb checks
-ENABLE_ABIDB=no
-if test x$PYTHON3_INTERPRETER != xno; then
+if test x$PYTHON3_INTERPRETER != xno -a x$ENABLE_ABIDB != xno; then
   AX_CHECK_PYTHON_MODULES([git libarchive],
 			  [$PYTHON],
 			  [FOUND_ALL_PYTHON_MODULES=yes],
@@ -830,6 +835,8 @@ if test x$PYTHON3_INTERPRETER != xno; then
   else
     ENABLE_ABIDB=yes
   fi
+else
+    AC_MSG_NOTICE([disabling abidb])
 fi
 AM_CONDITIONAL(ENABLE_ABIDB, test x$ENABLE_ABIDB = xyes)
 
