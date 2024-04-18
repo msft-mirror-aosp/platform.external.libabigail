@@ -42,6 +42,7 @@ ABG_END_EXPORT_DECLARATIONS
 
 namespace abigail
 {
+/// Namespace of the reader for the CTF debug information
 namespace ctf
 {
 using std::dynamic_pointer_cast;
@@ -1671,8 +1672,11 @@ fill_ctf_section(const Elf_Scn *elf_section, ctf_sect_t *ctf_section)
 /// from a given ELF file.
 ///
 /// @param elf_path the patch of some ELF file.
+///
+/// @param debug_info_root_paths the paths to where to find the debug
+/// info.
+///
 /// @param env a libabigail IR environment.
-
 elf_based_reader_sptr
 create_reader(const std::string& elf_path,
 	      const vector<char**>& debug_info_root_paths,
@@ -1692,16 +1696,8 @@ create_reader(const std::string& elf_path,
 /// @param elf_path the path to the elf file the context is to be used
 /// for.
 ///
-/// @param environment the environment used by the current context.
-/// This environment contains resources needed by the reader and by
-/// the types and declarations that are to be created later.  Note
-/// that ABI artifacts that are to be compared all need to be created
-/// within the same environment.
-///
-/// Please also note that the life time of this environment object
-/// must be greater than the life time of the resulting @ref
-/// reader the context uses resources that are allocated in the
-/// environment.
+/// @param debug_info_root_paths the paths pointing to where to find
+/// the debug info.
 void
 reset_reader(elf_based_reader&		rdr,
 	     const std::string&	elf_path,

@@ -23,6 +23,8 @@
 
 namespace abigail
 {
+
+/// Namespace of the reader for the CTF debug information.
 namespace ctf
 {
 

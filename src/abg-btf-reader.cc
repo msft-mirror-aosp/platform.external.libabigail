@@ -35,6 +35,7 @@ namespace abigail
 {
 using namespace ir;
 
+/// Namespace of the reader for the BTF debug information.
 namespace btf
 {
 
