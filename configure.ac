@@ -824,16 +824,27 @@ fi
 
 dnl abidb checks
 if test x$PYTHON3_INTERPRETER != xno -a x$ENABLE_ABIDB != xno; then
-  AX_CHECK_PYTHON_MODULES([git libarchive],
+  AX_CHECK_PYTHON_MODULES([git],
 			  [$PYTHON],
 			  [FOUND_ALL_PYTHON_MODULES=yes],
 			  [FOUND_ALL_PYTHON_MODULES=no])
 
   if test x$FOUND_ALL_PYTHON_MODULES = xno; then
     AC_MSG_NOTICE([missing python modules: $MISSING_PYTHON_MODULES])
-    AC_MSG_NOTICE([disabling abidb as a result])
+    AC_MSG_WARN([disabling abidb as a result])
+    ENABLE_ABIDB=no
   else
     ENABLE_ABIDB=yes
+    dnl search for optional modules, just for autoconf reporting purposes
+    AX_CHECK_PYTHON_MODULES([libarchive],
+			    [$PYTHON],
+			    [FOUND_ALL_OPTIONAL_PYTHON_MODULES=yes],
+			    [FOUND_ALL_OPTIONAL_PYTHON_MODULES=no])
+      if test x$FOUND_ALL_OPTIONAL_PYTHON_MODULES = xno; then
+        AC_MSG_WARN([missing optional python modules for abidb: $MISSING_PYTHON_MODULES])
+    else
+	AC_MSG_NOTICE([found all optional python modules for abidb])
+    fi
   fi
 else
     AC_MSG_NOTICE([disabling abidb])

@@ -23,7 +23,11 @@ import re
 import ast
 import os
 import glob
-import libarchive
+try:
+    import libarchive
+    enable_libarchive=True
+except:
+    enable_libarchive=False
 
 
 # globals
@@ -156,9 +160,10 @@ def main() -> list[str]:
     parser.add_argument('--timeout',type=int,help='limit abidw/abicompat runtime (seconds)',default=0)
     parser.add_argument('--submit',nargs='*',type=str,default=[],
                         help='submit abidw of given binaries to abidb')
-    parser.add_argument('--archive','-Z',metavar='EXT=CMD',
-                        type=str,help='submit binaries from archives with given extension & decoder',
-                        default=[],action='append') # like debuginfod(8)
+    if enable_libarchive:
+        parser.add_argument('--archive','-Z',metavar='EXT=CMD',
+                            type=str,help='submit binaries from archives with given extension & decoder',
+                            default=[],action='append') # like debuginfod(8)
     parser.add_argument('--sysroot',type=str,help='remove given sysroot prefix from submitted file names',default=None)
     parser.add_argument('--filter',type=str,help='submit only binaries matching given wildcard',default=r'/lib.*\.so') # sub-version suffixes will be flattened into SONAME
     # --sysroot=PATH subtract this from SUBMIT paths
@@ -208,14 +213,15 @@ def main() -> list[str]:
         logging.info(f'checked out distrobranch {args.distrobranch} files {numfiles}')
 
         ra = {}
-        for entry in args.archive: # parse / accumulate -Z EXT=CMD bits
-            extcmd = entry.split('=')
-            ext = extcmd[0]
-            if len(extcmd) == 1:
-                cmd = "cat" # default: pass through to libarchive
-            else:
-                cmd = "=".join(extcmd[1:]) # the rest of the command, filling other ='s back in
-            ra["."+ext] = cmd
+        if enable_libarchive:
+            for entry in args.archive: # parse / accumulate -Z EXT=CMD bits
+                extcmd = entry.split('=')
+                ext = extcmd[0]
+                if len(extcmd) == 1:
+                    cmd = "cat" # default: pass through to libarchive
+                else:
+                    cmd = "=".join(extcmd[1:]) # the rest of the command, filling other ='s back in
+                    ra["."+ext] = cmd
 
 
         def submit_file_generator(args):
@@ -230,6 +236,7 @@ def main() -> list[str]:
                         ln = submit
                     yield (None, ln, pn) # must be a plain file # XXX or ldconfig-created symlink, ugh
                 else: # an archive!
+                    assert enable_libarchive
                     cmd = ra[ext]
                     if (cmd == "cat"): # short-circuit this
                         with libarchive.file_reader(submit) as archive:
