@@ -1,8 +1,8 @@
 #!/bin/sh
 # SPDX-License-Identifier: Apache-2.0 WITH LLVM-exception
 
-oldyear=2022
-newyear=2023
+oldyear=2023
+newyear=2024
 
 for dir in src include tools tests; do
     for ext in cc h; do
