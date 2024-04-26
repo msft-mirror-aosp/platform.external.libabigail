@@ -3784,12 +3784,12 @@
     <typedef-decl name='DBusMutex' type-id='type-id-227' filepath='/tmp/legendre/spack-stage/spack-stage-hI99PR/dbus-1.9.0/dbus/dbus-threads.h' line='41' column='1' id='type-id-224'/>
     <!-- typedef DBusCondVar DBusCondVar -->
     <typedef-decl name='DBusCondVar' type-id='type-id-226' filepath='/tmp/legendre/spack-stage/spack-stage-hI99PR/dbus-1.9.0/dbus/dbus-threads.h' line='43' column='1' id='type-id-222'/>
-    <!-- DBusCondVar* () -->
+    <!-- DBusCondVar* (void) -->
     <function-type size-in-bits='64' id='type-id-212'>
       <!-- DBusCondVar* -->
       <return type-id='type-id-223'/>
     </function-type>
-    <!-- DBusMutex* () -->
+    <!-- DBusMutex* (void) -->
     <function-type size-in-bits='64' id='type-id-213'>
       <!-- DBusMutex* -->
       <return type-id='type-id-225'/>
@@ -3835,7 +3835,7 @@
       <!-- void -->
       <return type-id='type-id-24'/>
     </function-type>
-    <!-- void () -->
+    <!-- void (void) -->
     <function-type size-in-bits='64' id='type-id-221'>
       <!-- void -->
       <return type-id='type-id-24'/>

@@ -10369,6 +10369,11 @@
       <parameter type-id='type-id-2103'/>
       <return type-id='type-id-1'/>
     </function-type>
+    <function-type size-in-bits='64' id='type-id-1330'>
+      <parameter type-id='type-id-45'/>
+      <parameter type-id='type-id-45'/>
+      <return type-id='type-id-23'/>
+    </function-type>
     <function-type size-in-bits='64' id='type-id-1413'>
       <parameter type-id='type-id-636'/>
       <parameter type-id='type-id-1391'/>
@@ -10377,11 +10382,6 @@
     <function-type size-in-bits='64' id='type-id-1415'>
       <parameter type-id='type-id-1391'/>
       <return type-id='type-id-489'/>
-    </function-type>
-    <function-type size-in-bits='64' id='type-id-1330'>
-      <parameter type-id='type-id-45'/>
-      <parameter type-id='type-id-45'/>
-      <return type-id='type-id-23'/>
     </function-type>
     <function-type size-in-bits='64' id='type-id-1886'>
       <parameter type-id='type-id-2772'/>

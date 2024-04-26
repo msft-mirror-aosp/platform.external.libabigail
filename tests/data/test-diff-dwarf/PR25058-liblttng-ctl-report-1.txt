@@ -97,7 +97,7 @@ Variables changes summary: 0 Removed, 0 Changed, 3 Added variables
                   pointed to type 'struct lttng_action' changed, as being reported
           type of 'action_serialize_cb serialize' changed:
             underlying type 'ssize_t (*)(lttng_action*, char*)' changed:
-              in pointed to type 'function type typedef ssize_t (lttng_action*, char*)':
+              in pointed to type 'function type ssize_t (lttng_action*, char*)':
                 return type changed:
                   entity changed from 'typedef ssize_t' to compatible type 'int'
                     type name changed from 'long int' to 'int'
@@ -153,7 +153,7 @@ Variables changes summary: 0 Removed, 0 Changed, 3 Added variables
                       unqualified underlying type 'struct lttng_condition' changed, as being reported
             type of 'condition_serialize_cb serialize' changed:
               underlying type 'ssize_t (*)(const lttng_condition*, char*)' changed:
-                in pointed to type 'function type typedef ssize_t (const lttng_condition*, char*)':
+                in pointed to type 'function type ssize_t (const lttng_condition*, char*)':
                   return type changed:
                     entity changed from 'typedef ssize_t' to compatible type 'int'
                       type name changed from 'long int' to 'int'
@@ -270,7 +270,7 @@ Variables changes summary: 0 Removed, 0 Changed, 3 Added variables
             type of 'lttng_condition_type type' changed, as reported earlier
             type of 'evaluation_serialize_cb serialize' changed:
               underlying type 'ssize_t (*)(lttng_evaluation*, char*)' changed:
-                in pointed to type 'function type typedef ssize_t (lttng_evaluation*, char*)':
+                in pointed to type 'function type ssize_t (lttng_evaluation*, char*)':
                   return type changed:
                     entity changed from 'typedef ssize_t' to compatible type 'int'
                       type name changed from 'long int' to 'int'

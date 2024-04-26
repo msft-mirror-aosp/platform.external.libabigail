@@ -1183,22 +1183,10 @@ annotate(const function_type_sptr&	function_type,
   ostream& o = ctxt.get_ostream();
 
   do_indent(o, indent);
+
   o << "<!-- "
-    << xml::escape_xml_comment(get_type_name(function_type->get_return_type()))
-    << " (";
-
-  vector<shared_ptr<function_decl::parameter> >::const_iterator pi =
-    function_type->get_first_non_implicit_parm();
-
-  for (; pi != function_type->get_parameters().end(); ++pi)
-    {
-      o << xml::escape_xml_comment((*pi)->get_type_name());
-      // emit a comma after a param type, unless it's the last one
-      if (distance(pi, function_type->get_parameters().end()) > 1)
-	o << ", ";
-    }
-  o << ") -->\n";
-
+    << xml::escape_xml_comment(get_function_type_name(function_type))
+    << " -->\n";
   return true;
 }
 

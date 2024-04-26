@@ -86,7 +86,7 @@
       <!-- int -->
       <return type-id='type-id-7'/>
     </function-decl>
-    <!-- void (int) -->
+    <!-- void (X::*) (int) -->
     <function-type size-in-bits='64' method-class-id='type-id-5' id='type-id-14'>
       <!-- implicit parameter of type 'X*' -->
       <parameter type-id='type-id-16' is-artificial='yes'/>

@@ -345,7 +345,7 @@
                                                                                               pointed to type 'typedef RedChannelClient' changed at red_channel.h:136:1, as reported earlier
                                                                                       type of 'channel_handle_migrate_data_get_serial_proc handle_migrate_data_get_serial' changed:
                                                                                         underlying type 'uint64_t (*)(RedChannelClient*, uint32_t, void*)' changed:
-                                                                                          in pointed to type 'function type typedef uint64_t (RedChannelClient*, uint32_t, void*)':
+                                                                                          in pointed to type 'function type uint64_t (RedChannelClient*, uint32_t, void*)':
                                                                                             parameter 1 of type 'RedChannelClient*' has sub-type changes:
                                                                                               pointed to type 'typedef RedChannelClient' changed at red_channel.h:136:1, as reported earlier
                                                                                 type of 'ClientCbs client_cbs' changed:

@@ -9331,7 +9331,7 @@ get_function_type_name(const function_type& fn_type,
     : fn_type.get_return_type();
   const environment& env = fn_type.get_environment();
 
-  o <<  get_pretty_representation(return_type, internal) << " ";
+  o <<  get_type_name(return_type, /*qualified=*/true, internal) << " ";
   stream_pretty_representation_of_fn_parms(fn_type, o,
 					   /*qualified=*/true,
 					   internal);
@@ -9423,7 +9423,7 @@ get_method_type_name(const method_type& fn_type,
   const environment& env = fn_type.get_environment();
 
   if (return_type)
-    o << return_type->get_cached_pretty_representation(internal);
+    o << get_type_name(return_type, /*qualified=*/true, internal);
   else
     // There are still some abixml files out there in which "void"
     // can be expressed as an empty type.

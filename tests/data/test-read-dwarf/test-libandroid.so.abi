@@ -3526,7 +3526,7 @@
     <pointer-type-def type-id='cf650c06' size-in-bits='32' id='9a5725d5'/>
     <pointer-type-def type-id='f74edd67' size-in-bits='32' id='ad0b765a'/>
     <pointer-type-def type-id='bb3a3bd3' size-in-bits='32' id='61b688b0'/>
-    <pointer-type-def type-id='4861351d' size-in-bits='32' id='3f4a2861'/>
+    <pointer-type-def type-id='b6c7f6ce' size-in-bits='32' id='3f4a2861'/>
     <pointer-type-def type-id='ccb79e1e' size-in-bits='32' id='5cd6fe7f'/>
     <pointer-type-def type-id='69749345' size-in-bits='32' id='322ef220'/>
     <pointer-type-def type-id='846957af' size-in-bits='32' id='3b95ca3e'/>
@@ -9874,11 +9874,6 @@
       <parameter type-id='2aee9912'/>
       <return type-id='973e3c3f'/>
     </function-type>
-    <function-type size-in-bits='32' id='4861351d'>
-      <parameter type-id='fae49a1f'/>
-      <parameter type-id='96f3d089'/>
-      <return type-id='c36bf49e'/>
-    </function-type>
     <function-type size-in-bits='32' id='3ed49d13'>
       <parameter type-id='fae49a1f'/>
       <parameter type-id='70de5c42'/>
@@ -10294,6 +10289,11 @@
       <parameter type-id='b43b1271'/>
       <parameter type-id='d4a328b7'/>
       <return type-id='c2fb5303'/>
+    </function-type>
+    <function-type size-in-bits='32' id='b6c7f6ce'>
+      <parameter type-id='fae49a1f'/>
+      <parameter type-id='96f3d089'/>
+      <return type-id='c36bf49e'/>
     </function-type>
     <function-type size-in-bits='32' id='31804c0e'>
       <parameter type-id='fae49a1f'/>

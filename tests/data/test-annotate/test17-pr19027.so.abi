@@ -2796,7 +2796,7 @@
     <typedef-decl name='hb_glyph_extents_t' type-id='type-id-222' filepath='/tmp/legendre/spack-stage/spack-stage-04g73E/harfbuzz-0.9.37/src/hb-font.h' line='89' column='1' id='type-id-240'/>
     <!-- typedef hb_blob_t* (*)(hb_face_t*, hb_tag_t, void*) hb_reference_table_func_t -->
     <typedef-decl name='hb_reference_table_func_t' type-id='type-id-241' filepath='/tmp/legendre/spack-stage/spack-stage-04g73E/harfbuzz-0.9.37/src/hb-face.h' line='50' column='1' id='type-id-205'/>
-    <!-- typedef typedef hb_bool_t (hb_shape_plan_t*, hb_font_t*, hb_buffer_t*, const hb_feature_t*, unsigned int) hb_shape_func_t -->
+    <!-- typedef hb_bool_t (hb_shape_plan_t*, hb_font_t*, hb_buffer_t*, const hb_feature_t*, unsigned int) hb_shape_func_t -->
     <typedef-decl name='hb_shape_func_t' type-id='type-id-242' filepath='/tmp/legendre/spack-stage/spack-stage-04g73E/harfbuzz-0.9.37/src/hb-shaper-private.hh' line='36' column='1' id='type-id-243'/>
     <!-- typedef hb_shape_plan_t hb_shape_plan_t -->
     <typedef-decl name='hb_shape_plan_t' type-id='type-id-223' filepath='/tmp/legendre/spack-stage/spack-stage-04g73E/harfbuzz-0.9.37/src/hb-shape-plan.h' line='39' column='1' id='type-id-244'/>
