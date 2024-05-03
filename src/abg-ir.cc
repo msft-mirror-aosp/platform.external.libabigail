@@ -29380,7 +29380,12 @@ ir_node_visitor::mark_type_node_as_visited(type_base *p)
     return;
 
   type_base* canonical_type = p->get_naked_canonical_type();
-  ABG_ASSERT(canonical_type);
+  if (is_non_canonicalized_type(p))
+    {
+      ABG_ASSERT(!canonical_type);
+      canonical_type = p;
+    }
+    ABG_ASSERT(canonical_type);
 
   size_t canonical_ptr_value = reinterpret_cast<size_t>(canonical_type);
   priv_->visited_ir_nodes.insert(canonical_ptr_value);
@@ -29414,6 +29419,11 @@ ir_node_visitor::type_node_has_been_visited(type_base* p) const
     return false;
 
   type_base *canonical_type = p->get_naked_canonical_type();
+  if (is_non_canonicalized_type(p))
+    {
+      ABG_ASSERT(!canonical_type);
+      canonical_type = p;
+    }
   ABG_ASSERT(canonical_type);
 
   size_t ptr_value = reinterpret_cast<size_t>(canonical_type);
