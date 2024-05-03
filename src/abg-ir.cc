@@ -3589,6 +3589,15 @@ struct type_topo_comp
     if (s1 != s2)
       return s1 < s2;
 
+    if (method_type* m_f = is_method_type(peeled_f))
+      if (method_type* m_s = is_method_type(peeled_s))
+      {
+	// If two method types have the same name (textual
+	// representation), make the non-static one come first.
+	if (m_f->get_is_for_static_method() != m_s->get_is_for_static_method())
+	  return m_f->get_is_for_static_method() < m_s->get_is_for_static_method();
+      }
+
     decl_base *fd = is_decl(f);
     decl_base *sd = is_decl(s);
 
@@ -21663,7 +21672,7 @@ function_type::get_first_non_implicit_parm() const
 
   parameters::const_iterator i = get_parameters().begin();
 
-  if (is_method)
+  if (is_method && (*i)->get_is_artificial())
     ++i;
 
   return i;
@@ -22008,6 +22017,43 @@ method_type::set_is_const(bool f)
 bool
 method_type::get_is_const() const
 {return priv_->is_const;}
+
+/// Test if the current method type is for a static method or not.
+///
+/// @return true iff the current method_type denotes a the type of a
+/// static method.
+bool
+method_type::get_is_for_static_method() const
+{
+  // Let's see if the first parameter is artificial and is a pointer
+  // to an instance of the same class type as the current class.
+  function_decl::parameter_sptr first_parm;
+  if (!get_parameters().empty())
+    first_parm = get_parameters()[0];
+  if (!first_parm)
+    return true;
+  if (!first_parm->get_is_artificial())
+    return true;
+
+  type_base_sptr this_ptr_type = first_parm->get_type();
+  // Sometimes, the type of the "this" pointer is "const class_type*
+  // const".  Meaning that the "this pointer" itself is const
+  // qualified.  So let's get the underlying non-qualified pointer.
+  this_ptr_type = peel_qualified_type(this_ptr_type);
+  if (!is_pointer_type(this_ptr_type))
+    return true;
+
+  type_base_sptr candidate_class_type =
+    is_pointer_type(this_ptr_type)->get_pointed_to_type();
+  candidate_class_type = peel_qualified_type(candidate_class_type);
+  if (is_class_type(candidate_class_type)
+      && get_type_name(candidate_class_type) == get_type_name(get_class_type()))
+    // At this point, we are sure we are looking at a *non-static*
+    // method.
+    return false;
+
+  return true;
+}
 
 /// The destructor of method_type
 method_type::~method_type()

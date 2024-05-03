@@ -1336,7 +1336,7 @@
           <return type-id='type-id-14'/>
         </function-decl>
       </member-function>
-      <member-function access='private' vtable-offset='0'>
+      <member-function access='private' const='yes' vtable-offset='0'>
         <!-- const char* vtkCommunicator::GetClassNameInternal() -->
         <function-decl name='GetClassNameInternal' mangled-name='_ZNK15vtkCommunicator20GetClassNameInternalEv' filepath='/tmp/legendre/spack-stage/spack-stage-R_crTC/VTK-6.1.0/Parallel/Core/vtkCommunicator.h' line='49' column='1' visibility='default' binding='global' size-in-bits='64'>
           <!-- implicit parameter of type 'const vtkCommunicator*' -->
@@ -1369,7 +1369,7 @@
           <return type-id='type-id-14'/>
         </function-decl>
       </member-function>
-      <member-function access='protected' vtable-offset='15'>
+      <member-function access='protected' const='yes' vtable-offset='15'>
         <!-- vtkObjectBase* vtkCommunicator::NewInstanceInternal() -->
         <function-decl name='NewInstanceInternal' mangled-name='_ZNK15vtkCommunicator19NewInstanceInternalEv' filepath='/tmp/legendre/spack-stage/spack-stage-R_crTC/VTK-6.1.0/Parallel/Core/vtkCommunicator.h' line='49' column='1' visibility='default' binding='global' size-in-bits='64'>
           <!-- implicit parameter of type 'const vtkCommunicator*' -->
@@ -4218,7 +4218,7 @@
           <return type-id='type-id-14'/>
         </function-decl>
       </member-function>
-      <member-function access='private' vtable-offset='0'>
+      <member-function access='private' const='yes' vtable-offset='0'>
         <!-- const char* vtkDummyCommunicator::GetClassNameInternal() -->
         <function-decl name='GetClassNameInternal' mangled-name='_ZNK20vtkDummyCommunicator20GetClassNameInternalEv' filepath='/tmp/legendre/spack-stage/spack-stage-R_crTC/VTK-6.1.0/Parallel/Core/vtkDummyCommunicator.h' line='34' column='1' visibility='default' binding='global' size-in-bits='64'>
           <!-- implicit parameter of type 'const vtkDummyCommunicator*' -->
@@ -4251,7 +4251,7 @@
           <return type-id='type-id-14'/>
         </function-decl>
       </member-function>
-      <member-function access='protected' vtable-offset='15'>
+      <member-function access='protected' const='yes' vtable-offset='15'>
         <!-- vtkObjectBase* vtkDummyCommunicator::NewInstanceInternal() -->
         <function-decl name='NewInstanceInternal' mangled-name='_ZNK20vtkDummyCommunicator19NewInstanceInternalEv' filepath='/tmp/legendre/spack-stage/spack-stage-R_crTC/VTK-6.1.0/Parallel/Core/vtkDummyCommunicator.h' line='34' column='1' visibility='default' binding='global' size-in-bits='64'>
           <!-- implicit parameter of type 'const vtkDummyCommunicator*' -->
@@ -4395,7 +4395,7 @@
           <return type-id='type-id-14'/>
         </function-decl>
       </member-function>
-      <member-function access='private' vtable-offset='0'>
+      <member-function access='private' const='yes' vtable-offset='0'>
         <!-- const char* vtkDummyController::GetClassNameInternal() -->
         <function-decl name='GetClassNameInternal' mangled-name='_ZNK18vtkDummyController20GetClassNameInternalEv' filepath='/tmp/legendre/spack-stage/spack-stage-R_crTC/VTK-6.1.0/Parallel/Core/vtkDummyController.h' line='33' column='1' visibility='default' binding='global' size-in-bits='64'>
           <!-- implicit parameter of type 'const vtkDummyController*' -->
@@ -4428,7 +4428,7 @@
           <return type-id='type-id-14'/>
         </function-decl>
       </member-function>
-      <member-function access='protected' vtable-offset='15'>
+      <member-function access='protected' const='yes' vtable-offset='15'>
         <!-- vtkObjectBase* vtkDummyController::NewInstanceInternal() -->
         <function-decl name='NewInstanceInternal' mangled-name='_ZNK18vtkDummyController19NewInstanceInternalEv' filepath='/tmp/legendre/spack-stage/spack-stage-R_crTC/VTK-6.1.0/Parallel/Core/vtkDummyController.h' line='33' column='1' visibility='default' binding='global' size-in-bits='64'>
           <!-- implicit parameter of type 'const vtkDummyController*' -->
@@ -4950,7 +4950,7 @@
           <return type-id='type-id-14'/>
         </function-decl>
       </member-function>
-      <member-function access='private' vtable-offset='0'>
+      <member-function access='private' const='yes' vtable-offset='0'>
         <!-- const char* vtkMultiProcessController::GetClassNameInternal() -->
         <function-decl name='GetClassNameInternal' mangled-name='_ZNK25vtkMultiProcessController20GetClassNameInternalEv' filepath='/tmp/legendre/spack-stage/spack-stage-R_crTC/VTK-6.1.0/Parallel/Core/vtkMultiProcessController.h' line='65' column='1' visibility='default' binding='global' size-in-bits='64'>
           <!-- implicit parameter of type 'const vtkMultiProcessController*' -->
@@ -4983,7 +4983,7 @@
           <return type-id='type-id-14'/>
         </function-decl>
       </member-function>
-      <member-function access='protected' vtable-offset='15'>
+      <member-function access='protected' const='yes' vtable-offset='15'>
         <!-- vtkObjectBase* vtkMultiProcessController::NewInstanceInternal() -->
         <function-decl name='NewInstanceInternal' mangled-name='_ZNK25vtkMultiProcessController19NewInstanceInternalEv' filepath='/tmp/legendre/spack-stage/spack-stage-R_crTC/VTK-6.1.0/Parallel/Core/vtkMultiProcessController.h' line='65' column='1' visibility='default' binding='global' size-in-bits='64'>
           <!-- implicit parameter of type 'const vtkMultiProcessController*' -->
@@ -5428,7 +5428,7 @@
           <return type-id='type-id-14'/>
         </function-decl>
       </member-function>
-      <member-function access='private' vtable-offset='0'>
+      <member-function access='private' const='yes' vtable-offset='0'>
         <!-- const char* vtkFieldDataSerializer::GetClassNameInternal() -->
         <function-decl name='GetClassNameInternal' mangled-name='_ZNK22vtkFieldDataSerializer20GetClassNameInternalEv' filepath='/tmp/legendre/spack-stage/spack-stage-R_crTC/VTK-6.1.0/Parallel/Core/vtkFieldDataSerializer.h' line='44' column='1' visibility='default' binding='global' size-in-bits='64'>
           <!-- implicit parameter of type 'const vtkFieldDataSerializer*' -->
@@ -5461,7 +5461,7 @@
           <return type-id='type-id-14'/>
         </function-decl>
       </member-function>
-      <member-function access='protected' vtable-offset='15'>
+      <member-function access='protected' const='yes' vtable-offset='15'>
         <!-- vtkObjectBase* vtkFieldDataSerializer::NewInstanceInternal() -->
         <function-decl name='NewInstanceInternal' mangled-name='_ZNK22vtkFieldDataSerializer19NewInstanceInternalEv' filepath='/tmp/legendre/spack-stage/spack-stage-R_crTC/VTK-6.1.0/Parallel/Core/vtkFieldDataSerializer.h' line='44' column='1' visibility='default' binding='global' size-in-bits='64'>
           <!-- implicit parameter of type 'const vtkFieldDataSerializer*' -->
@@ -6614,7 +6614,7 @@
           <return type-id='type-id-14'/>
         </function-decl>
       </member-function>
-      <member-function access='private' vtable-offset='0'>
+      <member-function access='private' const='yes' vtable-offset='0'>
         <!-- const char* vtkProcess::GetClassNameInternal() -->
         <function-decl name='GetClassNameInternal' mangled-name='_ZNK10vtkProcess20GetClassNameInternalEv' filepath='/tmp/legendre/spack-stage/spack-stage-R_crTC/VTK-6.1.0/Parallel/Core/vtkProcess.h' line='46' column='1' visibility='default' binding='global' size-in-bits='64'>
           <!-- implicit parameter of type 'const vtkProcess*' -->
@@ -6647,7 +6647,7 @@
           <return type-id='type-id-14'/>
         </function-decl>
       </member-function>
-      <member-function access='protected' vtable-offset='15'>
+      <member-function access='protected' const='yes' vtable-offset='15'>
         <!-- vtkObjectBase* vtkProcess::NewInstanceInternal() -->
         <function-decl name='NewInstanceInternal' mangled-name='_ZNK10vtkProcess19NewInstanceInternalEv' filepath='/tmp/legendre/spack-stage/spack-stage-R_crTC/VTK-6.1.0/Parallel/Core/vtkProcess.h' line='46' column='1' visibility='default' binding='global' size-in-bits='64'>
           <!-- implicit parameter of type 'const vtkProcess*' -->
@@ -6822,7 +6822,7 @@
           <return type-id='type-id-14'/>
         </function-decl>
       </member-function>
-      <member-function access='private' vtable-offset='0'>
+      <member-function access='private' const='yes' vtable-offset='0'>
         <!-- const char* vtkProcessGroup::GetClassNameInternal() -->
         <function-decl name='GetClassNameInternal' mangled-name='_ZNK15vtkProcessGroup20GetClassNameInternalEv' filepath='/tmp/legendre/spack-stage/spack-stage-R_crTC/VTK-6.1.0/Parallel/Core/vtkProcessGroup.h' line='54' column='1' visibility='default' binding='global' size-in-bits='64'>
           <!-- implicit parameter of type 'const vtkProcessGroup*' -->
@@ -6855,7 +6855,7 @@
           <return type-id='type-id-14'/>
         </function-decl>
       </member-function>
-      <member-function access='protected' vtable-offset='15'>
+      <member-function access='protected' const='yes' vtable-offset='15'>
         <!-- vtkObjectBase* vtkProcessGroup::NewInstanceInternal() -->
         <function-decl name='NewInstanceInternal' mangled-name='_ZNK15vtkProcessGroup19NewInstanceInternalEv' filepath='/tmp/legendre/spack-stage/spack-stage-R_crTC/VTK-6.1.0/Parallel/Core/vtkProcessGroup.h' line='54' column='1' visibility='default' binding='global' size-in-bits='64'>
           <!-- implicit parameter of type 'const vtkProcessGroup*' -->
@@ -8871,7 +8871,7 @@
           <return type-id='type-id-14'/>
         </function-decl>
       </member-function>
-      <member-function access='private' vtable-offset='0'>
+      <member-function access='private' const='yes' vtable-offset='0'>
         <!-- const char* vtkSocketCommunicator::GetClassNameInternal() -->
         <function-decl name='GetClassNameInternal' mangled-name='_ZNK21vtkSocketCommunicator20GetClassNameInternalEv' filepath='/tmp/legendre/spack-stage/spack-stage-R_crTC/VTK-6.1.0/Parallel/Core/vtkSocketCommunicator.h' line='58' column='1' visibility='default' binding='global' size-in-bits='64'>
           <!-- implicit parameter of type 'const vtkSocketCommunicator*' -->
@@ -8904,7 +8904,7 @@
           <return type-id='type-id-14'/>
         </function-decl>
       </member-function>
-      <member-function access='protected' vtable-offset='15'>
+      <member-function access='protected' const='yes' vtable-offset='15'>
         <!-- vtkObjectBase* vtkSocketCommunicator::NewInstanceInternal() -->
         <function-decl name='NewInstanceInternal' mangled-name='_ZNK21vtkSocketCommunicator19NewInstanceInternalEv' filepath='/tmp/legendre/spack-stage/spack-stage-R_crTC/VTK-6.1.0/Parallel/Core/vtkSocketCommunicator.h' line='58' column='1' visibility='default' binding='global' size-in-bits='64'>
           <!-- implicit parameter of type 'const vtkSocketCommunicator*' -->
@@ -10493,7 +10493,7 @@
           <return type-id='type-id-14'/>
         </function-decl>
       </member-function>
-      <member-function access='private' vtable-offset='0'>
+      <member-function access='private' const='yes' vtable-offset='0'>
         <!-- const char* vtkSocketController::GetClassNameInternal() -->
         <function-decl name='GetClassNameInternal' mangled-name='_ZNK19vtkSocketController20GetClassNameInternalEv' filepath='/tmp/legendre/spack-stage/spack-stage-R_crTC/VTK-6.1.0/Parallel/Core/vtkSocketController.h' line='50' column='1' visibility='default' binding='global' size-in-bits='64'>
           <!-- implicit parameter of type 'const vtkSocketController*' -->
@@ -10526,7 +10526,7 @@
           <return type-id='type-id-14'/>
         </function-decl>
       </member-function>
-      <member-function access='protected' vtable-offset='15'>
+      <member-function access='protected' const='yes' vtable-offset='15'>
         <!-- vtkObjectBase* vtkSocketController::NewInstanceInternal() -->
         <function-decl name='NewInstanceInternal' mangled-name='_ZNK19vtkSocketController19NewInstanceInternalEv' filepath='/tmp/legendre/spack-stage/spack-stage-R_crTC/VTK-6.1.0/Parallel/Core/vtkSocketController.h' line='50' column='1' visibility='default' binding='global' size-in-bits='64'>
           <!-- implicit parameter of type 'const vtkSocketController*' -->
@@ -10749,7 +10749,7 @@
           <return type-id='type-id-14'/>
         </function-decl>
       </member-function>
-      <member-function access='private' vtable-offset='0'>
+      <member-function access='private' const='yes' vtable-offset='0'>
         <!-- const char* vtkSubCommunicator::GetClassNameInternal() -->
         <function-decl name='GetClassNameInternal' mangled-name='_ZNK18vtkSubCommunicator20GetClassNameInternalEv' filepath='/tmp/legendre/spack-stage/spack-stage-R_crTC/VTK-6.1.0/Parallel/Core/vtkSubCommunicator.h' line='54' column='1' visibility='default' binding='global' size-in-bits='64'>
           <!-- implicit parameter of type 'const vtkSubCommunicator*' -->
@@ -10782,7 +10782,7 @@
           <return type-id='type-id-14'/>
         </function-decl>
       </member-function>
-      <member-function access='protected' vtable-offset='15'>
+      <member-function access='protected' const='yes' vtable-offset='15'>
         <!-- vtkObjectBase* vtkSubCommunicator::NewInstanceInternal() -->
         <function-decl name='NewInstanceInternal' mangled-name='_ZNK18vtkSubCommunicator19NewInstanceInternalEv' filepath='/tmp/legendre/spack-stage/spack-stage-R_crTC/VTK-6.1.0/Parallel/Core/vtkSubCommunicator.h' line='54' column='1' visibility='default' binding='global' size-in-bits='64'>
           <!-- implicit parameter of type 'const vtkSubCommunicator*' -->
@@ -11454,7 +11454,7 @@
           <return type-id='type-id-14'/>
         </function-decl>
       </member-function>
-      <member-function access='private' vtable-offset='0'>
+      <member-function access='private' const='yes' vtable-offset='0'>
         <!-- const char* vtkSubGroup::GetClassNameInternal() -->
         <function-decl name='GetClassNameInternal' mangled-name='_ZNK11vtkSubGroup20GetClassNameInternalEv' filepath='/tmp/legendre/spack-stage/spack-stage-R_crTC/VTK-6.1.0/Parallel/Core/vtkSubGroup.h' line='51' column='1' visibility='default' binding='global' size-in-bits='64'>
           <!-- implicit parameter of type 'const vtkSubGroup*' -->
@@ -11487,7 +11487,7 @@
           <return type-id='type-id-14'/>
         </function-decl>
       </member-function>
-      <member-function access='protected' vtable-offset='15'>
+      <member-function access='protected' const='yes' vtable-offset='15'>
         <!-- vtkObjectBase* vtkSubGroup::NewInstanceInternal() -->
         <function-decl name='NewInstanceInternal' mangled-name='_ZNK11vtkSubGroup19NewInstanceInternalEv' filepath='/tmp/legendre/spack-stage/spack-stage-R_crTC/VTK-6.1.0/Parallel/Core/vtkSubGroup.h' line='51' column='1' visibility='default' binding='global' size-in-bits='64'>
           <!-- implicit parameter of type 'const vtkSubGroup*' -->

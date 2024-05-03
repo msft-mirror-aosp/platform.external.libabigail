@@ -43,7 +43,7 @@ Variable symbols changes summary: 0 Removed, 0 Added variable symbol not referen
   [D] 'function void Offload_Timer_Print(void)'
   [D] 'method void VarList::dump()'
   [D] 'method void VarList::table_copy(void*, int64_t)'
-  [D] 'method void VarList::table_patch_names(int64_t)'
+  [D] 'method void VarList::table_patch_names(void*, int64_t)'
   [D] 'method int64_t VarList::table_size(int64_t&)'
   [D] 'function void __arr_data_offset_and_length(const arr_desc*, int64_t&, int64_t&)'
   [D] 'function void __arr_desc_dump(const char*, const char*, const arr_desc*, bool)'

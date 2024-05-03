@@ -3527,6 +3527,8 @@ public:
 
   bool get_is_const() const;
 
+  bool get_is_for_static_method() const;
+
   virtual ~method_type();
 
   virtual string

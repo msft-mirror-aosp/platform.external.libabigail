@@ -6101,37 +6101,37 @@
         <data-member access='public'>
           <var-decl name='_M_pod_data' type-id='type-id-9' visibility='default' filepath='/usr/include/c++/4.9/functional' line='1780' column='1'/>
         </data-member>
-        <member-function access='public'>
+        <member-function access='public' static='yes'>
           <function-decl name='_M_access' mangled-name='_ZNSt9_Any_data9_M_accessEv' filepath='/usr/include/c++/4.9/functional' line='1766' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZNSt9_Any_data9_M_accessEv'>
             <parameter type-id='type-id-1502' is-artificial='yes'/>
             <return type-id='type-id-45'/>
           </function-decl>
         </member-function>
-        <member-function access='public' const='yes'>
+        <member-function access='public' static='yes'>
           <function-decl name='_M_access' mangled-name='_ZNKSt9_Any_data9_M_accessEv' filepath='/usr/include/c++/4.9/functional' line='1767' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZNKSt9_Any_data9_M_accessEv'>
             <parameter type-id='type-id-637' is-artificial='yes'/>
             <return type-id='type-id-45'/>
           </function-decl>
         </member-function>
-        <member-function access='public'>
+        <member-function access='public' static='yes'>
           <function-decl name='_M_access&lt;const std::type_info*&gt;' mangled-name='_ZNSt9_Any_data9_M_accessIPKSt9type_infoEERT_v' filepath='/usr/include/c++/4.9/functional' line='1771' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZNSt9_Any_data9_M_accessIPKSt9type_infoEERT_v'>
             <parameter type-id='type-id-1502' is-artificial='yes'/>
             <return type-id='type-id-2067'/>
           </function-decl>
         </member-function>
-        <member-function access='public'>
+        <member-function access='public' static='yes'>
           <function-decl name='_M_access&lt;mongo::Status (**)(mongo::InitializerContext*)&gt;' mangled-name='_ZNSt9_Any_data9_M_accessIPPFN5mongo6StatusEPNS1_18InitializerContextEEEERT_v' filepath='/usr/include/c++/4.9/functional' line='1771' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZNSt9_Any_data9_M_accessIPPFN5mongo6StatusEPNS1_18InitializerContextEEEERT_v'>
             <parameter type-id='type-id-1502' is-artificial='yes'/>
             <return type-id='type-id-1423'/>
           </function-decl>
         </member-function>
-        <member-function access='public' const='yes'>
+        <member-function access='public' static='yes'>
           <function-decl name='_M_access&lt;mongo::Status (*)(mongo::InitializerContext*)&gt;' mangled-name='_ZNKSt9_Any_data9_M_accessIPFN5mongo6StatusEPNS1_18InitializerContextEEEERKT_v' filepath='/usr/include/c++/4.9/functional' line='1776' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZNKSt9_Any_data9_M_accessIPFN5mongo6StatusEPNS1_18InitializerContextEEEERKT_v'>
             <parameter type-id='type-id-637' is-artificial='yes'/>
             <return type-id='type-id-1418'/>
           </function-decl>
         </member-function>
-        <member-function access='public'>
+        <member-function access='public' static='yes'>
           <function-decl name='_M_access&lt;mongo::Status (*)(mongo::InitializerContext*)&gt;' mangled-name='_ZNSt9_Any_data9_M_accessIPFN5mongo6StatusEPNS1_18InitializerContextEEEERT_v' filepath='/usr/include/c++/4.9/functional' line='1771' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZNSt9_Any_data9_M_accessIPFN5mongo6StatusEPNS1_18InitializerContextEEEERT_v'>
             <parameter type-id='type-id-1502' is-artificial='yes'/>
             <return type-id='type-id-1420'/>

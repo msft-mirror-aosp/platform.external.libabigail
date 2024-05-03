@@ -3519,7 +3519,7 @@
       </class-decl>
       <class-decl name='__anonymous_struct__21' is-anonymous='yes' visibility='default' is-declaration-only='yes' id='type-id-1548'/>
       <class-decl name='__anonymous_struct__22' is-anonymous='yes' visibility='default' is-declaration-only='yes' id='type-id-1521'>
-        <member-function access='public'>
+        <member-function access='public' const='yes'>
           <function-decl name='read&lt;mongo::Validated&lt;mongo::BSONObj&gt; &gt;' mangled-name='_ZNK5mongo14ConstDataRange4readINS_9ValidatedINS_7BSONObjEEEEENS_10StatusWithIT_EEm' filepath='src/mongo/base/data_range.h' line='83' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZNK5mongo14ConstDataRange4readINS_9ValidatedINS_7BSONObjEEEEENS_10StatusWithIT_EEm'>
             <parameter type-id='type-id-1571' is-artificial='yes'/>
             <parameter type-id='type-id-39' filepath='src/mongo/base/data_range.h' line='83' column='1'/>
@@ -4272,13 +4272,13 @@
       <class-decl name='__anonymous_struct__12' is-anonymous='yes' visibility='default' is-declaration-only='yes' id='type-id-1901'/>
       <class-decl name='__anonymous_struct__15' is-anonymous='yes' visibility='default' is-declaration-only='yes' id='type-id-1977'/>
       <class-decl name='__anonymous_struct__16' is-anonymous='yes' visibility='default' is-declaration-only='yes' id='type-id-1909'>
-        <member-function access='public'>
+        <member-function access='public' const='yes'>
           <function-decl name='numberLong' mangled-name='_ZNK5mongo11BSONElement10numberLongEv' filepath='src/mongo/bson/bsonelement.h' line='788' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZNK5mongo11BSONElement10numberLongEv'>
             <parameter type-id='type-id-1998' is-artificial='yes'/>
             <return type-id='type-id-19'/>
           </function-decl>
         </member-function>
-        <member-function access='private'>
+        <member-function access='private' const='yes'>
           <function-decl name='chk' mangled-name='_ZNK5mongo11BSONElement3chkENS_8BSONTypeE' filepath='src/mongo/bson/bsonelement.h' line='692' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZNK5mongo11BSONElement3chkENS_8BSONTypeE'>
             <parameter type-id='type-id-1998' is-artificial='yes'/>
             <parameter type-id='type-id-226' filepath='src/mongo/bson/bsonelement.h' line='692' column='1'/>

@@ -540,7 +540,7 @@
           <return type-id='type-id-21'/>
         </function-decl>
       </member-function>
-      <member-function access='private' vtable-offset='0'>
+      <member-function access='private' const='yes' vtable-offset='0'>
         <function-decl name='GetClassNameInternal' mangled-name='_ZNK17vtkImageDataLIC2D20GetClassNameInternalEv' filepath='/tmp/legendre/spack-stage/spack-stage-R_crTC/VTK-6.1.0/Rendering/LIC/vtkImageDataLIC2D.h' line='48' column='1' visibility='default' binding='global' size-in-bits='64'>
           <parameter type-id='type-id-22' is-artificial='yes'/>
           <return type-id='type-id-23'/>
@@ -561,7 +561,7 @@
           <return type-id='type-id-21'/>
         </function-decl>
       </member-function>
-      <member-function access='protected' vtable-offset='15'>
+      <member-function access='protected' const='yes' vtable-offset='15'>
         <function-decl name='NewInstanceInternal' mangled-name='_ZNK17vtkImageDataLIC2D19NewInstanceInternalEv' filepath='/tmp/legendre/spack-stage/spack-stage-R_crTC/VTK-6.1.0/Rendering/LIC/vtkImageDataLIC2D.h' line='48' column='1' visibility='default' binding='global' size-in-bits='64'>
           <parameter type-id='type-id-22' is-artificial='yes'/>
           <return type-id='type-id-26'/>
@@ -3709,7 +3709,7 @@
           <return type-id='type-id-21'/>
         </function-decl>
       </member-function>
-      <member-function access='private' vtable-offset='0'>
+      <member-function access='private' const='yes' vtable-offset='0'>
         <function-decl name='GetClassNameInternal' mangled-name='_ZNK33vtkImageDataLIC2DExtentTranslator20GetClassNameInternalEv' filepath='/tmp/legendre/spack-stage/spack-stage-R_crTC/VTK-6.1.0/Rendering/LIC/vtkImageDataLIC2DExtentTranslator.h' line='35' column='1' visibility='default' binding='global' size-in-bits='64'>
           <parameter type-id='type-id-244' is-artificial='yes'/>
           <return type-id='type-id-23'/>
@@ -3730,7 +3730,7 @@
           <return type-id='type-id-21'/>
         </function-decl>
       </member-function>
-      <member-function access='protected' vtable-offset='15'>
+      <member-function access='protected' const='yes' vtable-offset='15'>
         <function-decl name='NewInstanceInternal' mangled-name='_ZNK33vtkImageDataLIC2DExtentTranslator19NewInstanceInternalEv' filepath='/tmp/legendre/spack-stage/spack-stage-R_crTC/VTK-6.1.0/Rendering/LIC/vtkImageDataLIC2DExtentTranslator.h' line='35' column='1' visibility='default' binding='global' size-in-bits='64'>
           <parameter type-id='type-id-244' is-artificial='yes'/>
           <return type-id='type-id-245'/>
@@ -4625,7 +4625,7 @@
           <return type-id='type-id-21'/>
         </function-decl>
       </member-function>
-      <member-function access='private' vtable-offset='0'>
+      <member-function access='private' const='yes' vtable-offset='0'>
         <function-decl name='GetClassNameInternal' mangled-name='_ZNK28vtkLineIntegralConvolution2D20GetClassNameInternalEv' filepath='/tmp/legendre/spack-stage/spack-stage-R_crTC/VTK-6.1.0/Rendering/LIC/vtkLineIntegralConvolution2D.h' line='108' column='1' visibility='default' binding='global' size-in-bits='64'>
           <parameter type-id='type-id-357' is-artificial='yes'/>
           <return type-id='type-id-23'/>
@@ -4646,7 +4646,7 @@
           <return type-id='type-id-21'/>
         </function-decl>
       </member-function>
-      <member-function access='protected' vtable-offset='15'>
+      <member-function access='protected' const='yes' vtable-offset='15'>
         <function-decl name='NewInstanceInternal' mangled-name='_ZNK28vtkLineIntegralConvolution2D19NewInstanceInternalEv' filepath='/tmp/legendre/spack-stage/spack-stage-R_crTC/VTK-6.1.0/Rendering/LIC/vtkLineIntegralConvolution2D.h' line='108' column='1' visibility='default' binding='global' size-in-bits='64'>
           <parameter type-id='type-id-357' is-artificial='yes'/>
           <return type-id='type-id-358'/>
@@ -5412,7 +5412,7 @@
             <return type-id='type-id-461'/>
           </function-decl>
         </member-function>
-        <member-function access='public'>
+        <member-function access='public' const='yes'>
           <function-decl name='compare' mangled-name='_ZNKSs7compareEPKc' filepath='/usr/lib/gcc/x86_64-redhat-linux/4.4.7/../../../../include/c++/4.4.7/bits/basic_string.tcc' line='949' column='1' visibility='default' binding='global' size-in-bits='64'>
             <parameter type-id='type-id-419' is-artificial='yes'/>
             <parameter type-id='type-id-23'/>
@@ -5644,7 +5644,7 @@
           <return type-id='type-id-21'/>
         </function-decl>
       </member-function>
-      <member-function access='private' vtable-offset='0'>
+      <member-function access='private' const='yes' vtable-offset='0'>
         <function-decl name='GetClassNameInternal' mangled-name='_ZNK22vtkStructuredGridLIC2D20GetClassNameInternalEv' filepath='/tmp/legendre/spack-stage/spack-stage-R_crTC/VTK-6.1.0/Rendering/LIC/vtkStructuredGridLIC2D.h' line='54' column='1' visibility='default' binding='global' size-in-bits='64'>
           <parameter type-id='type-id-582' is-artificial='yes'/>
           <return type-id='type-id-23'/>
@@ -5665,7 +5665,7 @@
           <return type-id='type-id-21'/>
         </function-decl>
       </member-function>
-      <member-function access='protected' vtable-offset='15'>
+      <member-function access='protected' const='yes' vtable-offset='15'>
         <function-decl name='NewInstanceInternal' mangled-name='_ZNK22vtkStructuredGridLIC2D19NewInstanceInternalEv' filepath='/tmp/legendre/spack-stage/spack-stage-R_crTC/VTK-6.1.0/Rendering/LIC/vtkStructuredGridLIC2D.h' line='54' column='1' visibility='default' binding='global' size-in-bits='64'>
           <parameter type-id='type-id-582' is-artificial='yes'/>
           <return type-id='type-id-583'/>
@@ -6163,7 +6163,7 @@
           <return type-id='type-id-21'/>
         </function-decl>
       </member-function>
-      <member-function access='private' vtable-offset='0'>
+      <member-function access='private' const='yes' vtable-offset='0'>
         <function-decl name='GetClassNameInternal' mangled-name='_ZNK22vtkSurfaceLICComposite20GetClassNameInternalEv' filepath='/tmp/legendre/spack-stage/spack-stage-R_crTC/VTK-6.1.0/Rendering/LIC/vtkSurfaceLICComposite.h' line='41' column='1' visibility='default' binding='global' size-in-bits='64'>
           <parameter type-id='type-id-679' is-artificial='yes'/>
           <return type-id='type-id-23'/>
@@ -6184,7 +6184,7 @@
           <return type-id='type-id-21'/>
         </function-decl>
       </member-function>
-      <member-function access='protected' vtable-offset='15'>
+      <member-function access='protected' const='yes' vtable-offset='15'>
         <function-decl name='NewInstanceInternal' mangled-name='_ZNK22vtkSurfaceLICComposite19NewInstanceInternalEv' filepath='/tmp/legendre/spack-stage/spack-stage-R_crTC/VTK-6.1.0/Rendering/LIC/vtkSurfaceLICComposite.h' line='41' column='1' visibility='default' binding='global' size-in-bits='64'>
           <parameter type-id='type-id-679' is-artificial='yes'/>
           <return type-id='type-id-680'/>
@@ -6458,7 +6458,7 @@
           <return type-id='type-id-21'/>
         </function-decl>
       </member-function>
-      <member-function access='private' vtable-offset='0'>
+      <member-function access='private' const='yes' vtable-offset='0'>
         <function-decl name='GetClassNameInternal' mangled-name='_ZNK27vtkSurfaceLICDefaultPainter20GetClassNameInternalEv' filepath='/tmp/legendre/spack-stage/spack-stage-R_crTC/VTK-6.1.0/Rendering/LIC/vtkSurfaceLICDefaultPainter.h' line='40' column='1' visibility='default' binding='global' size-in-bits='64'>
           <parameter type-id='type-id-757' is-artificial='yes'/>
           <return type-id='type-id-23'/>
@@ -6486,7 +6486,7 @@
           <return type-id='type-id-21'/>
         </function-decl>
       </member-function>
-      <member-function access='protected' vtable-offset='15'>
+      <member-function access='protected' const='yes' vtable-offset='15'>
         <function-decl name='NewInstanceInternal' mangled-name='_ZNK27vtkSurfaceLICDefaultPainter19NewInstanceInternalEv' filepath='/tmp/legendre/spack-stage/spack-stage-R_crTC/VTK-6.1.0/Rendering/LIC/vtkSurfaceLICDefaultPainter.h' line='40' column='1' visibility='default' binding='global' size-in-bits='64'>
           <parameter type-id='type-id-757' is-artificial='yes'/>
           <return type-id='type-id-759'/>
@@ -7284,7 +7284,7 @@
           <return type-id='type-id-21'/>
         </function-decl>
       </member-function>
-      <member-function access='private' vtable-offset='0'>
+      <member-function access='private' const='yes' vtable-offset='0'>
         <function-decl name='GetClassNameInternal' mangled-name='_ZNK20vtkSurfaceLICPainter20GetClassNameInternalEv' filepath='/tmp/legendre/spack-stage/spack-stage-R_crTC/VTK-6.1.0/Rendering/LIC/vtkSurfaceLICPainter.h' line='70' column='1' visibility='default' binding='global' size-in-bits='64'>
           <parameter type-id='type-id-812' is-artificial='yes'/>
           <return type-id='type-id-23'/>
@@ -7312,7 +7312,7 @@
           <return type-id='type-id-21'/>
         </function-decl>
       </member-function>
-      <member-function access='protected' vtable-offset='15'>
+      <member-function access='protected' const='yes' vtable-offset='15'>
         <function-decl name='NewInstanceInternal' mangled-name='_ZNK20vtkSurfaceLICPainter19NewInstanceInternalEv' filepath='/tmp/legendre/spack-stage/spack-stage-R_crTC/VTK-6.1.0/Rendering/LIC/vtkSurfaceLICPainter.h' line='70' column='1' visibility='default' binding='global' size-in-bits='64'>
           <parameter type-id='type-id-812' is-artificial='yes'/>
           <return type-id='type-id-814'/>

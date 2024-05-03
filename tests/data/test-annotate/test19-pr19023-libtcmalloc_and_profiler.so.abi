@@ -13373,7 +13373,7 @@
             <return type-id='type-id-1792'/>
           </function-decl>
         </member-function>
-        <member-function access='public'>
+        <member-function access='public' const='yes'>
           <!-- int std::basic_string<char, std::char_traits<char>, std::allocator<char> >::compare(const char*) -->
           <function-decl name='compare' mangled-name='_ZNKSs7compareEPKc' filepath='/usr/lib/gcc/x86_64-redhat-linux/4.4.7/../../../../include/c++/4.4.7/bits/basic_string.tcc' line='949' column='1' visibility='default' binding='global' size-in-bits='64'>
             <!-- implicit parameter of type 'const std::basic_string<char, std::char_traits<char>, std::allocator<char> >*' -->

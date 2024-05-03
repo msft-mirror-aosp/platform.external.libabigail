@@ -462,6 +462,16 @@ static bool
 die_has_children(const Dwarf_Die* die);
 
 static bool
+fn_die_first_parameter_die(const Dwarf_Die* die, Dwarf_Die& first_parm_die);
+
+static bool
+member_fn_die_has_this_pointer(const reader& rdr,
+			       const Dwarf_Die* die,
+			       size_t where_offset,
+			       Dwarf_Die& class_die,
+			       Dwarf_Die& object_pointer_die);
+
+static bool
 die_this_pointer_from_object_pointer(Dwarf_Die* die,
 				     Dwarf_Die& this_pointer);
 
@@ -604,6 +614,9 @@ die_peel_qual_ptr(Dwarf_Die *die, Dwarf_Die& peeled_die);
 
 static bool
 die_peel_qualified(Dwarf_Die *die, Dwarf_Die& peeled_die);
+
+static bool
+die_peel_typedef(Dwarf_Die *die, Dwarf_Die& peeled_die);
 
 static bool
 die_function_type_is_method_type(const reader& rdr,
@@ -7304,6 +7317,135 @@ die_has_children(const Dwarf_Die* die)
   return false;
 }
 
+/// Get the DIE representing the first parameter of the function
+/// denoted by a given DIE.
+///
+/// @param die the function DIE to consider.  Note that if this
+/// parameter is neither a DW_TAG_subprogram nor a
+/// DW_TAG_subroutine_type, then the current process is aborted.
+///
+/// @param first_parm_die output parameter.  This is set to the DIE of
+/// the first parameter of the function denoted by @p die.  This
+/// output parameter is set iff the function returns true.
+///
+/// @return true iff the first parameter of the function denoted by @p
+/// die is returned in output parameter @p first_parm_die.
+static bool
+fn_die_first_parameter_die(const Dwarf_Die* die, Dwarf_Die& first_parm_die)
+{
+  if (!die)
+    return false;
+
+  int tag = dwarf_tag(const_cast<Dwarf_Die*>(die));
+  ABG_ASSERT(tag == DW_TAG_subroutine_type || tag == DW_TAG_subprogram);
+
+  Dwarf_Die child;
+  if (dwarf_child(const_cast<Dwarf_Die*>(die), &child) == 0)
+    {
+      int child_tag = dwarf_tag(&child);
+      if (child_tag == DW_TAG_formal_parameter)
+	{
+	  memcpy(&first_parm_die, &child, sizeof(Dwarf_Die));
+	  return true;
+	}
+    }
+  return false;
+}
+
+/// Test if a member function denoted by a given DIE has a parameter
+/// which is a "this pointer".
+///
+/// Please note that if the member function denotes a static member
+/// function or if the DIE does not denote a member function to begin
+/// with, then the function will return false because no "this
+/// pointer" will be found.
+///
+/// @param rdr the current DWARF reader in use.
+///
+/// @param die the DIE of the member function this function should
+/// inspect.
+///
+/// @param where_offset where in the DIE stream we logically are.
+///
+/// @param class_die output parameter.  This is set iff a "this
+/// pointer" was found as the first parameters of the member function
+/// denoted by @p die, and thus the function returns true If set, this
+/// then points to the DIE of the class containing the member function
+/// denoted by @p die.
+///
+/// @param object_pointer_die output parameter.  This is set to the
+/// DIE of the function parameter that carries the "this pointe".
+/// This is set iff this function return true.
+///
+/// @return true iff the first parameter of the member function
+/// denoted by @p die points to a "this pointer".
+static bool
+member_fn_die_has_this_pointer(const reader& rdr,
+			       const Dwarf_Die* die,
+			       size_t where_offset,
+			       Dwarf_Die& class_die,
+			       Dwarf_Die& object_pointer_die)
+{
+  if (!die)
+    return false;
+
+  int tag = dwarf_tag(const_cast<Dwarf_Die*>(die));
+  if (tag != DW_TAG_subprogram && tag != DW_TAG_subroutine_type)
+    return false;
+
+  if (tag == DW_TAG_subprogram
+      && !die_is_at_class_scope(rdr, die, where_offset, class_die))
+    return false;
+
+  Dwarf_Die first_parm_die;
+  Dwarf_Die parm_type_die;
+  if (die_has_object_pointer(die, object_pointer_die))
+    {
+      // This can be either a member function with a
+      // DW_AT_object_pointer attribute or a DW_TAG_subroutine_type
+      // with a DW_AT_object_pointer.  In the later case, we are
+      // looking at a member function type.
+      memcpy(&first_parm_die, &object_pointer_die, sizeof(Dwarf_Die));
+      if (!die_die_attribute(&first_parm_die, DW_AT_type, parm_type_die))
+	return false;
+      die_peel_qual_ptr(&parm_type_die, parm_type_die);
+      die_peel_typedef(&parm_type_die, parm_type_die);
+    }
+  else if (fn_die_first_parameter_die(die, first_parm_die))
+    {
+      memcpy(&object_pointer_die, &first_parm_die, sizeof(Dwarf_Die));
+      bool is_artificial = false;
+      if (die_flag_attribute(&first_parm_die, DW_AT_artificial, is_artificial))
+	{
+	  if (die_die_attribute(&first_parm_die, DW_AT_type, parm_type_die))
+	    {
+	      tag = dwarf_tag(&parm_type_die);
+	      if (tag == DW_TAG_pointer_type)
+		{
+		  die_peel_qual_ptr(&parm_type_die, parm_type_die);
+		  die_peel_typedef(&parm_type_die, parm_type_die);
+		}
+	      else
+		return false;
+	    }
+	  else
+	    return false;
+	}
+      else
+	return false;
+    }
+  else
+    return false;
+
+  tag = dwarf_tag(&parm_type_die);
+  if (tag == DW_TAG_class_type || tag == DW_TAG_structure_type)
+    {
+      memcpy(&class_die, &parm_type_die, sizeof(Dwarf_Die));
+      return true;
+    }
+  return false;
+}
+
 /// When given the object pointer DIE of a function type or member
 /// function DIE, this function returns the "this" pointer that points
 /// to the associated class.
@@ -7335,18 +7477,23 @@ die_this_pointer_from_object_pointer(Dwarf_Die* die,
 /// it means the function type or the member function associated to
 /// that "this" pointer is const.
 ///
-/// @param die the DIE of the "this" pointer to consider.
+/// @param dye the DIE of the "this" pointer to consider.
 ///
 /// @return true iff @p die points to a const class type.
 static bool
-die_this_pointer_is_const(Dwarf_Die* die)
+die_this_pointer_is_const(Dwarf_Die* dye)
 {
-  ABG_ASSERT(die);
+  ABG_ASSERT(dye);
 
-  if (dwarf_tag(die) == DW_TAG_pointer_type)
+  Dwarf_Die die;
+  memcpy(&die, dye, sizeof(Dwarf_Die));
+  if (dwarf_tag(&die) == DW_TAG_const_type)
+    ABG_ASSERT(die_peel_qualified(&die, die));
+
+  if (dwarf_tag(&die) == DW_TAG_pointer_type)
     {
       Dwarf_Die pointed_to_type_die;
-      if (die_die_attribute(die, DW_AT_type, pointed_to_type_die))
+      if (die_die_attribute(&die, DW_AT_type, pointed_to_type_die))
 	if (dwarf_tag(&pointed_to_type_die) == DW_TAG_const_type)
 	  return true;
     }
@@ -7573,15 +7720,18 @@ die_peel_pointer_and_typedef(const Dwarf_Die *die, Dwarf_Die& peeled_die)
 /// @param object_pointer_die out parameter.  This is set by the
 /// function to the DIE that refers to the formal function parameter
 /// which holds the implicit "this" pointer of the method.  That die
-/// is called the object pointer DIE. This is set iff the function
+/// is called the object pointer DIE. This is set iff the member
+/// function is a non-static member function and if the function
+/// returns true.  In other words, this is only set if the is_static
+/// out parameter is set to false and the function returns true.
 ///
 /// @param class_die out parameter.  This is set by the function to
 /// the DIE that represents the class of the method type.  This is set
 /// iff the function returns true.
 ///
 /// @param is_static out parameter.  This is set to true by the
-/// function if @p die is a static method.  This is set iff the
-/// function returns true.
+/// function if @p die is a static method or a the type of a static
+/// method.  This is set iff the function returns true.
 ///
 /// @return true iff @p die is a DIE for a method type.
 static bool
@@ -7598,70 +7748,18 @@ die_function_type_is_method_type(const reader& rdr,
   int tag = dwarf_tag(const_cast<Dwarf_Die*>(die));
   ABG_ASSERT(tag == DW_TAG_subroutine_type || tag == DW_TAG_subprogram);
 
-  bool has_object_pointer = false;
-  is_static = false;
-  if (tag == DW_TAG_subprogram)
+  if (member_fn_die_has_this_pointer(rdr, die, where_offset, class_die, object_pointer_die))
     {
-      Dwarf_Die spec_or_origin_die;
-      if (die_die_attribute(die, DW_AT_specification,
-			    spec_or_origin_die)
-	  || die_die_attribute(die, DW_AT_abstract_origin,
-			       spec_or_origin_die))
-	{
-	  if (die_has_object_pointer(&spec_or_origin_die,
-				     object_pointer_die))
-	    has_object_pointer = true;
-	  else
-	    {
-	      if (die_is_at_class_scope(rdr, &spec_or_origin_die,
-					where_offset, class_die))
-		is_static = true;
-	      else
-		return false;
-	    }
-	}
-      else
-	{
-	  if (die_has_object_pointer(die, object_pointer_die))
-	    has_object_pointer = true;
-	  else
-	    {
-	      if (die_is_at_class_scope(rdr, die, where_offset, class_die))
-		is_static = true;
-	      else
-		return false;
-	    }
-	}
+      is_static = false;
+      return true;
     }
-  else
+  else if (die_is_at_class_scope(rdr, die, where_offset, class_die))
     {
-      if (die_has_object_pointer(die, object_pointer_die))
-	has_object_pointer = true;
-      else
-	return false;
+      is_static = true;
+      return true;
     }
 
-  if (!is_static)
-    {
-      ABG_ASSERT(has_object_pointer);
-      // The object pointer die points to a DW_TAG_formal_parameter which
-      // is the "this" parameter.  The type of the "this" parameter is a
-      // pointer.  Let's get that pointer type.
-      Dwarf_Die this_type_die;
-      if (!die_die_attribute(&object_pointer_die, DW_AT_type, this_type_die))
-	return false;
-
-      // So the class type is the type pointed to by the type of the "this"
-      // parameter.
-      if (!die_peel_qual_ptr(&this_type_die, class_die))
-	return false;
-
-      // And make we return a class type, rather than a typedef to a
-      // class.
-      die_peel_typedef(&class_die, class_die);
-    }
-
-  return true;
+  return false;
 }
 
 enum virtuality
@@ -12775,62 +12873,13 @@ finish_member_function_reading(Dwarf_Die*			die,
       access = private_access;
   die_access_specifier(die, access);
 
-  bool is_static = false;
-  {
-    // Let's see if the first parameter is a pointer to an instance of
-    // the same class type as the current class and has a
-    // DW_AT_artificial attribute flag set.  We are not looking at
-    // DW_AT_object_pointer (for DWARF 3) because it wasn't being
-    // emitted in GCC 4_4, which was already DWARF 3.
-    function_decl::parameter_sptr first_parm;
-    if (!f->get_parameters().empty())
-      first_parm = f->get_parameters()[0];
-
-    bool is_artificial = first_parm && first_parm->get_is_artificial();
-    type_base_sptr this_ptr_type, other_klass;
-
-    if (is_artificial)
-      this_ptr_type = first_parm->get_type();
-
-    // Sometimes, the type of the "this" pointer is "const class_type* const".
-    //
-    // Meaning that the "this pointer" itself is const qualified.  So
-    // let's get the underlying underlying non-qualified pointer.
-    if (qualified_type_def_sptr q = is_qualified_type(this_ptr_type))
-      this_ptr_type = q->get_underlying_type();
-
-    // Now, get the pointed-to type.
-    if (pointer_type_def_sptr p = is_pointer_type(this_ptr_type))
-      other_klass = p->get_pointed_to_type();
-
-    // Sometimes, other_klass can be qualified; e.g, volatile.  In
-    // that case, let's get the unqualified version of other_klass.
-    if (qualified_type_def_sptr q = is_qualified_type(other_klass))
-      other_klass = q->get_underlying_type();
-
-    if (other_klass
-	&& get_type_name(other_klass) == klass->get_qualified_name())
-      ;
-    else
-      is_static = true;
-
-    if (is_static)
-      {
-	// If we are looking at a DWARF version that is high enough
-	// for the DW_AT_object_pointer attribute to be present, let's
-	// see if it's present.  If it is, then the current member
-	// function is not static.
-	Dwarf_Die object_pointer_die;
-	if (die_has_object_pointer(die, object_pointer_die))
-	  is_static = false;
-      }
-  }
   m->is_declared_inline(is_inline);
   set_member_access_specifier(m, access);
   if (vindex != -1)
     set_member_function_vtable_offset(m, vindex);
   if (is_virtual)
     set_member_function_is_virtual(m, is_virtual);
+  bool is_static = method_t->get_is_for_static_method();
   set_member_is_static(m, is_static);
   set_member_function_is_ctor(m, is_ctor);
   set_member_function_is_dtor(m, is_dtor);

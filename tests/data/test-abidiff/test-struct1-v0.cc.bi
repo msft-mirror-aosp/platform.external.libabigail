@@ -43,19 +43,19 @@
     </member-function>
     <member-function access='public' destructor='yes'>
       <function-decl name='__comp_dtor ' mangled-name='_ZN2s0D1Ev' filepath='../../abitests/test-struct1-v0.cc' line='20' column='1' visibility='default' binding='global' size-in-bits='8' alignment-in-bits='8'>
-        <parameter type-id='type-id-5'/>
+        <parameter type-id='type-id-5' is-artificial='yes'/>
         <return type-id='type-id-6'/>
       </function-decl>
     </member-function>
     <member-function access='public' destructor='yes' vtable-offset='1'>
       <function-decl name='__deleting_dtor ' mangled-name='_ZN2s0D0Ev' filepath='../../abitests/test-struct1-v0.cc' line='20' column='1' visibility='default' binding='global' size-in-bits='8' alignment-in-bits='8'>
-        <parameter type-id='type-id-5'/>
+        <parameter type-id='type-id-5' is-artificial='yes'/>
         <return type-id='type-id-6'/>
       </function-decl>
     </member-function>
     <member-function access='public' const='yes'>
       <function-decl name='foo' mangled-name='_ZNK2s03fooEv' filepath='../../abitests/test-struct1-v0.cc' line='25' column='1' visibility='default' binding='global' size-in-bits='8' alignment-in-bits='8'>
-        <parameter type-id='type-id-8'/>
+        <parameter type-id='type-id-8' is-artificial='yes'/>
       </function-decl>
     </member-function>
   </class-decl>

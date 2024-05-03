@@ -26,14 +26,14 @@ Variables changes summary: 0 Removed, 0 Changed, 0 Added variable
         1 data member change:
           name of 'std::_Head_base<0ul, STR&&, false>::_M_head_impl' changed to 'std::_Head_base<0, STR &&, false>::_M_head_impl'
 
-  [C] 'method STR& std::_Head_base<0ul, STR&&, false>::_M_head()' has some indirect sub-type changes:
-    'method STR& std::_Head_base<0ul, STR&&, false>::_M_head() {_ZNSt10_Head_baseILm0EO3STRLb0EE7_M_headERKS2_}' now becomes 'method STR& std::_Head_base<0, STR &&, false>::_M_head() {_ZNSt10_Head_baseILm0EO3STRLb0EE7_M_headERKS2_}'
+  [C] 'method STR& std::_Head_base<0ul, STR&&, false>::_M_head(const std::_Head_base<0ul, STR&&, false>&)' has some indirect sub-type changes:
+    'method STR& std::_Head_base<0ul, STR&&, false>::_M_head(const std::_Head_base<0ul, STR&&, false>&) {_ZNSt10_Head_baseILm0EO3STRLb0EE7_M_headERKS2_}' now becomes 'method STR& std::_Head_base<0, STR &&, false>::_M_head(const std::_Head_base<0, STR &&, false>&) {_ZNSt10_Head_baseILm0EO3STRLb0EE7_M_headERKS2_}'
     parameter 1 of type 'const std::_Head_base<0ul, STR&&, false>&' changed:
       in referenced type 'const std::_Head_base<0ul, STR&&, false>':
         'const std::_Head_base<0ul, STR&&, false>' changed to 'const std::_Head_base<0, STR &&, false>'
 
-  [C] 'method STR& std::_Tuple_impl<0ul, STR&&>::_M_head()' has some indirect sub-type changes:
-    'method STR& std::_Tuple_impl<0ul, STR&&>::_M_head() {_ZNSt11_Tuple_implILm0EJO3STREE7_M_headERKS2_}' now becomes 'method STR& std::_Tuple_impl<0, STR &&>::_M_head() {_ZNSt11_Tuple_implILm0EJO3STREE7_M_headERKS2_}'
+  [C] 'method STR& std::_Tuple_impl<0ul, STR&&>::_M_head(const std::_Tuple_impl<0ul, STR&&>&)' has some indirect sub-type changes:
+    'method STR& std::_Tuple_impl<0ul, STR&&>::_M_head(const std::_Tuple_impl<0ul, STR&&>&) {_ZNSt11_Tuple_implILm0EJO3STREE7_M_headERKS2_}' now becomes 'method STR& std::_Tuple_impl<0, STR &&>::_M_head(const std::_Tuple_impl<0, STR &&>&) {_ZNSt11_Tuple_implILm0EJO3STREE7_M_headERKS2_}'
     parameter 1 of type 'const std::_Tuple_impl<0ul, STR&&>&' changed:
       in referenced type 'const std::_Tuple_impl<0ul, STR&&>':
         'const std::_Tuple_impl<0ul, STR&&>' changed to 'const std::_Tuple_impl<0, STR &&>'

@@ -4115,7 +4115,7 @@
     <!-- struct PFVS -->
     <class-decl name='PFVS' size-in-bits='128' is-struct='yes' naming-typedef-id='type-id-281' visibility='default' filepath='libnurbs/internals/displaylist.h' line='46' column='1' id='type-id-282'>
       <data-member access='public' layout-offset-in-bits='0'>
-        <!-- void (* PFVS::__pfn)(NurbsTessellator*, void*) -->
+        <!-- void (* PFVS::__pfn)(void*) -->
         <var-decl name='__pfn' type-id='type-id-283' visibility='default' filepath='libnurbs/internals/displaylist.h' line='46' column='1'/>
       </data-member>
       <data-member access='public' layout-offset-in-bits='64'>
@@ -4137,10 +4137,10 @@
     <pointer-type-def type-id='type-id-278' size-in-bits='64' id='type-id-279'/>
     <!-- NurbsTessellator* -->
     <pointer-type-def type-id='type-id-52' size-in-bits='64' id='type-id-85'/>
-    <!-- void (*)(NurbsTessellator*, void*) -->
+    <!-- void (*)(void*) -->
     <pointer-type-def type-id='type-id-286' size-in-bits='64' id='type-id-283'/>
-    <!-- void (NurbsTessellator*, void*) -->
-    <function-type size-in-bits='64' id='type-id-286'>
+    <!-- void (NurbsTessellator::*) (void*) -->
+    <function-type size-in-bits='64' method-class-id='type-id-52' id='type-id-286'>
       <!-- implicit parameter of type 'NurbsTessellator*' -->
       <parameter type-id='type-id-85' is-artificial='yes'/>
       <!-- parameter of type 'void*' -->
