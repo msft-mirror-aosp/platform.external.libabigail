@@ -1333,21 +1333,21 @@
       </class-decl>
       <class-decl name='iterator_traits&lt;char const*&gt;' size-in-bits='8' is-struct='yes' visibility='default' filepath='/usr/include/c++/4.9/bits/stl_iterator_base_types.h' line='186' column='1' id='type-id-224'>
         <member-type access='public'>
-          <typedef-decl name='pointer' type-id='type-id-43' filepath='/usr/include/c++/4.9/bits/stl_iterator_base_types.h' line='191' column='1' id='type-id-225'/>
+          <typedef-decl name='iterator_category' type-id='type-id-226' filepath='/usr/include/c++/4.9/bits/stl_iterator_base_types.h' line='188' column='1' id='type-id-225'/>
         </member-type>
         <member-type access='public'>
-          <typedef-decl name='reference' type-id='type-id-117' filepath='/usr/include/c++/4.9/bits/stl_iterator_base_types.h' line='192' column='1' id='type-id-226'/>
+          <typedef-decl name='pointer' type-id='type-id-43' filepath='/usr/include/c++/4.9/bits/stl_iterator_base_types.h' line='191' column='1' id='type-id-227'/>
+        </member-type>
+        <member-type access='public'>
+          <typedef-decl name='reference' type-id='type-id-117' filepath='/usr/include/c++/4.9/bits/stl_iterator_base_types.h' line='192' column='1' id='type-id-228'/>
         </member-type>
       </class-decl>
-      <class-decl name='iterator_traits&lt;char*&gt;' size-in-bits='8' is-struct='yes' visibility='default' filepath='/usr/include/c++/4.9/bits/stl_iterator_base_types.h' line='175' column='1' id='type-id-227'>
+      <class-decl name='iterator_traits&lt;char*&gt;' size-in-bits='8' is-struct='yes' visibility='default' filepath='/usr/include/c++/4.9/bits/stl_iterator_base_types.h' line='175' column='1' id='type-id-229'>
         <member-type access='public'>
-          <typedef-decl name='difference_type' type-id='type-id-229' filepath='/usr/include/c++/4.9/bits/stl_iterator_base_types.h' line='179' column='1' id='type-id-228'/>
-        </member-type>
-        <member-type access='public'>
-          <typedef-decl name='iterator_category' type-id='type-id-231' filepath='/usr/include/c++/4.9/bits/stl_iterator_base_types.h' line='177' column='1' id='type-id-230'/>
+          <typedef-decl name='difference_type' type-id='type-id-231' filepath='/usr/include/c++/4.9/bits/stl_iterator_base_types.h' line='179' column='1' id='type-id-230'/>
         </member-type>
       </class-decl>
-      <typedef-decl name='ptrdiff_t' type-id='type-id-14' filepath='/usr/include/x86_64-linux-gnu/c++/4.9/bits/c++config.h' line='189' column='1' id='type-id-229'/>
+      <typedef-decl name='ptrdiff_t' type-id='type-id-14' filepath='/usr/include/x86_64-linux-gnu/c++/4.9/bits/c++config.h' line='189' column='1' id='type-id-231'/>
       <typedef-decl name='string' type-id='type-id-140' filepath='/usr/include/c++/4.9/bits/stringfwd.h' line='62' column='1' id='type-id-232'/>
       <class-decl name='reverse_iterator&lt;__gnu_cxx::__normal_iterator&lt;char const*, std::basic_string&lt;char, std::char_traits&lt;char&gt;, std::allocator&lt;char&gt; &gt; &gt; &gt;' visibility='default' is-declaration-only='yes' id='type-id-196'/>
       <class-decl name='reverse_iterator&lt;__gnu_cxx::__normal_iterator&lt;char*, std::basic_string&lt;char, std::char_traits&lt;char&gt;, std::allocator&lt;char&gt; &gt; &gt; &gt;' visibility='default' is-declaration-only='yes' id='type-id-208'/>
@@ -1355,10 +1355,10 @@
     <namespace-decl name='__gnu_cxx'>
       <class-decl name='__normal_iterator&lt;char const*, std::basic_string&lt;char, std::char_traits&lt;char&gt;, std::allocator&lt;char&gt; &gt; &gt;' size-in-bits='64' visibility='default' filepath='/usr/include/c++/4.9/bits/stl_iterator.h' line='709' column='1' id='type-id-70'>
         <member-type access='public'>
-          <typedef-decl name='pointer' type-id='type-id-225' filepath='/usr/include/c++/4.9/bits/stl_iterator.h' line='722' column='1' id='type-id-233'/>
+          <typedef-decl name='pointer' type-id='type-id-227' filepath='/usr/include/c++/4.9/bits/stl_iterator.h' line='722' column='1' id='type-id-233'/>
         </member-type>
         <member-type access='public'>
-          <typedef-decl name='reference' type-id='type-id-226' filepath='/usr/include/c++/4.9/bits/stl_iterator.h' line='721' column='1' id='type-id-234'/>
+          <typedef-decl name='reference' type-id='type-id-228' filepath='/usr/include/c++/4.9/bits/stl_iterator.h' line='721' column='1' id='type-id-234'/>
         </member-type>
         <data-member access='protected' layout-offset-in-bits='0'>
           <var-decl name='_M_current' type-id='type-id-43' visibility='default' filepath='/usr/include/c++/4.9/bits/stl_iterator.h' line='712' column='1'/>
@@ -1386,7 +1386,7 @@
       </class-decl>
       <class-decl name='__normal_iterator&lt;char*, std::basic_string&lt;char, std::char_traits&lt;char&gt;, std::allocator&lt;char&gt; &gt; &gt;' size-in-bits='64' visibility='default' filepath='/usr/include/c++/4.9/bits/stl_iterator.h' line='709' column='1' id='type-id-73'>
         <member-type access='public'>
-          <typedef-decl name='difference_type' type-id='type-id-228' filepath='/usr/include/c++/4.9/bits/stl_iterator.h' line='720' column='1' id='type-id-235'/>
+          <typedef-decl name='difference_type' type-id='type-id-230' filepath='/usr/include/c++/4.9/bits/stl_iterator.h' line='720' column='1' id='type-id-235'/>
         </member-type>
         <member-type access='public'>
           <typedef-decl name='pointer' type-id='type-id-237' filepath='/usr/include/c++/4.9/bits/stl_iterator.h' line='722' column='1' id='type-id-236'/>
@@ -2325,7 +2325,7 @@
       </class-decl>
       <class-decl name='iterator_traits&lt;wchar_t*&gt;' size-in-bits='8' is-struct='yes' visibility='default' filepath='/usr/include/c++/4.9/bits/stl_iterator_base_types.h' line='175' column='1' id='type-id-565'>
       </class-decl>
-      <class-decl name='random_access_iterator_tag' size-in-bits='8' is-struct='yes' visibility='default' filepath='/usr/include/c++/4.9/bits/stl_iterator_base_types.h' line='103' column='1' id='type-id-231'>
+      <class-decl name='random_access_iterator_tag' size-in-bits='8' is-struct='yes' visibility='default' filepath='/usr/include/c++/4.9/bits/stl_iterator_base_types.h' line='103' column='1' id='type-id-226'>
         <base-class access='public' layout-offset-in-bits='0' type-id='type-id-560'/>
       </class-decl>
       <class-decl name='remove_reference&lt;boost::filesystem::detail::dir_itr_imp*&amp;&gt;' size-in-bits='8' is-struct='yes' visibility='default' filepath='/usr/include/c++/4.9/type_traits' line='1504' column='1' id='type-id-566'>
@@ -2366,17 +2366,17 @@
       <function-decl name='__distance&lt;char*&gt;' mangled-name='_ZSt10__distanceIPcENSt15iterator_traitsIT_E15difference_typeES2_S2_St26random_access_iterator_tag' filepath='/usr/include/c++/4.9/bits/stl_iterator_base_funcs.h' line='90' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZSt10__distanceIPcENSt15iterator_traitsIT_E15difference_typeES2_S2_St26random_access_iterator_tag'>
         <parameter type-id='type-id-23' filepath='/usr/include/c++/4.9/bits/stl_iterator_base_funcs.h' line='90' column='1'/>
         <parameter type-id='type-id-23' filepath='/usr/include/c++/4.9/bits/stl_iterator_base_funcs.h' line='90' column='1'/>
-        <parameter type-id='type-id-231'/>
-        <return type-id='type-id-228'/>
+        <parameter type-id='type-id-226'/>
+        <return type-id='type-id-230'/>
       </function-decl>
       <function-decl name='distance&lt;char*&gt;' mangled-name='_ZSt8distanceIPcENSt15iterator_traitsIT_E15difference_typeES2_S2_' filepath='/usr/include/c++/4.9/bits/stl_iterator_base_funcs.h' line='114' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZSt8distanceIPcENSt15iterator_traitsIT_E15difference_typeES2_S2_'>
         <parameter type-id='type-id-23' filepath='/usr/include/c++/4.9/bits/stl_iterator_base_funcs.h' line='114' column='1'/>
         <parameter type-id='type-id-23' filepath='/usr/include/c++/4.9/bits/stl_iterator_base_funcs.h' line='114' column='1'/>
-        <return type-id='type-id-228'/>
+        <return type-id='type-id-230'/>
       </function-decl>
       <function-decl name='__iterator_category&lt;char*&gt;' mangled-name='_ZSt19__iterator_categoryIPcENSt15iterator_traitsIT_E17iterator_categoryERKS2_' filepath='/usr/include/c++/4.9/bits/stl_iterator_base_types.h' line='201' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZSt19__iterator_categoryIPcENSt15iterator_traitsIT_E17iterator_categoryERKS2_'>
         <parameter type-id='type-id-92'/>
-        <return type-id='type-id-230'/>
+        <return type-id='type-id-225'/>
       </function-decl>
     </namespace-decl>
     <namespace-decl name='__gnu_cxx'>
@@ -4166,17 +4166,17 @@
       <function-decl name='__distance&lt;char const*&gt;' mangled-name='_ZSt10__distanceIPKcENSt15iterator_traitsIT_E15difference_typeES3_S3_St26random_access_iterator_tag' filepath='/usr/include/c++/4.9/bits/stl_iterator_base_funcs.h' line='90' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZSt10__distanceIPKcENSt15iterator_traitsIT_E15difference_typeES3_S3_St26random_access_iterator_tag'>
         <parameter type-id='type-id-43' filepath='/usr/include/c++/4.9/bits/stl_iterator_base_funcs.h' line='90' column='1'/>
         <parameter type-id='type-id-43' filepath='/usr/include/c++/4.9/bits/stl_iterator_base_funcs.h' line='90' column='1'/>
-        <parameter type-id='type-id-231'/>
-        <return type-id='type-id-228'/>
+        <parameter type-id='type-id-226'/>
+        <return type-id='type-id-230'/>
       </function-decl>
       <function-decl name='distance&lt;char const*&gt;' mangled-name='_ZSt8distanceIPKcENSt15iterator_traitsIT_E15difference_typeES3_S3_' filepath='/usr/include/c++/4.9/bits/stl_iterator_base_funcs.h' line='114' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZSt8distanceIPKcENSt15iterator_traitsIT_E15difference_typeES3_S3_'>
         <parameter type-id='type-id-43' filepath='/usr/include/c++/4.9/bits/stl_iterator_base_funcs.h' line='114' column='1'/>
         <parameter type-id='type-id-43' filepath='/usr/include/c++/4.9/bits/stl_iterator_base_funcs.h' line='114' column='1'/>
-        <return type-id='type-id-228'/>
+        <return type-id='type-id-230'/>
       </function-decl>
       <function-decl name='__iterator_category&lt;char const*&gt;' mangled-name='_ZSt19__iterator_categoryIPKcENSt15iterator_traitsIT_E17iterator_categoryERKS3_' filepath='/usr/include/c++/4.9/bits/stl_iterator_base_types.h' line='201' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZSt19__iterator_categoryIPKcENSt15iterator_traitsIT_E17iterator_categoryERKS3_'>
         <parameter type-id='type-id-119'/>
-        <return type-id='type-id-230'/>
+        <return type-id='type-id-225'/>
       </function-decl>
     </namespace-decl>
     <namespace-decl name='__gnu_cxx'>

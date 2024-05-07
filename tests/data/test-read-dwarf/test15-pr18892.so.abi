@@ -11996,6 +11996,124 @@
         <enumerator name='StatCnt' value='438'/>
       </enum-decl>
     </namespace-decl>
+    <function-type size-in-bits='64' id='type-id-961'>
+      <parameter type-id='type-id-4'/>
+      <parameter type-id='type-id-1081'/>
+      <parameter type-id='type-id-6'/>
+      <return type-id='type-id-437'/>
+    </function-type>
+    <function-type size-in-bits='64' id='type-id-962'>
+      <parameter type-id='type-id-27'/>
+      <parameter type-id='type-id-1121'/>
+      <parameter type-id='type-id-441'/>
+      <parameter type-id='type-id-441'/>
+      <parameter type-id='type-id-3'/>
+      <return type-id='type-id-441'/>
+    </function-type>
+    <function-type size-in-bits='64' id='type-id-963'>
+      <parameter type-id='type-id-27'/>
+      <parameter type-id='type-id-1121'/>
+      <parameter type-id='type-id-441'/>
+      <parameter type-id='type-id-3'/>
+      <return type-id='type-id-441'/>
+    </function-type>
+    <function-type size-in-bits='64' id='type-id-964'>
+      <parameter type-id='type-id-27'/>
+      <parameter type-id='type-id-1120'/>
+      <parameter type-id='type-id-441'/>
+      <return type-id='type-id-441'/>
+    </function-type>
+    <function-type size-in-bits='64' id='type-id-965'>
+      <parameter type-id='type-id-6'/>
+      <parameter type-id='type-id-27'/>
+      <parameter type-id='type-id-441'/>
+      <return type-id='type-id-441'/>
+    </function-type>
+    <function-type size-in-bits='64' id='type-id-966'>
+      <parameter type-id='type-id-3'/>
+      <parameter type-id='type-id-1081'/>
+      <parameter type-id='type-id-970'/>
+      <parameter type-id='type-id-1081'/>
+      <parameter type-id='type-id-970'/>
+      <return type-id='type-id-441'/>
+    </function-type>
+    <function-type size-in-bits='64' id='type-id-967'>
+      <parameter type-id='type-id-1269'/>
+      <parameter type-id='type-id-388'/>
+      <parameter type-id='type-id-441'/>
+      <parameter type-id='type-id-441'/>
+      <parameter type-id='type-id-3'/>
+      <return type-id='type-id-441'/>
+    </function-type>
+    <function-type size-in-bits='64' id='type-id-968'>
+      <parameter type-id='type-id-1269'/>
+      <parameter type-id='type-id-388'/>
+      <parameter type-id='type-id-441'/>
+      <parameter type-id='type-id-3'/>
+      <return type-id='type-id-441'/>
+    </function-type>
+    <function-type size-in-bits='64' id='type-id-969'>
+      <parameter type-id='type-id-1269'/>
+      <parameter type-id='type-id-4'/>
+      <parameter type-id='type-id-441'/>
+      <return type-id='type-id-441'/>
+    </function-type>
+    <function-type size-in-bits='64' id='type-id-971'>
+      <parameter type-id='type-id-1081'/>
+      <parameter type-id='type-id-970'/>
+      <parameter type-id='type-id-6'/>
+      <parameter type-id='type-id-3'/>
+      <return type-id='type-id-443'/>
+    </function-type>
+    <function-type size-in-bits='64' id='type-id-972'>
+      <parameter type-id='type-id-1081'/>
+      <parameter type-id='type-id-970'/>
+      <parameter type-id='type-id-3'/>
+      <return type-id='type-id-443'/>
+    </function-type>
+    <function-type size-in-bits='64' id='type-id-973'>
+      <parameter type-id='type-id-6'/>
+      <parameter type-id='type-id-1034'/>
+      <parameter type-id='type-id-6'/>
+      <return type-id='type-id-443'/>
+    </function-type>
+    <function-type size-in-bits='64' id='type-id-974'>
+      <parameter type-id='type-id-6'/>
+      <parameter type-id='type-id-1034'/>
+      <parameter type-id='type-id-6'/>
+      <parameter type-id='type-id-439'/>
+      <return type-id='type-id-443'/>
+    </function-type>
+    <function-type size-in-bits='64' id='type-id-975'>
+      <parameter type-id='type-id-6'/>
+      <parameter type-id='type-id-1041'/>
+      <parameter type-id='type-id-6'/>
+      <return type-id='type-id-443'/>
+    </function-type>
+    <function-type size-in-bits='64' id='type-id-976'>
+      <parameter type-id='type-id-6'/>
+      <parameter type-id='type-id-3'/>
+      <parameter type-id='type-id-439'/>
+      <parameter type-id='type-id-439'/>
+      <return type-id='type-id-443'/>
+    </function-type>
+    <function-type size-in-bits='64' id='type-id-977'>
+      <parameter type-id='type-id-6'/>
+      <parameter type-id='type-id-3'/>
+      <parameter type-id='type-id-441'/>
+      <return type-id='type-id-443'/>
+    </function-type>
+    <function-type size-in-bits='64' id='type-id-978'>
+      <parameter type-id='type-id-6'/>
+      <parameter type-id='type-id-3'/>
+      <parameter type-id='type-id-441'/>
+      <parameter type-id='type-id-439'/>
+      <return type-id='type-id-443'/>
+    </function-type>
+    <function-type size-in-bits='64' id='type-id-1006'>
+      <parameter type-id='type-id-3'/>
+      <return type-id='type-id-1274'/>
+    </function-type>
     <function-type size-in-bits='64' id='type-id-1009'>
       <parameter type-id='type-id-3'/>
       <return type-id='type-id-1008'/>
@@ -12052,6 +12170,24 @@
       <parameter type-id='type-id-3'/>
       <return type-id='type-id-1048'/>
     </function-type>
+    <function-type size-in-bits='64' id='type-id-1059'>
+      <parameter type-id='type-id-6'/>
+      <parameter type-id='type-id-6'/>
+      <parameter type-id='type-id-3'/>
+      <parameter type-id='type-id-3'/>
+      <return type-id='type-id-2'/>
+    </function-type>
+    <function-type size-in-bits='64' id='type-id-1060'>
+      <parameter type-id='type-id-3'/>
+      <return type-id='type-id-2'/>
+    </function-type>
+    <function-type size-in-bits='64' id='type-id-1061'>
+      <parameter type-id='type-id-3'/>
+      <parameter type-id='type-id-2'/>
+      <parameter type-id='type-id-2'/>
+      <parameter type-id='type-id-3'/>
+      <return type-id='type-id-2'/>
+    </function-type>
     <function-type size-in-bits='64' id='type-id-1062'>
       <parameter type-id='type-id-1018'/>
       <return type-id='type-id-27'/>
@@ -12072,6 +12208,11 @@
     </function-type>
     <function-type size-in-bits='64' id='type-id-1066'>
       <parameter type-id='type-id-27'/>
+      <return type-id='type-id-27'/>
+    </function-type>
+    <function-type size-in-bits='64' id='type-id-1067'>
+      <parameter type-id='type-id-27'/>
+      <parameter type-id='type-id-441'/>
       <return type-id='type-id-27'/>
     </function-type>
     <function-type size-in-bits='64' id='type-id-1068'>
@@ -12099,11 +12240,6 @@
     <function-type size-in-bits='64' id='type-id-1072'>
       <parameter type-id='type-id-27'/>
       <parameter type-id='type-id-6'/>
-      <return type-id='type-id-27'/>
-    </function-type>
-    <function-type size-in-bits='64' id='type-id-1067'>
-      <parameter type-id='type-id-27'/>
-      <parameter type-id='type-id-441'/>
       <return type-id='type-id-27'/>
     </function-type>
     <function-type size-in-bits='64' id='type-id-1074'>
@@ -12156,19 +12292,10 @@
       <parameter type-id='type-id-410'/>
       <return type-id='type-id-410'/>
     </function-type>
-    <function-type size-in-bits='64' id='type-id-1228'>
-      <parameter type-id='type-id-415'/>
-      <return type-id='type-id-415'/>
-    </function-type>
     <function-type size-in-bits='64' id='type-id-1123'>
       <parameter type-id='type-id-410'/>
       <parameter type-id='type-id-1126'/>
       <return type-id='type-id-410'/>
-    </function-type>
-    <function-type size-in-bits='64' id='type-id-1230'>
-      <parameter type-id='type-id-415'/>
-      <parameter type-id='type-id-1232'/>
-      <return type-id='type-id-415'/>
     </function-type>
     <function-type size-in-bits='64' id='type-id-1124'>
       <parameter type-id='type-id-410'/>
@@ -12176,21 +12303,10 @@
       <parameter type-id='type-id-38'/>
       <return type-id='type-id-410'/>
     </function-type>
-    <function-type size-in-bits='64' id='type-id-1231'>
-      <parameter type-id='type-id-415'/>
-      <parameter type-id='type-id-415'/>
-      <parameter type-id='type-id-38'/>
-      <return type-id='type-id-415'/>
-    </function-type>
     <function-type size-in-bits='64' id='type-id-1125'>
       <parameter type-id='type-id-410'/>
       <parameter type-id='type-id-38'/>
       <return type-id='type-id-410'/>
-    </function-type>
-    <function-type size-in-bits='64' id='type-id-1229'>
-      <parameter type-id='type-id-415'/>
-      <parameter type-id='type-id-38'/>
-      <return type-id='type-id-415'/>
     </function-type>
     <function-type size-in-bits='64' id='type-id-1127'>
       <parameter type-id='type-id-411'/>
@@ -12253,22 +12369,25 @@
       <parameter type-id='type-id-3'/>
       <return type-id='type-id-6'/>
     </function-type>
+    <function-type size-in-bits='64' id='type-id-1139'>
+      <parameter type-id='type-id-231'/>
+      <parameter type-id='type-id-3'/>
+      <return type-id='type-id-6'/>
+    </function-type>
+    <function-type size-in-bits='64' id='type-id-1140'>
+      <parameter type-id='type-id-2'/>
+      <parameter type-id='type-id-4'/>
+      <return type-id='type-id-6'/>
+    </function-type>
+    <function-type size-in-bits='64' id='type-id-1141'>
+      <parameter type-id='type-id-2'/>
+      <parameter type-id='type-id-38'/>
+      <parameter type-id='type-id-38'/>
+      <return type-id='type-id-6'/>
+    </function-type>
     <function-type size-in-bits='64' id='type-id-1142'>
       <parameter type-id='type-id-27'/>
       <return type-id='type-id-6'/>
-    </function-type>
-    <function-type size-in-bits='64' id='type-id-971'>
-      <parameter type-id='type-id-1081'/>
-      <parameter type-id='type-id-970'/>
-      <parameter type-id='type-id-6'/>
-      <parameter type-id='type-id-3'/>
-      <return type-id='type-id-443'/>
-    </function-type>
-    <function-type size-in-bits='64' id='type-id-972'>
-      <parameter type-id='type-id-1081'/>
-      <parameter type-id='type-id-970'/>
-      <parameter type-id='type-id-3'/>
-      <return type-id='type-id-443'/>
     </function-type>
     <function-type size-in-bits='64' id='type-id-1143'>
       <parameter type-id='type-id-27'/>
@@ -12310,6 +12429,11 @@
       <parameter type-id='type-id-6'/>
       <return type-id='type-id-6'/>
     </function-type>
+    <function-type size-in-bits='64' id='type-id-1149'>
+      <parameter type-id='type-id-27'/>
+      <parameter type-id='type-id-231'/>
+      <return type-id='type-id-6'/>
+    </function-type>
     <function-type size-in-bits='64' id='type-id-1150'>
       <parameter type-id='type-id-27'/>
       <parameter type-id='type-id-6'/>
@@ -12318,11 +12442,6 @@
       <parameter type-id='type-id-441'/>
       <parameter type-id='type-id-1027'/>
       <parameter type-id='type-id-38'/>
-      <return type-id='type-id-6'/>
-    </function-type>
-    <function-type size-in-bits='64' id='type-id-1149'>
-      <parameter type-id='type-id-27'/>
-      <parameter type-id='type-id-231'/>
       <return type-id='type-id-6'/>
     </function-type>
     <function-type size-in-bits='64' id='type-id-1151'>
@@ -12361,12 +12480,6 @@
       <parameter is-variadic='yes'/>
       <return type-id='type-id-6'/>
     </function-type>
-    <function-type size-in-bits='64' id='type-id-961'>
-      <parameter type-id='type-id-4'/>
-      <parameter type-id='type-id-1081'/>
-      <parameter type-id='type-id-6'/>
-      <return type-id='type-id-437'/>
-    </function-type>
     <function-type size-in-bits='64' id='type-id-1159'>
       <parameter type-id='type-id-4'/>
       <parameter type-id='type-id-4'/>
@@ -12378,16 +12491,16 @@
       <parameter is-variadic='yes'/>
       <return type-id='type-id-6'/>
     </function-type>
-    <function-type size-in-bits='64' id='type-id-1162'>
-      <parameter type-id='type-id-4'/>
-      <parameter type-id='type-id-4'/>
-      <parameter type-id='type-id-1242'/>
-      <return type-id='type-id-6'/>
-    </function-type>
     <function-type size-in-bits='64' id='type-id-1161'>
       <parameter type-id='type-id-4'/>
       <parameter type-id='type-id-4'/>
       <parameter type-id='type-id-441'/>
+      <return type-id='type-id-6'/>
+    </function-type>
+    <function-type size-in-bits='64' id='type-id-1162'>
+      <parameter type-id='type-id-4'/>
+      <parameter type-id='type-id-4'/>
+      <parameter type-id='type-id-1242'/>
       <return type-id='type-id-6'/>
     </function-type>
     <function-type size-in-bits='64' id='type-id-1163'>
@@ -12411,14 +12524,6 @@
       <parameter type-id='type-id-3'/>
       <return type-id='type-id-6'/>
     </function-type>
-    <function-type size-in-bits='64' id='type-id-1167'>
-      <parameter type-id='type-id-6'/>
-      <return type-id='type-id-6'/>
-    </function-type>
-    <function-type size-in-bits='64' id='type-id-1196'>
-      <parameter type-id='type-id-641'/>
-      <return type-id='type-id-6'/>
-    </function-type>
     <function-type size-in-bits='64' id='type-id-1168'>
       <parameter type-id='type-id-38'/>
       <return type-id='type-id-6'/>
@@ -12434,29 +12539,21 @@
       <parameter type-id='type-id-3'/>
       <return type-id='type-id-6'/>
     </function-type>
-    <function-type size-in-bits='64' id='type-id-973'>
+    <function-type size-in-bits='64' id='type-id-1171'>
       <parameter type-id='type-id-6'/>
-      <parameter type-id='type-id-1034'/>
-      <parameter type-id='type-id-6'/>
-      <return type-id='type-id-443'/>
-    </function-type>
-    <function-type size-in-bits='64' id='type-id-974'>
-      <parameter type-id='type-id-6'/>
-      <parameter type-id='type-id-1034'/>
-      <parameter type-id='type-id-6'/>
-      <parameter type-id='type-id-439'/>
-      <return type-id='type-id-443'/>
-    </function-type>
-    <function-type size-in-bits='64' id='type-id-975'>
-      <parameter type-id='type-id-6'/>
-      <parameter type-id='type-id-1041'/>
-      <parameter type-id='type-id-6'/>
-      <return type-id='type-id-443'/>
+      <parameter type-id='type-id-441'/>
+      <parameter type-id='type-id-3'/>
+      <return type-id='type-id-6'/>
     </function-type>
     <function-type size-in-bits='64' id='type-id-1172'>
       <parameter type-id='type-id-6'/>
       <parameter type-id='type-id-1046'/>
       <parameter type-id='type-id-1046'/>
+      <return type-id='type-id-6'/>
+    </function-type>
+    <function-type size-in-bits='64' id='type-id-1173'>
+      <parameter type-id='type-id-6'/>
+      <parameter type-id='type-id-1057'/>
       <return type-id='type-id-6'/>
     </function-type>
     <function-type size-in-bits='64' id='type-id-1174'>
@@ -12473,12 +12570,6 @@
     </function-type>
     <function-type size-in-bits='64' id='type-id-1176'>
       <parameter type-id='type-id-6'/>
-      <parameter type-id='type-id-6'/>
-      <return type-id='type-id-6'/>
-    </function-type>
-    <function-type size-in-bits='64' id='type-id-1177'>
-      <parameter type-id='type-id-6'/>
-      <parameter type-id='type-id-38'/>
       <parameter type-id='type-id-6'/>
       <return type-id='type-id-6'/>
     </function-type>
@@ -12536,9 +12627,10 @@
       <parameter type-id='type-id-1240'/>
       <return type-id='type-id-6'/>
     </function-type>
-    <function-type size-in-bits='64' id='type-id-1173'>
+    <function-type size-in-bits='64' id='type-id-1186'>
       <parameter type-id='type-id-6'/>
-      <parameter type-id='type-id-1057'/>
+      <parameter type-id='type-id-172'/>
+      <parameter type-id='type-id-3'/>
       <return type-id='type-id-6'/>
     </function-type>
     <function-type size-in-bits='64' id='type-id-1187'>
@@ -12547,18 +12639,6 @@
       <parameter type-id='type-id-1'/>
       <parameter type-id='type-id-1'/>
       <parameter type-id='type-id-1'/>
-      <return type-id='type-id-6'/>
-    </function-type>
-    <function-type size-in-bits='64' id='type-id-1171'>
-      <parameter type-id='type-id-6'/>
-      <parameter type-id='type-id-441'/>
-      <parameter type-id='type-id-3'/>
-      <return type-id='type-id-6'/>
-    </function-type>
-    <function-type size-in-bits='64' id='type-id-1186'>
-      <parameter type-id='type-id-6'/>
-      <parameter type-id='type-id-172'/>
-      <parameter type-id='type-id-3'/>
       <return type-id='type-id-6'/>
     </function-type>
     <function-type size-in-bits='64' id='type-id-1188'>
@@ -12571,12 +12651,6 @@
       <parameter type-id='type-id-3'/>
       <parameter type-id='type-id-6'/>
       <return type-id='type-id-6'/>
-    </function-type>
-    <function-type size-in-bits='64' id='type-id-1234'>
-      <parameter type-id='type-id-6'/>
-      <parameter type-id='type-id-3'/>
-      <parameter type-id='type-id-6'/>
-      <return type-id='type-id-641'/>
     </function-type>
     <function-type size-in-bits='64' id='type-id-1190'>
       <parameter type-id='type-id-6'/>
@@ -12591,24 +12665,11 @@
       <parameter type-id='type-id-6'/>
       <return type-id='type-id-6'/>
     </function-type>
-    <function-type size-in-bits='64' id='type-id-1235'>
-      <parameter type-id='type-id-6'/>
-      <parameter type-id='type-id-3'/>
-      <parameter type-id='type-id-641'/>
-      <parameter type-id='type-id-6'/>
-      <return type-id='type-id-641'/>
-    </function-type>
     <function-type size-in-bits='64' id='type-id-1192'>
       <parameter type-id='type-id-6'/>
       <parameter type-id='type-id-3'/>
       <parameter type-id='type-id-172'/>
       <return type-id='type-id-6'/>
-    </function-type>
-    <function-type size-in-bits='64' id='type-id-977'>
-      <parameter type-id='type-id-6'/>
-      <parameter type-id='type-id-3'/>
-      <parameter type-id='type-id-441'/>
-      <return type-id='type-id-443'/>
     </function-type>
     <function-type size-in-bits='64' id='type-id-1193'>
       <parameter type-id='type-id-6'/>
@@ -12623,45 +12684,19 @@
       <parameter type-id='type-id-6'/>
       <return type-id='type-id-6'/>
     </function-type>
-    <function-type size-in-bits='64' id='type-id-976'>
-      <parameter type-id='type-id-6'/>
-      <parameter type-id='type-id-3'/>
-      <parameter type-id='type-id-439'/>
-      <parameter type-id='type-id-439'/>
-      <return type-id='type-id-443'/>
-    </function-type>
-    <function-type size-in-bits='64' id='type-id-978'>
-      <parameter type-id='type-id-6'/>
-      <parameter type-id='type-id-3'/>
-      <parameter type-id='type-id-441'/>
-      <parameter type-id='type-id-440'/>
-      <return type-id='type-id-443'/>
-    </function-type>
     <function-type size-in-bits='64' id='type-id-1195'>
       <parameter type-id='type-id-6'/>
       <parameter type-id='type-id-3'/>
       <parameter type-id='type-id-3'/>
       <return type-id='type-id-6'/>
     </function-type>
-    <function-type size-in-bits='64' id='type-id-1140'>
-      <parameter type-id='type-id-2'/>
-      <parameter type-id='type-id-4'/>
+    <function-type size-in-bits='64' id='type-id-1196'>
+      <parameter type-id='type-id-641'/>
       <return type-id='type-id-6'/>
     </function-type>
     <function-type size-in-bits='64' id='type-id-1197'>
       <parameter type-id='type-id-172'/>
       <parameter type-id='type-id-6'/>
-      <return type-id='type-id-6'/>
-    </function-type>
-    <function-type size-in-bits='64' id='type-id-1141'>
-      <parameter type-id='type-id-2'/>
-      <parameter type-id='type-id-38'/>
-      <parameter type-id='type-id-38'/>
-      <return type-id='type-id-6'/>
-    </function-type>
-    <function-type size-in-bits='64' id='type-id-1139'>
-      <parameter type-id='type-id-231'/>
-      <parameter type-id='type-id-3'/>
       <return type-id='type-id-6'/>
     </function-type>
     <function-type size-in-bits='64' id='type-id-1198'>
@@ -12679,22 +12714,21 @@
       <parameter type-id='type-id-3'/>
       <return type-id='type-id-6'/>
     </function-type>
-    <function-type size-in-bits='64' id='type-id-1201'>
+    <function-type size-in-bits='64' id='type-id-1202'>
+      <parameter type-id='type-id-1273'/>
+      <parameter type-id='type-id-2'/>
+      <parameter type-id='type-id-2'/>
       <return type-id='type-id-6'/>
-    </function-type>
-    <function-type size-in-bits='64' id='type-id-1006'>
-      <parameter type-id='type-id-3'/>
-      <return type-id='type-id-1274'/>
     </function-type>
     <function-type size-in-bits='64' id='type-id-1203'>
       <parameter type-id='type-id-1273'/>
       <parameter type-id='type-id-6'/>
       <return type-id='type-id-6'/>
     </function-type>
-    <function-type size-in-bits='64' id='type-id-1202'>
-      <parameter type-id='type-id-1273'/>
-      <parameter type-id='type-id-2'/>
-      <parameter type-id='type-id-2'/>
+    <function-type size-in-bits='64' id='type-id-1204'>
+      <parameter type-id='type-id-3'/>
+      <parameter type-id='type-id-441'/>
+      <parameter type-id='type-id-3'/>
       <return type-id='type-id-6'/>
     </function-type>
     <function-type size-in-bits='64' id='type-id-1205'>
@@ -12707,6 +12741,16 @@
       <parameter type-id='type-id-3'/>
       <parameter type-id='type-id-1013'/>
       <parameter type-id='type-id-1015'/>
+      <return type-id='type-id-6'/>
+    </function-type>
+    <function-type size-in-bits='64' id='type-id-1207'>
+      <parameter type-id='type-id-3'/>
+      <parameter type-id='type-id-1057'/>
+      <return type-id='type-id-6'/>
+    </function-type>
+    <function-type size-in-bits='64' id='type-id-1208'>
+      <parameter type-id='type-id-3'/>
+      <parameter type-id='type-id-2'/>
       <return type-id='type-id-6'/>
     </function-type>
     <function-type size-in-bits='64' id='type-id-1209'>
@@ -12731,19 +12775,9 @@
       <parameter type-id='type-id-6'/>
       <return type-id='type-id-6'/>
     </function-type>
-    <function-type size-in-bits='64' id='type-id-1217'>
-      <parameter type-id='type-id-3'/>
-      <parameter type-id='type-id-641'/>
-      <return type-id='type-id-6'/>
-    </function-type>
     <function-type size-in-bits='64' id='type-id-1213'>
       <parameter type-id='type-id-3'/>
       <parameter type-id='type-id-38'/>
-      <return type-id='type-id-6'/>
-    </function-type>
-    <function-type size-in-bits='64' id='type-id-1216'>
-      <parameter type-id='type-id-3'/>
-      <parameter type-id='type-id-1233'/>
       <return type-id='type-id-6'/>
     </function-type>
     <function-type size-in-bits='64' id='type-id-1214'>
@@ -12763,20 +12797,14 @@
       <parameter type-id='type-id-172'/>
       <return type-id='type-id-6'/>
     </function-type>
-    <function-type size-in-bits='64' id='type-id-1207'>
+    <function-type size-in-bits='64' id='type-id-1216'>
       <parameter type-id='type-id-3'/>
-      <parameter type-id='type-id-1057'/>
+      <parameter type-id='type-id-1233'/>
       <return type-id='type-id-6'/>
     </function-type>
-    <function-type size-in-bits='64' id='type-id-1208'>
+    <function-type size-in-bits='64' id='type-id-1217'>
       <parameter type-id='type-id-3'/>
-      <parameter type-id='type-id-2'/>
-      <return type-id='type-id-6'/>
-    </function-type>
-    <function-type size-in-bits='64' id='type-id-1204'>
-      <parameter type-id='type-id-3'/>
-      <parameter type-id='type-id-441'/>
-      <parameter type-id='type-id-3'/>
+      <parameter type-id='type-id-641'/>
       <return type-id='type-id-6'/>
     </function-type>
     <function-type size-in-bits='64' id='type-id-1218'>
@@ -12827,39 +12855,43 @@
       <parameter type-id='type-id-3'/>
       <return type-id='type-id-6'/>
     </function-type>
-    <function-type size-in-bits='64' id='type-id-962'>
-      <parameter type-id='type-id-27'/>
-      <parameter type-id='type-id-1121'/>
-      <parameter type-id='type-id-441'/>
-      <parameter type-id='type-id-441'/>
-      <parameter type-id='type-id-3'/>
-      <return type-id='type-id-441'/>
+    <function-type size-in-bits='64' id='type-id-1228'>
+      <parameter type-id='type-id-415'/>
+      <return type-id='type-id-415'/>
     </function-type>
-    <function-type size-in-bits='64' id='type-id-963'>
-      <parameter type-id='type-id-27'/>
-      <parameter type-id='type-id-1121'/>
-      <parameter type-id='type-id-441'/>
-      <parameter type-id='type-id-3'/>
-      <return type-id='type-id-441'/>
+    <function-type size-in-bits='64' id='type-id-1229'>
+      <parameter type-id='type-id-415'/>
+      <parameter type-id='type-id-38'/>
+      <return type-id='type-id-415'/>
     </function-type>
-    <function-type size-in-bits='64' id='type-id-964'>
-      <parameter type-id='type-id-27'/>
-      <parameter type-id='type-id-1120'/>
-      <parameter type-id='type-id-441'/>
-      <return type-id='type-id-441'/>
+    <function-type size-in-bits='64' id='type-id-1230'>
+      <parameter type-id='type-id-415'/>
+      <parameter type-id='type-id-1232'/>
+      <return type-id='type-id-415'/>
     </function-type>
-    <function-type size-in-bits='64' id='type-id-965'>
-      <parameter type-id='type-id-6'/>
-      <parameter type-id='type-id-27'/>
-      <parameter type-id='type-id-441'/>
-      <return type-id='type-id-441'/>
+    <function-type size-in-bits='64' id='type-id-1231'>
+      <parameter type-id='type-id-415'/>
+      <parameter type-id='type-id-415'/>
+      <parameter type-id='type-id-38'/>
+      <return type-id='type-id-415'/>
     </function-type>
-    <function-type size-in-bits='64' id='type-id-1059'>
-      <parameter type-id='type-id-6'/>
+    <function-type size-in-bits='64' id='type-id-1234'>
       <parameter type-id='type-id-6'/>
       <parameter type-id='type-id-3'/>
+      <parameter type-id='type-id-6'/>
+      <return type-id='type-id-641'/>
+    </function-type>
+    <function-type size-in-bits='64' id='type-id-1235'>
+      <parameter type-id='type-id-6'/>
       <parameter type-id='type-id-3'/>
-      <return type-id='type-id-2'/>
+      <parameter type-id='type-id-641'/>
+      <parameter type-id='type-id-6'/>
+      <return type-id='type-id-641'/>
+    </function-type>
+    <function-type size-in-bits='64' id='type-id-1241'>
+      <parameter type-id='type-id-6'/>
+      <parameter type-id='type-id-431'/>
+      <return type-id='type-id-431'/>
     </function-type>
     <function-type size-in-bits='64' id='type-id-1243'>
       <parameter type-id='type-id-172'/>
@@ -12869,61 +12901,15 @@
       <parameter type-id='type-id-131'/>
       <return type-id='type-id-1'/>
     </function-type>
-    <function-type size-in-bits='64' id='type-id-1060'>
-      <parameter type-id='type-id-3'/>
-      <return type-id='type-id-2'/>
-    </function-type>
-    <function-type size-in-bits='64' id='type-id-966'>
-      <parameter type-id='type-id-3'/>
-      <parameter type-id='type-id-1081'/>
-      <parameter type-id='type-id-970'/>
-      <parameter type-id='type-id-1081'/>
-      <parameter type-id='type-id-970'/>
-      <return type-id='type-id-441'/>
-    </function-type>
-    <function-type size-in-bits='64' id='type-id-1061'>
-      <parameter type-id='type-id-3'/>
-      <parameter type-id='type-id-2'/>
-      <parameter type-id='type-id-2'/>
-      <parameter type-id='type-id-3'/>
-      <return type-id='type-id-2'/>
-    </function-type>
-    <function-type size-in-bits='64' id='type-id-967'>
-      <parameter type-id='type-id-1269'/>
-      <parameter type-id='type-id-388'/>
-      <parameter type-id='type-id-441'/>
-      <parameter type-id='type-id-441'/>
-      <parameter type-id='type-id-3'/>
-      <return type-id='type-id-441'/>
-    </function-type>
-    <function-type size-in-bits='64' id='type-id-968'>
-      <parameter type-id='type-id-1269'/>
-      <parameter type-id='type-id-388'/>
-      <parameter type-id='type-id-441'/>
-      <parameter type-id='type-id-3'/>
-      <return type-id='type-id-441'/>
-    </function-type>
-    <function-type size-in-bits='64' id='type-id-969'>
-      <parameter type-id='type-id-1269'/>
-      <parameter type-id='type-id-4'/>
-      <parameter type-id='type-id-441'/>
-      <return type-id='type-id-441'/>
-    </function-type>
-    <function-type size-in-bits='64' id='type-id-1241'>
+    <function-type size-in-bits='64' id='type-id-1245'>
+      <parameter type-id='type-id-1278'/>
       <parameter type-id='type-id-6'/>
-      <parameter type-id='type-id-431'/>
-      <return type-id='type-id-431'/>
+      <return type-id='type-id-29'/>
     </function-type>
     <function-type size-in-bits='64' id='type-id-1246'>
       <parameter type-id='type-id-410'/>
       <parameter type-id='type-id-1126'/>
       <parameter type-id='type-id-1126'/>
-      <return type-id='type-id-29'/>
-    </function-type>
-    <function-type size-in-bits='64' id='type-id-1251'>
-      <parameter type-id='type-id-415'/>
-      <parameter type-id='type-id-1232'/>
-      <parameter type-id='type-id-1232'/>
       <return type-id='type-id-29'/>
     </function-type>
     <function-type size-in-bits='64' id='type-id-1247'>
@@ -12943,15 +12929,20 @@
       <parameter type-id='type-id-3'/>
       <return type-id='type-id-29'/>
     </function-type>
-    <function-type size-in-bits='64' id='type-id-1245'>
-      <parameter type-id='type-id-1278'/>
-      <parameter type-id='type-id-6'/>
+    <function-type size-in-bits='64' id='type-id-1251'>
+      <parameter type-id='type-id-415'/>
+      <parameter type-id='type-id-1232'/>
+      <parameter type-id='type-id-1232'/>
       <return type-id='type-id-29'/>
     </function-type>
     <function-type size-in-bits='64' id='type-id-1252'>
       <parameter type-id='type-id-3'/>
       <parameter type-id='type-id-148'/>
       <return type-id='type-id-29'/>
+    </function-type>
+    <function-type size-in-bits='64' id='type-id-1253'>
+      <parameter type-id='type-id-2'/>
+      <return type-id='type-id-3'/>
     </function-type>
     <function-type size-in-bits='64' id='type-id-1255'>
       <parameter type-id='type-id-27'/>
@@ -12979,12 +12970,13 @@
       <parameter type-id='type-id-6'/>
       <return type-id='type-id-3'/>
     </function-type>
-    <function-type size-in-bits='64' id='type-id-1253'>
-      <parameter type-id='type-id-2'/>
-      <return type-id='type-id-3'/>
-    </function-type>
     <function-type size-in-bits='64' id='type-id-1260'>
       <parameter type-id='type-id-3'/>
+      <return type-id='type-id-3'/>
+    </function-type>
+    <function-type size-in-bits='64' id='type-id-1262'>
+      <parameter type-id='type-id-3'/>
+      <parameter type-id='type-id-2'/>
       <return type-id='type-id-3'/>
     </function-type>
     <function-type size-in-bits='64' id='type-id-1264'>
@@ -13005,18 +12997,26 @@
       <parameter type-id='type-id-172'/>
       <return type-id='type-id-3'/>
     </function-type>
-    <function-type size-in-bits='64' id='type-id-1262'>
-      <parameter type-id='type-id-3'/>
-      <parameter type-id='type-id-2'/>
-      <return type-id='type-id-3'/>
+    <function-type size-in-bits='64' id='type-id-1058'>
+      <parameter type-id='type-id-4'/>
+      <return type-id='type-id-2'/>
     </function-type>
     <function-type size-in-bits='64' id='type-id-1073'>
       <parameter type-id='type-id-4'/>
       <return type-id='type-id-27'/>
     </function-type>
-    <function-type size-in-bits='64' id='type-id-1058'>
-      <parameter type-id='type-id-4'/>
-      <return type-id='type-id-2'/>
+    <function-type size-in-bits='64' id='type-id-1167'>
+      <parameter type-id='type-id-6'/>
+      <return type-id='type-id-6'/>
+    </function-type>
+    <function-type size-in-bits='64' id='type-id-1177'>
+      <parameter type-id='type-id-6'/>
+      <parameter type-id='type-id-38'/>
+      <parameter type-id='type-id-6'/>
+      <return type-id='type-id-6'/>
+    </function-type>
+    <function-type size-in-bits='64' id='type-id-1201'>
+      <return type-id='type-id-6'/>
     </function-type>
     <function-type size-in-bits='64' id='type-id-1291'>
       <parameter type-id='type-id-3'/>
@@ -15482,17 +15482,17 @@
         </data-member>
       </class-decl>
     </namespace-decl>
-    <function-type size-in-bits='64' id='type-id-1658'>
-      <parameter type-id='type-id-1654'/>
-      <parameter type-id='type-id-3'/>
-      <return type-id='type-id-29'/>
-    </function-type>
     <function-type size-in-bits='64' id='type-id-1657'>
       <parameter type-id='type-id-2'/>
       <parameter type-id='type-id-2'/>
       <parameter type-id='type-id-148'/>
       <parameter type-id='type-id-1278'/>
       <parameter type-id='type-id-2'/>
+      <return type-id='type-id-29'/>
+    </function-type>
+    <function-type size-in-bits='64' id='type-id-1658'>
+      <parameter type-id='type-id-1654'/>
+      <parameter type-id='type-id-3'/>
       <return type-id='type-id-29'/>
     </function-type>
   </abi-instr>

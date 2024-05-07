@@ -4724,16 +4724,15 @@ public:
   }
 
   /// @return vectors of types created during the analysis of the
-  /// DWARF and in the need of being canonicalized.<<<<<<< HEAD
-  /// Return a reference to the vector containing the types created
-  /// during the binary analysis but that are not tied to a given
-  /// DWARF DIE.
-  ///
-  /// @return reference to the vector containing the types created
-  /// during the binary analysis but that are not tied to a given
-  /// DWARF DIE.
+  /// DWARF and in the need of being canonicalized.
   const vector<type_base_sptr>&
   types_to_canonicalize() const
+  {return types_to_canonicalize_;}
+
+  /// @return vectors of types created during the analysis of the
+  /// DWARF and in the need of being canonicalized.
+  vector<type_base_sptr>&
+  types_to_canonicalize()
   {return types_to_canonicalize_;}
 
   /// Clear the containers holding types to canonicalize.

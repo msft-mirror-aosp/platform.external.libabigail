@@ -13,8 +13,9 @@
 #ifndef __ABG_IR_PRIV_H__
 #define __ABG_IR_PRIV_H__
 
-#include <string>
+#include <algorithm>
 #include <iostream>
+#include <string>
 
 #include "abg-ir.h"
 #include "abg-corpus.h"
@@ -1289,6 +1290,289 @@ struct environment::priv
 #endif
 };// end struct environment::priv
 
+bool
+compare_using_locations(const decl_base *f,
+			const decl_base *s);
+
+/// A functor to sort decls somewhat topologically.  That is, types
+/// are sorted in a way that makes the ones that are defined "first"
+/// to come first.
+///
+/// The topological criteria is a lexicographic sort of the definition
+/// location of the type.  For types that have no location (or the
+/// same location), it's their qualified name that is used for the
+/// lexicographic sort.
+struct decl_topo_comp
+{
+
+  /// The "Less Than" comparison operator of this functor.
+  ///
+  /// @param f the first decl to be considered for the comparison.
+  ///
+  /// @param s the second decl to be considered for the comparison.
+  ///
+  /// @return true iff @p f is less than @p s.
+  bool
+  operator()(const decl_base *f,
+	     const decl_base *s)
+  {
+    if (!!f != !!s)
+      return f && !s;
+
+    if (!f)
+      return false;
+
+    // Unique types that are artificially created in the environment
+    // don't have locations.  They ought to be compared on the basis
+    // of their pretty representation before we start looking at IR
+    // nodes' locations down the road.
+    if (is_unique_type(is_type(f)) || is_unique_type(is_type(s)))
+      return (get_pretty_representation(f, /*internal=*/false)
+	      < get_pretty_representation(s, /*internal=*/false));
+
+    // If both decls come from an abixml file, keep the order they
+    // have from that abixml file.
+    if ((!f->get_corpus() && !s->get_corpus())
+	|| (f->get_corpus()->get_origin() == corpus::NATIVE_XML_ORIGIN
+	    && s->get_corpus()->get_origin() == corpus::NATIVE_XML_ORIGIN))
+      return compare_using_locations(f, s);
+
+    // If a decl has artificial location, then use that one over the
+    // natural one.
+    location fl = get_artificial_or_natural_location(f);
+    location sl = get_artificial_or_natural_location(s);
+
+    if (fl.get_value() && sl.get_value())
+      return compare_using_locations(f, s);
+    else if (!!fl != !!sl)
+      // So one of the decls doesn't have location data.
+      // The first decl is less than the second if it's the one not
+      // having location data.
+      return !fl && sl;
+
+    // We reach this point if location data is useless.
+    if (f->get_is_anonymous()
+	&& s->get_is_anonymous()
+	&& (get_pretty_representation(f, /*internal=*/false)
+	    == get_pretty_representation(s, /*internal=*/false)))
+      return f->get_name() < s->get_name();
+
+    return (get_pretty_representation(f, /*internal=*/false)
+	    < get_pretty_representation(s, /*internal=*/false));
+  }
+
+  /// The "Less Than" comparison operator of this functor.
+  ///
+  /// @param f the first decl to be considered for the comparison.
+  ///
+  /// @param s the second decl to be considered for the comparison.
+  ///
+  /// @return true iff @p f is less than @p s.
+  bool
+  operator()(const decl_base_sptr &f,
+	     const decl_base_sptr &s)
+  {return operator()(f.get(), s.get());}
+
+}; // end struct decl_topo_comp
+
+bool
+is_ptr_ref_or_qual_type(const type_base *t);
+
+/// A functor to sort types somewhat topologically.  That is, types
+/// are sorted in a way that makes the ones that are defined "first"
+/// to come first.
+///
+/// The topological criteria is a lexicographic sort of the definition
+/// location of the type.  For types that have no location, it's their
+/// qualified name that is used for the lexicographic sort.
+struct type_topo_comp
+{
+  /// Test if a decl has an artificial or natural location.
+  ///
+  /// @param d the decl to consider
+  ///
+  /// @return true iff @p d has a location.
+  bool
+  has_artificial_or_natural_location(const decl_base* d)
+  {return get_artificial_or_natural_location(d);}
+
+  /// Test if a type has an artificial or natural location.
+  ///
+  /// @param t the type to consider
+  ///
+  /// @return true iff @p t has a location.
+  bool
+  has_artificial_or_natural_location(const type_base* t)
+  {
+    if (decl_base *d = is_decl(t))
+      return has_artificial_or_natural_location(d);
+    return false;
+  }
+
+  /// The "Less Than" comparison operator of this functor.
+  ///
+  /// @param f the first type to be considered for the comparison.
+  ///
+  /// @param s the second type to be considered for the comparison.
+  ///
+  /// @return true iff @p f is less than @p s.
+  bool
+  operator()(const type_base_sptr &f,
+	     const type_base_sptr &s)
+  {return operator()(f.get(), s.get());}
+
+  /// The "Less Than" comparison operator of this functor.
+  ///
+  /// @param f the first type to be considered for the comparison.
+  ///
+  /// @param s the second type to be considered for the comparison.
+  ///
+  /// @return true iff @p f is less than @p s.
+  bool
+  operator()(const type_base *f,
+	     const type_base *s)
+  {
+    if (f == s || !f || !s)
+      return false;
+
+    // If both decls come from an abixml file, keep the order they
+    // have from that abixml file.
+    if (is_decl(f) && is_decl(s)
+	&& ((!f->get_corpus() && !s->get_corpus())
+	    || (f->get_corpus()->get_origin() == corpus::NATIVE_XML_ORIGIN
+		&& (s->get_corpus()->get_origin()
+		    == corpus::NATIVE_XML_ORIGIN))))
+      return compare_using_locations(is_decl(f), is_decl(s));
+
+    bool f_is_ptr_ref_or_qual = is_ptr_ref_or_qual_type(f);
+    bool s_is_ptr_ref_or_qual = is_ptr_ref_or_qual_type(s);
+
+    if (f_is_ptr_ref_or_qual != s_is_ptr_ref_or_qual)
+      return !f_is_ptr_ref_or_qual && s_is_ptr_ref_or_qual;
+
+    if (f_is_ptr_ref_or_qual && s_is_ptr_ref_or_qual
+	&& !has_artificial_or_natural_location(f)
+	&& !has_artificial_or_natural_location(s))
+      {
+	string s1 = get_pretty_representation(f, /*internal=*/false);
+	string s2 = get_pretty_representation(s, /*internal=*/false);
+	if (s1 == s2)
+	  {
+	    if (qualified_type_def * q = is_qualified_type(f))
+	      {
+		if (q->get_cv_quals() == qualified_type_def::CV_NONE)
+		  if (!is_qualified_type(s))
+		    // We are looking at two types that are the result of
+		    // an optimization that happens during the IR
+		    // construction.  Namely, type f is a cv-qualified
+		    // type with no qualifier (no const, no volatile, no
+		    // nothing, we call it an empty-qualified type).
+		    // These are the result of an optimization which
+		    // removes "redundant qualifiers" from some types.
+		    // For instance, consider a "const reference".  The
+		    // const there is redundant because a reference is
+		    // always const.  So as a result of the optimizaton
+		    // that type is going to be transformed into an
+		    // empty-qualified reference. If we don't make that
+		    // optimization, then we risk having spurious change
+		    // reports down the road.  But then, as a consequence
+		    // of that optimization, we need to sort the
+		    // empty-qualified type and its non-qualified variant
+		    // e.g, to ensure stability in the abixml output; both
+		    // types are logically equal, but here, we decide that
+		    // the empty-qualified one is topologically "less
+		    // than" the non-qualified counterpart.
+		    //
+		    // So here, type f is an empty-qualified type and type
+		    // s is its non-qualified variant.  We decide that f
+		    // is topologically less than s.
+		    return true;
+	      }
+	    // Now let's peel off the pointer (or reference types) and
+	    // see if the ultimate underlying types have the same
+	    // textual representation; if not, use that as sorting
+	    // criterion.
+	    type_base *peeled_f =
+	      peel_pointer_or_reference_type(f, true);
+	    type_base *peeled_s =
+	      peel_pointer_or_reference_type(s, true);
+
+	    s1 = get_pretty_representation(peeled_f, /*internal=*/false);
+	    s2 = get_pretty_representation(peeled_s, /*internal=*/false);
+	    if (s1 != s2)
+	      return s1 < s2;
+
+	    // The underlying type of pointer/reference have the same
+	    // textual representation; let's try to peel of typedefs
+	    // as well and we'll consider sorting the result as decls.
+	    peeled_f = peel_typedef_pointer_or_reference_type(peeled_f, true);
+	    peeled_s = peel_typedef_pointer_or_reference_type(peeled_s, true);
+
+	    s1 = get_pretty_representation(peeled_f, false);
+	    s2 = get_pretty_representation(peeled_s, false);
+	    if (s1 != s2)
+	      return s1 < s2;
+	  }
+      }
+
+    string s1 = get_pretty_representation(f, false);
+    string s2 = get_pretty_representation(s, false);
+
+    if (s1 != s2)
+      return s1 < s2;
+
+    if (is_typedef(f) && is_typedef(s))
+      {
+	s1 = get_pretty_representation(is_typedef(f)->get_underlying_type(),
+				       false);
+	s2 = get_pretty_representation(is_typedef(s)->get_underlying_type(),
+				       false);
+	if (s1 != s2)
+	  return s1 < s2;
+      }
+
+    type_base *peeled_f = peel_typedef_pointer_or_reference_type(f, true);
+    type_base *peeled_s = peel_typedef_pointer_or_reference_type(s, true);
+
+    s1 = get_pretty_representation(peeled_f, false);
+    s2 = get_pretty_representation(peeled_s, false);
+
+    if (s1 != s2)
+      return s1 < s2;
+
+    if (method_type* m_f = is_method_type(peeled_f))
+      if (method_type* m_s = is_method_type(peeled_s))
+      {
+	// If two method types differ from their const-ness, make the
+	// const one come first.
+	if (m_f->get_is_const() != m_s->get_is_const())
+	  return m_f->get_is_const();
+
+	// If two method types have the same name (textual
+	// representation), make the non-static one come first.
+	if (m_f->get_is_for_static_method() != m_s->get_is_for_static_method())
+	  return m_f->get_is_for_static_method() < m_s->get_is_for_static_method();
+      }
+
+    decl_base *fd = is_decl(f);
+    decl_base *sd = is_decl(s);
+
+    if (!!fd != !!sd)
+      return fd && !sd;
+
+    if (!fd)
+      return false;
+
+    // If the two types have no decls, how come we could not sort them
+    // until now? Let's investigate.
+    //ABG_ASSERT(fd);
+
+    // From this point, fd and sd should be non-nil
+    decl_topo_comp decl_comp;
+    return decl_comp(fd, sd);
+  }
+}; //end struct type_topo_comp
+
 /// Compute the canonical type for all the IR types of the system.
 ///
 /// After invoking this function, the time it takes to compare two
@@ -1329,6 +1613,9 @@ canonicalize_types(const input_iterator& begin,
 {
   if (begin == end)
     return;
+
+  type_topo_comp comp;
+  std::stable_sort(begin, end, comp);
 
   int i;
   input_iterator t;

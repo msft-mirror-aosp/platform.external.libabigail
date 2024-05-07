@@ -4412,31 +4412,20 @@
       <!-- int -->
       <return type-id='type-id-19'/>
     </function-type>
-    <!-- int (vtkCommunicator::*) (void*, vtkIdType, int, int) -->
+    <!-- int (vtkCommunicator::*) (void*, void*, vtkIdType*, vtkIdType*, vtkIdType, int, int) -->
     <function-type size-in-bits='64' method-class-id='type-id-15' id='type-id-504'>
       <!-- implicit parameter of type 'vtkCommunicator*' -->
       <parameter type-id='type-id-25' is-artificial='yes'/>
       <!-- parameter of type 'void*' -->
       <parameter type-id='type-id-20'/>
-      <!-- parameter of type 'typedef vtkIdType' -->
-      <parameter type-id='type-id-21'/>
-      <!-- parameter of type 'int' -->
-      <parameter type-id='type-id-19'/>
-      <!-- parameter of type 'int' -->
-      <parameter type-id='type-id-19'/>
-      <!-- int -->
-      <return type-id='type-id-19'/>
-    </function-type>
-    <!-- int (vtkCommunicator::*) (void*, vtkIdType, int, int, int) -->
-    <function-type size-in-bits='64' method-class-id='type-id-15' id='type-id-505'>
-      <!-- implicit parameter of type 'vtkCommunicator*' -->
-      <parameter type-id='type-id-25' is-artificial='yes'/>
       <!-- parameter of type 'void*' -->
       <parameter type-id='type-id-20'/>
+      <!-- parameter of type 'vtkIdType*' -->
+      <parameter type-id='type-id-27'/>
+      <!-- parameter of type 'vtkIdType*' -->
+      <parameter type-id='type-id-27'/>
       <!-- parameter of type 'typedef vtkIdType' -->
       <parameter type-id='type-id-21'/>
-      <!-- parameter of type 'int' -->
-      <parameter type-id='type-id-19'/>
       <!-- parameter of type 'int' -->
       <parameter type-id='type-id-19'/>
       <!-- parameter of type 'int' -->
@@ -4445,7 +4434,7 @@
       <return type-id='type-id-19'/>
     </function-type>
     <!-- int (vtkCommunicator::*) (void*, void*, vtkIdType, int) -->
-    <function-type size-in-bits='64' method-class-id='type-id-15' id='type-id-506'>
+    <function-type size-in-bits='64' method-class-id='type-id-15' id='type-id-505'>
       <!-- implicit parameter of type 'vtkCommunicator*' -->
       <parameter type-id='type-id-25' is-artificial='yes'/>
       <!-- parameter of type 'void*' -->
@@ -4460,7 +4449,7 @@
       <return type-id='type-id-19'/>
     </function-type>
     <!-- int (vtkCommunicator::*) (void*, void*, vtkIdType, int, int) -->
-    <function-type size-in-bits='64' method-class-id='type-id-15' id='type-id-507'>
+    <function-type size-in-bits='64' method-class-id='type-id-15' id='type-id-506'>
       <!-- implicit parameter of type 'vtkCommunicator*' -->
       <parameter type-id='type-id-25' is-artificial='yes'/>
       <!-- parameter of type 'void*' -->
@@ -4477,7 +4466,7 @@
       <return type-id='type-id-19'/>
     </function-type>
     <!-- int (vtkCommunicator::*) (void*, void*, vtkIdType, int, int, int) -->
-    <function-type size-in-bits='64' method-class-id='type-id-15' id='type-id-508'>
+    <function-type size-in-bits='64' method-class-id='type-id-15' id='type-id-507'>
       <!-- implicit parameter of type 'vtkCommunicator*' -->
       <parameter type-id='type-id-25' is-artificial='yes'/>
       <!-- parameter of type 'void*' -->
@@ -4496,7 +4485,7 @@
       <return type-id='type-id-19'/>
     </function-type>
     <!-- int (vtkCommunicator::*) (void*, void*, vtkIdType, int, vtkCommunicator::Operation*) -->
-    <function-type size-in-bits='64' method-class-id='type-id-15' id='type-id-509'>
+    <function-type size-in-bits='64' method-class-id='type-id-15' id='type-id-508'>
       <!-- implicit parameter of type 'vtkCommunicator*' -->
       <parameter type-id='type-id-25' is-artificial='yes'/>
       <!-- parameter of type 'void*' -->
@@ -4513,7 +4502,7 @@
       <return type-id='type-id-19'/>
     </function-type>
     <!-- int (vtkCommunicator::*) (void*, void*, vtkIdType, int, vtkCommunicator::Operation*, int) -->
-    <function-type size-in-bits='64' method-class-id='type-id-15' id='type-id-510'>
+    <function-type size-in-bits='64' method-class-id='type-id-15' id='type-id-509'>
       <!-- implicit parameter of type 'vtkCommunicator*' -->
       <parameter type-id='type-id-25' is-artificial='yes'/>
       <!-- parameter of type 'void*' -->
@@ -4532,7 +4521,7 @@
       <return type-id='type-id-19'/>
     </function-type>
     <!-- int (vtkCommunicator::*) (void*, void*, vtkIdType, vtkIdType*, vtkIdType*, int) -->
-    <function-type size-in-bits='64' method-class-id='type-id-15' id='type-id-511'>
+    <function-type size-in-bits='64' method-class-id='type-id-15' id='type-id-510'>
       <!-- implicit parameter of type 'vtkCommunicator*' -->
       <parameter type-id='type-id-25' is-artificial='yes'/>
       <!-- parameter of type 'void*' -->
@@ -4551,7 +4540,7 @@
       <return type-id='type-id-19'/>
     </function-type>
     <!-- int (vtkCommunicator::*) (void*, void*, vtkIdType, vtkIdType*, vtkIdType*, int, int) -->
-    <function-type size-in-bits='64' method-class-id='type-id-15' id='type-id-512'>
+    <function-type size-in-bits='64' method-class-id='type-id-15' id='type-id-511'>
       <!-- implicit parameter of type 'vtkCommunicator*' -->
       <parameter type-id='type-id-25' is-artificial='yes'/>
       <!-- parameter of type 'void*' -->
@@ -4571,20 +4560,31 @@
       <!-- int -->
       <return type-id='type-id-19'/>
     </function-type>
-    <!-- int (vtkCommunicator::*) (void*, void*, vtkIdType*, vtkIdType*, vtkIdType, int, int) -->
+    <!-- int (vtkCommunicator::*) (void*, vtkIdType, int, int) -->
+    <function-type size-in-bits='64' method-class-id='type-id-15' id='type-id-512'>
+      <!-- implicit parameter of type 'vtkCommunicator*' -->
+      <parameter type-id='type-id-25' is-artificial='yes'/>
+      <!-- parameter of type 'void*' -->
+      <parameter type-id='type-id-20'/>
+      <!-- parameter of type 'typedef vtkIdType' -->
+      <parameter type-id='type-id-21'/>
+      <!-- parameter of type 'int' -->
+      <parameter type-id='type-id-19'/>
+      <!-- parameter of type 'int' -->
+      <parameter type-id='type-id-19'/>
+      <!-- int -->
+      <return type-id='type-id-19'/>
+    </function-type>
+    <!-- int (vtkCommunicator::*) (void*, vtkIdType, int, int, int) -->
     <function-type size-in-bits='64' method-class-id='type-id-15' id='type-id-513'>
       <!-- implicit parameter of type 'vtkCommunicator*' -->
       <parameter type-id='type-id-25' is-artificial='yes'/>
       <!-- parameter of type 'void*' -->
       <parameter type-id='type-id-20'/>
-      <!-- parameter of type 'void*' -->
-      <parameter type-id='type-id-20'/>
-      <!-- parameter of type 'vtkIdType*' -->
-      <parameter type-id='type-id-27'/>
-      <!-- parameter of type 'vtkIdType*' -->
-      <parameter type-id='type-id-27'/>
       <!-- parameter of type 'typedef vtkIdType' -->
       <parameter type-id='type-id-21'/>
+      <!-- parameter of type 'int' -->
+      <parameter type-id='type-id-19'/>
       <!-- parameter of type 'int' -->
       <parameter type-id='type-id-19'/>
       <!-- parameter of type 'int' -->
@@ -5782,22 +5782,15 @@
       <!-- int -->
       <return type-id='type-id-19'/>
     </function-type>
-    <!-- vtkIdType (vtkCommunicator::*) () -->
-    <function-type size-in-bits='64' method-class-id='type-id-15' id='type-id-591'>
-      <!-- implicit parameter of type 'vtkCommunicator*' -->
-      <parameter type-id='type-id-25' is-artificial='yes'/>
-      <!-- typedef vtkIdType -->
-      <return type-id='type-id-21'/>
-    </function-type>
     <!-- int (vtkMultiProcessController::*) () -->
-    <function-type size-in-bits='64' method-class-id='type-id-537' id='type-id-592'>
+    <function-type size-in-bits='64' method-class-id='type-id-537' id='type-id-591'>
       <!-- implicit parameter of type 'vtkMultiProcessController*' -->
       <parameter type-id='type-id-548' is-artificial='yes'/>
       <!-- int -->
       <return type-id='type-id-19'/>
     </function-type>
     <!-- int (vtkMultiProcessController::*) (const char*) -->
-    <function-type size-in-bits='64' method-class-id='type-id-537' id='type-id-593'>
+    <function-type size-in-bits='64' method-class-id='type-id-537' id='type-id-592'>
       <!-- implicit parameter of type 'vtkMultiProcessController*' -->
       <parameter type-id='type-id-548' is-artificial='yes'/>
       <!-- parameter of type 'const char*' -->
@@ -5806,7 +5799,7 @@
       <return type-id='type-id-19'/>
     </function-type>
     <!-- int (vtkMultiProcessController::*) (int) -->
-    <function-type size-in-bits='64' method-class-id='type-id-537' id='type-id-594'>
+    <function-type size-in-bits='64' method-class-id='type-id-537' id='type-id-593'>
       <!-- implicit parameter of type 'vtkMultiProcessController*' -->
       <parameter type-id='type-id-548' is-artificial='yes'/>
       <!-- parameter of type 'int' -->
@@ -5815,7 +5808,7 @@
       <return type-id='type-id-19'/>
     </function-type>
     <!-- int (vtkMultiProcessController::*) (int, int) -->
-    <function-type size-in-bits='64' method-class-id='type-id-537' id='type-id-595'>
+    <function-type size-in-bits='64' method-class-id='type-id-537' id='type-id-594'>
       <!-- implicit parameter of type 'vtkMultiProcessController*' -->
       <parameter type-id='type-id-548' is-artificial='yes'/>
       <!-- parameter of type 'int' -->
@@ -5826,7 +5819,7 @@
       <return type-id='type-id-19'/>
     </function-type>
     <!-- int (vtkMultiProcessController::*) (unsigned long int) -->
-    <function-type size-in-bits='64' method-class-id='type-id-537' id='type-id-596'>
+    <function-type size-in-bits='64' method-class-id='type-id-537' id='type-id-595'>
       <!-- implicit parameter of type 'vtkMultiProcessController*' -->
       <parameter type-id='type-id-548' is-artificial='yes'/>
       <!-- parameter of type 'unsigned long int' -->
@@ -5835,7 +5828,7 @@
       <return type-id='type-id-19'/>
     </function-type>
     <!-- unsigned long int (vtkMultiProcessController::*) (vtkRMIFunctionType, void*, int) -->
-    <function-type size-in-bits='64' method-class-id='type-id-537' id='type-id-597'>
+    <function-type size-in-bits='64' method-class-id='type-id-537' id='type-id-596'>
       <!-- implicit parameter of type 'vtkMultiProcessController*' -->
       <parameter type-id='type-id-548' is-artificial='yes'/>
       <!-- parameter of type 'typedef vtkRMIFunctionType' -->
@@ -5848,14 +5841,14 @@
       <return type-id='type-id-4'/>
     </function-type>
     <!-- void (vtkMultiProcessController::*) () -->
-    <function-type size-in-bits='64' method-class-id='type-id-537' id='type-id-598'>
+    <function-type size-in-bits='64' method-class-id='type-id-537' id='type-id-597'>
       <!-- implicit parameter of type 'vtkMultiProcessController*' -->
       <parameter type-id='type-id-548' is-artificial='yes'/>
       <!-- void -->
       <return type-id='type-id-14'/>
     </function-type>
     <!-- void (vtkMultiProcessController::*) (int) -->
-    <function-type size-in-bits='64' method-class-id='type-id-537' id='type-id-599'>
+    <function-type size-in-bits='64' method-class-id='type-id-537' id='type-id-598'>
       <!-- implicit parameter of type 'vtkMultiProcessController*' -->
       <parameter type-id='type-id-548' is-artificial='yes'/>
       <!-- parameter of type 'int' -->
@@ -5864,7 +5857,7 @@
       <return type-id='type-id-14'/>
     </function-type>
     <!-- void (vtkMultiProcessController::*) (int*, char***) -->
-    <function-type size-in-bits='64' method-class-id='type-id-537' id='type-id-600'>
+    <function-type size-in-bits='64' method-class-id='type-id-537' id='type-id-599'>
       <!-- implicit parameter of type 'vtkMultiProcessController*' -->
       <parameter type-id='type-id-548' is-artificial='yes'/>
       <!-- parameter of type 'int*' -->
@@ -5875,7 +5868,7 @@
       <return type-id='type-id-14'/>
     </function-type>
     <!-- void (vtkMultiProcessController::*) (int*, char***, int) -->
-    <function-type size-in-bits='64' method-class-id='type-id-537' id='type-id-601'>
+    <function-type size-in-bits='64' method-class-id='type-id-537' id='type-id-600'>
       <!-- implicit parameter of type 'vtkMultiProcessController*' -->
       <parameter type-id='type-id-548' is-artificial='yes'/>
       <!-- parameter of type 'int*' -->
@@ -5887,21 +5880,8 @@
       <!-- void -->
       <return type-id='type-id-14'/>
     </function-type>
-    <!-- void (vtkMultiProcessController::*) (int, vtkProcessFunctionType, void*) -->
-    <function-type size-in-bits='64' method-class-id='type-id-537' id='type-id-602'>
-      <!-- implicit parameter of type 'vtkMultiProcessController*' -->
-      <parameter type-id='type-id-548' is-artificial='yes'/>
-      <!-- parameter of type 'int' -->
-      <parameter type-id='type-id-19'/>
-      <!-- parameter of type 'typedef vtkProcessFunctionType' -->
-      <parameter type-id='type-id-578'/>
-      <!-- parameter of type 'void*' -->
-      <parameter type-id='type-id-20'/>
-      <!-- void -->
-      <return type-id='type-id-14'/>
-    </function-type>
     <!-- void (vtkMultiProcessController::*) (int, void*, int, int) -->
-    <function-type size-in-bits='64' method-class-id='type-id-537' id='type-id-603'>
+    <function-type size-in-bits='64' method-class-id='type-id-537' id='type-id-601'>
       <!-- implicit parameter of type 'vtkMultiProcessController*' -->
       <parameter type-id='type-id-548' is-artificial='yes'/>
       <!-- parameter of type 'int' -->
@@ -5916,7 +5896,7 @@
       <return type-id='type-id-14'/>
     </function-type>
     <!-- void (vtkMultiProcessController::*) (int, void*, int, int, bool) -->
-    <function-type size-in-bits='64' method-class-id='type-id-537' id='type-id-604'>
+    <function-type size-in-bits='64' method-class-id='type-id-537' id='type-id-602'>
       <!-- implicit parameter of type 'vtkMultiProcessController*' -->
       <parameter type-id='type-id-548' is-artificial='yes'/>
       <!-- parameter of type 'int' -->
@@ -5933,7 +5913,7 @@
       <return type-id='type-id-14'/>
     </function-type>
     <!-- void (vtkMultiProcessController::*) (int, vtkProcessFunctionType&, void*&) -->
-    <function-type size-in-bits='64' method-class-id='type-id-537' id='type-id-605'>
+    <function-type size-in-bits='64' method-class-id='type-id-537' id='type-id-603'>
       <!-- implicit parameter of type 'vtkMultiProcessController*' -->
       <parameter type-id='type-id-548' is-artificial='yes'/>
       <!-- parameter of type 'int' -->
@@ -5945,8 +5925,21 @@
       <!-- void -->
       <return type-id='type-id-14'/>
     </function-type>
+    <!-- void (vtkMultiProcessController::*) (int, vtkProcessFunctionType, void*) -->
+    <function-type size-in-bits='64' method-class-id='type-id-537' id='type-id-604'>
+      <!-- implicit parameter of type 'vtkMultiProcessController*' -->
+      <parameter type-id='type-id-548' is-artificial='yes'/>
+      <!-- parameter of type 'int' -->
+      <parameter type-id='type-id-19'/>
+      <!-- parameter of type 'typedef vtkProcessFunctionType' -->
+      <parameter type-id='type-id-578'/>
+      <!-- parameter of type 'void*' -->
+      <parameter type-id='type-id-20'/>
+      <!-- void -->
+      <return type-id='type-id-14'/>
+    </function-type>
     <!-- void (vtkMultiProcessController::*) (std::ostream&, vtkIndent) -->
-    <function-type size-in-bits='64' method-class-id='type-id-537' id='type-id-606'>
+    <function-type size-in-bits='64' method-class-id='type-id-537' id='type-id-605'>
       <!-- implicit parameter of type 'vtkMultiProcessController*' -->
       <parameter type-id='type-id-548' is-artificial='yes'/>
       <!-- parameter of type 'std::ostream&' -->
@@ -5956,19 +5949,8 @@
       <!-- void -->
       <return type-id='type-id-14'/>
     </function-type>
-    <!-- void (vtkMultiProcessController::*) (vtkProcessFunctionType, void*) -->
-    <function-type size-in-bits='64' method-class-id='type-id-537' id='type-id-607'>
-      <!-- implicit parameter of type 'vtkMultiProcessController*' -->
-      <parameter type-id='type-id-548' is-artificial='yes'/>
-      <!-- parameter of type 'typedef vtkProcessFunctionType' -->
-      <parameter type-id='type-id-578'/>
-      <!-- parameter of type 'void*' -->
-      <parameter type-id='type-id-20'/>
-      <!-- void -->
-      <return type-id='type-id-14'/>
-    </function-type>
     <!-- void (vtkMultiProcessController::*) (void*, int, int) -->
-    <function-type size-in-bits='64' method-class-id='type-id-537' id='type-id-608'>
+    <function-type size-in-bits='64' method-class-id='type-id-537' id='type-id-606'>
       <!-- implicit parameter of type 'vtkMultiProcessController*' -->
       <parameter type-id='type-id-548' is-artificial='yes'/>
       <!-- parameter of type 'void*' -->
@@ -5981,14 +5963,14 @@
       <return type-id='type-id-14'/>
     </function-type>
     <!-- void (vtkMultiProcessController::*) (vtkMultiProcessController*) -->
-    <function-type size-in-bits='64' method-class-id='type-id-537' id='type-id-609'>
+    <function-type size-in-bits='64' method-class-id='type-id-537' id='type-id-607'>
       <!-- parameter of type 'vtkMultiProcessController*' -->
       <parameter type-id='type-id-548'/>
       <!-- void -->
       <return type-id='type-id-14'/>
     </function-type>
     <!-- void (vtkMultiProcessController::*) (vtkProcess*) -->
-    <function-type size-in-bits='64' method-class-id='type-id-537' id='type-id-610'>
+    <function-type size-in-bits='64' method-class-id='type-id-537' id='type-id-608'>
       <!-- implicit parameter of type 'vtkMultiProcessController*' -->
       <parameter type-id='type-id-548' is-artificial='yes'/>
       <!-- parameter of type 'vtkProcess*' -->
@@ -5996,12 +5978,30 @@
       <!-- void -->
       <return type-id='type-id-14'/>
     </function-type>
+    <!-- void (vtkMultiProcessController::*) (vtkProcessFunctionType, void*) -->
+    <function-type size-in-bits='64' method-class-id='type-id-537' id='type-id-609'>
+      <!-- implicit parameter of type 'vtkMultiProcessController*' -->
+      <parameter type-id='type-id-548' is-artificial='yes'/>
+      <!-- parameter of type 'typedef vtkProcessFunctionType' -->
+      <parameter type-id='type-id-578'/>
+      <!-- parameter of type 'void*' -->
+      <parameter type-id='type-id-20'/>
+      <!-- void -->
+      <return type-id='type-id-14'/>
+    </function-type>
     <!-- vtkCommunicator* (vtkMultiProcessController::*) () -->
-    <function-type size-in-bits='64' method-class-id='type-id-537' id='type-id-611'>
+    <function-type size-in-bits='64' method-class-id='type-id-537' id='type-id-610'>
       <!-- implicit parameter of type 'vtkMultiProcessController*' -->
       <parameter type-id='type-id-548' is-artificial='yes'/>
       <!-- vtkCommunicator* -->
       <return type-id='type-id-25'/>
+    </function-type>
+    <!-- vtkIdType (vtkCommunicator::*) () -->
+    <function-type size-in-bits='64' method-class-id='type-id-15' id='type-id-611'>
+      <!-- implicit parameter of type 'vtkCommunicator*' -->
+      <parameter type-id='type-id-25' is-artificial='yes'/>
+      <!-- typedef vtkIdType -->
+      <return type-id='type-id-21'/>
     </function-type>
     <!-- vtkMultiProcessController* (vtkMultiProcessController::*) () -->
     <function-type size-in-bits='64' method-class-id='type-id-537' id='type-id-612'>
@@ -8387,8 +8387,6 @@
         <!-- struct std::input_iterator_tag -->
         <base-class access='public' layout-offset-in-bits='0' type-id='type-id-1302'/>
       </class-decl>
-      <!-- struct std::input_iterator_tag -->
-      <class-decl name='input_iterator_tag' is-struct='yes' visibility='default' filepath='/usr/lib/gcc/x86_64-redhat-linux/4.4.7/../../../../include/c++/4.4.7/bits/stl_iterator_base_types.h' line='79' column='1' id='type-id-1302'/>
       <!-- struct std::iterator<std::random_access_iterator_tag, bool, long int, bool*, bool&> -->
       <class-decl name='iterator&lt;std::random_access_iterator_tag, bool, long int, bool*, bool&amp;&gt;' size-in-bits='8' is-struct='yes' visibility='default' filepath='/usr/lib/gcc/x86_64-redhat-linux/4.4.7/../../../../include/c++/4.4.7/bits/stl_iterator_base_types.h' line='105' column='1' id='type-id-1266'/>
       <!-- struct std::iterator<std::random_access_iterator_tag, bool, long int, const bool*, bool> -->
@@ -8495,6 +8493,8 @@
       <class-decl name='pair&lt;vtksys::_Hashtable_iterator&lt;std::pair&lt;const int, void*&gt;, int, vtksys::hash&lt;int&gt;, vtksys::hash_select1st&lt;const int, void*&gt;, std::equal_to&lt;int&gt;, std::allocator&lt;char&gt; &gt;, bool&gt;' is-struct='yes' visibility='default' is-declaration-only='yes' id='type-id-1329'/>
       <!-- struct std::pair<vtksys::_Hashtable_iterator<std::pair<const int, void*>, int, vtksys::hash<int>, vtksys::hash_select1st<const int, void*>, std::equal_to<int>, std::allocator<char> >, vtksys::_Hashtable_iterator<std::pair<const int, void*>, int, vtksys::hash<int>, vtksys::hash_select1st<const int, void*>, std::equal_to<int>, std::allocator<char> > > -->
       <class-decl name='pair&lt;vtksys::_Hashtable_iterator&lt;std::pair&lt;const int, void*&gt;, int, vtksys::hash&lt;int&gt;, vtksys::hash_select1st&lt;const int, void*&gt;, std::equal_to&lt;int&gt;, std::allocator&lt;char&gt; &gt;, vtksys::_Hashtable_iterator&lt;std::pair&lt;const int, void*&gt;, int, vtksys::hash&lt;int&gt;, vtksys::hash_select1st&lt;const int, void*&gt;, std::equal_to&lt;int&gt;, std::allocator&lt;char&gt; &gt; &gt;' is-struct='yes' visibility='default' is-declaration-only='yes' id='type-id-1330'/>
+      <!-- struct std::input_iterator_tag -->
+      <class-decl name='input_iterator_tag' is-struct='yes' visibility='default' filepath='/usr/lib/gcc/x86_64-redhat-linux/4.4.7/../../../../include/c++/4.4.7/bits/stl_iterator_base_types.h' line='79' column='1' id='type-id-1302'/>
       <!-- typedef std::basic_ostream<char, std::char_traits<char> > std::ostream -->
       <typedef-decl name='ostream' type-id='type-id-1321' filepath='/usr/lib/gcc/x86_64-redhat-linux/4.4.7/../../../../include/c++/4.4.7/iosfwd' line='130' column='1' id='type-id-1331'/>
     </namespace-decl>
@@ -9292,17 +9292,8 @@
       <!-- vtkMultiProcessStream& -->
       <return type-id='type-id-30'/>
     </function-type>
-    <!-- vtkMultiProcessStream& (vtkMultiProcessStream::*) (vtkTypeInt64) -->
-    <function-type size-in-bits='64' method-class-id='type-id-59' id='type-id-1425'>
-      <!-- implicit parameter of type 'vtkMultiProcessStream*' -->
-      <parameter type-id='type-id-66' is-artificial='yes'/>
-      <!-- parameter of type 'typedef vtkTypeInt64' -->
-      <parameter type-id='type-id-95'/>
-      <!-- vtkMultiProcessStream& -->
-      <return type-id='type-id-30'/>
-    </function-type>
     <!-- vtkMultiProcessStream& (vtkMultiProcessStream::*) (std::string&) -->
-    <function-type size-in-bits='64' method-class-id='type-id-59' id='type-id-1426'>
+    <function-type size-in-bits='64' method-class-id='type-id-59' id='type-id-1425'>
       <!-- implicit parameter of type 'vtkMultiProcessStream*' -->
       <parameter type-id='type-id-66' is-artificial='yes'/>
       <!-- parameter of type 'std::string&' -->
@@ -9311,7 +9302,7 @@
       <return type-id='type-id-30'/>
     </function-type>
     <!-- vtkMultiProcessStream& (vtkMultiProcessStream::*) (unsigned char&) -->
-    <function-type size-in-bits='64' method-class-id='type-id-59' id='type-id-1427'>
+    <function-type size-in-bits='64' method-class-id='type-id-59' id='type-id-1426'>
       <!-- implicit parameter of type 'vtkMultiProcessStream*' -->
       <parameter type-id='type-id-66' is-artificial='yes'/>
       <!-- parameter of type 'unsigned char&' -->
@@ -9320,7 +9311,7 @@
       <return type-id='type-id-30'/>
     </function-type>
     <!-- vtkMultiProcessStream& (vtkMultiProcessStream::*) (unsigned char) -->
-    <function-type size-in-bits='64' method-class-id='type-id-59' id='type-id-1428'>
+    <function-type size-in-bits='64' method-class-id='type-id-59' id='type-id-1427'>
       <!-- implicit parameter of type 'vtkMultiProcessStream*' -->
       <parameter type-id='type-id-66' is-artificial='yes'/>
       <!-- parameter of type 'unsigned char' -->
@@ -9329,7 +9320,7 @@
       <return type-id='type-id-30'/>
     </function-type>
     <!-- vtkMultiProcessStream& (vtkMultiProcessStream::*) (unsigned int&) -->
-    <function-type size-in-bits='64' method-class-id='type-id-59' id='type-id-1429'>
+    <function-type size-in-bits='64' method-class-id='type-id-59' id='type-id-1428'>
       <!-- implicit parameter of type 'vtkMultiProcessStream*' -->
       <parameter type-id='type-id-66' is-artificial='yes'/>
       <!-- parameter of type 'unsigned int&' -->
@@ -9338,7 +9329,7 @@
       <return type-id='type-id-30'/>
     </function-type>
     <!-- vtkMultiProcessStream& (vtkMultiProcessStream::*) (unsigned int) -->
-    <function-type size-in-bits='64' method-class-id='type-id-59' id='type-id-1430'>
+    <function-type size-in-bits='64' method-class-id='type-id-59' id='type-id-1429'>
       <!-- implicit parameter of type 'vtkMultiProcessStream*' -->
       <parameter type-id='type-id-66' is-artificial='yes'/>
       <!-- parameter of type 'unsigned int' -->
@@ -9346,17 +9337,8 @@
       <!-- vtkMultiProcessStream& -->
       <return type-id='type-id-30'/>
     </function-type>
-    <!-- vtkMultiProcessStream& (vtkMultiProcessStream::*) (vtkTypeUInt64) -->
-    <function-type size-in-bits='64' method-class-id='type-id-59' id='type-id-1431'>
-      <!-- implicit parameter of type 'vtkMultiProcessStream*' -->
-      <parameter type-id='type-id-66' is-artificial='yes'/>
-      <!-- parameter of type 'typedef vtkTypeUInt64' -->
-      <parameter type-id='type-id-90'/>
-      <!-- vtkMultiProcessStream& -->
-      <return type-id='type-id-30'/>
-    </function-type>
     <!-- vtkMultiProcessStream& (vtkMultiProcessStream::*) (vtkMultiProcessStream&) -->
-    <function-type size-in-bits='64' method-class-id='type-id-59' id='type-id-1432'>
+    <function-type size-in-bits='64' method-class-id='type-id-59' id='type-id-1430'>
       <!-- implicit parameter of type 'vtkMultiProcessStream*' -->
       <parameter type-id='type-id-66' is-artificial='yes'/>
       <!-- parameter of type 'vtkMultiProcessStream&' -->
@@ -9365,7 +9347,7 @@
       <return type-id='type-id-30'/>
     </function-type>
     <!-- vtkMultiProcessStream& (vtkMultiProcessStream::*) (vtkTypeInt64&) -->
-    <function-type size-in-bits='64' method-class-id='type-id-59' id='type-id-1433'>
+    <function-type size-in-bits='64' method-class-id='type-id-59' id='type-id-1431'>
       <!-- implicit parameter of type 'vtkMultiProcessStream*' -->
       <parameter type-id='type-id-66' is-artificial='yes'/>
       <!-- parameter of type 'vtkTypeInt64&' -->
@@ -9373,12 +9355,30 @@
       <!-- vtkMultiProcessStream& -->
       <return type-id='type-id-30'/>
     </function-type>
+    <!-- vtkMultiProcessStream& (vtkMultiProcessStream::*) (vtkTypeInt64) -->
+    <function-type size-in-bits='64' method-class-id='type-id-59' id='type-id-1432'>
+      <!-- implicit parameter of type 'vtkMultiProcessStream*' -->
+      <parameter type-id='type-id-66' is-artificial='yes'/>
+      <!-- parameter of type 'typedef vtkTypeInt64' -->
+      <parameter type-id='type-id-95'/>
+      <!-- vtkMultiProcessStream& -->
+      <return type-id='type-id-30'/>
+    </function-type>
     <!-- vtkMultiProcessStream& (vtkMultiProcessStream::*) (vtkTypeUInt64&) -->
-    <function-type size-in-bits='64' method-class-id='type-id-59' id='type-id-1434'>
+    <function-type size-in-bits='64' method-class-id='type-id-59' id='type-id-1433'>
       <!-- implicit parameter of type 'vtkMultiProcessStream*' -->
       <parameter type-id='type-id-66' is-artificial='yes'/>
       <!-- parameter of type 'vtkTypeUInt64&' -->
       <parameter type-id='type-id-72'/>
+      <!-- vtkMultiProcessStream& -->
+      <return type-id='type-id-30'/>
+    </function-type>
+    <!-- vtkMultiProcessStream& (vtkMultiProcessStream::*) (vtkTypeUInt64) -->
+    <function-type size-in-bits='64' method-class-id='type-id-59' id='type-id-1434'>
+      <!-- implicit parameter of type 'vtkMultiProcessStream*' -->
+      <parameter type-id='type-id-66' is-artificial='yes'/>
+      <!-- parameter of type 'typedef vtkTypeUInt64' -->
+      <parameter type-id='type-id-90'/>
       <!-- vtkMultiProcessStream& -->
       <return type-id='type-id-30'/>
     </function-type>
@@ -9818,44 +9818,44 @@
       <class-decl name='__copy_move&lt;false, false, std::random_access_iterator_tag&gt;' is-struct='yes' visibility='default' id='type-id-1509'/>
       <!-- struct std::__copy_move_backward<false, false, std::random_access_iterator_tag> -->
       <class-decl name='__copy_move_backward&lt;false, false, std::random_access_iterator_tag&gt;' is-struct='yes' visibility='default' id='type-id-1510'/>
-      <!-- struct std::__false_type -->
-      <class-decl name='__false_type' is-struct='yes' visibility='default' filepath='/usr/lib/gcc/x86_64-redhat-linux/4.4.7/../../../../include/c++/4.4.7/bits/cpp_type_traits.h' line='79' column='1' id='type-id-1511'/>
       <!-- struct std::__miter_base<std::_Deque_iterator<unsigned char, const unsigned char&, const unsigned char*>, false> -->
-      <class-decl name='__miter_base&lt;std::_Deque_iterator&lt;unsigned char, const unsigned char&amp;, const unsigned char*&gt;, false&gt;' size-in-bits='8' is-struct='yes' visibility='default' filepath='/usr/lib/gcc/x86_64-redhat-linux/4.4.7/../../../../include/c++/4.4.7/bits/stl_algobase.h' line='285' column='1' id='type-id-1512'/>
+      <class-decl name='__miter_base&lt;std::_Deque_iterator&lt;unsigned char, const unsigned char&amp;, const unsigned char*&gt;, false&gt;' size-in-bits='8' is-struct='yes' visibility='default' filepath='/usr/lib/gcc/x86_64-redhat-linux/4.4.7/../../../../include/c++/4.4.7/bits/stl_algobase.h' line='285' column='1' id='type-id-1511'/>
       <!-- struct std::__miter_base<std::_Deque_iterator<unsigned char, unsigned char&, unsigned char*>, false> -->
-      <class-decl name='__miter_base&lt;std::_Deque_iterator&lt;unsigned char, unsigned char&amp;, unsigned char*&gt;, false&gt;' size-in-bits='8' is-struct='yes' visibility='default' filepath='/usr/lib/gcc/x86_64-redhat-linux/4.4.7/../../../../include/c++/4.4.7/bits/stl_algobase.h' line='285' column='1' id='type-id-1513'/>
+      <class-decl name='__miter_base&lt;std::_Deque_iterator&lt;unsigned char, unsigned char&amp;, unsigned char*&gt;, false&gt;' size-in-bits='8' is-struct='yes' visibility='default' filepath='/usr/lib/gcc/x86_64-redhat-linux/4.4.7/../../../../include/c++/4.4.7/bits/stl_algobase.h' line='285' column='1' id='type-id-1512'/>
       <!-- struct std::__miter_base<unsigned char**, false> -->
-      <class-decl name='__miter_base&lt;unsigned char**, false&gt;' size-in-bits='8' is-struct='yes' visibility='default' filepath='/usr/lib/gcc/x86_64-redhat-linux/4.4.7/../../../../include/c++/4.4.7/bits/stl_algobase.h' line='285' column='1' id='type-id-1514'/>
+      <class-decl name='__miter_base&lt;unsigned char**, false&gt;' size-in-bits='8' is-struct='yes' visibility='default' filepath='/usr/lib/gcc/x86_64-redhat-linux/4.4.7/../../../../include/c++/4.4.7/bits/stl_algobase.h' line='285' column='1' id='type-id-1513'/>
       <!-- struct std::__miter_base<unsigned char*, false> -->
-      <class-decl name='__miter_base&lt;unsigned char*, false&gt;' is-struct='yes' visibility='default' id='type-id-1515'/>
+      <class-decl name='__miter_base&lt;unsigned char*, false&gt;' is-struct='yes' visibility='default' id='type-id-1514'/>
       <!-- struct std::__niter_base<std::_Deque_iterator<unsigned char, const unsigned char&, const unsigned char*>, false> -->
-      <class-decl name='__niter_base&lt;std::_Deque_iterator&lt;unsigned char, const unsigned char&amp;, const unsigned char*&gt;, false&gt;' size-in-bits='8' is-struct='yes' visibility='default' filepath='/usr/lib/gcc/x86_64-redhat-linux/4.4.7/../../../../include/c++/4.4.7/bits/stl_algobase.h' line='267' column='1' id='type-id-1516'/>
+      <class-decl name='__niter_base&lt;std::_Deque_iterator&lt;unsigned char, const unsigned char&amp;, const unsigned char*&gt;, false&gt;' size-in-bits='8' is-struct='yes' visibility='default' filepath='/usr/lib/gcc/x86_64-redhat-linux/4.4.7/../../../../include/c++/4.4.7/bits/stl_algobase.h' line='267' column='1' id='type-id-1515'/>
       <!-- struct std::__niter_base<std::_Deque_iterator<unsigned char, unsigned char&, unsigned char*>, false> -->
-      <class-decl name='__niter_base&lt;std::_Deque_iterator&lt;unsigned char, unsigned char&amp;, unsigned char*&gt;, false&gt;' size-in-bits='8' is-struct='yes' visibility='default' filepath='/usr/lib/gcc/x86_64-redhat-linux/4.4.7/../../../../include/c++/4.4.7/bits/stl_algobase.h' line='267' column='1' id='type-id-1517'/>
+      <class-decl name='__niter_base&lt;std::_Deque_iterator&lt;unsigned char, unsigned char&amp;, unsigned char*&gt;, false&gt;' size-in-bits='8' is-struct='yes' visibility='default' filepath='/usr/lib/gcc/x86_64-redhat-linux/4.4.7/../../../../include/c++/4.4.7/bits/stl_algobase.h' line='267' column='1' id='type-id-1516'/>
       <!-- struct std::__niter_base<unsigned char**, false> -->
-      <class-decl name='__niter_base&lt;unsigned char**, false&gt;' size-in-bits='8' is-struct='yes' visibility='default' filepath='/usr/lib/gcc/x86_64-redhat-linux/4.4.7/../../../../include/c++/4.4.7/bits/stl_algobase.h' line='267' column='1' id='type-id-1518'/>
+      <class-decl name='__niter_base&lt;unsigned char**, false&gt;' size-in-bits='8' is-struct='yes' visibility='default' filepath='/usr/lib/gcc/x86_64-redhat-linux/4.4.7/../../../../include/c++/4.4.7/bits/stl_algobase.h' line='267' column='1' id='type-id-1517'/>
       <!-- struct std::__niter_base<unsigned char*, false> -->
-      <class-decl name='__niter_base&lt;unsigned char*, false&gt;' size-in-bits='8' is-struct='yes' visibility='default' filepath='/usr/lib/gcc/x86_64-redhat-linux/4.4.7/../../../../include/c++/4.4.7/bits/stl_algobase.h' line='267' column='1' id='type-id-1519'/>
+      <class-decl name='__niter_base&lt;unsigned char*, false&gt;' size-in-bits='8' is-struct='yes' visibility='default' filepath='/usr/lib/gcc/x86_64-redhat-linux/4.4.7/../../../../include/c++/4.4.7/bits/stl_algobase.h' line='267' column='1' id='type-id-1518'/>
       <!-- struct std::__uninitialized_fill<true> -->
-      <class-decl name='__uninitialized_fill&lt;true&gt;' size-in-bits='8' is-struct='yes' visibility='default' filepath='/usr/lib/gcc/x86_64-redhat-linux/4.4.7/../../../../include/c++/4.4.7/bits/stl_uninitialized.h' line='144' column='1' id='type-id-1520'/>
+      <class-decl name='__uninitialized_fill&lt;true&gt;' size-in-bits='8' is-struct='yes' visibility='default' filepath='/usr/lib/gcc/x86_64-redhat-linux/4.4.7/../../../../include/c++/4.4.7/bits/stl_uninitialized.h' line='144' column='1' id='type-id-1519'/>
       <!-- struct std::forward_iterator_tag -->
-      <class-decl name='forward_iterator_tag' is-struct='yes' visibility='default' id='type-id-1521'/>
+      <class-decl name='forward_iterator_tag' is-struct='yes' visibility='default' id='type-id-1520'/>
       <!-- struct std::random_access_iterator_tag -->
-      <class-decl name='random_access_iterator_tag' is-struct='yes' visibility='default' id='type-id-1522'/>
+      <class-decl name='random_access_iterator_tag' is-struct='yes' visibility='default' id='type-id-1521'/>
       <!-- class std::ios_base -->
-      <class-decl name='ios_base' visibility='default' is-declaration-only='yes' id='type-id-1523'/>
+      <class-decl name='ios_base' visibility='default' is-declaration-only='yes' id='type-id-1522'/>
       <!-- class std::reverse_iterator<__gnu_cxx::__normal_iterator<char*, std::basic_string<char, std::char_traits<char>, std::allocator<char> > > > -->
-      <class-decl name='reverse_iterator&lt;__gnu_cxx::__normal_iterator&lt;char*, std::basic_string&lt;char, std::char_traits&lt;char&gt;, std::allocator&lt;char&gt; &gt; &gt; &gt;' visibility='default' is-declaration-only='yes' id='type-id-1524'/>
+      <class-decl name='reverse_iterator&lt;__gnu_cxx::__normal_iterator&lt;char*, std::basic_string&lt;char, std::char_traits&lt;char&gt;, std::allocator&lt;char&gt; &gt; &gt; &gt;' visibility='default' is-declaration-only='yes' id='type-id-1523'/>
       <!-- class std::reverse_iterator<__gnu_cxx::__normal_iterator<const char*, std::basic_string<char, std::char_traits<char>, std::allocator<char> > > > -->
-      <class-decl name='reverse_iterator&lt;__gnu_cxx::__normal_iterator&lt;const char*, std::basic_string&lt;char, std::char_traits&lt;char&gt;, std::allocator&lt;char&gt; &gt; &gt; &gt;' visibility='default' is-declaration-only='yes' id='type-id-1525'/>
+      <class-decl name='reverse_iterator&lt;__gnu_cxx::__normal_iterator&lt;const char*, std::basic_string&lt;char, std::char_traits&lt;char&gt;, std::allocator&lt;char&gt; &gt; &gt; &gt;' visibility='default' is-declaration-only='yes' id='type-id-1524'/>
       <!-- class std::reverse_iterator<__gnu_cxx::__normal_iterator<const unsigned char*, std::vector<unsigned char, std::allocator<unsigned char> > > > -->
-      <class-decl name='reverse_iterator&lt;__gnu_cxx::__normal_iterator&lt;const unsigned char*, std::vector&lt;unsigned char, std::allocator&lt;unsigned char&gt; &gt; &gt; &gt;' visibility='default' is-declaration-only='yes' id='type-id-1526'/>
+      <class-decl name='reverse_iterator&lt;__gnu_cxx::__normal_iterator&lt;const unsigned char*, std::vector&lt;unsigned char, std::allocator&lt;unsigned char&gt; &gt; &gt; &gt;' visibility='default' is-declaration-only='yes' id='type-id-1525'/>
       <!-- class std::reverse_iterator<__gnu_cxx::__normal_iterator<unsigned char*, std::vector<unsigned char, std::allocator<unsigned char> > > > -->
-      <class-decl name='reverse_iterator&lt;__gnu_cxx::__normal_iterator&lt;unsigned char*, std::vector&lt;unsigned char, std::allocator&lt;unsigned char&gt; &gt; &gt; &gt;' visibility='default' is-declaration-only='yes' id='type-id-1527'/>
+      <class-decl name='reverse_iterator&lt;__gnu_cxx::__normal_iterator&lt;unsigned char*, std::vector&lt;unsigned char, std::allocator&lt;unsigned char&gt; &gt; &gt; &gt;' visibility='default' is-declaration-only='yes' id='type-id-1526'/>
       <!-- class std::reverse_iterator<std::_Deque_iterator<unsigned char, const unsigned char&, const unsigned char*> > -->
-      <class-decl name='reverse_iterator&lt;std::_Deque_iterator&lt;unsigned char, const unsigned char&amp;, const unsigned char*&gt; &gt;' visibility='default' is-declaration-only='yes' id='type-id-1528'/>
+      <class-decl name='reverse_iterator&lt;std::_Deque_iterator&lt;unsigned char, const unsigned char&amp;, const unsigned char*&gt; &gt;' visibility='default' is-declaration-only='yes' id='type-id-1527'/>
       <!-- class std::reverse_iterator<std::_Deque_iterator<unsigned char, unsigned char&, unsigned char*> > -->
-      <class-decl name='reverse_iterator&lt;std::_Deque_iterator&lt;unsigned char, unsigned char&amp;, unsigned char*&gt; &gt;' visibility='default' is-declaration-only='yes' id='type-id-1529'/>
+      <class-decl name='reverse_iterator&lt;std::_Deque_iterator&lt;unsigned char, unsigned char&amp;, unsigned char*&gt; &gt;' visibility='default' is-declaration-only='yes' id='type-id-1528'/>
+      <!-- struct std::__false_type -->
+      <class-decl name='__false_type' is-struct='yes' visibility='default' filepath='/usr/lib/gcc/x86_64-redhat-linux/4.4.7/../../../../include/c++/4.4.7/bits/cpp_type_traits.h' line='79' column='1' id='type-id-1529'/>
       <!-- void std::fill<unsigned char>(const std::_Deque_iterator<unsigned char, unsigned char&, unsigned char*>&, const std::_Deque_iterator<unsigned char, unsigned char&, unsigned char*>&, const unsigned char&) -->
       <function-decl name='fill&lt;unsigned char&gt;' mangled-name='_ZSt4fillIhEvRKSt15_Deque_iteratorIT_RS1_PS1_ES6_RKS1_' filepath='/usr/lib/gcc/x86_64-redhat-linux/4.4.7/../../../../include/c++/4.4.7/bits/deque.tcc' line='844' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZSt4fillIhEvRKSt15_Deque_iteratorIT_RS1_PS1_ES6_RKS1_'>
         <!-- parameter of type 'const std::_Deque_iterator<unsigned char, unsigned char&, unsigned char*>&' -->
@@ -12332,23 +12332,8 @@
       <!-- int -->
       <return type-id='type-id-19'/>
     </function-type>
-    <!-- int (vtkSocketCommunicator::*) (void*, vtkIdType, int, int) -->
-    <function-type size-in-bits='64' method-class-id='type-id-1581' id='type-id-1940'>
-      <!-- implicit parameter of type 'vtkSocketCommunicator*' -->
-      <parameter type-id='type-id-1592' is-artificial='yes'/>
-      <!-- parameter of type 'void*' -->
-      <parameter type-id='type-id-20'/>
-      <!-- parameter of type 'typedef vtkIdType' -->
-      <parameter type-id='type-id-21'/>
-      <!-- parameter of type 'int' -->
-      <parameter type-id='type-id-19'/>
-      <!-- parameter of type 'int' -->
-      <parameter type-id='type-id-19'/>
-      <!-- int -->
-      <return type-id='type-id-19'/>
-    </function-type>
     <!-- int (vtkSocketCommunicator::*) (void*, int, int, int, const char*) -->
-    <function-type size-in-bits='64' method-class-id='type-id-1581' id='type-id-1941'>
+    <function-type size-in-bits='64' method-class-id='type-id-1581' id='type-id-1940'>
       <!-- implicit parameter of type 'vtkSocketCommunicator*' -->
       <parameter type-id='type-id-1592' is-artificial='yes'/>
       <!-- parameter of type 'void*' -->
@@ -12364,16 +12349,20 @@
       <!-- int -->
       <return type-id='type-id-19'/>
     </function-type>
-    <!-- int (vtkSocketCommunicator::*) (void*, vtkIdType, int, int, int) -->
-    <function-type size-in-bits='64' method-class-id='type-id-1581' id='type-id-1942'>
+    <!-- int (vtkSocketCommunicator::*) (void*, void*, vtkIdType*, vtkIdType*, vtkIdType, int, int) -->
+    <function-type size-in-bits='64' method-class-id='type-id-1581' id='type-id-1941'>
       <!-- implicit parameter of type 'vtkSocketCommunicator*' -->
       <parameter type-id='type-id-1592' is-artificial='yes'/>
       <!-- parameter of type 'void*' -->
       <parameter type-id='type-id-20'/>
+      <!-- parameter of type 'void*' -->
+      <parameter type-id='type-id-20'/>
+      <!-- parameter of type 'vtkIdType*' -->
+      <parameter type-id='type-id-27'/>
+      <!-- parameter of type 'vtkIdType*' -->
+      <parameter type-id='type-id-27'/>
       <!-- parameter of type 'typedef vtkIdType' -->
       <parameter type-id='type-id-21'/>
-      <!-- parameter of type 'int' -->
-      <parameter type-id='type-id-19'/>
       <!-- parameter of type 'int' -->
       <parameter type-id='type-id-19'/>
       <!-- parameter of type 'int' -->
@@ -12382,7 +12371,7 @@
       <return type-id='type-id-19'/>
     </function-type>
     <!-- int (vtkSocketCommunicator::*) (void*, void*, vtkIdType, int) -->
-    <function-type size-in-bits='64' method-class-id='type-id-1581' id='type-id-1943'>
+    <function-type size-in-bits='64' method-class-id='type-id-1581' id='type-id-1942'>
       <!-- implicit parameter of type 'vtkSocketCommunicator*' -->
       <parameter type-id='type-id-1592' is-artificial='yes'/>
       <!-- parameter of type 'void*' -->
@@ -12397,7 +12386,7 @@
       <return type-id='type-id-19'/>
     </function-type>
     <!-- int (vtkSocketCommunicator::*) (void*, void*, vtkIdType, int, int) -->
-    <function-type size-in-bits='64' method-class-id='type-id-1581' id='type-id-1944'>
+    <function-type size-in-bits='64' method-class-id='type-id-1581' id='type-id-1943'>
       <!-- implicit parameter of type 'vtkSocketCommunicator*' -->
       <parameter type-id='type-id-1592' is-artificial='yes'/>
       <!-- parameter of type 'void*' -->
@@ -12414,7 +12403,7 @@
       <return type-id='type-id-19'/>
     </function-type>
     <!-- int (vtkSocketCommunicator::*) (void*, void*, vtkIdType, int, int, int) -->
-    <function-type size-in-bits='64' method-class-id='type-id-1581' id='type-id-1945'>
+    <function-type size-in-bits='64' method-class-id='type-id-1581' id='type-id-1944'>
       <!-- implicit parameter of type 'vtkSocketCommunicator*' -->
       <parameter type-id='type-id-1592' is-artificial='yes'/>
       <!-- parameter of type 'void*' -->
@@ -12433,7 +12422,7 @@
       <return type-id='type-id-19'/>
     </function-type>
     <!-- int (vtkSocketCommunicator::*) (void*, void*, vtkIdType, int, vtkCommunicator::Operation*) -->
-    <function-type size-in-bits='64' method-class-id='type-id-1581' id='type-id-1946'>
+    <function-type size-in-bits='64' method-class-id='type-id-1581' id='type-id-1945'>
       <!-- implicit parameter of type 'vtkSocketCommunicator*' -->
       <parameter type-id='type-id-1592' is-artificial='yes'/>
       <!-- parameter of type 'void*' -->
@@ -12450,7 +12439,7 @@
       <return type-id='type-id-19'/>
     </function-type>
     <!-- int (vtkSocketCommunicator::*) (void*, void*, vtkIdType, int, vtkCommunicator::Operation*, int) -->
-    <function-type size-in-bits='64' method-class-id='type-id-1581' id='type-id-1947'>
+    <function-type size-in-bits='64' method-class-id='type-id-1581' id='type-id-1946'>
       <!-- implicit parameter of type 'vtkSocketCommunicator*' -->
       <parameter type-id='type-id-1592' is-artificial='yes'/>
       <!-- parameter of type 'void*' -->
@@ -12469,7 +12458,7 @@
       <return type-id='type-id-19'/>
     </function-type>
     <!-- int (vtkSocketCommunicator::*) (void*, void*, vtkIdType, vtkIdType*, vtkIdType*, int) -->
-    <function-type size-in-bits='64' method-class-id='type-id-1581' id='type-id-1948'>
+    <function-type size-in-bits='64' method-class-id='type-id-1581' id='type-id-1947'>
       <!-- implicit parameter of type 'vtkSocketCommunicator*' -->
       <parameter type-id='type-id-1592' is-artificial='yes'/>
       <!-- parameter of type 'void*' -->
@@ -12488,7 +12477,7 @@
       <return type-id='type-id-19'/>
     </function-type>
     <!-- int (vtkSocketCommunicator::*) (void*, void*, vtkIdType, vtkIdType*, vtkIdType*, int, int) -->
-    <function-type size-in-bits='64' method-class-id='type-id-1581' id='type-id-1949'>
+    <function-type size-in-bits='64' method-class-id='type-id-1581' id='type-id-1948'>
       <!-- implicit parameter of type 'vtkSocketCommunicator*' -->
       <parameter type-id='type-id-1592' is-artificial='yes'/>
       <!-- parameter of type 'void*' -->
@@ -12508,20 +12497,31 @@
       <!-- int -->
       <return type-id='type-id-19'/>
     </function-type>
-    <!-- int (vtkSocketCommunicator::*) (void*, void*, vtkIdType*, vtkIdType*, vtkIdType, int, int) -->
+    <!-- int (vtkSocketCommunicator::*) (void*, vtkIdType, int, int) -->
+    <function-type size-in-bits='64' method-class-id='type-id-1581' id='type-id-1949'>
+      <!-- implicit parameter of type 'vtkSocketCommunicator*' -->
+      <parameter type-id='type-id-1592' is-artificial='yes'/>
+      <!-- parameter of type 'void*' -->
+      <parameter type-id='type-id-20'/>
+      <!-- parameter of type 'typedef vtkIdType' -->
+      <parameter type-id='type-id-21'/>
+      <!-- parameter of type 'int' -->
+      <parameter type-id='type-id-19'/>
+      <!-- parameter of type 'int' -->
+      <parameter type-id='type-id-19'/>
+      <!-- int -->
+      <return type-id='type-id-19'/>
+    </function-type>
+    <!-- int (vtkSocketCommunicator::*) (void*, vtkIdType, int, int, int) -->
     <function-type size-in-bits='64' method-class-id='type-id-1581' id='type-id-1950'>
       <!-- implicit parameter of type 'vtkSocketCommunicator*' -->
       <parameter type-id='type-id-1592' is-artificial='yes'/>
       <!-- parameter of type 'void*' -->
       <parameter type-id='type-id-20'/>
-      <!-- parameter of type 'void*' -->
-      <parameter type-id='type-id-20'/>
-      <!-- parameter of type 'vtkIdType*' -->
-      <parameter type-id='type-id-27'/>
-      <!-- parameter of type 'vtkIdType*' -->
-      <parameter type-id='type-id-27'/>
       <!-- parameter of type 'typedef vtkIdType' -->
       <parameter type-id='type-id-21'/>
+      <!-- parameter of type 'int' -->
+      <parameter type-id='type-id-19'/>
       <!-- parameter of type 'int' -->
       <parameter type-id='type-id-19'/>
       <!-- parameter of type 'int' -->

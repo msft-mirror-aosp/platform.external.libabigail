@@ -8091,7 +8091,7 @@
     <pointer-type-def type-id='type-id-972' size-in-bits='64' id='type-id-598'/>
     <!-- SSIZE_T (*)(int, __sanitizer::__sanitizer_iovec*, int) -->
     <pointer-type-def type-id='type-id-973' size-in-bits='64' id='type-id-791'/>
-    <!-- SSIZE_T (*)(int, __sanitizer::__sanitizer_iovec*, int, OFF_T) -->
+    <!-- SSIZE_T (*)(int, __sanitizer::__sanitizer_iovec*, int, OFF64_T) -->
     <pointer-type-def type-id='type-id-974' size-in-bits='64' id='type-id-710'/>
     <!-- SSIZE_T (*)(int, __sanitizer::__sanitizer_msghdr*, int) -->
     <pointer-type-def type-id='type-id-975' size-in-bits='64' id='type-id-799'/>
@@ -8099,7 +8099,7 @@
     <pointer-type-def type-id='type-id-976' size-in-bits='64' id='type-id-773'/>
     <!-- SSIZE_T (*)(int, void*, SIZE_T) -->
     <pointer-type-def type-id='type-id-977' size-in-bits='64' id='type-id-781'/>
-    <!-- SSIZE_T (*)(int, void*, SIZE_T, OFF_T) -->
+    <!-- SSIZE_T (*)(int, void*, SIZE_T, OFF64_T) -->
     <pointer-type-def type-id='type-id-978' size-in-bits='64' id='type-id-707'/>
     <!-- ScopedInterceptor* -->
     <pointer-type-def type-id='type-id-408' size-in-bits='64' id='type-id-979'/>
@@ -8413,7 +8413,7 @@
     <pointer-type-def type-id='type-id-1159' size-in-bits='64' id='type-id-883'/>
     <!-- int (*)(const char*, const char*, ...) -->
     <pointer-type-def type-id='type-id-1160' size-in-bits='64' id='type-id-455'/>
-    <!-- int (*)(const char*, const char*, __sanitizer::uptr) -->
+    <!-- int (*)(const char*, const char*, SIZE_T) -->
     <pointer-type-def type-id='type-id-1161' size-in-bits='64' id='type-id-897'/>
     <!-- int (*)(const char*, const char*, typedef __va_list_tag __va_list_tag*) -->
     <pointer-type-def type-id='type-id-1162' size-in-bits='64' id='type-id-461'/>
@@ -21163,6 +21163,224 @@
         <enumerator name='StatCnt' value='438'/>
       </enum-decl>
     </namespace-decl>
+    <!-- INTMAX_T (const char*, char**, int) -->
+    <function-type size-in-bits='64' id='type-id-961'>
+      <!-- parameter of type 'const char*' -->
+      <parameter type-id='type-id-4'/>
+      <!-- parameter of type 'char**' -->
+      <parameter type-id='type-id-1081'/>
+      <!-- parameter of type 'int' -->
+      <parameter type-id='type-id-6'/>
+      <!-- typedef INTMAX_T -->
+      <return type-id='type-id-437'/>
+    </function-type>
+    <!-- SIZE_T (char*, const wchar_t**, SIZE_T, SIZE_T, void*) -->
+    <function-type size-in-bits='64' id='type-id-962'>
+      <!-- parameter of type 'char*' -->
+      <parameter type-id='type-id-27'/>
+      <!-- parameter of type 'const wchar_t**' -->
+      <parameter type-id='type-id-1121'/>
+      <!-- parameter of type 'typedef SIZE_T' -->
+      <parameter type-id='type-id-441'/>
+      <!-- parameter of type 'typedef SIZE_T' -->
+      <parameter type-id='type-id-441'/>
+      <!-- parameter of type 'void*' -->
+      <parameter type-id='type-id-3'/>
+      <!-- typedef SIZE_T -->
+      <return type-id='type-id-441'/>
+    </function-type>
+    <!-- SIZE_T (char*, const wchar_t**, SIZE_T, void*) -->
+    <function-type size-in-bits='64' id='type-id-963'>
+      <!-- parameter of type 'char*' -->
+      <parameter type-id='type-id-27'/>
+      <!-- parameter of type 'const wchar_t**' -->
+      <parameter type-id='type-id-1121'/>
+      <!-- parameter of type 'typedef SIZE_T' -->
+      <parameter type-id='type-id-441'/>
+      <!-- parameter of type 'void*' -->
+      <parameter type-id='type-id-3'/>
+      <!-- typedef SIZE_T -->
+      <return type-id='type-id-441'/>
+    </function-type>
+    <!-- SIZE_T (char*, const wchar_t*, SIZE_T) -->
+    <function-type size-in-bits='64' id='type-id-964'>
+      <!-- parameter of type 'char*' -->
+      <parameter type-id='type-id-27'/>
+      <!-- parameter of type 'const wchar_t*' -->
+      <parameter type-id='type-id-1120'/>
+      <!-- parameter of type 'typedef SIZE_T' -->
+      <parameter type-id='type-id-441'/>
+      <!-- typedef SIZE_T -->
+      <return type-id='type-id-441'/>
+    </function-type>
+    <!-- SIZE_T (int, char*, SIZE_T) -->
+    <function-type size-in-bits='64' id='type-id-965'>
+      <!-- parameter of type 'int' -->
+      <parameter type-id='type-id-6'/>
+      <!-- parameter of type 'char*' -->
+      <parameter type-id='type-id-27'/>
+      <!-- parameter of type 'typedef SIZE_T' -->
+      <parameter type-id='type-id-441'/>
+      <!-- typedef SIZE_T -->
+      <return type-id='type-id-441'/>
+    </function-type>
+    <!-- SIZE_T (void*, char**, SIZE_T*, char**, SIZE_T*) -->
+    <function-type size-in-bits='64' id='type-id-966'>
+      <!-- parameter of type 'void*' -->
+      <parameter type-id='type-id-3'/>
+      <!-- parameter of type 'char**' -->
+      <parameter type-id='type-id-1081'/>
+      <!-- parameter of type 'SIZE_T*' -->
+      <parameter type-id='type-id-970'/>
+      <!-- parameter of type 'char**' -->
+      <parameter type-id='type-id-1081'/>
+      <!-- parameter of type 'SIZE_T*' -->
+      <parameter type-id='type-id-970'/>
+      <!-- typedef SIZE_T -->
+      <return type-id='type-id-441'/>
+    </function-type>
+    <!-- SIZE_T (wchar_t*, const char**, SIZE_T, SIZE_T, void*) -->
+    <function-type size-in-bits='64' id='type-id-967'>
+      <!-- parameter of type 'wchar_t*' -->
+      <parameter type-id='type-id-1269'/>
+      <!-- parameter of type 'const char**' -->
+      <parameter type-id='type-id-388'/>
+      <!-- parameter of type 'typedef SIZE_T' -->
+      <parameter type-id='type-id-441'/>
+      <!-- parameter of type 'typedef SIZE_T' -->
+      <parameter type-id='type-id-441'/>
+      <!-- parameter of type 'void*' -->
+      <parameter type-id='type-id-3'/>
+      <!-- typedef SIZE_T -->
+      <return type-id='type-id-441'/>
+    </function-type>
+    <!-- SIZE_T (wchar_t*, const char**, SIZE_T, void*) -->
+    <function-type size-in-bits='64' id='type-id-968'>
+      <!-- parameter of type 'wchar_t*' -->
+      <parameter type-id='type-id-1269'/>
+      <!-- parameter of type 'const char**' -->
+      <parameter type-id='type-id-388'/>
+      <!-- parameter of type 'typedef SIZE_T' -->
+      <parameter type-id='type-id-441'/>
+      <!-- parameter of type 'void*' -->
+      <parameter type-id='type-id-3'/>
+      <!-- typedef SIZE_T -->
+      <return type-id='type-id-441'/>
+    </function-type>
+    <!-- SIZE_T (wchar_t*, const char*, SIZE_T) -->
+    <function-type size-in-bits='64' id='type-id-969'>
+      <!-- parameter of type 'wchar_t*' -->
+      <parameter type-id='type-id-1269'/>
+      <!-- parameter of type 'const char*' -->
+      <parameter type-id='type-id-4'/>
+      <!-- parameter of type 'typedef SIZE_T' -->
+      <parameter type-id='type-id-441'/>
+      <!-- typedef SIZE_T -->
+      <return type-id='type-id-441'/>
+    </function-type>
+    <!-- SSIZE_T (char**, SIZE_T*, int, void*) -->
+    <function-type size-in-bits='64' id='type-id-971'>
+      <!-- parameter of type 'char**' -->
+      <parameter type-id='type-id-1081'/>
+      <!-- parameter of type 'SIZE_T*' -->
+      <parameter type-id='type-id-970'/>
+      <!-- parameter of type 'int' -->
+      <parameter type-id='type-id-6'/>
+      <!-- parameter of type 'void*' -->
+      <parameter type-id='type-id-3'/>
+      <!-- typedef SSIZE_T -->
+      <return type-id='type-id-443'/>
+    </function-type>
+    <!-- SSIZE_T (char**, SIZE_T*, void*) -->
+    <function-type size-in-bits='64' id='type-id-972'>
+      <!-- parameter of type 'char**' -->
+      <parameter type-id='type-id-1081'/>
+      <!-- parameter of type 'SIZE_T*' -->
+      <parameter type-id='type-id-970'/>
+      <!-- parameter of type 'void*' -->
+      <parameter type-id='type-id-3'/>
+      <!-- typedef SSIZE_T -->
+      <return type-id='type-id-443'/>
+    </function-type>
+    <!-- SSIZE_T (int, __sanitizer::__sanitizer_iovec*, int) -->
+    <function-type size-in-bits='64' id='type-id-973'>
+      <!-- parameter of type 'int' -->
+      <parameter type-id='type-id-6'/>
+      <!-- parameter of type '__sanitizer::__sanitizer_iovec*' -->
+      <parameter type-id='type-id-1034'/>
+      <!-- parameter of type 'int' -->
+      <parameter type-id='type-id-6'/>
+      <!-- typedef SSIZE_T -->
+      <return type-id='type-id-443'/>
+    </function-type>
+    <!-- SSIZE_T (int, __sanitizer::__sanitizer_iovec*, int, OFF64_T) -->
+    <function-type size-in-bits='64' id='type-id-974'>
+      <!-- parameter of type 'int' -->
+      <parameter type-id='type-id-6'/>
+      <!-- parameter of type '__sanitizer::__sanitizer_iovec*' -->
+      <parameter type-id='type-id-1034'/>
+      <!-- parameter of type 'int' -->
+      <parameter type-id='type-id-6'/>
+      <!-- parameter of type 'typedef OFF64_T' -->
+      <parameter type-id='type-id-439'/>
+      <!-- typedef SSIZE_T -->
+      <return type-id='type-id-443'/>
+    </function-type>
+    <!-- SSIZE_T (int, __sanitizer::__sanitizer_msghdr*, int) -->
+    <function-type size-in-bits='64' id='type-id-975'>
+      <!-- parameter of type 'int' -->
+      <parameter type-id='type-id-6'/>
+      <!-- parameter of type '__sanitizer::__sanitizer_msghdr*' -->
+      <parameter type-id='type-id-1041'/>
+      <!-- parameter of type 'int' -->
+      <parameter type-id='type-id-6'/>
+      <!-- typedef SSIZE_T -->
+      <return type-id='type-id-443'/>
+    </function-type>
+    <!-- SSIZE_T (int, void*, OFF64_T, OFF64_T) -->
+    <function-type size-in-bits='64' id='type-id-976'>
+      <!-- parameter of type 'int' -->
+      <parameter type-id='type-id-6'/>
+      <!-- parameter of type 'void*' -->
+      <parameter type-id='type-id-3'/>
+      <!-- parameter of type 'typedef OFF64_T' -->
+      <parameter type-id='type-id-439'/>
+      <!-- parameter of type 'typedef OFF64_T' -->
+      <parameter type-id='type-id-439'/>
+      <!-- typedef SSIZE_T -->
+      <return type-id='type-id-443'/>
+    </function-type>
+    <!-- SSIZE_T (int, void*, SIZE_T) -->
+    <function-type size-in-bits='64' id='type-id-977'>
+      <!-- parameter of type 'int' -->
+      <parameter type-id='type-id-6'/>
+      <!-- parameter of type 'void*' -->
+      <parameter type-id='type-id-3'/>
+      <!-- parameter of type 'typedef SIZE_T' -->
+      <parameter type-id='type-id-441'/>
+      <!-- typedef SSIZE_T -->
+      <return type-id='type-id-443'/>
+    </function-type>
+    <!-- SSIZE_T (int, void*, SIZE_T, OFF64_T) -->
+    <function-type size-in-bits='64' id='type-id-978'>
+      <!-- parameter of type 'int' -->
+      <parameter type-id='type-id-6'/>
+      <!-- parameter of type 'void*' -->
+      <parameter type-id='type-id-3'/>
+      <!-- parameter of type 'typedef SIZE_T' -->
+      <parameter type-id='type-id-441'/>
+      <!-- parameter of type 'typedef OFF64_T' -->
+      <parameter type-id='type-id-439'/>
+      <!-- typedef SSIZE_T -->
+      <return type-id='type-id-443'/>
+    </function-type>
+    <!-- __sanitizer::__sanitizer_clock_t (void*) -->
+    <function-type size-in-bits='64' id='type-id-1006'>
+      <!-- parameter of type 'void*' -->
+      <parameter type-id='type-id-3'/>
+      <!-- typedef __sanitizer::__sanitizer_clock_t -->
+      <return type-id='type-id-1274'/>
+    </function-type>
     <!-- __sanitizer::__sanitizer_dirent* (void*) -->
     <function-type size-in-bits='64' id='type-id-1009'>
       <!-- parameter of type 'void*' -->
@@ -21263,6 +21481,39 @@
       <!-- __sanitizer::__sanitizer_tm* -->
       <return type-id='type-id-1048'/>
     </function-type>
+    <!-- __sanitizer::uptr (int, int, void*, void*) -->
+    <function-type size-in-bits='64' id='type-id-1059'>
+      <!-- parameter of type 'int' -->
+      <parameter type-id='type-id-6'/>
+      <!-- parameter of type 'int' -->
+      <parameter type-id='type-id-6'/>
+      <!-- parameter of type 'void*' -->
+      <parameter type-id='type-id-3'/>
+      <!-- parameter of type 'void*' -->
+      <parameter type-id='type-id-3'/>
+      <!-- typedef __sanitizer::uptr -->
+      <return type-id='type-id-2'/>
+    </function-type>
+    <!-- __sanitizer::uptr (void*) -->
+    <function-type size-in-bits='64' id='type-id-1060'>
+      <!-- parameter of type 'void*' -->
+      <parameter type-id='type-id-3'/>
+      <!-- typedef __sanitizer::uptr -->
+      <return type-id='type-id-2'/>
+    </function-type>
+    <!-- __sanitizer::uptr (void*, __sanitizer::uptr, __sanitizer::uptr, void*) -->
+    <function-type size-in-bits='64' id='type-id-1061'>
+      <!-- parameter of type 'void*' -->
+      <parameter type-id='type-id-3'/>
+      <!-- parameter of type 'typedef __sanitizer::uptr' -->
+      <parameter type-id='type-id-2'/>
+      <!-- parameter of type 'typedef __sanitizer::uptr' -->
+      <parameter type-id='type-id-2'/>
+      <!-- parameter of type 'void*' -->
+      <parameter type-id='type-id-3'/>
+      <!-- typedef __sanitizer::uptr -->
+      <return type-id='type-id-2'/>
+    </function-type>
     <!-- char* (__sanitizer::__sanitizer_ether_addr*) -->
     <function-type size-in-bits='64' id='type-id-1062'>
       <!-- parameter of type '__sanitizer::__sanitizer_ether_addr*' -->
@@ -21299,6 +21550,15 @@
     <function-type size-in-bits='64' id='type-id-1066'>
       <!-- parameter of type 'char*' -->
       <parameter type-id='type-id-27'/>
+      <!-- char* -->
+      <return type-id='type-id-27'/>
+    </function-type>
+    <!-- char* (char*, SIZE_T) -->
+    <function-type size-in-bits='64' id='type-id-1067'>
+      <!-- parameter of type 'char*' -->
+      <parameter type-id='type-id-27'/>
+      <!-- parameter of type 'typedef SIZE_T' -->
+      <parameter type-id='type-id-441'/>
       <!-- char* -->
       <return type-id='type-id-27'/>
     </function-type>
@@ -21348,15 +21608,6 @@
       <parameter type-id='type-id-27'/>
       <!-- parameter of type 'int' -->
       <parameter type-id='type-id-6'/>
-      <!-- char* -->
-      <return type-id='type-id-27'/>
-    </function-type>
-    <!-- char* (char*, SIZE_T) -->
-    <function-type size-in-bits='64' id='type-id-1067'>
-      <!-- parameter of type 'char*' -->
-      <parameter type-id='type-id-27'/>
-      <!-- parameter of type 'typedef SIZE_T' -->
-      <parameter type-id='type-id-441'/>
       <!-- char* -->
       <return type-id='type-id-27'/>
     </function-type>
@@ -21450,13 +21701,6 @@
       <!-- double -->
       <return type-id='type-id-410'/>
     </function-type>
-    <!-- long double (long double) -->
-    <function-type size-in-bits='64' id='type-id-1228'>
-      <!-- parameter of type 'long double' -->
-      <parameter type-id='type-id-415'/>
-      <!-- long double -->
-      <return type-id='type-id-415'/>
-    </function-type>
     <!-- double (double, double*) -->
     <function-type size-in-bits='64' id='type-id-1123'>
       <!-- parameter of type 'double' -->
@@ -21465,15 +21709,6 @@
       <parameter type-id='type-id-1126'/>
       <!-- double -->
       <return type-id='type-id-410'/>
-    </function-type>
-    <!-- long double (long double, long double*) -->
-    <function-type size-in-bits='64' id='type-id-1230'>
-      <!-- parameter of type 'long double' -->
-      <parameter type-id='type-id-415'/>
-      <!-- parameter of type 'long double*' -->
-      <parameter type-id='type-id-1232'/>
-      <!-- long double -->
-      <return type-id='type-id-415'/>
     </function-type>
     <!-- double (double, double, int*) -->
     <function-type size-in-bits='64' id='type-id-1124'>
@@ -21486,17 +21721,6 @@
       <!-- double -->
       <return type-id='type-id-410'/>
     </function-type>
-    <!-- long double (long double, long double, int*) -->
-    <function-type size-in-bits='64' id='type-id-1231'>
-      <!-- parameter of type 'long double' -->
-      <parameter type-id='type-id-415'/>
-      <!-- parameter of type 'long double' -->
-      <parameter type-id='type-id-415'/>
-      <!-- parameter of type 'int*' -->
-      <parameter type-id='type-id-38'/>
-      <!-- long double -->
-      <return type-id='type-id-415'/>
-    </function-type>
     <!-- double (double, int*) -->
     <function-type size-in-bits='64' id='type-id-1125'>
       <!-- parameter of type 'double' -->
@@ -21505,15 +21729,6 @@
       <parameter type-id='type-id-38'/>
       <!-- double -->
       <return type-id='type-id-410'/>
-    </function-type>
-    <!-- long double (long double, int*) -->
-    <function-type size-in-bits='64' id='type-id-1229'>
-      <!-- parameter of type 'long double' -->
-      <parameter type-id='type-id-415'/>
-      <!-- parameter of type 'int*' -->
-      <parameter type-id='type-id-38'/>
-      <!-- long double -->
-      <return type-id='type-id-415'/>
     </function-type>
     <!-- float (float) -->
     <function-type size-in-bits='64' id='type-id-1127'>
@@ -21626,36 +21841,41 @@
       <!-- int -->
       <return type-id='type-id-6'/>
     </function-type>
+    <!-- int (__sanitizer::u32, void*) -->
+    <function-type size-in-bits='64' id='type-id-1139'>
+      <!-- parameter of type 'typedef __sanitizer::u32' -->
+      <parameter type-id='type-id-231'/>
+      <!-- parameter of type 'void*' -->
+      <parameter type-id='type-id-3'/>
+      <!-- int -->
+      <return type-id='type-id-6'/>
+    </function-type>
+    <!-- int (__sanitizer::uptr, const char*) -->
+    <function-type size-in-bits='64' id='type-id-1140'>
+      <!-- parameter of type 'typedef __sanitizer::uptr' -->
+      <parameter type-id='type-id-2'/>
+      <!-- parameter of type 'const char*' -->
+      <parameter type-id='type-id-4'/>
+      <!-- int -->
+      <return type-id='type-id-6'/>
+    </function-type>
+    <!-- int (__sanitizer::uptr, int*, int*) -->
+    <function-type size-in-bits='64' id='type-id-1141'>
+      <!-- parameter of type 'typedef __sanitizer::uptr' -->
+      <parameter type-id='type-id-2'/>
+      <!-- parameter of type 'int*' -->
+      <parameter type-id='type-id-38'/>
+      <!-- parameter of type 'int*' -->
+      <parameter type-id='type-id-38'/>
+      <!-- int -->
+      <return type-id='type-id-6'/>
+    </function-type>
     <!-- int (char*) -->
     <function-type size-in-bits='64' id='type-id-1142'>
       <!-- parameter of type 'char*' -->
       <parameter type-id='type-id-27'/>
       <!-- int -->
       <return type-id='type-id-6'/>
-    </function-type>
-    <!-- SSIZE_T (char**, SIZE_T*, int, void*) -->
-    <function-type size-in-bits='64' id='type-id-971'>
-      <!-- parameter of type 'char**' -->
-      <parameter type-id='type-id-1081'/>
-      <!-- parameter of type 'SIZE_T*' -->
-      <parameter type-id='type-id-970'/>
-      <!-- parameter of type 'int' -->
-      <parameter type-id='type-id-6'/>
-      <!-- parameter of type 'void*' -->
-      <parameter type-id='type-id-3'/>
-      <!-- typedef SSIZE_T -->
-      <return type-id='type-id-443'/>
-    </function-type>
-    <!-- SSIZE_T (char**, SIZE_T*, void*) -->
-    <function-type size-in-bits='64' id='type-id-972'>
-      <!-- parameter of type 'char**' -->
-      <parameter type-id='type-id-1081'/>
-      <!-- parameter of type 'SIZE_T*' -->
-      <parameter type-id='type-id-970'/>
-      <!-- parameter of type 'void*' -->
-      <parameter type-id='type-id-3'/>
-      <!-- typedef SSIZE_T -->
-      <return type-id='type-id-443'/>
     </function-type>
     <!-- int (char*, __sanitizer::__sanitizer_dirent***, scandir_filter_f, scandir_compar_f) -->
     <function-type size-in-bits='64' id='type-id-1143'>
@@ -21731,6 +21951,15 @@
       <!-- int -->
       <return type-id='type-id-6'/>
     </function-type>
+    <!-- int (char*, __sanitizer::u32) -->
+    <function-type size-in-bits='64' id='type-id-1149'>
+      <!-- parameter of type 'char*' -->
+      <parameter type-id='type-id-27'/>
+      <!-- parameter of type 'typedef __sanitizer::u32' -->
+      <parameter type-id='type-id-231'/>
+      <!-- int -->
+      <return type-id='type-id-6'/>
+    </function-type>
     <!-- int (char*, int, __sanitizer::__sanitizer_hostent*, char*, SIZE_T, __sanitizer::__sanitizer_hostent**, int*) -->
     <function-type size-in-bits='64' id='type-id-1150'>
       <!-- parameter of type 'char*' -->
@@ -21747,15 +21976,6 @@
       <parameter type-id='type-id-1027'/>
       <!-- parameter of type 'int*' -->
       <parameter type-id='type-id-38'/>
-      <!-- int -->
-      <return type-id='type-id-6'/>
-    </function-type>
-    <!-- int (char*, __sanitizer::u32) -->
-    <function-type size-in-bits='64' id='type-id-1149'>
-      <!-- parameter of type 'char*' -->
-      <parameter type-id='type-id-27'/>
-      <!-- parameter of type 'typedef __sanitizer::u32' -->
-      <parameter type-id='type-id-231'/>
       <!-- int -->
       <return type-id='type-id-6'/>
     </function-type>
@@ -21822,17 +22042,6 @@
       <!-- int -->
       <return type-id='type-id-6'/>
     </function-type>
-    <!-- INTMAX_T (const char*, char**, int) -->
-    <function-type size-in-bits='64' id='type-id-961'>
-      <!-- parameter of type 'const char*' -->
-      <parameter type-id='type-id-4'/>
-      <!-- parameter of type 'char**' -->
-      <parameter type-id='type-id-1081'/>
-      <!-- parameter of type 'int' -->
-      <parameter type-id='type-id-6'/>
-      <!-- typedef INTMAX_T -->
-      <return type-id='type-id-437'/>
-    </function-type>
     <!-- int (const char*, const char*) -->
     <function-type size-in-bits='64' id='type-id-1159'>
       <!-- parameter of type 'const char*' -->
@@ -21852,17 +22061,6 @@
       <!-- int -->
       <return type-id='type-id-6'/>
     </function-type>
-    <!-- int (const char*, const char*, typedef __va_list_tag __va_list_tag*) -->
-    <function-type size-in-bits='64' id='type-id-1162'>
-      <!-- parameter of type 'const char*' -->
-      <parameter type-id='type-id-4'/>
-      <!-- parameter of type 'const char*' -->
-      <parameter type-id='type-id-4'/>
-      <!-- parameter of type 'typedef __va_list_tag __va_list_tag*' -->
-      <parameter type-id='type-id-1242'/>
-      <!-- int -->
-      <return type-id='type-id-6'/>
-    </function-type>
     <!-- int (const char*, const char*, SIZE_T) -->
     <function-type size-in-bits='64' id='type-id-1161'>
       <!-- parameter of type 'const char*' -->
@@ -21871,6 +22069,17 @@
       <parameter type-id='type-id-4'/>
       <!-- parameter of type 'typedef SIZE_T' -->
       <parameter type-id='type-id-441'/>
+      <!-- int -->
+      <return type-id='type-id-6'/>
+    </function-type>
+    <!-- int (const char*, const char*, typedef __va_list_tag __va_list_tag*) -->
+    <function-type size-in-bits='64' id='type-id-1162'>
+      <!-- parameter of type 'const char*' -->
+      <parameter type-id='type-id-4'/>
+      <!-- parameter of type 'const char*' -->
+      <parameter type-id='type-id-4'/>
+      <!-- parameter of type 'typedef __va_list_tag __va_list_tag*' -->
+      <parameter type-id='type-id-1242'/>
       <!-- int -->
       <return type-id='type-id-6'/>
     </function-type>
@@ -21912,20 +22121,6 @@
       <!-- int -->
       <return type-id='type-id-6'/>
     </function-type>
-    <!-- int (int) -->
-    <function-type size-in-bits='64' id='type-id-1167'>
-      <!-- parameter of type 'int' -->
-      <parameter type-id='type-id-6'/>
-      <!-- int -->
-      <return type-id='type-id-6'/>
-    </function-type>
-    <!-- int (long_t) -->
-    <function-type size-in-bits='64' id='type-id-1196'>
-      <!-- parameter of type 'typedef long_t' -->
-      <parameter type-id='type-id-641'/>
-      <!-- int -->
-      <return type-id='type-id-6'/>
-    </function-type>
     <!-- int (int*) -->
     <function-type size-in-bits='64' id='type-id-1168'>
       <!-- parameter of type 'int*' -->
@@ -21953,40 +22148,16 @@
       <!-- int -->
       <return type-id='type-id-6'/>
     </function-type>
-    <!-- SSIZE_T (int, __sanitizer::__sanitizer_iovec*, int) -->
-    <function-type size-in-bits='64' id='type-id-973'>
+    <!-- int (int, SIZE_T, void*) -->
+    <function-type size-in-bits='64' id='type-id-1171'>
       <!-- parameter of type 'int' -->
       <parameter type-id='type-id-6'/>
-      <!-- parameter of type '__sanitizer::__sanitizer_iovec*' -->
-      <parameter type-id='type-id-1034'/>
-      <!-- parameter of type 'int' -->
-      <parameter type-id='type-id-6'/>
-      <!-- typedef SSIZE_T -->
-      <return type-id='type-id-443'/>
-    </function-type>
-    <!-- SSIZE_T (int, __sanitizer::__sanitizer_iovec*, int, OFF64_T) -->
-    <function-type size-in-bits='64' id='type-id-974'>
-      <!-- parameter of type 'int' -->
-      <parameter type-id='type-id-6'/>
-      <!-- parameter of type '__sanitizer::__sanitizer_iovec*' -->
-      <parameter type-id='type-id-1034'/>
-      <!-- parameter of type 'int' -->
-      <parameter type-id='type-id-6'/>
-      <!-- parameter of type 'typedef OFF64_T' -->
-      <parameter type-id='type-id-439'/>
-      <!-- typedef SSIZE_T -->
-      <return type-id='type-id-443'/>
-    </function-type>
-    <!-- SSIZE_T (int, __sanitizer::__sanitizer_msghdr*, int) -->
-    <function-type size-in-bits='64' id='type-id-975'>
-      <!-- parameter of type 'int' -->
-      <parameter type-id='type-id-6'/>
-      <!-- parameter of type '__sanitizer::__sanitizer_msghdr*' -->
-      <parameter type-id='type-id-1041'/>
-      <!-- parameter of type 'int' -->
-      <parameter type-id='type-id-6'/>
-      <!-- typedef SSIZE_T -->
-      <return type-id='type-id-443'/>
+      <!-- parameter of type 'typedef SIZE_T' -->
+      <parameter type-id='type-id-441'/>
+      <!-- parameter of type 'void*' -->
+      <parameter type-id='type-id-3'/>
+      <!-- int -->
+      <return type-id='type-id-6'/>
     </function-type>
     <!-- int (int, __sanitizer::__sanitizer_sigset_t*, __sanitizer::__sanitizer_sigset_t*) -->
     <function-type size-in-bits='64' id='type-id-1172'>
@@ -21996,6 +22167,15 @@
       <parameter type-id='type-id-1046'/>
       <!-- parameter of type '__sanitizer::__sanitizer_sigset_t*' -->
       <parameter type-id='type-id-1046'/>
+      <!-- int -->
+      <return type-id='type-id-6'/>
+    </function-type>
+    <!-- int (int, __sanitizer::u32*) -->
+    <function-type size-in-bits='64' id='type-id-1173'>
+      <!-- parameter of type 'int' -->
+      <parameter type-id='type-id-6'/>
+      <!-- parameter of type '__sanitizer::u32*' -->
+      <parameter type-id='type-id-1057'/>
       <!-- int -->
       <return type-id='type-id-6'/>
     </function-type>
@@ -22025,17 +22205,6 @@
     <function-type size-in-bits='64' id='type-id-1176'>
       <!-- parameter of type 'int' -->
       <parameter type-id='type-id-6'/>
-      <!-- parameter of type 'int' -->
-      <parameter type-id='type-id-6'/>
-      <!-- int -->
-      <return type-id='type-id-6'/>
-    </function-type>
-    <!-- int (int, int*, int) -->
-    <function-type size-in-bits='64' id='type-id-1177'>
-      <!-- parameter of type 'int' -->
-      <parameter type-id='type-id-6'/>
-      <!-- parameter of type 'int*' -->
-      <parameter type-id='type-id-38'/>
       <!-- parameter of type 'int' -->
       <parameter type-id='type-id-6'/>
       <!-- int -->
@@ -22141,12 +22310,14 @@
       <!-- int -->
       <return type-id='type-id-6'/>
     </function-type>
-    <!-- int (int, __sanitizer::u32*) -->
-    <function-type size-in-bits='64' id='type-id-1173'>
+    <!-- int (int, unsigned int, void*) -->
+    <function-type size-in-bits='64' id='type-id-1186'>
       <!-- parameter of type 'int' -->
       <parameter type-id='type-id-6'/>
-      <!-- parameter of type '__sanitizer::u32*' -->
-      <parameter type-id='type-id-1057'/>
+      <!-- parameter of type 'unsigned int' -->
+      <parameter type-id='type-id-172'/>
+      <!-- parameter of type 'void*' -->
+      <parameter type-id='type-id-3'/>
       <!-- int -->
       <return type-id='type-id-6'/>
     </function-type>
@@ -22162,28 +22333,6 @@
       <parameter type-id='type-id-1'/>
       <!-- parameter of type 'unsigned long int' -->
       <parameter type-id='type-id-1'/>
-      <!-- int -->
-      <return type-id='type-id-6'/>
-    </function-type>
-    <!-- int (int, SIZE_T, void*) -->
-    <function-type size-in-bits='64' id='type-id-1171'>
-      <!-- parameter of type 'int' -->
-      <parameter type-id='type-id-6'/>
-      <!-- parameter of type 'typedef SIZE_T' -->
-      <parameter type-id='type-id-441'/>
-      <!-- parameter of type 'void*' -->
-      <parameter type-id='type-id-3'/>
-      <!-- int -->
-      <return type-id='type-id-6'/>
-    </function-type>
-    <!-- int (int, unsigned int, void*) -->
-    <function-type size-in-bits='64' id='type-id-1186'>
-      <!-- parameter of type 'int' -->
-      <parameter type-id='type-id-6'/>
-      <!-- parameter of type 'unsigned int' -->
-      <parameter type-id='type-id-172'/>
-      <!-- parameter of type 'void*' -->
-      <parameter type-id='type-id-3'/>
       <!-- int -->
       <return type-id='type-id-6'/>
     </function-type>
@@ -22206,17 +22355,6 @@
       <parameter type-id='type-id-6'/>
       <!-- int -->
       <return type-id='type-id-6'/>
-    </function-type>
-    <!-- long_t (int, void*, int) -->
-    <function-type size-in-bits='64' id='type-id-1234'>
-      <!-- parameter of type 'int' -->
-      <parameter type-id='type-id-6'/>
-      <!-- parameter of type 'void*' -->
-      <parameter type-id='type-id-3'/>
-      <!-- parameter of type 'int' -->
-      <parameter type-id='type-id-6'/>
-      <!-- typedef long_t -->
-      <return type-id='type-id-641'/>
     </function-type>
     <!-- int (int, void*, int*) -->
     <function-type size-in-bits='64' id='type-id-1190'>
@@ -22242,19 +22380,6 @@
       <!-- int -->
       <return type-id='type-id-6'/>
     </function-type>
-    <!-- long_t (int, void*, long_t, int) -->
-    <function-type size-in-bits='64' id='type-id-1235'>
-      <!-- parameter of type 'int' -->
-      <parameter type-id='type-id-6'/>
-      <!-- parameter of type 'void*' -->
-      <parameter type-id='type-id-3'/>
-      <!-- parameter of type 'typedef long_t' -->
-      <parameter type-id='type-id-641'/>
-      <!-- parameter of type 'int' -->
-      <parameter type-id='type-id-6'/>
-      <!-- typedef long_t -->
-      <return type-id='type-id-641'/>
-    </function-type>
     <!-- int (int, void*, unsigned int) -->
     <function-type size-in-bits='64' id='type-id-1192'>
       <!-- parameter of type 'int' -->
@@ -22265,17 +22390,6 @@
       <parameter type-id='type-id-172'/>
       <!-- int -->
       <return type-id='type-id-6'/>
-    </function-type>
-    <!-- SSIZE_T (int, void*, SIZE_T) -->
-    <function-type size-in-bits='64' id='type-id-977'>
-      <!-- parameter of type 'int' -->
-      <parameter type-id='type-id-6'/>
-      <!-- parameter of type 'void*' -->
-      <parameter type-id='type-id-3'/>
-      <!-- parameter of type 'typedef SIZE_T' -->
-      <parameter type-id='type-id-441'/>
-      <!-- typedef SSIZE_T -->
-      <return type-id='type-id-443'/>
     </function-type>
     <!-- int (int, void*, unsigned int*) -->
     <function-type size-in-bits='64' id='type-id-1193'>
@@ -22301,32 +22415,6 @@
       <!-- int -->
       <return type-id='type-id-6'/>
     </function-type>
-    <!-- SSIZE_T (int, void*, OFF64_T, OFF64_T) -->
-    <function-type size-in-bits='64' id='type-id-976'>
-      <!-- parameter of type 'int' -->
-      <parameter type-id='type-id-6'/>
-      <!-- parameter of type 'void*' -->
-      <parameter type-id='type-id-3'/>
-      <!-- parameter of type 'typedef OFF64_T' -->
-      <parameter type-id='type-id-439'/>
-      <!-- parameter of type 'typedef OFF64_T' -->
-      <parameter type-id='type-id-439'/>
-      <!-- typedef SSIZE_T -->
-      <return type-id='type-id-443'/>
-    </function-type>
-    <!-- SSIZE_T (int, void*, SIZE_T, OFF_T) -->
-    <function-type size-in-bits='64' id='type-id-978'>
-      <!-- parameter of type 'int' -->
-      <parameter type-id='type-id-6'/>
-      <!-- parameter of type 'void*' -->
-      <parameter type-id='type-id-3'/>
-      <!-- parameter of type 'typedef SIZE_T' -->
-      <parameter type-id='type-id-441'/>
-      <!-- parameter of type 'typedef OFF_T' -->
-      <parameter type-id='type-id-440'/>
-      <!-- typedef SSIZE_T -->
-      <return type-id='type-id-443'/>
-    </function-type>
     <!-- int (int, void*, void*) -->
     <function-type size-in-bits='64' id='type-id-1195'>
       <!-- parameter of type 'int' -->
@@ -22338,12 +22426,10 @@
       <!-- int -->
       <return type-id='type-id-6'/>
     </function-type>
-    <!-- int (__sanitizer::uptr, const char*) -->
-    <function-type size-in-bits='64' id='type-id-1140'>
-      <!-- parameter of type 'typedef __sanitizer::uptr' -->
-      <parameter type-id='type-id-2'/>
-      <!-- parameter of type 'const char*' -->
-      <parameter type-id='type-id-4'/>
+    <!-- int (long_t) -->
+    <function-type size-in-bits='64' id='type-id-1196'>
+      <!-- parameter of type 'typedef long_t' -->
+      <parameter type-id='type-id-641'/>
       <!-- int -->
       <return type-id='type-id-6'/>
     </function-type>
@@ -22353,26 +22439,6 @@
       <parameter type-id='type-id-172'/>
       <!-- parameter of type 'int' -->
       <parameter type-id='type-id-6'/>
-      <!-- int -->
-      <return type-id='type-id-6'/>
-    </function-type>
-    <!-- int (__sanitizer::uptr, int*, int*) -->
-    <function-type size-in-bits='64' id='type-id-1141'>
-      <!-- parameter of type 'typedef __sanitizer::uptr' -->
-      <parameter type-id='type-id-2'/>
-      <!-- parameter of type 'int*' -->
-      <parameter type-id='type-id-38'/>
-      <!-- parameter of type 'int*' -->
-      <parameter type-id='type-id-38'/>
-      <!-- int -->
-      <return type-id='type-id-6'/>
-    </function-type>
-    <!-- int (__sanitizer::u32, void*) -->
-    <function-type size-in-bits='64' id='type-id-1139'>
-      <!-- parameter of type 'typedef __sanitizer::u32' -->
-      <parameter type-id='type-id-231'/>
-      <!-- parameter of type 'void*' -->
-      <parameter type-id='type-id-3'/>
       <!-- int -->
       <return type-id='type-id-6'/>
     </function-type>
@@ -22403,17 +22469,16 @@
       <!-- int -->
       <return type-id='type-id-6'/>
     </function-type>
-    <!-- int (void) -->
-    <function-type size-in-bits='64' id='type-id-1201'>
+    <!-- int (void**, __sanitizer::uptr, __sanitizer::uptr) -->
+    <function-type size-in-bits='64' id='type-id-1202'>
+      <!-- parameter of type 'void**' -->
+      <parameter type-id='type-id-1273'/>
+      <!-- parameter of type 'typedef __sanitizer::uptr' -->
+      <parameter type-id='type-id-2'/>
+      <!-- parameter of type 'typedef __sanitizer::uptr' -->
+      <parameter type-id='type-id-2'/>
       <!-- int -->
       <return type-id='type-id-6'/>
-    </function-type>
-    <!-- __sanitizer::__sanitizer_clock_t (void*) -->
-    <function-type size-in-bits='64' id='type-id-1006'>
-      <!-- parameter of type 'void*' -->
-      <parameter type-id='type-id-3'/>
-      <!-- typedef __sanitizer::__sanitizer_clock_t -->
-      <return type-id='type-id-1274'/>
     </function-type>
     <!-- int (void**, int) -->
     <function-type size-in-bits='64' id='type-id-1203'>
@@ -22424,14 +22489,14 @@
       <!-- int -->
       <return type-id='type-id-6'/>
     </function-type>
-    <!-- int (void**, __sanitizer::uptr, __sanitizer::uptr) -->
-    <function-type size-in-bits='64' id='type-id-1202'>
-      <!-- parameter of type 'void**' -->
-      <parameter type-id='type-id-1273'/>
-      <!-- parameter of type 'typedef __sanitizer::uptr' -->
-      <parameter type-id='type-id-2'/>
-      <!-- parameter of type 'typedef __sanitizer::uptr' -->
-      <parameter type-id='type-id-2'/>
+    <!-- int (void*, SIZE_T, void*) -->
+    <function-type size-in-bits='64' id='type-id-1204'>
+      <!-- parameter of type 'void*' -->
+      <parameter type-id='type-id-3'/>
+      <!-- parameter of type 'typedef SIZE_T' -->
+      <parameter type-id='type-id-441'/>
+      <!-- parameter of type 'void*' -->
+      <parameter type-id='type-id-3'/>
       <!-- int -->
       <return type-id='type-id-6'/>
     </function-type>
@@ -22454,6 +22519,24 @@
       <parameter type-id='type-id-1013'/>
       <!-- parameter of type '__sanitizer::__sanitizer_dirent64**' -->
       <parameter type-id='type-id-1015'/>
+      <!-- int -->
+      <return type-id='type-id-6'/>
+    </function-type>
+    <!-- int (void*, __sanitizer::u32*) -->
+    <function-type size-in-bits='64' id='type-id-1207'>
+      <!-- parameter of type 'void*' -->
+      <parameter type-id='type-id-3'/>
+      <!-- parameter of type '__sanitizer::u32*' -->
+      <parameter type-id='type-id-1057'/>
+      <!-- int -->
+      <return type-id='type-id-6'/>
+    </function-type>
+    <!-- int (void*, __sanitizer::uptr) -->
+    <function-type size-in-bits='64' id='type-id-1208'>
+      <!-- parameter of type 'void*' -->
+      <parameter type-id='type-id-3'/>
+      <!-- parameter of type 'typedef __sanitizer::uptr' -->
+      <parameter type-id='type-id-2'/>
       <!-- int -->
       <return type-id='type-id-6'/>
     </function-type>
@@ -22496,30 +22579,12 @@
       <!-- int -->
       <return type-id='type-id-6'/>
     </function-type>
-    <!-- int (void*, long_t) -->
-    <function-type size-in-bits='64' id='type-id-1217'>
-      <!-- parameter of type 'void*' -->
-      <parameter type-id='type-id-3'/>
-      <!-- parameter of type 'typedef long_t' -->
-      <parameter type-id='type-id-641'/>
-      <!-- int -->
-      <return type-id='type-id-6'/>
-    </function-type>
     <!-- int (void*, int*) -->
     <function-type size-in-bits='64' id='type-id-1213'>
       <!-- parameter of type 'void*' -->
       <parameter type-id='type-id-3'/>
       <!-- parameter of type 'int*' -->
       <parameter type-id='type-id-38'/>
-      <!-- int -->
-      <return type-id='type-id-6'/>
-    </function-type>
-    <!-- int (void*, long int*) -->
-    <function-type size-in-bits='64' id='type-id-1216'>
-      <!-- parameter of type 'void*' -->
-      <parameter type-id='type-id-3'/>
-      <!-- parameter of type 'long int*' -->
-      <parameter type-id='type-id-1233'/>
       <!-- int -->
       <return type-id='type-id-6'/>
     </function-type>
@@ -22555,32 +22620,21 @@
       <!-- int -->
       <return type-id='type-id-6'/>
     </function-type>
-    <!-- int (void*, __sanitizer::u32*) -->
-    <function-type size-in-bits='64' id='type-id-1207'>
+    <!-- int (void*, long int*) -->
+    <function-type size-in-bits='64' id='type-id-1216'>
       <!-- parameter of type 'void*' -->
       <parameter type-id='type-id-3'/>
-      <!-- parameter of type '__sanitizer::u32*' -->
-      <parameter type-id='type-id-1057'/>
+      <!-- parameter of type 'long int*' -->
+      <parameter type-id='type-id-1233'/>
       <!-- int -->
       <return type-id='type-id-6'/>
     </function-type>
-    <!-- int (void*, __sanitizer::uptr) -->
-    <function-type size-in-bits='64' id='type-id-1208'>
+    <!-- int (void*, long_t) -->
+    <function-type size-in-bits='64' id='type-id-1217'>
       <!-- parameter of type 'void*' -->
       <parameter type-id='type-id-3'/>
-      <!-- parameter of type 'typedef __sanitizer::uptr' -->
-      <parameter type-id='type-id-2'/>
-      <!-- int -->
-      <return type-id='type-id-6'/>
-    </function-type>
-    <!-- int (void*, SIZE_T, void*) -->
-    <function-type size-in-bits='64' id='type-id-1204'>
-      <!-- parameter of type 'void*' -->
-      <parameter type-id='type-id-3'/>
-      <!-- parameter of type 'typedef SIZE_T' -->
-      <parameter type-id='type-id-441'/>
-      <!-- parameter of type 'void*' -->
-      <parameter type-id='type-id-3'/>
+      <!-- parameter of type 'typedef long_t' -->
+      <parameter type-id='type-id-641'/>
       <!-- int -->
       <return type-id='type-id-6'/>
     </function-type>
@@ -22672,68 +22726,74 @@
       <!-- int -->
       <return type-id='type-id-6'/>
     </function-type>
-    <!-- SIZE_T (char*, const wchar_t**, SIZE_T, SIZE_T, void*) -->
-    <function-type size-in-bits='64' id='type-id-962'>
-      <!-- parameter of type 'char*' -->
-      <parameter type-id='type-id-27'/>
-      <!-- parameter of type 'const wchar_t**' -->
-      <parameter type-id='type-id-1121'/>
-      <!-- parameter of type 'typedef SIZE_T' -->
-      <parameter type-id='type-id-441'/>
-      <!-- parameter of type 'typedef SIZE_T' -->
-      <parameter type-id='type-id-441'/>
-      <!-- parameter of type 'void*' -->
-      <parameter type-id='type-id-3'/>
-      <!-- typedef SIZE_T -->
-      <return type-id='type-id-441'/>
+    <!-- long double (long double) -->
+    <function-type size-in-bits='64' id='type-id-1228'>
+      <!-- parameter of type 'long double' -->
+      <parameter type-id='type-id-415'/>
+      <!-- long double -->
+      <return type-id='type-id-415'/>
     </function-type>
-    <!-- SIZE_T (char*, const wchar_t**, SIZE_T, void*) -->
-    <function-type size-in-bits='64' id='type-id-963'>
-      <!-- parameter of type 'char*' -->
-      <parameter type-id='type-id-27'/>
-      <!-- parameter of type 'const wchar_t**' -->
-      <parameter type-id='type-id-1121'/>
-      <!-- parameter of type 'typedef SIZE_T' -->
-      <parameter type-id='type-id-441'/>
-      <!-- parameter of type 'void*' -->
-      <parameter type-id='type-id-3'/>
-      <!-- typedef SIZE_T -->
-      <return type-id='type-id-441'/>
+    <!-- long double (long double, int*) -->
+    <function-type size-in-bits='64' id='type-id-1229'>
+      <!-- parameter of type 'long double' -->
+      <parameter type-id='type-id-415'/>
+      <!-- parameter of type 'int*' -->
+      <parameter type-id='type-id-38'/>
+      <!-- long double -->
+      <return type-id='type-id-415'/>
     </function-type>
-    <!-- SIZE_T (char*, const wchar_t*, SIZE_T) -->
-    <function-type size-in-bits='64' id='type-id-964'>
-      <!-- parameter of type 'char*' -->
-      <parameter type-id='type-id-27'/>
-      <!-- parameter of type 'const wchar_t*' -->
-      <parameter type-id='type-id-1120'/>
-      <!-- parameter of type 'typedef SIZE_T' -->
-      <parameter type-id='type-id-441'/>
-      <!-- typedef SIZE_T -->
-      <return type-id='type-id-441'/>
+    <!-- long double (long double, long double*) -->
+    <function-type size-in-bits='64' id='type-id-1230'>
+      <!-- parameter of type 'long double' -->
+      <parameter type-id='type-id-415'/>
+      <!-- parameter of type 'long double*' -->
+      <parameter type-id='type-id-1232'/>
+      <!-- long double -->
+      <return type-id='type-id-415'/>
     </function-type>
-    <!-- SIZE_T (int, char*, SIZE_T) -->
-    <function-type size-in-bits='64' id='type-id-965'>
-      <!-- parameter of type 'int' -->
-      <parameter type-id='type-id-6'/>
-      <!-- parameter of type 'char*' -->
-      <parameter type-id='type-id-27'/>
-      <!-- parameter of type 'typedef SIZE_T' -->
-      <parameter type-id='type-id-441'/>
-      <!-- typedef SIZE_T -->
-      <return type-id='type-id-441'/>
+    <!-- long double (long double, long double, int*) -->
+    <function-type size-in-bits='64' id='type-id-1231'>
+      <!-- parameter of type 'long double' -->
+      <parameter type-id='type-id-415'/>
+      <!-- parameter of type 'long double' -->
+      <parameter type-id='type-id-415'/>
+      <!-- parameter of type 'int*' -->
+      <parameter type-id='type-id-38'/>
+      <!-- long double -->
+      <return type-id='type-id-415'/>
     </function-type>
-    <!-- __sanitizer::uptr (int, int, void*, void*) -->
-    <function-type size-in-bits='64' id='type-id-1059'>
-      <!-- parameter of type 'int' -->
-      <parameter type-id='type-id-6'/>
+    <!-- long_t (int, void*, int) -->
+    <function-type size-in-bits='64' id='type-id-1234'>
       <!-- parameter of type 'int' -->
       <parameter type-id='type-id-6'/>
       <!-- parameter of type 'void*' -->
       <parameter type-id='type-id-3'/>
+      <!-- parameter of type 'int' -->
+      <parameter type-id='type-id-6'/>
+      <!-- typedef long_t -->
+      <return type-id='type-id-641'/>
+    </function-type>
+    <!-- long_t (int, void*, long_t, int) -->
+    <function-type size-in-bits='64' id='type-id-1235'>
+      <!-- parameter of type 'int' -->
+      <parameter type-id='type-id-6'/>
       <!-- parameter of type 'void*' -->
       <parameter type-id='type-id-3'/>
-      <!-- typedef __sanitizer::uptr -->
-      <return type-id='type-id-2'/>
+      <!-- parameter of type 'typedef long_t' -->
+      <parameter type-id='type-id-641'/>
+      <!-- parameter of type 'int' -->
+      <parameter type-id='type-id-6'/>
+      <!-- typedef long_t -->
+      <return type-id='type-id-641'/>
+    </function-type>
+    <!-- sighandler_t (int, sighandler_t) -->
+    <function-type size-in-bits='64' id='type-id-1241'>
+      <!-- parameter of type 'int' -->
+      <parameter type-id='type-id-6'/>
+      <!-- parameter of type 'typedef sighandler_t' -->
+      <parameter type-id='type-id-431'/>
+      <!-- typedef sighandler_t -->
+      <return type-id='type-id-431'/>
     </function-type>
     <!-- unsigned int (unsigned int) -->
     <function-type size-in-bits='64' id='type-id-1243'>
@@ -22749,88 +22809,14 @@
       <!-- unsigned long int -->
       <return type-id='type-id-1'/>
     </function-type>
-    <!-- __sanitizer::uptr (void*) -->
-    <function-type size-in-bits='64' id='type-id-1060'>
-      <!-- parameter of type 'void*' -->
-      <parameter type-id='type-id-3'/>
-      <!-- typedef __sanitizer::uptr -->
-      <return type-id='type-id-2'/>
-    </function-type>
-    <!-- SIZE_T (void*, char**, SIZE_T*, char**, SIZE_T*) -->
-    <function-type size-in-bits='64' id='type-id-966'>
-      <!-- parameter of type 'void*' -->
-      <parameter type-id='type-id-3'/>
-      <!-- parameter of type 'char**' -->
-      <parameter type-id='type-id-1081'/>
-      <!-- parameter of type 'SIZE_T*' -->
-      <parameter type-id='type-id-970'/>
-      <!-- parameter of type 'char**' -->
-      <parameter type-id='type-id-1081'/>
-      <!-- parameter of type 'SIZE_T*' -->
-      <parameter type-id='type-id-970'/>
-      <!-- typedef SIZE_T -->
-      <return type-id='type-id-441'/>
-    </function-type>
-    <!-- __sanitizer::uptr (void*, __sanitizer::uptr, __sanitizer::uptr, void*) -->
-    <function-type size-in-bits='64' id='type-id-1061'>
-      <!-- parameter of type 'void*' -->
-      <parameter type-id='type-id-3'/>
-      <!-- parameter of type 'typedef __sanitizer::uptr' -->
-      <parameter type-id='type-id-2'/>
-      <!-- parameter of type 'typedef __sanitizer::uptr' -->
-      <parameter type-id='type-id-2'/>
-      <!-- parameter of type 'void*' -->
-      <parameter type-id='type-id-3'/>
-      <!-- typedef __sanitizer::uptr -->
-      <return type-id='type-id-2'/>
-    </function-type>
-    <!-- SIZE_T (wchar_t*, const char**, SIZE_T, SIZE_T, void*) -->
-    <function-type size-in-bits='64' id='type-id-967'>
-      <!-- parameter of type 'wchar_t*' -->
-      <parameter type-id='type-id-1269'/>
-      <!-- parameter of type 'const char**' -->
-      <parameter type-id='type-id-388'/>
-      <!-- parameter of type 'typedef SIZE_T' -->
-      <parameter type-id='type-id-441'/>
-      <!-- parameter of type 'typedef SIZE_T' -->
-      <parameter type-id='type-id-441'/>
-      <!-- parameter of type 'void*' -->
-      <parameter type-id='type-id-3'/>
-      <!-- typedef SIZE_T -->
-      <return type-id='type-id-441'/>
-    </function-type>
-    <!-- SIZE_T (wchar_t*, const char**, SIZE_T, void*) -->
-    <function-type size-in-bits='64' id='type-id-968'>
-      <!-- parameter of type 'wchar_t*' -->
-      <parameter type-id='type-id-1269'/>
-      <!-- parameter of type 'const char**' -->
-      <parameter type-id='type-id-388'/>
-      <!-- parameter of type 'typedef SIZE_T' -->
-      <parameter type-id='type-id-441'/>
-      <!-- parameter of type 'void*' -->
-      <parameter type-id='type-id-3'/>
-      <!-- typedef SIZE_T -->
-      <return type-id='type-id-441'/>
-    </function-type>
-    <!-- SIZE_T (wchar_t*, const char*, SIZE_T) -->
-    <function-type size-in-bits='64' id='type-id-969'>
-      <!-- parameter of type 'wchar_t*' -->
-      <parameter type-id='type-id-1269'/>
-      <!-- parameter of type 'const char*' -->
-      <parameter type-id='type-id-4'/>
-      <!-- parameter of type 'typedef SIZE_T' -->
-      <parameter type-id='type-id-441'/>
-      <!-- typedef SIZE_T -->
-      <return type-id='type-id-441'/>
-    </function-type>
-    <!-- sighandler_t (int, sighandler_t) -->
-    <function-type size-in-bits='64' id='type-id-1241'>
+    <!-- void (__sanitizer::uptr*, int) -->
+    <function-type size-in-bits='64' id='type-id-1245'>
+      <!-- parameter of type '__sanitizer::uptr*' -->
+      <parameter type-id='type-id-1278'/>
       <!-- parameter of type 'int' -->
       <parameter type-id='type-id-6'/>
-      <!-- parameter of type 'typedef sighandler_t' -->
-      <parameter type-id='type-id-431'/>
-      <!-- typedef sighandler_t -->
-      <return type-id='type-id-431'/>
+      <!-- void -->
+      <return type-id='type-id-29'/>
     </function-type>
     <!-- void (double, double*, double*) -->
     <function-type size-in-bits='64' id='type-id-1246'>
@@ -22840,17 +22826,6 @@
       <parameter type-id='type-id-1126'/>
       <!-- parameter of type 'double*' -->
       <parameter type-id='type-id-1126'/>
-      <!-- void -->
-      <return type-id='type-id-29'/>
-    </function-type>
-    <!-- void (long double, long double*, long double*) -->
-    <function-type size-in-bits='64' id='type-id-1251'>
-      <!-- parameter of type 'long double' -->
-      <parameter type-id='type-id-415'/>
-      <!-- parameter of type 'long double*' -->
-      <parameter type-id='type-id-1232'/>
-      <!-- parameter of type 'long double*' -->
-      <parameter type-id='type-id-1232'/>
       <!-- void -->
       <return type-id='type-id-29'/>
     </function-type>
@@ -22885,12 +22860,14 @@
       <!-- void -->
       <return type-id='type-id-29'/>
     </function-type>
-    <!-- void (__sanitizer::uptr*, int) -->
-    <function-type size-in-bits='64' id='type-id-1245'>
-      <!-- parameter of type '__sanitizer::uptr*' -->
-      <parameter type-id='type-id-1278'/>
-      <!-- parameter of type 'int' -->
-      <parameter type-id='type-id-6'/>
+    <!-- void (long double, long double*, long double*) -->
+    <function-type size-in-bits='64' id='type-id-1251'>
+      <!-- parameter of type 'long double' -->
+      <parameter type-id='type-id-415'/>
+      <!-- parameter of type 'long double*' -->
+      <parameter type-id='type-id-1232'/>
+      <!-- parameter of type 'long double*' -->
+      <parameter type-id='type-id-1232'/>
       <!-- void -->
       <return type-id='type-id-29'/>
     </function-type>
@@ -22902,6 +22879,13 @@
       <parameter type-id='type-id-148'/>
       <!-- void -->
       <return type-id='type-id-29'/>
+    </function-type>
+    <!-- void* (__sanitizer::uptr) -->
+    <function-type size-in-bits='64' id='type-id-1253'>
+      <!-- parameter of type 'typedef __sanitizer::uptr' -->
+      <parameter type-id='type-id-2'/>
+      <!-- void* -->
+      <return type-id='type-id-3'/>
     </function-type>
     <!-- void* (char*) -->
     <function-type size-in-bits='64' id='type-id-1255'>
@@ -22950,17 +22934,19 @@
       <!-- void* -->
       <return type-id='type-id-3'/>
     </function-type>
-    <!-- void* (__sanitizer::uptr) -->
-    <function-type size-in-bits='64' id='type-id-1253'>
-      <!-- parameter of type 'typedef __sanitizer::uptr' -->
-      <parameter type-id='type-id-2'/>
-      <!-- void* -->
-      <return type-id='type-id-3'/>
-    </function-type>
     <!-- void* (void*) -->
     <function-type size-in-bits='64' id='type-id-1260'>
       <!-- parameter of type 'void*' -->
       <parameter type-id='type-id-3'/>
+      <!-- void* -->
+      <return type-id='type-id-3'/>
+    </function-type>
+    <!-- void* (void*, __sanitizer::uptr) -->
+    <function-type size-in-bits='64' id='type-id-1262'>
+      <!-- parameter of type 'void*' -->
+      <parameter type-id='type-id-3'/>
+      <!-- parameter of type 'typedef __sanitizer::uptr' -->
+      <parameter type-id='type-id-2'/>
       <!-- void* -->
       <return type-id='type-id-3'/>
     </function-type>
@@ -22998,14 +22984,12 @@
       <!-- void* -->
       <return type-id='type-id-3'/>
     </function-type>
-    <!-- void* (void*, __sanitizer::uptr) -->
-    <function-type size-in-bits='64' id='type-id-1262'>
-      <!-- parameter of type 'void*' -->
-      <parameter type-id='type-id-3'/>
-      <!-- parameter of type 'typedef __sanitizer::uptr' -->
-      <parameter type-id='type-id-2'/>
-      <!-- void* -->
-      <return type-id='type-id-3'/>
+    <!-- __sanitizer::uptr (const char*) -->
+    <function-type size-in-bits='64' id='type-id-1058'>
+      <!-- parameter of type 'const char*' -->
+      <parameter type-id='type-id-4'/>
+      <!-- typedef __sanitizer::uptr -->
+      <return type-id='type-id-2'/>
     </function-type>
     <!-- char* (const char*) -->
     <function-type size-in-bits='64' id='type-id-1073'>
@@ -23014,12 +22998,28 @@
       <!-- char* -->
       <return type-id='type-id-27'/>
     </function-type>
-    <!-- __sanitizer::uptr (const char*) -->
-    <function-type size-in-bits='64' id='type-id-1058'>
-      <!-- parameter of type 'const char*' -->
-      <parameter type-id='type-id-4'/>
-      <!-- typedef __sanitizer::uptr -->
-      <return type-id='type-id-2'/>
+    <!-- int (int) -->
+    <function-type size-in-bits='64' id='type-id-1167'>
+      <!-- parameter of type 'int' -->
+      <parameter type-id='type-id-6'/>
+      <!-- int -->
+      <return type-id='type-id-6'/>
+    </function-type>
+    <!-- int (int, int*, int) -->
+    <function-type size-in-bits='64' id='type-id-1177'>
+      <!-- parameter of type 'int' -->
+      <parameter type-id='type-id-6'/>
+      <!-- parameter of type 'int*' -->
+      <parameter type-id='type-id-38'/>
+      <!-- parameter of type 'int' -->
+      <parameter type-id='type-id-6'/>
+      <!-- int -->
+      <return type-id='type-id-6'/>
+    </function-type>
+    <!-- int (void) -->
+    <function-type size-in-bits='64' id='type-id-1201'>
+      <!-- int -->
+      <return type-id='type-id-6'/>
     </function-type>
     <!-- void (void*) -->
     <function-type size-in-bits='64' id='type-id-1291'>
@@ -26924,15 +26924,6 @@
         </data-member>
       </class-decl>
     </namespace-decl>
-    <!-- void (const __sanitizer::SuspendedThreadsList&, void*) -->
-    <function-type size-in-bits='64' id='type-id-1658'>
-      <!-- parameter of type 'const __sanitizer::SuspendedThreadsList&' -->
-      <parameter type-id='type-id-1654'/>
-      <!-- parameter of type 'void*' -->
-      <parameter type-id='type-id-3'/>
-      <!-- void -->
-      <return type-id='type-id-29'/>
-    </function-type>
     <!-- void (__sanitizer::uptr, __sanitizer::uptr, bool, __sanitizer::uptr*, __sanitizer::uptr) -->
     <function-type size-in-bits='64' id='type-id-1657'>
       <!-- parameter of type 'typedef __sanitizer::uptr' -->
@@ -26945,6 +26936,15 @@
       <parameter type-id='type-id-1278'/>
       <!-- parameter of type 'typedef __sanitizer::uptr' -->
       <parameter type-id='type-id-2'/>
+      <!-- void -->
+      <return type-id='type-id-29'/>
+    </function-type>
+    <!-- void (const __sanitizer::SuspendedThreadsList&, void*) -->
+    <function-type size-in-bits='64' id='type-id-1658'>
+      <!-- parameter of type 'const __sanitizer::SuspendedThreadsList&' -->
+      <parameter type-id='type-id-1654'/>
+      <!-- parameter of type 'void*' -->
+      <parameter type-id='type-id-3'/>
       <!-- void -->
       <return type-id='type-id-29'/>
     </function-type>

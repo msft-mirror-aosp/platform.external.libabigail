@@ -26,6 +26,7 @@
 
 #include "abg-internal.h"
 #include "abg-symtab-reader.h"
+#include "abg-ir-priv.h"
 
 // <headers defining libabigail's API go under here>
 ABG_BEGIN_EXPORT_DECLARATIONS
@@ -1045,15 +1046,10 @@ public:
   void
   perform_late_type_canonicalizing()
   {
-    for (vector<type_base_sptr>::iterator i = m_types_to_canonicalize.begin();
-	 i != m_types_to_canonicalize.end();
-	 ++i)
-      {
-	canonicalize(*i);
-#ifdef WITH_DEBUG_SELF_COMPARISON
-	maybe_check_abixml_canonical_type_stability(*i);
-#endif
-      }
+    canonicalize_types(m_types_to_canonicalize.begin(),
+		       m_types_to_canonicalize.end(),
+		       [](const vector<type_base_sptr>::const_iterator& i)
+		       {return *i;});
   }
 
   /// Test whether if a given function suppression matches a function

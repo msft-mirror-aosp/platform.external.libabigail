@@ -24,6 +24,7 @@
 #include <vector>
 
 #include "abg-tools-utils.h"
+#include "abg-ir-priv.h"
 
 #include "abg-internal.h"
 // <headers defining libabigail's API go under here>
@@ -617,93 +618,6 @@ public:
       return m_referenced_types_set.find(t) != m_referenced_types_set.end();
   }
 
-  /// A comparison functor to compare pointers to @ref type_base.
-  ///
-  /// What is compared is the string representation of the pointed-to
-  /// type.
-  struct type_ptr_cmp
-  {
-    type_ptr_map *map;
-    type_ptr_cmp(type_ptr_map *m)
-      : map(m)
-    {}
-
-    /// The comparison operator of the functor.
-    ///
-    /// @param l the first type to consider.
-    ///
-    /// @param r the second type to consider.
-    ///
-    /// @return true if the string representation of type @p l is
-    /// considered to be "less than" the string representation of the
-    /// type @p r.
-    ///
-    /// But when the two string representations are equal (for
-    /// instance, for typedefs that have the same string
-    /// representation), this function compares the type-ids of the
-    /// types.  This allows for a stable result.
-    bool
-    operator()(const type_base* l, const type_base* r) const
-    {
-      if (!l && r)
-	return true;
-      if (l && !r)
-	return false;
-      if (!l && !r)
-	return false;
-
-      string r1 = ir::get_pretty_representation(l, true),
-	r2 = ir::get_pretty_representation(r, true);
-
-      if (r1 == r2)
-	{
-	  // So the two operands have the same pretty representation.
-	  if (is_typedef(l) || is_typedef(r))
-	    {
-	      // There is a typedef in the comparison.
-	      // Let's strip the typedef to look at the underlying
-	      // type and consider its pretty representation instead.
-	      l = peel_typedef_type(l);
-	      r = peel_typedef_type(r);
-
-	      r1 = ir::get_pretty_representation(l, /*internal=*/false),
-		r2 = ir::get_pretty_representation(r, /*internal=*/false);
-
-	      if (r1 != r2)
-		return r1 < r2;
-	    }
-
-	  type_ptr_map::const_iterator i =
-	    map->find(const_cast<type_base*>(l));
-	  if (i != map->end())
-	    r1 = i->second;
-	  i = map->find(const_cast<type_base*>(r));
-	  if (i != map->end())
-	    r2 = i->second;
-	}
-
-      return r1 < r2;
-    }
-
-    /// The comparison operator of the functor.
-    ///
-    /// @param l the first type to consider.
-    ///
-    /// @param r the second type to consider.
-    ///
-    /// @return true if the string representation of type @p l is
-    /// considered to be "less than" the string representation of the
-    /// type @p r.
-    ///
-    /// But when the two string representations are equal (for
-    /// instance, for typedefs that have the same string
-    /// representation), this function compares the type-ids of the
-    /// types.  This allows for a stable result.
-    bool
-    operator()(const type_base_sptr& l, const type_base_sptr& r) const
-    {return operator()(l.get(), r.get());}
-  }; // end struct type_ptr_cmp
-
   /// Sort the content of a map of type pointers into a vector.
   ///
   /// The pointers are sorted by using their string representation as
@@ -722,7 +636,7 @@ public:
 	 i != types.end();
 	 ++i)
       sorted.push_back(const_cast<type_base*>(*i));
-    type_ptr_cmp comp(&m_type_id_map);
+    type_topo_comp comp;
     sort(sorted.begin(), sorted.end(), comp);
   }
 
@@ -743,7 +657,7 @@ public:
 	 i != types.end();
 	 ++i)
       sorted.push_back(type_base_sptr(i->second));
-    type_ptr_cmp comp(&m_type_id_map);
+    type_topo_comp comp;
     sort(sorted.begin(), sorted.end(), comp);
   }
 
@@ -765,7 +679,7 @@ public:
 	 i != types.end();
 	 ++i)
       sorted.push_back(*i);
-    type_ptr_cmp comp(&m_type_id_map);
+    type_topo_comp comp;
     sort(sorted.begin(), sorted.end(), comp);
   }
 

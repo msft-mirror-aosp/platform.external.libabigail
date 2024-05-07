@@ -213,10 +213,14 @@ public:
   void
   canonicalize_all_types(void)
   {
+    vector<type_base_sptr> types;
+    for (const auto& entry : types_map)
+      types.push_back(entry.second);
+
     canonicalize_types
-      (types_map.begin(), types_map.end(),
-       [](const string_type_base_sptr_map_type::const_iterator& i)
-       {return i->second;});
+      (types.begin(), types.end(),
+       [](vector<type_base_sptr>::iterator& i)
+       {return *i;});
   }
 
   /// Constructor.

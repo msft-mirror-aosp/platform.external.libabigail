@@ -579,20 +579,23 @@
           </member-function>
         </class-decl>
         <class-decl name='sp_array_access&lt;boost::iostreams::detail::file_descriptor_impl&gt;' size-in-bits='8' is-struct='yes' visibility='default' filepath='src/third_party/boost-1.60.0/boost/smart_ptr/shared_ptr.hpp' line='175' column='1' id='type-id-268'>
-        </class-decl>
-        <class-decl name='sp_dereference&lt;boost::iostreams::detail::file_descriptor_impl&gt;' size-in-bits='8' is-struct='yes' visibility='default' filepath='src/third_party/boost-1.60.0/boost/smart_ptr/shared_ptr.hpp' line='101' column='1' id='type-id-269'>
           <member-type access='public'>
-            <typedef-decl name='type' type-id='type-id-88' filepath='src/third_party/boost-1.60.0/boost/smart_ptr/shared_ptr.hpp' line='103' column='1' id='type-id-270'/>
+            <typedef-decl name='type' type-id='type-id-266' filepath='src/third_party/boost-1.60.0/boost/smart_ptr/shared_ptr.hpp' line='177' column='1' id='type-id-269'/>
           </member-type>
         </class-decl>
-        <class-decl name='sp_element&lt;boost::iostreams::detail::file_descriptor_impl&gt;' size-in-bits='8' is-struct='yes' visibility='default' filepath='src/third_party/boost-1.60.0/boost/smart_ptr/shared_ptr.hpp' line='76' column='1' id='type-id-271'>
+        <class-decl name='sp_dereference&lt;boost::iostreams::detail::file_descriptor_impl&gt;' size-in-bits='8' is-struct='yes' visibility='default' filepath='src/third_party/boost-1.60.0/boost/smart_ptr/shared_ptr.hpp' line='101' column='1' id='type-id-270'>
+          <member-type access='public'>
+            <typedef-decl name='type' type-id='type-id-88' filepath='src/third_party/boost-1.60.0/boost/smart_ptr/shared_ptr.hpp' line='103' column='1' id='type-id-271'/>
+          </member-type>
+        </class-decl>
+        <class-decl name='sp_element&lt;boost::iostreams::detail::file_descriptor_impl&gt;' size-in-bits='8' is-struct='yes' visibility='default' filepath='src/third_party/boost-1.60.0/boost/smart_ptr/shared_ptr.hpp' line='76' column='1' id='type-id-272'>
           <member-type access='public'>
             <typedef-decl name='type' type-id='type-id-87' filepath='src/third_party/boost-1.60.0/boost/smart_ptr/shared_ptr.hpp' line='78' column='1' id='type-id-267'/>
           </member-type>
         </class-decl>
-        <class-decl name='sp_member_access&lt;boost::iostreams::detail::file_descriptor_impl&gt;' size-in-bits='8' is-struct='yes' visibility='default' filepath='src/third_party/boost-1.60.0/boost/smart_ptr/shared_ptr.hpp' line='150' column='1' id='type-id-272'>
+        <class-decl name='sp_member_access&lt;boost::iostreams::detail::file_descriptor_impl&gt;' size-in-bits='8' is-struct='yes' visibility='default' filepath='src/third_party/boost-1.60.0/boost/smart_ptr/shared_ptr.hpp' line='150' column='1' id='type-id-273'>
           <member-type access='public'>
-            <typedef-decl name='type' type-id='type-id-89' filepath='src/third_party/boost-1.60.0/boost/smart_ptr/shared_ptr.hpp' line='152' column='1' id='type-id-273'/>
+            <typedef-decl name='type' type-id='type-id-89' filepath='src/third_party/boost-1.60.0/boost/smart_ptr/shared_ptr.hpp' line='152' column='1' id='type-id-274'/>
           </member-type>
         </class-decl>
         <function-decl name='sp_enable_shared_from_this' mangled-name='_ZN5boost6detail26sp_enable_shared_from_thisEz' filepath='src/third_party/boost-1.60.0/boost/smart_ptr/shared_ptr.hpp' line='241' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZN5boost6detail26sp_enable_shared_from_thisEz'>
@@ -643,7 +646,7 @@
           <base-class access='public' layout-offset-in-bits='0' type-id='type-id-80'/>
           <base-class access='public' layout-offset-in-bits='192' is-virtual='yes' type-id='type-id-74'/>
           <member-type access='private'>
-            <class-decl name='clone_tag' size-in-bits='8' is-struct='yes' visibility='default' filepath='src/third_party/boost-1.60.0/boost/exception/exception.hpp' line='446' column='1' id='type-id-274'/>
+            <class-decl name='clone_tag' size-in-bits='8' is-struct='yes' visibility='default' filepath='src/third_party/boost-1.60.0/boost/exception/exception.hpp' line='446' column='1' id='type-id-275'/>
           </member-type>
           <member-function access='public' destructor='yes' vtable-offset='0'>
             <function-decl name='~clone_impl' filepath='src/third_party/boost-1.60.0/boost/exception/exception.hpp' line='462' column='1' visibility='default' binding='global' size-in-bits='64'>
@@ -724,7 +727,7 @@
             <typedef-decl name='char_type' type-id='type-id-2' filepath='src/third_party/boost-1.60.0/boost/iostreams/device/file_descriptor.hpp' line='51' column='1' id='type-id-102'/>
           </member-type>
           <member-type access='private'>
-            <typedef-decl name='handle_type' type-id='type-id-276' filepath='src/third_party/boost-1.60.0/boost/iostreams/device/file_descriptor.hpp' line='50' column='1' id='type-id-275'/>
+            <typedef-decl name='handle_type' type-id='type-id-277' filepath='src/third_party/boost-1.60.0/boost/iostreams/device/file_descriptor.hpp' line='50' column='1' id='type-id-276'/>
           </member-type>
           <data-member access='private' layout-offset-in-bits='0'>
             <var-decl name='pimpl_' type-id='type-id-110' visibility='default' filepath='src/third_party/boost-1.60.0/boost/iostreams/device/file_descriptor.hpp' line='143' column='1'/>
@@ -738,16 +741,16 @@
           <member-function access='public' constructor='yes'>
             <function-decl name='file_descriptor' mangled-name='_ZN5boost9iostreams15file_descriptorC2EiNS0_21file_descriptor_flagsE' filepath='src/third_party/boost-1.60.0/libs/iostreams/src/file_descriptor.cpp' line='362' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZN5boost9iostreams15file_descriptorC2EiNS0_21file_descriptor_flagsE'>
               <parameter type-id='type-id-101' is-artificial='yes'/>
-              <parameter type-id='type-id-275' filepath='src/third_party/boost-1.60.0/libs/iostreams/src/file_descriptor.cpp' line='362' column='1'/>
-              <parameter type-id='type-id-277' filepath='src/third_party/boost-1.60.0/libs/iostreams/src/file_descriptor.cpp' line='362' column='1'/>
+              <parameter type-id='type-id-276' filepath='src/third_party/boost-1.60.0/libs/iostreams/src/file_descriptor.cpp' line='362' column='1'/>
+              <parameter type-id='type-id-278' filepath='src/third_party/boost-1.60.0/libs/iostreams/src/file_descriptor.cpp' line='362' column='1'/>
               <return type-id='type-id-266'/>
             </function-decl>
           </member-function>
           <member-function access='public'>
             <function-decl name='open' mangled-name='_ZN5boost9iostreams15file_descriptor4openEiNS0_21file_descriptor_flagsE' filepath='src/third_party/boost-1.60.0/libs/iostreams/src/file_descriptor.cpp' line='400' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZN5boost9iostreams15file_descriptor4openEiNS0_21file_descriptor_flagsE'>
               <parameter type-id='type-id-101' is-artificial='yes'/>
-              <parameter type-id='type-id-275' filepath='src/third_party/boost-1.60.0/libs/iostreams/src/file_descriptor.cpp' line='400' column='1'/>
-              <parameter type-id='type-id-277' filepath='src/third_party/boost-1.60.0/libs/iostreams/src/file_descriptor.cpp' line='400' column='1'/>
+              <parameter type-id='type-id-276' filepath='src/third_party/boost-1.60.0/libs/iostreams/src/file_descriptor.cpp' line='400' column='1'/>
+              <parameter type-id='type-id-278' filepath='src/third_party/boost-1.60.0/libs/iostreams/src/file_descriptor.cpp' line='400' column='1'/>
               <return type-id='type-id-266'/>
             </function-decl>
           </member-function>
@@ -830,7 +833,7 @@
           <member-function access='public'>
             <function-decl name='seek' mangled-name='_ZN5boost9iostreams15file_descriptor4seekElSt12_Ios_Seekdir' filepath='src/third_party/boost-1.60.0/libs/iostreams/src/file_descriptor.cpp' line='440' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZN5boost9iostreams15file_descriptor4seekElSt12_Ios_Seekdir'>
               <parameter type-id='type-id-101' is-artificial='yes'/>
-              <parameter type-id='type-id-278' filepath='src/third_party/boost-1.60.0/libs/iostreams/src/file_descriptor.cpp' line='440' column='1'/>
+              <parameter type-id='type-id-279' filepath='src/third_party/boost-1.60.0/libs/iostreams/src/file_descriptor.cpp' line='440' column='1'/>
               <parameter type-id='type-id-255' filepath='src/third_party/boost-1.60.0/libs/iostreams/src/file_descriptor.cpp' line='440' column='1'/>
               <return type-id='type-id-261'/>
             </function-decl>
@@ -838,7 +841,7 @@
           <member-function access='public' const='yes'>
             <function-decl name='handle' mangled-name='_ZNK5boost9iostreams15file_descriptor6handleEv' filepath='src/third_party/boost-1.60.0/libs/iostreams/src/file_descriptor.cpp' line='443' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZNK5boost9iostreams15file_descriptor6handleEv'>
               <parameter type-id='type-id-163' is-artificial='yes'/>
-              <return type-id='type-id-275'/>
+              <return type-id='type-id-276'/>
             </function-decl>
           </member-function>
           <member-function access='private'>
@@ -853,16 +856,16 @@
           <member-function access='public' constructor='yes'>
             <function-decl name='file_descriptor_sink' mangled-name='_ZN5boost9iostreams20file_descriptor_sinkC2EiNS0_21file_descriptor_flagsE' filepath='src/third_party/boost-1.60.0/libs/iostreams/src/file_descriptor.cpp' line='531' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZN5boost9iostreams20file_descriptor_sinkC2EiNS0_21file_descriptor_flagsE'>
               <parameter type-id='type-id-105' is-artificial='yes'/>
-              <parameter type-id='type-id-279' filepath='src/third_party/boost-1.60.0/libs/iostreams/src/file_descriptor.cpp' line='532' column='1'/>
-              <parameter type-id='type-id-277' filepath='src/third_party/boost-1.60.0/libs/iostreams/src/file_descriptor.cpp' line='532' column='1'/>
+              <parameter type-id='type-id-280' filepath='src/third_party/boost-1.60.0/libs/iostreams/src/file_descriptor.cpp' line='532' column='1'/>
+              <parameter type-id='type-id-278' filepath='src/third_party/boost-1.60.0/libs/iostreams/src/file_descriptor.cpp' line='532' column='1'/>
               <return type-id='type-id-266'/>
             </function-decl>
           </member-function>
           <member-function access='public'>
             <function-decl name='open' mangled-name='_ZN5boost9iostreams20file_descriptor_sink4openEiNS0_21file_descriptor_flagsE' filepath='src/third_party/boost-1.60.0/libs/iostreams/src/file_descriptor.cpp' line='565' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZN5boost9iostreams20file_descriptor_sink4openEiNS0_21file_descriptor_flagsE'>
               <parameter type-id='type-id-105' is-artificial='yes'/>
-              <parameter type-id='type-id-279' filepath='src/third_party/boost-1.60.0/libs/iostreams/src/file_descriptor.cpp' line='565' column='1'/>
-              <parameter type-id='type-id-277' filepath='src/third_party/boost-1.60.0/libs/iostreams/src/file_descriptor.cpp' line='565' column='1'/>
+              <parameter type-id='type-id-280' filepath='src/third_party/boost-1.60.0/libs/iostreams/src/file_descriptor.cpp' line='565' column='1'/>
+              <parameter type-id='type-id-278' filepath='src/third_party/boost-1.60.0/libs/iostreams/src/file_descriptor.cpp' line='565' column='1'/>
               <return type-id='type-id-266'/>
             </function-decl>
           </member-function>
@@ -917,21 +920,21 @@
         <class-decl name='file_descriptor_source' size-in-bits='128' visibility='default' filepath='src/third_party/boost-1.60.0/boost/iostreams/device/file_descriptor.hpp' line='146' column='1' id='type-id-106'>
           <base-class access='private' layout-offset-in-bits='0' type-id='type-id-100'/>
           <member-type access='private'>
-            <typedef-decl name='handle_type' type-id='type-id-8' filepath='src/third_party/boost-1.60.0/boost/iostreams/device/file_descriptor.hpp' line='151' column='1' id='type-id-279'/>
+            <typedef-decl name='handle_type' type-id='type-id-8' filepath='src/third_party/boost-1.60.0/boost/iostreams/device/file_descriptor.hpp' line='151' column='1' id='type-id-280'/>
           </member-type>
           <member-function access='public' constructor='yes'>
             <function-decl name='file_descriptor_source' mangled-name='_ZN5boost9iostreams22file_descriptor_sourceC2EiNS0_21file_descriptor_flagsE' filepath='src/third_party/boost-1.60.0/libs/iostreams/src/file_descriptor.cpp' line='458' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZN5boost9iostreams22file_descriptor_sourceC2EiNS0_21file_descriptor_flagsE'>
               <parameter type-id='type-id-107' is-artificial='yes'/>
-              <parameter type-id='type-id-279' filepath='src/third_party/boost-1.60.0/libs/iostreams/src/file_descriptor.cpp' line='459' column='1'/>
-              <parameter type-id='type-id-277' filepath='src/third_party/boost-1.60.0/libs/iostreams/src/file_descriptor.cpp' line='459' column='1'/>
+              <parameter type-id='type-id-280' filepath='src/third_party/boost-1.60.0/libs/iostreams/src/file_descriptor.cpp' line='459' column='1'/>
+              <parameter type-id='type-id-278' filepath='src/third_party/boost-1.60.0/libs/iostreams/src/file_descriptor.cpp' line='459' column='1'/>
               <return type-id='type-id-266'/>
             </function-decl>
           </member-function>
           <member-function access='public'>
             <function-decl name='open' mangled-name='_ZN5boost9iostreams22file_descriptor_source4openEiNS0_21file_descriptor_flagsE' filepath='src/third_party/boost-1.60.0/libs/iostreams/src/file_descriptor.cpp' line='493' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZN5boost9iostreams22file_descriptor_source4openEiNS0_21file_descriptor_flagsE'>
               <parameter type-id='type-id-107' is-artificial='yes'/>
-              <parameter type-id='type-id-279' filepath='src/third_party/boost-1.60.0/libs/iostreams/src/file_descriptor.cpp' line='493' column='1'/>
-              <parameter type-id='type-id-277' filepath='src/third_party/boost-1.60.0/libs/iostreams/src/file_descriptor.cpp' line='493' column='1'/>
+              <parameter type-id='type-id-280' filepath='src/third_party/boost-1.60.0/libs/iostreams/src/file_descriptor.cpp' line='493' column='1'/>
+              <parameter type-id='type-id-278' filepath='src/third_party/boost-1.60.0/libs/iostreams/src/file_descriptor.cpp' line='493' column='1'/>
               <return type-id='type-id-266'/>
             </function-decl>
           </member-function>
@@ -983,12 +986,12 @@
             </function-decl>
           </member-function>
         </class-decl>
-        <enum-decl name='file_descriptor_flags' filepath='src/third_party/boost-1.60.0/boost/iostreams/device/file_descriptor.hpp' line='40' column='1' id='type-id-277'>
+        <enum-decl name='file_descriptor_flags' filepath='src/third_party/boost-1.60.0/boost/iostreams/device/file_descriptor.hpp' line='40' column='1' id='type-id-278'>
           <underlying-type type-id='type-id-50'/>
           <enumerator name='never_close_handle' value='0'/>
           <enumerator name='close_handle' value='3'/>
         </enum-decl>
-        <typedef-decl name='stream_offset' type-id='type-id-42' filepath='src/third_party/boost-1.60.0/boost/iostreams/positioning.hpp' line='36' column='1' id='type-id-278'/>
+        <typedef-decl name='stream_offset' type-id='type-id-42' filepath='src/third_party/boost-1.60.0/boost/iostreams/positioning.hpp' line='36' column='1' id='type-id-279'/>
         <namespace-decl name='detail'>
           <class-decl name='path' size-in-bits='576' visibility='default' filepath='src/third_party/boost-1.60.0/boost/iostreams/detail/path.hpp' line='37' column='1' id='type-id-97'>
             <data-member access='private' layout-offset-in-bits='0'>
@@ -1003,7 +1006,7 @@
           </class-decl>
           <class-decl name='file_descriptor_impl' size-in-bits='64' is-struct='yes' visibility='default' filepath='src/third_party/boost-1.60.0/libs/iostreams/src/file_descriptor.cpp' line='50' column='1' id='type-id-87'>
             <member-type access='public'>
-              <enum-decl name='flags' filepath='src/third_party/boost-1.60.0/libs/iostreams/src/file_descriptor.cpp' line='52' column='1' id='type-id-280'>
+              <enum-decl name='flags' filepath='src/third_party/boost-1.60.0/libs/iostreams/src/file_descriptor.cpp' line='52' column='1' id='type-id-281'>
                 <underlying-type type-id='type-id-50'/>
                 <enumerator name='never_close' value='0'/>
                 <enumerator name='close_on_exit' value='1'/>
@@ -1012,7 +1015,7 @@
               </enum-decl>
             </member-type>
             <data-member access='public' layout-offset-in-bits='0'>
-              <var-decl name='handle_' type-id='type-id-276' visibility='default' filepath='src/third_party/boost-1.60.0/libs/iostreams/src/file_descriptor.cpp' line='73' column='1'/>
+              <var-decl name='handle_' type-id='type-id-277' visibility='default' filepath='src/third_party/boost-1.60.0/libs/iostreams/src/file_descriptor.cpp' line='73' column='1'/>
             </data-member>
             <data-member access='public' layout-offset-in-bits='32'>
               <var-decl name='flags_' type-id='type-id-8' visibility='default' filepath='src/third_party/boost-1.60.0/libs/iostreams/src/file_descriptor.cpp' line='74' column='1'/>
@@ -1025,7 +1028,7 @@
             </member-function>
             <member-function access='public' static='yes'>
               <function-decl name='invalid_handle' mangled-name='_ZN5boost9iostreams6detail20file_descriptor_impl14invalid_handleEv' filepath='src/third_party/boost-1.60.0/libs/iostreams/src/file_descriptor.cpp' line='347' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZN5boost9iostreams6detail20file_descriptor_impl14invalid_handleEv'>
-                <return type-id='type-id-276'/>
+                <return type-id='type-id-277'/>
               </function-decl>
             </member-function>
             <member-function access='public' destructor='yes'>
@@ -1045,8 +1048,8 @@
             <member-function access='public'>
               <function-decl name='open' mangled-name='_ZN5boost9iostreams6detail20file_descriptor_impl4openEiNS2_5flagsE' filepath='src/third_party/boost-1.60.0/libs/iostreams/src/file_descriptor.cpp' line='88' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZN5boost9iostreams6detail20file_descriptor_impl4openEiNS2_5flagsE'>
                 <parameter type-id='type-id-89' is-artificial='yes'/>
-                <parameter type-id='type-id-276' filepath='src/third_party/boost-1.60.0/libs/iostreams/src/file_descriptor.cpp' line='88' column='1'/>
-                <parameter type-id='type-id-280' filepath='src/third_party/boost-1.60.0/libs/iostreams/src/file_descriptor.cpp' line='88' column='1'/>
+                <parameter type-id='type-id-277' filepath='src/third_party/boost-1.60.0/libs/iostreams/src/file_descriptor.cpp' line='88' column='1'/>
+                <parameter type-id='type-id-281' filepath='src/third_party/boost-1.60.0/libs/iostreams/src/file_descriptor.cpp' line='88' column='1'/>
                 <return type-id='type-id-266'/>
               </function-decl>
             </member-function>
@@ -1089,13 +1092,13 @@
             <member-function access='public'>
               <function-decl name='seek' mangled-name='_ZN5boost9iostreams6detail20file_descriptor_impl4seekElSt12_Ios_Seekdir' filepath='src/third_party/boost-1.60.0/libs/iostreams/src/file_descriptor.cpp' line='300' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZN5boost9iostreams6detail20file_descriptor_impl4seekElSt12_Ios_Seekdir'>
                 <parameter type-id='type-id-89' is-artificial='yes'/>
-                <parameter type-id='type-id-278' filepath='src/third_party/boost-1.60.0/libs/iostreams/src/file_descriptor.cpp' line='301' column='1'/>
+                <parameter type-id='type-id-279' filepath='src/third_party/boost-1.60.0/libs/iostreams/src/file_descriptor.cpp' line='301' column='1'/>
                 <parameter type-id='type-id-255' filepath='src/third_party/boost-1.60.0/libs/iostreams/src/file_descriptor.cpp' line='301' column='1'/>
                 <return type-id='type-id-261'/>
               </function-decl>
             </member-function>
           </class-decl>
-          <typedef-decl name='file_handle' type-id='type-id-8' filepath='src/third_party/boost-1.60.0/boost/iostreams/detail/file_handle.hpp' line='27' column='1' id='type-id-276'/>
+          <typedef-decl name='file_handle' type-id='type-id-8' filepath='src/third_party/boost-1.60.0/boost/iostreams/detail/file_handle.hpp' line='27' column='1' id='type-id-277'/>
           <function-decl name='system_failure' mangled-name='_ZN5boost9iostreams6detail14system_failureB5cxx11EPKc' filepath='src/third_party/boost-1.60.0/boost/iostreams/detail/system_failure.hpp' line='39' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZN5boost9iostreams6detail14system_failureB5cxx11EPKc'>
             <parameter type-id='type-id-31' filepath='src/third_party/boost-1.60.0/boost/iostreams/detail/system_failure.hpp' line='39' column='1'/>
             <return type-id='type-id-212'/>
@@ -1110,7 +1113,7 @@
     <namespace-decl name='boost'>
       <class-decl name='shared_ptr&lt;boost::iostreams::detail::mapped_file_impl&gt;' size-in-bits='128' visibility='default' filepath='src/third_party/boost-1.60.0/boost/smart_ptr/shared_ptr.hpp' line='336' column='1' id='type-id-116'>
         <member-type access='private'>
-          <typedef-decl name='element_type' type-id='type-id-281' filepath='src/third_party/boost-1.60.0/boost/smart_ptr/shared_ptr.hpp' line='345' column='1' id='type-id-120'/>
+          <typedef-decl name='element_type' type-id='type-id-282' filepath='src/third_party/boost-1.60.0/boost/smart_ptr/shared_ptr.hpp' line='345' column='1' id='type-id-120'/>
         </member-type>
         <data-member access='private' layout-offset-in-bits='0'>
           <var-decl name='px' type-id='type-id-121' visibility='default' filepath='src/third_party/boost-1.60.0/boost/smart_ptr/shared_ptr.hpp' line='768' column='1'/>
@@ -1127,7 +1130,7 @@
         </member-function>
       </class-decl>
       <namespace-decl name='core'>
-        <typedef-decl name='typeinfo' type-id='type-id-263' filepath='src/third_party/boost-1.60.0/boost/core/typeinfo.hpp' line='134' column='1' id='type-id-282'/>
+        <typedef-decl name='typeinfo' type-id='type-id-263' filepath='src/third_party/boost-1.60.0/boost/core/typeinfo.hpp' line='134' column='1' id='type-id-283'/>
       </namespace-decl>
       <namespace-decl name='detail'>
         <class-decl name='shared_count' size-in-bits='64' visibility='default' filepath='src/third_party/boost-1.60.0/boost/smart_ptr/detail/shared_count.hpp' line='107' column='1' id='type-id-58'>
@@ -1137,10 +1140,10 @@
         </class-decl>
         <class-decl name='sp_counted_base' size-in-bits='128' visibility='default' filepath='src/third_party/boost-1.60.0/boost/smart_ptr/detail/sp_counted_base_clang.hpp' line='61' column='1' id='type-id-62'>
           <data-member access='private' layout-offset-in-bits='64'>
-            <var-decl name='use_count_' type-id='type-id-283' visibility='default' filepath='src/third_party/boost-1.60.0/boost/smart_ptr/detail/sp_counted_base_clang.hpp' line='68' column='1'/>
+            <var-decl name='use_count_' type-id='type-id-284' visibility='default' filepath='src/third_party/boost-1.60.0/boost/smart_ptr/detail/sp_counted_base_clang.hpp' line='68' column='1'/>
           </data-member>
           <data-member access='private' layout-offset-in-bits='96'>
-            <var-decl name='weak_count_' type-id='type-id-283' visibility='default' filepath='src/third_party/boost-1.60.0/boost/smart_ptr/detail/sp_counted_base_clang.hpp' line='69' column='1'/>
+            <var-decl name='weak_count_' type-id='type-id-284' visibility='default' filepath='src/third_party/boost-1.60.0/boost/smart_ptr/detail/sp_counted_base_clang.hpp' line='69' column='1'/>
           </data-member>
           <member-function access='public' destructor='yes' vtable-offset='0'>
             <function-decl name='~sp_counted_base' filepath='src/third_party/boost-1.60.0/boost/smart_ptr/detail/sp_counted_base_clang.hpp' line='79' column='1' visibility='default' binding='global' size-in-bits='64'>
@@ -1174,27 +1177,27 @@
             </function-decl>
           </member-function>
         </class-decl>
-        <class-decl name='sp_counted_impl_p&lt;boost::iostreams::detail::mapped_file_impl&gt;' size-in-bits='192' visibility='default' filepath='src/third_party/boost-1.60.0/boost/smart_ptr/detail/sp_counted_impl.hpp' line='53' column='1' id='type-id-284'>
+        <class-decl name='sp_counted_impl_p&lt;boost::iostreams::detail::mapped_file_impl&gt;' size-in-bits='192' visibility='default' filepath='src/third_party/boost-1.60.0/boost/smart_ptr/detail/sp_counted_impl.hpp' line='53' column='1' id='type-id-285'>
           <base-class access='public' layout-offset-in-bits='0' type-id='type-id-62'/>
           <data-member access='private' layout-offset-in-bits='128'>
             <var-decl name='px_' type-id='type-id-92' visibility='default' filepath='src/third_party/boost-1.60.0/boost/smart_ptr/detail/sp_counted_impl.hpp' line='57' column='1'/>
           </data-member>
           <member-function access='public' vtable-offset='2'>
             <function-decl name='dispose' mangled-name='_ZN5boost6detail17sp_counted_impl_pINS_9iostreams6detail16mapped_file_implEE7disposeEv' filepath='src/third_party/boost-1.60.0/boost/smart_ptr/detail/sp_counted_impl.hpp' line='73' column='1' visibility='default' binding='global' size-in-bits='64'>
-              <parameter type-id='type-id-285' is-artificial='yes'/>
+              <parameter type-id='type-id-286' is-artificial='yes'/>
               <return type-id='type-id-266'/>
             </function-decl>
           </member-function>
           <member-function access='public' vtable-offset='4'>
             <function-decl name='get_deleter' mangled-name='_ZN5boost6detail17sp_counted_impl_pINS_9iostreams6detail16mapped_file_implEE11get_deleterERKSt9type_info' filepath='src/third_party/boost-1.60.0/boost/smart_ptr/detail/sp_counted_impl.hpp' line='81' column='1' visibility='default' binding='global' size-in-bits='64'>
-              <parameter type-id='type-id-285' is-artificial='yes'/>
+              <parameter type-id='type-id-286' is-artificial='yes'/>
               <parameter type-id='type-id-247'/>
               <return type-id='type-id-22'/>
             </function-decl>
           </member-function>
           <member-function access='public' vtable-offset='5'>
             <function-decl name='get_untyped_deleter' mangled-name='_ZN5boost6detail17sp_counted_impl_pINS_9iostreams6detail16mapped_file_implEE19get_untyped_deleterEv' filepath='src/third_party/boost-1.60.0/boost/smart_ptr/detail/sp_counted_impl.hpp' line='86' column='1' visibility='default' binding='global' size-in-bits='64'>
-              <parameter type-id='type-id-285' is-artificial='yes'/>
+              <parameter type-id='type-id-286' is-artificial='yes'/>
               <return type-id='type-id-22'/>
             </function-decl>
           </member-function>
@@ -1204,10 +1207,7 @@
             <var-decl name='pi_' type-id='type-id-64' visibility='default' filepath='src/third_party/boost-1.60.0/boost/smart_ptr/detail/shared_count.hpp' line='564' column='1'/>
           </data-member>
         </class-decl>
-        <class-decl name='sp_array_access&lt;boost::iostreams::detail::mapped_file_impl&gt;' size-in-bits='8' is-struct='yes' visibility='default' filepath='src/third_party/boost-1.60.0/boost/smart_ptr/shared_ptr.hpp' line='175' column='1' id='type-id-286'>
-          <member-type access='public'>
-            <typedef-decl name='type' type-id='type-id-266' filepath='src/third_party/boost-1.60.0/boost/smart_ptr/shared_ptr.hpp' line='177' column='1' id='type-id-287'/>
-          </member-type>
+        <class-decl name='sp_array_access&lt;boost::iostreams::detail::mapped_file_impl&gt;' size-in-bits='8' is-struct='yes' visibility='default' filepath='src/third_party/boost-1.60.0/boost/smart_ptr/shared_ptr.hpp' line='175' column='1' id='type-id-287'>
         </class-decl>
         <class-decl name='sp_dereference&lt;boost::iostreams::detail::mapped_file_impl&gt;' size-in-bits='8' is-struct='yes' visibility='default' filepath='src/third_party/boost-1.60.0/boost/smart_ptr/shared_ptr.hpp' line='101' column='1' id='type-id-288'>
           <member-type access='public'>
@@ -1216,7 +1216,7 @@
         </class-decl>
         <class-decl name='sp_element&lt;boost::iostreams::detail::mapped_file_impl&gt;' size-in-bits='8' is-struct='yes' visibility='default' filepath='src/third_party/boost-1.60.0/boost/smart_ptr/shared_ptr.hpp' line='76' column='1' id='type-id-290'>
           <member-type access='public'>
-            <typedef-decl name='type' type-id='type-id-90' filepath='src/third_party/boost-1.60.0/boost/smart_ptr/shared_ptr.hpp' line='78' column='1' id='type-id-281'/>
+            <typedef-decl name='type' type-id='type-id-90' filepath='src/third_party/boost-1.60.0/boost/smart_ptr/shared_ptr.hpp' line='78' column='1' id='type-id-282'/>
           </member-type>
         </class-decl>
         <class-decl name='sp_member_access&lt;boost::iostreams::detail::mapped_file_impl&gt;' size-in-bits='8' is-struct='yes' visibility='default' filepath='src/third_party/boost-1.60.0/boost/smart_ptr/shared_ptr.hpp' line='150' column='1' id='type-id-291'>
@@ -1225,8 +1225,8 @@
           </member-type>
         </class-decl>
         <class-decl name='sp_nothrow_tag' size-in-bits='8' is-struct='yes' visibility='default' filepath='src/third_party/boost-1.60.0/boost/smart_ptr/detail/shared_count.hpp' line='71' column='1' id='type-id-293'/>
-        <typedef-decl name='atomic_int_least32_t' type-id='type-id-41' filepath='src/third_party/boost-1.60.0/boost/smart_ptr/detail/sp_counted_base_clang.hpp' line='27' column='1' id='type-id-283'/>
-        <typedef-decl name='sp_typeinfo' type-id='type-id-282' filepath='src/third_party/boost-1.60.0/boost/detail/sp_typeinfo.hpp' line='28' column='1' id='type-id-245'/>
+        <typedef-decl name='atomic_int_least32_t' type-id='type-id-41' filepath='src/third_party/boost-1.60.0/boost/smart_ptr/detail/sp_counted_base_clang.hpp' line='27' column='1' id='type-id-284'/>
+        <typedef-decl name='sp_typeinfo' type-id='type-id-283' filepath='src/third_party/boost-1.60.0/boost/detail/sp_typeinfo.hpp' line='28' column='1' id='type-id-245'/>
         <function-decl name='sp_pointer_construct&lt;boost::iostreams::detail::mapped_file_impl, boost::iostreams::detail::mapped_file_impl&gt;' mangled-name='_ZN5boost6detail20sp_pointer_constructINS_9iostreams6detail16mapped_file_implES4_EEvPNS_10shared_ptrIT_EEPT0_RNS0_12shared_countE' filepath='src/third_party/boost-1.60.0/boost/smart_ptr/shared_ptr.hpp' line='282' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZN5boost6detail20sp_pointer_constructINS_9iostreams6detail16mapped_file_implES4_EEvPNS_10shared_ptrIT_EEPT0_RNS0_12shared_countE'>
           <parameter type-id='type-id-119' filepath='src/third_party/boost-1.60.0/boost/smart_ptr/shared_ptr.hpp' line='282' column='1'/>
           <parameter type-id='type-id-92' filepath='src/third_party/boost-1.60.0/boost/smart_ptr/shared_ptr.hpp' line='282' column='1'/>
@@ -1265,7 +1265,7 @@
           <member-function access='public'>
             <function-decl name='resize' mangled-name='_ZN5boost9iostreams11mapped_file6resizeEl' filepath='src/third_party/boost-1.60.0/libs/iostreams/src/mapped_file.cpp' line='485' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZN5boost9iostreams11mapped_file6resizeEl'>
               <parameter type-id='type-id-301' is-artificial='yes'/>
-              <parameter type-id='type-id-278' filepath='src/third_party/boost-1.60.0/libs/iostreams/src/mapped_file.cpp' line='485' column='1'/>
+              <parameter type-id='type-id-279' filepath='src/third_party/boost-1.60.0/libs/iostreams/src/mapped_file.cpp' line='485' column='1'/>
               <return type-id='type-id-266'/>
             </function-decl>
           </member-function>
@@ -1430,10 +1430,10 @@
               <var-decl name='data_' type-id='type-id-122' visibility='default' filepath='src/third_party/boost-1.60.0/libs/iostreams/src/mapped_file.cpp' line='71' column='1'/>
             </data-member>
             <data-member access='private' layout-offset-in-bits='960'>
-              <var-decl name='size_' type-id='type-id-278' visibility='default' filepath='src/third_party/boost-1.60.0/libs/iostreams/src/mapped_file.cpp' line='72' column='1'/>
+              <var-decl name='size_' type-id='type-id-279' visibility='default' filepath='src/third_party/boost-1.60.0/libs/iostreams/src/mapped_file.cpp' line='72' column='1'/>
             </data-member>
             <data-member access='private' layout-offset-in-bits='1024'>
-              <var-decl name='handle_' type-id='type-id-276' visibility='default' filepath='src/third_party/boost-1.60.0/libs/iostreams/src/mapped_file.cpp' line='73' column='1'/>
+              <var-decl name='handle_' type-id='type-id-277' visibility='default' filepath='src/third_party/boost-1.60.0/libs/iostreams/src/mapped_file.cpp' line='73' column='1'/>
             </data-member>
             <data-member access='private' layout-offset-in-bits='1056'>
               <var-decl name='error_' type-id='type-id-1' visibility='default' filepath='src/third_party/boost-1.60.0/libs/iostreams/src/mapped_file.cpp' line='77' column='1'/>
@@ -1507,7 +1507,7 @@
             <member-function access='public'>
               <function-decl name='resize' mangled-name='_ZN5boost9iostreams6detail16mapped_file_impl6resizeEl' filepath='src/third_party/boost-1.60.0/libs/iostreams/src/mapped_file.cpp' line='113' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZN5boost9iostreams6detail16mapped_file_impl6resizeEl'>
                 <parameter type-id='type-id-92' is-artificial='yes'/>
-                <parameter type-id='type-id-278' filepath='src/third_party/boost-1.60.0/libs/iostreams/src/mapped_file.cpp' line='113' column='1'/>
+                <parameter type-id='type-id-279' filepath='src/third_party/boost-1.60.0/libs/iostreams/src/mapped_file.cpp' line='113' column='1'/>
                 <return type-id='type-id-266'/>
               </function-decl>
             </member-function>
@@ -1525,13 +1525,13 @@
               <var-decl name='mode' type-id='type-id-253' visibility='default' filepath='src/third_party/boost-1.60.0/boost/iostreams/device/mapped_file.hpp' line='93' column='1'/>
             </data-member>
             <data-member access='public' layout-offset-in-bits='64'>
-              <var-decl name='offset' type-id='type-id-278' visibility='default' filepath='src/third_party/boost-1.60.0/boost/iostreams/device/mapped_file.hpp' line='94' column='1'/>
+              <var-decl name='offset' type-id='type-id-279' visibility='default' filepath='src/third_party/boost-1.60.0/boost/iostreams/device/mapped_file.hpp' line='94' column='1'/>
             </data-member>
             <data-member access='public' layout-offset-in-bits='128'>
               <var-decl name='length' type-id='type-id-260' visibility='default' filepath='src/third_party/boost-1.60.0/boost/iostreams/device/mapped_file.hpp' line='95' column='1'/>
             </data-member>
             <data-member access='public' layout-offset-in-bits='192'>
-              <var-decl name='new_file_size' type-id='type-id-278' visibility='default' filepath='src/third_party/boost-1.60.0/boost/iostreams/device/mapped_file.hpp' line='96' column='1'/>
+              <var-decl name='new_file_size' type-id='type-id-279' visibility='default' filepath='src/third_party/boost-1.60.0/boost/iostreams/device/mapped_file.hpp' line='96' column='1'/>
             </data-member>
             <data-member access='public' layout-offset-in-bits='256'>
               <var-decl name='hint' type-id='type-id-31' visibility='default' filepath='src/third_party/boost-1.60.0/boost/iostreams/device/mapped_file.hpp' line='97' column='1'/>
@@ -1558,12 +1558,12 @@
     </function-type>
   </abi-instr>
   <abi-instr address-size='64' path='src/third_party/boost-1.60.0/libs/iostreams/src/mapped_file.cpp' comp-dir-path='/home/andrew/Documents/10gen/dev/src/mongodb' language='LANG_C_plus_plus'>
-    <reference-type-def kind='lvalue' type-id='type-id-284' size-in-bits='64' id='type-id-309'/>
-    <pointer-type-def type-id='type-id-284' size-in-bits='64' id='type-id-285'/>
+    <reference-type-def kind='lvalue' type-id='type-id-285' size-in-bits='64' id='type-id-309'/>
+    <pointer-type-def type-id='type-id-285' size-in-bits='64' id='type-id-286'/>
     <pointer-type-def type-id='type-id-294' size-in-bits='64' id='type-id-301'/>
     <pointer-type-def type-id='type-id-304' size-in-bits='64' id='type-id-305'/>
     <reference-type-def kind='lvalue' type-id='type-id-108' size-in-bits='64' id='type-id-310'/>
-    <qualified-type-def type-id='type-id-284' const='yes' id='type-id-311'/>
+    <qualified-type-def type-id='type-id-285' const='yes' id='type-id-311'/>
     <reference-type-def kind='lvalue' type-id='type-id-311' size-in-bits='64' id='type-id-312'/>
     <qualified-type-def type-id='type-id-294' const='yes' id='type-id-313'/>
     <reference-type-def kind='lvalue' type-id='type-id-313' size-in-bits='64' id='type-id-302'/>
