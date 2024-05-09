@@ -874,7 +874,7 @@ elf_symbol_sptr
 reader::variable_symbol_is_exported(const string& name) const
 {
   const elf_symbol_sptr s  = symtab()->variable_symbol_is_exported(name);
-  if (s->is_variable() && s->is_public())
+  if (s && s->is_variable() && s->is_public())
     {
       bool looking_at_linux_kernel_binary =
 	(load_in_linux_kernel_mode()
