@@ -486,12 +486,16 @@ public:
 
 #ifdef WITH_BTF_KIND_TYPE_TAG
 	  case BTF_KIND_TYPE_TAG/* Type Tag */:
+	    break;
 #endif
 #ifdef WITH_BTF_KIND_DECL_TAG
 	  case BTF_KIND_DECL_TAG/* Decl Tag */:
+	    break;
 #endif
 	  case BTF_KIND_DATASEC/* Section */:
+	    break;
 	  case BTF_KIND_UNKN/* Unknown	*/:
+	    break;
 	  default:
 	    ABG_ASSERT_NOT_REACHED;
 	    break;
