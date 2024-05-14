@@ -571,6 +571,11 @@
                                                                                               7 data member changes:
                                                                                                 type of 'void (* pixel_converter)(uint8_t*, uint8_t*)' changed:
                                                                                                   in pointed to type 'function type void (uint8_t*, uint8_t*)':
+                                                                                                    parameter 1 of type 'uint8_t*' changed:
+                                                                                                      in pointed to type 'typedef uint8_t':
+                                                                                                        entity changed from 'typedef uint8_t' to compatible type 'void'
+                                                                                                          type name changed from 'unsigned char' to 'void'
+                                                                                                          type size changed from 8 to 0 (in bits)
                                                                                                 'MJpegEncoderRateControl rate_control' offset changed from 5824 to 5760 (in bits) (by -64 bits)
                                                                                                 'MJpegEncoderRateControlCbs cbs' offset changed from 7680 to 7616 (in bits) (by -64 bits)
                                                                                                 'void* cbs_opaque' offset changed from 7872 to 7808 (in bits) (by -64 bits)

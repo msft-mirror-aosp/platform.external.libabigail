@@ -1687,7 +1687,7 @@
     <!-- unsigned int (*)(hb_unicode_funcs_t*, hb_codepoint_t, hb_codepoint_t*, void*) -->
     <pointer-type-def type-id='type-id-166' size-in-bits='64' hash='c66cdd9c5848f363' id='type-id-128'/>
     <!-- unsigned int (*)(hb_unicode_funcs_t*, hb_codepoint_t, void*) -->
-    <pointer-type-def type-id='type-id-167' size-in-bits='64' hash='c66cdd9c5848f363#2' id='type-id-130'/>
+    <pointer-type-def type-id='type-id-167' size-in-bits='64' hash='c66cdd9c5848f363' id='type-id-130'/>
     <!-- struct hb_font_t -->
     <class-decl name='hb_font_t' is-struct='yes' visibility='default' size-in-bits='1536' filepath='/tmp/legendre/spack-stage/spack-stage-04g73E/harfbuzz-0.9.37/src/hb-font-private.hh' line='91' column='1' hash='de2f93e7fecfc982' id='type-id-120'>
       <data-member access='public' layout-offset-in-bits='0'>
@@ -1895,7 +1895,7 @@
       <return type-id='type-id-18'/>
     </function-type>
     <!-- unsigned int (hb_unicode_funcs_t*, hb_codepoint_t, void*) -->
-    <function-type size-in-bits='64' hash='89d05a3a3b484799#2' id='type-id-167'>
+    <function-type size-in-bits='64' hash='89d05a3a3b484799' id='type-id-167'>
       <!-- parameter of type 'hb_unicode_funcs_t*' -->
       <parameter type-id='type-id-91'/>
       <!-- parameter of type 'typedef hb_codepoint_t' -->
@@ -2180,7 +2180,7 @@
       <return type-id='type-id-33'/>
     </function-decl>
     <!-- unsigned int hb_buffer_get_length(hb_buffer_t*) -->
-    <function-decl name='hb_buffer_get_length' mangled-name='hb_buffer_get_length' filepath='/tmp/legendre/spack-stage/spack-stage-04g73E/harfbuzz-0.9.37/src/hb-buffer.cc' line='1219' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='hb_buffer_get_length' hash='41b53655394fed34#2'>
+    <function-decl name='hb_buffer_get_length' mangled-name='hb_buffer_get_length' filepath='/tmp/legendre/spack-stage/spack-stage-04g73E/harfbuzz-0.9.37/src/hb-buffer.cc' line='1219' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='hb_buffer_get_length' hash='41b53655394fed34'>
       <!-- parameter of type 'hb_buffer_t*' -->
       <parameter type-id='type-id-156' filepath='/tmp/legendre/spack-stage/spack-stage-04g73E/harfbuzz-0.9.37/src/hb-buffer.cc' line='1219' column='1'/>
       <!-- unsigned int -->
@@ -4123,7 +4123,7 @@
       <return type-id='type-id-68'/>
     </function-decl>
     <!-- void hb_font_funcs_set_glyph_v_advance_func(hb_font_funcs_t*, hb_font_get_glyph_v_advance_func_t, void*, hb_destroy_func_t) -->
-    <function-decl name='hb_font_funcs_set_glyph_v_advance_func' mangled-name='hb_font_funcs_set_glyph_v_advance_func' filepath='/tmp/legendre/spack-stage/spack-stage-04g73E/harfbuzz-0.9.37/src/hb-font.cc' line='411' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='hb_font_funcs_set_glyph_v_advance_func' hash='4e076abb07cc8f73#2'>
+    <function-decl name='hb_font_funcs_set_glyph_v_advance_func' mangled-name='hb_font_funcs_set_glyph_v_advance_func' filepath='/tmp/legendre/spack-stage/spack-stage-04g73E/harfbuzz-0.9.37/src/hb-font.cc' line='411' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='hb_font_funcs_set_glyph_v_advance_func' hash='4e076abb07cc8f73'>
       <!-- parameter of type 'hb_font_funcs_t*' -->
       <parameter type-id='type-id-170' filepath='/tmp/legendre/spack-stage/spack-stage-04g73E/harfbuzz-0.9.37/src/hb-font.cc' line='411' column='1'/>
       <!-- parameter of type 'typedef hb_font_get_glyph_v_advance_func_t' -->
@@ -4136,7 +4136,7 @@
       <return type-id='type-id-68'/>
     </function-decl>
     <!-- void hb_font_funcs_set_glyph_v_kerning_func(hb_font_funcs_t*, hb_font_get_glyph_v_kerning_func_t, void*, hb_destroy_func_t) -->
-    <function-decl name='hb_font_funcs_set_glyph_v_kerning_func' mangled-name='hb_font_funcs_set_glyph_v_kerning_func' filepath='/tmp/legendre/spack-stage/spack-stage-04g73E/harfbuzz-0.9.37/src/hb-font.cc' line='411' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='hb_font_funcs_set_glyph_v_kerning_func' hash='4e076abb07cc8f73#2'>
+    <function-decl name='hb_font_funcs_set_glyph_v_kerning_func' mangled-name='hb_font_funcs_set_glyph_v_kerning_func' filepath='/tmp/legendre/spack-stage/spack-stage-04g73E/harfbuzz-0.9.37/src/hb-font.cc' line='411' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='hb_font_funcs_set_glyph_v_kerning_func' hash='4e076abb07cc8f73'>
       <!-- parameter of type 'hb_font_funcs_t*' -->
       <parameter type-id='type-id-170' filepath='/tmp/legendre/spack-stage/spack-stage-04g73E/harfbuzz-0.9.37/src/hb-font.cc' line='411' column='1'/>
       <!-- parameter of type 'typedef hb_font_get_glyph_v_kerning_func_t' -->
@@ -4149,7 +4149,7 @@
       <return type-id='type-id-68'/>
     </function-decl>
     <!-- void hb_font_funcs_set_glyph_v_origin_func(hb_font_funcs_t*, hb_font_get_glyph_v_origin_func_t, void*, hb_destroy_func_t) -->
-    <function-decl name='hb_font_funcs_set_glyph_v_origin_func' mangled-name='hb_font_funcs_set_glyph_v_origin_func' filepath='/tmp/legendre/spack-stage/spack-stage-04g73E/harfbuzz-0.9.37/src/hb-font.cc' line='411' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='hb_font_funcs_set_glyph_v_origin_func' hash='4e076abb07cc8f73#2'>
+    <function-decl name='hb_font_funcs_set_glyph_v_origin_func' mangled-name='hb_font_funcs_set_glyph_v_origin_func' filepath='/tmp/legendre/spack-stage/spack-stage-04g73E/harfbuzz-0.9.37/src/hb-font.cc' line='411' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='hb_font_funcs_set_glyph_v_origin_func' hash='4e076abb07cc8f73'>
       <!-- parameter of type 'hb_font_funcs_t*' -->
       <parameter type-id='type-id-170' filepath='/tmp/legendre/spack-stage/spack-stage-04g73E/harfbuzz-0.9.37/src/hb-font.cc' line='411' column='1'/>
       <!-- parameter of type 'typedef hb_font_get_glyph_v_origin_func_t' -->
@@ -13552,7 +13552,7 @@
       <return type-id='type-id-33'/>
     </function-decl>
     <!-- hb_bool_t hb_ot_layout_language_get_required_feature_index(hb_face_t*, hb_tag_t, unsigned int, unsigned int, unsigned int*) -->
-    <function-decl name='hb_ot_layout_language_get_required_feature_index' mangled-name='hb_ot_layout_language_get_required_feature_index' filepath='/tmp/legendre/spack-stage/spack-stage-04g73E/harfbuzz-0.9.37/src/hb-ot-layout.cc' line='324' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='hb_ot_layout_language_get_required_feature_index' hash='4c53218d3f024ee6#2'>
+    <function-decl name='hb_ot_layout_language_get_required_feature_index' mangled-name='hb_ot_layout_language_get_required_feature_index' filepath='/tmp/legendre/spack-stage/spack-stage-04g73E/harfbuzz-0.9.37/src/hb-ot-layout.cc' line='324' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='hb_ot_layout_language_get_required_feature_index' hash='4c53218d3f024ee6'>
       <!-- parameter of type 'hb_face_t*' -->
       <parameter type-id='type-id-169' filepath='/tmp/legendre/spack-stage/spack-stage-04g73E/harfbuzz-0.9.37/src/hb-ot-layout.cc' line='324' column='1'/>
       <!-- parameter of type 'typedef hb_tag_t' -->
@@ -14958,7 +14958,7 @@
       <return type-id='type-id-68'/>
     </function-decl>
     <!-- unsigned int hb_set_get_population(const hb_set_t*) -->
-    <function-decl name='hb_set_get_population' mangled-name='hb_set_get_population' filepath='/tmp/legendre/spack-stage/spack-stage-04g73E/harfbuzz-0.9.37/src/hb-set.cc' line='397' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='hb_set_get_population' hash='41b53655394fed34#2'>
+    <function-decl name='hb_set_get_population' mangled-name='hb_set_get_population' filepath='/tmp/legendre/spack-stage/spack-stage-04g73E/harfbuzz-0.9.37/src/hb-set.cc' line='397' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='hb_set_get_population' hash='41b53655394fed34'>
       <!-- parameter of type 'const hb_set_t*' -->
       <parameter type-id='type-id-2531' filepath='/tmp/legendre/spack-stage/spack-stage-04g73E/harfbuzz-0.9.37/src/hb-set.cc' line='397' column='1'/>
       <!-- unsigned int -->
@@ -15313,7 +15313,7 @@
       <return type-id='type-id-68'/>
     </function-decl>
     <!-- void hb_unicode_funcs_set_mirroring_func(hb_unicode_funcs_t*, hb_unicode_mirroring_func_t, void*, hb_destroy_func_t) -->
-    <function-decl name='hb_unicode_funcs_set_mirroring_func' mangled-name='hb_unicode_funcs_set_mirroring_func' filepath='/tmp/legendre/spack-stage/spack-stage-04g73E/harfbuzz-0.9.37/src/hb-unicode.cc' line='377' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='hb_unicode_funcs_set_mirroring_func' hash='4e076abb07cc8f73#2'>
+    <function-decl name='hb_unicode_funcs_set_mirroring_func' mangled-name='hb_unicode_funcs_set_mirroring_func' filepath='/tmp/legendre/spack-stage/spack-stage-04g73E/harfbuzz-0.9.37/src/hb-unicode.cc' line='377' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='hb_unicode_funcs_set_mirroring_func' hash='4e076abb07cc8f73'>
       <!-- parameter of type 'hb_unicode_funcs_t*' -->
       <parameter type-id='type-id-91' filepath='/tmp/legendre/spack-stage/spack-stage-04g73E/harfbuzz-0.9.37/src/hb-unicode.cc' line='377' column='1'/>
       <!-- parameter of type 'typedef hb_unicode_mirroring_func_t' -->
@@ -15375,7 +15375,7 @@
       <return type-id='type-id-78'/>
     </function-decl>
     <!-- unsigned int hb_unicode_eastasian_width(hb_unicode_funcs_t*, hb_codepoint_t) -->
-    <function-decl name='hb_unicode_eastasian_width' mangled-name='hb_unicode_eastasian_width' filepath='/tmp/legendre/spack-stage/spack-stage-04g73E/harfbuzz-0.9.37/src/hb-unicode.cc' line='389' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='hb_unicode_eastasian_width' hash='89d05a3a3b484799#2'>
+    <function-decl name='hb_unicode_eastasian_width' mangled-name='hb_unicode_eastasian_width' filepath='/tmp/legendre/spack-stage/spack-stage-04g73E/harfbuzz-0.9.37/src/hb-unicode.cc' line='389' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='hb_unicode_eastasian_width' hash='89d05a3a3b484799'>
       <!-- parameter of type 'hb_unicode_funcs_t*' -->
       <parameter type-id='type-id-91' filepath='/tmp/legendre/spack-stage/spack-stage-04g73E/harfbuzz-0.9.37/src/hb-unicode.cc' line='389' column='1'/>
       <!-- parameter of type 'typedef hb_codepoint_t' -->

@@ -7139,7 +7139,7 @@
         </data-member>
         <member-function access='public'>
           <!-- std::_Deque_iterator<vtkPixelExtent, vtkPixelExtent&, vtkPixelExtent*>& std::_Deque_iterator<vtkPixelExtent, vtkPixelExtent&, vtkPixelExtent*>::operator+=(ptrdiff_t) -->
-          <function-decl name='operator+=' mangled-name='_ZNSt15_Deque_iteratorI14vtkPixelExtentRS0_PS0_EpLEl' filepath='/usr/lib/gcc/x86_64-redhat-linux/4.4.7/../../../../include/c++/4.4.7/bits/stl_deque.h' line='176' column='1' declared-inline='yes' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZNSt15_Deque_iteratorI14vtkPixelExtentRS0_PS0_EpLEl' hash='659ced78215eae4a#2'>
+          <function-decl name='operator+=' mangled-name='_ZNSt15_Deque_iteratorI14vtkPixelExtentRS0_PS0_EpLEl' filepath='/usr/lib/gcc/x86_64-redhat-linux/4.4.7/../../../../include/c++/4.4.7/bits/stl_deque.h' line='176' column='1' declared-inline='yes' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZNSt15_Deque_iteratorI14vtkPixelExtentRS0_PS0_EpLEl' hash='659ced78215eae4a'>
             <!-- implicit parameter of type 'std::_Deque_iterator<vtkPixelExtent, vtkPixelExtent&, vtkPixelExtent*>*' -->
             <parameter type-id='type-id-198' is-artificial='yes'/>
             <!-- parameter of type 'typedef ptrdiff_t' -->
@@ -7150,7 +7150,7 @@
         </member-function>
         <member-function access='public'>
           <!-- std::_Deque_iterator<vtkPixelExtent, vtkPixelExtent&, vtkPixelExtent*> std::_Deque_iterator<vtkPixelExtent, vtkPixelExtent&, vtkPixelExtent*>::operator+(ptrdiff_t) -->
-          <function-decl name='operator+' mangled-name='_ZNKSt15_Deque_iteratorI14vtkPixelExtentRS0_PS0_EplEl' filepath='/usr/lib/gcc/x86_64-redhat-linux/4.4.7/../../../../include/c++/4.4.7/bits/stl_deque.h' line='195' column='1' declared-inline='yes' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZNKSt15_Deque_iteratorI14vtkPixelExtentRS0_PS0_EplEl' hash='c0c5e3a61de274ca#3'>
+          <function-decl name='operator+' mangled-name='_ZNKSt15_Deque_iteratorI14vtkPixelExtentRS0_PS0_EplEl' filepath='/usr/lib/gcc/x86_64-redhat-linux/4.4.7/../../../../include/c++/4.4.7/bits/stl_deque.h' line='195' column='1' declared-inline='yes' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZNKSt15_Deque_iteratorI14vtkPixelExtentRS0_PS0_EplEl' hash='c0c5e3a61de274ca'>
             <!-- implicit parameter of type 'const std::_Deque_iterator<vtkPixelExtent, vtkPixelExtent&, vtkPixelExtent*>*' -->
             <parameter type-id='type-id-145' is-artificial='yes'/>
             <!-- parameter of type 'typedef ptrdiff_t' -->
@@ -9607,7 +9607,7 @@
       <class-decl name='_Deque_iterator&lt;vtkPixelExtent, vtkPixelExtent&amp;, vtkPixelExtent*&gt;' is-struct='yes' visibility='default' hash='ba4ee5c255fbd2eb' id='type-id-555'>
         <member-function access='public'>
           <!-- std::_Deque_iterator<vtkPixelExtent, vtkPixelExtent&, vtkPixelExtent*>& std::_Deque_iterator<vtkPixelExtent, vtkPixelExtent&, vtkPixelExtent*>::operator+=(ptrdiff_t) -->
-          <function-decl name='operator+=' mangled-name='_ZNSt15_Deque_iteratorI14vtkPixelExtentRS0_PS0_EpLEl' filepath='/usr/lib/gcc/x86_64-redhat-linux/4.4.7/../../../../include/c++/4.4.7/bits/stl_deque.h' line='176' column='1' declared-inline='yes' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZNSt15_Deque_iteratorI14vtkPixelExtentRS0_PS0_EpLEl' hash='659ced78215eae4a#2'>
+          <function-decl name='operator+=' mangled-name='_ZNSt15_Deque_iteratorI14vtkPixelExtentRS0_PS0_EpLEl' filepath='/usr/lib/gcc/x86_64-redhat-linux/4.4.7/../../../../include/c++/4.4.7/bits/stl_deque.h' line='176' column='1' declared-inline='yes' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZNSt15_Deque_iteratorI14vtkPixelExtentRS0_PS0_EpLEl' hash='659ced78215eae4a'>
             <!-- implicit parameter of type 'std::_Deque_iterator<vtkPixelExtent, vtkPixelExtent&, vtkPixelExtent*>*' -->
             <parameter type-id='type-id-198' is-artificial='yes'/>
             <!-- parameter of type 'typedef ptrdiff_t' -->
@@ -9618,7 +9618,7 @@
         </member-function>
         <member-function access='public'>
           <!-- std::_Deque_iterator<vtkPixelExtent, vtkPixelExtent&, vtkPixelExtent*> std::_Deque_iterator<vtkPixelExtent, vtkPixelExtent&, vtkPixelExtent*>::operator+(ptrdiff_t) -->
-          <function-decl name='operator+' mangled-name='_ZNKSt15_Deque_iteratorI14vtkPixelExtentRS0_PS0_EplEl' filepath='/usr/lib/gcc/x86_64-redhat-linux/4.4.7/../../../../include/c++/4.4.7/bits/stl_deque.h' line='195' column='1' declared-inline='yes' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZNKSt15_Deque_iteratorI14vtkPixelExtentRS0_PS0_EplEl' hash='c0c5e3a61de274ca#3'>
+          <function-decl name='operator+' mangled-name='_ZNKSt15_Deque_iteratorI14vtkPixelExtentRS0_PS0_EplEl' filepath='/usr/lib/gcc/x86_64-redhat-linux/4.4.7/../../../../include/c++/4.4.7/bits/stl_deque.h' line='195' column='1' declared-inline='yes' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZNKSt15_Deque_iteratorI14vtkPixelExtentRS0_PS0_EplEl' hash='c0c5e3a61de274ca'>
             <!-- implicit parameter of type 'const std::_Deque_iterator<vtkPixelExtent, vtkPixelExtent&, vtkPixelExtent*>*' -->
             <parameter type-id='type-id-145' is-artificial='yes'/>
             <!-- parameter of type 'typedef ptrdiff_t' -->
@@ -10082,7 +10082,7 @@
       <return type-id='type-id-20'/>
     </function-type>
     <!-- std::_Deque_iterator<vtkPixelExtent, vtkPixelExtent&, vtkPixelExtent*> (std::_Deque_iterator<vtkPixelExtent, vtkPixelExtent&, vtkPixelExtent*>::*) (ptrdiff_t) -->
-    <function-type method-class-id='type-id-142' size-in-bits='64' hash='c0c5e3a61de274ca#3' id='type-id-622'>
+    <function-type method-class-id='type-id-142' size-in-bits='64' hash='c0c5e3a61de274ca' id='type-id-622'>
       <!-- implicit parameter of type 'const std::_Deque_iterator<vtkPixelExtent, vtkPixelExtent&, vtkPixelExtent*>*' -->
       <parameter type-id='type-id-145' is-artificial='yes'/>
       <!-- parameter of type 'typedef ptrdiff_t' -->
@@ -10100,7 +10100,7 @@
       <return type-id='type-id-142'/>
     </function-type>
     <!-- std::_Deque_iterator<vtkPixelExtent, vtkPixelExtent&, vtkPixelExtent*>& (std::_Deque_iterator<vtkPixelExtent, vtkPixelExtent&, vtkPixelExtent*>::*) (ptrdiff_t) -->
-    <function-type method-class-id='type-id-142' size-in-bits='64' hash='659ced78215eae4a#2' id='type-id-624'>
+    <function-type method-class-id='type-id-142' size-in-bits='64' hash='659ced78215eae4a' id='type-id-624'>
       <!-- implicit parameter of type 'std::_Deque_iterator<vtkPixelExtent, vtkPixelExtent&, vtkPixelExtent*>*' -->
       <parameter type-id='type-id-198' is-artificial='yes'/>
       <!-- parameter of type 'typedef ptrdiff_t' -->

@@ -1,4 +1,4 @@
-Functions changes summary: 16 Removed, 0 Changed (22 filtered out), 21 Added functions
+Functions changes summary: 16 Removed, 1 Changed (21 filtered out), 21 Added functions
 Variables changes summary: 0 Removed, 0 Changed, 0 Added variable
 Function symbols changes summary: 2 Removed, 2 Added function symbols not referenced by debug info
 Variable symbols changes summary: 0 Removed, 0 Added variable symbol not referenced by debug info
@@ -45,6 +45,24 @@ Variable symbols changes summary: 0 Removed, 0 Added variable symbol not referen
   [A] 'method std::vector<char, std::allocator<char> >::pointer std::vector<char, std::allocator<char> >::_S_relocate(std::vector<char, std::allocator<char> >::pointer, std::vector<char, std::allocator<char> >::pointer, std::vector<char, std::allocator<char> >::pointer, std::vector<char, std::allocator<char> >::_Tp_alloc_type&)'    {_ZNSt6vectorIcSaIcEE11_S_relocateEPcS2_S2_RS0_}
   [A] 'method std::vector<char, std::allocator<char> >::reference std::vector<char, std::allocator<char> >::back()'    {_ZNSt6vectorIcSaIcEE4backEv}
   [A] 'method std::vector<char, std::allocator<char> >::reference std::vector<char, std::allocator<char> >::emplace_back<char>()'    {_ZNSt6vectorIcSaIcEE12emplace_backIJcEEERcDpOT_}
+
+1 function with some indirect sub-type change:
+
+  [C] 'method int qiifa::class1::addnums(int, int)' at class1.cpp:24:1 has some indirect sub-type changes:
+    implicit parameter 0 of type 'qiifa::class1*' has sub-type changes:
+      in pointed to type 'class qiifa::class1' at class1.h:27:1:
+        type size hasn't changed
+        1 data member change:
+          type of 'std::vector<char, std::allocator<char> > letters' changed:
+            type size hasn't changed
+            1 base class change:
+              'struct std::_Vector_base<char, std::allocator<char> >' at stl_vector.h:74:1 changed:
+                type size hasn't changed
+                1 data member change:
+                  type of 'std::_Vector_base<char, std::allocator<char> >::_Vector_impl _M_impl' changed:
+                    type size hasn't changed
+                    1 base class insertion:
+                      struct std::_Vector_base<char, std::allocator<char> >::_Vector_impl_data at stl_vector.h:91:1
 
 2 Removed function symbols not referenced by debug info:
 

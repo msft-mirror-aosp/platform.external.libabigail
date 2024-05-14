@@ -826,7 +826,7 @@
         </function-decl>
       </member-function>
       <member-function access='private' vtable-offset='25'>
-        <function-decl name='GetCount' mangled-name='_ZN15vtkCommunicator8GetCountEv' filepath='/tmp/legendre/spack-stage/spack-stage-R_crTC/VTK-6.1.0/Parallel/Core/vtkCommunicator.h' line='241' column='1' visibility='default' binding='global' size-in-bits='64' hash='8d6dd888776a11fb#2'>
+        <function-decl name='GetCount' mangled-name='_ZN15vtkCommunicator8GetCountEv' filepath='/tmp/legendre/spack-stage/spack-stage-R_crTC/VTK-6.1.0/Parallel/Core/vtkCommunicator.h' line='241' column='1' visibility='default' binding='global' size-in-bits='64' hash='8d6dd888776a11fb'>
           <parameter type-id='type-id-25' is-artificial='yes'/>
           <return type-id='type-id-21'/>
         </function-decl>
@@ -1420,7 +1420,7 @@
         </function-decl>
       </member-function>
       <member-function access='private'>
-        <function-decl name='operator&lt;&lt;' mangled-name='_ZN21vtkMultiProcessStreamlsEy' filepath='/tmp/legendre/spack-stage/spack-stage-R_crTC/VTK-6.1.0/Parallel/Core/vtkMultiProcessStream.cxx' line='588' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZN21vtkMultiProcessStreamlsEy' hash='659ced78215eae4a#2'>
+        <function-decl name='operator&lt;&lt;' mangled-name='_ZN21vtkMultiProcessStreamlsEy' filepath='/tmp/legendre/spack-stage/spack-stage-R_crTC/VTK-6.1.0/Parallel/Core/vtkMultiProcessStream.cxx' line='588' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZN21vtkMultiProcessStreamlsEy' hash='659ced78215eae4a'>
           <parameter type-id='type-id-66' is-artificial='yes'/>
           <parameter type-id='type-id-90'/>
           <return type-id='type-id-30'/>
@@ -1487,7 +1487,7 @@
         </function-decl>
       </member-function>
       <member-function access='private'>
-        <function-decl name='operator&lt;&lt;' mangled-name='_ZN21vtkMultiProcessStreamlsEx' filepath='/tmp/legendre/spack-stage/spack-stage-R_crTC/VTK-6.1.0/Parallel/Core/vtkMultiProcessStream.cxx' line='579' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZN21vtkMultiProcessStreamlsEx' hash='659ced78215eae4a#2'>
+        <function-decl name='operator&lt;&lt;' mangled-name='_ZN21vtkMultiProcessStreamlsEx' filepath='/tmp/legendre/spack-stage/spack-stage-R_crTC/VTK-6.1.0/Parallel/Core/vtkMultiProcessStream.cxx' line='579' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZN21vtkMultiProcessStreamlsEx' hash='659ced78215eae4a'>
           <parameter type-id='type-id-66' is-artificial='yes'/>
           <parameter type-id='type-id-95'/>
           <return type-id='type-id-30'/>
@@ -2929,7 +2929,7 @@
       <parameter type-id='type-id-19'/>
       <return type-id='type-id-29'/>
     </function-type>
-    <function-type method-class-id='type-id-15' size-in-bits='64' hash='8d6dd888776a11fb#2' id='type-id-549'>
+    <function-type method-class-id='type-id-15' size-in-bits='64' hash='8d6dd888776a11fb' id='type-id-549'>
       <parameter type-id='type-id-25' is-artificial='yes'/>
       <return type-id='type-id-21'/>
     </function-type>
@@ -3018,7 +3018,7 @@
       <parameter type-id='type-id-79'/>
       <return type-id='type-id-30'/>
     </function-type>
-    <function-type method-class-id='type-id-59' size-in-bits='64' hash='659ced78215eae4a#2' id='type-id-567'>
+    <function-type method-class-id='type-id-59' size-in-bits='64' hash='659ced78215eae4a' id='type-id-567'>
       <parameter type-id='type-id-66' is-artificial='yes'/>
       <parameter type-id='type-id-95'/>
       <return type-id='type-id-30'/>
@@ -3028,7 +3028,7 @@
       <parameter type-id='type-id-72'/>
       <return type-id='type-id-30'/>
     </function-type>
-    <function-type method-class-id='type-id-59' size-in-bits='64' hash='659ced78215eae4a#2' id='type-id-569'>
+    <function-type method-class-id='type-id-59' size-in-bits='64' hash='659ced78215eae4a' id='type-id-569'>
       <parameter type-id='type-id-66' is-artificial='yes'/>
       <parameter type-id='type-id-90'/>
       <return type-id='type-id-30'/>

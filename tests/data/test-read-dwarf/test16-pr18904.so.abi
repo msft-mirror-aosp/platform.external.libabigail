@@ -2745,7 +2745,7 @@
         </function-decl>
       </member-function>
       <member-function access='private'>
-        <function-decl name='init_device' mangled-name='_ZN6Engine11init_deviceEv' filepath='../../../gcc/liboffloadmic/runtime/offload_engine.cpp' line='572' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZN6Engine11init_deviceEv' hash='d97f95fe79cacdf1#2'>
+        <function-decl name='init_device' mangled-name='_ZN6Engine11init_deviceEv' filepath='../../../gcc/liboffloadmic/runtime/offload_engine.cpp' line='572' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZN6Engine11init_deviceEv' hash='d97f95fe79cacdf1'>
           <parameter type-id='type-id-213' is-artificial='yes'/>
           <return type-id='type-id-217'/>
         </function-decl>
@@ -6860,7 +6860,7 @@
           </function-decl>
         </member-function>
         <member-function access='private'>
-          <function-decl name='find' mangled-name='_ZNSt3setI8AutoDataSt4lessIS0_ESaIS0_EE4findERKS0_' filepath='/export/users/iverbin/gcc_build_host/x86_64-pc-linux-gnu/libstdc++-v3/include/bits/stl_set.h' line='695' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZNSt3setI8AutoDataSt4lessIS0_ESaIS0_EE4findERKS0_' hash='659ced78215eae4a#2'>
+          <function-decl name='find' mangled-name='_ZNSt3setI8AutoDataSt4lessIS0_ESaIS0_EE4findERKS0_' filepath='/export/users/iverbin/gcc_build_host/x86_64-pc-linux-gnu/libstdc++-v3/include/bits/stl_set.h' line='695' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZNSt3setI8AutoDataSt4lessIS0_ESaIS0_EE4findERKS0_' hash='659ced78215eae4a'>
             <parameter type-id='type-id-1079' is-artificial='yes'/>
             <parameter type-id='type-id-869'/>
             <return type-id='type-id-1337'/>
@@ -6934,7 +6934,7 @@
           </function-decl>
         </member-function>
         <member-function access='private'>
-          <function-decl name='find' mangled-name='_ZNSt3setI7PtrDataSt4lessIS0_ESaIS0_EE4findERKS0_' filepath='/export/users/iverbin/gcc_build_host/x86_64-pc-linux-gnu/libstdc++-v3/include/bits/stl_set.h' line='695' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZNSt3setI7PtrDataSt4lessIS0_ESaIS0_EE4findERKS0_' hash='659ced78215eae4a#2'>
+          <function-decl name='find' mangled-name='_ZNSt3setI7PtrDataSt4lessIS0_ESaIS0_EE4findERKS0_' filepath='/export/users/iverbin/gcc_build_host/x86_64-pc-linux-gnu/libstdc++-v3/include/bits/stl_set.h' line='695' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZNSt3setI7PtrDataSt4lessIS0_ESaIS0_EE4findERKS0_' hash='659ced78215eae4a'>
             <parameter type-id='type-id-1082' is-artificial='yes'/>
             <parameter type-id='type-id-881'/>
             <return type-id='type-id-1346'/>
@@ -6974,7 +6974,7 @@
           </function-decl>
         </member-function>
         <member-function access='public' static='yes'>
-          <function-decl name='_S_whichword' mangled-name='_ZNSt12_Base_bitsetILm16EE12_S_whichwordEm' filepath='/export/users/iverbin/gcc_build_host/x86_64-pc-linux-gnu/libstdc++-v3/include/bitset' line='95' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZNSt12_Base_bitsetILm16EE12_S_whichwordEm' hash='659ced78215eae4a#4'>
+          <function-decl name='_S_whichword' mangled-name='_ZNSt12_Base_bitsetILm16EE12_S_whichwordEm' filepath='/export/users/iverbin/gcc_build_host/x86_64-pc-linux-gnu/libstdc++-v3/include/bitset' line='95' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZNSt12_Base_bitsetILm16EE12_S_whichwordEm' hash='659ced78215eae4a#2'>
             <parameter type-id='type-id-1124'/>
             <return type-id='type-id-1124'/>
           </function-decl>
@@ -6986,7 +6986,7 @@
           </function-decl>
         </member-function>
         <member-function access='public' static='yes'>
-          <function-decl name='_S_whichbit' mangled-name='_ZNSt12_Base_bitsetILm16EE11_S_whichbitEm' filepath='/export/users/iverbin/gcc_build_host/x86_64-pc-linux-gnu/libstdc++-v3/include/bitset' line='103' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZNSt12_Base_bitsetILm16EE11_S_whichbitEm' hash='659ced78215eae4a#4'>
+          <function-decl name='_S_whichbit' mangled-name='_ZNSt12_Base_bitsetILm16EE11_S_whichbitEm' filepath='/export/users/iverbin/gcc_build_host/x86_64-pc-linux-gnu/libstdc++-v3/include/bitset' line='103' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZNSt12_Base_bitsetILm16EE11_S_whichbitEm' hash='659ced78215eae4a#2'>
             <parameter type-id='type-id-1124'/>
             <return type-id='type-id-1124'/>
           </function-decl>
@@ -10280,7 +10280,7 @@
       <parameter type-id='type-id-150' filepath='../../../gcc/liboffloadmic/runtime/compiler_if_host.cpp' line='467' column='1'/>
       <return type-id='type-id-30'/>
     </function-decl>
-    <function-decl name='__offload_offload_call_count' mangled-name='__offload_offload_call_count' filepath='../../../gcc/liboffloadmic/runtime/compiler_if_host.cpp' line='491' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='__offload_offload_call_count' hash='d97f95fe79cacdf1#2'>
+    <function-decl name='__offload_offload_call_count' mangled-name='__offload_offload_call_count' filepath='../../../gcc/liboffloadmic/runtime/compiler_if_host.cpp' line='491' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='__offload_offload_call_count' hash='d97f95fe79cacdf1'>
       <return type-id='type-id-30'/>
     </function-decl>
     <namespace-decl name='__gnu_cxx'>
@@ -13419,7 +13419,7 @@
     <typedef-decl name='COIPIPELINE' type-id='type-id-2416' size-in-bits='64' filepath='../../../gcc/liboffloadmic/include/coi/common/../common/COITypes_common.h' line='66' column='1' id='type-id-2130'/>
     <typedef-decl name='COIBUFFER' type-id='type-id-1255' size-in-bits='64' filepath='../../../gcc/liboffloadmic/include/coi/common/../common/COITypes_common.h' line='70' column='1' id='type-id-2565'/>
     <typedef-decl name='COILIBRARY' type-id='type-id-2414' size-in-bits='64' filepath='../../../gcc/liboffloadmic/include/coi/common/../common/COITypes_common.h' line='71' column='1' id='type-id-2566'/>
-    <function-decl name='operator new' mangled-name='_ZnwmPv' filepath='/export/users/iverbin/gcc/libstdc++-v3/libsupc++/new' line='129' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZnwmPv' hash='8d6dd888776a11fb#2'>
+    <function-decl name='operator new' mangled-name='_ZnwmPv' filepath='/export/users/iverbin/gcc/libstdc++-v3/libsupc++/new' line='129' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZnwmPv' hash='8d6dd888776a11fb'>
       <parameter type-id='type-id-1124'/>
       <parameter type-id='type-id-150' filepath='/export/users/iverbin/gcc/libstdc++-v3/libsupc++/new' line='129' column='1'/>
       <return type-id='type-id-150'/>
@@ -13452,7 +13452,7 @@
           </function-decl>
         </member-function>
         <member-function access='private'>
-          <function-decl name='operator++' mangled-name='_ZN9__gnu_cxx17__normal_iteratorIPKPKN8VarTable5EntryESt6vectorIS4_SaIS4_EEEppEi' filepath='/export/users/iverbin/gcc_build_host/x86_64-pc-linux-gnu/libstdc++-v3/include/bits/stl_iterator.h' line='795' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZN9__gnu_cxx17__normal_iteratorIPKPKN8VarTable5EntryESt6vectorIS4_SaIS4_EEEppEi' hash='648097d4f5419b81#2'>
+          <function-decl name='operator++' mangled-name='_ZN9__gnu_cxx17__normal_iteratorIPKPKN8VarTable5EntryESt6vectorIS4_SaIS4_EEEppEi' filepath='/export/users/iverbin/gcc_build_host/x86_64-pc-linux-gnu/libstdc++-v3/include/bits/stl_iterator.h' line='795' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZN9__gnu_cxx17__normal_iteratorIPKPKN8VarTable5EntryESt6vectorIS4_SaIS4_EEEppEi' hash='648097d4f5419b81'>
             <parameter type-id='type-id-2155' is-artificial='yes'/>
             <parameter type-id='type-id-30'/>
             <return type-id='type-id-2153'/>
@@ -15675,13 +15675,13 @@
           </function-decl>
         </member-function>
         <member-function access='public' static='yes'>
-          <function-decl name='_S_whichword' mangled-name='_ZNSt12_Base_bitsetILm2EE12_S_whichwordEm' filepath='/export/users/iverbin/gcc_build_host/x86_64-pc-linux-gnu/libstdc++-v3/include/bitset' line='95' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZNSt12_Base_bitsetILm2EE12_S_whichwordEm' hash='659ced78215eae4a#4'>
+          <function-decl name='_S_whichword' mangled-name='_ZNSt12_Base_bitsetILm2EE12_S_whichwordEm' filepath='/export/users/iverbin/gcc_build_host/x86_64-pc-linux-gnu/libstdc++-v3/include/bitset' line='95' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZNSt12_Base_bitsetILm2EE12_S_whichwordEm' hash='659ced78215eae4a#2'>
             <parameter type-id='type-id-1124'/>
             <return type-id='type-id-1124'/>
           </function-decl>
         </member-function>
         <member-function access='public' const='yes'>
-          <function-decl name='_M_do_count' mangled-name='_ZNKSt12_Base_bitsetILm2EE11_M_do_countEv' filepath='/export/users/iverbin/gcc_build_host/x86_64-pc-linux-gnu/libstdc++-v3/include/bitset' line='208' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZNKSt12_Base_bitsetILm2EE11_M_do_countEv' hash='8d6dd888776a11fb#2'>
+          <function-decl name='_M_do_count' mangled-name='_ZNKSt12_Base_bitsetILm2EE11_M_do_countEv' filepath='/export/users/iverbin/gcc_build_host/x86_64-pc-linux-gnu/libstdc++-v3/include/bitset' line='208' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZNKSt12_Base_bitsetILm2EE11_M_do_countEv' hash='8d6dd888776a11fb'>
             <parameter type-id='type-id-3178' is-artificial='yes'/>
             <return type-id='type-id-1124'/>
           </function-decl>
@@ -15699,7 +15699,7 @@
           </function-decl>
         </member-function>
         <member-function access='public' static='yes'>
-          <function-decl name='_S_whichbit' mangled-name='_ZNSt12_Base_bitsetILm2EE11_S_whichbitEm' filepath='/export/users/iverbin/gcc_build_host/x86_64-pc-linux-gnu/libstdc++-v3/include/bitset' line='103' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZNSt12_Base_bitsetILm2EE11_S_whichbitEm' hash='659ced78215eae4a#4'>
+          <function-decl name='_S_whichbit' mangled-name='_ZNSt12_Base_bitsetILm2EE11_S_whichbitEm' filepath='/export/users/iverbin/gcc_build_host/x86_64-pc-linux-gnu/libstdc++-v3/include/bitset' line='103' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZNSt12_Base_bitsetILm2EE11_S_whichbitEm' hash='659ced78215eae4a#2'>
             <parameter type-id='type-id-1124'/>
             <return type-id='type-id-1124'/>
           </function-decl>
@@ -16385,13 +16385,13 @@
       <parameter type-id='type-id-30'/>
       <return type-id='type-id-154'/>
     </function-decl>
-    <function-decl name='_Offload_number_of_devices' mangled-name='_Offload_number_of_devices' filepath='../../../gcc/liboffloadmic/runtime/offload_host.cpp' line='5672' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_Offload_number_of_devices' hash='d97f95fe79cacdf1#2'>
+    <function-decl name='_Offload_number_of_devices' mangled-name='_Offload_number_of_devices' filepath='../../../gcc/liboffloadmic/runtime/offload_host.cpp' line='5672' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_Offload_number_of_devices' hash='d97f95fe79cacdf1'>
       <return type-id='type-id-30'/>
     </function-decl>
-    <function-decl name='_Offload_get_device_number' mangled-name='_Offload_get_device_number' filepath='../../../gcc/liboffloadmic/runtime/offload_host.cpp' line='5678' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_Offload_get_device_number' hash='d97f95fe79cacdf1#2'>
+    <function-decl name='_Offload_get_device_number' mangled-name='_Offload_get_device_number' filepath='../../../gcc/liboffloadmic/runtime/offload_host.cpp' line='5678' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_Offload_get_device_number' hash='d97f95fe79cacdf1'>
       <return type-id='type-id-30'/>
     </function-decl>
-    <function-decl name='_Offload_get_physical_device_number' mangled-name='_Offload_get_physical_device_number' filepath='../../../gcc/liboffloadmic/runtime/offload_host.cpp' line='5683' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_Offload_get_physical_device_number' hash='d97f95fe79cacdf1#2'>
+    <function-decl name='_Offload_get_physical_device_number' mangled-name='_Offload_get_physical_device_number' filepath='../../../gcc/liboffloadmic/runtime/offload_host.cpp' line='5683' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_Offload_get_physical_device_number' hash='d97f95fe79cacdf1'>
       <return type-id='type-id-30'/>
     </function-decl>
     <function-decl name='_Offload_signaled' mangled-name='_Offload_signaled' filepath='../../../gcc/liboffloadmic/runtime/offload_host.cpp' line='5688' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_Offload_signaled' hash='878a7be8e06969cb'>
@@ -16676,7 +16676,7 @@
         </function-decl>
       </member-function>
       <member-function access='private' const='yes'>
-        <function-decl name='SharedAlignedFree' mangled-name='_ZNK10MyoWrapper17SharedAlignedFreeEPv' filepath='../../../gcc/liboffloadmic/runtime/offload_myo_host.cpp' line='102' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZNK10MyoWrapper17SharedAlignedFreeEPv' hash='61477c4d1fd8d94d#2'>
+        <function-decl name='SharedAlignedFree' mangled-name='_ZNK10MyoWrapper17SharedAlignedFreeEPv' filepath='../../../gcc/liboffloadmic/runtime/offload_myo_host.cpp' line='102' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZNK10MyoWrapper17SharedAlignedFreeEPv' hash='61477c4d1fd8d94d'>
           <parameter type-id='type-id-3489' is-artificial='yes'/>
           <parameter type-id='type-id-150'/>
           <return type-id='type-id-154'/>
@@ -16691,7 +16691,7 @@
         </function-decl>
       </member-function>
       <member-function access='private' const='yes'>
-        <function-decl name='SharedFree' mangled-name='_ZNK10MyoWrapper10SharedFreeEPv' filepath='../../../gcc/liboffloadmic/runtime/offload_myo_host.cpp' line='90' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZNK10MyoWrapper10SharedFreeEPv' hash='61477c4d1fd8d94d#2'>
+        <function-decl name='SharedFree' mangled-name='_ZNK10MyoWrapper10SharedFreeEPv' filepath='../../../gcc/liboffloadmic/runtime/offload_myo_host.cpp' line='90' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZNK10MyoWrapper10SharedFreeEPv' hash='61477c4d1fd8d94d'>
           <parameter type-id='type-id-3489' is-artificial='yes'/>
           <parameter type-id='type-id-150'/>
           <return type-id='type-id-154'/>
@@ -17429,7 +17429,7 @@
       <parameter type-id='type-id-3471' filepath='../../../gcc/liboffloadmic/runtime/offload_myo_host.cpp' line='1198' column='1'/>
       <return type-id='type-id-154'/>
     </function-decl>
-    <function-decl name='__intel_cilk_for_32_offload' mangled-name='__intel_cilk_for_32_offload' filepath='../../../gcc/liboffloadmic/runtime/offload_myo_host.cpp' line='1208' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='__intel_cilk_for_32_offload' hash='6d1a508451026650#2'>
+    <function-decl name='__intel_cilk_for_32_offload' mangled-name='__intel_cilk_for_32_offload' filepath='../../../gcc/liboffloadmic/runtime/offload_myo_host.cpp' line='1208' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='__intel_cilk_for_32_offload' hash='6d1a508451026650'>
       <parameter type-id='type-id-30' filepath='../../../gcc/liboffloadmic/runtime/offload_myo_host.cpp' line='1209' column='1'/>
       <parameter type-id='type-id-3626' filepath='../../../gcc/liboffloadmic/runtime/offload_myo_host.cpp' line='1210' column='1'/>
       <parameter type-id='type-id-30' filepath='../../../gcc/liboffloadmic/runtime/offload_myo_host.cpp' line='1211' column='1'/>
@@ -17700,10 +17700,10 @@
       <parameter type-id='type-id-30'/>
       <return type-id='type-id-154'/>
     </function-decl>
-    <function-decl name='omp_get_default_device' mangled-name='omp_get_default_device' filepath='../../../gcc/liboffloadmic/runtime/offload_omp_host.cpp' line='44' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='omp_get_default_device' hash='d97f95fe79cacdf1#2'>
+    <function-decl name='omp_get_default_device' mangled-name='omp_get_default_device' filepath='../../../gcc/liboffloadmic/runtime/offload_omp_host.cpp' line='44' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='omp_get_default_device' hash='d97f95fe79cacdf1'>
       <return type-id='type-id-30'/>
     </function-decl>
-    <function-decl name='omp_get_num_devices' mangled-name='omp_get_num_devices' filepath='../../../gcc/liboffloadmic/runtime/offload_omp_host.cpp' line='49' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='omp_get_num_devices' hash='d97f95fe79cacdf1#2'>
+    <function-decl name='omp_get_num_devices' mangled-name='omp_get_num_devices' filepath='../../../gcc/liboffloadmic/runtime/offload_omp_host.cpp' line='49' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='omp_get_num_devices' hash='d97f95fe79cacdf1'>
       <return type-id='type-id-30'/>
     </function-decl>
     <function-decl name='omp_set_num_threads_target' mangled-name='omp_set_num_threads_target' filepath='../../../gcc/liboffloadmic/runtime/offload_omp_host.cpp' line='105' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='omp_set_num_threads_target' hash='62db15d296121df5'>

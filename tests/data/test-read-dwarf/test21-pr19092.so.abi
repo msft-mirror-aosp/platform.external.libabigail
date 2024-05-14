@@ -1271,7 +1271,7 @@
       <parameter type-id='type-id-42'/>
       <return type-id='type-id-99'/>
     </function-type>
-    <function-type size-in-bits='64' hash='8d6dd888776a11fb#2' id='type-id-140'>
+    <function-type size-in-bits='64' hash='8d6dd888776a11fb' id='type-id-140'>
       <parameter type-id='type-id-26'/>
       <return type-id='type-id-38'/>
     </function-type>
@@ -3382,7 +3382,7 @@
       <parameter type-id='type-id-223' filepath='../.././libcpp/charset.c' line='700' column='1'/>
       <return type-id='type-id-99'/>
     </function-decl>
-    <function-decl name='cpp_lookup' mangled-name='_Z10cpp_lookupP10cpp_readerPKhj' filepath='../.././libcpp/identifiers.c' line='92' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_Z10cpp_lookupP10cpp_readerPKhj' hash='530ff15a20e9eac8#2'>
+    <function-decl name='cpp_lookup' mangled-name='_Z10cpp_lookupP10cpp_readerPKhj' filepath='../.././libcpp/identifiers.c' line='92' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_Z10cpp_lookupP10cpp_readerPKhj' hash='530ff15a20e9eac8'>
       <parameter type-id='type-id-223'/>
       <parameter type-id='type-id-275'/>
       <parameter type-id='type-id-52'/>
@@ -5077,12 +5077,12 @@
       <parameter type-id='type-id-223' filepath='../.././libcpp/charset.c' line='700' column='1'/>
       <return type-id='type-id-99'/>
     </function-decl>
-    <function-decl name='_cpp_backup_tokens_direct' mangled-name='_cpp_backup_tokens_direct' filepath='../.././libcpp/macro.c' line='2469' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_cpp_backup_tokens_direct' hash='648097d4f5419b81#2'>
+    <function-decl name='_cpp_backup_tokens_direct' mangled-name='_cpp_backup_tokens_direct' filepath='../.././libcpp/macro.c' line='2469' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_cpp_backup_tokens_direct' hash='648097d4f5419b81'>
       <parameter type-id='type-id-223'/>
       <parameter type-id='type-id-52'/>
       <return type-id='type-id-99'/>
     </function-decl>
-    <function-decl name='_cpp_backup_tokens' mangled-name='_Z18_cpp_backup_tokensP10cpp_readerj' filepath='../.././libcpp/macro.c' line='2488' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_Z18_cpp_backup_tokensP10cpp_readerj' hash='648097d4f5419b81#2'>
+    <function-decl name='_cpp_backup_tokens' mangled-name='_Z18_cpp_backup_tokensP10cpp_readerj' filepath='../.././libcpp/macro.c' line='2488' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_Z18_cpp_backup_tokensP10cpp_readerj' hash='648097d4f5419b81'>
       <parameter type-id='type-id-223'/>
       <parameter type-id='type-id-52'/>
       <return type-id='type-id-99'/>

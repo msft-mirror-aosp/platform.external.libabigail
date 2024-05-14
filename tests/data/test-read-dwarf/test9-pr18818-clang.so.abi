@@ -1565,7 +1565,7 @@
           </function-decl>
         </member-function>
         <member-function access='public'>
-          <function-decl name='operator--' mangled-name='_ZN5boost15iterator_facadeINS_10filesystem4path8iteratorEKS2_NS_27bidirectional_traversal_tagERS4_lEmmEi' filepath='src/third_party/boost-1.56.0/boost/iterator/iterator_facade.hpp' line='681' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZN5boost15iterator_facadeINS_10filesystem4path8iteratorEKS2_NS_27bidirectional_traversal_tagERS4_lEmmEi' hash='c175301e4265186c#2'>
+          <function-decl name='operator--' mangled-name='_ZN5boost15iterator_facadeINS_10filesystem4path8iteratorEKS2_NS_27bidirectional_traversal_tagERS4_lEmmEi' filepath='src/third_party/boost-1.56.0/boost/iterator/iterator_facade.hpp' line='681' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZN5boost15iterator_facadeINS_10filesystem4path8iteratorEKS2_NS_27bidirectional_traversal_tagERS4_lEmmEi' hash='c175301e4265186c'>
             <parameter type-id='type-id-212' is-artificial='yes'/>
             <parameter type-id='type-id-8'/>
             <return type-id='type-id-202'/>
@@ -1619,7 +1619,7 @@
           <var-decl name='pn' type-id='type-id-164' visibility='default' filepath='src/third_party/boost-1.56.0/boost/smart_ptr/shared_ptr.hpp' line='724' column='1'/>
         </data-member>
         <member-function access='public' const='yes'>
-          <function-decl name='operator-&gt;' mangled-name='_ZNK5boost10shared_ptrINS_10filesystem6detail11dir_itr_impEEptEv' filepath='src/third_party/boost-1.56.0/boost/smart_ptr/shared_ptr.hpp' line='646' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZNK5boost10shared_ptrINS_10filesystem6detail11dir_itr_impEEptEv' hash='8d6dd888776a11fb'>
+          <function-decl name='operator-&gt;' mangled-name='_ZNK5boost10shared_ptrINS_10filesystem6detail11dir_itr_impEEptEv' filepath='src/third_party/boost-1.56.0/boost/smart_ptr/shared_ptr.hpp' line='646' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZNK5boost10shared_ptrINS_10filesystem6detail11dir_itr_impEEptEv' hash='8d6dd888776a11fb#2'>
             <parameter type-id='type-id-282' is-artificial='yes'/>
             <return type-id='type-id-392'/>
           </function-decl>
@@ -1693,7 +1693,7 @@
           </function-decl>
         </member-function>
         <member-function access='public' const='yes'>
-          <function-decl name='operator-&gt;' mangled-name='_ZNK5boost10shared_ptrINS_10filesystem16filesystem_error5m_impEEptEv' filepath='src/third_party/boost-1.56.0/boost/smart_ptr/shared_ptr.hpp' line='646' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZNK5boost10shared_ptrINS_10filesystem16filesystem_error5m_impEEptEv' hash='8d6dd888776a11fb'>
+          <function-decl name='operator-&gt;' mangled-name='_ZNK5boost10shared_ptrINS_10filesystem16filesystem_error5m_impEEptEv' filepath='src/third_party/boost-1.56.0/boost/smart_ptr/shared_ptr.hpp' line='646' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZNK5boost10shared_ptrINS_10filesystem16filesystem_error5m_impEEptEv' hash='8d6dd888776a11fb#2'>
             <parameter type-id='type-id-285' is-artificial='yes'/>
             <return type-id='type-id-394'/>
           </function-decl>
@@ -3373,7 +3373,7 @@
         <parameter type-id='type-id-18' filepath='/usr/bin/../lib/gcc/x86_64-linux-gnu/4.9/../../../../include/c++/4.9/bits/basic_string.h' line='2539' column='1'/>
         <return type-id='type-id-1'/>
       </function-decl>
-      <function-decl name='operator&lt;&lt;char, std::char_traits&lt;char&gt;, std::allocator&lt;char&gt; &gt;' mangled-name='_ZStltIcSt11char_traitsIcESaIcEEbRKSbIT_T0_T1_ES8_' filepath='/usr/bin/../lib/gcc/x86_64-linux-gnu/4.9/../../../../include/c++/4.9/bits/basic_string.h' line='2588' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZStltIcSt11char_traitsIcESaIcEEbRKSbIT_T0_T1_ES8_' hash='24abd9d42c07747f#2'>
+      <function-decl name='operator&lt;&lt;char, std::char_traits&lt;char&gt;, std::allocator&lt;char&gt; &gt;' mangled-name='_ZStltIcSt11char_traitsIcESaIcEEbRKSbIT_T0_T1_ES8_' filepath='/usr/bin/../lib/gcc/x86_64-linux-gnu/4.9/../../../../include/c++/4.9/bits/basic_string.h' line='2588' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZStltIcSt11char_traitsIcESaIcEEbRKSbIT_T0_T1_ES8_' hash='24abd9d42c07747f'>
         <parameter type-id='type-id-345' filepath='/usr/bin/../lib/gcc/x86_64-linux-gnu/4.9/../../../../include/c++/4.9/bits/basic_string.h' line='2588' column='1'/>
         <parameter type-id='type-id-345' filepath='/usr/bin/../lib/gcc/x86_64-linux-gnu/4.9/../../../../include/c++/4.9/bits/basic_string.h' line='2589' column='1'/>
         <return type-id='type-id-1'/>
@@ -3384,7 +3384,7 @@
         <parameter type-id='type-id-369' filepath='/usr/bin/../lib/gcc/x86_64-linux-gnu/4.9/../../../../include/c++/4.9/bits/stl_iterator_base_funcs.h' line='91' column='1'/>
         <return type-id='type-id-505'/>
       </function-decl>
-      <function-decl name='distance&lt;const char *&gt;' mangled-name='_ZSt8distanceIPKcENSt15iterator_traitsIT_E15difference_typeES3_S3_' filepath='/usr/bin/../lib/gcc/x86_64-linux-gnu/4.9/../../../../include/c++/4.9/bits/stl_iterator_base_funcs.h' line='114' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZSt8distanceIPKcENSt15iterator_traitsIT_E15difference_typeES3_S3_' hash='4e076abb07cc8f73#2'>
+      <function-decl name='distance&lt;const char *&gt;' mangled-name='_ZSt8distanceIPKcENSt15iterator_traitsIT_E15difference_typeES3_S3_' filepath='/usr/bin/../lib/gcc/x86_64-linux-gnu/4.9/../../../../include/c++/4.9/bits/stl_iterator_base_funcs.h' line='114' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZSt8distanceIPKcENSt15iterator_traitsIT_E15difference_typeES3_S3_' hash='4e076abb07cc8f73'>
         <parameter type-id='type-id-18' filepath='/usr/bin/../lib/gcc/x86_64-linux-gnu/4.9/../../../../include/c++/4.9/bits/stl_iterator_base_funcs.h' line='114' column='1'/>
         <parameter type-id='type-id-18' filepath='/usr/bin/../lib/gcc/x86_64-linux-gnu/4.9/../../../../include/c++/4.9/bits/stl_iterator_base_funcs.h' line='114' column='1'/>
         <return type-id='type-id-505'/>

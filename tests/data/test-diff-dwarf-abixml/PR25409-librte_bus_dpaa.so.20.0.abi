@@ -434,7 +434,7 @@
       <parameter type-id='type-id-30' name='icp' filepath='../../dpdk/drivers/bus/dpaa/base/fman/fman_hw.c' line='478' column='1'/>
       <return type-id='type-id-1'/>
     </function-decl>
-    <function-decl name='fman_if_set_fdoff' mangled-name='fman_if_set_fdoff' filepath='../../dpdk/drivers/bus/dpaa/base/fman/fman_hw.c' line='500' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='fman_if_set_fdoff@@DPDK_20.0' hash='648097d4f5419b81#2'>
+    <function-decl name='fman_if_set_fdoff' mangled-name='fman_if_set_fdoff' filepath='../../dpdk/drivers/bus/dpaa/base/fman/fman_hw.c' line='500' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='fman_if_set_fdoff@@DPDK_20.0' hash='648097d4f5419b81'>
       <parameter type-id='type-id-31' name='fm_if' filepath='../../dpdk/drivers/bus/dpaa/base/fman/fman_hw.c' line='500' column='1'/>
       <parameter type-id='type-id-8' name='fd_offset' filepath='../../dpdk/drivers/bus/dpaa/base/fman/fman_hw.c' line='500' column='1'/>
       <return type-id='type-id-35'/>
@@ -2957,7 +2957,7 @@
       <parameter type-id='type-id-131' name='dq' filepath='../../dpdk/drivers/bus/dpaa/base/qbman/qman.c' line='1319' column='1'/>
       <return type-id='type-id-35'/>
     </function-decl>
-    <function-decl name='qman_poll_dqrr' mangled-name='qman_poll_dqrr' filepath='../../dpdk/drivers/bus/dpaa/base/qbman/qman.c' line='1330' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='qman_poll_dqrr@@DPDK_20.0' hash='878a7be8e06969cb#2'>
+    <function-decl name='qman_poll_dqrr' mangled-name='qman_poll_dqrr' filepath='../../dpdk/drivers/bus/dpaa/base/qbman/qman.c' line='1330' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='qman_poll_dqrr@@DPDK_20.0' hash='878a7be8e06969cb'>
       <parameter type-id='type-id-4' name='limit' filepath='../../dpdk/drivers/bus/dpaa/base/qbman/qman.c' line='1330' column='1'/>
       <return type-id='type-id-1'/>
     </function-decl>
@@ -3018,7 +3018,7 @@
       <parameter type-id='type-id-8' name='vdqcr_flags' filepath='../../dpdk/drivers/bus/dpaa/base/qbman/qman.c' line='2102' column='1'/>
       <return type-id='type-id-1'/>
     </function-decl>
-    <function-decl name='qman_volatile_dequeue' mangled-name='qman_volatile_dequeue' filepath='../../dpdk/drivers/bus/dpaa/base/qbman/qman.c' line='2139' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='qman_volatile_dequeue@@DPDK_20.0' hash='5314ce831be897df#2'>
+    <function-decl name='qman_volatile_dequeue' mangled-name='qman_volatile_dequeue' filepath='../../dpdk/drivers/bus/dpaa/base/qbman/qman.c' line='2139' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='qman_volatile_dequeue@@DPDK_20.0' hash='5314ce831be897df'>
       <parameter type-id='type-id-211' name='fq' filepath='../../dpdk/drivers/bus/dpaa/base/qbman/qman.c' line='2139' column='1'/>
       <parameter type-id='type-id-9' name='flags' filepath='../../dpdk/drivers/bus/dpaa/base/qbman/qman.c' line='2139' column='1'/>
       <parameter type-id='type-id-9' name='vdqcr' filepath='../../dpdk/drivers/bus/dpaa/base/qbman/qman.c' line='2140' column='1'/>
@@ -5152,7 +5152,7 @@
     <pointer-type-def type-id='type-id-726' size-in-bits='64' hash='c66cdd9c5848f363' id='type-id-658'/>
     <pointer-type-def type-id='type-id-727' size-in-bits='64' hash='c66cdd9c5848f363' id='type-id-664'/>
     <pointer-type-def type-id='type-id-728' size-in-bits='64' hash='c66cdd9c5848f363' id='type-id-634'/>
-    <pointer-type-def type-id='type-id-729' size-in-bits='64' hash='c66cdd9c5848f363#2' id='type-id-655'/>
+    <pointer-type-def type-id='type-id-729' size-in-bits='64' hash='c66cdd9c5848f363' id='type-id-655'/>
     <pointer-type-def type-id='type-id-730' size-in-bits='64' hash='c66cdd9c5848f363' id='type-id-628'/>
     <pointer-type-def type-id='type-id-731' size-in-bits='64' hash='c66cdd9c5848f363' id='type-id-630'/>
     <pointer-type-def type-id='type-id-732' size-in-bits='64' hash='c66cdd9c5848f363' id='type-id-627'/>
@@ -5187,14 +5187,14 @@
     <pointer-type-def type-id='type-id-761' size-in-bits='64' hash='c66cdd9c5848f363' id='type-id-650'/>
     <pointer-type-def type-id='type-id-762' size-in-bits='64' hash='c66cdd9c5848f363' id='type-id-660'/>
     <pointer-type-def type-id='type-id-763' size-in-bits='64' hash='c66cdd9c5848f363' id='type-id-644'/>
-    <pointer-type-def type-id='type-id-764' size-in-bits='64' hash='c66cdd9c5848f363#2' id='type-id-623'/>
+    <pointer-type-def type-id='type-id-764' size-in-bits='64' hash='c66cdd9c5848f363' id='type-id-623'/>
     <pointer-type-def type-id='type-id-765' size-in-bits='64' hash='c66cdd9c5848f363' id='type-id-645'/>
     <pointer-type-def type-id='type-id-766' size-in-bits='64' hash='c66cdd9c5848f363' id='type-id-638'/>
     <pointer-type-def type-id='type-id-767' size-in-bits='64' hash='c66cdd9c5848f363' id='type-id-640'/>
     <pointer-type-def type-id='type-id-348' size-in-bits='64' hash='c66cdd9c5848f363' id='type-id-677'/>
     <pointer-type-def type-id='type-id-768' size-in-bits='64' hash='c66cdd9c5848f363' id='type-id-678'/>
     <pointer-type-def type-id='type-id-769' size-in-bits='64' hash='c66cdd9c5848f363' id='type-id-647'/>
-    <pointer-type-def type-id='type-id-770' size-in-bits='64' hash='c66cdd9c5848f363#2' id='type-id-659'/>
+    <pointer-type-def type-id='type-id-770' size-in-bits='64' hash='c66cdd9c5848f363' id='type-id-659'/>
     <pointer-type-def type-id='type-id-483' size-in-bits='64' hash='11fa76aa9227aaf5' id='type-id-501'/>
     <pointer-type-def type-id='type-id-501' size-in-bits='64' hash='c1585ec7bd9ff92a' id='type-id-611'/>
     <pointer-type-def type-id='type-id-499' size-in-bits='64' hash='9f483f8d81e17934' id='type-id-771'/>
@@ -5351,7 +5351,7 @@
       <parameter type-id='type-id-1'/>
       <return type-id='type-id-1'/>
     </function-type>
-    <function-type size-in-bits='64' hash='c50376f19f645d5#2' id='type-id-729'>
+    <function-type size-in-bits='64' hash='c50376f19f645d5' id='type-id-729'>
       <parameter type-id='type-id-695'/>
       <parameter type-id='type-id-669'/>
       <return type-id='type-id-1'/>
@@ -5557,7 +5557,7 @@
       <parameter type-id='type-id-14'/>
       <return type-id='type-id-1'/>
     </function-type>
-    <function-type size-in-bits='64' hash='89d05a3a3b484799#2' id='type-id-764'>
+    <function-type size-in-bits='64' hash='89d05a3a3b484799' id='type-id-764'>
       <parameter type-id='type-id-695'/>
       <parameter type-id='type-id-8'/>
       <return type-id='type-id-1'/>
@@ -5586,7 +5586,7 @@
       <parameter type-id='type-id-6'/>
       <return type-id='type-id-1'/>
     </function-type>
-    <function-type size-in-bits='64' hash='878a7be8e06969cb#2' id='type-id-770'>
+    <function-type size-in-bits='64' hash='878a7be8e06969cb' id='type-id-770'>
       <parameter type-id='type-id-48'/>
       <parameter type-id='type-id-8'/>
       <return type-id='type-id-1'/>

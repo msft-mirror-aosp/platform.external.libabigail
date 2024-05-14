@@ -2804,7 +2804,7 @@
       </member-function>
       <member-function access='private' constructor='yes'>
         <!-- ProcMapsIterator::ProcMapsIterator(pid_t) -->
-        <function-decl name='ProcMapsIterator' mangled-name='_ZN16ProcMapsIteratorC1Ei' filepath='src/base/sysinfo.cc' line='728' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZN16ProcMapsIteratorC1Ei' hash='d97f95fe79cacdf1#2'>
+        <function-decl name='ProcMapsIterator' mangled-name='_ZN16ProcMapsIteratorC1Ei' filepath='src/base/sysinfo.cc' line='728' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZN16ProcMapsIteratorC1Ei' hash='d97f95fe79cacdf1'>
           <!-- implicit parameter of type 'ProcMapsIterator*' -->
           <parameter type-id='type-id-134' is-artificial='yes'/>
           <!-- parameter of type 'typedef pid_t' -->
@@ -2933,7 +2933,7 @@
       <return type-id='type-id-59'/>
     </function-decl>
     <!-- void SleepForMilliseconds(int) -->
-    <function-decl name='SleepForMilliseconds' mangled-name='_Z20SleepForMillisecondsi' filepath='src/base/sysinfo.cc' line='226' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_Z20SleepForMillisecondsi' hash='d97f95fe79cacdf1#2'>
+    <function-decl name='SleepForMilliseconds' mangled-name='_Z20SleepForMillisecondsi' filepath='src/base/sysinfo.cc' line='226' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_Z20SleepForMillisecondsi' hash='d97f95fe79cacdf1'>
       <!-- parameter of type 'int' -->
       <parameter type-id='type-id-1' filepath='src/base/sysinfo.cc' line='226' column='1'/>
       <!-- void -->
@@ -3412,7 +3412,7 @@
       <return type-id='type-id-181'/>
     </function-decl>
     <!-- int atoi(const char*) -->
-    <function-decl name='atoi' filepath='/usr/include/stdlib.h' line='284' column='1' visibility='default' binding='global' size-in-bits='64' hash='41b53655394fed34#2'>
+    <function-decl name='atoi' filepath='/usr/include/stdlib.h' line='284' column='1' visibility='default' binding='global' size-in-bits='64' hash='41b53655394fed34'>
       <!-- parameter of type 'const char*' -->
       <parameter type-id='type-id-60'/>
       <!-- int -->
@@ -4002,7 +4002,7 @@
       <return type-id='type-id-58'/>
     </function-type>
     <!-- void* (size_t) -->
-    <function-type size-in-bits='64' hash='8d6dd888776a11fb#2' id='type-id-206'>
+    <function-type size-in-bits='64' hash='8d6dd888776a11fb' id='type-id-206'>
       <!-- parameter of type 'typedef size_t' -->
       <parameter type-id='type-id-61'/>
       <!-- void* -->
@@ -4307,14 +4307,14 @@
     <!-- namespace tcmalloc -->
     <namespace-decl name='tcmalloc'>
       <!-- int tcmalloc::AlignmentForSize(size_t) -->
-      <function-decl name='AlignmentForSize' mangled-name='_ZN8tcmalloc16AlignmentForSizeEm' filepath='src/common.cc' line='77' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZN8tcmalloc16AlignmentForSizeEm' hash='41b53655394fed34#2'>
+      <function-decl name='AlignmentForSize' mangled-name='_ZN8tcmalloc16AlignmentForSizeEm' filepath='src/common.cc' line='77' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZN8tcmalloc16AlignmentForSizeEm' hash='41b53655394fed34'>
         <!-- parameter of type 'typedef size_t' -->
         <parameter type-id='type-id-61'/>
         <!-- int -->
         <return type-id='type-id-1'/>
       </function-decl>
       <!-- void* tcmalloc::MetaDataAlloc(size_t) -->
-      <function-decl name='MetaDataAlloc' mangled-name='_ZN8tcmalloc13MetaDataAllocEm' filepath='src/common.cc' line='233' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZN8tcmalloc13MetaDataAllocEm' hash='8d6dd888776a11fb#2'>
+      <function-decl name='MetaDataAlloc' mangled-name='_ZN8tcmalloc13MetaDataAllocEm' filepath='src/common.cc' line='233' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZN8tcmalloc13MetaDataAllocEm' hash='8d6dd888776a11fb'>
         <!-- parameter of type 'typedef size_t' -->
         <parameter type-id='type-id-61'/>
         <!-- void* -->
@@ -7835,7 +7835,7 @@
         </member-function>
         <member-function access='public'>
           <!-- void std::basic_string<char, std::char_traits<char>, std::allocator<char> >::reserve(unsigned long int) -->
-          <function-decl name='reserve' mangled-name='_ZNSs7reserveEm' filepath='/usr/lib/gcc/x86_64-redhat-linux/4.4.7/../../../../include/c++/4.4.7/bits/basic_string.tcc' line='502' column='1' visibility='default' binding='global' size-in-bits='64' hash='8d6dd888776a11fb#2'>
+          <function-decl name='reserve' mangled-name='_ZNSs7reserveEm' filepath='/usr/lib/gcc/x86_64-redhat-linux/4.4.7/../../../../include/c++/4.4.7/bits/basic_string.tcc' line='502' column='1' visibility='default' binding='global' size-in-bits='64' hash='8d6dd888776a11fb'>
             <!-- implicit parameter of type 'std::basic_string<char, std::char_traits<char>, std::allocator<char> >*' -->
             <parameter type-id='type-id-833' is-artificial='yes'/>
             <!-- parameter of type 'unsigned long int' -->
@@ -8398,7 +8398,7 @@
       <return type-id='type-id-58'/>
     </function-type>
     <!-- void (void*, ptrdiff_t) -->
-    <function-type size-in-bits='64' hash='8d6dd888776a11fb#2' id='type-id-902'>
+    <function-type size-in-bits='64' hash='8d6dd888776a11fb' id='type-id-902'>
       <!-- parameter of type 'void*' -->
       <parameter type-id='type-id-56'/>
       <!-- parameter of type 'typedef ptrdiff_t' -->
@@ -8504,7 +8504,7 @@
       <return type-id='type-id-58'/>
     </function-type>
     <!-- void (std::basic_string<char, std::char_traits<char>, std::allocator<char> >::*) (unsigned long int) -->
-    <function-type method-class-id='type-id-1000' size-in-bits='64' hash='8d6dd888776a11fb#2' id='type-id-1024'>
+    <function-type method-class-id='type-id-1000' size-in-bits='64' hash='8d6dd888776a11fb' id='type-id-1024'>
       <!-- implicit parameter of type 'std::basic_string<char, std::char_traits<char>, std::allocator<char> >*' -->
       <parameter type-id='type-id-833' is-artificial='yes'/>
       <!-- parameter of type 'unsigned long int' -->
@@ -10054,7 +10054,7 @@
       <return type-id='type-id-58'/>
     </function-decl>
     <!-- size_t MallocExtension_GetEstimatedAllocatedSize(size_t) -->
-    <function-decl name='MallocExtension_GetEstimatedAllocatedSize' mangled-name='MallocExtension_GetEstimatedAllocatedSize' filepath='src/malloc_extension.cc' line='370' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='MallocExtension_GetEstimatedAllocatedSize' hash='659ced78215eae4a#2'>
+    <function-decl name='MallocExtension_GetEstimatedAllocatedSize' mangled-name='MallocExtension_GetEstimatedAllocatedSize' filepath='src/malloc_extension.cc' line='370' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='MallocExtension_GetEstimatedAllocatedSize' hash='659ced78215eae4a'>
       <!-- parameter of type 'typedef size_t' -->
       <parameter type-id='type-id-61' filepath='src/malloc_extension.cc' line='370' column='1'/>
       <!-- typedef size_t -->
@@ -10503,14 +10503,14 @@
       </namespace-decl>
     </namespace-decl>
     <!-- int MallocHook_AddNewHook(MallocHook_NewHook) -->
-    <function-decl name='MallocHook_AddNewHook' mangled-name='MallocHook_AddNewHook' filepath='src/malloc_hook.cc' line='296' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='MallocHook_AddNewHook' hash='41b53655394fed34#2'>
+    <function-decl name='MallocHook_AddNewHook' mangled-name='MallocHook_AddNewHook' filepath='src/malloc_hook.cc' line='296' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='MallocHook_AddNewHook' hash='41b53655394fed34'>
       <!-- parameter of type 'typedef MallocHook_NewHook' -->
       <parameter type-id='type-id-380' filepath='src/malloc_hook.cc' line='302' column='1'/>
       <!-- int -->
       <return type-id='type-id-1'/>
     </function-decl>
     <!-- int MallocHook_RemoveNewHook(MallocHook_NewHook) -->
-    <function-decl name='MallocHook_RemoveNewHook' mangled-name='MallocHook_RemoveNewHook' filepath='src/malloc_hook.cc' line='302' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='MallocHook_RemoveNewHook' hash='41b53655394fed34#2'>
+    <function-decl name='MallocHook_RemoveNewHook' mangled-name='MallocHook_RemoveNewHook' filepath='src/malloc_hook.cc' line='302' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='MallocHook_RemoveNewHook' hash='41b53655394fed34'>
       <!-- parameter of type 'typedef MallocHook_NewHook' -->
       <parameter type-id='type-id-380' filepath='src/malloc_hook.cc' line='302' column='1'/>
       <!-- int -->
@@ -10643,7 +10643,7 @@
       <return type-id='type-id-1'/>
     </function-decl>
     <!-- MallocHook_NewHook MallocHook_SetNewHook(MallocHook_NewHook) -->
-    <function-decl name='MallocHook_SetNewHook' mangled-name='MallocHook_SetNewHook' filepath='src/malloc_hook.cc' line='424' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='MallocHook_SetNewHook' hash='659ced78215eae4a#2'>
+    <function-decl name='MallocHook_SetNewHook' mangled-name='MallocHook_SetNewHook' filepath='src/malloc_hook.cc' line='424' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='MallocHook_SetNewHook' hash='659ced78215eae4a'>
       <!-- parameter of type 'typedef MallocHook_NewHook' -->
       <parameter type-id='type-id-380' filepath='src/malloc_hook.cc' line='424' column='1'/>
       <!-- typedef MallocHook_NewHook -->
@@ -10727,7 +10727,7 @@
       <return type-id='type-id-56'/>
     </function-decl>
     <!-- void* mmap(void*, size_t, int, int, int, off_t) -->
-    <function-decl name='mmap' mangled-name='mmap' filepath='src/malloc_hook_mmap_linux.h' line='169' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='mmap' hash='c106fc1e3b8c4363#2'>
+    <function-decl name='mmap' mangled-name='mmap' filepath='src/malloc_hook_mmap_linux.h' line='169' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='mmap' hash='c106fc1e3b8c4363'>
       <!-- parameter of type 'void*' -->
       <parameter type-id='type-id-56' filepath='src/malloc_hook_mmap_linux.h' line='169' column='1'/>
       <!-- parameter of type 'typedef size_t' -->
@@ -10804,7 +10804,7 @@
       <return type-id='type-id-1'/>
     </function-type>
     <!-- void (ptrdiff_t) -->
-    <function-type size-in-bits='64' hash='8d6dd888776a11fb#3' id='type-id-1327'>
+    <function-type size-in-bits='64' hash='8d6dd888776a11fb' id='type-id-1327'>
       <!-- parameter of type 'typedef ptrdiff_t' -->
       <parameter type-id='type-id-352'/>
       <!-- void -->
@@ -12490,7 +12490,7 @@
       <return type-id='type-id-1'/>
     </function-decl>
     <!-- int ProfilerStart(const char*) -->
-    <function-decl name='ProfilerStart' mangled-name='ProfilerStart' filepath='src/profiler.cc' line='390' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='ProfilerStart' hash='41b53655394fed34#2'>
+    <function-decl name='ProfilerStart' mangled-name='ProfilerStart' filepath='src/profiler.cc' line='390' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='ProfilerStart' hash='41b53655394fed34'>
       <!-- parameter of type 'const char*' -->
       <parameter type-id='type-id-60'/>
       <!-- int -->
@@ -14944,7 +14944,7 @@
     <!-- void* (*)(size_t, void*) -->
     <pointer-type-def type-id='type-id-1940' size-in-bits='64' hash='c66cdd9c5848f363' id='type-id-1941'/>
     <!-- void* (*)(unsigned long int) -->
-    <pointer-type-def type-id='type-id-1942' size-in-bits='64' hash='c66cdd9c5848f363#2' id='type-id-260'/>
+    <pointer-type-def type-id='type-id-1942' size-in-bits='64' hash='c66cdd9c5848f363' id='type-id-260'/>
     <!-- void* (*)(void*, size_t, void*) -->
     <pointer-type-def type-id='type-id-1943' size-in-bits='64' hash='c66cdd9c5848f363' id='type-id-1944'/>
     <!-- void** -->
@@ -15140,7 +15140,7 @@
         </member-function>
         <member-function access='public'>
           <!-- void std::basic_string<char, std::char_traits<char>, std::allocator<char> >::reserve(unsigned long int) -->
-          <function-decl name='reserve' mangled-name='_ZNSs7reserveEm' filepath='/usr/lib/gcc/x86_64-redhat-linux/4.4.7/../../../../include/c++/4.4.7/bits/basic_string.tcc' line='502' column='1' visibility='default' binding='global' size-in-bits='64' hash='8d6dd888776a11fb#2'>
+          <function-decl name='reserve' mangled-name='_ZNSs7reserveEm' filepath='/usr/lib/gcc/x86_64-redhat-linux/4.4.7/../../../../include/c++/4.4.7/bits/basic_string.tcc' line='502' column='1' visibility='default' binding='global' size-in-bits='64' hash='8d6dd888776a11fb'>
             <!-- implicit parameter of type 'std::basic_string<char, std::char_traits<char>, std::allocator<char> >*' -->
             <parameter type-id='type-id-833' is-artificial='yes'/>
             <!-- parameter of type 'unsigned long int' -->
@@ -16460,7 +16460,7 @@
         </member-function>
         <member-function access='private' static='yes'>
           <!-- void tcmalloc::ThreadCache::set_overall_thread_cache_size() -->
-          <function-decl name='set_overall_thread_cache_size' mangled-name='_ZN8tcmalloc11ThreadCache29set_overall_thread_cache_sizeEm' filepath='src/thread_cache.cc' line='465' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZN8tcmalloc11ThreadCache29set_overall_thread_cache_sizeEm' hash='8d6dd888776a11fb#2'>
+          <function-decl name='set_overall_thread_cache_size' mangled-name='_ZN8tcmalloc11ThreadCache29set_overall_thread_cache_sizeEm' filepath='src/thread_cache.cc' line='465' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZN8tcmalloc11ThreadCache29set_overall_thread_cache_sizeEm' hash='8d6dd888776a11fb'>
             <!-- parameter of type 'typedef size_t' -->
             <parameter type-id='type-id-61'/>
             <!-- void -->
@@ -16700,7 +16700,7 @@
       <return type-id='type-id-1'/>
     </function-decl>
     <!-- void* tc_malloc(size_t) -->
-    <function-decl name='tc_malloc' mangled-name='tc_malloc' filepath='src/tcmalloc.cc' line='1573' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='tc_malloc' hash='8d6dd888776a11fb#2'>
+    <function-decl name='tc_malloc' mangled-name='tc_malloc' filepath='src/tcmalloc.cc' line='1573' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='tc_malloc' hash='8d6dd888776a11fb'>
       <!-- parameter of type 'typedef size_t' -->
       <parameter type-id='type-id-61'/>
       <!-- void* -->
@@ -16739,7 +16739,7 @@
       <return type-id='type-id-56'/>
     </function-decl>
     <!-- void* tc_new(size_t) -->
-    <function-decl name='tc_new' mangled-name='tc_new' filepath='src/tcmalloc.cc' line='1611' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='tc_new' hash='8d6dd888776a11fb#2'>
+    <function-decl name='tc_new' mangled-name='tc_new' filepath='src/tcmalloc.cc' line='1611' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='tc_new' hash='8d6dd888776a11fb'>
       <!-- parameter of type 'typedef size_t' -->
       <parameter type-id='type-id-61'/>
       <!-- void* -->
@@ -16771,7 +16771,7 @@
       <return type-id='type-id-58'/>
     </function-decl>
     <!-- void* tc_newarray(size_t) -->
-    <function-decl name='tc_newarray' mangled-name='tc_newarray' filepath='src/tcmalloc.cc' line='1641' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='tc_newarray' hash='8d6dd888776a11fb#2'>
+    <function-decl name='tc_newarray' mangled-name='tc_newarray' filepath='src/tcmalloc.cc' line='1641' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='tc_newarray' hash='8d6dd888776a11fb'>
       <!-- parameter of type 'typedef size_t' -->
       <parameter type-id='type-id-61'/>
       <!-- void* -->
@@ -16823,14 +16823,14 @@
       <return type-id='type-id-1'/>
     </function-decl>
     <!-- void* tc_valloc(size_t) -->
-    <function-decl name='tc_valloc' mangled-name='tc_valloc' filepath='src/tcmalloc.cc' line='1696' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='tc_valloc' hash='8d6dd888776a11fb#2'>
+    <function-decl name='tc_valloc' mangled-name='tc_valloc' filepath='src/tcmalloc.cc' line='1696' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='tc_valloc' hash='8d6dd888776a11fb'>
       <!-- parameter of type 'typedef size_t' -->
       <parameter type-id='type-id-61'/>
       <!-- void* -->
       <return type-id='type-id-56'/>
     </function-decl>
     <!-- void* tc_pvalloc(size_t) -->
-    <function-decl name='tc_pvalloc' mangled-name='tc_pvalloc' filepath='src/tcmalloc.cc' line='1704' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='tc_pvalloc' hash='8d6dd888776a11fb#2'>
+    <function-decl name='tc_pvalloc' mangled-name='tc_pvalloc' filepath='src/tcmalloc.cc' line='1704' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='tc_pvalloc' hash='8d6dd888776a11fb'>
       <!-- parameter of type 'typedef size_t' -->
       <parameter type-id='type-id-61'/>
       <!-- void* -->
@@ -16863,7 +16863,7 @@
       <return type-id='type-id-61'/>
     </function-decl>
     <!-- void* tc_malloc_skip_new_handler(size_t) -->
-    <function-decl name='tc_malloc_skip_new_handler' mangled-name='tc_malloc_skip_new_handler' filepath='src/tcmalloc.cc' line='1734' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='tc_malloc_skip_new_handler' hash='8d6dd888776a11fb#2'>
+    <function-decl name='tc_malloc_skip_new_handler' mangled-name='tc_malloc_skip_new_handler' filepath='src/tcmalloc.cc' line='1734' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='tc_malloc_skip_new_handler' hash='8d6dd888776a11fb'>
       <!-- parameter of type 'typedef size_t' -->
       <parameter type-id='type-id-61'/>
       <!-- void* -->
@@ -16925,7 +16925,7 @@
       <return type-id='type-id-56'/>
     </function-type>
     <!-- void* (unsigned long int) -->
-    <function-type size-in-bits='64' hash='8d6dd888776a11fb#3' id='type-id-1942'>
+    <function-type size-in-bits='64' hash='8d6dd888776a11fb' id='type-id-1942'>
       <!-- parameter of type 'unsigned long int' -->
       <parameter type-id='type-id-21'/>
       <!-- void* -->
@@ -16978,7 +16978,7 @@
       <return type-id='type-id-58'/>
     </function-type>
     <!-- void (tcmalloc::ThreadCache::*) (size_t) -->
-    <function-type method-class-id='type-id-1890' size-in-bits='64' hash='8d6dd888776a11fb#2' id='type-id-1983'>
+    <function-type method-class-id='type-id-1890' size-in-bits='64' hash='8d6dd888776a11fb' id='type-id-1983'>
       <!-- parameter of type 'typedef size_t' -->
       <parameter type-id='type-id-61'/>
       <!-- void -->

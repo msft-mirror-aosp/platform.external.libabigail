@@ -17,7 +17,7 @@ Variables changes summary: 0 Removed, 0 Changed, 0 Added variable
                       in pointed to type 'struct SDL_AudioCVT' at SDL12_compat.c:907:1:
                         type name changed from 'SDL_AudioCVT' to 'SDL12_AudioCVT'
                         type size changed from 1024 to 1088 (in bits)
-                        3 data member changes (8 filtered):
+                        3 data member changes (2 filtered):
                           'double len_ratio' offset changed from 288 to 320 (in bits) (by +32 bits)
                           name of 'SDL_AudioCVT::filters' changed to 'SDL12_AudioCVT::filters' at SDL12_compat.c:918:1, offset changed from 352 to 384 (in bits) (by +32 bits)
                           'int filter_index' offset changed from 992 to 1024 (in bits) (by +32 bits)

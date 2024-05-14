@@ -2100,7 +2100,7 @@
       <return type-id='type-id-99'/>
     </function-type>
     <!-- void* (long int) -->
-    <function-type size-in-bits='64' hash='8d6dd888776a11fb#2' id='type-id-140'>
+    <function-type size-in-bits='64' hash='8d6dd888776a11fb' id='type-id-140'>
       <!-- parameter of type 'long int' -->
       <parameter type-id='type-id-26'/>
       <!-- void* -->
@@ -5176,7 +5176,7 @@
       <return type-id='type-id-99'/>
     </function-decl>
     <!-- cpp_hashnode* cpp_lookup(cpp_reader*, const unsigned char*, unsigned int) -->
-    <function-decl name='cpp_lookup' mangled-name='_Z10cpp_lookupP10cpp_readerPKhj' filepath='../.././libcpp/identifiers.c' line='92' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_Z10cpp_lookupP10cpp_readerPKhj' hash='530ff15a20e9eac8#2'>
+    <function-decl name='cpp_lookup' mangled-name='_Z10cpp_lookupP10cpp_readerPKhj' filepath='../.././libcpp/identifiers.c' line='92' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_Z10cpp_lookupP10cpp_readerPKhj' hash='530ff15a20e9eac8'>
       <!-- parameter of type 'cpp_reader*' -->
       <parameter type-id='type-id-223'/>
       <!-- parameter of type 'const unsigned char*' -->
@@ -7672,7 +7672,7 @@
       <return type-id='type-id-99'/>
     </function-decl>
     <!-- void _cpp_backup_tokens_direct(cpp_reader*, unsigned int) -->
-    <function-decl name='_cpp_backup_tokens_direct' mangled-name='_cpp_backup_tokens_direct' filepath='../.././libcpp/macro.c' line='2469' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_cpp_backup_tokens_direct' hash='648097d4f5419b81#2'>
+    <function-decl name='_cpp_backup_tokens_direct' mangled-name='_cpp_backup_tokens_direct' filepath='../.././libcpp/macro.c' line='2469' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_cpp_backup_tokens_direct' hash='648097d4f5419b81'>
       <!-- parameter of type 'cpp_reader*' -->
       <parameter type-id='type-id-223'/>
       <!-- parameter of type 'unsigned int' -->
@@ -7681,7 +7681,7 @@
       <return type-id='type-id-99'/>
     </function-decl>
     <!-- void _cpp_backup_tokens(cpp_reader*, unsigned int) -->
-    <function-decl name='_cpp_backup_tokens' mangled-name='_Z18_cpp_backup_tokensP10cpp_readerj' filepath='../.././libcpp/macro.c' line='2488' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_Z18_cpp_backup_tokensP10cpp_readerj' hash='648097d4f5419b81#2'>
+    <function-decl name='_cpp_backup_tokens' mangled-name='_Z18_cpp_backup_tokensP10cpp_readerj' filepath='../.././libcpp/macro.c' line='2488' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_Z18_cpp_backup_tokensP10cpp_readerj' hash='648097d4f5419b81'>
       <!-- parameter of type 'cpp_reader*' -->
       <parameter type-id='type-id-223'/>
       <!-- parameter of type 'unsigned int' -->

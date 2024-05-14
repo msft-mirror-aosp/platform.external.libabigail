@@ -6832,7 +6832,7 @@
     <!-- int (*)(PQHeapKey, PQHeapKey) -->
     <pointer-type-def type-id='type-id-569' size-in-bits='64' hash='c66cdd9c5848f363' id='type-id-552'/>
     <!-- int (*)(PQSortKey, PQSortKey) -->
-    <pointer-type-def type-id='type-id-570' size-in-bits='64' hash='c66cdd9c5848f363#2' id='type-id-558'/>
+    <pointer-type-def type-id='type-id-570' size-in-bits='64' hash='c66cdd9c5848f363' id='type-id-558'/>
     <!-- int (*)(void*, DictListKey, DictListKey) -->
     <pointer-type-def type-id='type-id-571' size-in-bits='64' hash='c66cdd9c5848f363' id='type-id-528'/>
     <!-- void (*)(GLUmesh*) -->
@@ -6993,7 +6993,7 @@
       <return type-id='type-id-3'/>
     </function-type>
     <!-- int (PQSortKey, PQSortKey) -->
-    <function-type size-in-bits='64' hash='d97f95fe79cacdf1#2' id='type-id-570'>
+    <function-type size-in-bits='64' hash='d97f95fe79cacdf1' id='type-id-570'>
       <!-- parameter of type 'typedef PQSortKey' -->
       <parameter type-id='type-id-568'/>
       <!-- parameter of type 'typedef PQSortKey' -->

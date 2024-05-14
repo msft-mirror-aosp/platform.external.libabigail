@@ -8848,10 +8848,7 @@ get_function_type_name(const function_type& fn_type,
   // canonicalization), we want its representation to stay the same,
   // regardless of typedefs.  So let's strip typedefs from the return
   // type.
-  type_base_sptr return_type =
-    internal
-    ? peel_typedef_type(fn_type.get_return_type())
-    : fn_type.get_return_type();
+  type_base_sptr return_type = fn_type.get_return_type();
   const environment& env = fn_type.get_environment();
 
   o <<  get_type_name(return_type, /*qualified=*/true, internal) << " ";
@@ -8939,10 +8936,8 @@ get_method_type_name(const method_type& fn_type,
   // canonicalization), we want its representation to stay the same,
   // regardless of typedefs.  So let's strip typedefs from the return
   // type.
-  type_base_sptr return_type =
-    internal
-    ? peel_typedef_type(fn_type.get_return_type())
-    : fn_type.get_return_type();
+  type_base_sptr return_type = fn_type.get_return_type();
+
   const environment& env = fn_type.get_environment();
 
   if (return_type)
@@ -28423,11 +28418,7 @@ stream_pretty_representation_of_fn_parms(const function_type& fn_type,
 	  if (env.is_variadic_parameter_type(type))
 	    o << "...";
 	  else
-	    {
-	      if (internal)
-		type = peel_typedef_type(type);
-	      o << get_type_name(type, qualified, internal);
-	    }
+	    o << get_type_name(type, qualified, internal);
 	}
     }
   o << ")";
@@ -28511,11 +28502,8 @@ add_outer_pointer_to_fn_type_expr(const type_base* p,
   type_base_sptr type;
   stream_pretty_representation_of_fn_parms(*pointed_to_fn, right,
 					   qualified, internal);
-  type_base_sptr return_type =
-    internal
-    ? peel_typedef_type(pointed_to_fn->get_return_type())
-    : pointed_to_fn->get_return_type();
 
+  type_base_sptr return_type = pointed_to_fn->get_return_type();
   string result;
 
   if (is_npaf_type(return_type)

@@ -69,12 +69,6 @@ else
 TESTS += runtestdefaultsupprs.py
 endif
 
-# These tests temporarily fail after the commit that introduced type
-# hashing.  Their failure is due to long standing issues that have
-# been uncovered by the type hashing commit.  Subsequent commits that
-# are logically not related to the type hashing commit will fix the
-# issues and as a result, these test will PASS again.  For now, let's
-# mark them as being XFAIL.
 XFAIL_TESTS = runtestabidiffexit
 
 EXTRA_DIST = \
