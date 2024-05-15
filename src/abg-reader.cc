@@ -4609,6 +4609,21 @@ build_subrange_type(reader&		rdr,
 	length = strtoull(CHAR_STR(s), NULL, 0);
     }
 
+  uint64_t size_in_bits = 0;
+  if (xml_char_sptr s = XML_NODE_GET_ATTRIBUTE(node, "size-in-bits"))
+    {
+      char *endptr = nullptr;
+      size_in_bits = strtoull(CHAR_STR(s), &endptr, 0);
+      if (*endptr != '\0')
+	{
+	  if (!strcmp(CHAR_STR(s), "infinite")
+	      ||!strcmp(CHAR_STR(s), "unknown"))
+	    size_in_bits = (size_t) -1;
+	  else
+	    return nil;
+	}
+    }
+
   int64_t lower_bound = 0, upper_bound = 0;
   bool bounds_present = false;
   if (xml_char_sptr s = XML_NODE_GET_ATTRIBUTE(node, "lower-bound"))
@@ -4662,6 +4677,8 @@ build_subrange_type(reader&		rdr,
 				       underlying_type, loc));
   maybe_set_artificial_location(rdr, node, p);
   p->is_non_finite(is_non_finite);
+  if (size_in_bits)
+  p->set_size_in_bits(size_in_bits);
 
   if (rdr.push_and_key_type_decl(p, node, add_to_current_scope))
     rdr.map_xml_node_to_decl(node, p);

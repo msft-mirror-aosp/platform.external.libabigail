@@ -14705,6 +14705,18 @@ build_subrange_type(reader&		rdr,
 	  is_signed = (ate == DW_ATE_signed || ate == DW_ATE_signed_char);
     }
 
+  // The DW_TAG_subrange_type DIE may have some size related
+  // attributes (DW_AT_byte_size or DW_AT_bit_size).  If not, then the
+  // size is deduced from the size of its underlying type.
+  bool has_size_info = false;
+  uint64_t size = 0;
+  if ((has_size_info = die_unsigned_constant_attribute(die,
+						       DW_AT_byte_size, size)))
+    size *= 8;
+  else
+    has_size_info = die_unsigned_constant_attribute(die,
+						    DW_AT_bit_size, size);
+
   translation_unit::language language = rdr.cur_transl_unit()->get_language();
   array_type_def::subrange_type::bound_value lower_bound =
     get_default_array_lower_bound(language);
@@ -14780,13 +14792,23 @@ build_subrange_type(reader&		rdr,
 				       name,
 				       lower_bound,
 				       upper_bound,
+				       underlying_type,
 				       location()));
   result->is_non_finite(is_non_finite);
 
-  if (underlying_type)
-    result->set_underlying_type(underlying_type);
+  if (has_size_info)
+    result->set_size_in_bits(size);
+  else
+    {
+      // The DW_TAG_subrange_type doesn't appear to have any size
+      // attribute.  In that case, the size is deduced from the size
+      // of the underlying type.  If there is no underlying type
+      // specified, then the size of the subrange type is the size 
+      if (!underlying_type)
+	result->set_size_in_bits(rdr.cur_transl_unit()->get_address_size());
+    }
 
-  // Let's ensure the resulting subrange looks metabolically healhty.
+  // Let's ensure the resulting subrange looks metabolically healthy.
   ABG_ASSERT(result->is_non_finite()
 	     || (result->get_length() ==
 		 (uint64_t) (result->get_upper_bound()

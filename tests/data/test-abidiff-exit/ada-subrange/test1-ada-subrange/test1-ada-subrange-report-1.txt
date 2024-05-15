@@ -6,7 +6,7 @@ Variables changes summary: 0 Removed, 0 Changed, 0 Added variable
   [C] 'function test1__my_int[6] test1__first_function(void)' at test1.adb:6:1 has some indirect sub-type changes:
     return type changed:
       type name changed from 'test1__my_int[6]' to 'test1__my_int[7]'
-      array type size changed from 6000 to 7000
+      array type size changed from 96 to 112
       array type subrange 1 changed length from 6 to 7
 
   [C] 'function test1__my_index test1__second_function(void)' at test1.adb:14:1 has some indirect sub-type changes:

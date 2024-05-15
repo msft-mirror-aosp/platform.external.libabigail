@@ -1263,6 +1263,9 @@ build_array_ctf_range(reader *rdr, ctf_dict_t *dic,
                                                    index_type,
                                                    location(),
                                                    translation_unit::LANG_C));
+  if (!index_type)
+    subrange->set_size_in_bits(rdr->cur_transl_unit()->get_address_size());
+
   if (!subrange)
     return nullptr;
 

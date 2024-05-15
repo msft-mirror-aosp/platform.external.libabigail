@@ -18608,8 +18608,9 @@ array_type_def::subrange_type::subrange_type(const environment& env,
 					     translation_unit::language l)
   : type_or_decl_base(env, SUBRANGE_TYPE | ABSTRACT_TYPE_BASE | ABSTRACT_DECL_BASE),
     type_base(env,
-	      upper_bound.get_unsigned_value()
-	      - lower_bound.get_unsigned_value(),
+	      utype
+	      ? utype->get_size_in_bits()
+	      : 0,
 	      0),
     decl_base(env, name, loc, ""),
     priv_(new priv(lower_bound, upper_bound, utype, l))
@@ -18638,9 +18639,7 @@ array_type_def::subrange_type::subrange_type(const environment& env,
 					     const location&	loc,
 					     translation_unit::language l)
   : type_or_decl_base(env, SUBRANGE_TYPE | ABSTRACT_TYPE_BASE | ABSTRACT_DECL_BASE),
-    type_base(env,
-	      upper_bound.get_unsigned_value()
-	      - lower_bound.get_unsigned_value(), 0),
+    type_base(env, /*size-in-bits=*/0, /*alignment=*/0),
     decl_base(env, name, loc, ""),
     priv_(new priv(lower_bound, upper_bound, l))
 {
@@ -18689,6 +18688,8 @@ array_type_def::subrange_type::set_underlying_type(const type_base_sptr &u)
 {
   ABG_ASSERT(priv_->underlying_type_.expired());
   priv_->underlying_type_ = u;
+  if (u)
+    set_size_in_bits(u->get_size_in_bits());
 }
 
 /// Getter of the upper bound of the subrange type.

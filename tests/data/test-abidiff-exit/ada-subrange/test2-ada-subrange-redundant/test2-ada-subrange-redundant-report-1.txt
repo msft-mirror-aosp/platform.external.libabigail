@@ -6,7 +6,7 @@ Variables changes summary: 0 Removed, 0 Changed, 0 Added variable
   [C] 'function test__my_int[101] test__first_function(test__my_int[101]&)' at test.adb:6:1 has some indirect sub-type changes:
     return type changed:
       type name changed from 'test__my_int[101]' to 'test__my_int[201]'
-      array type size changed from 101000 to 201000
+      array type size changed from 1616 to 3216
       array type subrange 1 changed length from 101 to 201
 
   [C] 'function test__my_index test__second_function(const test__my_index)' at test.adb:12:1 has some indirect sub-type changes:
