@@ -391,10 +391,10 @@ dnl configure BTF usage
 BPF_LIBS=
 if test x$ENABLE_BTF != xno; then
   AC_CHECK_HEADER([bpf/btf.h],
-		  [ENABLE_BTF=yes],
+		  [HAS_BTF_HEADERS=yes],
 		  [AC_MSG_NOTICE([could not find bpf/btf.h])])
-  if test x$ENABLE_BTF = xyes; then
-    AC_MSG_NOTICE([enable BTF support])
+  if test x$HAS_BTF_HEADERS = xyes; then
+    AC_MSG_NOTICE([found BTF header file so enabling BTF support])
     ENABLE_BTF=yes
     AC_DEFINE([WITH_BTF], 1,
 	     [Defined if user enabled BTF usage])
