@@ -238,8 +238,9 @@ protected:
 	     bool			load_all_types,
 	     bool			linux_kernel_mode)
   {
-    elf_based_reader::initialize(elf_path, debug_info_root_paths);
     btf__free(btf_handle_);
+    btf_handle_ = nullptr;
+    elf_based_reader::initialize(elf_path, debug_info_root_paths);
     options().load_all_types = load_all_types;
     options().load_in_linux_kernel_mode = linux_kernel_mode;
   }
@@ -305,6 +306,7 @@ public:
   ~reader()
   {
     btf__free(btf_handle_);
+    btf_handle_ = nullptr;
   }
 
   /// Read the ELF information as well as the BTF type information to
@@ -346,7 +348,8 @@ public:
   corpus_sptr
   read_debug_info_into_corpus()
   {
-    btf_handle();
+    if (!btf_handle())
+      return corpus_sptr();
 
     translation_unit_sptr artificial_tu
       (new translation_unit(env(), "", /*address_size=*/64));
