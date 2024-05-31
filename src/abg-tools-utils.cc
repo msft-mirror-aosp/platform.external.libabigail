@@ -416,9 +416,12 @@ is_regular_file(const string& path)
   if (S_ISREG(st.st_mode))
     return true;
 
-  string symlink_target_path;
-  if (maybe_get_symlink_target_file_path(path, symlink_target_path))
-    return is_regular_file(symlink_target_path);
+  if (S_ISLNK(st.st_mode))
+    {
+      string symlink_target_path;
+      if (maybe_get_symlink_target_file_path(path, symlink_target_path))
+	return is_regular_file(symlink_target_path);
+    }
 
   return false;
 }
