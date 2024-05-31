@@ -1008,6 +1008,9 @@ load_kernel_corpus_group_and_write_abixml(char* argv[],
 #ifdef WITH_CTF
     opts.use_ctf ? corpus::CTF_ORIGIN :
 #endif
+#ifdef WITH_BTF
+    opts.use_btf ? corpus::BTF_ORIGIN :
+#endif
     corpus::DWARF_ORIGIN;
   corpus_group_sptr group =
     build_corpus_group_from_kernel_dist_under(opts.in_file_path,
