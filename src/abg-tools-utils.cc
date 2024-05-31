@@ -2858,7 +2858,7 @@ get_binary_paths_from_kernel_dist(const string&	dist_root,
   // under the 'debug_info_root_path' directory and its content is
   // accessible from <debug_info_root_path>/usr/lib/debug directory.
 
-  string kernel_modules_root;
+  string kernel_modules_root = dist_root;
   string debug_info_root;
   if (dir_exists(dist_root + "/lib/modules"))
     {
