@@ -1308,10 +1308,8 @@ leaf_reporter::report(const corpus_diff& d,
 	out << indent << num_changed
 	    << " Changed variables:\n\n";
       string n1, n2;
-      for (auto d : d.priv_->sorted_changed_vars_)
+      for (diff_sptr diff : d.priv_->sorted_changed_vars_)
 	{
-	  diff_sptr diff = d;
-
 	  if (!diff)
 	    continue;
 
