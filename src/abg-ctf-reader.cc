@@ -42,6 +42,9 @@ ABG_END_EXPORT_DECLARATIONS
 
 namespace abigail
 {
+
+using std::cerr;
+
 /// Namespace of the reader for the CTF debug information
 namespace ctf
 {
@@ -326,6 +329,16 @@ public:
   environment&
   env()
   {return options().env;}
+
+  /// Getter of the "do_log" flag.
+  ///
+  /// This flag tells if we should log about various internal
+  /// details.
+  ///
+  /// return the "do_log" flag.
+  bool
+  do_log() const
+  {return options().do_log;}
 
   /// Look for vmlinux.ctfa file in default directory or in
   /// directories provided by debug-info-dir command line option,
@@ -670,6 +683,10 @@ public:
           && (status & fe_iface::STATUS_DEBUG_INFO_NOT_FOUND))
       return corp;
 
+    tools_utils::timer t;
+    if (do_log())
+      t.start();
+
     int errp;
     if ((corp->get_origin() & corpus::LINUX_KERNEL_BINARY_ORIGIN)
 	&& corpus_group())
@@ -689,6 +706,13 @@ public:
       ctfa = ctf_arc_bufopen(&ctf_sect, &symtab_sect,
 			     &strtab_sect, &errp);
 
+    if (do_log())
+      {
+	t.stop();
+	cerr << "Reading CTF info in:" << t << "\n";
+	t.start();
+      }
+
     env().canonicalization_is_done(false);
     if (ctfa == NULL)
       status |= fe_iface::STATUS_DEBUG_INFO_NOT_FOUND;
@@ -705,6 +729,12 @@ public:
       }
 
     env().canonicalization_is_done(true);
+
+    if (do_log())
+      {
+	t.stop();
+	cerr << "Building ABG-IR in:" << t << "\n";
+      }
 
     return corp;
   }
