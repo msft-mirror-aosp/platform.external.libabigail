@@ -511,13 +511,6 @@ public:
       }
 
     ctf_dict_close(ctf_dict);
-    /* Canonicalize all the types generated above.  This must be
-       done "a posteriori" because the processing of types may
-       require other related types to not be already
-       canonicalized.  */
-    canonicalize_all_types();
-    corpus()->sort_functions();
-    corpus()->sort_variables();
   }
 
   /// Add a new type declaration to the given libabigail IR corpus CORP.
@@ -702,6 +695,11 @@ public:
     else
       {
 	process_ctf_archive();
+	/* Canonicalize all the types generated above.  This must be
+	   done "a posteriori" because the processing of types may
+	   require other related types to not be already
+	   canonicalized.  */
+	canonicalize_all_types();
 	corpus()->sort_functions();
 	corpus()->sort_variables();
       }
