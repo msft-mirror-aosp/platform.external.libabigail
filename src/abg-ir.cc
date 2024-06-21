@@ -4358,6 +4358,8 @@ struct decl_base::priv
   interned_string	qualified_name_;
   interned_string	temporary_internal_qualified_name_;
   interned_string	internal_qualified_name_;
+  interned_string	internal_cached_repr_;
+  interned_string	cached_repr_;
   // Unline qualified_name_, scoped_name_ contains the name of the
   // decl and the name of its scope; not the qualified name of the
   // scope.
@@ -4853,6 +4855,48 @@ decl_base::get_pretty_representation(bool internal,
   if (qualified_name)
     return get_qualified_name(internal);
   return get_name();
+}
+
+/// Get the pretty representation of the current decl.
+///
+/// The pretty representation is retrieved from a cache.  If the cache
+/// is empty, this function computes the pretty representation, put it
+/// in the cache and returns it.
+///
+/// Please note that if this function is called too early in the life
+/// cycle of the decl (before it is fully constructed), then the
+/// pretty representation that is cached is going to represent a
+/// non-complete (and thus wrong) representation of the decl.  Thus
+/// this function must be called only once the decl is fully
+/// constructed.
+///
+/// @param internal if true, then the pretty representation is to be
+/// used for purpuses that are internal to the libabigail library
+/// itself.  If you don't know what this means, then you probably
+/// should set this parameter to "false".
+///
+/// @return a reference to a cached @ref interned_string holding the
+/// pretty representation of the current decl.
+const interned_string&
+decl_base::get_cached_pretty_representation(bool internal) const
+{
+    if (internal)
+    {
+      if (priv_->internal_cached_repr_.empty())
+	{
+	  string r = ir::get_pretty_representation(this, internal);
+	  priv_->internal_cached_repr_ = get_environment().intern(r);
+	}
+      return priv_->internal_cached_repr_;
+    }
+
+  if (priv_->cached_repr_.empty())
+    {
+      string r = ir::get_pretty_representation(this, internal);
+      priv_->cached_repr_ = get_environment().intern(r);
+    }
+
+  return priv_->cached_repr_;
 }
 
 /// Return the qualified name of the decl.
@@ -15780,19 +15824,26 @@ type_base::get_naked_canonical_type() const
 /// is empty, this function computes the pretty representation, put it
 /// in the cache and returns it.
 ///
-/// Note that if the type is *NOT* canonicalized, the pretty
-/// representation is never cached.
+/// Please note that if this function is called too early in the life
+/// cycle of the type (before the type is fully constructed), then the
+/// pretty representation that is cached is going to represent a
+/// non-complete (and thus wrong) representation of the type.  Thus
+/// this function must be called only once the type is fully
+/// constructed.
 ///
 /// @param internal if true, then the pretty representation is to be
 /// used for purpuses that are internal to the libabigail library
 /// itself.  If you don't know what this means, then you probably
 /// should set this parameter to "false".
+///
+/// @return a reference to a cached @ref interned_string holding the
+/// pretty representation of the current type.
 const interned_string&
 type_base::get_cached_pretty_representation(bool internal) const
 {
   if (internal)
     {
-      if (!get_naked_canonical_type() || priv_->internal_cached_repr_.empty())
+      if (priv_->internal_cached_repr_.empty())
 	{
 	  string r = ir::get_pretty_representation(this, internal);
 	  priv_->internal_cached_repr_ = get_environment().intern(r);
@@ -15800,7 +15851,7 @@ type_base::get_cached_pretty_representation(bool internal) const
       return priv_->internal_cached_repr_;
     }
 
-  if (!get_naked_canonical_type() || priv_->cached_repr_.empty())
+  if (priv_->cached_repr_.empty())
     {
       string r = ir::get_pretty_representation(this, internal);
       priv_->cached_repr_ = get_environment().intern(r);

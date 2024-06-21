@@ -1327,8 +1327,8 @@ struct decl_topo_comp
     // of their pretty representation before we start looking at IR
     // nodes' locations down the road.
     if (is_unique_type(is_type(f)) || is_unique_type(is_type(s)))
-      return (get_pretty_representation(f, /*internal=*/false)
-	      < get_pretty_representation(s, /*internal=*/false));
+      return (f->get_cached_pretty_representation(/*internal=*/false)
+	      < s->get_cached_pretty_representation(/*internal=*/false));
 
     // If both decls come from an abixml file, keep the order they
     // have from that abixml file.
@@ -1353,12 +1353,12 @@ struct decl_topo_comp
     // We reach this point if location data is useless.
     if (f->get_is_anonymous()
 	&& s->get_is_anonymous()
-	&& (get_pretty_representation(f, /*internal=*/false)
-	    == get_pretty_representation(s, /*internal=*/false)))
+	&& (f->get_cached_pretty_representation(/*internal=*/false)
+	    == s->get_cached_pretty_representation(/*internal=*/false)))
       return f->get_name() < s->get_name();
 
-    return (get_pretty_representation(f, /*internal=*/false)
-	    < get_pretty_representation(s, /*internal=*/false));
+    return (f->get_cached_pretty_representation(/*internal=*/false)
+	    < s->get_cached_pretty_representation(/*internal=*/false));
   }
 
   /// The "Less Than" comparison operator of this functor.
@@ -1454,8 +1454,8 @@ struct type_topo_comp
 	&& !has_artificial_or_natural_location(f)
 	&& !has_artificial_or_natural_location(s))
       {
-	string s1 = get_pretty_representation(f, /*internal=*/false);
-	string s2 = get_pretty_representation(s, /*internal=*/false);
+	interned_string s1 = f->get_cached_pretty_representation(/*internal=*/false);
+	interned_string s2 = s->get_cached_pretty_representation(/*internal=*/false);
 	if (s1 == s2)
 	  {
 	    if (qualified_type_def * q = is_qualified_type(f))
@@ -1497,8 +1497,8 @@ struct type_topo_comp
 	    type_base *peeled_s =
 	      peel_pointer_or_reference_type(s, true);
 
-	    s1 = get_pretty_representation(peeled_f, /*internal=*/false);
-	    s2 = get_pretty_representation(peeled_s, /*internal=*/false);
+	    s1 = peeled_f->get_cached_pretty_representation(/*internal=*/false);
+	    s2 = peeled_s->get_cached_pretty_representation(/*internal=*/false);
 	    if (s1 != s2)
 	      return s1 < s2;
 
@@ -1508,25 +1508,23 @@ struct type_topo_comp
 	    peeled_f = peel_typedef_pointer_or_reference_type(peeled_f, true);
 	    peeled_s = peel_typedef_pointer_or_reference_type(peeled_s, true);
 
-	    s1 = get_pretty_representation(peeled_f, false);
-	    s2 = get_pretty_representation(peeled_s, false);
+	    s1 = peeled_f->get_cached_pretty_representation(false);
+	    s2 = peeled_s->get_cached_pretty_representation(false);
 	    if (s1 != s2)
 	      return s1 < s2;
 	  }
       }
 
-    string s1 = get_pretty_representation(f, false);
-    string s2 = get_pretty_representation(s, false);
+    interned_string s1 = f->get_cached_pretty_representation(false);
+    interned_string s2 = s->get_cached_pretty_representation(false);
 
     if (s1 != s2)
       return s1 < s2;
 
     if (is_typedef(f) && is_typedef(s))
       {
-	s1 = get_pretty_representation(is_typedef(f)->get_underlying_type(),
-				       false);
-	s2 = get_pretty_representation(is_typedef(s)->get_underlying_type(),
-				       false);
+	s1 = is_typedef(f)->get_underlying_type()->get_cached_pretty_representation(false);
+	s2 = is_typedef(s)->get_underlying_type()->get_cached_pretty_representation(false);
 	if (s1 != s2)
 	  return s1 < s2;
       }
@@ -1534,8 +1532,8 @@ struct type_topo_comp
     type_base *peeled_f = peel_typedef_pointer_or_reference_type(f, true);
     type_base *peeled_s = peel_typedef_pointer_or_reference_type(s, true);
 
-    s1 = get_pretty_representation(peeled_f, false);
-    s2 = get_pretty_representation(peeled_s, false);
+    s1 = peeled_f->get_cached_pretty_representation(false);
+    s2 = peeled_s->get_cached_pretty_representation(false);
 
     if (s1 != s2)
       return s1 < s2;

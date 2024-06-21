@@ -1622,6 +1622,9 @@ public:
 
   decl_base(const environment&, const location&);
 
+  const interned_string&
+  get_cached_pretty_representation(bool internal = false) const;
+
   virtual bool
   operator==(const decl_base&) const;
 
