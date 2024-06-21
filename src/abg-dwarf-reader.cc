@@ -2083,6 +2083,7 @@ public:
     type_section_die_parent_map_.clear();
     var_decls_to_add_.clear();
     clear_per_translation_unit_data();
+    clear_per_corpus_data();
     options().load_in_linux_kernel_mode = linux_kernel_mode;
     options().load_all_types = load_all_types;
 #ifdef WITH_DEBUG_TYPE_CANONICALIZATION
@@ -2217,8 +2218,6 @@ public:
   corpus_sptr
   read_debug_info_into_corpus()
   {
-    clear_per_corpus_data();
-
     // First set some mundane properties of the corpus gathered from
     // ELF.
     corpus::origin origin = corpus()->get_origin();
