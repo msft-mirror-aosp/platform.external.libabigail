@@ -241,7 +241,8 @@ public:
   reader(const string&		elf_path,
 	 const vector<char**>&	debug_info_root_paths,
 	 environment&		env)
-    : elf_based_reader(elf_path, debug_info_root_paths, env)
+    : elf_based_reader(elf_path, debug_info_root_paths, env),
+      ctfa(), ctf_sect(), symtab_sect(), strtab_sect()
   {
     initialize();
   }
@@ -251,23 +252,37 @@ public:
   /// This is useful to clear out the data used by the reader and get
   /// it ready to be used again.
   ///
-  /// Note that the reader eeps the same environment it has been
-  /// originally created with.
+  /// Note that the reader keeps (doesn't clear) the same environment
+  /// it has been originally created with.
   ///
   /// Please also note that the life time of this environment object
-  /// must be greater than the life time of the resulting @ref
-  /// reader the context uses resources that are allocated in
-  /// the environment.
+  /// must be greater than the life time of the resulting @ref reader
+  /// the context uses resources that are allocated in the
+  /// environment.
   void
   initialize()
   {
-    ctfa = nullptr;
+    if (ctfa)
+      {
+	ctf_close(ctfa);
+	ctfa = nullptr;
+      }
     types_map.clear();
     cur_tu_.reset();
     corpus_group().reset();
   }
 
   /// Initializer of the reader.
+  ///
+  /// This first makes sure the data used by the reader is cleared.
+  /// And then it initlizes it with the information passed in
+  /// argument.
+  ///
+  /// This is useful to clear out the data used by the reader and get
+  /// it ready to be used again.
+  ///
+  /// Note that the reader keeps the same environment it has been
+  /// originally created with.
   ///
   /// @param elf_path the new path to the new ELF file to use.
   ///
@@ -278,22 +293,13 @@ public:
   ///
   /// @param linux_kernel_mode currently not used.
   ///
-  /// This is useful to clear out the data used by the reader and get
-  /// it ready to be used again.
-  ///
-  /// Note that the reader eeps the same environment it has been
-  /// originally created with.
-  ///
-  /// Please also note that the life time of this environment object
-  /// must be greater than the life time of the resulting @ref
-  /// reader the context uses resources that are allocated in
-  /// the environment.
   void
-  initialize(const string& elf_path,
-             const vector<char**>& debug_info_root_paths,
-             bool load_all_types = false,
-             bool linux_kernel_mode = false)
+  initialize(const string&		elf_path,
+             const vector<char**>&	debug_info_root_paths,
+             bool			load_all_types = false,
+             bool			linux_kernel_mode = false)
   {
+    initialize();
     load_all_types = load_all_types;
     linux_kernel_mode = linux_kernel_mode;
     elf_based_reader::initialize(elf_path, debug_info_root_paths);
