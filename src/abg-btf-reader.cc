@@ -240,6 +240,9 @@ protected:
   {
     btf__free(btf_handle_);
     btf_handle_ = nullptr;
+    types_to_canonicalize_.clear();
+    btf_type_id_to_artifacts_.clear();
+    cur_tu_.reset();
     elf_based_reader::initialize(elf_path, debug_info_root_paths);
     options().load_all_types = load_all_types;
     options().load_in_linux_kernel_mode = linux_kernel_mode;
