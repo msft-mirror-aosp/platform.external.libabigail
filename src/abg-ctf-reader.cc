@@ -145,6 +145,7 @@ class reader : public elf_based_reader
   /// A map associating CTF type ids with libabigail IR types.  This
   /// is used to reuse already generated types.
   string_type_base_sptr_map_type types_map;
+  vector<type_base_sptr> types_to_canonicalize;
 
   /// A set associating unknown CTF type ids
   std::set<ctf_id_t> unknown_types_set;
@@ -167,6 +168,10 @@ public:
 
   /// Associate a given CTF type ID with a given libabigail IR type.
   ///
+  /// The IR type is a newly created type that needs to be
+  /// canonicalized at the end of the processing of the current
+  /// corpus.
+  ///
   /// @param dic the dictionnary the type belongs to.
   ///
   /// @param ctf_type the type ID.
@@ -176,7 +181,8 @@ public:
   add_type(ctf_dict_t *dic, ctf_id_t ctf_type, type_base_sptr type)
   {
     string key = dic_type_key(dic, ctf_type);
-    types_map.insert(std::make_pair(key, type));
+    if (types_map.insert(std::make_pair(key, type)).second)
+      types_to_canonicalize.push_back(type);
   }
 
   /// Insert a given CTF unknown type ID.
@@ -216,12 +222,8 @@ public:
   void
   canonicalize_all_types(void)
   {
-    vector<type_base_sptr> types;
-    for (const auto& entry : types_map)
-      types.push_back(entry.second);
-
     canonicalize_types
-      (types.begin(), types.end(),
+      (types_to_canonicalize.begin(), types_to_canonicalize.end(),
        [](vector<type_base_sptr>::iterator& i)
        {return *i;});
   }
@@ -262,14 +264,8 @@ public:
   void
   initialize()
   {
-    if (ctfa)
-      {
-	ctf_close(ctfa);
-	ctfa = nullptr;
-      }
-    types_map.clear();
+    types_to_canonicalize.clear();
     cur_tu_.reset();
-    corpus_group().reset();
   }
 
   /// Initializer of the reader.
@@ -697,7 +693,7 @@ public:
     if ((corp->get_origin() & corpus::LINUX_KERNEL_BINARY_ORIGIN)
 	&& corpus_group())
       {
-	if (ctfa == NULL)
+	if (ctfa == nullptr)
 	  {
 	    std::string ctfa_filename;
 	    if (find_ctfa_file(ctfa_filename))
@@ -709,8 +705,9 @@ public:
 	 and process the CTF archive in the read context, if any.
 	 Information about the types, variables, functions, etc contained
 	 in the archive are added to the given corpus.  */
-      ctfa = ctf_arc_bufopen(&ctf_sect, &symtab_sect,
-			     &strtab_sect, &errp);
+      if (ctfa == nullptr)
+	ctfa = ctf_arc_bufopen(&ctf_sect, &symtab_sect,
+			       &strtab_sect, &errp);
 
     if (do_log())
       {
@@ -749,6 +746,7 @@ public:
   ~reader()
   {
     ctf_close(ctfa);
+    ctfa = nullptr;
   }
 }; // end class reader.
 
