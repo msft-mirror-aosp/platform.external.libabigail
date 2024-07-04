@@ -231,6 +231,14 @@ AC_ARG_ENABLE(btf,
 			     [disable support of btf files)]),
 	      ENABLE_BTF=$enableval,
 	      ENABLE_BTF=auto)
+
+ENABLE_BIG_TESTS=no
+AC_ARG_ENABLE(big-tests,
+	      AS_HELP_STRING([--enable-big-tests=yes|no],
+			     [enable the support of libabigail big tests (in the big-tests subdir)]),
+	      ENABLE_BIG_TESTS=$enableval,
+	      ENABLE_BIG_TESTS=no)
+
 dnl *************************************************
 dnl check for dependencies
 dnl *************************************************
@@ -454,6 +462,29 @@ dnl Test if various functions and structs are present.
        AC_DEFINE([WITH_BTF_KIND_DECL_TAG], 1,
        [The BTF_KIND_DECL_TAG enumerator is present])
     fi
+  fi
+fi
+
+if test x$ENABLE_BIG_TESTS = xyes; then
+  AC_MSG_NOTICE([looking for $srcdir/big-tests ...]);
+  if test -d $srcdir/big-tests -o -L $srcdir/big-tests; then
+     AC_CONFIG_COMMANDS([create-big-tests-build-dir-and-configure],
+			[AC_MSG_NOTICE([Found $srcdir/big-tests!])
+			 cd ac_abs_top_srcdir/big-tests
+			 autoreconf -i
+			 cd $ac_abs_top_builddir
+			 test -d big-tests || mkdir big-tests
+			 cd big-tests
+			 CTF_OPTS=
+			 BTF_OPTS=
+			 if test x$CTF_ENABLED = xyes; then CTF_OPTS="--enable-ctf"; fi;
+			 if test x$BTF_ENABLED = xyes; then BTF_OPTS="--enable-btf"; fi;
+			 AC_MSG_NOTICE([configuring $srcdir/big-tests --with-libabigail-tools-dir=$ac_abs_top_builddir/tools --with-libabigail-headers-dir=$ac_abs_top_srcdir/include $CTF_OPTS $BTF_OPTS])
+			 $ac_abs_top_srcdir/big-tests/configure --with-libabigail-tools-dir=$ac_abs_top_builddir/tools --with-libabigail-headers-dir=$ac_abs_top_srcdir/include $CTF_OPTS $BTF_OPTS],
+			 [CTF_ENABLED=$ENABLE_CTF
+			 BTF_ENABLED=$ENABLE_BTF])
+  else
+     AC_MSG_ERROR([No sub-directory big-tests found. Please checkout libabigail-big-tests under a sub-directory named 'big-tests'])
   fi
 fi
 
@@ -1267,6 +1298,7 @@ AC_MSG_NOTICE([
     Enable python 3				   : ${ENABLE_PYTHON3}
     Enable CTF front-end                           : ${ENABLE_CTF}
     Enable BTF front-end                           : ${ENABLE_BTF}
+    Enable Big Libabigail tests                    : ${ENABLE_BIG_TESTS}
     Enable running tests under Valgrind            : ${enable_valgrind}
     Enable build with -fsanitize=address    	   : ${ENABLE_ASAN}
     Enable build with -fsanitize=memory    	   : ${ENABLE_MSAN}

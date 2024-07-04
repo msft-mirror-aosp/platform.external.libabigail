@@ -274,5 +274,5 @@ check-valgrind-helgrind-recursive:
 	$(MAKE) check-valgrind-helgrind VALGRIND_FLAGS="${RECURSIVE_VALGRIND_FLAGS}"
 
 check-self-compare:
-	$(MAKE) check TESTS=runtestslowselfcompare.sh ENABLE_SLOW_TEST=yes
+	$(MAKE) check TESTS=runtestslowselfcompare.sh ENABLE_SLOW_TEST=yes AM_TESTSUITE_SUMMARY_HEADER='  for runtestslowselfcompare.sh'
 

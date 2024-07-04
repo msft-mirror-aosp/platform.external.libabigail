@@ -30,7 +30,7 @@ libabigail.pc.in
 # Don't make make repeat.
 AM_MAKEFLAGS = --no-print-directory
 
-.PHONY: doc
+.PHONY: doc big-tests
 
 doc: html-doc man info
 
@@ -94,3 +94,10 @@ distcheck-fast:
 check-self-compare:
 	$(MAKE) -C tests check-self-compare
 
+big-tests:
+	test -d big-tests && $(MAKE) -C big-tests check
+
+clean-big-tests:
+	test -d big-tests && $(MAKE) -C big-tests clean
+
+full-check: check check-self-compare big-tests
