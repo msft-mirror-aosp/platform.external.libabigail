@@ -1750,14 +1750,11 @@ get_or_read_and_add_translation_unit(reader& rdr, xmlNodePtr node)
   string tu_path;
   xml::xml_char_sptr path_str = XML_NODE_GET_ATTRIBUTE(node, "path");
 
-  if (path_str)
+  if (corp && !corp->is_empty())
     {
-      tu_path = reinterpret_cast<char*>(path_str.get());
-      ABG_ASSERT(!tu_path.empty());
-
-      if (corp && !corp->is_empty())
-	tu = corp->find_translation_unit(tu_path);
-
+      if (path_str.get())
+	tu_path = reinterpret_cast<char*>(path_str.get());
+      tu = corp->find_translation_unit(tu_path);
       if (tu)
 	return tu;
     }
