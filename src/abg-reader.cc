@@ -3960,9 +3960,13 @@ build_ir_node_for_void_type(reader& rdr)
   const environment& env = rdr.get_environment();
 
   type_base_sptr t = env.get_void_type();
-  add_decl_to_scope(is_decl(t), rdr.get_translation_unit()->get_global_scope());
+  if (!get_type_scope(t))
+    {
+      add_decl_to_scope(is_decl(t),
+			rdr.get_translation_unit()->get_global_scope());
+      rdr.schedule_type_for_canonicalization(t);
+    }
   decl_base_sptr type_declaration = get_type_declaration(t);
-  rdr.schedule_type_for_canonicalization(t);
   return type_declaration;
 }
 
@@ -3980,12 +3984,16 @@ build_ir_node_for_void_type(reader& rdr)
 static decl_base_sptr
 build_ir_node_for_void_pointer_type(reader& rdr)
 {
-    const environment& env = rdr.get_environment();
+  const environment& env = rdr.get_environment();
 
   type_base_sptr t = env.get_void_pointer_type();
-  add_decl_to_scope(is_decl(t), rdr.get_translation_unit()->get_global_scope());
+  if (!get_type_scope(t))
+    {
+      add_decl_to_scope(is_decl(t),
+			rdr.get_translation_unit()->get_global_scope());
+      rdr.schedule_type_for_canonicalization(t);
+    }
   decl_base_sptr type_declaration = get_type_declaration(t);
-  rdr.schedule_type_for_canonicalization(t);
   return type_declaration;
 }
 
