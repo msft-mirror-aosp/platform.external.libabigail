@@ -111,6 +111,9 @@ build_ir_node_for_void_type(reader& rdr);
 static decl_base_sptr
 build_ir_node_for_void_pointer_type(reader& rdr);
 
+static decl_base_sptr
+build_ir_node_for_variadic_parameter_type(reader& rdr);
+
 static void
 resolve_symbol_aliases(string_elf_symbols_map_sptr&	fn_syms,
 		       string_elf_symbols_map_sptr&	var_syms,
@@ -3545,7 +3548,7 @@ build_function_parameter(reader& rdr, const xmlNodePtr node)
 
   type_base_sptr type;
   if (is_variadic)
-    type = rdr.get_environment().get_variadic_parameter_type();
+    type = is_type(build_ir_node_for_variadic_parameter_type(rdr));
   else
     {
       ABG_ASSERT(!type_id.empty());
@@ -3997,6 +4000,27 @@ build_ir_node_for_void_pointer_type(reader& rdr)
   return type_declaration;
 }
 
+/// Build the IR node for a variadic parameter type.
+///
+/// @param rdr the ABIXML reader to use.
+///
+/// @return the variadic parameter type.
+static decl_base_sptr
+build_ir_node_for_variadic_parameter_type(reader& rdr)
+{
+  const environment& env = rdr.get_environment();
+
+  type_base_sptr t = env.get_variadic_parameter_type();
+  if (!get_type_scope(t))
+    {
+      add_decl_to_scope(is_decl(t),
+			rdr.get_translation_unit()->get_global_scope());
+      rdr.schedule_type_for_canonicalization(t);
+    }
+  decl_base_sptr type_declaration = get_type_declaration(t);
+  return type_declaration;
+}
+
 /// Build a type_decl from a "type-decl" XML Node.
 ///
 /// @param rdr the context of the parsing.
@@ -4067,7 +4091,7 @@ build_type_decl(reader&		rdr,
   const environment& env = rdr.get_environment();
   type_decl_sptr decl;
   if (name == env.get_variadic_parameter_type_name())
-    decl = is_type_decl(env.get_variadic_parameter_type());
+    decl = is_type_decl(build_ir_node_for_variadic_parameter_type(rdr));
   else if (name == "void")
     decl = is_type_decl(build_ir_node_for_void_type(rdr));
   else
