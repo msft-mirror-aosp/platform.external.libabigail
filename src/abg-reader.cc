@@ -973,82 +973,22 @@ public:
   }
 #endif
 
-  /// Test if a type should be canonicalized early.  If so,
-  /// canonicalize it right away.  Otherwise, schedule it for late
-  /// canonicalizing; that is, schedule it so that it's going to be
-  /// canonicalized when the translation unit is fully read.
-  ///
-  /// @param t the type to consider for canonicalizing.
-  void
-  maybe_canonicalize_type(type_base_sptr t,
-			  bool force_delay = false)
-  {
-    if (!t)
-      return;
-
-    if (t->get_canonical_type())
-      return;
-
-    // If this class has some non-canonicalized sub type, then wait
-    // for the when we've read all the translation unit to
-    // canonicalize all of its non-canonicalized sub types and then we
-    // can canonicalize this one.
-    //
-    // Also, if this is a declaration-only class, wait for the end of
-    // the translation unit reading so that we have its definition and
-    // then we'll use that for canonicalizing it.
-    if (!force_delay
-	&& !type_has_non_canonicalized_subtype(t)
-	&& !is_class_type(t)
-	&& !is_union_type(t)
-	// Below are types that *must* be canonicalized only after
-	// they are added to their context; but then this function
-	// might be called to early, before they are actually added to
-	// their context.
-	//
-	// TODO: make sure this function is called after types are
-	// added to their context, so that we can try to
-	// early-canonicalize some of these types, reducing the size
-	// of the set of types to put on the side, waiting for being
-	// canonicalized.
-	&& !is_method_type(t)
-	&& !is_reference_type(t)
-	&& !is_pointer_type(t)
-	&& !is_array_type(t)
-	&& !is_qualified_type(t)
-	&& !is_typedef(t)
-	&& !is_enum_type(t)
-	&& !is_function_type(t))
-      {
-	canonicalize(t);
-#ifdef WITH_DEBUG_SELF_COMPARISON
-	maybe_check_abixml_canonical_type_stability(t);
-#endif
-      }
-    else
-      {
-	// We do not want to try to canonicalize a class type that
-	// hasn't been properly added to its context.
-	if (class_decl_sptr c = is_class_type(t))
-	  ABG_ASSERT(c->get_scope());
-
-	schedule_type_for_late_canonicalizing(t);
-      }
-  }
-
   /// Schedule a type for being canonicalized after the current
   /// translation unit is read.
   ///
   /// @param t the type to consider for canonicalization.
   void
-  schedule_type_for_late_canonicalizing(type_base_sptr t)
-  {m_types_to_canonicalize.push_back(t);}
+  schedule_type_for_canonicalization(type_base_sptr t)
+  {
+    if (t)
+      m_types_to_canonicalize.push_back(t);
+  }
 
   /// Perform the canonicalizing of types that ought to be done after
   /// the current translation unit is read.  This function is called
   /// when the current corpus is fully built.
   void
-  perform_late_type_canonicalizing()
+  perform_type_canonicalization()
   {
     canonicalize_types(m_types_to_canonicalize.begin(),
 		       m_types_to_canonicalize.end(),
@@ -1316,7 +1256,7 @@ public:
 	t.start();
       }
 
-    perform_late_type_canonicalizing();
+    perform_type_canonicalization();
 
     if (do_log())
       {
@@ -1686,7 +1626,7 @@ reader::build_or_get_type_decl(const string& id, bool add_decl_to_scope)
       if (add_decl_to_scope)
 	pop_scope_or_abort(scope);
 
-      maybe_canonicalize_type(t, !add_decl_to_scope);
+      schedule_type_for_canonicalization(t);
     }
   return t;
 }
@@ -2381,7 +2321,7 @@ read_translation_unit_from_file(const string&	input_file,
   reader rdr(xml::new_reader_from_file(input_file), env);
   translation_unit_sptr tu = read_translation_unit_from_input(rdr);
   env.canonicalization_is_done(false);
-  rdr.perform_late_type_canonicalizing();
+  rdr.perform_type_canonicalization();
   env.canonicalization_is_done(true);
   return tu;
 }
@@ -2403,7 +2343,7 @@ read_translation_unit_from_buffer(const string&	buffer,
   reader rdr(xml::new_reader_from_buffer(buffer), env);
   translation_unit_sptr tu = read_translation_unit_from_input(rdr);
   env.canonicalization_is_done(false);
-  rdr.perform_late_type_canonicalizing();
+  rdr.perform_type_canonicalization();
   env.canonicalization_is_done(true);
   return tu;
 }
@@ -2421,7 +2361,7 @@ read_translation_unit(fe_iface& iface)
   abixml::reader& rdr = dynamic_cast<abixml::reader&>(iface);
   translation_unit_sptr tu = read_translation_unit_from_input(rdr);
   rdr.options().env.canonicalization_is_done(false);
-  rdr.perform_late_type_canonicalizing();
+  rdr.perform_type_canonicalization();
   rdr.options().env.canonicalization_is_done(true);
   return tu;
 }
@@ -3761,7 +3701,7 @@ build_function_decl(reader&		rdr,
 
   rdr.get_translation_unit()->bind_function_type_life_time(fn_type);
 
-  rdr.maybe_canonicalize_type(fn_type, !add_to_current_scope);
+  rdr.schedule_type_for_canonicalization(fn_type);
 
   if (add_to_exported_decls)
     rdr.add_fn_to_exported_or_undefined_decls(fn_decl.get());
@@ -4025,7 +3965,7 @@ build_ir_node_for_void_type(reader& rdr)
   type_base_sptr t = env.get_void_type();
   add_decl_to_scope(is_decl(t), rdr.get_translation_unit()->get_global_scope());
   decl_base_sptr type_declaration = get_type_declaration(t);
-  canonicalize(t);
+  rdr.schedule_type_for_canonicalization(t);
   return type_declaration;
 }
 
@@ -4048,7 +3988,7 @@ build_ir_node_for_void_pointer_type(reader& rdr)
   type_base_sptr t = env.get_void_pointer_type();
   add_decl_to_scope(is_decl(t), rdr.get_translation_unit()->get_global_scope());
   decl_base_sptr type_declaration = get_type_declaration(t);
-  canonicalize(t);
+  rdr.schedule_type_for_canonicalization(t);
   return type_declaration;
 }
 
@@ -4792,7 +4732,7 @@ build_array_type_def(reader&	rdr,
 	    if (add_to_current_scope)
 	      {
 		add_decl_to_scope(s, rdr.get_cur_scope());
-		rdr.maybe_canonicalize_type(s);
+		rdr.schedule_type_for_canonicalization(s);
 	      }
 	    subranges.push_back(s);
 	  }
@@ -5352,7 +5292,7 @@ build_class_decl(reader&		rdr,
 		  decl_base_sptr td = get_type_declaration(t);
 		  ABG_ASSERT(td);
 		  set_member_access_specifier(td, access);
-		  rdr.maybe_canonicalize_type(t, !add_to_current_scope);
+		  rdr.schedule_type_for_canonicalization(t);
 		  xml_char_sptr i= XML_NODE_GET_ATTRIBUTE(p, "id");
 		  string id = CHAR_STR(i);
 		  ABG_ASSERT(!id.empty());
@@ -5729,7 +5669,7 @@ build_union_decl(reader& rdr,
 		  decl_base_sptr td = get_type_declaration(t);
 		  ABG_ASSERT(td);
 		  set_member_access_specifier(td, access);
-		  rdr.maybe_canonicalize_type(t, !add_to_current_scope);
+		  rdr.schedule_type_for_canonicalization(t);
 		  xml_char_sptr i= XML_NODE_GET_ATTRIBUTE(p, "id");
 		  string id = CHAR_STR(i);
 		  ABG_ASSERT(!id.empty());
@@ -6007,7 +5947,7 @@ build_class_tdecl(reader&		rdr,
 						  add_to_current_scope))
 	{
 	  if (c->get_scope())
-	    rdr.maybe_canonicalize_type(c, /*force_delay=*/false);
+	    rdr.schedule_type_for_canonicalization(c);
 	  class_tmpl->set_pattern(c);
 	}
     }
@@ -6072,7 +6012,7 @@ build_type_tparameter(reader&		rdr,
   else
     rdr.push_and_key_type_decl(result, node, /*add_to_current_scope=*/true);
 
-  rdr.maybe_canonicalize_type(result, /*force_delay=*/false);
+  rdr.schedule_type_for_canonicalization(result);
 
   return result;
 }
@@ -6123,8 +6063,7 @@ build_type_composition(reader&		rdr,
 	      build_qualified_type_decl(rdr, n,
 					/*add_to_current_scope=*/true)))
 	{
-	  rdr.maybe_canonicalize_type(composed_type,
-				       /*force_delay=*/true);
+	  rdr.schedule_type_for_canonicalization(composed_type);
 	  result->set_composed_type(composed_type);
 	  break;
 	}
@@ -6248,7 +6187,7 @@ build_template_tparameter(reader&	rdr,
   if (result)
     {
       rdr.key_type_decl(result, id);
-      rdr.maybe_canonicalize_type(result, /*force_delay=*/false);
+      rdr.schedule_type_for_canonicalization(result);
     }
 
   return result;
@@ -6328,7 +6267,7 @@ build_type(reader&	rdr,
   MAYBE_MAP_TYPE_WITH_TYPE_ID(t, node);
 
   if (t)
-    rdr.maybe_canonicalize_type(t,/*force_delay=*/false );
+    rdr.schedule_type_for_canonicalization(t);
   return t;
 }
 
@@ -6345,7 +6284,7 @@ handle_type_decl(reader&	rdr,
   type_decl_sptr decl = build_type_decl(rdr, node, add_to_current_scope);
   MAYBE_MAP_TYPE_WITH_TYPE_ID(decl, node);
   if (decl && decl->get_scope())
-    rdr.maybe_canonicalize_type(decl, /*force_delay=*/false);
+    rdr.schedule_type_for_canonicalization(decl);
   return decl;
 }
 
@@ -6379,7 +6318,7 @@ handle_qualified_type_decl(reader&	rdr,
 			      add_to_current_scope);
   MAYBE_MAP_TYPE_WITH_TYPE_ID(decl, node);
   if (decl && decl->get_scope())
-    rdr.maybe_canonicalize_type(decl, /*force_delay=*/false);
+    rdr.schedule_type_for_canonicalization(decl);
   return decl;
 }
 
@@ -6397,7 +6336,7 @@ handle_pointer_type_def(reader&	rdr,
 						      add_to_current_scope);
   MAYBE_MAP_TYPE_WITH_TYPE_ID(decl, node);
   if (decl && decl->get_scope())
-    rdr.maybe_canonicalize_type(decl, /*force_delay=*/false);
+    rdr.schedule_type_for_canonicalization(decl);
   return decl;
 }
 
@@ -6415,7 +6354,7 @@ handle_reference_type_def(reader& rdr,
 							  add_to_current_scope);
   MAYBE_MAP_TYPE_WITH_TYPE_ID(decl, node);
   if (decl && decl->get_scope())
-    rdr.maybe_canonicalize_type(decl, /*force_delay=*/false);
+    rdr.schedule_type_for_canonicalization(decl);
   return decl;
 }
 
@@ -6432,7 +6371,7 @@ handle_function_type(reader&	rdr,
   function_type_sptr type = build_function_type(rdr, node,
 						  add_to_current_scope);
   MAYBE_MAP_TYPE_WITH_TYPE_ID(type, node);
-  rdr.maybe_canonicalize_type(type, /*force_delay=*/true);
+  rdr.schedule_type_for_canonicalization(type);
   return type;
 }
 
@@ -6449,7 +6388,7 @@ handle_array_type_def(reader&	rdr,
   array_type_def_sptr decl = build_array_type_def(rdr, node,
 						  add_to_current_scope);
   MAYBE_MAP_TYPE_WITH_TYPE_ID(decl, node);
-  rdr.maybe_canonicalize_type(decl, /*force_delay=*/false);
+  rdr.schedule_type_for_canonicalization(decl);
   return decl;
 }
 
@@ -6466,7 +6405,7 @@ handle_enum_type_decl(reader&	rdr,
 					   add_to_current_scope);
   MAYBE_MAP_TYPE_WITH_TYPE_ID(decl, node);
   if (decl && decl->get_scope())
-    rdr.maybe_canonicalize_type(decl, /*force_delay=*/false);
+    rdr.schedule_type_for_canonicalization(decl);
   return decl;
 }
 
@@ -6482,7 +6421,7 @@ handle_typedef_decl(reader&	rdr,
 					      add_to_current_scope);
   MAYBE_MAP_TYPE_WITH_TYPE_ID(decl, node);
   if (decl && decl->get_scope())
-    rdr.maybe_canonicalize_type(decl, /*force_delay=*/false);
+    rdr.schedule_type_for_canonicalization(decl);
   return decl;
 }
 
@@ -6536,7 +6475,7 @@ handle_class_decl(reader& rdr,
     build_class_decl_if_not_suppressed(rdr, node, add_to_current_scope);
   MAYBE_MAP_TYPE_WITH_TYPE_ID(is_type(decl), node);
   if (decl && decl->get_scope())
-    rdr.maybe_canonicalize_type(decl, /*force_delay=*/false);
+    rdr.schedule_type_for_canonicalization(decl);
   return decl;
 }
 
@@ -6555,7 +6494,7 @@ handle_union_decl(reader& rdr,
     build_union_decl_if_not_suppressed(rdr, node, add_to_current_scope);
   MAYBE_MAP_TYPE_WITH_TYPE_ID(is_type(decl), node);
   if (decl && decl->get_scope())
-    rdr.maybe_canonicalize_type(decl, /*force_delay=*/false);
+    rdr.schedule_type_for_canonicalization(decl);
   return decl;
 }
 
