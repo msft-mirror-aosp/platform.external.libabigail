@@ -46,7 +46,6 @@ struct fe_iface::priv
     corpus_path.clear();
     dt_soname.clear();
     suppressions.clear();
-    corpus_group.reset();
     corpus.reset();
   }
 }; //end struct fe_iface::priv

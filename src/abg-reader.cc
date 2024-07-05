@@ -187,6 +187,22 @@ public:
   {
   }
 
+  /// The initializer of the reader.
+  ///
+  /// Resets the reader so that it can be re-used to read another
+  /// binary and build a corpus that is part of the same corpus group.
+  ///
+  /// In other words, the same reader is used to analyse all the
+  /// binaries that are part of the same corpus group.
+  ///
+  /// @param corpus_path the new corpus path.
+  void
+  initialize(const string& corpus_path)
+  {
+    fe_iface::initialize(corpus_path);
+    clear_types_to_canonicalize();
+  }
+
   /// Test if logging was requested.
   ///
   /// @return true iff logging was requested.
@@ -888,18 +904,6 @@ public:
   {
   }
 
-  /// Clear all the data that must absolutely be cleared at the end of
-  /// the parsing of an ABI corpus.
-  void
-  clear_per_corpus_data()
-  {
-    clear_type_map();
-    clear_types_to_canonicalize();
-    clear_xml_node_decl_map();
-    clear_id_xml_node_map();
-    clear_decls_stack();
-  }
-
 #ifdef WITH_DEBUG_SELF_COMPARISON
   /// Perform a debugging routine for the "self-comparison" mode.
   ///
@@ -1177,9 +1181,6 @@ public:
 	  get_environment().set_self_comparison_debug_input(corpus());
 #endif
 
-	if (!corpus_group())
-	  clear_per_corpus_data();
-
 	ir::corpus& corp = *corpus();
 
 	corp.set_origin(corpus::NATIVE_XML_ORIGIN);
@@ -1236,9 +1237,6 @@ public:
 	if (get_environment().self_comparison_debug_is_on())
 	  get_environment().set_self_comparison_debug_input(corpus());
 #endif
-
-	if (!corpus_group())
-	  clear_per_corpus_data();
 
 	ir::corpus& corp = *corpus();
 	corp.set_origin(corpus::NATIVE_XML_ORIGIN);
@@ -2310,7 +2308,14 @@ read_corpus_group_from_input(fe_iface& iface)
   corpus_sptr corp;
   fe_iface::status sts;
   while ((corp = rdr.read_corpus(sts)))
-    rdr.corpus_group()->add_corpus(corp);
+    {
+      rdr.corpus_group()->add_corpus(corp);
+      node = xmlNextElementSibling(node);
+      if (!node || !xmlStrEqual(node->name, BAD_CAST("abi-corpus")))
+	break;
+      rdr.initialize("");
+      rdr.set_corpus_node(node);
+    }
 
   xmlTextReaderNext(reader.get());
 
