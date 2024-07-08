@@ -21384,9 +21384,7 @@ equals(const function_type& l, const function_type& r, change_kind* k)
       // TODO: We should also do this for parameter types, or rather,
       // we should teach the equality operators in the IR, at some
       // point, to peel typedefs off.
-      if (peel_typedef_type(l.get_return_type())
-	  !=
-	  peel_typedef_type(r.get_return_type()))
+      if (l.get_return_type() != r.get_return_type())
 	{
 	  result = false;
 	  if (k)
@@ -22757,8 +22755,9 @@ equals(const function_decl::parameter& l,
 	ABG_RETURN_FALSE;
     }
 
-  type_base_sptr l_type = peel_typedef_type(l.get_type());
-  type_base_sptr r_type = peel_typedef_type(r.get_type());
+  type_base_sptr l_type = l.get_type();
+  type_base_sptr r_type = r.get_type();
+
   if (l_type != r_type)
     {
       result = false;

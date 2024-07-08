@@ -2484,10 +2484,10 @@
         <var-decl name='ReleaseStringCritical' type-id='c05a64c8' visibility='default' filepath='libnativehelper/include_jni/jni.h' line='468' column='1'/>
       </data-member>
       <data-member access='public' layout-offset-in-bits='7232'>
-        <var-decl name='NewWeakGlobalRef' type-id='e8d65641' visibility='default' filepath='libnativehelper/include_jni/jni.h' line='470' column='1'/>
+        <var-decl name='NewWeakGlobalRef' type-id='e8d65642' visibility='default' filepath='libnativehelper/include_jni/jni.h' line='470' column='1'/>
       </data-member>
       <data-member access='public' layout-offset-in-bits='7264'>
-        <var-decl name='DeleteWeakGlobalRef' type-id='f34f71b5' visibility='default' filepath='libnativehelper/include_jni/jni.h' line='471' column='1'/>
+        <var-decl name='DeleteWeakGlobalRef' type-id='f34f71b6' visibility='default' filepath='libnativehelper/include_jni/jni.h' line='471' column='1'/>
       </data-member>
       <data-member access='public' layout-offset-in-bits='7296'>
         <var-decl name='ExceptionCheck' type-id='c6d2cb52' visibility='default' filepath='libnativehelper/include_jni/jni.h' line='473' column='1'/>
@@ -3596,6 +3596,7 @@
     <pointer-type-def type-id='bf8b79fb' size-in-bits='32' id='a3339ebc'/>
     <pointer-type-def type-id='a6863c16' size-in-bits='32' id='b2c6c541'/>
     <pointer-type-def type-id='e13d7981' size-in-bits='32' id='a8a22fa6'/>
+    <pointer-type-def type-id='39763bbf' size-in-bits='32' id='e8d65642'/>
     <pointer-type-def type-id='a0eb0f09' size-in-bits='32' id='7408d286'/>
     <pointer-type-def type-id='3d7d8cbf' size-in-bits='32' id='a68021ce'/>
     <pointer-type-def type-id='05d4c620' size-in-bits='32' id='b8263143'/>
@@ -4125,6 +4126,7 @@
     <pointer-type-def type-id='3b2e054f' size-in-bits='32' id='c05a64c8'/>
     <pointer-type-def type-id='71686cf2' size-in-bits='32' id='0c1914a7'/>
     <pointer-type-def type-id='ada13aa2' size-in-bits='32' id='bd3e8fb9'/>
+    <pointer-type-def type-id='f82c684b' size-in-bits='32' id='f34f71b6'/>
     <pointer-type-def type-id='30a82da4' size-in-bits='32' id='c640490b'/>
     <pointer-type-def type-id='8deca216' size-in-bits='32' id='32c7d509'/>
     <pointer-type-def type-id='b472b352' size-in-bits='32' id='23103ee5'/>
@@ -10186,6 +10188,11 @@
       <parameter type-id='0b9c02cb'/>
       <return type-id='0b9c02cb'/>
     </function-type>
+    <function-type size-in-bits='32' id='e375f1d9'>
+      <parameter type-id='fae49a1f'/>
+      <parameter type-id='96f3d089'/>
+      <return type-id='0b9c02cb'/>
+    </function-type>
     <function-type size-in-bits='32' id='8ae4e70f'>
       <parameter type-id='fae49a1f'/>
       <parameter type-id='96f3d089'/>
@@ -10598,6 +10605,11 @@
     <function-type size-in-bits='32' id='e13d7981'>
       <parameter type-id='fae49a1f'/>
       <return type-id='5b89f496'/>
+    </function-type>
+    <function-type size-in-bits='32' id='39763bbf'>
+      <parameter type-id='fae49a1f'/>
+      <parameter type-id='96f3d089'/>
+      <return type-id='6c9a8402'/>
     </function-type>
     <function-type size-in-bits='32' id='03e3ce24'>
       <parameter type-id='fae49a1f'/>
@@ -11031,6 +11043,11 @@
       <parameter type-id='071e4e5d'/>
       <return type-id='48b5725f'/>
     </function-type>
+    <function-type size-in-bits='32' id='f82c684b'>
+      <parameter type-id='fae49a1f'/>
+      <parameter type-id='6c9a8402'/>
+      <return type-id='48b5725f'/>
+    </function-type>
     <function-type size-in-bits='32' id='8deca216'>
       <parameter type-id='fae49a1f'/>
       <parameter type-id='65b69bb3'/>
@@ -11041,11 +11058,6 @@
       <parameter type-id='fae49a1f'/>
       <parameter type-id='96f3d089'/>
       <return type-id='eaa32e2f'/>
-    </function-type>
-    <function-type size-in-bits='32' id='e375f1d9'>
-      <parameter type-id='fae49a1f'/>
-      <parameter type-id='96f3d089'/>
-      <return type-id='0b9c02cb'/>
     </function-type>
   </abi-instr>
   <abi-instr address-size='32' path='frameworks/base/native/android/choreographer.cpp' language='LANG_C_plus_plus_14'>
