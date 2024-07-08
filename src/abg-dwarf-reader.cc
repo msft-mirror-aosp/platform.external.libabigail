@@ -9539,9 +9539,9 @@ die_qualified_type_name(const reader& rdr,
 
     case DW_TAG_base_type:
       {
-	abigail::ir::integral_type int_type;
-	if (parse_integral_type(name, int_type))
-	  repr = int_type;
+	abigail::ir::real_type real_type;
+	if (parse_real_type(name, real_type))
+	  repr = real_type;
 	else
 	  repr = name;
       }
@@ -12779,9 +12779,9 @@ build_type_decl(reader& rdr, Dwarf_Die* die, size_t where_offset)
   if (corpus_sptr corp = rdr.should_reuse_type_from_corpus_group())
     {
       string normalized_type_name = type_name;
-      integral_type int_type;
-      if (parse_integral_type(type_name, int_type))
-	normalized_type_name = int_type.to_string();
+      real_type real_type;
+      if (parse_real_type(type_name, real_type))
+	normalized_type_name = real_type.to_string();
       result = lookup_basic_type(normalized_type_name, *corp);
     }
 

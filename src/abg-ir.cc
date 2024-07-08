@@ -213,7 +213,7 @@ static interned_string
 get_generic_anonymous_internal_type_name(const decl_base *d);
 
 static string
-get_internal_integral_type_name(const type_base*);
+get_internal_real_type_name(const type_base*);
 
 static void
 update_qualified_name(decl_base * d);
@@ -507,7 +507,7 @@ location_manager::~location_manager() = default;
 
 /// Insert the triplet representing a source locus into our internal
 /// vector of location triplet.  Return an instance of location type,
-/// built from an integral type that represents the index of the
+/// built from an real type that represents the index of the
 /// source locus triplet into our source locus table.
 ///
 /// @param file_path the file path of the source locus
@@ -8849,30 +8849,30 @@ get_generic_anonymous_internal_type_name(const decl_base *d)
   return result;
 }
 
-/// Get the internal name for a given integral type.
+/// Get the internal name for a given real type.
 ///
-/// All integral types that have the modifiers 'short, long or long
+/// All real types that have the modifiers 'short, long or long
 /// long' have the same internal name.  This is so that they can all
 /// have the same canonical type if they are of the same size.
 /// Otherwise, 'long int' and 'long long int' would have different
 /// canonical types even though they are equivalent from an ABI point
 /// of view.
 ///
-/// @param t the integral type to consider
+/// @param t the real type to consider
 ///
 /// @return the internal name for @p t if it's an integral type, or
-/// the empty string if @p t is not an integral type.
+/// the empty string if @p t is not a real type.
 static string
-get_internal_integral_type_name(const type_base* t)
+get_internal_real_type_name(const type_base* t)
 {
   string name;
-  type_decl *type = is_integral_type(t);
+  type_decl *type = is_real_type(t);
 
   if (!type)
     return name;
 
-  integral_type int_type;
-  if (parse_integral_type(type->get_name(), int_type))
+  real_type int_type;
+  if (parse_real_type(type->get_name(), int_type))
     name = int_type.to_string(/*internal=*/true);
 
   return name;
@@ -8923,7 +8923,7 @@ get_type_name(const type_base* t, bool qualified, bool internal)
       if (qualified)
 	return d->get_qualified_name(internal);
 
-      return env.intern(get_internal_integral_type_name(t));
+      return env.intern(get_internal_real_type_name(t));
     }
 
   if (d->get_is_anonymous())
@@ -10564,6 +10564,46 @@ type_decl_sptr
 is_type_decl(const type_or_decl_base_sptr& t)
 {return dynamic_pointer_cast<type_decl>(t);}
 
+/// Test if a type is a real type.
+///
+/// @param t the type to test.
+///
+/// @return the real type @p t can be converted to, or nil if @p
+/// is not a real type.
+type_decl*
+is_real_type(const type_or_decl_base* t)
+{
+  type_decl *type = const_cast<type_decl*>(is_type_decl(t));
+  if (!type)
+    return nullptr;
+
+  real_type int_type;
+  if (!parse_real_type(type->get_name(), int_type))
+    return nullptr;
+
+  return type;
+}
+
+/// Test if a type is a real type.
+///
+/// @param t the type to test.
+///
+/// @return the real type @p t can be converted to, or nil if @p is
+/// not a real type.
+type_decl_sptr
+is_real_type(const type_or_decl_base_sptr& t)
+{
+  const type_decl_sptr type = is_type_decl(t);
+  if (!type)
+    return type_decl_sptr();
+
+  real_type int_type;
+  if (!parse_real_type(type->get_name(), int_type))
+    return type_decl_sptr();
+
+  return type;
+}
+
 /// Test if a type is an integral type.
 ///
 /// @param t the type to test.
@@ -10573,12 +10613,14 @@ is_type_decl(const type_or_decl_base_sptr& t)
 type_decl*
 is_integral_type(const type_or_decl_base* t)
 {
-  type_decl *type = const_cast<type_decl*>(is_type_decl(t));
+  type_decl* type = is_real_type(t);
   if (!type)
     return nullptr;
 
-  integral_type int_type;
-  if (!parse_integral_type(type->get_name(), int_type))
+  real_type rt;
+  ABG_ASSERT(parse_real_type(type->get_name(), rt));
+  if (rt.get_base_type () == real_type::FLOAT_BASE_TYPE
+      || rt.get_base_type() == real_type::DOUBLE_BASE_TYPE)
     return nullptr;
 
   return type;
@@ -10593,12 +10635,14 @@ is_integral_type(const type_or_decl_base* t)
 type_decl_sptr
 is_integral_type(const type_or_decl_base_sptr& t)
 {
-  const type_decl_sptr type = is_type_decl(t);
+  type_decl_sptr type = is_real_type(t);
   if (!type)
-    return type_decl_sptr();
+    return type;
 
-  integral_type int_type;
-  if (!parse_integral_type(type->get_name(), int_type))
+  real_type rt;
+  ABG_ASSERT(parse_real_type(type->get_name(), rt));
+  if (rt.get_base_type () == real_type::FLOAT_BASE_TYPE
+      || rt.get_base_type() == real_type::DOUBLE_BASE_TYPE)
     return type_decl_sptr();
 
   return type;
@@ -15961,80 +16005,80 @@ type_base::~type_base()
 
 // </type_base definitions>
 
-// <integral_type definitions>
+// <real_type definitions>
 
-/// Bitwise OR operator for integral_type::modifiers_type.
+/// Bitwise OR operator for real_type::modifiers_type.
 ///
 /// @param l the left-hand side operand.
 ///
 /// @param r the right-hand side operand.
 ///
 /// @return the result of the bitwise OR.
-integral_type::modifiers_type
-operator|(integral_type::modifiers_type l, integral_type::modifiers_type r)
+real_type::modifiers_type
+operator|(real_type::modifiers_type l, real_type::modifiers_type r)
 {
-  return static_cast<integral_type::modifiers_type>(static_cast<unsigned>(l)
+  return static_cast<real_type::modifiers_type>(static_cast<unsigned>(l)
 						    |
 						    static_cast<unsigned>(r));
 }
 
-/// Bitwise AND operator for integral_type::modifiers_type.
+/// Bitwise AND operator for real_type::modifiers_type.
 ///
 /// @param l the left-hand side operand.
 ///
 /// @param r the right-hand side operand.
 ///
 /// @return the result of the bitwise AND.
-integral_type::modifiers_type
-operator&(integral_type::modifiers_type l, integral_type::modifiers_type r)
+real_type::modifiers_type
+operator&(real_type::modifiers_type l, real_type::modifiers_type r)
 {
-  return static_cast<integral_type::modifiers_type>(static_cast<unsigned>(l)
+  return static_cast<real_type::modifiers_type>(static_cast<unsigned>(l)
 						    &
 						    static_cast<unsigned>(r));
 }
 
-/// Bitwise one's complement operator for integral_type::modifiers_type.
+/// Bitwise one's complement operator for real_type::modifiers_type.
 ///
 /// @param l the left-hand side operand.
 ///
 /// @param r the right-hand side operand.
 ///
 /// @return the result of the bitwise one's complement operator.
-integral_type::modifiers_type
-operator~(integral_type::modifiers_type l)
+real_type::modifiers_type
+operator~(real_type::modifiers_type l)
 {
-  return static_cast<integral_type::modifiers_type>(~static_cast<unsigned>(l));
+  return static_cast<real_type::modifiers_type>(~static_cast<unsigned>(l));
 }
 
-/// Bitwise |= operator for integral_type::modifiers_type.
+/// Bitwise |= operator for real_type::modifiers_type.
 ///
 /// @param l the left-hand side operand.
 ///
 /// @param r the right-hand side operand.
 ///
 /// @return the result of the bitwise |=.
-integral_type::modifiers_type&
-operator|=(integral_type::modifiers_type& l, integral_type::modifiers_type r)
+real_type::modifiers_type&
+operator|=(real_type::modifiers_type& l, real_type::modifiers_type r)
 {
   l = l | r;
   return l;
 }
 
-/// Bitwise &= operator for integral_type::modifiers_type.
+/// Bitwise &= operator for real_type::modifiers_type.
 ///
 /// @param l the left-hand side operand.
 ///
 /// @param r the right-hand side operand.
 ///
 /// @return the result of the bitwise &=.
-integral_type::modifiers_type&
-operator&=(integral_type::modifiers_type& l, integral_type::modifiers_type r)
+real_type::modifiers_type&
+operator&=(real_type::modifiers_type& l, real_type::modifiers_type r)
 {
   l = l & r;
   return l;
 }
 
-/// Parse a word containing one integral type modifier.
+/// Parse a word containing one real type modifier.
 ///
 /// A word is considered to be a string of characters that doesn't
 /// contain any white space.
@@ -16047,26 +16091,26 @@ operator&=(integral_type::modifiers_type& l, integral_type::modifiers_type r)
 ///
 /// @return true iff @word was successfully parsed.
 static bool
-parse_integral_type_modifier(const string& word,
-			     integral_type::modifiers_type &modifiers)
+parse_real_type_modifier(const string& word,
+			     real_type::modifiers_type &modifiers)
 {
     if (word == "signed")
-      modifiers |= integral_type::SIGNED_MODIFIER;
+      modifiers |= real_type::SIGNED_MODIFIER;
     else if (word == "unsigned")
-      modifiers |= integral_type::UNSIGNED_MODIFIER;
+      modifiers |= real_type::UNSIGNED_MODIFIER;
     else if (word == "short")
-      modifiers |= integral_type::SHORT_MODIFIER;
+      modifiers |= real_type::SHORT_MODIFIER;
     else if (word == "long")
-      modifiers |= integral_type::LONG_MODIFIER;
+      modifiers |= real_type::LONG_MODIFIER;
     else if (word == "long long")
-      modifiers |= integral_type::LONG_LONG_MODIFIER;
+      modifiers |= real_type::LONG_LONG_MODIFIER;
     else
       return false;
 
     return true;
 }
 
-/// Parse a base type of an integral type from a string.
+/// Parse a base type of a real type from a string.
 ///
 /// @param type_name the type name to parse.
 ///
@@ -16076,47 +16120,47 @@ parse_integral_type_modifier(const string& word,
 /// @return true iff the function could successfully parse the base
 /// type.
 static bool
-parse_base_integral_type(const string& type_name,
-			 integral_type::base_type& base)
+parse_base_real_type(const string& type_name,
+			 real_type::base_type& base)
 {
   if (type_name == "int")
-    base = integral_type::INT_BASE_TYPE;
+    base = real_type::INT_BASE_TYPE;
   else if (type_name == "char")
-    base = integral_type::CHAR_BASE_TYPE;
+    base = real_type::CHAR_BASE_TYPE;
   else if (type_name == "bool" || type_name == "_Bool")
-    base = integral_type::BOOL_BASE_TYPE;
+    base = real_type::BOOL_BASE_TYPE;
   else if (type_name == "double")
-    base = integral_type::DOUBLE_BASE_TYPE;
+    base = real_type::DOUBLE_BASE_TYPE;
   else if (type_name =="float")
-    base = integral_type::FLOAT_BASE_TYPE;
+    base = real_type::FLOAT_BASE_TYPE;
   else if (type_name == "char16_t")
-    base = integral_type::CHAR16_T_BASE_TYPE;
+    base = real_type::CHAR16_T_BASE_TYPE;
   else if (type_name == "char32_t")
-    base = integral_type::CHAR32_T_BASE_TYPE;
+    base = real_type::CHAR32_T_BASE_TYPE;
   else if (type_name == "wchar_t")
-    base = integral_type::WCHAR_T_BASE_TYPE;
+    base = real_type::WCHAR_T_BASE_TYPE;
   else
     return false;
 
   return true;
 }
 
-/// Parse an integral type from a string.
+/// Parse a real type from a string.
 ///
-/// @param type_name the string containing the integral type to parse.
+/// @param type_name the string containing the real type to parse.
 ///
 /// @param base out parameter.  Is set by this function to the base
-/// type of the integral type, iff the function returned true.
+/// type of the real type, iff the function returned true.
 ///
 /// @param modifiers out parameter  If set by this function to the
-/// modifier of the integral type, iff the function returned true.
+/// modifier of the real type, iff the function returned true.
 ///
-/// @return true iff the function could parse an integral type from @p
+/// @return true iff the function could parse a real type from @p
 /// type_name.
 static bool
-parse_integral_type(const string&			type_name,
-		    integral_type::base_type&		base,
-		    integral_type::modifiers_type&	modifiers)
+parse_real_type(const string&			type_name,
+		    real_type::base_type&		base,
+		    real_type::modifiers_type&	modifiers)
 {
   string input = type_name;
   string::size_type len = input.length();
@@ -16160,9 +16204,9 @@ parse_integral_type(const string&			type_name,
 	    }
 	}
 
-      if (!parse_integral_type_modifier(cur_word, modifiers))
+      if (!parse_real_type_modifier(cur_word, modifiers))
 	{
-	  if (!parse_base_integral_type(cur_word, base))
+	  if (!parse_base_real_type(cur_word, base))
 	    return false;
 	  else
 	    ok = true;
@@ -16174,99 +16218,99 @@ parse_integral_type(const string&			type_name,
   return ok;
 }
 
-/// Parse an integral type from a string.
+/// Parse a real type from a string.
 ///
-/// @param str the string containing the integral type to parse.
+/// @param str the string containing the real type to parse.
 ///
-///@param type the resulting @ref integral_type.  Is set to the result
+///@param type the resulting @ref real_type.  Is set to the result
 ///of the parse, iff the function returns true.
 ///
-/// @return true iff the function could parse an integral type from @p
+/// @return true iff the function could parse a real type from @p
 /// str.
 bool
-parse_integral_type(const string& str, integral_type& type)
+parse_real_type(const string& str, real_type& type)
 {
-  integral_type::base_type base_type = integral_type::INT_BASE_TYPE;
-  integral_type::modifiers_type modifiers = integral_type::NO_MODIFIER;
+  real_type::base_type base_type = real_type::INT_BASE_TYPE;
+  real_type::modifiers_type modifiers = real_type::NO_MODIFIER;
 
-  if (!parse_integral_type(str, base_type, modifiers))
+  if (!parse_real_type(str, base_type, modifiers))
     return false;
 
-  // So this is an integral type.
-  integral_type int_type(base_type, modifiers);
+  // So this is a real type.
+  real_type int_type(base_type, modifiers);
   type = int_type;
   return true;
 }
 
-/// Default constructor of the @ref integral_type.
-integral_type::integral_type()
+/// Default constructor of the @ref real_type.
+real_type::real_type()
   : base_(INT_BASE_TYPE),
     modifiers_(NO_MODIFIER)
 {}
 
-/// Constructor of the @ref integral_type.
+/// Constructor of the @ref real_type.
 ///
-/// @param b the base type of the integral type.
+/// @param b the base type of the real type.
 ///
-/// @param m the modifiers of the integral type.
-integral_type::integral_type(base_type b, modifiers_type m)
+/// @param m the modifiers of the real type.
+real_type::real_type(base_type b, modifiers_type m)
   : base_(b), modifiers_(m)
 {}
 
-/// Constructor of the @ref integral_type.
+/// Constructor of the @ref real_type.
 ///
-/// @param the name of the integral type to parse to initialize the
-/// current instance of @ref integral_type.
-integral_type::integral_type(const string& type_name)
+/// @param the name of the real type to parse to initialize the
+/// current instance of @ref real_type.
+real_type::real_type(const string& type_name)
   : base_(INT_BASE_TYPE),
     modifiers_(NO_MODIFIER)
 {
-  bool could_parse = parse_integral_type(type_name, base_, modifiers_);
+  bool could_parse = parse_real_type(type_name, base_, modifiers_);
   ABG_ASSERT(could_parse);
 }
 
-/// Getter of the base type of the @ref integral_type.
+/// Getter of the base type of the @ref real_type.
 ///
-/// @return the base type of the @ref integral_type.
-integral_type::base_type
-integral_type::get_base_type() const
+/// @return the base type of the @ref real_type.
+real_type::base_type
+real_type::get_base_type() const
 {return base_;}
 
-/// Getter of the modifiers bitmap of the @ref integral_type.
+/// Getter of the modifiers bitmap of the @ref real_type.
 ///
-/// @return the modifiers bitmap of the @ref integral_type.
-integral_type::modifiers_type
-integral_type::get_modifiers() const
+/// @return the modifiers bitmap of the @ref real_type.
+real_type::modifiers_type
+real_type::get_modifiers() const
 {return modifiers_;}
 
-/// Setter of the modifiers bitmap of the @ref integral_type.
+/// Setter of the modifiers bitmap of the @ref real_type.
 ///
 /// @param m the new modifiers.
 void
-integral_type::set_modifiers(modifiers_type m)
+real_type::set_modifiers(modifiers_type m)
 {modifiers_ = m;}
 
-/// Equality operator for the @ref integral_type.
+/// Equality operator for the @ref real_type.
 ///
-/// @param other the other integral type to compare against.
+/// @param other the other real type to compare against.
 ///
 /// @return true iff @p other equals the current instance of @ref
-/// integral_type.
+/// real_type.
 bool
-integral_type::operator==(const integral_type&other) const
+real_type::operator==(const real_type&other) const
 {return base_ == other.base_ && modifiers_ == other.modifiers_;}
 
 /// Return the string representation of the current instance of @ref
-/// integral_type.
+/// real_type.
 ///
 /// @param internal if true the string representation is to be used
 /// for internal purposes.  In general, it means it's for type
 /// canonicalization purposes.
 ///
 /// @return the string representation of the current instance of @ref
-/// integral_type.
+/// real_type.
 string
-integral_type::to_string(bool internal) const
+real_type::to_string(bool internal) const
 {
   string result;
 
@@ -16313,15 +16357,15 @@ integral_type::to_string(bool internal) const
   return result;
 }
 
-/// Convert the current instance of @ref integral_type into its string
+/// Convert the current instance of @ref real_type into its string
 /// representation.
 ///
 /// @return the string representation of the current instance of @ref
-/// integral_type.
-integral_type::operator string() const
+/// real_type.
+real_type::operator string() const
 {return to_string();}
 
-// </integral_type definitions>
+// </real_type definitions>
 
 //<type_decl definitions>
 
@@ -16358,22 +16402,22 @@ type_decl::type_decl(const environment& env,
 {
   runtime_type_instance(this);
 
-  integral_type::base_type base_type = integral_type::INT_BASE_TYPE;
-  integral_type::modifiers_type modifiers = integral_type::NO_MODIFIER;
-  integral_type int_type(base_type, modifiers);
-  if (parse_integral_type(name, int_type))
+  real_type::base_type base_type = real_type::INT_BASE_TYPE;
+  real_type::modifiers_type modifiers = real_type::NO_MODIFIER;
+  real_type int_type(base_type, modifiers);
+  if (parse_real_type(name, int_type))
     {
-      // Convert the integral_type into its canonical string
+      // Convert the real_type into its canonical string
       // representation.
-      string integral_type_name = int_type;
+      string real_type_name = int_type;
 
       // Set the name of this type_decl to the canonical string
       // representation above
-      set_name(integral_type_name);
+      set_name(real_type_name);
       set_qualified_name(get_name());
 
       if (!get_linkage_name().empty())
-	set_linkage_name(integral_type_name);
+	set_linkage_name(real_type_name);
     }
 }
 
@@ -16552,19 +16596,19 @@ type_decl::get_qualified_name(bool internal) const
 
 
   if (internal)
-    if (is_integral_type(this))
+    if (is_real_type(this))
       {
 	if (get_naked_canonical_type())
 	  {
 	    if (decl_base::priv_->internal_qualified_name_.empty())
 	      decl_base::priv_->internal_qualified_name_ =
-		env.intern(get_internal_integral_type_name(this));
+		env.intern(get_internal_real_type_name(this));
 	    return decl_base::priv_->internal_qualified_name_;
 	  }
 	else
 	  {
 	    decl_base::priv_->temporary_internal_qualified_name_ =
-	      env.intern(get_internal_integral_type_name(this));
+	      env.intern(get_internal_real_type_name(this));
 	    return decl_base::priv_->temporary_internal_qualified_name_;
 	  }
       }
@@ -16594,8 +16638,8 @@ type_decl::get_pretty_representation(bool internal,
 				     bool qualified_name) const
 {
   if (internal)
-    if (is_integral_type(this))
-      return get_internal_integral_type_name(this);
+    if (is_real_type(this))
+      return get_internal_real_type_name(this);
 
   if (qualified_name)
     return get_qualified_name(internal);

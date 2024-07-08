@@ -863,9 +863,9 @@ process_ctf_base_type(reader *rdr,
       if (corpus_sptr corp = rdr->should_reuse_type_from_corpus_group())
         {
           string normalized_type_name = type_name;
-          integral_type int_type;
-          if (parse_integral_type(type_name, int_type))
-            normalized_type_name = int_type.to_string();
+          real_type real_type;
+          if (parse_real_type(type_name, real_type))
+            normalized_type_name = real_type.to_string();
           if ((result = lookup_basic_type(normalized_type_name, *corp)))
             return result;
         }

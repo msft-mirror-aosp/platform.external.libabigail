@@ -451,6 +451,12 @@ is_integral_type(const type_or_decl_base*);
 type_decl_sptr
 is_integral_type(const type_or_decl_base_sptr&);
 
+type_decl*
+is_real_type(const type_or_decl_base*);
+
+type_decl_sptr
+is_real_type(const type_or_decl_base_sptr&);
+
 typedef_decl_sptr
 is_typedef(const type_or_decl_base_sptr);
 

@@ -43,14 +43,14 @@ enum comparison_result
 /// This is a "utility type" used internally to canonicalize the name
 /// of fundamental integral types, so that "unsignd long" and "long
 /// unsined int" end-up having the same name.
-class integral_type
+class real_type
 {
 public:
   /// The possible base types of integral types.  We might have
   /// forgotten many of these, so do not hesitate to add new ones.
   ///
   /// If you do add new ones, please also consider updating functions
-  /// parse_base_integral_type and integral_type::to_string.
+  /// parse_base_real_type and real_type::to_string.
   enum base_type
   {
     /// The "int" base type.
@@ -76,7 +76,7 @@ public:
   /// usually modelled by a bitmap of modifiers.
   ///
   /// If you add a new modifier, please consider updating functions
-  /// parse_integral_type_modifier and integral_type::to_string.
+  /// parse_real_type_modifier and real_type::to_string.
   enum modifiers_type
   {
     NO_MODIFIER = 0,
@@ -98,9 +98,9 @@ private:
 
 public:
 
-  integral_type();
-  integral_type(const string& name);
-  integral_type(base_type, modifiers_type);
+  real_type();
+  real_type(const string& name);
+  real_type(base_type, modifiers_type);
 
   base_type
   get_base_type() const;
@@ -112,32 +112,32 @@ public:
   set_modifiers(modifiers_type);
 
   bool
-  operator==(const integral_type&) const;
+  operator==(const real_type&) const;
 
   string
   to_string(bool internal=false) const;
 
   operator string() const;
-}; // end class integral_type
+}; // end class real_type
 
-integral_type::modifiers_type
-operator|(integral_type::modifiers_type l, integral_type::modifiers_type r);
+real_type::modifiers_type
+operator|(real_type::modifiers_type l, real_type::modifiers_type r);
 
-integral_type::modifiers_type
-operator&(integral_type::modifiers_type l, integral_type::modifiers_type r);
+real_type::modifiers_type
+operator&(real_type::modifiers_type l, real_type::modifiers_type r);
 
-integral_type::modifiers_type
-operator~(integral_type::modifiers_type l);
+real_type::modifiers_type
+operator~(real_type::modifiers_type l);
 
-integral_type::modifiers_type&
-operator|=(integral_type::modifiers_type& l, integral_type::modifiers_type r);
+real_type::modifiers_type&
+operator|=(real_type::modifiers_type& l, real_type::modifiers_type r);
 
-integral_type::modifiers_type&
-operator &=(integral_type::modifiers_type& l, integral_type::modifiers_type r);
+real_type::modifiers_type&
+operator &=(real_type::modifiers_type& l, real_type::modifiers_type r);
 
 bool
-parse_integral_type(const string& type_name,
-		    integral_type& type);
+parse_real_type(const string& type_name,
+		    real_type& type);
 
 /// Private type to hold private members of @ref translation_unit
 struct translation_unit::priv
