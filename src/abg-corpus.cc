@@ -14,6 +14,7 @@
 #include <stdexcept>
 #include <unordered_map>
 #include <set>
+#include <memory>
 
 #include "abg-internal.h"
 
@@ -724,14 +725,11 @@ corpus::add(const translation_unit_sptr& tu)
 {
   ABG_ASSERT(priv_->members.insert(tu).second);
 
-  if (!tu->get_absolute_path().empty())
-    {
-      // Update the path -> translation_unit map.
-      string_tu_map_type::const_iterator i =
-	priv_->path_tu_map.find(tu->get_absolute_path());
-      ABG_ASSERT(i == priv_->path_tu_map.end());
-      priv_->path_tu_map[tu->get_absolute_path()] = tu;
-    }
+  // Update the path -> translation_unit map.
+  string_tu_map_type::const_iterator i =
+    priv_->path_tu_map.find(tu->get_absolute_path());
+  ABG_ASSERT(i == priv_->path_tu_map.end());
+  priv_->path_tu_map[tu->get_absolute_path()] = tu;
 
   tu->set_corpus(this);
 }
