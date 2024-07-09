@@ -1620,7 +1620,7 @@ canonicalize_types(const input_iterator& begin,
   // First, let's compute the canonical type of this type.
   for (t = begin,i = 0; t != end; ++t, ++i)
     {
-      if (deref(t)->get_environment().priv_->do_log())
+      if (deref(t) && deref(t)->get_environment().priv_->do_log())
 	std::cerr << "#" << std::dec << i << " ";
 
       canonicalize(deref(t));
