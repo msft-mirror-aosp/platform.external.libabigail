@@ -1729,6 +1729,12 @@ create_reader(const std::string& elf_path,
   reader_sptr result(new reader(elf_path,
 				debug_info_root_paths,
 				env));
+
+#ifdef WITH_DEBUG_SELF_COMPARISON
+    if (env.self_comparison_debug_is_on())
+      env.set_self_comparison_debug_input(result->corpus());
+#endif
+
   return result;
 }
 

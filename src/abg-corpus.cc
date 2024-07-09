@@ -2247,6 +2247,16 @@ bool
 corpus_group::recording_types_reachable_from_public_interface_supported()
 {return !get_public_types_pretty_representations()->empty();}
 
+/// Test if a @ref corpus is a @ref corpus_group.
+///
+/// @param corpus the corpus to consider.
+///
+/// @return the @ref corpus_group is @p corpus is a corpus group, or
+/// nil.
+corpus_group_sptr
+is_corpus_group(const corpus_sptr& corpus)
+{return std::dynamic_pointer_cast<corpus_group>(corpus);}
+
 // </corpus_group stuff>
 
 }// end namespace ir

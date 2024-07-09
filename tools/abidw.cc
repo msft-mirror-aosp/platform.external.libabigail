@@ -624,6 +624,121 @@ set_generic_options(abigail::elf_based_reader& rdr, options& opts)
   rdr.options().load_undefined_interfaces = opts.load_undefined_interfaces;
 }
 
+/// Given a corpus (or a corpus group), write it as ABIXML, read it
+/// back into another corpus and compare the resulting two corpora.
+///
+/// The result of the comparison should be the empty set.
+///
+/// @param write_ctxt the write context to use for writing the corpus
+/// to ABIXML.
+///
+/// @param corp the input corpus (or corpus group) to serialize to
+/// ABIXML.
+///
+/// @param env the environment used for computing.
+///
+/// @param t the timer to be used for the logs.
+///
+/// @param opts the options passed to the main program.
+///
+/// @param argv the vector of arguments of the main program.
+///
+/// @return 0 if the self comparison did yield the empty set, 1
+/// otherwise.  If the comparison does (wronly) yield a result, that
+/// result if emitted on std::cerr.
+static int
+perform_self_comparison(const write_context_sptr& write_ctxt,
+			const corpus_sptr& corp,
+			environment& env,
+			timer& t,
+			options& opts,
+			char* argv[])
+{
+  // Save the abi in abixml format in a temporary file, read
+  // it back, and compare the ABI of what we've read back
+  // against the ABI of the input ELF file.
+  temp_file_sptr tmp_file = temp_file::create();
+  set_ostream(*write_ctxt, tmp_file->get_stream());
+  corpus_group_sptr corp_group = is_corpus_group(corp);
+
+  if (corp_group)
+    write_corpus_group(*write_ctxt, corp_group, 0);
+  else
+    write_corpus(*write_ctxt, corp, 0);
+  tmp_file->get_stream().flush();
+
+#ifdef WITH_DEBUG_SELF_COMPARISON
+  if (opts.debug_abidiff)
+    {
+      opts.type_id_file_path = tmp_file->get_path() + string(".typeid");
+      write_canonical_type_ids(*write_ctxt, opts.type_id_file_path);
+    }
+#endif
+  fe_iface_sptr rdr = abixml::create_reader(tmp_file->get_path(), env);
+
+#ifdef WITH_DEBUG_SELF_COMPARISON
+  if (opts.debug_abidiff
+      && !opts.type_id_file_path.empty())
+    load_canonical_type_ids(*rdr, opts.type_id_file_path);
+#endif
+
+  t.start();
+  fe_iface::status sts;
+  corpus_sptr corp2;
+  corpus_group_sptr corp_group2;
+
+  if (corp_group)
+    corp_group2 = abixml::read_corpus_group_from_input(*rdr);
+  else
+    corp2 = rdr->read_corpus(sts);
+
+  t.stop();
+  if (opts.do_log)
+    emit_prefix(argv[0], cerr)
+      << "Read corpus in: " << t << "\n";
+
+#ifdef WITH_DEBUG_SELF_COMPARISON
+  if (opts.debug_abidiff
+      && !opts.type_id_file_path.empty())
+    remove(opts.type_id_file_path.c_str());
+#endif
+
+  if (!corp2 && !corp_group2)
+    {
+      emit_prefix(argv[0], cerr)
+	<< "Could not read temporary XML representation of "
+	"elf file back\n";
+      return 1;
+    }
+
+  diff_context_sptr ctxt(new diff_context);
+  set_diff_context(ctxt);
+  ctxt->show_locs(opts.show_locs);
+  t.start();
+  corpus_diff_sptr diff =
+    corp_group2
+    ? compute_diff(corp_group, corp_group2, ctxt)
+    : compute_diff(corp, corp2, ctxt);
+
+  t.stop();
+  if (opts.do_log)
+    emit_prefix(argv[0], cerr)
+      << "computed diff in: " << t << "\n";
+
+  bool has_error = diff->has_changes();
+  if (has_error)
+    {
+      t.start();
+      diff->report(cerr);
+      t.stop();
+      if (opts.do_log)
+	emit_prefix(argv[0], cerr)
+	  << "emitted report in: " << t << "\n";
+      return 1;
+    }
+  return 0;
+}
+
 /// Load an ABI @ref corpus (the internal representation of the ABI of
 /// a binary) and write it out as an abixml.
 ///
@@ -841,88 +956,9 @@ load_corpus_and_write_abixml(char* argv[],
       << t << "\n";
 
   if (opts.abidiff)
-    {
-      // Save the abi in abixml format in a temporary file, read
-      // it back, and compare the ABI of what we've read back
-      // against the ABI of the input ELF file.
-      temp_file_sptr tmp_file = temp_file::create();
-      set_ostream(*write_ctxt, tmp_file->get_stream());
-      if (corp_group)
-	write_corpus_group(*write_ctxt, corp_group, 0);
-      else
-	write_corpus(*write_ctxt, corp, 0);
-      tmp_file->get_stream().flush();
-
-#ifdef WITH_DEBUG_SELF_COMPARISON
-      if (opts.debug_abidiff)
-        {
-          opts.type_id_file_path = tmp_file->get_path() + string(".typeid");
-          write_canonical_type_ids(*write_ctxt, opts.type_id_file_path);
-        }
-#endif
-      fe_iface_sptr rdr = abixml::create_reader(tmp_file->get_path(), env);
-
-#ifdef WITH_DEBUG_SELF_COMPARISON
-      if (opts.debug_abidiff
-          && !opts.type_id_file_path.empty())
-        load_canonical_type_ids(*rdr, opts.type_id_file_path);
-#endif
-      t.start();
-      fe_iface::status sts;
-      corpus_sptr corp2;
-      corpus_group_sptr corp_group2;
-
-      if (corp_group)
-	corp_group2 = abixml::read_corpus_group_from_input(*rdr);
-      else
-	corp2 = rdr->read_corpus(sts);
-
-      t.stop();
-      if (opts.do_log)
-        emit_prefix(argv[0], cerr)
-          << "Read corpus in: " << t << "\n";
-
-      if (!corp2)
-        {
-          emit_prefix(argv[0], cerr)
-            << "Could not read temporary XML representation of "
-            "elf file back\n";
-          return 1;
-        }
-
-      diff_context_sptr ctxt(new diff_context);
-      set_diff_context(ctxt);
-      ctxt->show_locs(opts.show_locs);
-      t.start();
-      corpus_diff_sptr diff =
-	corp_group2
-	? compute_diff(corp_group, corp_group2, ctxt)
-	: compute_diff(corp, corp2, ctxt);
-
-      t.stop();
-      if (opts.do_log)
-        emit_prefix(argv[0], cerr)
-          << "computed diff in: " << t << "\n";
-
-      bool has_error = diff->has_changes();
-      if (has_error)
-        {
-          t.start();
-          diff->report(cerr);
-          t.stop();
-          if (opts.do_log)
-            emit_prefix(argv[0], cerr)
-              << "emitted report in: " << t << "\n";
-          return 1;
-        }
-      return 0;
-    }
-
-#ifdef WITH_DEBUG_SELF_COMPARISON
-  if (opts.debug_abidiff
-      && !opts.type_id_file_path.empty())
-    remove(opts.type_id_file_path.c_str());
-#endif
+    return perform_self_comparison(write_ctxt,
+				   corp_group ? corp_group : corp,
+				   env, t, opts, argv);
 
   if (opts.noout)
     return 0;
@@ -992,6 +1028,11 @@ load_kernel_corpus_group_and_write_abixml(char* argv[],
     if (!abigail::tools_utils::check_file(opts.vmlinux, cerr, argv[0]))
       return 1;
 
+#ifdef WITH_DEBUG_SELF_COMPARISON
+  if (opts.debug_abidiff)
+    env.self_comparison_debug_is_on(true);
+#endif
+
   timer t, global_timer;
   suppressions_type supprs;
 
@@ -1037,6 +1078,9 @@ load_kernel_corpus_group_and_write_abixml(char* argv[],
       const xml_writer::write_context_sptr& ctxt
 	  = xml_writer::create_write_context(env, cout);
       set_common_options(*ctxt, opts);
+
+      if (opts.abidiff)
+	return perform_self_comparison(ctxt, group, env, t, opts, argv);
 
       if (!opts.out_file_path.empty())
 	{

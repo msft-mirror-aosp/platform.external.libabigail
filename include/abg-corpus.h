@@ -444,6 +444,8 @@ public:
   operator==(const corpus_group&) const;
 }; // end class corpus_group
 
+corpus_group_sptr
+is_corpus_group(const corpus_sptr&);
 }// end namespace ir
 }//end namespace abigail
 #endif //__ABG_CORPUS_H__
