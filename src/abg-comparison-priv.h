@@ -429,9 +429,12 @@ struct array_diff::priv
 {
   /// The diff between the two array element types.
   diff_sptr element_type_diff_;
+  vector<subrange_diff_sptr> subrange_diffs_;
 
-  priv(diff_sptr element_type_diff)
-    : element_type_diff_(element_type_diff)
+  priv(diff_sptr element_type_diff,
+       vector<subrange_diff_sptr>& subrange_diffs)
+    : element_type_diff_(element_type_diff),
+      subrange_diffs_(subrange_diffs)
   {}
 };//end struct array_diff::priv
 

@@ -42,6 +42,8 @@
                       type name changed from 'char[80]' to 'char[72]'
                       array type size changed from 640 to 576
                       array type subrange 1 changed length from 80 to 72
+                      array subrange changed: 
+                        upper bound of '<anonymous range>[72]' change from '79' to '71'
                     type of 'generic_scheduler* my_owner' changed:
                       in pointed to type 'class tbb::internal::generic_scheduler' at scheduler.h:110:1:
                         type size changed from 3136 to 3072 (in bits)

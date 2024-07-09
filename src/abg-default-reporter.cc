@@ -829,6 +829,24 @@ default_reporter::report(const array_diff& d, ostream& out,
 					   d.second_array(),
 					   d.context(),
 					   out, indent);
+
+  if (d.any_subrange_diff_to_be_reported())
+    {
+      int subrange_index = 0;
+      for (const auto& subrange_diff : d.subrange_diffs())
+	{
+	  ++subrange_index;
+	  if (subrange_diff->to_be_reported())
+	    {
+	      out << indent << "array subrange ";
+	      if (d.subrange_diffs().size() > 1)
+		out << subrange_index << " ";
+	      out  << "changed: \n";
+	      subrange_diff->report(out, indent + "  ");
+	    }
+	}
+    }
+
 }
 
 /// Generates a report for an intance of @ref base_diff.

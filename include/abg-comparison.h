@@ -1541,10 +1541,11 @@ class array_diff : public type_diff_base
   std::unique_ptr<priv> priv_;
 
 protected:
-  array_diff(const array_type_def_sptr	first,
-	     const array_type_def_sptr	second,
-	     diff_sptr			element_type_diff,
-	     diff_context_sptr		ctxt = diff_context_sptr());
+  array_diff(const array_type_def_sptr		first,
+	     const array_type_def_sptr		second,
+	     diff_sptr				element_type_diff,
+	     vector<subrange_diff_sptr>&	subrange_diffs,
+	     diff_context_sptr			ctxt = diff_context_sptr());
 
 public:
   const array_type_def_sptr
@@ -1556,8 +1557,17 @@ public:
   const diff_sptr&
   element_type_diff() const;
 
+  const vector<subrange_diff_sptr>&
+  subrange_diffs() const;
+
   void
   element_type_diff(diff_sptr);
+
+  void
+  subrange_diffs(const vector<subrange_diff_sptr>&);
+
+  bool
+  any_subrange_diff_to_be_reported() const;
 
   virtual const string&
   get_pretty_representation() const;
@@ -2979,6 +2989,9 @@ is_anonymous_class_or_union_diff(const diff* d);
 
 const subrange_diff*
 is_subrange_diff(const diff* diff);
+
+const subrange_diff*
+is_anonymous_subrange_diff(const diff* d);
 
 const array_diff*
 is_array_diff(const diff* diff);

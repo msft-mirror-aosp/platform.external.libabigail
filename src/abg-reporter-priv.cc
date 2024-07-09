@@ -746,7 +746,7 @@ represent(const subrange_diff&		d,
   int64_t oub = o->get_upper_bound();
   int64_t nub = n->get_upper_bound();
 
-    if (on != nn)
+  if (on != nn)
     {
       out << indent << "name of range changed from '"
 	  << on << "' to '" << nn << "'\n";
@@ -754,9 +754,7 @@ represent(const subrange_diff&		d,
 
   if (olb != nlb)
     {
-      out << indent << "lower bound of range '"
-	  << on
-	  << "' change from '";
+      out << indent << "lower bound of '" << oor << "' change from '";
       emit_num_value(olb, *ctxt, out);
       out << "' to '";
       emit_num_value(nlb, *ctxt, out);
@@ -765,13 +763,28 @@ represent(const subrange_diff&		d,
 
   if (oub != nub)
     {
-      out << indent << "upper bound of range '"
-	  << on
-	  << "' change from '";
+      out << indent << "upper bound of '" << nr  << "' change from '";
       emit_num_value(oub, *ctxt, out);
       out << "' to '";
       emit_num_value(nub, *ctxt, out);
       out << "'\n";
+    }
+
+  if (o->is_non_finite() != n->is_non_finite())
+    {
+      out << indent
+	  << (o->is_non_finite()
+	      ? string("unknown sized")
+	      : string("known sized"))
+	  << string(" range '")
+	  << oor
+	  << string("' changed to ")
+	  << (n->is_non_finite()
+	      ? string("unknown sized")
+	      : string("known sized"))
+	  << string(" range '")
+	  << nr
+	  << "'\n";
     }
 
   if (!local_only)

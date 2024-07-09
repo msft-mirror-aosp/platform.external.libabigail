@@ -42,6 +42,8 @@
                       type name changed from 'char[80]' to 'char[72]'
                       array type size changed from 640 to 576
                       array type subrange 1 changed length from 80 to 72
+                      array subrange changed: 
+                        upper bound of '<anonymous range>[72]' change from '79' to '71'
 
     [C] 'function void tbb::internal::throw_exception_v4(tbb::internal::exception_id)' at tbb_misc.cpp:126:1 has some indirect sub-type changes:
       parameter 1 of type 'enum tbb::internal::exception_id' has sub-type changes:

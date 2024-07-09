@@ -10,4 +10,8 @@ Variables changes summary: 0 Removed, 1 Changed, 0 Added variable
       type name changed from 'unsigned int[]' to 'unsigned int[1]'
       array type size changed from 'unknown' to 32
       array type subrange 1 changed length from 'unknown' to 1
+      array subrange changed: 
+        unknown sized range '<anonymous range>[]' changed to known sized range '<anonymous range>[1]'
+        underlying type of range '<anonymous range>[]' changed:
+          entity changed from ''void'' to 'unsigned long int'
 

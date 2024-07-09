@@ -17,6 +17,7 @@ ABG_BEGIN_EXPORT_DECLARATIONS
 
 #include "abg-comp-filter.h"
 #include "abg-tools-utils.h"
+#include "abg-ir-priv.h"
 
 ABG_END_EXPORT_DECLARATIONS
 // </headers defining libabigail's API>
@@ -711,16 +712,52 @@ decl_name_changed(const type_or_decl_base_sptr& d1,
 		  const type_or_decl_base_sptr& d2)
 {return decl_name_changed(d1.get(), d2.get());}
 
-/// Test if a diff nodes carries a changes in which two decls have
+/// Test if a diff node carries a changes in which two decls have
 /// different names.
 ///
 /// @param d the diff node to consider.
 ///
-/// @return true iff d carries a changes in which two decls have
+/// @return true iff d carries a change in which two decls have
 /// different names.
 static bool
 decl_name_changed(const diff *d)
 {return decl_name_changed(d->first_subject(), d->second_subject());}
+
+/// Test if a diff node carries a change whereby two integral types
+/// have different names in a harmless way.
+///
+/// Basically, if the integral type name change is accompanied by a
+/// size change then the change is considered harmful.  If there are
+/// modifiers change, the change is considered harmful.
+static bool
+integral_type_has_harmless_name_change(const decl_base_sptr& f,
+				       const decl_base_sptr& s)
+{
+  if ((is_integral_type(f) || f->get_name().empty())
+      && (is_integral_type(s) || s->get_name().empty())
+      && decl_name_changed(f, s)
+      && (is_type(f)->get_size_in_bits()
+	  == is_type(s)->get_size_in_bits())
+      && (is_type(f)->get_alignment_in_bits()
+	  == is_type(s)->get_alignment_in_bits()))
+    {
+      real_type fi, si;
+      ABG_ASSERT(f->get_name().empty()
+		 || parse_real_type(f->get_name(), fi));
+      ABG_ASSERT(s->get_name().empty()
+		 || parse_real_type(s->get_name(), si));
+
+      if (fi.get_base_type() == si.get_base_type()
+	  && fi.get_modifiers() != si.get_modifiers())
+	// The base type hasn't changed.  That means only modifiers
+	// changed.  This is considered has harmful by default.
+	return false;
+
+      return true;
+    }
+
+  return false;
+}
 
 /// Test if two decls represents a harmless name change.
 ///
@@ -765,7 +802,8 @@ has_harmless_name_change(const decl_base_sptr& f, const decl_base_sptr& s)
 		  && is_enum_type(s)
 		  && !enum_has_non_name_change(*is_enum_type(f),
 					       *is_enum_type(s),
-					       0))));
+					       0))
+	      || integral_type_has_harmless_name_change(f, s)));
 }
 
 /// Test if two decls represents a harmful name change.

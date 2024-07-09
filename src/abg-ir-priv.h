@@ -68,7 +68,13 @@ public:
     /// The "char32_t" base type.
     CHAR32_T_BASE_TYPE,
     /// The "wchar_t" base type.
-    WCHAR_T_BASE_TYPE
+    WCHAR_T_BASE_TYPE,
+    SIZE_BASE_TYPE,
+    SSIZE_BASE_TYPE,
+    BIT_SIZE_BASE_TYPE,
+    SBIT_SIZE_BASE_TYPE,
+    /// The aray size type used by Clang.
+    ARRAY_SIZE_BASE_TYPE
   };
 
   /// The modifiers of the base types above.  Several modifiers can be

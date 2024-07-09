@@ -714,9 +714,8 @@ is_class_or_union_diff(const diff* d)
 ///
 /// @param d the diff node to consider.
 ///
-/// @return a non-nil pointer to the @ref class_or_union_diff iff @p
-/// denoted by @p d iff @p is pointer to an anonymous class or union
-/// diff.
+/// @return a non-nil pointer to the @ref class_or_union_diff denoted
+/// by @p d iff @p is a pointer to an anonymous class or union diff.
 const class_or_union_diff*
 is_anonymous_class_or_union_diff(const diff* d)
 {
@@ -745,6 +744,23 @@ is_typedef_diff(const diff *diff)
 const subrange_diff*
 is_subrange_diff(const diff* diff)
 {return dynamic_cast<const subrange_diff*>(diff);}
+
+/// Test if a diff node is a @ref subrange_diff between two anonymous
+/// subranges.
+///
+/// @param d the diff node to consider.
+///
+/// @return a non-nil pointer to the @ref subrange_diff denoted by @p
+/// d iff @p d is a pointer to an anonymous @ref subrange_diff.
+const subrange_diff*
+is_anonymous_subrange_diff(const diff* d)
+{
+  if (const subrange_diff* dif = is_subrange_diff(d))
+    if (dif->first_subrange()->get_is_anonymous())
+      return dif;
+
+  return nullptr;
+}
 
 /// Test if a diff node is a @ref array_diff node.
 ///
@@ -3911,7 +3927,11 @@ compute_diff(array_type_def::subrange_sptr first,
 /// diff::children_node().
 void
 array_diff::chain_into_hierarchy()
-{append_child_node(element_type_diff());}
+{
+  append_child_node(element_type_diff());
+  for (const auto& subrange_diff : subrange_diffs())
+    append_child_node(subrange_diff);
+}
 
 /// Constructor for array_diff
 ///
@@ -3926,9 +3946,10 @@ array_diff::chain_into_hierarchy()
 array_diff::array_diff(const array_type_def_sptr	first,
 		       const array_type_def_sptr	second,
 		       diff_sptr			element_type_diff,
+		       vector<subrange_diff_sptr>&	subrange_diffs,
 		       diff_context_sptr		ctxt)
   : type_diff_base(first, second, ctxt),
-    priv_(new priv(element_type_diff))
+    priv_(new priv(element_type_diff, subrange_diffs))
 {}
 
 /// Getter for the first array of the diff.
@@ -3952,12 +3973,40 @@ const diff_sptr&
 array_diff::element_type_diff() const
 {return priv_->element_type_diff_;}
 
+/// Getter for the diffs between the array subranges.
+///
+/// @return the diffs between the array subranges.
+const vector<subrange_diff_sptr>&
+array_diff::subrange_diffs() const
+{return priv_->subrange_diffs_;}
+
+/// Test if any subrange diff is to be reported.
+///
+/// @return true if any subrange diff is to be reported, false
+/// otherwise.
+bool
+array_diff::any_subrange_diff_to_be_reported() const
+{
+  for (const auto& diff: subrange_diffs())
+    if (diff->to_be_reported())
+      return true;
+
+  return false;
+}
+
 /// Setter for the diff between the two array element types.
 ///
-/// @param d the new diff betweend the two array element types.
+/// @param d the new diff between the two array element types.
 void
 array_diff::element_type_diff(diff_sptr d)
 {priv_->element_type_diff_ = d;}
+
+/// Setter for the diff between the two sets of array sub-ranges.
+///
+/// @param d the new diff between the two sets of array sub-ranges.
+void
+array_diff::subrange_diffs(const vector<subrange_diff_sptr>& d)
+{priv_->subrange_diffs_ = d;}
 
 /// @return the pretty representation for the current instance of @ref
 /// array_diff.
@@ -4002,6 +4051,9 @@ array_diff::has_changes() const
     ? element_type_diff()->has_changes()
     : false;
 
+  for (const auto& subrange_diff : subrange_diffs())
+    l |= subrange_diff->has_changes();
+
   return l;
 }
 
@@ -4044,10 +4096,25 @@ compute_diff(array_type_def_sptr	first,
 	     array_type_def_sptr	second,
 	     diff_context_sptr		ctxt)
 {
-  diff_sptr d = compute_diff_for_types(first->get_element_type(),
-				       second->get_element_type(),
-				       ctxt);
-  array_diff_sptr result(new array_diff(first, second, d, ctxt));
+  diff_sptr element_diff = compute_diff_for_types(first->get_element_type(),
+						  second->get_element_type(),
+						  ctxt);
+  vector<subrange_diff_sptr> subrange_diffs;
+  if (first->get_subranges().size() == first->get_subranges().size())
+    {
+      for (unsigned i = 0; i < first->get_subranges().size(); ++i)
+	{
+	  subrange_diff_sptr subrange_diff =
+	    compute_diff(first->get_subranges()[i],
+			 second->get_subranges()[i],
+			 ctxt);
+	  subrange_diffs.push_back(subrange_diff);
+	}
+    }
+  array_diff_sptr result(new array_diff(first, second,
+					element_diff,
+					subrange_diffs,
+					ctxt));
   ctxt->initialize_canonical_diff(result);
   return result;
 }
@@ -11847,6 +11914,8 @@ struct leaf_diff_node_marker_visitor : public diff_node_visitor
 	// typedef change which underlying type is an anonymous
 	// struct/union.
 	&& !is_anonymous_class_or_union_diff(d)
+	// An anonymous subrange doesn't make sense either.
+	&& !is_anonymous_subrange_diff(d)
 	// Don't show decl-only-ness changes either.
 	&& !filtering::has_decl_only_def_change(d)
 	// Sometime, we can encounter artifacts of bogus DWARF that
@@ -13112,7 +13181,7 @@ struct redundancy_marking_visitor : public diff_node_visitor
 		    continue;
 		  if (sib->get_canonical_diff() == d->get_canonical_diff()
 		      // Sibbling diff nodes that carry base type
-		      // changes ar to be marked as redundant.
+		      // changes are to be marked as redundant.
 		      && (is_base_diff(sib) || is_distinct_diff(sib)))
 		    {
 		      redundant_with_sibling_node = true;
@@ -13206,9 +13275,10 @@ struct redundancy_marking_visitor : public diff_node_visitor
 	// doesn't inherit redundancy from its children nodes.
 	if (!(d->get_category() & REDUNDANT_CATEGORY)
 	    && (!d->has_local_changes_to_be_reported()
-		// By default, pointer, reference and qualified types
-		// consider that a local changes to their underlying
-		// type is always a local change for themselves.
+		// By default, pointer, reference, array and qualified
+		// types consider that a local changes to their
+		// underlying type is always a local change for
+		// themselves.
 		//
 		// This is as if those types don't have local changes
 		// in the same sense as other types.  So we always
@@ -13225,6 +13295,7 @@ struct redundancy_marking_visitor : public diff_node_visitor
 		// typedef itself are considered local of
 		// LOCAL_NON_TYPE_CHANGE_KIND kind.
 		|| is_pointer_diff(d)
+		|| is_array_diff(d)
 		|| is_qualified_type_diff(d)
 		// A typedef with local non-type changes should not
 		// see redundancy propagation from its underlying
@@ -13255,6 +13326,7 @@ struct redundancy_marking_visitor : public diff_node_visitor
 	  {
 	    bool has_non_redundant_child = false;
 	    bool has_non_empty_child = false;
+	    bool is_array_diff_node = is_array_diff(d);
 	    for (vector<diff*>::const_iterator i =
 		   d->children_nodes().begin();
 		 i != d->children_nodes().end();
@@ -13262,7 +13334,16 @@ struct redundancy_marking_visitor : public diff_node_visitor
 	      {
 		if ((*i)->has_changes())
 		  {
-		    has_non_empty_child = true;
+		    // If we are looking at a child node of an array,
+		    // do not take a subrange diff node change into
+		    // account when considering redundancy.  In other
+		    // words, a subrange diff node that carries a
+		    // change should not be considered as a non-empty
+		    // child node.  This is because we want to report
+		    // all subrange diff node changes and not consider
+		    // them as redundant.
+		    if (!is_array_diff_node || !is_subrange_diff(*i))
+		      has_non_empty_child = true;
 		    // Let's see if the current child node '*i' is
 		    // "non-redundant".
 		    //

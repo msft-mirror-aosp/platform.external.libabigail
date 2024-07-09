@@ -16139,6 +16139,16 @@ parse_base_real_type(const string& type_name,
     base = real_type::CHAR32_T_BASE_TYPE;
   else if (type_name == "wchar_t")
     base = real_type::WCHAR_T_BASE_TYPE;
+  else if (type_name == "__ARRAY_SIZE_TYPE__")
+    base = real_type::ARRAY_SIZE_BASE_TYPE;
+  else if (type_name == "sizetype")
+    base = real_type::SIZE_BASE_TYPE;
+  else if (type_name == "ssizetype")
+    base = real_type::SSIZE_BASE_TYPE;
+  else if (type_name == "bitsizetype")
+    base = real_type::BIT_SIZE_BASE_TYPE;
+  else if (type_name == "sbitsizetype")
+    base = real_type::SBIT_SIZE_BASE_TYPE;
   else
     return false;
 
@@ -16353,7 +16363,16 @@ real_type::to_string(bool internal) const
     result += "char32_t";
     else if (base_ == WCHAR_T_BASE_TYPE)
     result += "wchar_t";
-
+    else if (base_ == ARRAY_SIZE_BASE_TYPE)
+      result += "__ARRAY_SIZE_TYPE__";
+    else if (base_ == SIZE_BASE_TYPE)
+      result += "sizetype";
+    else if (base_ == SSIZE_BASE_TYPE)
+      result += "ssizetype";
+    else if (base_ == BIT_SIZE_BASE_TYPE)
+      result += "bitsizetype";
+    else if (base_ == SBIT_SIZE_BASE_TYPE)
+      result += "sbitsizetype";
   return result;
 }
 
@@ -18935,6 +18954,17 @@ equals(const array_type_def::subrange_type& l,
 	ABG_RETURN(result);
     }
 
+  if (l.get_underlying_type()
+      && r.get_underlying_type()
+      && (*l.get_underlying_type() != *r.get_underlying_type()))
+    {
+      result = false;
+      if (k)
+	*k |= SUBTYPE_CHANGE_KIND;
+      else
+	ABG_RETURN(result);
+    }
+
   ABG_RETURN(result);
 }
 
@@ -19233,7 +19263,7 @@ equals(const array_type_def& l, const array_type_def& r, change_kind* k)
     {
       result = false;
       if (k)
-	*k |= LOCAL_TYPE_CHANGE_KIND;
+	*k |= LOCAL_NON_TYPE_CHANGE_KIND;
       else
 	ABG_RETURN_FALSE;
     }
@@ -19247,7 +19277,7 @@ equals(const array_type_def& l, const array_type_def& r, change_kind* k)
 	result = false;
 	if (k)
 	  {
-	    *k |= LOCAL_TYPE_CHANGE_KIND;
+	    *k |= LOCAL_NON_TYPE_CHANGE_KIND;
 	    break;
 	  }
 	else

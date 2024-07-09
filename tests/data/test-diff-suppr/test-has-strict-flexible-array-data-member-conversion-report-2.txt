@@ -11,4 +11,6 @@ Unreachable types summary: 0 removed, 1 changed, 0 added type
         type name changed from 'int[1]' to 'int[]'
         array type size changed from 32 to 'unknown'
         array type subrange 1 changed length from 1 to 'unknown'
+        array subrange changed: 
+          known sized range '<anonymous range>[1]' changed to unknown sized range '<anonymous range>[]'
 
