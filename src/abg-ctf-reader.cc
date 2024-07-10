@@ -383,15 +383,6 @@ public:
     elf::reader::read_corpus(status);
 
     corpus_sptr corp = corpus();
-    if ((corp->get_origin() & corpus::LINUX_KERNEL_BINARY_ORIGIN)
-	&& corpus_group())
-      {
-	// Not finding any debug info so far is expected if we are
-	// building a kABI.
-        status &= static_cast<abigail::fe_iface::status>
-                    (~STATUS_DEBUG_INFO_NOT_FOUND);
-	return;
-      }
 
     if ((status & STATUS_NO_SYMBOLS_FOUND)
 	|| !(status & STATUS_OK))
@@ -415,17 +406,29 @@ public:
       }
 
     const Elf_Scn* ctf_scn = find_ctf_section();
-    fill_ctf_section(ctf_scn, &ctf_sect);
+    if (ctf_scn)
+      fill_ctf_section(ctf_scn, &ctf_sect);
 
     const Elf_Scn* symtab_scn =
       elf_helpers::find_section_by_name(elf_handle(), symtab_name);
-    fill_ctf_section(symtab_scn, &symtab_sect);
+    if (symtab_scn)
+      fill_ctf_section(symtab_scn, &symtab_sect);
 
     const Elf_Scn* strtab_scn =
       elf_helpers::find_section_by_name(elf_handle(), strtab_name);
-    fill_ctf_section(strtab_scn, &strtab_sect);
+    if (strtab_scn)
+      fill_ctf_section(strtab_scn, &strtab_sect);
 
-    status |= fe_iface::STATUS_OK;
+    if (ctf_scn && symtab_scn && strtab_scn)
+      status |= fe_iface::STATUS_OK;
+    else if (corp->get_origin() & corpus::LINUX_KERNEL_BINARY_ORIGIN)
+      {
+	// Not finding any debug info so far is expected if we are
+	// building a kABI.
+        status &= static_cast<abigail::fe_iface::status>
+                    (~STATUS_DEBUG_INFO_NOT_FOUND);
+	return;
+      }
   }
 
   /// Process a CTF archive and create libabigail IR for the types,
@@ -690,8 +693,7 @@ public:
       t.start();
 
     int errp;
-    if ((corp->get_origin() & corpus::LINUX_KERNEL_BINARY_ORIGIN)
-	&& corpus_group())
+    if (corp->get_origin() & corpus::LINUX_KERNEL_BINARY_ORIGIN)
       {
 	if (ctfa == nullptr)
 	  {
@@ -700,14 +702,17 @@ public:
 	      ctfa = ctf_arc_open(ctfa_filename.c_str(), &errp);
 	  }
       }
-    else
-      /* Build the ctfa from the contents of the relevant ELF sections,
-	 and process the CTF archive in the read context, if any.
-	 Information about the types, variables, functions, etc contained
-	 in the archive are added to the given corpus.  */
-      if (ctfa == nullptr)
-	ctfa = ctf_arc_bufopen(&ctf_sect, &symtab_sect,
-			       &strtab_sect, &errp);
+
+    /* Build the ctfa from the contents of the relevant ELF sections,
+       and process the CTF archive in the read context, if any.
+       Information about the types, variables, functions, etc contained
+       in the archive are added to the given corpus.  */
+    if (ctfa == nullptr
+	&& ctf_sect.cts_data
+	&& symtab_sect.cts_data
+	&& strtab_sect.cts_data)
+      ctfa = ctf_arc_bufopen(&ctf_sect, &symtab_sect,
+			     &strtab_sect, &errp);
 
     if (do_log())
       {
