@@ -41,8 +41,6 @@ abicompatdir = $(bindir)
 
 abipkgdiff_SOURCES = abipkgdiff.cc
 abipkgdiffdir = $(bindir)
-abipkgdiff_CPPFLAGS = $(FTS_CFLAGS)
-abipkgdiff_LDADD = $(FTS_LIBS)
 abipkgdiff_LDFLAGS = $(abs_top_builddir)/src/libabigail.la -pthread
 
 kmidiff_SOURCES = kmidiff.cc

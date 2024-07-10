@@ -281,6 +281,10 @@ fi
 
 AC_SUBST(VISIBILITY_FLAGS)
 
+dnl glibc and BSD include fts into their libc, but musl does not so
+dnl check if we need to explicitly link to the standalone musl-fts.
+AC_SEARCH_LIBS([fts_open], [fts])
+
 dnl Older glibc had a broken fts that didn't work with Large File Systems.
 dnl We want the version that can handler LFS, but include workaround if we
 dnl get a bad one. Add define to CFLAGS (not AC_DEFINE it) since we need to
@@ -295,11 +299,6 @@ AS_IF([test "x$ac_cv_bad_fts" = "xyes"],
       [CFLAGS="$CFLAGS -DBAD_FTS=1",
        CXXFLAGS="$CXXFLAGS -DBAD_FTS=1"])
 
-dnl On musl, we need to find fts-standalone
-AS_CASE(
-  [${host_os}], [*-musl*], [
-    PKG_CHECK_MODULES([FTS], [fts-standalone])
-])
 
 dnl Check for dependency: libelf, libdw, libebl (elfutils)
 dnl Note that we need to use at least elfutils 0.159 but
