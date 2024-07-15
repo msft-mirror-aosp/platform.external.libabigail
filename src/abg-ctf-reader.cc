@@ -1087,7 +1087,7 @@ process_ctf_sou_members(reader *rdr,
                            public_access,
                            true /* is_laid_out */,
                            false /* is_static */,
-                           membinfo.ctm_offset);
+                           is_union_type(sou) ? 0 : membinfo.ctm_offset);
     }
   if (ctf_errno(ctf_dictionary) != ECTF_NEXT_END)
     fprintf(stderr, "ERROR from ctf_member_next\n");
