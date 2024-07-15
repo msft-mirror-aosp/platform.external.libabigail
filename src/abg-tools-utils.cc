@@ -3230,7 +3230,8 @@ create_best_elf_based_reader(const string& elf_file_path,
     {
 #ifdef WITH_BTF
       if (file_has_btf_debug_info(elf_file_path, debug_info_root_paths))
-	result = btf::create_reader(elf_file_path, debug_info_root_paths, env);
+	result = btf::create_reader(elf_file_path, debug_info_root_paths, env,
+				    show_all_types, linux_kernel_mode);
 #endif
     }
   else
@@ -3249,7 +3250,8 @@ create_best_elf_based_reader(const string& elf_file_path,
 	  && file_has_btf_debug_info(elf_file_path, debug_info_root_paths))
 	// The file has BTF debug info and no BTF, let's use the BTF
 	// front-end even if it wasn't formally requested by the user.
-	result = btf::create_reader(elf_file_path, debug_info_root_paths, env);
+	result = btf::create_reader(elf_file_path, debug_info_root_paths, env,
+				    show_all_types, linux_kernel_mode);
 #endif
     }
 
