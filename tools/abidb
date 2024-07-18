@@ -33,7 +33,10 @@ except:
 # globals
 args = None
 
-
+# suppress debuginfod diagnostics that would litter stderr
+for bad in ['DEBUGINFOD_PROGRESS', 'DEBUGINFOD_VERBOSE']:
+    if bad in os.environ:
+        del os.environ[bad]
 
 def default_distrobranch():
     """Compute the default distrobranch string for the current host.
