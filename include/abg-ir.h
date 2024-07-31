@@ -579,7 +579,7 @@ typedef unordered_map<interned_string,
 		      hash_interned_string> istring_function_decl_ptr_map_type;
 
 typedef unordered_map<interned_string,
-		      const var_decl*,
+		      var_decl_sptr,
 		      hash_interned_string> istring_var_decl_ptr_map_type;
 
 /// This is a type that aggregates maps of all the kinds of types that

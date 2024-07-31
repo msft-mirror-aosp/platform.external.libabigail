@@ -55,12 +55,12 @@ typedef unordered_map<interned_string,
 
 /// Convenience typedef for a hash map which key is a string and
 /// which data is an abigail::ir::var_decl*.
-typedef unordered_map<string, var_decl*> str_var_ptr_map_type;
+typedef unordered_map<string, var_decl_sptr> str_var_ptr_map_type;
 
 /// Convenience typedef for a hash map which key is an interned_string
 /// and which data is an abigail::ir::var_decl*.
 typedef unordered_map<interned_string,
-		      var_decl*,
+		      var_decl_sptr,
 		      hash_interned_string> istr_var_ptr_map_type;
 
 /// The type of the private data of @ref
@@ -449,7 +449,7 @@ public:
   ///
   /// @param id the variable to add to the map.
   void
-  add_var_to_map(var_decl* var)
+  add_var_to_map(const var_decl_sptr& var)
   {
     if (var)
       {
@@ -475,13 +475,13 @@ public:
   ///
   /// @param fn the variable to add to the set of exported variables.
   void
-  add_var_to_exported(const var_decl* var)
+  add_var_to_exported(const var_decl_sptr& var)
   {
     const interned_string& id = get_id(*var);
     if (!var_id_is_in_id_var_map(id))
       {
-	vars_.push_back(const_cast<var_decl*>(var));
-	add_var_to_map(const_cast<var_decl*>(var));
+	vars_.push_back(var);
+	add_var_to_map(var);
       }
   }
 
@@ -617,7 +617,7 @@ public:
   ///
   /// @return true iff the variable is to be kept.
   bool
-  keep_wrt_id_of_vars_to_keep(const var_decl* var)
+  keep_wrt_id_of_vars_to_keep(const var_decl_sptr& var)
   {
     if (!var)
       return false;
@@ -662,7 +662,7 @@ public:
   ///
   /// @return true iff the variable is to be kept.
   bool
-  keep_wrt_regex_of_vars_to_suppress(const var_decl *var)
+  keep_wrt_regex_of_vars_to_suppress(const var_decl_sptr var)
   {
     if (!var)
       return false;
@@ -691,7 +691,7 @@ public:
   ///
   /// @return true iff the variable is to be kept.
   bool
-  keep_wrt_regex_of_vars_to_keep(const var_decl *var)
+  keep_wrt_regex_of_vars_to_keep(const var_decl_sptr& var)
   {
     if (!var)
       return false;
@@ -743,7 +743,7 @@ struct corpus::priv
   translation_units				members;
   string_tu_map_type				path_tu_map;
   vector<const function_decl*>			fns;
-  vector<const var_decl*>			vars;
+  vector<var_decl_sptr>			vars;
   functions_set				undefined_fns;
   functions					sorted_undefined_fns;
   variables_set				undefined_vars;

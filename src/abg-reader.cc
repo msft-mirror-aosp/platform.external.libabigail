@@ -5375,7 +5375,7 @@ build_class_decl(reader&		rdr,
 					    is_static,
 					    offset_in_bits);
 		      if (is_static)
-			rdr.add_var_to_exported_or_undefined_decls(v.get());
+			rdr.add_var_to_exported_or_undefined_decls(v);
 		      // Now let's record the fact that the data
 		      // member uses its type and that the class being
 		      // built uses the data member.
@@ -6469,7 +6469,7 @@ handle_var_decl(reader&	rdr,
 {
   decl_base_sptr decl = build_var_decl_if_not_suppressed(rdr, node,
 							 add_to_current_scope);
-  rdr.add_var_to_exported_or_undefined_decls(is_var_decl(decl).get());
+  rdr.add_var_to_exported_or_undefined_decls(is_var_decl(decl));
   return decl;
 }
 

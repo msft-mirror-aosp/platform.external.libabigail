@@ -502,7 +502,7 @@ public:
 	    add_decl_to_scope(var_declaration,
 			      ir_translation_unit->get_global_scope());
 	    var_declaration->set_is_in_public_symbol_table(true);
-	    add_var_to_exported_or_undefined_decls(var_declaration.get());
+	    add_var_to_exported_or_undefined_decls(var_declaration);
 	  }
 	else
 	  {

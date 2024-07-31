@@ -1013,6 +1013,10 @@ struct var_comp
   bool
   operator() (const var_decl* l, const var_decl* r) const
   {return operator()(*l, *r);}
+
+  bool
+  operator() (const var_decl_sptr& l, const var_decl_sptr& r) const
+  {return operator()(l.get(), r.get());}
 };// end struct var_comp
 
 /// A functor to compare instances of @ref elf_symbol base on their
@@ -1147,10 +1151,10 @@ struct corpus_diff::priv
   added_function_is_suppressed(const function_decl* fn) const;
 
   bool
-  deleted_variable_is_suppressed(const var_decl* var) const;
+  deleted_variable_is_suppressed(const var_decl_sptr& var) const;
 
   bool
-  added_variable_is_suppressed(const var_decl* var) const;
+  added_variable_is_suppressed(const var_decl_sptr& var) const;
 
   bool
   added_unreachable_type_is_suppressed(const type_base *t)const ;
@@ -1434,7 +1438,7 @@ sort_string_elf_symbol_map(const string_elf_symbol_map& map,
 
 void
 sort_string_var_ptr_map(const string_var_ptr_map& map,
-			vector<const var_decl*>& sorted);
+			vector<var_decl_sptr>& sorted);
 
 void
 sort_string_data_member_diff_sptr_map(const string_var_diff_sptr_map& map,

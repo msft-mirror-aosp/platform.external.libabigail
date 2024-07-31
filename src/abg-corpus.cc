@@ -190,7 +190,7 @@ corpus::exported_decls_builder::maybe_add_fn_to_exported_fns(function_decl* fn)
 /// @return true iff the variable was added to the set of exported
 /// variables.
 bool
-corpus::exported_decls_builder::maybe_add_var_to_exported_vars(const var_decl* var)
+corpus::exported_decls_builder::maybe_add_var_to_exported_vars(const var_decl_sptr& var)
 {
   if (!var->get_is_in_public_symbol_table())
     return false;
@@ -308,8 +308,12 @@ struct var_comp
 
     return first_name < second_name;
   }
-};
 
+  bool
+  operator()(const var_decl_sptr& first,
+	     const var_decl_sptr& second) const
+  {return operator()(first.get(), second.get());}
+};
 
 /// A comparison functor to compare elf_symbols for the purpose of
 /// sorting.
@@ -1411,7 +1415,7 @@ corpus::lookup_functions(const char* id) const
 ///
 /// @return the variable with ID @p id that was found or nil if none
 /// was found.
-const var_decl*
+const var_decl_sptr
 corpus::lookup_variable(const interned_string& id) const
 {
   exported_decls_builder_sptr b = get_exported_decls_builder();

@@ -145,7 +145,7 @@ protected:
   add_fn_to_exported_or_undefined_decls(const function_decl* fn);
 
   void
-  add_var_to_exported_or_undefined_decls(const var_decl* var);
+  add_var_to_exported_or_undefined_decls(const var_decl_sptr& var);
 
   virtual ir::corpus_sptr
   read_corpus(status& status) = 0;

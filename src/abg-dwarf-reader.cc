@@ -16300,7 +16300,7 @@ build_ir_node_from_die(reader&	rdr,
 			rdr.var_decls_to_re_add_to_tree().push_back(m);
 		      }
 		    ABG_ASSERT(m->get_scope());
-		    rdr.add_var_to_exported_or_undefined_decls(m.get());
+		    rdr.add_var_to_exported_or_undefined_decls(m);
 		    result = m;
 		  }
 	      }
@@ -16318,7 +16318,7 @@ build_ir_node_from_die(reader&	rdr,
 	    ABG_ASSERT(v);
 	    ABG_ASSERT(v->get_scope());
 	    rdr.var_decls_to_re_add_to_tree().push_back(v);
-	    rdr.add_var_to_exported_or_undefined_decls(v.get());
+	    rdr.add_var_to_exported_or_undefined_decls(v);
 	  }
       }
       break;

@@ -166,11 +166,11 @@ struct fn_change
 /// the differences found in the type of that variable.
 struct var_change
 {
-  const var_decl* decl = nullptr;
+  var_decl_sptr decl = nullptr;
   diff_sptr diff;
   bool reverse_direction = false;
 
-  var_change(const var_decl* var,
+  var_change(const var_decl_sptr& var,
 	     diff_sptr difference,
 	     bool reverse_dir)
     : decl(var),
@@ -542,7 +542,7 @@ compare_expected_against_provided_variables(diff_context_sptr&		ctxt,
     {
       interned_string var_id = expected_var->get_id();
       // ... against the variables exported by the library!
-      const var_decl* exported_var =
+      const var_decl_sptr exported_var =
 	reverse_direction
 	? app_corpus->lookup_variable(var_id)
 	: lib_corpus->lookup_variable(var_id);

@@ -2548,8 +2548,7 @@ write_translation_unit(write_context&		ctxt,
   if (const abigail::ir::corpus* abi = tu.get_corpus())
     for (auto undefined_var : abi->get_sorted_undefined_variables())
       {
-	var_decl_sptr v(const_cast<var_decl*>(undefined_var),
-			noop_deleter());
+	var_decl_sptr v = undefined_var;
 	if (v->get_translation_unit() != &tu || ctxt.decl_is_emitted(v))
 	  continue;
 

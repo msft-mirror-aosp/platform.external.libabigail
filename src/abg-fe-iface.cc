@@ -334,7 +334,7 @@ fe_iface::add_fn_to_exported_or_undefined_decls(const function_decl* fn)
 ///
 /// @param var the internal representation of the ABI of a variable.
 void
-fe_iface::add_var_to_exported_or_undefined_decls(const var_decl* var)
+fe_iface::add_var_to_exported_or_undefined_decls(const var_decl_sptr& var)
 {
   bool added = false;
   if (var)

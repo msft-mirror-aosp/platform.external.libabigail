@@ -661,7 +661,7 @@ public:
     if (function_decl_sptr fn = is_function_decl(result))
       add_fn_to_exported_or_undefined_decls(fn.get());
     else if (var_decl_sptr var = is_var_decl(result))
-      add_var_to_exported_or_undefined_decls(var.get());
+      add_var_to_exported_or_undefined_decls(var);
 
     return result;
   }

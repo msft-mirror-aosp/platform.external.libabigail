@@ -34,10 +34,10 @@ public:
   typedef std::unordered_set<const function_decl*> functions_set;
 
   ///Convenience typedef for std::vector<abigail::ir::var_decl*>
-  typedef vector<const var_decl*> variables;
+  typedef vector<var_decl_sptr> variables;
 
   /// Convenience typedef for std::unordered_set<const var_decl*>.
-  typedef std::unordered_set<const var_decl*> variables_set;
+  typedef std::unordered_set<var_decl_sptr> variables_set;
 
   class exported_decls_builder;
 
@@ -230,7 +230,7 @@ public:
   const std::unordered_set<function_decl*>*
   lookup_functions(const char* id) const;
 
-  const var_decl*
+  const var_decl_sptr
   lookup_variable(const interned_string& id) const;
 
   void
@@ -370,7 +370,7 @@ public:
   maybe_add_fn_to_exported_fns(function_decl*);
 
   bool
-  maybe_add_var_to_exported_vars(const var_decl*);
+  maybe_add_var_to_exported_vars(const var_decl_sptr&);
 }; //corpus::exported_decls_builder
 
 /// Abstraction of a group of corpora.

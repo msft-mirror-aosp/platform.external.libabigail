@@ -225,7 +225,7 @@ typedef unordered_map<string, method_decl_sptr> string_member_function_sptr_map;
 
 /// Convenience typedef for a map which key is a string and which
 /// value is a point to @ref var_decl.
-typedef unordered_map<string, const var_decl*> string_var_ptr_map;
+typedef unordered_map<string, var_decl_sptr> string_var_ptr_map;
 
 /// Convenience typedef for a pair of pointer to @ref var_decl
 /// representing a @ref var_decl change.  The first member of the pair

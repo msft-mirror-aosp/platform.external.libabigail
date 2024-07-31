@@ -324,7 +324,7 @@ sort_string_elf_symbol_map(const string_elf_symbol_map& map,
 /// @param sorted out parameter; the sorted vector of @ref var_decl.
 void
 sort_string_var_ptr_map(const string_var_ptr_map& map,
-			vector<const var_decl*>& sorted)
+			vector<var_decl_sptr>& sorted)
 {
   for (string_var_ptr_map::const_iterator i = map.begin();
        i != map.end();
@@ -9685,7 +9685,7 @@ corpus_diff::priv::ensure_lookup_tables_populated()
 	unsigned i = it->index();
 	ABG_ASSERT(i < first_->get_variables().size());
 
-	const var_decl* deleted_var = first_->get_variables()[i];
+	const var_decl_sptr deleted_var = first_->get_variables()[i];
 	string n = deleted_var->get_id();
 	ABG_ASSERT(!n.empty());
 	ABG_ASSERT(deleted_vars_.find(n) == deleted_vars_.end());
@@ -9702,7 +9702,7 @@ corpus_diff::priv::ensure_lookup_tables_populated()
 	     ++iit)
 	  {
 	    unsigned i = *iit;
-	    const var_decl* added_var = second_->get_variables()[i];
+	    const var_decl_sptr added_var = second_->get_variables()[i];
 	    string n = added_var->get_id();
 	    ABG_ASSERT(!n.empty());
 	    {
@@ -9720,10 +9720,8 @@ corpus_diff::priv::ensure_lookup_tables_populated()
 	      {
 		if (*j->second != *added_var)
 		  {
-		    var_decl_sptr f(const_cast<var_decl*>(j->second),
-				    noop_deleter());
-		    var_decl_sptr s(const_cast<var_decl*>(added_var),
-				    noop_deleter());
+		    var_decl_sptr f = j->second;
+		    var_decl_sptr s = added_var;
 		    changed_vars_map_[n] = compute_diff(f, s, ctxt);
 		  }
 		deleted_vars_.erase(j);
@@ -10173,7 +10171,7 @@ function_is_suppressed(const function_decl* fn,
 /// change reports about variable @p fn, if that variable changes in
 /// the way expressed by @p k.
 static bool
-variable_is_suppressed(const var_decl* var,
+variable_is_suppressed(const var_decl_sptr& var,
 		       const suppression_sptr suppr,
 		       variable_suppression::change_kind k,
 		       const diff_context_sptr ctxt)
@@ -10425,7 +10423,7 @@ corpus_diff::priv::added_function_is_suppressed(const function_decl* fn) const
 /// @return true iff the change reports for a give given deleted
 /// variable has been deleted.
 bool
-corpus_diff::priv::deleted_variable_is_suppressed(const var_decl* var) const
+corpus_diff::priv::deleted_variable_is_suppressed(const var_decl_sptr& var) const
 {
   if (!var)
     return false;
@@ -10444,7 +10442,7 @@ corpus_diff::priv::deleted_variable_is_suppressed(const var_decl* var) const
 /// @return true iff the change reports for a given deleted
 /// variable has been deleted.
 bool
-corpus_diff::priv::added_variable_is_suppressed(const var_decl* var) const
+corpus_diff::priv::added_variable_is_suppressed(const var_decl_sptr& var) const
 {
   if (!var)
     return false;
