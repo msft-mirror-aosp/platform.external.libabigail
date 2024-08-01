@@ -4220,7 +4220,7 @@ type_or_decl_base::has_artificial_location() const
 corpus*
 type_or_decl_base::get_corpus()
 {
-  translation_unit* tu = get_translation_unit();
+  translation_unit* tu = abigail::ir::get_translation_unit(this);
   if (!tu)
     return 0;
   return tu->get_corpus();
@@ -7984,6 +7984,8 @@ static void
 maybe_set_translation_unit(const decl_base_sptr& decl,
 			   translation_unit*     tu)
 {
+  ABG_ASSERT(tu);
+
   if (translation_unit* existing_tu = decl->get_translation_unit())
     // The decl already belongs to a translation unit.
     // Either:
@@ -10167,8 +10169,28 @@ types_are_compatible(const decl_base_sptr d1,
 /// @return the resulting translation unit, or null if the decl is not
 /// yet added to a translation unit.
 translation_unit*
-get_translation_unit(const decl_base& decl)
-{return const_cast<translation_unit*>(decl.get_translation_unit());}
+get_translation_unit(const type_or_decl_base& t)
+{
+  translation_unit* result =
+    const_cast<translation_unit*>(t.get_translation_unit());
+
+  if (result)
+    return result;
+
+  if (decl_base* decl = is_decl(&t))
+    {
+      scope_decl* scope = decl->get_scope();
+      while (scope)
+	{
+	  result = scope->get_translation_unit();
+	  if (result)
+	    break;
+	  scope = scope->get_scope();
+	}
+    }
+
+  return result;
+}
 
 /// Return the translation unit a declaration belongs to.
 ///
@@ -10177,8 +10199,8 @@ get_translation_unit(const decl_base& decl)
 /// @return the resulting translation unit, or null if the decl is not
 /// yet added to a translation unit.
 translation_unit*
-get_translation_unit(const decl_base* decl)
-{return decl ? get_translation_unit(*decl) : 0;}
+get_translation_unit(const type_or_decl_base* decl)
+{return decl ? get_translation_unit(*decl) : nullptr;}
 
 /// Return the translation unit a declaration belongs to.
 ///
@@ -10187,7 +10209,7 @@ get_translation_unit(const decl_base* decl)
 /// @return the resulting translation unit, or null if the decl is not
 /// yet added to a translation unit.
 translation_unit*
-get_translation_unit(const shared_ptr<decl_base> decl)
+get_translation_unit(const type_or_decl_base_sptr& decl)
 {return get_translation_unit(decl.get());}
 
 /// Tests whether if a given scope is the global scope.

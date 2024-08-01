@@ -359,13 +359,13 @@ const global_scope*
 get_global_scope(const decl_base_sptr);
 
 translation_unit*
-get_translation_unit(const decl_base&);
+get_translation_unit(const type_or_decl_base&);
 
 translation_unit*
-get_translation_unit(const decl_base*);
+get_translation_unit(const type_or_decl_base*);
 
 translation_unit*
-get_translation_unit(const decl_base_sptr);
+get_translation_unit(const type_or_decl_base_sptr&);
 
 bool
 is_global_scope(const scope_decl&);
