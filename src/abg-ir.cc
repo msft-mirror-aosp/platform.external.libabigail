@@ -10070,6 +10070,9 @@ debug_comp_stack(const environment& env)
 bool
 odr_is_relevant(const type_or_decl_base& artifact)
 {
+  if (!artifact.get_translation_unit())
+    return false;
+
   translation_unit::language l =
     artifact.get_translation_unit()->get_language();
 
