@@ -8415,7 +8415,8 @@ scope_decl::~scope_decl()
 decl_base_sptr
 add_decl_to_scope(decl_base_sptr decl, scope_decl* scope)
 {
-  ABG_ASSERT(scope);
+  if (!scope)
+    return decl;
 
   if (scope && decl && !decl->get_scope())
     decl = scope->add_member_decl(decl);
