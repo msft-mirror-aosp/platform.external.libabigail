@@ -15639,6 +15639,7 @@ maybe_adjust_canonical_type(const type_base_sptr& canonical,
 
   if (class_decl_sptr cl = is_class_type(type))
     {
+      cl = is_class_type(look_through_decl_only_class(cl));
       if (canonical_class
 	  && canonical_class.get() != cl.get())
 	{
@@ -15664,15 +15665,15 @@ maybe_adjust_canonical_type(const type_base_sptr& canonical,
 		  if (canonical_class->get_corpus()
 		      && cl->get_corpus()
 		      && (cl->get_corpus() == canonical_class->get_corpus()))
-		  // There is a member function defined and publicly
-		  // exported in the other class and the canonical
-		  // class doesn't have that member function.  This
-		  // should not have happened!  For instance, the
-		  // DWARF reader does merge the member functions of
-		  // classes having the same name so that all of them
-		  // end-up having the same member functions.  What's
-		  // going on here?
-		  ABG_ASSERT_NOT_REACHED;
+		    // There is a member function defined and publicly
+		    // exported in the other class and the canonical
+		    // class doesn't have that member function.  This
+		    // should not have happened!  For instance, the
+		    // DWARF reader does merge the member functions of
+		    // classes having the same name so that all of them
+		    // end-up having the same member functions.  What's
+		    // going on here?
+		    ABG_ASSERT_NOT_REACHED;
 	      }
 	}
     }
@@ -15806,11 +15807,11 @@ canonicalize(type_base_sptr t)
 		// 'canonical' to the set of canonical types belonging
 		// to ST.
 		if (type_base_sptr c = is_type(scope)->get_canonical_type())
-		  // We want to add 'canonical' to set of canonical
-		  // types belonging to the canonical type of ST.  That
-		  // way, just looking at the canonical type of ST is
-		  // enough to get the types that belong to the scope of
-		  // the class of equivalence of ST.
+		  // We want to add 'canonical' to the set of
+		  // canonical types belonging to the canonical type
+		  // of ST.  That way, just looking at the canonical
+		  // type of ST is enough to get the types that belong
+		  // to the scope of the class of equivalence of ST.
 		  scope = is_scope_decl(is_decl(c)).get();
 	      scope->get_canonical_types().insert(canonical);
 	    }
