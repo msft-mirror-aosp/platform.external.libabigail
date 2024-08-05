@@ -25647,7 +25647,11 @@ class_decl::operator==(const decl_base& other) const
 {
   const class_decl* op = is_class_type(&other);
   if (!op)
-    return false;
+    {
+      if (class_or_union* cou = is_class_or_union_type(&other))
+	return class_or_union::operator==(*cou);
+      return false;
+    }
 
   // If this is a decl-only type (and thus with no canonical type),
   // use the canonical type of the definition, if any.
