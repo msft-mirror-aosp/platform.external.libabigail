@@ -612,7 +612,7 @@ set_suppressions(abigail::elf_based_reader& rdr, options& opts)
 ///
 /// @param opts the command line options.
 static void
-set_generic_options(abigail::elf_based_reader& rdr, options& opts)
+set_generic_options(abigail::fe_iface& rdr, options& opts)
 {
   rdr.options().drop_undefined_syms = opts.drop_undefined_syms;
   rdr.options().show_stats = opts.show_stats;
@@ -675,6 +675,7 @@ perform_self_comparison(const write_context_sptr& write_ctxt,
     }
 #endif
   fe_iface_sptr rdr = abixml::create_reader(tmp_file->get_path(), env);
+  set_generic_options(*rdr, opts);
 
 #ifdef WITH_DEBUG_SELF_COMPARISON
   if (opts.debug_abidiff
