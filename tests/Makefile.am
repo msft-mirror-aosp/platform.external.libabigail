@@ -69,8 +69,6 @@ else
 TESTS += runtestdefaultsupprs.py
 endif
 
-XFAIL_TESTS = runtestabidiffexit
-
 EXTRA_DIST = \
 runtestcanonicalizetypes.sh.in \
 runtestfedabipkgdiff.py.in \

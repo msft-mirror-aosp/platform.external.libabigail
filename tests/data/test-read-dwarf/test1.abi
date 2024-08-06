@@ -37,8 +37,8 @@
   <abi-instr address-size='64' path='test1.cc' comp-dir-path='/home/dodji/git/libabigail/dwarf/tests/data/test-read-dwarf' language='LANG_C_plus_plus'>
     <type-decl name='char' size-in-bits='8' hash='7f1bbd7b0c3c186f' id='type-id-1'/>
     <type-decl name='double' size-in-bits='64' hash='ab419e666b76dba5' id='type-id-2'/>
-    <type-decl name='int' size-in-bits='32' hash='45e5b6264d770ae7#2' id='type-id-3'/>
-    <type-decl name='long long int' size-in-bits='64' hash='55e6262ccf4af918' id='type-id-4'/>
+    <type-decl name='int' size-in-bits='32' hash='45e5b6264d770ae7' id='type-id-3'/>
+    <type-decl name='long long int' size-in-bits='64' hash='55e6262ccf4af918#2' id='type-id-4'/>
     <class-decl name='b0' is-struct='yes' visibility='default' size-in-bits='128' filepath='/home/dodji/git/libabigail/dwarf/tests/data/test-read-dwarf/test1.cc' line='1' column='1' hash='333766ab4d3578d6' id='type-id-5'>
       <data-member access='public' layout-offset-in-bits='0'>
         <var-decl name='m0' type-id='type-id-4' visibility='default' filepath='/home/dodji/git/libabigail/dwarf/tests/data/test-read-dwarf/test1.cc' line='3' column='1'/>

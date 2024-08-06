@@ -4220,7 +4220,7 @@ public:
   get_base_specifiers() const;
 
   class_decl_sptr
-  find_base_class(const string&) const;
+  find_base_class(const string& qualified_name) const;
 
   const member_functions&
   get_virtual_mem_fns() const;

@@ -25,8 +25,8 @@
   <abi-instr address-size='64' path='test0.cc' comp-dir-path='/home/dodji/git/libabigail/dwarf/tests/data/test-read-dwarf' language='LANG_C_plus_plus'>
     <type-decl name='char' size-in-bits='8' hash='7f1bbd7b0c3c186f' id='type-id-1'/>
     <type-decl name='int' size-in-bits='32' hash='45e5b6264d770ae7' id='type-id-2'/>
-    <type-decl name='long int' size-in-bits='64' hash='69f1ebc3a0a3f241#3' id='type-id-3'/>
-    <type-decl name='long long int' size-in-bits='64' hash='55e6262ccf4af918#2' id='type-id-4'/>
+    <type-decl name='long int' size-in-bits='64' hash='69f1ebc3a0a3f241#2' id='type-id-3'/>
+    <type-decl name='long long int' size-in-bits='64' hash='55e6262ccf4af918#3' id='type-id-4'/>
     <type-decl name='unnamed-enum-underlying-type-32' size-in-bits='32' alignment-in-bits='32' is-anonymous='yes' hash='8f51609dd015af12' id='type-id-5'/>
     <pointer-type-def type-id='type-id-1' size-in-bits='64' hash='cbbb684bdad1404' id='type-id-6'/>
     <qualified-type-def type-id='type-id-2' const='yes' hash='efe9ca8385dea285' id='type-id-7'/>

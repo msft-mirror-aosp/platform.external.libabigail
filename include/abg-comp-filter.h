@@ -108,6 +108,15 @@ has_strict_fam_conversion(const diff *d);
 bool
 has_lvalue_reference_ness_change(const diff *d);
 
+bool
+has_void_ptr_to_ptr_change(const diff* d);
+
+bool
+has_harmless_enum_to_int_change(const diff* d);
+
+bool
+has_benign_array_of_unknown_size_change(const diff* dif);
+
 struct filter_base;
 /// Convenience typedef for a shared pointer to filter_base
 typedef shared_ptr<filter_base> filter_base_sptr;

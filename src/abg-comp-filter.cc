@@ -33,6 +33,13 @@ static bool
 has_offset_changes(const string_decl_base_sptr_map& f_data_members,
 		   const string_decl_base_sptr_map& s_data_members);
 
+static bool
+type_diff_has_cv_qual_change_only(const diff *type_dif);
+
+static bool
+type_diff_has_cv_qual_change_only(const type_base_sptr& f,
+				  const type_base_sptr& s);
+
 using std::dynamic_pointer_cast;
 
 /// Walk the diff sub-trees of a a @ref corpus_diff and apply a filter
@@ -314,61 +321,16 @@ has_offset_changes(const string_decl_base_sptr_map& f_data_members,
   return false;
 }
 
-/// Test if a set of data members contains at least one data member
-/// that has a sub-type change.
-///
-/// @param f_data_members the first version of data members to
-/// consider.
-///
-/// @param s_data_members the second version of data members to
-/// consider.
-///
-/// @return true iff there is at least one data member which has a
-/// sub-type change between the first version of data members and the
-/// second version.
-static bool
-has_subtype_changes(const string_decl_base_sptr_map& f_data_members,
-		    const string_decl_base_sptr_map& s_data_members,
-		    diff_context_sptr ctxt)
-{
-  // Now compare the offsets of the data members collected.
-  for (auto entry : f_data_members)
-    {
-      var_decl_sptr f_member = is_var_decl(entry.second);
-      ABG_ASSERT(f_member);
-
-      var_decl_sptr s_member;
-      auto i = s_data_members.find(entry.first);
-      if (i == s_data_members.end())
-	{
-	  unsigned offset = get_data_member_offset(f_member);
-	  s_member = find_data_member_at_offset(s_data_members, offset);
-	  if (!s_member)
-	    // A data member was suppressed; that's bad; let's consider
-	    // that as a sub-type change.
-	    return true;
-	}
-
-      if (!s_member)
-	s_member = is_var_decl(i->second);
-      ABG_ASSERT(s_member);
-      diff_sptr d =compute_diff(f_member->get_type(), s_member->get_type(), ctxt);
-      if (d->has_changes())
-	return true;
-    }
-  return false;
-}
-
-/// Test if the changes of a @ref class_diff are harmless.
+/// Test if the local changes of a @ref class_diff are harmless.
 ///
 /// Potentially harmful changes are basically:
 ///   1/ name change (that changes the type altogether)
 ///   2/ size change
 ///   3/ offset change of any data member
-///   4/ any subtype change.
+///
 ///
 /// Thus, this function tests that the class_diff carries none of the
-/// 4 kinds of changes above.
+/// 3 kinds of changes above.
 ///
 /// @param d the @ref class_diff to consider.
 ///
@@ -396,23 +358,18 @@ class_diff_has_only_harmless_changes(const class_diff* d)
   if (has_offset_changes(f_data_members, s_data_members))
     return false;
 
-  // detect subtype changes
-  if (has_subtype_changes(f_data_members, s_data_members, d->context()))
-    return false;
-
   return true;
 }
 
-/// Test if the changes of a @ref class_diff are harmless.
+/// Test if the local changes of a @ref class_diff are harmless.
 ///
 /// Potentially harmful changes are basically:
 ///   1/ name change (that changes the type altogether)
 ///   2/ size change
 ///   3/ offset change of any data member
-///   4/ any subtype change.
 ///
 /// Thus, this function tests that the class_diff carries none of the
-/// 4 kinds of changes above.
+/// 3 kinds of changes above.
 ///
 /// @param d the @ref class_diff to consider.
 ///
@@ -672,6 +629,37 @@ is_compatible_change(const decl_base_sptr& d1, const decl_base_sptr& d2)
   return false;
 }
 
+/// Test if a diff node carries a non-compatible change between two
+/// types of different kinds.
+///
+/// Note that a compatible change is a change whereby two types are
+/// equal modulo a typedef.  Said otherwise, a compatible change is a
+/// change whereby one type is a typedef of the other.
+///
+/// @param d the diff node to consider.
+///
+/// @return true iff the diff node carries a non-compatible change
+/// between two types of different kinds.
+static bool
+is_non_compatible_distinct_change(const diff *d)
+{
+  if (const distinct_diff* dd = is_distinct_diff(d))
+    {
+      if (dd->compatible_child_diff()
+	  || type_diff_has_cv_qual_change_only(d)
+	  || (!dd->first_subject() || !dd->second_subject()))
+	// The distinct diff node carries a compatible or benign
+	// change
+	return false;
+
+      // If we reached this point, then the distinct diff node is
+      // likely to carry a non-compatible change.
+      return true;
+    }
+
+  return false;
+}
+
 /// Test if two decls have different names.
 ///
 /// @param d1 the first declaration to consider.
@@ -790,7 +778,14 @@ has_harmless_name_change(const decl_base_sptr& f, const decl_base_sptr& s)
 		  && is_typedef(s)
 		  && (is_typedef(f)->get_underlying_type()
 		   == is_typedef(s)->get_underlying_type()))
-	      // .. or a data member name change, without having its
+	      // ... Types are compatible (equal modulo a typedef) ...
+	      || (is_type(f)
+		  && is_type(s)
+		  && types_are_compatible(is_type(f), is_type(s)))
+	      // ... Only qualifers changed on the type without having
+	      // the underlying type changed ...
+	      || type_diff_has_cv_qual_change_only(is_type(f), is_type(s))
+	      // ... or a data member name change, without having its
 	      // type changed ...
 	      || (is_data_member(f)
 		  && is_data_member(s)
@@ -1741,7 +1736,7 @@ has_harmful_enum_change(const diff* diff)
 /// @param diff the diff node to consider.
 ///
 /// @return true if @p diff is a harmless enum to integer change.
-static bool
+bool
 has_harmless_enum_to_int_change(const diff* diff)
 {
   if (!diff)
@@ -1846,46 +1841,59 @@ has_fn_parm_type_top_cv_qual_change(const diff* diff)
 static bool
 type_diff_has_cv_qual_change_only(const diff *type_dif)
 {
-  if (!is_type_diff(type_dif))
+  if (!type_dif)
     return false;
 
-  if (is_pointer_diff(type_dif))
-    type_dif = peel_pointer_diff(type_dif);
-  else if (is_reference_diff(type_dif))
-    type_dif = peel_reference_diff(type_dif);
+  type_base_sptr f = is_type(type_dif->first_subject());
+  type_base_sptr s = is_type(type_dif->second_subject());
 
-  const type_base *f = 0;
-  const type_base *s = 0;
-  if (const distinct_diff *d = is_distinct_diff(type_dif))
-    {
-      if (is_qualified_type(d->first()) == is_qualified_type(d->second()))
-	return false;
-      else
-	{
-	  f = is_type(d->first()).get();
-	  s = is_type(d->second()).get();
-	}
-    }
-  else if (const qualified_type_diff *d = is_qualified_type_diff(type_dif))
-    {
-      f = is_type(d->first_qualified_type()).get();
-      s = is_type(d->second_qualified_type()).get();
-    }
-  else
-    return false;
+  return type_diff_has_cv_qual_change_only(f, s);
+}
 
-  f = peel_qualified_type(f);
-  s = peel_qualified_type(s);
+/// Test if a type only carries a CV qualifier-only change.
+///
+/// @param f the first version of the type.
+///
+/// @param s the second version of the type.
+///
+/// @return true iff the change is only a qualifier change.
+static bool
+type_diff_has_cv_qual_change_only(const type_base_sptr& f,
+				  const type_base_sptr& s)
+{
+  type_base_sptr a = f;
+  type_base_sptr b = s;
+
+  a = peel_qualified_or_typedef_type(a);
+  b = peel_qualified_or_typedef_type(b);
+
+  if (a && b && *a == *b)
+    return true;
+
+  if (is_pointer_type(a) && is_pointer_type(b))
+    {
+      a = peel_pointer_type(a);
+      b = peel_pointer_type(b);
+    }
+
+  if (a && b && *a == *b)
+    return true;
+
+  a = peel_qualified_or_typedef_type(a);
+  b = peel_qualified_or_typedef_type(b);
+
+  if (a && b && *a == *b)
+    return true;
 
   // If f and s are arrays, note that they can differ only by the cv
   // qualifier of the array element type.  That cv qualifier is not
   // removed by peel_qualified_type.  So we need to test this case
   // specifically.
-  if (array_type_def *f_a = is_array_type(f))
-    if (array_type_def *s_a = is_array_type(s))
+  if (array_type_def *f_a = is_array_type(a.get()))
+    if (array_type_def *s_a = is_array_type(b.get()))
       return equals_modulo_cv_qualifier(f_a, s_a);
 
-  return *f == *s;
+  return (a && b && *a == *b);
 }
 
 /// Test if an @ref fn_parm_diff node has a cv qualifier change on the
@@ -1984,6 +1992,27 @@ has_var_type_cv_qual_change(const diff* dif)
   return type_diff_has_cv_qual_change_only(type_dif);
 }
 
+/// Test if a type change is a "void pointer to pointer" change.
+///
+/// @param f the first version of the type.
+///
+/// @param s the second version of the type.
+///
+/// @return true iff the type change is a "void pointer to pointer"
+/// change.
+static bool
+is_void_ptr_to_ptr(const type_base* f, const type_base* s)
+{
+  if (is_void_pointer_type_equivalent(f)
+      && is_pointer_type(s)
+      && !is_void_pointer_type_equivalent(s)
+      && ((f->get_size_in_bits() == 0)
+	  || (f->get_size_in_bits() == s->get_size_in_bits())))
+    return true;
+
+  return false;
+}
+
 /// Test if a diff node carries a void* to pointer type change.
 ///
 /// Note that this function looks through typedef and qualifier types
@@ -1992,7 +2021,7 @@ has_var_type_cv_qual_change(const diff* dif)
 /// @param dif the diff node to consider.
 ///
 /// @return true iff @p dif carries a void* to pointer type change.
-static bool
+bool
 has_void_ptr_to_ptr_change(const diff* dif)
 {
   dif = peel_typedef_diff(dif);
@@ -2005,11 +2034,7 @@ has_void_ptr_to_ptr_change(const diff* dif)
       f = peel_qualified_or_typedef_type(f);
       s = peel_qualified_or_typedef_type(s);
 
-      if (is_void_pointer_type_equivalent(f)
-	  && is_pointer_type(s)
-	  && !is_void_pointer_type_equivalent(s)
-	  && ((f->get_size_in_bits() == 0)
-	      || (f->get_size_in_bits() == s->get_size_in_bits())))
+      if (is_void_ptr_to_ptr(f, s) || is_void_ptr_to_ptr(s, f))
 	return true;
     }
   else if (const pointer_diff *d = is_pointer_diff(dif))
@@ -2020,11 +2045,7 @@ has_void_ptr_to_ptr_change(const diff* dif)
       f = peel_qualified_or_typedef_type(f);
       s = peel_qualified_or_typedef_type(s);
 
-      if (is_void_pointer_type_equivalent(f)
-	  && is_pointer_type(s)
-	  && !is_void_pointer_type_equivalent(s)
-	  && ((f->get_size_in_bits() == 0)
-	      || (f->get_size_in_bits() == s->get_size_in_bits())))
+      if (is_void_ptr_to_ptr(f, s) || is_void_ptr_to_ptr(s, f))
 	return true;
     }
   else if (const qualified_type_diff *d = is_qualified_type_diff(dif))
@@ -2035,11 +2056,7 @@ has_void_ptr_to_ptr_change(const diff* dif)
       f = peel_qualified_or_typedef_type(f);
       s = peel_qualified_or_typedef_type(s);
 
-      if (is_void_pointer_type_equivalent(f)
-	  && is_pointer_type(s)
-	  && !is_void_pointer_type_equivalent(s)
-	  && ((f->get_size_in_bits() == 0)
-	      || (f->get_size_in_bits() == s->get_size_in_bits())))
+      if (is_void_ptr_to_ptr(f, s) || is_void_ptr_to_ptr(s, f))
 	return true;
     }
 
@@ -2058,7 +2075,7 @@ has_void_ptr_to_ptr_change(const diff* dif)
 /// @param dif the diff node to consider.
 ///
 /// @return true iff @p dif contains the benign array type size change.
-static bool
+bool
 has_benign_array_of_unknown_size_change(const diff* dif)
 {
   return is_var_1_dim_unknown_size_array_change(dif);
@@ -2218,6 +2235,12 @@ categorize_harmful_diff_node(diff *d, bool pre)
 
       if (has_added_or_removed_function_parameters(d))
 	category |= FN_PARM_ADD_REMOVE_CHANGE_CATEGORY;
+
+      if (is_non_compatible_distinct_change(d))
+	category |= NON_COMPATIBLE_DISTINCT_CHANGE_CATEGORY;
+
+      if (has_harmful_name_change(d))
+	category |= NON_COMPATIBLE_NAME_CHANGE_CATEGORY;
 
       if (category)
 	{

@@ -674,15 +674,21 @@ leaf_reporter::report(const class_or_union_diff& d,
 	}
 
       // report changes
-      size_t numchanges = (d.sorted_changed_data_members().size()
-			   + d.sorted_subtype_changed_data_members().size());
+      size_t net_numchanges = 0;
 
-      size_t num_filtered =
-	(d.count_filtered_changed_data_members(/*local_only=*/true)
-	 + d.count_filtered_subtype_changed_data_members(/*local_only=*/true));
+      for (var_diff_sptrs_type::const_iterator it =
+	     d.sorted_changed_data_members().begin();
+	   it != d.sorted_changed_data_members().end();
+	   ++it)
+	if (diff_to_be_reported((*it).get()))
+	  net_numchanges++;
 
-      ABG_ASSERT(numchanges >= num_filtered);
-      size_t net_numchanges = numchanges - num_filtered;
+      for (var_diff_sptrs_type::const_iterator it =
+	     d.sorted_subtype_changed_data_members().begin();
+	   it != d.sorted_subtype_changed_data_members().end();
+	   ++it)
+	if (diff_to_be_reported((*it).get()))
+	  net_numchanges++;
 
       if (net_numchanges)
 	{

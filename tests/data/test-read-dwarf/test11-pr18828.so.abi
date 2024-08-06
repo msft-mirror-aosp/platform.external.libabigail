@@ -665,13 +665,13 @@
     </array-type-def>
     <type-decl name='double' size-in-bits='64' hash='ab419e666b76dba5' id='type-id-21'/>
     <type-decl name='float' size-in-bits='32' hash='d0241d3e33863f20' id='type-id-22'/>
-    <type-decl name='int' size-in-bits='32' hash='45e5b6264d770ae7#3' id='type-id-23'/>
+    <type-decl name='int' size-in-bits='32' hash='45e5b6264d770ae7' id='type-id-23'/>
     <array-type-def dimensions='1' type-id='type-id-23' size-in-bits='320' hash='d250b9aae8168ce2' id='type-id-24'>
       <subrange length='10' lower-bound='0' upper-bound='9' type-id='type-id-3' size-in-bits='64' is-anonymous='yes' hash='a8d9f7f5c641e013' id='type-id-25'/>
     </array-type-def>
     <type-decl name='long double' size-in-bits='128' hash='3585edd3484ecff7#2' id='type-id-26'/>
     <type-decl name='long int' size-in-bits='64' hash='69f1ebc3a0a3f241#2' id='type-id-27'/>
-    <type-decl name='long long int' size-in-bits='64' hash='55e6262ccf4af918' id='type-id-28'/>
+    <type-decl name='long long int' size-in-bits='64' hash='55e6262ccf4af918#3' id='type-id-28'/>
     <type-decl name='short int' size-in-bits='16' hash='bda4242a54aecaa8#4' id='type-id-29'/>
     <type-decl name='signed char' size-in-bits='8' hash='c34c714b7bd801ea' id='type-id-30'/>
     <type-decl name='sizetype' size-in-bits='64' hash='d73989f57060a55a' id='type-id-3'/>
@@ -1005,15 +1005,15 @@
     <array-type-def dimensions='1' type-id='type-id-89' size-in-bits='40' hash='4e88d3ad3419ff82' id='type-id-96'>
       <subrange length='5' lower-bound='0' upper-bound='4' type-id='type-id-3' size-in-bits='64' is-anonymous='yes' hash='366e4d8744b37ad2' id='type-id-97'/>
     </array-type-def>
-    <type-decl name='unsigned int' size-in-bits='32' hash='3a94285d174bd537#3' id='type-id-50'/>
-    <type-decl name='unsigned long int' size-in-bits='64' hash='e7c5efcec748ba6c' id='type-id-80'/>
+    <type-decl name='unsigned int' size-in-bits='32' hash='3a94285d174bd537' id='type-id-50'/>
+    <type-decl name='unsigned long int' size-in-bits='64' hash='e7c5efcec748ba6c#2' id='type-id-80'/>
     <array-type-def dimensions='1' type-id='type-id-80' size-in-bits='39936' hash='e26215bf8baaa466' id='type-id-98'>
       <subrange length='624' lower-bound='0' upper-bound='623' type-id='type-id-3' size-in-bits='64' is-anonymous='yes' hash='293e08fde3883c0f' id='type-id-99'/>
     </array-type-def>
     <array-type-def dimensions='1' type-id='type-id-80' size-in-bits='unknown' hash='8155e20d9c97fff3' id='type-id-100'>
       <subrange length='unknown' lower-bound='0' upper-bound='0' size-in-bits='64' is-anonymous='yes' hash='edeb07fdf1f46d10' id='type-id-101'/>
     </array-type-def>
-    <type-decl name='unsigned long long int' size-in-bits='64' hash='d226d906a470de76#2' id='type-id-102'/>
+    <type-decl name='unsigned long long int' size-in-bits='64' hash='d226d906a470de76#3' id='type-id-102'/>
     <type-decl name='unsigned short int' size-in-bits='16' hash='df52e4878444404b#4' id='type-id-42'/>
     <type-decl name='wchar_t' size-in-bits='32' hash='e03601bc1680ce34' id='type-id-103'/>
     <pointer-type-def type-id='type-id-63' size-in-bits='64' hash='99541c791ced7f68' id='type-id-104'/>

@@ -247,6 +247,10 @@ propagate_canonical_type(const reader& rdr,
 			 const Dwarf_Die* l,
 			 const Dwarf_Die* r);
 
+static void
+maybe_set_member_type_access_specifier(decl_base_sptr member_type_declaration,
+				       Dwarf_Die* die);
+
 /// Convenience typedef for a shared pointer to an
 /// addr_elf_symbol_sptr_map_type.
 typedef shared_ptr<addr_elf_symbol_sptr_map_type> addr_elf_symbol_sptr_map_sptr;
@@ -573,10 +577,6 @@ build_internal_anonymous_die_name(const string &base_name,
 				  size_t anonymous_type_index);
 
 static string
-get_internal_anonymous_die_name(Dwarf_Die *die,
-				size_t anonymous_type_index);
-
-static string
 die_qualified_type_name(const reader& rdr,
 			const Dwarf_Die* die,
 			size_t where);
@@ -591,6 +591,10 @@ die_qualified_name(const reader& rdr,
 		   const Dwarf_Die* die,
 		   size_t where);
 
+static string
+die_type_name(const reader& rdr, const Dwarf_Die* die,
+	      bool qualified_name, size_t where_offset);
+
 static bool
 die_qualified_type_name_empty(const reader& rdr,
 			      const Dwarf_Die* die, size_t where,
@@ -601,6 +605,8 @@ die_return_and_parm_names_from_fn_type_die(const reader& rdr,
 					   const Dwarf_Die* die,
 					   size_t where_offset,
 					   bool pretty_print,
+					   bool qualified_name,
+					   bool &is_method_type,
 					   string &return_type_name,
 					   string &class_name,
 					   vector<string>& parm_names,
@@ -610,6 +616,7 @@ die_return_and_parm_names_from_fn_type_die(const reader& rdr,
 static string
 die_function_signature(const reader& rdr,
 		       const Dwarf_Die *die,
+		       bool qualified_name,
 		       size_t where_offset);
 
 static bool
@@ -630,13 +637,39 @@ die_function_type_is_method_type(const reader& rdr,
 				 bool& is_static);
 
 static string
-die_pretty_print_type(reader& rdr,
+die_enum_flat_representation(const reader&	rdr,
+			     const Dwarf_Die*	die,
+			     const string&	indent,
+			     bool		one_line,
+			     bool		qualified_names,
+			     size_t		where_offset);
+
+static string
+die_class_flat_representation(const reader&	rdr,
+			      const Dwarf_Die*	die,
+			      const string&	indent,
+			      bool		one_line,
+			      bool		qualified_names,
+			      size_t		where_offset);
+
+static string
+die_class_or_enum_flat_representation(const reader&	rdr,
+				      const Dwarf_Die* die,
+				      const string&	indent,
+				      bool		one_line,
+				      bool		qualified_names,
+				      size_t		where_offset);
+
+static string
+die_pretty_print_type(const reader& rdr,
 		      const Dwarf_Die* die,
 		      size_t where_offset);
 
 static string
-die_pretty_print_decl(reader& rdr,
+die_pretty_print_decl(const reader& rdr,
 		      const Dwarf_Die* die,
+		      bool qualified_name,
+		      bool include_fns,
 		      size_t where_offset);
 
 static string
@@ -663,7 +696,7 @@ build_subrange_type(reader&	rdr,
 		    bool		associate_type_to_die = true);
 
 static void
-build_subranges_from_array_type_die(reader&			rdr,
+build_subranges_from_array_type_die(const reader&			rdr,
 				    const Dwarf_Die*			die,
 				    array_type_def::subranges_type&	subranges,
 				    size_t				where_offset,
@@ -681,6 +714,9 @@ compare_dies_during_canonicalization(reader& rdr,
 
 static bool
 get_member_child_die(const Dwarf_Die *die, Dwarf_Die *child);
+
+static bool
+get_next_member_sibling_die(const Dwarf_Die *die, Dwarf_Die *member);
 
 /// Get the language used to generate a given DIE.
 ///
@@ -3225,14 +3261,13 @@ public:
 	     || tag == DW_TAG_class_type
 	     || tag == DW_TAG_union_type)
 	    && die_is_anonymous(die))
-	  {
-	    location l = die_location(*this, die);
-	    qualified_name = l ? l.expand() : "noloc";
-	    qualified_name = "unnamed-at-" + qualified_name;
-	  }
-	else
 	  qualified_name =
-	    die_qualified_type_name(rdr, die, where_offset);
+	    die_class_or_enum_flat_representation(*this, die, /*indent=*/"",
+						  /*one_line=*/true,
+						  /*qualified_name=*/false,
+						  where_offset);
+	else
+	  qualified_name = die_qualified_type_name(rdr, die, where_offset);
 
 	interned_string istr = env().intern(qualified_name);
 	map[die_offset] = istr;
@@ -5989,7 +6024,7 @@ struct offset_pairs_stack_type
 }; // end struct offset_pairs_stack_type
 
 static type_or_decl_base_sptr
-build_ir_node_from_die(reader&	rdr,
+build_ir_node_from_die(reader&		rdr,
 		       Dwarf_Die*	die,
 		       scope_decl*	scope,
 		       bool		called_from_public_decl,
@@ -5998,7 +6033,7 @@ build_ir_node_from_die(reader&	rdr,
 		       bool		is_required_decl_spec = false);
 
 static type_or_decl_base_sptr
-build_ir_node_from_die(reader&	rdr,
+build_ir_node_from_die(reader&		rdr,
 		       Dwarf_Die*	die,
 		       bool		called_from_public_decl,
 		       size_t		where_offset);
@@ -9475,27 +9510,6 @@ build_internal_anonymous_die_name(const string &base_name,
   return name;
 }
 
-
-/// Build a full internal anonymous type name.
-///
-/// @param die the DIE representing the anonymous type to consider.
-///
-/// @param anonymous_type_index the index of the anonymous type
-/// represented by @p DIE, in its scope.  That is, if there are
-/// several different anonymous types of the same kind as @p die, this
-/// index is what tells them appart.
-///
-/// @return the internal name of the anonymous type represented by @p
-/// DIE.
-static string
-get_internal_anonymous_die_name(Dwarf_Die *die,
-				size_t anonymous_type_index)
-{
-  string name = get_internal_anonymous_die_prefix_name(die);
-  name = build_internal_anonymous_die_name(name, anonymous_type_index);
-  return name;
-}
-
 // ------------------------------------
 // <DIE pretty printer>
 // ------------------------------------
@@ -9533,7 +9547,6 @@ die_qualified_type_name(const reader& rdr,
   if (!get_scope_die(rdr, die, where_offset, scope_die))
     return "";
 
-  string parent_name = die_qualified_name(rdr, &scope_die, where_offset);
   bool colon_colon = die_is_type(die) || die_is_namespace(die);
   string separator = colon_colon ? "::" : ".";
 
@@ -9555,21 +9568,25 @@ die_qualified_type_name(const reader& rdr,
       break;
 
     case DW_TAG_typedef:
+      ABG_ASSERT(!name.empty());
+      // fall through
+
     case DW_TAG_enumeration_type:
     case DW_TAG_structure_type:
     case DW_TAG_class_type:
     case DW_TAG_union_type:
       {
-	if (name.empty())
-	  // TODO: handle cases where there are more than one
-	  // anonymous type of the same kind in the same scope.  In
-	  // that case, their name must be built with the function
-	  // get_internal_anonymous_die_name or something of the same
-	  // kind.
-	  name = get_internal_anonymous_die_prefix_name(die);
-
-	ABG_ASSERT(!name.empty());
-	repr = parent_name.empty() ? name : parent_name + separator + name;
+	if (die_is_anonymous(die))
+	  repr = die_class_or_enum_flat_representation(rdr, die, /*indent=*/"",
+						       /*one_line=*/true,
+						       /*qualed_name=*/false,
+						       where_offset);
+	else
+	  {
+	    string parent_name = die_qualified_name(rdr, &scope_die,
+						    where_offset);
+	    repr = parent_name.empty() ? name : parent_name + separator + name;
+	  }
       }
       break;
 
@@ -9720,9 +9737,11 @@ die_qualified_type_name(const reader& rdr,
 	vector<string> parm_names;
 	bool is_const = false;
 	bool is_static = false;
-
+	bool is_method_type = false;
 	die_return_and_parm_names_from_fn_type_die(rdr, die, where_offset,
 						   /*pretty_print=*/true,
+						   /*qualified_name=*/true,
+						   is_method_type,
 						   return_type_name, class_name,
 						   parm_names, is_const,
 						   is_static);
@@ -9731,7 +9750,286 @@ die_qualified_type_name(const reader& rdr,
 
 	repr = return_type_name;
 
-	if (!class_name.empty())
+	if (is_method_type)
+	  // This is a method, so print the class name.
+	  repr += " (" + class_name + "::*)";
+
+	// Now parameters.
+	repr += " (";
+	for (vector<string>::const_iterator i = parm_names.begin();
+	     i != parm_names.end();
+	     ++i)
+	  {
+	    if (i != parm_names.begin())
+	      repr += ", ";
+	    repr += *i;
+	  }
+	repr += ")";
+
+      }
+      break;
+
+    case DW_TAG_string_type:
+    case DW_TAG_ptr_to_member_type:
+    case DW_TAG_set_type:
+    case DW_TAG_file_type:
+    case DW_TAG_packed_type:
+    case DW_TAG_thrown_type:
+    case DW_TAG_interface_type:
+    case DW_TAG_shared_type:
+      break;
+    }
+
+  return repr;
+}
+
+/// Compute the name of a type represented by a DIE.
+///
+/// @param rdr the reader to use.
+///
+/// @param die the type DIE to consider.
+///
+/// @param qualified_name if true then compute a qualified name.
+///
+/// @param where_offset where in the are logically are in the DIE
+/// stream.
+///
+/// @return a copy of the string representing the type represented by
+/// @p die.
+static string
+die_type_name(const reader&	rdr,
+	      const Dwarf_Die*	die,
+	      bool		qualified_name,
+	      size_t		where_offset)
+{
+  if (!die)
+    return "";
+
+  int tag = dwarf_tag (const_cast<Dwarf_Die*>(die));
+  if (tag == DW_TAG_compile_unit
+      || tag == DW_TAG_partial_unit
+      || tag == DW_TAG_type_unit)
+    return "";
+
+  string name = die_name(die);
+
+  Dwarf_Die scope_die;
+  if (!get_scope_die(rdr, die, where_offset, scope_die))
+    return "";
+
+  bool colon_colon = die_is_type(die) || die_is_namespace(die);
+  string separator = colon_colon ? "::" : ".";
+
+  string repr;
+
+  switch (tag)
+    {
+    case DW_TAG_unspecified_type:
+      break;
+
+    case DW_TAG_base_type:
+      {
+	abigail::ir::real_type int_type;
+	if (parse_real_type(name, int_type))
+	  repr = int_type;
+	else
+	  repr = name;
+      }
+      break;
+
+    case DW_TAG_typedef:
+      ABG_ASSERT(!name.empty());
+      // fall through
+
+    case DW_TAG_enumeration_type:
+    case DW_TAG_structure_type:
+    case DW_TAG_class_type:
+    case DW_TAG_union_type:
+      {
+	if (die_is_anonymous(die))
+	  repr = die_class_or_enum_flat_representation(rdr, die, /*indent=*/"",
+						       /*one_line=*/true,
+						       /*qualed_name=*/false,
+						       where_offset);
+	else
+	  {
+	    string parent_name;
+	    if (qualified_name)
+	      {
+		if (!is_anonymous_type_die(&scope_die))
+		  parent_name = die_qualified_name(rdr, &scope_die,
+						   where_offset);
+	      }
+	    repr = parent_name.empty() ? name : parent_name + separator + name;
+	  }
+      }
+      break;
+
+    case DW_TAG_const_type:
+    case DW_TAG_volatile_type:
+    case DW_TAG_restrict_type:
+      {
+	Dwarf_Die underlying_type_die;
+	bool has_underlying_type_die =
+	  die_die_attribute(die, DW_AT_type, underlying_type_die);
+
+	if (has_underlying_type_die && die_is_unspecified(&underlying_type_die))
+	  break;
+
+	if (tag == DW_TAG_const_type)
+	  {
+	    if (has_underlying_type_die
+		&& die_is_reference_type(&underlying_type_die))
+	      // A reference is always const.  So, to lower false
+	      // positive reports in diff computations, we consider a
+	      // const reference just as a reference.  But we need to
+	      // keep the qualified-ness of the type.  So we introduce
+	      // a 'no-op' qualifier here.  Please remember that this
+	      // has to be kept in sync with what is done in
+	      // get_name_of_qualified_type.  So if you change this
+	      // here, you have to change that code there too.
+	      repr = "";
+	    else if (!has_underlying_type_die
+		     || die_is_void_type(&underlying_type_die))
+	      {
+		repr = "void";
+		break;
+	      }
+	    else
+	      repr = "const";
+	  }
+	else if (tag == DW_TAG_volatile_type)
+	  repr = "volatile";
+	else if (tag == DW_TAG_restrict_type)
+	  repr = "restrict";
+	else
+	  ABG_ASSERT_NOT_REACHED;
+
+	string underlying_type_repr;
+	if (has_underlying_type_die)
+	  underlying_type_repr =
+	    die_type_name(rdr, &underlying_type_die,
+			  qualified_name, where_offset);
+	else
+	  underlying_type_repr = "void";
+
+	if (underlying_type_repr.empty())
+	  repr.clear();
+	else
+	  {
+	    if (has_underlying_type_die)
+	      {
+		Dwarf_Die peeled;
+		die_peel_qualified(&underlying_type_die, peeled);
+		if (die_is_pointer_or_reference_type(&peeled))
+		  repr = underlying_type_repr + " " + repr;
+		else
+		  repr += " " + underlying_type_repr;
+	      }
+	    else
+	      repr += " " + underlying_type_repr;
+	  }
+      }
+      break;
+
+    case DW_TAG_pointer_type:
+    case DW_TAG_reference_type:
+    case DW_TAG_rvalue_reference_type:
+      {
+	Dwarf_Die pointed_to_type_die;
+	if (!die_die_attribute(die, DW_AT_type, pointed_to_type_die))
+	  {
+	    if (tag == DW_TAG_pointer_type)
+	      repr = "void*";
+	    break;
+	  }
+
+	if (die_is_unspecified(&pointed_to_type_die))
+	  break;
+
+	string pointed_type_repr =
+	  die_type_name(rdr, &pointed_to_type_die,
+			qualified_name, where_offset);
+
+	repr = pointed_type_repr;
+	if (repr.empty())
+	  break;
+
+	if (tag == DW_TAG_pointer_type)
+	  repr += "*";
+	else if (tag == DW_TAG_reference_type)
+	  repr += "&";
+	else if (tag == DW_TAG_rvalue_reference_type)
+	  repr += "&&";
+	else
+	  ABG_ASSERT_NOT_REACHED;
+      }
+      break;
+
+    case DW_TAG_subrange_type:
+      {
+	// In Ada, this one can be generated on its own, that is, not
+	// as a sub-type of an array.  So we need to support it on its
+	// own.  Note that when it's emitted as the sub-type of an
+	// array like in C and C++, this is handled differently, for
+	// now.  But we try to make this usable by other languages
+	// that are not Ada, even if we modelled it after Ada.
+
+	// So we build a subrange type for the sole purpose of using
+	// the ::as_string() method of that type.  So we don't add
+	// that type to the current type tree being built.
+	array_type_def::subrange_sptr s =
+	  build_subrange_type(const_cast<reader&>(rdr),
+			      die, where_offset,
+			      /*associate_die_to_type=*/false);
+	repr += s->as_string();
+	break;
+      }
+
+    case DW_TAG_array_type:
+      {
+	Dwarf_Die element_type_die;
+	if (!die_die_attribute(die, DW_AT_type, element_type_die))
+	  break;
+	string element_type_name =
+	  die_type_name(rdr, &element_type_die,
+			qualified_name, where_offset);
+	if (element_type_name.empty())
+	  break;
+
+	array_type_def::subranges_type subranges;
+	build_subranges_from_array_type_die(const_cast<reader&>(rdr),
+					    die, subranges, where_offset,
+					    /*associate_type_to_die=*/false);
+
+	repr = element_type_name;
+	repr += array_type_def::subrange_type::vector_as_string(subranges);
+      }
+      break;
+
+    case DW_TAG_subroutine_type:
+    case DW_TAG_subprogram:
+      {
+	string return_type_name;
+	string class_name;
+	vector<string> parm_names;
+	bool is_const = false;
+	bool is_static = false;
+	bool is_method_type = false;
+	die_return_and_parm_names_from_fn_type_die(rdr, die, where_offset,
+						   /*pretty_print=*/true,
+						   qualified_name,
+						   is_method_type,
+						   return_type_name,
+						   class_name,
+						   parm_names, is_const,
+						   is_static);
+	if (return_type_name.empty())
+	  return_type_name = "void";
+
+	repr = return_type_name;
+
+	if (is_method_type)
 	  {
 	    // This is a method, so print the class name.
 	    repr += " (" + class_name + "::*)";
@@ -9806,7 +10104,9 @@ die_qualified_decl_name(const reader& rdr,
       repr = scope_name.empty() ? name : scope_name + separator + name;
       break;
     case DW_TAG_subprogram:
-      repr = die_function_signature(rdr, die, where_offset);
+      repr = die_function_signature(rdr, die,
+				    /*qualified_name=*/true,
+				    where_offset);
       break;
 
     case DW_TAG_unspecified_parameters:
@@ -9931,6 +10231,12 @@ die_qualified_type_name_empty(const reader& rdr,
 /// pretty-printed names; otherwise, they are just qualified type
 /// names.
 ///
+/// @param qualified_name if true then the names returned are
+/// qualified.
+///
+/// @param is_method_type output parameter.  This is set by the
+/// function to true iff the DIE @p die represents a method.
+///
 /// @param return_type_name out parameter.  This contains the name of
 /// the return type of the function.
 ///
@@ -9950,6 +10256,8 @@ die_return_and_parm_names_from_fn_type_die(const reader& rdr,
 					   const Dwarf_Die* die,
 					   size_t where_offset,
 					   bool pretty_print,
+					   bool qualified_name,
+					   bool &is_method_type,
 					   string &return_type_name,
 					   string &class_name,
 					   vector<string>& parm_names,
@@ -9964,13 +10272,13 @@ die_return_and_parm_names_from_fn_type_die(const reader& rdr,
     return_type_name =
       pretty_print
       ? rdr.get_die_pretty_representation(&ret_type_die, where_offset)
-      : rdr.get_die_qualified_type_name(&ret_type_die, where_offset);
+      : die_type_name(rdr, &ret_type_die, qualified_name, where_offset);
 
   if (return_type_name.empty())
     return_type_name = "void";
 
   Dwarf_Die object_pointer_die, class_die;
-  bool is_method_type =
+  is_method_type =
     die_function_type_is_method_type(rdr, die, where_offset,
 				     object_pointer_die,
 				     class_die, is_static);
@@ -9978,7 +10286,8 @@ die_return_and_parm_names_from_fn_type_die(const reader& rdr,
   is_const = false;
   if (is_method_type)
     {
-      class_name = rdr.get_die_qualified_type_name(&class_die, where_offset);
+      if (!is_anonymous_type_die(&class_die))
+	class_name = die_type_name(rdr, &class_die, qualified_name, where_offset);
 
       Dwarf_Die this_pointer_die;
       Dwarf_Die pointed_to_die;
@@ -10002,19 +10311,28 @@ die_return_and_parm_names_from_fn_type_die(const reader& rdr,
     do
       {
 	int child_tag = dwarf_tag(&child);
+	bool first_parm = true;
 	if (child_tag == DW_TAG_formal_parameter)
 	  {
+	    // Skip the first parameter of a method.
+	    if (first_parm)
+	      {
+		first_parm = false;
+		if (is_method_type)
+		  continue;
+	      }
 	    Dwarf_Die parm_type_die;
 	    if (!die_die_attribute(&child, DW_AT_type, parm_type_die))
 	      continue;
-	    string qualified_name =
+	    string qname =
 	      pretty_print
 	      ? rdr.get_die_pretty_representation(&parm_type_die, where_offset)
-	      : rdr.get_die_qualified_type_name(&parm_type_die, where_offset);
+	      : die_type_name(rdr, &parm_type_die,
+			      qualified_name, where_offset);
 
-	    if (qualified_name.empty())
+	    if (qname.empty())
 	      continue;
-	    parm_names.push_back(qualified_name);
+	    parm_names.push_back(qname);
 	  }
 	else if (child_tag == DW_TAG_unspecified_parameters)
 	  {
@@ -10036,9 +10354,11 @@ die_return_and_parm_names_from_fn_type_die(const reader& rdr,
       Dwarf_Die parent_die;
       if (get_parent_die(rdr, die, parent_die, where_offset))
 	{
-	  if (die_is_class_type(&parent_die))
-	    class_name =
-	      rdr.get_die_qualified_type_name(&parent_die, where_offset);
+	  if (die_is_class_type(&parent_die)
+	      && !is_anonymous_type_die(&parent_die))
+	    class_name = die_type_name(rdr, &parent_die,
+				       qualified_name,
+				       where_offset);
 	}
     }
 }
@@ -10050,6 +10370,9 @@ die_return_and_parm_names_from_fn_type_die(const reader& rdr,
 ///
 /// @param fn_die the DIE of the function to consider.
 ///
+/// @param qualified_name if set to true then a qualified name is
+/// going to be computed.
+///
 /// @param where_offset where we are logically at in the stream of
 /// DIEs.
 ///
@@ -10057,6 +10380,7 @@ die_return_and_parm_names_from_fn_type_die(const reader& rdr,
 static string
 die_function_signature(const reader& rdr,
 		       const Dwarf_Die *fn_die,
+		       bool qualified_name,
 		       size_t where_offset)
 {
 
@@ -10093,7 +10417,7 @@ die_function_signature(const reader& rdr,
 
   Dwarf_Die scope_die;
   string scope_name;
-  if (get_scope_die(rdr, fn_die, where_offset, scope_die))
+  if (qualified_name && get_scope_die(rdr, fn_die, where_offset, scope_die))
     scope_name = rdr.get_die_qualified_name(&scope_die, where_offset);
   string fn_name = die_name(fn_die);
   if (!scope_name.empty())
@@ -10103,15 +10427,17 @@ die_function_signature(const reader& rdr,
   vector<string> parm_names;
   bool is_const = false;
   bool is_static = false;
+  bool is_method_type = false;
 
   die_return_and_parm_names_from_fn_type_die(rdr, fn_die, where_offset,
 					     /*pretty_print=*/false,
+					     qualified_name, is_method_type,
 					     return_type_name, class_name,
 					     parm_names, is_const, is_static);
 
   bool is_virtual = die_is_virtual(fn_die);
 
-  string repr = class_name.empty() ? "function" : "method";
+  string repr = is_method_type? "method" : "function";
   if (is_virtual)
     repr += " virtual";
 
@@ -10133,7 +10459,7 @@ die_function_signature(const reader& rdr,
 	    repr += ", ";
 	}
       else
-	if (!is_static && !class_name.empty())
+	if (!is_static && is_method_type)
 	  // We are printing a non-static method name, skip the implicit "this"
 	  // parameter type.
 	  continue;
@@ -10144,11 +10470,256 @@ die_function_signature(const reader& rdr,
 
   if (is_const)
     {
-      ABG_ASSERT(!class_name.empty());
+      ABG_ASSERT(is_method_type);
       repr += " const";
     }
 
   return repr;
+}
+
+/// Compute the flat representation string of a struct, class or union
+/// type represented by a DIE.
+///
+/// The flat representation string looks like:
+///      "struct {int foo; char blah;}.
+///
+/// That is useful to designate a struct (class or union) that is
+/// anonymous.
+///
+/// @param rdr the DWARF reader to consider.
+///
+/// @param die the DIE of the type to return the flat representation
+/// for.
+///
+/// @param indent the indentation string to use for the
+/// representation.
+///
+/// @param one_line if true then the flat representation is
+/// constructed on one line.  Otherwise, each data member is
+/// represented on its own line.
+///
+/// @param qualified_names if true then the data member (and their
+/// type) names using in the representation are qualified.
+///
+/// @param where_offset where in the are logically are in the DIE
+/// stream.
+static string
+die_class_flat_representation(const reader&	rdr,
+			      const Dwarf_Die*	die,
+			      const string&	indent,
+			      bool		one_line,
+			      bool		qualified_names,
+			      size_t		where_offset)
+{
+  int tag = dwarf_tag(const_cast<Dwarf_Die*>(die));
+
+  string repr = indent;
+  string local_indent = "  ";
+  string real_indent;
+
+    if (tag == DW_TAG_union_type)
+    repr += "union";
+  else if (tag == DW_TAG_structure_type)
+    repr += "struct";
+  else if (tag == DW_TAG_class_type)
+    repr += "class";
+  else
+    ABG_ASSERT_NOT_REACHED;
+
+  repr += " ";
+
+  if (!die_is_anonymous(die))
+    repr += die_qualified_name(rdr, die, where_offset);
+
+  repr += "{";
+
+  if (!one_line)
+    repr += "\n";
+
+  Dwarf_Die member_child_die;
+  bool first_sibling = true;
+  for (bool got_it = get_member_child_die(die, &member_child_die);
+       got_it;
+       got_it = get_next_member_sibling_die(&member_child_die,
+					    &member_child_die),
+	 first_sibling = false)
+    {
+      // A member of the class is either a declaration or an anonymous
+      // type.  Otherwise, let's skip it.
+      if (!die_is_decl(&member_child_die)
+	  && !(die_is_type(&member_child_die)
+	       && die_is_anonymous(&member_child_die)))
+	continue;
+
+      if (one_line)
+	real_indent = first_sibling ? "" : " " ;
+      else
+	real_indent = (first_sibling ? "": "\n") + indent + local_indent;
+
+      repr += real_indent;
+
+      repr += die_pretty_print_decl(rdr, &member_child_die,
+				    qualified_names,
+				    /*include_fns=*/false,
+				    where_offset);
+      repr += ";";
+    }
+
+  if (one_line)
+    repr += "}";
+  else
+    repr += indent + "}";
+
+  return repr;
+}
+
+/// Compute the flat representation string of a enum type represented
+/// by a DIE.
+///
+/// The flat representation string looks like:
+///      "enum {int foo; char blah;}.
+///
+/// That is useful to designate an enum that is anonymous.
+///
+/// @param rdr the DWARF reader to consider.
+///
+/// @param die the DIE of the type to return the flat representation
+/// for.
+///
+/// @param indent the indentation string to use for the
+/// representation.
+///
+/// @param one_line if true then the flat representation is
+/// constructed on one line.  Otherwise, each data member is
+/// represented on its own line.
+///
+/// @param qualified_names if true then the data member (and their
+/// type) names using in the representation are qualified.
+///
+/// @param where_offset where in the are logically are in the DIE
+/// stream.
+static string
+die_enum_flat_representation(const reader&	rdr,
+			     const Dwarf_Die*	die,
+			     const string&	indent,
+			     bool		one_line,
+			     bool		qualified_names,
+			     size_t		where_offset)
+{
+  int tag = dwarf_tag(const_cast<Dwarf_Die*>(die));
+
+  std::ostringstream o;
+  string local_indent = "  ";
+  string real_indent;
+
+  if (tag == DW_TAG_enumeration_type)
+    o << "enum";
+  else
+    ABG_ASSERT_NOT_REACHED;
+
+  o << " ";
+
+  if (!die_is_anonymous(die))
+    o << (qualified_names
+	  ? die_qualified_name(rdr, die, where_offset)
+	  : die_name(die));
+
+  o << "{";
+
+  if (!one_line)
+    o << "\n";
+
+  enum_type_decl::enumerators enms;
+  Dwarf_Die child;
+  bool first_enumerator= true;
+  if (dwarf_child(const_cast<Dwarf_Die*>(die), &child) == 0)
+    {
+      do
+	{
+	  if (dwarf_tag(&child) != DW_TAG_enumerator)
+	    continue;
+
+	  string name, m;
+	  location l;
+	  die_loc_and_name(rdr, &child, l, name, m);
+	  uint64_t val = 0;
+	  die_unsigned_constant_attribute(&child, DW_AT_const_value, val);
+
+	  if (one_line)
+	    real_indent = first_enumerator ? "" : ", ";
+	  else
+	    real_indent = first_enumerator ? "" : ",\n" + indent + local_indent;
+	  o << name + " = "  << val;
+	  first_enumerator = false;
+	}
+      while (dwarf_siblingof(&child, &child) == 0);
+    }
+
+  o << one_line ? string("}") : "\n" + indent;
+  o << "}";
+
+  return o.str();
+}
+
+/// Compute the flat representation string of a class or enum type
+/// represented by a DIE.
+///
+/// The flat representation string looks like:
+///      "union {int foo; char blah;}.
+///
+/// That is useful to designate a class or enum type that is
+/// anonymous.
+///
+/// @param rdr the DWARF reader to consider.
+///
+/// @param die the DIE of the type to return the flat representation
+/// for.
+///
+/// @param indent the indentation string to use for the
+/// representation.
+///
+/// @param one_line if true then the flat representation is
+/// constructed on one line.  Otherwise, each data member is
+/// represented on its own line.
+///
+/// @param qualified_names if true then the data member (and their
+/// type) names using in the representation are qualified.
+///
+/// @param where_offset where in the are logically are in the DIE
+/// stream.
+static string
+die_class_or_enum_flat_representation(const reader&	rdr,
+				      const Dwarf_Die*	die,
+				      const string&	indent,
+				      bool		one_line,
+				      bool		qualified_names,
+				      size_t		where_offset)
+{
+  if (!die)
+    return string();
+
+  string result;
+  int tag = dwarf_tag(const_cast<Dwarf_Die*>(die));
+
+  switch (tag)
+    {
+    case DW_TAG_class_type:
+    case DW_TAG_structure_type:
+    case DW_TAG_union_type:
+      result = die_class_flat_representation(rdr, die, indent,
+					     one_line, qualified_names,
+					     where_offset);
+      break;
+    case DW_TAG_enumeration_type:
+      result = die_enum_flat_representation(rdr, die, indent,
+					    one_line, qualified_names,
+					    where_offset);
+      break;
+    default:
+      ABG_ASSERT_NOT_REACHED;
+    }
+
+  return result;
 }
 
 /// Return a pretty string representation of a type, for internal purposes.
@@ -10169,7 +10740,7 @@ die_function_signature(const reader& rdr,
 ///
 /// @return the resulting pretty representation.
 static string
-die_pretty_print_type(reader& rdr,
+die_pretty_print_type(const reader& rdr,
 		      const Dwarf_Die* die,
 		      size_t where_offset)
 {
@@ -10291,13 +10862,15 @@ die_pretty_print_type(reader& rdr,
 	vector<string> parm_names;
 	bool is_const = false;
 	bool is_static = false;
-
+	bool is_method_type = false;
 	die_return_and_parm_names_from_fn_type_die(rdr, die, where_offset,
 						   /*pretty_print=*/true,
+						   /*qualified_name=*/true,
+						   is_method_type,
 						   return_type_name, class_name,
 						   parm_names, is_const,
 						   is_static);
-	if (class_name.empty())
+	if (!is_method_type)
 	  repr = "function type";
 	else
 	  repr = "method type";
@@ -10328,7 +10901,9 @@ die_pretty_print_type(reader& rdr,
 ///
 /// @param rdr the context to use.
 ///
-/// @param the DIE of the declaration to pretty print.
+/// @param die the DIE of the declaration to pretty print.
+///
+/// @param qualified_name if true then use qualified names.
 ///
 /// @param where_offset where we logically are placed when calling
 /// this.  It's useful to handle inclusion of DW_TAG_compile_unit
@@ -10336,8 +10911,10 @@ die_pretty_print_type(reader& rdr,
 ///
 /// @return the resulting pretty representation.
 static string
-die_pretty_print_decl(reader& rdr,
+die_pretty_print_decl(const reader& rdr,
 		      const Dwarf_Die* die,
+		      bool qualified_name,
+		      bool include_fns,
 		      size_t where_offset)
 {
   if (!die || !die_is_decl(die))
@@ -10358,15 +10935,23 @@ die_pretty_print_decl(reader& rdr,
 	string type_repr = "void";
 	Dwarf_Die type_die;
 	if (die_die_attribute(die, DW_AT_type, type_die))
-	  type_repr = die_qualified_type_name(rdr, &type_die, where_offset);
-	repr = die_qualified_name(rdr, die, where_offset);
-	if (!repr.empty())
+	  type_repr = die_type_name(rdr, &type_die,
+				    /*qualified_name=*/true,
+				    where_offset);
+	repr = (qualified_name
+		? die_qualified_name(rdr, die, where_offset)
+		: die_name(die));
+
+	if (repr.empty())
+	  repr = type_repr;
+	else
 	  repr = type_repr + " " + repr;
       }
       break;
 
     case DW_TAG_subprogram:
-      repr = die_function_signature(rdr, die, where_offset);
+      if (include_fns)
+	repr = die_function_signature(rdr, die, qualified_name, where_offset);
       break;
 
     default:
@@ -10397,7 +10982,10 @@ die_pretty_print(reader& rdr, const Dwarf_Die* die, size_t where_offset)
   if (die_is_type(die))
     return die_pretty_print_type(rdr, die, where_offset);
   else if (die_is_decl(die))
-    return die_pretty_print_decl(rdr, die, where_offset);
+    return die_pretty_print_decl(rdr, die,
+				 /*qualified_names=*/true,
+				 /*include_fns=*/true,
+				 where_offset);
   return "";
 }
 
@@ -10822,6 +11410,9 @@ get_next_member_sibling_die(const Dwarf_Die *die, Dwarf_Die *member)
 /// Get the first child DIE of a class/struct/union DIE that is a
 /// member DIE.
 ///
+/// Note that a member DIE is represented by a DWARF tag that is
+/// either DW_TAG_member, DW_TAG_inheritance.
+///
 /// @param die the DIE to consider.
 ///
 /// @param child out parameter.  This is set to the first child DIE of
@@ -10840,8 +11431,7 @@ get_member_child_die(const Dwarf_Die *die, Dwarf_Die *child)
 	     || tag == DW_TAG_union_type
 	     || tag == DW_TAG_class_type);
 
-  bool found_child = (dwarf_child(const_cast<Dwarf_Die*>(die),
-				   child) == 0);
+  bool found_child = (dwarf_child(const_cast<Dwarf_Die*>(die), child) == 0);
 
   if (!found_child)
     return false;
@@ -12833,7 +13423,7 @@ build_enum_underlying_type(reader& rdr,
   decl_base_sptr d = add_decl_to_scope(result, tu->get_global_scope().get());
   result = dynamic_pointer_cast<type_decl>(d);
   ABG_ASSERT(result);
-  canonicalize(result);
+  maybe_canonicalize_type(result, rdr);
   return result;
 }
 
@@ -12879,7 +13469,8 @@ build_enum_type(reader&	rdr,
       // But we remember that the type is anonymous.
       is_anonymous = true;
 
-      if (size_t s = scope->get_num_anonymous_member_enums())
+      scope_decl* sc = scope ? scope : rdr.global_scope().get();
+      if (size_t s = sc->get_num_anonymous_member_enums())
 	name = build_internal_anonymous_die_name(name, s);
     }
 
@@ -13135,57 +13726,6 @@ lookup_class_or_typedef_from_corpus(reader& rdr,
   return type_base_sptr();
 }
 
-/// Lookup a class, typedef or enum type with a given qualified name
-/// in the corpus that a given scope belongs to.
-///
-/// @param scope the scope to consider.
-///
-/// @param type_name the qualified name of the type to look for.
-///
-/// @return the typedef, enum or class type found.
-static type_base_sptr
-lookup_class_typedef_or_enum_type_from_corpus(scope_decl* scope,
-					      const string& type_name)
-{
-  string qname = build_qualified_name(scope, type_name);
-  corpus* corp = scope->get_corpus();
-  type_base_sptr result = lookup_class_typedef_or_enum_type(qname, *corp);
-  return result;
-}
-
-/// Lookup a class, typedef or enum type in a given scope, in the
-/// corpus that scope belongs to.
-///
-/// @param die the DIE of the class, typedef or enum to lookup.
-///
-/// @param anonymous_member_type_idx if @p DIE represents an anonymous
-/// type, this is the index of that anonymous type in its scope, in
-/// case there are several anonymous types of the same kind in that
-/// scope.
-///
-/// @param scope the scope in which to look the type for.
-///
-/// @return the typedef, enum or class type found.
-static type_base_sptr
-lookup_class_typedef_or_enum_type_from_corpus(Dwarf_Die* die,
-					      size_t anonymous_member_type_idx,
-					      scope_decl* scope)
-{
-  if (!die)
-    return class_decl_sptr();
-
-  string type_name = die_string_attribute(die, DW_AT_name);
-  if (is_anonymous_type_die(die))
-    type_name =
-      get_internal_anonymous_die_name(die, anonymous_member_type_idx);
-
-  if (type_name.empty())
-    return class_decl_sptr();
-
-  return lookup_class_typedef_or_enum_type_from_corpus(scope, type_name);
-}
-
-
 /// Test if a DIE represents a function that is a member of a given
 /// class type.
 ///
@@ -13359,8 +13899,12 @@ add_or_update_class_type(reader&	 rdr,
       // But we remember that the type is anonymous.
       is_anonymous = true;
 
-      if (size_t s = scope->get_num_anonymous_member_classes())
-	name = build_internal_anonymous_die_name(name, s);
+      size_t s = 0;
+      if (scope)
+	s = scope->get_num_anonymous_member_classes();
+      else
+	s = rdr.global_scope()->get_num_anonymous_member_classes();
+      name = build_internal_anonymous_die_name(name, s);
     }
 
   if (!is_anonymous)
@@ -13500,10 +14044,6 @@ add_or_update_class_type(reader&	 rdr,
 
   if (has_child && !is_incomplete_type)
     {
-      int anonymous_member_class_index = -1;
-      int anonymous_member_union_index = -1;
-      int anonymous_member_enum_index = -1;
-
       do
 	{
 	  tag = dwarf_tag(&child);
@@ -13517,17 +14057,27 @@ add_or_update_class_type(reader&	 rdr,
 	      if (!die_die_attribute(&child, DW_AT_type, type_die))
 		continue;
 
+	      string type_name = die_type_name(rdr, &type_die,
+					       /*qualified_name=*/true,
+					       where_offset);
 	      type_base_sptr base_type;
-	      if (!(base_type =
-		    lookup_class_or_typedef_from_corpus(rdr, &type_die,
-							called_from_public_decl,
-							where_offset)))
+	      if (!type_name.empty())
 		{
-		  base_type =
-		    is_type(build_ir_node_from_die(rdr, &type_die,
-						   called_from_public_decl,
-						   where_offset));
+		  base_type = result->find_base_class(type_name);
+		  if (base_type)
+		    continue;
 		}
+
+	      base_type =
+		lookup_class_or_typedef_from_corpus(rdr, &type_die,
+						    called_from_public_decl,
+						    where_offset);
+	      if (!base_type)
+		base_type =
+		  is_type(build_ir_node_from_die(rdr, &type_die,
+						 called_from_public_decl,
+						 where_offset));
+
 	      // Sometimes base_type can be a typedef.  Let's make
 	      // sure that typedef is compatible with a class type.
 	      class_decl_sptr b = is_compatible_with_class_type(base_type);
@@ -13652,7 +14202,7 @@ add_or_update_class_type(reader&	 rdr,
 				      is_static, offset_in_bits);
 	      ABG_ASSERT(has_scope(dm));
 	      rdr.associate_die_to_decl(&child, dm, where_offset,
-					 /*associate_by_repr=*/false);
+					/*associate_by_repr=*/false);
 	    }
 	  // Handle member functions;
 	  else if (tag == DW_TAG_subprogram)
@@ -13663,38 +14213,49 @@ add_or_update_class_type(reader&	 rdr,
 					      where_offset);
 	      if (function_decl_sptr f = is_function_decl(r))
 		rdr.associate_die_to_decl(&child, f, where_offset,
-					   /*associate_by_repr=*/true);
+					  /*associate_by_repr=*/true);
 	    }
 	  // Handle member types
 	  else if (die_is_type(&child))
 	    {
-	      // Track the anonymous type index in the current
-	      // scope. Look for what this means by reading the
-	      // comment of the function
-	      // build_internal_anonymous_die_name.
-	      int anonymous_member_type_index = 0;
-	      if (is_anonymous_type_die(&child))
-		{
-		  // Update the anonymous type index.
-		  if (die_is_class_type(&child))
-		    anonymous_member_type_index =
-		      ++anonymous_member_class_index;
-		  else if (dwarf_tag(&child) == DW_TAG_union_type)
-		    anonymous_member_type_index =
-		      ++anonymous_member_union_index;
-		  else if (dwarf_tag(&child) == DW_TAG_enumeration_type)
-		    anonymous_member_type_index =
-		      ++anonymous_member_enum_index;
-		}
 	      // if the type is not already a member of this class,
 	      // then add it to the class.
-	      if ((is_anonymous_type_die(&child)
-		   && !lookup_class_typedef_or_enum_type_from_corpus
-		   (&child, anonymous_member_type_index, result.get()))
-		  || !result->find_member_type(die_name(&child)))
+	      if (!is_anonymous_type_die(&child)
+		  && !result->find_member_type(die_name(&child)))
 		build_ir_node_from_die(rdr, &child, result.get(),
 				       called_from_public_decl,
 				       where_offset);
+	      else if (is_anonymous_type_die(&child))
+		{
+		  // Lookup the anonymous type DIE direcly by building
+		  // its flat representation & using it as the name of
+		  // the anonymous struct/union.
+		  string anonymous_type_name =
+		    die_class_or_enum_flat_representation(rdr, &child,
+							  /*indent=*/"",
+							  /*one_line=*/true,
+							  /*qualed_name=*/false,
+							  where_offset);
+		  if (type_base_sptr member_t =
+		      result->find_member_type(anonymous_type_name))
+		    rdr.associate_die_to_decl(&child, is_decl(member_t),
+					      where_offset,
+					      /*Associate_by_repr=*/false);
+		  else
+		    {
+		      type_base_sptr t =
+			is_type(build_ir_node_from_die(rdr, &child,
+						       /*scope=*/result.get(),
+						       called_from_public_decl,
+						       where_offset));
+		      if (t)
+			{
+			  add_decl_to_scope(is_decl(t), result.get());
+			  maybe_set_member_type_access_specifier(result,
+								 &child);
+			}
+		    }
+		}
 	    }
 	} while (dwarf_siblingof(&child, &child) == 0);
     }
@@ -13785,8 +14346,12 @@ add_or_update_union_type(reader&	 rdr,
       // But we remember that the type is anonymous.
       is_anonymous = true;
 
-      if (size_t s = scope->get_num_anonymous_member_unions())
-	name = build_internal_anonymous_die_name(name, s);
+      size_t s = 0;
+      if (scope)
+	s = scope->get_num_anonymous_member_unions();
+      else
+	s = rdr.global_scope()->get_num_anonymous_member_classes();
+      name = build_internal_anonymous_die_name(name, s);
     }
 
   // If the type has location, then associate it to its
@@ -13943,10 +14508,20 @@ add_or_update_union_type(reader&	 rdr,
 	    }
 	  // Handle member types
 	  else if (die_is_type(&child))
-	    decl_base_sptr td =
-	      is_decl(build_ir_node_from_die(rdr, &child, result.get(),
-					     called_from_public_decl,
-					     where_offset));
+	    {
+	      string type_name = die_type_name(rdr, &child,
+					       /*qualified_name=*/false,
+					       where_offset);
+	      if (type_base_sptr member_t = result->find_member_type(type_name))
+		rdr.associate_die_to_decl(&child, is_decl(member_t),
+					  where_offset,
+					  /*associate_by_repr=*/false);
+	      else
+		decl_base_sptr td =
+		  is_decl(build_ir_node_from_die(rdr, &child, result.get(),
+						 called_from_public_decl,
+						 where_offset));
+	    }
 	} while (dwarf_siblingof(&child, &child) == 0);
     }
 
@@ -14527,7 +15102,13 @@ build_function_type(reader&	rdr,
 	    is_class_or_union_type(build_ir_node_from_die(rdr, &class_type_die,
 							  /*called_from_pub_decl=*/true,
 							  where_offset));
-	  ABG_ASSERT(klass_type);
+	  if (!klass_type)
+	    {
+	      // We could not create the class type.  For instance,
+	      // this can be due to the fact that the class is
+	      // suppressed.  In those cases, we just bail out.
+	      return nullptr;
+	    }
 	  is_method = klass_type;
 	}
     }
@@ -14844,7 +15425,7 @@ build_subrange_type(reader&		rdr,
 /// e.g, DW_TAG_partial_unit that can be included in several places in
 /// the DIE tree.
 static void
-build_subranges_from_array_type_die(reader&			rdr,
+build_subranges_from_array_type_die(const reader&			rdr,
 				    const Dwarf_Die*			die,
 				    array_type_def::subranges_type&	subranges,
 				    size_t				where_offset,
@@ -14866,7 +15447,7 @@ build_subranges_from_array_type_die(reader&			rdr,
 		  // the current type graph and associate it to the
 		  // DIE it's been created from.
 		  type_or_decl_base_sptr t =
-		    build_ir_node_from_die(rdr, &child,
+		    build_ir_node_from_die(const_cast<reader&>(rdr), &child,
 					   /*called_from_public_decl=*/true,
 					   where_offset);
 		  s = is_subrange_type(t);
@@ -14875,7 +15456,7 @@ build_subranges_from_array_type_die(reader&			rdr,
 		// We are being called to create the type but *NOT*
 		// add it to the current tyupe tree, *NOR* associate
 		// it to the DIE it's been created from.
-		s = build_subrange_type(rdr, &child,
+		s = build_subrange_type(const_cast<reader&>(rdr), &child,
 					where_offset,
 					/*associate_type_to_die=*/false);
 	      if (s)
@@ -14944,7 +15525,7 @@ build_array_type(reader&	rdr,
   build_subranges_from_array_type_die(rdr, die, subranges, where_offset);
 
   result.reset(new array_type_def(type, subranges, location()));
-
+  rdr.associate_die_to_type(die, result, where_offset);
   return result;
 }
 
@@ -15903,7 +16484,7 @@ potential_member_fn_should_be_dropped(const function_decl_sptr& fn,
 ///
 /// @return the resulting IR node.
 static type_or_decl_base_sptr
-build_ir_node_from_die(reader&	rdr,
+build_ir_node_from_die(reader&		rdr,
 		       Dwarf_Die*	die,
 		       scope_decl*	scope,
 		       bool		called_from_public_decl,
@@ -15939,7 +16520,7 @@ build_ir_node_from_die(reader&	rdr,
       if (rdr.load_all_types())
 	if (called_from_public_decl)
 	  if (type_base_sptr t = is_type(result))
-	    if (corpus *abi_corpus = scope->get_corpus())
+	    if (corpus *abi_corpus = rdr.corpus().get())
 	      abi_corpus->record_type_as_reachable_from_public_interfaces(*t);
 
       return result;
@@ -15959,7 +16540,7 @@ build_ir_node_from_die(reader&	rdr,
 	{
 	  result =
 	    add_decl_to_scope(t, rdr.cur_transl_unit()->get_global_scope());
-	  canonicalize(t);
+	  maybe_canonicalize_type(t, rdr);
 	}
       break;
 
@@ -16005,8 +16586,6 @@ build_ir_node_from_die(reader&	rdr,
 	  {
 	    result =
 	      add_decl_to_scope(r, rdr.cur_transl_unit()->get_global_scope());
-
-	    rdr.associate_die_to_type(die, r, where_offset);
 	    maybe_canonicalize_type(r, rdr);
 	  }
       }
@@ -16020,7 +16599,8 @@ build_ir_node_from_die(reader&	rdr,
 	if (p)
 	  {
 	    result =
-	      add_decl_to_scope(p, rdr.cur_transl_unit()->get_global_scope());
+	      add_decl_to_scope(p,
+				rdr.cur_transl_unit()->get_global_scope());
 	    maybe_canonicalize_type(p, rdr);
 	  }
       }
@@ -16106,9 +16686,8 @@ build_ir_node_from_die(reader&	rdr,
 	  }
 	else if (!type_suppressed)
 	  {
-	    Dwarf_Die spec_die;
-	    scope_decl_sptr scop;
 	    class_decl_sptr klass;
+	    Dwarf_Die spec_die;
 	    if (die_die_attribute(die, DW_AT_specification, spec_die))
 	      {
 		scope_decl_sptr skope =
@@ -16137,37 +16716,70 @@ build_ir_node_from_die(reader&	rdr,
 					   is_declaration_only);
 	      }
 	    else
-	      klass =
-		add_or_update_class_type(rdr, die, scope,
-					 tag == DW_TAG_structure_type,
-					 class_decl_sptr(),
-					 called_from_public_decl,
-					 where_offset,
-					 is_declaration_only);
-	    result = klass;
+	      {
+		if (class_decl* class_sc = is_class_type(scope))
+		  {
+		    string type_name = die_type_name(rdr, die,
+						     /*qualified_name=*/false,
+						     where_offset);
+		    if (class_decl_sptr c =
+			is_class_type(class_sc->find_member_type(type_name)))
+		      klass = c;
+		    else
+		      klass =
+			add_or_update_class_type(rdr, die, scope,
+						 tag == DW_TAG_structure_type,
+						 class_decl_sptr(),
+						 called_from_public_decl,
+						 where_offset,
+						 is_declaration_only);
+		  }
+		else
+		  klass =
+		    add_or_update_class_type(rdr, die, scope,
+					     tag == DW_TAG_structure_type,
+					     class_decl_sptr(),
+					     called_from_public_decl,
+					     where_offset,
+					     is_declaration_only);
+	      }
 	    if (klass)
 	      {
 		maybe_set_member_type_access_specifier(klass, die);
 		maybe_canonicalize_type(klass, rdr);
 	      }
+	    result = klass;
 	  }
       }
       break;
     case DW_TAG_union_type:
       if (!type_is_suppressed(rdr, scope, die))
 	{
-	  union_decl_sptr union_type =
-	    add_or_update_union_type(rdr, die, scope,
-				     union_decl_sptr(),
-				     called_from_public_decl,
-				     where_offset,
-				     is_declaration_only);
+	  union_decl_sptr union_type;
+	  if (class_decl* class_sc = is_class_type(scope))
+	    {
+	      string type_name = die_type_name(rdr, die,
+					       /*qualified_name=*/false,
+					       where_offset);
+	      if (union_decl_sptr u =
+		  is_union_type(class_sc->find_member_type(type_name)))
+		union_type = u;
+	    }
+
+	  if (!union_type)
+	    union_type =
+	      add_or_update_union_type(rdr, die, scope,
+				       union_decl_sptr(),
+				       called_from_public_decl,
+				       where_offset,
+				       is_declaration_only);
+
 	  if (union_type)
 	    {
 	      maybe_set_member_type_access_specifier(union_type, die);
 	      maybe_canonicalize_type(union_type, rdr);
+	      result = union_type;
 	    }
-	  result = union_type;
 	}
       break;
     case DW_TAG_string_type:
@@ -16195,7 +16807,6 @@ build_ir_node_from_die(reader&	rdr,
 	  {
 	    result =
 	      add_decl_to_scope(a, rdr.cur_transl_unit()->get_global_scope());
-	    rdr.associate_die_to_type(die, a, where_offset);
 	    maybe_canonicalize_type(a, rdr);
 	  }
 	break;
@@ -16206,12 +16817,12 @@ build_ir_node_from_die(reader&	rdr,
 	// form" defined in the global namespace of the current
 	// translation unit, like what is found in Ada.
 	array_type_def::subrange_sptr s =
-	  build_subrange_type(rdr, die, where_offset);
+	  build_subrange_type(rdr, die, where_offset,
+			      /*associate_type_to_die=*/true);
 	if (s)
 	  {
 	    result =
 	      add_decl_to_scope(s, rdr.cur_transl_unit()->get_global_scope());
-	    rdr.associate_die_to_type(die, s, where_offset);
 	    maybe_canonicalize_type(s, rdr);
 	  }
       }
@@ -16598,6 +17209,9 @@ build_ir_node_from_die(reader&	rdr,
   scope_decl_sptr scope = get_scope_for_die(rdr, die,
 					    consider_as_called_from_public_decl,
 					    where_offset);
+  if (!scope)
+    scope = rdr.global_scope();
+
   return build_ir_node_from_die(rdr, die, scope.get(),
 				called_from_public_decl,
 				where_offset, true);

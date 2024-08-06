@@ -99,9 +99,8 @@ Variables changes summary: 0 Removed, 0 Changed, 3 Added variables
             underlying type 'ssize_t (*)(lttng_action*, char*)' changed:
               in pointed to type 'function type ssize_t (lttng_action*, char*)':
                 return type changed:
-                  entity changed from 'typedef ssize_t' to compatible type 'int'
-                    type name changed from 'long int' to 'int'
-                    type size changed from 64 to 32 (in bits)
+                  entity changed from 'typedef ssize_t' to 'int'
+                  type size changed from 64 to 32 (in bits)
                 parameter 1 of type 'lttng_action*' has sub-type changes:
                   pointed to type 'struct lttng_action' changed, as being reported
                 parameter 2 of type 'char*' changed:
@@ -155,9 +154,8 @@ Variables changes summary: 0 Removed, 0 Changed, 3 Added variables
               underlying type 'ssize_t (*)(const lttng_condition*, char*)' changed:
                 in pointed to type 'function type ssize_t (const lttng_condition*, char*)':
                   return type changed:
-                    entity changed from 'typedef ssize_t' to compatible type 'int'
-                      type name changed from 'long int' to 'int'
-                      type size changed from 64 to 32 (in bits)
+                    entity changed from 'typedef ssize_t' to 'int'
+                    type size changed from 64 to 32 (in bits)
                   parameter 1 of type 'const lttng_condition*' has sub-type changes:
                     in pointed to type 'const lttng_condition':
                       unqualified underlying type 'struct lttng_condition' changed, as being reported
@@ -272,9 +270,8 @@ Variables changes summary: 0 Removed, 0 Changed, 3 Added variables
               underlying type 'ssize_t (*)(lttng_evaluation*, char*)' changed:
                 in pointed to type 'function type ssize_t (lttng_evaluation*, char*)':
                   return type changed:
-                    entity changed from 'typedef ssize_t' to compatible type 'int'
-                      type name changed from 'long int' to 'int'
-                      type size changed from 64 to 32 (in bits)
+                    entity changed from 'typedef ssize_t' to 'int'
+                    type size changed from 64 to 32 (in bits)
                   parameter 1 of type 'lttng_evaluation*' changed:
                     in pointed to type 'struct lttng_evaluation':
                       entity changed from 'struct lttng_evaluation' to 'const lttng_evaluation'

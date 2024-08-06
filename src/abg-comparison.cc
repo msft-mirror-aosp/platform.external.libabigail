@@ -2881,7 +2881,8 @@ distinct_diff::compatible_child_diff() const
 
       if (fs && ss
 	  && !entities_are_of_distinct_kinds(get_type_declaration(fs),
-					     get_type_declaration(ss)))
+					     get_type_declaration(ss))
+	  && *fs == *ss)
 	priv_->compatible_child_diff = compute_diff(get_type_declaration(fs),
 						    get_type_declaration(ss),
 						    context());
@@ -3182,6 +3183,8 @@ get_default_harmful_categories_bitmap()
   return (abigail::comparison::SIZE_OR_OFFSET_CHANGE_CATEGORY
 	  | abigail::comparison::VIRTUAL_MEMBER_CHANGE_CATEGORY
 	  | abigail::comparison::REFERENCE_LVALUENESS_CHANGE_CATEGORY
+	  | abigail::comparison::NON_COMPATIBLE_DISTINCT_CHANGE_CATEGORY
+	  | abigail::comparison::NON_COMPATIBLE_NAME_CHANGE_CATEGORY
 	  | abigail::comparison::FN_PARM_ADD_REMOVE_CHANGE_CATEGORY);
 }
 
@@ -3312,6 +3315,22 @@ operator<<(ostream& o, diff_category c)
       if (emitted_a_category)
 	o << "|";
       o << "REFERENCE_LVALUENESS_CHANGE_CATEGORY";
+      emitted_a_category |= true;
+    }
+
+    if (c & NON_COMPATIBLE_DISTINCT_CHANGE_CATEGORY)
+    {
+      if (emitted_a_category)
+	o << "|";
+      o << "NON_COMPATIBLE_DISTINCT_CHANGE_CATEGORY";
+      emitted_a_category |= true;
+    }
+
+    if (c & NON_COMPATIBLE_NAME_CHANGE_CATEGORY)
+    {
+      if (emitted_a_category)
+	o << "|";
+      o << "NON_COMPATIBLE_NAME_CHANGE_CATEGORY";
       emitted_a_category |= true;
     }
 
@@ -4922,8 +4941,7 @@ class_or_union_diff::priv::count_filtered_subtype_changed_dm(bool local_only)
     {
       if (local_only)
 	{
-	  if ((*i)->has_changes()
-	      && !(*i)->has_local_changes_to_be_reported())
+	  if ((*i)->has_local_changes() && (*i)->is_filtered_out())
 	    ++num_filtered;
 	}
       else
@@ -4955,8 +4973,7 @@ class_or_union_diff::priv::count_filtered_changed_dm(bool local_only)
       diff_sptr diff = i->second;
       if (local_only)
 	{
-	  if ((diff->has_changes() && !diff->has_local_changes_to_be_reported())
-	      || diff->is_filtered_out())
+	  if (diff->has_changes() && diff->is_filtered_out())
 	    ++num_filtered;
 	}
       else
@@ -12558,6 +12575,43 @@ struct category_propagation_visitor : public diff_node_visitor
 	if (!already_visited && canonical)
 	  if (update_canonical)
 	    canonical->add_to_category(c);
+      }
+
+    if (filtering::has_void_ptr_to_ptr_change(d)
+	|| filtering::has_harmless_enum_to_int_change(d))
+      {
+	// The current diff node has either:
+	//
+	//   1/ a harmless "void pointer to pointer" change
+	//
+	//   or:
+	//
+	//   2/ a harmless "enum to int" change.
+	//
+	// The change 1/ was most likely flagged locally as a
+	// non-compatible distinct change, aka, a non-compatible
+	// change between two types of different kinds.  At a higher
+	// level however, as we see that it's just a void pointer to
+	// pointer change, we should unset the
+	// NON_COMPATIBLE_DISTINCT_CHANGE_CATEGORY categorization.
+	//
+	// The change 2/ was most likely flagged locally (in the
+	// children nodes of the current diff node) as a
+	// non-compatible name change.  At a higher level however, as
+	// we see that it's just a harmless "enum to int" change,
+	// let's unset the NON_COMPATIBLE_NAME_CHANGE_CATEGORY
+	// categorization as well.
+	diff_category c = d->get_category();
+	c &= (~NON_COMPATIBLE_NAME_CHANGE_CATEGORY
+	      & ~NON_COMPATIBLE_DISTINCT_CHANGE_CATEGORY);
+	d->set_category(c);
+      }
+
+    if (filtering::has_benign_array_of_unknown_size_change(d))
+      {
+	diff_category c = d->get_category();
+	c &= ~NON_COMPATIBLE_NAME_CHANGE_CATEGORY;
+	d->set_category(c);
       }
   }
 };// end struct category_propagation_visitor
