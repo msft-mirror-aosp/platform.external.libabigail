@@ -19997,7 +19997,34 @@ equals(const enum_type_decl& l, const enum_type_decl& r, change_kind* k)
 	ABG_RETURN_FALSE;
     }
 
-  // Now compare the enumerators.  Note that the order of declaration
+  // Now compare the enumerators.
+
+  // First in a naive (but potentially fast) way in case both enums
+  // are equal in a naive manner.
+
+  if (def1->get_enumerators().size() == def2->get_enumerators().size())
+    {
+      bool equals = true;
+      for (auto e1 = def1->get_enumerators().begin(),
+	     e2 = def2->get_enumerators().begin();
+	   (e1 != def1->get_enumerators().end()
+	    &&  e2 != def2->get_enumerators().end());
+	   ++e1, ++e2)
+	{
+	  if (*e1 != *e2)
+	    {
+	      equals = false;
+	      break;
+	    }
+	}
+      if (equals)
+	ABG_RETURN(result);
+    }
+
+  // If the two enums where not naively equals, let's try a more
+  // clever (and slow) way.
+
+  // Note that the order of declaration
   // of enumerators should not matter in the comparison.
   //
   // Also if an enumerator value is redundant, that shouldn't impact
