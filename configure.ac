@@ -470,7 +470,7 @@ if test x$ENABLE_BIG_TESTS = xyes; then
   if test -d $srcdir/big-tests -o -L $srcdir/big-tests; then
      AC_CONFIG_COMMANDS([create-big-tests-build-dir-and-configure],
 			[AC_MSG_NOTICE([Found $srcdir/big-tests!])
-			 cd ac_abs_top_srcdir/big-tests
+			 cd $ac_abs_top_srcdir/big-tests
 			 autoreconf -i
 			 cd $ac_abs_top_builddir
 			 test -d big-tests || mkdir big-tests
