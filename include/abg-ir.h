@@ -186,6 +186,12 @@ public:
   canonicalization_is_done(bool);
 
   bool
+  canonicalization_started() const;
+
+  void
+  canonicalization_started(bool);
+
+  bool
   decl_only_class_equals_definition() const;
 
   void

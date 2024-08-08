@@ -3336,7 +3336,29 @@ environment::canonicalization_is_done() const
 /// @param f the new value of the flag.
 void
 environment::canonicalization_is_done(bool f)
-{priv_->canonicalization_is_done_ = f;}
+{
+  priv_->canonicalization_is_done_ = f;
+  if (priv_->canonicalization_is_done_)
+    canonicalization_started(false);
+}
+
+/// Getter of a flag saying if the canonicalization process has
+/// started or not.
+///
+/// @return the flag saying if the canonicalization process has
+/// started or not.
+bool
+environment::canonicalization_started() const
+{return priv_->canonicalization_started_;}
+
+/// Setter of a flag saying if the canonicalization process has
+/// started or not.
+///
+/// @param f the new value of the flag saying if the canonicalization
+/// process has started or not.
+void
+environment::canonicalization_started(bool f)
+{priv_->canonicalization_started_ = f;}
 
 /// Getter of the "decl-only-class-equals-definition" flag.
 ///
@@ -7522,6 +7544,7 @@ struct scope_decl::priv
   scopes member_scopes_;
   canonical_type_sptr_set_type canonical_types_;
   type_base_sptrs_type sorted_canonical_types_;
+  bool clear_sorted_member_types_cache_ = false;
 }; // end struct scope_decl::priv
 
 /// Constructor of the @ref scope_decl type.
@@ -7758,7 +7781,10 @@ scope_decl::add_member_decl(const decl_base_sptr& member)
   member->set_scope(this);
   priv_->members_.push_back(member);
   if (is_type(member))
-    priv_->member_types_.push_back(is_type(member));
+    {
+      priv_->member_types_.push_back(is_type(member));
+      priv_->clear_sorted_member_types_cache_ = true;
+    }
 
   if (scope_decl_sptr m = dynamic_pointer_cast<scope_decl>(member))
     priv_->member_scopes_.push_back(m);
@@ -7810,6 +7836,7 @@ scope_decl::insert_member_type(type_base_sptr t,
   ABG_ASSERT(!has_scope(d));
 
   priv_->member_types_.push_back(t);
+  priv_->clear_sorted_member_types_cache_= true;
   insert_member_decl(d, before);
 }
 
@@ -7864,9 +7891,26 @@ scope_decl::remove_member_type(type_base_sptr t)
 const type_base_sptrs_type&
 scope_decl::get_sorted_member_types() const
 {
+  if (priv_->clear_sorted_member_types_cache_)
+    {
+      priv_->sorted_member_types_.clear();
+      priv_->clear_sorted_member_types_cache_ = false;
+    }
+
   if (priv_->sorted_member_types_.empty())
     {
+      unordered_set<type_base_sptr> canonical_pointer_types;
       for (auto t : get_member_types())
+	{
+	  if (is_non_canonicalized_type(t))
+	    priv_->sorted_member_types_.push_back(t);
+	  else if (auto c = t->get_canonical_type())
+	    canonical_pointer_types.insert(c);
+	  else
+	    canonical_pointer_types.insert(t);
+	}
+
+      for (auto t : canonical_pointer_types)
 	priv_->sorted_member_types_.push_back(t);
 
       type_topo_comp comp;
@@ -7874,6 +7918,11 @@ scope_decl::get_sorted_member_types() const
 		       priv_->sorted_member_types_.end(),
 		       comp);
     }
+
+  const ir::environment& env = get_environment();
+  if (!env.canonicalization_started() && !env.canonicalization_is_done())
+    priv_->clear_sorted_member_types_cache_ = true;
+
   return priv_->sorted_member_types_;
 }
 

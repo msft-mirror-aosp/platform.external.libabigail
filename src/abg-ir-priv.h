@@ -619,6 +619,7 @@ struct environment::priv
   // read from abixml and the type-id string it corresponds to.
   unordered_map<uintptr_t, string>	pointer_type_id_map_;
 #endif
+  bool					canonicalization_started_;
   bool					canonicalization_is_done_;
   bool					decl_only_class_equals_definition_;
   bool					use_enum_binary_only_equality_;
@@ -646,7 +647,8 @@ struct environment::priv
 #endif
 
   priv()
-    : canonicalization_is_done_(),
+    : canonicalization_started_(),
+      canonicalization_is_done_(),
       decl_only_class_equals_definition_(false),
       use_enum_binary_only_equality_(true),
       allow_type_comparison_results_caching_(false),
@@ -1464,6 +1466,12 @@ canonicalize_types(const input_iterator& begin,
   if (begin == end)
     return;
 
+  auto first_iter = begin;
+  auto first = deref(first_iter);
+  environment& env = const_cast<environment&>(first->get_environment());
+
+  env.canonicalization_started(true);
+
   int i;
   input_iterator t;
   // First, let's compute the canonical type of this type.
@@ -1481,6 +1489,9 @@ canonicalize_types(const input_iterator& begin,
 
       canonicalize(deref(t));
     }
+
+  env.canonicalization_is_done(true);
+
 }
 
 /// Hash and canonicalize a sequence of types.
