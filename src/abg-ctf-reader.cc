@@ -445,35 +445,26 @@ public:
     corp->add(ir_translation_unit);
     cur_transl_unit(ir_translation_unit);
 
-    int ctf_err;
-    ctf_dict_t *ctf_dict, *dict_tmp;
+    ctf_dict_t *ctf_dict = nullptr, *initial_ctf_dict = nullptr;
     const auto symt = symtab();
     symtab_reader::symtab_filter filter = symt->make_filter();
     filter.set_public_symbols();
-    std::string dict_name;
 
-    if ((corp->get_origin() & corpus::LINUX_KERNEL_BINARY_ORIGIN)
-	&& corpus_group())
+    ctf_next_t *it = nullptr;
+    // Iterate through the dictionnaries of the archive and get the
+    // first one, which should be the parent dictionnary.
+    initial_ctf_dict = ctf_archive_next(ctfa, /*iterator=*/&it,
+					/*dict_name=*/nullptr,
+					/*skip_parent=*/false,
+					/*ctf_error=*/nullptr);
+    if (!initial_ctf_dict)
       {
-	tools_utils::base_name(corpus_path(), dict_name);
-	// remove .* suffix
-	std::size_t pos = dict_name.find(".");
-	if (pos != string::npos)
-	  dict_name.erase(pos);
-
-	std::replace(dict_name.begin(), dict_name.end(), '-', '_');
+	std::cerr << "Could not find any dictionnary in the CTF archive\n";
+	ctf_next_destroy(it);
+	return;
       }
 
-    if ((ctf_dict = ctf_dict_open(ctfa,
-				  dict_name.empty() ? NULL : dict_name.c_str(),
-				  &ctf_err)) == NULL)
-      {
-	fprintf(stderr, "ERROR dictionary not found\n");
-	abort();
-      }
-
-    dict_tmp = ctf_dict;
-
+    ctf_dict = initial_ctf_dict;
     for (const auto& symbol : symtab_reader::filtered_symtab(*symt, filter))
       {
 	std::string sym_name = symbol->get_name();
@@ -524,11 +515,14 @@ public:
 	    func_declaration->set_is_in_public_symbol_table(true);
 	    add_fn_to_exported_or_undefined_decls(func_declaration.get());
 	  }
-
-	ctf_dict = dict_tmp;
+	if (ctf_dict != initial_ctf_dict)
+	  {
+	    ctf_dict_close(initial_ctf_dict);
+	    initial_ctf_dict = ctf_dict;
+	  }
       }
-
     ctf_dict_close(ctf_dict);
+    ctf_next_destroy(it);
   }
 
   /// Add a new type declaration to the given libabigail IR corpus CORP.
@@ -1667,10 +1661,12 @@ lookup_symbol_in_ctf_archive(ctf_archive_t *ctfa, ctf_dict_t **ctf_dict,
   if (ctf_type == CTF_ERR)
     {
       ctf_dict_t *fp;
-      ctf_next_t *i = NULL;
-      const char *arcname;
+      ctf_next_t *i = nullptr;
+      const char *arcname = nullptr;
 
-      while ((fp = ctf_archive_next(ctfa, &i, &arcname, 1, &ctf_err)) != NULL)
+      while ((fp = ctf_archive_next(ctfa, &i, &arcname,
+				    /*skip_parent=*/true,
+				    &ctf_err)) != nullptr)
         {
           if ((ctf_type = ctf_lookup_by_symbol_name (fp, sym_name)) == CTF_ERR)
             ctf_type = ctf_lookup_variable(fp, sym_name);
