@@ -70,6 +70,7 @@ static bool	read_tracking_non_reachable_types(xmlNodePtr, bool&);
 static bool	read_is_non_reachable_type(xmlNodePtr, bool&);
 static bool	read_naming_typedef_id_string(xmlNodePtr, string&);
 static bool	read_type_id_string(xmlNodePtr, string&);
+static bool	read_name(xmlNodePtr, string&);
 #ifdef WITH_DEBUG_SELF_COMPARISON
 static bool	maybe_map_type_with_type_id(const type_base_sptr&,
 					    xmlNodePtr);
@@ -3046,6 +3047,26 @@ read_type_id_string(xmlNodePtr node, string& type_id)
   return false;
 }
 
+/// Read of the value of the "name" attribute from a given XML node.
+///
+/// @param node the XML node to consider.
+///
+/// @param name the value of the "name" attribute read, iff the
+/// function returns true.
+///
+/// @return true iff a the "name" attribute was found an its value
+/// could be read and set to the @p name parameter.
+static bool
+read_name(xmlNodePtr node, string& name)
+{
+    if (xml_char_sptr s = XML_NODE_GET_ATTRIBUTE(node, "name"))
+    {
+      name = CHAR_STR(s);
+      return true;
+    }
+  return false;
+}
+
 /// Read the hash value and a the CTI from a (type) node.
 ///
 /// The value of the 'hash' property has the form:
@@ -5443,11 +5464,21 @@ build_class_decl(reader&		rdr,
 	       p;
 	       p = xmlNextElementSibling(p))
 	    {
-	      if (type_base_sptr t =
-		  build_type(rdr, p, /*add_to_current_scope=*/true))
+
+	      string member_type_name;
+	      read_name(p, member_type_name);
+	      type_base_sptr t;
+	      if (!member_type_name.empty())
+		t = decl->find_member_type(member_type_name);
+	      if (t)
+		continue;
+
+	      if ((t = build_type(rdr, p, /*add_to_current_scope=*/true)))
 		{
 		  decl_base_sptr td = get_type_declaration(t);
 		  ABG_ASSERT(td);
+		  if (!td->get_scope())
+		    decl->add_member_type(t);
 		  set_member_access_specifier(td, access);
 		  rdr.schedule_type_for_canonicalization(t);
 		  xml_char_sptr i= XML_NODE_GET_ATTRIBUTE(p, "id");
@@ -5823,11 +5854,19 @@ build_union_decl(reader& rdr,
 	       p;
 	       p = xmlNextElementSibling(p))
 	    {
-	      if (type_base_sptr t =
-		  build_type(rdr, p, /*add_to_current_scope=*/true))
+	      string member_type_name;
+	      read_name(p, member_type_name);
+	      type_base_sptr t;
+	      if (!member_type_name.empty())
+		t = decl->find_member_type(member_type_name);
+	      if (t)
+		continue;
+	      if ((t = build_type(rdr, p, /*add_to_current_scope=*/true)))
 		{
 		  decl_base_sptr td = get_type_declaration(t);
 		  ABG_ASSERT(td);
+		  if (!td->get_scope())
+		    decl->add_member_type(t);
 		  set_member_access_specifier(td, access);
 		  rdr.schedule_type_for_canonicalization(t);
 
