@@ -1001,7 +1001,9 @@ public:
     tools_utils::timer cn_timer;
     if (do_log())
       {
-	std::cerr << "ABIXML Reader is going to canonicalize types";
+	std::cerr << "ABIXML Reader is going to canonicalize "
+		  << m_types_to_canonicalize.size()
+		  << " types";
 	corpus_sptr c = corpus();
 	if (c)
 	  std::cerr << " of corpus " << corpus()->get_path() << "\n";
@@ -1119,6 +1121,9 @@ public:
   virtual ir::corpus_sptr
   read_corpus(fe_iface::status& status)
   {
+    tools_utils::timer global_timer;
+    global_timer.start();
+
     corpus_sptr nil;
 
     xml::reader_sptr xml_reader = get_libxml_reader();
@@ -1234,7 +1239,27 @@ public:
 
     ir::corpus& corp = *corpus();
 
+    tools_utils::timer t;
+
+    if (do_log())
+      {
+	std::cerr << "ABIXML Reader: mapping XML nodes to type ID "
+		  << "for corpus " << corp.get_path()
+		  << "...\n";
+	t.start();
+      }
+
     walk_xml_node_to_map_type_ids(*this, node);
+
+    if (do_log())
+      {
+	t.stop();
+	std::cerr << "ABIXML Reader: mapped XML nodes to type ID "
+		  << "for corpus " << corp.get_path()
+		  << " in: "
+		  << t
+		  << "\n";
+      }
 
     // Read the needed element
     vector<string> needed;
@@ -1244,6 +1269,14 @@ public:
 
     string_elf_symbols_map_sptr fn_sym_db(new string_elf_symbols_map_type),
       var_sym_db(new string_elf_symbols_map_type);
+
+    if (do_log())
+      {
+	std::cerr << "ABIXML Reader: reading symbols information "
+		  << "for corpus " << corp.get_path()
+		  << " ...\n";
+	t.start();
+      }
 
     // Read the symbol databases.
     string_strings_map_type non_resolved_fn_syms_aliases, non_resolved_var_syms_aliases;
@@ -1258,11 +1291,37 @@ public:
     // due to potential suppression specifications.  That's fine.
     corp.set_symtab(symtab_reader::symtab::load(fn_sym_db, var_sym_db));
 
+    if (do_log())
+      {
+	t.stop();
+	std::cerr << "ABIXML Reader: read symbols information "
+		  << "for corpus " << corp.get_path()
+		  << " in: "
+		  << t
+		  << "\n";
+      }
+
     get_environment().canonicalization_is_done(false);
+
+    if (do_log())
+      {
+	std::cerr << "ABIXML Reader: building IR "
+		  << "for corpus " << corp.get_path()
+		  << "...\n";
+	t.start();
+      }
 
     // Read the translation units.
     while (read_translation_unit_from_input(*this))
       ;
+
+    if (do_log())
+      {
+	t.stop();
+	std::cerr << "ABIXML Reader: built IR "
+		  << "for corpus " << corp.get_path()
+		  << " in: " << t << "\n";
+      }
 
     if (tracking_non_reachable_types())
       {
@@ -1275,10 +1334,11 @@ public:
       }
 
 
-    tools_utils::timer t;
     if (do_log())
       {
-	std::cerr << "perform late type canonicalization ...\n";
+	std::cerr << "ABIXML Reader: canonicalizing types "
+		  << "for corpus " << corp.get_path()
+		  << " ...\n";
 	t.start();
       }
 
@@ -1287,9 +1347,9 @@ public:
     if (do_log())
       {
 	t.stop();
-	std::cerr << "late type canonicalization DONE@"
+	std::cerr << "ABIXML Reader: canonicalized types for corpus "
 		  << corpus()->get_path()
-		  << ":" << t << "\n";
+		  << " in :" << t << "\n";
       }
 
     get_environment().canonicalization_is_done(true);
@@ -1317,8 +1377,33 @@ public:
 	set_corpus_node(node);
       }
 
+    if (do_log())
+      {
+	std::cerr << "ABIXML Reader: sorting functions and variables for corpus "
+		  << corp.get_path()
+		  << "\n";
+	t.start();
+      }
+
     corpus()->sort_functions();
     corpus()->sort_variables();
+
+    if (do_log())
+      {
+	t.stop();
+	std::cerr << "ABIXML Reader: sorted functions and variables for corpus "
+		  << corpus()->get_path()
+		  << " in " << t
+		  << "\n";
+      }
+
+    if (do_log())
+      {
+	global_timer.stop();
+	std::cerr << "ABIXML Reader: Analyzed corpus " << corpus()->get_path()
+		  << " in " << global_timer << "\n";
+	std::cerr << "======================================================\n";
+      }
 
     status = STATUS_OK;
     return corpus();
@@ -2248,6 +2333,8 @@ read_corpus_group_from_input(fe_iface& iface)
 				   BAD_CAST("abi-corpus-group")))
     return nil;
 
+  tools_utils::timer t;
+
   if (!rdr.corpus_group())
     {
       corpus_group_sptr g(new corpus_group(rdr.get_environment(),
@@ -2263,6 +2350,14 @@ read_corpus_group_from_input(fe_iface& iface)
   xml::xml_char_sptr path_str = XML_READER_GET_ATTRIBUTE(reader, "path");
   if (path_str)
     group->set_path(reinterpret_cast<char*>(path_str.get()));
+
+  if (rdr.do_log())
+    {
+      std::cerr << "ABIXML Reader: reading corpus group : '"
+		<< group->get_path()
+		<< "' ...\n";
+      t.start();
+    }
 
   xmlNodePtr node = xmlTextReaderExpand(reader.get());
   if (!node)
@@ -2284,6 +2379,14 @@ read_corpus_group_from_input(fe_iface& iface)
     }
 
   xmlTextReaderNext(reader.get());
+
+  if (rdr.do_log())
+    {
+      t.stop();
+      std::cerr << "ABIXML Reader: Read corpus group : "
+		<< group->get_path()
+		<< " in: " << t << "\n";
+    }
 
   return rdr.corpus_group();
 }
