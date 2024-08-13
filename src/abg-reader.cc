@@ -802,10 +802,12 @@ public:
   {
     ABG_ASSERT(decl);
     if (scope)
-      add_decl_to_scope(decl, scope);
-    if (!decl->get_translation_unit())
-      decl->set_translation_unit(get_translation_unit());
-    ABG_ASSERT(decl->get_translation_unit());
+      {
+	add_decl_to_scope(decl, scope);
+	if (!decl->get_translation_unit())
+	  decl->set_translation_unit(get_translation_unit());
+	ABG_ASSERT(decl->get_translation_unit());
+      }
     push_decl(decl);
   }
 
