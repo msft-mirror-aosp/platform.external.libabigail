@@ -4291,6 +4291,13 @@ build_qualified_type_decl(reader&	rdr,
     rdr.build_or_get_type_decl(type_id, true);
   ABG_ASSERT(underlying_type);
 
+  if (type_base_sptr t = rdr.get_type_decl(id))
+    {
+      qualified_type_def_sptr result = is_qualified_type(t);
+      ABG_ASSERT(result);
+      return result;
+    }
+
   qualified_type_def_sptr decl;
   if (type_base_sptr t = rdr.get_type_decl(id))
     {
@@ -4367,6 +4374,13 @@ build_pointer_type_def(reader&	rdr,
   type_base_sptr pointed_to_type =
     rdr.build_or_get_type_decl(type_id, true);
   ABG_ASSERT(pointed_to_type);
+
+  if (type_base_sptr t = rdr.get_type_decl(id))
+    {
+      pointer_type_def_sptr result = is_pointer_type(t);
+      ABG_ASSERT(result);
+      return result;
+    }
 
   pointer_type_def_sptr t;
   if (rdr.get_environment().is_void_type(pointed_to_type))
@@ -4457,6 +4471,15 @@ build_reference_type_def(reader&		rdr,
     rdr.build_or_get_type_decl(type_id, /*add_to_current_scope=*/ true);
   ABG_ASSERT(pointed_to_type);
 
+  // The call to rdr.build_or_get_type_decl above might have triggered
+  // the building of the current type.  If so, then return it.
+  if (type_base_sptr t = rdr.get_type_decl(id))
+    {
+      reference_type_def_sptr result = is_reference_type(t);
+      ABG_ASSERT(result);
+      return result;
+    }
+
   // Create the reference type /before/ the pointed-to type.  After
   // the creation, the type is 'keyed' using
   // rdr.push_and_key_type_decl.  This means that the type can be
@@ -4538,6 +4561,13 @@ build_ptr_to_mbr_type(reader&		rdr,
   if (!member_type)
     return nil;
 
+  if (type_base_sptr t = rdr.get_type_decl(id))
+    {
+      ptr_to_mbr_type_sptr result = is_ptr_to_mbr_type(t);
+      ABG_ASSERT(result);
+      return result;
+    }
+
   string containing_type_id;
   if (xml_char_sptr s = XML_NODE_GET_ATTRIBUTE(node, "containing-type-id"))
     containing_type_id = CHAR_STR(s);
@@ -4547,6 +4577,13 @@ build_ptr_to_mbr_type(reader&		rdr,
     rdr.build_or_get_type_decl(containing_type_id, true);
   if (!is_typedef_of_maybe_qualified_class_or_union_type(containing_type))
     return nil;
+
+  if (type_base_sptr t = rdr.get_type_decl(id))
+    {
+      ptr_to_mbr_type_sptr result = is_ptr_to_mbr_type(t);
+      ABG_ASSERT(result);
+      return result;
+    }
 
   result.reset(new ptr_to_mbr_type(rdr.get_environment(),
 				   member_type, containing_type,
@@ -4755,6 +4792,13 @@ build_subrange_type(reader&		rdr,
       ABG_ASSERT(underlying_type);
     }
 
+  if (type_base_sptr t = rdr.get_type_decl(id))
+    {
+      array_type_def::subrange_sptr result = is_subrange_type(t);
+      ABG_ASSERT(result);
+      return result;
+    }
+
   location loc;
   read_location(rdr, node, loc);
 
@@ -4846,16 +4890,6 @@ build_array_type_def(reader&	rdr,
   if (xml_char_sptr s = XML_NODE_GET_ATTRIBUTE(node, "type-id"))
     type_id = CHAR_STR(s);
 
-  // maybe building the type of array elements triggered building this
-  // one in the mean time ...
-  if (decl_base_sptr d = rdr.get_decl_for_xml_node(node))
-    {
-      array_type_def_sptr result =
-	dynamic_pointer_cast<array_type_def>(d);
-      ABG_ASSERT(result);
-      return result;
-    }
-
   size_t size_in_bits = 0, alignment_in_bits = 0;
   bool has_size_in_bits = false;
   char *endptr;
@@ -4907,6 +4941,15 @@ build_array_type_def(reader&	rdr,
   type_base_sptr type =
     rdr.build_or_get_type_decl(type_id, true);
   ABG_ASSERT(type);
+
+  // maybe building the type of array elements triggered building this
+  // one in the mean time ...
+  if (type_base_sptr t = rdr.get_type_decl(id))
+    {
+      array_type_def_sptr result = is_array_type(t);
+      ABG_ASSERT(result);
+      return result;
+    }
 
   array_type_def_sptr ar_type(new array_type_def(type, subranges, loc));
   // Read the stash from the XML node and stash it into the IR node.
@@ -5040,6 +5083,13 @@ build_enum_type_decl(reader&	rdr,
 
   ABG_ASSERT(!id.empty());
 
+  if (type_base_sptr t = rdr.get_type_decl(id))
+    {
+      enum_type_decl_sptr result = is_enum_type(t);
+      ABG_ASSERT(result);
+      return result;
+    }
+
   string base_type_id;
   enum_type_decl::enumerators enums;
   for (xmlNodePtr n = xmlFirstElementChild(node);
@@ -5081,6 +5131,13 @@ build_enum_type_decl(reader&	rdr,
   type_base_sptr underlying_type =
     rdr.build_or_get_type_decl(base_type_id, true);
   ABG_ASSERT(underlying_type);
+
+  if (type_base_sptr t = rdr.get_type_decl(id))
+    {
+      enum_type_decl_sptr result = is_enum_type(t);
+      ABG_ASSERT(result);
+      return result;
+    }
 
   enum_type_decl_sptr t(new enum_type_decl(name, loc,
 					   underlying_type,
@@ -5133,6 +5190,13 @@ build_typedef_decl(reader&	rdr,
     id = CHAR_STR(s);
   ABG_ASSERT(!id.empty());
 
+  if (type_base_sptr t = rdr.get_type_decl(id))
+    {
+      typedef_decl_sptr result = is_typedef(t);
+      ABG_ASSERT(result);
+      return result;
+    }
+
   string name;
   if (xml_char_sptr s = XML_NODE_GET_ATTRIBUTE(node, "name"))
     name = xml::unescape_xml_string(CHAR_STR(s));
@@ -5147,6 +5211,15 @@ build_typedef_decl(reader&	rdr,
 
   type_base_sptr underlying_type(rdr.build_or_get_type_decl(type_id, true));
   ABG_ASSERT(underlying_type);
+
+  // Maybe the building of the underlying type triggered the building
+  // of the current type.  If so, then return it.
+  if (type_base_sptr t = rdr.get_type_decl(id))
+    {
+      typedef_decl_sptr result = is_typedef(t);
+      ABG_ASSERT(result);
+      return result;
+    }
 
   typedef_decl_sptr t(new typedef_decl(name, underlying_type, loc));
   maybe_set_artificial_location(rdr, node, t);
