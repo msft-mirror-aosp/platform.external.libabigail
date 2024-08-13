@@ -4346,8 +4346,8 @@ build_reference_type_def(reader&		rdr,
 						   is_lvalue, size_in_bits,
 						   alignment_in_bits, loc));
   maybe_set_artificial_location(rdr, node, t);
-  if (rdr.push_and_key_type_decl(t, node, add_to_current_scope))
-    rdr.map_xml_node_to_decl(node, t);
+  ABG_ASSERT(rdr.push_and_key_type_decl(t, node, add_to_current_scope));
+  rdr.map_xml_node_to_decl(node, t);
 
   type_base_sptr pointed_to_type =
     rdr.build_or_get_type_decl(type_id,/*add_to_current_scope=*/ true);
