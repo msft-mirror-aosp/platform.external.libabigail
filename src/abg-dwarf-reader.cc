@@ -4102,6 +4102,9 @@ public:
   /// Compare two ABI artifacts in a context which canonicalization
   /// has not be done yet.
   ///
+  /// Please note that this should only be called on IR nodes that
+  /// belong to the same binary.
+  ///
   /// @param l the left-hand-side operand of the comparison
   ///
   /// @param r the right-hand-side operand of the comparison.
@@ -4116,6 +4119,37 @@ public:
 
     const environment& e = l->get_environment();
     ABG_ASSERT(!e.canonicalization_is_done());
+
+    if (is_decl(l) && is_decl(r)
+	&& l->kind() == r->kind()
+	&& ((l->get_corpus() && r->get_corpus()
+	     && (l->get_corpus() == r->get_corpus()))
+	    ||(l->get_translation_unit()
+	       && r->get_translation_unit()
+	       && l->get_translation_unit() == r->get_translation_unit())))
+      {
+	// Fast path optimization.  If the two types are declared at
+	// the same location (in the same binary) then it very likely
+	// means the two types are equal.
+	//
+	// We really need every bit of optimization here because
+	// otherwise, comparing types before canonicalization can take
+	// forever.*
+	decl_base *ld = is_decl(l.get());
+	decl_base *rd = is_decl(r.get());
+	ABG_ASSERT(ld && rd);
+	if (ld->get_qualified_name() != rd->get_qualified_name())
+	  return false;
+
+	location ll = ld->get_location(), rl = rd->get_location();
+	if (ll && rl)
+	  {
+	    string l1 = ll.expand();
+	    string l2 = rl.expand();
+	    if (l1 == l2)
+	      return true;
+	  }
+      }
 
     e.priv_->allow_type_comparison_results_caching(true);
     bool s0 = e.decl_only_class_equals_definition();

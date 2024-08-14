@@ -287,7 +287,7 @@
                                                                                                                     'unsigned int tlsext_hb_pending', at offset 5408 (in bits) at ssl.h:1302:1
                                                                                                                     'unsigned int tlsext_hb_seq', at offset 5440 (in bits) at ssl.h:1303:1
                                                                                                                     'int renegotiate', at offset 5472 (in bits) at ssl.h:1308:1
-                                                                                                                  6 data member changes (1 filtered):
+                                                                                                                  7 data member changes:
                                                                                                                     type of 'int version' changed:
                                                                                                                       entity changed from 'int' to 'SSL*'
                                                                                                                       type size changed from 32 to 64 (in bits)
@@ -305,6 +305,7 @@
                                                                                                                         entity changed from 'function type void (int, int, int, void*, size_t, SSL*, void*)' to 'typedef SpiceChannelEventInfo' at spice-core.h:88:1
                                                                                                                         type size changed from 64 to 2560 (in bits)
                                                                                                                     and name of 'ssl_st::msg_callback' changed to 'RedsStreamPrivate::info' at reds_stream.c:92:1
+                                                                                                                    name of 'ssl_st::msg_callback_arg' changed to 'RedsStreamPrivate::read' at reds_stream.c:94:1, size changed from 0 to 64 (in bits) (by +64 bits)
                                                                                                                     type of 'int hit' changed:
                                                                                                                       entity changed from 'int' to 'ssize_t (*)(RedsStream*, void*, size_t)'
                                                                                                                       type size changed from 32 to 64 (in bits)
@@ -560,11 +561,6 @@
                                                                                               7 data member changes:
                                                                                                 type of 'void (* pixel_converter)(uint8_t*, uint8_t*)' changed:
                                                                                                   in pointed to type 'function type void (uint8_t*, uint8_t*)':
-                                                                                                    parameter 1 of type 'uint8_t*' changed:
-                                                                                                      in pointed to type 'typedef uint8_t':
-                                                                                                        entity changed from 'typedef uint8_t' to compatible type 'void'
-                                                                                                          type name changed from 'unsigned char' to 'void'
-                                                                                                          type size changed from 8 to 0 (in bits)
                                                                                                 'MJpegEncoderRateControl rate_control' offset changed from 5824 to 5760 (in bits) (by -64 bits)
                                                                                                 'MJpegEncoderRateControlCbs cbs' offset changed from 7680 to 7616 (in bits) (by -64 bits)
                                                                                                 'void* cbs_opaque' offset changed from 7872 to 7808 (in bits) (by -64 bits)
