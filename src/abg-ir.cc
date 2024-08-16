@@ -18390,10 +18390,18 @@ ptr_to_mbr_type::ptr_to_mbr_type(const environment&		env,
   runtime_type_instance(this);
   ABG_ASSERT(member_type);
   ABG_ASSERT(containing_type);
-  interned_string name = ptr_to_mbr_declaration_name(this, "",
-						     /*qualified=*/true,
-						     /*internal=*/false);
-  set_name(name);
+  set_is_anonymous(false);
+}
+
+/// Getter of the name of the current ptr-to-mbr-type.
+///
+/// This just returns the qualified name.
+///
+/// @return the (qualified) name of the the type.
+const interned_string&
+ptr_to_mbr_type::get_name() const
+{
+  return get_qualified_name(/*internal=*/false);
 }
 
 /// Return the hash value of the current IR node.

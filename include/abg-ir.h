@@ -1680,13 +1680,13 @@ public:
   void
   set_location(const location& l);
 
-  const interned_string&
+  virtual const interned_string&
   get_name() const;
 
   const interned_string&
   get_qualified_parent_name() const;
 
-  void
+  virtual void
   set_name(const string& n);
 
   bool
@@ -2474,6 +2474,9 @@ class ptr_to_mbr_type : public virtual type_base,
 		  size_t			size_in_bits,
 		  size_t			alignment_in_bits,
 		  const location&		locus);
+
+  virtual const interned_string&
+  get_name() const;
 
   virtual hash_t
   hash_value() const;
