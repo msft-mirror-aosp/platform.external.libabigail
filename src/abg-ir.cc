@@ -6730,8 +6730,7 @@ set_member_function_is_virtual(const function_decl_sptr& fn, bool is_virtual)
   if (fn)
     {
       set_member_function_is_virtual(*fn, is_virtual);
-      fixup_virtual_member_function
-	(dynamic_pointer_cast<method_decl>(fn));
+      fixup_virtual_member_function(is_method_decl(fn));
     }
 }
 
