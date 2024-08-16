@@ -4515,11 +4515,16 @@ build_function_type(reader&	rdr,
 	  if (xml_char_sptr s =
 	      xml::build_sptr(xmlGetProp(n, BAD_CAST("type-id"))))
 	    type_id = CHAR_STR(s);
+	  type_base_sptr ret_type;
 	  if (!type_id.empty())
-	    fn_type->set_return_type(rdr.build_or_get_type_decl
-				     (type_id, true));
+	    ret_type = rdr.build_or_get_type_decl (type_id, true);
+	  if (!ret_type)
+	    ret_type = return_type;
+	  fn_type->set_return_type(ret_type);
 	}
     }
+  if (!fn_type->get_return_type())
+      fn_type->set_return_type(return_type);
 
   fn_type->set_parameters(parms);
 
