@@ -21633,9 +21633,8 @@ function_type::get_cached_name(bool internal) const
 	}
       else
 	{
-	  if (priv_->temp_internal_cached_name_.empty())
-	    priv_->temp_internal_cached_name_ =
-	      get_function_type_name(this, /*internal=*/true);
+	  priv_->temp_internal_cached_name_ =
+	    get_function_type_name(this, /*internal=*/true);
 	  return priv_->temp_internal_cached_name_;
 	}
     }
