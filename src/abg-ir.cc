@@ -28903,6 +28903,7 @@ add_outer_ptr_to_mbr_type_expr(const ptr_to_mbr_type* p,
     return "";
 
   std::ostringstream left, right, inner;
+  type_base_sptr void_type = p->get_environment().get_void_type();
   string containing_type_name = get_type_name(p->get_containing_type(),
 					      qualified, internal);
   type_base_sptr mbr_type = p->get_member_type();
@@ -28913,6 +28914,8 @@ add_outer_ptr_to_mbr_type_expr(const ptr_to_mbr_type* p,
       stream_pretty_representation_of_fn_parms(*fn_type, right,
 					       qualified, internal);
       type_base_sptr return_type = fn_type->get_return_type();
+      if (!return_type)
+	return_type = void_type;
       if (is_npaf_type(return_type)
 	  || !(is_pointer_to_function_type(return_type)
 	       || is_pointer_to_array_type(return_type)
