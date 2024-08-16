@@ -4054,6 +4054,21 @@ public:
   declaration_only_classes()
   {return decl_only_classes_map_;}
 
+  /// If a given artifact is a class, union or enum that is
+  /// declaration-only, then stash it on the side so that at the end
+  /// of the construction of the IR for the ABI corpus, we can resolve
+  /// that declaration to its definition.
+  ///
+  /// @parameter t the ABI artifact to consider.
+  void
+  maybe_schedule_decl_only_type_for_resolution(const type_or_decl_base_sptr& t)
+  {
+    if (class_or_union_sptr cou = is_class_or_union_type(t))
+      maybe_schedule_declaration_only_class_for_resolution(cou);
+    else if (enum_type_decl_sptr e = is_enum_type(t))
+      maybe_schedule_declaration_only_enum_for_resolution(e);
+  }
+
   /// If a given class is a declaration-only class then stash it on
   /// the side so that at the end of the corpus reading we can resolve
   /// it to its definition.
@@ -4449,13 +4464,13 @@ public:
 	//   this case, the declaration is resolved to that
 	//   definition.
 	//
-	//   2/ There are more than one enum that define that
-	//   declaration and none of them is defined in the TU of the
-	//   declaration.  In this case, the declaration is left
+	//   2/ There are more than one (different) enum that define
+	//   that declaration and none of them is defined in the TU of
+	//   the declaration.  In this case, the declaration is left
 	//   unresolved.
 	//
 	//   3/ No enum defines the declaration.  In this case, the
-	//   declaration is left unresoved.
+	//   declaration is left unresolved.
 
 	// So get the enums that might define the current
 	// declarations which name is i->first.
@@ -6904,7 +6919,8 @@ die_is_declaration_only(Dwarf_Die* die)
 {
   bool is_declaration = false;
   die_flag_attribute(die, DW_AT_declaration, is_declaration, false);
-  if (is_declaration && !die_has_size_attribute(die))
+  if (is_declaration && (!die_has_size_attribute(die)
+			 || !die_has_children(die)))
     return true;
   return false;
 }
@@ -13586,8 +13602,6 @@ build_enum_type(reader&	rdr,
   result->set_is_artificial(is_artificial);
   rdr.associate_die_to_type(die, result, where_offset);
 
-  rdr.maybe_schedule_declaration_only_enum_for_resolution(result);
-
   return result;
 }
 
@@ -14047,8 +14061,6 @@ add_or_update_class_type(reader&	 rdr,
 
   rdr.associate_die_to_type(die, result, where_offset);
 
-  rdr.maybe_schedule_declaration_only_class_for_resolution(result);
-
   if (!has_child)
     // TODO: set the access specifier for the declaration-only class
     // here.
@@ -14308,7 +14320,6 @@ add_or_update_class_type(reader&	 rdr,
       }
   }
 
-  rdr.maybe_schedule_declaration_only_class_for_resolution(result);
   return result;
 }
 
@@ -14449,8 +14460,6 @@ add_or_update_union_type(reader&	 rdr,
   result->set_is_artificial(is_artificial);
 
   rdr.associate_die_to_type(die, result, where_offset);
-
-  rdr.maybe_schedule_declaration_only_class_for_resolution(result);
 
   Dwarf_Die child;
   bool has_child = (dwarf_child(die, &child) == 0);
@@ -15631,12 +15640,7 @@ build_typedef_type(reader&	rdr,
 	  decl_base_sptr decl = is_decl(utype);
 	  ABG_ASSERT(decl);
 	  decl->set_naming_typedef(result);
-	  if (is_class_or_union_type(utype))
-	    rdr.maybe_schedule_declaration_only_class_for_resolution
-	      (is_class_or_union_type(utype));
-	  else if (is_enum_type(utype))
-	    rdr.maybe_schedule_declaration_only_enum_for_resolution
-	      (is_enum_type(utype));
+	  rdr.maybe_schedule_decl_only_type_for_resolution(utype);
 	}
     }
 
@@ -17137,6 +17141,8 @@ build_ir_node_from_die(reader&		rdr,
 	if (type_base_sptr t = is_type(result))
 	  if (corpus *abi_corpus = scope->get_corpus())
 	    abi_corpus->record_type_as_reachable_from_public_interfaces(*t);
+
+  rdr.maybe_schedule_decl_only_type_for_resolution(result);
 
   return result;
 }
