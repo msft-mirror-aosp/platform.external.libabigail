@@ -1492,6 +1492,12 @@ canonicalize_types(const input_iterator& begin,
 
   env.canonicalization_is_done(true);
 
+  if (do_log)
+    {
+      tmr.stop();
+      std::cerr << "Canonicalizing of types DONE in: " << tmr << "\n\n";
+      tmr.start();
+    }
 }
 
 /// Hash and canonicalize a sequence of types.
