@@ -2296,7 +2296,13 @@ public:
 
 #ifdef WITH_DEBUG_SELF_COMPARISON
     if (env().self_comparison_debug_is_on())
-      env().set_self_comparison_debug_input(corpus());
+      {
+	corpus_group_sptr g = corpus_group();
+	if (g)
+	  env().set_self_comparison_debug_input(g);
+	else
+	  env().set_self_comparison_debug_input(corpus());
+      }
 #endif
 
     env().priv_->do_log(do_log());

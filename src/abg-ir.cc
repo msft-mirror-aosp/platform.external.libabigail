@@ -363,6 +363,37 @@ size_t
 get_canonical_type_index(const type_base_sptr& t)
 {return get_canonical_type_index(t.get());}
 
+/// Test if a type originates from a corpus.
+///
+/// Note that this function supports testing if a type originates from
+/// a corpus group.
+///
+/// @param t the type to consider.
+///
+/// @param c the corpus or corpus group to consider.
+///
+/// @return true iff the type @p t originates from the corpus (or
+/// group) @p c.
+bool
+type_originates_from_corpus(type_base_sptr t, corpus_sptr& c)
+{
+  bool result = false;
+  if (c && t->get_corpus())
+    {
+      corpus_group_sptr g = is_corpus_group(c);
+      if (g)
+	{
+	  if (t->get_corpus()->get_group() == g.get())
+	    result = true;
+	}
+      else
+	{
+	  if (t->get_corpus() == c.get())
+	    result = true;
+	}
+    }
+  return result;
+}
 /// @brief the location of a token represented in its simplest form.
 /// Instances of this type are to be stored in a sorted vector, so the
 /// type must have proper relational operators.
@@ -15453,7 +15484,9 @@ type_base::get_canonical_type_for(type_base_sptr t)
 	  // possibly via the use of 'abidw --debug-abidiff <binary>'.
 	  corpus_sptr corp1, corp2;
 	  env.get_self_comparison_debug_inputs(corp1, corp2);
-	  if (corp1 && corp2 && t->get_corpus() == corp2.get())
+	  if (corp1 && corp2 && type_originates_from_corpus(t, corp2)
+	      && corp1->get_origin() != corp2->get_origin()
+	      && corp2->get_origin() & corpus::NATIVE_XML_ORIGIN)
 	    {
 	      // If 't' comes from the second corpus, then it *must*
 	      // be equal to its matching canonical type coming from

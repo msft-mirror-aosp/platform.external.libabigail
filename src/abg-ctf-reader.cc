@@ -707,6 +707,17 @@ public:
 	&& (status & fe_iface::STATUS_DEBUG_INFO_NOT_FOUND))
       return corp;
 
+#ifdef WITH_DEBUG_SELF_COMPARISON
+    if (env().self_comparison_debug_is_on())
+      {
+	corpus_group_sptr g = corpus_group();
+	if (g)
+	  env().set_self_comparison_debug_input(g);
+	else
+	  env().set_self_comparison_debug_input(corpus());
+      }
+#endif
+
     tools_utils::timer t;
     if (do_log())
       t.start();

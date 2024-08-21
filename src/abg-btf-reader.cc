@@ -552,6 +552,17 @@ public:
     corpus()->add(artificial_tu);
     cur_tu(artificial_tu);
 
+#ifdef WITH_DEBUG_SELF_COMPARISON
+    if (env().self_comparison_debug_is_on())
+      {
+	corpus_group_sptr g = corpus_group();
+	if (g)
+	  env().set_self_comparison_debug_input(g);
+	else
+	  env().set_self_comparison_debug_input(corpus());
+      }
+#endif
+
     int number_of_types = nr_btf_types(btf_handle());
     int first_type_id = 1;
     // Are we looking at the BTF for a kernel module?

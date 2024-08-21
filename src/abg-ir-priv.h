@@ -1841,7 +1841,8 @@ struct function_type::priv
 size_t
 get_canonical_type_index(const type_base& t);
 
-
+bool
+type_originates_from_corpus(type_base_sptr t, corpus_sptr& c);
 } // end namespace ir
 
 } // end namespace abigail
