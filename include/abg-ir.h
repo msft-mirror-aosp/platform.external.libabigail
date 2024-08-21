@@ -186,12 +186,6 @@ public:
   canonicalization_is_done(bool);
 
   bool
-  do_on_the_fly_canonicalization() const;
-
-  void
-  do_on_the_fly_canonicalization(bool f);
-
-  bool
   decl_only_class_equals_definition() const;
 
   void

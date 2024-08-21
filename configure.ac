@@ -134,11 +134,6 @@ AC_ARG_ENABLE(debug-type-canonicalization,
 	      ENABLE_DEBUG_TYPE_CANONICALIZATION=$enableval,
 	      ENABLE_DEBUG_TYPE_CANONICALIZATION=no)
 
-AC_ARG_ENABLE(debug-ct-propagation,
-	      AS_HELP_STRING([--enable-debug-ct-propagation=yes|no],
-			     [enable debugging of canonical type propagation (default is no)]),
-	      ENABLE_DEBUG_CT_PROPAGATION=$enableval,
-	      ENABLE_DEBUG_CT_PROPAGATION=no)
 
 AC_ARG_ENABLE(show-type-use-in-abilint,
 	      AS_HELP_STRING([--enable-show-type-use-in-abilint=yes|no],
@@ -610,15 +605,6 @@ else
 fi
 
 AM_CONDITIONAL(ENABLE_DEBUG_TYPE_CANONICALIZATION, test x$ENABLE_DEBUG_TYPE_CANONICALIZATION = xyes)
-
-if test x$ENABLE_DEBUG_CT_PROPAGATION = xyes; then
-   AC_DEFINE([WITH_DEBUG_CT_PROPAGATION],
-   	     1,
-	     [compile support of debugging canonical type propagation])
-   AC_MSG_NOTICE([support of debugging canonical type propagation is enabled])
-else
-   AC_MSG_NOTICE([support of debugging canonical type propagation is disabled])
-fi
 
 dnl Check for the dpkg program
 if test x$ENABLE_DEB = xauto -o x$ENABLE_DEB = xyes; then
@@ -1297,7 +1283,6 @@ AC_MSG_NOTICE([
     Enable abilint --show-type-use <type-id>       : ${ENABLE_SHOW_TYPE_USE_IN_ABILINT}
     Enable self comparison debugging               : ${ENABLE_DEBUG_SELF_COMPARISON}
     Enable type canonicalization debugging         : ${ENABLE_DEBUG_TYPE_CANONICALIZATION}
-    Enable propagated canonical type debugging	   : ${ENABLE_DEBUG_CT_PROPAGATION}
     Enable deb support in abipkgdiff               : ${ENABLE_DEB}
     Enable GNU tar archive support in abipkgdiff   : ${ENABLE_TAR}
     Enable bash completion	                   : ${ENABLE_BASH_COMPLETION}

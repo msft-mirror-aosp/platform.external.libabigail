@@ -297,8 +297,6 @@ void
 pop_composite_type_comparison_operands(const type_base& left,
 				       const type_base& right);
 
-bool
-mark_dependant_types_compared_until(const type_base &r);
 
 /// Push a pair of operands on the stack of operands of the current
 /// type comparison, during type canonicalization.
@@ -336,71 +334,6 @@ pop_composite_type_comparison_operands(const type_base& left,
 {
   const environment& env = left.get_environment();
   env.priv_->pop_composite_type_comparison_operands(&left, &right);
-}
-
-/// In the stack of the current types being compared (as part of type
-/// canonicalization), mark all the types that comes after a certain
-/// one as NOT being eligible to the canonical type propagation
-/// optimization.
-///
-/// For a starter, please read about the @ref
-/// OnTheFlyCanonicalization, aka, "canonical type propagation
-/// optimization".
-///
-/// To implement that optimization, we need, among other things to
-/// maintain stack of the types (and their sub-types) being
-/// currently compared as part of type canonicalization.
-///
-/// Note that we only consider the type that is the right-hand-side
-/// operand of the comparison because it's that one that is being
-/// canonicalized and thus, that is not yet canonicalized.
-///
-/// The reason why a type is deemed NON-eligible to the canonical
-/// type propagation optimization is that it "depends" on
-/// recursively present type.  Let me explain.
-///
-/// Suppose we have a type T that has sub-types named ST0 and ST1.
-/// Suppose ST1 itself has a sub-type that is T itself.  In this
-/// case, we say that T is a recursive type, because it has T
-/// (itself) as one of its sub-types:
-///
-///   T
-///   +-- ST0
-///   |
-///   +-- ST1
-///        +
-///        |
-///        +-- T
-///
-/// ST1 is said to "depend" on T because it has T as a sub-type.
-/// But because T is recursive, then ST1 is said to depend on a
-/// recursive type.  Notice however that ST0 does not depend on any
-/// recursive type.
-///
-/// When we are at the point of comparing the sub-type T of ST1
-/// against its counterpart, the stack of the right-hand-side
-/// operands of the type canonicalization is going to look like
-/// this:
-///
-///    | T | ST1 |
-///
-/// We don't add the type T to the stack as we detect that T was
-/// already in there (recursive cycle).
-///
-/// So, this function will basically mark ST1 as being NON-eligible
-/// to being the target of canonical type propagation, by marking ST1
-/// as being dependant on T.
-///
-/// @param right the right-hand-side operand of the type comparison.
-///
-/// @return true iff the operation was successful.
-bool
-mark_dependant_types_compared_until(const type_base &r)
-{
-  const environment& env = r.get_environment();
-  if (env.do_on_the_fly_canonicalization())
-    return env.priv_->mark_dependant_types_compared_until(&r);
-  return false;
 }
 
 /// Getter of the canonical type index of a given type.
@@ -1037,10 +970,7 @@ is_comparison_cycle_detected(const class_decl& l, const class_decl& r)
   do									\
     {									\
       if (is_comparison_cycle_detected(l, r))				\
-	{								\
-	  mark_dependant_types_compared_until(r);			\
-	  return true;							\
-	}								\
+	return true;							\
     }									\
   while(false)
 
@@ -1121,111 +1051,20 @@ unmark_types_as_being_compared(const class_decl& l, const class_decl &r)
 /// The function does the necessary book keeping before returning the
 /// result of the comparison of two (sub) types.
 ///
-/// The book-keeping done is in the following
-/// areas:
-///
-///   * Management of the Canonical Type Propagation optimization
-///   * type comparison cycle detection
+/// The book-keeping done is essentially about type comparison cycle detection.
 ///
 ///   @param l the left-hand-side operand of the type comparison
 ///
 ///   @param r the right-hand-side operand of the type comparison
-///
-///   @param propagate_canonical_type if true, it means the function
-///   performs the @ref OnTheFlyCanonicalization, aka, "canonical type
-///   propagation optimization".
 ///
 ///   @param value the result of the comparison of @p l and @p r.
 ///
 ///   @return the value @p value.
 template<typename T>
 bool
-return_comparison_result(T& l, T& r, bool value,
-			 bool propagate_canonical_type = true)
+return_comparison_result(T& l, T& r, bool value)
 {
-  if (propagate_canonical_type && (value == true))
-    maybe_propagate_canonical_type(l, r);
-
   unmark_types_as_being_compared(l, r);
-
-  const environment& env = l.get_environment();
-  if (env.do_on_the_fly_canonicalization())
-    // We are instructed to perform the "canonical type propagation"
-    // optimization, making 'r' to possibly get the canonical type of
-    // 'l' if it has one.  This mostly means that we are currently
-    // canonicalizing the type that contain the subtype provided in
-    // the 'r' argument.
-    {
-      if (value == true
-	  && (is_type(&r)->priv_->depends_on_recursive_type()
-	      || env.priv_->is_recursive_type(&r))
-	  && is_type(&r)->priv_->canonical_type_propagated()
-	  && !is_type(&r)->priv_->propagated_canonical_type_confirmed()
-	  && !env.priv_->right_type_comp_operands_.empty())
-	{
-	  // Track the object 'r' for which the propagated canonical
-	  // type might be re-initialized if the current comparison
-	  // eventually fails.
-	  env.priv_->add_to_types_with_non_confirmed_propagated_ct(is_type(&r));
-	}
-      else if (value == true
-	       && env.priv_->right_type_comp_operands_.empty()
-	       && is_type(&r)->priv_->canonical_type_propagated()
-	       && !is_type(&r)->priv_->propagated_canonical_type_confirmed())
-	{
-	  // The type provided in the 'r' argument is the type that is
-	  // being canonicalized; 'r' is not a mere subtype being
-	  // compared, it's the whole type being canonicalized.  And
-	  // its canonicalization has just succeeded.
-	  //
-	  // Let's confirm the canonical type resulting from the
-	  // "canonical type propagation" optimization.
-	  env.priv_->confirm_ct_propagation(&r);
-	}
-      else if (value == true
-	       && is_type(&r)->priv_->canonical_type_propagated()
-	       && !is_type(&r)->priv_->propagated_canonical_type_confirmed())
-	// In any other case, we are not sure if propagated types
-	// should be confirmed yet.  So let's mark them as such.
-	env.priv_->add_to_types_with_non_confirmed_propagated_ct(is_type(&r));
-      else if (value == false)
-	{
-	  // The comparison of the current sub-type failed.  So all
-	  // the with non-confirmed propagated types (those in
-	  // env.prix_->types_with_non_confirmed_propagated_ct_)
-	  // should see their tentatively propagated canonical type
-	  // cancelled.
-	  env.priv_->cancel_all_non_confirmed_propagated_canonical_types();
-	}
-    }
-
-  // If we reached this point with value == true and the stack of
-  // types being compared is empty, then it means that the type pair
-  // that was at the bottom of the stack is now fully compared.
-  //
-  // It follows that all types that were target of canonical type
-  // propagation can now see their tentative canonical type be
-  // confirmed for real.
-  if (value == true
-      && env.priv_->right_type_comp_operands_.empty()
-      && !env.priv_->types_with_non_confirmed_propagated_ct_.empty())
-    // So the comparison is completely done and there are some
-    // types for which their propagated canonical type is sitll
-    // considered not confirmed.  As the comparison did yield true, we
-    // shall now confirm the propagation for all those types.
-    env.priv_->confirm_ct_propagation();
-
-#ifdef WITH_DEBUG_SELF_COMPARISON
-  if (value == false && env.priv_->right_type_comp_operands_.empty())
-    {
-      for (const auto i : env.priv_->types_with_non_confirmed_propagated_ct_)
-	{
-	  type_base *t = reinterpret_cast<type_base*>(i);
-	  env.priv_->check_abixml_canonical_type_propagation_during_self_comp(t);
-	}
-    }
-#endif
-
   ABG_RETURN(value);
 }
 
@@ -3498,24 +3337,6 @@ environment::canonicalization_is_done() const
 void
 environment::canonicalization_is_done(bool f)
 {priv_->canonicalization_is_done_ = f;}
-
-/// Getter for the "on-the-fly-canonicalization" flag.
-///
-/// @return true iff @ref OnTheFlyCanonicalization
-/// "on-the-fly-canonicalization" is to be performed during
-/// comparison.
-bool
-environment::do_on_the_fly_canonicalization() const
-{return priv_->do_on_the_fly_canonicalization_;}
-
-/// Setter for the "on-the-fly-canonicalization" flag.
-///
-/// @param f If this is true then @ref OnTheFlyCanonicalization
-/// "on-the-fly-canonicalization" is to be performed during
-/// comparison.
-void
-environment::do_on_the_fly_canonicalization(bool f)
-{priv_->do_on_the_fly_canonicalization_ = f;}
 
 /// Getter of the "decl-only-class-equals-definition" flag.
 ///
@@ -15100,10 +14921,6 @@ global_scope::~global_scope()
 {
 }
 
-static bool
-maybe_propagate_canonical_type(const type_base& lhs_type,
-			       const type_base& rhs_type);
-
 /// Test if two types are eligible to the "Linux Kernel Fast Type
 /// Comparison Optimization", a.k.a LKFTCO.
 ///
@@ -15313,11 +15130,7 @@ compare_canonical_type_against_candidate(const type_base& canonical_type,
   // resolved to any of the two definitions of struct S.
   bool saved_decl_only_class_equals_definition =
     env.decl_only_class_equals_definition();
-  // Now that we do hash types and use the hash in comparisons, we
-  // don't do canonical-type-propagation anymore, at least for now.
-  // Let's see how we fare in terms of performance and hope we don't
-  // need this optimization moving foward.
-  env.do_on_the_fly_canonicalization(false);
+
   // Compare types by considering that decl-only classes don't
   // equal their definition.
   env.decl_only_class_equals_definition(false);
@@ -15331,7 +15144,6 @@ compare_canonical_type_against_candidate(const type_base& canonical_type,
   // flags.
   env.priv_->clear_type_comparison_results_cache();
   env.priv_->allow_type_comparison_results_caching(false);
-  env.do_on_the_fly_canonicalization(false);
   env.decl_only_class_equals_definition
     (saved_decl_only_class_equals_definition);
   return equal;
@@ -15884,21 +15696,6 @@ canonicalize(type_base_sptr t, bool do_log, bool show_stats)
     if (!t->priv_->canonical_type_index)
       t->priv_->canonical_type_index = canonical->priv_->canonical_type_index;
 
-  // So this type is now canonicalized.
-  //
-  // It means that:
-  //
-  //   1/ Either the canonical type was not propagated during the
-  //      comparison of another type that was being canonicalized
-  //
-  //   2/ Or the canonical type has been propagated during the
-  //      comparison of another type that was being canonicalized and
-  //      that propagated canonical type has been confirmed, because
-  //      it was depending on a recursive type which comparison
-  //      succeeded.
-  ABG_ASSERT(!t->priv_->canonical_type_propagated()
-	     || t->priv_->propagated_canonical_type_confirmed());
-
   if (class_decl_sptr cl = is_class_type(t))
     if (type_base_sptr d = is_type(cl->get_earlier_declaration()))
       if ((canonical = d->get_canonical_type()))
@@ -15934,18 +15731,6 @@ canonicalize(type_base_sptr t, bool do_log, bool show_stats)
 	  // emitted.  This can be the case for the result of the
 	  // function strip_typedef, for instance.
 	}
-
-#ifdef WITH_DEBUG_CT_PROPAGATION
-      // Update the book-keeping of the set of the types which
-      // propagated canonical type has been cleared.
-      //
-      // If this type 't' which has just been canonicalized was
-      // previously in the set of types which propagated canonical
-      // type has been cleared, then remove it from that set because
-      // its canonical type is now computed and definitely set.
-      const environment& env = t->get_environment();
-      env.priv_->erase_type_with_cleared_propagated_canonical_type(t.get());
-#endif
     }
 
   t->on_canonical_type_set();
@@ -24211,9 +23996,8 @@ equals(const class_or_union& l, const class_or_union& r, change_kind* k)
   //overload for class_decl and union_decl because this one ( the
   //equal overload for class_or_union) is just a sub-routine of these
   //two above.
-#define RETURN(value)							\
-  return return_comparison_result(l, r, value,				\
-				  /*propagate_canonical_type=*/false);
+#define RETURN(value)				\
+  return return_comparison_result(l, r, value);
 
   RETURN_TRUE_IF_COMPARISON_CYCLE_DETECTED(l, r);
 
@@ -24397,135 +24181,6 @@ copy_member_function(const class_or_union_sptr& t, const method_decl* method)
 }
 
 // </class_or_union definitions>
-
-/// @defgroup OnTheFlyCanonicalization On-the-fly Canonicalization
-/// @{
-///
-/// This optimization is also known as "canonical type propagation".
-/// 
-/// During the canonicalization of a type T (which doesn't yet have a
-/// canonical type), T is compared structurally (member-wise) against
-/// a type C which already has a canonical type.  The comparison
-/// expression is C == T.
-///
-/// During that structural comparison, if a subtype of C (which also
-/// already has a canonical type) is structurally compared to a
-/// subtype of T (which doesn't yet have a canonical type) and if they
-/// are equal, then we can deduce that the canonical type of the
-/// subtype of C is the canonical type of the subtype of C.
-///
-/// Thus, we can canonicalize the sub-type of the T, during the
-/// canonicalization of T itself.  That canonicalization of the
-/// sub-type of T is what we call the "on-the-fly canonicalization".
-/// It's on the fly because it happens during a comparison -- which
-/// itself happens during the canonicalization of T.
-///
-/// For now this on-the-fly canonicalization only happens when
-/// comparing @ref class_decl and @ref function_type.
-///
-/// Note however that there is a case when a type is *NOT* eligible to
-/// this canonical type propagation optimization.
-///
-/// The reason why a type is deemed NON-eligible to the canonical type
-/// propagation optimization is that it "depends" on recursively
-/// present type.  Let me explain.
-///
-/// Suppose we have a type T that has sub-types named ST0 and ST1.
-/// Suppose ST1 itself has a sub-type that is T itself.  In this case,
-/// we say that T is a recursive type, because it has T (itself) as
-/// one of its sub-types:
-///
-/// <PRE>
-///    T
-///    +-- ST0
-///    |
-///    +-- ST1
-///    |    +
-///    |    |
-///    |    +-- T
-///    |
-///    +-- ST2
-/// </PRE>
-///
-/// ST1 is said to "depend" on T because it has T as a sub-type.  But
-/// because T is recursive, then ST1 is said to depend on a recursive
-/// type.  Notice however that ST0 does not depend on any recursive
-/// type.
-///
-/// Now suppose we are comparing T to a type T' that has the same
-/// structure with sub-types ST0', ST1' and ST2'.  During the
-/// comparison of ST1 against ST1', their sub-type T is compared
-/// against T'.  Because T (resp. T') is a recursive type that is
-/// already being compared, the comparison of T against T' (as a
-/// subtypes of ST1 and ST1') returns true, meaning they are
-/// considered equal.  This is done so that we don't enter an infinite
-/// recursion.
-///
-/// That means ST1 is also deemed equal to ST1'.  If we are in the
-/// course of the canonicalization of T' and thus if T (as well as as
-/// all of its sub-types) is already canonicalized, then the canonical
-/// type propagation optimization will make us propagate the canonical
-/// type of ST1 onto ST1'.  So the canonical type of ST1' will be
-/// equal to the canonical type of ST1 as a result of that
-/// optmization.
-///
-/// But then, later down the road, when ST2 is compared against ST2',
-/// let's suppose that we find out that they are different. Meaning
-/// that ST2 != ST2'.  This means that T != T', i.e, the
-/// canonicalization of T' failed for now.  But most importantly, it
-/// means that the propagation of the canonical type of ST1 to ST1'
-/// must now be invalidated.  Meaning, ST1' must now be considered as
-/// not having any canonical type.
-///
-/// In other words, during type canonicalization, if ST1' depends on a
-/// recursive type T', its propagated canonical type must be
-/// invalidated (set to nullptr) if T' appears to be different from T,
-/// a.k.a, the canonicalization of T' temporarily failed.
-///
-/// This means that any sub-type that depends on recursive types and
-/// that has been the target of the canonical type propagation
-/// optimization must be tracked.  If the dependant recursive type
-/// fails its canonicalization, then the sub-type being compared must
-/// have its propagated canonical type cleared.  In other words, its
-/// propagated canonical type must be cancelled.
-///
-/// @}
-
-
-/// If on-the-fly canonicalization is turned on, then this function
-/// sets the canonical type of its second parameter to the canonical
-/// type of the first parameter.
-///
-/// @param lhs_type the type which canonical type to propagate.
-///
-/// @param rhs_type the type which canonical type to set.
-static bool
-maybe_propagate_canonical_type(const type_base& lhs_type,
-			       const type_base& rhs_type)
-{
-  const environment& env = lhs_type.get_environment();
-#if WITH_DEBUG_TYPE_CANONICALIZATION
-  if (!env.priv_->use_canonical_type_comparison_)
-    return false;
-#endif
-
-  if (env.do_on_the_fly_canonicalization())
-    if (type_base_sptr canonical_type = lhs_type.get_canonical_type())
-      if (!rhs_type.get_canonical_type()
-	  && (!rhs_type.priv_->canonical_type_index
-	      || (rhs_type.priv_->canonical_type_index
-		  == canonical_type->priv_->canonical_type_index)))
-	  {
-#if WITH_DEBUG_CT_PROPAGATION
-	    ABG_ASSERT(!rhs_type.priv_->canonical_type_index
-		       || (rhs_type.priv_->canonical_type_index
-			   == canonical_type->priv_->canonical_type_index));
-#endif
-	    if (env.priv_->propagate_ct(lhs_type, rhs_type))
-	      return true;
-	  }
-  return false;
-}
 
 // <class_decl definitions>
 
@@ -25716,29 +25371,6 @@ method_matches_at_least_one_in_vector(const method_decl_sptr& method,
   return false;
 }
 
-/// Cancel the canonical type that was propagated.
-///
-/// If we are in the process of comparing a type for the purpose of
-/// canonicalization, and if that type has been the target of the
-/// canonical type propagation optimization, then clear the propagated
-/// canonical type.  See @ref OnTheFlyCanonicalization for more about
-/// the canonical type  optimization
-///
-/// @param t the type to consider.
-static bool
-maybe_cancel_propagated_canonical_type(const class_or_union& t)
-{
-  const environment& env = t.get_environment();
-  if (env.do_on_the_fly_canonicalization())
-    if (is_type(&t)->priv_->canonical_type_propagated())
-      {
-	is_type(&t)->priv_->clear_propagated_canonical_type();
-	env.priv_->remove_from_types_with_non_confirmed_propagated_ct(&t);
-	return true;
-      }
-  return false;
-}
-
 /// Compares two instances of @ref class_decl.
 ///
 /// If the two intances are different, set a bitfield to give some
@@ -25778,7 +25410,6 @@ equals(const class_decl& l, const class_decl& r, change_kind* k)
 		      static_cast<const class_or_union&>(r),
 		      k));
 
-  bool had_canonical_type = !!r.get_naked_canonical_type();
   bool result = true;
   if (!equals(static_cast<const class_or_union&>(l),
 	      static_cast<const class_or_union&>(r),
@@ -25788,13 +25419,6 @@ equals(const class_decl& l, const class_decl& r, change_kind* k)
       if (!k)
 	ABG_RETURN(result);
     }
-
-  // If comparing the class_or_union 'part' of the type led to
-  // canonical type propagation, then cancel that because it's too
-  // early to do that at this point.  We still need to compare bases
-  // virtual members.
-  if (!had_canonical_type)
-    maybe_cancel_propagated_canonical_type(r);
 
   RETURN_TRUE_IF_COMPARISON_CYCLE_DETECTED(l, r);
 
