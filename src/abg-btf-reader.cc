@@ -515,6 +515,11 @@ public:
     corpus::origin origin = corpus()->get_origin();
     origin |= corpus::BTF_ORIGIN;
     corpus()->set_origin(origin);
+    if (corpus_group())
+      {
+	origin |= corpus_group()->get_origin();
+	corpus_group()->set_origin(origin);
+      }
 
     if ((status & STATUS_NO_SYMBOLS_FOUND)
 	|| !(status & STATUS_OK))

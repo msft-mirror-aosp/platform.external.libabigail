@@ -693,6 +693,11 @@ public:
     corpus::origin origin = corpus()->get_origin();
     origin |= corpus::CTF_ORIGIN;
     corp->set_origin(origin);
+    if (corpus_group())
+      {
+	origin |= corpus_group()->get_origin();
+	corpus_group()->set_origin(origin);
+      }
 
     slurp_elf_info(status);
     if (status & fe_iface::STATUS_NO_SYMBOLS_FOUND)
