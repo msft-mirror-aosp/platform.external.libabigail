@@ -3028,7 +3028,7 @@ load_vmlinux_corpus(elf_based_reader_sptr rdr,
 
   if (verbose)
     std::cerr << vmlinux
-     << " reading DONE:"
+     << " reading DONE in:"
      << t << "\n";
 
   if (group->is_empty())
@@ -3046,7 +3046,7 @@ load_vmlinux_corpus(elf_based_reader_sptr rdr,
          << *m << "' ("
          << cur_module_index
          << "/" << total_nb_modules
-         << ") ... " << std::flush;
+         << ") ...\n" << std::flush;
 
       rdr->initialize(*m, di_roots,
                       /*read_all_types=*/false,
@@ -3061,10 +3061,10 @@ load_vmlinux_corpus(elf_based_reader_sptr rdr,
       rdr->read_and_add_corpus_to_group(*group, status);
       t.stop();
       if (verbose)
-        std::cerr << "module '"
-         << *m
-         << "' reading DONE: "
-         << t << "\n";
+	std::cerr << "Module reading DONE in: "
+		  << t << " for '" << *m
+		  << "' (" << cur_module_index << "/" << total_nb_modules << ")"
+		  << "'\n";
     }
 }
 
@@ -3125,7 +3125,7 @@ build_corpus_group_from_kernel_dist_under(const string&	root,
 	      << root
 	      << "' with vmlinux path: '"
 	      << vmlinux_path
-	      << "' ... " << std::flush;
+	      << "' ... \n" << std::flush;
 
   timer t;
 
@@ -3135,7 +3135,7 @@ build_corpus_group_from_kernel_dist_under(const string&	root,
   t.stop();
 
   if (verbose)
-    std::cerr << "DONE: " << t << "\n";
+    std::cerr << "Kernel tree binary paths analysis DONE in: " << t << "\n";
 
   if (got_binary_paths)
     {
