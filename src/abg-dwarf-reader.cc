@@ -17158,9 +17158,12 @@ build_ir_node_for_void_type(reader& rdr)
   const environment& env = rdr.env();
 
   type_base_sptr t = env.get_void_type();
-  add_decl_to_scope(is_decl(t), rdr.cur_transl_unit()->get_global_scope());
   decl_base_sptr type_declaration = get_type_declaration(t);
-  canonicalize(t);
+  if (!has_scope(type_declaration))
+    {
+      add_decl_to_scope(is_decl(t), rdr.cur_transl_unit()->get_global_scope());
+      rdr.schedule_type_for_late_canonicalization(t);
+    }
   return type_declaration;
 }
 
@@ -17179,11 +17182,13 @@ static type_or_decl_base_sptr
 build_ir_node_for_void_pointer_type(reader& rdr)
 {
   const environment& env = rdr.env();
-
   type_base_sptr t = env.get_void_pointer_type();
-  add_decl_to_scope(is_decl(t), rdr.cur_transl_unit()->get_global_scope());
   decl_base_sptr type_declaration = get_type_declaration(t);
-  canonicalize(t);
+  if (!has_scope(type_declaration))
+    {
+      add_decl_to_scope(is_decl(t), rdr.cur_transl_unit()->get_global_scope());
+      rdr.schedule_type_for_late_canonicalization(t);
+    }
   return type_declaration;
 }
 
@@ -17197,11 +17202,13 @@ build_ir_node_for_variadic_parameter_type(reader &rdr)
 {
 
   const environment& env = rdr.env();
-
   type_base_sptr t = env.get_variadic_parameter_type();
-  add_decl_to_scope(is_decl(t), rdr.cur_transl_unit()->get_global_scope());
   decl_base_sptr type_declaration = get_type_declaration(t);
-  canonicalize(t);
+  if (!has_scope(type_declaration))
+    {
+      add_decl_to_scope(is_decl(t), rdr.cur_transl_unit()->get_global_scope());
+      rdr.schedule_type_for_late_canonicalization(t);
+    }
   return type_declaration;
 }
 
