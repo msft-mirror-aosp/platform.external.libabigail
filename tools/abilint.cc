@@ -82,6 +82,7 @@ struct options
   bool				diff;
   bool				noout;
   bool				annotate;
+  bool				do_log;
 #ifdef WITH_CTF
   bool				use_ctf;
 #endif
@@ -99,7 +100,8 @@ struct options
       read_tu(false),
       diff(false),
       noout(false),
-      annotate(false)
+      annotate(false),
+      do_log(false)
 #ifdef WITH_CTF
     ,
       use_ctf(false)
@@ -486,6 +488,7 @@ display_usage(const string& prog_name, ostream& out)
     << "usage: " << prog_name << " [options] [<abi-file1>]\n"
     << " where options can be:\n"
     << "  --annotate  annotate the ABI artifacts emitted in the output\n"
+    << "  --verbose  show verbose messages about internal stuff\n"
 #ifdef WITH_CTF
     << "  --ctf use CTF instead of DWARF in ELF files\n"
 #endif
@@ -588,6 +591,8 @@ parse_command_line(int argc, char* argv[], options& opts)
 	  opts.noout = true;
 	else if (!strcmp(argv[i], "--annotate"))
 	  opts.annotate = true;
+	else if (!strcmp(argv[i], "--verbose"))
+	  opts.do_log = true;
 #ifdef WITH_SHOW_TYPE_USE_IN_ABILINT
       else if (!strcmp(argv[i], "--show-type-use"))
 	{
@@ -680,6 +685,18 @@ set_suppressions(abigail::fe_iface& reader, const options& opts)
   reader.add_suppressions(supprs);
 }
 
+/// Set the options of the reader.
+///
+/// @param reader the reader to consider.
+///
+/// @param opts the options to use.
+static void
+set_reader_options(abigail::fe_iface& reader, const options& opts)
+{
+  set_suppressions(reader, opts);
+  reader.options().do_log = opts.do_log;
+}
+
 /// Reads a bi (binary instrumentation) file, saves it back to a
 /// temporary file and run a diff on the two versions.
 int
@@ -738,7 +755,7 @@ main(int argc, char* argv[])
 	  abigail::fe_iface_sptr rdr =
 	    abigail::abixml::create_reader(&cin, env);
 	  assert(rdr);
-	  set_suppressions(*rdr, opts);
+	  set_reader_options(*rdr, opts);
 	  abigail::fe_iface::status sts;
 	  corpus_sptr corp = rdr->read_corpus(sts);
 	  if (!opts.noout)
@@ -773,7 +790,8 @@ main(int argc, char* argv[])
 	  {
 	    abigail::fe_iface_sptr rdr =
 	      abigail::abixml::create_reader(opts.file_path,
-							   env);
+					     env);
+	    set_reader_options(*rdr, opts);
 	    tu = abigail::abixml::read_translation_unit(*rdr);
 	  }
 	  break;
@@ -795,7 +813,7 @@ main(int argc, char* argv[])
 		abigail::dwarf::create_reader(opts.file_path,
 					      di_roots, env,
 					      /*load_all_types=*/false);
-	    set_suppressions(*rdr, opts);
+	    set_reader_options(*rdr, opts);
 	    corp = rdr->read_corpus(s);
 	  }
 	  break;
@@ -804,7 +822,7 @@ main(int argc, char* argv[])
 	    abigail::fe_iface_sptr rdr =
 	      abigail::abixml::create_reader(opts.file_path, env);
 	    assert(rdr);
-	    set_suppressions(*rdr, opts);
+	    set_reader_options(*rdr, opts);
 	    corp = rdr->read_corpus(s);
 	    break;
 	  }
@@ -813,7 +831,7 @@ main(int argc, char* argv[])
 	    abigail::fe_iface_sptr rdr =
 	      abigail::abixml::create_reader(opts.file_path, env);
 	    assert(rdr);
-	    set_suppressions(*rdr, opts);
+	    set_reader_options(*rdr, opts);
 	    group = read_corpus_group_from_input(*rdr);
 	  }
 	  break;

@@ -108,6 +108,10 @@ Options
 
     Expect the input XML to represent a single translation unit.
 
+  * `--verbose`
+
+    Shows verbose messages about internal stuff.  This is used to
+    debug the tool and its underlying library.
 
   * `--version | -v`
 
