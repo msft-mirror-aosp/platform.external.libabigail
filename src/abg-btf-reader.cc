@@ -92,6 +92,45 @@ class reader : public elf_based_reader
   vector<type_base_sptr>		types_to_canonicalize_;
   btf_type_to_abi_artifact_map_type	btf_type_to_artifacts_;
 
+  /// Getter of the "do_log" flag.
+  ///
+  /// This flag tells if we should log about various internal
+  /// details.
+  ///
+  /// return the "do_log" flag.
+  bool
+  do_log() const
+  {return options().do_log;}
+
+  /// Setter of the "do_log" flag.
+  ///
+  /// This flag tells if we should log about various internal details.
+  ///
+  /// @param f the new value of the flag.
+  void
+  do_log(bool f)
+  {options().do_log = f;}
+
+  /// Getter of the "show_stats" flag.
+  ///
+  /// This flag tells if we should emit statistics about various
+  /// internal stuff.
+  ///
+  /// @return the value of the flag.
+  bool
+  show_stats() const
+  {return options().show_stats;}
+
+  /// Setter of the "show_stats" flag.
+  ///
+  /// This flag tells if we should emit statistics about various
+  /// internal stuff.
+  ///
+  /// @param f the value of the flag.
+  void
+  show_stats(bool f)
+  {options().show_stats = f;}
+
   /// Getter of the handle to the base BTF object of the current
   /// binary being analyzed.
   ///
