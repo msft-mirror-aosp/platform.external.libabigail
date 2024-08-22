@@ -3066,6 +3066,14 @@ load_vmlinux_corpus(elf_based_reader_sptr rdr,
 		  << "' (" << cur_module_index << "/" << total_nb_modules << ")"
 		  << "'\n";
     }
+
+  if (verbose)
+    {
+      std::cerr << "Total number of functions: "
+		<< group->get_functions().size() << "\n";
+      std::cerr << "Total number of variables: "
+		<< group->get_variables().size() << "\n";
+    }
 }
 
 /// Walk a given directory and build an instance of @ref corpus_group

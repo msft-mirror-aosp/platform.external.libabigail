@@ -1947,6 +1947,25 @@ public:
     }
   }; // end die_dependant_container_set
 
+  /// Statistics to help for debugging purposes.
+  struct stats
+  {
+    unsigned number_of_suppressed_functions = 0;
+    unsigned number_of_suppressed_variables = 0;
+    unsigned number_of_allowed_functions = 0;
+    unsigned number_of_allowed_variables = 0;
+
+    /// Clear the statistic data members.
+    void
+    clear()
+    {
+      number_of_suppressed_functions = 0;
+      number_of_suppressed_variables = 0;
+      number_of_allowed_functions = 0;
+      number_of_allowed_variables = 0;
+    }
+  };
+
   unsigned short		dwarf_version_;
   Dwarf_Die*			cur_tu_die_;
   mutable dwarf_expr_eval_context	dwarf_expr_eval_context_;
@@ -2027,6 +2046,7 @@ public:
   mutable size_t		canonical_propagated_count_;
   mutable size_t		cancelled_propagation_count_;
   mutable optional<bool>	leverage_dwarf_factorization_;
+  mutable stats		stats_;
 
 protected:
 
@@ -2071,6 +2091,13 @@ protected:
 		       environment)
   {
     initialize(load_all_types, linux_kernel_mode);
+  }
+
+  /// Clear the statistics for reading the current corpus.
+  void
+  clear_stats()
+  {
+    stats_.clear();
   }
 
 public:
@@ -2134,9 +2161,10 @@ public:
     canonical_propagated_count_ = 0;
     cancelled_propagation_count_ = 0;
     load_in_linux_kernel_mode(linux_kernel_mode);
+    clear_stats();
   }
 
-    /// Initializer of reader.
+  /// Initializer of reader.
   ///
   /// Resets the reader so that it can be re-used to read another binary.
   ///
@@ -2380,7 +2408,15 @@ public:
 	       << "Number of canonical types propagated: "
 	       << canonical_propagated_count_ << "\n"
 	       << "Number of cancelled propagated canonical types:"
-	       << cancelled_propagation_count_ << "\n";
+	       << cancelled_propagation_count_ << "\n"
+	       << "Number of suppressed functions: "
+	       << stats_.number_of_suppressed_functions << "\n"
+	       << "Number of allowed functions: "
+	       << stats_.number_of_allowed_functions << "\n"
+	       << "Total number of fns in the corpus: "
+	       << corpus()->get_functions().size() << "\n"
+	       << "Total number of variables in the corpus: "
+	       << corpus()->get_variables().size() << "\n";
 	}
     }
 
@@ -15704,7 +15740,10 @@ build_or_get_var_decl_if_not_suppressed(reader&	rdr,
   if (variable_is_suppressed(rdr, scope, die,
 			     is_declaration_only,
 			     is_required_decl_spec))
-    return var;
+    {
+      ++rdr.stats_.number_of_suppressed_variables;
+      return var;
+    }
 
   if (class_decl* class_type = is_class_type(scope))
     {
@@ -15713,6 +15752,10 @@ build_or_get_var_decl_if_not_suppressed(reader&	rdr,
 	if ((var = class_type->find_data_member(var_name)))
 	  return var;
     }
+
+  // The variable was not suppressed.
+  ++rdr.stats_.number_of_suppressed_variables;
+
   var = build_var_decl(rdr, die, where_offset, result);
   return var;
 }
@@ -15944,16 +15987,19 @@ function_is_suppressed(const reader& rdr,
 /// @return a pointer to the newly created var_decl.  If the var_decl
 /// could not be built, this function returns NULL.
 static function_decl_sptr
-build_or_get_fn_decl_if_not_suppressed(reader&	  rdr,
-				       scope_decl	  *scope,
-				       Dwarf_Die	  *fn_die,
-				       size_t		  where_offset,
-				       bool		  is_declaration_only,
-				       function_decl_sptr result)
+build_or_get_fn_decl_if_not_suppressed(reader&			rdr,
+				       scope_decl		*scope,
+				       Dwarf_Die		*fn_die,
+				       size_t			where_offset,
+				       bool			is_declaration_only,
+				       function_decl_sptr	result)
 {
   function_decl_sptr fn;
   if (function_is_suppressed(rdr, scope, fn_die, is_declaration_only))
-    return fn;
+    {
+      ++rdr.stats_.number_of_suppressed_functions;
+      return fn;
+    }
 
   string name = die_name(fn_die);
   string linkage_name = die_linkage_name(fn_die);
@@ -15976,13 +16022,18 @@ build_or_get_fn_decl_if_not_suppressed(reader&	  rdr,
   // symbols.  So re-using C++ destructors like that can lead to us
   // missing some destructors.
   if (!result && (!(is_dtor && is_virtual)))
-    if ((fn = is_function_decl(rdr.lookup_artifact_from_die(fn_die))))
-      {
-	fn = maybe_finish_function_decl_reading(rdr, fn_die, where_offset, fn);
-	rdr.associate_die_to_decl(fn_die, fn, /*do_associate_by_repr=*/true);
-	rdr.associate_die_to_type(fn_die, fn->get_type(), where_offset);
-	return fn;
-      }
+    {
+      if ((fn = is_function_decl(rdr.lookup_artifact_from_die(fn_die))))
+	{
+	  fn = maybe_finish_function_decl_reading(rdr, fn_die, where_offset, fn);
+	  rdr.associate_die_to_decl(fn_die, fn, /*do_associate_by_repr=*/true);
+	  rdr.associate_die_to_type(fn_die, fn->get_type(), where_offset);
+	  return fn;
+	}
+    }
+
+  // The function was not suppressed.
+  ++rdr.stats_.number_of_allowed_functions;
 
   // If a member function with the same linkage name as the one
   // carried by the DIE already exists, then return it.
