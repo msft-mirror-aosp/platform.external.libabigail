@@ -239,7 +239,7 @@ display_usage(const string& prog_name, ostream& out)
     "interfaces from the binary"
     << "  --no-linux-kernel-mode  don't consider the input binary as "
        "a Linux Kernel binary\n"
-    << "  --kmi-whitelist|-w  path to a linux kernel "
+    << "  --kmi-whitelist|--kmi-stablelist|-w  path to a linux kernel "
     "abi whitelist\n"
     << "  --linux-tree|--lt  emit the ABI for the union of a "
     "vmlinux and its modules\n"
@@ -356,6 +356,7 @@ parse_command_line(int argc, char* argv[], options& opts)
 	  ++i;
 	}
       else if (!strcmp(argv[i], "--kmi-whitelist")
+	       || !strcmp(argv[i], "--kmi-stablelist")
 	       || !strcmp(argv[i], "-w"))
 	{
 	  int j = i + 1;

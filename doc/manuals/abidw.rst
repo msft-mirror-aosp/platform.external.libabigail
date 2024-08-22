@@ -134,20 +134,22 @@ Options
     specifications are suppressed from the output of this tool.
 
 
-  * ``--kmi-whitelist | -kaw`` <*path-to-whitelist*>
+  * ``--kmi-whitelist | --kmi-stablelist |-w`` <*path-to-stablelist*>
 
     When analyzing a `Linux Kernel`_ binary, this option points to the
-    white list of names of ELF symbols of functions and variables
-    which ABI must be written out.  That white list is called a "
-    Kernel Module Interface white list".  This is because for the
+    list of names of ELF symbols of functions and variables which ABI
+    must be written out.  Any function or variable with a name that is
+    not included in that list will not ignored.  That list is called a
+    " Kernel Module Interface stable list".  This is because for the
     Kernel, we don't talk about the ABI; we rather talk about the
     interface between the Kernel and its module. Hence the term
-    ``KMI`` rather than ``ABI``
+    ``KMI`` rather than ``KABI``.
 
     Any other function or variable which ELF symbol are not present in
-    that white list will not be considered by the KMI writing process.
+    that stable list will not be considered by the KMI writing
+    process.
 
-    If this option is not provided -- thus if no white list is
+    If this option is not provided -- thus if no stable list is
     provided -- then the entire KMI, that is, all publicly defined and
     exported functions and global variables by the `Linux Kernel`_
     binaries is emitted.
