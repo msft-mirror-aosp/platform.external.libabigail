@@ -15247,8 +15247,8 @@ function_is_suppressed(const reader& rdr,
 	rdr.function_symbol_is_exported(fn_addr);
       if (!symbol)
 	return true;
-      if (!symbol->is_suppressed())
-	return false;
+      if (symbol->is_suppressed())
+	return true;
 
       // Since there is only one symbol in DWARF associated with an elf_symbol,
       // we can assume this is the main symbol then. Otherwise the main hinting
@@ -15257,8 +15257,8 @@ function_is_suppressed(const reader& rdr,
       if (symbol->has_aliases())
 	for (elf_symbol_sptr a = symbol->get_next_alias();
 	     !a->is_main_symbol(); a = a->get_next_alias())
-	  if (!a->is_suppressed())
-	    return false;
+	  if (a->is_suppressed())
+	    return true;
     }
 
   return suppr::is_function_suppressed(rdr, qualified_name, flinkage_name,
@@ -15427,8 +15427,8 @@ variable_is_suppressed(const reader&		rdr,
 	rdr.variable_symbol_is_exported(var_addr);
       if (!symbol)
 	return true;
-      if (!symbol->is_suppressed())
-	return false;
+      if (symbol->is_suppressed())
+	return true;
 
       // Since there is only one symbol in DWARF associated with an elf_symbol,
       // we can assume this is the main symbol then. Otherwise the main hinting
@@ -15437,8 +15437,8 @@ variable_is_suppressed(const reader&		rdr,
       if (symbol->has_aliases())
 	for (elf_symbol_sptr a = symbol->get_next_alias();
 	     !a->is_main_symbol(); a = a->get_next_alias())
-	  if (!a->is_suppressed())
-	    return false;
+	  if (a->is_suppressed())
+	    return true;
     }
 
   return suppr::is_variable_suppressed(rdr,
