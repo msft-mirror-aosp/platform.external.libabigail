@@ -9302,6 +9302,21 @@ get_class_or_union_flat_representation(const class_or_union& cou,
   if (!cou.get_is_anonymous())
     repr += name;
 
+  if (cou.priv_->is_printing_flat_representation())
+    {
+      // We have just detected a cycle while walking the sub-tree
+      // of this class or union type for the purpose of printing
+      // its flat representation.  We need to get out of here
+      // pronto or else we'll be spinning endlessly.
+      repr += "{}";
+      return repr;
+    }
+
+  // Let's mark this class or union type to signify that we started
+  // walking its sub-tree.  This is to detect potential cycles and
+  // avoid looping endlessly.
+  cou.priv_->set_printing_flat_representation();
+
   repr += "{";
 
   if (!one_line)
@@ -9347,6 +9362,11 @@ get_class_or_union_flat_representation(const class_or_union& cou,
     repr += "}";
   else
     repr += indent + "}";
+
+  // Let's unmark this class or union type to signify that we are done
+  // walking its sub-tree.  This was to detect potential cycles and
+  // avoid looping endlessly.
+  cou.priv_->unset_printing_flat_representation();
 
   return repr;
 }
@@ -28585,6 +28605,18 @@ add_outer_pointer_to_fn_type_expr(const type_base* p,
   if (!pointed_to_fn)
     return "";
 
+  if (pointed_to_fn->priv_->is_pretty_printing())
+    // We have just detected a cycle while walking the sub-tree of
+    // this function type for the purpose of printing its
+    // representation.  We need to get out of here pronto or else
+    // we'll be spinning endlessly.
+    return "";
+
+  // Let's mark thie function type  to signify that we started walking
+  // its subtree.  This is to detect potential cycles and avoid
+  // looping endlessly.
+  pointed_to_fn->priv_->set_is_pretty_printing();
+
   std::ostringstream left, right, inner;
 
   inner <<  "(" << star_or_ref  << input << ")";
@@ -28619,6 +28651,10 @@ add_outer_pointer_to_fn_type_expr(const type_base* p,
   else
     ABG_ASSERT_NOT_REACHED;
 
+  // Lets unmark this function type to signify that we are done
+  // walking its subtree.  This was to detect potential cycles and
+  // avoid looping endlessly.
+  pointed_to_fn->priv_->unset_is_pretty_printing();
   return result;
 }
 

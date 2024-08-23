@@ -1598,6 +1598,7 @@ struct class_or_union::priv
   string_mem_fn_ptr_map_type	signature_2_mem_fn_map_;
   member_function_templates	member_function_templates_;
   member_class_templates	member_class_templates_;
+  bool				is_printing_flat_representation_ = false;
 
   priv()
   {}
@@ -1759,6 +1760,36 @@ struct class_or_union::priv
       return comparison_started(*first, *second);
     return false;
   }
+
+  /// Set the 'is_printing_flat_representation_' boolean to true.
+  ///
+  /// That boolean marks the fact that the current @ref class_or_union
+  /// (and its sub-types graph) is being walked for the purpose of
+  /// printing its flat representation.  This is useful to detect
+  /// cycles in the graph and avoid endless loops.
+  void
+  set_printing_flat_representation()
+  {is_printing_flat_representation_ = true;}
+
+  /// Set the 'is_printing_flat_representation_' boolean to false.
+  ///
+  /// That boolean marks the fact that the current @ref class_or_union
+  /// (and its sub-types graph) is being walked for the purpose of
+  /// printing its flat representation.  This is useful to detect
+  /// cycles in the graph and avoid endless loops.
+  void
+  unset_printing_flat_representation()
+  {is_printing_flat_representation_ = false;}
+
+  /// Getter of the 'is_printing_flat_representation_' boolean.
+  ///
+  /// That boolean marks the fact that the current @ref class_or_union
+  /// (and its sub-types graph) is being walked for the purpose of
+  /// printing its flat representation.  This is useful to detect
+  /// cycles in the graph and avoid endless loops.
+  bool
+  is_printing_flat_representation() const
+  {return is_printing_flat_representation_;}
 }; // end struct class_or_union::priv
 
 // <function_type::priv definitions>
@@ -1771,7 +1802,7 @@ struct function_type::priv
   interned_string cached_name_;
   interned_string internal_cached_name_;
   interned_string temp_internal_cached_name_;
-
+  bool is_pretty_printing_ = false;
   priv()
   {}
 
@@ -1834,6 +1865,36 @@ struct function_type::priv
 	    ||
 	    env.priv_->right_fn_types_being_compared_.count(&second));
   }
+
+  /// Set the 'is_pretty_printing_' boolean to true.
+  ///
+  /// That boolean marks the fact that the current @ref function_type
+  /// (and its sub-types graph) is being walked for the purpose of
+  /// printing its flat representation.  This is useful to detect
+  /// cycles in the graph and avoid endless loops.
+  void
+  set_is_pretty_printing()
+  {is_pretty_printing_ = true;}
+
+  /// Set the 'is_pretty_printing_' boolean to false.
+  ///
+  /// That boolean marks the fact that the current @ref function_type
+  /// (and its sub-types graph) is being walked for the purpose of
+  /// printing its flat representation.  This is useful to detect
+  /// cycles in the graph and avoid endless loops.
+  void
+  unset_is_pretty_printing()
+  {is_pretty_printing_ = false;}
+
+  /// Getter of the 'is_pretty_printing_' boolean.
+  ///
+  /// That boolean marks the fact that the current @ref function_type
+  /// (and its sub-types graph) is being walked for the purpose of
+  /// printing its flat representation.  This is useful to detect
+  /// cycles in the graph and avoid endless loops.
+  bool
+  is_pretty_printing() const
+  {return is_pretty_printing_;}
 };// end struc function_type::priv
 
 // </function_type::priv definitions>

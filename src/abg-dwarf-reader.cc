@@ -579,12 +579,20 @@ build_internal_anonymous_die_name(const string &base_name,
 static string
 die_qualified_type_name(const reader& rdr,
 			const Dwarf_Die* die,
-			size_t where);
+			size_t where,
+			unordered_set<uint64_t>& guard);
 
 static string
 die_qualified_decl_name(const reader& rdr,
 			const Dwarf_Die* die,
-			size_t where);
+			size_t where,
+			unordered_set<uint64_t>& guard);
+
+static string
+die_qualified_name(const reader& rdr,
+		   const Dwarf_Die* die,
+		   size_t where,
+		   unordered_set<uint64_t>& guard);
 
 static string
 die_qualified_name(const reader& rdr,
@@ -593,12 +601,18 @@ die_qualified_name(const reader& rdr,
 
 static string
 die_type_name(const reader& rdr, const Dwarf_Die* die,
+	      bool qualified_name, size_t where_offset,
+	      unordered_set<uint64_t>& infinite_loop_guard);
+
+static string
+die_type_name(const reader& rdr, const Dwarf_Die* die,
 	      bool qualified_name, size_t where_offset);
 
 static bool
 die_qualified_type_name_empty(const reader& rdr,
 			      const Dwarf_Die* die, size_t where,
-			      string &qualified_name);
+			      string &qualified_name,
+			      unordered_set<uint64_t>& infinite_loop_guard);
 
 static void
 die_return_and_parm_names_from_fn_type_die(const reader& rdr,
@@ -611,13 +625,15 @@ die_return_and_parm_names_from_fn_type_die(const reader& rdr,
 					   string &class_name,
 					   vector<string>& parm_names,
 					   bool& is_const,
-					   bool& is_static);
+					   bool& is_static,
+					   unordered_set<uint64_t>& infinite_loop_guard);
 
 static string
 die_function_signature(const reader& rdr,
 		       const Dwarf_Die *die,
 		       bool qualified_name,
-		       size_t where_offset);
+		       size_t where_offset,
+		       unordered_set<uint64_t>& infinite_loop_guard);
 
 static bool
 die_peel_qual_ptr(Dwarf_Die *die, Dwarf_Die& peeled_die);
@@ -650,7 +666,17 @@ die_class_flat_representation(const reader&	rdr,
 			      const string&	indent,
 			      bool		one_line,
 			      bool		qualified_names,
-			      size_t		where_offset);
+			      size_t		where_offset,
+			      unordered_set<uint64_t>& infinite_loop_guard);
+
+static string
+die_class_or_enum_flat_representation(const reader&	rdr,
+				      const Dwarf_Die* die,
+				      const string&	indent,
+				      bool		one_line,
+				      bool		qualified_names,
+				      size_t		where_offset,
+				      unordered_set<uint64_t>& infinite_loop_guard);
 
 static string
 die_class_or_enum_flat_representation(const reader&	rdr,
@@ -663,19 +689,22 @@ die_class_or_enum_flat_representation(const reader&	rdr,
 static string
 die_pretty_print_type(const reader& rdr,
 		      const Dwarf_Die* die,
-		      size_t where_offset);
+		      size_t where_offset,
+		      unordered_set<uint64_t>& guard);
 
 static string
 die_pretty_print_decl(const reader& rdr,
 		      const Dwarf_Die* die,
 		      bool qualified_name,
 		      bool include_fns,
-		      size_t where_offset);
+		      size_t where_offset,
+		      unordered_set<uint64_t>& infinite_loop_guard);
 
 static string
 die_pretty_print(reader& rdr,
 		 const Dwarf_Die* die,
-		 size_t where_offset);
+		 size_t where_offset,
+		 unordered_set<uint64_t>& infinite_loop_guard);
 
 static void
 maybe_canonicalize_type(const type_base_sptr&	t,
@@ -3222,10 +3251,17 @@ public:
   ///
   /// @param where_offset where in the DIE stream we logically are.
   ///
+  /// @param guard the set of DIE offsets of the stack of DIEs
+  /// involved in the construction of the qualified name of the type.
+  /// This set is used to detect (and avoid) cycles in the stack of
+  /// DIEs that is going to be walked to compute the qualified type
+  /// name.
+  ///
   /// @return the interned string representing the qualified name of
   /// @p die.
   interned_string
-  get_die_qualified_name(Dwarf_Die *die, size_t where_offset)
+  get_die_qualified_name(Dwarf_Die *die, size_t where_offset,
+			 unordered_set<uint64_t>& guard) const
   {
     ABG_ASSERT(die);
     die_istring_map_type& map =
@@ -3237,7 +3273,9 @@ public:
     if (i == map.end())
       {
 	reader& rdr  = *const_cast<reader*>(this);
-	string qualified_name = die_qualified_name(rdr, die, where_offset);
+	string qualified_name = die_qualified_name(rdr, die,
+						   where_offset,
+						   guard);
 	interned_string istr = env().intern(qualified_name);
 	map[die_offset] = istr;
 	return istr;
@@ -3280,10 +3318,17 @@ public:
   ///
   /// @param where_offset where in the DIE stream we logically are.
   ///
+  /// @param guard the set of DIE offsets of the stack of DIEs
+  /// involved in the construction of the qualified name of the type.
+  /// This set is used to detect (and avoid) cycles in the stack of
+  /// DIEs that is going to be walked to compute the qualified type
+  /// name.
+  ///
   /// @return the interned string representing the qualified name of
   /// @p die.
   interned_string
-  get_die_qualified_type_name(const Dwarf_Die *die, size_t where_offset) const
+  get_die_qualified_type_name(const Dwarf_Die *die, size_t where_offset,
+			      unordered_set<uint64_t>& guard) const
   {
     ABG_ASSERT(die);
 
@@ -3312,9 +3357,12 @@ public:
 	    die_class_or_enum_flat_representation(*this, die, /*indent=*/"",
 						  /*one_line=*/true,
 						  /*qualified_name=*/false,
-						  where_offset);
+						  where_offset,
+						  guard);
 	else
-	  qualified_name = die_qualified_type_name(rdr, die, where_offset);
+	  qualified_name = die_qualified_type_name(rdr, die,
+						   where_offset,
+						   guard);
 
 	interned_string istr = env().intern(qualified_name);
 	map[die_offset] = istr;
@@ -3338,11 +3386,18 @@ public:
   ///
   /// @param where_offset where in the DIE stream we logically are.
   ///
+  /// @param guard the set of DIE offsets of the stack of DIEs
+  /// involved in the construction of the pretty representation of the
+  /// type.  This set is used to detect (and avoid) cycles in the
+  /// stack of DIEs that is going to be walked to compute the
+  /// pretty representation.
+  ///
   /// @return the interned_string that represents the pretty
   /// representation.
   interned_string
   get_die_pretty_type_representation(const Dwarf_Die *die,
-				     size_t where_offset) const
+				     size_t where_offset,
+				     unordered_set<uint64_t>& guard) const
   {
     ABG_ASSERT(die);
     die_istring_map_type& map =
@@ -3356,7 +3411,76 @@ public:
       {
 	reader& rdr = *const_cast<reader*>(this);
 	string pretty_representation =
-	  die_pretty_print_type(rdr, die, where_offset);
+	  die_pretty_print_type(rdr, die, where_offset, guard);
+	interned_string istr = env().intern(pretty_representation);
+	map[die_offset] = istr;
+	return istr;
+      }
+
+    return i->second;
+  }
+
+  
+  /// Get the pretty representation of a DIE that represents a type.
+  ///
+  /// For instance, for the DW_TAG_subprogram, this function computes
+  /// the pretty representation of the type of the function, not the
+  /// pretty representation of the function declaration.
+  ///
+  /// Once the pretty representation is computed, it's stored in a
+  /// cache.  Subsequent invocations of this function on the same DIE
+  /// will yield the cached name.
+  ///
+  /// @param die the DIE to consider.
+  ///
+  /// @param where_offset where in the DIE stream we logically are.
+  ///
+  /// @return the interned_string that represents the pretty
+  /// representation.
+  interned_string
+  get_die_pretty_type_representation(const Dwarf_Die *die,
+				     size_t where_offset) const
+  {
+    unordered_set<uint64_t> guard;
+    return get_die_pretty_type_representation(die, where_offset, guard);
+  }
+
+  /// Get the pretty representation of a DIE.
+  ///
+  /// Once the pretty representation is computed, it's stored in a
+  /// cache.  Subsequent invocations of this function on the same DIE
+  /// will yield the cached name.
+  ///
+  /// @param die the DIE to consider.
+  ///
+  /// @param where_offset where in the DIE stream we logically are.
+  ///
+  /// @param guard the set of DIE offsets of the stack of DIEs
+  /// involved in the construction of the pretty representation of the
+  /// type.  This set is used to detect (and avoid) cycles in the
+  /// stack of DIEs that is going to be walked to compute the
+  /// pretty representation.
+  ///
+  /// @return the interned_string that represents the pretty
+  /// representation.
+  interned_string
+  get_die_pretty_representation(const Dwarf_Die *die, size_t where_offset,
+				  unordered_set<uint64_t>& guard) const
+  {
+    ABG_ASSERT(die);
+
+    die_istring_map_type& map =
+      die_pretty_repr_maps_.get_container(*const_cast<reader*>(this),
+					  die);
+
+    size_t die_offset = dwarf_dieoffset(const_cast<Dwarf_Die*>(die));
+    die_istring_map_type::const_iterator i = map.find(die_offset);
+
+    if (i == map.end())
+      {
+	reader& rdr = *const_cast<reader*>(this);
+	string pretty_representation =
+	  die_pretty_print(rdr, die, where_offset, guard);
 	interned_string istr = env().intern(pretty_representation);
 	map[die_offset] = istr;
 	return istr;
@@ -3380,26 +3504,8 @@ public:
   interned_string
   get_die_pretty_representation(const Dwarf_Die *die, size_t where_offset) const
   {
-    ABG_ASSERT(die);
-
-    die_istring_map_type& map =
-      die_pretty_repr_maps_.get_container(*const_cast<reader*>(this),
-					  die);
-
-    size_t die_offset = dwarf_dieoffset(const_cast<Dwarf_Die*>(die));
-    die_istring_map_type::const_iterator i = map.find(die_offset);
-
-    if (i == map.end())
-      {
-	reader& rdr = *const_cast<reader*>(this);
-	string pretty_representation =
-	  die_pretty_print(rdr, die, where_offset);
-	interned_string istr = env().intern(pretty_representation);
-	map[die_offset] = istr;
-	return istr;
-      }
-
-    return i->second;
+    unordered_set<uint64_t> guard;
+    return get_die_pretty_representation(die, where_offset, guard);
   }
 
   /// Lookup the artifact that was built to represent a type that has
@@ -9623,11 +9729,17 @@ build_internal_anonymous_die_name(const string &base_name,
 /// @param where_offset where in the are logically are in the DIE
 /// stream.
 ///
+/// @param guard the set of DIE offsets of the stack of DIEs involved
+/// in the construction of the qualified name of the type.  This set
+/// is used to detect (and avoid) cycles in the stack of DIEs that is
+/// going to be walked to compute the qualified type name.
+///
 /// @return a copy of the qualified name of the type.
 static string
 die_qualified_type_name(const reader& rdr,
 			const Dwarf_Die* die,
-			size_t where_offset)
+			size_t where_offset,
+			unordered_set<uint64_t>& guard)
 {
   if (!die)
     return "";
@@ -9677,11 +9789,11 @@ die_qualified_type_name(const reader& rdr,
 	  repr = die_class_or_enum_flat_representation(rdr, die, /*indent=*/"",
 						       /*one_line=*/true,
 						       /*qualed_name=*/false,
-						       where_offset);
+						       where_offset, guard);
 	else
 	  {
 	    string parent_name = die_qualified_name(rdr, &scope_die,
-						    where_offset);
+						    where_offset, guard);
 	    repr = parent_name.empty() ? name : parent_name + separator + name;
 	  }
       }
@@ -9730,7 +9842,8 @@ die_qualified_type_name(const reader& rdr,
 	string underlying_type_repr;
 	if (has_underlying_type_die)
 	  underlying_type_repr =
-	    die_qualified_type_name(rdr, &underlying_type_die, where_offset);
+	    die_qualified_type_name(rdr, &underlying_type_die,
+				    where_offset, guard);
 	else
 	  underlying_type_repr = "void";
 
@@ -9769,7 +9882,8 @@ die_qualified_type_name(const reader& rdr,
 	  break;
 
 	string pointed_type_repr =
-	  die_qualified_type_name(rdr, &pointed_to_type_die, where_offset);
+	  die_qualified_type_name(rdr, &pointed_to_type_die,
+				  where_offset, guard);
 
 	repr = pointed_type_repr;
 	if (repr.empty())
@@ -9812,7 +9926,7 @@ die_qualified_type_name(const reader& rdr,
 	if (!die_die_attribute(die, DW_AT_type, element_type_die))
 	  break;
 	string element_type_name =
-	  die_qualified_type_name(rdr, &element_type_die, where_offset);
+	  die_qualified_type_name(rdr, &element_type_die, where_offset, guard);
 	if (element_type_name.empty())
 	  break;
 
@@ -9841,7 +9955,7 @@ die_qualified_type_name(const reader& rdr,
 						   is_method_type,
 						   return_type_name, class_name,
 						   parm_names, is_const,
-						   is_static);
+						   is_static, guard);
 	if (return_type_name.empty())
 	  return_type_name = "void";
 
@@ -9891,13 +10005,19 @@ die_qualified_type_name(const reader& rdr,
 /// @param where_offset where in the are logically are in the DIE
 /// stream.
 ///
+/// @param guard the set of DIE offsets of the stack of DIEs involved
+/// in the construction of the name of the type.  This set is used to
+/// detect (and avoid) cycles in the stack of DIEs that is going to be
+/// walked to compute the type name.
+///
 /// @return a copy of the string representing the type represented by
 /// @p die.
 static string
 die_type_name(const reader&	rdr,
 	      const Dwarf_Die*	die,
 	      bool		qualified_name,
-	      size_t		where_offset)
+	      size_t		where_offset,
+	      unordered_set<uint64_t>& guard)
 {
   if (!die)
     return "";
@@ -9947,7 +10067,8 @@ die_type_name(const reader&	rdr,
 	  repr = die_class_or_enum_flat_representation(rdr, die, /*indent=*/"",
 						       /*one_line=*/true,
 						       /*qualed_name=*/false,
-						       where_offset);
+						       where_offset,
+						       guard);
 	else
 	  {
 	    string parent_name;
@@ -9955,7 +10076,7 @@ die_type_name(const reader&	rdr,
 	      {
 		if (!is_anonymous_type_die(&scope_die))
 		  parent_name = die_qualified_name(rdr, &scope_die,
-						   where_offset);
+						   where_offset, guard);
 	      }
 	    repr = parent_name.empty() ? name : parent_name + separator + name;
 	  }
@@ -10006,7 +10127,8 @@ die_type_name(const reader&	rdr,
 	if (has_underlying_type_die)
 	  underlying_type_repr =
 	    die_type_name(rdr, &underlying_type_die,
-			  qualified_name, where_offset);
+			  qualified_name, where_offset,
+			  guard);
 	else
 	  underlying_type_repr = "void";
 
@@ -10046,7 +10168,8 @@ die_type_name(const reader&	rdr,
 
 	string pointed_type_repr =
 	  die_type_name(rdr, &pointed_to_type_die,
-			qualified_name, where_offset);
+			qualified_name, where_offset,
+			guard);
 
 	repr = pointed_type_repr;
 	if (repr.empty())
@@ -10090,7 +10213,8 @@ die_type_name(const reader&	rdr,
 	  break;
 	string element_type_name =
 	  die_type_name(rdr, &element_type_die,
-			qualified_name, where_offset);
+			qualified_name, where_offset,
+			guard);
 	if (element_type_name.empty())
 	  break;
 
@@ -10120,7 +10244,7 @@ die_type_name(const reader&	rdr,
 						   return_type_name,
 						   class_name,
 						   parm_names, is_const,
-						   is_static);
+						   is_static, guard);
 	if (return_type_name.empty())
 	  return_type_name = "void";
 
@@ -10161,6 +10285,29 @@ die_type_name(const reader&	rdr,
   return repr;
 }
 
+/// Compute the name of a type represented by a DIE.
+///
+/// @param rdr the reader to use.
+///
+/// @param die the type DIE to consider.
+///
+/// @param qualified_name if true then compute a qualified name.
+///
+/// @param where_offset where in the are logically are in the DIE
+/// stream.
+///
+/// @return a copy of the string representing the type represented by
+/// @p die.
+static string
+die_type_name(const reader&	rdr,
+	      const Dwarf_Die*	die,
+	      bool		qualified_name,
+	      size_t		where_offset)
+{
+  unordered_set<uint64_t> guard;
+  return die_type_name(rdr, die, qualified_name, where_offset, guard);
+}
+
 /// Compute the qualified name of a decl represented by a given DIE.
 ///
 /// For instance, for a DIE of tag DW_TAG_subprogram this function
@@ -10172,11 +10319,17 @@ die_type_name(const reader&	rdr,
 ///
 /// @param where_offset where we are logically at in the DIE stream.
 ///
+/// @param guard the set of DIE offsets of the stack of DIEs involved
+/// in the construction of the qualified name of the decl.  This set
+/// is used to detect (and avoid) cycles in the stack of DIEs that is
+/// going to be walked to compute the qualified decl name.
+///
 /// @return a copy of the computed name.
 static string
 die_qualified_decl_name(const reader& rdr,
 			const Dwarf_Die* die,
-			size_t where_offset)
+			size_t where_offset,
+			unordered_set<uint64_t>& guard)
 {
   if (!die || !die_is_decl(die))
     return "";
@@ -10187,7 +10340,7 @@ die_qualified_decl_name(const reader& rdr,
   if (!get_scope_die(rdr, die, where_offset, scope_die))
     return "";
 
-  string scope_name = die_qualified_name(rdr, &scope_die, where_offset);
+  string scope_name = die_qualified_name(rdr, &scope_die, where_offset, guard);
   string separator = "::";
 
   string repr;
@@ -10203,7 +10356,7 @@ die_qualified_decl_name(const reader& rdr,
     case DW_TAG_subprogram:
       repr = die_function_signature(rdr, die,
 				    /*qualified_name=*/true,
-				    where_offset);
+				    where_offset, guard);
       break;
 
     case DW_TAG_unspecified_parameters:
@@ -10235,15 +10388,44 @@ die_qualified_decl_name(const reader& rdr,
 ///
 /// @param where_offset where we are logically at in the DIE stream.
 ///
+/// @param guard the set of DIE offsets of the stack of DIEs involved
+/// in the construction of the qualified name of the DIE.  This set is
+/// used to detect (and avoid) cycles in the stack of DIEs that is
+/// going to be walked to compute the qualified DIE name.
+///
+/// @return a copy of the computed name.
+static string
+die_qualified_name(const reader& rdr, const Dwarf_Die* die,
+		   size_t where, unordered_set<uint64_t>& guard)
+{
+  if (die_is_type(die))
+    return die_qualified_type_name(rdr, die, where, guard);
+  else if (die_is_decl(die))
+    return die_qualified_decl_name(rdr, die, where, guard);
+  return "";
+}
+
+/// Compute the qualified name of the artifact represented by a given
+/// DIE.
+///
+/// If the DIE represents a type, then the function computes the name
+/// of the type.  Otherwise, if the DIE represents a decl then the
+/// function computes the name of the decl.  Note that a DIE of tag
+/// DW_TAG_subprogram is going to be considered as a "type" -- just
+/// like if it was a DW_TAG_subroutine_type.
+///
+/// @param rdr the DWARF reader.
+///
+/// @param die the DIE to consider.
+///
+/// @param where_offset where we are logically at in the DIE stream.
+///
 /// @return a copy of the computed name.
 static string
 die_qualified_name(const reader& rdr, const Dwarf_Die* die, size_t where)
 {
-  if (die_is_type(die))
-    return die_qualified_type_name(rdr, die, where);
-  else if (die_is_decl(die))
-    return die_qualified_decl_name(rdr, die, where);
-  return "";
+  unordered_set<uint64_t> guard;
+  return die_qualified_name(rdr, die, where, guard);
 }
 
 /// Test if the qualified name of a given type should be empty.
@@ -10262,11 +10444,17 @@ die_qualified_name(const reader& rdr, const Dwarf_Die* die, size_t where)
 /// @param qualified_name the qualified name of the DIE.  This is set
 /// only iff the function returns false.
 ///
+/// @param guard the set of DIE offsets of the stack of DIEs involved
+/// in the construction of the qualified name of the type.  This set
+/// is used to detect (and avoid) cycles in the stack of DIEs that is
+/// going to be walked to compute the qualified type name.
+///
 /// @return true if the qualified name of the DIE is empty.
 static bool
 die_qualified_type_name_empty(const reader& rdr,
 			      const Dwarf_Die* die,
-			      size_t where, string &qualified_name)
+			      size_t where, string &qualified_name,
+			      unordered_set<uint64_t>& guard)
 {
   if (!die)
     return true;
@@ -10287,19 +10475,19 @@ die_qualified_type_name_empty(const reader& rdr,
       if (die_die_attribute(die, DW_AT_type, underlying_type_die))
 	{
 	  string name =
-	    die_qualified_type_name(rdr, &underlying_type_die, where);
+	    die_qualified_type_name(rdr, &underlying_type_die, where, guard);
 	  if (name.empty())
 	    return true;
 	}
     }
   else
     {
-      string name = die_qualified_type_name(rdr, die, where);
+      string name = die_qualified_type_name(rdr, die, where, guard);
       if (name.empty())
 	return true;
     }
 
-  qname = die_qualified_type_name(rdr, die, where);
+  qname = die_qualified_type_name(rdr, die, where, guard);
   if (qname.empty())
     return true;
 
@@ -10348,6 +10536,12 @@ die_qualified_type_name_empty(const reader& rdr,
 ///
 /// @param is_static out parameter.  If the function is a static
 /// member function, then this is set to true.
+///
+/// @param guard the set of DIE offsets of the stack of DIEs involved
+/// in the construction of the qualified name of the function type.
+/// This set is used to detect (and avoid) cycles in the stack of DIEs
+/// that is going to be walked to compute the qualified function type
+/// name.
 static void
 die_return_and_parm_names_from_fn_type_die(const reader& rdr,
 					   const Dwarf_Die* die,
@@ -10359,17 +10553,26 @@ die_return_and_parm_names_from_fn_type_die(const reader& rdr,
 					   string &class_name,
 					   vector<string>& parm_names,
 					   bool& is_const,
-					   bool& is_static)
+					   bool& is_static,
+					   unordered_set<uint64_t>& guard)
 {
+  uint64_t off = dwarf_dieoffset(const_cast<Dwarf_Die*>(die));
+  if (guard.find(off) != guard.end())
+    return;
+  guard.insert(off);
+
   Dwarf_Die child;
   Dwarf_Die ret_type_die;
   if (!die_die_attribute(die, DW_AT_type, ret_type_die))
     return_type_name = "void";
   else
-    return_type_name =
-      pretty_print
-      ? rdr.get_die_pretty_representation(&ret_type_die, where_offset)
-      : die_type_name(rdr, &ret_type_die, qualified_name, where_offset);
+    {
+      return_type_name =
+	pretty_print
+	? rdr.get_die_pretty_representation(&ret_type_die, where_offset, guard)
+	: die_type_name(rdr, &ret_type_die, qualified_name,
+			where_offset, guard);
+    }
 
   if (return_type_name.empty())
     return_type_name = "void";
@@ -10384,7 +10587,8 @@ die_return_and_parm_names_from_fn_type_die(const reader& rdr,
   if (is_method_type)
     {
       if (!is_anonymous_type_die(&class_die))
-	class_name = die_type_name(rdr, &class_die, qualified_name, where_offset);
+	class_name = die_type_name(rdr, &class_die, qualified_name,
+				   where_offset, guard);
 
       Dwarf_Die this_pointer_die;
       Dwarf_Die pointed_to_die;
@@ -10423,9 +10627,10 @@ die_return_and_parm_names_from_fn_type_die(const reader& rdr,
 	      continue;
 	    string qname =
 	      pretty_print
-	      ? rdr.get_die_pretty_representation(&parm_type_die, where_offset)
+	      ? rdr.get_die_pretty_representation(&parm_type_die,
+						  where_offset, guard)
 	      : die_type_name(rdr, &parm_type_die,
-			      qualified_name, where_offset);
+			      qualified_name, where_offset, guard);
 
 	    if (qname.empty())
 	      continue;
@@ -10455,9 +10660,12 @@ die_return_and_parm_names_from_fn_type_die(const reader& rdr,
 	      && !is_anonymous_type_die(&parent_die))
 	    class_name = die_type_name(rdr, &parent_die,
 				       qualified_name,
-				       where_offset);
+				       where_offset,
+				       guard);
 	}
     }
+
+  guard.erase(off);
 }
 
 /// This computes the signature of the a function declaration
@@ -10473,12 +10681,18 @@ die_return_and_parm_names_from_fn_type_die(const reader& rdr,
 /// @param where_offset where we are logically at in the stream of
 /// DIEs.
 ///
+/// @param guard the set of DIE offsets of the stack of DIEs involved
+/// in the construction of the signature of the function type.  This
+/// set is used to detect (and avoid) cycles in the stack of DIEs that
+/// is going to be walked to compute the signature.
+///
 /// @return a copy of the computed function signature string.
 static string
 die_function_signature(const reader& rdr,
 		       const Dwarf_Die *fn_die,
 		       bool qualified_name,
-		       size_t where_offset)
+		       size_t where_offset,
+		       unordered_set<uint64_t>& guard)
 {
 
   translation_unit::language lang;
@@ -10507,7 +10721,8 @@ die_function_signature(const reader& rdr,
   Dwarf_Die ret_type_die;
   if (die_die_attribute(fn_die, DW_AT_type, ret_type_die))
     return_type_name = rdr.get_die_qualified_type_name(&ret_type_die,
-							where_offset);
+						       where_offset,
+						       guard);
 
   if (return_type_name.empty())
     return_type_name = "void";
@@ -10515,7 +10730,7 @@ die_function_signature(const reader& rdr,
   Dwarf_Die scope_die;
   string scope_name;
   if (qualified_name && get_scope_die(rdr, fn_die, where_offset, scope_die))
-    scope_name = rdr.get_die_qualified_name(&scope_die, where_offset);
+    scope_name = rdr.get_die_qualified_name(&scope_die, where_offset, guard);
   string fn_name = die_name(fn_die);
   if (!scope_name.empty())
     fn_name  = scope_name + "::" + fn_name;
@@ -10530,7 +10745,8 @@ die_function_signature(const reader& rdr,
 					     /*pretty_print=*/false,
 					     qualified_name, is_method_type,
 					     return_type_name, class_name,
-					     parm_names, is_const, is_static);
+					     parm_names, is_const, is_static,
+					     guard);
 
   bool is_virtual = die_is_virtual(fn_die);
 
@@ -10600,13 +10816,19 @@ die_function_signature(const reader& rdr,
 ///
 /// @param where_offset where in the are logically are in the DIE
 /// stream.
+///
+/// @param guard the set of DIE offsets of the stack of DIEs involved
+/// in the construction of the flat representation of the type.  This
+/// set is used to detect (and avoid) cycles in the stack of DIEs that
+/// is going to be walked to compute the flat representation.
 static string
 die_class_flat_representation(const reader&	rdr,
 			      const Dwarf_Die*	die,
 			      const string&	indent,
 			      bool		one_line,
 			      bool		qualified_names,
-			      size_t		where_offset)
+			      size_t		where_offset,
+			      unordered_set<uint64_t>& guard)
 {
   int tag = dwarf_tag(const_cast<Dwarf_Die*>(die));
 
@@ -10614,7 +10836,7 @@ die_class_flat_representation(const reader&	rdr,
   string local_indent = "  ";
   string real_indent;
 
-    if (tag == DW_TAG_union_type)
+  if (tag == DW_TAG_union_type)
     repr += "union";
   else if (tag == DW_TAG_structure_type)
     repr += "struct";
@@ -10625,8 +10847,19 @@ die_class_flat_representation(const reader&	rdr,
 
   repr += " ";
 
+  if (die_is_anonymous(die))
+    {
+      uint64_t off = dwarf_dieoffset(const_cast<Dwarf_Die*>(die));
+      if (guard.find(off) != guard.end())
+	{
+	  repr += "{}";
+	  return repr;
+	}
+      guard.insert(off);
+    }
+
   if (!die_is_anonymous(die))
-    repr += die_qualified_name(rdr, die, where_offset);
+    repr += die_qualified_name(rdr, die, where_offset, guard);
 
   repr += "{";
 
@@ -10658,7 +10891,8 @@ die_class_flat_representation(const reader&	rdr,
       repr += die_pretty_print_decl(rdr, &member_child_die,
 				    qualified_names,
 				    /*include_fns=*/false,
-				    where_offset);
+				    where_offset,
+				    guard);
       repr += ";";
     }
 
@@ -10667,6 +10901,11 @@ die_class_flat_representation(const reader&	rdr,
   else
     repr += indent + "}";
 
+  if (die_is_anonymous(die))
+    {
+      uint64_t off = dwarf_dieoffset(const_cast<Dwarf_Die*>(die));
+      guard.erase(off);
+    }
   return repr;
 }
 
@@ -10784,13 +11023,19 @@ die_enum_flat_representation(const reader&	rdr,
 ///
 /// @param where_offset where in the are logically are in the DIE
 /// stream.
+///
+/// @param guard the set of DIE offsets of the stack of DIEs involved
+/// in the construction of the flat representation of the type.  This
+/// set is used to detect (and avoid) cycles in the stack of DIEs that
+/// is going to be walked to compute the flat representation.
 static string
 die_class_or_enum_flat_representation(const reader&	rdr,
 				      const Dwarf_Die*	die,
 				      const string&	indent,
 				      bool		one_line,
 				      bool		qualified_names,
-				      size_t		where_offset)
+				      size_t		where_offset,
+				      unordered_set<uint64_t>& guard)
 {
   if (!die)
     return string();
@@ -10805,7 +11050,8 @@ die_class_or_enum_flat_representation(const reader&	rdr,
     case DW_TAG_union_type:
       result = die_class_flat_representation(rdr, die, indent,
 					     one_line, qualified_names,
-					     where_offset);
+					     where_offset,
+					     guard);
       break;
     case DW_TAG_enumeration_type:
       result = die_enum_flat_representation(rdr, die, indent,
@@ -10817,6 +11063,46 @@ die_class_or_enum_flat_representation(const reader&	rdr,
     }
 
   return result;
+}
+
+/// Compute the flat representation string of a class or enum type
+/// represented by a DIE.
+///
+/// The flat representation string looks like:
+///      "union {int foo; char blah;}.
+///
+/// That is useful to designate a class or enum type that is
+/// anonymous.
+///
+/// @param rdr the DWARF reader to consider.
+///
+/// @param die the DIE of the type to return the flat representation
+/// for.
+///
+/// @param indent the indentation string to use for the
+/// representation.
+///
+/// @param one_line if true then the flat representation is
+/// constructed on one line.  Otherwise, each data member is
+/// represented on its own line.
+///
+/// @param qualified_names if true then the data member (and their
+/// type) names using in the representation are qualified.
+///
+/// @param where_offset where in the are logically are in the DIE
+/// stream.
+static string
+die_class_or_enum_flat_representation(const reader&	rdr,
+				      const Dwarf_Die*	die,
+				      const string&	indent,
+				      bool		one_line,
+				      bool		qualified_names,
+				      size_t		where_offset)
+{
+  unordered_set<uint64_t> guard;
+  return die_class_or_enum_flat_representation(rdr, die, indent,
+					       one_line, qualified_names,
+					       where_offset, guard);
 }
 
 /// Return a pretty string representation of a type, for internal purposes.
@@ -10835,11 +11121,17 @@ die_class_or_enum_flat_representation(const reader&	rdr,
 /// this.  It's useful to handle inclusion of DW_TAG_compile_unit
 /// entries.
 ///
+/// @param guard the set of DIE offsets of the stack of DIEs involved
+/// in the construction of the pretty representation of the type.
+/// This set is used to detect (and avoid) cycles in the stack of DIEs
+/// that is going to be walked to compute the pretty representation.
+///
 /// @return the resulting pretty representation.
 static string
 die_pretty_print_type(const reader& rdr,
 		      const Dwarf_Die* die,
-		      size_t where_offset)
+		      size_t where_offset,
+		      unordered_set<uint64_t>& guard)
 {
   if (!die
       || (!die_is_type(die)
@@ -10867,11 +11159,12 @@ die_pretty_print_type(const reader& rdr,
       break;
 
     case DW_TAG_namespace:
-      repr = "namespace " + rdr.get_die_qualified_type_name(die, where_offset);
+      repr = "namespace " + rdr.get_die_qualified_type_name(die, where_offset,
+							    guard);
       break;
 
     case DW_TAG_base_type:
-      repr = rdr.get_die_qualified_type_name(die, where_offset);
+      repr = rdr.get_die_qualified_type_name(die, where_offset, guard);
       break;
 
     case DW_TAG_typedef:
@@ -10879,7 +11172,8 @@ die_pretty_print_type(const reader& rdr,
 	string qualified_name;
 	if (!die_qualified_type_name_empty(rdr, die,
 					   where_offset,
-					   qualified_name))
+					   qualified_name,
+					   guard))
 	  repr = "typedef " + qualified_name;
       }
       break;
@@ -10890,13 +11184,13 @@ die_pretty_print_type(const reader& rdr,
     case DW_TAG_pointer_type:
     case DW_TAG_reference_type:
     case DW_TAG_rvalue_reference_type:
-      repr = rdr.get_die_qualified_type_name(die, where_offset);
+      repr = rdr.get_die_qualified_type_name(die, where_offset, guard);
       break;
 
     case DW_TAG_enumeration_type:
       {
 	string qualified_name =
-	  rdr.get_die_qualified_type_name(die, where_offset);
+	  rdr.get_die_qualified_type_name(die, where_offset, guard);
 	repr = "enum " + qualified_name;
       }
       break;
@@ -10905,7 +11199,7 @@ die_pretty_print_type(const reader& rdr,
     case DW_TAG_class_type:
       {
 	string qualified_name =
-	  rdr.get_die_qualified_type_name(die, where_offset);
+	  rdr.get_die_qualified_type_name(die, where_offset, guard);
 	repr = "class " + qualified_name;
       }
       break;
@@ -10913,7 +11207,7 @@ die_pretty_print_type(const reader& rdr,
     case DW_TAG_union_type:
       {
 	string qualified_name =
-	  rdr.get_die_qualified_type_name(die, where_offset);
+	  rdr.get_die_qualified_type_name(die, where_offset, guard);
 	repr = "union " + qualified_name;
       }
       break;
@@ -10924,7 +11218,8 @@ die_pretty_print_type(const reader& rdr,
 	if (!die_die_attribute(die, DW_AT_type, element_type_die))
 	  break;
 	string element_type_name =
-	  rdr.get_die_qualified_type_name(&element_type_die, where_offset);
+	  rdr.get_die_qualified_type_name(&element_type_die,
+					  where_offset, guard);
 	if (element_type_name.empty())
 	  break;
 
@@ -10947,7 +11242,7 @@ die_pretty_print_type(const reader& rdr,
 	// subrange type is its name.  We might need something more
 	// advance, should the needs of the users get more
 	// complicated.
-	repr += die_qualified_type_name(rdr, die, where_offset);
+	repr += die_qualified_type_name(rdr, die, where_offset, guard);
       }
       break;
 
@@ -10966,12 +11261,12 @@ die_pretty_print_type(const reader& rdr,
 						   is_method_type,
 						   return_type_name, class_name,
 						   parm_names, is_const,
-						   is_static);
+						   is_static, guard);
 	if (!is_method_type)
 	  repr = "function type";
 	else
 	  repr = "method type";
-	repr += " " + rdr.get_die_qualified_type_name(die, where_offset);
+	repr += " " + rdr.get_die_qualified_type_name(die, where_offset, guard);
       }
       break;
 
@@ -11006,13 +11301,19 @@ die_pretty_print_type(const reader& rdr,
 /// this.  It's useful to handle inclusion of DW_TAG_compile_unit
 /// entries.
 ///
+/// @param guard the set of DIE offsets of the stack of DIEs involved
+/// in the construction of the pretty representation of the decl.
+/// This set is used to detect (and avoid) cycles in the stack of DIEs
+/// that is going to be walked to compute the pretty representation.
+///
 /// @return the resulting pretty representation.
 static string
 die_pretty_print_decl(const reader& rdr,
 		      const Dwarf_Die* die,
 		      bool qualified_name,
 		      bool include_fns,
-		      size_t where_offset)
+		      size_t where_offset,
+		      unordered_set<uint64_t>& guard)
 {
   if (!die || !die_is_decl(die))
     return "";
@@ -11023,7 +11324,7 @@ die_pretty_print_decl(const reader& rdr,
   switch (tag)
     {
     case DW_TAG_namespace:
-      repr = "namespace " + die_qualified_name(rdr, die, where_offset);
+      repr = "namespace " + die_qualified_name(rdr, die, where_offset, guard);
       break;
 
     case DW_TAG_member:
@@ -11033,10 +11334,11 @@ die_pretty_print_decl(const reader& rdr,
 	Dwarf_Die type_die;
 	if (die_die_attribute(die, DW_AT_type, type_die))
 	  type_repr = die_type_name(rdr, &type_die,
-				    /*qualified_name=*/true,
-				    where_offset);
+				    qualified_name,
+				    where_offset,
+				    guard);
 	repr = (qualified_name
-		? die_qualified_name(rdr, die, where_offset)
+		? die_qualified_name(rdr, die, where_offset, guard)
 		: die_name(die));
 
 	if (repr.empty())
@@ -11048,7 +11350,8 @@ die_pretty_print_decl(const reader& rdr,
 
     case DW_TAG_subprogram:
       if (include_fns)
-	repr = die_function_signature(rdr, die, qualified_name, where_offset);
+	repr = die_function_signature(rdr, die, qualified_name,
+				      where_offset, guard);
       break;
 
     default:
@@ -11072,17 +11375,23 @@ die_pretty_print_decl(const reader& rdr,
 ///
 /// @param where_offset we in the DIE stream we are logically at.
 ///
+/// @param guard the set of DIE offsets of the stack of DIEs involved
+/// in the construction of the pretty representation of the DIe.  This
+/// set is used to detect (and avoid) cycles in the stack of DIEs that
+/// is going to be walked to compute the pretty representation.
+///
 /// @return a copy of the pretty printed artifact.
 static string
-die_pretty_print(reader& rdr, const Dwarf_Die* die, size_t where_offset)
+die_pretty_print(reader& rdr, const Dwarf_Die* die, size_t where_offset,
+		 unordered_set<uint64_t>& guard)
 {
   if (die_is_type(die))
-    return die_pretty_print_type(rdr, die, where_offset);
+    return die_pretty_print_type(rdr, die, where_offset, guard);
   else if (die_is_decl(die))
     return die_pretty_print_decl(rdr, die,
 				 /*qualified_names=*/true,
 				 /*include_fns=*/true,
-				 where_offset);
+				 where_offset, guard);
   return "";
 }
 
