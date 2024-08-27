@@ -1615,12 +1615,6 @@ public:
   set_scope(scope_decl*);
 
 protected:
-  const context_rel*
-  get_context_rel() const;
-
-  context_rel*
-  get_context_rel();
-
   void
   set_context_rel(context_rel *c);
   decl_base(const decl_base&);
@@ -1639,6 +1633,12 @@ public:
 	    visibility vis = VISIBILITY_DEFAULT);
 
   decl_base(const environment&, const location&);
+
+  const context_rel*
+  get_context_rel() const;
+
+  context_rel*
+  get_context_rel();
 
   const interned_string&
   get_cached_pretty_representation(bool internal = false) const;
@@ -1792,9 +1792,6 @@ public:
 
   friend bool
   get_member_function_is_virtual(const function_decl& f);
-
-  friend void
-  set_member_function_is_virtual(function_decl&, bool);
 
   friend class class_or_union;
   friend class class_decl;
@@ -3917,18 +3914,6 @@ public:
 
   friend ssize_t
   get_member_function_vtable_offset(const function_decl&);
-
-  friend void
-  set_member_function_vtable_offset(function_decl&, ssize_t);
-
-  friend void
-  set_member_function_vtable_offset(const function_decl_sptr&, ssize_t);
-
-  friend bool
-  get_member_function_is_virtual(const function_decl&);
-
-  friend void
-  set_member_function_is_virtual(function_decl&, bool);
 
   virtual ~method_decl();
 };// end class method_decl

@@ -961,14 +961,6 @@ get_member_function_vtable_offset(const function_decl&);
 ssize_t
 get_member_function_vtable_offset(const function_decl_sptr&);
 
-void
-set_member_function_vtable_offset(const function_decl& f,
-				  ssize_t s);
-
-void
-set_member_function_vtable_offset(const function_decl_sptr &f,
-				  ssize_t s);
-
 bool
 get_member_function_is_virtual(const function_decl&);
 
@@ -979,10 +971,11 @@ bool
 get_member_function_is_virtual(const function_decl*);
 
 void
-set_member_function_is_virtual(function_decl&, bool);
-
+set_member_function_virtuality(function_decl&, bool, ssize_t);
 void
-set_member_function_is_virtual(const function_decl_sptr&, bool);
+set_member_function_virtuality(function_decl*, bool, ssize_t);
+void
+set_member_function_virtuality(const function_decl_sptr&, bool, ssize_t);
 
 type_base_sptr
 strip_typedef(const type_base_sptr);

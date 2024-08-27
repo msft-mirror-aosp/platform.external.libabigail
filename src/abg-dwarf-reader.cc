@@ -14004,10 +14004,8 @@ finish_member_function_reading(Dwarf_Die*			die,
 
   m->is_declared_inline(is_inline);
   set_member_access_specifier(m, access);
-  if (vindex != -1)
-    set_member_function_vtable_offset(m, vindex);
   if (is_virtual)
-    set_member_function_is_virtual(m, is_virtual);
+    set_member_function_virtuality(m, is_virtual, vindex);
   bool is_static = method_t->get_is_for_static_method();
   set_member_is_static(m, is_static);
   set_member_function_is_ctor(m, is_ctor);

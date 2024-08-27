@@ -6431,7 +6431,7 @@ get_member_function_vtable_offset(const function_decl_sptr& f)
 /// @param s the new vtable offset.  Please note that a vtable offset
 /// of value -1 means that the virtual member function does not (yet)
 /// have any vtable offset associated to it.
-void
+static void
 set_member_function_vtable_offset(function_decl& f, ssize_t s)
 {
   ABG_ASSERT(is_member_function(f));
@@ -6452,7 +6452,7 @@ set_member_function_vtable_offset(function_decl& f, ssize_t s)
 /// @param s the new vtable offset.  Please note that a vtable offset
 /// of value -1 means that the virtual member function does not (yet)
 /// have any vtable offset associated to it.
-void
+static void
 set_member_function_vtable_offset(const function_decl_sptr& f, ssize_t s)
 {return set_member_function_vtable_offset(*f, s);}
 
@@ -6499,7 +6499,7 @@ get_member_function_is_virtual(const function_decl* mem_fn)
 /// @param f the member function to consider.
 ///
 /// @param is_virtual set to true if the function is virtual.
-void
+static void
 set_member_function_is_virtual(function_decl& f, bool is_virtual)
 {
   ABG_ASSERT(is_member_function(f));
@@ -6518,7 +6518,7 @@ set_member_function_is_virtual(function_decl& f, bool is_virtual)
 /// @param f the member function to consider.
 ///
 /// @param is_virtual set to true if the function is virtual.
-void
+static void
 set_member_function_is_virtual(const function_decl_sptr& fn, bool is_virtual)
 {
   if (fn)
@@ -6526,6 +6526,56 @@ set_member_function_is_virtual(const function_decl_sptr& fn, bool is_virtual)
       set_member_function_is_virtual(*fn, is_virtual);
       fixup_virtual_member_function(is_method_decl(fn));
     }
+}
+
+/// Set the virtual-ness of a member fcuntion
+///
+/// @param fn the member function to consider.
+///
+/// @param is_virtual whether the function is virtual.
+///
+/// @param voffset the virtual offset of the virtual function.
+void
+set_member_function_virtuality(function_decl&	fn,
+			       bool		is_virtual,
+			       ssize_t		voffset)
+{
+  // Setting the offset must come first because the second function
+  // does assume the voffset is set, in case of virtuality
+  set_member_function_vtable_offset(fn, voffset);
+  set_member_function_is_virtual(fn, is_virtual);
+}
+
+/// Set the virtual-ness of a member fcuntion
+///
+/// @param fn the member function to consider.
+///
+/// @param is_virtual whether the function is virtual.
+///
+/// @param voffset the virtual offset of the virtual function.
+void
+set_member_function_virtuality(function_decl*	fn,
+			       bool		is_virtual,
+			       ssize_t		voffset)
+{
+  if (fn)
+    set_member_function_virtuality(*fn, is_virtual, voffset);
+}
+
+/// Set the virtual-ness of a member fcuntion
+///
+/// @param fn the member function to consider.
+///
+/// @param is_virtual whether the function is virtual.
+///
+/// @param voffset the virtual offset of the virtual function.
+void
+set_member_function_virtuality(const function_decl_sptr&	fn,
+			       bool				is_virtual,
+			       ssize_t				voffset)
+{
+  set_member_function_vtable_offset(fn, voffset);
+  set_member_function_is_virtual(fn, is_virtual);
 }
 
 /// Recursively returns the the underlying type of a typedef.  The
@@ -25254,10 +25304,9 @@ class_or_union::add_member_function(method_decl_sptr f,
 
   if (class_decl* klass = is_class_type(this))
     {
-      set_member_function_is_virtual(f, is_virtual);
       if (is_virtual)
 	{
-	  set_member_function_vtable_offset(f, vtable_offset);
+	  set_member_function_virtuality(f, is_virtual, vtable_offset);
 	  sort_virtual_member_functions(klass->priv_->virtual_mem_fns_);
 	}
     }
