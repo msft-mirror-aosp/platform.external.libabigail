@@ -2411,6 +2411,7 @@ test-diff-pkg/PR29610/guestfs-tools-debuginfo-1.51.6-2.el9.s390x.rpm \
 test-diff-pkg/libgm2-14.2.1-1.fc40.x86_64-self-check-report.txt \
 test-diff-pkg/libgm2-14.2.1-1.fc40.x86_64.rpm \
 test-diff-pkg/libgm2-debuginfo-14.2.1-1.fc40.x86_64.rpm \
+test-diff-pkg/gcc-debuginfo-14.2.1-1.fc40.x86_64.rpm \
 \
 test-diff-pkg-ctf/tarpkg-0-dir1.tar \
 test-diff-pkg-ctf/dirpkg-0-report-0.txt \

@@ -777,7 +777,8 @@ static InOutSpec in_out_specs[] =
     "data/test-diff-pkg/libgm2-14.2.1-1.fc40.x86_64.rpm",
     "--self-check",
     "",
-    "data/test-diff-pkg/libgm2-debuginfo-14.2.1-1.fc40.x86_64.rpm",
+    "data/test-diff-pkg/libgm2-debuginfo-14.2.1-1.fc40.x86_64.rpm, "
+    "data/test-diff-pkg/gcc-debuginfo-14.2.1-1.fc40.x86_64.rpm",
     "data/test-diff-pkg/libgm2-debuginfo-14.2.1-1.fc40.x86_64.rpm",
     "",
     "",

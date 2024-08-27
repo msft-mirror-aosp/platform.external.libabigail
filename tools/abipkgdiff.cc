@@ -2670,25 +2670,32 @@ extract_package_and_map_its_content(const package_sptr &pkg, options &opts)
 {
   assert(pkg);
 
-  pkg_extraction_task_sptr main_pkg_extraction;
+  // We are going to extract the the main package and the devel
+  // package sequentially because both cannot be extracted in
+  // parallel, as they are being extracted into the same directory.
+  vector<package_sptr> main_and_devel_pkgs_extraction;
+
+  // But then, the main-and-devel, debug package and kabi-whitelist
+  // packages are going to be extracted in parallel.
+  pkg_extraction_task_sptr main_and_devel_pkg_extraction;
   pkg_extraction_task_sptr dbg_extraction;
-  pkg_extraction_task_sptr devel_extraction;
   pkg_extraction_task_sptr kabi_whitelist_extraction;
 
   size_t NUM_EXTRACTIONS = 1;
 
-  main_pkg_extraction.reset(new pkg_extraction_task(pkg, opts));
+  main_and_devel_pkgs_extraction.push_back(pkg);
+  if (pkg->devel_package())
+    main_and_devel_pkgs_extraction.push_back(pkg->devel_package());
+
+  main_and_devel_pkg_extraction.reset(new pkg_extraction_task
+				      (main_and_devel_pkgs_extraction,
+				       opts));
+  ++NUM_EXTRACTIONS;
 
   if (!pkg->debug_info_packages().empty())
     {
       dbg_extraction.reset(new pkg_extraction_task(pkg->debug_info_packages(),
 						   opts));
-      ++NUM_EXTRACTIONS;
-    }
-
-  if (package_sptr devel_pkg = pkg->devel_package())
-    {
-      devel_extraction.reset(new pkg_extraction_task(devel_pkg, opts));
       ++NUM_EXTRACTIONS;
     }
 
@@ -2705,9 +2712,8 @@ extract_package_and_map_its_content(const package_sptr &pkg, options &opts)
   abigail::workers::queue extraction_queue(num_workers);
 
   // Perform the extraction of the NUM_WORKERS packages in parallel.
+  extraction_queue.schedule_task(main_and_devel_pkg_extraction);
   extraction_queue.schedule_task(dbg_extraction);
-  extraction_queue.schedule_task(main_pkg_extraction);
-  extraction_queue.schedule_task(devel_extraction);
   extraction_queue.schedule_task(kabi_whitelist_extraction);
 
   // Wait for the extraction to be done.
@@ -2715,7 +2721,7 @@ extract_package_and_map_its_content(const package_sptr &pkg, options &opts)
 
   // Analyze and map the content of the extracted package.
   bool is_ok = false;
-  if (main_pkg_extraction->is_ok)
+  if (main_and_devel_pkg_extraction->is_ok)
     is_ok = create_maps_of_package_content(*pkg, opts);
 
   if (is_ok)
@@ -3097,6 +3103,10 @@ self_compare_prepared_userspace_package(package&	pkg,
 	{
 	  if (it->second->type != abigail::elf::ELF_TYPE_RELOCATABLE)
 	    {
+	      if (opts.verbose)
+		emit_prefix("abipkgdiff", cerr)
+		  << "Going to self-compare file '"
+		  << it->first << "'\n";
 	      compare_args_sptr args
 		(new compare_args(*it->second,
 				  debug_dir,
@@ -3794,14 +3804,14 @@ main(int argc, char* argv[])
   if (!opts.devel_package1.empty())
     first_package->devel_package
       (package_sptr(new package(opts.devel_package1,
-				"devel_package1",
+				"package1",
 				/*pkg_kind=*/package::KIND_DEVEL)));
     ;
 
   if (!opts.devel_package2.empty())
     second_package->devel_package
       (package_sptr(new package(opts.devel_package2,
-				"devel_package2",
+				"package2",
 				/*pkg_kind=*/package::KIND_DEVEL)));
 
   if (!opts.kabi_whitelist_packages.empty())

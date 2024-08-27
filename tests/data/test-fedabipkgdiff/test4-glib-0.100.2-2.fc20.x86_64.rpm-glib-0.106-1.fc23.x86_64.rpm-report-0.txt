@@ -22,3 +22,14 @@ Comparing the ABI of binaries between dbus-glib-0.100.2-2.fc20.x86_64.rpm and db
 
 ================ end of changes of 'dbus-binding-tool'===============
 
+================ changes of 'dbus-bash-completion-helper'===============
+  Functions changes summary: 2 Removed, 0 Changed, 0 Added functions
+  Variables changes summary: 0 Removed, 0 Changed, 0 Added variable
+
+  2 Removed functions:
+
+    [D] 'function BaseInfo* base_info_ref(BaseInfo*)'    {base_info_ref}
+    [D] 'function void base_info_unref(BaseInfo*)'    {base_info_unref}
+
+================ end of changes of 'dbus-bash-completion-helper'===============
+
