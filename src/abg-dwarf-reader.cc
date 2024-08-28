@@ -13014,7 +13014,8 @@ finish_member_function_reading(Dwarf_Die*			die,
 
   ABG_ASSERT(is_member_function(m));
 
-  if (is_virtual && !f->get_linkage_name().empty() && !f->get_symbol())
+  if (is_virtual && !f->get_linkage_name().empty() && !f->get_symbol()
+      && !get_member_function_is_dtor(f))
     {
       // This is a virtual member function which has a linkage name
       // but has no underlying symbol set.
