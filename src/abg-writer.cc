@@ -2067,9 +2067,8 @@ write_decl_in_scope(const decl_base_sptr&	decl,
 		    unsigned			initial_indent)
 {
   type_base_sptr type = is_type(decl);
-  ABG_ASSERT(type);
-
-  if (ctxt.type_is_emitted(type))
+  if ((type && ctxt.type_is_emitted(type))
+      || (!type && ctxt.decl_is_emitted(decl)))
     return;
 
   list<scope_decl*> scopes;
@@ -2598,6 +2597,11 @@ write_translation_unit(write_context&		ctxt,
 
 	  if (is_non_canonicalized_type(t) && !ctxt.type_is_emitted(t))
 	    write_type(t, ctxt, indent + c.get_xml_element_indent());
+	}
+      else if (is_var_decl(decl))
+	{
+	  if (!ctxt.decl_is_emitted(decl))
+	    write_decl_in_scope(decl, ctxt, indent + c.get_xml_element_indent());
 	}
       else
 	{
@@ -3925,25 +3929,47 @@ write_class_decl(const class_decl_sptr& d,
 	if (!(*ti)->get_naked_canonical_type())
 	  write_member_type(*ti, ctxt, nb_ws);
 
-      for (class_decl::data_members::const_iterator data =
-	     decl->get_data_members().begin();
-	   data != decl->get_data_members().end();
-	   ++data)
+      // Write static data members
+      for (const auto& s_dm : decl->get_static_data_members())
 	{
 	  do_indent(o, nb_ws);
 	  o << "<data-member";
-	  write_access(get_member_access_specifier(*data), o);
+	  write_access(get_member_access_specifier(s_dm), o);
 
-	  bool is_static = get_member_is_static(*data);
+	  bool is_static = get_member_is_static(s_dm);
+	  ABG_ASSERT(is_static);
 	  write_cdtor_const_static(/*is_ctor=*/false,
 				   /*is_dtor=*/false,
 				   /*is_const=*/false,
 				   /*is_static=*/is_static,
 				   o);
-	  write_layout_offset(*data, o);
+	  write_layout_offset(s_dm, o);
 	  o << ">\n";
 
-	  write_var_decl(*data, ctxt, is_static,
+	  write_var_decl(s_dm, ctxt, is_static,
+			 get_indent_to_level(ctxt, indent, 2));
+
+	  do_indent_to_level(ctxt, indent, 1);
+	  o << "</data-member>\n";
+	}
+
+      // Write non-static data members
+      for (const auto& dm : decl->get_non_static_data_members())
+	{
+	  do_indent(o, nb_ws);
+	  o << "<data-member";
+	  write_access(get_member_access_specifier(dm), o);
+
+	  bool is_static = get_member_is_static(dm);
+	  write_cdtor_const_static(/*is_ctor=*/false,
+				   /*is_dtor=*/false,
+				   /*is_const=*/false,
+				   /*is_static=*/is_static,
+				   o);
+	  write_layout_offset(dm, o);
+	  o << ">\n";
+
+	  write_var_decl(dm, ctxt, is_static,
 			 get_indent_to_level(ctxt, indent, 2));
 
 	  do_indent_to_level(ctxt, indent, 1);

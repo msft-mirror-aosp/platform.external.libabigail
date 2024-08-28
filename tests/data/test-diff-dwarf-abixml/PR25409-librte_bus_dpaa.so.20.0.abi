@@ -199,8 +199,8 @@
     <typedef-decl name='u32' type-id='type-id-8' size-in-bits='32' filepath='../../dpdk/drivers/common/dpaax/compat.h' line='106' column='1' hash='f0c050c6f9f8032e' id='type-id-9'/>
     <typedef-decl name='uint16_t' type-id='type-id-3' size-in-bits='16' filepath='/usr/include/bits/stdint-uintn.h' line='25' column='1' hash='c392bb1926b4b6c2' id='type-id-6'/>
     <typedef-decl name='uint32_t' type-id='type-id-5' size-in-bits='32' filepath='/usr/include/bits/stdint-uintn.h' line='26' column='1' hash='f0c050c6f9f8032e' id='type-id-8'/>
-    <type-decl name='unsigned int' size-in-bits='32' hash='3a94285d174bd537#2' id='type-id-4'/>
-    <type-decl name='unsigned short int' size-in-bits='16' hash='df52e4878444404b' id='type-id-2'/>
+    <type-decl name='unsigned int' size-in-bits='32' hash='3a94285d174bd537' id='type-id-4'/>
+    <type-decl name='unsigned short int' size-in-bits='16' hash='df52e4878444404b#3' id='type-id-2'/>
     <var-decl name='fman_ip_rev' type-id='type-id-7' mangled-name='fman_ip_rev' visibility='default' filepath='../../dpdk/drivers/bus/dpaa/base/fman/fman.c' line='24' column='1' elf-symbol-id='fman_ip_rev@@DPDK_20.0'/>
     <var-decl name='fman_dealloc_bufs_mask_hi' type-id='type-id-9' mangled-name='fman_dealloc_bufs_mask_hi' visibility='default' filepath='../../dpdk/drivers/bus/dpaa/base/fman/fman.c' line='26' column='1' elf-symbol-id='fman_dealloc_bufs_mask_hi@@DPDK_20.0'/>
     <var-decl name='fman_dealloc_bufs_mask_lo' type-id='type-id-9' mangled-name='fman_dealloc_bufs_mask_lo' visibility='default' filepath='../../dpdk/drivers/bus/dpaa/base/fman/fman.c' line='27' column='1' elf-symbol-id='fman_dealloc_bufs_mask_lo@@DPDK_20.0'/>
@@ -332,7 +332,7 @@
     </array-type-def>
     <type-decl name='unnamed-enum-underlying-type-32' size-in-bits='32' alignment-in-bits='32' is-anonymous='yes' hash='8f51609dd015af12' id='type-id-12'/>
     <type-decl name='unsigned char' size-in-bits='8' hash='ecaf65035a0d2881' id='type-id-25'/>
-    <type-decl name='unsigned long int' size-in-bits='64' hash='e7c5efcec748ba6c#3' id='type-id-23'/>
+    <type-decl name='unsigned long int' size-in-bits='64' hash='e7c5efcec748ba6c#2' id='type-id-23'/>
     <qualified-type-def type-id='type-id-17' const='yes' hash='27f3f565a74927d7' id='type-id-29'/>
     <pointer-type-def type-id='type-id-29' size-in-bits='64' hash='47c719e9f61261cc' id='type-id-30'/>
     <pointer-type-def type-id='type-id-13' size-in-bits='64' hash='d4f3d75196026553' id='type-id-31'/>
@@ -926,7 +926,7 @@
     <array-type-def dimensions='1' type-id='type-id-113' size-in-bits='8192' hash='8f1f8ce53edbe2d1' id='type-id-114'>
       <subrange length='16' lower-bound='0' upper-bound='15' type-id='type-id-10' size-in-bits='64' is-anonymous='yes' hash='c9bb9f9dea25c527' id='type-id-27'/>
     </array-type-def>
-    <type-decl name='short int' size-in-bits='16' hash='bda4242a54aecaa8#2' id='type-id-115'/>
+    <type-decl name='short int' size-in-bits='16' hash='bda4242a54aecaa8#3' id='type-id-115'/>
     <type-decl name='signed char' size-in-bits='8' hash='c34c714b7bd801ea' id='type-id-116'/>
     <class-decl name='__qm_mc_cgr' is-struct='yes' visibility='default' size-in-bits='200' filepath='../../dpdk/drivers/bus/dpaa/include/fsl_qman.h' line='662' column='1' hash='62cb4fa8c06c3787' id='type-id-117'>
       <data-member access='public' layout-offset-in-bits='0'>
@@ -3318,7 +3318,7 @@
     <array-type-def dimensions='1' type-id='type-id-1' size-in-bits='16384' hash='d575c4235fdc62ea' id='type-id-375'>
       <subrange length='512' lower-bound='0' upper-bound='511' type-id='type-id-10' size-in-bits='64' is-anonymous='yes' hash='f980be5633575147' id='type-id-376'/>
     </array-type-def>
-    <type-decl name='long int' size-in-bits='64' hash='69f1ebc3a0a3f241#3' id='type-id-377'/>
+    <type-decl name='long int' size-in-bits='64' hash='69f1ebc3a0a3f241#2' id='type-id-377'/>
     <array-type-def dimensions='1' type-id='type-id-378' size-in-bits='196608' hash='44173c429a069e3f' id='type-id-379'>
       <subrange length='512' lower-bound='0' upper-bound='511' type-id='type-id-10' size-in-bits='64' is-anonymous='yes' hash='f980be5633575147' id='type-id-376'/>
     </array-type-def>

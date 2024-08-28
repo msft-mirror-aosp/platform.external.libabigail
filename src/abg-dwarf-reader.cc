@@ -14548,10 +14548,18 @@ add_or_update_class_type(reader&	 rdr,
 	      // this approximation should do OK.
 	      bool is_static = !is_laid_out;
 
-	      if (is_static && variable_is_suppressed(rdr,
-						      result.get(),
-						      &child,
-						      is_declaration_only))
+	      if (is_static)
+		// We are looking at the *declaration* of a static
+		// data member.  The definition comes later (or
+		// somewhere else, rather)in the DWARF.  It's the
+		// definition that we are interested in because it has
+		// attributes of the concrete representation of the
+		// static data member like, the ELF symbol (storage
+		// address) of the variable, etc.  It's at that point
+		// that the IR of the data member is going to be
+		// created (by build_ir_node_from_die, in the
+		// DW_TAG_variable case) and added to this class/struct
+		// being created.  So for now, just ignore it.
 		continue;
 
 	      decl_base_sptr ty = is_decl(build_ir_node_from_die(rdr, &type_die,
@@ -17262,68 +17270,45 @@ build_ir_node_from_die(reader&		rdr,
     case DW_TAG_variable:
     case DW_TAG_member:
       {
-	Dwarf_Die spec_die;
-	bool var_is_cloned = false;
-
 	if (tag == DW_TAG_member)
 	  ABG_ASSERT(!die_is_in_c(die));
 
-	if (die_die_attribute(die, DW_AT_specification, spec_die, false)
-	    || (var_is_cloned = die_die_attribute(die, DW_AT_abstract_origin,
-						  spec_die, false)))
+	scope_decl_sptr var_scope =
+	  get_scope_for_die(rdr, die,
+			    /*called_from_public_decl=*/
+			    die_is_effectively_public_decl(rdr, die),
+			    where_offset);
+	var_decl_sptr v =
+	  build_or_get_var_decl_if_not_suppressed(rdr, var_scope.get(), die,
+						  where_offset,
+						  is_declaration_only,
+						  /*result=*/var_decl_sptr(),
+						  is_required_decl_spec);
+	if (v && is_data_member(v))
+	  // We might have gotten a pre-existing data member variable
+	  // that was already built.  This means this DIE is a
+	  // concrete implementation of a previous specification.
+	  // Read the specific attributes of this concrete
+	  // implementation and add them to the existing IR node we
+	  // have.
+	  v = build_var_decl(rdr, die, where_offset, v);
+
+	if (v)
 	  {
-	    scope_decl_sptr spec_scope =
-	      get_scope_for_die(rdr, &spec_die,
-				/*called_from_public_decl=*/
-				die_is_effectively_public_decl(rdr, die),
-				where_offset);
-	    if (spec_scope)
-	      {
-		decl_base_sptr d =
-		  is_decl(build_ir_node_from_die(rdr, &spec_die,
-						 spec_scope.get(),
-						 called_from_public_decl,
-						 where_offset,
-						 is_declaration_only,
-						 /*is_required_decl_spec=*/true));
-		if (d)
-		  {
-		    var_decl_sptr m =
-		      dynamic_pointer_cast<var_decl>(d);
-		    if (var_is_cloned)
-		      m = m->clone();
-		    m = build_var_decl(rdr, die, where_offset, m);
-		    if (is_data_member(m))
-		      {
-			set_member_is_static(m, true);
-			rdr.associate_die_to_decl(die, m, where_offset,
-						   /*associate_by_repr=*/false);
-		      }
-		    else
-		      {
-			ABG_ASSERT(has_scope(m));
-			rdr.var_decls_to_re_add_to_tree().push_back(m);
-		      }
-		    ABG_ASSERT(m->get_scope());
-		    rdr.add_var_to_exported_or_undefined_decls(m);
-		    result = m;
-		  }
-	      }
-	  }
-	else if (var_decl_sptr v =
-		 build_or_get_var_decl_if_not_suppressed(rdr, scope, die,
-							 where_offset,
-							 is_declaration_only,
-							 /*result=*/var_decl_sptr(),
-							 is_required_decl_spec))
-	  {
-	    result = add_decl_to_scope(v, scope);
-	    ABG_ASSERT(is_decl(result)->get_scope());
-	    v = dynamic_pointer_cast<var_decl>(result);
-	    ABG_ASSERT(v);
-	    ABG_ASSERT(v->get_scope());
-	    rdr.var_decls_to_re_add_to_tree().push_back(v);
+	    add_decl_to_scope(v, var_scope);
+	    if (is_data_member(v))
+	      // We are sure this is a static data member at this
+	      // point because a non-static data member would have
+	      // been encountered a a child of a class or union DIE
+	      // and thus handled by add_or_update_class_type or
+	      // add_or_update_union_type.
+	      set_member_is_static(v, true);
+	    else
+	      rdr.var_decls_to_re_add_to_tree().push_back(v);
 	    rdr.add_var_to_exported_or_undefined_decls(v);
+	    rdr.associate_die_to_decl(die, v, where_offset,
+				      /*associate_by_repr=*/false);
+	    result = v;
 	  }
       }
       break;

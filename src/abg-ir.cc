@@ -15739,6 +15739,30 @@ maybe_adjust_canonical_type(const type_base_sptr& canonical,
 		    // going on here?
 		    ABG_ASSERT_NOT_REACHED;
 	      }
+
+	  // Set symbols of static data members that might be missing
+	  // theirs.
+	  for (const auto& data_member : cl->get_data_members())
+	    {
+	      if (!get_member_is_static(data_member))
+		continue;
+	      elf_symbol_sptr sym = data_member->get_symbol();
+	      if (!sym)
+		continue;
+	      const auto& canonical_data_member =
+		canonical_class->find_data_member(data_member->get_name());
+	      if (!canonical_data_member)
+		// Hmmh, maybe we
+		// should consider
+		// static data members
+		// when comparing two
+		// classes for the
+		// purpose of type
+		// canonicalization?
+		continue;
+	      if (!canonical_data_member->get_symbol())
+		canonical_data_member->set_symbol(sym);
+	    }
 	}
     }
 
@@ -15746,7 +15770,7 @@ maybe_adjust_canonical_type(const type_base_sptr& canonical,
   // all added to the set of exported functions of the corpus.
 
   // If we are looking at a non-canonicalized class (for instance, a
-  // decl-only class that has virtual member functoins), let's pretend
+  // decl-only class that has virtual member functions), let's pretend
   // it does have a canonical class so that we can perform the
   // necessary virtual  member function adjustments
   if (class_decl_sptr cl = is_class_type(type))
@@ -23634,11 +23658,26 @@ class_or_union::add_data_member(var_decl_sptr v, access_specifier access,
   set_member_access_specifier(v, access);
   set_member_is_static(v, is_static);
 
-  if (!is_static)
+  // Add the variable to the set of static or non-static data members,
+  // if it's not already in there.
+  bool is_already_in = false;
+  if (is_static)
+    {
+      for (const auto& s_dm: priv_->static_data_members_)
+	{
+	  if (s_dm == v)
+	    {
+	      is_already_in = true;
+	      break;
+	    }
+	}
+      if (!is_already_in)
+	priv_->static_data_members_.push_back(v);
+    }
+  else
     {
       // If this is a non-static variable, add it to the set of
       // non-static variables, if it's not already in there.
-      bool is_already_in = false;
       for (data_members::const_iterator i =
 	     priv_->non_static_data_members_.begin();
 	   i != priv_->non_static_data_members_.end();
@@ -23750,13 +23789,21 @@ class_or_union::find_data_member(const var_decl_sptr& v) const
 }
 
 
-/// Get the non-static data memebers of this @ref class_or_union.
+/// Get the non-static data members of this @ref class_or_union.
 ///
 /// @return a vector of the non-static data members of this @ref
 /// class_or_union.
 const class_or_union::data_members&
 class_or_union::get_non_static_data_members() const
 {return priv_->non_static_data_members_;}
+
+/// Get the static data memebers of this @ref class_or_union.
+///
+/// @return a vector of the static data members of this @ref
+/// class_or_union.
+const class_or_union::data_members&
+class_or_union::get_static_data_members() const
+{return priv_->static_data_members_;}
 
 /// Add a member function.
 ///
@@ -26267,51 +26314,68 @@ set_member_is_static(decl_base& d, bool s)
     {
       if (var_decl* v = is_var_decl(&d))
 	{
-	  if (s)
-	    // remove from the non-static data members
-	    for (class_decl::data_members::iterator i =
-		   cl->priv_->non_static_data_members_.begin();
-		 i != cl->priv_->non_static_data_members_.end();
-		 ++i)
+	  // First, find v in the set of data members.
+	  var_decl_sptr var;
+	  for (const auto& dm : cl->get_data_members())
+	    if (dm->get_name() == v->get_name())
 	      {
-		if ((*i)->get_name() == v->get_name())
-		  {
-		    cl->priv_->non_static_data_members_.erase(i);
-		    break;
-		  }
+		var = dm;
+		break;
 	      }
-	  else
+	  if (!var)
+	    return;
+
+	  if (s)
 	    {
-	      bool is_already_in_non_static_data_members = false;
-	      for (class_or_union::data_members::iterator i =
+	      // remove from the non-static data members
+	      for (class_decl::data_members::iterator i =
 		     cl->priv_->non_static_data_members_.begin();
 		   i != cl->priv_->non_static_data_members_.end();
 		   ++i)
-	      {
+		{
+		  if ((*i)->get_name() == v->get_name())
+		    {
+		      cl->priv_->non_static_data_members_.erase(i);
+		      break;
+		    }
+		}
+
+	      // If it's not in the static data members, then add it
+	      // there.
+	      bool already_in_static_dms = false;
+	      for (const auto& s_dm : cl->priv_->static_data_members_)
+		if (s_dm->get_name() == v->get_name())
+		  {
+		    already_in_static_dms = true;
+		    break;
+		  }
+	      if (!already_in_static_dms)
+		cl->priv_->static_data_members_.push_back(var);
+	    }
+	  else // is non-static
+	    {
+	      // Remove from the static data members.
+	      for (class_or_union::data_members::iterator i =
+		     cl->priv_->static_data_members_.begin();
+		   i != cl->priv_->static_data_members_.end();
+		   ++i)
 		if ((*i)->get_name() == v->get_name())
+		  {
+		    cl->priv_->static_data_members_.erase(i);
+		    break;
+		  }
+
+	      // If it's not already in the non-static data members
+	      // then add it there.
+	      bool is_already_in_non_static_data_members = false;
+	      for (const auto& ns_dm : cl->priv_->non_static_data_members_)
+		if (ns_dm->get_name() == v->get_name())
 		  {
 		    is_already_in_non_static_data_members = true;
 		    break;
 		  }
-	      }
 	      if (!is_already_in_non_static_data_members)
-		{
-		  var_decl_sptr var;
-		  // add to non-static data members.
-		  for (class_or_union::data_members::const_iterator i =
-			 cl->priv_->data_members_.begin();
-		       i != cl->priv_->data_members_.end();
-		       ++i)
-		    {
-		      if ((*i)->get_name() == v->get_name())
-			{
-			  var = *i;
-			  break;
-			}
-		    }
-		  ABG_ASSERT(var);
-		  cl->priv_->non_static_data_members_.push_back(var);
-		}
+		cl->priv_->non_static_data_members_.push_back(var);
 	    }
 	}
     }

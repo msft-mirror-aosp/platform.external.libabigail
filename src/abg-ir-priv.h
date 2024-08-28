@@ -1589,6 +1589,7 @@ struct class_or_union::priv
 {
   typedef_decl_wptr		naming_typedef_;
   data_members			data_members_;
+  data_members			static_data_members_;
   data_members			non_static_data_members_;
   member_functions		member_functions_;
   // A map that associates a linkage name to a member function.
@@ -1608,11 +1609,11 @@ struct class_or_union::priv
     : data_members_(data_mbrs),
       member_functions_(mbr_fns)
   {
-    for (data_members::const_iterator i = data_members_.begin();
-	 i != data_members_.end();
-	 ++i)
-      if (!get_member_is_static(*i))
-	non_static_data_members_.push_back(*i);
+    for (const auto& data_member: data_members_)
+      if (get_member_is_static(data_member))
+	static_data_members_.push_back(data_member);
+      else
+	non_static_data_members_.push_back(data_member);
   }
 
   /// Mark a pair of classes or unions as being currently compared

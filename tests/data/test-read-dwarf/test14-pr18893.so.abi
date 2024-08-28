@@ -2071,13 +2071,13 @@
     <class-decl name='Arc' is-struct='yes' visibility='default' size-in-bits='448' filepath='libnurbs/internals/arc.h' line='55' column='1' hash='119cfe595bd8d405' id='type-id-170'>
       <base-class access='public' layout-offset-in-bits='0' type-id='type-id-166'/>
       <data-member access='public' static='yes'>
-        <var-decl name='bezier_tag' type-id='type-id-43' mangled-name='_ZN3Arc10bezier_tagE' visibility='default' filepath='libnurbs/internals/arc.h' line='58' column='1'/>
+        <var-decl name='bezier_tag' type-id='type-id-43' mangled-name='_ZN3Arc10bezier_tagE' visibility='default' filepath='libnurbs/internals/arc.cc' line='52' column='1'/>
       </data-member>
       <data-member access='public' static='yes'>
-        <var-decl name='arc_tag' type-id='type-id-43' mangled-name='_ZN3Arc7arc_tagE' visibility='default' filepath='libnurbs/internals/arc.h' line='59' column='1'/>
+        <var-decl name='arc_tag' type-id='type-id-43' mangled-name='_ZN3Arc7arc_tagE' visibility='default' filepath='libnurbs/internals/arc.cc' line='53' column='1'/>
       </data-member>
       <data-member access='public' static='yes'>
-        <var-decl name='tail_tag' type-id='type-id-43' mangled-name='_ZN3Arc8tail_tagE' visibility='default' filepath='libnurbs/internals/arc.h' line='60' column='1'/>
+        <var-decl name='tail_tag' type-id='type-id-43' mangled-name='_ZN3Arc8tail_tagE' visibility='default' filepath='libnurbs/internals/arc.cc' line='54' column='1'/>
       </data-member>
       <data-member access='public' layout-offset-in-bits='0'>
         <var-decl name='prev' type-id='type-id-171' visibility='default' filepath='libnurbs/internals/arc.h' line='61' column='1'/>
@@ -2147,33 +2147,28 @@
     <array-type-def dimensions='1' type-id='type-id-15' size-in-bits='128' hash='a4e1fed20f7a59d6' id='type-id-185'>
       <subrange length='4' lower-bound='0' upper-bound='3' type-id='type-id-17' size-in-bits='64' is-anonymous='yes' hash='a81ae17a7e17002e' id='type-id-110'/>
     </array-type-def>
-    <array-type-def dimensions='3' type-id='type-id-15' size-in-bits='unknown' hash='d58c4f13494d321d' id='type-id-186'>
-      <subrange length='unknown' lower-bound='0' upper-bound='0' size-in-bits='64' is-anonymous='yes' hash='edeb07fdf1f46d10' id='type-id-187'/>
-      <subrange length='24' lower-bound='0' upper-bound='23' type-id='type-id-17' size-in-bits='64' is-anonymous='yes' hash='a3fc60197af58c4d' id='type-id-188'/>
-      <subrange length='24' lower-bound='0' upper-bound='23' type-id='type-id-17' size-in-bits='64' is-anonymous='yes' hash='a3fc60197af58c4d' id='type-id-188'/>
+    <array-type-def dimensions='1' type-id='type-id-186' size-in-bits='1600' hash='738555d34aef2a79#2' id='type-id-187'>
+      <subrange length='1' lower-bound='0' upper-bound='0' type-id='type-id-17' size-in-bits='64' is-anonymous='yes' hash='edeb07fdf1f46d10' id='type-id-188'/>
     </array-type-def>
-    <array-type-def dimensions='1' type-id='type-id-189' size-in-bits='1600' hash='738555d34aef2a79#2' id='type-id-190'>
-      <subrange length='1' lower-bound='0' upper-bound='0' type-id='type-id-17' size-in-bits='64' is-anonymous='yes' hash='edeb07fdf1f46d10' id='type-id-191'/>
-    </array-type-def>
-    <class-decl name='ArcSdirSorter' visibility='default' size-in-bits='192' filepath='libnurbs/internals/arcsorter.h' line='57' column='1' hash='3095c45d93dbc9da' id='type-id-192'>
-      <base-class access='public' layout-offset-in-bits='0' type-id='type-id-193'/>
+    <class-decl name='ArcSdirSorter' visibility='default' size-in-bits='192' filepath='libnurbs/internals/arcsorter.h' line='57' column='1' hash='3095c45d93dbc9da' id='type-id-189'>
+      <base-class access='public' layout-offset-in-bits='0' type-id='type-id-190'/>
       <member-function access='private' vtable-offset='2'>
         <function-decl name='qscmp' mangled-name='_ZN13ArcSdirSorter5qscmpEPcS0_' filepath='libnurbs/internals/arcsorter.cc' line='93' column='1' visibility='default' binding='global' size-in-bits='64' hash='c50376f19f645d5'>
-          <parameter type-id='type-id-194' is-artificial='yes'/>
+          <parameter type-id='type-id-191' is-artificial='yes'/>
           <parameter type-id='type-id-159'/>
           <parameter type-id='type-id-159'/>
           <return type-id='type-id-3'/>
         </function-decl>
       </member-function>
     </class-decl>
-    <class-decl name='ArcSorter' visibility='default' size-in-bits='192' filepath='libnurbs/internals/arcsorter.h' line='44' column='1' hash='dd18e9c05196e7d3' id='type-id-193'>
-      <base-class access='private' layout-offset-in-bits='0' type-id='type-id-195'/>
+    <class-decl name='ArcSorter' visibility='default' size-in-bits='192' filepath='libnurbs/internals/arcsorter.h' line='44' column='1' hash='dd18e9c05196e7d3' id='type-id-190'>
+      <base-class access='private' layout-offset-in-bits='0' type-id='type-id-192'/>
       <data-member access='protected' layout-offset-in-bits='128'>
-        <var-decl name='subdivider' type-id='type-id-196' visibility='default' filepath='libnurbs/internals/arcsorter.h' line='50' column='1'/>
+        <var-decl name='subdivider' type-id='type-id-193' visibility='default' filepath='libnurbs/internals/arcsorter.h' line='50' column='1'/>
       </data-member>
       <member-function access='protected' vtable-offset='2'>
         <function-decl name='qscmp' mangled-name='_ZN9ArcSorter5qscmpEPcS0_' filepath='libnurbs/internals/arcsorter.cc' line='53' column='1' visibility='default' binding='global' size-in-bits='64' hash='c50376f19f645d5'>
-          <parameter type-id='type-id-197' is-artificial='yes'/>
+          <parameter type-id='type-id-194' is-artificial='yes'/>
           <parameter type-id='type-id-159'/>
           <parameter type-id='type-id-159'/>
           <return type-id='type-id-3'/>
@@ -2181,7 +2176,7 @@
       </member-function>
       <member-function access='private' vtable-offset='3'>
         <function-decl name='qsexc' mangled-name='_ZN9ArcSorter5qsexcEPcS0_' filepath='libnurbs/internals/arcsorter.cc' line='66' column='1' visibility='default' binding='global' size-in-bits='64' hash='659ced78215eae4a'>
-          <parameter type-id='type-id-197' is-artificial='yes'/>
+          <parameter type-id='type-id-194' is-artificial='yes'/>
           <parameter type-id='type-id-159'/>
           <parameter type-id='type-id-159'/>
           <return type-id='type-id-32'/>
@@ -2189,7 +2184,7 @@
       </member-function>
       <member-function access='private' vtable-offset='4'>
         <function-decl name='qstexc' mangled-name='_ZN9ArcSorter6qstexcEPcS0_S0_' filepath='libnurbs/internals/arcsorter.cc' line='76' column='1' visibility='default' binding='global' size-in-bits='64' hash='4e076abb07cc8f73'>
-          <parameter type-id='type-id-197' is-artificial='yes'/>
+          <parameter type-id='type-id-194' is-artificial='yes'/>
           <parameter type-id='type-id-159'/>
           <parameter type-id='type-id-159'/>
           <parameter type-id='type-id-159'/>
@@ -2197,29 +2192,29 @@
         </function-decl>
       </member-function>
     </class-decl>
-    <class-decl name='ArcTdirSorter' visibility='default' size-in-bits='192' filepath='libnurbs/internals/arcsorter.h' line='65' column='1' hash='a2baff66c9c0d996' id='type-id-198'>
-      <base-class access='public' layout-offset-in-bits='0' type-id='type-id-193'/>
+    <class-decl name='ArcTdirSorter' visibility='default' size-in-bits='192' filepath='libnurbs/internals/arcsorter.h' line='65' column='1' hash='a2baff66c9c0d996' id='type-id-195'>
+      <base-class access='public' layout-offset-in-bits='0' type-id='type-id-190'/>
       <member-function access='private' vtable-offset='2'>
         <function-decl name='qscmp' mangled-name='_ZN13ArcTdirSorter5qscmpEPcS0_' filepath='libnurbs/internals/arcsorter.cc' line='138' column='1' visibility='default' binding='global' size-in-bits='64' hash='c50376f19f645d5'>
-          <parameter type-id='type-id-199' is-artificial='yes'/>
+          <parameter type-id='type-id-196' is-artificial='yes'/>
           <parameter type-id='type-id-159'/>
           <parameter type-id='type-id-159'/>
           <return type-id='type-id-3'/>
         </function-decl>
       </member-function>
     </class-decl>
-    <class-decl name='ArcTessellator' visibility='default' size-in-bits='128' filepath='libnurbs/internals/arctess.h' line='47' column='1' hash='c5e4f9148b4b7525' id='type-id-200'>
-      <data-member access='private' static='yes'>
-        <var-decl name='gl_Bernstein' type-id='type-id-186' mangled-name='_ZN14ArcTessellator12gl_BernsteinE' visibility='default' filepath='libnurbs/internals/arctess.h' line='60' column='1'/>
+    <class-decl name='ArcTessellator' visibility='default' size-in-bits='128' filepath='libnurbs/internals/arctess.h' line='47' column='1' hash='c5e4f9148b4b7525' id='type-id-197'>
+      <data-member access='public' static='yes'>
+        <var-decl name='gl_Bernstein' type-id='type-id-198' mangled-name='_ZN14ArcTessellator12gl_BernsteinE' visibility='default' filepath='libnurbs/internals/arctess.cc' line='504' column='1'/>
       </data-member>
       <data-member access='private' layout-offset-in-bits='0'>
         <var-decl name='pwlarcpool' type-id='type-id-180' visibility='default' filepath='libnurbs/internals/arctess.h' line='61' column='1'/>
       </data-member>
       <data-member access='private' layout-offset-in-bits='64'>
-        <var-decl name='trimvertexpool' type-id='type-id-201' visibility='default' filepath='libnurbs/internals/arctess.h' line='62' column='1'/>
+        <var-decl name='trimvertexpool' type-id='type-id-199' visibility='default' filepath='libnurbs/internals/arctess.h' line='62' column='1'/>
       </data-member>
     </class-decl>
-    <class-decl name='Bin' visibility='default' size-in-bits='128' filepath='libnurbs/internals/bin.h' line='44' column='1' hash='6309cb75c8ba39a5' id='type-id-202'>
+    <class-decl name='Bin' visibility='default' size-in-bits='128' filepath='libnurbs/internals/bin.h' line='44' column='1' hash='6309cb75c8ba39a5' id='type-id-200'>
       <data-member access='private' layout-offset-in-bits='0'>
         <var-decl name='head' type-id='type-id-171' visibility='default' filepath='libnurbs/internals/bin.h' line='46' column='1'/>
       </data-member>
@@ -2227,7 +2222,7 @@
         <var-decl name='current' type-id='type-id-171' visibility='default' filepath='libnurbs/internals/bin.h' line='47' column='1'/>
       </data-member>
     </class-decl>
-    <class-decl name='Flist' visibility='default' size-in-bits='320' filepath='libnurbs/internals/flist.h' line='42' column='1' hash='4306a41c11399b4a' id='type-id-203'>
+    <class-decl name='Flist' visibility='default' size-in-bits='320' filepath='libnurbs/internals/flist.h' line='42' column='1' hash='4306a41c11399b4a' id='type-id-201'>
       <data-member access='private' layout-offset-in-bits='0'>
         <var-decl name='pts' type-id='type-id-34' visibility='default' filepath='libnurbs/internals/flist.h' line='44' column='1'/>
       </data-member>
@@ -2241,12 +2236,12 @@
         <var-decl name='end' type-id='type-id-3' visibility='default' filepath='libnurbs/internals/flist.h' line='47' column='1'/>
       </data-member>
       <data-member access='protected' layout-offset-in-bits='192'>
-        <var-decl name='sorter' type-id='type-id-204' visibility='default' filepath='libnurbs/internals/flist.h' line='56' column='1'/>
+        <var-decl name='sorter' type-id='type-id-202' visibility='default' filepath='libnurbs/internals/flist.h' line='56' column='1'/>
       </data-member>
     </class-decl>
     <class-decl name='Subdivider' visibility='default' size-in-bits='20416' filepath='libnurbs/internals/subdivider.h' line='55' column='1' hash='de399fb546ea0150' id='type-id-115'>
       <member-type access='private'>
-        <enum-decl name='dir' size-in-bits='32' alignment-in-bits='32' filepath='libnurbs/internals/subdivider.h' line='105' column='1' hash='1af8efecf6977ab7' id='type-id-205'>
+        <enum-decl name='dir' size-in-bits='32' alignment-in-bits='32' filepath='libnurbs/internals/subdivider.h' line='105' column='1' hash='1af8efecf6977ab7' id='type-id-203'>
           <underlying-type type-id='type-id-50'/>
           <enumerator name='down' value='0'/>
           <enumerator name='same' value='1'/>
@@ -2255,10 +2250,10 @@
         </enum-decl>
       </member-type>
       <data-member access='private' layout-offset-in-bits='0'>
-        <var-decl name='slicer' type-id='type-id-206' visibility='default' filepath='libnurbs/internals/subdivider.h' line='112' column='1'/>
+        <var-decl name='slicer' type-id='type-id-204' visibility='default' filepath='libnurbs/internals/subdivider.h' line='112' column='1'/>
       </data-member>
       <data-member access='private' layout-offset-in-bits='8064'>
-        <var-decl name='arctessellator' type-id='type-id-200' visibility='default' filepath='libnurbs/internals/subdivider.h' line='113' column='1'/>
+        <var-decl name='arctessellator' type-id='type-id-197' visibility='default' filepath='libnurbs/internals/subdivider.h' line='113' column='1'/>
       </data-member>
       <data-member access='private' layout-offset-in-bits='8192'>
         <var-decl name='arcpool' type-id='type-id-117' visibility='default' filepath='libnurbs/internals/subdivider.h' line='114' column='1'/>
@@ -2276,13 +2271,13 @@
         <var-decl name='jumpbuffer' type-id='type-id-116' visibility='default' filepath='libnurbs/internals/subdivider.h' line='119' column='1'/>
       </data-member>
       <data-member access='private' layout-offset-in-bits='18368'>
-        <var-decl name='renderhints' type-id='type-id-207' visibility='default' filepath='libnurbs/internals/subdivider.h' line='120' column='1'/>
+        <var-decl name='renderhints' type-id='type-id-205' visibility='default' filepath='libnurbs/internals/subdivider.h' line='120' column='1'/>
       </data-member>
       <data-member access='private' layout-offset-in-bits='18432'>
-        <var-decl name='backend' type-id='type-id-208' visibility='default' filepath='libnurbs/internals/subdivider.h' line='121' column='1'/>
+        <var-decl name='backend' type-id='type-id-206' visibility='default' filepath='libnurbs/internals/subdivider.h' line='121' column='1'/>
       </data-member>
       <data-member access='private' layout-offset-in-bits='18496'>
-        <var-decl name='initialbin' type-id='type-id-202' visibility='default' filepath='libnurbs/internals/subdivider.h' line='123' column='1'/>
+        <var-decl name='initialbin' type-id='type-id-200' visibility='default' filepath='libnurbs/internals/subdivider.h' line='123' column='1'/>
       </data-member>
       <data-member access='private' layout-offset-in-bits='18624'>
         <var-decl name='pjarc' type-id='type-id-171' visibility='default' filepath='libnurbs/internals/subdivider.h' line='124' column='1'/>
@@ -2294,19 +2289,19 @@
         <var-decl name='t_index' type-id='type-id-3' visibility='default' filepath='libnurbs/internals/subdivider.h' line='126' column='1'/>
       </data-member>
       <data-member access='private' layout-offset-in-bits='18752'>
-        <var-decl name='qlist' type-id='type-id-209' visibility='default' filepath='libnurbs/internals/subdivider.h' line='127' column='1'/>
+        <var-decl name='qlist' type-id='type-id-207' visibility='default' filepath='libnurbs/internals/subdivider.h' line='127' column='1'/>
       </data-member>
       <data-member access='private' layout-offset-in-bits='18816'>
-        <var-decl name='spbrkpts' type-id='type-id-203' visibility='default' filepath='libnurbs/internals/subdivider.h' line='128' column='1'/>
+        <var-decl name='spbrkpts' type-id='type-id-201' visibility='default' filepath='libnurbs/internals/subdivider.h' line='128' column='1'/>
       </data-member>
       <data-member access='private' layout-offset-in-bits='19136'>
-        <var-decl name='tpbrkpts' type-id='type-id-203' visibility='default' filepath='libnurbs/internals/subdivider.h' line='129' column='1'/>
+        <var-decl name='tpbrkpts' type-id='type-id-201' visibility='default' filepath='libnurbs/internals/subdivider.h' line='129' column='1'/>
       </data-member>
       <data-member access='private' layout-offset-in-bits='19456'>
-        <var-decl name='smbrkpts' type-id='type-id-203' visibility='default' filepath='libnurbs/internals/subdivider.h' line='130' column='1'/>
+        <var-decl name='smbrkpts' type-id='type-id-201' visibility='default' filepath='libnurbs/internals/subdivider.h' line='130' column='1'/>
       </data-member>
       <data-member access='private' layout-offset-in-bits='19776'>
-        <var-decl name='tmbrkpts' type-id='type-id-203' visibility='default' filepath='libnurbs/internals/subdivider.h' line='131' column='1'/>
+        <var-decl name='tmbrkpts' type-id='type-id-201' visibility='default' filepath='libnurbs/internals/subdivider.h' line='131' column='1'/>
       </data-member>
       <data-member access='private' layout-offset-in-bits='20096'>
         <var-decl name='stepsizes' type-id='type-id-185' visibility='default' filepath='libnurbs/internals/subdivider.h' line='132' column='1'/>
@@ -2327,9 +2322,9 @@
         <var-decl name='is_domain_distance_sampling' type-id='type-id-3' visibility='default' filepath='libnurbs/internals/subdivider.h' line='190' column='1'/>
       </data-member>
     </class-decl>
-    <class-decl name='JumpBuffer' is-struct='yes' visibility='default' size-in-bits='1600' filepath='libnurbs/internals/mysetjmp.h' line='56' column='1' hash='ac2234bf55440ba1' id='type-id-210'>
+    <class-decl name='JumpBuffer' is-struct='yes' visibility='default' size-in-bits='1600' filepath='libnurbs/internals/mysetjmp.h' line='56' column='1' hash='ac2234bf55440ba1' id='type-id-208'>
       <data-member access='public' layout-offset-in-bits='0'>
-        <var-decl name='buf' type-id='type-id-211' visibility='default' filepath='libnurbs/internals/mysetjmp.h' line='57' column='1'/>
+        <var-decl name='buf' type-id='type-id-209' visibility='default' filepath='libnurbs/internals/mysetjmp.h' line='57' column='1'/>
       </data-member>
     </class-decl>
     <class-decl name='TrimVertexPool' is-struct='yes' visibility='default' size-in-bits='2624' filepath='libnurbs/internals/trimvertpool.h' line='45' column='1' hash='78e4260c1ecc7923#2' id='type-id-118'>
@@ -2337,7 +2332,7 @@
         <var-decl name='pool' type-id='type-id-117' visibility='default' filepath='libnurbs/internals/trimvertpool.h' line='52' column='1'/>
       </data-member>
       <data-member access='private' layout-offset-in-bits='2496'>
-        <var-decl name='vlist' type-id='type-id-212' visibility='default' filepath='libnurbs/internals/trimvertpool.h' line='53' column='1'/>
+        <var-decl name='vlist' type-id='type-id-210' visibility='default' filepath='libnurbs/internals/trimvertpool.h' line='53' column='1'/>
       </data-member>
       <data-member access='private' layout-offset-in-bits='2560'>
         <var-decl name='nextvlistslot' type-id='type-id-3' visibility='default' filepath='libnurbs/internals/trimvertpool.h' line='54' column='1'/>
@@ -2346,56 +2341,56 @@
         <var-decl name='vlistsize' type-id='type-id-3' visibility='default' filepath='libnurbs/internals/trimvertpool.h' line='55' column='1'/>
       </data-member>
     </class-decl>
-    <class-decl name='__jmp_buf_tag' is-struct='yes' visibility='default' size-in-bits='1600' filepath='/usr/include/setjmp.h' line='36' column='1' hash='56667803f16e661a#2' id='type-id-189'>
+    <class-decl name='__jmp_buf_tag' is-struct='yes' visibility='default' size-in-bits='1600' filepath='/usr/include/setjmp.h' line='36' column='1' hash='56667803f16e661a#2' id='type-id-186'>
       <data-member access='public' layout-offset-in-bits='0'>
-        <var-decl name='__jmpbuf' type-id='type-id-213' visibility='default' filepath='/usr/include/setjmp.h' line='41' column='1'/>
+        <var-decl name='__jmpbuf' type-id='type-id-211' visibility='default' filepath='/usr/include/setjmp.h' line='41' column='1'/>
       </data-member>
       <data-member access='public' layout-offset-in-bits='512'>
         <var-decl name='__mask_was_saved' type-id='type-id-3' visibility='default' filepath='/usr/include/setjmp.h' line='42' column='1'/>
       </data-member>
       <data-member access='public' layout-offset-in-bits='576'>
-        <var-decl name='__saved_mask' type-id='type-id-214' visibility='default' filepath='/usr/include/setjmp.h' line='43' column='1'/>
+        <var-decl name='__saved_mask' type-id='type-id-212' visibility='default' filepath='/usr/include/setjmp.h' line='43' column='1'/>
       </data-member>
     </class-decl>
-    <typedef-decl name='jmp_buf' type-id='type-id-190' size-in-bits='1600' filepath='/usr/include/setjmp.h' line='49' column='1' hash='eaf0312d83fb7dbe#2' id='type-id-211'/>
-    <pointer-type-def type-id='type-id-175' size-in-bits='64' hash='5bb341ab068e20d1' id='type-id-215'/>
-    <pointer-type-def type-id='type-id-192' size-in-bits='64' hash='ac643e5efe2ad5a7' id='type-id-194'/>
-    <qualified-type-def type-id='type-id-194' const='yes' hash='f0a96cba9eab91a6' id='type-id-216'/>
-    <pointer-type-def type-id='type-id-193' size-in-bits='64' hash='332974e139429579' id='type-id-197'/>
-    <qualified-type-def type-id='type-id-197' const='yes' hash='be779c77707b51a9' id='type-id-217'/>
-    <pointer-type-def type-id='type-id-198' size-in-bits='64' hash='e826ebb004997b15' id='type-id-199'/>
-    <qualified-type-def type-id='type-id-199' const='yes' hash='b72bbe463f0000ac' id='type-id-218'/>
-    <pointer-type-def type-id='type-id-200' size-in-bits='64' hash='1fb7d2d46f3534c2' id='type-id-219'/>
-    <reference-type-def kind='lvalue' type-id='type-id-114' size-in-bits='64' hash='9aac1f7c1b1bcf7a' id='type-id-208'/>
-    <reference-type-def kind='lvalue' type-id='type-id-202' size-in-bits='64' hash='f8d423d012ab5d30' id='type-id-220'/>
-    <pointer-type-def type-id='type-id-202' size-in-bits='64' hash='4a523755910eb635' id='type-id-221'/>
-    <reference-type-def kind='lvalue' type-id='type-id-222' size-in-bits='64' hash='631b13f06dbf4c0a' id='type-id-223'/>
-    <pointer-type-def type-id='type-id-203' size-in-bits='64' hash='ea979579dc8c213' id='type-id-224'/>
-    <pointer-type-def type-id='type-id-210' size-in-bits='64' hash='d9377c8ad6c480e7' id='type-id-116'/>
-    <reference-type-def kind='lvalue' type-id='type-id-225' size-in-bits='64' hash='307219709aed1c3f' id='type-id-226'/>
-    <pointer-type-def type-id='type-id-227' size-in-bits='64' hash='b85709d32b346d35#2' id='type-id-209'/>
-    <reference-type-def kind='lvalue' type-id='type-id-112' size-in-bits='64' hash='82c6f795f70e5521' id='type-id-207'/>
-    <pointer-type-def type-id='type-id-195' size-in-bits='64' hash='c8e6945b9846bb3e' id='type-id-228'/>
-    <qualified-type-def type-id='type-id-228' const='yes' hash='566ac8a790c1323' id='type-id-229'/>
-    <reference-type-def kind='lvalue' type-id='type-id-115' size-in-bits='64' hash='63fffe34e36429fb' id='type-id-196'/>
-    <pointer-type-def type-id='type-id-115' size-in-bits='64' hash='d43e85f7f656032c' id='type-id-230'/>
-    <pointer-type-def type-id='type-id-168' size-in-bits='64' hash='5b011906c73bf4a6#2' id='type-id-212'/>
-    <reference-type-def kind='lvalue' type-id='type-id-118' size-in-bits='64' hash='d067b691b75774e0' id='type-id-201'/>
-    <pointer-type-def type-id='type-id-118' size-in-bits='64' hash='6eb135f9ee30c7d3#2' id='type-id-231'/>
-    <qualified-type-def type-id='type-id-15' const='yes' hash='352ae351efe30fb' id='type-id-232'/>
-    <pointer-type-def type-id='type-id-232' size-in-bits='64' hash='3d4dad61f25401d1' id='type-id-233'/>
-    <class-decl name='FlistSorter' visibility='default' size-in-bits='128' filepath='libnurbs/internals/flistsorter.h' line='42' column='1' hash='de26355e9c8813e6' id='type-id-204'>
-      <base-class access='public' layout-offset-in-bits='0' type-id='type-id-195'/>
+    <typedef-decl name='jmp_buf' type-id='type-id-187' size-in-bits='1600' filepath='/usr/include/setjmp.h' line='49' column='1' hash='eaf0312d83fb7dbe#2' id='type-id-209'/>
+    <pointer-type-def type-id='type-id-175' size-in-bits='64' hash='5bb341ab068e20d1' id='type-id-213'/>
+    <pointer-type-def type-id='type-id-189' size-in-bits='64' hash='ac643e5efe2ad5a7' id='type-id-191'/>
+    <qualified-type-def type-id='type-id-191' const='yes' hash='f0a96cba9eab91a6' id='type-id-214'/>
+    <pointer-type-def type-id='type-id-190' size-in-bits='64' hash='332974e139429579' id='type-id-194'/>
+    <qualified-type-def type-id='type-id-194' const='yes' hash='be779c77707b51a9' id='type-id-215'/>
+    <pointer-type-def type-id='type-id-195' size-in-bits='64' hash='e826ebb004997b15' id='type-id-196'/>
+    <qualified-type-def type-id='type-id-196' const='yes' hash='b72bbe463f0000ac' id='type-id-216'/>
+    <pointer-type-def type-id='type-id-197' size-in-bits='64' hash='1fb7d2d46f3534c2' id='type-id-217'/>
+    <reference-type-def kind='lvalue' type-id='type-id-114' size-in-bits='64' hash='9aac1f7c1b1bcf7a' id='type-id-206'/>
+    <reference-type-def kind='lvalue' type-id='type-id-200' size-in-bits='64' hash='f8d423d012ab5d30' id='type-id-218'/>
+    <pointer-type-def type-id='type-id-200' size-in-bits='64' hash='4a523755910eb635' id='type-id-219'/>
+    <reference-type-def kind='lvalue' type-id='type-id-220' size-in-bits='64' hash='631b13f06dbf4c0a' id='type-id-221'/>
+    <pointer-type-def type-id='type-id-201' size-in-bits='64' hash='ea979579dc8c213' id='type-id-222'/>
+    <pointer-type-def type-id='type-id-208' size-in-bits='64' hash='d9377c8ad6c480e7' id='type-id-116'/>
+    <reference-type-def kind='lvalue' type-id='type-id-223' size-in-bits='64' hash='307219709aed1c3f' id='type-id-224'/>
+    <pointer-type-def type-id='type-id-225' size-in-bits='64' hash='b85709d32b346d35#2' id='type-id-207'/>
+    <reference-type-def kind='lvalue' type-id='type-id-112' size-in-bits='64' hash='82c6f795f70e5521' id='type-id-205'/>
+    <pointer-type-def type-id='type-id-192' size-in-bits='64' hash='c8e6945b9846bb3e' id='type-id-226'/>
+    <qualified-type-def type-id='type-id-226' const='yes' hash='566ac8a790c1323' id='type-id-227'/>
+    <reference-type-def kind='lvalue' type-id='type-id-115' size-in-bits='64' hash='63fffe34e36429fb' id='type-id-193'/>
+    <pointer-type-def type-id='type-id-115' size-in-bits='64' hash='d43e85f7f656032c' id='type-id-228'/>
+    <pointer-type-def type-id='type-id-168' size-in-bits='64' hash='5b011906c73bf4a6#2' id='type-id-210'/>
+    <reference-type-def kind='lvalue' type-id='type-id-118' size-in-bits='64' hash='d067b691b75774e0' id='type-id-199'/>
+    <pointer-type-def type-id='type-id-118' size-in-bits='64' hash='6eb135f9ee30c7d3#2' id='type-id-229'/>
+    <qualified-type-def type-id='type-id-15' const='yes' hash='352ae351efe30fb' id='type-id-230'/>
+    <pointer-type-def type-id='type-id-230' size-in-bits='64' hash='3d4dad61f25401d1' id='type-id-231'/>
+    <class-decl name='FlistSorter' visibility='default' size-in-bits='128' filepath='libnurbs/internals/flistsorter.h' line='42' column='1' hash='de26355e9c8813e6' id='type-id-202'>
+      <base-class access='public' layout-offset-in-bits='0' type-id='type-id-192'/>
       <member-function access='private' destructor='yes' vtable-offset='-1'>
         <function-decl name='~FlistSorter' filepath='libnurbs/internals/flistsorter.h' line='45' column='1' visibility='default' binding='global' size-in-bits='64' hash='d97f95fe79cacdf1'>
-          <parameter type-id='type-id-234' is-artificial='yes'/>
+          <parameter type-id='type-id-232' is-artificial='yes'/>
           <parameter type-id='type-id-3' is-artificial='yes'/>
           <return type-id='type-id-32'/>
         </function-decl>
       </member-function>
       <member-function access='protected' vtable-offset='2'>
         <function-decl name='qscmp' mangled-name='_ZN11FlistSorter5qscmpEPcS0_' filepath='libnurbs/internals/flistsorter.cc' line='54' column='1' visibility='default' binding='global' size-in-bits='64' hash='c50376f19f645d5'>
-          <parameter type-id='type-id-234' is-artificial='yes'/>
+          <parameter type-id='type-id-232' is-artificial='yes'/>
           <parameter type-id='type-id-159'/>
           <parameter type-id='type-id-159'/>
           <return type-id='type-id-3'/>
@@ -2403,7 +2398,7 @@
       </member-function>
       <member-function access='protected' vtable-offset='3'>
         <function-decl name='qsexc' mangled-name='_ZN11FlistSorter5qsexcEPcS0_' filepath='libnurbs/internals/flistsorter.cc' line='62' column='1' visibility='default' binding='global' size-in-bits='64' hash='659ced78215eae4a'>
-          <parameter type-id='type-id-234' is-artificial='yes'/>
+          <parameter type-id='type-id-232' is-artificial='yes'/>
           <parameter type-id='type-id-159'/>
           <parameter type-id='type-id-159'/>
           <return type-id='type-id-32'/>
@@ -2411,7 +2406,7 @@
       </member-function>
       <member-function access='protected' vtable-offset='4'>
         <function-decl name='qstexc' mangled-name='_ZN11FlistSorter6qstexcEPcS0_S0_' filepath='libnurbs/internals/flistsorter.cc' line='72' column='1' visibility='default' binding='global' size-in-bits='64' hash='4e076abb07cc8f73'>
-          <parameter type-id='type-id-234' is-artificial='yes'/>
+          <parameter type-id='type-id-232' is-artificial='yes'/>
           <parameter type-id='type-id-159'/>
           <parameter type-id='type-id-159'/>
           <parameter type-id='type-id-159'/>
@@ -2419,11 +2414,11 @@
         </function-decl>
       </member-function>
     </class-decl>
-    <class-decl name='Slicer' visibility='default' size-in-bits='8064' filepath='libnurbs/internals/slicer.h' line='49' column='1' hash='f330254a9b28fc6c' id='type-id-206'>
-      <base-class access='public' layout-offset-in-bits='0' type-id='type-id-235'/>
-      <base-class access='public' layout-offset-in-bits='128' type-id='type-id-236'/>
+    <class-decl name='Slicer' visibility='default' size-in-bits='8064' filepath='libnurbs/internals/slicer.h' line='49' column='1' hash='f330254a9b28fc6c' id='type-id-204'>
+      <base-class access='public' layout-offset-in-bits='0' type-id='type-id-233'/>
+      <base-class access='public' layout-offset-in-bits='128' type-id='type-id-234'/>
       <data-member access='private' layout-offset-in-bits='5248'>
-        <var-decl name='backend' type-id='type-id-208' visibility='default' filepath='libnurbs/internals/slicer.h' line='72' column='1'/>
+        <var-decl name='backend' type-id='type-id-206' visibility='default' filepath='libnurbs/internals/slicer.h' line='72' column='1'/>
       </data-member>
       <data-member access='private' layout-offset-in-bits='5312'>
         <var-decl name='oneOverDu' type-id='type-id-15' visibility='default' filepath='libnurbs/internals/slicer.h' line='73' column='1'/>
@@ -2444,20 +2439,20 @@
         <var-decl name='vlinear' type-id='type-id-3' visibility='default' filepath='libnurbs/internals/slicer.h' line='82' column='1'/>
       </data-member>
     </class-decl>
-    <class-decl name='Sorter' visibility='default' size-in-bits='128' filepath='libnurbs/internals/sorter.h' line='36' column='1' hash='6248f8f885ee936a' id='type-id-195'>
+    <class-decl name='Sorter' visibility='default' size-in-bits='128' filepath='libnurbs/internals/sorter.h' line='36' column='1' hash='6248f8f885ee936a' id='type-id-192'>
       <data-member access='private' layout-offset-in-bits='64'>
         <var-decl name='es' type-id='type-id-3' visibility='default' filepath='libnurbs/internals/sorter.h' line='49' column='1'/>
       </data-member>
       <member-function access='private' destructor='yes' vtable-offset='-1'>
         <function-decl name='~Sorter' filepath='libnurbs/internals/sorter.h' line='39' column='1' visibility='default' binding='global' size-in-bits='64' hash='d97f95fe79cacdf1'>
-          <parameter type-id='type-id-228' is-artificial='yes'/>
+          <parameter type-id='type-id-226' is-artificial='yes'/>
           <parameter type-id='type-id-3'/>
           <return type-id='type-id-32'/>
         </function-decl>
       </member-function>
       <member-function access='protected' vtable-offset='2'>
         <function-decl name='qscmp' mangled-name='_ZN6Sorter5qscmpEPcS0_' filepath='libnurbs/internals/sorter.cc' line='56' column='1' visibility='default' binding='global' size-in-bits='64' hash='c50376f19f645d5'>
-          <parameter type-id='type-id-228' is-artificial='yes'/>
+          <parameter type-id='type-id-226' is-artificial='yes'/>
           <parameter type-id='type-id-159'/>
           <parameter type-id='type-id-159'/>
           <return type-id='type-id-3'/>
@@ -2465,7 +2460,7 @@
       </member-function>
       <member-function access='protected' vtable-offset='3'>
         <function-decl name='qsexc' mangled-name='_ZN6Sorter5qsexcEPcS0_' filepath='libnurbs/internals/sorter.cc' line='64' column='1' visibility='default' binding='global' size-in-bits='64' hash='659ced78215eae4a'>
-          <parameter type-id='type-id-228' is-artificial='yes'/>
+          <parameter type-id='type-id-226' is-artificial='yes'/>
           <parameter type-id='type-id-159'/>
           <parameter type-id='type-id-159'/>
           <return type-id='type-id-32'/>
@@ -2473,7 +2468,7 @@
       </member-function>
       <member-function access='protected' vtable-offset='4'>
         <function-decl name='qstexc' mangled-name='_ZN6Sorter6qstexcEPcS0_S0_' filepath='libnurbs/internals/sorter.cc' line='71' column='1' visibility='default' binding='global' size-in-bits='64' hash='4e076abb07cc8f73'>
-          <parameter type-id='type-id-228' is-artificial='yes'/>
+          <parameter type-id='type-id-226' is-artificial='yes'/>
           <parameter type-id='type-id-159'/>
           <parameter type-id='type-id-159'/>
           <parameter type-id='type-id-159'/>
@@ -2483,10 +2478,10 @@
     </class-decl>
     <class-decl name='Backend' visibility='default' size-in-bits='640' filepath='libnurbs/internals/backend.h' line='46' column='1' hash='50ce073f352c904d' id='type-id-114'>
       <data-member access='private' layout-offset-in-bits='0'>
-        <var-decl name='curveEvaluator' type-id='type-id-237' visibility='default' filepath='libnurbs/internals/backend.h' line='48' column='1'/>
+        <var-decl name='curveEvaluator' type-id='type-id-235' visibility='default' filepath='libnurbs/internals/backend.h' line='48' column='1'/>
       </data-member>
       <data-member access='private' layout-offset-in-bits='64'>
-        <var-decl name='surfaceEvaluator' type-id='type-id-238' visibility='default' filepath='libnurbs/internals/backend.h' line='49' column='1'/>
+        <var-decl name='surfaceEvaluator' type-id='type-id-236' visibility='default' filepath='libnurbs/internals/backend.h' line='49' column='1'/>
       </data-member>
       <data-member access='private' layout-offset-in-bits='128'>
         <var-decl name='wireframetris' type-id='type-id-3' visibility='default' filepath='libnurbs/internals/backend.h' line='105' column='1'/>
@@ -2498,18 +2493,18 @@
         <var-decl name='npts' type-id='type-id-3' visibility='default' filepath='libnurbs/internals/backend.h' line='107' column='1'/>
       </data-member>
       <data-member access='private' layout-offset-in-bits='224'>
-        <var-decl name='mesh' type-id='type-id-239' visibility='default' filepath='libnurbs/internals/backend.h' line='108' column='1'/>
+        <var-decl name='mesh' type-id='type-id-237' visibility='default' filepath='libnurbs/internals/backend.h' line='108' column='1'/>
       </data-member>
       <data-member access='private' layout-offset-in-bits='608'>
         <var-decl name='meshindex' type-id='type-id-3' visibility='default' filepath='libnurbs/internals/backend.h' line='109' column='1'/>
       </data-member>
     </class-decl>
-    <class-decl name='Curvelist' visibility='default' size-in-bits='256' filepath='libnurbs/internals/curvelist.h' line='47' column='1' hash='d447e5bf0d8dc005' id='type-id-222'>
+    <class-decl name='Curvelist' visibility='default' size-in-bits='256' filepath='libnurbs/internals/curvelist.h' line='47' column='1' hash='d447e5bf0d8dc005' id='type-id-220'>
       <data-member access='private' layout-offset-in-bits='0'>
-        <var-decl name='curve' type-id='type-id-240' visibility='default' filepath='libnurbs/internals/curvelist.h' line='57' column='1'/>
+        <var-decl name='curve' type-id='type-id-238' visibility='default' filepath='libnurbs/internals/curvelist.h' line='57' column='1'/>
       </data-member>
       <data-member access='private' layout-offset-in-bits='64'>
-        <var-decl name='range' type-id='type-id-241' visibility='default' filepath='libnurbs/internals/curvelist.h' line='58' column='1'/>
+        <var-decl name='range' type-id='type-id-239' visibility='default' filepath='libnurbs/internals/curvelist.h' line='58' column='1'/>
       </data-member>
       <data-member access='private' layout-offset-in-bits='160'>
         <var-decl name='needsSubdivision' type-id='type-id-3' visibility='default' filepath='libnurbs/internals/curvelist.h' line='59' column='1'/>
@@ -2518,9 +2513,9 @@
         <var-decl name='stepsize' type-id='type-id-2' visibility='default' filepath='libnurbs/internals/curvelist.h' line='60' column='1'/>
       </data-member>
     </class-decl>
-    <class-decl name='Patchlist' visibility='default' size-in-bits='640' filepath='libnurbs/internals/patchlist.h' line='45' column='1' hash='6a36a7182ce54cd6' id='type-id-225'>
+    <class-decl name='Patchlist' visibility='default' size-in-bits='640' filepath='libnurbs/internals/patchlist.h' line='45' column='1' hash='6a36a7182ce54cd6' id='type-id-223'>
       <data-member access='private' layout-offset-in-bits='0'>
-        <var-decl name='patch' type-id='type-id-242' visibility='default' filepath='libnurbs/internals/patchlist.h' line='63' column='1'/>
+        <var-decl name='patch' type-id='type-id-240' visibility='default' filepath='libnurbs/internals/patchlist.h' line='63' column='1'/>
       </data-member>
       <data-member access='private' layout-offset-in-bits='64'>
         <var-decl name='notInBbox' type-id='type-id-3' visibility='default' filepath='libnurbs/internals/patchlist.h' line='64' column='1'/>
@@ -2529,10 +2524,10 @@
         <var-decl name='needsSampling' type-id='type-id-3' visibility='default' filepath='libnurbs/internals/patchlist.h' line='65' column='1'/>
       </data-member>
       <data-member access='private' layout-offset-in-bits='128'>
-        <var-decl name='pspec' type-id='type-id-243' visibility='default' filepath='libnurbs/internals/patchlist.h' line='66' column='1'/>
+        <var-decl name='pspec' type-id='type-id-241' visibility='default' filepath='libnurbs/internals/patchlist.h' line='66' column='1'/>
       </data-member>
     </class-decl>
-    <class-decl name='Quilt' is-struct='yes' visibility='default' size-in-bits='896' filepath='libnurbs/internals/quilt.h' line='64' column='1' hash='c67d4e3c23f99f1b#2' id='type-id-227'>
+    <class-decl name='Quilt' is-struct='yes' visibility='default' size-in-bits='896' filepath='libnurbs/internals/quilt.h' line='64' column='1' hash='c67d4e3c23f99f1b#2' id='type-id-225'>
       <base-class access='public' layout-offset-in-bits='0' type-id='type-id-166'/>
       <data-member access='public' layout-offset-in-bits='0'>
         <var-decl name='mapdesc' type-id='type-id-184' visibility='default' filepath='libnurbs/internals/quilt.h' line='67' column='1'/>
@@ -2541,13 +2536,13 @@
         <var-decl name='cpts' type-id='type-id-34' visibility='default' filepath='libnurbs/internals/quilt.h' line='68' column='1'/>
       </data-member>
       <data-member access='public' layout-offset-in-bits='128'>
-        <var-decl name='qspec' type-id='type-id-244' visibility='default' filepath='libnurbs/internals/quilt.h' line='69' column='1'/>
+        <var-decl name='qspec' type-id='type-id-242' visibility='default' filepath='libnurbs/internals/quilt.h' line='69' column='1'/>
       </data-member>
       <data-member access='public' layout-offset-in-bits='768'>
-        <var-decl name='eqspec' type-id='type-id-245' visibility='default' filepath='libnurbs/internals/quilt.h' line='70' column='1'/>
+        <var-decl name='eqspec' type-id='type-id-243' visibility='default' filepath='libnurbs/internals/quilt.h' line='70' column='1'/>
       </data-member>
       <data-member access='public' layout-offset-in-bits='832'>
-        <var-decl name='next' type-id='type-id-209' visibility='default' filepath='libnurbs/internals/quilt.h' line='71' column='1'/>
+        <var-decl name='next' type-id='type-id-207' visibility='default' filepath='libnurbs/internals/quilt.h' line='71' column='1'/>
       </data-member>
     </class-decl>
     <class-decl name='Renderhints' is-struct='yes' visibility='default' size-in-bits='256' filepath='libnurbs/internals/renderhints.h' line='41' column='1' hash='dc089e88fd7ee316#2' id='type-id-112'>
@@ -2576,70 +2571,70 @@
         <var-decl name='wirequads' type-id='type-id-3' visibility='default' filepath='libnurbs/internals/renderhints.h' line='57' column='1'/>
       </data-member>
     </class-decl>
-    <function-type method-class-id='type-id-192' size-in-bits='64' hash='c50376f19f645d5' id='type-id-246'>
+    <function-type method-class-id='type-id-189' size-in-bits='64' hash='c50376f19f645d5' id='type-id-244'>
+      <parameter type-id='type-id-191' is-artificial='yes'/>
+      <parameter type-id='type-id-159'/>
+      <parameter type-id='type-id-159'/>
+      <return type-id='type-id-3'/>
+    </function-type>
+    <function-type method-class-id='type-id-190' size-in-bits='64' hash='c50376f19f645d5' id='type-id-245'>
       <parameter type-id='type-id-194' is-artificial='yes'/>
       <parameter type-id='type-id-159'/>
       <parameter type-id='type-id-159'/>
       <return type-id='type-id-3'/>
     </function-type>
-    <function-type method-class-id='type-id-193' size-in-bits='64' hash='c50376f19f645d5' id='type-id-247'>
-      <parameter type-id='type-id-197' is-artificial='yes'/>
+    <function-type method-class-id='type-id-195' size-in-bits='64' hash='c50376f19f645d5' id='type-id-246'>
+      <parameter type-id='type-id-196' is-artificial='yes'/>
       <parameter type-id='type-id-159'/>
       <parameter type-id='type-id-159'/>
       <return type-id='type-id-3'/>
     </function-type>
-    <function-type method-class-id='type-id-198' size-in-bits='64' hash='c50376f19f645d5' id='type-id-248'>
-      <parameter type-id='type-id-199' is-artificial='yes'/>
+    <function-type method-class-id='type-id-202' size-in-bits='64' hash='c50376f19f645d5' id='type-id-247'>
+      <parameter type-id='type-id-232' is-artificial='yes'/>
       <parameter type-id='type-id-159'/>
       <parameter type-id='type-id-159'/>
       <return type-id='type-id-3'/>
     </function-type>
-    <function-type method-class-id='type-id-204' size-in-bits='64' hash='c50376f19f645d5' id='type-id-249'>
-      <parameter type-id='type-id-234' is-artificial='yes'/>
+    <function-type method-class-id='type-id-192' size-in-bits='64' hash='c50376f19f645d5' id='type-id-248'>
+      <parameter type-id='type-id-226' is-artificial='yes'/>
       <parameter type-id='type-id-159'/>
       <parameter type-id='type-id-159'/>
       <return type-id='type-id-3'/>
     </function-type>
-    <function-type method-class-id='type-id-195' size-in-bits='64' hash='c50376f19f645d5' id='type-id-250'>
-      <parameter type-id='type-id-228' is-artificial='yes'/>
-      <parameter type-id='type-id-159'/>
-      <parameter type-id='type-id-159'/>
-      <return type-id='type-id-3'/>
-    </function-type>
-    <function-type method-class-id='type-id-193' size-in-bits='64' hash='659ced78215eae4a' id='type-id-251'>
-      <parameter type-id='type-id-197' is-artificial='yes'/>
+    <function-type method-class-id='type-id-190' size-in-bits='64' hash='659ced78215eae4a' id='type-id-249'>
+      <parameter type-id='type-id-194' is-artificial='yes'/>
       <parameter type-id='type-id-159'/>
       <parameter type-id='type-id-159'/>
       <return type-id='type-id-32'/>
     </function-type>
-    <function-type method-class-id='type-id-193' size-in-bits='64' hash='4e076abb07cc8f73' id='type-id-252'>
-      <parameter type-id='type-id-197' is-artificial='yes'/>
+    <function-type method-class-id='type-id-190' size-in-bits='64' hash='4e076abb07cc8f73' id='type-id-250'>
+      <parameter type-id='type-id-194' is-artificial='yes'/>
       <parameter type-id='type-id-159'/>
       <parameter type-id='type-id-159'/>
       <parameter type-id='type-id-159'/>
       <return type-id='type-id-32'/>
     </function-type>
-    <function-type method-class-id='type-id-204' size-in-bits='64' hash='659ced78215eae4a' id='type-id-253'>
-      <parameter type-id='type-id-234' is-artificial='yes'/>
+    <function-type method-class-id='type-id-202' size-in-bits='64' hash='659ced78215eae4a' id='type-id-251'>
+      <parameter type-id='type-id-232' is-artificial='yes'/>
       <parameter type-id='type-id-159'/>
       <parameter type-id='type-id-159'/>
       <return type-id='type-id-32'/>
     </function-type>
-    <function-type method-class-id='type-id-204' size-in-bits='64' hash='4e076abb07cc8f73' id='type-id-254'>
-      <parameter type-id='type-id-234' is-artificial='yes'/>
+    <function-type method-class-id='type-id-202' size-in-bits='64' hash='4e076abb07cc8f73' id='type-id-252'>
+      <parameter type-id='type-id-232' is-artificial='yes'/>
       <parameter type-id='type-id-159'/>
       <parameter type-id='type-id-159'/>
       <parameter type-id='type-id-159'/>
       <return type-id='type-id-32'/>
     </function-type>
-    <function-type method-class-id='type-id-195' size-in-bits='64' hash='659ced78215eae4a' id='type-id-255'>
-      <parameter type-id='type-id-228' is-artificial='yes'/>
+    <function-type method-class-id='type-id-192' size-in-bits='64' hash='659ced78215eae4a' id='type-id-253'>
+      <parameter type-id='type-id-226' is-artificial='yes'/>
       <parameter type-id='type-id-159'/>
       <parameter type-id='type-id-159'/>
       <return type-id='type-id-32'/>
     </function-type>
-    <function-type method-class-id='type-id-195' size-in-bits='64' hash='4e076abb07cc8f73' id='type-id-256'>
-      <parameter type-id='type-id-228' is-artificial='yes'/>
+    <function-type method-class-id='type-id-192' size-in-bits='64' hash='4e076abb07cc8f73' id='type-id-254'>
+      <parameter type-id='type-id-226' is-artificial='yes'/>
       <parameter type-id='type-id-159'/>
       <parameter type-id='type-id-159'/>
       <parameter type-id='type-id-159'/>
@@ -2647,7 +2642,12 @@
     </function-type>
   </abi-instr>
   <abi-instr address-size='64' path='libnurbs/internals/arctess.cc' comp-dir-path='/tmp/legendre/spack-stage/spack-stage-T0fsxk/Mesa-8.0.5/src/glu/sgi' language='LANG_C_plus_plus'>
-    <qualified-type-def type-id='type-id-219' const='yes' hash='9105da5c5735bcca' id='type-id-257'/>
+    <array-type-def dimensions='3' type-id='type-id-15' size-in-bits='unknown' hash='d58c4f13494d321d' id='type-id-198'>
+      <subrange length='unknown' lower-bound='0' upper-bound='0' size-in-bits='64' is-anonymous='yes' hash='edeb07fdf1f46d10' id='type-id-255'/>
+      <subrange length='24' lower-bound='0' upper-bound='23' type-id='type-id-17' size-in-bits='64' is-anonymous='yes' hash='a3fc60197af58c4d' id='type-id-256'/>
+      <subrange length='24' lower-bound='0' upper-bound='23' type-id='type-id-17' size-in-bits='64' is-anonymous='yes' hash='a3fc60197af58c4d' id='type-id-256'/>
+    </array-type-def>
+    <qualified-type-def type-id='type-id-217' const='yes' hash='9105da5c5735bcca' id='type-id-257'/>
     <pointer-type-def type-id='type-id-258' size-in-bits='64' hash='55e9ab03b1bf2f0f#2' id='type-id-184'/>
     <qualified-type-def type-id='type-id-181' const='yes' hash='1fe76668198165fb' id='type-id-259'/>
     <qualified-type-def type-id='type-id-173' const='yes' hash='108588da93ff21b8' id='type-id-260'/>
@@ -2726,12 +2726,12 @@
         <var-decl name='next' type-id='type-id-184' visibility='default' filepath='libnurbs/internals/mapdesc.h' line='129' column='1'/>
       </data-member>
       <data-member access='private' layout-offset-in-bits='3328'>
-        <var-decl name='backend' type-id='type-id-208' visibility='default' filepath='libnurbs/internals/mapdesc.h' line='130' column='1'/>
+        <var-decl name='backend' type-id='type-id-206' visibility='default' filepath='libnurbs/internals/mapdesc.h' line='130' column='1'/>
       </data-member>
     </class-decl>
   </abi-instr>
   <abi-instr address-size='64' path='libnurbs/internals/backend.cc' comp-dir-path='/tmp/legendre/spack-stage/spack-stage-T0fsxk/Mesa-8.0.5/src/glu/sgi' language='LANG_C_plus_plus'>
-    <array-type-def dimensions='2' type-id='type-id-15' size-in-bits='384' hash='e58ef72812ba36a1' id='type-id-239'>
+    <array-type-def dimensions='2' type-id='type-id-15' size-in-bits='384' hash='e58ef72812ba36a1' id='type-id-237'>
       <subrange length='3' lower-bound='0' upper-bound='2' type-id='type-id-17' size-in-bits='64' is-anonymous='yes' hash='749db43716aefd44' id='type-id-134'/>
       <subrange length='4' lower-bound='0' upper-bound='3' type-id='type-id-17' size-in-bits='64' is-anonymous='yes' hash='a81ae17a7e17002e' id='type-id-110'/>
     </array-type-def>
@@ -2765,8 +2765,8 @@
     </class-decl>
     <pointer-type-def type-id='type-id-114' size-in-bits='64' hash='ffd2f64d5f5cc1' id='type-id-268'/>
     <qualified-type-def type-id='type-id-268' const='yes' hash='b63e56174121c0bc' id='type-id-269'/>
-    <reference-type-def kind='lvalue' type-id='type-id-22' size-in-bits='64' hash='5ba0edfbb381d4fa' id='type-id-237'/>
-    <reference-type-def kind='lvalue' type-id='type-id-85' size-in-bits='64' hash='d39155254008c22a' id='type-id-238'/>
+    <reference-type-def kind='lvalue' type-id='type-id-22' size-in-bits='64' hash='5ba0edfbb381d4fa' id='type-id-235'/>
+    <reference-type-def kind='lvalue' type-id='type-id-85' size-in-bits='64' hash='d39155254008c22a' id='type-id-236'/>
     <pointer-type-def type-id='type-id-263' size-in-bits='64' hash='d315a82f9175e15b' id='type-id-270'/>
     <qualified-type-def type-id='type-id-270' const='yes' hash='634cb106d6976f2' id='type-id-271'/>
     <pointer-type-def type-id='type-id-265' size-in-bits='64' hash='b1f9a8d911f030fa' id='type-id-267'/>
@@ -2781,23 +2781,23 @@
     <qualified-type-def type-id='type-id-145' const='yes' hash='2bac125d66b07e2a' id='type-id-273'/>
   </abi-instr>
   <abi-instr address-size='64' path='libnurbs/internals/bin.cc' comp-dir-path='/tmp/legendre/spack-stage/spack-stage-T0fsxk/Mesa-8.0.5/src/glu/sgi' language='LANG_C_plus_plus'>
-    <qualified-type-def type-id='type-id-221' const='yes' hash='e7156a70d1a00fc8' id='type-id-274'/>
+    <qualified-type-def type-id='type-id-219' const='yes' hash='e7156a70d1a00fc8' id='type-id-274'/>
   </abi-instr>
   <abi-instr address-size='64' path='libnurbs/internals/bufpool.cc' comp-dir-path='/tmp/legendre/spack-stage/spack-stage-T0fsxk/Mesa-8.0.5/src/glu/sgi' language='LANG_C_plus_plus'>
   </abi-instr>
   <abi-instr address-size='64' path='libnurbs/internals/cachingeval.cc' comp-dir-path='/tmp/legendre/spack-stage/spack-stage-T0fsxk/Mesa-8.0.5/src/glu/sgi' language='LANG_C_plus_plus'>
   </abi-instr>
   <abi-instr address-size='64' path='libnurbs/internals/ccw.cc' comp-dir-path='/tmp/legendre/spack-stage/spack-stage-T0fsxk/Mesa-8.0.5/src/glu/sgi' language='LANG_C_plus_plus'>
-    <qualified-type-def type-id='type-id-230' const='yes' hash='793cd1f7965b2caa' id='type-id-275'/>
+    <qualified-type-def type-id='type-id-228' const='yes' hash='793cd1f7965b2caa' id='type-id-275'/>
   </abi-instr>
   <abi-instr address-size='64' path='libnurbs/internals/coveandtiler.cc' comp-dir-path='/tmp/legendre/spack-stage/spack-stage-T0fsxk/Mesa-8.0.5/src/glu/sgi' language='LANG_C_plus_plus'>
-    <class-decl name='CoveAndTiler' visibility='default' size-in-bits='2688' filepath='libnurbs/internals/coveandtiler.h' line='46' column='1' hash='8201c171e372f287' id='type-id-235'>
+    <class-decl name='CoveAndTiler' visibility='default' size-in-bits='2688' filepath='libnurbs/internals/coveandtiler.h' line='46' column='1' hash='8201c171e372f287' id='type-id-233'>
       <base-class access='public' layout-offset-in-bits='192' is-virtual='yes' type-id='type-id-276'/>
-      <data-member access='private' layout-offset-in-bits='64'>
-        <var-decl name='backend' type-id='type-id-208' visibility='default' filepath='libnurbs/internals/coveandtiler.h' line='52' column='1'/>
-      </data-member>
-      <data-member access='private' static='yes'>
+      <data-member access='public' static='yes'>
         <var-decl name='MAXSTRIPSIZE' type-id='type-id-43' mangled-name='_ZN12CoveAndTiler12MAXSTRIPSIZEE' visibility='default' filepath='libnurbs/internals/coveandtiler.cc' line='50' column='1'/>
+      </data-member>
+      <data-member access='private' layout-offset-in-bits='64'>
+        <var-decl name='backend' type-id='type-id-206' visibility='default' filepath='libnurbs/internals/coveandtiler.h' line='52' column='1'/>
       </data-member>
     </class-decl>
     <class-decl name='Jarcloc' visibility='default' size-in-bits='192' filepath='libnurbs/internals/jarcloc.h' line='41' column='1' hash='a923b851bd843556' id='type-id-277'>
@@ -2888,7 +2888,7 @@
         <var-decl name='uend' type-id='type-id-33' visibility='default' filepath='libnurbs/internals/gridline.h' line='44' column='1'/>
       </data-member>
     </class-decl>
-    <pointer-type-def type-id='type-id-235' size-in-bits='64' hash='bce98e4f7d30489e' id='type-id-282'/>
+    <pointer-type-def type-id='type-id-233' size-in-bits='64' hash='bce98e4f7d30489e' id='type-id-282'/>
     <qualified-type-def type-id='type-id-282' const='yes' hash='e569359ef5fa718c' id='type-id-283'/>
     <reference-type-def kind='lvalue' type-id='type-id-263' size-in-bits='64' hash='fdfdd3c0df02dec3' id='type-id-284'/>
     <reference-type-def kind='lvalue' type-id='type-id-265' size-in-bits='64' hash='1c2700b404294e53' id='type-id-285'/>
@@ -2902,7 +2902,7 @@
     <qualified-type-def type-id='type-id-292' const='yes' hash='bae1b0db656826d4' id='type-id-293'/>
   </abi-instr>
   <abi-instr address-size='64' path='libnurbs/internals/curve.cc' comp-dir-path='/tmp/legendre/spack-stage/spack-stage-T0fsxk/Mesa-8.0.5/src/glu/sgi' language='LANG_C_plus_plus'>
-    <array-type-def dimensions='1' type-id='type-id-294' size-in-bits='640' hash='a3566192eab066e7' id='type-id-244'>
+    <array-type-def dimensions='1' type-id='type-id-294' size-in-bits='640' hash='a3566192eab066e7' id='type-id-242'>
       <subrange length='2' lower-bound='0' upper-bound='1' type-id='type-id-17' size-in-bits='64' is-anonymous='yes' hash='4b31246d758bb233' id='type-id-131'/>
     </array-type-def>
     <array-type-def dimensions='1' type-id='type-id-15' size-in-bits='3840' hash='58de69527282d658' id='type-id-295'>
@@ -2984,12 +2984,12 @@
     </class-decl>
     <typedef-decl name='Knot' type-id='type-id-15' size-in-bits='32' filepath='libnurbs/internals/types.h' line='45' column='1' hash='f0c050c6f9f8032e' id='type-id-304'/>
     <typedef-decl name='Maxmatrix' type-id='type-id-298' size-in-bits='800' filepath='libnurbs/internals/mapdesc.h' line='45' column='1' hash='1ed05e9d8dafdd69' id='type-id-262'/>
-    <typedef-decl name='Quilt_ptr' type-id='type-id-209' size-in-bits='64' filepath='libnurbs/internals/quilt.h' line='90' column='1' hash='61477c4d1fd8d94d#2' id='type-id-305'/>
-    <typedef-decl name='Quiltspec_ptr' type-id='type-id-306' size-in-bits='64' filepath='libnurbs/internals/quilt.h' line='62' column='1' hash='61477c4d1fd8d94d' id='type-id-245'/>
+    <typedef-decl name='Quilt_ptr' type-id='type-id-207' size-in-bits='64' filepath='libnurbs/internals/quilt.h' line='90' column='1' hash='61477c4d1fd8d94d#2' id='type-id-305'/>
+    <typedef-decl name='Quiltspec_ptr' type-id='type-id-306' size-in-bits='64' filepath='libnurbs/internals/quilt.h' line='62' column='1' hash='61477c4d1fd8d94d' id='type-id-243'/>
     <reference-type-def kind='lvalue' type-id='type-id-299' size-in-bits='64' hash='2cfcac9eea55d737' id='type-id-307'/>
     <pointer-type-def type-id='type-id-299' size-in-bits='64' hash='6f4af404afd59c92' id='type-id-300'/>
     <qualified-type-def type-id='type-id-300' const='yes' hash='d5d8e0ec5ace44dc' id='type-id-308'/>
-    <reference-type-def kind='lvalue' type-id='type-id-203' size-in-bits='64' hash='36cffed85287cd4' id='type-id-309'/>
+    <reference-type-def kind='lvalue' type-id='type-id-201' size-in-bits='64' hash='36cffed85287cd4' id='type-id-309'/>
     <pointer-type-def type-id='type-id-304' size-in-bits='64' hash='a96b216056e1533d' id='type-id-303'/>
     <reference-type-def kind='lvalue' type-id='type-id-310' size-in-bits='64' hash='2c2cc99c0b45f39c' id='type-id-311'/>
     <qualified-type-def type-id='type-id-184' const='yes' hash='a3ab9ec738074901#2' id='type-id-312'/>
@@ -3021,21 +3021,21 @@
         <var-decl name='cpts' type-id='type-id-34' visibility='default' filepath='libnurbs/internals/quilt.h' line='68' column='1'/>
       </data-member>
       <data-member access='private' layout-offset-in-bits='128'>
-        <var-decl name='qspec' type-id='type-id-244' visibility='default' filepath='libnurbs/internals/quilt.h' line='69' column='1'/>
+        <var-decl name='qspec' type-id='type-id-242' visibility='default' filepath='libnurbs/internals/quilt.h' line='69' column='1'/>
       </data-member>
       <data-member access='private' layout-offset-in-bits='768'>
-        <var-decl name='eqspec' type-id='type-id-245' visibility='default' filepath='libnurbs/internals/quilt.h' line='70' column='1'/>
+        <var-decl name='eqspec' type-id='type-id-243' visibility='default' filepath='libnurbs/internals/quilt.h' line='70' column='1'/>
       </data-member>
       <data-member access='private' layout-offset-in-bits='832'>
         <var-decl name='next' type-id='type-id-316' visibility='default' filepath='libnurbs/internals/quilt.h' line='71' column='1'/>
       </data-member>
     </class-decl>
-    <array-type-def dimensions='1' type-id='type-id-2' size-in-bits='96' hash='1bd3416724f27a06' id='type-id-241'>
+    <array-type-def dimensions='1' type-id='type-id-2' size-in-bits='96' hash='1bd3416724f27a06' id='type-id-239'>
       <subrange length='3' lower-bound='0' upper-bound='2' type-id='type-id-17' size-in-bits='64' is-anonymous='yes' hash='749db43716aefd44' id='type-id-134'/>
     </array-type-def>
     <class-decl name='Curve' is-struct='yes' visibility='default' size-in-bits='8128' filepath='libnurbs/internals/curve.h' line='46' column='1' hash='6b4b2d6fa1f92124#2' id='type-id-317'>
       <data-member access='public' layout-offset-in-bits='0'>
-        <var-decl name='next' type-id='type-id-240' visibility='default' filepath='libnurbs/internals/curve.h' line='51' column='1'/>
+        <var-decl name='next' type-id='type-id-238' visibility='default' filepath='libnurbs/internals/curve.h' line='51' column='1'/>
       </data-member>
       <data-member access='private' layout-offset-in-bits='64'>
         <var-decl name='mapdesc' type-id='type-id-184' visibility='default' filepath='libnurbs/internals/curve.h' line='53' column='1'/>
@@ -3068,8 +3068,8 @@
         <var-decl name='range' type-id='type-id-133' visibility='default' filepath='libnurbs/internals/curve.h' line='62' column='1'/>
       </data-member>
     </class-decl>
-    <pointer-type-def type-id='type-id-317' size-in-bits='64' hash='6f4af404afd59c92#2' id='type-id-240'/>
-    <pointer-type-def type-id='type-id-222' size-in-bits='64' hash='d5cf6050a43148d1' id='type-id-318'/>
+    <pointer-type-def type-id='type-id-317' size-in-bits='64' hash='6f4af404afd59c92#2' id='type-id-238'/>
+    <pointer-type-def type-id='type-id-220' size-in-bits='64' hash='d5cf6050a43148d1' id='type-id-318'/>
     <qualified-type-def type-id='type-id-318' const='yes' hash='eb9e57a56d1ff507' id='type-id-319'/>
     <pointer-type-def type-id='type-id-315' size-in-bits='64' hash='b85709d32b346d35' id='type-id-316'/>
   </abi-instr>
@@ -3079,7 +3079,7 @@
         <var-decl name='curve' type-id='type-id-300' visibility='default' filepath='libnurbs/internals/curvelist.h' line='57' column='1'/>
       </data-member>
       <data-member access='private' layout-offset-in-bits='64'>
-        <var-decl name='range' type-id='type-id-241' visibility='default' filepath='libnurbs/internals/curvelist.h' line='58' column='1'/>
+        <var-decl name='range' type-id='type-id-239' visibility='default' filepath='libnurbs/internals/curvelist.h' line='58' column='1'/>
       </data-member>
       <data-member access='private' layout-offset-in-bits='160'>
         <var-decl name='needsSubdivision' type-id='type-id-3' visibility='default' filepath='libnurbs/internals/curvelist.h' line='59' column='1'/>
@@ -3146,9 +3146,9 @@
     </function-type>
   </abi-instr>
   <abi-instr address-size='64' path='libnurbs/internals/flist.cc' comp-dir-path='/tmp/legendre/spack-stage/spack-stage-T0fsxk/Mesa-8.0.5/src/glu/sgi' language='LANG_C_plus_plus'>
-    <qualified-type-def type-id='type-id-224' const='yes' hash='a5953854e9751c30' id='type-id-333'/>
-    <pointer-type-def type-id='type-id-204' size-in-bits='64' hash='9198325088ce4450' id='type-id-234'/>
-    <qualified-type-def type-id='type-id-234' const='yes' hash='f704212932386f80' id='type-id-334'/>
+    <qualified-type-def type-id='type-id-222' const='yes' hash='a5953854e9751c30' id='type-id-333'/>
+    <pointer-type-def type-id='type-id-202' size-in-bits='64' hash='9198325088ce4450' id='type-id-232'/>
+    <qualified-type-def type-id='type-id-232' const='yes' hash='f704212932386f80' id='type-id-334'/>
   </abi-instr>
   <abi-instr address-size='64' path='libnurbs/internals/flistsorter.cc' comp-dir-path='/tmp/legendre/spack-stage/spack-stage-T0fsxk/Mesa-8.0.5/src/glu/sgi' language='LANG_C_plus_plus'>
   </abi-instr>
@@ -3270,7 +3270,7 @@
         <var-decl name='next' type-id='type-id-343' visibility='default' filepath='libnurbs/internals/mapdesc.h' line='129' column='1'/>
       </data-member>
       <data-member access='private' layout-offset-in-bits='3328'>
-        <var-decl name='backend' type-id='type-id-208' visibility='default' filepath='libnurbs/internals/mapdesc.h' line='130' column='1'/>
+        <var-decl name='backend' type-id='type-id-206' visibility='default' filepath='libnurbs/internals/mapdesc.h' line='130' column='1'/>
       </data-member>
     </class-decl>
     <pointer-type-def type-id='type-id-342' size-in-bits='64' hash='55e9ab03b1bf2f0f' id='type-id-343'/>
@@ -3290,7 +3290,7 @@
         <var-decl name='lastmap' type-id='type-id-345' visibility='default' filepath='libnurbs/internals/maplist.h' line='60' column='1'/>
       </data-member>
       <data-member access='private' layout-offset-in-bits='2624'>
-        <var-decl name='backend' type-id='type-id-208' visibility='default' filepath='libnurbs/internals/maplist.h' line='61' column='1'/>
+        <var-decl name='backend' type-id='type-id-206' visibility='default' filepath='libnurbs/internals/maplist.h' line='61' column='1'/>
       </data-member>
     </class-decl>
     <pointer-type-def type-id='type-id-184' size-in-bits='64' hash='b6550110937b2b7f' id='type-id-345'/>
@@ -3302,14 +3302,14 @@
     <array-type-def dimensions='1' type-id='type-id-270' size-in-bits='128' hash='a83a162cff68d905' id='type-id-349'>
       <subrange length='2' lower-bound='0' upper-bound='1' type-id='type-id-17' size-in-bits='64' is-anonymous='yes' hash='4b31246d758bb233' id='type-id-131'/>
     </array-type-def>
-    <class-decl name='Mesher' visibility='default' size-in-bits='7680' filepath='libnurbs/internals/mesher.h' line='47' column='1' hash='bd98137193bf0e9b' id='type-id-236'>
+    <class-decl name='Mesher' visibility='default' size-in-bits='7680' filepath='libnurbs/internals/mesher.h' line='47' column='1' hash='bd98137193bf0e9b' id='type-id-234'>
       <base-class access='public' layout-offset-in-bits='192' is-virtual='yes' type-id='type-id-276'/>
       <base-class access='public' layout-offset-in-bits='0' type-id='type-id-335'/>
-      <data-member access='private' static='yes'>
+      <data-member access='public' static='yes'>
         <var-decl name='ZERO' type-id='type-id-350' mangled-name='_ZN6Mesher4ZEROE' visibility='default' filepath='libnurbs/internals/mesher.cc' line='53' column='1'/>
       </data-member>
       <data-member access='private' layout-offset-in-bits='2240'>
-        <var-decl name='backend' type-id='type-id-208' visibility='default' filepath='libnurbs/internals/mesher.h' line='56' column='1'/>
+        <var-decl name='backend' type-id='type-id-206' visibility='default' filepath='libnurbs/internals/mesher.h' line='56' column='1'/>
       </data-member>
       <data-member access='private' layout-offset-in-bits='2304'>
         <var-decl name='p' type-id='type-id-117' visibility='default' filepath='libnurbs/internals/mesher.h' line='58' column='1'/>
@@ -3331,7 +3331,7 @@
       </data-member>
     </class-decl>
     <pointer-type-def type-id='type-id-270' size-in-bits='64' hash='d8209ea6885ab82a' id='type-id-352'/>
-    <pointer-type-def type-id='type-id-236' size-in-bits='64' hash='797eba125a6a2cff' id='type-id-353'/>
+    <pointer-type-def type-id='type-id-234' size-in-bits='64' hash='797eba125a6a2cff' id='type-id-353'/>
     <qualified-type-def type-id='type-id-353' const='yes' hash='628c5a4a8bcfa0d7' id='type-id-354'/>
     <qualified-type-def type-id='type-id-2' const='yes' hash='8a19facac7115e1f' id='type-id-350'/>
   </abi-instr>
@@ -3450,7 +3450,7 @@
     <class-decl name='O_nurbscurve' is-struct='yes' visibility='default' size-in-bits='384' filepath='libnurbs/internals/reader.h' line='70' column='1' hash='7321adaa451e1341' id='type-id-377'>
       <base-class access='public' layout-offset-in-bits='0' type-id='type-id-166'/>
       <data-member access='public' layout-offset-in-bits='0'>
-        <var-decl name='bezier_curves' type-id='type-id-209' visibility='default' filepath='libnurbs/internals/reader.h' line='71' column='1'/>
+        <var-decl name='bezier_curves' type-id='type-id-207' visibility='default' filepath='libnurbs/internals/reader.h' line='71' column='1'/>
       </data-member>
       <data-member access='public' layout-offset-in-bits='64'>
         <var-decl name='type' type-id='type-id-33' visibility='default' filepath='libnurbs/internals/reader.h' line='72' column='1'/>
@@ -3477,7 +3477,7 @@
     <class-decl name='O_nurbssurface' is-struct='yes' visibility='default' size-in-bits='320' filepath='libnurbs/internals/reader.h' line='101' column='1' hash='5d4cf915b03192ff' id='type-id-378'>
       <base-class access='public' layout-offset-in-bits='0' type-id='type-id-166'/>
       <data-member access='public' layout-offset-in-bits='0'>
-        <var-decl name='bezier_patches' type-id='type-id-209' visibility='default' filepath='libnurbs/internals/reader.h' line='102' column='1'/>
+        <var-decl name='bezier_patches' type-id='type-id-207' visibility='default' filepath='libnurbs/internals/reader.h' line='102' column='1'/>
       </data-member>
       <data-member access='public' layout-offset-in-bits='64'>
         <var-decl name='type' type-id='type-id-33' visibility='default' filepath='libnurbs/internals/reader.h' line='103' column='1'/>
@@ -3596,7 +3596,7 @@
         <var-decl name='mapdesc' type-id='type-id-184' visibility='default' filepath='libnurbs/internals/patch.h' line='82' column='1'/>
       </data-member>
       <data-member access='private' layout-offset-in-bits='64'>
-        <var-decl name='next' type-id='type-id-242' visibility='default' filepath='libnurbs/internals/patch.h' line='83' column='1'/>
+        <var-decl name='next' type-id='type-id-240' visibility='default' filepath='libnurbs/internals/patch.h' line='83' column='1'/>
       </data-member>
       <data-member access='private' layout-offset-in-bits='128'>
         <var-decl name='cullval' type-id='type-id-3' visibility='default' filepath='libnurbs/internals/patch.h' line='84' column='1'/>
@@ -3650,16 +3650,16 @@
       </data-member>
     </class-decl>
     <reference-type-def kind='lvalue' type-id='type-id-397' size-in-bits='64' hash='50b081d0f5928a15' id='type-id-399'/>
-    <pointer-type-def type-id='type-id-397' size-in-bits='64' hash='7fd43adaad99b78c' id='type-id-242'/>
-    <qualified-type-def type-id='type-id-242' const='yes' hash='7f6ae7db9b02face' id='type-id-400'/>
+    <pointer-type-def type-id='type-id-397' size-in-bits='64' hash='7fd43adaad99b78c' id='type-id-240'/>
+    <qualified-type-def type-id='type-id-240' const='yes' hash='7f6ae7db9b02face' id='type-id-400'/>
     <pointer-type-def type-id='type-id-392' size-in-bits='64' hash='5cf6cd4729a3fee' id='type-id-401'/>
     <qualified-type-def type-id='type-id-401' const='yes' hash='19faf374125d4424' id='type-id-402'/>
   </abi-instr>
   <abi-instr address-size='64' path='libnurbs/internals/patchlist.cc' comp-dir-path='/tmp/legendre/spack-stage/spack-stage-T0fsxk/Mesa-8.0.5/src/glu/sgi' language='LANG_C_plus_plus'>
-    <array-type-def dimensions='1' type-id='type-id-398' size-in-bits='512' hash='c76ad7248a97ef47' id='type-id-243'>
+    <array-type-def dimensions='1' type-id='type-id-398' size-in-bits='512' hash='c76ad7248a97ef47' id='type-id-241'>
       <subrange length='2' lower-bound='0' upper-bound='1' type-id='type-id-17' size-in-bits='64' is-anonymous='yes' hash='4b31246d758bb233' id='type-id-131'/>
     </array-type-def>
-    <pointer-type-def type-id='type-id-225' size-in-bits='64' hash='c9814bd14bc182ad' id='type-id-403'/>
+    <pointer-type-def type-id='type-id-223' size-in-bits='64' hash='c9814bd14bc182ad' id='type-id-403'/>
     <qualified-type-def type-id='type-id-403' const='yes' hash='4393b7112a4d7110' id='type-id-404'/>
   </abi-instr>
   <abi-instr address-size='64' path='libnurbs/internals/quilt.cc' comp-dir-path='/tmp/legendre/spack-stage/spack-stage-T0fsxk/Mesa-8.0.5/src/glu/sgi' language='LANG_C_plus_plus'>
@@ -3677,7 +3677,7 @@
         <var-decl name='end' type-id='type-id-3' visibility='default' filepath='libnurbs/internals/flist.h' line='47' column='1'/>
       </data-member>
       <data-member access='protected' layout-offset-in-bits='192'>
-        <var-decl name='sorter' type-id='type-id-204' visibility='default' filepath='libnurbs/internals/flist.h' line='56' column='1'/>
+        <var-decl name='sorter' type-id='type-id-202' visibility='default' filepath='libnurbs/internals/flist.h' line='56' column='1'/>
       </data-member>
     </class-decl>
     <pointer-type-def type-id='type-id-405' size-in-bits='64' hash='ea979579dc8c213#2' id='type-id-406'/>
@@ -3791,7 +3791,7 @@
         <var-decl name='size' type-id='type-id-360' visibility='default' filepath='libnurbs/nurbtess/rectBlock.h' line='64' column='1'/>
       </data-member>
     </class-decl>
-    <pointer-type-def type-id='type-id-206' size-in-bits='64' hash='ce5df562a3e77d10' id='type-id-418'/>
+    <pointer-type-def type-id='type-id-204' size-in-bits='64' hash='ce5df562a3e77d10' id='type-id-418'/>
     <qualified-type-def type-id='type-id-418' const='yes' hash='1a5beff822c13ea9' id='type-id-419'/>
     <qualified-type-def type-id='type-id-288' const='yes' hash='573ee91b3867e1d7' id='type-id-420'/>
     <pointer-type-def type-id='type-id-412' size-in-bits='64' hash='43ff367666705e19' id='type-id-421'/>
@@ -4222,7 +4222,7 @@
       <subrange length='100' lower-bound='0' upper-bound='99' type-id='type-id-17' size-in-bits='64' is-anonymous='yes' hash='bc04943da9f60c7c' id='type-id-487'/>
     </array-type-def>
     <array-type-def dimensions='1' type-id='type-id-488' size-in-bits='1600' hash='738555d34aef2a79' id='type-id-489'>
-      <subrange length='1' lower-bound='0' upper-bound='0' type-id='type-id-17' size-in-bits='64' is-anonymous='yes' hash='edeb07fdf1f46d10' id='type-id-191'/>
+      <subrange length='1' lower-bound='0' upper-bound='0' type-id='type-id-17' size-in-bits='64' is-anonymous='yes' hash='edeb07fdf1f46d10' id='type-id-188'/>
     </array-type-def>
     <enum-decl name='TessState' size-in-bits='32' alignment-in-bits='32' filepath='libtess/tess.h' line='47' column='1' hash='aa55d271c362ebc2' id='type-id-490'>
       <underlying-type type-id='type-id-50'/>
@@ -4440,7 +4440,7 @@
     </class-decl>
     <class-decl name='__jmp_buf_tag' is-struct='yes' visibility='default' size-in-bits='1600' filepath='/usr/include/setjmp.h' line='36' column='1' hash='56667803f16e661a' id='type-id-488'>
       <data-member access='public' layout-offset-in-bits='0'>
-        <var-decl name='__jmpbuf' type-id='type-id-213' visibility='default' filepath='/usr/include/setjmp.h' line='41' column='1'/>
+        <var-decl name='__jmpbuf' type-id='type-id-211' visibility='default' filepath='/usr/include/setjmp.h' line='41' column='1'/>
       </data-member>
       <data-member access='public' layout-offset-in-bits='512'>
         <var-decl name='__mask_was_saved' type-id='type-id-3' visibility='default' filepath='/usr/include/setjmp.h' line='42' column='1'/>
@@ -4449,7 +4449,7 @@
         <var-decl name='__saved_mask' type-id='type-id-527' visibility='default' filepath='/usr/include/setjmp.h' line='43' column='1'/>
       </data-member>
     </class-decl>
-    <class-decl name='__sigset_t' is-struct='yes' naming-typedef-id='type-id-527' visibility='default' size-in-bits='1024' filepath='/usr/include/bits/sigset.h' line='30' column='1' hash='752be014f937c8b2' id='type-id-214'>
+    <class-decl name='__sigset_t' is-struct='yes' naming-typedef-id='type-id-527' visibility='default' size-in-bits='1024' filepath='/usr/include/bits/sigset.h' line='30' column='1' hash='752be014f937c8b2' id='type-id-212'>
       <data-member access='public' layout-offset-in-bits='0'>
         <var-decl name='__val' type-id='type-id-528' visibility='default' filepath='/usr/include/bits/sigset.h' line='31' column='1'/>
       </data-member>
@@ -4466,8 +4466,8 @@
     <typedef-decl name='PQnode' type-id='type-id-516' size-in-bits='64' filepath='libtess/priorityq-heap.h' line='83' column='1' hash='61477c4d1fd8d94d' id='type-id-515'/>
     <typedef-decl name='PriorityQHeap' type-id='type-id-517' size-in-bits='448' filepath='libtess/priorityq-heap.h' line='81' column='1' hash='fb0d4a60aae1eb5' id='type-id-532'/>
     <typedef-decl name='PriorityQSort' type-id='type-id-521' size-in-bits='448' filepath='libtess/priorityq.h' line='95' column='1' hash='fb0d4a60aae1eb5' id='type-id-533'/>
-    <typedef-decl name='__jmp_buf' type-id='type-id-491' size-in-bits='512' filepath='/usr/include/bits/setjmp.h' line='32' column='1' hash='73d005fce13ea9c3' id='type-id-213'/>
-    <typedef-decl name='__sigset_t' type-id='type-id-214' size-in-bits='1024' filepath='/usr/include/bits/sigset.h' line='32' column='1' hash='681e2db4a1c6d31b' id='type-id-527'/>
+    <typedef-decl name='__jmp_buf' type-id='type-id-491' size-in-bits='512' filepath='/usr/include/bits/setjmp.h' line='32' column='1' hash='73d005fce13ea9c3' id='type-id-211'/>
+    <typedef-decl name='__sigset_t' type-id='type-id-212' size-in-bits='1024' filepath='/usr/include/bits/sigset.h' line='32' column='1' hash='681e2db4a1c6d31b' id='type-id-527'/>
     <typedef-decl name='jmp_buf' type-id='type-id-489' size-in-bits='1600' filepath='/usr/include/setjmp.h' line='49' column='1' hash='eaf0312d83fb7dbe' id='type-id-510'/>
     <type-decl name='unnamed-enum-underlying-type-32' size-in-bits='32' alignment-in-bits='32' is-anonymous='yes' hash='8f51609dd015af12' id='type-id-50'/>
     <array-type-def dimensions='1' type-id='type-id-17' size-in-bits='1024' hash='98ec18adf8a6da57' id='type-id-528'>

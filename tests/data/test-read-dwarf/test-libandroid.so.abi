@@ -589,7 +589,7 @@
         <data-member access='public' static='yes'>
           <var-decl name='descriptor' type-id='a3cec311' mangled-name='_ZN7android13IMountService10descriptorE' visibility='default' filepath='frameworks/base/libs/storage/include/storage/IMountService.h' line='34' column='1'/>
         </data-member>
-        <data-member access='private' static='yes'>
+        <data-member access='public' static='yes'>
           <var-decl name='default_impl' type-id='34e3553c' mangled-name='_ZN7android13IMountService12default_implE' visibility='default' filepath='frameworks/base/libs/storage/include/storage/IMountService.h' line='34' column='1'/>
         </data-member>
         <member-function access='public' destructor='yes' vtable-offset='0'>
@@ -852,7 +852,7 @@
         <data-member access='public' static='yes'>
           <var-decl name='descriptor' type-id='a3cec311' mangled-name='_ZN7android18IObbActionListener10descriptorE' visibility='default' filepath='frameworks/base/libs/storage/include/storage/IObbActionListener.h' line='30' column='1'/>
         </data-member>
-        <data-member access='private' static='yes'>
+        <data-member access='public' static='yes'>
           <var-decl name='default_impl' type-id='c722890a' mangled-name='_ZN7android18IObbActionListener12default_implE' visibility='default' filepath='frameworks/base/libs/storage/include/storage/IObbActionListener.h' line='30' column='1'/>
         </data-member>
         <member-function access='public' destructor='yes' vtable-offset='0'>
@@ -2959,7 +2959,6 @@
     <qualified-type-def type-id='3beaa405' const='yes' hash='3a1705c0aaab60aa' id='36819e5e'/>
     <reference-type-def kind='lvalue' type-id='36819e5e' size-in-bits='32' hash='a6a540db0ed152a1' id='460c76e8'/>
     <pointer-type-def type-id='36819e5e' size-in-bits='32' hash='66760f03656b20a' id='420c709c'/>
-    <qualified-type-def type-id='c894953d' const='yes' hash='621c3be701987985' id='4ab96a04'/>
     <qualified-type-def type-id='a84c031d' const='yes' hash='2059efede605db28' id='9b45d938'/>
     <reference-type-def kind='lvalue' type-id='9b45d938' size-in-bits='32' hash='5946cd19ca90d1dc' id='8cf4ca3a'/>
     <pointer-type-def type-id='9b45d938' size-in-bits='32' hash='fbba1ba8411df024' id='80f4b756'/>
@@ -2997,7 +2996,6 @@
     <qualified-type-def type-id='3d7d8cbf' const='yes' hash='ad45400390e0e955' id='7411c98f'/>
     <pointer-type-def type-id='7411c98f' size-in-bits='32' hash='123522a17bafa352' id='5d006ebf'/>
     <qualified-type-def type-id='b59d7dce' const='yes' hash='c32cd8a41089c47b' id='d0fa5dde'/>
-    <qualified-type-def type-id='143a6b6e' const='yes' hash='40870a839c19f76d' id='5919835e'/>
     <qualified-type-def type-id='c3e90ce7' const='yes' hash='7bc77d152620d595' id='f49e9570'/>
     <pointer-type-def type-id='f49e9570' size-in-bits='32' hash='9fbf300ef6c53b3f' id='6fa51cae'/>
     <qualified-type-def type-id='60f5da7d' const='yes' hash='ab35830f8017e369' id='69dda76c'/>
@@ -3492,7 +3490,6 @@
     <reference-type-def kind='lvalue' type-id='14ee82e4' size-in-bits='32' hash='1a635cccc6cefd1f' id='b577d766'/>
     <qualified-type-def type-id='b9c5d5a9' const='yes' hash='f5d307bcd4a74304#92' id='127172fe'/>
     <reference-type-def kind='lvalue' type-id='127172fe' size-in-bits='32' hash='7350295b869501a5#92' id='049802d8'/>
-    <qualified-type-def type-id='06725de7' const='yes' hash='40870a839c19f76d#2' id='5919835f'/>
     <qualified-type-def type-id='1a8dd50d' const='yes' hash='b58919001fd0d12f#28' id='3656e147'/>
     <reference-type-def kind='lvalue' type-id='3656e147' size-in-bits='32' hash='866dc460fe38e9a7#27' id='a2c458d0'/>
     <pointer-type-def type-id='3656e147' size-in-bits='32' hash='569434da0432004e#3' id='9ec4527e'/>
@@ -4874,9 +4871,6 @@
             </data-member>
           </class-decl>
         </member-type>
-        <data-member access='private' static='yes'>
-          <var-decl name='kIsSharedBufferAllocated' type-id='b9930aae' visibility='default' filepath='system/core/libutils/include/utils/String16.h' line='121' column='1'/>
-        </data-member>
         <data-member access='private' layout-offset-in-bits='0'>
           <var-decl name='mString' type-id='161c039a' visibility='default' filepath='system/core/libutils/include/utils/String16.h' line='142' column='1'/>
         </data-member>
@@ -7006,17 +7000,8 @@
           <member-type access='private'>
             <typedef-decl name='reverse_iterator' type-id='4cdc32cc' filepath='external/libcxx/include/string' line='699' column='1' id='f9e9b85b'/>
           </member-type>
-          <data-member access='private' static='yes'>
-            <var-decl name='__short_mask' type-id='5919835f' visibility='default' filepath='external/libcxx/include/string' line='747' column='1'/>
-          </data-member>
-          <data-member access='private' static='yes'>
-            <var-decl name='__long_mask' type-id='5919835f' visibility='default' filepath='external/libcxx/include/string' line='748' column='1'/>
-          </data-member>
           <data-member access='private' layout-offset-in-bits='0'>
             <var-decl name='__r_' type-id='8d3c18f6' visibility='default' filepath='external/libcxx/include/string' line='785' column='1'/>
-          </data-member>
-          <data-member access='public' static='yes'>
-            <var-decl name='npos' type-id='5919835f' visibility='default' filepath='external/libcxx/include/string' line='788' column='1'/>
           </data-member>
         </class-decl>
         <class-decl name='basic_string_view&lt;char16_t, std::__1::char_traits&lt;char16_t&gt; &gt;' visibility='default' size-in-bits='64' filepath='external/libcxx/include/string_view' line='195' column='1' hash='49a4f698dead92ca' id='501d9695'>
@@ -7041,9 +7026,6 @@
           <member-type access='private'>
             <typedef-decl name='const_reverse_iterator' type-id='aef4a5ca' filepath='external/libcxx/include/string_view' line='206' column='1' id='cdc3506c'/>
           </member-type>
-          <data-member access='public' static='yes'>
-            <var-decl name='npos' type-id='5919835e' visibility='default' filepath='external/libcxx/include/string_view' line='210' column='1'/>
-          </data-member>
           <data-member access='private' layout-offset-in-bits='0'>
             <var-decl name='__data' type-id='9ec4527f' visibility='default' filepath='external/libcxx/include/string_view' line='605' column='1'/>
           </data-member>
@@ -8540,9 +8522,6 @@
           <member-type access='public'>
             <typedef-decl name='key_type' type-id='27619c20' filepath='external/libcxx/include/__hash_table' line='169' column='1' id='080ca978'/>
           </member-type>
-          <data-member access='public' static='yes'>
-            <var-decl name='__is_map' type-id='4ab96a04' visibility='default' filepath='external/libcxx/include/__hash_table' line='174' column='1'/>
-          </data-member>
         </class-decl>
         <class-decl name='__hash_key_value_types&lt;std::__1::__hash_value_type&lt;unsigned int, android::util::unique_cptr&lt;android::ResolvedBag&gt; &gt; &gt;' is-struct='yes' visibility='default' size-in-bits='8' filepath='external/libcxx/include/__hash_table' line='168' column='1' hash='eb6e412310b9b611' id='ab787aa3'>
           <member-type access='public'>
@@ -8554,9 +8533,6 @@
           <member-type access='public'>
             <typedef-decl name='__node_value_type' type-id='ee02cccf' filepath='external/libcxx/include/__hash_table' line='171' column='1' id='a84cbf99'/>
           </member-type>
-          <data-member access='public' static='yes'>
-            <var-decl name='__is_map' type-id='4ab96a04' visibility='default' filepath='external/libcxx/include/__hash_table' line='174' column='1'/>
-          </data-member>
         </class-decl>
         <class-decl name='__hash_key_value_types&lt;std::__1::__hash_value_type&lt;unsigned int, std::__1::vector&lt;unsigned int, std::__1::allocator&lt;unsigned int&gt; &gt; &gt; &gt;' is-struct='yes' visibility='default' size-in-bits='8' filepath='external/libcxx/include/__hash_table' line='168' column='1' hash='477641ad85baada7' id='02e07a52'>
           <member-type access='public'>
@@ -8568,9 +8544,6 @@
           <member-type access='public'>
             <typedef-decl name='__node_value_type' type-id='c5316456' filepath='external/libcxx/include/__hash_table' line='171' column='1' id='85bf33ba'/>
           </member-type>
-          <data-member access='public' static='yes'>
-            <var-decl name='__is_map' type-id='4ab96a04' visibility='default' filepath='external/libcxx/include/__hash_table' line='174' column='1'/>
-          </data-member>
         </class-decl>
         <class-decl name='__hash_key_value_types&lt;unsigned int&gt;' is-struct='yes' visibility='default' size-in-bits='8' filepath='external/libcxx/include/__hash_table' line='140' column='1' hash='9064193e4e1f4a85' id='3e3a7d61'>
           <member-type access='public'>
@@ -8582,9 +8555,6 @@
           <member-type access='public'>
             <typedef-decl name='key_type' type-id='f0981eed' size-in-bits='32' filepath='external/libcxx/include/__hash_table' line='142' column='1' hash='f0c050c6f9f8032e' id='beafe2f0'/>
           </member-type>
-          <data-member access='public' static='yes'>
-            <var-decl name='__is_map' type-id='4ab96a04' visibility='default' filepath='external/libcxx/include/__hash_table' line='145' column='1'/>
-          </data-member>
         </class-decl>
         <class-decl name='__hash_map_pointer_types&lt;std::__1::__hash_value_type&lt;std::__1::basic_string&lt;char, std::__1::char_traits&lt;char&gt;, std::__1::allocator&lt;char&gt; &gt;, std::__1::basic_string&lt;char, std::__1::char_traits&lt;char&gt;, std::__1::allocator&lt;char&gt; &gt; &gt;, void *, std::__1::__hash_key_value_types&lt;std::__1::__hash_value_type&lt;std::__1::basic_string&lt;char, std::__1::char_traits&lt;char&gt;, std::__1::allocator&lt;char&gt; &gt;, std::__1::basic_string&lt;char, std::__1::char_traits&lt;char&gt;, std::__1::allocator&lt;char&gt; &gt; &gt; &gt;, true&gt;' is-struct='yes' visibility='default' size-in-bits='8' filepath='external/libcxx/include/__hash_table' line='215' column='1' hash='455bc16b2b755f06' id='e5893ee2'/>
         <class-decl name='__hash_map_pointer_types&lt;std::__1::__hash_value_type&lt;unsigned int, android::util::unique_cptr&lt;android::ResolvedBag&gt; &gt;, void *, std::__1::__hash_key_value_types&lt;std::__1::__hash_value_type&lt;unsigned int, android::util::unique_cptr&lt;android::ResolvedBag&gt; &gt; &gt;, true&gt;' is-struct='yes' visibility='default' size-in-bits='8' filepath='external/libcxx/include/__hash_table' line='215' column='1' hash='555e70852c257db1' id='ab8082b0'/>
@@ -9550,17 +9520,11 @@
           <member-type access='public'>
             <typedef-decl name='value_type' type-id='c894953d' size-in-bits='8' filepath='external/libcxx/include/type_traits' line='524' column='1' hash='a001c849ab2c5776' id='cc661894'/>
           </member-type>
-          <data-member access='public' static='yes'>
-            <var-decl name='value' type-id='4ab96a04' visibility='default' filepath='external/libcxx/include/type_traits' line='523' column='1'/>
-          </data-member>
         </class-decl>
         <class-decl name='integral_constant&lt;bool, true&gt;' is-struct='yes' visibility='default' size-in-bits='8' filepath='external/libcxx/include/type_traits' line='521' column='1' hash='9e1f6a887e72caff' id='249572b2'>
           <member-type access='public'>
             <typedef-decl name='value_type' type-id='c894953d' size-in-bits='8' filepath='external/libcxx/include/type_traits' line='524' column='1' hash='a001c849ab2c5776' id='64c81de7'/>
           </member-type>
-          <data-member access='public' static='yes'>
-            <var-decl name='value' type-id='4ab96a04' visibility='default' filepath='external/libcxx/include/type_traits' line='523' column='1'/>
-          </data-member>
         </class-decl>
         <class-decl name='iterator_traits&lt;const android::AssetManager2::PackageGroup *&gt;' is-struct='yes' visibility='default' size-in-bits='8' filepath='external/libcxx/include/iterator' line='502' column='1' hash='59e3693736a1ccf9' id='8582308f'>
           <member-type access='public'>
@@ -14303,9 +14267,6 @@
           <data-member access='private' layout-offset-in-bits='0'>
             <var-decl name='__base_' type-id='d0e5df19' visibility='default' filepath='external/libcxx/include/tuple' line='474' column='1'/>
           </data-member>
-          <data-member access='private' static='yes'>
-            <var-decl name='_EnableImplicitReducedArityExtension' type-id='4ab96a04' visibility='default' filepath='external/libcxx/include/tuple' line='479' column='1'/>
-          </data-member>
         </class-decl>
         <class-decl name='__tuple_impl&lt;std::__1::__tuple_indices&lt;0, 1&gt;, (lambda at frameworks/base/native/android/sharedmem.cpp:37:37) &amp;&amp;, _JNIEnv *&amp;&gt;' is-struct='yes' visibility='default' size-in-bits='64' filepath='external/libcxx/include/tuple' line='365' column='1' hash='7bcfb8097eb34994' id='0e01d3be'>
           <base-class access='public' layout-offset-in-bits='0' type-id='049c4c7d'/>
@@ -14508,6 +14469,7 @@
     <qualified-type-def type-id='a107f0d1' const='yes' hash='f887c614ecd061bf' id='2d59b88e'/>
     <reference-type-def kind='lvalue' type-id='2d59b88e' size-in-bits='32' hash='a6a30239d2c8fff7' id='0c3db078'/>
     <pointer-type-def type-id='2d59b88e' size-in-bits='32' hash='f59ceb661f1ea19a' id='083daa2c'/>
+    <qualified-type-def type-id='c894953d' const='yes' hash='621c3be701987985' id='4ab96a04'/>
     <qualified-type-def type-id='3ff5601b' const='yes' hash='c3b4bd9470b1e' id='922df12b'/>
     <qualified-type-def type-id='0efd2e9e' const='yes' hash='d466512a338e5fb1' id='96cd7851'/>
     <reference-type-def kind='lvalue' type-id='96cd7851' size-in-bits='32' hash='b07269e0f7dbc6c9' id='dc74a355'/>
@@ -14717,9 +14679,6 @@
         <class-decl name='__atomic_base&lt;int, false&gt;' is-struct='yes' visibility='default' size-in-bits='32' filepath='external/libcxx/include/atomic' line='891' column='1' hash='b751123ed9476ce4' id='0efd2e9e'>
           <data-member access='public' layout-offset-in-bits='0'>
             <var-decl name='__a_' type-id='95e97e5e' visibility='default' filepath='external/libcxx/include/atomic' line='893' column='1'/>
-          </data-member>
-          <data-member access='public' static='yes'>
-            <var-decl name='is_always_lock_free' type-id='4ab96a04' visibility='default' filepath='external/libcxx/include/atomic' line='896' column='1'/>
           </data-member>
         </class-decl>
         <class-decl name='__atomic_base&lt;int, true&gt;' is-struct='yes' visibility='default' size-in-bits='32' filepath='external/libcxx/include/atomic' line='1003' column='1' hash='ed07d63c935de952' id='a5d64365'>
@@ -15243,7 +15202,6 @@
     <pointer-type-def type-id='721c32d4' size-in-bits='32' hash='d578dca2b984c63d' id='a06445da'/>
     <qualified-type-def type-id='3181ea79' const='yes' hash='9feeb0f599fc1e1e' id='c5e4dfae'/>
     <pointer-type-def type-id='c5e4dfae' size-in-bits='32' hash='8c115f29e91f4345' id='0b4bdccc'/>
-    <qualified-type-def type-id='00f5ef57' const='yes' hash='15e5ddab16622830' id='1e3bd547'/>
     <qualified-type-def type-id='f72232a3' const='yes' hash='31dbb3c04fe8676' id='9a47ff5a'/>
     <reference-type-def kind='lvalue' type-id='9a47ff5a' size-in-bits='32' hash='e4efb4ef4e76918f' id='5b573034'/>
     <pointer-type-def type-id='9a47ff5a' size-in-bits='32' hash='a7437f40282fc010' id='4f571d50'/>
@@ -16954,15 +16912,6 @@
             <enumerator name='Signaled' value='2'/>
           </enum-decl>
         </member-type>
-        <data-member access='public' static='yes'>
-          <var-decl name='NO_FENCE' type-id='8fb586a6' visibility='default' filepath='frameworks/native/libs/ui/include/ui/Fence.h' line='39' column='1'/>
-        </data-member>
-        <data-member access='public' static='yes'>
-          <var-decl name='SIGNAL_TIME_PENDING' type-id='1e3bd547' visibility='default' filepath='frameworks/native/libs/ui/include/ui/Fence.h' line='40' column='1'/>
-        </data-member>
-        <data-member access='public' static='yes'>
-          <var-decl name='SIGNAL_TIME_INVALID' type-id='1e3bd547' visibility='default' filepath='frameworks/native/libs/ui/include/ui/Fence.h' line='41' column='1'/>
-        </data-member>
         <data-member access='private' layout-offset-in-bits='32'>
           <var-decl name='mFenceFd' type-id='ca770154' visibility='default' filepath='frameworks/native/libs/ui/include/ui/Fence.h' line='149' column='1'/>
         </data-member>
@@ -17180,21 +17129,12 @@
       <class-decl name='Rect' visibility='default' size-in-bits='128' filepath='frameworks/native/libs/ui/include/ui/Rect.h' line='33' column='1' hash='e981ec83f2c4cd24' id='c071b10e'>
         <base-class access='public' layout-offset-in-bits='0' type-id='c9ee9172'/>
         <base-class access='public' layout-offset-in-bits='0' type-id='0222005a'/>
-        <data-member access='public' static='yes'>
-          <var-decl name='INVALID_RECT' type-id='63da15ad' visibility='default' filepath='frameworks/native/libs/ui/include/ui/Rect.h' line='38' column='1'/>
-        </data-member>
-        <data-member access='public' static='yes'>
-          <var-decl name='EMPTY_RECT' type-id='63da15ad' visibility='default' filepath='frameworks/native/libs/ui/include/ui/Rect.h' line='39' column='1'/>
-        </data-member>
       </class-decl>
       <class-decl name='Region' visibility='default' size-in-bits='160' filepath='frameworks/native/libs/ui/include/ui/Region.h' line='35' column='1' hash='b3f396979553d1d7' id='6cff73f4'>
         <base-class access='public' layout-offset-in-bits='0' type-id='99119b01'/>
         <member-type access='private'>
           <typedef-decl name='const_iterator' type-id='b74fe385' size-in-bits='32' filepath='frameworks/native/libs/ui/include/ui/Region.h' line='127' column='1' hash='f0c050c6f9f8032e' id='a1870c49'/>
         </member-type>
-        <data-member access='public' static='yes'>
-          <var-decl name='INVALID_REGION' type-id='52187e93' visibility='default' filepath='frameworks/native/libs/ui/include/ui/Region.h' line='38' column='1'/>
-        </data-member>
         <data-member access='private' layout-offset-in-bits='0'>
           <var-decl name='mStorage' type-id='9515f494' visibility='default' filepath='frameworks/native/libs/ui/include/ui/Region.h' line='180' column='1'/>
         </data-member>
@@ -18008,18 +17948,6 @@
           <member-type access='private'>
             <typedef-decl name='col_type' type-id='3702b69c' size-in-bits='128' filepath='frameworks/native/libs/math/include/math/mat4.h' line='98' column='1' hash='279bebc58cd3ebad' id='0ac54e8c'/>
           </member-type>
-          <data-member access='public' static='yes'>
-            <var-decl name='COL_SIZE' type-id='d0fa5dde' visibility='default' filepath='frameworks/native/libs/math/include/math/mat4.h' line='101' column='1'/>
-          </data-member>
-          <data-member access='public' static='yes'>
-            <var-decl name='ROW_SIZE' type-id='d0fa5dde' visibility='default' filepath='frameworks/native/libs/math/include/math/mat4.h' line='102' column='1'/>
-          </data-member>
-          <data-member access='public' static='yes'>
-            <var-decl name='NUM_ROWS' type-id='d0fa5dde' visibility='default' filepath='frameworks/native/libs/math/include/math/mat4.h' line='103' column='1'/>
-          </data-member>
-          <data-member access='public' static='yes'>
-            <var-decl name='NUM_COLS' type-id='d0fa5dde' visibility='default' filepath='frameworks/native/libs/math/include/math/mat4.h' line='104' column='1'/>
-          </data-member>
           <data-member access='private' layout-offset-in-bits='0'>
             <var-decl name='m_value' type-id='ce213b98' visibility='default' filepath='frameworks/native/libs/math/include/math/mat4.h' line='121' column='1'/>
           </data-member>
@@ -18140,9 +18068,6 @@
           <data-member access='public' layout-offset-in-bits='0'>
             <var-decl name='' type-id='ac5ab5aa' visibility='default' filepath='frameworks/native/libs/math/include/math/vec2.h' line='49' column='1'/>
           </data-member>
-          <data-member access='public' static='yes'>
-            <var-decl name='SIZE' type-id='d0fa5dde' visibility='default' filepath='frameworks/native/libs/math/include/math/vec2.h' line='55' column='1'/>
-          </data-member>
         </class-decl>
         <class-decl name='TVec2&lt;float&gt;' visibility='default' size-in-bits='64' filepath='frameworks/native/libs/math/include/math/vec2.h' line='36' column='1' hash='53f54c0494911db1' id='adb150ce'>
           <base-class access='public' layout-offset-in-bits='0' type-id='b02afa94'/>
@@ -18202,9 +18127,6 @@
           </member-type>
           <data-member access='public' layout-offset-in-bits='0'>
             <var-decl name='' type-id='ac5ab5ab' visibility='default' filepath='frameworks/native/libs/math/include/math/vec2.h' line='49' column='1'/>
-          </data-member>
-          <data-member access='public' static='yes'>
-            <var-decl name='SIZE' type-id='d0fa5dde' visibility='default' filepath='frameworks/native/libs/math/include/math/vec2.h' line='55' column='1'/>
           </data-member>
         </class-decl>
         <class-decl name='TVec3&lt;android::half&gt;' visibility='default' size-in-bits='48' filepath='frameworks/native/libs/math/include/math/vec3.h' line='34' column='1' hash='322952618a117725' id='aa23b543'>
@@ -18284,9 +18206,6 @@
           <data-member access='public' layout-offset-in-bits='0'>
             <var-decl name='' type-id='ac5ab5ac' visibility='default' filepath='frameworks/native/libs/math/include/math/vec3.h' line='47' column='1'/>
           </data-member>
-          <data-member access='public' static='yes'>
-            <var-decl name='SIZE' type-id='d0fa5dde' visibility='default' filepath='frameworks/native/libs/math/include/math/vec3.h' line='56' column='1'/>
-          </data-member>
         </class-decl>
         <class-decl name='TVec3&lt;float&gt;' visibility='default' size-in-bits='96' filepath='frameworks/native/libs/math/include/math/vec3.h' line='34' column='1' hash='84e9d4a4aad8773c' id='97b5500f'>
           <base-class access='public' layout-offset-in-bits='0' type-id='8d48de5b'/>
@@ -18351,9 +18270,6 @@
           </member-type>
           <data-member access='public' layout-offset-in-bits='0'>
             <var-decl name='' type-id='ac5ab5ad' visibility='default' filepath='frameworks/native/libs/math/include/math/vec3.h' line='47' column='1'/>
-          </data-member>
-          <data-member access='public' static='yes'>
-            <var-decl name='SIZE' type-id='d0fa5dde' visibility='default' filepath='frameworks/native/libs/math/include/math/vec3.h' line='56' column='1'/>
           </data-member>
         </class-decl>
         <class-decl name='TVec4&lt;float&gt;' visibility='default' size-in-bits='128' filepath='frameworks/native/libs/math/include/math/vec4.h' line='34' column='1' hash='fe858a24f83c05dc' id='3702b69c'>
@@ -18434,9 +18350,6 @@
           </member-type>
           <data-member access='public' layout-offset-in-bits='0'>
             <var-decl name='' type-id='ac5ab5ae' visibility='default' filepath='frameworks/native/libs/math/include/math/vec4.h' line='47' column='1'/>
-          </data-member>
-          <data-member access='public' static='yes'>
-            <var-decl name='SIZE' type-id='d0fa5dde' visibility='default' filepath='frameworks/native/libs/math/include/math/vec4.h' line='59' column='1'/>
           </data-member>
         </class-decl>
         <class-decl name='TVecAddOperators&lt;TMat44, float&gt;' visibility='default' size-in-bits='8' filepath='frameworks/native/libs/math/include/math/TVecHelpers.h' line='56' column='1' hash='4ae16742bbf9c96b' id='b7e0d79e'/>
@@ -18567,12 +18480,6 @@
           </data-member>
           <data-member access='public' layout-offset-in-bits='32'>
             <var-decl name='height' type-id='3ff5601b' visibility='default' filepath='frameworks/native/libs/ui/include/ui/Size.h' line='37' column='1'/>
-          </data-member>
-          <data-member access='public' static='yes'>
-            <var-decl name='INVALID' type-id='56ab9948' visibility='default' filepath='frameworks/native/libs/ui/include/ui/Size.h' line='40' column='1'/>
-          </data-member>
-          <data-member access='public' static='yes'>
-            <var-decl name='EMPTY' type-id='56ab9948' visibility='default' filepath='frameworks/native/libs/ui/include/ui/Size.h' line='41' column='1'/>
           </data-member>
         </class-decl>
       </namespace-decl>
@@ -20072,9 +19979,6 @@
           <data-member access='private' layout-offset-in-bits='0'>
             <var-decl name='__base_' type-id='de0e726b' visibility='default' filepath='external/libcxx/include/tuple' line='474' column='1'/>
           </data-member>
-          <data-member access='private' static='yes'>
-            <var-decl name='_EnableImplicitReducedArityExtension' type-id='4ab96a04' visibility='default' filepath='external/libcxx/include/tuple' line='479' column='1'/>
-          </data-member>
         </class-decl>
         <class-decl name='tuple&lt;&gt;' visibility='default' size-in-bits='8' filepath='external/libcxx/include/tuple' line='907' column='1' hash='f53c99bd4e34435b' id='ad3ebb8d'/>
         <class-decl name='tuple&lt;ASurfaceControl *const &amp;&gt;' visibility='default' size-in-bits='32' filepath='external/libcxx/include/tuple' line='470' column='1' hash='ed3fba7fabded14d' id='3982c1f3'>
@@ -20084,9 +19988,6 @@
           <data-member access='private' layout-offset-in-bits='0'>
             <var-decl name='__base_' type-id='5d65f50c' visibility='default' filepath='external/libcxx/include/tuple' line='474' column='1'/>
           </data-member>
-          <data-member access='private' static='yes'>
-            <var-decl name='_EnableImplicitReducedArityExtension' type-id='4ab96a04' visibility='default' filepath='external/libcxx/include/tuple' line='479' column='1'/>
-          </data-member>
         </class-decl>
         <class-decl name='tuple&lt;const (lambda at frameworks/base/native/android/surface_control.cpp:282:57) &amp;&gt;' visibility='default' size-in-bits='32' filepath='external/libcxx/include/tuple' line='470' column='1' hash='ae1c9662d7fa20bf' id='d776bde3'>
           <member-type access='private'>
@@ -20094,9 +19995,6 @@
           </member-type>
           <data-member access='private' layout-offset-in-bits='0'>
             <var-decl name='__base_' type-id='37cc68d2' visibility='default' filepath='external/libcxx/include/tuple' line='474' column='1'/>
-          </data-member>
-          <data-member access='private' static='yes'>
-            <var-decl name='_EnableImplicitReducedArityExtension' type-id='4ab96a04' visibility='default' filepath='external/libcxx/include/tuple' line='479' column='1'/>
           </data-member>
         </class-decl>
         <class-decl name='tuple&lt;const std::__1::allocator&lt;(lambda at frameworks/base/native/android/surface_control.cpp:282:57)&gt; &amp;&gt;' visibility='default' size-in-bits='32' filepath='external/libcxx/include/tuple' line='470' column='1' hash='734b033300b24568' id='7d6b45b4'>
@@ -20106,9 +20004,6 @@
           <data-member access='private' layout-offset-in-bits='0'>
             <var-decl name='__base_' type-id='1b9988bb' visibility='default' filepath='external/libcxx/include/tuple' line='474' column='1'/>
           </data-member>
-          <data-member access='private' static='yes'>
-            <var-decl name='_EnableImplicitReducedArityExtension' type-id='4ab96a04' visibility='default' filepath='external/libcxx/include/tuple' line='479' column='1'/>
-          </data-member>
         </class-decl>
         <class-decl name='tuple&lt;std::__1::allocator&lt;(lambda at frameworks/base/native/android/surface_control.cpp:282:57)&gt; &amp;&amp;&gt;' visibility='default' size-in-bits='32' filepath='external/libcxx/include/tuple' line='470' column='1' hash='1e70b9795a306124' id='ee2e53c3'>
           <member-type access='private'>
@@ -20116,9 +20011,6 @@
           </member-type>
           <data-member access='private' layout-offset-in-bits='0'>
             <var-decl name='__base_' type-id='7d0948ca' visibility='default' filepath='external/libcxx/include/tuple' line='474' column='1'/>
-          </data-member>
-          <data-member access='private' static='yes'>
-            <var-decl name='_EnableImplicitReducedArityExtension' type-id='4ab96a04' visibility='default' filepath='external/libcxx/include/tuple' line='479' column='1'/>
           </data-member>
         </class-decl>
         <class-decl name='unique_ptr&lt;std::__1::__hash_node&lt;std::__1::__hash_value_type&lt;ASurfaceControl *, ASurfaceControlStats&gt;, void *&gt;, std::__1::__hash_node_destructor&lt;std::__1::allocator&lt;std::__1::__hash_node&lt;std::__1::__hash_value_type&lt;ASurfaceControl *, ASurfaceControlStats&gt;, void *&gt; &gt; &gt; &gt;' visibility='default' size-in-bits='96' filepath='external/libcxx/include/memory' line='2401' column='1' hash='dc09f448cee693be' id='b7880bd1'>
@@ -21386,9 +21278,6 @@
           <member-type access='public'>
             <typedef-decl name='key_type' type-id='3d05d53e' size-in-bits='32' filepath='external/libcxx/include/__hash_table' line='142' column='1' hash='f0c050c6f9f8032e' id='5290893d'/>
           </member-type>
-          <data-member access='public' static='yes'>
-            <var-decl name='__is_map' type-id='4ab96a04' visibility='default' filepath='external/libcxx/include/__hash_table' line='145' column='1'/>
-          </data-member>
         </class-decl>
         <class-decl name='__hash_key_value_types&lt;long long&gt;' is-struct='yes' visibility='default' size-in-bits='8' filepath='external/libcxx/include/__hash_table' line='140' column='1' hash='18d07d5584449c9c' id='bc310e75'>
           <member-type access='public'>
@@ -21400,9 +21289,6 @@
           <member-type access='public'>
             <typedef-decl name='key_type' type-id='95e97e60' size-in-bits='64' filepath='external/libcxx/include/__hash_table' line='142' column='1' hash='61477c4d1fd8d94d' id='f79bd14e'/>
           </member-type>
-          <data-member access='public' static='yes'>
-            <var-decl name='__is_map' type-id='4ab96a04' visibility='default' filepath='external/libcxx/include/__hash_table' line='145' column='1'/>
-          </data-member>
         </class-decl>
         <class-decl name='__hash_key_value_types&lt;std::__1::__hash_value_type&lt;ASurfaceControl *, ASurfaceControlStats&gt; &gt;' is-struct='yes' visibility='default' size-in-bits='8' filepath='external/libcxx/include/__hash_table' line='168' column='1' hash='88e4de7a6963b36b' id='26eebbb7'>
           <member-type access='public'>
@@ -21417,9 +21303,6 @@
           <member-type access='public'>
             <typedef-decl name='key_type' type-id='0373e656' size-in-bits='32' filepath='external/libcxx/include/__hash_table' line='169' column='1' id='2b01a7dc'/>
           </member-type>
-          <data-member access='public' static='yes'>
-            <var-decl name='__is_map' type-id='4ab96a04' visibility='default' filepath='external/libcxx/include/__hash_table' line='174' column='1'/>
-          </data-member>
         </class-decl>
         <class-decl name='__hash_key_value_types&lt;std::__1::__hash_value_type&lt;android::sp&lt;android::ITransactionCompletedListener&gt;, android::SurfaceComposerClient::CallbackInfo&gt; &gt;' is-struct='yes' visibility='default' size-in-bits='8' filepath='external/libcxx/include/__hash_table' line='168' column='1' hash='addc266b50a4a31e' id='d963f977'>
           <member-type access='public'>
@@ -21431,9 +21314,6 @@
           <member-type access='public'>
             <typedef-decl name='key_type' type-id='ae56e550' size-in-bits='32' filepath='external/libcxx/include/__hash_table' line='169' column='1' hash='f0c050c6f9f8032e' id='071eb9a8'/>
           </member-type>
-          <data-member access='public' static='yes'>
-            <var-decl name='__is_map' type-id='4ab96a04' visibility='default' filepath='external/libcxx/include/__hash_table' line='174' column='1'/>
-          </data-member>
         </class-decl>
         <class-decl name='__hash_key_value_types&lt;std::__1::__hash_value_type&lt;android::sp&lt;android::SurfaceControl&gt;, android::ComposerState&gt; &gt;' is-struct='yes' visibility='default' size-in-bits='8' filepath='external/libcxx/include/__hash_table' line='168' column='1' hash='8e1f2686cfec8a73' id='8beb8d05'>
           <member-type access='public'>
@@ -21445,9 +21325,6 @@
           <member-type access='public'>
             <typedef-decl name='key_type' type-id='3d05d53e' size-in-bits='32' filepath='external/libcxx/include/__hash_table' line='169' column='1' hash='f0c050c6f9f8032e' id='c5e85950'/>
           </member-type>
-          <data-member access='public' static='yes'>
-            <var-decl name='__is_map' type-id='4ab96a04' visibility='default' filepath='external/libcxx/include/__hash_table' line='174' column='1'/>
-          </data-member>
         </class-decl>
         <class-decl name='__hash_key_value_types&lt;std::__1::__hash_value_type&lt;unsigned int, std::__1::vector&lt;unsigned char, std::__1::allocator&lt;unsigned char&gt; &gt; &gt; &gt;' is-struct='yes' visibility='default' size-in-bits='8' filepath='external/libcxx/include/__hash_table' line='168' column='1' hash='18b418d43c11a1d1' id='24f5be2a'>
           <member-type access='public'>
@@ -21459,9 +21336,6 @@
           <member-type access='public'>
             <typedef-decl name='key_type' type-id='f0981eed' size-in-bits='32' filepath='external/libcxx/include/__hash_table' line='169' column='1' hash='f0c050c6f9f8032e' id='15cb1081'/>
           </member-type>
-          <data-member access='public' static='yes'>
-            <var-decl name='__is_map' type-id='4ab96a04' visibility='default' filepath='external/libcxx/include/__hash_table' line='174' column='1'/>
-          </data-member>
         </class-decl>
         <class-decl name='__hash_map_pointer_types&lt;android::sp&lt;android::SurfaceControl&gt;, void *, std::__1::__hash_key_value_types&lt;android::sp&lt;android::SurfaceControl&gt; &gt;, false&gt;' is-struct='yes' visibility='default' size-in-bits='8' filepath='external/libcxx/include/__hash_table' line='212' column='1' hash='244fee6af143c48c' id='976cc08f'/>
         <class-decl name='__hash_map_pointer_types&lt;long long, void *, std::__1::__hash_key_value_types&lt;long long&gt;, false&gt;' is-struct='yes' visibility='default' size-in-bits='8' filepath='external/libcxx/include/__hash_table' line='212' column='1' hash='2b5b4fa26d5a1cbc' id='f5844619'/>
@@ -24545,12 +24419,6 @@
         <member-type access='private'>
           <class-decl name='Range' is-struct='yes' visibility='default' is-declaration-only='yes' id='b76df172'/>
         </member-type>
-        <data-member access='private' static='yes'>
-          <var-decl name='kLogCharsPerPage' type-id='2448a865' visibility='default' filepath='frameworks/minikin/include/minikin/FontCollection.h' line='72' column='1'/>
-        </data-member>
-        <data-member access='private' static='yes'>
-          <var-decl name='kPageMask' type-id='2448a865' visibility='default' filepath='frameworks/minikin/include/minikin/FontCollection.h' line='73' column='1'/>
-        </data-member>
         <data-member access='private' layout-offset-in-bits='0'>
           <var-decl name='mId' type-id='8f92235e' visibility='default' filepath='frameworks/minikin/include/minikin/FontCollection.h' line='104' column='1'/>
         </data-member>
@@ -24630,9 +24498,6 @@
             </data-member>
           </class-decl>
         </member-type>
-        <data-member access='public' static='yes'>
-          <var-decl name='NOWHERE' type-id='b9930aae' visibility='default' filepath='frameworks/minikin/include/minikin/Range.h' line='29' column='1'/>
-        </data-member>
         <data-member access='private' layout-offset-in-bits='0'>
           <var-decl name='mStart' type-id='8f92235e' visibility='default' filepath='frameworks/minikin/include/minikin/Range.h' line='116' column='1'/>
         </data-member>
@@ -26565,14 +26430,7 @@
           <var-decl name='mMapperVersion' type-id='99943bd2' visibility='default' filepath='frameworks/native/libs/ui/include/ui/GraphicBufferMapper.h' line='101' column='1'/>
         </data-member>
       </class-decl>
-      <class-decl name='Singleton&lt;android::GraphicBufferMapper&gt;' visibility='default' size-in-bits='8' filepath='system/core/libutils/include/utils/Singleton.h' line='48' column='1' hash='cd6ad18178353abd' id='f522c7a1'>
-        <data-member access='private' static='yes'>
-          <var-decl name='sLock' type-id='406f4753' visibility='default' filepath='system/core/libutils/include/utils/Singleton.h' line='73' column='1'/>
-        </data-member>
-        <data-member access='private' static='yes'>
-          <var-decl name='sInstance' type-id='0e37d6af' visibility='default' filepath='system/core/libutils/include/utils/Singleton.h' line='74' column='1'/>
-        </data-member>
-      </class-decl>
+      <class-decl name='Singleton&lt;android::GraphicBufferMapper&gt;' visibility='default' size-in-bits='8' filepath='system/core/libutils/include/utils/Singleton.h' line='48' column='1' hash='cd6ad18178353abd' id='f522c7a1'/>
       <typedef-decl name='PixelFormat' type-id='3ff5601b' size-in-bits='32' filepath='frameworks/native/libs/ui/include/ui/PixelFormat.h' line='67' column='1' hash='f0c050c6f9f8032e' id='2ef73066'/>
       <class-decl name='ANativeObjectBase&lt;ANativeWindowBuffer, android::GraphicBuffer, android::RefBase, android_native_base_t&gt;' visibility='default' is-declaration-only='yes' id='ea557d9b'/>
       <class-decl name='GrallocMapper' visibility='default' is-declaration-only='yes' id='dfab8197'/>
