@@ -25217,7 +25217,22 @@
     <typedef-decl name='AHardwareBuffer' type-id='4d45f321' filepath='frameworks/native/libs/nativewindow/include/android/hardware_buffer.h' line='333' column='1' id='7a58eec0'/>
   </abi-instr>
   <abi-instr address-size='32' path='frameworks/native/libs/nativewindow/ANativeWindow.cpp' language='LANG_C_plus_plus_14'>
+    <enum-decl name='ANativeWindowQuery' filepath='frameworks/native/libs/nativewindow/include/vndk/window.h' line='68' column='1' id='5fb38be8'>
+      <underlying-type type-id='9cac1fee'/>
+      <enumerator name='ANATIVEWINDOW_QUERY_MIN_UNDEQUEUED_BUFFERS' value='3'/>
+      <enumerator name='ANATIVEWINDOW_QUERY_DEFAULT_WIDTH' value='6'/>
+      <enumerator name='ANATIVEWINDOW_QUERY_DEFAULT_HEIGHT' value='7'/>
+      <enumerator name='ANATIVEWINDOW_QUERY_TRANSFORM_HINT' value='8'/>
+      <enumerator name='ANATIVEWINDOW_QUERY_BUFFER_AGE' value='13'/>
+      <enumerator name='ANATIVEWINDOW_QUERY_MIN_SWAP_INTERVAL' value='65536'/>
+      <enumerator name='ANATIVEWINDOW_QUERY_MAX_SWAP_INTERVAL' value='65537'/>
+      <enumerator name='ANATIVEWINDOW_QUERY_XDPI' value='65538'/>
+      <enumerator name='ANATIVEWINDOW_QUERY_YDPI' value='65539'/>
+    </enum-decl>
+    <typedef-decl name='ANativeWindowQuery' type-id='5fb38be8' filepath='frameworks/native/libs/nativewindow/include/vndk/window.h' line='169' column='1' id='923f0e3c'/>
     <pointer-type-def type-id='d6dabff9' size-in-bits='32' id='b5e45470'/>
+    <qualified-type-def type-id='739fb858' const='yes' id='b0bf8c09'/>
+    <pointer-type-def type-id='b0bf8c09' size-in-bits='32' id='5f899987'/>
     <pointer-type-def type-id='4d45f322' size-in-bits='32' id='cdc60218'/>
     <pointer-type-def type-id='1b5f78db' size-in-bits='32' id='05466fe8'/>
     <pointer-type-def type-id='aa12d1cc' size-in-bits='32' id='822cd81d'/>

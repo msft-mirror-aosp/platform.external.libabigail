@@ -16371,10 +16371,16 @@ build_ir_node_from_die(reader&	rdr,
 		  }
 	      }
 	  }
+	else if (has_abstract_origin)
+	  // Let's see if this function is the implementation of an
+	  // existing interface.  In that case, let's read the
+	  // specification of the origin interface ...
+	  existing_fn = build_function_decl(rdr, &abstract_origin_die, where_offset,
+					    /*existing_fn=*/nullptr);
 
 	rdr.scope_stack().push(interface_scope);
 
-	// Either we create a branch new IR for the current function
+	// Either we create a brand new IR for the current function
 	// DIE we are looking at, or we complete an existing IR node
 	// with the new completementary information carried by this
 	// DIE for that IR node.
@@ -16397,10 +16403,11 @@ build_ir_node_from_die(reader&	rdr,
 		result.reset();
 		break;
 	      }
-	    // OK so we came to the conclusion that we need to keep
-	    // the function.  So let's add it to its scope.
-	    result = add_decl_to_scope(is_decl(result), interface_scope);
 	  }
+
+	// OK so we came to the conclusion that we need to keep
+	// the function.  So let's add it to its scope.
+	result = add_decl_to_scope(is_decl(result), interface_scope);
 
 	function_decl_sptr fn = is_function_decl(result);
 	if (fn && is_member_function(fn))

@@ -203,11 +203,9 @@
                                                                                                                 typedef name changed from SSL to RedsStreamPrivate at reds_stream.h:32:1
                                                                                                                 underlying type 'struct ssl_st' at ssl.h:1065:1 changed:
                                                                                                                   type name changed from 'ssl_st' to 'RedsStreamPrivate'
-                                                                                                                  type size changed from 5504 to 0 (in bits)
-                                                                                                                  94 data member deletions:
-                                                                                                                    'int version', at offset 0 (in bits) at ssl.h:1070:1
+                                                                                                                  type size changed from 5504 to 1472 (in bits)
+                                                                                                                  87 data member deletions:
                                                                                                                     'int type', at offset 32 (in bits) at ssl.h:1071:1
-                                                                                                                    'const SSL_METHOD* method', at offset 64 (in bits) at ssl.h:1073:1
                                                                                                                     'BIO* rbio', at offset 128 (in bits) at ssl.h:1080:1
                                                                                                                     'BIO* wbio', at offset 192 (in bits) at ssl.h:1081:1
                                                                                                                     'BIO* bbio', at offset 256 (in bits) at ssl.h:1082:1
@@ -224,16 +222,11 @@
                                                                                                                     'void* init_msg', at offset 704 (in bits) at ssl.h:1120:1
                                                                                                                     'int init_num', at offset 768 (in bits) at ssl.h:1121:1
                                                                                                                     'int init_off', at offset 800 (in bits) at ssl.h:1122:1
-                                                                                                                    'unsigned char* packet', at offset 832 (in bits) at ssl.h:1125:1
                                                                                                                     'unsigned int packet_length', at offset 896 (in bits) at ssl.h:1126:1
                                                                                                                     'ssl2_state_st* s2', at offset 960 (in bits) at ssl.h:1128:1
                                                                                                                     'ssl3_state_st* s3', at offset 1024 (in bits) at ssl.h:1129:1
                                                                                                                     'dtls1_state_st* d1', at offset 1088 (in bits) at ssl.h:1130:1
                                                                                                                     'int read_ahead', at offset 1152 (in bits) at ssl.h:1132:1
-                                                                                                                    'void (* msg_callback)(int, int, int, void*, size_t, SSL*, void*)', at offset 1216 (in bits) at ssl.h:1136:1
-                                                                                                                    'void* msg_callback_arg', at offset 1280 (in bits) at ssl.h:1137:1
-                                                                                                                    'int hit', at offset 1344 (in bits) at ssl.h:1139:1
-                                                                                                                    'X509_VERIFY_PARAM* param', at offset 1408 (in bits) at ssl.h:1141:1
                                                                                                                     'stack_st_SSL_CIPHER* cipher_list', at offset 1472 (in bits) at ssl.h:1149:1
                                                                                                                     'stack_st_SSL_CIPHER* cipher_list_by_id', at offset 1536 (in bits) at ssl.h:1150:1
                                                                                                                     'int mac_flags', at offset 1600 (in bits) at ssl.h:1154:1
@@ -299,6 +292,33 @@
                                                                                                                     'unsigned int tlsext_hb_pending', at offset 5408 (in bits) at ssl.h:1302:1
                                                                                                                     'unsigned int tlsext_hb_seq', at offset 5440 (in bits) at ssl.h:1303:1
                                                                                                                     'int renegotiate', at offset 5472 (in bits) at ssl.h:1308:1
+                                                                                                                  6 data member changes (1 filtered):
+                                                                                                                    type of 'int version' changed:
+                                                                                                                      entity changed from 'int' to 'SSL*'
+                                                                                                                      type size changed from 32 to 64 (in bits)
+                                                                                                                    and name of 'ssl_st::version' changed to 'RedsStreamPrivate::ssl' at reds_stream.c:80:1
+                                                                                                                    type of 'const SSL_METHOD* method' changed:
+                                                                                                                      entity changed from 'const SSL_METHOD*' to 'typedef RedsSASL' at reds_stream.c:76:1
+                                                                                                                      type size changed from 64 to 768 (in bits)
+                                                                                                                    and name of 'ssl_st::method' changed to 'RedsStreamPrivate::sasl' at reds_stream.c:83:1
+                                                                                                                    type of 'unsigned char* packet' changed:
+                                                                                                                      entity changed from 'unsigned char*' to 'typedef AsyncRead' at reds_stream.c:44:1
+                                                                                                                      type size changed from 64 to 384 (in bits)
+                                                                                                                    and name of 'ssl_st::packet' changed to 'RedsStreamPrivate::async_read' at reds_stream.c:86:1
+                                                                                                                    type of 'void (* msg_callback)(int, int, int, void*, size_t, SSL*, void*)' changed:
+                                                                                                                      in pointed to type 'function type void (int, int, int, void*, size_t, SSL*, void*)' at spice-core.h:88:1:
+                                                                                                                        entity changed from 'function type void (int, int, int, void*, size_t, SSL*, void*)' to 'typedef SpiceChannelEventInfo' at spice-core.h:88:1
+                                                                                                                        type size changed from 64 to 2560 (in bits)
+                                                                                                                    and name of 'ssl_st::msg_callback' changed to 'RedsStreamPrivate::info' at reds_stream.c:92:1
+                                                                                                                    type of 'int hit' changed:
+                                                                                                                      entity changed from 'int' to 'ssize_t (*)(RedsStream*, void*, size_t)'
+                                                                                                                      type size changed from 32 to 64 (in bits)
+                                                                                                                    and name of 'ssl_st::hit' changed to 'RedsStreamPrivate::write' at reds_stream.c:95:1
+                                                                                                                    type of 'X509_VERIFY_PARAM* param' changed:
+                                                                                                                      in pointed to type 'typedef X509_VERIFY_PARAM':
+                                                                                                                        entity changed from 'typedef X509_VERIFY_PARAM' to 'function type ssize_t (RedsStream*, const iovec*, int)'
+                                                                                                                        type size changed from 448 to 64 (in bits)
+                                                                                                                    and name of 'ssl_st::param' changed to 'RedsStreamPrivate::writev' at reds_stream.c:96:1
                                                                                                             and name of 'RedsStream::ssl' changed to 'RedsStream::priv' at reds_stream.h:42:1
                                                                                                             type of 'SpiceWatch* watch' changed:
                                                                                                               in pointed to type 'typedef SpiceWatch' at spice-core.h:68:1:
@@ -539,9 +559,24 @@
                                                                                   array element type 'typedef StreamAgent' changed:
                                                                                     underlying type 'struct StreamAgent' at red_worker.c:464:1 changed:
                                                                                       type size hasn't changed
-                                                                                      2 data member changes:
+                                                                                      3 data member changes:
                                                                                         type of 'Stream* stream' changed:
                                                                                           pointed to type 'typedef Stream' changed at red_worker.c:432:1, as reported earlier
+                                                                                        type of 'MJpegEncoder* mjpeg_encoder' changed:
+                                                                                          in pointed to type 'typedef MJpegEncoder' at mjpeg_encoder.h:30:1:
+                                                                                            underlying type 'struct MJpegEncoder' at mjpeg_encoder.c:155:1 changed:
+                                                                                              type size changed from 8128 to 8064 (in bits)
+                                                                                              1 data member deletion:
+                                                                                                'int rate_control_is_active', at offset 5760 (in bits) at mjpeg_encoder.c:166:1
+                                                                                              7 data member changes:
+                                                                                                type of 'void (* pixel_converter)(uint8_t*, uint8_t*)' changed:
+                                                                                                  in pointed to type 'function type void (uint8_t*, uint8_t*)':
+                                                                                                'MJpegEncoderRateControl rate_control' offset changed from 5824 to 5760 (in bits) (by -64 bits)
+                                                                                                'MJpegEncoderRateControlCbs cbs' offset changed from 7680 to 7616 (in bits) (by -64 bits)
+                                                                                                'void* cbs_opaque' offset changed from 7872 to 7808 (in bits) (by -64 bits)
+                                                                                                'uint64_t starting_bit_rate' offset changed from 7936 to 7872 (in bits) (by -64 bits)
+                                                                                                'uint64_t avg_quality' offset changed from 8000 to 7936 (in bits) (by -64 bits)
+                                                                                                'uint32_t num_frames' offset changed from 8064 to 8000 (in bits) (by -64 bits)
                                                                                         type of 'DisplayChannelClient* dcc' changed:
                                                                                           in pointed to type 'typedef DisplayChannelClient' at red_worker.c:435:1:
                                                                                             underlying type 'struct DisplayChannelClient' changed, as being reported
