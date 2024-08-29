@@ -711,7 +711,7 @@ public:
     if (do_log())
       {
 	t.stop();
-	cerr << "Reading CTF info in:" << t << "\n";
+	cerr << "CTF Reader: Reading CTF info in:" << t << "\n";
 	t.start();
       }
 
@@ -735,7 +735,7 @@ public:
     if (do_log())
       {
 	t.stop();
-	cerr << "Building ABG-IR in:" << t << "\n";
+	cerr << "CTF Reader: Building ABG-IR in:" << t << "\n";
       }
 
     return corp;
