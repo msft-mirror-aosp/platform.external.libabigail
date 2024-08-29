@@ -1303,6 +1303,7 @@ set_generic_options(abigail::elf_based_reader& rdr, const options& opts)
     opts.leverage_dwarf_factorization;
   rdr.options().assume_odr_for_cplusplus =
     opts.assume_odr_for_cplusplus;
+  rdr.options().do_log = opts.verbose;
 }
 
 /// Emit an error message on standard error about alternate debug info
