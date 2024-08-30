@@ -3155,10 +3155,11 @@ build_corpus_group_from_kernel_dist_under(const string&	root,
 
 #ifdef WITH_CTF
       shared_ptr<char> di_root_ctf;
+      char *di_root_ctf_ptr;
       if (requested_fe_kind & corpus::CTF_ORIGIN)
         {
           di_root_ctf = make_path_absolute(root.c_str());
-          char *di_root_ctf_ptr = di_root_ctf.get();
+          di_root_ctf_ptr = di_root_ctf.get();
           di_roots.push_back(&di_root_ctf_ptr);
         }
 #endif
