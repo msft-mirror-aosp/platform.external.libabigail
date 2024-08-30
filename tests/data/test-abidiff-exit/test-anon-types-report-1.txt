@@ -9,16 +9,16 @@ Unreachable types summary: 2 removed, 3 changed, 0 added types
 
 3 changed types unreachable from any public interface:
 
-  [C] 'struct {int a; int b;}' changed:
-    type size changed from 64 to 96 (in bits)
-    1 data member insertion:
-      'int c', at offset 64 (in bits) at test-anon-types-v1.c:18:1
-
   [C] 'enum {a=0, b=1, c=2, d=3, }' changed:
     type size hasn't changed
     2 enumerator insertions:
       'e' value '4'
       'f' value '5'
+
+  [C] 'struct {int a; int b;}' changed:
+    type size changed from 64 to 96 (in bits)
+    1 data member insertion:
+      'int c', at offset 64 (in bits) at test-anon-types-v1.c:18:1
 
   [C] 'union {int a; int b; int d;}' changed:
     type size hasn't changed

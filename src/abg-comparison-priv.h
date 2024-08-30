@@ -881,9 +881,9 @@ struct diff_comp
   bool
   operator()(const diff& l, diff& r) const
   {
-    return (get_pretty_representation(l.first_subject(), true)
+    return (get_pretty_representation(l.first_subject())
 	    <
-	    get_pretty_representation(r.first_subject(), true));
+	    get_pretty_representation(r.first_subject()));
   }
 
   /// Lexicographically compare two diff nodes.
