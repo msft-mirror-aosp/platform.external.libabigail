@@ -3195,7 +3195,7 @@ read_type_hash_and_cti(xmlNodePtr node, uint64_t& hash, uint64_t& cti)
       tools_utils::split_string(str, "#", parts);
       if (!parts.empty() && !parts.front().empty())
 	{
-	  hash = strtoull(parts[0].c_str(), 0, 16);
+	  ABG_ASSERT(hashing::deserialize_hash(parts[0], hash));
 	  if (parts.size() > 1)
 	    cti = atoll(parts[1].c_str());
 	  return true;

@@ -6,6 +6,7 @@
 /// @file
 
 #include <functional>
+#include <cstring>
 #include <xxhash.h>
 #include "abg-internal.h"
 #include "abg-ir-priv.h"
@@ -25,6 +26,137 @@ namespace abigail
 namespace hashing
 {
 
+/// Read a character representing an hexadecimal digit (from '0' to
+/// 'f' or to 'F'), and return an integer representing the value of
+/// that digit.  For instance, for the character '0', the function
+/// returns the integer 0.  For the character 'A' (or 'a'), the
+/// function returns the integer 10; for the character 'b' (or 'B')
+/// the function returns the integer 11.
+///
+/// @param c the input character to transform into an integer.
+///
+/// @param integer output value.  This is set by the function to the
+/// integer representing the character @p c.
+///
+/// @return true iff @p c is a character representing an hexadecimal
+/// number which value could be set to @p integer.
+static bool
+char_to_int(char c, unsigned char& integer)
+{
+  if (c >= '0' && c <= '9')
+    integer = c - '0';
+  else if (c >= 'a' && c <= 'z')
+    integer = 10 + c - 'a';
+  else if (c >= 'A' && c <= 'Z')
+    integer = 10 + c  - 'A';
+  else
+    return false;
+
+  return true;
+}
+
+/// Given an integer value representing an hexadecimal digit (from 0
+/// to F), emit the character value which prints that digit.  For the
+/// integer 11, the function returns the character 'b'.  For the
+/// integer 10, it returns the character 'a'.
+///
+/// @param integer the input hexadecimal integer digit to take into
+/// account.
+///
+/// @param c the output character representing the digit @p integer.
+///
+/// @return true iff @p integer is a valid hexadecimal digit that
+/// could could be represented by a character @p c.
+static bool
+int_to_char(unsigned char integer, unsigned char& c)
+{
+  if (integer <= 9)
+    c = integer + '0';
+  else if (integer >= 0xA && integer <= 0xF)
+    c = 'a' + (integer - 0xA);
+  else
+    return false;
+
+  return true;
+}
+
+/// Read a string of characters representing a string of hexadecimal
+/// digits which itself represents a hash value that was computed
+/// using the XH64 algorithm from the xxhash project.
+///
+/// That string of digit (characters) is laid out in the "canonical
+/// form" requested by the xxhash project.  That form is basically the
+/// hash number, represented in big endian.
+///
+/// @param input the input string of characters to consider.
+///
+/// @param hash the resulting hash value de-serialized from @p input.
+/// This is set by the function iff it returns true.
+///
+/// @return true iff the function could de-serialize the characters
+/// string @p input into the hash value @p hash.
+bool
+deserialize_hash(const string& input, uint64_t& hash)
+{
+  unsigned char byte = 0;
+  string xxh64_canonical_form;
+  for (size_t i = 0; i + 1 < input.size(); i += 2)
+    {
+      unsigned char first_nibble = 0, second_nibble = 0;
+      ABG_ASSERT(char_to_int(input[i], first_nibble));
+      ABG_ASSERT(char_to_int(input[i+1], second_nibble));
+      byte = (first_nibble << 4) | second_nibble;
+      xxh64_canonical_form.push_back(byte);
+    }
+
+  XXH64_canonical_t canonical_hash = {};
+  size_t size = sizeof(canonical_hash.digest);
+  memcpy(canonical_hash.digest,
+	 xxh64_canonical_form.c_str(),
+	 size);
+  hash = XXH64_hashFromCanonical(&canonical_hash);
+
+  return true;
+}
+
+/// Serialiaze a hash value computed using the XH64 algorithm (from the
+/// xxhash project) into a string of characters representing the
+/// digits of the hash in the canonical form requested by the xxhash
+/// project.  That canonical form is basically a big endian
+/// representation of the hexadecimal hash number.
+///
+/// @param hash the hash number to serialize.
+///
+/// @param output the resulting string of characters representing the
+/// hash value @p hash in its serialized form.  This is set iff the
+/// function return true.
+///
+/// @return true iff the function could serialize the hash value @p
+/// hash into a serialized form that is set into the output parameter
+/// @p output.
+bool
+serialize_hash(uint64_t hash, string& output)
+{
+  XXH64_canonical_t canonical_output = {};
+  XXH64_canonicalFromHash(&canonical_output, hash);
+  for (unsigned i = 0; i < sizeof(canonical_output.digest); ++i)
+    {
+      unsigned char first_nibble = 0, second_nibble = 0;
+      unsigned char byte = canonical_output.digest[i];
+      first_nibble = (0xf0 & byte) >> 4;
+      second_nibble = 0xf & byte;
+      unsigned char c = 0;
+      int_to_char(first_nibble, c);
+      output.push_back(c);
+      int_to_char(second_nibble, c);
+      output.push_back(c);
+    }
+
+  return true;
+}
+
+// </serialized_hash_type definitions>
+
 /// Combine two hash values to produce a third hash value.
 ///
 /// If one of the hash values is empty then the other one is returned,
@@ -41,7 +173,7 @@ combine_hashes(hash_t val1, hash_t val2)
 {
   hash_t result;
   if (val1.has_value() && val2.has_value())
-    result = XXH64(&val2.value(), sizeof(val2.value()), val1.value_or(0));
+    result = hash(*val2, *val1);
   else if (val1.has_value())
     result = *val1;
   else if (val2.has_value())
@@ -50,15 +182,31 @@ combine_hashes(hash_t val1, hash_t val2)
   return result;
 }
 
-/// Hash an integer value.
+/// Hash an integer value and combine it with a hash previously
+/// computed.
 ///
 /// @param v the value to hash.
 ///
+/// @param seed a previous hash value that is to be combined with the
+/// result of hashing @p v.  This is can be zero if no previous hash
+/// value is available.
+///
 /// @return the resulting hash value.
 hash_t
-hash(uint64_t v)
+hash(uint64_t v, uint64_t seed)
 {
-  hash_t h = XXH64(&v, sizeof(v), 0);
+  // THe XXH64 function takes an array of bytes representing the value
+  // to hash.  So let's represent 'v' as a big endian input and pass
+  // it to XXH64.
+  unsigned char data[sizeof(uint64_t)] = {};
+  uint64_t t = v;
+  size_t data_size = sizeof(data);
+  for (unsigned i = 0; i < data_size; ++i)
+    {
+      data[data_size - i - 1] = t & 0xff;
+      t = t >> 8;
+    }
+  hash_t h = XXH64(data, data_size, seed);
   return h;
 }
 

@@ -41,6 +41,12 @@ enum hashing_state
   HASHING_FINISHED_STATE,
 };
 
+bool
+deserialize_hash(const string& input, uint64_t& hash);
+
+bool
+serialize_hash(uint64_t hash, string& output);
+
 hash_t
 combine_hashes(hash_t, hash_t);
 
@@ -48,7 +54,7 @@ uint32_t
 fnv_hash(const std::string& str);
 
 hash_t
-hash(std::uint64_t);
+hash(std::uint64_t v, std::uint64_t seed = 0);
 
 hash_t
 hash(const std::string& str);

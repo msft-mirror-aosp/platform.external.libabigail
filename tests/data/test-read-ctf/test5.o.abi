@@ -7,40 +7,40 @@
     <elf-symbol name='foo' type='func-type' binding='global-binding' visibility='default-visibility' is-defined='yes'/>
   </elf-function-symbols>
   <abi-instr address-size='64' language='LANG_C'>
-    <type-decl name='char' size-in-bits='8' hash='7f1bbd7b0c3c186f' id='type-id-1'/>
-    <enum-decl name='E' linkage-name='E' size-in-bits='32' alignment-in-bits='32' hash='fbbc53945163b6d2' id='type-id-2'>
+    <type-decl name='char' size-in-bits='8' hash='9b0a6b0f99242b9a' id='type-id-1'/>
+    <enum-decl name='E' linkage-name='E' size-in-bits='32' alignment-in-bits='32' hash='e13177142c0b31d9' id='type-id-2'>
       <underlying-type type-id='type-id-3'/>
       <enumerator name='e0' value='0'/>
       <enumerator name='e1' value='1'/>
     </enum-decl>
-    <type-decl name='int' size-in-bits='32' hash='45e5b6264d770ae7' id='type-id-4'/>
-    <type-decl name='long int' size-in-bits='64' hash='69f1ebc3a0a3f241#2' id='type-id-5'/>
-    <type-decl name='long long int' size-in-bits='64' hash='55e6262ccf4af918#3' id='type-id-6'/>
-    <typedef-decl name='long_long' type-id='type-id-6' size-in-bits='64' hash='61477c4d1fd8d94d' id='type-id-7'/>
-    <type-decl name='unnamed-enum-underlying-type-32' size-in-bits='32' alignment-in-bits='32' is-anonymous='yes' hash='8f51609dd015af12' id='type-id-3'/>
-    <pointer-type-def type-id='type-id-1' size-in-bits='64' alignment-in-bits='64' hash='fd2f62e720077865' id='type-id-8'/>
-    <qualified-type-def type-id='type-id-4' const='yes' hash='efe9ca8385dea285' id='type-id-9'/>
-    <qualified-type-def type-id='type-id-5' const='yes' hash='a0d267bd9ac98d54#2' id='type-id-10'/>
-    <qualified-type-def type-id='type-id-10' volatile='yes' hash='e37907359f7750a6' id='type-id-11'/>
-    <function-decl name='foo' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='foo' hash='a124a4d88daead15'>
+    <type-decl name='int' size-in-bits='32' hash='a5c4f954b141f944' id='type-id-4'/>
+    <type-decl name='long int' size-in-bits='64' hash='19e68b445bea230d#2' id='type-id-5'/>
+    <type-decl name='long long int' size-in-bits='64' hash='f3758a4101363199#3' id='type-id-6'/>
+    <typedef-decl name='long_long' type-id='type-id-6' size-in-bits='64' hash='6d2e184520c45eb8' id='type-id-7'/>
+    <type-decl name='unnamed-enum-underlying-type-32' size-in-bits='32' alignment-in-bits='32' is-anonymous='yes' hash='3858cc731813efc0' id='type-id-3'/>
+    <pointer-type-def type-id='type-id-1' size-in-bits='64' alignment-in-bits='64' hash='0dcdd6ebf597dfbc' id='type-id-8'/>
+    <qualified-type-def type-id='type-id-4' const='yes' hash='47957d6eeb0cc8db' id='type-id-9'/>
+    <qualified-type-def type-id='type-id-5' const='yes' hash='7d3c465249de1570#2' id='type-id-10'/>
+    <qualified-type-def type-id='type-id-10' volatile='yes' hash='99277e3177a43406' id='type-id-11'/>
+    <function-decl name='foo' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='foo' hash='1f15727938fba476'>
       <parameter type-id='type-id-8'/>
       <parameter type-id='type-id-11'/>
       <return type-id='type-id-5'/>
     </function-decl>
-    <function-decl name='baz2' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='baz2' hash='648097d4f5419b81'>
+    <function-decl name='baz2' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='baz2' hash='db09bdd1df39db14'>
       <parameter type-id='type-id-4'/>
       <return type-id='type-id-7'/>
     </function-decl>
-    <function-decl name='bar' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='bar' hash='d97f95fe79cacdf1'>
+    <function-decl name='bar' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='bar' hash='7920927cd1607de2'>
       <parameter type-id='type-id-9'/>
       <parameter is-variadic='yes'/>
       <return type-id='type-id-12'/>
     </function-decl>
-    <function-decl name='bar2' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='bar2' hash='5c38cc4695988640'>
+    <function-decl name='bar2' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='bar2' hash='bdcdfab1542a710c'>
       <parameter type-id='type-id-2'/>
       <return type-id='type-id-12'/>
     </function-decl>
-    <function-decl name='baz' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='baz' hash='d97f95fe79cacdf1'>
+    <function-decl name='baz' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='baz' hash='7920927cd1607de2'>
       <parameter type-id='type-id-4'/>
       <return type-id='type-id-12'/>
     </function-decl>

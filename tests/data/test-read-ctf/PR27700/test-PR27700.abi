@@ -3,16 +3,16 @@
     <elf-symbol name='foo' type='func-type' binding='global-binding' visibility='default-visibility' is-defined='yes'/>
   </elf-function-symbols>
   <abi-instr address-size='64' language='LANG_C'>
-    <enum-decl name='foo' linkage-name='foo' size-in-bits='32' alignment-in-bits='32' hash='6ceafff98df3ac46' id='022218d8'>
+    <enum-decl name='foo' linkage-name='foo' size-in-bits='32' alignment-in-bits='32' hash='5c802d4f39dde76e' id='022218d8'>
       <underlying-type type-id='9cac1fee'/>
       <enumerator name='foo_e0' value='0'/>
       <enumerator name='foo_e1' value='1'/>
       <enumerator name='foo_e2' value='2'/>
       <enumerator name='foo_e3' value='3'/>
     </enum-decl>
-    <type-decl name='unnamed-enum-underlying-type-32' size-in-bits='32' alignment-in-bits='32' is-anonymous='yes' hash='8f51609dd015af12' id='9cac1fee'/>
-    <pointer-type-def type-id='022218d8' size-in-bits='64' alignment-in-bits='64' hash='6f3a2cfbddeb439d' id='8750e847'/>
-    <function-decl name='foo' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='foo' hash='476772e514ca5775'>
+    <type-decl name='unnamed-enum-underlying-type-32' size-in-bits='32' alignment-in-bits='32' is-anonymous='yes' hash='3858cc731813efc0' id='9cac1fee'/>
+    <pointer-type-def type-id='022218d8' size-in-bits='64' alignment-in-bits='64' hash='f5475be142a60815' id='8750e847'/>
+    <function-decl name='foo' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='foo' hash='1c8b1af2bb8487ad'>
       <parameter type-id='8750e847'/>
       <return type-id='48b5725f'/>
     </function-decl>

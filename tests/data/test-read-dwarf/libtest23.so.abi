@@ -12,16 +12,16 @@
     <elf-symbol name='_init' type='func-type' binding='global-binding' visibility='default-visibility' is-defined='yes'/>
   </elf-function-symbols>
   <abi-instr address-size='64' path='test23-first-tu.cc' comp-dir-path='/home/dodji/git/libabigail/PR20369/tests/data/test-read-dwarf' language='LANG_C_plus_plus'>
-    <type-decl name='bool' size-in-bits='8' hash='c635872c46617578' id='type-id-1'/>
-    <type-decl name='char' size-in-bits='8' hash='7f1bbd7b0c3c186f' id='type-id-2'/>
-    <type-decl name='double' size-in-bits='64' hash='ab419e666b76dba5' id='type-id-3'/>
-    <type-decl name='float' size-in-bits='32' hash='d0241d3e33863f20' id='type-id-4'/>
-    <type-decl name='int' size-in-bits='32' hash='45e5b6264d770ae7' id='type-id-5'/>
-    <type-decl name='long double' size-in-bits='128' hash='3585edd3484ecff7#2' id='type-id-6'/>
-    <type-decl name='long int' size-in-bits='64' hash='69f1ebc3a0a3f241#2' id='type-id-7'/>
-    <type-decl name='long long int' size-in-bits='64' hash='55e6262ccf4af918#3' id='type-id-8'/>
-    <type-decl name='short int' size-in-bits='16' hash='bda4242a54aecaa8#4' id='type-id-9'/>
-    <class-decl name='__mbstate_t' is-struct='yes' naming-typedef-id='type-id-10' visibility='default' size-in-bits='64' filepath='/usr/include/wchar.h' line='83' column='1' hash='6ebde45b350f9d6b' id='type-id-11'>
+    <type-decl name='bool' size-in-bits='8' hash='c99a27c9ef83b12a' id='type-id-1'/>
+    <type-decl name='char' size-in-bits='8' hash='9b0a6b0f99242b9a' id='type-id-2'/>
+    <type-decl name='double' size-in-bits='64' hash='45af2b0af187a9a0' id='type-id-3'/>
+    <type-decl name='float' size-in-bits='32' hash='45edc8c8380a563b' id='type-id-4'/>
+    <type-decl name='int' size-in-bits='32' hash='a5c4f954b141f944' id='type-id-5'/>
+    <type-decl name='long double' size-in-bits='128' hash='75bf7da5ecdf180b#2' id='type-id-6'/>
+    <type-decl name='long int' size-in-bits='64' hash='19e68b445bea230d#2' id='type-id-7'/>
+    <type-decl name='long long int' size-in-bits='64' hash='f3758a4101363199#3' id='type-id-8'/>
+    <type-decl name='short int' size-in-bits='16' hash='cb5448d80b4bf768#4' id='type-id-9'/>
+    <class-decl name='__mbstate_t' is-struct='yes' naming-typedef-id='type-id-10' visibility='default' size-in-bits='64' filepath='/usr/include/wchar.h' line='83' column='1' hash='d777f43ec2c9b06e' id='type-id-11'>
       <member-type access='public'>
         <union-decl name='__anonymous_union__' visibility='default' is-anonymous='yes' is-declaration-only='yes' id='type-id-12'/>
       </member-type>
@@ -32,7 +32,7 @@
         <var-decl name='__value' type-id='type-id-12' visibility='default' filepath='/usr/include/wchar.h' line='93' column='1'/>
       </data-member>
     </class-decl>
-    <class-decl name='tm' is-struct='yes' visibility='default' size-in-bits='448' filepath='/usr/include/time.h' line='133' column='1' hash='969be498eaf01735' id='type-id-13'>
+    <class-decl name='tm' is-struct='yes' visibility='default' size-in-bits='448' filepath='/usr/include/time.h' line='133' column='1' hash='baaf641c9e85f543' id='type-id-13'>
       <data-member access='public' layout-offset-in-bits='0'>
         <var-decl name='tm_sec' type-id='type-id-5' visibility='default' filepath='/usr/include/time.h' line='135' column='1'/>
       </data-member>
@@ -67,7 +67,7 @@
         <var-decl name='tm_zone' type-id='type-id-14' visibility='default' filepath='/usr/include/time.h' line='147' column='1'/>
       </data-member>
     </class-decl>
-    <class-decl name='typedef __va_list_tag __va_list_tag' is-struct='yes' visibility='default' size-in-bits='192' hash='72ef92348784e081' id='type-id-15'>
+    <class-decl name='typedef __va_list_tag __va_list_tag' is-struct='yes' visibility='default' size-in-bits='192' hash='83fa54683fd86a04' id='type-id-15'>
       <data-member access='public' layout-offset-in-bits='0'>
         <var-decl name='gp_offset' type-id='type-id-16' visibility='default'/>
       </data-member>
@@ -81,67 +81,67 @@
         <var-decl name='reg_save_area' type-id='type-id-17' visibility='default'/>
       </data-member>
     </class-decl>
-    <class-decl name='__anonymous_struct__' is-struct='yes' visibility='default' is-anonymous='yes' hash='bd77c6a55fb9cd2c' id='type-id-18'/>
-    <typedef-decl name='__int32_t' type-id='type-id-5' size-in-bits='32' filepath='/usr/include/bits/types.h' line='40' column='1' hash='f0c050c6f9f8032e' id='type-id-19'/>
-    <typedef-decl name='__mbstate_t' type-id='type-id-11' size-in-bits='64' filepath='/usr/include/wchar.h' line='94' column='1' hash='61477c4d1fd8d94d' id='type-id-10'/>
-    <typedef-decl name='mbstate_t' type-id='type-id-10' size-in-bits='64' filepath='/usr/include/wchar.h' line='106' column='1' hash='61477c4d1fd8d94d' id='type-id-20'/>
-    <typedef-decl name='size_t' type-id='type-id-21' size-in-bits='64' filepath='/usr/lib/gcc/x86_64-redhat-linux/4.8.5/include/stddef.h' line='212' column='1' hash='61477c4d1fd8d94d' id='type-id-22'/>
-    <typedef-decl name='wctrans_t' type-id='type-id-23' size-in-bits='64' filepath='/usr/include/wctype.h' line='186' column='1' hash='61477c4d1fd8d94d' id='type-id-24'/>
-    <typedef-decl name='wctype_t' type-id='type-id-21' size-in-bits='64' filepath='/usr/include/wctype.h' line='52' column='1' hash='61477c4d1fd8d94d' id='type-id-25'/>
-    <typedef-decl name='wint_t' type-id='type-id-16' size-in-bits='32' filepath='/usr/lib/gcc/x86_64-redhat-linux/4.8.5/include/stddef.h' line='353' column='1' hash='f0c050c6f9f8032e' id='type-id-26'/>
-    <type-decl name='unsigned int' size-in-bits='32' hash='3a94285d174bd537' id='type-id-16'/>
-    <type-decl name='unsigned long int' size-in-bits='64' hash='e7c5efcec748ba6c#2' id='type-id-21'/>
-    <type-decl name='unsigned long long int' size-in-bits='64' hash='d226d906a470de76#3' id='type-id-27'/>
-    <type-decl name='wchar_t' size-in-bits='32' hash='e03601bc1680ce34' id='type-id-28'/>
-    <reference-type-def kind='lvalue' type-id='type-id-2' size-in-bits='64' hash='7a2267c7e220a0d4' id='type-id-29'/>
-    <pointer-type-def type-id='type-id-2' size-in-bits='64' hash='cbbb684bdad1404' id='type-id-30'/>
-    <qualified-type-def type-id='type-id-19' const='yes' hash='45b539bd47b09a31' id='type-id-31'/>
-    <pointer-type-def type-id='type-id-31' size-in-bits='64' hash='e8b8dcbfb160b4c0' id='type-id-23'/>
-    <qualified-type-def type-id='type-id-2' const='yes' hash='2059efede605db28' id='type-id-32'/>
-    <reference-type-def kind='lvalue' type-id='type-id-32' size-in-bits='64' hash='15da667af2807204' id='type-id-33'/>
-    <pointer-type-def type-id='type-id-32' size-in-bits='64' hash='fe474f966dd309ec' id='type-id-14'/>
-    <pointer-type-def type-id='type-id-14' size-in-bits='64' hash='1d69489b117e3908' id='type-id-34'/>
-    <qualified-type-def type-id='type-id-5' const='yes' hash='efe9ca8385dea285' id='type-id-35'/>
-    <qualified-type-def type-id='type-id-7' const='yes' hash='a0d267bd9ac98d54#2' id='type-id-36'/>
-    <qualified-type-def type-id='type-id-20' const='yes' hash='bd6748e8ae3e857d' id='type-id-37'/>
-    <pointer-type-def type-id='type-id-37' size-in-bits='64' hash='168359808cdff22e' id='type-id-38'/>
-    <qualified-type-def type-id='type-id-9' const='yes' hash='59893dfb15493308#3' id='type-id-39'/>
-    <qualified-type-def type-id='type-id-40' const='yes' hash='83c068a11986f705' id='type-id-41'/>
-    <reference-type-def kind='lvalue' type-id='type-id-41' size-in-bits='64' hash='5677f5b0daf9b7ec' id='type-id-42'/>
-    <pointer-type-def type-id='type-id-41' size-in-bits='64' hash='64bef80fb36b994d' id='type-id-43'/>
-    <qualified-type-def type-id='type-id-44' const='yes' hash='5b83273800a290e0' id='type-id-45'/>
-    <qualified-type-def type-id='type-id-13' const='yes' hash='5e1629020865d229' id='type-id-46'/>
-    <pointer-type-def type-id='type-id-46' size-in-bits='64' hash='e9817f1d96dbf0fc' id='type-id-47'/>
-    <qualified-type-def type-id='type-id-28' const='yes' hash='c39a006827b53b8c' id='type-id-48'/>
-    <pointer-type-def type-id='type-id-48' size-in-bits='64' hash='40d2ae8fc93ab842' id='type-id-49'/>
-    <pointer-type-def type-id='type-id-49' size-in-bits='64' hash='d7b662533fe382b6' id='type-id-50'/>
-    <pointer-type-def type-id='type-id-20' size-in-bits='64' hash='e34b775ca165913b' id='type-id-51'/>
-    <reference-type-def kind='lvalue' type-id='type-id-40' size-in-bits='64' hash='267e36ff37d2b5fd' id='type-id-52'/>
-    <pointer-type-def type-id='type-id-40' size-in-bits='64' hash='f363c48e6fb08837' id='type-id-53'/>
-    <reference-type-def kind='lvalue' type-id='type-id-54' size-in-bits='64' hash='4aedc088de4a0082' id='type-id-55'/>
-    <pointer-type-def type-id='type-id-18' size-in-bits='64' hash='c6e5906a4c7d10cc' id='type-id-56'/>
-    <pointer-type-def type-id='type-id-15' size-in-bits='64' hash='d231781369ca2ed' id='type-id-57'/>
-    <pointer-type-def type-id='type-id-28' size-in-bits='64' hash='2338850b8cb7ce35' id='type-id-58'/>
-    <pointer-type-def type-id='type-id-58' size-in-bits='64' hash='e9272a368a48a792' id='type-id-59'/>
+    <class-decl name='__anonymous_struct__' is-struct='yes' visibility='default' is-anonymous='yes' hash='c148bcac45fc4960' id='type-id-18'/>
+    <typedef-decl name='__int32_t' type-id='type-id-5' size-in-bits='32' filepath='/usr/include/bits/types.h' line='40' column='1' hash='d8e5416fbbae5e96' id='type-id-19'/>
+    <typedef-decl name='__mbstate_t' type-id='type-id-11' size-in-bits='64' filepath='/usr/include/wchar.h' line='94' column='1' hash='6d2e184520c45eb8' id='type-id-10'/>
+    <typedef-decl name='mbstate_t' type-id='type-id-10' size-in-bits='64' filepath='/usr/include/wchar.h' line='106' column='1' hash='6d2e184520c45eb8' id='type-id-20'/>
+    <typedef-decl name='size_t' type-id='type-id-21' size-in-bits='64' filepath='/usr/lib/gcc/x86_64-redhat-linux/4.8.5/include/stddef.h' line='212' column='1' hash='6d2e184520c45eb8' id='type-id-22'/>
+    <typedef-decl name='wctrans_t' type-id='type-id-23' size-in-bits='64' filepath='/usr/include/wctype.h' line='186' column='1' hash='6d2e184520c45eb8' id='type-id-24'/>
+    <typedef-decl name='wctype_t' type-id='type-id-21' size-in-bits='64' filepath='/usr/include/wctype.h' line='52' column='1' hash='6d2e184520c45eb8' id='type-id-25'/>
+    <typedef-decl name='wint_t' type-id='type-id-16' size-in-bits='32' filepath='/usr/lib/gcc/x86_64-redhat-linux/4.8.5/include/stddef.h' line='353' column='1' hash='d8e5416fbbae5e96' id='type-id-26'/>
+    <type-decl name='unsigned int' size-in-bits='32' hash='7ec56020d293fea6' id='type-id-16'/>
+    <type-decl name='unsigned long int' size-in-bits='64' hash='49b6777b7019522a#2' id='type-id-21'/>
+    <type-decl name='unsigned long long int' size-in-bits='64' hash='4ca4828a98bd10cf#3' id='type-id-27'/>
+    <type-decl name='wchar_t' size-in-bits='32' hash='86d3a6b20eb69e9e' id='type-id-28'/>
+    <reference-type-def kind='lvalue' type-id='type-id-2' size-in-bits='64' hash='96cc5d715d0f6920' id='type-id-29'/>
+    <pointer-type-def type-id='type-id-2' size-in-bits='64' hash='e77c7ab38defab6a' id='type-id-30'/>
+    <qualified-type-def type-id='type-id-19' const='yes' hash='2fed97ec66e89835' id='type-id-31'/>
+    <pointer-type-def type-id='type-id-31' size-in-bits='64' hash='0d14c9b4717c511c' id='type-id-23'/>
+    <qualified-type-def type-id='type-id-2' const='yes' hash='cef38c8d77d78e97' id='type-id-32'/>
+    <reference-type-def kind='lvalue' type-id='type-id-32' size-in-bits='64' hash='08b882953c074136' id='type-id-33'/>
+    <pointer-type-def type-id='type-id-32' size-in-bits='64' hash='909d37f8d8f80abc' id='type-id-14'/>
+    <pointer-type-def type-id='type-id-14' size-in-bits='64' hash='9bffa3fb5c52bb0f' id='type-id-34'/>
+    <qualified-type-def type-id='type-id-5' const='yes' hash='47957d6eeb0cc8db' id='type-id-35'/>
+    <qualified-type-def type-id='type-id-7' const='yes' hash='7d3c465249de1570#2' id='type-id-36'/>
+    <qualified-type-def type-id='type-id-20' const='yes' hash='bb2f01ee61a14c59' id='type-id-37'/>
+    <pointer-type-def type-id='type-id-37' size-in-bits='64' hash='b455f26900a168d9' id='type-id-38'/>
+    <qualified-type-def type-id='type-id-9' const='yes' hash='62eaa1c6d1a6b4d5#3' id='type-id-39'/>
+    <qualified-type-def type-id='type-id-40' const='yes' hash='b3460f4f08ea9c71' id='type-id-41'/>
+    <reference-type-def kind='lvalue' type-id='type-id-41' size-in-bits='64' hash='cd5680a66c6bfc76' id='type-id-42'/>
+    <pointer-type-def type-id='type-id-41' size-in-bits='64' hash='3ca5b481103b8a18' id='type-id-43'/>
+    <qualified-type-def type-id='type-id-44' const='yes' hash='2bcfeae9ad356ca8' id='type-id-45'/>
+    <qualified-type-def type-id='type-id-13' const='yes' hash='a977b9476ec7c815' id='type-id-46'/>
+    <pointer-type-def type-id='type-id-46' size-in-bits='64' hash='a23a6229079265f5' id='type-id-47'/>
+    <qualified-type-def type-id='type-id-28' const='yes' hash='2e98b5280f94fb49' id='type-id-48'/>
+    <pointer-type-def type-id='type-id-48' size-in-bits='64' hash='46cc8b8b00aab743' id='type-id-49'/>
+    <pointer-type-def type-id='type-id-49' size-in-bits='64' hash='ee67446d3ee2db0d' id='type-id-50'/>
+    <pointer-type-def type-id='type-id-20' size-in-bits='64' hash='df6c0f6b9829ddf7' id='type-id-51'/>
+    <reference-type-def kind='lvalue' type-id='type-id-40' size-in-bits='64' hash='9971154de5d0efa4' id='type-id-52'/>
+    <pointer-type-def type-id='type-id-40' size-in-bits='64' hash='5867a1d321608c35' id='type-id-53'/>
+    <reference-type-def kind='lvalue' type-id='type-id-54' size-in-bits='64' hash='56d13577801a207d' id='type-id-55'/>
+    <pointer-type-def type-id='type-id-18' size-in-bits='64' hash='dd8011afac2ff1e0' id='type-id-56'/>
+    <pointer-type-def type-id='type-id-15' size-in-bits='64' hash='ad04ae38a387773f' id='type-id-57'/>
+    <pointer-type-def type-id='type-id-28' size-in-bits='64' hash='68bbfa840b9b47c0' id='type-id-58'/>
+    <pointer-type-def type-id='type-id-58' size-in-bits='64' hash='fb4d78942cc7e10f' id='type-id-59'/>
     <pointer-type-def type-id='type-id-60' size-in-bits='64' id='type-id-61'/>
     <class-decl name='allocator&lt;char&gt;' visibility='default' is-declaration-only='yes' id='type-id-62'>
       <member-type access='public'>
-        <typedef-decl name='const_pointer' type-id='type-id-14' size-in-bits='64' filepath='/usr/include/c++/4.8.2/bits/allocator.h' line='98' column='1' hash='61477c4d1fd8d94d' id='type-id-63'/>
+        <typedef-decl name='const_pointer' type-id='type-id-14' size-in-bits='64' filepath='/usr/include/c++/4.8.2/bits/allocator.h' line='98' column='1' hash='6d2e184520c45eb8' id='type-id-63'/>
       </member-type>
       <member-type access='public'>
-        <typedef-decl name='const_reference' type-id='type-id-33' size-in-bits='64' filepath='/usr/include/c++/4.8.2/bits/allocator.h' line='100' column='1' hash='61477c4d1fd8d94d' id='type-id-64'/>
+        <typedef-decl name='const_reference' type-id='type-id-33' size-in-bits='64' filepath='/usr/include/c++/4.8.2/bits/allocator.h' line='100' column='1' hash='6d2e184520c45eb8' id='type-id-64'/>
       </member-type>
       <member-type access='public'>
-        <typedef-decl name='difference_type' type-id='type-id-66' size-in-bits='64' filepath='/usr/include/c++/4.8.2/bits/allocator.h' line='96' column='1' hash='61477c4d1fd8d94d' id='type-id-65'/>
+        <typedef-decl name='difference_type' type-id='type-id-66' size-in-bits='64' filepath='/usr/include/c++/4.8.2/bits/allocator.h' line='96' column='1' hash='6d2e184520c45eb8' id='type-id-65'/>
       </member-type>
       <member-type access='public'>
-        <typedef-decl name='pointer' type-id='type-id-30' size-in-bits='64' filepath='/usr/include/c++/4.8.2/bits/allocator.h' line='97' column='1' hash='61477c4d1fd8d94d' id='type-id-67'/>
+        <typedef-decl name='pointer' type-id='type-id-30' size-in-bits='64' filepath='/usr/include/c++/4.8.2/bits/allocator.h' line='97' column='1' hash='6d2e184520c45eb8' id='type-id-67'/>
       </member-type>
       <member-type access='public'>
-        <typedef-decl name='reference' type-id='type-id-29' size-in-bits='64' filepath='/usr/include/c++/4.8.2/bits/allocator.h' line='99' column='1' hash='61477c4d1fd8d94d' id='type-id-68'/>
+        <typedef-decl name='reference' type-id='type-id-29' size-in-bits='64' filepath='/usr/include/c++/4.8.2/bits/allocator.h' line='99' column='1' hash='6d2e184520c45eb8' id='type-id-68'/>
       </member-type>
       <member-type access='public'>
-        <typedef-decl name='size_type' type-id='type-id-70' size-in-bits='64' filepath='/usr/include/c++/4.8.2/bits/allocator.h' line='95' column='1' hash='61477c4d1fd8d94d' id='type-id-69'/>
+        <typedef-decl name='size_type' type-id='type-id-70' size-in-bits='64' filepath='/usr/include/c++/4.8.2/bits/allocator.h' line='95' column='1' hash='6d2e184520c45eb8' id='type-id-69'/>
       </member-type>
     </class-decl>
     <qualified-type-def type-id='type-id-62' const='yes' id='type-id-71'/>
@@ -152,30 +152,30 @@
       <class-decl name='__normal_iterator&lt;char*, std::basic_string&lt;char, std::char_traits&lt;char&gt;, std::allocator&lt;char&gt; &gt; &gt;' visibility='default' is-declaration-only='yes' id='type-id-76'/>
     </namespace-decl>
     <namespace-decl name='std'>
-      <typedef-decl name='string' type-id='type-id-40' size-in-bits='64' filepath='/usr/include/c++/4.8.2/bits/stringfwd.h' line='62' column='1' hash='61477c4d1fd8d94d' id='type-id-54'/>
+      <typedef-decl name='string' type-id='type-id-40' size-in-bits='64' filepath='/usr/include/c++/4.8.2/bits/stringfwd.h' line='62' column='1' hash='6d2e184520c45eb8' id='type-id-54'/>
     </namespace-decl>
     <namespace-decl name='std'>
-      <class-decl name='basic_string&lt;char, std::char_traits&lt;char&gt;, std::allocator&lt;char&gt; &gt;' visibility='default' size-in-bits='64' filepath='/usr/include/c++/4.8.2/bits/basic_string.h' line='112' column='1' hash='7fb327305c7930c' id='type-id-40'>
+      <class-decl name='basic_string&lt;char, std::char_traits&lt;char&gt;, std::allocator&lt;char&gt; &gt;' visibility='default' size-in-bits='64' filepath='/usr/include/c++/4.8.2/bits/basic_string.h' line='112' column='1' hash='4f5f6e5a2dcea18d' id='type-id-40'>
         <member-type access='public'>
-          <typedef-decl name='const_pointer' type-id='type-id-63' size-in-bits='64' filepath='/usr/include/c++/4.8.2/bits/basic_string.h' line='126' column='1' hash='61477c4d1fd8d94d' id='type-id-77'/>
+          <typedef-decl name='const_pointer' type-id='type-id-63' size-in-bits='64' filepath='/usr/include/c++/4.8.2/bits/basic_string.h' line='126' column='1' hash='6d2e184520c45eb8' id='type-id-77'/>
         </member-type>
         <member-type access='public'>
-          <typedef-decl name='const_reference' type-id='type-id-64' size-in-bits='64' filepath='/usr/include/c++/4.8.2/bits/basic_string.h' line='124' column='1' hash='61477c4d1fd8d94d' id='type-id-78'/>
+          <typedef-decl name='const_reference' type-id='type-id-64' size-in-bits='64' filepath='/usr/include/c++/4.8.2/bits/basic_string.h' line='124' column='1' hash='6d2e184520c45eb8' id='type-id-78'/>
         </member-type>
         <member-type access='public'>
-          <typedef-decl name='difference_type' type-id='type-id-65' size-in-bits='64' filepath='/usr/include/c++/4.8.2/bits/basic_string.h' line='122' column='1' hash='61477c4d1fd8d94d' id='type-id-79'/>
+          <typedef-decl name='difference_type' type-id='type-id-65' size-in-bits='64' filepath='/usr/include/c++/4.8.2/bits/basic_string.h' line='122' column='1' hash='6d2e184520c45eb8' id='type-id-79'/>
         </member-type>
         <member-type access='public'>
-          <typedef-decl name='pointer' type-id='type-id-67' size-in-bits='64' filepath='/usr/include/c++/4.8.2/bits/basic_string.h' line='125' column='1' hash='61477c4d1fd8d94d' id='type-id-80'/>
+          <typedef-decl name='pointer' type-id='type-id-67' size-in-bits='64' filepath='/usr/include/c++/4.8.2/bits/basic_string.h' line='125' column='1' hash='6d2e184520c45eb8' id='type-id-80'/>
         </member-type>
         <member-type access='public'>
-          <typedef-decl name='reference' type-id='type-id-68' size-in-bits='64' filepath='/usr/include/c++/4.8.2/bits/basic_string.h' line='123' column='1' hash='61477c4d1fd8d94d' id='type-id-81'/>
+          <typedef-decl name='reference' type-id='type-id-68' size-in-bits='64' filepath='/usr/include/c++/4.8.2/bits/basic_string.h' line='123' column='1' hash='6d2e184520c45eb8' id='type-id-81'/>
         </member-type>
         <member-type access='public'>
-          <typedef-decl name='size_type' type-id='type-id-69' size-in-bits='64' filepath='/usr/include/c++/4.8.2/bits/basic_string.h' line='121' column='1' hash='61477c4d1fd8d94d' id='type-id-44'/>
+          <typedef-decl name='size_type' type-id='type-id-69' size-in-bits='64' filepath='/usr/include/c++/4.8.2/bits/basic_string.h' line='121' column='1' hash='6d2e184520c45eb8' id='type-id-44'/>
         </member-type>
         <member-type access='public'>
-          <typedef-decl name='value_type' type-id='type-id-83' size-in-bits='8' filepath='/usr/include/c++/4.8.2/bits/basic_string.h' line='119' column='1' hash='a001c849ab2c5776' id='type-id-82'/>
+          <typedef-decl name='value_type' type-id='type-id-83' size-in-bits='8' filepath='/usr/include/c++/4.8.2/bits/basic_string.h' line='119' column='1' hash='86aaa519d87e2050' id='type-id-82'/>
         </member-type>
         <member-type access='private'>
           <class-decl name='_Alloc_hider' is-struct='yes' visibility='default' is-declaration-only='yes' id='type-id-84'/>
@@ -213,8 +213,8 @@
       </class-decl>
     </namespace-decl>
     <namespace-decl name='std'>
-      <typedef-decl name='ptrdiff_t' type-id='type-id-7' size-in-bits='64' filepath='/usr/include/c++/4.8.2/x86_64-redhat-linux/bits/c++config.h' line='1858' column='1' hash='61477c4d1fd8d94d' id='type-id-66'/>
-      <typedef-decl name='size_t' type-id='type-id-21' size-in-bits='64' filepath='/usr/include/c++/4.8.2/x86_64-redhat-linux/bits/c++config.h' line='1857' column='1' hash='61477c4d1fd8d94d' id='type-id-70'/>
+      <typedef-decl name='ptrdiff_t' type-id='type-id-7' size-in-bits='64' filepath='/usr/include/c++/4.8.2/x86_64-redhat-linux/bits/c++config.h' line='1858' column='1' hash='6d2e184520c45eb8' id='type-id-66'/>
+      <typedef-decl name='size_t' type-id='type-id-21' size-in-bits='64' filepath='/usr/include/c++/4.8.2/x86_64-redhat-linux/bits/c++config.h' line='1857' column='1' hash='6d2e184520c45eb8' id='type-id-70'/>
       <class-decl name='reverse_iterator&lt;__gnu_cxx::__normal_iterator&lt;char const*, std::basic_string&lt;char, std::char_traits&lt;char&gt;, std::allocator&lt;char&gt; &gt; &gt; &gt;' visibility='default' is-declaration-only='yes' id='type-id-91'/>
       <class-decl name='reverse_iterator&lt;__gnu_cxx::__normal_iterator&lt;char*, std::basic_string&lt;char, std::char_traits&lt;char&gt;, std::allocator&lt;char&gt; &gt; &gt; &gt;' visibility='default' is-declaration-only='yes' id='type-id-94'/>
     </namespace-decl>
@@ -223,7 +223,7 @@
     <class-decl name='_IO_FILE' is-struct='yes' visibility='default' is-declaration-only='yes' id='type-id-99'/>
     <class-decl name='char_traits&lt;char&gt;' is-struct='yes' visibility='default' is-declaration-only='yes' id='type-id-96'>
       <member-type access='public'>
-        <typedef-decl name='char_type' type-id='type-id-2' size-in-bits='8' filepath='/usr/include/c++/4.8.2/bits/char_traits.h' line='235' column='1' hash='a001c849ab2c5776' id='type-id-83'/>
+        <typedef-decl name='char_type' type-id='type-id-2' size-in-bits='8' filepath='/usr/include/c++/4.8.2/bits/char_traits.h' line='235' column='1' hash='86aaa519d87e2050' id='type-id-83'/>
       </member-type>
     </class-decl>
     <class-decl name='rebind&lt;char&gt;' is-struct='yes' visibility='default' is-declaration-only='yes' id='type-id-100'>
@@ -231,7 +231,7 @@
         <typedef-decl name='other' type-id='type-id-62' filepath='/usr/include/c++/4.8.2/bits/allocator.h' line='105' column='1' id='type-id-87'/>
       </member-type>
     </class-decl>
-    <function-decl name='emit' mangled-name='_Z4emitRSs' filepath='/home/dodji/git/libabigail/PR20369/tests/data/test-read-dwarf/test23-first-tu.cc' line='12' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_Z4emitRSs' hash='8d6dd888776a11fb'>
+    <function-decl name='emit' mangled-name='_Z4emitRSs' filepath='/home/dodji/git/libabigail/PR20369/tests/data/test-read-dwarf/test23-first-tu.cc' line='12' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_Z4emitRSs' hash='68557582040b57ad'>
       <parameter type-id='type-id-55' filepath='/home/dodji/git/libabigail/PR20369/tests/data/test-read-dwarf/test23-first-tu.cc' line='12' column='1'/>
       <return type-id='type-id-101'/>
     </function-decl>
@@ -281,7 +281,7 @@
     <namespace-decl name='std'>
     </namespace-decl>
     <class-decl name='_IO_FILE' is-struct='yes' visibility='default' is-declaration-only='yes' id='type-id-110'/>
-    <function-decl name='emit' mangled-name='_Z4emitRSsS_' filepath='/home/dodji/git/libabigail/PR20369/tests/data/test-read-dwarf/test23-second-tu.cc' line='13' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_Z4emitRSsS_' hash='659ced78215eae4a'>
+    <function-decl name='emit' mangled-name='_Z4emitRSsS_' filepath='/home/dodji/git/libabigail/PR20369/tests/data/test-read-dwarf/test23-second-tu.cc' line='13' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_Z4emitRSsS_' hash='61e649ed70ac8348'>
       <parameter type-id='type-id-55' filepath='/home/dodji/git/libabigail/PR20369/tests/data/test-read-dwarf/test23-second-tu.cc' line='13' column='1'/>
       <parameter type-id='type-id-55' filepath='/home/dodji/git/libabigail/PR20369/tests/data/test-read-dwarf/test23-second-tu.cc' line='13' column='1'/>
       <return type-id='type-id-101'/>

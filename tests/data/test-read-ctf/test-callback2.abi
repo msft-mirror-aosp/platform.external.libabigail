@@ -3,16 +3,16 @@
     <elf-symbol name='s0' size='8' type='object-type' binding='global-binding' visibility='default-visibility' is-defined='yes'/>
   </elf-variable-symbols>
   <abi-instr address-size='64' language='LANG_C'>
-    <type-decl name='int' size-in-bits='32' hash='45e5b6264d770ae7' id='type-id-1'/>
-    <class-decl name='s0' is-struct='yes' visibility='default' size-in-bits='64' hash='694614a7206163c8' id='type-id-2'>
+    <type-decl name='int' size-in-bits='32' hash='a5c4f954b141f944' id='type-id-1'/>
+    <class-decl name='s0' is-struct='yes' visibility='default' size-in-bits='64' hash='6bdad4000121a31e' id='type-id-2'>
       <data-member access='public' layout-offset-in-bits='0'>
         <var-decl name='mem_fun' type-id='type-id-3' visibility='default'/>
       </data-member>
     </class-decl>
-    <pointer-type-def type-id='type-id-4' size-in-bits='64' alignment-in-bits='64' hash='dcfeea4f9e71f49' id='type-id-3'/>
-    <pointer-type-def type-id='type-id-2' size-in-bits='64' alignment-in-bits='64' hash='8acc0120f787bdbb' id='type-id-5'/>
+    <pointer-type-def type-id='type-id-4' size-in-bits='64' alignment-in-bits='64' hash='60b990e11343e845' id='type-id-3'/>
+    <pointer-type-def type-id='type-id-2' size-in-bits='64' alignment-in-bits='64' hash='f17ac9778d4a31b0' id='type-id-5'/>
     <var-decl name='s0' type-id='type-id-5' mangled-name='s0' visibility='default' elf-symbol-id='s0'/>
-    <function-type size-in-bits='64' hash='dc6fbb1fff2a95cf' id='type-id-4'>
+    <function-type size-in-bits='64' hash='04ae8cc83416930f' id='type-id-4'>
       <parameter type-id='type-id-5'/>
       <return type-id='type-id-1'/>
     </function-type>

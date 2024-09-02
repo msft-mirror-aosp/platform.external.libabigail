@@ -3,14 +3,14 @@
     <elf-symbol name='a' size='120' type='object-type' binding='global-binding' visibility='default-visibility' is-defined='yes'/>
   </elf-variable-symbols>
   <abi-instr address-size='64' language='LANG_C'>
-    <type-decl name='char' size-in-bits='8' hash='7f1bbd7b0c3c186f' id='type-id-1'/>
-    <array-type-def dimensions='4' type-id='type-id-1' size-in-bits='960' hash='477b04e14b8821b3' id='type-id-2'>
-      <subrange length='2' lower-bound='0' upper-bound='1' type-id='type-id-3' size-in-bits='64' is-anonymous='yes' hash='4b31246d758bb233' id='type-id-4'/>
-      <subrange length='3' lower-bound='0' upper-bound='2' type-id='type-id-3' size-in-bits='64' is-anonymous='yes' hash='749db43716aefd44' id='type-id-5'/>
-      <subrange length='4' lower-bound='0' upper-bound='3' type-id='type-id-3' size-in-bits='64' is-anonymous='yes' hash='a81ae17a7e17002e' id='type-id-6'/>
-      <subrange length='5' lower-bound='0' upper-bound='4' type-id='type-id-3' size-in-bits='64' is-anonymous='yes' hash='366e4d8744b37ad2' id='type-id-7'/>
+    <type-decl name='char' size-in-bits='8' hash='9b0a6b0f99242b9a' id='type-id-1'/>
+    <array-type-def dimensions='4' type-id='type-id-1' size-in-bits='960' hash='3addcf940bf90e7a' id='type-id-2'>
+      <subrange length='2' lower-bound='0' upper-bound='1' type-id='type-id-3' size-in-bits='64' is-anonymous='yes' hash='efe2e6049a1858ff' id='type-id-4'/>
+      <subrange length='3' lower-bound='0' upper-bound='2' type-id='type-id-3' size-in-bits='64' is-anonymous='yes' hash='95807fddbd77fea7' id='type-id-5'/>
+      <subrange length='4' lower-bound='0' upper-bound='3' type-id='type-id-3' size-in-bits='64' is-anonymous='yes' hash='376e77076f0762ff' id='type-id-6'/>
+      <subrange length='5' lower-bound='0' upper-bound='4' type-id='type-id-3' size-in-bits='64' is-anonymous='yes' hash='3aa0fd3ceaed5d9c' id='type-id-7'/>
     </array-type-def>
-    <type-decl name='unsigned long int' size-in-bits='64' hash='e7c5efcec748ba6c' id='type-id-3'/>
+    <type-decl name='unsigned long int' size-in-bits='64' hash='49b6777b7019522a' id='type-id-3'/>
     <var-decl name='a' type-id='type-id-2' mangled-name='a' visibility='default' elf-symbol-id='a'/>
   </abi-instr>
 </abi-corpus>

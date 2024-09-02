@@ -7,12 +7,12 @@
   </elf-variable-symbols>
   <abi-instr address-size='64' path='PR29443-missing-xx.cc' comp-dir-path='/home/dodji/git/libabigail/fixes/tests/data/test-read-dwarf' language='LANG_C_plus_plus_14'>
     <!-- int -->
-    <type-decl name='int' size-in-bits='32' hash='45e5b6264d770ae7' id='type-id-1'/>
+    <type-decl name='int' size-in-bits='32' hash='a5c4f954b141f944' id='type-id-1'/>
     <!-- struct A -->
-    <class-decl name='A' is-struct='yes' visibility='default' size-in-bits='32' filepath='/home/dodji/git/libabigail/fixes/tests/data/test-read-dwarf/PR29443-missing-xx.cc' line='1' column='1' hash='4ef9fd261f1ae104' id='type-id-2'>
+    <class-decl name='A' is-struct='yes' visibility='default' size-in-bits='32' filepath='/home/dodji/git/libabigail/fixes/tests/data/test-read-dwarf/PR29443-missing-xx.cc' line='1' column='1' hash='f650a1d495b7d971' id='type-id-2'>
       <member-type access='public'>
         <!-- struct {int xx;} -->
-        <class-decl name='__anonymous_struct__' is-struct='yes' visibility='default' size-in-bits='32' is-anonymous='yes' filepath='/home/dodji/git/libabigail/fixes/tests/data/test-read-dwarf/PR29443-missing-xx.cc' line='2' column='1' hash='90ac2f4c8d78f00c' id='type-id-3'>
+        <class-decl name='__anonymous_struct__' is-struct='yes' visibility='default' size-in-bits='32' is-anonymous='yes' filepath='/home/dodji/git/libabigail/fixes/tests/data/test-read-dwarf/PR29443-missing-xx.cc' line='2' column='1' hash='7c682b06fee03799' id='type-id-3'>
           <data-member access='public' layout-offset-in-bits='0'>
             <!-- int xx -->
             <var-decl name='xx' type-id='type-id-1' visibility='default' filepath='/home/dodji/git/libabigail/fixes/tests/data/test-read-dwarf/PR29443-missing-xx.cc' line='3' column='1'/>

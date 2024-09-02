@@ -3,11 +3,11 @@
     <elf-symbol name='foo' size='8' type='object-type' binding='global-binding' visibility='default-visibility' is-defined='yes'/>
   </elf-variable-symbols>
   <abi-instr address-size='64' language='LANG_C'>
-    <array-type-def dimensions='1' type-id='3ed987a4' size-in-bits='12800' hash='54cdc2b11f731bc6' id='e022be37'>
-      <subrange length='50' lower-bound='0' upper-bound='49' type-id='f0981eeb' size-in-bits='64' is-anonymous='yes' hash='69e8a71763832520' id='3c1860ce'/>
+    <array-type-def dimensions='1' type-id='3ed987a4' size-in-bits='12800' hash='7950a2b226120551' id='e022be37'>
+      <subrange length='50' lower-bound='0' upper-bound='49' type-id='f0981eeb' size-in-bits='64' is-anonymous='yes' hash='62c8c384fc3bd868' id='3c1860ce'/>
     </array-type-def>
-    <type-decl name='long int' size-in-bits='64' hash='69f1ebc3a0a3f241' id='95e97e5e'/>
-    <class-decl name='A' is-struct='yes' visibility='default' size-in-bits='256' hash='aa8b6cadfcd0557a' id='3ed987a4'>
+    <type-decl name='long int' size-in-bits='64' hash='19e68b445bea230d' id='95e97e5e'/>
+    <class-decl name='A' is-struct='yes' visibility='default' size-in-bits='256' hash='275927f8005140b8' id='3ed987a4'>
       <data-member access='public' layout-offset-in-bits='0'>
         <var-decl name='b' type-id='41d98c5d' visibility='default'/>
       </data-member>
@@ -21,15 +21,15 @@
         <var-decl name='b2' type-id='41d98c5d' visibility='default'/>
       </data-member>
     </class-decl>
-    <class-decl name='B' is-struct='yes' visibility='default' size-in-bits='64' hash='bd58efaffb9b1003' id='41d98c5d'>
+    <class-decl name='B' is-struct='yes' visibility='default' size-in-bits='64' hash='00f957a849c220ac' id='41d98c5d'>
       <data-member access='public' layout-offset-in-bits='0'>
         <var-decl name='a' type-id='84d5ac12' visibility='default'/>
       </data-member>
     </class-decl>
-    <typedef-decl name='a_array' type-id='e022be37' size-in-bits='12800' hash='43a11793a452e2ac' id='1c12b755'/>
-    <type-decl name='unsigned long int' size-in-bits='64' hash='e7c5efcec748ba6c' id='f0981eeb'/>
-    <pointer-type-def type-id='3ed987a4' size-in-bits='64' alignment-in-bits='64' hash='b45d59fab6f8e314' id='84d5ac12'/>
-    <pointer-type-def type-id='1c12b755' size-in-bits='64' alignment-in-bits='64' hash='f66bfccf78faf348' id='55cd64e8'/>
+    <typedef-decl name='a_array' type-id='e022be37' size-in-bits='12800' hash='cea83e1b5ea0b2dd' id='1c12b755'/>
+    <type-decl name='unsigned long int' size-in-bits='64' hash='49b6777b7019522a' id='f0981eeb'/>
+    <pointer-type-def type-id='3ed987a4' size-in-bits='64' alignment-in-bits='64' hash='677a247a9577d255' id='84d5ac12'/>
+    <pointer-type-def type-id='1c12b755' size-in-bits='64' alignment-in-bits='64' hash='86daac6c390d0ed9' id='55cd64e8'/>
     <var-decl name='foo' type-id='55cd64e8' mangled-name='foo' visibility='default' elf-symbol-id='foo'/>
   </abi-instr>
 </abi-corpus>

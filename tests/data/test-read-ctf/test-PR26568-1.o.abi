@@ -3,24 +3,24 @@
     <elf-symbol name='fun' type='func-type' binding='global-binding' visibility='default-visibility' is-defined='yes'/>
   </elf-function-symbols>
   <abi-instr address-size='64' language='LANG_C'>
-    <type-decl name='int' size-in-bits='32' hash='45e5b6264d770ae7' id='type-id-1'/>
-    <type-decl name='long int' size-in-bits='64' hash='69f1ebc3a0a3f241#2' id='type-id-2'/>
-    <class-decl name='A' is-struct='yes' visibility='default' size-in-bits='64' hash='3de9d8ede57e771f' id='type-id-3'>
+    <type-decl name='int' size-in-bits='32' hash='a5c4f954b141f944' id='type-id-1'/>
+    <type-decl name='long int' size-in-bits='64' hash='19e68b445bea230d#2' id='type-id-2'/>
+    <class-decl name='A' is-struct='yes' visibility='default' size-in-bits='64' hash='3e7d29b1f3da0657' id='type-id-3'>
       <data-member access='public' layout-offset-in-bits='0'>
         <var-decl name='' type-id='type-id-4' visibility='default'/>
       </data-member>
     </class-decl>
-    <class-decl name='' is-struct='yes' visibility='default' size-in-bits='32' is-anonymous='yes' hash='71671df87886ebf4' id='type-id-5'>
+    <class-decl name='' is-struct='yes' visibility='default' size-in-bits='32' is-anonymous='yes' hash='c6c7eb92e94f0af9' id='type-id-5'>
       <data-member access='public' layout-offset-in-bits='0'>
         <var-decl name='x' type-id='type-id-1' visibility='default'/>
       </data-member>
     </class-decl>
-    <class-decl name='' is-struct='yes' visibility='default' size-in-bits='64' is-anonymous='yes' hash='daaf48156f577e98' id='type-id-6'>
+    <class-decl name='' is-struct='yes' visibility='default' size-in-bits='64' is-anonymous='yes' hash='ece64e1d8aef6e64' id='type-id-6'>
       <data-member access='public' layout-offset-in-bits='0'>
         <var-decl name='y' type-id='type-id-2' visibility='default'/>
       </data-member>
     </class-decl>
-    <union-decl name='' visibility='default' size-in-bits='64' is-anonymous='yes' hash='58a981249f7065ee' id='type-id-4'>
+    <union-decl name='' visibility='default' size-in-bits='64' is-anonymous='yes' hash='187326e4f75cf95b' id='type-id-4'>
       <data-member access='public'>
         <var-decl name='' type-id='type-id-5' visibility='default'/>
       </data-member>
@@ -28,8 +28,8 @@
         <var-decl name='' type-id='type-id-6' visibility='default'/>
       </data-member>
     </union-decl>
-    <pointer-type-def type-id='type-id-3' size-in-bits='64' alignment-in-bits='64' hash='377a3213ba7e2fc2' id='type-id-7'/>
-    <function-decl name='fun' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='fun' hash='476772e514ca5775'>
+    <pointer-type-def type-id='type-id-3' size-in-bits='64' alignment-in-bits='64' hash='1a0aa5442dfcc851' id='type-id-7'/>
+    <function-decl name='fun' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='fun' hash='1c8b1af2bb8487ad'>
       <parameter type-id='type-id-7'/>
       <return type-id='type-id-8'/>
     </function-decl>

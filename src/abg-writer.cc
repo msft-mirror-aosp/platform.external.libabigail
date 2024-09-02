@@ -1884,7 +1884,9 @@ write_type_hash_and_cti(const type_base_sptr& t, ostream& o)
   hash_t hash = t->hash_value();
   if (hash)
     {
-      o << " hash='" << std::hex << *hash << std::dec;
+      string h;
+      ABG_ASSERT(hashing::serialize_hash(*hash, h));
+      o << " hash='" << h;
       if (t->priv_->canonical_type_index)
 	o << "#" << t->priv_->canonical_type_index;
       o << "'";
