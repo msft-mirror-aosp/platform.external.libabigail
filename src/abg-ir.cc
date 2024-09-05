@@ -15214,10 +15214,12 @@ compare_types_during_canonicalization(const type_base& canonical_type,
   if (env.debug_type_canonicalization_is_on())
     {
       bool canonical_equality = false, structural_equality = false;
+      env.priv_->allow_type_comparison_results_caching(false);
       env.priv_->use_canonical_type_comparison_ = false;
       structural_equality = canonical_type == candidate_type;
       env.priv_->use_canonical_type_comparison_ = true;
       canonical_equality = canonical_type == candidate_type;
+      env.priv_->allow_type_comparison_results_caching(true);
       if (canonical_equality != structural_equality)
 	{
 	  std::cerr << "structural & canonical equality different for type: "
