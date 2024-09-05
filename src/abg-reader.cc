@@ -4501,8 +4501,8 @@ build_pointer_type_def(reader&	rdr,
 
   maybe_set_artificial_location(rdr, node, t);
 
-  if (rdr.push_and_key_type_decl(t, node, add_to_current_scope))
-    rdr.map_xml_node_to_decl(node, t);
+  rdr.push_and_key_type_decl(t, node, add_to_current_scope);
+  rdr.map_xml_node_to_decl(node, t);
 
   // Read the stash from the XML node and stash it into the IR node.
   read_hash_and_stash(node, t);
