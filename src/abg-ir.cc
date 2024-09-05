@@ -17767,7 +17767,13 @@ pointer_type_def::set_pointed_to_type(const type_base_sptr& t)
 bool
 equals(const pointer_type_def& l, const pointer_type_def& r, change_kind* k)
 {
-  bool result = l.get_pointed_to_type() == r.get_pointed_to_type();
+  // Let's peel typedefs from the pointed-to-type so that a pointer to
+  // T and a pointer to typedef-of-T are the same.  Otherwise, that
+  // leads to subtle irrelevant comparison errors down the road.
+  type_base_sptr p1 = l.get_pointed_to_type(), p2 = r.get_pointed_to_type();
+  p1 = peel_typedef_type(p1);
+  p2 = peel_typedef_type(p2);
+  bool result = p1 == p2;
   if (!result)
     if (k)
       {
@@ -18198,8 +18204,13 @@ equals(const reference_type_def& l, const reference_type_def& r, change_kind* k)
       ABG_RETURN_FALSE;
     }
 
-  // Compare the pointed-to-types modulo the typedefs they might have
-  bool result = (l.get_pointed_to_type() == r.get_pointed_to_type());
+  // Let's peel typedefs from the pointed-to-type so that a pointer to
+  // T and a pointer to typedef-of-T are the same.  Otherwise, that
+  // might leads to subtle irrelevant comparison errors down the road.
+  type_base_sptr p1 = l.get_pointed_to_type(), p2 = r.get_pointed_to_type();
+  p1 = peel_typedef_type(p1);
+  p2 = peel_typedef_type(p2);
+  bool result = p1 == p2;
   if (!result)
     if (k)
       {
