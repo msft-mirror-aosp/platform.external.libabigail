@@ -28651,6 +28651,12 @@ stream_pretty_representation_of_fn_parms(const function_type& fn_type,
 	    o << ", ";
 	  parm = *i;
 	  type = parm->get_type();
+	  // If the type is a decl-only class, union or enum that has a
+	  // definition, use the definition instead.  That definition
+	  // is what is going to be serialized out in ABIXML anyway,
+	  // so use that for consistency.
+	  if (decl_base_sptr def = look_through_decl_only(is_decl(type)))
+	    type = is_type(def);
 	  if (env.is_variadic_parameter_type(type))
 	    o << "...";
 	  else
