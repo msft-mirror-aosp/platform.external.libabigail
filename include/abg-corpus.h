@@ -230,8 +230,11 @@ public:
   const std::unordered_set<function_decl*>*
   lookup_functions(const char* id) const;
 
-  const var_decl_sptr
-  lookup_variable(const interned_string& id) const;
+  const std::unordered_set<var_decl_sptr>*
+  lookup_variables(const interned_string& id) const;
+
+  const std::unordered_set<var_decl_sptr>*
+  lookup_variables(const char* id) const;
 
   void
   sort_functions();

@@ -198,7 +198,7 @@ corpus::exported_decls_builder::maybe_add_var_to_exported_vars(const var_decl_sp
   const interned_string& var_id = priv_->get_id(*var);
   ABG_ASSERT(!var_id.empty());
 
-  if (priv_->var_id_is_in_id_var_map(var_id))
+  if (priv_->var_is_in_id_vars_map(var))
     return false;
 
   if (priv_->keep_wrt_id_of_vars_to_keep(var)
@@ -1409,20 +1409,36 @@ corpus::lookup_functions(const char* id) const
   return lookup_functions(string_id);
 }
 
-/// Lookup the exported variable which has a given variable ID.
+/// Lookup the exported variables which all have a given variable ID.
 ///
 /// @param id the ID of the variable to look up.
 ///
-/// @return the variable with ID @p id that was found or nil if none
-/// was found.
-const var_decl_sptr
-corpus::lookup_variable(const interned_string& id) const
+/// @return a pointer to the set of variables with ID @p id, or
+/// nullptr if no variable was found with that ID.
+const std::unordered_set<var_decl_sptr>*
+corpus::lookup_variables(const interned_string& id) const
 {
   exported_decls_builder_sptr b = get_exported_decls_builder();
-  auto i = b->priv_->id_var_map_.find(id);
-  if (i == b->priv_->id_var_map_.end())
+  auto i = b->priv_->id_vars_map_.find(id);
+  if (i == b->priv_->id_vars_map_.end())
     return nullptr;
-  return i->second;
+  return &i->second;
+}
+
+/// Lookup the exported variables which all have a given variable ID.
+///
+/// @param id the ID of the variable to look up.
+///
+/// @return a pointer to the set of variables with ID @p id, or
+/// nullptr if no variable was found with that ID.
+const std::unordered_set<var_decl_sptr>*
+corpus::lookup_variables(const char* id) const
+{
+  if (!id)
+    return nullptr;
+
+  interned_string string_id = priv_->env.intern(id);
+  return lookup_variables(string_id);
 }
 
 /// Sort the set of functions exported by this corpus.

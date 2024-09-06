@@ -542,27 +542,30 @@ compare_expected_against_provided_variables(diff_context_sptr&		ctxt,
     {
       interned_string var_id = expected_var->get_id();
       // ... against the variables exported by the library!
-      const var_decl_sptr exported_var =
+      const std::unordered_set<var_decl_sptr>* exported_vars =
 	reverse_direction
-	? app_corpus->lookup_variable(var_id)
-	: lib_corpus->lookup_variable(var_id);
-      if (exported_var)
+	? app_corpus->lookup_variables(var_id)
+	: lib_corpus->lookup_variables(var_id);
+      if (exported_vars)
 	{
-	  // OK here is where we compare the variable expected by
-	  // the application against the variable exported by the
-	  // library.
-	  diff_sptr type_diff =
-	    compute_diff(expected_var->get_type(),
-			 exported_var->get_type(),
-			 ctxt);
-	  if (type_diff && type_diff->to_be_reported())
+	  for (auto exported_var : *exported_vars)
 	    {
-	      // So there is a type change between the variable
-	      // expected by the application and the variable
-	      // exported by the library.  Let's record that
-	      // change so that we can report about it later.
-	      var_changes.push_back(var_change(expected_var, type_diff, reverse_direction));
-	      status |= abigail::tools_utils::ABIDIFF_ABI_CHANGE;
+	      // OK here is where we compare the variable expected by
+	      // the application against the variable exported by the
+	      // library.
+	      diff_sptr type_diff =
+		compute_diff(expected_var->get_type(),
+			     exported_var->get_type(),
+			     ctxt);
+	      if (type_diff && type_diff->to_be_reported())
+		{
+		  // So there is a type change between the variable
+		  // expected by the application and the variable
+		  // exported by the library.  Let's record that
+		  // change so that we can report about it later.
+		  var_changes.push_back(var_change(expected_var, type_diff, reverse_direction));
+		  status |= abigail::tools_utils::ABIDIFF_ABI_CHANGE;
+		}
 	    }
 	}
     }

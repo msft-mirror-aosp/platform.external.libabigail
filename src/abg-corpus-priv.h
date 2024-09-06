@@ -63,6 +63,12 @@ typedef unordered_map<interned_string,
 		      var_decl_sptr,
 		      hash_interned_string> istr_var_ptr_map_type;
 
+/// Convenience typedef for a hash map which key is an interned_string
+/// and which data is a set of abigail::ir::var_decl_sptr
+typedef unordered_map<interned_string,
+		      std::unordered_set<var_decl_sptr>,
+		      hash_interned_string> istr_var_ptr_set_map_type;
+
 /// The type of the private data of @ref
 /// corpus::exported_decls_builder type.
 class corpus::exported_decls_builder::priv
@@ -75,7 +81,7 @@ class corpus::exported_decls_builder::priv
   functions&		fns_;
   variables&		vars_;
   // A map that associates a function ID (function symbol and its
-  // version) to to a vector of functions with that ID.  Normally, one
+  // version) to a vector of functions with that ID.  Normally, one
   // would think that in the corpus, there must only one function for
   // a given ID.  Actually, in c++, there can be two function template
   // instantiations that produce the same function ID because the
@@ -83,7 +89,7 @@ class corpus::exported_decls_builder::priv
   // of the first instantiation, for instance.  So there can be cases
   // where one ID appertains to more than one function.
   istr_fn_ptr_set_map_type	id_fns_map_;
-  istr_var_ptr_map_type	id_var_map_;
+  istr_var_ptr_set_map_type	id_vars_map_;
   strings_type&	fns_suppress_regexps_;
   regex_t_sptrs_type	compiled_fns_suppress_regexp_;
   strings_type&	vars_suppress_regexps_;
@@ -223,12 +229,11 @@ public:
   /// Getter for a map of the IDs of the functions that are present in
   /// the set of exported functions.
   ///
-  /// This map is useful during the construction of the set of
-  /// exported functions, at least to ensure that every function is
-  /// present only once in that set.
+  /// The map associates the ID of a function with the set of
+  /// functions having the symbol that matches the ID.
   ///
-  /// @return a map which key is a string and which data is a pointer
-  /// to a function.
+  /// @return a map which key is a string and which data is a set of
+  /// functions.
   istr_fn_ptr_set_map_type&
   id_fns_map()
   {return id_fns_map_;}
@@ -236,28 +241,26 @@ public:
   /// Getter for a map of the IDs of the variables that are present in
   /// the set of exported variables.
   ///
-  /// This map is useful during the construction of the set of
-  /// exported variables, at least to ensure that every function is
-  /// present only once in that set.
+  /// The map associates the ID of a variable with the set of variables
+  /// having the symbol that matches the ID.
   ///
-  /// @return a map which key is a string and which data is a pointer
-  /// to a function.
-  const istr_var_ptr_map_type&
-  id_var_map() const
-  {return id_var_map_;}
+  /// @return a map which key is a string and which data is a set of
+  /// variables.
+  istr_var_ptr_set_map_type&
+  id_vars_map()
+  {return id_vars_map_;}
 
   /// Getter for a map of the IDs of the variables that are present in
   /// the set of exported variables.
   ///
-  /// This map is useful during the construction of the set of
-  /// exported variables, at least to ensure that every function is
-  /// present only once in that set.
+  /// The map associates the ID of a variable with the set of variables
+  /// having the symbol that matches the ID.
   ///
-  /// @return a map which key is a string and which data is a pointer
-  /// to a function.
-  istr_var_ptr_map_type&
-  id_var_map()
-  {return id_var_map_;}
+  /// @return a map which key is a string and which data is a set of
+  /// variables.
+  const istr_var_ptr_set_map_type&
+  id_vars_map() const
+  {return id_vars_map_;}
 
   /// Returns an ID for a given function.
   ///
@@ -428,34 +431,123 @@ public:
     while (sym && !sym->is_main_symbol());
   }
 
-  /// Test if a given (ID of a) varialble is present in the variable
+  /// Test if a given (ID of a) variable is present in the variable
   /// map.  In other words, it tests if a given variable is present in
   /// the set of exported variables.
   ///
   /// @param fn_id the ID of the variable to consider.
   ///
-  /// @return true iff the variable designated by @p fn_id is present
-  /// in the set of exported variables.
-  bool
-  var_id_is_in_id_var_map(const interned_string& var_id) const
+  /// @return a pointer to the set of variables that have the same ID
+  /// as @p var_id.
+  std::unordered_set<var_decl_sptr>*
+  var_id_is_in_id_vars_map(const interned_string& var_id)
   {
-    const istr_var_ptr_map_type& m = id_var_map();
+    istr_var_ptr_set_map_type& m = id_vars_map();
     auto i = m.find(var_id);
-    return i != m.end();
+    if (i != m.end())
+      return &i->second;
+    return nullptr;
   }
 
-  /// Add a given variable to the map of functions that are present in
-  /// the set of exported functions.
+  /// Test if a given (ID of a) variable is present in the variable
+  /// map.  In other words, it tests if a given variable is present in
+  /// the set of exported variables.
   ///
-  /// @param id the variable to add to the map.
-  void
-  add_var_to_map(const var_decl_sptr& var)
+  /// @param fn_id the ID of the variable to consider.
+  ///
+  /// @return a pointer to the set of variables that have the same ID
+  /// as @p var_id.
+  const std::unordered_set<var_decl_sptr>*
+  var_id_is_in_id_vars_map(const interned_string& var_id) const
   {
-    if (var)
+    return const_cast<corpus::exported_decls_builder::priv*>(this)->
+      var_id_is_in_id_vars_map(var_id);
+  }
+
+  /// Test if a given variable is present in a set of variables.
+  ///
+  /// The variable compares the ID and the qualified name of
+  /// variables.
+  ///
+  /// @param fn the variable to consider.
+  ///
+  /// @parm fns the set of variables to consider.
+  static bool
+  var_is_in_vars(const var_decl_sptr& var,
+		 const std::unordered_set<var_decl_sptr>& vars)
+  {
+    if (vars.empty())
+      return false;
+
+    if (vars.find(var) != vars.end())
+      return true;
+
+    const string var_id = var->get_id();
+    for (const auto& v: vars)
+      if (v->get_id() == var_id
+	  && v->get_qualified_name() == var->get_qualified_name())
+	return true;
+
+    return false;
+  }
+
+  /// Test if a given variable is present in a set of variables.
+  ///
+  /// The variable compares the ID and the qualified name of
+  /// variables.
+  ///
+  /// @param fn the variable to consider.
+  ///
+  /// @parm fns the set of variables to consider.
+  bool
+  var_is_in_id_vars_map(const var_decl_sptr& var)
+  {
+    if (!var)
+      return false;
+
+    interned_string var_id = var->get_id();
+    const std::unordered_set<var_decl_sptr>* vars =
+      var_id_is_in_id_vars_map(var_id);
+    if (vars && var_is_in_vars(var, *vars))
+      return true;
+    return false;
+  }
+
+  /// Add a given variable to the map of variables that are present in
+  /// the set of exported variables.
+  ///
+  /// @param fn the variable to add to the map.
+  void
+  add_var_to_id_vars_map(const var_decl_sptr& var)
+  {
+    if (!var)
+      return;
+
+    // First associate the var id to the variable.
+    interned_string var_id = var->get_id();
+    std::unordered_set<var_decl_sptr>* vars = var_id_is_in_id_vars_map(var_id);
+    if (!vars)
+      vars = &(id_vars_map()[var_id] = std::unordered_set<var_decl_sptr>());
+    vars->insert(var);
+
+    // Now associate all aliases of th underlying symbol to the
+    // variable too.
+    elf_symbol_sptr sym = var->get_symbol();
+    ABG_ASSERT(sym);
+    string sym_id;
+    do
       {
-	const interned_string& var_id = get_id(*var);
-	id_var_map()[var_id] = var;
+	sym_id = sym->get_id_string();
+	if (sym_id == var_id)
+	  goto loop;
+	vars = var_id_is_in_id_vars_map(var_id);
+	if (!vars)
+	  vars = &(id_vars_map()[var_id] = std::unordered_set<var_decl_sptr>());
+	vars->insert(var);
+      loop:
+	sym = sym->get_next_alias();
       }
+    while (sym && !sym->is_main_symbol());
   }
 
   /// Add a function to the set of exported functions.
@@ -477,11 +569,10 @@ public:
   void
   add_var_to_exported(const var_decl_sptr& var)
   {
-    const interned_string& id = get_id(*var);
-    if (!var_id_is_in_id_var_map(id))
+    if (!var_is_in_id_vars_map(var))
       {
 	vars_.push_back(var);
-	add_var_to_map(var);
+	add_var_to_id_vars_map(var);
       }
   }
 
