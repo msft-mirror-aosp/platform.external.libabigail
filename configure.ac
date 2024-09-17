@@ -495,10 +495,6 @@ dnl Check for dependency: xxhash
 XXHASH_VERSION=0.8.0
 PKG_CHECK_MODULES(XXHASH, libxxhash >= $XXHASH_VERSION)
 
-AC_SUBST(XXHASH_VERSION)
-AC_SUBST(XXHASH_LIBS)
-AC_SUBST(XXHASH_CFLAGS)
-
 dnl Check for some programs like rm, mkdir, etc ...
 AC_CHECK_PROG(HAS_RM, rm, yes, no)
 if test x$HAS_RM = xno; then
@@ -922,7 +918,7 @@ AX_VALGRIND_CHECK
 
 dnl Set the list of libraries libabigail depends on
 
-DEPS_LIBS="$XML_LIBS $ELF_LIBS $DW_LIBS $XXHASH_LIBS $CTF_LIBS $BPF_LIBS"
+DEPS_LIBS="$XML_LIBS $ELF_LIBS $DW_LIBS $CTF_LIBS $BPF_LIBS"
 AC_SUBST(DEPS_LIBS)
 
 if test x$ABIGAIL_DEVEL != x; then
@@ -959,6 +955,10 @@ if test x$ENABLE_UBSAN = xyes; then
     CFLAGS="$CFLAGS -fsanitize=undefined"
     CXXFLAGS="$CXXFLAGS -fsanitize=undefined"
 fi
+
+dnl We always want all xxhash functions inlined
+CFLAGS="$CFLAGS -DXXH_INLINE_ALL=1"
+CXXFLAGS="$CXXFLAGS -DXXH_INLINE_ALL=1"
 
 dnl Set a few Automake conditionals
 
