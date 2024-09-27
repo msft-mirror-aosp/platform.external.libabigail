@@ -785,6 +785,18 @@ static InOutSpec in_out_specs[] =
     "data/test-diff-pkg/libgm2-14.2.1-1.fc40.x86_64-self-check-report.txt",
     "output/test-diff-pkg/libgm2-14.2.1-1.fc40.x86_64-self-check-report.txt"
   },
+  {
+    "data/test-diff-pkg/infinipath-psm-3.3-26_g604758e_open.6.fc36.5.x86_64.rpm",
+    "data/test-diff-pkg/infinipath-psm-3.3-26_g604758e_open.6.fc36.5.x86_64.rpm",
+    "--self-check",
+    "",
+    "data/test-diff-pkg/infinipath-psm-debuginfo-3.3-26_g604758e_open.6.fc36.5.x86_64.rpm",
+    "data/test-diff-pkg/infinipath-psm-debuginfo-3.3-26_g604758e_open.6.fc36.5.x86_64.rpm",
+    "",
+    "",
+    "data/test-diff-pkg/infinipath-psm-3.3-26_g604758e_open.6.fc36.5.x86_64-self-check-report.txt",
+    "output/test-diff-pkg/infinipath-psm-3.3-26_g604758e_open.6.fc36.5.x86_64-self-check-report.txt"
+  },
 #endif // WITH_RPM_ZSTD
 #endif //WITH_RPM
 

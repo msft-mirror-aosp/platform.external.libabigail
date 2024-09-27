@@ -878,6 +878,28 @@ notify_equality_failed(const type_or_decl_base *l __attribute__((unused)),
 #define ABG_RETURN_EQUAL(l, r) return ((l) == (r));
 #endif
 
+/// Get the canonical type of a given type T* as a T*.
+///
+/// Note that normally, canonical types are returned as @ref
+/// type_base* (un-typed form, kind of).  This function returns the
+/// canonical type as a T*, just like the T* it is looking at.
+///
+///
+/// @param t the type to consider.
+///
+/// @return either the canonical type of @p t or @p t itself if it
+/// doesn't have any canonical type.
+template<typename T>
+T*
+maybe_get_canonical_type(T* t)
+{
+  if (!t)
+    return nullptr;
+  if (type_base* type = t->get_naked_canonical_type())
+    return dynamic_cast<T*>(type);
+  return t;
+}
+
 /// Compare two types by comparing their canonical types if present.
 ///
 /// If the canonical types are not present (because the types have not
@@ -941,6 +963,11 @@ try_canonical_compare(const T *l, const T *r)
     if (hash_t r_hash = peek_hash_value(*r))
       if (l_hash != r_hash)
 	ABG_RETURN_FALSE;
+
+  // If a type has a canonical type, use its canonical type, always.
+  l = maybe_get_canonical_type(l);
+  r = maybe_get_canonical_type(r);
+
   return equals(*l, *r, 0);
 #endif
 }

@@ -2412,6 +2412,9 @@ test-diff-pkg/libgm2-14.2.1-1.fc40.x86_64-self-check-report.txt \
 test-diff-pkg/libgm2-14.2.1-1.fc40.x86_64.rpm \
 test-diff-pkg/libgm2-debuginfo-14.2.1-1.fc40.x86_64.rpm \
 test-diff-pkg/gcc-debuginfo-14.2.1-1.fc40.x86_64.rpm \
+test-diff-pkg/infinipath-psm-3.3-26_g604758e_open.6.fc36.5.x86_64.rpm \
+test-diff-pkg/infinipath-psm-debuginfo-3.3-26_g604758e_open.6.fc36.5.x86_64.rpm \
+test-diff-pkg/infinipath-psm-3.3-26_g604758e_open.6.fc36.5.x86_64-self-check-report.txt \
 \
 test-diff-pkg-ctf/tarpkg-0-dir1.tar \
 test-diff-pkg-ctf/dirpkg-0-report-0.txt \
