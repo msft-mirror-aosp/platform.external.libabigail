@@ -122,6 +122,8 @@ resolve_symbol_aliases(string_elf_symbols_map_sptr&	fn_syms,
 		       string_elf_symbols_map_sptr&	var_syms,
 		       string_strings_map_type&	non_resolved_fn_sym_aliases,
 		       string_strings_map_type&	non_resolved_var_sym_aliases);
+static bool
+read_type_hash_and_cti(xmlNodePtr, uint64_t& hash, uint64_t& cti);
 
 /// The ABIXML reader object.
 ///
@@ -175,6 +177,7 @@ private:
   deque<shared_ptr<decl_base> >			m_decls_stack;
   bool							m_tracking_non_reachable_types;
   bool							m_drop_undefined_syms;
+  bool							m_drop_hash_value;
 #ifdef WITH_SHOW_TYPE_USE_IN_ABILINT
   unordered_map<type_or_decl_base*,
 		vector<type_or_decl_base*>>		m_artifact_used_by_map;
@@ -189,7 +192,8 @@ public:
       m_reader(reader),
       m_corp_node(),
       m_tracking_non_reachable_types(),
-      m_drop_undefined_syms()
+      m_drop_undefined_syms(),
+      m_drop_hash_value()
   {
   }
 
@@ -1158,6 +1162,8 @@ public:
 
 	handle_version_attribute(xml_reader, corp);
 
+	maybe_drop_hash_values();
+
 	xml::xml_char_sptr path_str = XML_READER_GET_ATTRIBUTE(xml_reader, "path");
 	string path;
 
@@ -1408,6 +1414,61 @@ public:
     status = STATUS_OK;
     return corpus();
   }
+
+  /// Test if the reader should drop the hash values coming from the
+  /// ABIXML on the floor.
+  ///
+  /// If the minor version number of the ABIXML document is older than
+  /// the current minor abixml version of the document being read,
+  /// then the hash values are dropped and new ones are going to be
+  /// computed by ir::hash_and_canonicalize_types.
+  void
+  maybe_drop_hash_values()
+  {
+    string current_major, current_minor;
+    abigail::abigail_get_abixml_version(current_major, current_minor);
+
+    if (current_major.empty() || current_minor.empty())
+      return;
+
+    ir::corpus& corp = *corpus();
+    bool drop_hash_values_from_abixml = false;
+    if (current_major > corp.get_format_major_version_number()
+	|| current_minor > corp.get_format_minor_version_number())
+      drop_hash_values_from_abixml = true;
+
+    if (drop_hash_values_from_abixml)
+      m_drop_hash_value = true;
+  }
+
+  /// Read the hash value from an XML node and set it onto an IR node.
+  ///
+  /// @param node the XML node to read the hash value from.
+  ///
+  /// @param ir_node output parameter.  The IR node to set the hash
+  /// value read from @p node onto.
+  void
+  read_hash_and_stash(const xmlNodePtr node,
+		      const type_or_decl_base_sptr& ir_node)
+  {
+    uint64_t hash = 0, cti = 0;
+    if (!m_drop_hash_value
+	&& read_type_hash_and_cti(node, hash, cti))
+      {
+	ir_node->priv_->force_set_hash_value(hash);
+	type_base_sptr type;
+	if (function_decl_sptr fn = is_function_decl(ir_node))
+	  type = fn->get_type();
+	else
+	  type = is_type(ir_node);
+
+	if (type)
+	  {
+	    type->type_or_decl_base::priv_->force_set_hash_value(hash);
+	    type->priv_->canonical_type_index = cti;
+	  }
+      }
+  }
 };// end class reader
 
 typedef shared_ptr<reader> reader_sptr;
@@ -1441,10 +1502,6 @@ static bool	read_elf_symbol_type(xmlNodePtr, elf_symbol::type&);
 static bool	read_elf_symbol_binding(xmlNodePtr, elf_symbol::binding&);
 static bool	read_elf_symbol_visibility(xmlNodePtr,
 					   elf_symbol::visibility&);
-static bool	read_type_hash_and_cti(xmlNodePtr, uint64_t& hash,
-				       uint64_t& cti);
-static void	read_hash_and_stash(const xmlNodePtr,
-				    const type_or_decl_base_sptr&);
 static namespace_decl_sptr
 build_namespace_decl(reader&, const xmlNodePtr, bool);
 
@@ -3204,34 +3261,6 @@ read_type_hash_and_cti(xmlNodePtr node, uint64_t& hash, uint64_t& cti)
   return false;
 }
 
-/// Read the hash value from an XML node and set it onto an IR node.
-///
-/// @param node the XML node to read the hash value from.
-///
-/// @param ir_node output parameter.  The IR node to set the hash
-/// value read from @p node onto.
-static void
-read_hash_and_stash(const xmlNodePtr node,
-		    const type_or_decl_base_sptr& ir_node)
-{
-  uint64_t hash = 0, cti = 0;
-  if (read_type_hash_and_cti(node, hash, cti))
-    {
-      ir_node->priv_->force_set_hash_value(hash);
-      type_base_sptr type;
-      if (function_decl_sptr fn = is_function_decl(ir_node))
-	type = fn->get_type();
-      else
-	type = is_type(ir_node);
-
-      if (type)
-	{
-	  type->type_or_decl_base::priv_->force_set_hash_value(hash);
-	  type->priv_->canonical_type_index = cti;
-	}
-    }
-}
-
 #ifdef WITH_DEBUG_SELF_COMPARISON
 /// Associate a type-id string with the type that was constructed from
 /// it.
@@ -3885,7 +3914,7 @@ build_function_decl(reader&		rdr,
 
   ABG_ASSERT(fn_type);
 
-  read_hash_and_stash(node, fn_type);
+  rdr.read_hash_and_stash(node, fn_type);
 
   fn_type->set_is_artificial(true);
 
@@ -4314,7 +4343,7 @@ build_type_decl(reader&		rdr,
   decl->set_is_anonymous(is_anonymous);
   decl->set_is_declaration_only(is_decl_only);
   // Read the stash from the XML node and stash it into the IR node.
-  read_hash_and_stash(node, decl);
+  rdr.read_hash_and_stash(node, decl);
 
   if (rdr.push_and_key_type_decl(decl, node, add_to_current_scope))
     {
@@ -4415,7 +4444,7 @@ build_qualified_type_decl(reader&	rdr,
       RECORD_ARTIFACT_AS_USED_BY(rdr, underlying_type, decl);
     }
   // Read the stash from the XML node and stash it into the IR node.
-  read_hash_and_stash(node, decl);
+  rdr.read_hash_and_stash(node, decl);
 
   rdr.map_xml_node_to_decl(node, decl);
 
@@ -4505,7 +4534,7 @@ build_pointer_type_def(reader&	rdr,
   rdr.map_xml_node_to_decl(node, t);
 
   // Read the stash from the XML node and stash it into the IR node.
-  read_hash_and_stash(node, t);
+  rdr.read_hash_and_stash(node, t);
 
   RECORD_ARTIFACT_AS_USED_BY(rdr, pointed_to_type, t);
   return t;
@@ -4597,7 +4626,7 @@ build_reference_type_def(reader&		rdr,
   rdr.map_xml_node_to_decl(node, t);
 
   // Read the stash from the XML node and stash it into the IR node.
-  read_hash_and_stash(node, t);
+  rdr.read_hash_and_stash(node, t);
 
   RECORD_ARTIFACT_AS_USED_BY(rdr, pointed_to_type, t);
 
@@ -4694,7 +4723,7 @@ build_ptr_to_mbr_type(reader&		rdr,
 				   loc));
 
   // Read the stash from the XML node and stash it into the IR node.
-  read_hash_and_stash(node, result);
+  rdr.read_hash_and_stash(node, result);
 
   if (rdr.push_and_key_type_decl(result, node, add_to_current_scope))
     rdr.map_xml_node_to_decl(node, result);
@@ -4759,7 +4788,7 @@ build_function_type(reader&	rdr,
 						 parms, size, align));
 
   // Read the stash from the XML node and stash it into the IR node.
-  read_hash_and_stash(node, fn_type);
+  rdr.read_hash_and_stash(node, fn_type);
 
   rdr.get_translation_unit()->bind_function_type_life_time(fn_type);
   rdr.key_type_decl(fn_type, id);
@@ -4935,7 +4964,7 @@ build_subrange_type(reader&		rdr,
   p->set_size_in_bits(size_in_bits);
 
   // Read the stash from the XML node and stash it into the IR node.
-  read_hash_and_stash(node, p);
+  rdr.read_hash_and_stash(node, p);
 
   if (rdr.push_and_key_type_decl(p, node, add_to_current_scope))
     rdr.map_xml_node_to_decl(node, p);
@@ -5056,7 +5085,7 @@ build_array_type_def(reader&	rdr,
 
   array_type_def_sptr ar_type(new array_type_def(type, subranges, loc));
   // Read the stash from the XML node and stash it into the IR node.
-  read_hash_and_stash(node, ar_type);
+  rdr.read_hash_and_stash(node, ar_type);
 
   maybe_set_artificial_location(rdr, node, ar_type);
   if (rdr.push_and_key_type_decl(ar_type, node, add_to_current_scope))
@@ -5250,7 +5279,7 @@ build_enum_type_decl(reader&	rdr,
   t->set_is_artificial(is_artificial);
   t->set_is_declaration_only(is_decl_only);
   // Read the stash from the XML node and stash it into the IR node.
-  read_hash_and_stash(node, t);
+  rdr.read_hash_and_stash(node, t);
 
   if (rdr.push_and_key_type_decl(t, node, add_to_current_scope))
     {
@@ -5328,7 +5357,7 @@ build_typedef_decl(reader&	rdr,
   maybe_set_artificial_location(rdr, node, t);
 
   // Read the hash from the XML node and stash it into the IR node.
-  read_hash_and_stash(node, t);
+  rdr.read_hash_and_stash(node, t);
 
   rdr.push_and_key_type_decl(t, node, add_to_current_scope);
   rdr.map_xml_node_to_decl(node, t);
@@ -5521,7 +5550,7 @@ build_class_decl(reader&		rdr,
   decl->set_is_artificial(is_artificial);
 
   // Read the stash from the XML node and stash it into the IR node.
-  read_hash_and_stash(node, decl);
+  rdr.read_hash_and_stash(node, decl);
 
   string def_id;
   bool is_def_of_decl = false;
@@ -5946,7 +5975,7 @@ build_union_decl(reader& rdr,
     }
 
   // Read the stash from the XML node and stash it into the IR node.
-  read_hash_and_stash(node, decl);
+  rdr.read_hash_and_stash(node, decl);
 
   maybe_set_artificial_location(rdr, node, decl);
   decl->set_is_artificial(is_artificial);
