@@ -807,9 +807,8 @@ public:
       return;
 
     const string& path = corp->get_path();
-    ABG_ASSERT(!path.empty());
-
-    m_emitted_corpora_set.insert(path);
+    if (!path.empty())
+      m_emitted_corpora_set.insert(path);
   }
 
   /// Get the set of types that have been emitted.
