@@ -3,7 +3,7 @@
     <elf-symbol name='a' size='4' type='object-type' binding='global-binding' visibility='default-visibility' is-defined='yes'/>
   </elf-variable-symbols>
   <abi-instr address-size='64' path='tests/data/test-read-dwarf/test-fallback.c' comp-dir-path='/home/byby/oracle/src/libabigail-new' language='LANG_C11'>
-    <type-decl name='int' size-in-bits='32' hash='a5c4f954b141f944' id='type-id-1'/>
+    <type-decl name='int' size-in-bits='32' hash='09d17c08f594edc7' id='type-id-1'/>
     <var-decl name='a' type-id='type-id-1' mangled-name='a' visibility='default' filepath='tests/data/test-read-dwarf/test-fallback.c' line='8' column='1' elf-symbol-id='a'/>
   </abi-instr>
 </abi-corpus>

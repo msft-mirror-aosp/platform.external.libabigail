@@ -1,10 +1,10 @@
 <abi-instr address-size='64' path='data/text-read-write/test25.xml'>
   <type-decl name='char' size-in-bits='8' alignment-in-bits='8' hash='1e02e78f5bd54451' id='type-id-1'/>
   <array-type-def dimensions='1' type-id='type-id-2' size-in-bits='448' alignment-in-bits='64' hash='f65ab11f10e341cb' id='type-id-3'>
-    <subrange length='7' lower-bound='0' upper-bound='6' size-in-bits='6' is-anonymous='yes' hash='b3123bbd0063c358' id='type-id-4'/>
+    <subrange length='7' lower-bound='0' upper-bound='6' size-in-bits='6' is-anonymous='yes' hash='58190901bcecd086' id='type-id-4'/>
   </array-type-def>
   <array-type-def dimensions='1' type-id='type-id-1' size-in-bits='unknown' alignment-in-bits='8' hash='56c88d63417d97b5' id='type-id-5'>
-    <subrange length='unknown' lower-bound='0' upper-bound='0' is-anonymous='yes' hash='2cdc8bb4a0be8876' id='type-id-6'/>
+    <subrange length='unknown' lower-bound='0' upper-bound='0' is-anonymous='yes' hash='eba0a2b392137dcb' id='type-id-6'/>
   </array-type-def>
   <class-decl name='S' is-struct='yes' visibility='default' size-in-bits='2240' hash='5ecb56d5bc4bf74d' id='type-id-7'>
     <data-member access='public' layout-offset-in-bits='0'>
@@ -25,18 +25,18 @@
   </class-decl>
   <type-decl name='double' size-in-bits='64' alignment-in-bits='64' hash='1252f3417d121f06' id='type-id-11'/>
   <array-type-def dimensions='2' type-id='type-id-11' size-in-bits='960' alignment-in-bits='64' hash='ea5f3406409b0dcb' id='type-id-9'>
-    <subrange length='5' lower-bound='0' upper-bound='4' size-in-bits='4' is-anonymous='yes' hash='3aa0fd3ceaed5d9c' id='type-id-12'/>
-    <subrange length='3' lower-bound='0' upper-bound='2' size-in-bits='2' is-anonymous='yes' hash='95807fddbd77fea7' id='type-id-13'/>
+    <subrange length='5' lower-bound='0' upper-bound='4' size-in-bits='4' is-anonymous='yes' hash='5aa5cef1e1be46c9' id='type-id-12'/>
+    <subrange length='3' lower-bound='0' upper-bound='2' size-in-bits='2' is-anonymous='yes' hash='30d99d19f0f4b2ea' id='type-id-13'/>
   </array-type-def>
   <type-decl name='int' size-in-bits='32' alignment-in-bits='32' hash='709cbe60bab69a92' id='type-id-14'/>
   <array-type-def dimensions='1' type-id='type-id-15' size-in-bits='256' alignment-in-bits='64' hash='49ed7bf98c736a39' id='type-id-16'>
-    <subrange length='4' lower-bound='0' upper-bound='3' size-in-bits='3' is-anonymous='yes' hash='376e77076f0762ff' id='type-id-17'/>
+    <subrange length='4' lower-bound='0' upper-bound='3' size-in-bits='3' is-anonymous='yes' hash='cee611f4a73e486c' id='type-id-17'/>
   </array-type-def>
   <array-type-def dimensions='1' type-id='type-id-18' size-in-bits='640' alignment-in-bits='64' hash='d72a14b22ae41950' id='type-id-10'>
-    <subrange length='10' lower-bound='0' upper-bound='9' size-in-bits='9' is-anonymous='yes' hash='6f0ba94ef636c4f4' id='type-id-19'/>
+    <subrange length='10' lower-bound='0' upper-bound='9' size-in-bits='9' is-anonymous='yes' hash='4e72a2f569b234f4' id='type-id-19'/>
   </array-type-def>
   <array-type-def dimensions='1' type-id='type-id-14' size-in-bits='160' alignment-in-bits='32' hash='85d31acdd10123f3' id='type-id-8'>
-    <subrange length='5' lower-bound='0' upper-bound='4' size-in-bits='4' is-anonymous='yes' hash='3aa0fd3ceaed5d9c' id='type-id-12'/>
+    <subrange length='5' lower-bound='0' upper-bound='4' size-in-bits='4' is-anonymous='yes' hash='5aa5cef1e1be46c9' id='type-id-12'/>
   </array-type-def>
   <reference-type-def kind='lvalue' type-id='type-id-7' size-in-bits='64' alignment-in-bits='64' hash='54901bf1a9ee098d' id='type-id-20'/>
   <qualified-type-def type-id='type-id-20' const='yes' hash='15a49980bcc6bc7d' id='type-id-21'/>

@@ -3,8 +3,8 @@
     <elf-symbol name='first_type_constructor' type='func-type' binding='global-binding' visibility='default-visibility' is-defined='yes'/>
   </elf-function-symbols>
   <abi-instr address-size='64' language='LANG_C'>
-    <type-decl name='int' size-in-bits='32' hash='a5c4f954b141f944' id='type-id-1'/>
-    <class-decl name='first_type' is-struct='yes' visibility='default' size-in-bits='128' hash='c85a38770703df4d' id='type-id-2'>
+    <type-decl name='int' size-in-bits='32' hash='09d17c08f594edc7' id='type-id-1'/>
+    <class-decl name='first_type' is-struct='yes' visibility='default' size-in-bits='128' hash='862949eac981febc' id='type-id-2'>
       <data-member access='public' layout-offset-in-bits='0'>
         <var-decl name='member0' type-id='type-id-3' visibility='default'/>
       </data-member>
@@ -15,19 +15,19 @@
         <var-decl name='ctor' type-id='type-id-5' visibility='default'/>
       </data-member>
     </class-decl>
-    <typedef-decl name='character' type-id='type-id-6' size-in-bits='8' hash='bf1bb1b8377a7dae' id='type-id-4'/>
-    <typedef-decl name='constructor' type-id='type-id-7' size-in-bits='64' alignment-in-bits='64' hash='75f0bb3d9c036fd2' id='type-id-5'/>
-    <typedef-decl name='integer' type-id='type-id-1' size-in-bits='32' hash='a5c4f954b141f944' id='type-id-3'/>
-    <type-decl name='unsigned char' size-in-bits='8' hash='bf1bb1b8377a7dae' id='type-id-6'/>
-    <pointer-type-def type-id='type-id-2' size-in-bits='64' alignment-in-bits='64' hash='f26626d650ed54c1' id='type-id-8'/>
-    <pointer-type-def type-id='type-id-9' size-in-bits='64' alignment-in-bits='64' hash='75f0bb3d9c036fd2' id='type-id-7'/>
-    <function-decl name='first_type_constructor' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='first_type_constructor' hash='69fc085eab960137'>
+    <typedef-decl name='character' type-id='type-id-6' size-in-bits='8' hash='6ebac62b3366db68' id='type-id-4'/>
+    <typedef-decl name='constructor' type-id='type-id-7' size-in-bits='64' alignment-in-bits='64' hash='d125197fd9fb707c' id='type-id-5'/>
+    <typedef-decl name='integer' type-id='type-id-1' size-in-bits='32' hash='09d17c08f594edc7' id='type-id-3'/>
+    <type-decl name='unsigned char' size-in-bits='8' hash='6ebac62b3366db68' id='type-id-6'/>
+    <pointer-type-def type-id='type-id-2' size-in-bits='64' alignment-in-bits='64' hash='aac1626e6626b46e' id='type-id-8'/>
+    <pointer-type-def type-id='type-id-9' size-in-bits='64' alignment-in-bits='64' hash='d125197fd9fb707c' id='type-id-7'/>
+    <function-decl name='first_type_constructor' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='first_type_constructor' hash='8565dc50e9aa674a'>
       <parameter type-id='type-id-8'/>
       <return type-id='type-id-10'/>
     </function-decl>
     <type-decl name='variadic parameter type' id='type-id-11'/>
     <type-decl name='void' id='type-id-10'/>
-    <function-type size-in-bits='64' hash='6d2e184520c45eb8' id='type-id-9'>
+    <function-type size-in-bits='64' hash='7f32ffea222edbe7' id='type-id-9'>
       <parameter is-variadic='yes'/>
       <return type-id='type-id-10'/>
     </function-type>

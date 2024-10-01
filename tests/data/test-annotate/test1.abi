@@ -61,15 +61,15 @@
   </elf-variable-symbols>
   <abi-instr address-size='64' path='test1.cc' comp-dir-path='/home/dodji/git/libabigail/dwarf/tests/data/test-read-dwarf' language='LANG_C_plus_plus'>
     <!-- char -->
-    <type-decl name='char' size-in-bits='8' hash='9b0a6b0f99242b9a' id='type-id-1'/>
+    <type-decl name='char' size-in-bits='8' hash='65b2d157027b431a' id='type-id-1'/>
     <!-- double -->
-    <type-decl name='double' size-in-bits='64' hash='45af2b0af187a9a0' id='type-id-2'/>
+    <type-decl name='double' size-in-bits='64' hash='e9e9b320886d9aa6' id='type-id-2'/>
     <!-- int -->
-    <type-decl name='int' size-in-bits='32' hash='a5c4f954b141f944' id='type-id-3'/>
+    <type-decl name='int' size-in-bits='32' hash='09d17c08f594edc7' id='type-id-3'/>
     <!-- long long int -->
-    <type-decl name='long long int' size-in-bits='64' hash='f3758a4101363199#2' id='type-id-4'/>
+    <type-decl name='long long int' size-in-bits='64' hash='5ae7f9eec1fc43d6#2' id='type-id-4'/>
     <!-- struct b0 -->
-    <class-decl name='b0' is-struct='yes' visibility='default' size-in-bits='128' filepath='/home/dodji/git/libabigail/dwarf/tests/data/test-read-dwarf/test1.cc' line='1' column='1' hash='bc25e7bea098ea7d' id='type-id-5'>
+    <class-decl name='b0' is-struct='yes' visibility='default' size-in-bits='128' filepath='/home/dodji/git/libabigail/dwarf/tests/data/test-read-dwarf/test1.cc' line='1' column='1' hash='2d98f93844537f53' id='type-id-5'>
       <data-member access='public' layout-offset-in-bits='0'>
         <!-- long long int b0::m0 -->
         <var-decl name='m0' type-id='type-id-4' visibility='default' filepath='/home/dodji/git/libabigail/dwarf/tests/data/test-read-dwarf/test1.cc' line='3' column='1'/>
@@ -80,7 +80,7 @@
       </data-member>
     </class-decl>
     <!-- struct b1 -->
-    <class-decl name='b1' is-struct='yes' visibility='default' size-in-bits='128' filepath='/home/dodji/git/libabigail/dwarf/tests/data/test-read-dwarf/test1.cc' line='7' column='1' hash='8a47b9578b03bfb1' id='type-id-6'>
+    <class-decl name='b1' is-struct='yes' visibility='default' size-in-bits='128' filepath='/home/dodji/git/libabigail/dwarf/tests/data/test-read-dwarf/test1.cc' line='7' column='1' hash='cb52add71beae51b' id='type-id-6'>
       <data-member access='public' layout-offset-in-bits='0'>
         <!-- double b1::m0 -->
         <var-decl name='m0' type-id='type-id-2' visibility='default' filepath='/home/dodji/git/libabigail/dwarf/tests/data/test-read-dwarf/test1.cc' line='9' column='1'/>
@@ -91,18 +91,18 @@
       </data-member>
     </class-decl>
     <!-- struct s0 -->
-    <class-decl name='s0' is-struct='yes' visibility='default' size-in-bits='384' filepath='/home/dodji/git/libabigail/dwarf/tests/data/test-read-dwarf/test1.cc' line='13' column='1' hash='567a73e2f653f39b' id='type-id-7'>
+    <class-decl name='s0' is-struct='yes' visibility='default' size-in-bits='384' filepath='/home/dodji/git/libabigail/dwarf/tests/data/test-read-dwarf/test1.cc' line='13' column='1' hash='c090f013fbdda03c' id='type-id-7'>
       <!-- struct b0 -->
       <base-class access='public' layout-offset-in-bits='192' is-virtual='yes' type-id='type-id-5'/>
       <!-- struct b1 -->
       <base-class access='public' layout-offset-in-bits='256' is-virtual='yes' type-id='type-id-6'/>
       <member-type access='public'>
         <!-- typedef unsigned char s0::byte -->
-        <typedef-decl name='byte' type-id='type-id-9' size-in-bits='8' filepath='/home/dodji/git/libabigail/dwarf/tests/data/test-read-dwarf/test1.cc' line='16' column='1' hash='bf1bb1b8377a7dae' id='type-id-8'/>
+        <typedef-decl name='byte' type-id='type-id-9' size-in-bits='8' filepath='/home/dodji/git/libabigail/dwarf/tests/data/test-read-dwarf/test1.cc' line='16' column='1' hash='6ebac62b3366db68' id='type-id-8'/>
       </member-type>
       <member-type access='public'>
         <!-- typedef int s0::integer -->
-        <typedef-decl name='integer' type-id='type-id-3' size-in-bits='32' filepath='/home/dodji/git/libabigail/dwarf/tests/data/test-read-dwarf/test1.cc' line='15' column='1' hash='a5c4f954b141f944' id='type-id-10'/>
+        <typedef-decl name='integer' type-id='type-id-3' size-in-bits='32' filepath='/home/dodji/git/libabigail/dwarf/tests/data/test-read-dwarf/test1.cc' line='15' column='1' hash='09d17c08f594edc7' id='type-id-10'/>
       </member-type>
       <data-member access='public' layout-offset-in-bits='64'>
         <!-- s0::integer s0::m0 -->
@@ -114,7 +114,7 @@
       </data-member>
       <member-function access='public' constructor='yes'>
         <!-- s0::s0() -->
-        <function-decl name='s0' mangled-name='_ZN2s0C1Ev' filepath='/home/dodji/git/libabigail/dwarf/tests/data/test-read-dwarf/test1.cc' line='21' column='1' declared-inline='yes' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZN2s0C1Ev' hash='6d2e184520c45eb8'>
+        <function-decl name='s0' mangled-name='_ZN2s0C1Ev' filepath='/home/dodji/git/libabigail/dwarf/tests/data/test-read-dwarf/test1.cc' line='21' column='1' declared-inline='yes' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZN2s0C1Ev' hash='7f32ffea222edbe7'>
           <!-- implicit parameter of type 's0*' -->
           <parameter type-id='type-id-11' is-artificial='yes'/>
           <!-- void -->
@@ -123,7 +123,7 @@
       </member-function>
       <member-function access='public' destructor='yes'>
         <!-- s0::~s0() -->
-        <function-decl name='~s0' mangled-name='_ZN2s0D1Ev' filepath='/home/dodji/git/libabigail/dwarf/tests/data/test-read-dwarf/test1.cc' line='27' column='1' declared-inline='yes' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZN2s0D1Ev' hash='6d2e184520c45eb8'>
+        <function-decl name='~s0' mangled-name='_ZN2s0D1Ev' filepath='/home/dodji/git/libabigail/dwarf/tests/data/test-read-dwarf/test1.cc' line='27' column='1' declared-inline='yes' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZN2s0D1Ev' hash='7f32ffea222edbe7'>
           <!-- implicit parameter of type 's0*' -->
           <parameter type-id='type-id-11' is-artificial='yes'/>
           <!-- void -->
@@ -132,7 +132,7 @@
       </member-function>
       <member-function access='public'>
         <!-- s0::integer s0::mem_fun() -->
-        <function-decl name='mem_fun' mangled-name='_ZN2s07mem_funEv' filepath='/home/dodji/git/libabigail/dwarf/tests/data/test-read-dwarf/test1.cc' line='36' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZN2s07mem_funEv' hash='2a788f7b319049ca'>
+        <function-decl name='mem_fun' mangled-name='_ZN2s07mem_funEv' filepath='/home/dodji/git/libabigail/dwarf/tests/data/test-read-dwarf/test1.cc' line='36' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZN2s07mem_funEv' hash='388da3fa973fde78'>
           <!-- implicit parameter of type 's0*' -->
           <parameter type-id='type-id-11' is-artificial='yes'/>
           <!-- typedef s0::integer -->
@@ -141,28 +141,28 @@
       </member-function>
     </class-decl>
     <!-- unsigned char -->
-    <type-decl name='unsigned char' size-in-bits='8' hash='bf1bb1b8377a7dae' id='type-id-9'/>
+    <type-decl name='unsigned char' size-in-bits='8' hash='6ebac62b3366db68' id='type-id-9'/>
     <!-- const int -->
-    <qualified-type-def type-id='type-id-3' const='yes' hash='92213e4cda3e7249' id='type-id-13'/>
+    <qualified-type-def type-id='type-id-3' const='yes' hash='8cef8df4b6728924' id='type-id-13'/>
     <!-- s0& -->
-    <reference-type-def kind='lvalue' type-id='type-id-7' size-in-bits='64' hash='daa39373c8f8f14d' id='type-id-14'/>
+    <reference-type-def kind='lvalue' type-id='type-id-7' size-in-bits='64' hash='9aedd9a9b4871d9f' id='type-id-14'/>
     <!-- s0* -->
-    <pointer-type-def type-id='type-id-7' size-in-bits='64' hash='eab7f05d5b6d2d69' id='type-id-11'/>
+    <pointer-type-def type-id='type-id-7' size-in-bits='64' hash='8e193f607b7de857' id='type-id-11'/>
     <!-- s0* const -->
-    <qualified-type-def type-id='type-id-11' const='yes' hash='e4369cbee48345bd' id='type-id-15'/>
+    <qualified-type-def type-id='type-id-11' const='yes' hash='f29a452ed10ca758' id='type-id-15'/>
     <!-- void** -->
-    <pointer-type-def type-id='type-id-16' size-in-bits='64' hash='1ac5a7d5fe234a8f' id='type-id-17'/>
+    <pointer-type-def type-id='type-id-16' size-in-bits='64' hash='473a9667a2856e32' id='type-id-17'/>
     <!-- void** const -->
-    <qualified-type-def type-id='type-id-17' const='yes' hash='3fc57eaa441f779f' id='type-id-18'/>
+    <qualified-type-def type-id='type-id-17' const='yes' hash='52c4b44d191c43e5' id='type-id-18'/>
     <!-- void foo(s0&) -->
-    <function-decl name='foo' mangled-name='_Z3fooR2s0' filepath='/home/dodji/git/libabigail/dwarf/tests/data/test-read-dwarf/test1.cc' line='42' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_Z3fooR2s0' hash='c7b761ac7c379003'>
+    <function-decl name='foo' mangled-name='_Z3fooR2s0' filepath='/home/dodji/git/libabigail/dwarf/tests/data/test-read-dwarf/test1.cc' line='42' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_Z3fooR2s0' hash='1578bbd11f231f0a'>
       <!-- parameter of type 's0&' -->
       <parameter type-id='type-id-14' filepath='/home/dodji/git/libabigail/dwarf/tests/data/test-read-dwarf/test1.cc' line='42' column='1'/>
       <!-- void -->
       <return type-id='type-id-12'/>
     </function-decl>
     <!-- int main() -->
-    <function-decl name='main' mangled-name='main' filepath='/home/dodji/git/libabigail/dwarf/tests/data/test-read-dwarf/test1.cc' line='48' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='main' hash='2a788f7b319049ca'>
+    <function-decl name='main' mangled-name='main' filepath='/home/dodji/git/libabigail/dwarf/tests/data/test-read-dwarf/test1.cc' line='48' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='main' hash='388da3fa973fde78'>
       <!-- int -->
       <return type-id='type-id-3'/>
     </function-decl>

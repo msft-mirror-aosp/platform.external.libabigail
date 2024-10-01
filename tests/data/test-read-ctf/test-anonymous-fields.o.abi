@@ -3,23 +3,23 @@
     <elf-symbol name='t' size='8' type='object-type' binding='global-binding' visibility='default-visibility' is-defined='yes'/>
   </elf-variable-symbols>
   <abi-instr address-size='64' language='LANG_C'>
-    <type-decl name='int' size-in-bits='32' hash='a5c4f954b141f944' id='type-id-1'/>
-    <class-decl name='uprobe_task' is-struct='yes' visibility='default' size-in-bits='64' hash='5bf407694ba133c9' id='type-id-2'>
+    <type-decl name='int' size-in-bits='32' hash='09d17c08f594edc7' id='type-id-1'/>
+    <class-decl name='uprobe_task' is-struct='yes' visibility='default' size-in-bits='64' hash='6d67ef9257d937fc' id='type-id-2'>
       <data-member access='public' layout-offset-in-bits='0'>
         <var-decl name='' type-id='type-id-3' visibility='default'/>
       </data-member>
     </class-decl>
-    <class-decl name='' is-struct='yes' visibility='default' size-in-bits='32' is-anonymous='yes' hash='a87122d0b05070e1' id='type-id-4'>
+    <class-decl name='' is-struct='yes' visibility='default' size-in-bits='32' is-anonymous='yes' hash='cdf2df871966dfe8' id='type-id-4'>
       <data-member access='public' layout-offset-in-bits='0'>
         <var-decl name='dup_xol_work' type-id='type-id-1' visibility='default'/>
       </data-member>
     </class-decl>
-    <class-decl name='' is-struct='yes' visibility='default' size-in-bits='64' is-anonymous='yes' hash='7e0aef88a328ad71' id='type-id-5'>
+    <class-decl name='' is-struct='yes' visibility='default' size-in-bits='64' is-anonymous='yes' hash='89b2ee007c46ece7' id='type-id-5'>
       <data-member access='public' layout-offset-in-bits='0'>
         <var-decl name='vaddr' type-id='type-id-6' visibility='default'/>
       </data-member>
     </class-decl>
-    <union-decl name='' visibility='default' size-in-bits='64' is-anonymous='yes' hash='e6925f3034099baf' id='type-id-3'>
+    <union-decl name='' visibility='default' size-in-bits='64' is-anonymous='yes' hash='987c4f2d3d1e5b28' id='type-id-3'>
       <data-member access='public'>
         <var-decl name='' type-id='type-id-5' visibility='default'/>
       </data-member>
@@ -27,7 +27,7 @@
         <var-decl name='' type-id='type-id-4' visibility='default'/>
       </data-member>
     </union-decl>
-    <type-decl name='unsigned long int' size-in-bits='64' hash='49b6777b7019522a' id='type-id-6'/>
+    <type-decl name='unsigned long int' size-in-bits='64' hash='8fdc5eea2983a729' id='type-id-6'/>
     <var-decl name='t' type-id='type-id-2' mangled-name='t' visibility='default' elf-symbol-id='t'/>
   </abi-instr>
 </abi-corpus>

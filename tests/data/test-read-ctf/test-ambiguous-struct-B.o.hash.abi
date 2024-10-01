@@ -3,8 +3,8 @@
     <elf-symbol name='a' size='24' type='object-type' binding='global-binding' visibility='default-visibility' is-defined='yes'/>
   </elf-variable-symbols>
   <abi-instr address-size='64' language='LANG_C'>
-    <type-decl name='int' size-in-bits='32' hash='a5c4f954b141f944' id='95e97e5e'/>
-    <class-decl name='A' is-struct='yes' visibility='default' size-in-bits='192' hash='33f57d7a1a7b3828' id='3ed987a4'>
+    <type-decl name='int' size-in-bits='32' hash='09d17c08f594edc7' id='95e97e5e'/>
+    <class-decl name='A' is-struct='yes' visibility='default' size-in-bits='192' hash='fee7ab600ae91885' id='3ed987a4'>
       <data-member access='public' layout-offset-in-bits='0'>
         <var-decl name='b' type-id='41d98c5d' visibility='default'/>
       </data-member>
@@ -15,12 +15,12 @@
         <var-decl name='b2' type-id='41d98c5d' visibility='default'/>
       </data-member>
     </class-decl>
-    <class-decl name='B' is-struct='yes' visibility='default' size-in-bits='64' hash='0a2bbab2dd7e827f' id='41d98c5d'>
+    <class-decl name='B' is-struct='yes' visibility='default' size-in-bits='64' hash='231ada02c5607e0e' id='41d98c5d'>
       <data-member access='public' layout-offset-in-bits='0'>
         <var-decl name='a' type-id='84d5ac12' visibility='default'/>
       </data-member>
     </class-decl>
-    <pointer-type-def type-id='3ed987a4' size-in-bits='64' alignment-in-bits='64' hash='384ca2634b2d9ca8' id='84d5ac12'/>
+    <pointer-type-def type-id='3ed987a4' size-in-bits='64' alignment-in-bits='64' hash='f722f813fa194fef' id='84d5ac12'/>
     <var-decl name='a' type-id='3ed987a4' mangled-name='a' visibility='default' elf-symbol-id='a'/>
   </abi-instr>
 </abi-corpus>

@@ -3,12 +3,12 @@
     <elf-symbol name='a' size='32' type='object-type' binding='global-binding' visibility='default-visibility' is-defined='yes'/>
   </elf-variable-symbols>
   <abi-instr address-size='64' language='LANG_C'>
-    <type-decl name='char' size-in-bits='8' hash='9b0a6b0f99242b9a' id='type-id-1'/>
-    <array-type-def dimensions='1' type-id='type-id-2' size-in-bits='256' hash='f73686dbcda1f0d7' id='type-id-3'>
-      <subrange length='32' lower-bound='0' upper-bound='31' type-id='type-id-4' size-in-bits='64' is-anonymous='yes' hash='49ce07b6e7add2ea' id='type-id-5'/>
+    <type-decl name='char' size-in-bits='8' hash='65b2d157027b431a' id='type-id-1'/>
+    <array-type-def dimensions='1' type-id='type-id-2' size-in-bits='256' hash='fe4d9cb568708407' id='type-id-3'>
+      <subrange length='32' lower-bound='0' upper-bound='31' type-id='type-id-4' size-in-bits='64' is-anonymous='yes' hash='99f823ef025a9d75' id='type-id-5'/>
     </array-type-def>
-    <type-decl name='unsigned long int' size-in-bits='64' hash='49b6777b7019522a' id='type-id-4'/>
-    <qualified-type-def type-id='type-id-1' const='yes' hash='e9100b9619094275' id='type-id-2'/>
+    <type-decl name='unsigned long int' size-in-bits='64' hash='8fdc5eea2983a729' id='type-id-4'/>
+    <qualified-type-def type-id='type-id-1' const='yes' hash='3e50fd33f9bb78d9' id='type-id-2'/>
     <var-decl name='a' type-id='type-id-3' mangled-name='a' visibility='default' elf-symbol-id='a'/>
   </abi-instr>
 </abi-corpus>

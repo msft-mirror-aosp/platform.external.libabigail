@@ -195,9 +195,9 @@ combine_hashes(hash_t val1, hash_t val2)
 hash_t
 hash(uint64_t v, uint64_t seed)
 {
-  // THe XXH64 function takes an array of bytes representing the value
-  // to hash.  So let's represent 'v' as a big endian input and pass
-  // it to XXH64.
+  // THe XXH hashing functions take an array of bytes representing the
+  // value to hash.  So let's represent 'v' as a big endian input and
+  // pass it to XXH3_64bits_withSeed.
   unsigned char data[sizeof(uint64_t)] = {};
   uint64_t t = v;
   size_t data_size = sizeof(data);
@@ -206,7 +206,7 @@ hash(uint64_t v, uint64_t seed)
       data[data_size - i - 1] = t & 0xff;
       t = t >> 8;
     }
-  hash_t h = XXH64(data, data_size, seed);
+  hash_t h = XXH3_64bits_withSeed(data, data_size, seed);
   return h;
 }
 
@@ -218,7 +218,7 @@ hash(uint64_t v, uint64_t seed)
 hash_t
 hash(const std::string& str)
 {
-  hash_t h = XXH64(str.c_str(), str.size(), 0);
+  hash_t h = XXH3_64bits(str.c_str(), str.size());
   return h;
 }
 

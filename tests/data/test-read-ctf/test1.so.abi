@@ -6,22 +6,22 @@
     <elf-symbol name='fn' type='func-type' binding='global-binding' visibility='default-visibility' is-defined='yes'/>
   </elf-function-symbols>
   <abi-instr address-size='64' language='LANG_C'>
-    <enum-decl name='opaque_enum' linkage-name='opaque_enum' size-in-bits='32' alignment-in-bits='32' hash='6d9b9cf9ded15738' id='type-id-1'>
+    <enum-decl name='opaque_enum' linkage-name='opaque_enum' size-in-bits='32' alignment-in-bits='32' hash='8052a48aba79331b' id='type-id-1'>
       <underlying-type type-id='type-id-2'/>
       <enumerator name='e0' value='0'/>
       <enumerator name='e1' value='1'/>
     </enum-decl>
-    <class-decl name='opaque_struct' is-struct='yes' visibility='default' size-in-bits='32' hash='640d0f2c56b66ef0' id='type-id-3'>
+    <class-decl name='opaque_struct' is-struct='yes' visibility='default' size-in-bits='32' hash='76b8be93c7b2042b' id='type-id-3'>
       <data-member access='public' layout-offset-in-bits='0'>
         <var-decl name='m0' type-id='type-id-4' visibility='default'/>
       </data-member>
     </class-decl>
-    <typedef-decl name='opaque_enum' type-id='type-id-1' size-in-bits='32' alignment-in-bits='32' hash='6d9b9cf9ded15738' id='type-id-4'/>
+    <typedef-decl name='opaque_enum' type-id='type-id-1' size-in-bits='32' alignment-in-bits='32' hash='8052a48aba79331b' id='type-id-4'/>
     <typedef-decl name='opaque_struct' type-id='type-id-3' size-in-bits='32' id='type-id-5'/>
-    <type-decl name='unnamed-enum-underlying-type-32' size-in-bits='32' alignment-in-bits='32' is-anonymous='yes' hash='3858cc731813efc0' id='type-id-2'/>
-    <pointer-type-def type-id='type-id-4' size-in-bits='64' alignment-in-bits='64' hash='a90212f2ce49aa7d' id='type-id-6'/>
-    <pointer-type-def type-id='type-id-5' size-in-bits='64' alignment-in-bits='64' hash='8db0c5a83f6734bd' id='type-id-7'/>
-    <function-decl name='fn' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='fn' hash='4d1bb6aa024965d9'>
+    <type-decl name='unnamed-enum-underlying-type-32' size-in-bits='32' alignment-in-bits='32' is-anonymous='yes' hash='5181a58e665b3619' id='type-id-2'/>
+    <pointer-type-def type-id='type-id-4' size-in-bits='64' alignment-in-bits='64' hash='7e09fd30fc6f7f14' id='type-id-6'/>
+    <pointer-type-def type-id='type-id-5' size-in-bits='64' alignment-in-bits='64' hash='9049c6536b43efe1' id='type-id-7'/>
+    <function-decl name='fn' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='fn' hash='e762c5a57679e6a9'>
       <parameter type-id='type-id-7'/>
       <parameter type-id='type-id-6'/>
       <return type-id='type-id-8'/>
