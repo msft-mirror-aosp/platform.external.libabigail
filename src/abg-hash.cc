@@ -349,7 +349,8 @@ using namespace abigail::ir;
 #define MAYBE_RETURN_EARLY_FROM_HASHING_TO_AVOID_CYCLES(type)		\
   do									\
     {									\
-      if (hashing::get_hashing_state(type) == hashing::HASHING_STARTED_STATE) \
+      if (hashing::get_hashing_state(type) == hashing::HASHING_STARTED_STATE \
+	  || hashing::get_hashing_state(type) == hashing::HASHING_SUBTYPE_STATE) \
 	{								\
 	  hashing::set_hashing_state(t, hashing::HASHING_CYCLED_TYPE_STATE); \
 	  hashing::is_recursive_artefact(type, true);			\
@@ -503,7 +504,10 @@ typedef_decl::hash::operator()(const typedef_decl& t) const
   // The hash value of a typedef is the same as the hash value of its
   // underlying type.
   type_base_sptr u = look_through_decl_only_type(t.get_underlying_type());
-  hash_t v = do_hash_value(u);
+  hashing::hashing_state s = hashing::get_hashing_state(*u);
+  hashing::set_hashing_state(*u, hashing::HASHING_SUBTYPE_STATE);
+  hash_t v = u->hash_value();
+  hashing::set_hashing_state(*u, s);
   MAYBE_FLAG_TYPE_AS_RECURSIVE(t, u, v);
 
   hashing::set_hashing_state(t, hashing::HASHING_NOT_DONE_STATE);
@@ -540,7 +544,10 @@ qualified_type_def::hash::operator()(const qualified_type_def& t) const
   hashing::set_hashing_state(t, hashing::HASHING_STARTED_STATE);
 
   type_base_sptr u = look_through_decl_only_type(t.get_underlying_type());
-  hash_t v = do_hash_value(u);
+  hashing::hashing_state s = hashing::get_hashing_state(*u);
+  hashing::set_hashing_state(*u, hashing::HASHING_SUBTYPE_STATE);
+  hash_t v = u->hash_value();
+  hashing::set_hashing_state(*u, s);
   MAYBE_FLAG_TYPE_AS_RECURSIVE(t, u, v);
   v = hashing::combine_hashes(v, type_hash(t));
   v = hashing::combine_hashes(v, decl_hash(t));
@@ -580,7 +587,10 @@ pointer_type_def::hash::operator()(const pointer_type_def& t) const
   hashing::set_hashing_state(t, hashing::HASHING_STARTED_STATE);
 
   type_base_sptr u = look_through_decl_only_type(t.get_pointed_to_type());
-  hash_t v = do_hash_value(u);
+  hashing::hashing_state s = hashing::get_hashing_state(*u);
+  hashing::set_hashing_state(*u, hashing::HASHING_SUBTYPE_STATE);
+  hash_t v = u->hash_value();
+  hashing::set_hashing_state(*u, s);
   MAYBE_FLAG_TYPE_AS_RECURSIVE(t, u, v);
   v = hashing::combine_hashes(v, type_base_hash(t));
   v = hashing::combine_hashes(v, decl_hash(t));
@@ -619,7 +629,10 @@ reference_type_def::hash::operator()(const reference_type_def& t) const
   hashing::set_hashing_state(t, hashing::HASHING_STARTED_STATE);
 
   type_base_sptr u = look_through_decl_only_type(t.get_pointed_to_type());
-  hash_t v = do_hash_value(u);
+  hashing::hashing_state s = hashing::get_hashing_state(*u);
+  hashing::set_hashing_state(*u, hashing::HASHING_SUBTYPE_STATE);
+  hash_t v = u->hash_value();
+  hashing::set_hashing_state(*u, s);
   MAYBE_FLAG_TYPE_AS_RECURSIVE(t, u, v);
   v = hashing::combine_hashes(v, hash_type_base(t));
   v = hashing::combine_hashes(v, hash_decl(t));
@@ -698,13 +711,20 @@ array_type_def::hash::operator()(const array_type_def& t) const
        i != t.get_subranges().end();
        ++i)
     {
-      h = do_hash_value(*i);
+      hashing::hashing_state s = hashing::get_hashing_state(**i);
+      hashing::set_hashing_state(**i, hashing::HASHING_SUBTYPE_STATE);
+      h = (*i)->hash_value();
+      hashing::set_hashing_state(**i, s);
       MAYBE_FLAG_TYPE_AS_RECURSIVE(t, *i, h);
       v = hashing::combine_hashes(v, h);
     }
 
-  h = do_hash_value(t.get_element_type());
-  MAYBE_FLAG_TYPE_AS_RECURSIVE(t, t.get_element_type(), h);
+  type_base_sptr e = t.get_element_type();
+  hashing::hashing_state s = hashing::get_hashing_state(*e);
+  hashing::set_hashing_state(*e, hashing::HASHING_SUBTYPE_STATE);
+  h = e->hash_value();
+  hashing::set_hashing_state(*e, s);
+  MAYBE_FLAG_TYPE_AS_RECURSIVE(t, e, h);
   v = hashing::combine_hashes(v, h);
 
   hashing::set_hashing_state(t, hashing::HASHING_NOT_DONE_STATE);
@@ -742,10 +762,19 @@ ptr_to_mbr_type::hash::operator() (const ptr_to_mbr_type& t) const
 
   hash_t v = hash_as_type_base(t);
   v = hashing::combine_hashes(v, hash_as_decl_base(t));
-  hash_t h = do_hash_value(t.get_member_type());
-  MAYBE_FLAG_TYPE_AS_RECURSIVE(t, t.get_member_type(), h);
+  type_base_sptr e = t.get_member_type();
+  hashing::hashing_state s = hashing::get_hashing_state(*e);
+  hashing::set_hashing_state(*e, hashing::HASHING_SUBTYPE_STATE);
+  hash_t h = e->hash_value();
+  hashing::set_hashing_state(*e, s);
+  MAYBE_FLAG_TYPE_AS_RECURSIVE(t, e, h);
   v = hashing::combine_hashes(v, h);
-  h = do_hash_value(t.get_containing_type());
+
+  e = t.get_containing_type();
+  s = hashing::get_hashing_state(*e);
+  hashing::set_hashing_state(*e, hashing::HASHING_SUBTYPE_STATE);
+  h = e->hash_value();
+  hashing::set_hashing_state(*e, s);
   MAYBE_FLAG_TYPE_AS_RECURSIVE(t, t.get_containing_type(), h);
   v = hashing::combine_hashes(v, h);
 
@@ -788,8 +817,12 @@ enum_type_decl::hash::operator()(const enum_type_decl& t) const
 
     if (t.get_is_declaration_only() && t.get_definition_of_declaration())
     {
-      hash_t v = do_hash_value(is_enum_type(t.get_definition_of_declaration()));
-      MAYBE_FLAG_TYPE_AS_RECURSIVE(t, t.get_definition_of_declaration(), v);
+      enum_type_decl_sptr e = is_enum_type(t.get_definition_of_declaration());
+      hashing::hashing_state s = hashing::get_hashing_state(*e);
+      hashing::set_hashing_state(*e, hashing::HASHING_SUBTYPE_STATE);
+      hash_t v = e->hash_value();
+      hashing::set_hashing_state(*e, s);
+      MAYBE_FLAG_TYPE_AS_RECURSIVE(t, e, v);
       return v;
     }
 
@@ -801,8 +834,12 @@ enum_type_decl::hash::operator()(const enum_type_decl& t) const
   hash_t v = hash_as_type(t);
   v = hashing::combine_hashes(v, hash_as_decl(t));
 
-  hash_t h = do_hash_value(t.get_underlying_type());
-  MAYBE_FLAG_TYPE_AS_RECURSIVE(t, t.get_underlying_type(), h);
+  type_base_sptr u = t.get_underlying_type();
+  hashing::hashing_state s = hashing::get_hashing_state(*u);
+  hashing::set_hashing_state(*u, hashing::HASHING_SUBTYPE_STATE);
+  hash_t h = u->hash_value();
+  hashing::set_hashing_state(*u, s);
+  MAYBE_FLAG_TYPE_AS_RECURSIVE(t, u, h);
   v = hashing::combine_hashes(v, h);
 
   for (enum_type_decl::enumerators::const_iterator i =
@@ -847,8 +884,12 @@ function_type::hash::operator()(const function_type& t) const
   set_hashing_state(t, hashing::HASHING_STARTED_STATE);
 
   hash_t v = hash_as_type_base(t), h = 0;
-  h = do_hash_value(t.get_return_type());
-  MAYBE_FLAG_TYPE_AS_RECURSIVE(t, t.get_return_type(), h);
+  type_base_sptr r = t.get_return_type();
+  hashing::hashing_state s = hashing::get_hashing_state(*r);
+  hashing::set_hashing_state(*r, hashing::HASHING_SUBTYPE_STATE);
+  h = r->hash_value();
+  hashing::set_hashing_state(*r, s);
+  MAYBE_FLAG_TYPE_AS_RECURSIVE(t, r, h);
   v = hashing::combine_hashes(v, h);
 
   for (auto parm = t.get_first_parm();
@@ -856,7 +897,10 @@ function_type::hash::operator()(const function_type& t) const
        ++parm)
     {
       type_base_sptr parm_type = (*parm)->get_type();
-      h = do_hash_value(parm_type);
+      hashing::hashing_state s = hashing::get_hashing_state(*parm_type);
+      hashing::set_hashing_state(*parm_type, hashing::HASHING_SUBTYPE_STATE);
+      h = parm_type->hash_value();
+      hashing::set_hashing_state(*parm_type, s);
       MAYBE_FLAG_TYPE_AS_RECURSIVE(t, parm_type, h);
       v = hashing::combine_hashes(v, h);
     }
@@ -903,7 +947,11 @@ method_type::hash::operator()(const method_type& t) const
   set_hashing_state(t, hashing::HASHING_STARTED_STATE);
 
   hash_t v = hash_as_type_base(t), h = 0;
-  h = do_hash_value(t.get_return_type());
+  type_base_sptr r = t.get_return_type();
+  hashing::hashing_state s = hashing::get_hashing_state(*r);
+  hashing::set_hashing_state(*r, hashing::HASHING_SUBTYPE_STATE);
+  h = r->hash_value();
+  hashing::set_hashing_state(*r, s);
   MAYBE_FLAG_TYPE_AS_RECURSIVE(t, t.get_return_type(), h);
   v = hashing::combine_hashes(v, h);
 
@@ -912,8 +960,12 @@ method_type::hash::operator()(const method_type& t) const
        ++i)
     {
       function_decl::parameter_sptr parm = *i;
-      h = do_hash_value(parm->get_type());
-      MAYBE_FLAG_TYPE_AS_RECURSIVE(t, parm->get_type(), h);
+      type_base_sptr ty = parm->get_type();
+      hashing::hashing_state s = hashing::get_hashing_state(*ty);
+      hashing::set_hashing_state(*ty, hashing::HASHING_SUBTYPE_STATE);
+      h = ty->hash_value();
+      hashing::set_hashing_state(*ty, s);
+      MAYBE_FLAG_TYPE_AS_RECURSIVE(t, ty, h);
       v = hashing::combine_hashes(v, h);
     }
 
@@ -968,7 +1020,11 @@ class_decl::base_spec::hash::operator()(const base_spec& t) const
   hash_t v = hash_member(t), h = 0;;
   v = hashing::combine_hashes(v, hashing::hash(t.get_offset_in_bits()));
   v = hashing::combine_hashes(v, hashing::hash(t.get_is_virtual()));
-  h = do_hash_value(t.get_base_class());
+  type_base_sptr b = t.get_base_class();
+  hashing::hashing_state s = hashing::get_hashing_state(*b);
+  hashing::set_hashing_state(*b, hashing::HASHING_SUBTYPE_STATE);
+  h = b->hash_value();
+  hashing::set_hashing_state(*b, s);
   MAYBE_FLAG_TYPE_AS_RECURSIVE(t, t.get_base_class(), h);
   v = hashing::combine_hashes(v, h);
 
@@ -1003,7 +1059,11 @@ class_or_union::hash::operator()(const class_or_union& t) const
 
   if (t.get_is_declaration_only() && t.get_definition_of_declaration())
     {
-      hash_t v = do_hash_value(is_class_or_union_type(t.get_definition_of_declaration()));
+      class_or_union_sptr cou = is_class_or_union_type(t.get_definition_of_declaration());
+      hashing::hashing_state s = hashing::get_hashing_state(*cou);
+      hashing::set_hashing_state(*cou, hashing::HASHING_SUBTYPE_STATE);
+      hash_t v = cou->hash_value();
+      hashing::set_hashing_state(*cou, s);
       MAYBE_FLAG_TYPE_AS_RECURSIVE(t, t.get_definition_of_declaration(), v);
       return v;
     }
@@ -1015,12 +1075,17 @@ class_or_union::hash::operator()(const class_or_union& t) const
   v = hashing::combine_hashes(v, hash_as_decl_base(t));
 
   // Hash data members.
+  type_base_sptr ty;
   for (auto d = t.get_non_static_data_members().begin();
        d != t.get_non_static_data_members().end();
        ++d)
     {
-      hash_t h = do_hash_value((*d)->get_type());
-      MAYBE_FLAG_TYPE_AS_RECURSIVE(t, (*d)->get_type(), h);
+      ty = (*d)->get_type();
+      hashing::hashing_state s = hashing::get_hashing_state(*ty);
+      hashing::set_hashing_state(*ty, hashing::HASHING_SUBTYPE_STATE);
+      hash_t h = ty->hash_value();
+      hashing::set_hashing_state(*ty, s);
+      MAYBE_FLAG_TYPE_AS_RECURSIVE(t, ty, h);
       v = hashing::combine_hashes(v, h);
       v = hashing::combine_hashes(v, hashing::hash((*d)->get_name()));
     }
@@ -1052,8 +1117,12 @@ class_decl::hash::operator()(const class_decl& t) const
 
   if (t.get_is_declaration_only() && t.get_definition_of_declaration())
     {
-      hash_t v = do_hash_value(is_class_type(t.get_definition_of_declaration()));
-      MAYBE_FLAG_TYPE_AS_RECURSIVE(t, t.get_definition_of_declaration(), v);
+      class_decl_sptr c = is_class_type(t.get_definition_of_declaration());
+      hashing::hashing_state s = hashing::get_hashing_state(*c);
+      hashing::set_hashing_state(*c, hashing::HASHING_SUBTYPE_STATE);
+      hash_t v = c->hash_value();
+      hashing::set_hashing_state(*c, s);
+      MAYBE_FLAG_TYPE_AS_RECURSIVE(t, c, v);
       return v;
     }
 
@@ -1068,7 +1137,10 @@ class_decl::hash::operator()(const class_decl& t) const
        b != t.get_base_specifiers().end();
        ++b)
     {
-      hash_t h = do_hash_value((*b));
+      hashing::hashing_state s = hashing::get_hashing_state(**b);
+      hashing::set_hashing_state(**b, hashing::HASHING_SUBTYPE_STATE);
+      hash_t h = (*b)->hash_value();
+      hashing::set_hashing_state(**b, s);
       MAYBE_FLAG_TYPE_AS_RECURSIVE(t, *b, h);
       v = hashing::combine_hashes(v, h);
     }
@@ -1137,8 +1209,12 @@ union_decl::hash::operator()(const union_decl& t) const
 
   if (t.get_is_declaration_only() && t.get_definition_of_declaration())
     {
-      hash_t v = do_hash_value(is_union_type(t.get_definition_of_declaration()));
-      MAYBE_FLAG_TYPE_AS_RECURSIVE(t, t.get_definition_of_declaration(), v);
+      union_decl_sptr u = is_union_type(t.get_definition_of_declaration());
+      hashing::hashing_state s = hashing::get_hashing_state(*u);
+      hashing::set_hashing_state(*u, hashing::HASHING_SUBTYPE_STATE);
+      hash_t v = u->hash_value();
+      hashing::set_hashing_state(*u, s);
+      MAYBE_FLAG_TYPE_AS_RECURSIVE(t, u, v);
       return v;
     }
 

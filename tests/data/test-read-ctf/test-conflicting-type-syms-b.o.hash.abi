@@ -5,8 +5,8 @@
   </elf-variable-symbols>
   <abi-instr address-size='64' language='LANG_C'>
     <type-decl name='long int' size-in-bits='64' hash='19e68b445bea230d' id='95e97e5e'/>
-    <typedef-decl name='a_t' type-id='95e97e5e' size-in-bits='64' hash='6d2e184520c45eb8' id='40acc204'/>
-    <typedef-decl name='b_t' type-id='95e97e5e' size-in-bits='64' hash='6d2e184520c45eb8' id='b3d2db81'/>
+    <typedef-decl name='a_t' type-id='95e97e5e' size-in-bits='64' hash='19e68b445bea230d' id='40acc204'/>
+    <typedef-decl name='b_t' type-id='95e97e5e' size-in-bits='64' hash='19e68b445bea230d' id='b3d2db81'/>
     <var-decl name='b' type-id='40acc204' mangled-name='b' visibility='default' elf-symbol-id='b'/>
     <var-decl name='ignore1' type-id='b3d2db81' mangled-name='ignore1' visibility='default' elf-symbol-id='ignore1'/>
   </abi-instr>

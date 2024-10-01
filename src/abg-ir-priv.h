@@ -282,7 +282,7 @@ struct type_or_decl_base::priv
   /// Setter of the hashing value of the current IR node.
   ///
   /// An empty value is just ignored.  Also, if the IR node is NEITHER
-  /// in the hashing::HASHING_STARTED_STATE nor in the
+  /// in the hashing::HASHING_NOT_DONE_STATE nor in the
   /// hashing::HASHING_CYCLED_TYPE_STATE, then the function does
   /// nothing.
   ///
@@ -294,7 +294,8 @@ struct type_or_decl_base::priv
 
     ABG_ASSERT(s == hashing::HASHING_NOT_DONE_STATE
 	       || s == hashing::HASHING_CYCLED_TYPE_STATE
-	       || s == hashing::HASHING_FINISHED_STATE);
+	       || s == hashing::HASHING_FINISHED_STATE
+	       || s == hashing::HASHING_SUBTYPE_STATE);
     if (h.has_value()
 	&& (s == hashing::HASHING_NOT_DONE_STATE
 	    || s == hashing::HASHING_CYCLED_TYPE_STATE))

@@ -23,46 +23,46 @@
     <!-- char -->
     <type-decl name='char' size-in-bits='8' hash='9b0a6b0f99242b9a' id='type-id-1'/>
     <!-- char Y::* -->
-    <pointer-to-member-type member-type-id='type-id-1' containing-type-id='type-id-2' size-in-bits='64' hash='9c16841c61a394f0' id='type-id-3'/>
+    <pointer-to-member-type member-type-id='type-id-1' containing-type-id='type-id-2' size-in-bits='64' hash='2baa9866299a37c2' id='type-id-3'/>
     <!-- double -->
     <type-decl name='double' size-in-bits='64' hash='45af2b0af187a9a0' id='type-id-4'/>
     <!-- double X::* -->
-    <pointer-to-member-type member-type-id='type-id-4' containing-type-id='type-id-5' size-in-bits='64' hash='e5a49b77c888ffa2' id='type-id-6'/>
+    <pointer-to-member-type member-type-id='type-id-4' containing-type-id='type-id-5' size-in-bits='64' hash='76d3d026a3f988e2' id='type-id-6'/>
     <!-- int -->
     <type-decl name='int' size-in-bits='32' hash='a5c4f954b141f944' id='type-id-7'/>
     <!-- int T::* -->
-    <pointer-to-member-type member-type-id='type-id-7' containing-type-id='type-id-8' size-in-bits='64' hash='d967f52e1586a06f' id='type-id-9'/>
+    <pointer-to-member-type member-type-id='type-id-7' containing-type-id='type-id-8' size-in-bits='64' hash='5d61afdb5fb2bca3' id='type-id-9'/>
     <!-- int U::* -->
-    <pointer-to-member-type member-type-id='type-id-7' containing-type-id='type-id-10' size-in-bits='64' hash='aa01b3ef3e5cf4d8' id='type-id-11'/>
+    <pointer-to-member-type member-type-id='type-id-7' containing-type-id='type-id-10' size-in-bits='64' hash='c768609cce81659a' id='type-id-11'/>
     <!-- int X::* -->
-    <pointer-to-member-type member-type-id='type-id-7' containing-type-id='type-id-5' size-in-bits='64' hash='40c01a37a18ae78c' id='type-id-12'/>
+    <pointer-to-member-type member-type-id='type-id-7' containing-type-id='type-id-5' size-in-bits='64' hash='f0d2a3b0af5bff87' id='type-id-12'/>
     <!-- struct T -->
-    <class-decl name='T' is-struct='yes' naming-typedef-id='type-id-8' visibility='default' size-in-bits='32' filepath='/home/dodji/git/libabigail/PR30260/tests/data/test-read-dwarf/test-pointer-to-member-1.cc' line='12' column='1' hash='95c9b6cc89f6f4db' id='type-id-13'>
+    <class-decl name='T' is-struct='yes' naming-typedef-id='type-id-8' visibility='default' size-in-bits='32' filepath='/home/dodji/git/libabigail/PR30260/tests/data/test-read-dwarf/test-pointer-to-member-1.cc' line='12' column='1' hash='85ff65ba9cf00834' id='type-id-13'>
       <data-member access='public' layout-offset-in-bits='0'>
         <!-- int T::t -->
         <var-decl name='t' type-id='type-id-7' visibility='default' filepath='/home/dodji/git/libabigail/PR30260/tests/data/test-read-dwarf/test-pointer-to-member-1.cc' line='12' column='1'/>
       </data-member>
     </class-decl>
     <!-- struct X -->
-    <class-decl name='X' is-struct='yes' visibility='default' size-in-bits='32' filepath='/home/dodji/git/libabigail/PR30260/tests/data/test-read-dwarf/test-pointer-to-member-1.cc' line='1' column='1' hash='feb445ea7f51905a' id='type-id-5'>
+    <class-decl name='X' is-struct='yes' visibility='default' size-in-bits='32' filepath='/home/dodji/git/libabigail/PR30260/tests/data/test-read-dwarf/test-pointer-to-member-1.cc' line='1' column='1' hash='ca83b7ba965737cf' id='type-id-5'>
       <data-member access='public' layout-offset-in-bits='0'>
         <!-- int X::a -->
         <var-decl name='a' type-id='type-id-7' visibility='default' filepath='/home/dodji/git/libabigail/PR30260/tests/data/test-read-dwarf/test-pointer-to-member-1.cc' line='3' column='1'/>
       </data-member>
     </class-decl>
     <!-- typedef T T -->
-    <typedef-decl name='T' type-id='type-id-13' size-in-bits='32' filepath='/home/dodji/git/libabigail/PR30260/tests/data/test-read-dwarf/test-pointer-to-member-1.cc' line='12' column='1' hash='d8e5416fbbae5e96' id='type-id-8'/>
+    <typedef-decl name='T' type-id='type-id-13' size-in-bits='32' filepath='/home/dodji/git/libabigail/PR30260/tests/data/test-read-dwarf/test-pointer-to-member-1.cc' line='12' column='1' id='type-id-8'/>
     <!-- union U -->
-    <union-decl name='U' visibility='default' size-in-bits='32' filepath='/home/dodji/git/libabigail/PR30260/tests/data/test-read-dwarf/test-pointer-to-member-1.cc' line='20' column='1' hash='df3ddd9745ed58f8' id='type-id-10'>
+    <union-decl name='U' visibility='default' size-in-bits='32' filepath='/home/dodji/git/libabigail/PR30260/tests/data/test-read-dwarf/test-pointer-to-member-1.cc' line='20' column='1' hash='05a24bb522e946fb' id='type-id-10'>
       <data-member access='public'>
         <!-- int U::u -->
         <var-decl name='u' type-id='type-id-7' visibility='default' filepath='/home/dodji/git/libabigail/PR30260/tests/data/test-read-dwarf/test-pointer-to-member-1.cc' line='20' column='1'/>
       </data-member>
     </union-decl>
     <!-- void (X::*)(int) -->
-    <pointer-to-member-type member-type-id='type-id-14' containing-type-id='type-id-5' size-in-bits='64' hash='9150a01d48be21a6' id='type-id-15'/>
+    <pointer-to-member-type member-type-id='type-id-14' containing-type-id='type-id-5' size-in-bits='64' hash='97f70c1fcbebb848' id='type-id-15'/>
     <!-- X* -->
-    <pointer-type-def type-id='type-id-5' size-in-bits='64' hash='47f0750308a614a8' id='type-id-16'/>
+    <pointer-type-def type-id='type-id-5' size-in-bits='64' hash='bc17b9ed47d09b0d' id='type-id-16'/>
     <!-- struct Y -->
     <class-decl name='Y' is-struct='yes' visibility='default' is-declaration-only='yes' id='type-id-2'/>
     <!-- int X::* pmi -->
@@ -82,12 +82,12 @@
     <!-- int U::* pmcu -->
     <var-decl name='pmcu' type-id='type-id-11' mangled-name='pmcu' visibility='default' filepath='/home/dodji/git/libabigail/PR30260/tests/data/test-read-dwarf/test-pointer-to-member-1.cc' line='24' column='1' elf-symbol-id='pmcu'/>
     <!-- int main() -->
-    <function-decl name='main' mangled-name='main' filepath='/home/dodji/git/libabigail/PR30260/tests/data/test-read-dwarf/test-pointer-to-member-1.cc' line='27' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='main' hash='7920927cd1607de2'>
+    <function-decl name='main' mangled-name='main' filepath='/home/dodji/git/libabigail/PR30260/tests/data/test-read-dwarf/test-pointer-to-member-1.cc' line='27' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='main' hash='2a788f7b319049ca'>
       <!-- int -->
       <return type-id='type-id-7'/>
     </function-decl>
     <!-- void (X::*) (int) -->
-    <function-type method-class-id='type-id-5' size-in-bits='64' hash='7920927cd1607de2' id='type-id-14'>
+    <function-type method-class-id='type-id-5' size-in-bits='64' hash='2a788f7b319049ca' id='type-id-14'>
       <!-- implicit parameter of type 'X*' -->
       <parameter type-id='type-id-16' is-artificial='yes'/>
       <!-- parameter of type 'int' -->

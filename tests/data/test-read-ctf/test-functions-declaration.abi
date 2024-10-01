@@ -6,17 +6,17 @@
   <abi-instr address-size='64' language='LANG_C'>
     <type-decl name='int' size-in-bits='32' hash='a5c4f954b141f944' id='type-id-1'/>
     <type-decl name='long int' size-in-bits='64' hash='19e68b445bea230d#2' id='type-id-2'/>
-    <pointer-type-def type-id='type-id-3' size-in-bits='64' alignment-in-bits='64' hash='60b990e11343e845' id='type-id-4'/>
-    <function-decl name='attribute_container_add_device' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='attribute_container_add_device' hash='1c8b1af2bb8487ad'>
+    <pointer-type-def type-id='type-id-3' size-in-bits='64' alignment-in-bits='64' hash='75f0bb3d9c036fd2' id='type-id-4'/>
+    <function-decl name='attribute_container_add_device' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='attribute_container_add_device' hash='1c5096ca878b41e2'>
       <parameter type-id='type-id-4'/>
       <return type-id='type-id-5'/>
     </function-decl>
-    <function-decl name='attribute_container_device_trigger' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='attribute_container_device_trigger' hash='1c8b1af2bb8487ad'>
+    <function-decl name='attribute_container_device_trigger' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='attribute_container_device_trigger' hash='1c5096ca878b41e2'>
       <parameter type-id='type-id-4'/>
       <return type-id='type-id-5'/>
     </function-decl>
     <type-decl name='void' id='type-id-5'/>
-    <function-type size-in-bits='64' hash='011295bad56de53a' id='type-id-3'>
+    <function-type size-in-bits='64' hash='1c946d99bb76813b' id='type-id-3'>
       <parameter type-id='type-id-1'/>
       <parameter type-id='type-id-2'/>
       <return type-id='type-id-5'/>

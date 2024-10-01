@@ -4,12 +4,12 @@
     <elf-symbol name='foo' size='4' type='object-type' binding='global-binding' visibility='default-visibility' is-defined='yes'/>
   </elf-variable-symbols>
   <abi-instr address-size='64' language='LANG_C'>
-    <enum-decl name='e' linkage-name='e' size-in-bits='32' alignment-in-bits='32' hash='c7f37fabd8392c11' id='a6c2eddf'>
+    <enum-decl name='e' linkage-name='e' size-in-bits='32' alignment-in-bits='32' hash='d5b72afff679b881' id='a6c2eddf'>
       <underlying-type type-id='9cac1fee'/>
       <enumerator name='ENUMSAMPLE_1' value='0'/>
       <enumerator name='ENUMSAMPLE_2' value='1'/>
     </enum-decl>
-    <enum-decl name='ie' linkage-name='ie' size-in-bits='32' alignment-in-bits='32' hash='7ea2c99b84e1c941' id='1ee696ca'>
+    <enum-decl name='ie' linkage-name='ie' size-in-bits='32' alignment-in-bits='32' hash='202a3539c54e9352' id='1ee696ca'>
       <underlying-type type-id='9cac1fee'/>
       <enumerator name='IE_0' value='-10'/>
       <enumerator name='IE_1' value='-9'/>

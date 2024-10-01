@@ -20,7 +20,7 @@
     <type-decl name='int' size-in-bits='32' hash='a5c4f954b141f944' id='type-id-1'/>
     <class-decl name='B' is-struct='yes' visibility='default' size-in-bits='8' filepath='/home/skumari/Tasks/source_repo/dodji/libabigail/tests/data/test-read-dwarf/test6.cc' line='9' column='1' hash='abeefb8466faa082' id='type-id-2'>
       <member-function access='public'>
-        <function-decl name='foo' mangled-name='_ZN1B3fooEv' filepath='/home/skumari/Tasks/source_repo/dodji/libabigail/tests/data/test-read-dwarf/test6.cc' line='11' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZN1B3fooEv' hash='7920927cd1607de2'>
+        <function-decl name='foo' mangled-name='_ZN1B3fooEv' filepath='/home/skumari/Tasks/source_repo/dodji/libabigail/tests/data/test-read-dwarf/test6.cc' line='11' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZN1B3fooEv' hash='2a788f7b319049ca'>
           <parameter type-id='type-id-3' is-artificial='yes'/>
           <return type-id='type-id-1'/>
         </function-decl>
@@ -31,12 +31,12 @@
         <var-decl name='bar' type-id='type-id-1' mangled-name='_ZN1CIiE3barE' visibility='default' filepath='/home/skumari/Tasks/source_repo/dodji/libabigail/tests/data/test-read-dwarf/test6.cc' line='31' column='1' elf-symbol-id='_ZN1CIiE3barE'/>
       </data-member>
     </class-decl>
-    <pointer-type-def type-id='type-id-2' size-in-bits='64' hash='a48c44fa674d94a6' id='type-id-3'/>
-    <qualified-type-def type-id='type-id-3' const='yes' hash='c35382470916e593' id='type-id-5'/>
-    <function-decl name='bar' mangled-name='_Z3barv' filepath='/home/skumari/Tasks/source_repo/dodji/libabigail/tests/data/test-read-dwarf/test6.cc' line='19' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_Z3barv' hash='7920927cd1607de2'>
+    <pointer-type-def type-id='type-id-2' size-in-bits='64' hash='7fa7bcfb9a304635' id='type-id-3'/>
+    <qualified-type-def type-id='type-id-3' const='yes' hash='f5a7719140eba1de' id='type-id-5'/>
+    <function-decl name='bar' mangled-name='_Z3barv' filepath='/home/skumari/Tasks/source_repo/dodji/libabigail/tests/data/test-read-dwarf/test6.cc' line='19' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_Z3barv' hash='2a788f7b319049ca'>
       <return type-id='type-id-1'/>
     </function-decl>
-    <function-decl name='bleh' mangled-name='_Z4blehv' filepath='/home/skumari/Tasks/source_repo/dodji/libabigail/tests/data/test-read-dwarf/test6.cc' line='34' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_Z4blehv' hash='7920927cd1607de2'>
+    <function-decl name='bleh' mangled-name='_Z4blehv' filepath='/home/skumari/Tasks/source_repo/dodji/libabigail/tests/data/test-read-dwarf/test6.cc' line='34' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_Z4blehv' hash='2a788f7b319049ca'>
       <return type-id='type-id-1'/>
     </function-decl>
   </abi-instr>

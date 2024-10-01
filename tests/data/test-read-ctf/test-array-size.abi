@@ -6,13 +6,13 @@
   </elf-variable-symbols>
   <abi-instr address-size='64' language='LANG_C'>
     <type-decl name='char' size-in-bits='8' hash='9b0a6b0f99242b9a' id='type-id-1'/>
-    <array-type-def dimensions='1' type-id='type-id-1' size-in-bits='8' hash='e1b507867189e0a6' id='type-id-2'>
+    <array-type-def dimensions='1' type-id='type-id-1' size-in-bits='8' hash='4e606996a0efd649' id='type-id-2'>
       <subrange length='1' lower-bound='0' upper-bound='0' type-id='type-id-3' size-in-bits='64' is-anonymous='yes' hash='2cdc8bb4a0be8876' id='type-id-4'/>
     </array-type-def>
-    <array-type-def dimensions='1' type-id='type-id-1' size-in-bits='16' hash='c6fa3a8b0e1febf2' id='type-id-5'>
+    <array-type-def dimensions='1' type-id='type-id-1' size-in-bits='16' hash='dfe57316a7bf1a4c' id='type-id-5'>
       <subrange length='2' lower-bound='0' upper-bound='1' type-id='type-id-3' size-in-bits='64' is-anonymous='yes' hash='efe2e6049a1858ff' id='type-id-6'/>
     </array-type-def>
-    <array-type-def dimensions='1' type-id='type-id-1' size-in-bits='unknown' hash='9a66b74e47d25167' id='type-id-7'>
+    <array-type-def dimensions='1' type-id='type-id-1' size-in-bits='unknown' hash='fd82fcb715047e56' id='type-id-7'>
       <subrange length='unknown' lower-bound='0' upper-bound='0' type-id='type-id-3' size-in-bits='64' is-anonymous='yes' hash='2cdc8bb4a0be8876' id='type-id-8'/>
     </array-type-def>
     <type-decl name='unsigned long int' size-in-bits='64' hash='49b6777b7019522a' id='type-id-3'/>

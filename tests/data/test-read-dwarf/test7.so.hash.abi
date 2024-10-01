@@ -4,32 +4,32 @@
   </elf-function-symbols>
   <abi-instr address-size='64' path='test7.cc' comp-dir-path='/home/ooprala/rh/u/libabigail/tests/data/test-read-dwarf' language='LANG_C_plus_plus'>
     <type-decl name='char' size-in-bits='8' hash='9b0a6b0f99242b9a' id='a84c031d'/>
-    <array-type-def dimensions='1' type-id='26a90f95' size-in-bits='448' hash='7549b77f1092ce7a' id='0626c76e'>
+    <array-type-def dimensions='1' type-id='26a90f95' size-in-bits='448' hash='44804a7d5e1b13e0' id='0626c76e'>
       <subrange length='7' lower-bound='0' upper-bound='6' type-id='4c87fef4' size-in-bits='64' is-anonymous='yes' hash='b3123bbd0063c358' id='16fc326e'/>
     </array-type-def>
-    <array-type-def dimensions='1' type-id='a84c031d' size-in-bits='8' hash='e1b507867189e0a6' id='89feb1ec'>
+    <array-type-def dimensions='1' type-id='a84c031d' size-in-bits='8' hash='4e606996a0efd649' id='89feb1ec'>
       <subrange length='1' lower-bound='0' upper-bound='0' type-id='4c87fef4' size-in-bits='64' is-anonymous='yes' hash='2cdc8bb4a0be8876' id='52f813b4'/>
     </array-type-def>
-    <array-type-def dimensions='1' type-id='a84c031d' size-in-bits='unknown' hash='23e7be989b8a1faf' id='e84913bd'>
+    <array-type-def dimensions='1' type-id='a84c031d' size-in-bits='unknown' hash='b9ee0dc960a04565' id='e84913bd'>
       <subrange length='unknown' lower-bound='0' upper-bound='-1' type-id='4c87fef4' size-in-bits='64' is-anonymous='yes' hash='b6ce6b3d72f4c41e' id='031f2035'/>
     </array-type-def>
     <type-decl name='double' size-in-bits='64' hash='45af2b0af187a9a0' id='a0eb0f08'/>
-    <array-type-def dimensions='2' type-id='a0eb0f08' size-in-bits='960' hash='5fb992d2860ce6b4' id='9ba86d8c'>
+    <array-type-def dimensions='2' type-id='a0eb0f08' size-in-bits='960' hash='56a32bc23618a315' id='9ba86d8c'>
       <subrange length='5' lower-bound='0' upper-bound='4' type-id='4c87fef4' size-in-bits='64' is-anonymous='yes' hash='3aa0fd3ceaed5d9c' id='53010e10'/>
       <subrange length='3' lower-bound='0' upper-bound='2' type-id='4c87fef4' size-in-bits='64' is-anonymous='yes' hash='95807fddbd77fea7' id='56f209d2'/>
     </array-type-def>
     <type-decl name='int' size-in-bits='32' hash='a5c4f954b141f944' id='95e97e5e'/>
-    <array-type-def dimensions='1' type-id='99298bf9' size-in-bits='640' hash='2c4079edcd4ada7c' id='3360f342'>
+    <array-type-def dimensions='1' type-id='99298bf9' size-in-bits='640' hash='d0a833660694f9e7' id='3360f342'>
       <subrange length='10' lower-bound='0' upper-bound='9' type-id='4c87fef4' size-in-bits='64' is-anonymous='yes' hash='6f0ba94ef636c4f4' id='487da03a'/>
     </array-type-def>
-    <array-type-def dimensions='1' type-id='7292109c' size-in-bits='256' hash='88ce74abb6a6a1d8' id='5abcdf1a'>
+    <array-type-def dimensions='1' type-id='7292109c' size-in-bits='256' hash='e773f80dca72ca1a' id='5abcdf1a'>
       <subrange length='4' lower-bound='0' upper-bound='3' type-id='4c87fef4' size-in-bits='64' is-anonymous='yes' hash='376e77076f0762ff' id='16fe7105'/>
     </array-type-def>
-    <array-type-def dimensions='1' type-id='95e97e5e' size-in-bits='160' hash='beca318be2a89b57' id='e41e1db9'>
+    <array-type-def dimensions='1' type-id='95e97e5e' size-in-bits='160' hash='170583bcc8e57478' id='e41e1db9'>
       <subrange length='5' lower-bound='0' upper-bound='4' type-id='4c87fef4' size-in-bits='64' is-anonymous='yes' hash='3aa0fd3ceaed5d9c' id='53010e10'/>
     </array-type-def>
     <type-decl name='sizetype' size-in-bits='64' hash='2e26638d434a22ff' id='4c87fef4'/>
-    <class-decl name='S' is-struct='yes' visibility='default' size-in-bits='2304' filepath='/home/ooprala/rh/u/libabigail/tests/data/test-read-dwarf/test7.cc' line='1' column='1' hash='5f7118ba403e38c4' id='50d9a3fa'>
+    <class-decl name='S' is-struct='yes' visibility='default' size-in-bits='2304' filepath='/home/ooprala/rh/u/libabigail/tests/data/test-read-dwarf/test7.cc' line='1' column='1' hash='3740112d45b5bee8' id='50d9a3fa'>
       <data-member access='public' layout-offset-in-bits='0'>
         <var-decl name='a' type-id='e41e1db9' visibility='default' filepath='/home/ooprala/rh/u/libabigail/tests/data/test-read-dwarf/test7.cc' line='3' column='1'/>
       </data-member>
@@ -49,11 +49,11 @@
         <var-decl name='f' type-id='e84913bd' visibility='default' filepath='/home/ooprala/rh/u/libabigail/tests/data/test-read-dwarf/test7.cc' line='8' column='1'/>
       </data-member>
     </class-decl>
-    <reference-type-def kind='lvalue' type-id='50d9a3fa' size-in-bits='64' hash='38df0790ea720641' id='f901ef4c'/>
-    <pointer-type-def type-id='a84c031d' size-in-bits='64' hash='e77c7ab38defab6a' id='26a90f95'/>
-    <pointer-type-def type-id='95e97e5e' size-in-bits='64' hash='cbee81be773ab152' id='7292109c'/>
-    <pointer-type-def type-id='5abcdf1a' size-in-bits='64' hash='c52ec7b5f087c731' id='99298bf9'/>
-    <function-decl name='foo' mangled-name='_Z3fooR1S' filepath='/home/ooprala/rh/u/libabigail/tests/data/test-read-dwarf/test7.cc' line='11' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_Z3fooR1S' hash='011295bad56de53a'>
+    <reference-type-def kind='lvalue' type-id='50d9a3fa' size-in-bits='64' hash='2e758c71a83cdc47' id='f901ef4c'/>
+    <pointer-type-def type-id='a84c031d' size-in-bits='64' hash='4dd02ec89ec005f0' id='26a90f95'/>
+    <pointer-type-def type-id='95e97e5e' size-in-bits='64' hash='13d488e60c6a684e' id='7292109c'/>
+    <pointer-type-def type-id='5abcdf1a' size-in-bits='64' hash='d4359e7a412a1825' id='99298bf9'/>
+    <function-decl name='foo' mangled-name='_Z3fooR1S' filepath='/home/ooprala/rh/u/libabigail/tests/data/test-read-dwarf/test7.cc' line='11' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_Z3fooR1S' hash='50a2d6567c9c49fb'>
       <parameter type-id='f901ef4c'/>
       <return type-id='95e97e5e'/>
     </function-decl>

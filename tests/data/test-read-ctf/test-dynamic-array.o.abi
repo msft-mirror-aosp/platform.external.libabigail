@@ -4,10 +4,10 @@
   </elf-function-symbols>
   <abi-instr address-size='64' language='LANG_C'>
     <type-decl name='char' size-in-bits='8' hash='9b0a6b0f99242b9a' id='type-id-1'/>
-    <array-type-def dimensions='1' type-id='type-id-1' size-in-bits='unknown' hash='9a66b74e47d25167' id='type-id-2'>
+    <array-type-def dimensions='1' type-id='type-id-1' size-in-bits='unknown' hash='fd82fcb715047e56' id='type-id-2'>
       <subrange length='unknown' lower-bound='0' upper-bound='0' type-id='type-id-3' size-in-bits='64' is-anonymous='yes' hash='2cdc8bb4a0be8876' id='type-id-4'/>
     </array-type-def>
-    <class-decl name='S' is-struct='yes' visibility='default' size-in-bits='64' hash='fb465a233bb9d8c1' id='type-id-5'>
+    <class-decl name='S' is-struct='yes' visibility='default' size-in-bits='64' hash='ef09a054ad7ebe7b' id='type-id-5'>
       <data-member access='public' layout-offset-in-bits='0'>
         <var-decl name='a' type-id='type-id-6' visibility='default'/>
       </data-member>
@@ -19,9 +19,9 @@
       </data-member>
     </class-decl>
     <type-decl name='unsigned long int' size-in-bits='64' hash='49b6777b7019522a' id='type-id-3'/>
-    <pointer-type-def type-id='type-id-5' size-in-bits='64' alignment-in-bits='64' hash='b47eebde211dc690' id='type-id-7'/>
-    <pointer-type-def type-id='type-id-1' size-in-bits='64' alignment-in-bits='64' hash='0dcdd6ebf597dfbc' id='type-id-6'/>
-    <function-decl name='use_struct_s' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='use_struct_s' hash='1c8b1af2bb8487ad'>
+    <pointer-type-def type-id='type-id-5' size-in-bits='64' alignment-in-bits='64' hash='135b8efb70bb4d86' id='type-id-7'/>
+    <pointer-type-def type-id='type-id-1' size-in-bits='64' alignment-in-bits='64' hash='c95271391c8d020c' id='type-id-6'/>
+    <function-decl name='use_struct_s' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='use_struct_s' hash='7998d80781d5d89a'>
       <parameter type-id='type-id-7'/>
       <return type-id='type-id-8'/>
     </function-decl>

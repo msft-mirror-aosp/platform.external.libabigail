@@ -17,7 +17,7 @@
   </elf-function-symbols>
   <abi-instr address-size='64' path='test2-0.cc' comp-dir-path='/home/dodji/git/libabigail/dwarf/tests/data/test-read-dwarf' language='LANG_C_plus_plus'>
     <type-decl name='int' size-in-bits='32' hash='a5c4f954b141f944' id='95e97e5e'/>
-    <class-decl name='first_type' is-struct='yes' visibility='default' size-in-bits='64' filepath='/home/dodji/git/libabigail/dwarf/tests/data/test-read-dwarf/test2.h' line='4' column='1' hash='249aebdbdf9e8a61' id='55265432'>
+    <class-decl name='first_type' is-struct='yes' visibility='default' size-in-bits='64' filepath='/home/dodji/git/libabigail/dwarf/tests/data/test-read-dwarf/test2.h' line='4' column='1' hash='2bd54cd8e5e4189d' id='55265432'>
       <data-member access='public' layout-offset-in-bits='0'>
         <var-decl name='member0' type-id='c2cab9c6' visibility='default' filepath='/home/dodji/git/libabigail/dwarf/tests/data/test-read-dwarf/test2.h' line='6' column='1'/>
       </data-member>
@@ -31,20 +31,20 @@
         </function-decl>
       </member-function>
     </class-decl>
-    <typedef-decl name='character' type-id='002ac4a6' size-in-bits='8' hash='86aaa519d87e2050' id='8ec86933'/>
-    <typedef-decl name='integer' type-id='95e97e5e' size-in-bits='32' hash='d8e5416fbbae5e96' id='c2cab9c6'/>
+    <typedef-decl name='character' type-id='002ac4a6' size-in-bits='8' hash='bf1bb1b8377a7dae' id='8ec86933'/>
+    <typedef-decl name='integer' type-id='95e97e5e' size-in-bits='32' hash='a5c4f954b141f944' id='c2cab9c6'/>
     <type-decl name='unsigned char' size-in-bits='8' hash='bf1bb1b8377a7dae' id='002ac4a6'/>
-    <pointer-type-def type-id='55265432' size-in-bits='64' hash='693b005a40d36c99' id='82c95d70'/>
-    <qualified-type-def type-id='82c95d70' const='yes' hash='ab78ff4a88c5083e' id='ebe03783'/>
+    <pointer-type-def type-id='55265432' size-in-bits='64' hash='419cb4cbcc7403c5' id='82c95d70'/>
+    <qualified-type-def type-id='82c95d70' const='yes' hash='05d0a8c1dc287f54' id='ebe03783'/>
     <namespace-decl name='a'>
-      <function-decl name='build_first_type' mangled-name='_ZN1a16build_first_typeEv' filepath='/home/dodji/git/libabigail/dwarf/tests/data/test-read-dwarf/test2-0.cc' line='13' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZN1a16build_first_typeEv' hash='68557582040b57ad'>
+      <function-decl name='build_first_type' mangled-name='_ZN1a16build_first_typeEv' filepath='/home/dodji/git/libabigail/dwarf/tests/data/test-read-dwarf/test2-0.cc' line='13' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZN1a16build_first_typeEv' hash='538eb18c71a740d1'>
         <return type-id='82c95d70'/>
       </function-decl>
     </namespace-decl>
     <type-decl name='void' id='48b5725f'/>
   </abi-instr>
   <abi-instr address-size='64' path='test2-1.cc' comp-dir-path='/home/dodji/git/libabigail/dwarf/tests/data/test-read-dwarf' language='LANG_C_plus_plus'>
-    <class-decl name='second_type' is-struct='yes' visibility='default' size-in-bits='64' filepath='/home/dodji/git/libabigail/dwarf/tests/data/test-read-dwarf/test2.h' line='12' column='1' hash='c26a2eaa935ecfb3' id='cf111fae'>
+    <class-decl name='second_type' is-struct='yes' visibility='default' size-in-bits='64' filepath='/home/dodji/git/libabigail/dwarf/tests/data/test-read-dwarf/test2.h' line='12' column='1' hash='11870acaa6066b2e' id='cf111fae'>
       <data-member access='public' layout-offset-in-bits='0'>
         <var-decl name='member0' type-id='c2cab9c6' visibility='default' filepath='/home/dodji/git/libabigail/dwarf/tests/data/test-read-dwarf/test2.h' line='14' column='1'/>
       </data-member>
@@ -58,10 +58,10 @@
         </function-decl>
       </member-function>
     </class-decl>
-    <pointer-type-def type-id='cf111fae' size-in-bits='64' hash='fdb281c0d91086c8' id='fc0abc74'/>
-    <qualified-type-def type-id='fc0abc74' const='yes' hash='26d17093e7570843' id='4782933f'/>
+    <pointer-type-def type-id='cf111fae' size-in-bits='64' hash='841e6eee08b29e0e' id='fc0abc74'/>
+    <qualified-type-def type-id='fc0abc74' const='yes' hash='f5a1cceebc82660e' id='4782933f'/>
     <namespace-decl name='a'>
-      <function-decl name='build_second_type' mangled-name='_ZN1a17build_second_typeEv' filepath='/home/dodji/git/libabigail/dwarf/tests/data/test-read-dwarf/test2-1.cc' line='13' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZN1a17build_second_typeEv' hash='68557582040b57ad'>
+      <function-decl name='build_second_type' mangled-name='_ZN1a17build_second_typeEv' filepath='/home/dodji/git/libabigail/dwarf/tests/data/test-read-dwarf/test2-1.cc' line='13' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZN1a17build_second_typeEv' hash='be7d2f877263de56'>
         <return type-id='fc0abc74'/>
       </function-decl>
     </namespace-decl>
