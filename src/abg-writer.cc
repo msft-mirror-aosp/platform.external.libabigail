@@ -2104,12 +2104,33 @@ write_decl_in_scope(const decl_base_sptr&	decl,
 	{
 	  c = is_class_type(look_through_decl_only_class(c));
 	  class_decl_sptr class_type(c, noop_deleter());
+	  bool do_break = false;
 	  if (!ctxt.type_is_emitted(c))
 	    {
 	      write_type(class_type, ctxt, initial_indent);
-	      break;
+	      // So, we've written class_type, which is a scope of
+	      // 'decl'.  So normally, decl should have been emitted
+	      // by the emitting of class_type.
+	      //
+	      // But there can be times where 'decl' is not emitted.
+	      //
+	      // 'decl' can still be not emitted if the canonical type
+	      // of class_type (the one that is emitted) is not the
+	      // variant that contains the member type 'decl'.  In
+	      // that case, 'decl' still needs to be emitted after
+	      // emitting tags for its scope.  That is done by the
+	      // 'if' block below.
+	      do_break = true;
 	    }
-	  else
+
+	  if (!do_break
+	      // if decl/type is still not emitted, then it means the
+	      // canonical type for 'class_type' above was emitted but
+	      // wasn't the variant containing the member type
+	      // 'decl/type'.  In that case, we'll need to emit the
+	      // tags for the scope of decl and then emit decl.
+	      || (type && !ctxt.type_is_emitted(type))
+	      || (!type && !ctxt.decl_is_emitted(decl)))
 	    {
 	      write_class_decl_opening_tag(class_type, "", ctxt, indent,
 					   /*prepare_to_handle_empty=*/false);
@@ -2122,6 +2143,9 @@ write_decl_in_scope(const decl_base_sptr&	decl,
 	      closing_tags.push("</member-type>");
 	      closing_indents.push(nb_ws);
 	    }
+
+	  if (do_break)
+	    break;
 	}
       else if (union_decl *u = is_union_type(*i))
 	{
