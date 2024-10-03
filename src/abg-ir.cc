@@ -949,6 +949,10 @@ try_canonical_compare(const T *l, const T *r)
       if (l_hash != r_hash)
 	ABG_RETURN_FALSE;
 
+  // If a type has a canonical type, use its canonical type, always.
+  l = maybe_get_canonical_type(l);
+  r = maybe_get_canonical_type(r);
+
   return equals(*l, *r, 0);
 #else
   if (const type_base *lc = l->get_naked_canonical_type())
