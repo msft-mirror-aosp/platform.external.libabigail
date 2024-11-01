@@ -80,7 +80,7 @@ tarball-and-tag-and-upload: tarball-and-all
 tarball-and-all: tag-and-all
 	$(MAKE) tarball
 
-tag-and-all: distcheck check-self-compare
+tag-and-all: distcheck full-check
 	$(MAKE) tag-release-only
 
 # the default for GZIP_ENV is --best, which is pretty slow for check runs
