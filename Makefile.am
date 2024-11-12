@@ -21,7 +21,7 @@ autoconf-archive/ax_check_python_modules.m4 \
 autoconf-archive/ax_prog_python_version.m4 \
 autoconf-archive/ax_compare_version.m4 \
 NEWS README LICENSE.txt license-change-2020.txt \
-COMPILING COMMIT-LOG-GUIDELINES VISIBILITY \
+COMPILING COMMIT-LOG-GUIDELINES VISIBILITY SECURITY \
 ChangeLog gen-changelog.py	\
 $(headers) $(m4data_DATA) 	\
 libabigail.pc.in
