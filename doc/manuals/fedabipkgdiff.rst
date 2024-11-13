@@ -137,6 +137,14 @@ Options
     defined in public header files available from the packages being
     compared.
 
+
+  * ``--private-dso``
+
+    Compare the ABI of shared libraries that are private to the
+    packages.  If this option is not provided, shared libraries that
+    are private to the packages being considered are not compared.
+
+
   * ``--server`` <URL>
 
     Specifies the URL of the `Koji`_ XMLRPC service the tool talks to.
