@@ -254,7 +254,7 @@ Options
     ELF binary.  It thus considers functions and variables which are
     defined and exported in the ELF sense.
 
-  * ``--kmi-whitelist | -kaw`` <*path-to-whitelist*>
+  * ``--kmi-whitelist | -w`` <*path-to-whitelist*>
 
     When analyzing a Linux kernel binary, this option points to the
     white list of names of ELF symbols of functions and variables
