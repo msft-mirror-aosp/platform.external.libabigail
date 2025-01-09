@@ -234,6 +234,20 @@ AC_ARG_ENABLE(big-tests,
 	      ENABLE_BIG_TESTS=$enableval,
 	      ENABLE_BIG_TESTS=no)
 
+WITH_DW_LIBS_PATH=auto
+AC_ARG_WITH(libdw,
+	    AS_HELP_STRING([--with-libdw=/path/to/libdw-library/prefix],
+			   [Set the path to the libdw library prefix]),
+	    WITH_DW_LIBS_PATH=$withval,
+	    WITH_DW_LIBS_PATH=auto)
+
+WITH_ELF_LIBS_PATH=auto
+AC_ARG_WITH(libelf,
+	    AS_HELP_STRING([--with-libelf=/path/to/libelf-library/prefix],
+			   [Set the path to the libelf library prefix]),
+	    WITH_ELF_LIBS_PATH=$withval,
+	    WITH_ELF_LIBS_PATH=auto)
+			  
 dnl *************************************************
 dnl check for dependencies
 dnl *************************************************
@@ -303,25 +317,41 @@ AS_IF([test "x$ac_cv_bad_fts" = "xyes"],
        CXXFLAGS="$CXXFLAGS -DBAD_FTS=1"])
 
 
-dnl Check for dependency: libelf, libdw, libebl (elfutils)
-dnl Note that we need to use at least elfutils 0.159 but
-dnl at that time elfutils didnt have pkgconfig capabilities
-dnl  to easily query for its version.
-ELF_LIBS=
-AC_CHECK_LIB([elf], [elf_end], [ELF_LIBS="-lelf"])
-AC_CHECK_HEADER([libelf.h],
-		[],
-		[AC_MSG_ERROR([could not find libelf.h])])
+dnl Check for dependency: libelf and libdw (elfutils).  Note that we
+dnl need to use at least elfutils 0.159 but at that time elfutils
+dnl didnt have pkgconfig capabilities to easily query for its version.
+dnl Those were added in version 0.165.
 
-DW_LIBS=
-AC_CHECK_LIB(dw, dwfl_begin, [DW_LIBS=-ldw])
-AC_CHECK_LIB(dw, dwarf_getalt,
-	     [FOUND_DWARF_GETALT_IN_LIBDW=yes],
-	     [FOUND_DWARF_GETALT_IN_LIBDW=no])
+dnl look for libelf
+ELF_LIBS_VERSION=0.165
+SAVED_PKG_CONFIG_PATH=$PKG_CONFIG_PATH
+if test $WITH_ELF_LIBS_PATH != xauto; then
+  export PKG_CONFIG_PATH="$WITH_ELF_LIBS_PATH/lib/pkgconfig:$PKG_CONFIG_PATH"
+fi
 
-AC_CHECK_HEADER(elfutils/libdwfl.h,
-		[],
-		[AC_MSG_ERROR([could not find elfutils/libdwfl.h installed])])
+AC_MSG_NOTICE([used PKG_CONFIG_PATH=$PKG_CONFIG_PATH to check for libelf]);
+PKG_CHECK_MODULES(ELF, libelf >= $ELF_LIBS_VERSION)
+if test $WITH_ELF_LIBS_PATH != xauto; then
+  PKG_CONFIG_PATH=$SAVED_PKG_CONFIG_PATH
+fi
+
+dnl Look for libdw
+DW_LIBS_VERSION=0.165
+SAVED_PKG_CONFIG_PATH=$PKG_CONFIG_PATH
+if test $WITH_DW_LIBS_PATH != xauto; then
+  export PKG_CONFIG_PATH="$WITH_DW_LIBS_PATH/lib/pkgconfig:$PKG_CONFIG_PATH"
+fi
+
+AC_MSG_NOTICE([used PKG_CONFIG_PATH=$PKG_CONFIG_PATH to check for libdw]);
+PKG_CHECK_MODULES(DW, libdw >= $DW_LIBS_VERSION)
+if test $WITH_DW_LIBS_PATH != xauto; then
+  PKG_CONFIG_PATH=$SAVED_PKG_CONFIG_PATH
+fi
+
+dnl From elfutils version 0.159 onward, the dwarf_getalt function is
+dnl always present.
+FOUND_DWARF_GETALT_IN_LIBDW=yes
+
 
 dnl Allow users to compile with the NDEBUG macro defined,
 dnl meaning they are compiling in a mode where the
@@ -330,21 +360,15 @@ dnl users just need to pass the --disable-assert
 dnl option to configure.
 AC_HEADER_ASSERT
 
-if test x$ELF_LIBS = x; then
-   AC_MSG_ERROR([could not find elfutils elf library installed])
-fi
-
-if test x$DW_LIBS = x; then
-   AC_MSG_ERROR([could not find elfutils dwarf library installed])
-fi
-
 if test x$FOUND_DWARF_GETALT_IN_LIBDW = xyes; then
    AC_DEFINE([LIBDW_HAS_DWARF_GETALT], 1,
 	     [Defined if libdw has the function dwarf_getalt])
 fi
 
 AC_SUBST(DW_LIBS)
+AC_SUBST(DW_CFLAGS)
 AC_SUBST([ELF_LIBS])
+AC_SUBST([ELF_CFLAGS])
 
 dnl check for libctf presence if CTF code has been enabled by command line
 dnl argument, and then define CTF flag (to build CTF file code) if libctf is
@@ -1273,6 +1297,10 @@ AC_MSG_NOTICE([
     C++ Compiler		                   : ${CXX}
     GCC visibility attribute supported             : ${SUPPORTS_GCC_VISIBILITY_ATTRIBUTE}
     CXXFLAGS	   	     			   : ${CXXFLAGS}
+    ELF_LIBS					   : ${ELF_LIBS}
+    ELF_CFLAGS					   : ${ELF_CFLAGS}
+    DW_LIBS					   : ${DW_LIBS}
+    DW_CFLAGS					   : ${DW_CFLAGS}
     Python					   : ${PYTHON}
 
  OPTIONAL FEATURES:
