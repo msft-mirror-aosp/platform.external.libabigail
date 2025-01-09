@@ -1553,48 +1553,108 @@ translation_unit_language_to_string(translation_unit::language l)
       return "LANG_C99";
     case translation_unit::LANG_C11:
       return "LANG_C11";
+    case translation_unit::LANG_C17:
+      return "LANG_C17";
+    case translation_unit::LANG_C23:
+      return "LANG_C23";
     case translation_unit::LANG_C:
       return "LANG_C";
+    case translation_unit::LANG_C_plus_plus_03:
+      return "LANG_C_plus_plus_03";
     case translation_unit::LANG_C_plus_plus_11:
       return "LANG_C_plus_plus_11";
     case translation_unit::LANG_C_plus_plus_14:
       return "LANG_C_plus_plus_14";
+    case translation_unit::LANG_C_plus_plus_17:
+      return "LANG_C_plus_plus_17";
+    case translation_unit::LANG_C_plus_plus_20:
+      return "LANG_C_plus_plus_20";
+    case translation_unit::LANG_C_plus_plus_23:
+      return "LANG_C_plus_plus_23";
     case translation_unit::LANG_C_plus_plus:
       return "LANG_C_plus_plus";
+    case translation_unit::LANG_OCaml:
+      return "LANG_OCaml";
+    case translation_unit::LANG_Zig:
+      return "LANG_Zig";
     case translation_unit::LANG_ObjC:
       return "LANG_ObjC";
     case translation_unit::LANG_ObjC_plus_plus:
       return "LANG_ObjC_plus_plus";
+    case translation_unit::LANG_D:
+      return "LANG_D";
+    case translation_unit::LANG_Go:
+      return "LANG_Go";
+    case translation_unit::LANG_Rust:
+      return "LANG_Rust";
     case translation_unit::LANG_Fortran77:
       return "LANG_Fortran77";
     case translation_unit::LANG_Fortran90:
       return "LANG_Fortran90";
     case translation_unit::LANG_Fortran95:
       return "LANG_Fortran95";
+    case translation_unit::LANG_Fortran18:
+      return "LANG_Fortran18";
+    case translation_unit::LANG_Fortran23:
+      return "LANG_Fortran23";
     case translation_unit::LANG_Ada83:
       return "LANG_Ada83";
     case translation_unit::LANG_Ada95:
       return "LANG_Ada95";
+    case translation_unit::LANG_Ada2005:
+      return "LANG_Ada2005";
+    case translation_unit::LANG_Ada2012:
+      return "LANG_Ada2012";
     case translation_unit::LANG_Pascal83:
       return "LANG_Pascal83";
     case translation_unit::LANG_Modula2:
       return "LANG_Modula2";
     case translation_unit::LANG_Java:
       return "LANG_Java";
+    case translation_unit::LANG_Kotlin:
+      return "LANG_Kotlin";
+    case translation_unit::LANG_C_sharp:
+      return "LANG_C_sharp";
+    case translation_unit::LANG_Python:
+      return "LANG_Python";
+    case translation_unit::LANG_Ruby:
+      return "LANG_Ruby";
     case translation_unit::LANG_PLI:
       return "LANG_PLI";
     case translation_unit::LANG_UPC:
       return "LANG_UPC";
-    case translation_unit::LANG_D:
-      return "LANG_D";
-    case translation_unit::LANG_Python:
-      return "LANG_Python";
-    case translation_unit::LANG_Go:
-      return "LANG_Go";
     case translation_unit::LANG_Mips_Assembler:
       return "LANG_Mips_Assembler";
-    default:
-      return "LANG_UNKNOWN";
+    case translation_unit::LANG_Assembly:
+      return "LANG_Assembly";
+    case translation_unit::LANG_Crystal:
+      return "LANG_Crystal";
+    case translation_unit::LANG_HIP:
+      return "LANG_HIP";
+    case translation_unit::LANG_Mojo:
+      return "LANG_Mojo";
+    case translation_unit::LANG_GLSL:
+      return "LANG_GLSL";
+    case translation_unit::LANG_GLSL_ES:
+      return "LANG_GLSL_ES";
+    case translation_unit::LANG_HLSL:
+      return "LANG_HLSL";
+    case translation_unit::LANG_OpenCL_CPP:
+      return "LANG_OpenCL_CPP";
+    case translation_unit::LANG_CPP_for_OpenCL:
+      return "LANG_CPP_for_OpenCL";
+    case translation_unit::LANG_SYCL:
+      return "LANG_SYCL";
+    case translation_unit::LANG_Odin:
+      return "LANG_Odin";
+    case translation_unit::LANG_P4:
+      return "LANG_P4";
+    case translation_unit::LANG_Metal:
+      return "LANG_Metal";
+    case translation_unit::LANG_Move:
+      return "LANG_Move";
+    case translation_unit::LANG_Hylo:
+      return "LANG_Hylo";
     }
 
   return "LANG_UNKNOWN";
@@ -1619,46 +1679,106 @@ string_to_translation_unit_language(const string& l)
     return translation_unit::LANG_C99;
   else if (l == "LANG_C11")
     return translation_unit::LANG_C11;
+  else if (l == "LANG_C17")
+    return translation_unit::LANG_C17;
+  else if (l == "LANG_C23")
+    return translation_unit::LANG_C23;
   else if (l == "LANG_C")
     return translation_unit::LANG_C;
+  else if (l == "LANG_C_plus_plus_03")
+    return translation_unit::LANG_C_plus_plus_03;
   else if (l == "LANG_C_plus_plus_11")
     return translation_unit::LANG_C_plus_plus_11;
   else if (l == "LANG_C_plus_plus_14")
     return translation_unit::LANG_C_plus_plus_14;
+  else if (l == "LANG_C_plus_plus_17")
+    return translation_unit::LANG_C_plus_plus_17;
+  else if (l == "LANG_C_plus_plus_20")
+    return translation_unit::LANG_C_plus_plus_20;
+  else if (l == "LANG_C_plus_plus_23")
+    return translation_unit::LANG_C_plus_plus_23;
   else if (l == "LANG_C_plus_plus")
     return translation_unit::LANG_C_plus_plus;
+  else if (l == "LANG_OCaml")
+    return translation_unit::LANG_OCaml;
   else if (l == "LANG_ObjC")
     return translation_unit::LANG_ObjC;
   else if (l == "LANG_ObjC_plus_plus")
     return translation_unit::LANG_ObjC_plus_plus;
+  else if (l == "LANG_Zig")
+    return translation_unit::LANG_Zig;
+  else if (l == "LANG_Metal")
+    return translation_unit::LANG_Metal;
   else if (l == "LANG_Fortran77")
     return translation_unit::LANG_Fortran77;
   else if (l == "LANG_Fortran90")
     return translation_unit::LANG_Fortran90;
-    else if (l == "LANG_Fortran95")
+  else if (l == "LANG_Fortran95")
     return translation_unit::LANG_Fortran95;
+  else if (l == "LANG_Fortran18")
+    return translation_unit::LANG_Fortran23;
   else if (l == "LANG_Ada83")
     return translation_unit::LANG_Ada83;
   else if (l == "LANG_Ada95")
     return translation_unit::LANG_Ada95;
+  else if (l == "LANG_Ada2005")
+    return translation_unit::LANG_Ada2005;
+  else if (l == "LANG_Ada2012")
+    return translation_unit::LANG_Ada2012;
   else if (l == "LANG_Pascal83")
     return translation_unit::LANG_Pascal83;
   else if (l == "LANG_Modula2")
     return translation_unit::LANG_Modula2;
   else if (l == "LANG_Java")
     return translation_unit::LANG_Java;
+  else if (l == "LANG_Kotlin")
+    return translation_unit::LANG_Kotlin;
   else if (l == "LANG_PLI")
     return translation_unit::LANG_PLI;
   else if (l == "LANG_UPC")
     return translation_unit::LANG_UPC;
   else if (l == "LANG_D")
     return translation_unit::LANG_D;
-  else if (l == "LANG_Python")
-    return translation_unit::LANG_Python;
   else if (l == "LANG_Go")
     return translation_unit::LANG_Go;
+  else if (l == "LANG_Rust")
+    return translation_unit::LANG_Rust;
+  else if (l == "LANG_Python")
+    return translation_unit::LANG_Python;
+  else if (l == "LANG_Ruby")
+    return translation_unit::LANG_Ruby;
   else if (l == "LANG_Mips_Assembler")
     return translation_unit::LANG_Mips_Assembler;
+  else if (l == "LANG_Assembly")
+    return translation_unit::LANG_Assembly;
+  else if (l == "LANG_Crystal")
+    return translation_unit::LANG_Crystal;
+  else if (l == "LANG_HIP")
+    return translation_unit::LANG_HIP;
+  else if (l == "LANG_C_sharp")
+    return translation_unit::LANG_C_sharp;
+  else if (l == "LANG_Mojo")
+    return translation_unit::LANG_Mojo;
+  else if (l == "LANG_GLSL")
+    return translation_unit::LANG_GLSL;
+  else if (l == "LANG_GLSL_ES")
+    return translation_unit::LANG_GLSL_ES;
+  else if (l == "LANG_HLSL")
+    return translation_unit::LANG_HLSL;
+  else if (l == "LANG_OpenCL_CPP")
+    return translation_unit::LANG_OpenCL_CPP;
+  else if (l == "LANG_CPP_for_OpenCL")
+    return translation_unit::LANG_CPP_for_OpenCL;
+  else if (l == "LANG_SYCL")
+    return translation_unit::LANG_SYCL;
+  else if (l == "LANG_Odin")
+    return translation_unit::LANG_Odin;
+  else if (l == "LANG_P4")
+    return translation_unit::LANG_P4;
+  else if (l == "LANG_Move")
+    return translation_unit::LANG_Move;
+  else if (l == "LANG_Hylo")
+    return translation_unit::LANG_Hylo;
 
   return translation_unit::LANG_UNKNOWN;
 }
@@ -1674,6 +1794,8 @@ is_c_language(translation_unit::language l)
   return (l == translation_unit::LANG_C89
 	  || l == translation_unit::LANG_C99
 	  || l == translation_unit::LANG_C11
+	  || l == translation_unit::LANG_C17
+	  || l == translation_unit::LANG_C23
 	  || l == translation_unit::LANG_C);
 }
 
@@ -1688,6 +1810,8 @@ is_cplus_plus_language(translation_unit::language l)
   return (l == translation_unit::LANG_C_plus_plus_03
 	  || l == translation_unit::LANG_C_plus_plus_11
 	  || l == translation_unit::LANG_C_plus_plus_14
+	  || l == translation_unit::LANG_C_plus_plus_20
+	  || l == translation_unit::LANG_C_plus_plus_23
 	  || l == translation_unit::LANG_C_plus_plus);
 }
 
@@ -1709,7 +1833,9 @@ bool
 is_ada_language(translation_unit::language l)
 {
   return (l == translation_unit::LANG_Ada83
-	 || l == translation_unit::LANG_Ada95);
+	  || l == translation_unit::LANG_Ada95
+	  || l == translation_unit::LANG_Ada2005
+	  || l == translation_unit::LANG_Ada2012);
 }
 
 /// A deep comparison operator for pointers to translation units.

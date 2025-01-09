@@ -13321,69 +13321,22 @@ dwarf_language_to_tu_language(size_t l)
     {
     case DW_LANG_C89:
       return translation_unit::LANG_C89;
-    case DW_LANG_C:
-      return translation_unit::LANG_C;
-    case DW_LANG_Ada83:
-      return translation_unit::LANG_Ada83;
-    case DW_LANG_C_plus_plus:
-      return translation_unit::LANG_C_plus_plus;
-    case DW_LANG_Cobol74:
-      return translation_unit::LANG_Cobol74;
-    case DW_LANG_Cobol85:
-      return translation_unit::LANG_Cobol85;
-    case DW_LANG_Fortran77:
-      return translation_unit::LANG_Fortran77;
-    case DW_LANG_Fortran90:
-      return translation_unit::LANG_Fortran90;
-    case DW_LANG_Pascal83:
-      return translation_unit::LANG_Pascal83;
-    case DW_LANG_Modula2:
-      return translation_unit::LANG_Modula2;
-    case DW_LANG_Java:
-      return translation_unit::LANG_Java;
     case DW_LANG_C99:
       return translation_unit::LANG_C99;
-    case DW_LANG_Ada95:
-      return translation_unit::LANG_Ada95;
-    case DW_LANG_Fortran95:
-      return translation_unit::LANG_Fortran95;
-    case DW_LANG_PLI:
-      return translation_unit::LANG_PLI;
-    case DW_LANG_ObjC:
-      return translation_unit::LANG_ObjC;
-    case DW_LANG_ObjC_plus_plus:
-      return translation_unit::LANG_ObjC_plus_plus;
-
-#ifdef HAVE_DW_LANG_Rust_enumerator
-    case DW_LANG_Rust:
-      return translation_unit::LANG_Rust;
-#endif
-
-#ifdef HAVE_DW_LANG_UPC_enumerator
-    case DW_LANG_UPC:
-      return translation_unit::LANG_UPC;
-#endif
-
-#ifdef HAVE_DW_LANG_D_enumerator
-    case DW_LANG_D:
-      return translation_unit::LANG_D;
-#endif
-
-#ifdef HAVE_DW_LANG_Python_enumerator
-    case DW_LANG_Python:
-      return translation_unit::LANG_Python;
-#endif
-
-#ifdef HAVE_DW_LANG_Go_enumerator
-    case DW_LANG_Go:
-      return translation_unit::LANG_Go;
-#endif
-
 #ifdef HAVE_DW_LANG_C11_enumerator
     case DW_LANG_C11:
       return translation_unit::LANG_C11;
 #endif
-
+#ifdef HAVE_DW_LANG_C17
+    case DW_LANG_C17:
+      return translation_unit::LANG_C17;
+#endif
+#ifdef HAVE_DW_LANG_C23
+    case DW_LANG_C23:
+      return translation_unit::LANG_C23;
+#endif
+    case DW_LANG_C:
+      return translation_unit::LANG_C;
 #ifdef HAVE_DW_LANG_C_plus_plus_03_enumerator
       case DW_LANG_C_plus_plus_03:
 	return translation_unit::LANG_C_plus_plus_03;
@@ -13398,10 +13351,168 @@ dwarf_language_to_tu_language(size_t l)
     case DW_LANG_C_plus_plus_14:
       return translation_unit::LANG_C_plus_plus_14;
 #endif
+#ifdef HAVE_DW_LANG_C_plus_plus_17
+    case DW_LANG_C_plus_plus_17:
+      return translation_unit::LANG_C_plus_plus_17;
+#endif
 
+#ifdef HAVE_DW_LANG_C_plus_plus_20
+    case DW_LANG_C_plus_plus_20:
+      return translation_unit::LANG_C_plus_plus_20;
+#endif
+#ifdef HAVE_DW_LANG_C_plus_plus_23
+    case DW_LANG_C_plus_plus_23:
+      return translation_unit::LANG_C_plus_plus_23;
+#endif
+    case DW_LANG_C_plus_plus:
+      return translation_unit::LANG_C_plus_plus;
+#ifdef HAVE_DW_LANG_D_enumerator
+    case DW_LANG_D:
+      return translation_unit::LANG_D;
+#endif
+#ifdef HAVE_DW_LANG_OCaml_enumerator
+    case DW_LANG_OCaml:
+      return translation_unit::LANG_OCaml;
+#endif
+#ifdef HAVE_DW_LANG_Go_enumerator
+    case DW_LANG_Go:
+      return translation_unit::LANG_Go;
+#endif
+#ifdef HAVE_DW_LANG_Rust_enumerator
+    case DW_LANG_Rust:
+      return translation_unit::LANG_Rust;
+#endif
+#ifdef HAVE_DW_LANG_Zig
+    case DW_LANG_Zig:
+      return translation_unit::LANG_Zig;
+#endif
+#ifdef HAVE_DW_LANG_Metal
+    case DW_LANG_Metal:
+      return translation_unit::LANG_Metal;
+#endif
+    case DW_LANG_Ada83:
+      return translation_unit::LANG_Ada83;
+    case DW_LANG_Ada95:
+      return translation_unit::LANG_Ada95;
+#ifdef HAVE_DW_LANG_Ada2005
+    case DW_LANG_Ada2005:
+      return translation_unit::LANG_Ada2005;
+#endif
+
+#ifdef HAVE_DW_LANG_Ada2012
+    case DW_LANG_Ada2012:
+      return translation_unit::LANG_Ada2012;
+#endif
+    case DW_LANG_Cobol74:
+      return translation_unit::LANG_Cobol74;
+    case DW_LANG_Cobol85:
+      return translation_unit::LANG_Cobol85;
+    case DW_LANG_Fortran77:
+      return translation_unit::LANG_Fortran77;
+    case DW_LANG_Fortran90:
+      return translation_unit::LANG_Fortran90;
+    case DW_LANG_Fortran95:
+      return translation_unit::LANG_Fortran95;
+#ifdef HAVE_DW_LANG_Fortran18
+    case DW_LANG_Fortran18:
+      return translation_unit::LANG_Fortran18;
+#endif
+#ifdef HAVE_DW_LANG_Fortran23
+    case DW_LANG_Fortran23:
+      return translation_unit::LANG_Fortran23;
+#endif
+    case DW_LANG_Pascal83:
+      return translation_unit::LANG_Pascal83;
+    case DW_LANG_Modula2:
+      return translation_unit::LANG_Modula2;
+    case DW_LANG_Java:
+      return translation_unit::LANG_Java;
+#ifdef HAVE_DW_LANG_Kotlin
+    case DW_LANG_Kotlin:
+      return translation_unit::LANG_Kotlin;
+#endif
+    case DW_LANG_PLI:
+      return translation_unit::LANG_PLI;
+    case DW_LANG_ObjC:
+      return translation_unit::LANG_ObjC;
+    case DW_LANG_ObjC_plus_plus:
+      return translation_unit::LANG_ObjC_plus_plus;
+
+#ifdef HAVE_DW_LANG_UPC_enumerator
+    case DW_LANG_UPC:
+      return translation_unit::LANG_UPC;
+#endif
+#ifdef HAVE_DW_LANG_Python_enumerator
+    case DW_LANG_Python:
+      return translation_unit::LANG_Python;
+#endif
+#ifdef HAVE_DW_LANG_Ruby
+    case DW_LANG_Ruby:
+      return translation_unit::LANG_Ruby;
+#endif
 #ifdef HAVE_DW_LANG_Mips_Assembler_enumerator
     case DW_LANG_Mips_Assembler:
       return translation_unit::LANG_Mips_Assembler;
+#endif
+#ifdef HAVE_DW_LANG_Assembly
+    case DW_LANG_Assembly:
+      return translation_unit::LANG_Assembly;
+#endif
+#ifdef HAVE_DW_LANG_Crystal
+    case DW_LANG_Crystal:
+      return translation_unit::LANG_Crystal;
+#endif
+#ifdef HAVE_DW_LANG_HIP
+    case DW_LANG_HIP:
+      return translation_unit::LANG_HIP;
+#endif
+#ifdef HAVE_DW_LANG_C_sharp
+    case DW_LANG_C_sharp:
+      return translation_unit::LANG_C_sharp;
+#endif
+#ifdef HAVE_DW_LANG_Mojo
+    case DW_LANG_Mojo:
+      return translation_unit::LANG_Mojo;
+#endif
+#ifdef HAVE_DW_LANG_GLSL
+    case DW_LANG_GLSL:
+      return translation_unit::LANG_GLSL;
+#endif
+#ifdef HAVE_DW_LANG_GLSL_ES
+    case DW_LANG_GLSL_ES:
+      return translation_unit::LANG_GLSL_ES;
+#endif
+#ifdef HAVE_DW_LANG_HLSL
+    case DW_LANG_HLSL:
+      return translation_unit::LANG_HLSL;
+#endif
+#ifdef HAVE_DW_LANG_OpenCL_CPP
+    case DW_LANG_OpenCL_CPP:
+      return translation_unit::LANG_OpenCL_CPP;
+#endif
+#ifdef HAVE_DW_LANG_CPP_for_OpenCL
+    case DW_LANG_CPP_for_OpenCL:
+      return translation_unit::LANG_CPP_for_OpenCL;
+#endif
+#ifdef HAVE_DW_LANG_SYCL
+    case DW_LANG_SYCL:
+      return translation_unit::LANG_SYCL;
+#endif
+#ifdef HAVE_DW_LANG_Odin
+    case DW_LANG_Odin:
+      return translation_unit::LANG_Odin;
+#endif
+#ifdef HAVE_DW_LANG_P4
+    case DW_LANG_P4:
+      return translation_unit::LANG_P4;
+#endif
+#ifdef HAVE_DW_LANG_Move
+    case DW_LANG_Move:
+      return translation_unit::LANG_Move;
+#endif
+#ifdef HAVE_DW_LANG_Hylo
+    case DW_LANG_Hylo:
+      return translation_unit::LANG_Hylo;
 #endif
 
     default:
@@ -13423,46 +13534,65 @@ get_default_array_lower_bound(translation_unit::language l)
   switch (l)
     {
     case translation_unit::LANG_UNKNOWN:
-      value = 0;
-      break;
-    case translation_unit::LANG_Cobol74:
-    case translation_unit::LANG_Cobol85:
-      value = 1;
-      break;
     case translation_unit::LANG_C89:
     case translation_unit::LANG_C99:
     case translation_unit::LANG_C11:
+    case translation_unit::LANG_C17:
+    case translation_unit::LANG_C23:
     case translation_unit::LANG_C:
     case translation_unit::LANG_C_plus_plus_03:
     case translation_unit::LANG_C_plus_plus_11:
     case translation_unit::LANG_C_plus_plus_14:
+    case translation_unit::LANG_C_plus_plus_17:
+    case translation_unit::LANG_C_plus_plus_20:
+    case translation_unit::LANG_C_plus_plus_23:
     case translation_unit::LANG_C_plus_plus:
+    case translation_unit::LANG_OCaml:
     case translation_unit::LANG_ObjC:
     case translation_unit::LANG_ObjC_plus_plus:
+    case translation_unit::LANG_D:
     case translation_unit::LANG_Rust:
+    case translation_unit::LANG_Go:
+    case translation_unit::LANG_Zig:
+    case translation_unit::LANG_Metal:
+    case translation_unit::LANG_Java:
+    case translation_unit::LANG_Kotlin:
+    case translation_unit::LANG_Python:
+    case translation_unit::LANG_Ruby:
+    case translation_unit::LANG_UPC:
+    case translation_unit::LANG_Mips_Assembler:
+    case translation_unit::LANG_Assembly:
+    case translation_unit::LANG_Crystal:
+    case translation_unit::LANG_HIP:
+    case translation_unit::LANG_C_sharp:
+    case translation_unit::LANG_Mojo:
+    case translation_unit::LANG_GLSL:
+    case translation_unit::LANG_GLSL_ES:
+    case translation_unit::LANG_HLSL:
+    case translation_unit::LANG_Odin:
+    case translation_unit::LANG_P4:
+    case translation_unit::LANG_OpenCL_CPP:
+    case translation_unit::LANG_CPP_for_OpenCL:
+    case translation_unit::LANG_SYCL:
+    case translation_unit::LANG_Move:
+    case translation_unit::LANG_Hylo:
       value = 0;
       break;
+    case translation_unit::LANG_Cobol74:
+    case translation_unit::LANG_Cobol85:
     case translation_unit::LANG_Fortran77:
     case translation_unit::LANG_Fortran90:
     case translation_unit::LANG_Fortran95:
+    case translation_unit::LANG_Fortran18:
+    case translation_unit::LANG_Fortran23:
     case translation_unit::LANG_Ada83:
     case translation_unit::LANG_Ada95:
+    case translation_unit::LANG_Ada2005:
+    case translation_unit::LANG_Ada2012:
     case translation_unit::LANG_Pascal83:
     case translation_unit::LANG_Modula2:
-      value = 1;
-      break;
-    case translation_unit::LANG_Java:
-      value = 0;
-      break;
     case translation_unit::LANG_PLI:
       value = 1;
-      break;
-    case translation_unit::LANG_UPC:
-    case translation_unit::LANG_D:
-    case translation_unit::LANG_Python:
-    case translation_unit::LANG_Go:
-    case translation_unit::LANG_Mips_Assembler:
-      value = 0;
       break;
     }
 

@@ -1177,6 +1177,327 @@ if test x$HAS_DW_LANG_Rust = xyes; then
 	    [Define to 1 if dwarf.h has the DW_LANG_Rust enumerator])
 fi
 
+HAS_DW_LANG_OCaml=no
+AC_CHECK_DECL([DW_LANG_OCaml],
+	      [HAS_DW_LANG_OCaml=yes],
+	      [HAS_DW_LANG_OCaml=no],
+	      [[#include <dwarf.h>]])
+
+if test x$HAS_DW_LANG_OCaml = xyes; then
+  AC_DEFINE([HAVE_DW_LANG_OCaml_enumerator], 
+  	    1,
+	    [Define to 1 if dwarf.h has the DW_LANG_OCaml enumerator])
+fi
+
+HAS_DW_LANG_Kotlin=no
+AC_CHECK_DECL([DW_LANG_Kotlin],
+	      [HAS_DW_LANG_Kotlin=yes],
+	      [HAS_DW_LANG_Kotlin=no],
+	      [[#include <dwarf.h>]])
+if test x$HAS_DW_LANG_Kotlin = xyes; then
+   AC_DEFINE([HAVE_DW_LANG_Kotlin_enumerator],
+	     1,
+	     [Define to 1 if dwarf.h has the DW_LANG_Kotlin enumerator])
+fi
+
+HAS_DW_LANG_Zig=no
+AC_CHECK_DECL([DW_LANG_Zig],
+	      [HAS_DW_LANG_Zig=yes],
+	      [HAS_DW_LANG_Zig=no],
+	      [[#include <dwarf.h>]])
+if test x$HAS_DW_LANG_Zig = xyes; then
+   AC_DEFINE([HAVE_DW_LANG_Zig_enumerator],
+	     1,
+	     [Define to 1 if dwarf.h has the DW_LANG_Zig enumerator])
+fi
+
+HAS_DW_LANG_Crystal=no
+AC_CHECK_DECL([DW_LANG_Crystal],
+	      [HAS_DW_LANG_Crystal=yes],
+	      [HAS_DW_LANG_Crystal=no],
+	      [[#include <dwarf.h>]])
+if test x$HAS_DW_LANG_Crystal = xyes; then
+   AC_DEFINE([HAVE_DW_LANG_Crystal_enumerator],
+	     1,
+	     [Define to 1 if dwarf.h has the DW_LANG_Crystal enumerator])
+fi
+
+HAS_DW_LANG_C_plus_plus_17=no
+AC_CHECK_DECL([DW_LANG_C_plus_plus_17],
+	      [HAS_DW_LANG_C_plus_plus_17=yes],
+	      [HAS_DW_LANG_C_plus_plus_17=no],
+	      [[#include <dwarf.h>]])
+if test x$HAS_DW_LANG_C_plus_plus_17 = xyes; then
+   AC_DEFINE([HAVE_DW_LANG_C_plus_plus_17_enumerator],
+	     1,
+	     [Define to 1 if dwarf.h has the DW_LANG_C_plus_plus_17 enumerator])
+fi
+
+HAS_DW_LANG_C_plus_plus_20=no
+AC_CHECK_DECL([DW_LANG_C_plus_plus_20],
+	      [HAS_DW_LANG_C_plus_plus_20=yes],
+	      [HAS_DW_LANG_C_plus_plus_20=no],
+	      [[#include <dwarf.h>]])
+if test x$HAS_DW_LANG_C_plus_plus_20 = xyes; then
+   AC_DEFINE([HAVE_DW_LANG_C_plus_plus_20_enumerator],
+	     1,
+	     [Define to 1 if dwarf.h has the DW_LANG_C_plus_plus_20 enumerator])
+fi
+
+HAS_DW_LANG_C17=no
+AC_CHECK_DECL([DW_LANG_C17],
+	      [HAS_DW_LANG_C17=yes],
+	      [HAS_DW_LANG_C17=no],
+	      [[#include <dwarf.h>]])
+if test x$HAS_DW_LANG_C17 = xyes; then
+   AC_DEFINE([HAVE_DW_LANG_C17_enumerator],
+	     1,
+	     [Define to 1 if dwarf.h has the DW_LANG_C17 enumerator])
+fi
+
+HAS_DW_LANG_Fortran18=no
+AC_CHECK_DECL([DW_LANG_Fortran18],
+	      [HAS_DW_LANG_Fortran18=yes],
+	      [HAS_DW_LANG_Fortran18=no],
+	      [[#include <dwarf.h>]])
+if test x$HAS_DW_LANG_Fortran18 = xyes; then
+   AC_DEFINE([HAVE_DW_LANG_Fortran18_enumerator],
+	     1,
+	     [Define to 1 if dwarf.h has the DW_LANG_Fortran18 enumerator])
+fi
+
+HAS_DW_LANG_Ada2005=no
+AC_CHECK_DECL([DW_LANG_Ada2005],
+	      [HAS_DW_LANG_Ada2005=yes],
+	      [HAS_DW_LANG_Ada2005=no],
+	      [[#include <dwarf.h>]])
+if test x$HAS_DW_LANG_Ada2005 = xyes; then
+   AC_DEFINE([HAVE_DW_LANG_Ada2005_enumerator],
+	     1,
+	     [Define to 1 if dwarf.h has the DW_LANG_Ada2005 enumerator])
+fi
+
+HAS_DW_LANG_Ada2012=no
+AC_CHECK_DECL([DW_LANG_Ada2012],
+	      [HAS_DW_LANG_Ada2012=yes],
+	      [HAS_DW_LANG_Ada2012=no],
+	      [[#include <dwarf.h>]])
+if test x$HAS_DW_LANG_Ada2012 = xyes; then
+   AC_DEFINE([HAVE_DW_LANG_Ada2012_enumerator],
+	     1,
+	     [Define to 1 if dwarf.h has the DW_LANG_Ada2012 enumerator])
+fi
+
+HAS_DW_LANG_HIP=no
+AC_CHECK_DECL([DW_LANG_HIP],
+	      [HAS_DW_LANG_HIP=yes],
+	      [HAS_DW_LANG_HIP=no],
+	      [[#include <dwarf.h>]])
+if test x$HAS_DW_LANG_HIP = xyes; then
+   AC_DEFINE([HAVE_DW_LANG_HIP_enumerator],
+	     1,
+	     [Define to 1 if dwarf.h has the DW_LANG_HIP enumerator])
+fi
+
+HAS_DW_LANG_Assembly=no
+AC_CHECK_DECL([DW_LANG_Assembly],
+	      [HAS_DW_LANG_Assembly=yes],
+	      [HAS_DW_LANG_Assembly=no],
+	      [[#include <dwarf.h>]])
+if test x$HAS_DW_LANG_Assembly = xyes; then
+   AC_DEFINE([HAVE_DW_LANG_Assembly_enumerator],
+	     1,
+	     [Define to 1 if dwarf.h has the DW_LANG_Assembly enumerator])
+fi
+
+HAS_DW_LANG_C_sharp=no
+AC_CHECK_DECL([DW_LANG_C_sharp],
+	      [HAS_DW_LANG_C_sharp=yes],
+	      [HAS_DW_LANG_C_sharp=no],
+	      [[#include <dwarf.h>]])
+if test x$HAS_DW_LANG_C_sharp = xyes; then
+   AC_DEFINE([HAVE_DW_LANG_C_sharp_enumerator],
+	     1,
+	     [Define to 1 if dwarf.h has the DW_LANG_C_sharp enumerator])
+fi
+
+HAS_DW_LANG_Mojo=no
+AC_CHECK_DECL([DW_LANG_Mojo],
+	      [HAS_DW_LANG_Mojo=yes],
+	      [HAS_DW_LANG_Mojo=no],
+	      [[#include <dwarf.h>]])
+if test x$HAS_DW_LANG_Mojo = xyes; then
+   AC_DEFINE([HAVE_DW_LANG_Mojo_enumerator],
+	     1,
+	     [Define to 1 if dwarf.h has the DW_LANG_Mojo enumerator])
+fi
+
+HAS_DW_LANG_GLSL=no
+AC_CHECK_DECL([DW_LANG_GLSL],
+	      [HAS_DW_LANG_GLSL=yes],
+	      [HAS_DW_LANG_GLSL=no],
+	      [[#include <dwarf.h>]])
+if test x$HAS_DW_LANG_GLSL = xyes; then
+   AC_DEFINE([HAVE_DW_LANG_GLSL_enumerator],
+	     1,
+	     [Define to 1 if dwarf.h has the DW_LANG_GLSL enumerator])
+fi
+
+HAS_DW_LANG_GLSL_ES=no
+AC_CHECK_DECL([DW_LANG_GLSL_ES],
+	      [HAS_DW_LANG_GLSL_ES=yes],
+	      [HAS_DW_LANG_GLSL_ES=no],
+	      [[#include <dwarf.h>]])
+if test x$HAS_DW_LANG_GLSL_ES = xyes; then
+   AC_DEFINE([HAVE_DW_LANG_GLSL_ES_enumerator],
+	     1,
+	     [Define to 1 if dwarf.h has the DW_LANG_GLSL_ES enumerator])
+fi
+
+HAS_DW_LANG_HLSL=no
+AC_CHECK_DECL([DW_LANG_HLSL],
+	      [HAS_DW_LANG_HLSL=yes],
+	      [HAS_DW_LANG_HLSL=no],
+	      [[#include <dwarf.h>]])
+if test x$HAS_DW_LANG_HLSL = xyes; then
+   AC_DEFINE([HAVE_DW_LANG_HLSL_enumerator],
+	     1,
+	     [Define to 1 if dwarf.h has the DW_LANG_HLSL enumerator])
+fi
+
+HAS_DW_LANG_OpenCL_CPP=no
+AC_CHECK_DECL([DW_LANG_OpenCL_CPP],
+	      [HAS_DW_LANG_OpenCL_CPP=yes],
+	      [HAS_DW_LANG_OpenCL_CPP=no],
+	      [[#include <dwarf.h>]])
+if test x$HAS_DW_LANG_OpenCL_CPP = xyes; then
+   AC_DEFINE([HAVE_DW_LANG_OpenCL_CPP_enumerator],
+	     1,
+	     [Define to 1 if dwarf.h has the DW_LANG_OpenCL_CPP enumerator])
+fi
+
+HAS_DW_LANG_CPP_for_OpenCL=no
+AC_CHECK_DECL([DW_LANG_CPP_for_OpenCL],
+	      [HAS_DW_LANG_CPP_for_OpenCL=yes],
+	      [HAS_DW_LANG_CPP_for_OpenCL=no],
+	      [[#include <dwarf.h>]])
+if test x$HAS_DW_LANG_CPP_for_OpenCL = xyes; then
+   AC_DEFINE([HAVE_DW_LANG_CPP_for_OpenCL_enumerator],
+	     1,
+	     [Define to 1 if dwarf.h has the DW_LANG_CPP_for_OpenCL enumerator])
+fi
+
+HAS_DW_LANG_SYCL=no
+AC_CHECK_DECL([DW_LANG_SYCL],
+	      [HAS_DW_LANG_SYCL=yes],
+	      [HAS_DW_LANG_SYCL=no],
+	      [[#include <dwarf.h>]])
+if test x$HAS_DW_LANG_SYCL = xyes; then
+   AC_DEFINE([HAVE_DW_LANG_SYCL_enumerator],
+	     1,
+	     [Define to 1 if dwarf.h has the DW_LANG_SYCL enumerator])
+fi
+
+HAS_DW_LANG_C_plus_plus_23=no
+AC_CHECK_DECL([DW_LANG_C_plus_plus_23],
+	      [HAS_DW_LANG_C_plus_plus_23=yes],
+	      [HAS_DW_LANG_C_plus_plus_23=no],
+	      [[#include <dwarf.h>]])
+if test x$HAS_DW_LANG_C_plus_plus_23 = xyes; then
+   AC_DEFINE([HAVE_DW_LANG_C_plus_plus_23_enumerator],
+	     1,
+	     [Define to 1 if dwarf.h has the DW_LANG_C_plus_plus_23 enumerator])
+fi
+
+HAS_DW_LANG_Odin=no
+AC_CHECK_DECL([DW_LANG_Odin],
+	      [HAS_DW_LANG_Odin=yes],
+	      [HAS_DW_LANG_Odin=no],
+	      [[#include <dwarf.h>]])
+if test x$HAS_DW_LANG_Odin = xyes; then
+   AC_DEFINE([HAVE_DW_LANG_Odin_enumerator],
+	     1,
+	     [Define to 1 if dwarf.h has the DW_LANG_Odin enumerator])
+fi
+
+HAS_DW_LANG_P4=no
+AC_CHECK_DECL([DW_LANG_P4],
+	      [HAS_DW_LANG_P4=yes],
+	      [HAS_DW_LANG_P4=no],
+	      [[#include <dwarf.h>]])
+if test x$HAS_DW_LANG_P4 = xyes; then
+   AC_DEFINE([HAVE_DW_LANG_P4_enumerator],
+	     1,
+	     [Define to 1 if dwarf.h has the DW_LANG_P4 enumerator])
+fi
+
+HAS_DW_LANG_Metal=no
+AC_CHECK_DECL([DW_LANG_Metal],
+	      [HAS_DW_LANG_Metal=yes],
+	      [HAS_DW_LANG_Metal=no],
+	      [[#include <dwarf.h>]])
+if test x$HAS_DW_LANG_Metal = xyes; then
+   AC_DEFINE([HAVE_DW_LANG_Metal_enumerator],
+	     1,
+	     [Define to 1 if dwarf.h has the DW_LANG_Metal enumerator])
+fi
+
+HAS_DW_LANG_C23=no
+AC_CHECK_DECL([DW_LANG_C23],
+	      [HAS_DW_LANG_C23=yes],
+	      [HAS_DW_LANG_C23=no],
+	      [[#include <dwarf.h>]])
+if test x$HAS_DW_LANG_C23 = xyes; then
+   AC_DEFINE([HAVE_DW_LANG_C23_enumerator],
+	     1,
+	     [Define to 1 if dwarf.h has the DW_LANG_C23 enumerator])
+fi
+
+HAS_DW_LANG_Fortran23=no
+AC_CHECK_DECL([DW_LANG_Fortran23],
+	      [HAS_DW_LANG_Fortran23=yes],
+	      [HAS_DW_LANG_Fortran23=no],
+	      [[#include <dwarf.h>]])
+if test x$HAS_DW_LANG_Fortran23 = xyes; then
+   AC_DEFINE([HAVE_DW_LANG_Fortran23_enumerator],
+	     1,
+	     [Define to 1 if dwarf.h has the DW_LANG_Fortran23 enumerator])
+fi
+
+HAS_DW_LANG_Ruby=no
+AC_CHECK_DECL([DW_LANG_Ruby],
+	      [HAS_DW_LANG_Ruby=yes],
+	      [HAS_DW_LANG_Ruby=no],
+	      [[#include <dwarf.h>]])
+if test x$HAS_DW_LANG_Ruby = xyes; then
+   AC_DEFINE([HAVE_DW_LANG_Ruby_enumerator],
+	     1,
+	     [Define to 1 if dwarf.h has the DW_LANG_Ruby enumerator])
+fi
+
+HAS_DW_LANG_Move=no
+AC_CHECK_DECL([DW_LANG_Move],
+	      [HAS_DW_LANG_Move=yes],
+	      [HAS_DW_LANG_Move=no],
+	      [[#include <dwarf.h>]])
+if test x$HAS_DW_LANG_Move = xyes; then
+   AC_DEFINE([HAVE_DW_LANG_Move_enumerator],
+	     1,
+	     [Define to 1 if dwarf.h has the DW_LANG_Move enumerator])
+fi
+
+HAS_DW_LANG_Hylo=no
+AC_CHECK_DECL([DW_LANG_Hylo],
+	      [HAS_DW_LANG_Hylo=yes],
+	      [HAS_DW_LANG_Hylo=no],
+	      [[#include <dwarf.h>]])
+if test x$HAS_DW_LANG_Hylo = xyes; then
+   AC_DEFINE([HAVE_DW_LANG_Hylo_enumerator],
+	     1,
+	     [Define to 1 if dwarf.h has the DW_LANG_Hylo enumerator])
+
+fi
+
 HAS_DW_FORM_strx1=no
 HAS_DW_FORM_strx2=no
 HAS_DW_FORM_strx3=no
