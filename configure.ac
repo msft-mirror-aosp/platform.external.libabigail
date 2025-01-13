@@ -1,4 +1,13 @@
-# SPDX-License-Identifier: Apache-2.0 WITH LLVM-exception
+dnl SPDX-License-Identifier: Apache-2.0 WITH LLVM-exception
+
+dnl Process this file with autoconf to produce a configure script.
+dnl Configure input file for Libabigail.                     -*-autoconf-*-
+dnl
+dnl Copyright (C) 2013-2025 Red Hat, Inc.
+dnl Author: Dodji Seketeli
+dnl
+dnl This file is part of Libabigail.
+dnl
 
 dnl Libabigail version number is handled here with the major and minor
 dnl version numbers.
