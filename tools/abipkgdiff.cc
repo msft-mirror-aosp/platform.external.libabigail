@@ -140,6 +140,7 @@ using abigail::tools_utils::load_default_system_suppressions;
 using abigail::tools_utils::load_default_user_suppressions;
 using abigail::tools_utils::abidiff_status;
 using abigail::tools_utils::create_best_elf_based_reader;
+using abigail::tools_utils::timer;
 using abigail::ir::corpus_sptr;
 using abigail::ir::corpus_group_sptr;
 using abigail::comparison::diff_context;
@@ -3254,6 +3255,14 @@ compare_prepared_linux_kernel_packages(package& first_package,
     requested_fe_kind = corpus::BTF_ORIGIN;
 #endif
 
+  timer t;
+  if (opts.verbose)
+    emit_prefix("abipkgdiff", cerr)
+      << "Going to build first corpus group from kernel dist under "
+      << dist_root1
+      << "...\n";
+
+  t.start();
   corpus1 = build_corpus_group_from_kernel_dist_under(dist_root1,
 						      debug_dir1,
 						      vmlinux_path1,
@@ -3261,10 +3270,23 @@ compare_prepared_linux_kernel_packages(package& first_package,
 						      opts.kabi_whitelist_paths,
 						      supprs, opts.verbose,
 						      env, requested_fe_kind);
+  t.stop();
+  if (opts.verbose)
+    emit_prefix("abipkgdiff", cerr)
+      << "Built first corpus group from kernel dist under "
+      << dist_root1
+      << "in: " << t << "\n";
 
   if (!corpus1)
     return abigail::tools_utils::ABIDIFF_ERROR;
 
+  if (opts.verbose)
+    emit_prefix("abipkgdiff", cerr)
+      << "Going to build second corpus group from kernel dist under "
+      << dist_root2
+      << "...\n";
+
+  t.start();
   corpus2 = build_corpus_group_from_kernel_dist_under(dist_root2,
 						      debug_dir2,
 						      vmlinux_path2,
@@ -3272,6 +3294,12 @@ compare_prepared_linux_kernel_packages(package& first_package,
 						      opts.kabi_whitelist_paths,
 						      supprs, opts.verbose,
 						      env, requested_fe_kind);
+  t.stop();
+  if (opts.verbose)
+    emit_prefix("abipkgdiff", cerr)
+      << "Built second corpus group from kernel dist under "
+      << dist_root2
+      << "in: " << t << "\n";
 
   if (!corpus2)
     return abigail::tools_utils::ABIDIFF_ERROR;
@@ -3279,9 +3307,27 @@ compare_prepared_linux_kernel_packages(package& first_package,
   diff_context_sptr diff_ctxt(new diff_context);
   set_diff_context_from_opts(diff_ctxt, opts);
 
+  if (opts.verbose)
+    emit_prefix("abipkgdiff", cerr)
+      << "diffing the two kernel corpora ...\n";
+  t.start();
   corpus_diff_sptr diff = compute_diff(corpus1, corpus2, diff_ctxt);
+  t.stop();
+  if (opts.verbose)
+    emit_prefix("abipkgdiff", cerr)
+      << "diffed the two kernel corpora in: " << t << "\n";
 
-  if (diff->has_net_changes())
+  if (opts.verbose)
+    emit_prefix("abipkgdiff", cerr)
+      << "evaluating the set of net changes of the diff ...\n";
+  t.start();
+  bool has_net_changes = diff->has_net_changes();
+  t.stop();
+  if (opts.verbose)
+    emit_prefix("abipkgdiff", cerr)
+      << "evaluated set of net changes of the diff in:" << t << "\n";
+
+  if (has_net_changes)
     status |= abigail::tools_utils::ABIDIFF_ABI_CHANGE;
   if (diff->has_incompatible_changes())
     status |= abigail::tools_utils::ABIDIFF_ABI_INCOMPATIBLE_CHANGE;

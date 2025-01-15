@@ -3005,6 +3005,13 @@ load_vmlinux_corpus(elf_based_reader_sptr rdr,
   abigail::fe_iface::status status = abigail::fe_iface::STATUS_OK;
   rdr->options().do_log = verbose;
 
+  if (verbose)
+    {
+      std::cerr << "Loading stable lists:'";
+      for (auto s : kabi_wl_paths)
+	std::cerr << s << ",";
+      std::cerr << "'...\n";
+    }
   t.start();
   load_generate_apply_suppressions(*rdr, suppr_paths,
                                    kabi_wl_paths, supprs);
