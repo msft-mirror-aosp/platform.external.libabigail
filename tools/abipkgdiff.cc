@@ -3246,12 +3246,12 @@ compare_prepared_linux_kernel_packages(package& first_package,
 
   corpus::origin requested_fe_kind = corpus::DWARF_ORIGIN;
 #ifdef WITH_CTF
-    if (opts.use_ctf)
-      requested_fe_kind = corpus::CTF_ORIGIN;
+  if (opts.use_ctf)
+    requested_fe_kind = corpus::CTF_ORIGIN;
 #endif
 #ifdef WITH_BTF
-    if (opts.use_btf)
-      requested_fe_kind = corpus::BTF_ORIGIN;
+  if (opts.use_btf)
+    requested_fe_kind = corpus::BTF_ORIGIN;
 #endif
 
   corpus1 = build_corpus_group_from_kernel_dist_under(dist_root1,
