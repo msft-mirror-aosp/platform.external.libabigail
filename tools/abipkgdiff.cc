@@ -188,6 +188,7 @@ public:
   string	devel_package2;
   size_t	num_workers;
   bool		verbose;
+  bool		verbose_diff;
   bool		drop_private_types;
   bool		show_relative_offset_changes;
   bool		no_default_suppression;
@@ -236,6 +237,7 @@ public:
       abignore(true),
       parallel(true),
       verbose(),
+      verbose_diff(),
       drop_private_types(),
       show_relative_offset_changes(true),
       no_default_suppression(),
@@ -919,6 +921,7 @@ display_usage(const string& prog_name, ostream& out)
     << " --no-assume-odr-for-cplusplus  do not assume the ODR to speed-up the"
     "analysis of the binary\n"
     << " --verbose                      emit verbose progress messages\n"
+    << " --verbose-diff                 emit verbose diff progress messages\n"
     << " --self-check                   perform a sanity check by comparing "
     "binaries inside the input package against their ABIXML representation\n"
 #ifdef WITH_CTF
@@ -1276,6 +1279,7 @@ set_diff_context_from_opts(diff_context_sptr ctxt,
     (opts.show_added_syms);
   ctxt->show_symbols_unreferenced_by_debug_info
     (opts.show_symbols_not_referenced_by_debug_info);
+  ctxt->do_log(opts.verbose_diff);
 
   if (!opts.show_harmless_changes)
     ctxt->switch_categories_off(get_default_harmless_categories_bitmap());
@@ -3634,6 +3638,11 @@ parse_command_line(int argc, char* argv[], options& opts)
 	opts.assume_odr_for_cplusplus = false;
       else if (!strcmp(argv[i], "--verbose"))
 	opts.verbose = true;
+      else if (!strcmp(argv[i], "--verbose-diff"))
+	{
+	  opts.verbose_diff = true;
+	  opts.verbose = true;
+	}
       else if (!strcmp(argv[i], "--no-abignore"))
 	opts.abignore = false;
       else if (!strcmp(argv[i], "--no-parallel"))

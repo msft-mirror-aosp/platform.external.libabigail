@@ -513,6 +513,12 @@ Options
     Emit verbose progress messages.
 
 
+  * ``--verbose-diff``
+
+    Emit timed verbose progress messages about the diffing process.
+    This option implies the --verbose one.
+
+
   * ``--self-check``
 
     This is used to test the underlying Libabigail library.  When in
