@@ -221,9 +221,9 @@ public:
   bool		use_btf;
 #endif
 
-  vector<string> kabi_whitelist_packages;
+  vector<string> kabi_stablelist_packages;
   vector<string> suppression_paths;
-  vector<string> kabi_whitelist_paths;
+  vector<string> kabi_stablelist_paths;
   suppressions_type kabi_suppressions;
   package_sptr  pkg1;
   package_sptr  pkg2;
@@ -357,8 +357,8 @@ public:
     /// Debug info package.  Contains the debug info for the binaries
     /// int he main packge.
     KIND_DEBUG_INFO,
-    /// Contains kernel ABI whitelists
-    KIND_KABI_WHITELISTS,
+    /// Contains kernel ABI stablelists
+    KIND_KABI_STABLELISTS,
     /// Source package.  Contains the source of the binaries in the
     /// main package.
     KIND_SRC
@@ -373,7 +373,7 @@ private:
   map<string, elf_file_sptr>		path_elf_file_sptr_map_;
   vector<package_sptr>			debug_info_packages_;
   package_sptr				devel_package_;
-  package_sptr				kabi_whitelist_package_;
+  package_sptr				kabi_stablelist_package_;
   vector<string>			elf_file_paths_;
   set<string>				public_dso_sonames_;
 
@@ -567,19 +567,19 @@ public:
   devel_package(const package_sptr& p)
   {devel_package_ = p;}
 
-  /// Getter of the associated kernel abi whitelist package, if any.
+  /// Getter of the associated kernel abi stablelist package, if any.
   ///
-  /// @return the associated kernel abi whitelist package.
+  /// @return the associated kernel abi stablelist package.
   const package_sptr
-  kabi_whitelist_package() const
-  {return kabi_whitelist_package_;}
+  kabi_stablelist_package() const
+  {return kabi_stablelist_package_;}
 
-  /// Setter of the associated kernel abi whitelist package.
+  /// Setter of the associated kernel abi stablelist package.
   ///
-  /// @param p the new kernel abi whitelist package.
+  /// @param p the new kernel abi stablelist package.
   void
-  kabi_whitelist_package(const package_sptr& p)
-  {kabi_whitelist_package_ = p;}
+  kabi_stablelist_package(const package_sptr& p)
+  {kabi_stablelist_package_ = p;}
 
   /// Getter of the path to the elf files of the package.
   ///
@@ -756,8 +756,8 @@ public:
       debug_info_packages().front()->erase_extraction_directory(opts);
     if (devel_package())
       devel_package()->erase_extraction_directory(opts);
-    if (kabi_whitelist_package())
-      kabi_whitelist_package()->erase_extraction_directory(opts);
+    if (kabi_stablelist_package())
+      kabi_stablelist_package()->erase_extraction_directory(opts);
   }
 }; // end class package.
 
@@ -1242,8 +1242,8 @@ maybe_check_suppression_files(const options& opts)
       return false;
 
   for (vector<string>::const_iterator i =
-	 opts.kabi_whitelist_paths.begin();
-       i != opts.kabi_whitelist_paths.end();
+	 opts.kabi_stablelist_paths.begin();
+       i != opts.kabi_stablelist_paths.end();
        ++i)
     if (!check_file(*i, cerr, "abidiff"))
       return false;
@@ -1987,9 +1987,9 @@ must_compare_public_dso_only(package& pkg, options& opts)
 }
 
 /// While walking a file directory, check if a directory entry is a
-/// kabi whitelist of a particular architecture.
+/// kabi stablelist of a particular architecture.
 ///
-/// If it is, then save its file path in a vector of whitelists.
+/// If it is, then save its file path in a vector of stablelists.
 ///
 /// @param entry the directory entry to consider.
 ///
@@ -1998,8 +1998,8 @@ must_compare_public_dso_only(package& pkg, options& opts)
 /// @param stablelists out parameter.  If @p entry is the stablelist
 /// we are looking for, add its path to this output parameter.
 static void
-maybe_collect_kabi_whitelists(const FTSENT *entry,
-			      const string arch,
+maybe_collect_kabi_stablelists(const FTSENT *entry,
+			       const string arch,
 			       vector<string> &stablelists)
 {
   if (entry == NULL
@@ -2024,22 +2024,22 @@ maybe_collect_kabi_whitelists(const FTSENT *entry,
     }
 }
 
-/// Get the kabi whitelist for a particular architecture under a given
+/// Get the kabi stablelist for a particular architecture under a given
 /// directory.
 ///
 /// @param dir the directory to look at.
 ///
 /// @param arch the architecture to consider.
 ///
-/// @param whitelist_paths the vector where to add the whitelists
-/// found.  Note that a whitelist is added to this parameter iff the
+/// @param stablelist_paths the vector where to add the stablelists
+/// found.  Note that a stablelist is added to this parameter iff the
 /// function returns true.
 ///
-/// @return true iff the function found a whitelist at least.
+/// @return true iff the function found a stablelist at least.
 static bool
-get_kabi_whitelists_from_arch_under_dir(const string& dir,
+get_kabi_stablelists_from_arch_under_dir(const string& dir,
 					const string& arch,
-					vector<string>& whitelist_paths)
+					vector<string>& stablelist_paths)
 {
  bool is_ok = false;
   char* paths[] = {const_cast<char*>(dir.c_str()), 0};
@@ -2050,32 +2050,32 @@ get_kabi_whitelists_from_arch_under_dir(const string& dir,
 
   FTSENT *entry;
   while ((entry = fts_read(file_hierarchy)))
-    maybe_collect_kabi_whitelists(entry, arch, whitelist_paths);
+    maybe_collect_kabi_stablelists(entry, arch, stablelist_paths);
 
   fts_close(file_hierarchy);
 
   return true;
 }
 
-/// Find a kabi whitelist in a linux kernel RPM package.
+/// Find a kabi stablelist in a linux kernel RPM package.
 ///
 /// Note that the linux kernel RPM package must have been extracted
 /// somewhere already.
 ///
-/// This function then looks for the whitelist under the /lib/modules
+/// This function then looks for the stablelist under the /lib/modules
 /// directory inside the extracted content of the package.  If it
 /// finds it and saves its file path in the
-/// options::kabi_whitelist_paths data member.
+/// options::kabi_stablelist_paths data member.
 ///
 /// @param pkg the linux kernel package to consider.
 ///
 /// @param opts the options the program was invoked with.
 static bool
-maybe_handle_kabi_whitelist_pkg(const package& pkg, options &opts)
+maybe_handle_kabi_stablelist_pkg(const package& pkg, options &opts)
 {
-  if (opts.kabi_whitelist_packages.empty()
-      || !opts.kabi_whitelist_paths.empty()
-      || !pkg.kabi_whitelist_package())
+  if (opts.kabi_stablelist_packages.empty()
+      || !opts.kabi_stablelist_paths.empty()
+      || !pkg.kabi_stablelist_package())
     return false;
 
   if (pkg.type() != abigail::tools_utils::FILE_TYPE_RPM)
@@ -2087,7 +2087,7 @@ maybe_handle_kabi_whitelist_pkg(const package& pkg, options &opts)
   if (!is_linux_kernel_package)
     return false;
 
-  package_sptr kabi_wl_pkg = pkg.kabi_whitelist_package();
+  package_sptr kabi_wl_pkg = pkg.kabi_stablelist_package();
   assert(kabi_wl_pkg);
 
   if (!file_exists(kabi_wl_pkg->extracted_dir_path())
@@ -2100,15 +2100,15 @@ maybe_handle_kabi_whitelist_pkg(const package& pkg, options &opts)
 
   string kabi_wl_path = kabi_wl_pkg->extracted_dir_path();
   kabi_wl_path += "/lib/modules";
-  vector<string> whitelist_paths;
+  vector<string> stablelist_paths;
 
-  get_kabi_whitelists_from_arch_under_dir(kabi_wl_path, rpm_arch,
-					  whitelist_paths);
+  get_kabi_stablelists_from_arch_under_dir(kabi_wl_path, rpm_arch,
+					   stablelist_paths);
 
-  if (!whitelist_paths.empty())
+  if (!stablelist_paths.empty())
     {
-      std::sort(whitelist_paths.begin(), whitelist_paths.end());
-      opts.kabi_whitelist_paths.push_back(whitelist_paths.back());
+      std::sort(stablelist_paths.begin(), stablelist_paths.end());
+      opts.kabi_stablelist_paths.push_back(stablelist_paths.back());
     }
 
   return true;
@@ -2687,11 +2687,11 @@ extract_package_and_map_its_content(const package_sptr &pkg, options &opts)
   // parallel, as they are being extracted into the same directory.
   vector<package_sptr> main_and_devel_pkgs_extraction;
 
-  // But then, the main-and-devel, debug package and kabi-whitelist
+  // But then, the main-and-devel, debug package and kabi-stablelist
   // packages are going to be extracted in parallel.
   pkg_extraction_task_sptr main_and_devel_pkg_extraction;
   pkg_extraction_task_sptr dbg_extraction;
-  pkg_extraction_task_sptr kabi_whitelist_extraction;
+  pkg_extraction_task_sptr kabi_stablelist_extraction;
 
   size_t NUM_EXTRACTIONS = 1;
 
@@ -2711,9 +2711,9 @@ extract_package_and_map_its_content(const package_sptr &pkg, options &opts)
       ++NUM_EXTRACTIONS;
     }
 
-  if (package_sptr kabi_wl_pkg = pkg->kabi_whitelist_package())
+  if (package_sptr kabi_wl_pkg = pkg->kabi_stablelist_package())
     {
-      kabi_whitelist_extraction.reset(new pkg_extraction_task(kabi_wl_pkg,
+      kabi_stablelist_extraction.reset(new pkg_extraction_task(kabi_wl_pkg,
 							      opts));
       ++NUM_EXTRACTIONS;
     }
@@ -2726,7 +2726,7 @@ extract_package_and_map_its_content(const package_sptr &pkg, options &opts)
   // Perform the extraction of the NUM_WORKERS packages in parallel.
   extraction_queue.schedule_task(main_and_devel_pkg_extraction);
   extraction_queue.schedule_task(dbg_extraction);
-  extraction_queue.schedule_task(kabi_whitelist_extraction);
+  extraction_queue.schedule_task(kabi_stablelist_extraction);
 
   // Wait for the extraction to be done.
   extraction_queue.wait_for_workers_to_complete();
@@ -2737,7 +2737,7 @@ extract_package_and_map_its_content(const package_sptr &pkg, options &opts)
     is_ok = create_maps_of_package_content(*pkg, opts);
 
   if (is_ok)
-    maybe_handle_kabi_whitelist_pkg(*pkg, opts);
+    maybe_handle_kabi_stablelist_pkg(*pkg, opts);
 
   return is_ok;
 }
@@ -3278,7 +3278,7 @@ compare_prepared_linux_kernel_packages(package& first_package,
 						      debug_dir1,
 						      vmlinux_path1,
 						      opts.suppression_paths,
-						      opts.kabi_whitelist_paths,
+						      opts.kabi_stablelist_paths,
 						      supprs, opts.verbose,
 						      env, requested_fe_kind);
   t.stop();
@@ -3302,7 +3302,7 @@ compare_prepared_linux_kernel_packages(package& first_package,
 						      debug_dir2,
 						      vmlinux_path2,
 						      opts.suppression_paths,
-						      opts.kabi_whitelist_paths,
+						      opts.kabi_stablelist_paths,
 						      supprs, opts.verbose,
 						      env, requested_fe_kind);
   t.stop();
@@ -3678,14 +3678,14 @@ parse_command_line(int argc, char* argv[], options& opts)
 	      return true;
 	    }
 	  if (guess_file_type(argv[j]) == abigail::tools_utils::FILE_TYPE_RPM)
-	    // The kernel abi whitelist is actually a whitelist
+	    // The kernel abi stablelist is actually a stablelist
 	    // *package*.  Take that into account.
-	    opts.kabi_whitelist_packages.push_back
+	    opts.kabi_stablelist_packages.push_back
 	      (make_path_absolute(argv[j]).get());
 	  else
-	    // We assume the kernel abi whitelist is a white list
+	    // We assume the kernel abi stablelist is a white list
 	    // file.
-	    opts.kabi_whitelist_paths.push_back(argv[j]);
+	    opts.kabi_stablelist_paths.push_back(argv[j]);
 	  ++i;
 	}
       else if (!strcmp(argv[i], "--wp"))
@@ -3697,7 +3697,7 @@ parse_command_line(int argc, char* argv[], options& opts)
 	      opts.wrong_option = argv[i];
 	      return true;
 	    }
-	  opts.kabi_whitelist_packages.push_back
+	  opts.kabi_stablelist_packages.push_back
 	    (make_path_absolute(argv[j]).get());
 	  ++i;
 	}
@@ -3771,7 +3771,7 @@ main(int argc, char* argv[])
 	      | abigail::tools_utils::ABIDIFF_ERROR);
     }
 
-  if (opts.kabi_whitelist_packages.size() > 2)
+  if (opts.kabi_stablelist_packages.size() > 2)
     {
       emit_prefix("abipkgdiff", cerr)
 	<< "no more than 2 Linux kernel white list packages can be provided\n";
@@ -3876,19 +3876,19 @@ main(int argc, char* argv[])
 				"package2",
 				/*pkg_kind=*/package::KIND_DEVEL)));
 
-  if (!opts.kabi_whitelist_packages.empty())
+  if (!opts.kabi_stablelist_packages.empty())
     {
-      first_package->kabi_whitelist_package
+      first_package->kabi_stablelist_package
 	(package_sptr(new package
-		      (opts.kabi_whitelist_packages[0],
-		       "kabi_whitelist_package1",
-		       /*pkg_kind=*/package::KIND_KABI_WHITELISTS)));
-      if (opts.kabi_whitelist_packages.size() >= 2)
-	second_package->kabi_whitelist_package
+		      (opts.kabi_stablelist_packages[0],
+		       "kabi_stablelist_package1",
+		       /*pkg_kind=*/package::KIND_KABI_STABLELISTS)));
+      if (opts.kabi_stablelist_packages.size() >= 2)
+	second_package->kabi_stablelist_package
 	  (package_sptr(new package
-			(opts.kabi_whitelist_packages[1],
-			 "kabi_whitelist_package2",
-			 /*pkg_kind=*/package::KIND_KABI_WHITELISTS)));
+			(opts.kabi_stablelist_packages[1],
+			 "kabi_stablelist_package2",
+			 /*pkg_kind=*/package::KIND_KABI_STABLELISTS)));
     }
 
   string package_name;
