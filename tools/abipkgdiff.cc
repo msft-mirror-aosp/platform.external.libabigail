@@ -1995,12 +1995,12 @@ must_compare_public_dso_only(package& pkg, options& opts)
 ///
 /// @param arch the architecture to consider.
 ///
-/// @param whitelists out parameter.  If @p entry is the whitelist we
-/// are looking for, add its path to this output parameter.
+/// @param stablelists out parameter.  If @p entry is the stablelist
+/// we are looking for, add its path to this output parameter.
 static void
 maybe_collect_kabi_whitelists(const FTSENT *entry,
 			      const string arch,
-			      vector<string> &whitelists)
+			       vector<string> &stablelists)
 {
   if (entry == NULL
       || (entry->fts_info != FTS_F && entry->fts_info != FTS_SL)
@@ -2011,10 +2011,17 @@ maybe_collect_kabi_whitelists(const FTSENT *entry,
   string path = entry->fts_path;
   maybe_get_symlink_target_file_path(path, path);
 
-  string kabi_whitelist_name = "kabi_whitelist_" + arch;
+  vector<string> stablelist_prefixes;
+  stablelist_prefixes.push_back("kabi_whitelist_");
+  stablelist_prefixes.push_back("kabi_stablelist_");
 
-  if (string_ends_with(path, kabi_whitelist_name))
-    whitelists.push_back(path);
+  string kabi_stablelist_name;
+  for (auto prefix : stablelist_prefixes)
+    {
+      kabi_stablelist_name = prefix + arch;
+      if (string_ends_with(path, kabi_stablelist_name))
+	stablelists.push_back(path);
+    }
 }
 
 /// Get the kabi whitelist for a particular architecture under a given
