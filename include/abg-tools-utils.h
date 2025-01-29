@@ -233,7 +233,22 @@ enum file_type
   FILE_TYPE_DIR,
   /// A tar archive.  The archive can be compressed with the popular
   /// compression schemes recognized by GNU tar.
-  FILE_TYPE_TAR
+  FILE_TYPE_TAR,
+
+  // All non-tared compression scheme go under here.  When one of
+  // these is returned, the goal is to look into the uncompressed
+  // stream to get what format has been compressed, then return an
+  // enumerator for that compressed format instead.
+  //
+  // Please note that each time a new enumerator is added here, one
+  // needs to add a corresponding enumerator to the @ref
+  // compression_kind enum in abg-tools-utils.cc and update the
+  // is_compressed_file_type and get_compressed_streambuf functions
+  // accordingly.
+
+  /// The XZ (lzma) compresson scheme.
+
+  FILE_TYPE_XZ
 };
 
 /// Exit status for abidiff and abicompat tools.
@@ -369,6 +384,49 @@ create_best_elf_based_reader(const string& elf_file_path,
 			     corpus::origin requested_debug_info_kind,
 			     bool show_all_types,
 			     bool linux_kernel_mode = false);
+
+/// This is a custom std::streambuf that knows how to decompress an
+/// input stream that was compressed using xz.
+///
+/// The code was inspired by the example in the source code of the xz
+/// project at
+/// https://github.com/tukaani-project/xz/blob/master/doc/examples/02_decompress.c.
+///
+/// here is an example of how a user code would use this custom
+/// streambuf to decode an xz'ed file and emit its content to stdout.
+///
+///        ifstream input_file("/path/to/a/compressed/file.xz", ifstream::binary);
+///        xz_decompressor_type xzed_streambuf(input_file);
+///        istream input_stream(&xzed_streambuf);
+///
+///        const size_t BUFFER_SIZE = 1024 * 4;
+///        vector<char> decompressed_data(BUFFER_SIZE);
+///        input_stream.read(decompressed_data.data(), BUFFER_SIZE);
+///        size_t nb_bytes_read = input_stream.gcount();
+///        while (nb_bytes_read && !input_stream.bad())
+///          {
+///            for (auto c : decompressed_data)
+///            std::out << c;
+///          }
+///        input_file.close();
+///
+/// Voila.
+class xz_decompressor_type : public std::streambuf
+{
+  struct priv;
+
+  std::unique_ptr<priv> priv_;
+
+  public:
+  xz_decompressor_type(std::istream& xz_istream);
+
+  ~xz_decompressor_type();
+
+  protected:
+
+  int_type
+  underflow() override;
+}; // end class xz_decompressor_type.
 
 }// end namespace tools_utils
 

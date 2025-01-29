@@ -1487,6 +1487,7 @@ main(int argc, char* argv[])
 	case abigail::tools_utils::FILE_TYPE_DEB:
 	case abigail::tools_utils::FILE_TYPE_DIR:
 	case abigail::tools_utils::FILE_TYPE_TAR:
+	case abigail::tools_utils::FILE_TYPE_XZ:
 	  break;
 	}
 
@@ -1576,6 +1577,7 @@ main(int argc, char* argv[])
 	case abigail::tools_utils::FILE_TYPE_DEB:
 	case abigail::tools_utils::FILE_TYPE_DIR:
 	case abigail::tools_utils::FILE_TYPE_TAR:
+	case abigail::tools_utils::FILE_TYPE_XZ:
 	  break;
 	}
 

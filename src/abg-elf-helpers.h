@@ -13,6 +13,7 @@
 #include "config.h"
 
 #include <elfutils/libdwfl.h>
+#include <elfutils/libdwelf.h>
 #include <gelf.h>
 #include <string>
 

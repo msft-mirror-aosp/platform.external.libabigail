@@ -29,6 +29,8 @@ test-read-write/test25.xml \
 test-read-write/test26.xml \
 test-read-write/test27.xml \
 test-read-write/test28.xml \
+test-read-write/test28.xml.xz \
+test-read-write/test28.xml.xzed \
 test-read-write/test28-drop-std-fns.abignore \
 test-read-write/test28-without-std-fns.xml \
 test-read-write/test28-without-std-fns-ref.xml \
@@ -714,14 +716,16 @@ test-read-common/PR27700/test-PR27700.c	\
 test-read-common/PR27700/test-PR27700.o	\
 \
 test-read-dwarf/test0			\
-test-read-dwarf/test0.abi			\
+test-read-dwarf/test0.xzbinary		\
+test-read-dwarf/test0.xz		\
+test-read-dwarf/test0.abi		\
 test-read-dwarf/test0.hash.abi		\
-test-read-dwarf/test0.cc			\
+test-read-dwarf/test0.cc		\
 test-read-dwarf/test1			\
-test-read-dwarf/test1.abi			\
+test-read-dwarf/test1.abi		\
 test-read-dwarf/test1.hash.abi		\
-test-read-dwarf/test1.cc			\
-test-read-dwarf/test2.h		\
+test-read-dwarf/test1.cc		\
+test-read-dwarf/test2.h			\
 test-read-dwarf/test2-0.cc		\
 test-read-dwarf/test2-1.cc		\
 test-read-dwarf/test2.so		\

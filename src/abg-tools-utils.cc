@@ -35,6 +35,7 @@
 #include <libgen.h>
 #include <libxml/parser.h>
 #include <libxml/xmlversion.h>
+#include <lzma.h>
 #include <algorithm>
 #include <cstdlib>
 #include <cstring>
@@ -1555,10 +1556,41 @@ operator<<(ostream& output,
     case FILE_TYPE_TAR:
       repr = "GNU tar archive type";
       break;
+    case FILE_TYPE_XZ:
+      repr = "XZ compressed file";
     }
 
   output << repr;
   return output;
+}
+
+/// The kind of compression we want a de-compression std::streambuf
+/// for.
+///
+/// This enum must be amended to add support for new compression
+/// schemes, especially whenever a new enumerator is added to the enum
+/// @ref file_type.
+enum compression_kind
+{
+  COMPRESSION_KIND_UNKNOWN,
+  /// The LZMA compression (used by the xz tool).
+  COMPRESSION_KIND_XZ
+}; //end enum compression_kind
+
+/// Test if one of the enumerators of @ref file_type designates a
+/// compression scheme.
+///
+/// This helper function needs to be updated whenever a new
+/// compression-related enumerator is added to @ref file_type.
+///
+/// @return the kind of compression designated by @p t.
+static compression_kind
+is_compressed_file_type(file_type t)
+{
+  if (t == FILE_TYPE_XZ)
+    return COMPRESSION_KIND_XZ;
+
+  return COMPRESSION_KIND_UNKNOWN;
 }
 
 /// Guess the type of the content of an input stream.
@@ -1572,11 +1604,11 @@ guess_file_type(istream& in)
   const unsigned BUF_LEN = 264;
   const unsigned NB_BYTES_TO_READ = 263;
 
-  char buf[BUF_LEN];
+  unsigned char buf[BUF_LEN];
   memset(buf, 0, BUF_LEN);
 
   std::streampos initial_pos = in.tellg();
-  in.read(buf, NB_BYTES_TO_READ);
+  in.read(reinterpret_cast<char*>(buf), NB_BYTES_TO_READ);
   in.seekg(initial_pos);
 
   if (in.gcount() < 4 || in.bad())
@@ -1588,6 +1620,17 @@ guess_file_type(istream& in)
       && buf[3] == 'F')
     return FILE_TYPE_ELF;
 
+  // XZ format.  Described at
+  // https://tukaani.org/xz/xz-file-format.txt.
+  if (in.gcount() >= 6
+      && buf[0] == 0xFD
+      && buf[1] == '7'
+      && buf[2] == 'z'
+      && buf[3] == 'X'
+      && buf[4] == 'Z'
+      && buf[5] == 0)
+    return FILE_TYPE_XZ;
+
   if (buf[0] == '!'
       && buf[1] == '<'
       && buf[2] == 'a'
@@ -1596,7 +1639,7 @@ guess_file_type(istream& in)
       && buf[5] == 'h'
       && buf[6] == '>')
     {
-      if (strstr(buf, "debian-binary"))
+      if (strstr(reinterpret_cast<char*>(buf), "debian-binary"))
 	return FILE_TYPE_DEB;
       else
 	return FILE_TYPE_AR;
@@ -1674,6 +1717,42 @@ guess_file_type(istream& in)
   return FILE_TYPE_UNKNOWN;
 }
 
+/// The factory of an std::streambuf aimed at decompressing data
+/// coming from an input stream compressed with a particular
+/// compression scheme.
+///
+/// This function must be amended to add support for new compression
+/// schemes.
+///
+/// @param compressed_input the compressed input to create the
+/// decompressor std::streambuf for.
+///
+/// @param compr the compression scheme kind.
+///
+/// @return a pointer to the std::streambuf to use for decompression.
+/// If the compression scheme is not supported, the function returns
+/// nil.
+static shared_ptr<std::streambuf>
+get_decompressed_streambuf(std::istream& compressed_input,
+			   compression_kind compr)
+{
+  shared_ptr<std::streambuf> result;
+
+  switch(compr)
+    {
+    case COMPRESSION_KIND_UNKNOWN:
+      ABG_ASSERT_NOT_REACHED;
+      break;
+
+    case COMPRESSION_KIND_XZ:
+    shared_ptr<std::streambuf> r(new xz_decompressor_type(compressed_input));
+    result = r;
+    break;
+    };
+
+  return result;
+};// end struct compression_handler_type
+
 /// Guess the type of the content of an file.
 ///
 /// @param file_path the path to the file to consider.
@@ -1702,9 +1781,57 @@ guess_file_type(const string& file_path)
       || string_ends_with(file_path, ".tz"))
     return FILE_TYPE_TAR;
 
-  ifstream in(file_path.c_str(), ifstream::binary);
-  file_type r = guess_file_type(in);
-  in.close();
+  file_type r = FILE_TYPE_UNKNOWN;
+  compression_kind compr_kind = COMPRESSION_KIND_UNKNOWN;
+  shared_ptr<std::streambuf> decompressor_streambuf;
+
+  if (string_ends_with(file_path, ".lzma")
+      || string_ends_with(file_path, ".lz")
+      || string_ends_with(file_path, ".xz"))
+    compr_kind = COMPRESSION_KIND_XZ;
+  // else if there are other compression schemes supported, recognize
+  // their file suffix here!
+
+  do
+    {
+      shared_ptr<ifstream> input_fstream(new ifstream(file_path.c_str(),
+						      ifstream::binary));
+      shared_ptr<istream> input_stream = input_fstream;
+
+      if (compr_kind != COMPRESSION_KIND_UNKNOWN)
+	decompressor_streambuf = get_decompressed_streambuf(*input_stream,
+							    compr_kind);
+
+      if (decompressor_streambuf)
+	input_stream.reset(new istream(decompressor_streambuf.get()));
+
+      r = guess_file_type(*input_stream);
+
+      input_fstream->close();
+
+      if (!decompressor_streambuf)
+	{
+	  // So we haven't attempted to decompress the input stream.
+	  //
+	  // Have we found out that it was compressed nonetheless?
+	  compr_kind = is_compressed_file_type(r);
+	  if (compr_kind)
+	    {
+	      // yes, we found out the input file is compressed, so we
+	      // do have the means to decompress it.  However, we
+	      // haven't yet gotten the de-compressor; that might be
+	      // because we detected the compression just by looking
+	      // at the file name suffix.  Let's go back to calling
+	      // get_decompressed_streambuf again to get the
+	      // decompressor.
+	      ;
+	    }
+	  else
+	    // No the file is not compressed let's get out of here.
+	    break;
+	}
+    } while (!decompressor_streambuf && compr_kind);
+
   return r;
 }
 
@@ -3287,6 +3414,115 @@ create_best_elf_based_reader(const string& elf_file_path,
 
   return result;
 }
+
+/// ---------------------------------------------------
+/// <xz_decompressor definition>
+///----------------------------------------------------
+
+/// The private data of the @ref xz_decompressor_type class.
+struct xz_decompressor_type::priv
+{
+  std::istream& xz_istream;
+  lzma_stream lzma;
+  // A 10k bytes buffer for xz data coming from the
+  // xz'ed istream.  That buffer is going to be fed into the lzma
+  // decoding machinery.
+  char inbuf[1024 * 10] = {};
+  // A 10k bytes buffer for decompressed data coming
+  // out of the lzma machinery
+  char outbuf[1024 * 10] = {};
+
+  priv(std::istream& i)
+    : xz_istream(i),
+      lzma(LZMA_STREAM_INIT)
+  {}
+};// end xz_decompressor_type::priv
+
+/// Constructor of the @ref xz_decompressor_type class.
+///
+/// @param xz_istream the input stream containing the xz-compressed
+/// data to decompress.
+xz_decompressor_type::xz_decompressor_type(std::istream& xz_istream)
+  : priv_(new priv(xz_istream))
+{
+  // Initialize the native LZMA stream to decompress.
+  lzma_ret status = lzma_stream_decoder(&priv_->lzma,
+					UINT64_MAX,
+					LZMA_CONCATENATED);
+  ABG_ASSERT(status == LZMA_OK);
+}
+
+/// Destructor of the @ref xz_decompressor_type class.
+xz_decompressor_type::~xz_decompressor_type()
+{
+  lzma_end(&priv_->lzma);
+}
+
+/// The implementation of the virtual protected
+/// std:streambuf::underlying method.  This method is invoked by the
+/// std::streambuf facility to re-fill its internals buffers with data
+/// coming from the associated input stream and to update the gptr()
+/// and egptr() pointers by using the std::streambuf::setg method.
+///
+/// This is where the decompression using the lzma library is
+/// performed.
+std::streambuf::int_type
+xz_decompressor_type::underflow()
+{
+  if (gptr() < egptr())
+    return *gptr();
+
+  // Let's read 'nr' bytes of xz data into inbuf
+  priv_->xz_istream.read(priv_->inbuf, sizeof(priv_->inbuf));
+  size_t nr = priv_->xz_istream.gcount();
+  if (nr == 0)
+    {
+      // Tell the lzma machinery that we've reached the end of the
+      // data.
+      lzma_ret result = lzma_code(&priv_->lzma, LZMA_FINISH);
+      ABG_ASSERT(result == LZMA_OK || result == LZMA_STREAM_END);
+      return EOF;
+    }
+
+  // Let's prepare the lzma input/output stream/machinery.
+  priv_->lzma.avail_in = nr;
+  priv_->lzma.next_in = reinterpret_cast<uint8_t*>(priv_->inbuf);
+
+  priv_->lzma.avail_out = sizeof(priv_->outbuf);
+  priv_->lzma.next_out = reinterpret_cast<uint8_t*>(priv_->outbuf);
+
+  // Let's now ask the lzma machinery to decompress the inbuf and
+  // put the result into outbuf.
+  lzma_ret result = lzma_code(&priv_->lzma, LZMA_RUN);
+  if (result != LZMA_OK && result != LZMA_STREAM_END)
+    {
+      // TODO: list the possible error codes and tell them explicitely
+      // to the user, just like what is done in
+      // https://github.com/tukaani-project/xz/blob/master/doc/examples/02_decompress.c.
+      std::ostringstream o;
+      o << "LZMA decompression failed;"
+	<< " return code of lzma_code() is : "
+	<< result;
+      throw std::runtime_error(o.str());
+    }
+
+  // Let's get the number of bytes decompressed by the lzma
+  // machinery.  I got this from the example in the xz code base at
+  // https://github.com/tukaani-project/xz/blob/master/doc/examples/02_decompress.c.
+  size_t nr_decompressed_bytes = sizeof(priv_->outbuf) - priv_->lzma.avail_out;
+
+  // Now set the relevant index pointers of this streambuf.
+  setg(priv_->outbuf, priv_->outbuf, priv_->outbuf + nr_decompressed_bytes);
+
+  if (nr_decompressed_bytes > 0)
+    return *gptr();
+
+  return EOF;
+}
+
+/// ---------------------------------------------------
+/// </xz_decompressor definition>
+///----------------------------------------------------
 
 }//end namespace tools_utils
 

@@ -230,6 +230,18 @@ InOutSpec in_out_specs[] =
     "output/test-read-write/test28-without-std-fns.xml"
   },
   {
+    "data/test-read-write/test28.xml.xz",
+    "data/test-read-write/test28-drop-std-fns.abignore",
+    "data/test-read-write/test28-without-std-fns-ref.xml",
+    "output/test-read-write/test28-without-std-fns-xz.xml"
+  },
+  {
+    "data/test-read-write/test28.xml.xzed",
+    "data/test-read-write/test28-drop-std-fns.abignore",
+    "data/test-read-write/test28-without-std-fns-ref.xml",
+    "output/test-read-write/test28-without-std-fns-xzed.xml"
+  },
+  {
     "data/test-read-write/test28.xml",
     "data/test-read-write/test28-drop-std-vars.abignore",
     "data/test-read-write/test28-without-std-vars-ref.xml",

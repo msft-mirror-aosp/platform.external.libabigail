@@ -1071,7 +1071,9 @@ get_type_of_elf_file(const string& path, elf::elf_type& type)
     return false;
 
   elf_version (EV_CURRENT);
-  Elf *elf = elf_begin (fd, ELF_C_READ_MMAP, NULL);
+  // Note that the dwelf_elf_begin function supports decompressing the
+  // content of the input file, which is pretty cool.
+  Elf *elf = dwelf_elf_begin(fd);
   type = elf_file_type(elf);
   elf_end(elf);
   close(fd);
