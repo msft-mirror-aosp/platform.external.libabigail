@@ -5,13 +5,17 @@ abipkgdiff
 ===========
 
 ``abipkgdiff`` compares the Application Binary Interfaces (ABI) of the
-`ELF`_ binaries contained in two software packages.  The software
-package formats currently supported are `Deb`_, `RPM`_, `tar`_
-archives (either compressed or not) and plain directories that contain
-binaries.
+`ELF`_ binaries contained in two sets of software packages.  The
+software package formats currently supported are `Deb`_, `RPM`_,
+`tar`_ archives (either compressed or not) and plain directories that
+contain binaries.
+
+The ABI of the binaries contained in the second set of packages is
+compared against the ABI of the binaries contained in the first set of
+packages.
 
 For a comprehensive ABI change report that includes changes about
-function and variable sub-types, the two input packages must be
+function and variable sub-types, the two input package sets must be
 accompanied with their debug information packages that contain debug
 information either in `DWARF`_, `CTF`_ or in `BTF`_ formats.  Please
 note however that some packages contain binaries that embed the debug
@@ -34,10 +38,20 @@ Invocation
 
 ::
 
-  abipkgdiff [option] <package1> <package2>
+  abipkgdiff [options] <package1> <package2>
 
 ``package1`` and ``package2`` are the packages that contain the
 binaries to be compared.
+
+An alternate invocation style would be:
+
+::
+
+  abipkgdiff [options] --set1 <pkg1-v1> <pkg2-v1> <pkg3-v1> \
+                       --set2 <pkg1-v2> <pkg2-v2> <pkg3-v2>
+
+where the ABI of binaries contained in the second set of packages are
+compared against binaries contained in the first set of packages.
 
 
 Environment
@@ -543,6 +557,19 @@ Options
       $ abipkgdiff --self-check --d1 mesa-libGLU-debuginfo-9.0.1-3.fc33.x86_64.rpm  mesa-libGLU-9.0.1-3.fc33.x86_64.rpm
        ==== SELF CHECK SUCCEEDED for 'libGLU.so.1.3.1' ====
       $
+
+  * ``--set1`` <package1-path> <package2-path> <package2-path> ...
+
+    Specifies the first set of packages whose binaries are to be
+    compared against the second one.  Note that the second set of
+    packages is to be specified using the option ``--set2``.
+
+
+  * ``--set2`` <package1-path> <package2-path> <package2-path> ...
+
+    Specifies the second set of packages whose binaries are to be
+    compared against the second one.  Note that the first set of
+    packages is to be specified using the option ``--set1``.
 
 
   * ``--suppressions | --suppr`` <*path-to-suppressions*>
