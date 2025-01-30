@@ -1649,6 +1649,8 @@ guess_file_type(istream& in)
       && buf[11] == ' ')
     return FILE_TYPE_XML_CORPUS;
 
+  // Detect RPM format.  Documented at
+  // http://ftp.rpm.org/max-rpm/s1-rpm-file-format-rpm-file-format.html.
   if ((unsigned char) buf[0]    == 0xed
       && (unsigned char) buf[1] == 0xab
       && (unsigned char) buf[2] == 0xee
