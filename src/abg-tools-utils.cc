@@ -1865,7 +1865,7 @@ file_is_kernel_package(const string& file_path, file_type file_type)
 bool
 rpm_contains_file(const string& rpm_path, const string& file_name)
 {
-    vector<string> query_output;
+  vector<string> query_output;
   // We don't check the return value of this command because on some
   // system, the command can issue errors but still emit a valid
   // output.  We'll rather rely on the fact that the command emits a
