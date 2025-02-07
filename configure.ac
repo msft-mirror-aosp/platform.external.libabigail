@@ -890,7 +890,18 @@ if test x$PYTHON3_INTERPRETER != xno -a x$ENABLE_ABIDB != xno; then
 			  [FOUND_ALL_PYTHON_MODULES=yes],
 			  [FOUND_ALL_PYTHON_MODULES=no])
 
-  if test x$FOUND_ALL_PYTHON_MODULES = xno; then
+  $PYTHON3_INTERPRETER -c "import sys; sys.exit(0 if sys.version_info >= (3, 9) else 1)"
+  if test $? -ne 0; then
+    AC_MSG_NOTICE([Python 3 version 3.9 or higher is required for abidb])
+    AC_MSG_WARN([disabling abidb as a result])
+    ENABLE_ABIDB=no
+  else
+    AC_MSG_NOTICE([Found Python 3 version at 3.9 or higher.  Great for abidb!])
+  fi
+
+  if test x$ENABLE_ABIDB = xno; then
+    pass
+  elif test x$ENABLE_ABIDB != xno -a x$FOUND_ALL_PYTHON_MODULES = xno; then
     AC_MSG_NOTICE([missing python modules: $MISSING_PYTHON_MODULES])
     AC_MSG_WARN([disabling abidb as a result])
     ENABLE_ABIDB=no
