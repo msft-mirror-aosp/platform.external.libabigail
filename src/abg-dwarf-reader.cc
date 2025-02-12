@@ -2119,7 +2119,7 @@ protected:
 		       debug_info_root_paths,
 		       environment)
   {
-    initialize(load_all_types, linux_kernel_mode);
+    reset(load_all_types, linux_kernel_mode);
   }
 
   /// Clear the statistics for reading the current corpus.
@@ -2144,7 +2144,7 @@ public:
   /// special linux kernel symbol tables when determining if a symbol
   /// is exported or not.
   void
-  initialize(bool load_all_types, bool linux_kernel_mode)
+  reset(bool load_all_types, bool linux_kernel_mode)
   {
     dwarf_version_ = 0;
     cur_tu_die_ =  0;
@@ -2217,7 +2217,7 @@ public:
 	     bool			linux_kernel_mode)
   {
     elf_based_reader::initialize(elf_path, debug_info_root_paths);
-    initialize(load_all_types, linux_kernel_mode);
+    reset(load_all_types, linux_kernel_mode);
   }
 
   /// Create an instance of DWARF Reader.

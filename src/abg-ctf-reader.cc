@@ -266,7 +266,7 @@ public:
     : elf_based_reader(elf_path, debug_info_root_paths, env),
       ctfa(), ctf_sect(), symtab_sect(), strtab_sect()
   {
-    initialize();
+    reset();
   }
 
   /// Initializer of the reader.
@@ -282,7 +282,7 @@ public:
   /// the context uses resources that are allocated in the
   /// environment.
   void
-  initialize()
+  reset()
   {
     types_to_canonicalize.clear();
     cur_tu_.reset();
@@ -315,7 +315,7 @@ public:
              bool			load_all_types = false,
              bool			linux_kernel_mode = false)
   {
-    initialize();
+    reset();
     load_all_types = load_all_types;
     linux_kernel_mode = linux_kernel_mode;
     elf_based_reader::initialize(elf_path, debug_info_root_paths);
