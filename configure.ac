@@ -243,6 +243,14 @@ AC_ARG_ENABLE(big-tests,
 	      ENABLE_BIG_TESTS=$enableval,
 	      ENABLE_BIG_TESTS=no)
 
+
+ENABLE_INLINED_XXHASH=no
+AC_ARG_ENABLE(inlined-xxhash,
+	      AS_HELP_STRING([--enable-inlined-xxhash=yes|no],
+			     [enable the support the inlined-only version of the xxhash library]),
+	      ENABLE_INLINED_XXHASH=$enableval,
+	      ENABLE_INLINED_XXHASH=no)
+
 WITH_DW_LIBS_PATH=auto
 AC_ARG_WITH(libdw,
 	    AS_HELP_STRING([--with-libdw=/path/to/libdw-library/prefix],
@@ -969,8 +977,10 @@ AX_VALGRIND_DFLT(sgcheck, off)
 AX_VALGRIND_CHECK
 
 dnl Set the list of libraries libabigail depends on
-
-DEPS_LIBS="$XML_LIBS $ELF_LIBS $DW_LIBS $CTF_LIBS $BPF_LIBS $XXHASH_LIBS $LZMA_LIBS"
+DEPS_LIBS="$XML_LIBS $ELF_LIBS $DW_LIBS $CTF_LIBS $BPF_LIBS $LZMA_LIBS"
+if test x$ENABLE_INLINED_XXHASH = xno; then
+  DEPS_LIBS="$DEPS_LIBS $XXHASH_LIBS"
+fi
 AC_SUBST(DEPS_LIBS)
 
 if test x$ABIGAIL_DEVEL != x; then
@@ -1008,9 +1018,11 @@ if test x$ENABLE_UBSAN = xyes; then
     CXXFLAGS="$CXXFLAGS -fsanitize=undefined"
 fi
 
-dnl We always want all xxhash functions inlined
-CFLAGS="$CFLAGS -DXXH_INLINE_ALL=1"
-CXXFLAGS="$CXXFLAGS -DXXH_INLINE_ALL=1"
+dnl If the user asked then let's use inlined xxhash functions.
+if test x$ENABLE_INLINED_XXHASH = xyes; then
+   CFLAGS="$CFLAGS -DXXH_INLINE_ALL=1"
+   CXXFLAGS="$CXXFLAGS -DXXH_INLINE_ALL=1"
+fi
 
 dnl Set a few Automake conditionals
 
@@ -1650,11 +1662,13 @@ AC_MSG_NOTICE([
     ELF_CFLAGS					   : ${ELF_CFLAGS}
     DW_LIBS					   : ${DW_LIBS}
     DW_CFLAGS					   : ${DW_CFLAGS}
+    DEPS_LIBS					   $ ${DEPS_LIBS}
     Python					   : ${PYTHON}
 
  OPTIONAL FEATURES:
     C++ standard level                             : ${CXX_STANDARD}
     libdw has the dwarf_getalt function            : ${FOUND_DWARF_GETALT_IN_LIBDW}
+    Enable inlined-only xxhash library		   : ${ENABLE_INLINED_XXHASH}
     Enable rpm support in abipkgdiff               : ${ENABLE_RPM}
     Enable rpm/zstd in abipkgdiff testing          : ${ENABLE_RPM_ZSTD}
     Enable abilint --show-type-use <type-id>       : ${ENABLE_SHOW_TYPE_USE_IN_ABILINT}
