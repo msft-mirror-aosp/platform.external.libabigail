@@ -3594,13 +3594,13 @@ compare_prepared_linux_kernel_package_sets(const package_set_sptr& first_ps,
   if (status & abigail::tools_utils::ABIDIFF_ABI_CHANGE)
     {
       cout << "== Kernel ABI changes between packages '"
-	   << first_core_kernel_package->path() << "' and '"
-	   << second_core_kernel_package->path() << "' are: ===\n";
+	   << first_core_kernel_package->base_name() << "' and '"
+	   << second_core_kernel_package->base_name() << "' are: ===\n";
       diff->report(cout);
       cout << "== End of kernel ABI changes between packages '"
-	   << first_core_kernel_package->path()
+	   << first_core_kernel_package->base_name()
 	   << "' and '"
-	   << second_core_kernel_package->path() << "' ===\n\n";
+	   << second_core_kernel_package->base_name() << "' ===\n\n";
     }
 
   return status;
