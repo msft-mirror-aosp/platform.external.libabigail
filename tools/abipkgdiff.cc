@@ -2850,11 +2850,11 @@ create_maps_of_package_set_content(const package_set_sptr& ps,
 	  // soname.  So let's *also* consider the full path of the
 	  // binary inside the extracted directory, not just the
 	  // soname.
-	  string key = e->soname;
+	  string key = string("/@soname:") + e->soname;
 
 	  if (must_compare_public_dso_only(ps, opts))
 	    {
-	      if (ps->public_dso_sonames().find(key)
+	      if (ps->public_dso_sonames().find(e->soname)
 		  == ps->public_dso_sonames().end())
 		{
 		  // We are instructed to compare public DSOs only and
@@ -2865,12 +2865,6 @@ create_maps_of_package_set_content(const package_set_sptr& ps,
 		      << " seems to be private.  Skipping it\n";
 		  continue;
 		}
-	    }
-
-	  if (ps->convert_path_to_unique_suffix(resolved_e_path, key))
-	    {
-	      dir_name(key, key);
-	      key += string("/@soname:") + e->soname;
 	    }
 
 	  if (ps->path_elf_file_sptr_map().find(key)
