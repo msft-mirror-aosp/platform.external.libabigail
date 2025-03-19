@@ -8,7 +8,7 @@ Variable symbols changes summary: 0 Removed, 0 Added variable symbol not referen
   [D] 'function void COI::fini(void)'
   [D] 'function bool COI::init(void)'
   [D] 'function void* DL_sym(void*, const char*, const char*)'
-  [D] 'method COIRESULT Engine::compute(const std::__cxx11::list<coibuffer*, std::allocator<coibuffer*> >&, void*, uint16_t, void*, uint16_t, uint32_t, const COIEVENT*, COIEVENT*)'
+  [D] 'method COIRESULT Engine::compute(const std::__cxx11::list<coibuffer*,std::allocator<coibuffer*>>&, void*, uint16_t, void*, uint16_t, uint32_t, const COIEVENT*, COIEVENT*)'
   [D] 'method void FuncList::dump()'
   [D] 'method void* FuncList::find_addr(const char*)'
   [D] 'method const char* FuncList::find_name(void*)'
@@ -82,10 +82,10 @@ Variable symbols changes summary: 0 Removed, 0 Added variable symbol not referen
   [D] 'function const char* report_get_host_stage_str(int)'
   [D] 'function const char* report_get_message_str(error_types)'
   [D] 'function const char* report_get_target_stage_str(int)'
-  [D] 'function void std::__adjust_heap<VarList::BufEntry*, long int, VarList::BufEntry, __gnu_cxx::__ops::_Iter_comp_iter<bool (*)(const VarList::BufEntry&, const VarList::BufEntry&)> >(VarList::BufEntry*, long int, long int, VarList::BufEntry, __gnu_cxx::__ops::_Iter_comp_iter<bool (*)(const VarList::BufEntry&, const VarList::BufEntry&)>)'
-  [D] 'function void std::__insertion_sort<VarList::BufEntry*, __gnu_cxx::__ops::_Iter_comp_iter<bool (*)(const VarList::BufEntry&, const VarList::BufEntry&)> >(VarList::BufEntry*, VarList::BufEntry*, __gnu_cxx::__ops::_Iter_comp_iter<bool (*)(const VarList::BufEntry&, const VarList::BufEntry&)>)'
-  [D] 'function void std::__introsort_loop<VarList::BufEntry*, long int, __gnu_cxx::__ops::_Iter_comp_iter<bool (*)(const VarList::BufEntry&, const VarList::BufEntry&)> >(VarList::BufEntry*, VarList::BufEntry*, long int, __gnu_cxx::__ops::_Iter_comp_iter<bool (*)(const VarList::BufEntry&, const VarList::BufEntry&)>)'
-  [D] 'function void std::__unguarded_linear_insert<VarList::BufEntry*, __gnu_cxx::__ops::_Val_comp_iter<bool (*)(const VarList::BufEntry&, const VarList::BufEntry&)> >(VarList::BufEntry*, __gnu_cxx::__ops::_Val_comp_iter<bool (*)(const VarList::BufEntry&, const VarList::BufEntry&)>)'
+  [D] 'function void std::__adjust_heap<VarList::BufEntry*,longint,VarList::BufEntry,__gnu_cxx::__ops::_Iter_comp_iter<bool(*)(constVarList::BufEntry&,constVarList::BufEntry&)>>(VarList::BufEntry*, long int, long int, VarList::BufEntry, __gnu_cxx::__ops::_Iter_comp_iter<bool(*)(constVarList::BufEntry&,constVarList::BufEntry&)>)'
+  [D] 'function void std::__insertion_sort<VarList::BufEntry*,__gnu_cxx::__ops::_Iter_comp_iter<bool(*)(constVarList::BufEntry&,constVarList::BufEntry&)>>(VarList::BufEntry*, VarList::BufEntry*, __gnu_cxx::__ops::_Iter_comp_iter<bool(*)(constVarList::BufEntry&,constVarList::BufEntry&)>)'
+  [D] 'function void std::__introsort_loop<VarList::BufEntry*,longint,__gnu_cxx::__ops::_Iter_comp_iter<bool(*)(constVarList::BufEntry&,constVarList::BufEntry&)>>(VarList::BufEntry*, VarList::BufEntry*, long int, __gnu_cxx::__ops::_Iter_comp_iter<bool(*)(constVarList::BufEntry&,constVarList::BufEntry&)>)'
+  [D] 'function void std::__unguarded_linear_insert<VarList::BufEntry*,__gnu_cxx::__ops::_Val_comp_iter<bool(*)(constVarList::BufEntry&,constVarList::BufEntry&)>>(VarList::BufEntry*, __gnu_cxx::__ops::_Val_comp_iter<bool(*)(constVarList::BufEntry&,constVarList::BufEntry&)>)'
   [D] 'function void write_message(FILE*, int, __va_list_tag*)'
 
 1 Changed variable:

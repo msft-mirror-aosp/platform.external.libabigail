@@ -4289,9 +4289,9 @@
     <pointer-type-def type-id='type-id-97' size-in-bits='64' hash='fd7a63c0c6c822c4' id='type-id-98'/>
     <!-- __sanitizer::LargeMmapAllocator<__sanitizer::CrashOnMapUnmap>::Header* -->
     <pointer-type-def type-id='type-id-99' size-in-bits='64' id='type-id-100'/>
-    <!-- __sanitizer::SizeClassAllocator32<0ul, 140737488355328ull, 16ul, __sanitizer::SizeClassMap<17ul, 64ul, 14ul>, 24ul, __sanitizer::TwoLevelByteMap<2048ull, 4096ull, __sanitizer::NoOpMapUnmapCallback>, __sanitizer::NoOpMapUnmapCallback>::Batch* -->
+    <!-- __sanitizer::SizeClassAllocator32<0,140737488355328,16,__sanitizer::SizeClassMap<17,64,14>,24,__sanitizer::TwoLevelByteMap<2048,4096,__sanitizer::NoOpMapUnmapCallback>,__sanitizer::NoOpMapUnmapCallback>::Batch* -->
     <pointer-type-def type-id='type-id-101' size-in-bits='64' id='type-id-102'/>
-    <!-- __sanitizer::SizeClassMap<17ul, 64ul, 14ul>::TransferBatch* -->
+    <!-- __sanitizer::SizeClassMap<17,64,14>::TransferBatch* -->
     <pointer-type-def type-id='type-id-103' size-in-bits='64' id='type-id-104'/>
     <!-- namespace __sanitizer -->
     <namespace-decl name='__sanitizer'>
@@ -4321,9 +4321,9 @@
       </enum-decl>
       <!-- typedef void (*)(__sanitizer::uptr, void*) __sanitizer::ForEachChunkCallback -->
       <typedef-decl name='ForEachChunkCallback' type-id='type-id-107' size-in-bits='64' filepath='../../.././libsanitizer/sanitizer_common/sanitizer_allocator.h' line='284' column='1' hash='fd7a63c0c6c822c4' id='type-id-108'/>
-      <!-- typedef __sanitizer::SizeClassAllocatorLocalCache<__sanitizer::SizeClassAllocator32<0ul, 140737488355328ull, 16ul, __sanitizer::SizeClassMap<17ul, 64ul, 14ul>, 24ul, __sanitizer::TwoLevelByteMap<2048ull, 4096ull, __sanitizer::NoOpMapUnmapCallback>, __sanitizer::NoOpMapUnmapCallback> > __sanitizer::InternalAllocatorCache -->
+      <!-- typedef __sanitizer::SizeClassAllocatorLocalCache<__sanitizer::SizeClassAllocator32<0,140737488355328,16,__sanitizer::SizeClassMap<17,64,14>,24,__sanitizer::TwoLevelByteMap<2048,4096,__sanitizer::NoOpMapUnmapCallback>,__sanitizer::NoOpMapUnmapCallback>> __sanitizer::InternalAllocatorCache -->
       <typedef-decl name='InternalAllocatorCache' type-id='type-id-109' size-in-bits='441344' filepath='../../.././libsanitizer/sanitizer_common/sanitizer_allocator_internal.h' line='43' column='1' id='type-id-110'/>
-      <!-- typedef __sanitizer::CombinedAllocator<__sanitizer::SizeClassAllocator32<0ul, 140737488355328ull, 16ul, __sanitizer::SizeClassMap<17ul, 64ul, 14ul>, 24ul, __sanitizer::TwoLevelByteMap<2048ull, 4096ull, __sanitizer::NoOpMapUnmapCallback>, __sanitizer::NoOpMapUnmapCallback>, __sanitizer::SizeClassAllocatorLocalCache<__sanitizer::SizeClassAllocator32<0ul, 140737488355328ull, 16ul, __sanitizer::SizeClassMap<17ul, 64ul, 14ul>, 24ul, __sanitizer::TwoLevelByteMap<2048ull, 4096ull, __sanitizer::NoOpMapUnmapCallback>, __sanitizer::NoOpMapUnmapCallback> >, __sanitizer::LargeMmapAllocator<__sanitizer::CrashOnMapUnmap> > __sanitizer::InternalAllocator -->
+      <!-- typedef __sanitizer::CombinedAllocator<__sanitizer::SizeClassAllocator32<0,140737488355328,16,__sanitizer::SizeClassMap<17,64,14>,24,__sanitizer::TwoLevelByteMap<2048,4096,__sanitizer::NoOpMapUnmapCallback>,__sanitizer::NoOpMapUnmapCallback>,__sanitizer::SizeClassAllocatorLocalCache<__sanitizer::SizeClassAllocator32<0,140737488355328,16,__sanitizer::SizeClassMap<17,64,14>,24,__sanitizer::TwoLevelByteMap<2048,4096,__sanitizer::NoOpMapUnmapCallback>,__sanitizer::NoOpMapUnmapCallback>>,__sanitizer::LargeMmapAllocator<__sanitizer::CrashOnMapUnmap>> __sanitizer::InternalAllocator -->
       <typedef-decl name='InternalAllocator' type-id='type-id-111' size-in-bits='16940672' filepath='../../.././libsanitizer/sanitizer_common/sanitizer_allocator_internal.h' line='58' column='1' id='type-id-112'/>
       <!-- enum __sanitizer::memory_order -->
       <enum-decl name='memory_order' size-in-bits='32' alignment-in-bits='32' filepath='../../.././libsanitizer/sanitizer_common/sanitizer_atomic.h' line='19' column='1' hash='3c57cb71e85bb581' id='type-id-113'>
@@ -4717,30 +4717,30 @@
     </namespace-decl>
   </abi-instr>
   <abi-instr address-size='64' path='../../.././libsanitizer/sanitizer_common/sanitizer_coverage.cc' comp-dir-path='/tmp/legendre/spack-stage/spack-stage-ImG4Cf/gcc-4.9.2/x86_64-unknown-linux-gnu/libsanitizer/sanitizer_common' language='LANG_C_plus_plus'>
-    <!-- __sanitizer::InternalMmapVector<long unsigned int>* -->
-    <pointer-type-def type-id='type-id-166' size-in-bits='64' hash='37b410eb8b10f623' id='type-id-167'/>
-    <!-- __sanitizer::InternalMmapVector<long unsigned int>* const -->
-    <qualified-type-def type-id='type-id-167' const='yes' hash='287766d5e4ab629c' id='type-id-168'/>
-    <!-- __sanitizer::InternalMmapVector<unsigned int>* -->
-    <pointer-type-def type-id='type-id-169' size-in-bits='64' hash='d37ba974318082f6' id='type-id-170'/>
-    <!-- __sanitizer::InternalMmapVector<unsigned int>* const -->
-    <qualified-type-def type-id='type-id-170' const='yes' hash='a6b6ee215b8c8837' id='type-id-171'/>
-    <!-- const __sanitizer::InternalMmapVector<long unsigned int> -->
-    <qualified-type-def type-id='type-id-166' const='yes' hash='3744ce03666d1157' id='type-id-172'/>
-    <!-- const __sanitizer::InternalMmapVector<long unsigned int>& -->
-    <reference-type-def kind='lvalue' type-id='type-id-172' size-in-bits='64' hash='51a4326a037fdf9a' id='type-id-173'/>
-    <!-- const __sanitizer::InternalMmapVector<long unsigned int>* -->
-    <pointer-type-def type-id='type-id-172' size-in-bits='64' hash='23c94f7b5e5de60d' id='type-id-174'/>
-    <!-- const __sanitizer::InternalMmapVector<long unsigned int>* const -->
-    <qualified-type-def type-id='type-id-174' const='yes' hash='9792afcfbfe392a8' id='type-id-175'/>
-    <!-- const __sanitizer::InternalMmapVector<unsigned int> -->
-    <qualified-type-def type-id='type-id-169' const='yes' hash='33713c6470efa09e' id='type-id-176'/>
-    <!-- const __sanitizer::InternalMmapVector<unsigned int>& -->
-    <reference-type-def kind='lvalue' type-id='type-id-176' size-in-bits='64' hash='f3a9583d9f03baf1' id='type-id-177'/>
-    <!-- const __sanitizer::InternalMmapVector<unsigned int>* -->
-    <pointer-type-def type-id='type-id-176' size-in-bits='64' hash='7618a48ba4b5f8b3' id='type-id-178'/>
-    <!-- const __sanitizer::InternalMmapVector<unsigned int>* const -->
-    <qualified-type-def type-id='type-id-178' const='yes' hash='f9a1e5ce970ba082' id='type-id-179'/>
+    <!-- __sanitizer::InternalMmapVector<longunsignedint>* -->
+    <pointer-type-def type-id='type-id-166' size-in-bits='64' hash='2b543dd5707a597e' id='type-id-167'/>
+    <!-- __sanitizer::InternalMmapVector<longunsignedint>* const -->
+    <qualified-type-def type-id='type-id-167' const='yes' hash='c4b4e779059a3a6f' id='type-id-168'/>
+    <!-- __sanitizer::InternalMmapVector<unsignedint>* -->
+    <pointer-type-def type-id='type-id-169' size-in-bits='64' hash='39e9ff522b15a5e7' id='type-id-170'/>
+    <!-- __sanitizer::InternalMmapVector<unsignedint>* const -->
+    <qualified-type-def type-id='type-id-170' const='yes' hash='73c3af2b7c2d6dee' id='type-id-171'/>
+    <!-- const __sanitizer::InternalMmapVector<longunsignedint> -->
+    <qualified-type-def type-id='type-id-166' const='yes' hash='35a0dbe339a24cd2' id='type-id-172'/>
+    <!-- const __sanitizer::InternalMmapVector<longunsignedint>& -->
+    <reference-type-def kind='lvalue' type-id='type-id-172' size-in-bits='64' hash='cea71e05587c988d' id='type-id-173'/>
+    <!-- const __sanitizer::InternalMmapVector<longunsignedint>* -->
+    <pointer-type-def type-id='type-id-172' size-in-bits='64' hash='8ce29dc9a0fd977a' id='type-id-174'/>
+    <!-- const __sanitizer::InternalMmapVector<longunsignedint>* const -->
+    <qualified-type-def type-id='type-id-174' const='yes' hash='286b293c104122d3' id='type-id-175'/>
+    <!-- const __sanitizer::InternalMmapVector<unsignedint> -->
+    <qualified-type-def type-id='type-id-169' const='yes' hash='f040d60e2491bd0d' id='type-id-176'/>
+    <!-- const __sanitizer::InternalMmapVector<unsignedint>& -->
+    <reference-type-def kind='lvalue' type-id='type-id-176' size-in-bits='64' hash='3f9fbe4133a0f5b2' id='type-id-177'/>
+    <!-- const __sanitizer::InternalMmapVector<unsignedint>* -->
+    <pointer-type-def type-id='type-id-176' size-in-bits='64' hash='0317583b3ea6929f' id='type-id-178'/>
+    <!-- const __sanitizer::InternalMmapVector<unsignedint>* const -->
+    <qualified-type-def type-id='type-id-178' const='yes' hash='7ebf6e058b53940b' id='type-id-179'/>
     <!-- const unsigned int -->
     <qualified-type-def type-id='type-id-180' const='yes' hash='6e5b7fbd041269f4' id='type-id-181'/>
     <!-- const unsigned int& -->
@@ -4765,33 +4765,33 @@
     </function-decl>
     <!-- namespace __sanitizer -->
     <namespace-decl name='__sanitizer'>
-      <!-- class __sanitizer::InternalMmapVector<long unsigned int> -->
-      <class-decl name='InternalMmapVector&lt;long unsigned int&gt;' visibility='default' size-in-bits='192' filepath='../../.././libsanitizer/sanitizer_common/sanitizer_common.h' line='320' column='1' hash='bc399a347d7d6190' id='type-id-166'>
+      <!-- class __sanitizer::InternalMmapVector<longunsignedint> -->
+      <class-decl name='InternalMmapVector&lt;longunsignedint&gt;' visibility='default' size-in-bits='192' filepath='../../.././libsanitizer/sanitizer_common/sanitizer_common.h' line='320' column='1' hash='4a700ba669696dfd' id='type-id-166'>
         <data-member access='private' layout-offset-in-bits='0'>
-          <!-- unsigned long int* __sanitizer::InternalMmapVector<long unsigned int>::data_ -->
+          <!-- unsigned long int* __sanitizer::InternalMmapVector<longunsignedint>::data_ -->
           <var-decl name='data_' type-id='type-id-140' visibility='default' filepath='../../.././libsanitizer/sanitizer_common/sanitizer_common.h' line='382' column='1'/>
         </data-member>
         <data-member access='private' layout-offset-in-bits='64'>
-          <!-- __sanitizer::uptr __sanitizer::InternalMmapVector<long unsigned int>::capacity_ -->
+          <!-- __sanitizer::uptr __sanitizer::InternalMmapVector<longunsignedint>::capacity_ -->
           <var-decl name='capacity_' type-id='type-id-87' visibility='default' filepath='../../.././libsanitizer/sanitizer_common/sanitizer_common.h' line='383' column='1'/>
         </data-member>
         <data-member access='private' layout-offset-in-bits='128'>
-          <!-- __sanitizer::uptr __sanitizer::InternalMmapVector<long unsigned int>::size_ -->
+          <!-- __sanitizer::uptr __sanitizer::InternalMmapVector<longunsignedint>::size_ -->
           <var-decl name='size_' type-id='type-id-87' visibility='default' filepath='../../.././libsanitizer/sanitizer_common/sanitizer_common.h' line='384' column='1'/>
         </data-member>
       </class-decl>
-      <!-- class __sanitizer::InternalMmapVector<unsigned int> -->
-      <class-decl name='InternalMmapVector&lt;unsigned int&gt;' visibility='default' size-in-bits='192' filepath='../../.././libsanitizer/sanitizer_common/sanitizer_common.h' line='320' column='1' hash='751815d654f2dc76' id='type-id-169'>
+      <!-- class __sanitizer::InternalMmapVector<unsignedint> -->
+      <class-decl name='InternalMmapVector&lt;unsignedint&gt;' visibility='default' size-in-bits='192' filepath='../../.././libsanitizer/sanitizer_common/sanitizer_common.h' line='320' column='1' hash='0544c1c9dd896c45' id='type-id-169'>
         <data-member access='private' layout-offset-in-bits='0'>
-          <!-- unsigned int* __sanitizer::InternalMmapVector<unsigned int>::data_ -->
+          <!-- unsigned int* __sanitizer::InternalMmapVector<unsignedint>::data_ -->
           <var-decl name='data_' type-id='type-id-186' visibility='default' filepath='../../.././libsanitizer/sanitizer_common/sanitizer_common.h' line='382' column='1'/>
         </data-member>
         <data-member access='private' layout-offset-in-bits='64'>
-          <!-- __sanitizer::uptr __sanitizer::InternalMmapVector<unsigned int>::capacity_ -->
+          <!-- __sanitizer::uptr __sanitizer::InternalMmapVector<unsignedint>::capacity_ -->
           <var-decl name='capacity_' type-id='type-id-87' visibility='default' filepath='../../.././libsanitizer/sanitizer_common/sanitizer_common.h' line='383' column='1'/>
         </data-member>
         <data-member access='private' layout-offset-in-bits='128'>
-          <!-- __sanitizer::uptr __sanitizer::InternalMmapVector<unsigned int>::size_ -->
+          <!-- __sanitizer::uptr __sanitizer::InternalMmapVector<unsignedint>::size_ -->
           <var-decl name='size_' type-id='type-id-87' visibility='default' filepath='../../.././libsanitizer/sanitizer_common/sanitizer_common.h' line='384' column='1'/>
         </data-member>
       </class-decl>
@@ -4807,35 +4807,35 @@
   <abi-instr address-size='64' path='../../.././libsanitizer/sanitizer_common/sanitizer_libc.cc' comp-dir-path='/tmp/legendre/spack-stage/spack-stage-ImG4Cf/gcc-4.9.2/x86_64-unknown-linux-gnu/libsanitizer/sanitizer_common' language='LANG_C_plus_plus'>
     <!-- namespace __sanitizer -->
     <namespace-decl name='__sanitizer'>
-      <!-- struct __sanitizer::SizeClassAllocatorLocalCache<__sanitizer::SizeClassAllocator32<0ul, 140737488355328ull, 16ul, __sanitizer::SizeClassMap<17ul, 64ul, 14ul>, 24ul, __sanitizer::TwoLevelByteMap<2048ull, 4096ull, __sanitizer::NoOpMapUnmapCallback>, __sanitizer::NoOpMapUnmapCallback> > -->
-      <class-decl name='SizeClassAllocatorLocalCache&lt;__sanitizer::SizeClassAllocator32&lt;0ul, 140737488355328ull, 16ul, __sanitizer::SizeClassMap&lt;17ul, 64ul, 14ul&gt;, 24ul, __sanitizer::TwoLevelByteMap&lt;2048ull, 4096ull, __sanitizer::NoOpMapUnmapCallback&gt;, __sanitizer::NoOpMapUnmapCallback&gt; &gt;' is-struct='yes' visibility='default' size-in-bits='441344' filepath='../../.././libsanitizer/sanitizer_common/sanitizer_allocator.h' line='889' column='1' hash='29c841a968bf73d6' id='type-id-109'>
+      <!-- struct __sanitizer::SizeClassAllocatorLocalCache<__sanitizer::SizeClassAllocator32<0,140737488355328,16,__sanitizer::SizeClassMap<17,64,14>,24,__sanitizer::TwoLevelByteMap<2048,4096,__sanitizer::NoOpMapUnmapCallback>,__sanitizer::NoOpMapUnmapCallback>> -->
+      <class-decl name='SizeClassAllocatorLocalCache&lt;__sanitizer::SizeClassAllocator32&lt;0,140737488355328,16,__sanitizer::SizeClassMap&lt;17,64,14&gt;,24,__sanitizer::TwoLevelByteMap&lt;2048,4096,__sanitizer::NoOpMapUnmapCallback&gt;,__sanitizer::NoOpMapUnmapCallback&gt;&gt;' is-struct='yes' visibility='default' size-in-bits='441344' filepath='../../.././libsanitizer/sanitizer_common/sanitizer_allocator.h' line='889' column='1' hash='72c99b02a69a4a0c' id='type-id-109'>
         <member-type access='public'>
-          <!-- struct __sanitizer::SizeClassAllocatorLocalCache<__sanitizer::SizeClassAllocator32<0ul, 140737488355328ull, 16ul, __sanitizer::SizeClassMap<17ul, 64ul, 14ul>, 24ul, __sanitizer::TwoLevelByteMap<2048ull, 4096ull, __sanitizer::NoOpMapUnmapCallback>, __sanitizer::NoOpMapUnmapCallback> >::PerClass -->
+          <!-- struct __sanitizer::SizeClassAllocatorLocalCache<__sanitizer::SizeClassAllocator32<0,140737488355328,16,__sanitizer::SizeClassMap<17,64,14>,24,__sanitizer::TwoLevelByteMap<2048,4096,__sanitizer::NoOpMapUnmapCallback>,__sanitizer::NoOpMapUnmapCallback>>::PerClass -->
           <class-decl name='PerClass' is-struct='yes' visibility='default' size-in-bits='8320' filepath='../../.././libsanitizer/sanitizer_common/sanitizer_allocator.h' line='942' column='1' hash='7277531e5c0a53cc' id='type-id-189'>
             <data-member access='public' layout-offset-in-bits='0'>
-              <!-- __sanitizer::uptr __sanitizer::SizeClassAllocatorLocalCache<__sanitizer::SizeClassAllocator32<0ul, 140737488355328ull, 16ul, __sanitizer::SizeClassMap<17ul, 64ul, 14ul>, 24ul, __sanitizer::TwoLevelByteMap<2048ull, 4096ull, __sanitizer::NoOpMapUnmapCallback>, __sanitizer::NoOpMapUnmapCallback> >::PerClass::count -->
+              <!-- __sanitizer::uptr __sanitizer::SizeClassAllocatorLocalCache<__sanitizer::SizeClassAllocator32<0,140737488355328,16,__sanitizer::SizeClassMap<17,64,14>,24,__sanitizer::TwoLevelByteMap<2048,4096,__sanitizer::NoOpMapUnmapCallback>,__sanitizer::NoOpMapUnmapCallback>>::PerClass::count -->
               <var-decl name='count' type-id='type-id-87' visibility='default' filepath='../../.././libsanitizer/sanitizer_common/sanitizer_allocator.h' line='943' column='1'/>
             </data-member>
             <data-member access='public' layout-offset-in-bits='64'>
-              <!-- __sanitizer::uptr __sanitizer::SizeClassAllocatorLocalCache<__sanitizer::SizeClassAllocator32<0ul, 140737488355328ull, 16ul, __sanitizer::SizeClassMap<17ul, 64ul, 14ul>, 24ul, __sanitizer::TwoLevelByteMap<2048ull, 4096ull, __sanitizer::NoOpMapUnmapCallback>, __sanitizer::NoOpMapUnmapCallback> >::PerClass::max_count -->
+              <!-- __sanitizer::uptr __sanitizer::SizeClassAllocatorLocalCache<__sanitizer::SizeClassAllocator32<0,140737488355328,16,__sanitizer::SizeClassMap<17,64,14>,24,__sanitizer::TwoLevelByteMap<2048,4096,__sanitizer::NoOpMapUnmapCallback>,__sanitizer::NoOpMapUnmapCallback>>::PerClass::max_count -->
               <var-decl name='max_count' type-id='type-id-87' visibility='default' filepath='../../.././libsanitizer/sanitizer_common/sanitizer_allocator.h' line='944' column='1'/>
             </data-member>
             <data-member access='public' layout-offset-in-bits='128'>
-              <!-- void* __sanitizer::SizeClassAllocatorLocalCache<__sanitizer::SizeClassAllocator32<0ul, 140737488355328ull, 16ul, __sanitizer::SizeClassMap<17ul, 64ul, 14ul>, 24ul, __sanitizer::TwoLevelByteMap<2048ull, 4096ull, __sanitizer::NoOpMapUnmapCallback>, __sanitizer::NoOpMapUnmapCallback> >::PerClass::batch[128] -->
+              <!-- void* __sanitizer::SizeClassAllocatorLocalCache<__sanitizer::SizeClassAllocator32<0,140737488355328,16,__sanitizer::SizeClassMap<17,64,14>,24,__sanitizer::TwoLevelByteMap<2048,4096,__sanitizer::NoOpMapUnmapCallback>,__sanitizer::NoOpMapUnmapCallback>>::PerClass::batch[128] -->
               <var-decl name='batch' type-id='type-id-190' visibility='default' filepath='../../.././libsanitizer/sanitizer_common/sanitizer_allocator.h' line='945' column='1'/>
             </data-member>
           </class-decl>
         </member-type>
         <member-type access='public'>
-          <!-- typedef __sanitizer::SizeClassMap<17ul, 64ul, 14ul>::TransferBatch __sanitizer::SizeClassAllocatorLocalCache<__sanitizer::SizeClassAllocator32<0ul, 140737488355328ull, 16ul, __sanitizer::SizeClassMap<17ul, 64ul, 14ul>, 24ul, __sanitizer::TwoLevelByteMap<2048ull, 4096ull, __sanitizer::NoOpMapUnmapCallback>, __sanitizer::NoOpMapUnmapCallback> >::Batch -->
+          <!-- typedef __sanitizer::SizeClassMap<17,64,14>::TransferBatch __sanitizer::SizeClassAllocatorLocalCache<__sanitizer::SizeClassAllocator32<0,140737488355328,16,__sanitizer::SizeClassMap<17,64,14>,24,__sanitizer::TwoLevelByteMap<2048,4096,__sanitizer::NoOpMapUnmapCallback>,__sanitizer::NoOpMapUnmapCallback>>::Batch -->
           <typedef-decl name='Batch' type-id='type-id-103' filepath='../../.././libsanitizer/sanitizer_common/sanitizer_allocator.h' line='941' column='1' id='type-id-191'/>
         </member-type>
         <data-member access='public' layout-offset-in-bits='0'>
-          <!-- __sanitizer::SizeClassAllocatorLocalCache<__sanitizer::SizeClassAllocator32<0ul, 140737488355328ull, 16ul, __sanitizer::SizeClassMap<17ul, 64ul, 14ul>, 24ul, __sanitizer::TwoLevelByteMap<2048ull, 4096ull, __sanitizer::NoOpMapUnmapCallback>, __sanitizer::NoOpMapUnmapCallback> >::PerClass __sanitizer::SizeClassAllocatorLocalCache<__sanitizer::SizeClassAllocator32<0ul, 140737488355328ull, 16ul, __sanitizer::SizeClassMap<17ul, 64ul, 14ul>, 24ul, __sanitizer::TwoLevelByteMap<2048ull, 4096ull, __sanitizer::NoOpMapUnmapCallback>, __sanitizer::NoOpMapUnmapCallback> >::per_class_[53] -->
+          <!-- __sanitizer::SizeClassAllocatorLocalCache<__sanitizer::SizeClassAllocator32<0,140737488355328,16,__sanitizer::SizeClassMap<17,64,14>,24,__sanitizer::TwoLevelByteMap<2048,4096,__sanitizer::NoOpMapUnmapCallback>,__sanitizer::NoOpMapUnmapCallback>>::PerClass __sanitizer::SizeClassAllocatorLocalCache<__sanitizer::SizeClassAllocator32<0,140737488355328,16,__sanitizer::SizeClassMap<17,64,14>,24,__sanitizer::TwoLevelByteMap<2048,4096,__sanitizer::NoOpMapUnmapCallback>,__sanitizer::NoOpMapUnmapCallback>>::per_class_[53] -->
           <var-decl name='per_class_' type-id='type-id-192' visibility='default' filepath='../../.././libsanitizer/sanitizer_common/sanitizer_allocator.h' line='947' column='1'/>
         </data-member>
         <data-member access='public' layout-offset-in-bits='440960'>
-          <!-- __sanitizer::AllocatorStats __sanitizer::SizeClassAllocatorLocalCache<__sanitizer::SizeClassAllocator32<0ul, 140737488355328ull, 16ul, __sanitizer::SizeClassMap<17ul, 64ul, 14ul>, 24ul, __sanitizer::TwoLevelByteMap<2048ull, 4096ull, __sanitizer::NoOpMapUnmapCallback>, __sanitizer::NoOpMapUnmapCallback> >::stats_ -->
+          <!-- __sanitizer::AllocatorStats __sanitizer::SizeClassAllocatorLocalCache<__sanitizer::SizeClassAllocator32<0,140737488355328,16,__sanitizer::SizeClassMap<17,64,14>,24,__sanitizer::TwoLevelByteMap<2048,4096,__sanitizer::NoOpMapUnmapCallback>,__sanitizer::NoOpMapUnmapCallback>>::stats_ -->
           <var-decl name='stats_' type-id='type-id-193' visibility='default' filepath='../../.././libsanitizer/sanitizer_common/sanitizer_allocator.h' line='948' column='1'/>
         </data-member>
       </class-decl>
@@ -5860,10 +5860,10 @@
     <pointer-type-def type-id='type-id-373' size-in-bits='64' hash='7f5adc830ffd8423' id='type-id-374'/>
     <!-- __tsan::ThreadClock* const -->
     <qualified-type-def type-id='type-id-374' const='yes' hash='23be82b95dd01b0b' id='type-id-375'/>
-    <!-- __tsan::Vector<long long unsigned int>* -->
-    <pointer-type-def type-id='type-id-376' size-in-bits='64' hash='32be8d6e6ef077b8' id='type-id-377'/>
-    <!-- __tsan::Vector<long long unsigned int>* const -->
-    <qualified-type-def type-id='type-id-377' const='yes' hash='1c6bc23d3426d145' id='type-id-378'/>
+    <!-- __tsan::Vector<longlongunsignedint>* -->
+    <pointer-type-def type-id='type-id-376' size-in-bits='64' hash='a6a67f02fc81dd37' id='type-id-377'/>
+    <!-- __tsan::Vector<longlongunsignedint>* const -->
+    <qualified-type-def type-id='type-id-377' const='yes' hash='3cee973f02384f43' id='type-id-378'/>
     <!-- const __tsan::MBlockType -->
     <qualified-type-def type-id='type-id-379' const='yes' hash='1c7ceba604a3c911' id='type-id-380'/>
     <!-- const __tsan::SyncClock -->
@@ -5876,14 +5876,14 @@
     <pointer-type-def type-id='type-id-383' size-in-bits='64' hash='304075f25ebb8888' id='type-id-384'/>
     <!-- const __tsan::ThreadClock* const -->
     <qualified-type-def type-id='type-id-384' const='yes' hash='28bc40cb99e592bd' id='type-id-385'/>
-    <!-- const __tsan::Vector<long long unsigned int> -->
-    <qualified-type-def type-id='type-id-376' const='yes' hash='a81bb0955c0b7a44' id='type-id-386'/>
-    <!-- const __tsan::Vector<long long unsigned int>& -->
-    <reference-type-def kind='lvalue' type-id='type-id-386' size-in-bits='64' hash='c44f58147f5a5540' id='type-id-387'/>
-    <!-- const __tsan::Vector<long long unsigned int>* -->
-    <pointer-type-def type-id='type-id-386' size-in-bits='64' hash='c9d14478e950e4f9' id='type-id-388'/>
-    <!-- const __tsan::Vector<long long unsigned int>* const -->
-    <qualified-type-def type-id='type-id-388' const='yes' hash='69d3ef7df28480c3' id='type-id-389'/>
+    <!-- const __tsan::Vector<longlongunsignedint> -->
+    <qualified-type-def type-id='type-id-376' const='yes' hash='d970ebe36d3bbebe' id='type-id-386'/>
+    <!-- const __tsan::Vector<longlongunsignedint>& -->
+    <reference-type-def kind='lvalue' type-id='type-id-386' size-in-bits='64' hash='4c0728065839e049' id='type-id-387'/>
+    <!-- const __tsan::Vector<longlongunsignedint>* -->
+    <pointer-type-def type-id='type-id-386' size-in-bits='64' hash='903709da3b638c5f' id='type-id-388'/>
+    <!-- const __tsan::Vector<longlongunsignedint>* const -->
+    <qualified-type-def type-id='type-id-388' const='yes' hash='a3720239c2451bba' id='type-id-389'/>
     <!-- const unsigned long long int -->
     <qualified-type-def type-id='type-id-115' const='yes' hash='f06d84c079ff07f5#3' id='type-id-390'/>
     <!-- const unsigned long long int& -->
@@ -5900,26 +5900,26 @@
       <!-- class __tsan::SyncClock -->
       <class-decl name='SyncClock' visibility='default' size-in-bits='256' filepath='../../.././libsanitizer/tsan/tsan_clock.h' line='20' column='1' hash='19da309c4d401914' id='type-id-370'>
         <data-member access='private' layout-offset-in-bits='0'>
-          <!-- __tsan::Vector<long long unsigned int> __tsan::SyncClock::clk_ -->
+          <!-- __tsan::Vector<longlongunsignedint> __tsan::SyncClock::clk_ -->
           <var-decl name='clk_' type-id='type-id-376' visibility='default' filepath='../../.././libsanitizer/tsan/tsan_clock.h' line='33' column='1'/>
         </data-member>
       </class-decl>
-      <!-- class __tsan::Vector<long long unsigned int> -->
-      <class-decl name='Vector&lt;long long unsigned int&gt;' visibility='default' size-in-bits='256' filepath='../../.././libsanitizer/tsan/tsan_vector.h' line='23' column='1' hash='3c3d55096071d4eb' id='type-id-376'>
+      <!-- class __tsan::Vector<longlongunsignedint> -->
+      <class-decl name='Vector&lt;longlongunsignedint&gt;' visibility='default' size-in-bits='256' filepath='../../.././libsanitizer/tsan/tsan_vector.h' line='23' column='1' hash='c231464d57baf5ac' id='type-id-376'>
         <data-member access='private' layout-offset-in-bits='0'>
-          <!-- const __tsan::MBlockType __tsan::Vector<long long unsigned int>::typ_ -->
+          <!-- const __tsan::MBlockType __tsan::Vector<longlongunsignedint>::typ_ -->
           <var-decl name='typ_' type-id='type-id-380' visibility='default' filepath='../../.././libsanitizer/tsan/tsan_vector.h' line='80' column='1'/>
         </data-member>
         <data-member access='private' layout-offset-in-bits='64'>
-          <!-- unsigned long long int* __tsan::Vector<long long unsigned int>::begin_ -->
+          <!-- unsigned long long int* __tsan::Vector<longlongunsignedint>::begin_ -->
           <var-decl name='begin_' type-id='type-id-393' visibility='default' filepath='../../.././libsanitizer/tsan/tsan_vector.h' line='81' column='1'/>
         </data-member>
         <data-member access='private' layout-offset-in-bits='128'>
-          <!-- unsigned long long int* __tsan::Vector<long long unsigned int>::end_ -->
+          <!-- unsigned long long int* __tsan::Vector<longlongunsignedint>::end_ -->
           <var-decl name='end_' type-id='type-id-393' visibility='default' filepath='../../.././libsanitizer/tsan/tsan_vector.h' line='82' column='1'/>
         </data-member>
         <data-member access='private' layout-offset-in-bits='192'>
-          <!-- unsigned long long int* __tsan::Vector<long long unsigned int>::last_ -->
+          <!-- unsigned long long int* __tsan::Vector<longlongunsignedint>::last_ -->
           <var-decl name='last_' type-id='type-id-393' visibility='default' filepath='../../.././libsanitizer/tsan/tsan_vector.h' line='83' column='1'/>
         </data-member>
       </class-decl>
@@ -6237,22 +6237,22 @@
         <var-decl name='sa_restorer' type-id='type-id-145' visibility='default' filepath='../../.././libsanitizer/tsan/tsan_interceptors.cc' line='98' column='1'/>
       </data-member>
     </class-decl>
-    <!-- struct typedef __va_list_tag __va_list_tag -->
-    <class-decl name='typedef __va_list_tag __va_list_tag' is-struct='yes' visibility='default' size-in-bits='192' hash='82aec996f90384a2' id='type-id-445'>
+    <!-- struct typedef__va_list_tag__va_list_tag -->
+    <class-decl name='typedef__va_list_tag__va_list_tag' is-struct='yes' visibility='default' size-in-bits='192' hash='3b37d6f26ac12c24' id='type-id-445'>
       <data-member access='public' layout-offset-in-bits='0'>
-        <!-- unsigned int typedef __va_list_tag __va_list_tag::gp_offset -->
+        <!-- unsigned int typedef__va_list_tag__va_list_tag::gp_offset -->
         <var-decl name='gp_offset' type-id='type-id-180' visibility='default'/>
       </data-member>
       <data-member access='public' layout-offset-in-bits='32'>
-        <!-- unsigned int typedef __va_list_tag __va_list_tag::fp_offset -->
+        <!-- unsigned int typedef__va_list_tag__va_list_tag::fp_offset -->
         <var-decl name='fp_offset' type-id='type-id-180' visibility='default'/>
       </data-member>
       <data-member access='public' layout-offset-in-bits='64'>
-        <!-- void* typedef __va_list_tag __va_list_tag::overflow_arg_area -->
+        <!-- void* typedef__va_list_tag__va_list_tag::overflow_arg_area -->
         <var-decl name='overflow_arg_area' type-id='type-id-3' visibility='default'/>
       </data-member>
       <data-member access='public' layout-offset-in-bits='128'>
-        <!-- void* typedef __va_list_tag __va_list_tag::reg_save_area -->
+        <!-- void* typedef__va_list_tag__va_list_tag::reg_save_area -->
         <var-decl name='reg_save_area' type-id='type-id-3' visibility='default'/>
       </data-member>
     </class-decl>
@@ -6526,8 +6526,8 @@
     <pointer-type-def type-id='type-id-439' size-in-bits='64' hash='9c6590d4e21b17c5' id='type-id-598'/>
     <!-- sigaction_t* -->
     <pointer-type-def type-id='type-id-440' size-in-bits='64' hash='dc89d352292e5898' id='type-id-599'/>
-    <!-- typedef __va_list_tag __va_list_tag* -->
-    <pointer-type-def type-id='type-id-445' size-in-bits='64' hash='648313adc1c4c534' id='type-id-600'/>
+    <!-- typedef__va_list_tag__va_list_tag* -->
+    <pointer-type-def type-id='type-id-445' size-in-bits='64' hash='32209790a214ec40' id='type-id-600'/>
     <!-- unsigned int* -->
     <pointer-type-def type-id='type-id-180' size-in-bits='64' hash='232fa04f890c2a5a' id='type-id-186'/>
     <!-- unsigned long int* -->
@@ -6881,64 +6881,64 @@
       <!-- char* -->
       <return type-id='type-id-28'/>
     </function-decl>
-    <!-- int __interceptor_vscanf(const char*, typedef __va_list_tag __va_list_tag*) -->
-    <function-decl name='__interceptor_vscanf' mangled-name='__interceptor_vscanf' filepath='../../.././libsanitizer/sanitizer_common/sanitizer_common_interceptors.inc' line='587' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='__interceptor_vscanf' hash='09869f0b6b21fd13'>
+    <!-- int __interceptor_vscanf(const char*, typedef__va_list_tag__va_list_tag*) -->
+    <function-decl name='__interceptor_vscanf' mangled-name='__interceptor_vscanf' filepath='../../.././libsanitizer/sanitizer_common/sanitizer_common_interceptors.inc' line='587' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='__interceptor_vscanf' hash='6b52185f6389d9c0'>
       <!-- parameter of type 'const char*' -->
       <parameter type-id='type-id-4' filepath='../../.././libsanitizer/sanitizer_common/sanitizer_common_interceptors.inc' line='597' column='1'/>
-      <!-- parameter of type 'typedef __va_list_tag __va_list_tag*' -->
+      <!-- parameter of type 'typedef__va_list_tag__va_list_tag*' -->
       <parameter type-id='type-id-600' filepath='../../.././libsanitizer/sanitizer_common/sanitizer_common_interceptors.inc' line='597' column='1'/>
       <!-- int -->
       <return type-id='type-id-6'/>
     </function-decl>
-    <!-- int __interceptor_vsscanf(const char*, const char*, typedef __va_list_tag __va_list_tag*) -->
-    <function-decl name='__interceptor_vsscanf' mangled-name='__interceptor_vsscanf' filepath='../../.././libsanitizer/sanitizer_common/sanitizer_common_interceptors.inc' line='590' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='__interceptor_vsscanf' hash='0aa4065f8c3f2710'>
+    <!-- int __interceptor_vsscanf(const char*, const char*, typedef__va_list_tag__va_list_tag*) -->
+    <function-decl name='__interceptor_vsscanf' mangled-name='__interceptor_vsscanf' filepath='../../.././libsanitizer/sanitizer_common/sanitizer_common_interceptors.inc' line='590' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='__interceptor_vsscanf' hash='42b37fc80abf6bc2'>
       <!-- parameter of type 'const char*' -->
       <parameter type-id='type-id-4' filepath='../../.././libsanitizer/sanitizer_common/sanitizer_common_interceptors.inc' line='600' column='1'/>
       <!-- parameter of type 'const char*' -->
       <parameter type-id='type-id-4' filepath='../../.././libsanitizer/sanitizer_common/sanitizer_common_interceptors.inc' line='600' column='1'/>
-      <!-- parameter of type 'typedef __va_list_tag __va_list_tag*' -->
+      <!-- parameter of type 'typedef__va_list_tag__va_list_tag*' -->
       <parameter type-id='type-id-600' filepath='../../.././libsanitizer/sanitizer_common/sanitizer_common_interceptors.inc' line='600' column='1'/>
       <!-- int -->
       <return type-id='type-id-6'/>
     </function-decl>
-    <!-- int __interceptor_vfscanf(void*, const char*, typedef __va_list_tag __va_list_tag*) -->
-    <function-decl name='__interceptor_vfscanf' mangled-name='__interceptor_vfscanf' filepath='../../.././libsanitizer/sanitizer_common/sanitizer_common_interceptors.inc' line='593' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='__interceptor_vfscanf' hash='09869f0b6b21fd13'>
+    <!-- int __interceptor_vfscanf(void*, const char*, typedef__va_list_tag__va_list_tag*) -->
+    <function-decl name='__interceptor_vfscanf' mangled-name='__interceptor_vfscanf' filepath='../../.././libsanitizer/sanitizer_common/sanitizer_common_interceptors.inc' line='593' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='__interceptor_vfscanf' hash='6b52185f6389d9c0'>
       <!-- parameter of type 'void*' -->
       <parameter type-id='type-id-3' filepath='../../.././libsanitizer/sanitizer_common/sanitizer_common_interceptors.inc' line='604' column='1'/>
       <!-- parameter of type 'const char*' -->
       <parameter type-id='type-id-4' filepath='../../.././libsanitizer/sanitizer_common/sanitizer_common_interceptors.inc' line='604' column='1'/>
-      <!-- parameter of type 'typedef __va_list_tag __va_list_tag*' -->
+      <!-- parameter of type 'typedef__va_list_tag__va_list_tag*' -->
       <parameter type-id='type-id-600' filepath='../../.././libsanitizer/sanitizer_common/sanitizer_common_interceptors.inc' line='604' column='1'/>
       <!-- int -->
       <return type-id='type-id-6'/>
     </function-decl>
-    <!-- int __interceptor___isoc99_vscanf(const char*, typedef __va_list_tag __va_list_tag*) -->
-    <function-decl name='__interceptor___isoc99_vscanf' mangled-name='__interceptor___isoc99_vscanf' filepath='../../.././libsanitizer/sanitizer_common/sanitizer_common_interceptors.inc' line='597' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='__interceptor___isoc99_vscanf' hash='09869f0b6b21fd13'>
+    <!-- int __interceptor___isoc99_vscanf(const char*, typedef__va_list_tag__va_list_tag*) -->
+    <function-decl name='__interceptor___isoc99_vscanf' mangled-name='__interceptor___isoc99_vscanf' filepath='../../.././libsanitizer/sanitizer_common/sanitizer_common_interceptors.inc' line='597' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='__interceptor___isoc99_vscanf' hash='6b52185f6389d9c0'>
       <!-- parameter of type 'const char*' -->
       <parameter type-id='type-id-4' filepath='../../.././libsanitizer/sanitizer_common/sanitizer_common_interceptors.inc' line='597' column='1'/>
-      <!-- parameter of type 'typedef __va_list_tag __va_list_tag*' -->
+      <!-- parameter of type 'typedef__va_list_tag__va_list_tag*' -->
       <parameter type-id='type-id-600' filepath='../../.././libsanitizer/sanitizer_common/sanitizer_common_interceptors.inc' line='597' column='1'/>
       <!-- int -->
       <return type-id='type-id-6'/>
     </function-decl>
-    <!-- int __interceptor___isoc99_vsscanf(const char*, const char*, typedef __va_list_tag __va_list_tag*) -->
-    <function-decl name='__interceptor___isoc99_vsscanf' mangled-name='__interceptor___isoc99_vsscanf' filepath='../../.././libsanitizer/sanitizer_common/sanitizer_common_interceptors.inc' line='600' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='__interceptor___isoc99_vsscanf' hash='0aa4065f8c3f2710'>
+    <!-- int __interceptor___isoc99_vsscanf(const char*, const char*, typedef__va_list_tag__va_list_tag*) -->
+    <function-decl name='__interceptor___isoc99_vsscanf' mangled-name='__interceptor___isoc99_vsscanf' filepath='../../.././libsanitizer/sanitizer_common/sanitizer_common_interceptors.inc' line='600' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='__interceptor___isoc99_vsscanf' hash='42b37fc80abf6bc2'>
       <!-- parameter of type 'const char*' -->
       <parameter type-id='type-id-4' filepath='../../.././libsanitizer/sanitizer_common/sanitizer_common_interceptors.inc' line='600' column='1'/>
       <!-- parameter of type 'const char*' -->
       <parameter type-id='type-id-4' filepath='../../.././libsanitizer/sanitizer_common/sanitizer_common_interceptors.inc' line='600' column='1'/>
-      <!-- parameter of type 'typedef __va_list_tag __va_list_tag*' -->
+      <!-- parameter of type 'typedef__va_list_tag__va_list_tag*' -->
       <parameter type-id='type-id-600' filepath='../../.././libsanitizer/sanitizer_common/sanitizer_common_interceptors.inc' line='600' column='1'/>
       <!-- int -->
       <return type-id='type-id-6'/>
     </function-decl>
-    <!-- int __interceptor___isoc99_vfscanf(void*, const char*, typedef __va_list_tag __va_list_tag*) -->
-    <function-decl name='__interceptor___isoc99_vfscanf' mangled-name='__interceptor___isoc99_vfscanf' filepath='../../.././libsanitizer/sanitizer_common/sanitizer_common_interceptors.inc' line='604' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='__interceptor___isoc99_vfscanf' hash='09869f0b6b21fd13'>
+    <!-- int __interceptor___isoc99_vfscanf(void*, const char*, typedef__va_list_tag__va_list_tag*) -->
+    <function-decl name='__interceptor___isoc99_vfscanf' mangled-name='__interceptor___isoc99_vfscanf' filepath='../../.././libsanitizer/sanitizer_common/sanitizer_common_interceptors.inc' line='604' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='__interceptor___isoc99_vfscanf' hash='6b52185f6389d9c0'>
       <!-- parameter of type 'void*' -->
       <parameter type-id='type-id-3' filepath='../../.././libsanitizer/sanitizer_common/sanitizer_common_interceptors.inc' line='604' column='1'/>
       <!-- parameter of type 'const char*' -->
       <parameter type-id='type-id-4' filepath='../../.././libsanitizer/sanitizer_common/sanitizer_common_interceptors.inc' line='604' column='1'/>
-      <!-- parameter of type 'typedef __va_list_tag __va_list_tag*' -->
+      <!-- parameter of type 'typedef__va_list_tag__va_list_tag*' -->
       <parameter type-id='type-id-600' filepath='../../.././libsanitizer/sanitizer_common/sanitizer_common_interceptors.inc' line='604' column='1'/>
       <!-- int -->
       <return type-id='type-id-6'/>
@@ -16672,22 +16672,22 @@
       <!-- typedef __sanitizer::uptr -->
       <return type-id='type-id-87'/>
     </function-decl>
-    <!-- void* operator new(__sanitizer::uptr) -->
-    <function-decl name='operator new' mangled-name='_Znwm' filepath='../../.././libsanitizer/tsan/tsan_interceptors.cc' line='559' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_Znwm' hash='e0055d99adb0e173'>
+    <!-- void* operatornew(__sanitizer::uptr) -->
+    <function-decl name='operatornew' mangled-name='_Znwm' filepath='../../.././libsanitizer/tsan/tsan_interceptors.cc' line='559' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_Znwm' hash='e0055d99adb0e173'>
       <!-- parameter of type 'typedef __sanitizer::uptr' -->
       <parameter type-id='type-id-87' filepath='../../.././libsanitizer/tsan/tsan_interceptors.cc' line='780' column='1'/>
       <!-- void* -->
       <return type-id='type-id-3'/>
     </function-decl>
-    <!-- void* operator new [](__sanitizer::uptr) -->
-    <function-decl name='operator new []' mangled-name='_Znam' filepath='../../.././libsanitizer/tsan/tsan_interceptors.cc' line='565' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_Znam' hash='e0055d99adb0e173'>
+    <!-- void* operatornew[](__sanitizer::uptr) -->
+    <function-decl name='operatornew[]' mangled-name='_Znam' filepath='../../.././libsanitizer/tsan/tsan_interceptors.cc' line='565' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_Znam' hash='e0055d99adb0e173'>
       <!-- parameter of type 'typedef __sanitizer::uptr' -->
       <parameter type-id='type-id-87' filepath='../../.././libsanitizer/tsan/tsan_interceptors.cc' line='780' column='1'/>
       <!-- void* -->
       <return type-id='type-id-3'/>
     </function-decl>
-    <!-- void* operator new(__sanitizer::uptr, const std::nothrow_t&) -->
-    <function-decl name='operator new' mangled-name='_ZnwmRKSt9nothrow_t' filepath='../../.././libsanitizer/tsan/tsan_interceptors.cc' line='571' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZnwmRKSt9nothrow_t' hash='f8a066801a6f0717'>
+    <!-- void* operatornew(__sanitizer::uptr, const std::nothrow_t&) -->
+    <function-decl name='operatornew' mangled-name='_ZnwmRKSt9nothrow_t' filepath='../../.././libsanitizer/tsan/tsan_interceptors.cc' line='571' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZnwmRKSt9nothrow_t' hash='f8a066801a6f0717'>
       <!-- parameter of type 'typedef __sanitizer::uptr' -->
       <parameter type-id='type-id-87' filepath='../../.././libsanitizer/tsan/tsan_interceptors.cc' line='577' column='1'/>
       <!-- parameter of type 'const std::nothrow_t&' -->
@@ -16695,8 +16695,8 @@
       <!-- void* -->
       <return type-id='type-id-3'/>
     </function-decl>
-    <!-- void* operator new [](__sanitizer::uptr, const std::nothrow_t&) -->
-    <function-decl name='operator new []' mangled-name='_ZnamRKSt9nothrow_t' filepath='../../.././libsanitizer/tsan/tsan_interceptors.cc' line='577' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZnamRKSt9nothrow_t' hash='f8a066801a6f0717'>
+    <!-- void* operatornew[](__sanitizer::uptr, const std::nothrow_t&) -->
+    <function-decl name='operatornew[]' mangled-name='_ZnamRKSt9nothrow_t' filepath='../../.././libsanitizer/tsan/tsan_interceptors.cc' line='577' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZnamRKSt9nothrow_t' hash='f8a066801a6f0717'>
       <!-- parameter of type 'typedef __sanitizer::uptr' -->
       <parameter type-id='type-id-87' filepath='../../.././libsanitizer/tsan/tsan_interceptors.cc' line='577' column='1'/>
       <!-- parameter of type 'const std::nothrow_t&' -->
@@ -16704,22 +16704,22 @@
       <!-- void* -->
       <return type-id='type-id-3'/>
     </function-decl>
-    <!-- void operator delete(void*) -->
-    <function-decl name='operator delete' mangled-name='_ZdlPv' filepath='../../.././libsanitizer/tsan/tsan_interceptors.cc' line='591' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZdlPv' hash='7f32ffea222edbe7'>
+    <!-- void operatordelete(void*) -->
+    <function-decl name='operatordelete' mangled-name='_ZdlPv' filepath='../../.././libsanitizer/tsan/tsan_interceptors.cc' line='591' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZdlPv' hash='7f32ffea222edbe7'>
       <!-- parameter of type 'void*' -->
       <parameter type-id='type-id-3'/>
       <!-- void -->
       <return type-id='type-id-31'/>
     </function-decl>
-    <!-- void operator delete [](void*) -->
-    <function-decl name='operator delete []' mangled-name='_ZdaPv' filepath='../../.././libsanitizer/tsan/tsan_interceptors.cc' line='597' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZdaPv' hash='7f32ffea222edbe7'>
+    <!-- void operatordelete[](void*) -->
+    <function-decl name='operatordelete[]' mangled-name='_ZdaPv' filepath='../../.././libsanitizer/tsan/tsan_interceptors.cc' line='597' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZdaPv' hash='7f32ffea222edbe7'>
       <!-- parameter of type 'void*' -->
       <parameter type-id='type-id-3'/>
       <!-- void -->
       <return type-id='type-id-31'/>
     </function-decl>
-    <!-- void operator delete(void*, const std::nothrow_t&) -->
-    <function-decl name='operator delete' mangled-name='_ZdlPvRKSt9nothrow_t' filepath='../../.././libsanitizer/tsan/tsan_interceptors.cc' line='603' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZdlPvRKSt9nothrow_t' hash='d44aa25c7bc2dcfc'>
+    <!-- void operatordelete(void*, const std::nothrow_t&) -->
+    <function-decl name='operatordelete' mangled-name='_ZdlPvRKSt9nothrow_t' filepath='../../.././libsanitizer/tsan/tsan_interceptors.cc' line='603' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZdlPvRKSt9nothrow_t' hash='d44aa25c7bc2dcfc'>
       <!-- parameter of type 'void*' -->
       <parameter type-id='type-id-3' filepath='../../.././libsanitizer/tsan/tsan_interceptors.cc' line='609' column='1'/>
       <!-- parameter of type 'const std::nothrow_t&' -->
@@ -16727,8 +16727,8 @@
       <!-- void -->
       <return type-id='type-id-31'/>
     </function-decl>
-    <!-- void operator delete [](void*, const std::nothrow_t&) -->
-    <function-decl name='operator delete []' mangled-name='_ZdaPvRKSt9nothrow_t' filepath='../../.././libsanitizer/tsan/tsan_interceptors.cc' line='609' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZdaPvRKSt9nothrow_t' hash='d44aa25c7bc2dcfc'>
+    <!-- void operatordelete[](void*, const std::nothrow_t&) -->
+    <function-decl name='operatordelete[]' mangled-name='_ZdaPvRKSt9nothrow_t' filepath='../../.././libsanitizer/tsan/tsan_interceptors.cc' line='609' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZdaPvRKSt9nothrow_t' hash='d44aa25c7bc2dcfc'>
       <!-- parameter of type 'void*' -->
       <parameter type-id='type-id-3' filepath='../../.././libsanitizer/tsan/tsan_interceptors.cc' line='609' column='1'/>
       <!-- parameter of type 'const std::nothrow_t&' -->
@@ -19201,18 +19201,18 @@
   <abi-instr address-size='64' path='../../.././libsanitizer/tsan/tsan_interface_atomic.cc' comp-dir-path='/tmp/legendre/spack-stage/spack-stage-ImG4Cf/gcc-4.9.2/x86_64-unknown-linux-gnu/libsanitizer/tsan' language='LANG_C_plus_plus'>
     <!-- __int128 -->
     <type-decl name='__int128' size-in-bits='128' hash='8782fa5e5b495ba5' id='type-id-663'/>
-    <!-- __sanitizer::SizeClassAllocator32<0ul, 140737488355328ull, 16ul, __sanitizer::SizeClassMap<17ul, 64ul, 14ul>, 24ul, __sanitizer::TwoLevelByteMap<2048ull, 4096ull, __sanitizer::NoOpMapUnmapCallback>, __sanitizer::NoOpMapUnmapCallback>::SizeClassInfo[53] -->
-    <array-type-def dimensions='1' type-id='type-id-664' size-in-bits='27136' hash='dfab650b944a10f4' id='type-id-665'>
+    <!-- __sanitizer::SizeClassAllocator32<0,140737488355328,16,__sanitizer::SizeClassMap<17,64,14>,24,__sanitizer::TwoLevelByteMap<2048,4096,__sanitizer::NoOpMapUnmapCallback>,__sanitizer::NoOpMapUnmapCallback>::SizeClassInfo[53] -->
+    <array-type-def dimensions='1' type-id='type-id-664' size-in-bits='27136' hash='956d291d19d0d8ec' id='type-id-665'>
       <!-- <anonymous range>[53] -->
       <subrange length='53' lower-bound='0' upper-bound='52' type-id='type-id-46' size-in-bits='64' is-anonymous='yes' hash='bfd8ea0daa9e6934' id='type-id-666'/>
     </array-type-def>
-    <!-- __sanitizer::SizeClassAllocatorLocalCache<__sanitizer::SizeClassAllocator32<0ul, 140737488355328ull, 16ul, __sanitizer::SizeClassMap<17ul, 64ul, 14ul>, 24ul, __sanitizer::TwoLevelByteMap<2048ull, 4096ull, __sanitizer::NoOpMapUnmapCallback>, __sanitizer::NoOpMapUnmapCallback> >::PerClass[53] -->
-    <array-type-def dimensions='1' type-id='type-id-189' size-in-bits='440960' hash='07756d17d1cf618c' id='type-id-192'>
+    <!-- __sanitizer::SizeClassAllocatorLocalCache<__sanitizer::SizeClassAllocator32<0,140737488355328,16,__sanitizer::SizeClassMap<17,64,14>,24,__sanitizer::TwoLevelByteMap<2048,4096,__sanitizer::NoOpMapUnmapCallback>,__sanitizer::NoOpMapUnmapCallback>>::PerClass[53] -->
+    <array-type-def dimensions='1' type-id='type-id-189' size-in-bits='440960' hash='3a719b20dbbca48e' id='type-id-192'>
       <!-- <anonymous range>[53] -->
       <subrange length='53' lower-bound='0' upper-bound='52' type-id='type-id-46' size-in-bits='64' is-anonymous='yes' hash='bfd8ea0daa9e6934' id='type-id-666'/>
     </array-type-def>
-    <!-- __sanitizer::SizeClassAllocatorLocalCache<__sanitizer::SizeClassAllocator64<137438953472000ul, 1099511627776ul, 16ul, __sanitizer::SizeClassMap<17ul, 128ul, 16ul>, __tsan::MapUnmapCallback> >::PerClass[53] -->
-    <array-type-def dimensions='1' type-id='type-id-667' size-in-bits='875136' hash='f395a4c1c9df70b5' id='type-id-668'>
+    <!-- __sanitizer::SizeClassAllocatorLocalCache<__sanitizer::SizeClassAllocator64<137438953472000,1099511627776,16,__sanitizer::SizeClassMap<17,128,16>,__tsan::MapUnmapCallback>>::PerClass[53] -->
+    <array-type-def dimensions='1' type-id='type-id-667' size-in-bits='875136' hash='20f5ea86d235ce89' id='type-id-668'>
       <!-- <anonymous range>[53] -->
       <subrange length='53' lower-bound='0' upper-bound='52' type-id='type-id-46' size-in-bits='64' is-anonymous='yes' hash='bfd8ea0daa9e6934' id='type-id-666'/>
     </array-type-def>
@@ -19359,28 +19359,28 @@
     <pointer-type-def type-id='type-id-327' size-in-bits='64' hash='ed59997d89d77c73' id='type-id-213'/>
     <!-- __sanitizer::InternalMmapVector<__tsan::FiredSuppression>* -->
     <pointer-type-def type-id='type-id-716' size-in-bits='64' hash='8d98c2665bb23885' id='type-id-717'/>
-    <!-- __sanitizer::IntrusiveList<__sanitizer::SizeClassMap<17ul, 64ul, 14ul>::TransferBatch>* -->
-    <pointer-type-def type-id='type-id-718' size-in-bits='64' hash='9b1bd9f41c659ebd' id='type-id-719'/>
+    <!-- __sanitizer::IntrusiveList<__sanitizer::SizeClassMap<17,64,14>::TransferBatch>* -->
+    <pointer-type-def type-id='type-id-718' size-in-bits='64' hash='50d5fb7bfeef0ffa' id='type-id-719'/>
     <!-- __sanitizer::IntrusiveList<__sanitizer::ThreadContextBase>* -->
     <pointer-type-def type-id='type-id-720' size-in-bits='64' hash='3dc9b0005535e00f' id='type-id-358'/>
-    <!-- __sanitizer::LFStack<__sanitizer::SizeClassMap<17ul, 128ul, 16ul>::TransferBatch>* -->
-    <pointer-type-def type-id='type-id-721' size-in-bits='64' hash='97f4546687e664ad' id='type-id-722'/>
-    <!-- __sanitizer::SizeClassAllocator32<0ul, 140737488355328ull, 16ul, __sanitizer::SizeClassMap<17ul, 64ul, 14ul>, 24ul, __sanitizer::TwoLevelByteMap<2048ull, 4096ull, __sanitizer::NoOpMapUnmapCallback>, __sanitizer::NoOpMapUnmapCallback>* -->
-    <pointer-type-def type-id='type-id-723' size-in-bits='64' hash='ae138004d72d076f' id='type-id-724'/>
-    <!-- __sanitizer::SizeClassAllocator32<0ul, 140737488355328ull, 16ul, __sanitizer::SizeClassMap<17ul, 64ul, 14ul>, 24ul, __sanitizer::TwoLevelByteMap<2048ull, 4096ull, __sanitizer::NoOpMapUnmapCallback>, __sanitizer::NoOpMapUnmapCallback>::AllocatorCache* -->
+    <!-- __sanitizer::LFStack<__sanitizer::SizeClassMap<17,128,16>::TransferBatch>* -->
+    <pointer-type-def type-id='type-id-721' size-in-bits='64' hash='74ab791fc220f4d2' id='type-id-722'/>
+    <!-- __sanitizer::SizeClassAllocator32<0,140737488355328,16,__sanitizer::SizeClassMap<17,64,14>,24,__sanitizer::TwoLevelByteMap<2048,4096,__sanitizer::NoOpMapUnmapCallback>,__sanitizer::NoOpMapUnmapCallback>* -->
+    <pointer-type-def type-id='type-id-723' size-in-bits='64' hash='358e5ea6622d4ee0' id='type-id-724'/>
+    <!-- __sanitizer::SizeClassAllocator32<0,140737488355328,16,__sanitizer::SizeClassMap<17,64,14>,24,__sanitizer::TwoLevelByteMap<2048,4096,__sanitizer::NoOpMapUnmapCallback>,__sanitizer::NoOpMapUnmapCallback>::AllocatorCache* -->
     <pointer-type-def type-id='type-id-725' size-in-bits='64' hash='0e1a08c4c5d8e63e' id='type-id-726'/>
-    <!-- __sanitizer::SizeClassAllocator32<0ul, 140737488355328ull, 16ul, __sanitizer::SizeClassMap<17ul, 64ul, 14ul>, 24ul, __sanitizer::TwoLevelByteMap<2048ull, 4096ull, __sanitizer::NoOpMapUnmapCallback>, __sanitizer::NoOpMapUnmapCallback>::SizeClassInfo* -->
+    <!-- __sanitizer::SizeClassAllocator32<0,140737488355328,16,__sanitizer::SizeClassMap<17,64,14>,24,__sanitizer::TwoLevelByteMap<2048,4096,__sanitizer::NoOpMapUnmapCallback>,__sanitizer::NoOpMapUnmapCallback>::SizeClassInfo* -->
     <pointer-type-def type-id='type-id-664' size-in-bits='64' hash='c3612160f9c20388' id='type-id-727'/>
-    <!-- __sanitizer::SizeClassAllocator64<137438953472000ul, 1099511627776ul, 16ul, __sanitizer::SizeClassMap<17ul, 128ul, 16ul>, __tsan::MapUnmapCallback>* -->
-    <pointer-type-def type-id='type-id-728' size-in-bits='64' hash='532dee2ef773edfa' id='type-id-729'/>
-    <!-- __sanitizer::SizeClassAllocator64<137438953472000ul, 1099511627776ul, 16ul, __sanitizer::SizeClassMap<17ul, 128ul, 16ul>, __tsan::MapUnmapCallback>::AllocatorCache* -->
+    <!-- __sanitizer::SizeClassAllocator64<137438953472000,1099511627776,16,__sanitizer::SizeClassMap<17,128,16>,__tsan::MapUnmapCallback>* -->
+    <pointer-type-def type-id='type-id-728' size-in-bits='64' hash='68a6e4287f4ab1b4' id='type-id-729'/>
+    <!-- __sanitizer::SizeClassAllocator64<137438953472000,1099511627776,16,__sanitizer::SizeClassMap<17,128,16>,__tsan::MapUnmapCallback>::AllocatorCache* -->
     <pointer-type-def type-id='type-id-730' size-in-bits='64' hash='0e1a08c4c5d8e63e#2' id='type-id-731'/>
-    <!-- __sanitizer::SizeClassAllocator64<137438953472000ul, 1099511627776ul, 16ul, __sanitizer::SizeClassMap<17ul, 128ul, 16ul>, __tsan::MapUnmapCallback>::RegionInfo* -->
+    <!-- __sanitizer::SizeClassAllocator64<137438953472000,1099511627776,16,__sanitizer::SizeClassMap<17,128,16>,__tsan::MapUnmapCallback>::RegionInfo* -->
     <pointer-type-def type-id='type-id-732' size-in-bits='64' hash='ea74c16fdd306ed0' id='type-id-733'/>
-    <!-- __sanitizer::SizeClassAllocatorLocalCache<__sanitizer::SizeClassAllocator32<0ul, 140737488355328ull, 16ul, __sanitizer::SizeClassMap<17ul, 64ul, 14ul>, 24ul, __sanitizer::TwoLevelByteMap<2048ull, 4096ull, __sanitizer::NoOpMapUnmapCallback>, __sanitizer::NoOpMapUnmapCallback> >* -->
-    <pointer-type-def type-id='type-id-109' size-in-bits='64' hash='69738b332abc5b6d' id='type-id-734'/>
-    <!-- __sanitizer::SizeClassAllocatorLocalCache<__sanitizer::SizeClassAllocator64<137438953472000ul, 1099511627776ul, 16ul, __sanitizer::SizeClassMap<17ul, 128ul, 16ul>, __tsan::MapUnmapCallback> >* -->
-    <pointer-type-def type-id='type-id-735' size-in-bits='64' hash='ec6a0179e37c1417' id='type-id-736'/>
+    <!-- __sanitizer::SizeClassAllocatorLocalCache<__sanitizer::SizeClassAllocator32<0,140737488355328,16,__sanitizer::SizeClassMap<17,64,14>,24,__sanitizer::TwoLevelByteMap<2048,4096,__sanitizer::NoOpMapUnmapCallback>,__sanitizer::NoOpMapUnmapCallback>>* -->
+    <pointer-type-def type-id='type-id-109' size-in-bits='64' hash='348198d2359c4389' id='type-id-734'/>
+    <!-- __sanitizer::SizeClassAllocatorLocalCache<__sanitizer::SizeClassAllocator64<137438953472000,1099511627776,16,__sanitizer::SizeClassMap<17,128,16>,__tsan::MapUnmapCallback>>* -->
+    <pointer-type-def type-id='type-id-735' size-in-bits='64' hash='a6613416b1229b3c' id='type-id-736'/>
     <!-- __sanitizer::SpinMutex* -->
     <pointer-type-def type-id='type-id-737' size-in-bits='64' hash='99ba7b8aaaf662cb' id='type-id-738'/>
     <!-- __sanitizer::StaticSpinMutex* -->
@@ -19395,8 +19395,8 @@
     <pointer-type-def type-id='type-id-360' size-in-bits='64' hash='cb600a90839f5c6f' id='type-id-741'/>
     <!-- __sanitizer::ThreadRegistry* -->
     <pointer-type-def type-id='type-id-742' size-in-bits='64' hash='09b222db49f6a2e3' id='type-id-743'/>
-    <!-- __sanitizer::TwoLevelByteMap<2048ull, 4096ull, __sanitizer::NoOpMapUnmapCallback>* -->
-    <pointer-type-def type-id='type-id-744' size-in-bits='64' hash='ab1e1624915d5e36' id='type-id-745'/>
+    <!-- __sanitizer::TwoLevelByteMap<2048,4096,__sanitizer::NoOpMapUnmapCallback>* -->
+    <pointer-type-def type-id='type-id-744' size-in-bits='64' hash='f137d758fbdc797f' id='type-id-745'/>
     <!-- __sanitizer::u64* -->
     <pointer-type-def type-id='type-id-116' size-in-bits='64' hash='8ed9f7c2b63e281e' id='type-id-746'/>
     <!-- __sanitizer::u8* -->
@@ -19481,28 +19481,28 @@
     <reference-type-def kind='lvalue' type-id='type-id-796' size-in-bits='64' hash='b71be796e7416ac9' id='type-id-797'/>
     <!-- const __sanitizer::InternalMmapVector<__tsan::FiredSuppression>* -->
     <pointer-type-def type-id='type-id-796' size-in-bits='64' hash='6e8756901753d19f' id='type-id-798'/>
-    <!-- const __sanitizer::IntrusiveList<__sanitizer::SizeClassMap<17ul, 64ul, 14ul>::TransferBatch> -->
-    <qualified-type-def type-id='type-id-718' const='yes' hash='7d363829231031bb' id='type-id-799'/>
-    <!-- const __sanitizer::IntrusiveList<__sanitizer::SizeClassMap<17ul, 64ul, 14ul>::TransferBatch>* -->
-    <pointer-type-def type-id='type-id-799' size-in-bits='64' hash='519edfa0cd6f8bf6' id='type-id-800'/>
+    <!-- const __sanitizer::IntrusiveList<__sanitizer::SizeClassMap<17,64,14>::TransferBatch> -->
+    <qualified-type-def type-id='type-id-718' const='yes' hash='15b7801f1fe3787d' id='type-id-799'/>
+    <!-- const __sanitizer::IntrusiveList<__sanitizer::SizeClassMap<17,64,14>::TransferBatch>* -->
+    <pointer-type-def type-id='type-id-799' size-in-bits='64' hash='e303d2b0d5a46657' id='type-id-800'/>
     <!-- const __sanitizer::IntrusiveList<__sanitizer::ThreadContextBase> -->
     <qualified-type-def type-id='type-id-720' const='yes' hash='8b24820ee55a41ba' id='type-id-801'/>
     <!-- const __sanitizer::IntrusiveList<__sanitizer::ThreadContextBase>* -->
     <pointer-type-def type-id='type-id-801' size-in-bits='64' hash='371dd82ba65c9e37' id='type-id-362'/>
-    <!-- const __sanitizer::LFStack<__sanitizer::SizeClassMap<17ul, 128ul, 16ul>::TransferBatch> -->
-    <qualified-type-def type-id='type-id-721' const='yes' hash='a3a130f5cdd57649' id='type-id-802'/>
-    <!-- const __sanitizer::LFStack<__sanitizer::SizeClassMap<17ul, 128ul, 16ul>::TransferBatch>* -->
-    <pointer-type-def type-id='type-id-802' size-in-bits='64' hash='2eb869696740004b' id='type-id-803'/>
+    <!-- const __sanitizer::LFStack<__sanitizer::SizeClassMap<17,128,16>::TransferBatch> -->
+    <qualified-type-def type-id='type-id-721' const='yes' hash='f594d013879c9d67' id='type-id-802'/>
+    <!-- const __sanitizer::LFStack<__sanitizer::SizeClassMap<17,128,16>::TransferBatch>* -->
+    <pointer-type-def type-id='type-id-802' size-in-bits='64' hash='5978d122b268db51' id='type-id-803'/>
     <!-- const __sanitizer::SpinMutex -->
     <qualified-type-def type-id='type-id-737' const='yes' hash='fda37e527142eb8b' id='type-id-804'/>
     <!-- const __sanitizer::SpinMutex& -->
     <reference-type-def kind='lvalue' type-id='type-id-804' size-in-bits='64' hash='451bb7a1b9719a5a' id='type-id-805'/>
     <!-- const __sanitizer::ThreadContextFactory -->
     <qualified-type-def type-id='type-id-365' const='yes' hash='8e4ef74b42ff7ee5' id='type-id-806'/>
-    <!-- const __sanitizer::TwoLevelByteMap<2048ull, 4096ull, __sanitizer::NoOpMapUnmapCallback> -->
-    <qualified-type-def type-id='type-id-744' const='yes' hash='09050e2ec65996a7' id='type-id-807'/>
-    <!-- const __sanitizer::TwoLevelByteMap<2048ull, 4096ull, __sanitizer::NoOpMapUnmapCallback>* -->
-    <pointer-type-def type-id='type-id-807' size-in-bits='64' hash='b5d6df19a402f8bc' id='type-id-808'/>
+    <!-- const __sanitizer::TwoLevelByteMap<2048,4096,__sanitizer::NoOpMapUnmapCallback> -->
+    <qualified-type-def type-id='type-id-744' const='yes' hash='3a99bb6fdf80bff4' id='type-id-807'/>
+    <!-- const __sanitizer::TwoLevelByteMap<2048,4096,__sanitizer::NoOpMapUnmapCallback>* -->
+    <pointer-type-def type-id='type-id-807' size-in-bits='64' hash='973ad72266eb094b' id='type-id-808'/>
     <!-- const __sanitizer::u32 -->
     <qualified-type-def type-id='type-id-242' const='yes' hash='9281cb181a5a2be6' id='type-id-620'/>
     <!-- const __sanitizer::u64 -->
@@ -19639,13 +19639,13 @@
     <pointer-type-def type-id='type-id-856' size-in-bits='64' hash='567340ac28ba8eab' id='type-id-874'/>
     <!-- volatile void -->
     <qualified-type-def type-id='type-id-31' volatile='yes' hash='0441c2c5cfdaba96' id='type-id-859'/>
-    <!-- __sanitizer::SizeClassAllocator32<0ul, 140737488355328ull, 16ul, __sanitizer::SizeClassMap<17ul, 64ul, 14ul>, 24ul, __sanitizer::TwoLevelByteMap<2048ull, 4096ull, __sanitizer::NoOpMapUnmapCallback>, __sanitizer::NoOpMapUnmapCallback>::Batch* -->
+    <!-- __sanitizer::SizeClassAllocator32<0,140737488355328,16,__sanitizer::SizeClassMap<17,64,14>,24,__sanitizer::TwoLevelByteMap<2048,4096,__sanitizer::NoOpMapUnmapCallback>,__sanitizer::NoOpMapUnmapCallback>::Batch* -->
     <pointer-type-def type-id='type-id-875' size-in-bits='64' id='type-id-876'/>
-    <!-- __sanitizer::SizeClassAllocator64<137438953472000ul, 1099511627776ul, 16ul, __sanitizer::SizeClassMap<17ul, 128ul, 16ul>, __tsan::MapUnmapCallback>::Batch* -->
+    <!-- __sanitizer::SizeClassAllocator64<137438953472000,1099511627776,16,__sanitizer::SizeClassMap<17,128,16>,__tsan::MapUnmapCallback>::Batch* -->
     <pointer-type-def type-id='type-id-877' size-in-bits='64' id='type-id-878'/>
-    <!-- __sanitizer::SizeClassMap<17ul, 128ul, 16ul>::TransferBatch* -->
+    <!-- __sanitizer::SizeClassMap<17,128,16>::TransferBatch* -->
     <pointer-type-def type-id='type-id-879' size-in-bits='64' id='type-id-880'/>
-    <!-- __sanitizer::SizeClassMap<17ul, 64ul, 14ul>::TransferBatch* -->
+    <!-- __sanitizer::SizeClassMap<17,64,14>::TransferBatch* -->
     <pointer-type-def type-id='type-id-103' size-in-bits='64' id='type-id-881'/>
     <!-- const volatile void* -->
     <pointer-type-def type-id='type-id-860' size-in-bits='64' id='type-id-882'/>
@@ -19701,125 +19701,125 @@
           <var-decl name='size_' type-id='type-id-87' visibility='default' filepath='../../.././libsanitizer/sanitizer_common/sanitizer_common.h' line='384' column='1'/>
         </data-member>
       </class-decl>
-      <!-- class __sanitizer::SizeClassAllocator32<0ul, 140737488355328ull, 16ul, __sanitizer::SizeClassMap<17ul, 64ul, 14ul>, 24ul, __sanitizer::TwoLevelByteMap<2048ull, 4096ull, __sanitizer::NoOpMapUnmapCallback>, __sanitizer::NoOpMapUnmapCallback> -->
-      <class-decl name='SizeClassAllocator32&lt;0ul, 140737488355328ull, 16ul, __sanitizer::SizeClassMap&lt;17ul, 64ul, 14ul&gt;, 24ul, __sanitizer::TwoLevelByteMap&lt;2048ull, 4096ull, __sanitizer::NoOpMapUnmapCallback&gt;, __sanitizer::NoOpMapUnmapCallback&gt;' visibility='default' size-in-bits='158272' filepath='../../.././libsanitizer/sanitizer_common/sanitizer_allocator.h' line='677' column='1' hash='d78869d3074844ea' id='type-id-723'>
+      <!-- class __sanitizer::SizeClassAllocator32<0,140737488355328,16,__sanitizer::SizeClassMap<17,64,14>,24,__sanitizer::TwoLevelByteMap<2048,4096,__sanitizer::NoOpMapUnmapCallback>,__sanitizer::NoOpMapUnmapCallback> -->
+      <class-decl name='SizeClassAllocator32&lt;0,140737488355328,16,__sanitizer::SizeClassMap&lt;17,64,14&gt;,24,__sanitizer::TwoLevelByteMap&lt;2048,4096,__sanitizer::NoOpMapUnmapCallback&gt;,__sanitizer::NoOpMapUnmapCallback&gt;' visibility='default' size-in-bits='158272' filepath='../../.././libsanitizer/sanitizer_common/sanitizer_allocator.h' line='677' column='1' hash='50dc5c41257f985b' id='type-id-723'>
         <member-type access='private'>
-          <!-- struct __sanitizer::SizeClassAllocator32<0ul, 140737488355328ull, 16ul, __sanitizer::SizeClassMap<17ul, 64ul, 14ul>, 24ul, __sanitizer::TwoLevelByteMap<2048ull, 4096ull, __sanitizer::NoOpMapUnmapCallback>, __sanitizer::NoOpMapUnmapCallback>::SizeClassInfo -->
+          <!-- struct __sanitizer::SizeClassAllocator32<0,140737488355328,16,__sanitizer::SizeClassMap<17,64,14>,24,__sanitizer::TwoLevelByteMap<2048,4096,__sanitizer::NoOpMapUnmapCallback>,__sanitizer::NoOpMapUnmapCallback>::SizeClassInfo -->
           <class-decl name='SizeClassInfo' is-struct='yes' visibility='default' size-in-bits='512' filepath='../../.././libsanitizer/sanitizer_common/sanitizer_allocator.h' line='820' column='1' hash='fafd9dc3d2bc6de8' id='type-id-664'>
             <data-member access='public' layout-offset-in-bits='0'>
-              <!-- __sanitizer::SpinMutex __sanitizer::SizeClassAllocator32<0ul, 140737488355328ull, 16ul, __sanitizer::SizeClassMap<17ul, 64ul, 14ul>, 24ul, __sanitizer::TwoLevelByteMap<2048ull, 4096ull, __sanitizer::NoOpMapUnmapCallback>, __sanitizer::NoOpMapUnmapCallback>::SizeClassInfo::mutex -->
+              <!-- __sanitizer::SpinMutex __sanitizer::SizeClassAllocator32<0,140737488355328,16,__sanitizer::SizeClassMap<17,64,14>,24,__sanitizer::TwoLevelByteMap<2048,4096,__sanitizer::NoOpMapUnmapCallback>,__sanitizer::NoOpMapUnmapCallback>::SizeClassInfo::mutex -->
               <var-decl name='mutex' type-id='type-id-737' visibility='default' filepath='../../.././libsanitizer/sanitizer_common/sanitizer_allocator.h' line='821' column='1'/>
             </data-member>
             <data-member access='public' layout-offset-in-bits='64'>
-              <!-- __sanitizer::IntrusiveList<__sanitizer::SizeClassMap<17ul, 64ul, 14ul>::TransferBatch> __sanitizer::SizeClassAllocator32<0ul, 140737488355328ull, 16ul, __sanitizer::SizeClassMap<17ul, 64ul, 14ul>, 24ul, __sanitizer::TwoLevelByteMap<2048ull, 4096ull, __sanitizer::NoOpMapUnmapCallback>, __sanitizer::NoOpMapUnmapCallback>::SizeClassInfo::free_list -->
+              <!-- __sanitizer::IntrusiveList<__sanitizer::SizeClassMap<17,64,14>::TransferBatch> __sanitizer::SizeClassAllocator32<0,140737488355328,16,__sanitizer::SizeClassMap<17,64,14>,24,__sanitizer::TwoLevelByteMap<2048,4096,__sanitizer::NoOpMapUnmapCallback>,__sanitizer::NoOpMapUnmapCallback>::SizeClassInfo::free_list -->
               <var-decl name='free_list' type-id='type-id-718' visibility='default' filepath='../../.././libsanitizer/sanitizer_common/sanitizer_allocator.h' line='822' column='1'/>
             </data-member>
             <data-member access='public' layout-offset-in-bits='256'>
-              <!-- char __sanitizer::SizeClassAllocator32<0ul, 140737488355328ull, 16ul, __sanitizer::SizeClassMap<17ul, 64ul, 14ul>, 24ul, __sanitizer::TwoLevelByteMap<2048ull, 4096ull, __sanitizer::NoOpMapUnmapCallback>, __sanitizer::NoOpMapUnmapCallback>::SizeClassInfo::padding[32] -->
+              <!-- char __sanitizer::SizeClassAllocator32<0,140737488355328,16,__sanitizer::SizeClassMap<17,64,14>,24,__sanitizer::TwoLevelByteMap<2048,4096,__sanitizer::NoOpMapUnmapCallback>,__sanitizer::NoOpMapUnmapCallback>::SizeClassInfo::padding[32] -->
               <var-decl name='padding' type-id='type-id-681' visibility='default' filepath='../../.././libsanitizer/sanitizer_common/sanitizer_allocator.h' line='823' column='1'/>
             </data-member>
           </class-decl>
         </member-type>
         <member-type access='public'>
-          <!-- typedef __sanitizer::SizeClassAllocatorLocalCache<__sanitizer::SizeClassAllocator32<0ul, 140737488355328ull, 16ul, __sanitizer::SizeClassMap<17ul, 64ul, 14ul>, 24ul, __sanitizer::TwoLevelByteMap<2048ull, 4096ull, __sanitizer::NoOpMapUnmapCallback>, __sanitizer::NoOpMapUnmapCallback> > __sanitizer::SizeClassAllocator32<0ul, 140737488355328ull, 16ul, __sanitizer::SizeClassMap<17ul, 64ul, 14ul>, 24ul, __sanitizer::TwoLevelByteMap<2048ull, 4096ull, __sanitizer::NoOpMapUnmapCallback>, __sanitizer::NoOpMapUnmapCallback>::AllocatorCache -->
+          <!-- typedef __sanitizer::SizeClassAllocatorLocalCache<__sanitizer::SizeClassAllocator32<0,140737488355328,16,__sanitizer::SizeClassMap<17,64,14>,24,__sanitizer::TwoLevelByteMap<2048,4096,__sanitizer::NoOpMapUnmapCallback>,__sanitizer::NoOpMapUnmapCallback>> __sanitizer::SizeClassAllocator32<0,140737488355328,16,__sanitizer::SizeClassMap<17,64,14>,24,__sanitizer::TwoLevelByteMap<2048,4096,__sanitizer::NoOpMapUnmapCallback>,__sanitizer::NoOpMapUnmapCallback>::AllocatorCache -->
           <typedef-decl name='AllocatorCache' type-id='type-id-109' size-in-bits='441344' filepath='../../.././libsanitizer/sanitizer_common/sanitizer_allocator.h' line='682' column='1' id='type-id-725'/>
         </member-type>
         <member-type access='public'>
-          <!-- typedef __sanitizer::SizeClassMap<17ul, 64ul, 14ul>::TransferBatch __sanitizer::SizeClassAllocator32<0ul, 140737488355328ull, 16ul, __sanitizer::SizeClassMap<17ul, 64ul, 14ul>, 24ul, __sanitizer::TwoLevelByteMap<2048ull, 4096ull, __sanitizer::NoOpMapUnmapCallback>, __sanitizer::NoOpMapUnmapCallback>::Batch -->
+          <!-- typedef __sanitizer::SizeClassMap<17,64,14>::TransferBatch __sanitizer::SizeClassAllocator32<0,140737488355328,16,__sanitizer::SizeClassMap<17,64,14>,24,__sanitizer::TwoLevelByteMap<2048,4096,__sanitizer::NoOpMapUnmapCallback>,__sanitizer::NoOpMapUnmapCallback>::Batch -->
           <typedef-decl name='Batch' type-id='type-id-103' filepath='../../.././libsanitizer/sanitizer_common/sanitizer_allocator.h' line='679' column='1' id='type-id-875'/>
         </member-type>
         <member-type access='public'>
-          <!-- typedef __sanitizer::SizeClassMap<17ul, 64ul, 14ul>::TransferBatch __sanitizer::SizeClassAllocator32<0ul, 140737488355328ull, 16ul, __sanitizer::SizeClassMap<17ul, 64ul, 14ul>, 24ul, __sanitizer::TwoLevelByteMap<2048ull, 4096ull, __sanitizer::NoOpMapUnmapCallback>, __sanitizer::NoOpMapUnmapCallback>::Batch -->
+          <!-- typedef __sanitizer::SizeClassMap<17,64,14>::TransferBatch __sanitizer::SizeClassAllocator32<0,140737488355328,16,__sanitizer::SizeClassMap<17,64,14>,24,__sanitizer::TwoLevelByteMap<2048,4096,__sanitizer::NoOpMapUnmapCallback>,__sanitizer::NoOpMapUnmapCallback>::Batch -->
           <typedef-decl name='Batch' type-id='type-id-103' filepath='../../.././libsanitizer/sanitizer_common/sanitizer_allocator.h' line='679' column='1' id='type-id-883'/>
         </member-type>
         <member-type access='public'>
-          <!-- typedef __sanitizer::SizeClassMap<17ul, 64ul, 14ul>::TransferBatch __sanitizer::SizeClassAllocator32<0ul, 140737488355328ull, 16ul, __sanitizer::SizeClassMap<17ul, 64ul, 14ul>, 24ul, __sanitizer::TwoLevelByteMap<2048ull, 4096ull, __sanitizer::NoOpMapUnmapCallback>, __sanitizer::NoOpMapUnmapCallback>::Batch -->
+          <!-- typedef __sanitizer::SizeClassMap<17,64,14>::TransferBatch __sanitizer::SizeClassAllocator32<0,140737488355328,16,__sanitizer::SizeClassMap<17,64,14>,24,__sanitizer::TwoLevelByteMap<2048,4096,__sanitizer::NoOpMapUnmapCallback>,__sanitizer::NoOpMapUnmapCallback>::Batch -->
           <typedef-decl name='Batch' type-id='type-id-103' filepath='../../.././libsanitizer/sanitizer_common/sanitizer_allocator.h' line='679' column='1' id='type-id-884'/>
         </member-type>
         <member-type access='public'>
-          <!-- typedef __sanitizer::SizeClassMap<17ul, 64ul, 14ul>::TransferBatch __sanitizer::SizeClassAllocator32<0ul, 140737488355328ull, 16ul, __sanitizer::SizeClassMap<17ul, 64ul, 14ul>, 24ul, __sanitizer::TwoLevelByteMap<2048ull, 4096ull, __sanitizer::NoOpMapUnmapCallback>, __sanitizer::NoOpMapUnmapCallback>::Batch -->
+          <!-- typedef __sanitizer::SizeClassMap<17,64,14>::TransferBatch __sanitizer::SizeClassAllocator32<0,140737488355328,16,__sanitizer::SizeClassMap<17,64,14>,24,__sanitizer::TwoLevelByteMap<2048,4096,__sanitizer::NoOpMapUnmapCallback>,__sanitizer::NoOpMapUnmapCallback>::Batch -->
           <typedef-decl name='Batch' type-id='type-id-103' filepath='../../.././libsanitizer/sanitizer_common/sanitizer_allocator.h' line='679' column='1' id='type-id-101'/>
         </member-type>
         <data-member access='private' layout-offset-in-bits='0'>
-          <!-- __sanitizer::TwoLevelByteMap<2048ull, 4096ull, __sanitizer::NoOpMapUnmapCallback> __sanitizer::SizeClassAllocator32<0ul, 140737488355328ull, 16ul, __sanitizer::SizeClassMap<17ul, 64ul, 14ul>, 24ul, __sanitizer::TwoLevelByteMap<2048ull, 4096ull, __sanitizer::NoOpMapUnmapCallback>, __sanitizer::NoOpMapUnmapCallback>::possible_regions -->
+          <!-- __sanitizer::TwoLevelByteMap<2048,4096,__sanitizer::NoOpMapUnmapCallback> __sanitizer::SizeClassAllocator32<0,140737488355328,16,__sanitizer::SizeClassMap<17,64,14>,24,__sanitizer::TwoLevelByteMap<2048,4096,__sanitizer::NoOpMapUnmapCallback>,__sanitizer::NoOpMapUnmapCallback>::possible_regions -->
           <var-decl name='possible_regions' type-id='type-id-744' visibility='default' filepath='../../.././libsanitizer/sanitizer_common/sanitizer_allocator.h' line='881' column='1'/>
         </data-member>
         <data-member access='private' layout-offset-in-bits='131136'>
-          <!-- __sanitizer::SizeClassAllocator32<0ul, 140737488355328ull, 16ul, __sanitizer::SizeClassMap<17ul, 64ul, 14ul>, 24ul, __sanitizer::TwoLevelByteMap<2048ull, 4096ull, __sanitizer::NoOpMapUnmapCallback>, __sanitizer::NoOpMapUnmapCallback>::SizeClassInfo __sanitizer::SizeClassAllocator32<0ul, 140737488355328ull, 16ul, __sanitizer::SizeClassMap<17ul, 64ul, 14ul>, 24ul, __sanitizer::TwoLevelByteMap<2048ull, 4096ull, __sanitizer::NoOpMapUnmapCallback>, __sanitizer::NoOpMapUnmapCallback>::size_class_info_array[53] -->
+          <!-- __sanitizer::SizeClassAllocator32<0,140737488355328,16,__sanitizer::SizeClassMap<17,64,14>,24,__sanitizer::TwoLevelByteMap<2048,4096,__sanitizer::NoOpMapUnmapCallback>,__sanitizer::NoOpMapUnmapCallback>::SizeClassInfo __sanitizer::SizeClassAllocator32<0,140737488355328,16,__sanitizer::SizeClassMap<17,64,14>,24,__sanitizer::TwoLevelByteMap<2048,4096,__sanitizer::NoOpMapUnmapCallback>,__sanitizer::NoOpMapUnmapCallback>::size_class_info_array[53] -->
           <var-decl name='size_class_info_array' type-id='type-id-665' visibility='default' filepath='../../.././libsanitizer/sanitizer_common/sanitizer_allocator.h' line='882' column='1'/>
         </data-member>
       </class-decl>
-      <!-- class __sanitizer::SizeClassAllocator64<137438953472000ul, 1099511627776ul, 16ul, __sanitizer::SizeClassMap<17ul, 128ul, 16ul>, __tsan::MapUnmapCallback> -->
-      <class-decl name='SizeClassAllocator64&lt;137438953472000ul, 1099511627776ul, 16ul, __sanitizer::SizeClassMap&lt;17ul, 128ul, 16ul&gt;, __tsan::MapUnmapCallback&gt;' visibility='default' size-in-bits='8' filepath='../../.././libsanitizer/sanitizer_common/sanitizer_allocator.h' line='305' column='1' hash='f05ea38e49bb32bc' id='type-id-728'>
+      <!-- class __sanitizer::SizeClassAllocator64<137438953472000,1099511627776,16,__sanitizer::SizeClassMap<17,128,16>,__tsan::MapUnmapCallback> -->
+      <class-decl name='SizeClassAllocator64&lt;137438953472000,1099511627776,16,__sanitizer::SizeClassMap&lt;17,128,16&gt;,__tsan::MapUnmapCallback&gt;' visibility='default' size-in-bits='8' filepath='../../.././libsanitizer/sanitizer_common/sanitizer_allocator.h' line='305' column='1' hash='ad4c96fce81aedc9' id='type-id-728'>
         <member-type access='private'>
-          <!-- struct __sanitizer::SizeClassAllocator64<137438953472000ul, 1099511627776ul, 16ul, __sanitizer::SizeClassMap<17ul, 128ul, 16ul>, __tsan::MapUnmapCallback>::RegionInfo -->
+          <!-- struct __sanitizer::SizeClassAllocator64<137438953472000,1099511627776,16,__sanitizer::SizeClassMap<17,128,16>,__tsan::MapUnmapCallback>::RegionInfo -->
           <class-decl name='RegionInfo' is-struct='yes' visibility='default' size-in-bits='1152' filepath='../../.././libsanitizer/sanitizer_common/sanitizer_allocator.h' line='474' column='1' hash='d65877c3095cb9e2' id='type-id-732'>
             <data-member access='public' layout-offset-in-bits='0'>
-              <!-- __sanitizer::BlockingMutex __sanitizer::SizeClassAllocator64<137438953472000ul, 1099511627776ul, 16ul, __sanitizer::SizeClassMap<17ul, 128ul, 16ul>, __tsan::MapUnmapCallback>::RegionInfo::mutex -->
+              <!-- __sanitizer::BlockingMutex __sanitizer::SizeClassAllocator64<137438953472000,1099511627776,16,__sanitizer::SizeClassMap<17,128,16>,__tsan::MapUnmapCallback>::RegionInfo::mutex -->
               <var-decl name='mutex' type-id='type-id-327' visibility='default' filepath='../../.././libsanitizer/sanitizer_common/sanitizer_allocator.h' line='475' column='1'/>
             </data-member>
             <data-member access='public' layout-offset-in-bits='704'>
-              <!-- __sanitizer::LFStack<__sanitizer::SizeClassMap<17ul, 128ul, 16ul>::TransferBatch> __sanitizer::SizeClassAllocator64<137438953472000ul, 1099511627776ul, 16ul, __sanitizer::SizeClassMap<17ul, 128ul, 16ul>, __tsan::MapUnmapCallback>::RegionInfo::free_list -->
+              <!-- __sanitizer::LFStack<__sanitizer::SizeClassMap<17,128,16>::TransferBatch> __sanitizer::SizeClassAllocator64<137438953472000,1099511627776,16,__sanitizer::SizeClassMap<17,128,16>,__tsan::MapUnmapCallback>::RegionInfo::free_list -->
               <var-decl name='free_list' type-id='type-id-721' visibility='default' filepath='../../.././libsanitizer/sanitizer_common/sanitizer_allocator.h' line='476' column='1'/>
             </data-member>
             <data-member access='public' layout-offset-in-bits='768'>
-              <!-- __sanitizer::uptr __sanitizer::SizeClassAllocator64<137438953472000ul, 1099511627776ul, 16ul, __sanitizer::SizeClassMap<17ul, 128ul, 16ul>, __tsan::MapUnmapCallback>::RegionInfo::allocated_user -->
+              <!-- __sanitizer::uptr __sanitizer::SizeClassAllocator64<137438953472000,1099511627776,16,__sanitizer::SizeClassMap<17,128,16>,__tsan::MapUnmapCallback>::RegionInfo::allocated_user -->
               <var-decl name='allocated_user' type-id='type-id-87' visibility='default' filepath='../../.././libsanitizer/sanitizer_common/sanitizer_allocator.h' line='477' column='1'/>
             </data-member>
             <data-member access='public' layout-offset-in-bits='832'>
-              <!-- __sanitizer::uptr __sanitizer::SizeClassAllocator64<137438953472000ul, 1099511627776ul, 16ul, __sanitizer::SizeClassMap<17ul, 128ul, 16ul>, __tsan::MapUnmapCallback>::RegionInfo::allocated_meta -->
+              <!-- __sanitizer::uptr __sanitizer::SizeClassAllocator64<137438953472000,1099511627776,16,__sanitizer::SizeClassMap<17,128,16>,__tsan::MapUnmapCallback>::RegionInfo::allocated_meta -->
               <var-decl name='allocated_meta' type-id='type-id-87' visibility='default' filepath='../../.././libsanitizer/sanitizer_common/sanitizer_allocator.h' line='478' column='1'/>
             </data-member>
             <data-member access='public' layout-offset-in-bits='896'>
-              <!-- __sanitizer::uptr __sanitizer::SizeClassAllocator64<137438953472000ul, 1099511627776ul, 16ul, __sanitizer::SizeClassMap<17ul, 128ul, 16ul>, __tsan::MapUnmapCallback>::RegionInfo::mapped_user -->
+              <!-- __sanitizer::uptr __sanitizer::SizeClassAllocator64<137438953472000,1099511627776,16,__sanitizer::SizeClassMap<17,128,16>,__tsan::MapUnmapCallback>::RegionInfo::mapped_user -->
               <var-decl name='mapped_user' type-id='type-id-87' visibility='default' filepath='../../.././libsanitizer/sanitizer_common/sanitizer_allocator.h' line='479' column='1'/>
             </data-member>
             <data-member access='public' layout-offset-in-bits='960'>
-              <!-- __sanitizer::uptr __sanitizer::SizeClassAllocator64<137438953472000ul, 1099511627776ul, 16ul, __sanitizer::SizeClassMap<17ul, 128ul, 16ul>, __tsan::MapUnmapCallback>::RegionInfo::mapped_meta -->
+              <!-- __sanitizer::uptr __sanitizer::SizeClassAllocator64<137438953472000,1099511627776,16,__sanitizer::SizeClassMap<17,128,16>,__tsan::MapUnmapCallback>::RegionInfo::mapped_meta -->
               <var-decl name='mapped_meta' type-id='type-id-87' visibility='default' filepath='../../.././libsanitizer/sanitizer_common/sanitizer_allocator.h' line='480' column='1'/>
             </data-member>
             <data-member access='public' layout-offset-in-bits='1024'>
-              <!-- __sanitizer::uptr __sanitizer::SizeClassAllocator64<137438953472000ul, 1099511627776ul, 16ul, __sanitizer::SizeClassMap<17ul, 128ul, 16ul>, __tsan::MapUnmapCallback>::RegionInfo::n_allocated -->
+              <!-- __sanitizer::uptr __sanitizer::SizeClassAllocator64<137438953472000,1099511627776,16,__sanitizer::SizeClassMap<17,128,16>,__tsan::MapUnmapCallback>::RegionInfo::n_allocated -->
               <var-decl name='n_allocated' type-id='type-id-87' visibility='default' filepath='../../.././libsanitizer/sanitizer_common/sanitizer_allocator.h' line='481' column='1'/>
             </data-member>
             <data-member access='public' layout-offset-in-bits='1088'>
-              <!-- __sanitizer::uptr __sanitizer::SizeClassAllocator64<137438953472000ul, 1099511627776ul, 16ul, __sanitizer::SizeClassMap<17ul, 128ul, 16ul>, __tsan::MapUnmapCallback>::RegionInfo::n_freed -->
+              <!-- __sanitizer::uptr __sanitizer::SizeClassAllocator64<137438953472000,1099511627776,16,__sanitizer::SizeClassMap<17,128,16>,__tsan::MapUnmapCallback>::RegionInfo::n_freed -->
               <var-decl name='n_freed' type-id='type-id-87' visibility='default' filepath='../../.././libsanitizer/sanitizer_common/sanitizer_allocator.h' line='481' column='1'/>
             </data-member>
           </class-decl>
         </member-type>
         <member-type access='public'>
-          <!-- typedef __sanitizer::SizeClassAllocatorLocalCache<__sanitizer::SizeClassAllocator64<137438953472000ul, 1099511627776ul, 16ul, __sanitizer::SizeClassMap<17ul, 128ul, 16ul>, __tsan::MapUnmapCallback> > __sanitizer::SizeClassAllocator64<137438953472000ul, 1099511627776ul, 16ul, __sanitizer::SizeClassMap<17ul, 128ul, 16ul>, __tsan::MapUnmapCallback>::AllocatorCache -->
+          <!-- typedef __sanitizer::SizeClassAllocatorLocalCache<__sanitizer::SizeClassAllocator64<137438953472000,1099511627776,16,__sanitizer::SizeClassMap<17,128,16>,__tsan::MapUnmapCallback>> __sanitizer::SizeClassAllocator64<137438953472000,1099511627776,16,__sanitizer::SizeClassMap<17,128,16>,__tsan::MapUnmapCallback>::AllocatorCache -->
           <typedef-decl name='AllocatorCache' type-id='type-id-735' size-in-bits='875520' filepath='../../.././libsanitizer/sanitizer_common/sanitizer_allocator.h' line='310' column='1' id='type-id-730'/>
         </member-type>
         <member-type access='public'>
-          <!-- typedef __sanitizer::SizeClassMap<17ul, 128ul, 16ul>::TransferBatch __sanitizer::SizeClassAllocator64<137438953472000ul, 1099511627776ul, 16ul, __sanitizer::SizeClassMap<17ul, 128ul, 16ul>, __tsan::MapUnmapCallback>::Batch -->
+          <!-- typedef __sanitizer::SizeClassMap<17,128,16>::TransferBatch __sanitizer::SizeClassAllocator64<137438953472000,1099511627776,16,__sanitizer::SizeClassMap<17,128,16>,__tsan::MapUnmapCallback>::Batch -->
           <typedef-decl name='Batch' type-id='type-id-879' filepath='../../.././libsanitizer/sanitizer_common/sanitizer_allocator.h' line='307' column='1' id='type-id-877'/>
         </member-type>
         <member-type access='public'>
-          <!-- typedef __sanitizer::SizeClassMap<17ul, 128ul, 16ul>::TransferBatch __sanitizer::SizeClassAllocator64<137438953472000ul, 1099511627776ul, 16ul, __sanitizer::SizeClassMap<17ul, 128ul, 16ul>, __tsan::MapUnmapCallback>::Batch -->
+          <!-- typedef __sanitizer::SizeClassMap<17,128,16>::TransferBatch __sanitizer::SizeClassAllocator64<137438953472000,1099511627776,16,__sanitizer::SizeClassMap<17,128,16>,__tsan::MapUnmapCallback>::Batch -->
           <typedef-decl name='Batch' type-id='type-id-879' filepath='../../.././libsanitizer/sanitizer_common/sanitizer_allocator.h' line='307' column='1' id='type-id-885'/>
         </member-type>
         <member-type access='public'>
-          <!-- typedef __sanitizer::SizeClassMap<17ul, 128ul, 16ul>::TransferBatch __sanitizer::SizeClassAllocator64<137438953472000ul, 1099511627776ul, 16ul, __sanitizer::SizeClassMap<17ul, 128ul, 16ul>, __tsan::MapUnmapCallback>::Batch -->
+          <!-- typedef __sanitizer::SizeClassMap<17,128,16>::TransferBatch __sanitizer::SizeClassAllocator64<137438953472000,1099511627776,16,__sanitizer::SizeClassMap<17,128,16>,__tsan::MapUnmapCallback>::Batch -->
           <typedef-decl name='Batch' type-id='type-id-879' filepath='../../.././libsanitizer/sanitizer_common/sanitizer_allocator.h' line='307' column='1' id='type-id-886'/>
         </member-type>
         <member-type access='public'>
-          <!-- typedef __sanitizer::SizeClassMap<17ul, 128ul, 16ul>::TransferBatch __sanitizer::SizeClassAllocator64<137438953472000ul, 1099511627776ul, 16ul, __sanitizer::SizeClassMap<17ul, 128ul, 16ul>, __tsan::MapUnmapCallback>::Batch -->
+          <!-- typedef __sanitizer::SizeClassMap<17,128,16>::TransferBatch __sanitizer::SizeClassAllocator64<137438953472000,1099511627776,16,__sanitizer::SizeClassMap<17,128,16>,__tsan::MapUnmapCallback>::Batch -->
           <typedef-decl name='Batch' type-id='type-id-879' filepath='../../.././libsanitizer/sanitizer_common/sanitizer_allocator.h' line='307' column='1' id='type-id-887'/>
         </member-type>
       </class-decl>
-      <!-- class __sanitizer::SizeClassMap<17ul, 128ul, 16ul> -->
-      <class-decl name='SizeClassMap&lt;17ul, 128ul, 16ul&gt;' visibility='default' size-in-bits='8' filepath='../../.././libsanitizer/sanitizer_common/sanitizer_allocator.h' line='89' column='1' hash='f2f997dc0afc8190' id='type-id-888'>
+      <!-- class __sanitizer::SizeClassMap<17,128,16> -->
+      <class-decl name='SizeClassMap&lt;17,128,16&gt;' visibility='default' size-in-bits='8' filepath='../../.././libsanitizer/sanitizer_common/sanitizer_allocator.h' line='89' column='1' hash='f677e88670740c35' id='type-id-888'>
         <member-type access='private'>
-          <!-- struct __sanitizer::SizeClassMap<17ul, 128ul, 16ul>::TransferBatch -->
+          <!-- struct __sanitizer::SizeClassMap<17,128,16>::TransferBatch -->
           <class-decl name='TransferBatch' is-struct='yes' visibility='default' is-declaration-only='yes' id='type-id-879'/>
         </member-type>
       </class-decl>
-      <!-- class __sanitizer::SizeClassMap<17ul, 64ul, 14ul> -->
-      <class-decl name='SizeClassMap&lt;17ul, 64ul, 14ul&gt;' visibility='default' size-in-bits='8' filepath='../../.././libsanitizer/sanitizer_common/sanitizer_allocator.h' line='89' column='1' hash='32317374f791f3f8' id='type-id-889'>
+      <!-- class __sanitizer::SizeClassMap<17,64,14> -->
+      <class-decl name='SizeClassMap&lt;17,64,14&gt;' visibility='default' size-in-bits='8' filepath='../../.././libsanitizer/sanitizer_common/sanitizer_allocator.h' line='89' column='1' hash='21684d28fd990fd9' id='type-id-889'>
         <member-type access='public'>
-          <!-- struct __sanitizer::SizeClassMap<17ul, 64ul, 14ul>::TransferBatch -->
+          <!-- struct __sanitizer::SizeClassMap<17,64,14>::TransferBatch -->
           <class-decl name='TransferBatch' is-struct='yes' visibility='default' is-declaration-only='yes' id='type-id-103'/>
         </member-type>
       </class-decl>
@@ -19898,14 +19898,14 @@
           <var-decl name='invalid_threads_' type-id='type-id-720' visibility='default' filepath='../../.././libsanitizer/sanitizer_common/sanitizer_thread_registry.h' line='133' column='1'/>
         </data-member>
       </class-decl>
-      <!-- class __sanitizer::TwoLevelByteMap<2048ull, 4096ull, __sanitizer::NoOpMapUnmapCallback> -->
-      <class-decl name='TwoLevelByteMap&lt;2048ull, 4096ull, __sanitizer::NoOpMapUnmapCallback&gt;' visibility='default' size-in-bits='131136' filepath='../../.././libsanitizer/sanitizer_common/sanitizer_allocator.h' line='594' column='1' hash='679d25466bc9f185' id='type-id-744'>
+      <!-- class __sanitizer::TwoLevelByteMap<2048,4096,__sanitizer::NoOpMapUnmapCallback> -->
+      <class-decl name='TwoLevelByteMap&lt;2048,4096,__sanitizer::NoOpMapUnmapCallback&gt;' visibility='default' size-in-bits='131136' filepath='../../.././libsanitizer/sanitizer_common/sanitizer_allocator.h' line='594' column='1' hash='90af9979e56ad2ab' id='type-id-744'>
         <data-member access='private' layout-offset-in-bits='0'>
-          <!-- __sanitizer::atomic_uintptr_t __sanitizer::TwoLevelByteMap<2048ull, 4096ull, __sanitizer::NoOpMapUnmapCallback>::map1_[2048] -->
+          <!-- __sanitizer::atomic_uintptr_t __sanitizer::TwoLevelByteMap<2048,4096,__sanitizer::NoOpMapUnmapCallback>::map1_[2048] -->
           <var-decl name='map1_' type-id='type-id-671' visibility='default' filepath='../../.././libsanitizer/sanitizer_common/sanitizer_allocator.h' line='648' column='1'/>
         </data-member>
         <data-member access='private' layout-offset-in-bits='131072'>
-          <!-- __sanitizer::StaticSpinMutex __sanitizer::TwoLevelByteMap<2048ull, 4096ull, __sanitizer::NoOpMapUnmapCallback>::mu_ -->
+          <!-- __sanitizer::StaticSpinMutex __sanitizer::TwoLevelByteMap<2048,4096,__sanitizer::NoOpMapUnmapCallback>::mu_ -->
           <var-decl name='mu_' type-id='type-id-153' visibility='default' filepath='../../.././libsanitizer/sanitizer_common/sanitizer_allocator.h' line='649' column='1'/>
         </data-member>
       </class-decl>
@@ -19964,18 +19964,18 @@
           <var-decl name='print_summary' type-id='type-id-156' visibility='default' filepath='../../.././libsanitizer/sanitizer_common/sanitizer_flags.h' line='54' column='1'/>
         </data-member>
       </class-decl>
-      <!-- struct __sanitizer::IntrusiveList<__sanitizer::SizeClassMap<17ul, 64ul, 14ul>::TransferBatch> -->
-      <class-decl name='IntrusiveList&lt;__sanitizer::SizeClassMap&lt;17ul, 64ul, 14ul&gt;::TransferBatch&gt;' is-struct='yes' visibility='default' size-in-bits='192' filepath='../../.././libsanitizer/sanitizer_common/sanitizer_list.h' line='26' column='1' hash='f6caafa1868411a9' id='type-id-718'>
+      <!-- struct __sanitizer::IntrusiveList<__sanitizer::SizeClassMap<17,64,14>::TransferBatch> -->
+      <class-decl name='IntrusiveList&lt;__sanitizer::SizeClassMap&lt;17,64,14&gt;::TransferBatch&gt;' is-struct='yes' visibility='default' size-in-bits='192' filepath='../../.././libsanitizer/sanitizer_common/sanitizer_list.h' line='26' column='1' hash='464d2bd9ed7b86a6' id='type-id-718'>
         <data-member access='public' layout-offset-in-bits='0'>
-          <!-- __sanitizer::uptr __sanitizer::IntrusiveList<__sanitizer::SizeClassMap<17ul, 64ul, 14ul>::TransferBatch>::size_ -->
+          <!-- __sanitizer::uptr __sanitizer::IntrusiveList<__sanitizer::SizeClassMap<17,64,14>::TransferBatch>::size_ -->
           <var-decl name='size_' type-id='type-id-87' visibility='default' filepath='../../.././libsanitizer/sanitizer_common/sanitizer_list.h' line='115' column='1'/>
         </data-member>
         <data-member access='public' layout-offset-in-bits='64'>
-          <!-- __sanitizer::SizeClassMap<17ul, 64ul, 14ul>::TransferBatch* __sanitizer::IntrusiveList<__sanitizer::SizeClassMap<17ul, 64ul, 14ul>::TransferBatch>::first_ -->
+          <!-- __sanitizer::SizeClassMap<17,64,14>::TransferBatch* __sanitizer::IntrusiveList<__sanitizer::SizeClassMap<17,64,14>::TransferBatch>::first_ -->
           <var-decl name='first_' type-id='type-id-881' visibility='default' filepath='../../.././libsanitizer/sanitizer_common/sanitizer_list.h' line='116' column='1'/>
         </data-member>
         <data-member access='public' layout-offset-in-bits='128'>
-          <!-- __sanitizer::SizeClassMap<17ul, 64ul, 14ul>::TransferBatch* __sanitizer::IntrusiveList<__sanitizer::SizeClassMap<17ul, 64ul, 14ul>::TransferBatch>::last_ -->
+          <!-- __sanitizer::SizeClassMap<17,64,14>::TransferBatch* __sanitizer::IntrusiveList<__sanitizer::SizeClassMap<17,64,14>::TransferBatch>::last_ -->
           <var-decl name='last_' type-id='type-id-881' visibility='default' filepath='../../.././libsanitizer/sanitizer_common/sanitizer_list.h' line='117' column='1'/>
         </data-member>
       </class-decl>
@@ -19994,42 +19994,42 @@
           <var-decl name='last_' type-id='type-id-360' visibility='default' filepath='../../.././libsanitizer/sanitizer_common/sanitizer_list.h' line='117' column='1'/>
         </data-member>
       </class-decl>
-      <!-- struct __sanitizer::LFStack<__sanitizer::SizeClassMap<17ul, 128ul, 16ul>::TransferBatch> -->
-      <class-decl name='LFStack&lt;__sanitizer::SizeClassMap&lt;17ul, 128ul, 16ul&gt;::TransferBatch&gt;' is-struct='yes' visibility='default' size-in-bits='64' filepath='../../.././libsanitizer/sanitizer_common/sanitizer_lfstack.h' line='25' column='1' hash='a7a16527ea102db5' id='type-id-721'>
+      <!-- struct __sanitizer::LFStack<__sanitizer::SizeClassMap<17,128,16>::TransferBatch> -->
+      <class-decl name='LFStack&lt;__sanitizer::SizeClassMap&lt;17,128,16&gt;::TransferBatch&gt;' is-struct='yes' visibility='default' size-in-bits='64' filepath='../../.././libsanitizer/sanitizer_common/sanitizer_lfstack.h' line='25' column='1' hash='6836cfe339141b22' id='type-id-721'>
         <data-member access='public' layout-offset-in-bits='0'>
-          <!-- __sanitizer::atomic_uint64_t __sanitizer::LFStack<__sanitizer::SizeClassMap<17ul, 128ul, 16ul>::TransferBatch>::head_ -->
+          <!-- __sanitizer::atomic_uint64_t __sanitizer::LFStack<__sanitizer::SizeClassMap<17,128,16>::TransferBatch>::head_ -->
           <var-decl name='head_' type-id='type-id-669' visibility='default' filepath='../../.././libsanitizer/sanitizer_common/sanitizer_lfstack.h' line='67' column='1'/>
         </data-member>
       </class-decl>
-      <!-- struct __sanitizer::SizeClassAllocatorLocalCache<__sanitizer::SizeClassAllocator64<137438953472000ul, 1099511627776ul, 16ul, __sanitizer::SizeClassMap<17ul, 128ul, 16ul>, __tsan::MapUnmapCallback> > -->
-      <class-decl name='SizeClassAllocatorLocalCache&lt;__sanitizer::SizeClassAllocator64&lt;137438953472000ul, 1099511627776ul, 16ul, __sanitizer::SizeClassMap&lt;17ul, 128ul, 16ul&gt;, __tsan::MapUnmapCallback&gt; &gt;' is-struct='yes' visibility='default' size-in-bits='875520' filepath='../../.././libsanitizer/sanitizer_common/sanitizer_allocator.h' line='889' column='1' hash='493f64a0ff505ef3' id='type-id-735'>
+      <!-- struct __sanitizer::SizeClassAllocatorLocalCache<__sanitizer::SizeClassAllocator64<137438953472000,1099511627776,16,__sanitizer::SizeClassMap<17,128,16>,__tsan::MapUnmapCallback>> -->
+      <class-decl name='SizeClassAllocatorLocalCache&lt;__sanitizer::SizeClassAllocator64&lt;137438953472000,1099511627776,16,__sanitizer::SizeClassMap&lt;17,128,16&gt;,__tsan::MapUnmapCallback&gt;&gt;' is-struct='yes' visibility='default' size-in-bits='875520' filepath='../../.././libsanitizer/sanitizer_common/sanitizer_allocator.h' line='889' column='1' hash='53413f62ba6ffb73' id='type-id-735'>
         <member-type access='public'>
-          <!-- struct __sanitizer::SizeClassAllocatorLocalCache<__sanitizer::SizeClassAllocator64<137438953472000ul, 1099511627776ul, 16ul, __sanitizer::SizeClassMap<17ul, 128ul, 16ul>, __tsan::MapUnmapCallback> >::PerClass -->
+          <!-- struct __sanitizer::SizeClassAllocatorLocalCache<__sanitizer::SizeClassAllocator64<137438953472000,1099511627776,16,__sanitizer::SizeClassMap<17,128,16>,__tsan::MapUnmapCallback>>::PerClass -->
           <class-decl name='PerClass' is-struct='yes' visibility='default' size-in-bits='16512' filepath='../../.././libsanitizer/sanitizer_common/sanitizer_allocator.h' line='942' column='1' hash='515f852662899fc5' id='type-id-667'>
             <data-member access='public' layout-offset-in-bits='0'>
-              <!-- __sanitizer::uptr __sanitizer::SizeClassAllocatorLocalCache<__sanitizer::SizeClassAllocator64<137438953472000ul, 1099511627776ul, 16ul, __sanitizer::SizeClassMap<17ul, 128ul, 16ul>, __tsan::MapUnmapCallback> >::PerClass::count -->
+              <!-- __sanitizer::uptr __sanitizer::SizeClassAllocatorLocalCache<__sanitizer::SizeClassAllocator64<137438953472000,1099511627776,16,__sanitizer::SizeClassMap<17,128,16>,__tsan::MapUnmapCallback>>::PerClass::count -->
               <var-decl name='count' type-id='type-id-87' visibility='default' filepath='../../.././libsanitizer/sanitizer_common/sanitizer_allocator.h' line='943' column='1'/>
             </data-member>
             <data-member access='public' layout-offset-in-bits='64'>
-              <!-- __sanitizer::uptr __sanitizer::SizeClassAllocatorLocalCache<__sanitizer::SizeClassAllocator64<137438953472000ul, 1099511627776ul, 16ul, __sanitizer::SizeClassMap<17ul, 128ul, 16ul>, __tsan::MapUnmapCallback> >::PerClass::max_count -->
+              <!-- __sanitizer::uptr __sanitizer::SizeClassAllocatorLocalCache<__sanitizer::SizeClassAllocator64<137438953472000,1099511627776,16,__sanitizer::SizeClassMap<17,128,16>,__tsan::MapUnmapCallback>>::PerClass::max_count -->
               <var-decl name='max_count' type-id='type-id-87' visibility='default' filepath='../../.././libsanitizer/sanitizer_common/sanitizer_allocator.h' line='944' column='1'/>
             </data-member>
             <data-member access='public' layout-offset-in-bits='128'>
-              <!-- void* __sanitizer::SizeClassAllocatorLocalCache<__sanitizer::SizeClassAllocator64<137438953472000ul, 1099511627776ul, 16ul, __sanitizer::SizeClassMap<17ul, 128ul, 16ul>, __tsan::MapUnmapCallback> >::PerClass::batch[256] -->
+              <!-- void* __sanitizer::SizeClassAllocatorLocalCache<__sanitizer::SizeClassAllocator64<137438953472000,1099511627776,16,__sanitizer::SizeClassMap<17,128,16>,__tsan::MapUnmapCallback>>::PerClass::batch[256] -->
               <var-decl name='batch' type-id='type-id-710' visibility='default' filepath='../../.././libsanitizer/sanitizer_common/sanitizer_allocator.h' line='945' column='1'/>
             </data-member>
           </class-decl>
         </member-type>
         <member-type access='public'>
-          <!-- typedef __sanitizer::SizeClassMap<17ul, 128ul, 16ul>::TransferBatch __sanitizer::SizeClassAllocatorLocalCache<__sanitizer::SizeClassAllocator64<137438953472000ul, 1099511627776ul, 16ul, __sanitizer::SizeClassMap<17ul, 128ul, 16ul>, __tsan::MapUnmapCallback> >::Batch -->
+          <!-- typedef __sanitizer::SizeClassMap<17,128,16>::TransferBatch __sanitizer::SizeClassAllocatorLocalCache<__sanitizer::SizeClassAllocator64<137438953472000,1099511627776,16,__sanitizer::SizeClassMap<17,128,16>,__tsan::MapUnmapCallback>>::Batch -->
           <typedef-decl name='Batch' type-id='type-id-879' filepath='../../.././libsanitizer/sanitizer_common/sanitizer_allocator.h' line='941' column='1' id='type-id-893'/>
         </member-type>
         <data-member access='public' layout-offset-in-bits='0'>
-          <!-- __sanitizer::SizeClassAllocatorLocalCache<__sanitizer::SizeClassAllocator64<137438953472000ul, 1099511627776ul, 16ul, __sanitizer::SizeClassMap<17ul, 128ul, 16ul>, __tsan::MapUnmapCallback> >::PerClass __sanitizer::SizeClassAllocatorLocalCache<__sanitizer::SizeClassAllocator64<137438953472000ul, 1099511627776ul, 16ul, __sanitizer::SizeClassMap<17ul, 128ul, 16ul>, __tsan::MapUnmapCallback> >::per_class_[53] -->
+          <!-- __sanitizer::SizeClassAllocatorLocalCache<__sanitizer::SizeClassAllocator64<137438953472000,1099511627776,16,__sanitizer::SizeClassMap<17,128,16>,__tsan::MapUnmapCallback>>::PerClass __sanitizer::SizeClassAllocatorLocalCache<__sanitizer::SizeClassAllocator64<137438953472000,1099511627776,16,__sanitizer::SizeClassMap<17,128,16>,__tsan::MapUnmapCallback>>::per_class_[53] -->
           <var-decl name='per_class_' type-id='type-id-668' visibility='default' filepath='../../.././libsanitizer/sanitizer_common/sanitizer_allocator.h' line='947' column='1'/>
         </data-member>
         <data-member access='public' layout-offset-in-bits='875136'>
-          <!-- __sanitizer::AllocatorStats __sanitizer::SizeClassAllocatorLocalCache<__sanitizer::SizeClassAllocator64<137438953472000ul, 1099511627776ul, 16ul, __sanitizer::SizeClassMap<17ul, 128ul, 16ul>, __tsan::MapUnmapCallback> >::stats_ -->
+          <!-- __sanitizer::AllocatorStats __sanitizer::SizeClassAllocatorLocalCache<__sanitizer::SizeClassAllocator64<137438953472000,1099511627776,16,__sanitizer::SizeClassMap<17,128,16>,__tsan::MapUnmapCallback>>::stats_ -->
           <var-decl name='stats_' type-id='type-id-193' visibility='default' filepath='../../.././libsanitizer/sanitizer_common/sanitizer_allocator.h' line='948' column='1'/>
         </data-member>
       </class-decl>
@@ -20681,7 +20681,7 @@
           <var-decl name='nomalloc' type-id='type-id-6' visibility='default' filepath='../../.././libsanitizer/tsan/tsan_rtl.h' line='462' column='1'/>
         </data-member>
       </class-decl>
-      <!-- typedef __sanitizer::SizeClassAllocatorLocalCache<__sanitizer::SizeClassAllocator64<137438953472000ul, 1099511627776ul, 16ul, __sanitizer::SizeClassMap<17ul, 128ul, 16ul>, __tsan::MapUnmapCallback> > __tsan::AllocatorCache -->
+      <!-- typedef __sanitizer::SizeClassAllocatorLocalCache<__sanitizer::SizeClassAllocator64<137438953472000,1099511627776,16,__sanitizer::SizeClassMap<17,128,16>,__tsan::MapUnmapCallback>> __tsan::AllocatorCache -->
       <typedef-decl name='AllocatorCache' type-id='type-id-735' size-in-bits='875520' filepath='../../.././libsanitizer/tsan/tsan_rtl.h' line='133' column='1' id='type-id-895'/>
     </namespace-decl>
     <!-- a8 __tsan_atomic8_load(const volatile a8*, morder) -->
@@ -21660,24 +21660,24 @@
     <qualified-type-def type-id='type-id-714' const='yes' hash='902f052999c53fed' id='type-id-916'/>
     <!-- __sanitizer::AllocatorStats* const -->
     <qualified-type-def type-id='type-id-715' const='yes' hash='3b9877a7bc809d81' id='type-id-917'/>
-    <!-- __sanitizer::CombinedAllocator<__sanitizer::SizeClassAllocator32<0ul, 140737488355328ull, 16ul, __sanitizer::SizeClassMap<17ul, 64ul, 14ul>, 24ul, __sanitizer::TwoLevelByteMap<2048ull, 4096ull, __sanitizer::NoOpMapUnmapCallback>, __sanitizer::NoOpMapUnmapCallback>, __sanitizer::SizeClassAllocatorLocalCache<__sanitizer::SizeClassAllocator32<0ul, 140737488355328ull, 16ul, __sanitizer::SizeClassMap<17ul, 64ul, 14ul>, 24ul, __sanitizer::TwoLevelByteMap<2048ull, 4096ull, __sanitizer::NoOpMapUnmapCallback>, __sanitizer::NoOpMapUnmapCallback> >, __sanitizer::LargeMmapAllocator<__sanitizer::CrashOnMapUnmap> >* -->
-    <pointer-type-def type-id='type-id-111' size-in-bits='64' hash='51f16ee61e94aef1' id='type-id-918'/>
-    <!-- __sanitizer::CombinedAllocator<__sanitizer::SizeClassAllocator32<0ul, 140737488355328ull, 16ul, __sanitizer::SizeClassMap<17ul, 64ul, 14ul>, 24ul, __sanitizer::TwoLevelByteMap<2048ull, 4096ull, __sanitizer::NoOpMapUnmapCallback>, __sanitizer::NoOpMapUnmapCallback>, __sanitizer::SizeClassAllocatorLocalCache<__sanitizer::SizeClassAllocator32<0ul, 140737488355328ull, 16ul, __sanitizer::SizeClassMap<17ul, 64ul, 14ul>, 24ul, __sanitizer::TwoLevelByteMap<2048ull, 4096ull, __sanitizer::NoOpMapUnmapCallback>, __sanitizer::NoOpMapUnmapCallback> >, __sanitizer::LargeMmapAllocator<__sanitizer::CrashOnMapUnmap> >* const -->
-    <qualified-type-def type-id='type-id-918' const='yes' hash='3818958b471527d0' id='type-id-919'/>
-    <!-- __sanitizer::CombinedAllocator<__sanitizer::SizeClassAllocator64<137438953472000ul, 1099511627776ul, 16ul, __sanitizer::SizeClassMap<17ul, 128ul, 16ul>, __tsan::MapUnmapCallback>, __sanitizer::SizeClassAllocatorLocalCache<__sanitizer::SizeClassAllocator64<137438953472000ul, 1099511627776ul, 16ul, __sanitizer::SizeClassMap<17ul, 128ul, 16ul>, __tsan::MapUnmapCallback> >, __sanitizer::LargeMmapAllocator<__tsan::MapUnmapCallback> >* -->
-    <pointer-type-def type-id='type-id-920' size-in-bits='64' hash='18c682b813cb3b8d' id='type-id-921'/>
-    <!-- __sanitizer::CombinedAllocator<__sanitizer::SizeClassAllocator64<137438953472000ul, 1099511627776ul, 16ul, __sanitizer::SizeClassMap<17ul, 128ul, 16ul>, __tsan::MapUnmapCallback>, __sanitizer::SizeClassAllocatorLocalCache<__sanitizer::SizeClassAllocator64<137438953472000ul, 1099511627776ul, 16ul, __sanitizer::SizeClassMap<17ul, 128ul, 16ul>, __tsan::MapUnmapCallback> >, __sanitizer::LargeMmapAllocator<__tsan::MapUnmapCallback> >* const -->
-    <qualified-type-def type-id='type-id-921' const='yes' hash='47102629d461efa9' id='type-id-922'/>
+    <!-- __sanitizer::CombinedAllocator<__sanitizer::SizeClassAllocator32<0,140737488355328,16,__sanitizer::SizeClassMap<17,64,14>,24,__sanitizer::TwoLevelByteMap<2048,4096,__sanitizer::NoOpMapUnmapCallback>,__sanitizer::NoOpMapUnmapCallback>,__sanitizer::SizeClassAllocatorLocalCache<__sanitizer::SizeClassAllocator32<0,140737488355328,16,__sanitizer::SizeClassMap<17,64,14>,24,__sanitizer::TwoLevelByteMap<2048,4096,__sanitizer::NoOpMapUnmapCallback>,__sanitizer::NoOpMapUnmapCallback>>,__sanitizer::LargeMmapAllocator<__sanitizer::CrashOnMapUnmap>>* -->
+    <pointer-type-def type-id='type-id-111' size-in-bits='64' hash='2d567a471f6ca01b' id='type-id-918'/>
+    <!-- __sanitizer::CombinedAllocator<__sanitizer::SizeClassAllocator32<0,140737488355328,16,__sanitizer::SizeClassMap<17,64,14>,24,__sanitizer::TwoLevelByteMap<2048,4096,__sanitizer::NoOpMapUnmapCallback>,__sanitizer::NoOpMapUnmapCallback>,__sanitizer::SizeClassAllocatorLocalCache<__sanitizer::SizeClassAllocator32<0,140737488355328,16,__sanitizer::SizeClassMap<17,64,14>,24,__sanitizer::TwoLevelByteMap<2048,4096,__sanitizer::NoOpMapUnmapCallback>,__sanitizer::NoOpMapUnmapCallback>>,__sanitizer::LargeMmapAllocator<__sanitizer::CrashOnMapUnmap>>* const -->
+    <qualified-type-def type-id='type-id-918' const='yes' hash='714b1f9e0aab6fb2' id='type-id-919'/>
+    <!-- __sanitizer::CombinedAllocator<__sanitizer::SizeClassAllocator64<137438953472000,1099511627776,16,__sanitizer::SizeClassMap<17,128,16>,__tsan::MapUnmapCallback>,__sanitizer::SizeClassAllocatorLocalCache<__sanitizer::SizeClassAllocator64<137438953472000,1099511627776,16,__sanitizer::SizeClassMap<17,128,16>,__tsan::MapUnmapCallback>>,__sanitizer::LargeMmapAllocator<__tsan::MapUnmapCallback>>* -->
+    <pointer-type-def type-id='type-id-920' size-in-bits='64' hash='fdf66406cb8ef261' id='type-id-921'/>
+    <!-- __sanitizer::CombinedAllocator<__sanitizer::SizeClassAllocator64<137438953472000,1099511627776,16,__sanitizer::SizeClassMap<17,128,16>,__tsan::MapUnmapCallback>,__sanitizer::SizeClassAllocatorLocalCache<__sanitizer::SizeClassAllocator64<137438953472000,1099511627776,16,__sanitizer::SizeClassMap<17,128,16>,__tsan::MapUnmapCallback>>,__sanitizer::LargeMmapAllocator<__tsan::MapUnmapCallback>>* const -->
+    <qualified-type-def type-id='type-id-921' const='yes' hash='b452789b17f0d89d' id='type-id-922'/>
     <!-- __sanitizer::GenericScopedLock<__sanitizer::BlockingMutex>* -->
     <pointer-type-def type-id='type-id-923' size-in-bits='64' hash='8db9014a384136a2' id='type-id-924'/>
     <!-- __sanitizer::GenericScopedLock<__sanitizer::BlockingMutex>* const -->
     <qualified-type-def type-id='type-id-924' const='yes' hash='f57b8c8b50e4988c' id='type-id-925'/>
     <!-- __sanitizer::InternalAllocator* -->
     <pointer-type-def type-id='type-id-112' size-in-bits='64' hash='222ba27ce054d69b' id='type-id-926'/>
-    <!-- __sanitizer::IntrusiveList<__sanitizer::SizeClassMap<17ul, 64ul, 14ul>::TransferBatch>* const -->
-    <qualified-type-def type-id='type-id-719' const='yes' hash='ff7840cc873e9a91' id='type-id-927'/>
-    <!-- __sanitizer::LFStack<__sanitizer::SizeClassMap<17ul, 128ul, 16ul>::TransferBatch>* const -->
-    <qualified-type-def type-id='type-id-722' const='yes' hash='60f550ea77b9109a' id='type-id-928'/>
+    <!-- __sanitizer::IntrusiveList<__sanitizer::SizeClassMap<17,64,14>::TransferBatch>* const -->
+    <qualified-type-def type-id='type-id-719' const='yes' hash='d6285c62c1230b4f' id='type-id-927'/>
+    <!-- __sanitizer::LFStack<__sanitizer::SizeClassMap<17,128,16>::TransferBatch>* const -->
+    <qualified-type-def type-id='type-id-722' const='yes' hash='57be614b5015e3c1' id='type-id-928'/>
     <!-- __sanitizer::LargeMmapAllocator<__sanitizer::CrashOnMapUnmap>* -->
     <pointer-type-def type-id='type-id-929' size-in-bits='64' hash='c3698b2c28964cee' id='type-id-88'/>
     <!-- __sanitizer::LargeMmapAllocator<__tsan::MapUnmapCallback>* -->
@@ -21686,16 +21686,16 @@
     <qualified-type-def type-id='type-id-931' const='yes' hash='a631ce86d0b86a59' id='type-id-932'/>
     <!-- __sanitizer::LargeMmapAllocator<__tsan::MapUnmapCallback>::Header* -->
     <pointer-type-def type-id='type-id-933' size-in-bits='64' hash='a76ed8bf6a7c9603' id='type-id-912'/>
-    <!-- __sanitizer::SizeClassAllocator32<0ul, 140737488355328ull, 16ul, __sanitizer::SizeClassMap<17ul, 64ul, 14ul>, 24ul, __sanitizer::TwoLevelByteMap<2048ull, 4096ull, __sanitizer::NoOpMapUnmapCallback>, __sanitizer::NoOpMapUnmapCallback>* const -->
-    <qualified-type-def type-id='type-id-724' const='yes' hash='2e77e018de17bdd7' id='type-id-934'/>
-    <!-- __sanitizer::SizeClassAllocator64<137438953472000ul, 1099511627776ul, 16ul, __sanitizer::SizeClassMap<17ul, 128ul, 16ul>, __tsan::MapUnmapCallback>* const -->
-    <qualified-type-def type-id='type-id-729' const='yes' hash='07f038faab963cd2' id='type-id-935'/>
-    <!-- __sanitizer::SizeClassAllocatorLocalCache<__sanitizer::SizeClassAllocator32<0ul, 140737488355328ull, 16ul, __sanitizer::SizeClassMap<17ul, 64ul, 14ul>, 24ul, __sanitizer::TwoLevelByteMap<2048ull, 4096ull, __sanitizer::NoOpMapUnmapCallback>, __sanitizer::NoOpMapUnmapCallback> >* const -->
-    <qualified-type-def type-id='type-id-734' const='yes' hash='966090eebbf97317' id='type-id-936'/>
-    <!-- __sanitizer::SizeClassAllocatorLocalCache<__sanitizer::SizeClassAllocator64<137438953472000ul, 1099511627776ul, 16ul, __sanitizer::SizeClassMap<17ul, 128ul, 16ul>, __tsan::MapUnmapCallback> >* const -->
-    <qualified-type-def type-id='type-id-736' const='yes' hash='e5fd54ffac8e095b' id='type-id-937'/>
-    <!-- __sanitizer::TwoLevelByteMap<2048ull, 4096ull, __sanitizer::NoOpMapUnmapCallback>* const -->
-    <qualified-type-def type-id='type-id-745' const='yes' hash='dd7289a62133e359' id='type-id-938'/>
+    <!-- __sanitizer::SizeClassAllocator32<0,140737488355328,16,__sanitizer::SizeClassMap<17,64,14>,24,__sanitizer::TwoLevelByteMap<2048,4096,__sanitizer::NoOpMapUnmapCallback>,__sanitizer::NoOpMapUnmapCallback>* const -->
+    <qualified-type-def type-id='type-id-724' const='yes' hash='effaf471e7cc2b64' id='type-id-934'/>
+    <!-- __sanitizer::SizeClassAllocator64<137438953472000,1099511627776,16,__sanitizer::SizeClassMap<17,128,16>,__tsan::MapUnmapCallback>* const -->
+    <qualified-type-def type-id='type-id-729' const='yes' hash='f6a83dbce321e10e' id='type-id-935'/>
+    <!-- __sanitizer::SizeClassAllocatorLocalCache<__sanitizer::SizeClassAllocator32<0,140737488355328,16,__sanitizer::SizeClassMap<17,64,14>,24,__sanitizer::TwoLevelByteMap<2048,4096,__sanitizer::NoOpMapUnmapCallback>,__sanitizer::NoOpMapUnmapCallback>>* const -->
+    <qualified-type-def type-id='type-id-734' const='yes' hash='0241eebd77484996' id='type-id-936'/>
+    <!-- __sanitizer::SizeClassAllocatorLocalCache<__sanitizer::SizeClassAllocator64<137438953472000,1099511627776,16,__sanitizer::SizeClassMap<17,128,16>,__tsan::MapUnmapCallback>>* const -->
+    <qualified-type-def type-id='type-id-736' const='yes' hash='6399195ccc9c15c1' id='type-id-937'/>
+    <!-- __sanitizer::TwoLevelByteMap<2048,4096,__sanitizer::NoOpMapUnmapCallback>* const -->
+    <qualified-type-def type-id='type-id-745' const='yes' hash='b971bd3decffc4d9' id='type-id-938'/>
     <!-- __sanitizer::atomic_uint64_t::Type* -->
     <pointer-type-def type-id='type-id-864' size-in-bits='64' hash='b2837cb6a7e3851b#2' id='type-id-939'/>
     <!-- __tsan::Allocator* -->
@@ -21704,30 +21704,30 @@
     <qualified-type-def type-id='type-id-793' const='yes' hash='333629131297dff8' id='type-id-942'/>
     <!-- const __sanitizer::AllocatorStats* const -->
     <qualified-type-def type-id='type-id-795' const='yes' hash='3111e9e9419dab54' id='type-id-943'/>
-    <!-- const __sanitizer::CombinedAllocator<__sanitizer::SizeClassAllocator32<0ul, 140737488355328ull, 16ul, __sanitizer::SizeClassMap<17ul, 64ul, 14ul>, 24ul, __sanitizer::TwoLevelByteMap<2048ull, 4096ull, __sanitizer::NoOpMapUnmapCallback>, __sanitizer::NoOpMapUnmapCallback>, __sanitizer::SizeClassAllocatorLocalCache<__sanitizer::SizeClassAllocator32<0ul, 140737488355328ull, 16ul, __sanitizer::SizeClassMap<17ul, 64ul, 14ul>, 24ul, __sanitizer::TwoLevelByteMap<2048ull, 4096ull, __sanitizer::NoOpMapUnmapCallback>, __sanitizer::NoOpMapUnmapCallback> >, __sanitizer::LargeMmapAllocator<__sanitizer::CrashOnMapUnmap> > -->
-    <qualified-type-def type-id='type-id-111' const='yes' hash='805b40cb75d65646' id='type-id-944'/>
-    <!-- const __sanitizer::CombinedAllocator<__sanitizer::SizeClassAllocator32<0ul, 140737488355328ull, 16ul, __sanitizer::SizeClassMap<17ul, 64ul, 14ul>, 24ul, __sanitizer::TwoLevelByteMap<2048ull, 4096ull, __sanitizer::NoOpMapUnmapCallback>, __sanitizer::NoOpMapUnmapCallback>, __sanitizer::SizeClassAllocatorLocalCache<__sanitizer::SizeClassAllocator32<0ul, 140737488355328ull, 16ul, __sanitizer::SizeClassMap<17ul, 64ul, 14ul>, 24ul, __sanitizer::TwoLevelByteMap<2048ull, 4096ull, __sanitizer::NoOpMapUnmapCallback>, __sanitizer::NoOpMapUnmapCallback> >, __sanitizer::LargeMmapAllocator<__sanitizer::CrashOnMapUnmap> >* -->
-    <pointer-type-def type-id='type-id-944' size-in-bits='64' hash='b6311777cd8aa796' id='type-id-945'/>
-    <!-- const __sanitizer::CombinedAllocator<__sanitizer::SizeClassAllocator64<137438953472000ul, 1099511627776ul, 16ul, __sanitizer::SizeClassMap<17ul, 128ul, 16ul>, __tsan::MapUnmapCallback>, __sanitizer::SizeClassAllocatorLocalCache<__sanitizer::SizeClassAllocator64<137438953472000ul, 1099511627776ul, 16ul, __sanitizer::SizeClassMap<17ul, 128ul, 16ul>, __tsan::MapUnmapCallback> >, __sanitizer::LargeMmapAllocator<__tsan::MapUnmapCallback> > -->
-    <qualified-type-def type-id='type-id-920' const='yes' hash='30001cf5cd67784b' id='type-id-946'/>
-    <!-- const __sanitizer::CombinedAllocator<__sanitizer::SizeClassAllocator64<137438953472000ul, 1099511627776ul, 16ul, __sanitizer::SizeClassMap<17ul, 128ul, 16ul>, __tsan::MapUnmapCallback>, __sanitizer::SizeClassAllocatorLocalCache<__sanitizer::SizeClassAllocator64<137438953472000ul, 1099511627776ul, 16ul, __sanitizer::SizeClassMap<17ul, 128ul, 16ul>, __tsan::MapUnmapCallback> >, __sanitizer::LargeMmapAllocator<__tsan::MapUnmapCallback> >* -->
-    <pointer-type-def type-id='type-id-946' size-in-bits='64' hash='734739a86364f979' id='type-id-947'/>
-    <!-- const __sanitizer::CombinedAllocator<__sanitizer::SizeClassAllocator64<137438953472000ul, 1099511627776ul, 16ul, __sanitizer::SizeClassMap<17ul, 128ul, 16ul>, __tsan::MapUnmapCallback>, __sanitizer::SizeClassAllocatorLocalCache<__sanitizer::SizeClassAllocator64<137438953472000ul, 1099511627776ul, 16ul, __sanitizer::SizeClassMap<17ul, 128ul, 16ul>, __tsan::MapUnmapCallback> >, __sanitizer::LargeMmapAllocator<__tsan::MapUnmapCallback> >* const -->
-    <qualified-type-def type-id='type-id-947' const='yes' hash='83a06325b6bd0500' id='type-id-948'/>
+    <!-- const __sanitizer::CombinedAllocator<__sanitizer::SizeClassAllocator32<0,140737488355328,16,__sanitizer::SizeClassMap<17,64,14>,24,__sanitizer::TwoLevelByteMap<2048,4096,__sanitizer::NoOpMapUnmapCallback>,__sanitizer::NoOpMapUnmapCallback>,__sanitizer::SizeClassAllocatorLocalCache<__sanitizer::SizeClassAllocator32<0,140737488355328,16,__sanitizer::SizeClassMap<17,64,14>,24,__sanitizer::TwoLevelByteMap<2048,4096,__sanitizer::NoOpMapUnmapCallback>,__sanitizer::NoOpMapUnmapCallback>>,__sanitizer::LargeMmapAllocator<__sanitizer::CrashOnMapUnmap>> -->
+    <qualified-type-def type-id='type-id-111' const='yes' hash='0f70ed12caff59fd' id='type-id-944'/>
+    <!-- const __sanitizer::CombinedAllocator<__sanitizer::SizeClassAllocator32<0,140737488355328,16,__sanitizer::SizeClassMap<17,64,14>,24,__sanitizer::TwoLevelByteMap<2048,4096,__sanitizer::NoOpMapUnmapCallback>,__sanitizer::NoOpMapUnmapCallback>,__sanitizer::SizeClassAllocatorLocalCache<__sanitizer::SizeClassAllocator32<0,140737488355328,16,__sanitizer::SizeClassMap<17,64,14>,24,__sanitizer::TwoLevelByteMap<2048,4096,__sanitizer::NoOpMapUnmapCallback>,__sanitizer::NoOpMapUnmapCallback>>,__sanitizer::LargeMmapAllocator<__sanitizer::CrashOnMapUnmap>>* -->
+    <pointer-type-def type-id='type-id-944' size-in-bits='64' hash='7e22d107434cd323' id='type-id-945'/>
+    <!-- const __sanitizer::CombinedAllocator<__sanitizer::SizeClassAllocator64<137438953472000,1099511627776,16,__sanitizer::SizeClassMap<17,128,16>,__tsan::MapUnmapCallback>,__sanitizer::SizeClassAllocatorLocalCache<__sanitizer::SizeClassAllocator64<137438953472000,1099511627776,16,__sanitizer::SizeClassMap<17,128,16>,__tsan::MapUnmapCallback>>,__sanitizer::LargeMmapAllocator<__tsan::MapUnmapCallback>> -->
+    <qualified-type-def type-id='type-id-920' const='yes' hash='2f07de8e5d441b75' id='type-id-946'/>
+    <!-- const __sanitizer::CombinedAllocator<__sanitizer::SizeClassAllocator64<137438953472000,1099511627776,16,__sanitizer::SizeClassMap<17,128,16>,__tsan::MapUnmapCallback>,__sanitizer::SizeClassAllocatorLocalCache<__sanitizer::SizeClassAllocator64<137438953472000,1099511627776,16,__sanitizer::SizeClassMap<17,128,16>,__tsan::MapUnmapCallback>>,__sanitizer::LargeMmapAllocator<__tsan::MapUnmapCallback>>* -->
+    <pointer-type-def type-id='type-id-946' size-in-bits='64' hash='b30e3fb5545613dd' id='type-id-947'/>
+    <!-- const __sanitizer::CombinedAllocator<__sanitizer::SizeClassAllocator64<137438953472000,1099511627776,16,__sanitizer::SizeClassMap<17,128,16>,__tsan::MapUnmapCallback>,__sanitizer::SizeClassAllocatorLocalCache<__sanitizer::SizeClassAllocator64<137438953472000,1099511627776,16,__sanitizer::SizeClassMap<17,128,16>,__tsan::MapUnmapCallback>>,__sanitizer::LargeMmapAllocator<__tsan::MapUnmapCallback>>* const -->
+    <qualified-type-def type-id='type-id-947' const='yes' hash='2c805edd5ffddd31' id='type-id-948'/>
     <!-- const __sanitizer::GenericScopedLock<__sanitizer::BlockingMutex> -->
     <qualified-type-def type-id='type-id-923' const='yes' hash='314bd6fb2e601daa' id='type-id-949'/>
     <!-- const __sanitizer::GenericScopedLock<__sanitizer::BlockingMutex>& -->
     <reference-type-def kind='lvalue' type-id='type-id-949' size-in-bits='64' hash='0887d36012dcb951' id='type-id-950'/>
-    <!-- const __sanitizer::IntrusiveList<__sanitizer::SizeClassMap<17ul, 64ul, 14ul>::TransferBatch>* const -->
-    <qualified-type-def type-id='type-id-800' const='yes' hash='0ef07a9f015d0ac1' id='type-id-951'/>
+    <!-- const __sanitizer::IntrusiveList<__sanitizer::SizeClassMap<17,64,14>::TransferBatch>* const -->
+    <qualified-type-def type-id='type-id-800' const='yes' hash='06f35626d51b0df9' id='type-id-951'/>
     <!-- const __sanitizer::NoOpMapUnmapCallback -->
     <qualified-type-def type-id='type-id-952' const='yes' hash='6824bb7a3d62a58d' id='type-id-953'/>
     <!-- const __sanitizer::NoOpMapUnmapCallback* -->
     <pointer-type-def type-id='type-id-953' size-in-bits='64' hash='4df688a2c330d5a2' id='type-id-954'/>
     <!-- const __sanitizer::NoOpMapUnmapCallback* const -->
     <qualified-type-def type-id='type-id-954' const='yes' hash='1626f7b10972f89c' id='type-id-955'/>
-    <!-- const __sanitizer::TwoLevelByteMap<2048ull, 4096ull, __sanitizer::NoOpMapUnmapCallback>* const -->
-    <qualified-type-def type-id='type-id-808' const='yes' hash='6f8731df8f70aad4' id='type-id-956'/>
+    <!-- const __sanitizer::TwoLevelByteMap<2048,4096,__sanitizer::NoOpMapUnmapCallback>* const -->
+    <qualified-type-def type-id='type-id-808' const='yes' hash='802a9fb49c57f4c7' id='type-id-956'/>
     <!-- const __tsan::MapUnmapCallback -->
     <qualified-type-def type-id='type-id-957' const='yes' hash='6075055f025a4f91' id='type-id-958'/>
     <!-- const __tsan::MapUnmapCallback* -->
@@ -21741,43 +21741,43 @@
       <!-- <anonymous range>[262144] -->
       <subrange length='262144' lower-bound='0' upper-bound='262143' type-id='type-id-46' size-in-bits='64' is-anonymous='yes' hash='ad578e6842dcb066' id='type-id-914'/>
     </array-type-def>
-    <!-- __sanitizer::SizeClassAllocator32<0ul, 140737488355328ull, 16ul, __sanitizer::SizeClassMap<17ul, 64ul, 14ul>, 24ul, __sanitizer::TwoLevelByteMap<2048ull, 4096ull, __sanitizer::NoOpMapUnmapCallback>, __sanitizer::NoOpMapUnmapCallback>::Batch* -->
+    <!-- __sanitizer::SizeClassAllocator32<0,140737488355328,16,__sanitizer::SizeClassMap<17,64,14>,24,__sanitizer::TwoLevelByteMap<2048,4096,__sanitizer::NoOpMapUnmapCallback>,__sanitizer::NoOpMapUnmapCallback>::Batch* -->
     <pointer-type-def type-id='type-id-884' size-in-bits='64' id='type-id-963'/>
-    <!-- __sanitizer::SizeClassAllocator64<137438953472000ul, 1099511627776ul, 16ul, __sanitizer::SizeClassMap<17ul, 128ul, 16ul>, __tsan::MapUnmapCallback>::Batch* -->
+    <!-- __sanitizer::SizeClassAllocator64<137438953472000,1099511627776,16,__sanitizer::SizeClassMap<17,128,16>,__tsan::MapUnmapCallback>::Batch* -->
     <pointer-type-def type-id='type-id-886' size-in-bits='64' id='type-id-964'/>
-    <!-- __sanitizer::SizeClassMap<17ul, 128ul, 16ul>::TransferBatch* -->
+    <!-- __sanitizer::SizeClassMap<17,128,16>::TransferBatch* -->
     <pointer-type-def type-id='type-id-879' size-in-bits='64' id='type-id-965'/>
-    <!-- __sanitizer::SizeClassMap<17ul, 64ul, 14ul>::TransferBatch* -->
+    <!-- __sanitizer::SizeClassMap<17,64,14>::TransferBatch* -->
     <pointer-type-def type-id='type-id-103' size-in-bits='64' id='type-id-966'/>
     <!-- namespace __sanitizer -->
     <namespace-decl name='__sanitizer'>
-      <!-- class __sanitizer::CombinedAllocator<__sanitizer::SizeClassAllocator32<0ul, 140737488355328ull, 16ul, __sanitizer::SizeClassMap<17ul, 64ul, 14ul>, 24ul, __sanitizer::TwoLevelByteMap<2048ull, 4096ull, __sanitizer::NoOpMapUnmapCallback>, __sanitizer::NoOpMapUnmapCallback>, __sanitizer::SizeClassAllocatorLocalCache<__sanitizer::SizeClassAllocator32<0ul, 140737488355328ull, 16ul, __sanitizer::SizeClassMap<17ul, 64ul, 14ul>, 24ul, __sanitizer::TwoLevelByteMap<2048ull, 4096ull, __sanitizer::NoOpMapUnmapCallback>, __sanitizer::NoOpMapUnmapCallback> >, __sanitizer::LargeMmapAllocator<__sanitizer::CrashOnMapUnmap> > -->
-      <class-decl name='CombinedAllocator&lt;__sanitizer::SizeClassAllocator32&lt;0ul, 140737488355328ull, 16ul, __sanitizer::SizeClassMap&lt;17ul, 64ul, 14ul&gt;, 24ul, __sanitizer::TwoLevelByteMap&lt;2048ull, 4096ull, __sanitizer::NoOpMapUnmapCallback&gt;, __sanitizer::NoOpMapUnmapCallback&gt;, __sanitizer::SizeClassAllocatorLocalCache&lt;__sanitizer::SizeClassAllocator32&lt;0ul, 140737488355328ull, 16ul, __sanitizer::SizeClassMap&lt;17ul, 64ul, 14ul&gt;, 24ul, __sanitizer::TwoLevelByteMap&lt;2048ull, 4096ull, __sanitizer::NoOpMapUnmapCallback&gt;, __sanitizer::NoOpMapUnmapCallback&gt; &gt;, __sanitizer::LargeMmapAllocator&lt;__sanitizer::CrashOnMapUnmap&gt; &gt;' visibility='default' size-in-bits='16940672' filepath='../../.././libsanitizer/sanitizer_common/sanitizer_allocator.h' line='1229' column='1' hash='d82d6395b0adb5bc' id='type-id-111'>
+      <!-- class __sanitizer::CombinedAllocator<__sanitizer::SizeClassAllocator32<0,140737488355328,16,__sanitizer::SizeClassMap<17,64,14>,24,__sanitizer::TwoLevelByteMap<2048,4096,__sanitizer::NoOpMapUnmapCallback>,__sanitizer::NoOpMapUnmapCallback>,__sanitizer::SizeClassAllocatorLocalCache<__sanitizer::SizeClassAllocator32<0,140737488355328,16,__sanitizer::SizeClassMap<17,64,14>,24,__sanitizer::TwoLevelByteMap<2048,4096,__sanitizer::NoOpMapUnmapCallback>,__sanitizer::NoOpMapUnmapCallback>>,__sanitizer::LargeMmapAllocator<__sanitizer::CrashOnMapUnmap>> -->
+      <class-decl name='CombinedAllocator&lt;__sanitizer::SizeClassAllocator32&lt;0,140737488355328,16,__sanitizer::SizeClassMap&lt;17,64,14&gt;,24,__sanitizer::TwoLevelByteMap&lt;2048,4096,__sanitizer::NoOpMapUnmapCallback&gt;,__sanitizer::NoOpMapUnmapCallback&gt;,__sanitizer::SizeClassAllocatorLocalCache&lt;__sanitizer::SizeClassAllocator32&lt;0,140737488355328,16,__sanitizer::SizeClassMap&lt;17,64,14&gt;,24,__sanitizer::TwoLevelByteMap&lt;2048,4096,__sanitizer::NoOpMapUnmapCallback&gt;,__sanitizer::NoOpMapUnmapCallback&gt;&gt;,__sanitizer::LargeMmapAllocator&lt;__sanitizer::CrashOnMapUnmap&gt;&gt;' visibility='default' size-in-bits='16940672' filepath='../../.././libsanitizer/sanitizer_common/sanitizer_allocator.h' line='1229' column='1' hash='323e15f218fb52d2' id='type-id-111'>
         <data-member access='private' layout-offset-in-bits='0'>
-          <!-- __sanitizer::SizeClassAllocator32<0ul, 140737488355328ull, 16ul, __sanitizer::SizeClassMap<17ul, 64ul, 14ul>, 24ul, __sanitizer::TwoLevelByteMap<2048ull, 4096ull, __sanitizer::NoOpMapUnmapCallback>, __sanitizer::NoOpMapUnmapCallback> __sanitizer::CombinedAllocator<__sanitizer::SizeClassAllocator32<0ul, 140737488355328ull, 16ul, __sanitizer::SizeClassMap<17ul, 64ul, 14ul>, 24ul, __sanitizer::TwoLevelByteMap<2048ull, 4096ull, __sanitizer::NoOpMapUnmapCallback>, __sanitizer::NoOpMapUnmapCallback>, __sanitizer::SizeClassAllocatorLocalCache<__sanitizer::SizeClassAllocator32<0ul, 140737488355328ull, 16ul, __sanitizer::SizeClassMap<17ul, 64ul, 14ul>, 24ul, __sanitizer::TwoLevelByteMap<2048ull, 4096ull, __sanitizer::NoOpMapUnmapCallback>, __sanitizer::NoOpMapUnmapCallback> >, __sanitizer::LargeMmapAllocator<__sanitizer::CrashOnMapUnmap> >::primary_ -->
+          <!-- __sanitizer::SizeClassAllocator32<0,140737488355328,16,__sanitizer::SizeClassMap<17,64,14>,24,__sanitizer::TwoLevelByteMap<2048,4096,__sanitizer::NoOpMapUnmapCallback>,__sanitizer::NoOpMapUnmapCallback> __sanitizer::CombinedAllocator<__sanitizer::SizeClassAllocator32<0,140737488355328,16,__sanitizer::SizeClassMap<17,64,14>,24,__sanitizer::TwoLevelByteMap<2048,4096,__sanitizer::NoOpMapUnmapCallback>,__sanitizer::NoOpMapUnmapCallback>,__sanitizer::SizeClassAllocatorLocalCache<__sanitizer::SizeClassAllocator32<0,140737488355328,16,__sanitizer::SizeClassMap<17,64,14>,24,__sanitizer::TwoLevelByteMap<2048,4096,__sanitizer::NoOpMapUnmapCallback>,__sanitizer::NoOpMapUnmapCallback>>,__sanitizer::LargeMmapAllocator<__sanitizer::CrashOnMapUnmap>>::primary_ -->
           <var-decl name='primary_' type-id='type-id-723' visibility='default' filepath='../../.././libsanitizer/sanitizer_common/sanitizer_allocator.h' line='1368' column='1'/>
         </data-member>
         <data-member access='private' layout-offset-in-bits='158272'>
-          <!-- __sanitizer::LargeMmapAllocator<__sanitizer::CrashOnMapUnmap> __sanitizer::CombinedAllocator<__sanitizer::SizeClassAllocator32<0ul, 140737488355328ull, 16ul, __sanitizer::SizeClassMap<17ul, 64ul, 14ul>, 24ul, __sanitizer::TwoLevelByteMap<2048ull, 4096ull, __sanitizer::NoOpMapUnmapCallback>, __sanitizer::NoOpMapUnmapCallback>, __sanitizer::SizeClassAllocatorLocalCache<__sanitizer::SizeClassAllocator32<0ul, 140737488355328ull, 16ul, __sanitizer::SizeClassMap<17ul, 64ul, 14ul>, 24ul, __sanitizer::TwoLevelByteMap<2048ull, 4096ull, __sanitizer::NoOpMapUnmapCallback>, __sanitizer::NoOpMapUnmapCallback> >, __sanitizer::LargeMmapAllocator<__sanitizer::CrashOnMapUnmap> >::secondary_ -->
+          <!-- __sanitizer::LargeMmapAllocator<__sanitizer::CrashOnMapUnmap> __sanitizer::CombinedAllocator<__sanitizer::SizeClassAllocator32<0,140737488355328,16,__sanitizer::SizeClassMap<17,64,14>,24,__sanitizer::TwoLevelByteMap<2048,4096,__sanitizer::NoOpMapUnmapCallback>,__sanitizer::NoOpMapUnmapCallback>,__sanitizer::SizeClassAllocatorLocalCache<__sanitizer::SizeClassAllocator32<0,140737488355328,16,__sanitizer::SizeClassMap<17,64,14>,24,__sanitizer::TwoLevelByteMap<2048,4096,__sanitizer::NoOpMapUnmapCallback>,__sanitizer::NoOpMapUnmapCallback>>,__sanitizer::LargeMmapAllocator<__sanitizer::CrashOnMapUnmap>>::secondary_ -->
           <var-decl name='secondary_' type-id='type-id-929' visibility='default' filepath='../../.././libsanitizer/sanitizer_common/sanitizer_allocator.h' line='1369' column='1'/>
         </data-member>
         <data-member access='private' layout-offset-in-bits='16940224'>
-          <!-- __sanitizer::AllocatorGlobalStats __sanitizer::CombinedAllocator<__sanitizer::SizeClassAllocator32<0ul, 140737488355328ull, 16ul, __sanitizer::SizeClassMap<17ul, 64ul, 14ul>, 24ul, __sanitizer::TwoLevelByteMap<2048ull, 4096ull, __sanitizer::NoOpMapUnmapCallback>, __sanitizer::NoOpMapUnmapCallback>, __sanitizer::SizeClassAllocatorLocalCache<__sanitizer::SizeClassAllocator32<0ul, 140737488355328ull, 16ul, __sanitizer::SizeClassMap<17ul, 64ul, 14ul>, 24ul, __sanitizer::TwoLevelByteMap<2048ull, 4096ull, __sanitizer::NoOpMapUnmapCallback>, __sanitizer::NoOpMapUnmapCallback> >, __sanitizer::LargeMmapAllocator<__sanitizer::CrashOnMapUnmap> >::stats_ -->
+          <!-- __sanitizer::AllocatorGlobalStats __sanitizer::CombinedAllocator<__sanitizer::SizeClassAllocator32<0,140737488355328,16,__sanitizer::SizeClassMap<17,64,14>,24,__sanitizer::TwoLevelByteMap<2048,4096,__sanitizer::NoOpMapUnmapCallback>,__sanitizer::NoOpMapUnmapCallback>,__sanitizer::SizeClassAllocatorLocalCache<__sanitizer::SizeClassAllocator32<0,140737488355328,16,__sanitizer::SizeClassMap<17,64,14>,24,__sanitizer::TwoLevelByteMap<2048,4096,__sanitizer::NoOpMapUnmapCallback>,__sanitizer::NoOpMapUnmapCallback>>,__sanitizer::LargeMmapAllocator<__sanitizer::CrashOnMapUnmap>>::stats_ -->
           <var-decl name='stats_' type-id='type-id-713' visibility='default' filepath='../../.././libsanitizer/sanitizer_common/sanitizer_allocator.h' line='1370' column='1'/>
         </data-member>
       </class-decl>
-      <!-- class __sanitizer::CombinedAllocator<__sanitizer::SizeClassAllocator64<137438953472000ul, 1099511627776ul, 16ul, __sanitizer::SizeClassMap<17ul, 128ul, 16ul>, __tsan::MapUnmapCallback>, __sanitizer::SizeClassAllocatorLocalCache<__sanitizer::SizeClassAllocator64<137438953472000ul, 1099511627776ul, 16ul, __sanitizer::SizeClassMap<17ul, 128ul, 16ul>, __tsan::MapUnmapCallback> >, __sanitizer::LargeMmapAllocator<__tsan::MapUnmapCallback> > -->
-      <class-decl name='CombinedAllocator&lt;__sanitizer::SizeClassAllocator64&lt;137438953472000ul, 1099511627776ul, 16ul, __sanitizer::SizeClassMap&lt;17ul, 128ul, 16ul&gt;, __tsan::MapUnmapCallback&gt;, __sanitizer::SizeClassAllocatorLocalCache&lt;__sanitizer::SizeClassAllocator64&lt;137438953472000ul, 1099511627776ul, 16ul, __sanitizer::SizeClassMap&lt;17ul, 128ul, 16ul&gt;, __tsan::MapUnmapCallback&gt; &gt;, __sanitizer::LargeMmapAllocator&lt;__tsan::MapUnmapCallback&gt; &gt;' visibility='default' size-in-bits='16782464' filepath='../../.././libsanitizer/sanitizer_common/sanitizer_allocator.h' line='1229' column='1' hash='122c557e2a8d75ee' id='type-id-920'>
+      <!-- class __sanitizer::CombinedAllocator<__sanitizer::SizeClassAllocator64<137438953472000,1099511627776,16,__sanitizer::SizeClassMap<17,128,16>,__tsan::MapUnmapCallback>,__sanitizer::SizeClassAllocatorLocalCache<__sanitizer::SizeClassAllocator64<137438953472000,1099511627776,16,__sanitizer::SizeClassMap<17,128,16>,__tsan::MapUnmapCallback>>,__sanitizer::LargeMmapAllocator<__tsan::MapUnmapCallback>> -->
+      <class-decl name='CombinedAllocator&lt;__sanitizer::SizeClassAllocator64&lt;137438953472000,1099511627776,16,__sanitizer::SizeClassMap&lt;17,128,16&gt;,__tsan::MapUnmapCallback&gt;,__sanitizer::SizeClassAllocatorLocalCache&lt;__sanitizer::SizeClassAllocator64&lt;137438953472000,1099511627776,16,__sanitizer::SizeClassMap&lt;17,128,16&gt;,__tsan::MapUnmapCallback&gt;&gt;,__sanitizer::LargeMmapAllocator&lt;__tsan::MapUnmapCallback&gt;&gt;' visibility='default' size-in-bits='16782464' filepath='../../.././libsanitizer/sanitizer_common/sanitizer_allocator.h' line='1229' column='1' hash='45fae529e176599c' id='type-id-920'>
         <data-member access='private' layout-offset-in-bits='0'>
-          <!-- __sanitizer::SizeClassAllocator64<137438953472000ul, 1099511627776ul, 16ul, __sanitizer::SizeClassMap<17ul, 128ul, 16ul>, __tsan::MapUnmapCallback> __sanitizer::CombinedAllocator<__sanitizer::SizeClassAllocator64<137438953472000ul, 1099511627776ul, 16ul, __sanitizer::SizeClassMap<17ul, 128ul, 16ul>, __tsan::MapUnmapCallback>, __sanitizer::SizeClassAllocatorLocalCache<__sanitizer::SizeClassAllocator64<137438953472000ul, 1099511627776ul, 16ul, __sanitizer::SizeClassMap<17ul, 128ul, 16ul>, __tsan::MapUnmapCallback> >, __sanitizer::LargeMmapAllocator<__tsan::MapUnmapCallback> >::primary_ -->
+          <!-- __sanitizer::SizeClassAllocator64<137438953472000,1099511627776,16,__sanitizer::SizeClassMap<17,128,16>,__tsan::MapUnmapCallback> __sanitizer::CombinedAllocator<__sanitizer::SizeClassAllocator64<137438953472000,1099511627776,16,__sanitizer::SizeClassMap<17,128,16>,__tsan::MapUnmapCallback>,__sanitizer::SizeClassAllocatorLocalCache<__sanitizer::SizeClassAllocator64<137438953472000,1099511627776,16,__sanitizer::SizeClassMap<17,128,16>,__tsan::MapUnmapCallback>>,__sanitizer::LargeMmapAllocator<__tsan::MapUnmapCallback>>::primary_ -->
           <var-decl name='primary_' type-id='type-id-728' visibility='default' filepath='../../.././libsanitizer/sanitizer_common/sanitizer_allocator.h' line='1368' column='1'/>
         </data-member>
         <data-member access='private' layout-offset-in-bits='64'>
-          <!-- __sanitizer::LargeMmapAllocator<__tsan::MapUnmapCallback> __sanitizer::CombinedAllocator<__sanitizer::SizeClassAllocator64<137438953472000ul, 1099511627776ul, 16ul, __sanitizer::SizeClassMap<17ul, 128ul, 16ul>, __tsan::MapUnmapCallback>, __sanitizer::SizeClassAllocatorLocalCache<__sanitizer::SizeClassAllocator64<137438953472000ul, 1099511627776ul, 16ul, __sanitizer::SizeClassMap<17ul, 128ul, 16ul>, __tsan::MapUnmapCallback> >, __sanitizer::LargeMmapAllocator<__tsan::MapUnmapCallback> >::secondary_ -->
+          <!-- __sanitizer::LargeMmapAllocator<__tsan::MapUnmapCallback> __sanitizer::CombinedAllocator<__sanitizer::SizeClassAllocator64<137438953472000,1099511627776,16,__sanitizer::SizeClassMap<17,128,16>,__tsan::MapUnmapCallback>,__sanitizer::SizeClassAllocatorLocalCache<__sanitizer::SizeClassAllocator64<137438953472000,1099511627776,16,__sanitizer::SizeClassMap<17,128,16>,__tsan::MapUnmapCallback>>,__sanitizer::LargeMmapAllocator<__tsan::MapUnmapCallback>>::secondary_ -->
           <var-decl name='secondary_' type-id='type-id-930' visibility='default' filepath='../../.././libsanitizer/sanitizer_common/sanitizer_allocator.h' line='1369' column='1'/>
         </data-member>
         <data-member access='private' layout-offset-in-bits='16782016'>
-          <!-- __sanitizer::AllocatorGlobalStats __sanitizer::CombinedAllocator<__sanitizer::SizeClassAllocator64<137438953472000ul, 1099511627776ul, 16ul, __sanitizer::SizeClassMap<17ul, 128ul, 16ul>, __tsan::MapUnmapCallback>, __sanitizer::SizeClassAllocatorLocalCache<__sanitizer::SizeClassAllocator64<137438953472000ul, 1099511627776ul, 16ul, __sanitizer::SizeClassMap<17ul, 128ul, 16ul>, __tsan::MapUnmapCallback> >, __sanitizer::LargeMmapAllocator<__tsan::MapUnmapCallback> >::stats_ -->
+          <!-- __sanitizer::AllocatorGlobalStats __sanitizer::CombinedAllocator<__sanitizer::SizeClassAllocator64<137438953472000,1099511627776,16,__sanitizer::SizeClassMap<17,128,16>,__tsan::MapUnmapCallback>,__sanitizer::SizeClassAllocatorLocalCache<__sanitizer::SizeClassAllocator64<137438953472000,1099511627776,16,__sanitizer::SizeClassMap<17,128,16>,__tsan::MapUnmapCallback>>,__sanitizer::LargeMmapAllocator<__tsan::MapUnmapCallback>>::stats_ -->
           <var-decl name='stats_' type-id='type-id-713' visibility='default' filepath='../../.././libsanitizer/sanitizer_common/sanitizer_allocator.h' line='1370' column='1'/>
         </data-member>
       </class-decl>
@@ -21940,7 +21940,7 @@
     <namespace-decl name='__tsan'>
       <!-- struct __tsan::MapUnmapCallback -->
       <class-decl name='MapUnmapCallback' is-struct='yes' visibility='default' size-in-bits='8' filepath='../../.././libsanitizer/tsan/tsan_mman.cc' line='56' column='1' hash='ea1ca0452f0c8254' id='type-id-957'/>
-      <!-- typedef __sanitizer::CombinedAllocator<__sanitizer::SizeClassAllocator64<137438953472000ul, 1099511627776ul, 16ul, __sanitizer::SizeClassMap<17ul, 128ul, 16ul>, __tsan::MapUnmapCallback>, __sanitizer::SizeClassAllocatorLocalCache<__sanitizer::SizeClassAllocator64<137438953472000ul, 1099511627776ul, 16ul, __sanitizer::SizeClassMap<17ul, 128ul, 16ul>, __tsan::MapUnmapCallback> >, __sanitizer::LargeMmapAllocator<__tsan::MapUnmapCallback> > __tsan::Allocator -->
+      <!-- typedef __sanitizer::CombinedAllocator<__sanitizer::SizeClassAllocator64<137438953472000,1099511627776,16,__sanitizer::SizeClassMap<17,128,16>,__tsan::MapUnmapCallback>,__sanitizer::SizeClassAllocatorLocalCache<__sanitizer::SizeClassAllocator64<137438953472000,1099511627776,16,__sanitizer::SizeClassMap<17,128,16>,__tsan::MapUnmapCallback>>,__sanitizer::LargeMmapAllocator<__tsan::MapUnmapCallback>> __tsan::Allocator -->
       <typedef-decl name='Allocator' type-id='type-id-920' size-in-bits='16782464' filepath='../../.././libsanitizer/tsan/tsan_rtl.h' line='136' column='1' id='type-id-940'/>
     </namespace-decl>
   </abi-instr>
@@ -22053,10 +22053,10 @@
     <typedef-decl name='rlim_t' type-id='type-id-985' size-in-bits='64' filepath='/usr/include/bits/resource.h' line='127' column='1' hash='8fdc5eea2983a729' id='type-id-984'/>
     <!-- __sanitizer::InternalMmapVector<int>* -->
     <pointer-type-def type-id='type-id-986' size-in-bits='64' hash='4516c43afe46660d' id='type-id-300'/>
-    <!-- __sanitizer::InternalScopedBuffer<long long unsigned int>* -->
-    <pointer-type-def type-id='type-id-987' size-in-bits='64' hash='27b3052f1d1b5b0f' id='type-id-988'/>
-    <!-- __sanitizer::InternalScopedBuffer<long long unsigned int>* const -->
-    <qualified-type-def type-id='type-id-988' const='yes' hash='8a82cf3416fe6589' id='type-id-989'/>
+    <!-- __sanitizer::InternalScopedBuffer<longlongunsignedint>* -->
+    <pointer-type-def type-id='type-id-987' size-in-bits='64' hash='db701aba9f2cc884' id='type-id-988'/>
+    <!-- __sanitizer::InternalScopedBuffer<longlongunsignedint>* const -->
+    <qualified-type-def type-id='type-id-988' const='yes' hash='d29c85c9d2d75b28' id='type-id-989'/>
     <!-- __sanitizer::SuspendedThreadsList* -->
     <pointer-type-def type-id='type-id-311' size-in-bits='64' hash='c7ad51ad6fce12cf' id='type-id-313'/>
     <!-- __tsan::ScopedInRtl* -->
@@ -22069,10 +22069,10 @@
     <reference-type-def kind='lvalue' type-id='type-id-993' size-in-bits='64' hash='10af91bdb60b718f' id='type-id-994'/>
     <!-- const __sanitizer::InternalMmapVector<int>* -->
     <pointer-type-def type-id='type-id-993' size-in-bits='64' hash='68144ef07976fa9e' id='type-id-318'/>
-    <!-- const __sanitizer::InternalScopedBuffer<long long unsigned int> -->
-    <qualified-type-def type-id='type-id-987' const='yes' hash='d34fa863e10fcac2' id='type-id-995'/>
-    <!-- const __sanitizer::InternalScopedBuffer<long long unsigned int>& -->
-    <reference-type-def kind='lvalue' type-id='type-id-995' size-in-bits='64' hash='44084620ee2f6fc3' id='type-id-996'/>
+    <!-- const __sanitizer::InternalScopedBuffer<longlongunsignedint> -->
+    <qualified-type-def type-id='type-id-987' const='yes' hash='3ce6ee918d8f9931' id='type-id-995'/>
+    <!-- const __sanitizer::InternalScopedBuffer<longlongunsignedint>& -->
+    <reference-type-def kind='lvalue' type-id='type-id-995' size-in-bits='64' hash='8dc9f935935983f9' id='type-id-996'/>
     <!-- const __sanitizer::SuspendedThreadsList -->
     <qualified-type-def type-id='type-id-311' const='yes' hash='a18ecf5170a4343b' id='type-id-997'/>
     <!-- const __sanitizer::SuspendedThreadsList& -->
@@ -22108,14 +22108,14 @@
           <var-decl name='size_' type-id='type-id-87' visibility='default' filepath='../../.././libsanitizer/sanitizer_common/sanitizer_common.h' line='384' column='1'/>
         </data-member>
       </class-decl>
-      <!-- class __sanitizer::InternalScopedBuffer<long long unsigned int> -->
-      <class-decl name='InternalScopedBuffer&lt;long long unsigned int&gt;' visibility='default' size-in-bits='128' filepath='../../.././libsanitizer/sanitizer_common/sanitizer_common.h' line='67' column='1' hash='d5d1a02054bf209d' id='type-id-987'>
+      <!-- class __sanitizer::InternalScopedBuffer<longlongunsignedint> -->
+      <class-decl name='InternalScopedBuffer&lt;longlongunsignedint&gt;' visibility='default' size-in-bits='128' filepath='../../.././libsanitizer/sanitizer_common/sanitizer_common.h' line='67' column='1' hash='9ca94390adabf2cc' id='type-id-987'>
         <data-member access='private' layout-offset-in-bits='0'>
-          <!-- unsigned long long int* __sanitizer::InternalScopedBuffer<long long unsigned int>::ptr_ -->
+          <!-- unsigned long long int* __sanitizer::InternalScopedBuffer<longlongunsignedint>::ptr_ -->
           <var-decl name='ptr_' type-id='type-id-393' visibility='default' filepath='../../.././libsanitizer/sanitizer_common/sanitizer_common.h' line='81' column='1'/>
         </data-member>
         <data-member access='private' layout-offset-in-bits='64'>
-          <!-- __sanitizer::uptr __sanitizer::InternalScopedBuffer<long long unsigned int>::cnt_ -->
+          <!-- __sanitizer::uptr __sanitizer::InternalScopedBuffer<longlongunsignedint>::cnt_ -->
           <var-decl name='cnt_' type-id='type-id-87' visibility='default' filepath='../../.././libsanitizer/sanitizer_common/sanitizer_common.h' line='82' column='1'/>
         </data-member>
       </class-decl>
@@ -22904,10 +22904,10 @@
     <pointer-type-def type-id='type-id-1135' size-in-bits='64' hash='3c2c306835698c40' id='type-id-1136'/>
     <!-- __sanitizer::InternalScopedBuffer<__tsan::MutexSet>* const -->
     <qualified-type-def type-id='type-id-1136' const='yes' hash='fe5753223ada705d' id='type-id-1137'/>
-    <!-- __sanitizer::InternalScopedBuffer<long unsigned int>* -->
-    <pointer-type-def type-id='type-id-1138' size-in-bits='64' hash='11a1709671360a1f' id='type-id-1139'/>
-    <!-- __sanitizer::InternalScopedBuffer<long unsigned int>* const -->
-    <qualified-type-def type-id='type-id-1139' const='yes' hash='85a9fd0a61fb0d59' id='type-id-1140'/>
+    <!-- __sanitizer::InternalScopedBuffer<longunsignedint>* -->
+    <pointer-type-def type-id='type-id-1138' size-in-bits='64' hash='03a343451534de87' id='type-id-1139'/>
+    <!-- __sanitizer::InternalScopedBuffer<longunsignedint>* const -->
+    <qualified-type-def type-id='type-id-1139' const='yes' hash='bb29a2ed772cc961' id='type-id-1140'/>
     <!-- __tsan::MutexSet& -->
     <reference-type-def kind='lvalue' type-id='type-id-765' size-in-bits='64' hash='cdfe8e50cac607a0' id='type-id-1141'/>
     <!-- __tsan::ReportDesc*& -->
@@ -22920,10 +22920,10 @@
     <qualified-type-def type-id='type-id-1135' const='yes' hash='46a3bce787767686' id='type-id-1146'/>
     <!-- const __sanitizer::InternalScopedBuffer<__tsan::MutexSet>& -->
     <reference-type-def kind='lvalue' type-id='type-id-1146' size-in-bits='64' hash='3b273d1aa1416393' id='type-id-1147'/>
-    <!-- const __sanitizer::InternalScopedBuffer<long unsigned int> -->
-    <qualified-type-def type-id='type-id-1138' const='yes' hash='accf1b484b36fcea' id='type-id-1148'/>
-    <!-- const __sanitizer::InternalScopedBuffer<long unsigned int>& -->
-    <reference-type-def kind='lvalue' type-id='type-id-1148' size-in-bits='64' hash='ab5ca882fc2228c4' id='type-id-1149'/>
+    <!-- const __sanitizer::InternalScopedBuffer<longunsignedint> -->
+    <qualified-type-def type-id='type-id-1138' const='yes' hash='7a1eb15b8afbf69f' id='type-id-1148'/>
+    <!-- const __sanitizer::InternalScopedBuffer<longunsignedint>& -->
+    <reference-type-def kind='lvalue' type-id='type-id-1148' size-in-bits='64' hash='85fd20411c2193b0' id='type-id-1149'/>
     <!-- const __tsan::RacyStacks* const -->
     <qualified-type-def type-id='type-id-830' const='yes' hash='fe03128e4463c140' id='type-id-1150'/>
     <!-- const __tsan::ScopedReport* const -->
@@ -22934,7 +22934,7 @@
     <qualified-type-def type-id='type-id-842' const='yes' hash='863a109d433f9d1c' id='type-id-1154'/>
     <!-- unsigned long int& -->
     <reference-type-def kind='lvalue' type-id='type-id-1' size-in-bits='64' hash='b08a4d7705311570#2' id='type-id-1155'/>
-    <!-- __sanitizer::SizeClassAllocator64<137438953472000ul, 1099511627776ul, 16ul, __sanitizer::SizeClassMap<17ul, 128ul, 16ul>, __tsan::MapUnmapCallback>::Batch* -->
+    <!-- __sanitizer::SizeClassAllocator64<137438953472000,1099511627776,16,__sanitizer::SizeClassMap<17,128,16>,__tsan::MapUnmapCallback>::Batch* -->
     <pointer-type-def type-id='type-id-887' size-in-bits='64' id='type-id-1156'/>
     <!-- namespace __sanitizer -->
     <namespace-decl name='__sanitizer'>
@@ -22949,14 +22949,14 @@
           <var-decl name='cnt_' type-id='type-id-87' visibility='default' filepath='../../.././libsanitizer/sanitizer_common/sanitizer_common.h' line='82' column='1'/>
         </data-member>
       </class-decl>
-      <!-- class __sanitizer::InternalScopedBuffer<long unsigned int> -->
-      <class-decl name='InternalScopedBuffer&lt;long unsigned int&gt;' visibility='default' size-in-bits='128' filepath='../../.././libsanitizer/sanitizer_common/sanitizer_common.h' line='67' column='1' hash='881284aa6e21720c' id='type-id-1138'>
+      <!-- class __sanitizer::InternalScopedBuffer<longunsignedint> -->
+      <class-decl name='InternalScopedBuffer&lt;longunsignedint&gt;' visibility='default' size-in-bits='128' filepath='../../.././libsanitizer/sanitizer_common/sanitizer_common.h' line='67' column='1' hash='56fa2c6a9bf3fcfd' id='type-id-1138'>
         <data-member access='private' layout-offset-in-bits='0'>
-          <!-- unsigned long int* __sanitizer::InternalScopedBuffer<long unsigned int>::ptr_ -->
+          <!-- unsigned long int* __sanitizer::InternalScopedBuffer<longunsignedint>::ptr_ -->
           <var-decl name='ptr_' type-id='type-id-140' visibility='default' filepath='../../.././libsanitizer/sanitizer_common/sanitizer_common.h' line='81' column='1'/>
         </data-member>
         <data-member access='private' layout-offset-in-bits='64'>
-          <!-- __sanitizer::uptr __sanitizer::InternalScopedBuffer<long unsigned int>::cnt_ -->
+          <!-- __sanitizer::uptr __sanitizer::InternalScopedBuffer<longunsignedint>::cnt_ -->
           <var-decl name='cnt_' type-id='type-id-87' visibility='default' filepath='../../.././libsanitizer/sanitizer_common/sanitizer_common.h' line='82' column='1'/>
         </data-member>
       </class-decl>
@@ -23247,7 +23247,7 @@
     <reference-type-def kind='lvalue' type-id='type-id-1220' size-in-bits='64' hash='282ec0edcde22d3e' id='type-id-1221'/>
     <!-- int* -->
     <pointer-type-def type-id='type-id-6' size-in-bits='64' hash='3fd83b2c14ae2f2f' id='type-id-38'/>
-    <!-- __sanitizer::SizeClassAllocator32<0ul, 140737488355328ull, 16ul, __sanitizer::SizeClassMap<17ul, 64ul, 14ul>, 24ul, __sanitizer::TwoLevelByteMap<2048ull, 4096ull, __sanitizer::NoOpMapUnmapCallback>, __sanitizer::NoOpMapUnmapCallback>::Batch* -->
+    <!-- __sanitizer::SizeClassAllocator32<0,140737488355328,16,__sanitizer::SizeClassMap<17,64,14>,24,__sanitizer::TwoLevelByteMap<2048,4096,__sanitizer::NoOpMapUnmapCallback>,__sanitizer::NoOpMapUnmapCallback>::Batch* -->
     <pointer-type-def type-id='type-id-883' size-in-bits='64' id='type-id-1222'/>
     <!-- namespace __sanitizer -->
     <namespace-decl name='__sanitizer'>
@@ -23483,7 +23483,7 @@
     <qualified-type-def type-id='type-id-1253' const='yes' hash='172caff2c7d30631' id='type-id-1254'/>
     <!-- const __tsan::StackTrace* const -->
     <qualified-type-def type-id='type-id-1191' const='yes' hash='eef5e9d39f953281' id='type-id-1255'/>
-    <!-- __sanitizer::SizeClassAllocator64<137438953472000ul, 1099511627776ul, 16ul, __sanitizer::SizeClassMap<17ul, 128ul, 16ul>, __tsan::MapUnmapCallback>::Batch* -->
+    <!-- __sanitizer::SizeClassAllocator64<137438953472000,1099511627776,16,__sanitizer::SizeClassMap<17,128,16>,__tsan::MapUnmapCallback>::Batch* -->
     <pointer-type-def type-id='type-id-885' size-in-bits='64' id='type-id-1256'/>
     <!-- namespace __sanitizer -->
     <namespace-decl name='__sanitizer'>

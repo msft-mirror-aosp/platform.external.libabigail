@@ -78,6 +78,8 @@ void get_comma_separated_args_of_option(const string& input_str,
 bool get_dsos_provided_by_rpm(const string& rpm_path,
 			      set<string>& provided_dsos);
 string trim_white_space(const string&);
+bool remove_white_spaces(string&);
+bool normalize_litterals(string&);
 string trim_leading_string(const string& from, const string& to_trim);
 void convert_char_stars_to_char_star_stars(const vector<char*>&,
 					   vector<char**>&);

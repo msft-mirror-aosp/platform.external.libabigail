@@ -152,7 +152,7 @@
         <var-decl name='tm_zone' type-id='type-id-20' visibility='default' filepath='/usr/include/time.h' line='147' column='1'/>
       </data-member>
     </class-decl>
-    <class-decl name='typedef __va_list_tag __va_list_tag' is-struct='yes' visibility='default' size-in-bits='192' hash='82aec996f90384a2' id='type-id-21'>
+    <class-decl name='typedef__va_list_tag__va_list_tag' is-struct='yes' visibility='default' size-in-bits='192' hash='3b37d6f26ac12c24' id='type-id-21'>
       <data-member access='public' layout-offset-in-bits='0'>
         <var-decl name='gp_offset' type-id='type-id-16' visibility='default'/>
       </data-member>
@@ -197,9 +197,9 @@
     <qualified-type-def type-id='type-id-12' const='yes' hash='fa0f98d319d2e5f4#3' id='type-id-48'/>
     <qualified-type-def type-id='type-id-49' const='yes' hash='902ffeb42efa2254' id='type-id-50'/>
     <reference-type-def kind='lvalue' type-id='type-id-50' size-in-bits='64' hash='7d4280c016344b59' id='type-id-51'/>
-    <qualified-type-def type-id='type-id-52' const='yes' hash='42938116911f2585' id='type-id-53'/>
-    <reference-type-def kind='lvalue' type-id='type-id-53' size-in-bits='64' hash='ebc94b0648ba0254' id='type-id-54'/>
-    <pointer-type-def type-id='type-id-53' size-in-bits='64' hash='f14dbace06951209' id='type-id-55'/>
+    <qualified-type-def type-id='type-id-52' const='yes' hash='876836f44f3494e5' id='type-id-53'/>
+    <reference-type-def kind='lvalue' type-id='type-id-53' size-in-bits='64' hash='c150ddfcb238b493' id='type-id-54'/>
+    <pointer-type-def type-id='type-id-53' size-in-bits='64' hash='558e377f8e11c9af' id='type-id-55'/>
     <qualified-type-def type-id='type-id-56' const='yes' hash='7226944aa4e46352' id='type-id-57'/>
     <pointer-type-def type-id='type-id-57' size-in-bits='64' hash='61c33da8fd0cc9a8' id='type-id-58'/>
     <qualified-type-def type-id='type-id-59' const='yes' hash='f3ad494e9f7aea44' id='type-id-60'/>
@@ -218,14 +218,14 @@
     <pointer-type-def type-id='type-id-17' size-in-bits='64' hash='6921f81febec828e' id='type-id-76'/>
     <pointer-type-def type-id='type-id-25' size-in-bits='64' hash='18fb85b101e2cd25' id='type-id-77'/>
     <pointer-type-def type-id='type-id-49' size-in-bits='64' hash='e3d0c180eee5d782' id='type-id-78'/>
-    <reference-type-def kind='lvalue' type-id='type-id-52' size-in-bits='64' hash='d8ed513ed2f704b1' id='type-id-79'/>
-    <pointer-type-def type-id='type-id-52' size-in-bits='64' hash='c23efea4cbf2dbe8' id='type-id-80'/>
+    <reference-type-def kind='lvalue' type-id='type-id-52' size-in-bits='64' hash='eafca7fdb10b089a' id='type-id-79'/>
+    <pointer-type-def type-id='type-id-52' size-in-bits='64' hash='18becb8991ad6ad0' id='type-id-80'/>
     <pointer-type-def type-id='type-id-81' size-in-bits='64' hash='9d029584a1ffef40' id='type-id-82'/>
     <reference-type-def kind='lvalue' type-id='type-id-56' size-in-bits='64' hash='dce7c83b7dca5265' id='type-id-83'/>
     <pointer-type-def type-id='type-id-56' size-in-bits='64' hash='0eeadcf9df869442' id='type-id-84'/>
     <reference-type-def kind='lvalue' type-id='type-id-61' size-in-bits='64' hash='75929b1513585467' id='type-id-85'/>
     <pointer-type-def type-id='type-id-61' size-in-bits='64' hash='4cef840ef4725ab6' id='type-id-86'/>
-    <pointer-type-def type-id='type-id-21' size-in-bits='64' hash='648313adc1c4c534' id='type-id-87'/>
+    <pointer-type-def type-id='type-id-21' size-in-bits='64' hash='32209790a214ec40' id='type-id-87'/>
     <pointer-type-def type-id='type-id-33' size-in-bits='64' hash='fb9a8c973ae04ed8' id='type-id-88'/>
     <pointer-type-def type-id='type-id-88' size-in-bits='64' hash='f6157ba411f3141d' id='type-id-89'/>
     <pointer-type-def type-id='type-id-90' size-in-bits='64' id='type-id-91'/>
@@ -242,7 +242,7 @@
           <typedef-decl name='size_type' type-id='type-id-95' size-in-bits='64' filepath='/usr/include/c++/5.3.1/bits/allocator.h' line='95' column='1' hash='8fdc5eea2983a729' id='type-id-94'/>
         </member-type>
       </class-decl>
-      <class-decl name='basic_string&lt;char, std::char_traits&lt;char&gt;, std::allocator&lt;char&gt; &gt;' visibility='default' size-in-bits='64' filepath='/usr/include/c++/5.3.1/bits/basic_string.h' line='2510' column='1' hash='41e28a36dddcbfdb' id='type-id-52'>
+      <class-decl name='basic_string&lt;char,std::char_traits&lt;char&gt;,std::allocator&lt;char&gt;&gt;' visibility='default' size-in-bits='64' filepath='/usr/include/c++/5.3.1/bits/basic_string.h' line='2510' column='1' hash='c9b0684f73450e83' id='type-id-52'>
         <member-type access='private'>
           <class-decl name='_Alloc_hider' is-struct='yes' visibility='default' size-in-bits='64' filepath='/usr/include/c++/5.3.1/bits/basic_string.h' line='2670' column='1' hash='b2053c926fcda493' id='type-id-81'>
             <base-class access='public' layout-offset-in-bits='0' type-id='type-id-49'/>
@@ -313,10 +313,10 @@
       </class-decl>
       <typedef-decl name='size_t' type-id='type-id-26' size-in-bits='64' filepath='/usr/include/c++/5.3.1/x86_64-redhat-linux/bits/c++config.h' line='1969' column='1' hash='8fdc5eea2983a729' id='type-id-95'/>
       <typedef-decl name='string' type-id='type-id-52' size-in-bits='64' filepath='/usr/include/c++/5.3.1/bits/stringfwd.h' line='74' column='1' id='type-id-68'/>
-      <class-decl name='basic_ostream&lt;char, std::char_traits&lt;char&gt; &gt;' visibility='default' is-declaration-only='yes' id='type-id-109'/>
-      <class-decl name='reverse_iterator&lt;__gnu_cxx::__normal_iterator&lt;char const*, std::basic_string&lt;char, std::char_traits&lt;char&gt;, std::allocator&lt;char&gt; &gt; &gt; &gt;' visibility='default' is-declaration-only='yes' id='type-id-103'/>
-      <class-decl name='reverse_iterator&lt;__gnu_cxx::__normal_iterator&lt;char*, std::basic_string&lt;char, std::char_traits&lt;char&gt;, std::allocator&lt;char&gt; &gt; &gt; &gt;' visibility='default' is-declaration-only='yes' id='type-id-107'/>
-      <function-decl name='operator+&lt;char, std::char_traits&lt;char&gt;, std::allocator&lt;char&gt; &gt;' mangled-name='_ZStplIcSt11char_traitsIcESaIcEESbIT_T0_T1_EPKS3_RKS6_' filepath='/usr/include/c++/5.3.1/bits/basic_string.tcc' line='1151' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZStplIcSt11char_traitsIcESaIcEESbIT_T0_T1_EPKS3_RKS6_' hash='af03af46bc40880c'>
+      <class-decl name='basic_ostream&lt;char,std::char_traits&lt;char&gt;&gt;' visibility='default' is-declaration-only='yes' id='type-id-109'/>
+      <class-decl name='reverse_iterator&lt;__gnu_cxx::__normal_iterator&lt;char*,std::basic_string&lt;char,std::char_traits&lt;char&gt;,std::allocator&lt;char&gt;&gt;&gt;&gt;' visibility='default' is-declaration-only='yes' id='type-id-107'/>
+      <class-decl name='reverse_iterator&lt;__gnu_cxx::__normal_iterator&lt;charconst*,std::basic_string&lt;char,std::char_traits&lt;char&gt;,std::allocator&lt;char&gt;&gt;&gt;&gt;' visibility='default' is-declaration-only='yes' id='type-id-103'/>
+      <function-decl name='operator+&lt;char,std::char_traits&lt;char&gt;,std::allocator&lt;char&gt;&gt;' mangled-name='_ZStplIcSt11char_traitsIcESaIcEESbIT_T0_T1_EPKS3_RKS6_' filepath='/usr/include/c++/5.3.1/bits/basic_string.tcc' line='1151' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZStplIcSt11char_traitsIcESaIcEESbIT_T0_T1_EPKS3_RKS6_' hash='e176adab2711438b'>
         <parameter type-id='type-id-20'/>
         <parameter type-id='type-id-54'/>
         <return type-id='type-id-52'/>
@@ -364,7 +364,7 @@
           <var-decl name='__max' type-id='type-id-44' mangled-name='_ZN9__gnu_cxx24__numeric_traits_integerIiE5__maxE' visibility='default' filepath='/usr/include/c++/5.3.1/ext/numeric_traits.h' line='59' column='1'/>
         </data-member>
       </class-decl>
-      <class-decl name='__numeric_traits_integer&lt;long int&gt;' is-struct='yes' visibility='default' size-in-bits='8' filepath='/usr/include/c++/5.3.1/ext/numeric_traits.h' line='55' column='1' hash='45f07c99b3549de3' id='type-id-120'>
+      <class-decl name='__numeric_traits_integer&lt;longint&gt;' is-struct='yes' visibility='default' size-in-bits='8' filepath='/usr/include/c++/5.3.1/ext/numeric_traits.h' line='55' column='1' hash='b83b6d736c3d7a3d' id='type-id-120'>
         <data-member access='public' static='yes'>
           <var-decl name='__min' type-id='type-id-45' mangled-name='_ZN9__gnu_cxx24__numeric_traits_integerIlE5__minE' visibility='default' filepath='/usr/include/c++/5.3.1/ext/numeric_traits.h' line='58' column='1'/>
         </data-member>
@@ -372,12 +372,12 @@
           <var-decl name='__max' type-id='type-id-45' mangled-name='_ZN9__gnu_cxx24__numeric_traits_integerIlE5__maxE' visibility='default' filepath='/usr/include/c++/5.3.1/ext/numeric_traits.h' line='59' column='1'/>
         </data-member>
       </class-decl>
-      <class-decl name='__numeric_traits_integer&lt;long unsigned int&gt;' is-struct='yes' visibility='default' size-in-bits='8' filepath='/usr/include/c++/5.3.1/ext/numeric_traits.h' line='55' column='1' hash='1c97241ef0e09e7a' id='type-id-121'>
+      <class-decl name='__numeric_traits_integer&lt;longunsignedint&gt;' is-struct='yes' visibility='default' size-in-bits='8' filepath='/usr/include/c++/5.3.1/ext/numeric_traits.h' line='55' column='1' hash='43c9314f28796314' id='type-id-121'>
         <data-member access='public' static='yes'>
           <var-decl name='__digits' type-id='type-id-44' mangled-name='_ZN9__gnu_cxx24__numeric_traits_integerImE8__digitsE' visibility='default' filepath='/usr/include/c++/5.3.1/ext/numeric_traits.h' line='64' column='1'/>
         </data-member>
       </class-decl>
-      <class-decl name='__numeric_traits_integer&lt;short int&gt;' is-struct='yes' visibility='default' size-in-bits='8' filepath='/usr/include/c++/5.3.1/ext/numeric_traits.h' line='55' column='1' hash='2509c5a6751e4c19' id='type-id-122'>
+      <class-decl name='__numeric_traits_integer&lt;shortint&gt;' is-struct='yes' visibility='default' size-in-bits='8' filepath='/usr/include/c++/5.3.1/ext/numeric_traits.h' line='55' column='1' hash='9d7868ef0e2cc9d6' id='type-id-122'>
         <data-member access='public' static='yes'>
           <var-decl name='__min' type-id='type-id-48' mangled-name='_ZN9__gnu_cxx24__numeric_traits_integerIsE5__minE' visibility='default' filepath='/usr/include/c++/5.3.1/ext/numeric_traits.h' line='58' column='1'/>
         </data-member>
@@ -385,8 +385,8 @@
           <var-decl name='__max' type-id='type-id-48' mangled-name='_ZN9__gnu_cxx24__numeric_traits_integerIsE5__maxE' visibility='default' filepath='/usr/include/c++/5.3.1/ext/numeric_traits.h' line='59' column='1'/>
         </data-member>
       </class-decl>
-      <class-decl name='__normal_iterator&lt;char const*, std::basic_string&lt;char, std::char_traits&lt;char&gt;, std::allocator&lt;char&gt; &gt; &gt;' visibility='default' is-declaration-only='yes' id='type-id-101'/>
-      <class-decl name='__normal_iterator&lt;char*, std::basic_string&lt;char, std::char_traits&lt;char&gt;, std::allocator&lt;char&gt; &gt; &gt;' visibility='default' is-declaration-only='yes' id='type-id-105'/>
+      <class-decl name='__normal_iterator&lt;char*,std::basic_string&lt;char,std::char_traits&lt;char&gt;,std::allocator&lt;char&gt;&gt;&gt;' visibility='default' is-declaration-only='yes' id='type-id-105'/>
+      <class-decl name='__normal_iterator&lt;charconst*,std::basic_string&lt;char,std::char_traits&lt;char&gt;,std::allocator&lt;char&gt;&gt;&gt;' visibility='default' is-declaration-only='yes' id='type-id-101'/>
     </namespace-decl>
     <typedef-decl name='__FILE' type-id='type-id-112' filepath='/usr/include/stdio.h' line='64' column='1' id='type-id-90'/>
     <type-decl name='variadic parameter type' id='type-id-123'/>

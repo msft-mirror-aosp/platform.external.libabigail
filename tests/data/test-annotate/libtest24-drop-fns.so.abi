@@ -213,22 +213,22 @@
         <var-decl name='tm_zone' type-id='type-id-20' visibility='default' filepath='/usr/include/time.h' line='147' column='1'/>
       </data-member>
     </class-decl>
-    <!-- struct typedef __va_list_tag __va_list_tag -->
-    <class-decl name='typedef __va_list_tag __va_list_tag' is-struct='yes' visibility='default' size-in-bits='192' hash='82aec996f90384a2' id='type-id-21'>
+    <!-- struct typedef__va_list_tag__va_list_tag -->
+    <class-decl name='typedef__va_list_tag__va_list_tag' is-struct='yes' visibility='default' size-in-bits='192' hash='3b37d6f26ac12c24' id='type-id-21'>
       <data-member access='public' layout-offset-in-bits='0'>
-        <!-- unsigned int typedef __va_list_tag __va_list_tag::gp_offset -->
+        <!-- unsigned int typedef__va_list_tag__va_list_tag::gp_offset -->
         <var-decl name='gp_offset' type-id='type-id-16' visibility='default'/>
       </data-member>
       <data-member access='public' layout-offset-in-bits='32'>
-        <!-- unsigned int typedef __va_list_tag __va_list_tag::fp_offset -->
+        <!-- unsigned int typedef__va_list_tag__va_list_tag::fp_offset -->
         <var-decl name='fp_offset' type-id='type-id-16' visibility='default'/>
       </data-member>
       <data-member access='public' layout-offset-in-bits='64'>
-        <!-- void* typedef __va_list_tag __va_list_tag::overflow_arg_area -->
+        <!-- void* typedef__va_list_tag__va_list_tag::overflow_arg_area -->
         <var-decl name='overflow_arg_area' type-id='type-id-22' visibility='default'/>
       </data-member>
       <data-member access='public' layout-offset-in-bits='128'>
-        <!-- void* typedef __va_list_tag __va_list_tag::reg_save_area -->
+        <!-- void* typedef__va_list_tag__va_list_tag::reg_save_area -->
         <var-decl name='reg_save_area' type-id='type-id-22' visibility='default'/>
       </data-member>
     </class-decl>
@@ -294,17 +294,17 @@
     <qualified-type-def type-id='type-id-49' const='yes' hash='902ffeb42efa2254' id='type-id-50'/>
     <!-- const std::allocator<char>& -->
     <reference-type-def kind='lvalue' type-id='type-id-50' size-in-bits='64' hash='7d4280c016344b59' id='type-id-51'/>
-    <!-- const std::basic_string<char, std::char_traits<char>, std::allocator<char> > -->
-    <qualified-type-def type-id='type-id-52' const='yes' hash='42938116911f2585' id='type-id-53'/>
-    <!-- const std::basic_string<char, std::char_traits<char>, std::allocator<char> >& -->
-    <reference-type-def kind='lvalue' type-id='type-id-53' size-in-bits='64' hash='ebc94b0648ba0254' id='type-id-54'/>
-    <!-- const std::basic_string<char, std::char_traits<char>, std::allocator<char> >* -->
-    <pointer-type-def type-id='type-id-53' size-in-bits='64' hash='f14dbace06951209' id='type-id-55'/>
-    <!-- const std::basic_string<char, std::char_traits<char>, std::allocator<char> >::_Rep -->
+    <!-- const std::basic_string<char,std::char_traits<char>,std::allocator<char>> -->
+    <qualified-type-def type-id='type-id-52' const='yes' hash='876836f44f3494e5' id='type-id-53'/>
+    <!-- const std::basic_string<char,std::char_traits<char>,std::allocator<char>>& -->
+    <reference-type-def kind='lvalue' type-id='type-id-53' size-in-bits='64' hash='c150ddfcb238b493' id='type-id-54'/>
+    <!-- const std::basic_string<char,std::char_traits<char>,std::allocator<char>>* -->
+    <pointer-type-def type-id='type-id-53' size-in-bits='64' hash='558e377f8e11c9af' id='type-id-55'/>
+    <!-- const std::basic_string<char,std::char_traits<char>,std::allocator<char>>::_Rep -->
     <qualified-type-def type-id='type-id-56' const='yes' hash='7226944aa4e46352' id='type-id-57'/>
-    <!-- const std::basic_string<char, std::char_traits<char>, std::allocator<char> >::_Rep* -->
+    <!-- const std::basic_string<char,std::char_traits<char>,std::allocator<char>>::_Rep* -->
     <pointer-type-def type-id='type-id-57' size-in-bits='64' hash='61c33da8fd0cc9a8' id='type-id-58'/>
-    <!-- const std::basic_string<char, std::char_traits<char>, std::allocator<char> >::size_type -->
+    <!-- const std::basic_string<char,std::char_traits<char>,std::allocator<char>>::size_type -->
     <qualified-type-def type-id='type-id-59' const='yes' hash='f3ad494e9f7aea44' id='type-id-60'/>
     <!-- const std::char_traits<char>::char_type -->
     <qualified-type-def type-id='type-id-61' const='yes' hash='0d301f00e830e5eb' id='type-id-62'/>
@@ -336,22 +336,22 @@
     <pointer-type-def type-id='type-id-25' size-in-bits='64' hash='18fb85b101e2cd25' id='type-id-77'/>
     <!-- std::allocator<char>* -->
     <pointer-type-def type-id='type-id-49' size-in-bits='64' hash='e3d0c180eee5d782' id='type-id-78'/>
-    <!-- std::basic_string<char, std::char_traits<char>, std::allocator<char> >& -->
-    <reference-type-def kind='lvalue' type-id='type-id-52' size-in-bits='64' hash='d8ed513ed2f704b1' id='type-id-79'/>
-    <!-- std::basic_string<char, std::char_traits<char>, std::allocator<char> >* -->
-    <pointer-type-def type-id='type-id-52' size-in-bits='64' hash='c23efea4cbf2dbe8' id='type-id-80'/>
-    <!-- std::basic_string<char, std::char_traits<char>, std::allocator<char> >::_Alloc_hider* -->
+    <!-- std::basic_string<char,std::char_traits<char>,std::allocator<char>>& -->
+    <reference-type-def kind='lvalue' type-id='type-id-52' size-in-bits='64' hash='eafca7fdb10b089a' id='type-id-79'/>
+    <!-- std::basic_string<char,std::char_traits<char>,std::allocator<char>>* -->
+    <pointer-type-def type-id='type-id-52' size-in-bits='64' hash='18becb8991ad6ad0' id='type-id-80'/>
+    <!-- std::basic_string<char,std::char_traits<char>,std::allocator<char>>::_Alloc_hider* -->
     <pointer-type-def type-id='type-id-81' size-in-bits='64' hash='9d029584a1ffef40' id='type-id-82'/>
-    <!-- std::basic_string<char, std::char_traits<char>, std::allocator<char> >::_Rep& -->
+    <!-- std::basic_string<char,std::char_traits<char>,std::allocator<char>>::_Rep& -->
     <reference-type-def kind='lvalue' type-id='type-id-56' size-in-bits='64' hash='dce7c83b7dca5265' id='type-id-83'/>
-    <!-- std::basic_string<char, std::char_traits<char>, std::allocator<char> >::_Rep* -->
+    <!-- std::basic_string<char,std::char_traits<char>,std::allocator<char>>::_Rep* -->
     <pointer-type-def type-id='type-id-56' size-in-bits='64' hash='0eeadcf9df869442' id='type-id-84'/>
     <!-- std::char_traits<char>::char_type& -->
     <reference-type-def kind='lvalue' type-id='type-id-61' size-in-bits='64' hash='75929b1513585467' id='type-id-85'/>
     <!-- std::char_traits<char>::char_type* -->
     <pointer-type-def type-id='type-id-61' size-in-bits='64' hash='4cef840ef4725ab6' id='type-id-86'/>
-    <!-- typedef __va_list_tag __va_list_tag* -->
-    <pointer-type-def type-id='type-id-21' size-in-bits='64' hash='648313adc1c4c534' id='type-id-87'/>
+    <!-- typedef__va_list_tag__va_list_tag* -->
+    <pointer-type-def type-id='type-id-21' size-in-bits='64' hash='32209790a214ec40' id='type-id-87'/>
     <!-- wchar_t* -->
     <pointer-type-def type-id='type-id-33' size-in-bits='64' hash='fb9a8c973ae04ed8' id='type-id-88'/>
     <!-- wchar_t** -->
@@ -377,77 +377,77 @@
           <typedef-decl name='size_type' type-id='type-id-95' size-in-bits='64' filepath='/usr/include/c++/5.3.1/bits/allocator.h' line='95' column='1' hash='8fdc5eea2983a729' id='type-id-94'/>
         </member-type>
       </class-decl>
-      <!-- class std::basic_string<char, std::char_traits<char>, std::allocator<char> > -->
-      <class-decl name='basic_string&lt;char, std::char_traits&lt;char&gt;, std::allocator&lt;char&gt; &gt;' visibility='default' size-in-bits='64' filepath='/usr/include/c++/5.3.1/bits/basic_string.h' line='2510' column='1' hash='41e28a36dddcbfdb' id='type-id-52'>
+      <!-- class std::basic_string<char,std::char_traits<char>,std::allocator<char>> -->
+      <class-decl name='basic_string&lt;char,std::char_traits&lt;char&gt;,std::allocator&lt;char&gt;&gt;' visibility='default' size-in-bits='64' filepath='/usr/include/c++/5.3.1/bits/basic_string.h' line='2510' column='1' hash='c9b0684f73450e83' id='type-id-52'>
         <member-type access='private'>
-          <!-- struct std::basic_string<char, std::char_traits<char>, std::allocator<char> >::_Alloc_hider -->
+          <!-- struct std::basic_string<char,std::char_traits<char>,std::allocator<char>>::_Alloc_hider -->
           <class-decl name='_Alloc_hider' is-struct='yes' visibility='default' size-in-bits='64' filepath='/usr/include/c++/5.3.1/bits/basic_string.h' line='2670' column='1' hash='b2053c926fcda493' id='type-id-81'>
             <!-- class std::allocator<char> -->
             <base-class access='public' layout-offset-in-bits='0' type-id='type-id-49'/>
             <data-member access='public' layout-offset-in-bits='0'>
-              <!-- char* std::basic_string<char, std::char_traits<char>, std::allocator<char> >::_Alloc_hider::_M_p -->
+              <!-- char* std::basic_string<char,std::char_traits<char>,std::allocator<char>>::_Alloc_hider::_M_p -->
               <var-decl name='_M_p' type-id='type-id-18' visibility='default' filepath='/usr/include/c++/5.3.1/bits/basic_string.h' line='2675' column='1'/>
             </data-member>
           </class-decl>
         </member-type>
         <member-type access='private'>
-          <!-- struct std::basic_string<char, std::char_traits<char>, std::allocator<char> >::_Rep -->
+          <!-- struct std::basic_string<char,std::char_traits<char>,std::allocator<char>>::_Rep -->
           <class-decl name='_Rep' is-struct='yes' visibility='default' size-in-bits='192' filepath='/usr/include/c++/5.3.1/bits/basic_string.h' line='2553' column='1' hash='1100d7022e36b961' id='type-id-56'>
-            <!-- struct std::basic_string<char, std::char_traits<char>, std::allocator<char> >::_Rep_base -->
+            <!-- struct std::basic_string<char,std::char_traits<char>,std::allocator<char>>::_Rep_base -->
             <base-class access='public' layout-offset-in-bits='0' type-id='type-id-96'/>
           </class-decl>
         </member-type>
         <member-type access='private'>
-          <!-- struct std::basic_string<char, std::char_traits<char>, std::allocator<char> >::_Rep_base -->
+          <!-- struct std::basic_string<char,std::char_traits<char>,std::allocator<char>>::_Rep_base -->
           <class-decl name='_Rep_base' is-struct='yes' visibility='default' size-in-bits='192' filepath='/usr/include/c++/5.3.1/bits/basic_string.h' line='2546' column='1' hash='ef64d4b91b5de2fe' id='type-id-96'>
             <data-member access='public' layout-offset-in-bits='0'>
-              <!-- std::basic_string<char, std::char_traits<char>, std::allocator<char> >::size_type std::basic_string<char, std::char_traits<char>, std::allocator<char> >::_Rep_base::_M_length -->
+              <!-- std::basic_string<char,std::char_traits<char>,std::allocator<char>>::size_type std::basic_string<char,std::char_traits<char>,std::allocator<char>>::_Rep_base::_M_length -->
               <var-decl name='_M_length' type-id='type-id-59' visibility='default' filepath='/usr/include/c++/5.3.1/bits/basic_string.h' line='2548' column='1'/>
             </data-member>
             <data-member access='public' layout-offset-in-bits='64'>
-              <!-- std::basic_string<char, std::char_traits<char>, std::allocator<char> >::size_type std::basic_string<char, std::char_traits<char>, std::allocator<char> >::_Rep_base::_M_capacity -->
+              <!-- std::basic_string<char,std::char_traits<char>,std::allocator<char>>::size_type std::basic_string<char,std::char_traits<char>,std::allocator<char>>::_Rep_base::_M_capacity -->
               <var-decl name='_M_capacity' type-id='type-id-59' visibility='default' filepath='/usr/include/c++/5.3.1/bits/basic_string.h' line='2549' column='1'/>
             </data-member>
             <data-member access='public' layout-offset-in-bits='128'>
-              <!-- _Atomic_word std::basic_string<char, std::char_traits<char>, std::allocator<char> >::_Rep_base::_M_refcount -->
+              <!-- _Atomic_word std::basic_string<char,std::char_traits<char>,std::allocator<char>>::_Rep_base::_M_refcount -->
               <var-decl name='_M_refcount' type-id='type-id-23' visibility='default' filepath='/usr/include/c++/5.3.1/bits/basic_string.h' line='2550' column='1'/>
             </data-member>
           </class-decl>
         </member-type>
         <member-type access='public'>
-          <!-- typedef std::allocator<char> std::basic_string<char, std::char_traits<char>, std::allocator<char> >::allocator_type -->
+          <!-- typedef std::allocator<char> std::basic_string<char,std::char_traits<char>,std::allocator<char>>::allocator_type -->
           <typedef-decl name='allocator_type' type-id='type-id-49' size-in-bits='8' filepath='/usr/include/c++/5.3.1/bits/basic_string.h' line='2518' column='1' id='type-id-97'/>
         </member-type>
         <member-type access='public'>
-          <!-- typedef std::allocator<char>::const_reference std::basic_string<char, std::char_traits<char>, std::allocator<char> >::const_reference -->
+          <!-- typedef std::allocator<char>::const_reference std::basic_string<char,std::char_traits<char>,std::allocator<char>>::const_reference -->
           <typedef-decl name='const_reference' type-id='type-id-92' size-in-bits='64' filepath='/usr/include/c++/5.3.1/bits/basic_string.h' line='2522' column='1' hash='78bf127c69ae91c1' id='type-id-98'/>
         </member-type>
         <member-type access='public'>
-          <!-- typedef std::allocator<char>::reference std::basic_string<char, std::char_traits<char>, std::allocator<char> >::reference -->
+          <!-- typedef std::allocator<char>::reference std::basic_string<char,std::char_traits<char>,std::allocator<char>>::reference -->
           <typedef-decl name='reference' type-id='type-id-93' size-in-bits='64' filepath='/usr/include/c++/5.3.1/bits/basic_string.h' line='2521' column='1' hash='ffc913127619398d' id='type-id-99'/>
         </member-type>
         <member-type access='public'>
-          <!-- typedef std::allocator<char>::size_type std::basic_string<char, std::char_traits<char>, std::allocator<char> >::size_type -->
+          <!-- typedef std::allocator<char>::size_type std::basic_string<char,std::char_traits<char>,std::allocator<char>>::size_type -->
           <typedef-decl name='size_type' type-id='type-id-94' size-in-bits='64' filepath='/usr/include/c++/5.3.1/bits/basic_string.h' line='2519' column='1' hash='8fdc5eea2983a729' id='type-id-59'/>
         </member-type>
         <member-type access='public'>
-          <!-- typedef __gnu_cxx::__normal_iterator<char const*, std::basic_string<char, std::char_traits<char>, std::allocator<char> > > std::basic_string<char, std::char_traits<char>, std::allocator<char> >::const_iterator -->
+          <!-- typedef __gnu_cxx::__normal_iterator<charconst*,std::basic_string<char,std::char_traits<char>,std::allocator<char>>> std::basic_string<char,std::char_traits<char>,std::allocator<char>>::const_iterator -->
           <typedef-decl name='const_iterator' type-id='type-id-101' filepath='/usr/include/c++/5.3.1/bits/basic_string.h' line='2527' column='1' id='type-id-100'/>
         </member-type>
         <member-type access='public'>
-          <!-- typedef std::reverse_iterator<__gnu_cxx::__normal_iterator<char const*, std::basic_string<char, std::char_traits<char>, std::allocator<char> > > > std::basic_string<char, std::char_traits<char>, std::allocator<char> >::const_reverse_iterator -->
+          <!-- typedef std::reverse_iterator<__gnu_cxx::__normal_iterator<charconst*,std::basic_string<char,std::char_traits<char>,std::allocator<char>>>> std::basic_string<char,std::char_traits<char>,std::allocator<char>>::const_reverse_iterator -->
           <typedef-decl name='const_reverse_iterator' type-id='type-id-103' filepath='/usr/include/c++/5.3.1/bits/basic_string.h' line='2528' column='1' id='type-id-102'/>
         </member-type>
         <member-type access='public'>
-          <!-- typedef __gnu_cxx::__normal_iterator<char*, std::basic_string<char, std::char_traits<char>, std::allocator<char> > > std::basic_string<char, std::char_traits<char>, std::allocator<char> >::iterator -->
+          <!-- typedef __gnu_cxx::__normal_iterator<char*,std::basic_string<char,std::char_traits<char>,std::allocator<char>>> std::basic_string<char,std::char_traits<char>,std::allocator<char>>::iterator -->
           <typedef-decl name='iterator' type-id='type-id-105' filepath='/usr/include/c++/5.3.1/bits/basic_string.h' line='2525' column='1' id='type-id-104'/>
         </member-type>
         <member-type access='public'>
-          <!-- typedef std::reverse_iterator<__gnu_cxx::__normal_iterator<char*, std::basic_string<char, std::char_traits<char>, std::allocator<char> > > > std::basic_string<char, std::char_traits<char>, std::allocator<char> >::reverse_iterator -->
+          <!-- typedef std::reverse_iterator<__gnu_cxx::__normal_iterator<char*,std::basic_string<char,std::char_traits<char>,std::allocator<char>>>> std::basic_string<char,std::char_traits<char>,std::allocator<char>>::reverse_iterator -->
           <typedef-decl name='reverse_iterator' type-id='type-id-107' filepath='/usr/include/c++/5.3.1/bits/basic_string.h' line='2529' column='1' id='type-id-106'/>
         </member-type>
         <data-member access='private' layout-offset-in-bits='0'>
-          <!-- std::basic_string<char, std::char_traits<char>, std::allocator<char> >::_Alloc_hider std::basic_string<char, std::char_traits<char>, std::allocator<char> >::_M_dataplus -->
+          <!-- std::basic_string<char,std::char_traits<char>,std::allocator<char>>::_Alloc_hider std::basic_string<char,std::char_traits<char>,std::allocator<char>>::_M_dataplus -->
           <var-decl name='_M_dataplus' type-id='type-id-81' visibility='default' filepath='/usr/include/c++/5.3.1/bits/basic_string.h' line='2687' column='1'/>
         </data-member>
       </class-decl>
@@ -473,24 +473,24 @@
       </class-decl>
       <!-- typedef unsigned long int std::size_t -->
       <typedef-decl name='size_t' type-id='type-id-26' size-in-bits='64' filepath='/usr/include/c++/5.3.1/x86_64-redhat-linux/bits/c++config.h' line='1969' column='1' hash='8fdc5eea2983a729' id='type-id-95'/>
-      <!-- typedef std::basic_string<char, std::char_traits<char>, std::allocator<char> > std::string -->
+      <!-- typedef std::basic_string<char,std::char_traits<char>,std::allocator<char>> std::string -->
       <typedef-decl name='string' type-id='type-id-52' size-in-bits='64' filepath='/usr/include/c++/5.3.1/bits/stringfwd.h' line='74' column='1' id='type-id-68'/>
-      <!-- class std::basic_ostream<char, std::char_traits<char> > -->
-      <class-decl name='basic_ostream&lt;char, std::char_traits&lt;char&gt; &gt;' visibility='default' is-declaration-only='yes' id='type-id-109'/>
-      <!-- class std::reverse_iterator<__gnu_cxx::__normal_iterator<char const*, std::basic_string<char, std::char_traits<char>, std::allocator<char> > > > -->
-      <class-decl name='reverse_iterator&lt;__gnu_cxx::__normal_iterator&lt;char const*, std::basic_string&lt;char, std::char_traits&lt;char&gt;, std::allocator&lt;char&gt; &gt; &gt; &gt;' visibility='default' is-declaration-only='yes' id='type-id-103'/>
-      <!-- class std::reverse_iterator<__gnu_cxx::__normal_iterator<char*, std::basic_string<char, std::char_traits<char>, std::allocator<char> > > > -->
-      <class-decl name='reverse_iterator&lt;__gnu_cxx::__normal_iterator&lt;char*, std::basic_string&lt;char, std::char_traits&lt;char&gt;, std::allocator&lt;char&gt; &gt; &gt; &gt;' visibility='default' is-declaration-only='yes' id='type-id-107'/>
-      <!-- std::basic_string<char, std::char_traits<char>, std::allocator<char> > std::operator+<char, std::char_traits<char>, std::allocator<char> >(const char*, const std::basic_string<char, std::char_traits<char>, std::allocator<char> >&) -->
-      <function-decl name='operator+&lt;char, std::char_traits&lt;char&gt;, std::allocator&lt;char&gt; &gt;' mangled-name='_ZStplIcSt11char_traitsIcESaIcEESbIT_T0_T1_EPKS3_RKS6_' filepath='/usr/include/c++/5.3.1/bits/basic_string.tcc' line='1151' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZStplIcSt11char_traitsIcESaIcEESbIT_T0_T1_EPKS3_RKS6_' hash='af03af46bc40880c'>
+      <!-- class std::basic_ostream<char,std::char_traits<char>> -->
+      <class-decl name='basic_ostream&lt;char,std::char_traits&lt;char&gt;&gt;' visibility='default' is-declaration-only='yes' id='type-id-109'/>
+      <!-- class std::reverse_iterator<__gnu_cxx::__normal_iterator<char*,std::basic_string<char,std::char_traits<char>,std::allocator<char>>>> -->
+      <class-decl name='reverse_iterator&lt;__gnu_cxx::__normal_iterator&lt;char*,std::basic_string&lt;char,std::char_traits&lt;char&gt;,std::allocator&lt;char&gt;&gt;&gt;&gt;' visibility='default' is-declaration-only='yes' id='type-id-107'/>
+      <!-- class std::reverse_iterator<__gnu_cxx::__normal_iterator<charconst*,std::basic_string<char,std::char_traits<char>,std::allocator<char>>>> -->
+      <class-decl name='reverse_iterator&lt;__gnu_cxx::__normal_iterator&lt;charconst*,std::basic_string&lt;char,std::char_traits&lt;char&gt;,std::allocator&lt;char&gt;&gt;&gt;&gt;' visibility='default' is-declaration-only='yes' id='type-id-103'/>
+      <!-- std::basic_string<char,std::char_traits<char>,std::allocator<char>> std::operator+<char,std::char_traits<char>,std::allocator<char>>(const char*, const std::basic_string<char,std::char_traits<char>,std::allocator<char>>&) -->
+      <function-decl name='operator+&lt;char,std::char_traits&lt;char&gt;,std::allocator&lt;char&gt;&gt;' mangled-name='_ZStplIcSt11char_traitsIcESaIcEESbIT_T0_T1_EPKS3_RKS6_' filepath='/usr/include/c++/5.3.1/bits/basic_string.tcc' line='1151' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZStplIcSt11char_traitsIcESaIcEESbIT_T0_T1_EPKS3_RKS6_' hash='e176adab2711438b'>
         <!-- parameter of type 'const char*' -->
         <parameter type-id='type-id-20'/>
-        <!-- parameter of type 'const std::basic_string<char, std::char_traits<char>, std::allocator<char> >&' -->
+        <!-- parameter of type 'const std::basic_string<char,std::char_traits<char>,std::allocator<char>>&' -->
         <parameter type-id='type-id-54'/>
-        <!-- class std::basic_string<char, std::char_traits<char>, std::allocator<char> > -->
+        <!-- class std::basic_string<char,std::char_traits<char>,std::allocator<char>> -->
         <return type-id='type-id-52'/>
       </function-decl>
-      <!-- typedef std::basic_ostream<char, std::char_traits<char> > std::ostream -->
+      <!-- typedef std::basic_ostream<char,std::char_traits<char>> std::ostream -->
       <typedef-decl name='ostream' type-id='type-id-109' filepath='/usr/include/c++/5.3.1/iosfwd' line='141' column='1' id='type-id-110'/>
     </namespace-decl>
     <!-- std::ostream* -->
@@ -554,39 +554,39 @@
           <var-decl name='__max' type-id='type-id-44' mangled-name='_ZN9__gnu_cxx24__numeric_traits_integerIiE5__maxE' visibility='default' filepath='/usr/include/c++/5.3.1/ext/numeric_traits.h' line='59' column='1'/>
         </data-member>
       </class-decl>
-      <!-- struct __gnu_cxx::__numeric_traits_integer<long int> -->
-      <class-decl name='__numeric_traits_integer&lt;long int&gt;' is-struct='yes' visibility='default' size-in-bits='8' filepath='/usr/include/c++/5.3.1/ext/numeric_traits.h' line='55' column='1' hash='45f07c99b3549de3' id='type-id-120'>
+      <!-- struct __gnu_cxx::__numeric_traits_integer<longint> -->
+      <class-decl name='__numeric_traits_integer&lt;longint&gt;' is-struct='yes' visibility='default' size-in-bits='8' filepath='/usr/include/c++/5.3.1/ext/numeric_traits.h' line='55' column='1' hash='b83b6d736c3d7a3d' id='type-id-120'>
         <data-member access='public' static='yes'>
-          <!-- static const long int __gnu_cxx::__numeric_traits_integer<long int>::__min -->
+          <!-- static const long int __gnu_cxx::__numeric_traits_integer<longint>::__min -->
           <var-decl name='__min' type-id='type-id-45' mangled-name='_ZN9__gnu_cxx24__numeric_traits_integerIlE5__minE' visibility='default' filepath='/usr/include/c++/5.3.1/ext/numeric_traits.h' line='58' column='1'/>
         </data-member>
         <data-member access='public' static='yes'>
-          <!-- static const long int __gnu_cxx::__numeric_traits_integer<long int>::__max -->
+          <!-- static const long int __gnu_cxx::__numeric_traits_integer<longint>::__max -->
           <var-decl name='__max' type-id='type-id-45' mangled-name='_ZN9__gnu_cxx24__numeric_traits_integerIlE5__maxE' visibility='default' filepath='/usr/include/c++/5.3.1/ext/numeric_traits.h' line='59' column='1'/>
         </data-member>
       </class-decl>
-      <!-- struct __gnu_cxx::__numeric_traits_integer<long unsigned int> -->
-      <class-decl name='__numeric_traits_integer&lt;long unsigned int&gt;' is-struct='yes' visibility='default' size-in-bits='8' filepath='/usr/include/c++/5.3.1/ext/numeric_traits.h' line='55' column='1' hash='1c97241ef0e09e7a' id='type-id-121'>
+      <!-- struct __gnu_cxx::__numeric_traits_integer<longunsignedint> -->
+      <class-decl name='__numeric_traits_integer&lt;longunsignedint&gt;' is-struct='yes' visibility='default' size-in-bits='8' filepath='/usr/include/c++/5.3.1/ext/numeric_traits.h' line='55' column='1' hash='43c9314f28796314' id='type-id-121'>
         <data-member access='public' static='yes'>
-          <!-- static const int __gnu_cxx::__numeric_traits_integer<long unsigned int>::__digits -->
+          <!-- static const int __gnu_cxx::__numeric_traits_integer<longunsignedint>::__digits -->
           <var-decl name='__digits' type-id='type-id-44' mangled-name='_ZN9__gnu_cxx24__numeric_traits_integerImE8__digitsE' visibility='default' filepath='/usr/include/c++/5.3.1/ext/numeric_traits.h' line='64' column='1'/>
         </data-member>
       </class-decl>
-      <!-- struct __gnu_cxx::__numeric_traits_integer<short int> -->
-      <class-decl name='__numeric_traits_integer&lt;short int&gt;' is-struct='yes' visibility='default' size-in-bits='8' filepath='/usr/include/c++/5.3.1/ext/numeric_traits.h' line='55' column='1' hash='2509c5a6751e4c19' id='type-id-122'>
+      <!-- struct __gnu_cxx::__numeric_traits_integer<shortint> -->
+      <class-decl name='__numeric_traits_integer&lt;shortint&gt;' is-struct='yes' visibility='default' size-in-bits='8' filepath='/usr/include/c++/5.3.1/ext/numeric_traits.h' line='55' column='1' hash='9d7868ef0e2cc9d6' id='type-id-122'>
         <data-member access='public' static='yes'>
-          <!-- static const short int __gnu_cxx::__numeric_traits_integer<short int>::__min -->
+          <!-- static const short int __gnu_cxx::__numeric_traits_integer<shortint>::__min -->
           <var-decl name='__min' type-id='type-id-48' mangled-name='_ZN9__gnu_cxx24__numeric_traits_integerIsE5__minE' visibility='default' filepath='/usr/include/c++/5.3.1/ext/numeric_traits.h' line='58' column='1'/>
         </data-member>
         <data-member access='public' static='yes'>
-          <!-- static const short int __gnu_cxx::__numeric_traits_integer<short int>::__max -->
+          <!-- static const short int __gnu_cxx::__numeric_traits_integer<shortint>::__max -->
           <var-decl name='__max' type-id='type-id-48' mangled-name='_ZN9__gnu_cxx24__numeric_traits_integerIsE5__maxE' visibility='default' filepath='/usr/include/c++/5.3.1/ext/numeric_traits.h' line='59' column='1'/>
         </data-member>
       </class-decl>
-      <!-- class __gnu_cxx::__normal_iterator<char const*, std::basic_string<char, std::char_traits<char>, std::allocator<char> > > -->
-      <class-decl name='__normal_iterator&lt;char const*, std::basic_string&lt;char, std::char_traits&lt;char&gt;, std::allocator&lt;char&gt; &gt; &gt;' visibility='default' is-declaration-only='yes' id='type-id-101'/>
-      <!-- class __gnu_cxx::__normal_iterator<char*, std::basic_string<char, std::char_traits<char>, std::allocator<char> > > -->
-      <class-decl name='__normal_iterator&lt;char*, std::basic_string&lt;char, std::char_traits&lt;char&gt;, std::allocator&lt;char&gt; &gt; &gt;' visibility='default' is-declaration-only='yes' id='type-id-105'/>
+      <!-- class __gnu_cxx::__normal_iterator<char*,std::basic_string<char,std::char_traits<char>,std::allocator<char>>> -->
+      <class-decl name='__normal_iterator&lt;char*,std::basic_string&lt;char,std::char_traits&lt;char&gt;,std::allocator&lt;char&gt;&gt;&gt;' visibility='default' is-declaration-only='yes' id='type-id-105'/>
+      <!-- class __gnu_cxx::__normal_iterator<charconst*,std::basic_string<char,std::char_traits<char>,std::allocator<char>>> -->
+      <class-decl name='__normal_iterator&lt;charconst*,std::basic_string&lt;char,std::char_traits&lt;char&gt;,std::allocator&lt;char&gt;&gt;&gt;' visibility='default' is-declaration-only='yes' id='type-id-101'/>
     </namespace-decl>
     <!-- typedef _IO_FILE __FILE -->
     <typedef-decl name='__FILE' type-id='type-id-112' filepath='/usr/include/stdio.h' line='64' column='1' id='type-id-90'/>

@@ -44,6 +44,7 @@
 #include <iterator>
 #include <memory>
 #include <sstream>
+#include <regex>
 
 #include "abg-dwarf-reader.h"
 #ifdef WITH_CTF
@@ -1349,6 +1350,79 @@ trim_white_space(const string& str)
 
   result = str.substr(start, end - start + 1);
   return result;
+}
+
+/// Remove white spaces from a string.
+///
+/// @param str the string to remove the white spaces from.
+///
+/// @return true iff any white space was removed from @p str.
+bool
+remove_white_spaces(string& str)
+{
+  if (str.erase(std::remove_if(str.begin(), str.end(), isspace),
+		str.end()) == str.end())
+    return false;
+  return true;
+}
+
+/// Getter of a global instance of std::regex that matches numerical
+/// litterals.
+///
+/// The regular expression is the following: "([0-9]+)([uUlL])+"
+///
+/// The purpose of this is to compile the regular expression only
+/// once, the first time this function is invoked.  Subsquent
+/// invocations return the already compiled regular expression.
+///
+/// @return a reference to a global instance of std::regex
+static std::regex&
+get_litteral_regex()
+{
+  static std::regex re("([0-9]+)([uUlL])+");
+  return re;
+}
+
+/// Normalize the numerical litteral in a string.
+///
+/// Basically, if a litteral is present as 10u or 100UL, change it
+/// into 10 or 100.
+///
+/// @param str the string to normalize.
+///
+/// @return true iff @p str was normalized.
+bool
+normalize_litterals(string& str)
+{
+  bool begin_pattern = false, middle_pattern = false, found_litteral = false;
+  for (string::iterator i = str.begin(); i < str.end(); ++i)
+    {
+      if (isdigit(*i))
+	begin_pattern = true;
+      else
+	{
+	  if (begin_pattern
+	      && (*i == 'u' || *i == 'U' || *i == 'l' || *i == 'L'))
+	    middle_pattern = true;
+	  else
+	    {
+	      if (middle_pattern)
+		{
+		  found_litteral = true;
+		  break;
+		}
+	    }
+	}
+    }
+
+  if (found_litteral)
+    {
+      std::regex& re = get_litteral_regex();
+      str = std::regex_replace(str, re, "$1");
+      return true;
+    }
+
+  return false;
 }
 
 /// Remove a string of pattern in front of a given string.

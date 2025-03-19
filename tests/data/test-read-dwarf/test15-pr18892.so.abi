@@ -2607,18 +2607,18 @@
     </namespace-decl>
   </abi-instr>
   <abi-instr address-size='64' path='../../.././libsanitizer/sanitizer_common/sanitizer_coverage.cc' comp-dir-path='/tmp/legendre/spack-stage/spack-stage-ImG4Cf/gcc-4.9.2/x86_64-unknown-linux-gnu/libsanitizer/sanitizer_common' language='LANG_C_plus_plus'>
-    <pointer-type-def type-id='type-id-166' size-in-bits='64' hash='37b410eb8b10f623' id='type-id-167'/>
-    <qualified-type-def type-id='type-id-167' const='yes' hash='287766d5e4ab629c' id='type-id-168'/>
-    <pointer-type-def type-id='type-id-169' size-in-bits='64' hash='d37ba974318082f6' id='type-id-170'/>
-    <qualified-type-def type-id='type-id-170' const='yes' hash='a6b6ee215b8c8837' id='type-id-171'/>
-    <qualified-type-def type-id='type-id-166' const='yes' hash='3744ce03666d1157' id='type-id-172'/>
-    <reference-type-def kind='lvalue' type-id='type-id-172' size-in-bits='64' hash='51a4326a037fdf9a' id='type-id-173'/>
-    <pointer-type-def type-id='type-id-172' size-in-bits='64' hash='23c94f7b5e5de60d' id='type-id-174'/>
-    <qualified-type-def type-id='type-id-174' const='yes' hash='9792afcfbfe392a8' id='type-id-175'/>
-    <qualified-type-def type-id='type-id-169' const='yes' hash='33713c6470efa09e' id='type-id-176'/>
-    <reference-type-def kind='lvalue' type-id='type-id-176' size-in-bits='64' hash='f3a9583d9f03baf1' id='type-id-177'/>
-    <pointer-type-def type-id='type-id-176' size-in-bits='64' hash='7618a48ba4b5f8b3' id='type-id-178'/>
-    <qualified-type-def type-id='type-id-178' const='yes' hash='f9a1e5ce970ba082' id='type-id-179'/>
+    <pointer-type-def type-id='type-id-166' size-in-bits='64' hash='2b543dd5707a597e' id='type-id-167'/>
+    <qualified-type-def type-id='type-id-167' const='yes' hash='c4b4e779059a3a6f' id='type-id-168'/>
+    <pointer-type-def type-id='type-id-169' size-in-bits='64' hash='39e9ff522b15a5e7' id='type-id-170'/>
+    <qualified-type-def type-id='type-id-170' const='yes' hash='73c3af2b7c2d6dee' id='type-id-171'/>
+    <qualified-type-def type-id='type-id-166' const='yes' hash='35a0dbe339a24cd2' id='type-id-172'/>
+    <reference-type-def kind='lvalue' type-id='type-id-172' size-in-bits='64' hash='cea71e05587c988d' id='type-id-173'/>
+    <pointer-type-def type-id='type-id-172' size-in-bits='64' hash='8ce29dc9a0fd977a' id='type-id-174'/>
+    <qualified-type-def type-id='type-id-174' const='yes' hash='286b293c104122d3' id='type-id-175'/>
+    <qualified-type-def type-id='type-id-169' const='yes' hash='f040d60e2491bd0d' id='type-id-176'/>
+    <reference-type-def kind='lvalue' type-id='type-id-176' size-in-bits='64' hash='3f9fbe4133a0f5b2' id='type-id-177'/>
+    <pointer-type-def type-id='type-id-176' size-in-bits='64' hash='0317583b3ea6929f' id='type-id-178'/>
+    <qualified-type-def type-id='type-id-178' const='yes' hash='7ebf6e058b53940b' id='type-id-179'/>
     <qualified-type-def type-id='type-id-180' const='yes' hash='6e5b7fbd041269f4' id='type-id-181'/>
     <reference-type-def kind='lvalue' type-id='type-id-181' size-in-bits='64' hash='a2578beb6ca2184c' id='type-id-182'/>
     <pointer-type-def type-id='type-id-181' size-in-bits='64' hash='7b228ce973c39aff' id='type-id-183'/>
@@ -2632,7 +2632,7 @@
       <return type-id='type-id-31'/>
     </function-decl>
     <namespace-decl name='__sanitizer'>
-      <class-decl name='InternalMmapVector&lt;long unsigned int&gt;' visibility='default' size-in-bits='192' filepath='../../.././libsanitizer/sanitizer_common/sanitizer_common.h' line='320' column='1' hash='bc399a347d7d6190' id='type-id-166'>
+      <class-decl name='InternalMmapVector&lt;longunsignedint&gt;' visibility='default' size-in-bits='192' filepath='../../.././libsanitizer/sanitizer_common/sanitizer_common.h' line='320' column='1' hash='4a700ba669696dfd' id='type-id-166'>
         <data-member access='private' layout-offset-in-bits='0'>
           <var-decl name='data_' type-id='type-id-140' visibility='default' filepath='../../.././libsanitizer/sanitizer_common/sanitizer_common.h' line='382' column='1'/>
         </data-member>
@@ -2643,7 +2643,7 @@
           <var-decl name='size_' type-id='type-id-87' visibility='default' filepath='../../.././libsanitizer/sanitizer_common/sanitizer_common.h' line='384' column='1'/>
         </data-member>
       </class-decl>
-      <class-decl name='InternalMmapVector&lt;unsigned int&gt;' visibility='default' size-in-bits='192' filepath='../../.././libsanitizer/sanitizer_common/sanitizer_common.h' line='320' column='1' hash='751815d654f2dc76' id='type-id-169'>
+      <class-decl name='InternalMmapVector&lt;unsignedint&gt;' visibility='default' size-in-bits='192' filepath='../../.././libsanitizer/sanitizer_common/sanitizer_common.h' line='320' column='1' hash='0544c1c9dd896c45' id='type-id-169'>
         <data-member access='private' layout-offset-in-bits='0'>
           <var-decl name='data_' type-id='type-id-186' visibility='default' filepath='../../.././libsanitizer/sanitizer_common/sanitizer_common.h' line='382' column='1'/>
         </data-member>
@@ -2663,7 +2663,7 @@
   </abi-instr>
   <abi-instr address-size='64' path='../../.././libsanitizer/sanitizer_common/sanitizer_libc.cc' comp-dir-path='/tmp/legendre/spack-stage/spack-stage-ImG4Cf/gcc-4.9.2/x86_64-unknown-linux-gnu/libsanitizer/sanitizer_common' language='LANG_C_plus_plus'>
     <namespace-decl name='__sanitizer'>
-      <class-decl name='SizeClassAllocatorLocalCache&lt;__sanitizer::SizeClassAllocator32&lt;0ul, 140737488355328ull, 16ul, __sanitizer::SizeClassMap&lt;17ul, 64ul, 14ul&gt;, 24ul, __sanitizer::TwoLevelByteMap&lt;2048ull, 4096ull, __sanitizer::NoOpMapUnmapCallback&gt;, __sanitizer::NoOpMapUnmapCallback&gt; &gt;' is-struct='yes' visibility='default' size-in-bits='441344' filepath='../../.././libsanitizer/sanitizer_common/sanitizer_allocator.h' line='889' column='1' hash='29c841a968bf73d6' id='type-id-109'>
+      <class-decl name='SizeClassAllocatorLocalCache&lt;__sanitizer::SizeClassAllocator32&lt;0,140737488355328,16,__sanitizer::SizeClassMap&lt;17,64,14&gt;,24,__sanitizer::TwoLevelByteMap&lt;2048,4096,__sanitizer::NoOpMapUnmapCallback&gt;,__sanitizer::NoOpMapUnmapCallback&gt;&gt;' is-struct='yes' visibility='default' size-in-bits='441344' filepath='../../.././libsanitizer/sanitizer_common/sanitizer_allocator.h' line='889' column='1' hash='72c99b02a69a4a0c' id='type-id-109'>
         <member-type access='public'>
           <class-decl name='PerClass' is-struct='yes' visibility='default' size-in-bits='8320' filepath='../../.././libsanitizer/sanitizer_common/sanitizer_allocator.h' line='942' column='1' hash='7277531e5c0a53cc' id='type-id-189'>
             <data-member access='public' layout-offset-in-bits='0'>
@@ -3354,18 +3354,18 @@
     <qualified-type-def type-id='type-id-371' const='yes' hash='0604ca3a859f1c79' id='type-id-372'/>
     <pointer-type-def type-id='type-id-373' size-in-bits='64' hash='7f5adc830ffd8423' id='type-id-374'/>
     <qualified-type-def type-id='type-id-374' const='yes' hash='23be82b95dd01b0b' id='type-id-375'/>
-    <pointer-type-def type-id='type-id-376' size-in-bits='64' hash='32be8d6e6ef077b8' id='type-id-377'/>
-    <qualified-type-def type-id='type-id-377' const='yes' hash='1c6bc23d3426d145' id='type-id-378'/>
+    <pointer-type-def type-id='type-id-376' size-in-bits='64' hash='a6a67f02fc81dd37' id='type-id-377'/>
+    <qualified-type-def type-id='type-id-377' const='yes' hash='3cee973f02384f43' id='type-id-378'/>
     <qualified-type-def type-id='type-id-379' const='yes' hash='1c7ceba604a3c911' id='type-id-380'/>
     <qualified-type-def type-id='type-id-370' const='yes' hash='3b83daec96af29be' id='type-id-381'/>
     <pointer-type-def type-id='type-id-381' size-in-bits='64' hash='8dae87a32858b04d' id='type-id-382'/>
     <qualified-type-def type-id='type-id-373' const='yes' hash='245bef550874897b' id='type-id-383'/>
     <pointer-type-def type-id='type-id-383' size-in-bits='64' hash='304075f25ebb8888' id='type-id-384'/>
     <qualified-type-def type-id='type-id-384' const='yes' hash='28bc40cb99e592bd' id='type-id-385'/>
-    <qualified-type-def type-id='type-id-376' const='yes' hash='a81bb0955c0b7a44' id='type-id-386'/>
-    <reference-type-def kind='lvalue' type-id='type-id-386' size-in-bits='64' hash='c44f58147f5a5540' id='type-id-387'/>
-    <pointer-type-def type-id='type-id-386' size-in-bits='64' hash='c9d14478e950e4f9' id='type-id-388'/>
-    <qualified-type-def type-id='type-id-388' const='yes' hash='69d3ef7df28480c3' id='type-id-389'/>
+    <qualified-type-def type-id='type-id-376' const='yes' hash='d970ebe36d3bbebe' id='type-id-386'/>
+    <reference-type-def kind='lvalue' type-id='type-id-386' size-in-bits='64' hash='4c0728065839e049' id='type-id-387'/>
+    <pointer-type-def type-id='type-id-386' size-in-bits='64' hash='903709da3b638c5f' id='type-id-388'/>
+    <qualified-type-def type-id='type-id-388' const='yes' hash='a3720239c2451bba' id='type-id-389'/>
     <qualified-type-def type-id='type-id-115' const='yes' hash='f06d84c079ff07f5#3' id='type-id-390'/>
     <reference-type-def kind='lvalue' type-id='type-id-390' size-in-bits='64' hash='e29bc4e9795dc799#3' id='type-id-391'/>
     <reference-type-def kind='lvalue' type-id='type-id-115' size-in-bits='64' hash='6356f9ae036b2084#3' id='type-id-392'/>
@@ -3378,7 +3378,7 @@
           <var-decl name='clk_' type-id='type-id-376' visibility='default' filepath='../../.././libsanitizer/tsan/tsan_clock.h' line='33' column='1'/>
         </data-member>
       </class-decl>
-      <class-decl name='Vector&lt;long long unsigned int&gt;' visibility='default' size-in-bits='256' filepath='../../.././libsanitizer/tsan/tsan_vector.h' line='23' column='1' hash='3c3d55096071d4eb' id='type-id-376'>
+      <class-decl name='Vector&lt;longlongunsignedint&gt;' visibility='default' size-in-bits='256' filepath='../../.././libsanitizer/tsan/tsan_vector.h' line='23' column='1' hash='c231464d57baf5ac' id='type-id-376'>
         <data-member access='private' layout-offset-in-bits='0'>
           <var-decl name='typ_' type-id='type-id-380' visibility='default' filepath='../../.././libsanitizer/tsan/tsan_vector.h' line='80' column='1'/>
         </data-member>
@@ -3622,7 +3622,7 @@
         <var-decl name='sa_restorer' type-id='type-id-145' visibility='default' filepath='../../.././libsanitizer/tsan/tsan_interceptors.cc' line='98' column='1'/>
       </data-member>
     </class-decl>
-    <class-decl name='typedef __va_list_tag __va_list_tag' is-struct='yes' visibility='default' size-in-bits='192' hash='82aec996f90384a2' id='type-id-445'>
+    <class-decl name='typedef__va_list_tag__va_list_tag' is-struct='yes' visibility='default' size-in-bits='192' hash='3b37d6f26ac12c24' id='type-id-445'>
       <data-member access='public' layout-offset-in-bits='0'>
         <var-decl name='gp_offset' type-id='type-id-180' visibility='default'/>
       </data-member>
@@ -3776,7 +3776,7 @@
     <pointer-type-def type-id='type-id-437' size-in-bits='64' hash='4c04f8b87db1c92e' id='type-id-597'/>
     <pointer-type-def type-id='type-id-439' size-in-bits='64' hash='9c6590d4e21b17c5' id='type-id-598'/>
     <pointer-type-def type-id='type-id-440' size-in-bits='64' hash='dc89d352292e5898' id='type-id-599'/>
-    <pointer-type-def type-id='type-id-445' size-in-bits='64' hash='648313adc1c4c534' id='type-id-600'/>
+    <pointer-type-def type-id='type-id-445' size-in-bits='64' hash='32209790a214ec40' id='type-id-600'/>
     <pointer-type-def type-id='type-id-180' size-in-bits='64' hash='232fa04f890c2a5a' id='type-id-186'/>
     <pointer-type-def type-id='type-id-1' size-in-bits='64' hash='d9e2f19705735211#2' id='type-id-140'/>
     <pointer-type-def type-id='type-id-119' size-in-bits='64' hash='fd7a63c0c6c822c4' id='type-id-239'/>
@@ -3970,35 +3970,35 @@
       <parameter type-id='type-id-538' filepath='../../.././libsanitizer/sanitizer_common/sanitizer_common_interceptors.inc' line='550' column='1'/>
       <return type-id='type-id-28'/>
     </function-decl>
-    <function-decl name='__interceptor_vscanf' mangled-name='__interceptor_vscanf' filepath='../../.././libsanitizer/sanitizer_common/sanitizer_common_interceptors.inc' line='587' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='__interceptor_vscanf' hash='09869f0b6b21fd13'>
+    <function-decl name='__interceptor_vscanf' mangled-name='__interceptor_vscanf' filepath='../../.././libsanitizer/sanitizer_common/sanitizer_common_interceptors.inc' line='587' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='__interceptor_vscanf' hash='6b52185f6389d9c0'>
       <parameter type-id='type-id-4' filepath='../../.././libsanitizer/sanitizer_common/sanitizer_common_interceptors.inc' line='597' column='1'/>
       <parameter type-id='type-id-600' filepath='../../.././libsanitizer/sanitizer_common/sanitizer_common_interceptors.inc' line='597' column='1'/>
       <return type-id='type-id-6'/>
     </function-decl>
-    <function-decl name='__interceptor_vsscanf' mangled-name='__interceptor_vsscanf' filepath='../../.././libsanitizer/sanitizer_common/sanitizer_common_interceptors.inc' line='590' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='__interceptor_vsscanf' hash='0aa4065f8c3f2710'>
+    <function-decl name='__interceptor_vsscanf' mangled-name='__interceptor_vsscanf' filepath='../../.././libsanitizer/sanitizer_common/sanitizer_common_interceptors.inc' line='590' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='__interceptor_vsscanf' hash='42b37fc80abf6bc2'>
       <parameter type-id='type-id-4' filepath='../../.././libsanitizer/sanitizer_common/sanitizer_common_interceptors.inc' line='600' column='1'/>
       <parameter type-id='type-id-4' filepath='../../.././libsanitizer/sanitizer_common/sanitizer_common_interceptors.inc' line='600' column='1'/>
       <parameter type-id='type-id-600' filepath='../../.././libsanitizer/sanitizer_common/sanitizer_common_interceptors.inc' line='600' column='1'/>
       <return type-id='type-id-6'/>
     </function-decl>
-    <function-decl name='__interceptor_vfscanf' mangled-name='__interceptor_vfscanf' filepath='../../.././libsanitizer/sanitizer_common/sanitizer_common_interceptors.inc' line='593' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='__interceptor_vfscanf' hash='09869f0b6b21fd13'>
+    <function-decl name='__interceptor_vfscanf' mangled-name='__interceptor_vfscanf' filepath='../../.././libsanitizer/sanitizer_common/sanitizer_common_interceptors.inc' line='593' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='__interceptor_vfscanf' hash='6b52185f6389d9c0'>
       <parameter type-id='type-id-3' filepath='../../.././libsanitizer/sanitizer_common/sanitizer_common_interceptors.inc' line='604' column='1'/>
       <parameter type-id='type-id-4' filepath='../../.././libsanitizer/sanitizer_common/sanitizer_common_interceptors.inc' line='604' column='1'/>
       <parameter type-id='type-id-600' filepath='../../.././libsanitizer/sanitizer_common/sanitizer_common_interceptors.inc' line='604' column='1'/>
       <return type-id='type-id-6'/>
     </function-decl>
-    <function-decl name='__interceptor___isoc99_vscanf' mangled-name='__interceptor___isoc99_vscanf' filepath='../../.././libsanitizer/sanitizer_common/sanitizer_common_interceptors.inc' line='597' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='__interceptor___isoc99_vscanf' hash='09869f0b6b21fd13'>
+    <function-decl name='__interceptor___isoc99_vscanf' mangled-name='__interceptor___isoc99_vscanf' filepath='../../.././libsanitizer/sanitizer_common/sanitizer_common_interceptors.inc' line='597' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='__interceptor___isoc99_vscanf' hash='6b52185f6389d9c0'>
       <parameter type-id='type-id-4' filepath='../../.././libsanitizer/sanitizer_common/sanitizer_common_interceptors.inc' line='597' column='1'/>
       <parameter type-id='type-id-600' filepath='../../.././libsanitizer/sanitizer_common/sanitizer_common_interceptors.inc' line='597' column='1'/>
       <return type-id='type-id-6'/>
     </function-decl>
-    <function-decl name='__interceptor___isoc99_vsscanf' mangled-name='__interceptor___isoc99_vsscanf' filepath='../../.././libsanitizer/sanitizer_common/sanitizer_common_interceptors.inc' line='600' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='__interceptor___isoc99_vsscanf' hash='0aa4065f8c3f2710'>
+    <function-decl name='__interceptor___isoc99_vsscanf' mangled-name='__interceptor___isoc99_vsscanf' filepath='../../.././libsanitizer/sanitizer_common/sanitizer_common_interceptors.inc' line='600' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='__interceptor___isoc99_vsscanf' hash='42b37fc80abf6bc2'>
       <parameter type-id='type-id-4' filepath='../../.././libsanitizer/sanitizer_common/sanitizer_common_interceptors.inc' line='600' column='1'/>
       <parameter type-id='type-id-4' filepath='../../.././libsanitizer/sanitizer_common/sanitizer_common_interceptors.inc' line='600' column='1'/>
       <parameter type-id='type-id-600' filepath='../../.././libsanitizer/sanitizer_common/sanitizer_common_interceptors.inc' line='600' column='1'/>
       <return type-id='type-id-6'/>
     </function-decl>
-    <function-decl name='__interceptor___isoc99_vfscanf' mangled-name='__interceptor___isoc99_vfscanf' filepath='../../.././libsanitizer/sanitizer_common/sanitizer_common_interceptors.inc' line='604' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='__interceptor___isoc99_vfscanf' hash='09869f0b6b21fd13'>
+    <function-decl name='__interceptor___isoc99_vfscanf' mangled-name='__interceptor___isoc99_vfscanf' filepath='../../.././libsanitizer/sanitizer_common/sanitizer_common_interceptors.inc' line='604' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='__interceptor___isoc99_vfscanf' hash='6b52185f6389d9c0'>
       <parameter type-id='type-id-3' filepath='../../.././libsanitizer/sanitizer_common/sanitizer_common_interceptors.inc' line='604' column='1'/>
       <parameter type-id='type-id-4' filepath='../../.././libsanitizer/sanitizer_common/sanitizer_common_interceptors.inc' line='604' column='1'/>
       <parameter type-id='type-id-600' filepath='../../.././libsanitizer/sanitizer_common/sanitizer_common_interceptors.inc' line='604' column='1'/>
@@ -9418,38 +9418,38 @@
       <parameter type-id='type-id-3' filepath='../../.././libsanitizer/tsan/tsan_interceptors.cc' line='541' column='1'/>
       <return type-id='type-id-87'/>
     </function-decl>
-    <function-decl name='operator new' mangled-name='_Znwm' filepath='../../.././libsanitizer/tsan/tsan_interceptors.cc' line='559' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_Znwm' hash='e0055d99adb0e173'>
+    <function-decl name='operatornew' mangled-name='_Znwm' filepath='../../.././libsanitizer/tsan/tsan_interceptors.cc' line='559' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_Znwm' hash='e0055d99adb0e173'>
       <parameter type-id='type-id-87' filepath='../../.././libsanitizer/tsan/tsan_interceptors.cc' line='780' column='1'/>
       <return type-id='type-id-3'/>
     </function-decl>
-    <function-decl name='operator new []' mangled-name='_Znam' filepath='../../.././libsanitizer/tsan/tsan_interceptors.cc' line='565' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_Znam' hash='e0055d99adb0e173'>
+    <function-decl name='operatornew[]' mangled-name='_Znam' filepath='../../.././libsanitizer/tsan/tsan_interceptors.cc' line='565' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_Znam' hash='e0055d99adb0e173'>
       <parameter type-id='type-id-87' filepath='../../.././libsanitizer/tsan/tsan_interceptors.cc' line='780' column='1'/>
       <return type-id='type-id-3'/>
     </function-decl>
-    <function-decl name='operator new' mangled-name='_ZnwmRKSt9nothrow_t' filepath='../../.././libsanitizer/tsan/tsan_interceptors.cc' line='571' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZnwmRKSt9nothrow_t' hash='f8a066801a6f0717'>
+    <function-decl name='operatornew' mangled-name='_ZnwmRKSt9nothrow_t' filepath='../../.././libsanitizer/tsan/tsan_interceptors.cc' line='571' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZnwmRKSt9nothrow_t' hash='f8a066801a6f0717'>
       <parameter type-id='type-id-87' filepath='../../.././libsanitizer/tsan/tsan_interceptors.cc' line='577' column='1'/>
       <parameter type-id='type-id-578'/>
       <return type-id='type-id-3'/>
     </function-decl>
-    <function-decl name='operator new []' mangled-name='_ZnamRKSt9nothrow_t' filepath='../../.././libsanitizer/tsan/tsan_interceptors.cc' line='577' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZnamRKSt9nothrow_t' hash='f8a066801a6f0717'>
+    <function-decl name='operatornew[]' mangled-name='_ZnamRKSt9nothrow_t' filepath='../../.././libsanitizer/tsan/tsan_interceptors.cc' line='577' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZnamRKSt9nothrow_t' hash='f8a066801a6f0717'>
       <parameter type-id='type-id-87' filepath='../../.././libsanitizer/tsan/tsan_interceptors.cc' line='577' column='1'/>
       <parameter type-id='type-id-578'/>
       <return type-id='type-id-3'/>
     </function-decl>
-    <function-decl name='operator delete' mangled-name='_ZdlPv' filepath='../../.././libsanitizer/tsan/tsan_interceptors.cc' line='591' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZdlPv' hash='7f32ffea222edbe7'>
+    <function-decl name='operatordelete' mangled-name='_ZdlPv' filepath='../../.././libsanitizer/tsan/tsan_interceptors.cc' line='591' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZdlPv' hash='7f32ffea222edbe7'>
       <parameter type-id='type-id-3'/>
       <return type-id='type-id-31'/>
     </function-decl>
-    <function-decl name='operator delete []' mangled-name='_ZdaPv' filepath='../../.././libsanitizer/tsan/tsan_interceptors.cc' line='597' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZdaPv' hash='7f32ffea222edbe7'>
+    <function-decl name='operatordelete[]' mangled-name='_ZdaPv' filepath='../../.././libsanitizer/tsan/tsan_interceptors.cc' line='597' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZdaPv' hash='7f32ffea222edbe7'>
       <parameter type-id='type-id-3'/>
       <return type-id='type-id-31'/>
     </function-decl>
-    <function-decl name='operator delete' mangled-name='_ZdlPvRKSt9nothrow_t' filepath='../../.././libsanitizer/tsan/tsan_interceptors.cc' line='603' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZdlPvRKSt9nothrow_t' hash='d44aa25c7bc2dcfc'>
+    <function-decl name='operatordelete' mangled-name='_ZdlPvRKSt9nothrow_t' filepath='../../.././libsanitizer/tsan/tsan_interceptors.cc' line='603' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZdlPvRKSt9nothrow_t' hash='d44aa25c7bc2dcfc'>
       <parameter type-id='type-id-3' filepath='../../.././libsanitizer/tsan/tsan_interceptors.cc' line='609' column='1'/>
       <parameter type-id='type-id-578'/>
       <return type-id='type-id-31'/>
     </function-decl>
-    <function-decl name='operator delete []' mangled-name='_ZdaPvRKSt9nothrow_t' filepath='../../.././libsanitizer/tsan/tsan_interceptors.cc' line='609' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZdaPvRKSt9nothrow_t' hash='d44aa25c7bc2dcfc'>
+    <function-decl name='operatordelete[]' mangled-name='_ZdaPvRKSt9nothrow_t' filepath='../../.././libsanitizer/tsan/tsan_interceptors.cc' line='609' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZdaPvRKSt9nothrow_t' hash='d44aa25c7bc2dcfc'>
       <parameter type-id='type-id-3' filepath='../../.././libsanitizer/tsan/tsan_interceptors.cc' line='609' column='1'/>
       <parameter type-id='type-id-578'/>
       <return type-id='type-id-31'/>
@@ -11059,13 +11059,13 @@
   </abi-instr>
   <abi-instr address-size='64' path='../../.././libsanitizer/tsan/tsan_interface_atomic.cc' comp-dir-path='/tmp/legendre/spack-stage/spack-stage-ImG4Cf/gcc-4.9.2/x86_64-unknown-linux-gnu/libsanitizer/tsan' language='LANG_C_plus_plus'>
     <type-decl name='__int128' size-in-bits='128' hash='8782fa5e5b495ba5' id='type-id-663'/>
-    <array-type-def dimensions='1' type-id='type-id-664' size-in-bits='27136' hash='dfab650b944a10f4' id='type-id-665'>
+    <array-type-def dimensions='1' type-id='type-id-664' size-in-bits='27136' hash='956d291d19d0d8ec' id='type-id-665'>
       <subrange length='53' lower-bound='0' upper-bound='52' type-id='type-id-46' size-in-bits='64' is-anonymous='yes' hash='bfd8ea0daa9e6934' id='type-id-666'/>
     </array-type-def>
-    <array-type-def dimensions='1' type-id='type-id-189' size-in-bits='440960' hash='07756d17d1cf618c' id='type-id-192'>
+    <array-type-def dimensions='1' type-id='type-id-189' size-in-bits='440960' hash='3a719b20dbbca48e' id='type-id-192'>
       <subrange length='53' lower-bound='0' upper-bound='52' type-id='type-id-46' size-in-bits='64' is-anonymous='yes' hash='bfd8ea0daa9e6934' id='type-id-666'/>
     </array-type-def>
-    <array-type-def dimensions='1' type-id='type-id-667' size-in-bits='875136' hash='f395a4c1c9df70b5' id='type-id-668'>
+    <array-type-def dimensions='1' type-id='type-id-667' size-in-bits='875136' hash='20f5ea86d235ce89' id='type-id-668'>
       <subrange length='53' lower-bound='0' upper-bound='52' type-id='type-id-46' size-in-bits='64' is-anonymous='yes' hash='bfd8ea0daa9e6934' id='type-id-666'/>
     </array-type-def>
     <array-type-def dimensions='1' type-id='type-id-669' size-in-bits='256' hash='7fcdb724a127a653' id='type-id-670'>
@@ -11154,17 +11154,17 @@
     <pointer-type-def type-id='type-id-193' size-in-bits='64' hash='8b174767059b32b6' id='type-id-715'/>
     <pointer-type-def type-id='type-id-327' size-in-bits='64' hash='ed59997d89d77c73' id='type-id-213'/>
     <pointer-type-def type-id='type-id-716' size-in-bits='64' hash='8d98c2665bb23885' id='type-id-717'/>
-    <pointer-type-def type-id='type-id-718' size-in-bits='64' hash='9b1bd9f41c659ebd' id='type-id-719'/>
+    <pointer-type-def type-id='type-id-718' size-in-bits='64' hash='50d5fb7bfeef0ffa' id='type-id-719'/>
     <pointer-type-def type-id='type-id-720' size-in-bits='64' hash='3dc9b0005535e00f' id='type-id-358'/>
-    <pointer-type-def type-id='type-id-721' size-in-bits='64' hash='97f4546687e664ad' id='type-id-722'/>
-    <pointer-type-def type-id='type-id-723' size-in-bits='64' hash='ae138004d72d076f' id='type-id-724'/>
+    <pointer-type-def type-id='type-id-721' size-in-bits='64' hash='74ab791fc220f4d2' id='type-id-722'/>
+    <pointer-type-def type-id='type-id-723' size-in-bits='64' hash='358e5ea6622d4ee0' id='type-id-724'/>
     <pointer-type-def type-id='type-id-725' size-in-bits='64' hash='0e1a08c4c5d8e63e' id='type-id-726'/>
     <pointer-type-def type-id='type-id-664' size-in-bits='64' hash='c3612160f9c20388' id='type-id-727'/>
-    <pointer-type-def type-id='type-id-728' size-in-bits='64' hash='532dee2ef773edfa' id='type-id-729'/>
+    <pointer-type-def type-id='type-id-728' size-in-bits='64' hash='68a6e4287f4ab1b4' id='type-id-729'/>
     <pointer-type-def type-id='type-id-730' size-in-bits='64' hash='0e1a08c4c5d8e63e#2' id='type-id-731'/>
     <pointer-type-def type-id='type-id-732' size-in-bits='64' hash='ea74c16fdd306ed0' id='type-id-733'/>
-    <pointer-type-def type-id='type-id-109' size-in-bits='64' hash='69738b332abc5b6d' id='type-id-734'/>
-    <pointer-type-def type-id='type-id-735' size-in-bits='64' hash='ec6a0179e37c1417' id='type-id-736'/>
+    <pointer-type-def type-id='type-id-109' size-in-bits='64' hash='348198d2359c4389' id='type-id-734'/>
+    <pointer-type-def type-id='type-id-735' size-in-bits='64' hash='a6613416b1229b3c' id='type-id-736'/>
     <pointer-type-def type-id='type-id-737' size-in-bits='64' hash='99ba7b8aaaf662cb' id='type-id-738'/>
     <pointer-type-def type-id='type-id-153' size-in-bits='64' hash='adbae4d0a8e7dfe0' id='type-id-739'/>
     <pointer-type-def type-id='type-id-488' size-in-bits='64' hash='c1774f0b21c82359' id='type-id-490'/>
@@ -11172,7 +11172,7 @@
     <pointer-type-def type-id='type-id-740' size-in-bits='64' hash='fd7a63c0c6c822c4' id='type-id-364'/>
     <pointer-type-def type-id='type-id-360' size-in-bits='64' hash='cb600a90839f5c6f' id='type-id-741'/>
     <pointer-type-def type-id='type-id-742' size-in-bits='64' hash='09b222db49f6a2e3' id='type-id-743'/>
-    <pointer-type-def type-id='type-id-744' size-in-bits='64' hash='ab1e1624915d5e36' id='type-id-745'/>
+    <pointer-type-def type-id='type-id-744' size-in-bits='64' hash='f137d758fbdc797f' id='type-id-745'/>
     <pointer-type-def type-id='type-id-116' size-in-bits='64' hash='8ed9f7c2b63e281e' id='type-id-746'/>
     <pointer-type-def type-id='type-id-114' size-in-bits='64' hash='4726dd2eed2329ff' id='type-id-747'/>
     <pointer-type-def type-id='type-id-87' size-in-bits='64' hash='9ccf4b235df98601#2' id='type-id-617'/>
@@ -11215,17 +11215,17 @@
     <qualified-type-def type-id='type-id-716' const='yes' hash='4b31835528fbcb1f' id='type-id-796'/>
     <reference-type-def kind='lvalue' type-id='type-id-796' size-in-bits='64' hash='b71be796e7416ac9' id='type-id-797'/>
     <pointer-type-def type-id='type-id-796' size-in-bits='64' hash='6e8756901753d19f' id='type-id-798'/>
-    <qualified-type-def type-id='type-id-718' const='yes' hash='7d363829231031bb' id='type-id-799'/>
-    <pointer-type-def type-id='type-id-799' size-in-bits='64' hash='519edfa0cd6f8bf6' id='type-id-800'/>
+    <qualified-type-def type-id='type-id-718' const='yes' hash='15b7801f1fe3787d' id='type-id-799'/>
+    <pointer-type-def type-id='type-id-799' size-in-bits='64' hash='e303d2b0d5a46657' id='type-id-800'/>
     <qualified-type-def type-id='type-id-720' const='yes' hash='8b24820ee55a41ba' id='type-id-801'/>
     <pointer-type-def type-id='type-id-801' size-in-bits='64' hash='371dd82ba65c9e37' id='type-id-362'/>
-    <qualified-type-def type-id='type-id-721' const='yes' hash='a3a130f5cdd57649' id='type-id-802'/>
-    <pointer-type-def type-id='type-id-802' size-in-bits='64' hash='2eb869696740004b' id='type-id-803'/>
+    <qualified-type-def type-id='type-id-721' const='yes' hash='f594d013879c9d67' id='type-id-802'/>
+    <pointer-type-def type-id='type-id-802' size-in-bits='64' hash='5978d122b268db51' id='type-id-803'/>
     <qualified-type-def type-id='type-id-737' const='yes' hash='fda37e527142eb8b' id='type-id-804'/>
     <reference-type-def kind='lvalue' type-id='type-id-804' size-in-bits='64' hash='451bb7a1b9719a5a' id='type-id-805'/>
     <qualified-type-def type-id='type-id-365' const='yes' hash='8e4ef74b42ff7ee5' id='type-id-806'/>
-    <qualified-type-def type-id='type-id-744' const='yes' hash='09050e2ec65996a7' id='type-id-807'/>
-    <pointer-type-def type-id='type-id-807' size-in-bits='64' hash='b5d6df19a402f8bc' id='type-id-808'/>
+    <qualified-type-def type-id='type-id-744' const='yes' hash='3a99bb6fdf80bff4' id='type-id-807'/>
+    <pointer-type-def type-id='type-id-807' size-in-bits='64' hash='973ad72266eb094b' id='type-id-808'/>
     <qualified-type-def type-id='type-id-242' const='yes' hash='9281cb181a5a2be6' id='type-id-620'/>
     <qualified-type-def type-id='type-id-116' const='yes' hash='814a6abc0e95616c' id='type-id-809'/>
     <qualified-type-def type-id='type-id-87' const='yes' hash='e30329bec27bda4a' id='type-id-419'/>
@@ -11336,7 +11336,7 @@
           <var-decl name='size_' type-id='type-id-87' visibility='default' filepath='../../.././libsanitizer/sanitizer_common/sanitizer_common.h' line='384' column='1'/>
         </data-member>
       </class-decl>
-      <class-decl name='SizeClassAllocator32&lt;0ul, 140737488355328ull, 16ul, __sanitizer::SizeClassMap&lt;17ul, 64ul, 14ul&gt;, 24ul, __sanitizer::TwoLevelByteMap&lt;2048ull, 4096ull, __sanitizer::NoOpMapUnmapCallback&gt;, __sanitizer::NoOpMapUnmapCallback&gt;' visibility='default' size-in-bits='158272' filepath='../../.././libsanitizer/sanitizer_common/sanitizer_allocator.h' line='677' column='1' hash='d78869d3074844ea' id='type-id-723'>
+      <class-decl name='SizeClassAllocator32&lt;0,140737488355328,16,__sanitizer::SizeClassMap&lt;17,64,14&gt;,24,__sanitizer::TwoLevelByteMap&lt;2048,4096,__sanitizer::NoOpMapUnmapCallback&gt;,__sanitizer::NoOpMapUnmapCallback&gt;' visibility='default' size-in-bits='158272' filepath='../../.././libsanitizer/sanitizer_common/sanitizer_allocator.h' line='677' column='1' hash='50dc5c41257f985b' id='type-id-723'>
         <member-type access='private'>
           <class-decl name='SizeClassInfo' is-struct='yes' visibility='default' size-in-bits='512' filepath='../../.././libsanitizer/sanitizer_common/sanitizer_allocator.h' line='820' column='1' hash='fafd9dc3d2bc6de8' id='type-id-664'>
             <data-member access='public' layout-offset-in-bits='0'>
@@ -11372,7 +11372,7 @@
           <var-decl name='size_class_info_array' type-id='type-id-665' visibility='default' filepath='../../.././libsanitizer/sanitizer_common/sanitizer_allocator.h' line='882' column='1'/>
         </data-member>
       </class-decl>
-      <class-decl name='SizeClassAllocator64&lt;137438953472000ul, 1099511627776ul, 16ul, __sanitizer::SizeClassMap&lt;17ul, 128ul, 16ul&gt;, __tsan::MapUnmapCallback&gt;' visibility='default' size-in-bits='8' filepath='../../.././libsanitizer/sanitizer_common/sanitizer_allocator.h' line='305' column='1' hash='f05ea38e49bb32bc' id='type-id-728'>
+      <class-decl name='SizeClassAllocator64&lt;137438953472000,1099511627776,16,__sanitizer::SizeClassMap&lt;17,128,16&gt;,__tsan::MapUnmapCallback&gt;' visibility='default' size-in-bits='8' filepath='../../.././libsanitizer/sanitizer_common/sanitizer_allocator.h' line='305' column='1' hash='ad4c96fce81aedc9' id='type-id-728'>
         <member-type access='private'>
           <class-decl name='RegionInfo' is-struct='yes' visibility='default' size-in-bits='1152' filepath='../../.././libsanitizer/sanitizer_common/sanitizer_allocator.h' line='474' column='1' hash='d65877c3095cb9e2' id='type-id-732'>
             <data-member access='public' layout-offset-in-bits='0'>
@@ -11417,12 +11417,12 @@
           <typedef-decl name='Batch' type-id='type-id-879' filepath='../../.././libsanitizer/sanitizer_common/sanitizer_allocator.h' line='307' column='1' id='type-id-887'/>
         </member-type>
       </class-decl>
-      <class-decl name='SizeClassMap&lt;17ul, 128ul, 16ul&gt;' visibility='default' size-in-bits='8' filepath='../../.././libsanitizer/sanitizer_common/sanitizer_allocator.h' line='89' column='1' hash='f2f997dc0afc8190' id='type-id-888'>
+      <class-decl name='SizeClassMap&lt;17,128,16&gt;' visibility='default' size-in-bits='8' filepath='../../.././libsanitizer/sanitizer_common/sanitizer_allocator.h' line='89' column='1' hash='f677e88670740c35' id='type-id-888'>
         <member-type access='private'>
           <class-decl name='TransferBatch' is-struct='yes' visibility='default' is-declaration-only='yes' id='type-id-879'/>
         </member-type>
       </class-decl>
-      <class-decl name='SizeClassMap&lt;17ul, 64ul, 14ul&gt;' visibility='default' size-in-bits='8' filepath='../../.././libsanitizer/sanitizer_common/sanitizer_allocator.h' line='89' column='1' hash='32317374f791f3f8' id='type-id-889'>
+      <class-decl name='SizeClassMap&lt;17,64,14&gt;' visibility='default' size-in-bits='8' filepath='../../.././libsanitizer/sanitizer_common/sanitizer_allocator.h' line='89' column='1' hash='21684d28fd990fd9' id='type-id-889'>
         <member-type access='public'>
           <class-decl name='TransferBatch' is-struct='yes' visibility='default' is-declaration-only='yes' id='type-id-103'/>
         </member-type>
@@ -11482,7 +11482,7 @@
           <var-decl name='invalid_threads_' type-id='type-id-720' visibility='default' filepath='../../.././libsanitizer/sanitizer_common/sanitizer_thread_registry.h' line='133' column='1'/>
         </data-member>
       </class-decl>
-      <class-decl name='TwoLevelByteMap&lt;2048ull, 4096ull, __sanitizer::NoOpMapUnmapCallback&gt;' visibility='default' size-in-bits='131136' filepath='../../.././libsanitizer/sanitizer_common/sanitizer_allocator.h' line='594' column='1' hash='679d25466bc9f185' id='type-id-744'>
+      <class-decl name='TwoLevelByteMap&lt;2048,4096,__sanitizer::NoOpMapUnmapCallback&gt;' visibility='default' size-in-bits='131136' filepath='../../.././libsanitizer/sanitizer_common/sanitizer_allocator.h' line='594' column='1' hash='90af9979e56ad2ab' id='type-id-744'>
         <data-member access='private' layout-offset-in-bits='0'>
           <var-decl name='map1_' type-id='type-id-671' visibility='default' filepath='../../.././libsanitizer/sanitizer_common/sanitizer_allocator.h' line='648' column='1'/>
         </data-member>
@@ -11531,7 +11531,7 @@
           <var-decl name='print_summary' type-id='type-id-156' visibility='default' filepath='../../.././libsanitizer/sanitizer_common/sanitizer_flags.h' line='54' column='1'/>
         </data-member>
       </class-decl>
-      <class-decl name='IntrusiveList&lt;__sanitizer::SizeClassMap&lt;17ul, 64ul, 14ul&gt;::TransferBatch&gt;' is-struct='yes' visibility='default' size-in-bits='192' filepath='../../.././libsanitizer/sanitizer_common/sanitizer_list.h' line='26' column='1' hash='f6caafa1868411a9' id='type-id-718'>
+      <class-decl name='IntrusiveList&lt;__sanitizer::SizeClassMap&lt;17,64,14&gt;::TransferBatch&gt;' is-struct='yes' visibility='default' size-in-bits='192' filepath='../../.././libsanitizer/sanitizer_common/sanitizer_list.h' line='26' column='1' hash='464d2bd9ed7b86a6' id='type-id-718'>
         <data-member access='public' layout-offset-in-bits='0'>
           <var-decl name='size_' type-id='type-id-87' visibility='default' filepath='../../.././libsanitizer/sanitizer_common/sanitizer_list.h' line='115' column='1'/>
         </data-member>
@@ -11553,12 +11553,12 @@
           <var-decl name='last_' type-id='type-id-360' visibility='default' filepath='../../.././libsanitizer/sanitizer_common/sanitizer_list.h' line='117' column='1'/>
         </data-member>
       </class-decl>
-      <class-decl name='LFStack&lt;__sanitizer::SizeClassMap&lt;17ul, 128ul, 16ul&gt;::TransferBatch&gt;' is-struct='yes' visibility='default' size-in-bits='64' filepath='../../.././libsanitizer/sanitizer_common/sanitizer_lfstack.h' line='25' column='1' hash='a7a16527ea102db5' id='type-id-721'>
+      <class-decl name='LFStack&lt;__sanitizer::SizeClassMap&lt;17,128,16&gt;::TransferBatch&gt;' is-struct='yes' visibility='default' size-in-bits='64' filepath='../../.././libsanitizer/sanitizer_common/sanitizer_lfstack.h' line='25' column='1' hash='6836cfe339141b22' id='type-id-721'>
         <data-member access='public' layout-offset-in-bits='0'>
           <var-decl name='head_' type-id='type-id-669' visibility='default' filepath='../../.././libsanitizer/sanitizer_common/sanitizer_lfstack.h' line='67' column='1'/>
         </data-member>
       </class-decl>
-      <class-decl name='SizeClassAllocatorLocalCache&lt;__sanitizer::SizeClassAllocator64&lt;137438953472000ul, 1099511627776ul, 16ul, __sanitizer::SizeClassMap&lt;17ul, 128ul, 16ul&gt;, __tsan::MapUnmapCallback&gt; &gt;' is-struct='yes' visibility='default' size-in-bits='875520' filepath='../../.././libsanitizer/sanitizer_common/sanitizer_allocator.h' line='889' column='1' hash='493f64a0ff505ef3' id='type-id-735'>
+      <class-decl name='SizeClassAllocatorLocalCache&lt;__sanitizer::SizeClassAllocator64&lt;137438953472000,1099511627776,16,__sanitizer::SizeClassMap&lt;17,128,16&gt;,__tsan::MapUnmapCallback&gt;&gt;' is-struct='yes' visibility='default' size-in-bits='875520' filepath='../../.././libsanitizer/sanitizer_common/sanitizer_allocator.h' line='889' column='1' hash='53413f62ba6ffb73' id='type-id-735'>
         <member-type access='public'>
           <class-decl name='PerClass' is-struct='yes' visibility='default' size-in-bits='16512' filepath='../../.././libsanitizer/sanitizer_common/sanitizer_allocator.h' line='942' column='1' hash='515f852662899fc5' id='type-id-667'>
             <data-member access='public' layout-offset-in-bits='0'>
@@ -12616,40 +12616,40 @@
     </array-type-def>
     <qualified-type-def type-id='type-id-714' const='yes' hash='902f052999c53fed' id='type-id-916'/>
     <qualified-type-def type-id='type-id-715' const='yes' hash='3b9877a7bc809d81' id='type-id-917'/>
-    <pointer-type-def type-id='type-id-111' size-in-bits='64' hash='51f16ee61e94aef1' id='type-id-918'/>
-    <qualified-type-def type-id='type-id-918' const='yes' hash='3818958b471527d0' id='type-id-919'/>
-    <pointer-type-def type-id='type-id-920' size-in-bits='64' hash='18c682b813cb3b8d' id='type-id-921'/>
-    <qualified-type-def type-id='type-id-921' const='yes' hash='47102629d461efa9' id='type-id-922'/>
+    <pointer-type-def type-id='type-id-111' size-in-bits='64' hash='2d567a471f6ca01b' id='type-id-918'/>
+    <qualified-type-def type-id='type-id-918' const='yes' hash='714b1f9e0aab6fb2' id='type-id-919'/>
+    <pointer-type-def type-id='type-id-920' size-in-bits='64' hash='fdf66406cb8ef261' id='type-id-921'/>
+    <qualified-type-def type-id='type-id-921' const='yes' hash='b452789b17f0d89d' id='type-id-922'/>
     <pointer-type-def type-id='type-id-923' size-in-bits='64' hash='8db9014a384136a2' id='type-id-924'/>
     <qualified-type-def type-id='type-id-924' const='yes' hash='f57b8c8b50e4988c' id='type-id-925'/>
     <pointer-type-def type-id='type-id-112' size-in-bits='64' hash='222ba27ce054d69b' id='type-id-926'/>
-    <qualified-type-def type-id='type-id-719' const='yes' hash='ff7840cc873e9a91' id='type-id-927'/>
-    <qualified-type-def type-id='type-id-722' const='yes' hash='60f550ea77b9109a' id='type-id-928'/>
+    <qualified-type-def type-id='type-id-719' const='yes' hash='d6285c62c1230b4f' id='type-id-927'/>
+    <qualified-type-def type-id='type-id-722' const='yes' hash='57be614b5015e3c1' id='type-id-928'/>
     <pointer-type-def type-id='type-id-929' size-in-bits='64' hash='c3698b2c28964cee' id='type-id-88'/>
     <pointer-type-def type-id='type-id-930' size-in-bits='64' hash='7fcf8d653ba0bf9a' id='type-id-931'/>
     <qualified-type-def type-id='type-id-931' const='yes' hash='a631ce86d0b86a59' id='type-id-932'/>
     <pointer-type-def type-id='type-id-933' size-in-bits='64' hash='a76ed8bf6a7c9603' id='type-id-912'/>
-    <qualified-type-def type-id='type-id-724' const='yes' hash='2e77e018de17bdd7' id='type-id-934'/>
-    <qualified-type-def type-id='type-id-729' const='yes' hash='07f038faab963cd2' id='type-id-935'/>
-    <qualified-type-def type-id='type-id-734' const='yes' hash='966090eebbf97317' id='type-id-936'/>
-    <qualified-type-def type-id='type-id-736' const='yes' hash='e5fd54ffac8e095b' id='type-id-937'/>
-    <qualified-type-def type-id='type-id-745' const='yes' hash='dd7289a62133e359' id='type-id-938'/>
+    <qualified-type-def type-id='type-id-724' const='yes' hash='effaf471e7cc2b64' id='type-id-934'/>
+    <qualified-type-def type-id='type-id-729' const='yes' hash='f6a83dbce321e10e' id='type-id-935'/>
+    <qualified-type-def type-id='type-id-734' const='yes' hash='0241eebd77484996' id='type-id-936'/>
+    <qualified-type-def type-id='type-id-736' const='yes' hash='6399195ccc9c15c1' id='type-id-937'/>
+    <qualified-type-def type-id='type-id-745' const='yes' hash='b971bd3decffc4d9' id='type-id-938'/>
     <pointer-type-def type-id='type-id-864' size-in-bits='64' hash='b2837cb6a7e3851b#2' id='type-id-939'/>
     <pointer-type-def type-id='type-id-940' size-in-bits='64' hash='46e7dd3df34eeb46' id='type-id-941'/>
     <qualified-type-def type-id='type-id-793' const='yes' hash='333629131297dff8' id='type-id-942'/>
     <qualified-type-def type-id='type-id-795' const='yes' hash='3111e9e9419dab54' id='type-id-943'/>
-    <qualified-type-def type-id='type-id-111' const='yes' hash='805b40cb75d65646' id='type-id-944'/>
-    <pointer-type-def type-id='type-id-944' size-in-bits='64' hash='b6311777cd8aa796' id='type-id-945'/>
-    <qualified-type-def type-id='type-id-920' const='yes' hash='30001cf5cd67784b' id='type-id-946'/>
-    <pointer-type-def type-id='type-id-946' size-in-bits='64' hash='734739a86364f979' id='type-id-947'/>
-    <qualified-type-def type-id='type-id-947' const='yes' hash='83a06325b6bd0500' id='type-id-948'/>
+    <qualified-type-def type-id='type-id-111' const='yes' hash='0f70ed12caff59fd' id='type-id-944'/>
+    <pointer-type-def type-id='type-id-944' size-in-bits='64' hash='7e22d107434cd323' id='type-id-945'/>
+    <qualified-type-def type-id='type-id-920' const='yes' hash='2f07de8e5d441b75' id='type-id-946'/>
+    <pointer-type-def type-id='type-id-946' size-in-bits='64' hash='b30e3fb5545613dd' id='type-id-947'/>
+    <qualified-type-def type-id='type-id-947' const='yes' hash='2c805edd5ffddd31' id='type-id-948'/>
     <qualified-type-def type-id='type-id-923' const='yes' hash='314bd6fb2e601daa' id='type-id-949'/>
     <reference-type-def kind='lvalue' type-id='type-id-949' size-in-bits='64' hash='0887d36012dcb951' id='type-id-950'/>
-    <qualified-type-def type-id='type-id-800' const='yes' hash='0ef07a9f015d0ac1' id='type-id-951'/>
+    <qualified-type-def type-id='type-id-800' const='yes' hash='06f35626d51b0df9' id='type-id-951'/>
     <qualified-type-def type-id='type-id-952' const='yes' hash='6824bb7a3d62a58d' id='type-id-953'/>
     <pointer-type-def type-id='type-id-953' size-in-bits='64' hash='4df688a2c330d5a2' id='type-id-954'/>
     <qualified-type-def type-id='type-id-954' const='yes' hash='1626f7b10972f89c' id='type-id-955'/>
-    <qualified-type-def type-id='type-id-808' const='yes' hash='6f8731df8f70aad4' id='type-id-956'/>
+    <qualified-type-def type-id='type-id-808' const='yes' hash='802a9fb49c57f4c7' id='type-id-956'/>
     <qualified-type-def type-id='type-id-957' const='yes' hash='6075055f025a4f91' id='type-id-958'/>
     <pointer-type-def type-id='type-id-958' size-in-bits='64' hash='752a8eaa671718ef' id='type-id-959'/>
     <qualified-type-def type-id='type-id-959' const='yes' hash='338d284b63608d24' id='type-id-960'/>
@@ -12662,7 +12662,7 @@
     <pointer-type-def type-id='type-id-879' size-in-bits='64' id='type-id-965'/>
     <pointer-type-def type-id='type-id-103' size-in-bits='64' id='type-id-966'/>
     <namespace-decl name='__sanitizer'>
-      <class-decl name='CombinedAllocator&lt;__sanitizer::SizeClassAllocator32&lt;0ul, 140737488355328ull, 16ul, __sanitizer::SizeClassMap&lt;17ul, 64ul, 14ul&gt;, 24ul, __sanitizer::TwoLevelByteMap&lt;2048ull, 4096ull, __sanitizer::NoOpMapUnmapCallback&gt;, __sanitizer::NoOpMapUnmapCallback&gt;, __sanitizer::SizeClassAllocatorLocalCache&lt;__sanitizer::SizeClassAllocator32&lt;0ul, 140737488355328ull, 16ul, __sanitizer::SizeClassMap&lt;17ul, 64ul, 14ul&gt;, 24ul, __sanitizer::TwoLevelByteMap&lt;2048ull, 4096ull, __sanitizer::NoOpMapUnmapCallback&gt;, __sanitizer::NoOpMapUnmapCallback&gt; &gt;, __sanitizer::LargeMmapAllocator&lt;__sanitizer::CrashOnMapUnmap&gt; &gt;' visibility='default' size-in-bits='16940672' filepath='../../.././libsanitizer/sanitizer_common/sanitizer_allocator.h' line='1229' column='1' hash='d82d6395b0adb5bc' id='type-id-111'>
+      <class-decl name='CombinedAllocator&lt;__sanitizer::SizeClassAllocator32&lt;0,140737488355328,16,__sanitizer::SizeClassMap&lt;17,64,14&gt;,24,__sanitizer::TwoLevelByteMap&lt;2048,4096,__sanitizer::NoOpMapUnmapCallback&gt;,__sanitizer::NoOpMapUnmapCallback&gt;,__sanitizer::SizeClassAllocatorLocalCache&lt;__sanitizer::SizeClassAllocator32&lt;0,140737488355328,16,__sanitizer::SizeClassMap&lt;17,64,14&gt;,24,__sanitizer::TwoLevelByteMap&lt;2048,4096,__sanitizer::NoOpMapUnmapCallback&gt;,__sanitizer::NoOpMapUnmapCallback&gt;&gt;,__sanitizer::LargeMmapAllocator&lt;__sanitizer::CrashOnMapUnmap&gt;&gt;' visibility='default' size-in-bits='16940672' filepath='../../.././libsanitizer/sanitizer_common/sanitizer_allocator.h' line='1229' column='1' hash='323e15f218fb52d2' id='type-id-111'>
         <data-member access='private' layout-offset-in-bits='0'>
           <var-decl name='primary_' type-id='type-id-723' visibility='default' filepath='../../.././libsanitizer/sanitizer_common/sanitizer_allocator.h' line='1368' column='1'/>
         </data-member>
@@ -12673,7 +12673,7 @@
           <var-decl name='stats_' type-id='type-id-713' visibility='default' filepath='../../.././libsanitizer/sanitizer_common/sanitizer_allocator.h' line='1370' column='1'/>
         </data-member>
       </class-decl>
-      <class-decl name='CombinedAllocator&lt;__sanitizer::SizeClassAllocator64&lt;137438953472000ul, 1099511627776ul, 16ul, __sanitizer::SizeClassMap&lt;17ul, 128ul, 16ul&gt;, __tsan::MapUnmapCallback&gt;, __sanitizer::SizeClassAllocatorLocalCache&lt;__sanitizer::SizeClassAllocator64&lt;137438953472000ul, 1099511627776ul, 16ul, __sanitizer::SizeClassMap&lt;17ul, 128ul, 16ul&gt;, __tsan::MapUnmapCallback&gt; &gt;, __sanitizer::LargeMmapAllocator&lt;__tsan::MapUnmapCallback&gt; &gt;' visibility='default' size-in-bits='16782464' filepath='../../.././libsanitizer/sanitizer_common/sanitizer_allocator.h' line='1229' column='1' hash='122c557e2a8d75ee' id='type-id-920'>
+      <class-decl name='CombinedAllocator&lt;__sanitizer::SizeClassAllocator64&lt;137438953472000,1099511627776,16,__sanitizer::SizeClassMap&lt;17,128,16&gt;,__tsan::MapUnmapCallback&gt;,__sanitizer::SizeClassAllocatorLocalCache&lt;__sanitizer::SizeClassAllocator64&lt;137438953472000,1099511627776,16,__sanitizer::SizeClassMap&lt;17,128,16&gt;,__tsan::MapUnmapCallback&gt;&gt;,__sanitizer::LargeMmapAllocator&lt;__tsan::MapUnmapCallback&gt;&gt;' visibility='default' size-in-bits='16782464' filepath='../../.././libsanitizer/sanitizer_common/sanitizer_allocator.h' line='1229' column='1' hash='45fae529e176599c' id='type-id-920'>
         <data-member access='private' layout-offset-in-bits='0'>
           <var-decl name='primary_' type-id='type-id-728' visibility='default' filepath='../../.././libsanitizer/sanitizer_common/sanitizer_allocator.h' line='1368' column='1'/>
         </data-member>
@@ -12878,16 +12878,16 @@
     <typedef-decl name='__rlimit_resource_t' type-id='type-id-6' size-in-bits='32' filepath='/usr/include/sys/resource.h' line='43' column='1' hash='09d17c08f594edc7' id='type-id-269'/>
     <typedef-decl name='rlim_t' type-id='type-id-985' size-in-bits='64' filepath='/usr/include/bits/resource.h' line='127' column='1' hash='8fdc5eea2983a729' id='type-id-984'/>
     <pointer-type-def type-id='type-id-986' size-in-bits='64' hash='4516c43afe46660d' id='type-id-300'/>
-    <pointer-type-def type-id='type-id-987' size-in-bits='64' hash='27b3052f1d1b5b0f' id='type-id-988'/>
-    <qualified-type-def type-id='type-id-988' const='yes' hash='8a82cf3416fe6589' id='type-id-989'/>
+    <pointer-type-def type-id='type-id-987' size-in-bits='64' hash='db701aba9f2cc884' id='type-id-988'/>
+    <qualified-type-def type-id='type-id-988' const='yes' hash='d29c85c9d2d75b28' id='type-id-989'/>
     <pointer-type-def type-id='type-id-311' size-in-bits='64' hash='c7ad51ad6fce12cf' id='type-id-313'/>
     <pointer-type-def type-id='type-id-990' size-in-bits='64' hash='bccdc4a178a38710' id='type-id-991'/>
     <qualified-type-def type-id='type-id-991' const='yes' hash='6d3c994a62abcbd0' id='type-id-992'/>
     <qualified-type-def type-id='type-id-986' const='yes' hash='9c2f3d9db216c583' id='type-id-993'/>
     <reference-type-def kind='lvalue' type-id='type-id-993' size-in-bits='64' hash='10af91bdb60b718f' id='type-id-994'/>
     <pointer-type-def type-id='type-id-993' size-in-bits='64' hash='68144ef07976fa9e' id='type-id-318'/>
-    <qualified-type-def type-id='type-id-987' const='yes' hash='d34fa863e10fcac2' id='type-id-995'/>
-    <reference-type-def kind='lvalue' type-id='type-id-995' size-in-bits='64' hash='44084620ee2f6fc3' id='type-id-996'/>
+    <qualified-type-def type-id='type-id-987' const='yes' hash='3ce6ee918d8f9931' id='type-id-995'/>
+    <reference-type-def kind='lvalue' type-id='type-id-995' size-in-bits='64' hash='8dc9f935935983f9' id='type-id-996'/>
     <qualified-type-def type-id='type-id-311' const='yes' hash='a18ecf5170a4343b' id='type-id-997'/>
     <reference-type-def kind='lvalue' type-id='type-id-997' size-in-bits='64' hash='52107c8bb7859e22' id='type-id-998'/>
     <pointer-type-def type-id='type-id-997' size-in-bits='64' hash='01aa3c67c76440ee' id='type-id-323'/>
@@ -12909,7 +12909,7 @@
           <var-decl name='size_' type-id='type-id-87' visibility='default' filepath='../../.././libsanitizer/sanitizer_common/sanitizer_common.h' line='384' column='1'/>
         </data-member>
       </class-decl>
-      <class-decl name='InternalScopedBuffer&lt;long long unsigned int&gt;' visibility='default' size-in-bits='128' filepath='../../.././libsanitizer/sanitizer_common/sanitizer_common.h' line='67' column='1' hash='d5d1a02054bf209d' id='type-id-987'>
+      <class-decl name='InternalScopedBuffer&lt;longlongunsignedint&gt;' visibility='default' size-in-bits='128' filepath='../../.././libsanitizer/sanitizer_common/sanitizer_common.h' line='67' column='1' hash='9ca94390adabf2cc' id='type-id-987'>
         <data-member access='private' layout-offset-in-bits='0'>
           <var-decl name='ptr_' type-id='type-id-393' visibility='default' filepath='../../.././libsanitizer/sanitizer_common/sanitizer_common.h' line='81' column='1'/>
         </data-member>
@@ -13418,16 +13418,16 @@
   <abi-instr address-size='64' path='../../.././libsanitizer/tsan/tsan_rtl_report.cc' comp-dir-path='/tmp/legendre/spack-stage/spack-stage-ImG4Cf/gcc-4.9.2/x86_64-unknown-linux-gnu/libsanitizer/tsan' language='LANG_C_plus_plus'>
     <pointer-type-def type-id='type-id-1135' size-in-bits='64' hash='3c2c306835698c40' id='type-id-1136'/>
     <qualified-type-def type-id='type-id-1136' const='yes' hash='fe5753223ada705d' id='type-id-1137'/>
-    <pointer-type-def type-id='type-id-1138' size-in-bits='64' hash='11a1709671360a1f' id='type-id-1139'/>
-    <qualified-type-def type-id='type-id-1139' const='yes' hash='85a9fd0a61fb0d59' id='type-id-1140'/>
+    <pointer-type-def type-id='type-id-1138' size-in-bits='64' hash='03a343451534de87' id='type-id-1139'/>
+    <qualified-type-def type-id='type-id-1139' const='yes' hash='bb29a2ed772cc961' id='type-id-1140'/>
     <reference-type-def kind='lvalue' type-id='type-id-765' size-in-bits='64' hash='cdfe8e50cac607a0' id='type-id-1141'/>
     <reference-type-def kind='lvalue' type-id='type-id-1010' size-in-bits='64' hash='edb22a5c7b00c0ff' id='type-id-1142'/>
     <qualified-type-def type-id='type-id-1143' const='yes' hash='403e2817422399b3' id='type-id-1144'/>
     <qualified-type-def type-id='type-id-798' const='yes' hash='e7556c5ab3a797f8' id='type-id-1145'/>
     <qualified-type-def type-id='type-id-1135' const='yes' hash='46a3bce787767686' id='type-id-1146'/>
     <reference-type-def kind='lvalue' type-id='type-id-1146' size-in-bits='64' hash='3b273d1aa1416393' id='type-id-1147'/>
-    <qualified-type-def type-id='type-id-1138' const='yes' hash='accf1b484b36fcea' id='type-id-1148'/>
-    <reference-type-def kind='lvalue' type-id='type-id-1148' size-in-bits='64' hash='ab5ca882fc2228c4' id='type-id-1149'/>
+    <qualified-type-def type-id='type-id-1138' const='yes' hash='7a1eb15b8afbf69f' id='type-id-1148'/>
+    <reference-type-def kind='lvalue' type-id='type-id-1148' size-in-bits='64' hash='85fd20411c2193b0' id='type-id-1149'/>
     <qualified-type-def type-id='type-id-830' const='yes' hash='fe03128e4463c140' id='type-id-1150'/>
     <qualified-type-def type-id='type-id-1151' const='yes' hash='2aaa71c2bd16c46e' id='type-id-1152'/>
     <qualified-type-def type-id='type-id-839' const='yes' hash='a466b49872a7e12a' id='type-id-1153'/>
@@ -13443,7 +13443,7 @@
           <var-decl name='cnt_' type-id='type-id-87' visibility='default' filepath='../../.././libsanitizer/sanitizer_common/sanitizer_common.h' line='82' column='1'/>
         </data-member>
       </class-decl>
-      <class-decl name='InternalScopedBuffer&lt;long unsigned int&gt;' visibility='default' size-in-bits='128' filepath='../../.././libsanitizer/sanitizer_common/sanitizer_common.h' line='67' column='1' hash='881284aa6e21720c' id='type-id-1138'>
+      <class-decl name='InternalScopedBuffer&lt;longunsignedint&gt;' visibility='default' size-in-bits='128' filepath='../../.././libsanitizer/sanitizer_common/sanitizer_common.h' line='67' column='1' hash='56fa2c6a9bf3fcfd' id='type-id-1138'>
         <data-member access='private' layout-offset-in-bits='0'>
           <var-decl name='ptr_' type-id='type-id-140' visibility='default' filepath='../../.././libsanitizer/sanitizer_common/sanitizer_common.h' line='81' column='1'/>
         </data-member>

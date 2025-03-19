@@ -961,7 +961,7 @@
         <var-decl name='__unused' type-id='type-id-27' visibility='default' filepath='/usr/include/bits/stat.h' line='106' column='1'/>
       </data-member>
     </class-decl>
-    <class-decl name='text_info' is-struct='yes' naming-typedef-id='type-id-60' visibility='default' size-in-bits='320' filepath='../.././gcc/pretty-print.h' line='34' column='1' hash='e6bbbf9270843bc2' id='type-id-92'>
+    <class-decl name='text_info' is-struct='yes' naming-typedef-id='type-id-60' visibility='default' size-in-bits='320' filepath='../.././gcc/pretty-print.h' line='34' column='1' hash='c6d74675aef90a6f' id='type-id-92'>
       <data-member access='public' layout-offset-in-bits='0'>
         <var-decl name='format_spec' type-id='type-id-12' visibility='default' filepath='../.././gcc/pretty-print.h' line='35' column='1'/>
       </data-member>
@@ -986,7 +986,7 @@
         <var-decl name='tv_nsec' type-id='type-id-26' visibility='default' filepath='/usr/include/time.h' line='123' column='1'/>
       </data-member>
     </class-decl>
-    <class-decl name='typedef __va_list_tag __va_list_tag' is-struct='yes' visibility='default' size-in-bits='192' hash='82aec996f90384a2' id='type-id-97'>
+    <class-decl name='typedef__va_list_tag__va_list_tag' is-struct='yes' visibility='default' size-in-bits='192' hash='3b37d6f26ac12c24' id='type-id-97'>
       <data-member access='public' layout-offset-in-bits='0'>
         <var-decl name='gp_offset' type-id='type-id-52' visibility='default'/>
       </data-member>
@@ -1006,7 +1006,7 @@
     <typedef-decl name='__blksize_t' type-id='type-id-26' size-in-bits='64' filepath='/usr/include/bits/types.h' line='164' column='1' hash='b119fe0931d2ee10' id='type-id-89'/>
     <typedef-decl name='__dev_t' type-id='type-id-101' size-in-bits='64' filepath='/usr/include/bits/types.h' line='134' column='1' hash='8fdc5eea2983a729' id='type-id-83'/>
     <typedef-decl name='__gid_t' type-id='type-id-52' size-in-bits='32' filepath='/usr/include/bits/types.h' line='136' column='1' hash='e66b43f97c38e87a' id='type-id-88'/>
-    <typedef-decl name='__gnuc_va_list' type-id='type-id-102' size-in-bits='192' filepath='/tmp/legendre/spack-stage/spack-stage-wfh0ig/gcc-4.7.4/host-x86_64-unknown-linux-gnu/prev-gcc/include/stdarg.h' line='40' column='1' hash='858330b9505742c5' id='type-id-103'/>
+    <typedef-decl name='__gnuc_va_list' type-id='type-id-102' size-in-bits='192' filepath='/tmp/legendre/spack-stage/spack-stage-wfh0ig/gcc-4.7.4/host-x86_64-unknown-linux-gnu/prev-gcc/include/stdarg.h' line='40' column='1' hash='418b358a7481eeb2' id='type-id-103'/>
     <typedef-decl name='__ino_t' type-id='type-id-101' size-in-bits='64' filepath='/usr/include/bits/types.h' line='137' column='1' hash='8fdc5eea2983a729' id='type-id-84'/>
     <typedef-decl name='__mode_t' type-id='type-id-52' size-in-bits='32' filepath='/usr/include/bits/types.h' line='139' column='1' hash='e66b43f97c38e87a' id='type-id-86'/>
     <typedef-decl name='__nlink_t' type-id='type-id-101' size-in-bits='64' filepath='/usr/include/bits/types.h' line='140' column='1' hash='8fdc5eea2983a729' id='type-id-85'/>
@@ -1015,9 +1015,6 @@
     <typedef-decl name='__sighandler_t' type-id='type-id-104' size-in-bits='64' filepath='/usr/include/signal.h' line='84' column='1' hash='fd7a63c0c6c822c4' id='type-id-105'/>
     <typedef-decl name='__time_t' type-id='type-id-26' size-in-bits='64' filepath='/usr/include/bits/types.h' line='149' column='1' hash='b119fe0931d2ee10' id='type-id-96'/>
     <typedef-decl name='__uid_t' type-id='type-id-52' size-in-bits='32' filepath='/usr/include/bits/types.h' line='135' column='1' hash='e66b43f97c38e87a' id='type-id-87'/>
-    <array-type-def dimensions='1' type-id='type-id-97' size-in-bits='192' hash='858330b9505742c5' id='type-id-102'>
-      <subrange length='1' lower-bound='0' upper-bound='0' type-id='type-id-4' size-in-bits='64' is-anonymous='yes' hash='eba0a2b392137dcb' id='type-id-7'/>
-    </array-type-def>
     <typedef-decl name='diagnostic_classification_change_t' type-id='type-id-45' size-in-bits='96' filepath='../.././gcc/diagnostic.h' line='52' column='1' id='type-id-106'/>
     <typedef-decl name='diagnostic_context' type-id='type-id-47' size-in-bits='1536' filepath='../.././gcc/coretypes.h' line='74' column='1' id='type-id-107'/>
     <typedef-decl name='diagnostic_finalizer_fn' type-id='type-id-53' size-in-bits='64' filepath='../.././gcc/diagnostic.h' line='57' column='1' hash='fd7a63c0c6c822c4' id='type-id-54'/>
@@ -1035,7 +1032,10 @@
     <typedef-decl name='size_t' type-id='type-id-101' size-in-bits='64' filepath='/tmp/legendre/spack-stage/spack-stage-wfh0ig/gcc-4.7.4/host-x86_64-unknown-linux-gnu/prev-gcc/include/stddef.h' line='213' column='1' hash='8fdc5eea2983a729' id='type-id-39'/>
     <typedef-decl name='source_location' type-id='type-id-52' size-in-bits='32' filepath='../.././gcc/../libcpp/include/line-map.h' line='51' column='1' hash='e66b43f97c38e87a' id='type-id-65'/>
     <typedef-decl name='text_info' type-id='type-id-92' size-in-bits='320' filepath='../.././gcc/pretty-print.h' line='40' column='1' id='type-id-60'/>
-    <typedef-decl name='va_list' type-id='type-id-103' size-in-bits='192' filepath='/tmp/legendre/spack-stage/spack-stage-wfh0ig/gcc-4.7.4/host-x86_64-unknown-linux-gnu/prev-gcc/include/stdarg.h' line='102' column='1' hash='858330b9505742c5' id='type-id-112'/>
+    <typedef-decl name='va_list' type-id='type-id-103' size-in-bits='192' filepath='/tmp/legendre/spack-stage/spack-stage-wfh0ig/gcc-4.7.4/host-x86_64-unknown-linux-gnu/prev-gcc/include/stdarg.h' line='102' column='1' hash='418b358a7481eeb2' id='type-id-112'/>
+    <array-type-def dimensions='1' type-id='type-id-97' size-in-bits='192' hash='418b358a7481eeb2' id='type-id-102'>
+      <subrange length='1' lower-bound='0' upper-bound='0' type-id='type-id-4' size-in-bits='64' is-anonymous='yes' hash='eba0a2b392137dcb' id='type-id-7'/>
+    </array-type-def>
     <type-decl name='unnamed-enum-underlying-type-32' size-in-bits='32' alignment-in-bits='32' is-anonymous='yes' hash='5181a58e665b3619' id='type-id-17'/>
     <type-decl name='unsigned char' size-in-bits='8' hash='6ebac62b3366db68' id='type-id-69'/>
     <type-decl name='unsigned int' size-in-bits='32' hash='e66b43f97c38e87a' id='type-id-52'/>
@@ -1074,8 +1074,8 @@
     <pointer-type-def type-id='type-id-65' size-in-bits='64' hash='4a58eb646f8cf2f0' id='type-id-67'/>
     <pointer-type-def type-id='type-id-82' size-in-bits='64' hash='925ad1338878bb49' id='type-id-129'/>
     <pointer-type-def type-id='type-id-60' size-in-bits='64' hash='cf1e8ab2c18af0cb' id='type-id-130'/>
-    <pointer-type-def type-id='type-id-97' size-in-bits='64' hash='648313adc1c4c534' id='type-id-131'/>
-    <pointer-type-def type-id='type-id-112' size-in-bits='64' hash='11b77aa5214c2fa9' id='type-id-93'/>
+    <pointer-type-def type-id='type-id-97' size-in-bits='64' hash='32209790a214ec40' id='type-id-131'/>
+    <pointer-type-def type-id='type-id-112' size-in-bits='64' hash='7070a2cff5cc29ad' id='type-id-93'/>
     <pointer-type-def type-id='type-id-132' size-in-bits='64' hash='fd7a63c0c6c822c4' id='type-id-55'/>
     <pointer-type-def type-id='type-id-133' size-in-bits='64' hash='fd7a63c0c6c822c4' id='type-id-109'/>
     <pointer-type-def type-id='type-id-134' size-in-bits='64' hash='fd7a63c0c6c822c4' id='type-id-104'/>
@@ -1244,7 +1244,7 @@
       <parameter type-id='type-id-38'/>
       <return type-id='type-id-23'/>
     </function-type>
-    <function-type size-in-bits='64' hash='204bea41562215f3' id='type-id-132'>
+    <function-type size-in-bits='64' hash='0ab70deccd6d31d0' id='type-id-132'>
       <parameter type-id='type-id-123'/>
       <parameter type-id='type-id-12'/>
       <parameter type-id='type-id-93'/>
@@ -1376,7 +1376,7 @@
       <parameter type-id='type-id-124' filepath='../.././gcc/diagnostic.c' line='128' column='1'/>
       <return type-id='type-id-99'/>
     </function-decl>
-    <function-decl name='diagnostic_set_info_translated' mangled-name='_Z30diagnostic_set_info_translatedP15diagnostic_infoPKcPA1_13__va_list_tagj12diagnostic_t' filepath='../.././gcc/diagnostic.c' line='150' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_Z30diagnostic_set_info_translatedP15diagnostic_infoPKcPA1_13__va_list_tagj12diagnostic_t' hash='ea67db90da737d27'>
+    <function-decl name='diagnostic_set_info_translated' mangled-name='_Z30diagnostic_set_info_translatedP15diagnostic_infoPKcPA1_13__va_list_tagj12diagnostic_t' filepath='../.././gcc/diagnostic.c' line='150' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_Z30diagnostic_set_info_translatedP15diagnostic_infoPKcPA1_13__va_list_tagj12diagnostic_t' hash='73da2ea2649047c9'>
       <parameter type-id='type-id-125' filepath='../.././gcc/diagnostic.c' line='150' column='1'/>
       <parameter type-id='type-id-12' filepath='../.././gcc/diagnostic.c' line='150' column='1'/>
       <parameter type-id='type-id-93' filepath='../.././gcc/diagnostic.c' line='151' column='1'/>
@@ -1384,7 +1384,7 @@
       <parameter type-id='type-id-18' filepath='../.././gcc/diagnostic.c' line='152' column='1'/>
       <return type-id='type-id-99'/>
     </function-decl>
-    <function-decl name='diagnostic_set_info' mangled-name='_Z19diagnostic_set_infoP15diagnostic_infoPKcPA1_13__va_list_tagj12diagnostic_t' filepath='../.././gcc/diagnostic.c' line='166' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_Z19diagnostic_set_infoP15diagnostic_infoPKcPA1_13__va_list_tagj12diagnostic_t' hash='ea67db90da737d27'>
+    <function-decl name='diagnostic_set_info' mangled-name='_Z19diagnostic_set_infoP15diagnostic_infoPKcPA1_13__va_list_tagj12diagnostic_t' filepath='../.././gcc/diagnostic.c' line='166' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_Z19diagnostic_set_infoP15diagnostic_infoPKcPA1_13__va_list_tagj12diagnostic_t' hash='73da2ea2649047c9'>
       <parameter type-id='type-id-125' filepath='../.././gcc/diagnostic.c' line='150' column='1'/>
       <parameter type-id='type-id-12' filepath='../.././gcc/diagnostic.c' line='150' column='1'/>
       <parameter type-id='type-id-93' filepath='../.././gcc/diagnostic.c' line='151' column='1'/>
@@ -5108,7 +5108,7 @@
       <return type-id='type-id-275'/>
     </function-decl>
     <typedef-decl name='iconv_t' type-id='type-id-38' filepath='/usr/include/iconv.h' line='30' column='1' id='type-id-374'/>
-    <function-type size-in-bits='64' hash='c7f85813c2f6036b' id='type-id-397'>
+    <function-type size-in-bits='64' hash='f757dfaad76a6364' id='type-id-397'>
       <parameter type-id='type-id-223'/>
       <parameter type-id='type-id-23'/>
       <parameter type-id='type-id-23'/>

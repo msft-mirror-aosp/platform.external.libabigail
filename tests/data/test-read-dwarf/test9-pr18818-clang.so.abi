@@ -513,9 +513,9 @@
     <qualified-type-def type-id='type-id-14' restrict='yes' id='type-id-114'/>
     <qualified-type-def type-id='type-id-14' restrict='yes' id='type-id-115'/>
     <namespace-decl name='std'>
-      <class-decl name='basic_string&lt;char, std::char_traits&lt;char&gt;, std::allocator&lt;char&gt; &gt;' visibility='default' is-declaration-only='yes' id='type-id-116'>
+      <class-decl name='basic_string&lt;char,std::char_traits&lt;char&gt;,std::allocator&lt;char&gt;&gt;' visibility='default' is-declaration-only='yes' id='type-id-116'>
         <member-function access='public'>
-          <function-decl name='basic_string&lt;char *&gt;' mangled-name='_ZNSsC2IPcEET_S1_RKSaIcE' filepath='/usr/bin/../lib/gcc/x86_64-linux-gnu/4.9/../../../../include/c++/4.9/bits/basic_string.h' line='540' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZNSsC2IPcEET_S1_RKSaIcE' hash='6faa8831d3af3ad4'>
+          <function-decl name='basic_string&lt;char*&gt;' mangled-name='_ZNSsC2IPcEET_S1_RKSaIcE' filepath='/usr/bin/../lib/gcc/x86_64-linux-gnu/4.9/../../../../include/c++/4.9/bits/basic_string.h' line='540' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZNSsC2IPcEET_S1_RKSaIcE' hash='6faa8831d3af3ad4'>
             <parameter type-id='type-id-117' is-artificial='yes'/>
             <parameter type-id='type-id-53' filepath='/usr/bin/../lib/gcc/x86_64-linux-gnu/4.9/../../../../include/c++/4.9/bits/basic_string.tcc' line='540' column='1'/>
             <parameter type-id='type-id-53' filepath='/usr/bin/../lib/gcc/x86_64-linux-gnu/4.9/../../../../include/c++/4.9/bits/basic_string.tcc' line='540' column='1'/>
@@ -524,7 +524,7 @@
           </function-decl>
         </member-function>
         <member-function access='public'>
-          <function-decl name='append&lt;const char *&gt;' mangled-name='_ZNSs6appendIPKcEERSsT_S3_' filepath='/usr/bin/../lib/gcc/x86_64-linux-gnu/4.9/../../../../include/c++/4.9/bits/basic_string.h' line='1061' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZNSs6appendIPKcEERSsT_S3_' hash='3d5693612af11c46'>
+          <function-decl name='append&lt;constchar*&gt;' mangled-name='_ZNSs6appendIPKcEERSsT_S3_' filepath='/usr/bin/../lib/gcc/x86_64-linux-gnu/4.9/../../../../include/c++/4.9/bits/basic_string.h' line='1061' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZNSs6appendIPKcEERSsT_S3_' hash='3d5693612af11c46'>
             <parameter type-id='type-id-117' is-artificial='yes'/>
             <parameter type-id='type-id-18' filepath='/usr/bin/../lib/gcc/x86_64-linux-gnu/4.9/../../../../include/c++/4.9/bits/basic_string.h' line='1061' column='1'/>
             <parameter type-id='type-id-18' filepath='/usr/bin/../lib/gcc/x86_64-linux-gnu/4.9/../../../../include/c++/4.9/bits/basic_string.h' line='1061' column='1'/>
@@ -532,7 +532,7 @@
           </function-decl>
         </member-function>
         <member-function access='private' static='yes'>
-          <function-decl name='_S_construct&lt;char *&gt;' mangled-name='_ZNSs12_S_constructIPcEES0_T_S1_RKSaIcE' filepath='/usr/bin/../lib/gcc/x86_64-linux-gnu/4.9/../../../../include/c++/4.9/bits/basic_string.h' line='1761' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZNSs12_S_constructIPcEES0_T_S1_RKSaIcE' hash='9895045035709c6f'>
+          <function-decl name='_S_construct&lt;char*&gt;' mangled-name='_ZNSs12_S_constructIPcEES0_T_S1_RKSaIcE' filepath='/usr/bin/../lib/gcc/x86_64-linux-gnu/4.9/../../../../include/c++/4.9/bits/basic_string.h' line='1761' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZNSs12_S_constructIPcEES0_T_S1_RKSaIcE' hash='9895045035709c6f'>
             <parameter type-id='type-id-53' filepath='/usr/bin/../lib/gcc/x86_64-linux-gnu/4.9/../../../../include/c++/4.9/bits/basic_string.h' line='1761' column='1'/>
             <parameter type-id='type-id-53' filepath='/usr/bin/../lib/gcc/x86_64-linux-gnu/4.9/../../../../include/c++/4.9/bits/basic_string.h' line='1761' column='1'/>
             <parameter type-id='type-id-118' filepath='/usr/bin/../lib/gcc/x86_64-linux-gnu/4.9/../../../../include/c++/4.9/bits/basic_string.h' line='1761' column='1'/>
@@ -540,7 +540,7 @@
           </function-decl>
         </member-function>
         <member-function access='private' static='yes'>
-          <function-decl name='_S_construct_aux&lt;char *&gt;' mangled-name='_ZNSs16_S_construct_auxIPcEES0_T_S1_RKSaIcESt12__false_type' filepath='/usr/bin/../lib/gcc/x86_64-linux-gnu/4.9/../../../../include/c++/4.9/bits/basic_string.h' line='1739' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZNSs16_S_construct_auxIPcEES0_T_S1_RKSaIcESt12__false_type' hash='9895045035709c6f'>
+          <function-decl name='_S_construct_aux&lt;char*&gt;' mangled-name='_ZNSs16_S_construct_auxIPcEES0_T_S1_RKSaIcESt12__false_type' filepath='/usr/bin/../lib/gcc/x86_64-linux-gnu/4.9/../../../../include/c++/4.9/bits/basic_string.h' line='1739' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZNSs16_S_construct_auxIPcEES0_T_S1_RKSaIcESt12__false_type' hash='9895045035709c6f'>
             <parameter type-id='type-id-53' filepath='/usr/bin/../lib/gcc/x86_64-linux-gnu/4.9/../../../../include/c++/4.9/bits/basic_string.h' line='1739' column='1'/>
             <parameter type-id='type-id-53' filepath='/usr/bin/../lib/gcc/x86_64-linux-gnu/4.9/../../../../include/c++/4.9/bits/basic_string.h' line='1739' column='1'/>
             <parameter type-id='type-id-118' filepath='/usr/bin/../lib/gcc/x86_64-linux-gnu/4.9/../../../../include/c++/4.9/bits/basic_string.h' line='1740' column='1'/>
@@ -549,7 +549,7 @@
           </function-decl>
         </member-function>
         <member-function access='private' static='yes'>
-          <function-decl name='_S_construct&lt;char *&gt;' mangled-name='_ZNSs12_S_constructIPcEES0_T_S1_RKSaIcESt20forward_iterator_tag' filepath='/usr/bin/../lib/gcc/x86_64-linux-gnu/4.9/../../../../include/c++/4.9/bits/basic_string.h' line='1777' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZNSs12_S_constructIPcEES0_T_S1_RKSaIcESt20forward_iterator_tag' hash='9895045035709c6f'>
+          <function-decl name='_S_construct&lt;char*&gt;' mangled-name='_ZNSs12_S_constructIPcEES0_T_S1_RKSaIcESt20forward_iterator_tag' filepath='/usr/bin/../lib/gcc/x86_64-linux-gnu/4.9/../../../../include/c++/4.9/bits/basic_string.h' line='1777' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZNSs12_S_constructIPcEES0_T_S1_RKSaIcESt20forward_iterator_tag' hash='9895045035709c6f'>
             <parameter type-id='type-id-53' filepath='/usr/bin/../lib/gcc/x86_64-linux-gnu/4.9/../../../../include/c++/4.9/bits/basic_string.tcc' line='1777' column='1'/>
             <parameter type-id='type-id-53' filepath='/usr/bin/../lib/gcc/x86_64-linux-gnu/4.9/../../../../include/c++/4.9/bits/basic_string.tcc' line='1777' column='1'/>
             <parameter type-id='type-id-118' filepath='/usr/bin/../lib/gcc/x86_64-linux-gnu/4.9/../../../../include/c++/4.9/bits/basic_string.tcc' line='1777' column='1'/>
@@ -558,7 +558,7 @@
           </function-decl>
         </member-function>
         <member-function access='public'>
-          <function-decl name='basic_string&lt;const char *&gt;' mangled-name='_ZNSsC2IPKcEET_S2_RKSaIcE' filepath='/usr/bin/../lib/gcc/x86_64-linux-gnu/4.9/../../../../include/c++/4.9/bits/basic_string.h' line='540' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZNSsC2IPKcEET_S2_RKSaIcE' hash='3d5693612af11c46'>
+          <function-decl name='basic_string&lt;constchar*&gt;' mangled-name='_ZNSsC2IPKcEET_S2_RKSaIcE' filepath='/usr/bin/../lib/gcc/x86_64-linux-gnu/4.9/../../../../include/c++/4.9/bits/basic_string.h' line='540' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZNSsC2IPKcEET_S2_RKSaIcE' hash='3d5693612af11c46'>
             <parameter type-id='type-id-123' is-artificial='yes'/>
             <parameter type-id='type-id-18' filepath='/usr/bin/../lib/gcc/x86_64-linux-gnu/4.9/../../../../include/c++/4.9/bits/basic_string.tcc' line='540' column='1'/>
             <parameter type-id='type-id-18' filepath='/usr/bin/../lib/gcc/x86_64-linux-gnu/4.9/../../../../include/c++/4.9/bits/basic_string.tcc' line='540' column='1'/>
@@ -567,7 +567,7 @@
           </function-decl>
         </member-function>
         <member-function access='private' static='yes'>
-          <function-decl name='_S_construct&lt;const char *&gt;' mangled-name='_ZNSs12_S_constructIPKcEEPcT_S3_RKSaIcE' filepath='/usr/bin/../lib/gcc/x86_64-linux-gnu/4.9/../../../../include/c++/4.9/bits/basic_string.h' line='1761' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZNSs12_S_constructIPKcEEPcT_S3_RKSaIcE' hash='21babdbcb7a34ebe'>
+          <function-decl name='_S_construct&lt;constchar*&gt;' mangled-name='_ZNSs12_S_constructIPKcEEPcT_S3_RKSaIcE' filepath='/usr/bin/../lib/gcc/x86_64-linux-gnu/4.9/../../../../include/c++/4.9/bits/basic_string.h' line='1761' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZNSs12_S_constructIPKcEEPcT_S3_RKSaIcE' hash='21babdbcb7a34ebe'>
             <parameter type-id='type-id-18' filepath='/usr/bin/../lib/gcc/x86_64-linux-gnu/4.9/../../../../include/c++/4.9/bits/basic_string.h' line='1761' column='1'/>
             <parameter type-id='type-id-18' filepath='/usr/bin/../lib/gcc/x86_64-linux-gnu/4.9/../../../../include/c++/4.9/bits/basic_string.h' line='1761' column='1'/>
             <parameter type-id='type-id-118' filepath='/usr/bin/../lib/gcc/x86_64-linux-gnu/4.9/../../../../include/c++/4.9/bits/basic_string.h' line='1761' column='1'/>
@@ -575,7 +575,7 @@
           </function-decl>
         </member-function>
         <member-function access='private' static='yes'>
-          <function-decl name='_S_construct_aux&lt;const char *&gt;' mangled-name='_ZNSs16_S_construct_auxIPKcEEPcT_S3_RKSaIcESt12__false_type' filepath='/usr/bin/../lib/gcc/x86_64-linux-gnu/4.9/../../../../include/c++/4.9/bits/basic_string.h' line='1739' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZNSs16_S_construct_auxIPKcEEPcT_S3_RKSaIcESt12__false_type' hash='21babdbcb7a34ebe'>
+          <function-decl name='_S_construct_aux&lt;constchar*&gt;' mangled-name='_ZNSs16_S_construct_auxIPKcEEPcT_S3_RKSaIcESt12__false_type' filepath='/usr/bin/../lib/gcc/x86_64-linux-gnu/4.9/../../../../include/c++/4.9/bits/basic_string.h' line='1739' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZNSs16_S_construct_auxIPKcEEPcT_S3_RKSaIcESt12__false_type' hash='21babdbcb7a34ebe'>
             <parameter type-id='type-id-18' filepath='/usr/bin/../lib/gcc/x86_64-linux-gnu/4.9/../../../../include/c++/4.9/bits/basic_string.h' line='1739' column='1'/>
             <parameter type-id='type-id-18' filepath='/usr/bin/../lib/gcc/x86_64-linux-gnu/4.9/../../../../include/c++/4.9/bits/basic_string.h' line='1739' column='1'/>
             <parameter type-id='type-id-118' filepath='/usr/bin/../lib/gcc/x86_64-linux-gnu/4.9/../../../../include/c++/4.9/bits/basic_string.h' line='1740' column='1'/>
@@ -584,7 +584,7 @@
           </function-decl>
         </member-function>
         <member-function access='private' static='yes'>
-          <function-decl name='_S_construct&lt;const char *&gt;' mangled-name='_ZNSs12_S_constructIPKcEEPcT_S3_RKSaIcESt20forward_iterator_tag' filepath='/usr/bin/../lib/gcc/x86_64-linux-gnu/4.9/../../../../include/c++/4.9/bits/basic_string.h' line='1777' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZNSs12_S_constructIPKcEEPcT_S3_RKSaIcESt20forward_iterator_tag' hash='21babdbcb7a34ebe'>
+          <function-decl name='_S_construct&lt;constchar*&gt;' mangled-name='_ZNSs12_S_constructIPKcEEPcT_S3_RKSaIcESt20forward_iterator_tag' filepath='/usr/bin/../lib/gcc/x86_64-linux-gnu/4.9/../../../../include/c++/4.9/bits/basic_string.h' line='1777' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZNSs12_S_constructIPKcEEPcT_S3_RKSaIcESt20forward_iterator_tag' hash='21babdbcb7a34ebe'>
             <parameter type-id='type-id-18' filepath='/usr/bin/../lib/gcc/x86_64-linux-gnu/4.9/../../../../include/c++/4.9/bits/basic_string.tcc' line='1777' column='1'/>
             <parameter type-id='type-id-18' filepath='/usr/bin/../lib/gcc/x86_64-linux-gnu/4.9/../../../../include/c++/4.9/bits/basic_string.tcc' line='1777' column='1'/>
             <parameter type-id='type-id-118' filepath='/usr/bin/../lib/gcc/x86_64-linux-gnu/4.9/../../../../include/c++/4.9/bits/basic_string.tcc' line='1777' column='1'/>
@@ -593,7 +593,7 @@
           </function-decl>
         </member-function>
         <member-function access='public'>
-          <function-decl name='append&lt;char *&gt;' mangled-name='_ZNSs6appendIPcEERSsT_S2_' filepath='/usr/bin/../lib/gcc/x86_64-linux-gnu/4.9/../../../../include/c++/4.9/bits/basic_string.h' line='1061' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZNSs6appendIPcEERSsT_S2_' hash='6faa8831d3af3ad4'>
+          <function-decl name='append&lt;char*&gt;' mangled-name='_ZNSs6appendIPcEERSsT_S2_' filepath='/usr/bin/../lib/gcc/x86_64-linux-gnu/4.9/../../../../include/c++/4.9/bits/basic_string.h' line='1061' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZNSs6appendIPcEERSsT_S2_' hash='6faa8831d3af3ad4'>
             <parameter type-id='type-id-124' is-artificial='yes'/>
             <parameter type-id='type-id-53' filepath='/usr/bin/../lib/gcc/x86_64-linux-gnu/4.9/../../../../include/c++/4.9/bits/basic_string.h' line='1061' column='1'/>
             <parameter type-id='type-id-53' filepath='/usr/bin/../lib/gcc/x86_64-linux-gnu/4.9/../../../../include/c++/4.9/bits/basic_string.h' line='1061' column='1'/>
@@ -752,7 +752,7 @@
             </function-decl>
           </member-function>
           <member-function access='public' const='yes'>
-            <function-decl name='operator void (*)()' mangled-name='_ZNK5boost6system10error_codecvPFvvEEv' filepath='src/third_party/boost-1.56.0/boost/system/error_code.hpp' line='362' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZNK5boost6system10error_codecvPFvvEEv' hash='5695f5ce05a4c55f'>
+            <function-decl name='operatorvoid(*)()' mangled-name='_ZNK5boost6system10error_codecvPFvvEEv' filepath='src/third_party/boost-1.56.0/boost/system/error_code.hpp' line='362' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZNK5boost6system10error_codecvPFvvEEv' hash='5695f5ce05a4c55f'>
               <parameter type-id='type-id-67' is-artificial='yes'/>
               <return type-id='type-id-127'/>
             </function-decl>
@@ -978,8 +978,8 @@
     <pointer-type-def type-id='type-id-195' size-in-bits='64' hash='b76fa2ed4cc16294' id='type-id-197'/>
     <reference-type-def kind='lvalue' type-id='type-id-198' size-in-bits='64' hash='f542faa4954b0da7' id='type-id-199'/>
     <pointer-type-def type-id='type-id-200' size-in-bits='64' hash='122a796f9d78b70b' id='type-id-201'/>
-    <pointer-type-def type-id='type-id-202' size-in-bits='64' hash='b57ccecb37b5f634' id='type-id-203'/>
-    <pointer-type-def type-id='type-id-204' size-in-bits='64' hash='5cec61dc7cb4c781' id='type-id-205'/>
+    <pointer-type-def type-id='type-id-202' size-in-bits='64' hash='83f47a8f97b67ce6' id='type-id-203'/>
+    <pointer-type-def type-id='type-id-204' size-in-bits='64' hash='ef49aa2b12cc4439' id='type-id-205'/>
     <reference-type-def kind='lvalue' type-id='type-id-206' size-in-bits='64' hash='51ab83e9a218bf36' id='type-id-207'/>
     <pointer-type-def type-id='type-id-206' size-in-bits='64' hash='5458f1a39901a32d' id='type-id-208'/>
     <reference-type-def kind='lvalue' type-id='type-id-209' size-in-bits='64' hash='60625043307a5fb3' id='type-id-210'/>
@@ -1030,12 +1030,12 @@
     <pointer-type-def type-id='type-id-257' size-in-bits='64' hash='feba8f1b6d05d774' id='type-id-259'/>
     <qualified-type-def type-id='type-id-260' const='yes' hash='704f5e5efff62eb9' id='type-id-261'/>
     <pointer-type-def type-id='type-id-261' size-in-bits='64' hash='0d0ce9b9b3a8c16c' id='type-id-262'/>
-    <qualified-type-def type-id='type-id-202' const='yes' hash='436ecac9f226d3d9' id='type-id-263'/>
-    <reference-type-def kind='lvalue' type-id='type-id-263' size-in-bits='64' hash='da4187505994b14a' id='type-id-264'/>
-    <pointer-type-def type-id='type-id-263' size-in-bits='64' hash='a3bccd6f772ae242' id='type-id-265'/>
-    <qualified-type-def type-id='type-id-204' const='yes' hash='cc41aaec4312e2bc' id='type-id-266'/>
-    <reference-type-def kind='lvalue' type-id='type-id-266' size-in-bits='64' hash='ea8e74a180681653' id='type-id-267'/>
-    <pointer-type-def type-id='type-id-266' size-in-bits='64' hash='3590705e7e6d4026' id='type-id-268'/>
+    <qualified-type-def type-id='type-id-202' const='yes' hash='4a602f290a604a8b' id='type-id-263'/>
+    <reference-type-def kind='lvalue' type-id='type-id-263' size-in-bits='64' hash='e0aa4428e1d3ed8e' id='type-id-264'/>
+    <pointer-type-def type-id='type-id-263' size-in-bits='64' hash='a1879119bb2fb444' id='type-id-265'/>
+    <qualified-type-def type-id='type-id-204' const='yes' hash='5d91bfaae9bf2187' id='type-id-266'/>
+    <reference-type-def kind='lvalue' type-id='type-id-266' size-in-bits='64' hash='6efd4b695a89c157' id='type-id-267'/>
+    <pointer-type-def type-id='type-id-266' size-in-bits='64' hash='1f3f4312368edabf' id='type-id-268'/>
     <qualified-type-def type-id='type-id-206' const='yes' hash='b95ada383dd0c82c' id='type-id-269'/>
     <reference-type-def kind='lvalue' type-id='type-id-269' size-in-bits='64' hash='cb7830ad19520e8f' id='type-id-270'/>
     <pointer-type-def type-id='type-id-269' size-in-bits='64' hash='e96590be6a522662' id='type-id-271'/>
@@ -1161,7 +1161,7 @@
         <base-class access='public' layout-offset-in-bits='0' type-id='type-id-352'/>
       </class-decl>
       <class-decl name='input_iterator_tag' is-struct='yes' visibility='default' size-in-bits='8' filepath='/usr/bin/../lib/gcc/x86_64-linux-gnu/4.9/../../../../include/c++/4.9/bits/stl_iterator_base_types.h' line='89' column='1' hash='1ba5e1fb131a0fbd' id='type-id-352'/>
-      <class-decl name='iterator_traits&lt;char *&gt;' is-struct='yes' visibility='default' size-in-bits='8' filepath='/usr/bin/../lib/gcc/x86_64-linux-gnu/4.9/../../../../include/c++/4.9/bits/stl_iterator_base_types.h' line='175' column='1' hash='c4b76745d911ae21' id='type-id-353'>
+      <class-decl name='iterator_traits&lt;char*&gt;' is-struct='yes' visibility='default' size-in-bits='8' filepath='/usr/bin/../lib/gcc/x86_64-linux-gnu/4.9/../../../../include/c++/4.9/bits/stl_iterator_base_types.h' line='175' column='1' hash='3b3695ef601bd8ee' id='type-id-353'>
         <member-type access='public'>
           <typedef-decl name='difference_type' type-id='type-id-355' size-in-bits='64' filepath='/usr/bin/../lib/gcc/x86_64-linux-gnu/4.9/../../../../include/c++/4.9/bits/stl_iterator_base_types.h' line='179' column='1' hash='b119fe0931d2ee10' id='type-id-354'/>
         </member-type>
@@ -1178,12 +1178,12 @@
       <class-decl name='random_access_iterator_tag' is-struct='yes' visibility='default' size-in-bits='8' filepath='/usr/bin/../lib/gcc/x86_64-linux-gnu/4.9/../../../../include/c++/4.9/bits/stl_iterator_base_types.h' line='103' column='1' hash='2cf237ece7bebf66' id='type-id-357'>
         <base-class access='public' layout-offset-in-bits='0' type-id='type-id-351'/>
       </class-decl>
-      <class-decl name='remove_reference&lt;boost::filesystem::detail::dir_itr_imp *&amp;&gt;' is-struct='yes' visibility='default' size-in-bits='8' filepath='/usr/bin/../lib/gcc/x86_64-linux-gnu/4.9/../../../../include/c++/4.9/type_traits' line='1504' column='1' hash='7d3c8b232c9fbfe3' id='type-id-360'>
+      <class-decl name='remove_reference&lt;boost::filesystem::detail::dir_itr_imp*&amp;&gt;' is-struct='yes' visibility='default' size-in-bits='8' filepath='/usr/bin/../lib/gcc/x86_64-linux-gnu/4.9/../../../../include/c++/4.9/type_traits' line='1504' column='1' hash='6b8c2a99af96f167' id='type-id-360'>
         <member-type access='public'>
           <typedef-decl name='type' type-id='type-id-176' size-in-bits='64' filepath='/usr/bin/../lib/gcc/x86_64-linux-gnu/4.9/../../../../include/c++/4.9/type_traits' line='1505' column='1' hash='9e4c6ed13ec05836' id='type-id-306'/>
         </member-type>
       </class-decl>
-      <class-decl name='remove_reference&lt;boost::filesystem::filesystem_error::m_imp *&amp;&gt;' is-struct='yes' visibility='default' size-in-bits='8' filepath='/usr/bin/../lib/gcc/x86_64-linux-gnu/4.9/../../../../include/c++/4.9/type_traits' line='1504' column='1' hash='f8947dca8aa14535' id='type-id-361'>
+      <class-decl name='remove_reference&lt;boost::filesystem::filesystem_error::m_imp*&amp;&gt;' is-struct='yes' visibility='default' size-in-bits='8' filepath='/usr/bin/../lib/gcc/x86_64-linux-gnu/4.9/../../../../include/c++/4.9/type_traits' line='1504' column='1' hash='2f040eeb3074ec78' id='type-id-361'>
         <member-type access='public'>
           <typedef-decl name='type' type-id='type-id-190' size-in-bits='64' filepath='/usr/bin/../lib/gcc/x86_64-linux-gnu/4.9/../../../../include/c++/4.9/type_traits' line='1505' column='1' hash='d16cc64bab66b9f1' id='type-id-308'/>
         </member-type>
@@ -1195,12 +1195,12 @@
           <typedef-decl name='size_type' type-id='type-id-349' size-in-bits='64' filepath='/usr/bin/../lib/gcc/x86_64-linux-gnu/4.9/../../../../include/c++/4.9/bits/allocator.h' line='95' column='1' hash='8fdc5eea2983a729' id='type-id-362'/>
         </member-type>
       </class-decl>
-      <class-decl name='basic_string&lt;char, std::char_traits&lt;char&gt;, std::allocator&lt;char&gt; &gt;' visibility='default' is-declaration-only='yes' id='type-id-331'>
+      <class-decl name='basic_string&lt;char,std::char_traits&lt;char&gt;,std::allocator&lt;char&gt;&gt;' visibility='default' is-declaration-only='yes' id='type-id-331'>
         <member-type access='private'>
           <typedef-decl name='size_type' type-id='type-id-362' size-in-bits='64' filepath='/usr/bin/../lib/gcc/x86_64-linux-gnu/4.9/../../../../include/c++/4.9/bits/basic_string.h' line='121' column='1' hash='8fdc5eea2983a729' id='type-id-363'/>
         </member-type>
         <member-function access='public'>
-          <function-decl name='basic_string&lt;char *&gt;' mangled-name='_ZNSsC2IPcEET_S1_RKSaIcE' filepath='/usr/bin/../lib/gcc/x86_64-linux-gnu/4.9/../../../../include/c++/4.9/bits/basic_string.h' line='540' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZNSsC2IPcEET_S1_RKSaIcE' hash='6faa8831d3af3ad4'>
+          <function-decl name='basic_string&lt;char*&gt;' mangled-name='_ZNSsC2IPcEET_S1_RKSaIcE' filepath='/usr/bin/../lib/gcc/x86_64-linux-gnu/4.9/../../../../include/c++/4.9/bits/basic_string.h' line='540' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZNSsC2IPcEET_S1_RKSaIcE' hash='6faa8831d3af3ad4'>
             <parameter type-id='type-id-117' is-artificial='yes'/>
             <parameter type-id='type-id-53' filepath='/usr/bin/../lib/gcc/x86_64-linux-gnu/4.9/../../../../include/c++/4.9/bits/basic_string.tcc' line='540' column='1'/>
             <parameter type-id='type-id-53' filepath='/usr/bin/../lib/gcc/x86_64-linux-gnu/4.9/../../../../include/c++/4.9/bits/basic_string.tcc' line='540' column='1'/>
@@ -1209,7 +1209,7 @@
           </function-decl>
         </member-function>
         <member-function access='public'>
-          <function-decl name='append&lt;const char *&gt;' mangled-name='_ZNSs6appendIPKcEERSsT_S3_' filepath='/usr/bin/../lib/gcc/x86_64-linux-gnu/4.9/../../../../include/c++/4.9/bits/basic_string.h' line='1061' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZNSs6appendIPKcEERSsT_S3_' hash='3d5693612af11c46'>
+          <function-decl name='append&lt;constchar*&gt;' mangled-name='_ZNSs6appendIPKcEERSsT_S3_' filepath='/usr/bin/../lib/gcc/x86_64-linux-gnu/4.9/../../../../include/c++/4.9/bits/basic_string.h' line='1061' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZNSs6appendIPKcEERSsT_S3_' hash='3d5693612af11c46'>
             <parameter type-id='type-id-117' is-artificial='yes'/>
             <parameter type-id='type-id-18' filepath='/usr/bin/../lib/gcc/x86_64-linux-gnu/4.9/../../../../include/c++/4.9/bits/basic_string.h' line='1061' column='1'/>
             <parameter type-id='type-id-18' filepath='/usr/bin/../lib/gcc/x86_64-linux-gnu/4.9/../../../../include/c++/4.9/bits/basic_string.h' line='1061' column='1'/>
@@ -1217,7 +1217,7 @@
           </function-decl>
         </member-function>
         <member-function access='private' static='yes'>
-          <function-decl name='_S_construct&lt;char *&gt;' mangled-name='_ZNSs12_S_constructIPcEES0_T_S1_RKSaIcE' filepath='/usr/bin/../lib/gcc/x86_64-linux-gnu/4.9/../../../../include/c++/4.9/bits/basic_string.h' line='1761' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZNSs12_S_constructIPcEES0_T_S1_RKSaIcE' hash='9895045035709c6f'>
+          <function-decl name='_S_construct&lt;char*&gt;' mangled-name='_ZNSs12_S_constructIPcEES0_T_S1_RKSaIcE' filepath='/usr/bin/../lib/gcc/x86_64-linux-gnu/4.9/../../../../include/c++/4.9/bits/basic_string.h' line='1761' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZNSs12_S_constructIPcEES0_T_S1_RKSaIcE' hash='9895045035709c6f'>
             <parameter type-id='type-id-53' filepath='/usr/bin/../lib/gcc/x86_64-linux-gnu/4.9/../../../../include/c++/4.9/bits/basic_string.h' line='1761' column='1'/>
             <parameter type-id='type-id-53' filepath='/usr/bin/../lib/gcc/x86_64-linux-gnu/4.9/../../../../include/c++/4.9/bits/basic_string.h' line='1761' column='1'/>
             <parameter type-id='type-id-118' filepath='/usr/bin/../lib/gcc/x86_64-linux-gnu/4.9/../../../../include/c++/4.9/bits/basic_string.h' line='1761' column='1'/>
@@ -1225,7 +1225,7 @@
           </function-decl>
         </member-function>
         <member-function access='private' static='yes'>
-          <function-decl name='_S_construct_aux&lt;char *&gt;' mangled-name='_ZNSs16_S_construct_auxIPcEES0_T_S1_RKSaIcESt12__false_type' filepath='/usr/bin/../lib/gcc/x86_64-linux-gnu/4.9/../../../../include/c++/4.9/bits/basic_string.h' line='1739' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZNSs16_S_construct_auxIPcEES0_T_S1_RKSaIcESt12__false_type' hash='9895045035709c6f'>
+          <function-decl name='_S_construct_aux&lt;char*&gt;' mangled-name='_ZNSs16_S_construct_auxIPcEES0_T_S1_RKSaIcESt12__false_type' filepath='/usr/bin/../lib/gcc/x86_64-linux-gnu/4.9/../../../../include/c++/4.9/bits/basic_string.h' line='1739' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZNSs16_S_construct_auxIPcEES0_T_S1_RKSaIcESt12__false_type' hash='9895045035709c6f'>
             <parameter type-id='type-id-53' filepath='/usr/bin/../lib/gcc/x86_64-linux-gnu/4.9/../../../../include/c++/4.9/bits/basic_string.h' line='1739' column='1'/>
             <parameter type-id='type-id-53' filepath='/usr/bin/../lib/gcc/x86_64-linux-gnu/4.9/../../../../include/c++/4.9/bits/basic_string.h' line='1739' column='1'/>
             <parameter type-id='type-id-118' filepath='/usr/bin/../lib/gcc/x86_64-linux-gnu/4.9/../../../../include/c++/4.9/bits/basic_string.h' line='1740' column='1'/>
@@ -1234,7 +1234,7 @@
           </function-decl>
         </member-function>
         <member-function access='private' static='yes'>
-          <function-decl name='_S_construct&lt;char *&gt;' mangled-name='_ZNSs12_S_constructIPcEES0_T_S1_RKSaIcESt20forward_iterator_tag' filepath='/usr/bin/../lib/gcc/x86_64-linux-gnu/4.9/../../../../include/c++/4.9/bits/basic_string.h' line='1777' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZNSs12_S_constructIPcEES0_T_S1_RKSaIcESt20forward_iterator_tag' hash='9895045035709c6f'>
+          <function-decl name='_S_construct&lt;char*&gt;' mangled-name='_ZNSs12_S_constructIPcEES0_T_S1_RKSaIcESt20forward_iterator_tag' filepath='/usr/bin/../lib/gcc/x86_64-linux-gnu/4.9/../../../../include/c++/4.9/bits/basic_string.h' line='1777' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZNSs12_S_constructIPcEES0_T_S1_RKSaIcESt20forward_iterator_tag' hash='9895045035709c6f'>
             <parameter type-id='type-id-53' filepath='/usr/bin/../lib/gcc/x86_64-linux-gnu/4.9/../../../../include/c++/4.9/bits/basic_string.tcc' line='1777' column='1'/>
             <parameter type-id='type-id-53' filepath='/usr/bin/../lib/gcc/x86_64-linux-gnu/4.9/../../../../include/c++/4.9/bits/basic_string.tcc' line='1777' column='1'/>
             <parameter type-id='type-id-118' filepath='/usr/bin/../lib/gcc/x86_64-linux-gnu/4.9/../../../../include/c++/4.9/bits/basic_string.tcc' line='1777' column='1'/>
@@ -1243,7 +1243,7 @@
           </function-decl>
         </member-function>
         <member-function access='public'>
-          <function-decl name='basic_string&lt;const char *&gt;' mangled-name='_ZNSsC2IPKcEET_S2_RKSaIcE' filepath='/usr/bin/../lib/gcc/x86_64-linux-gnu/4.9/../../../../include/c++/4.9/bits/basic_string.h' line='540' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZNSsC2IPKcEET_S2_RKSaIcE' hash='3d5693612af11c46'>
+          <function-decl name='basic_string&lt;constchar*&gt;' mangled-name='_ZNSsC2IPKcEET_S2_RKSaIcE' filepath='/usr/bin/../lib/gcc/x86_64-linux-gnu/4.9/../../../../include/c++/4.9/bits/basic_string.h' line='540' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZNSsC2IPKcEET_S2_RKSaIcE' hash='3d5693612af11c46'>
             <parameter type-id='type-id-123' is-artificial='yes'/>
             <parameter type-id='type-id-18' filepath='/usr/bin/../lib/gcc/x86_64-linux-gnu/4.9/../../../../include/c++/4.9/bits/basic_string.tcc' line='540' column='1'/>
             <parameter type-id='type-id-18' filepath='/usr/bin/../lib/gcc/x86_64-linux-gnu/4.9/../../../../include/c++/4.9/bits/basic_string.tcc' line='540' column='1'/>
@@ -1252,7 +1252,7 @@
           </function-decl>
         </member-function>
         <member-function access='private' static='yes'>
-          <function-decl name='_S_construct&lt;const char *&gt;' mangled-name='_ZNSs12_S_constructIPKcEEPcT_S3_RKSaIcE' filepath='/usr/bin/../lib/gcc/x86_64-linux-gnu/4.9/../../../../include/c++/4.9/bits/basic_string.h' line='1761' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZNSs12_S_constructIPKcEEPcT_S3_RKSaIcE' hash='21babdbcb7a34ebe'>
+          <function-decl name='_S_construct&lt;constchar*&gt;' mangled-name='_ZNSs12_S_constructIPKcEEPcT_S3_RKSaIcE' filepath='/usr/bin/../lib/gcc/x86_64-linux-gnu/4.9/../../../../include/c++/4.9/bits/basic_string.h' line='1761' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZNSs12_S_constructIPKcEEPcT_S3_RKSaIcE' hash='21babdbcb7a34ebe'>
             <parameter type-id='type-id-18' filepath='/usr/bin/../lib/gcc/x86_64-linux-gnu/4.9/../../../../include/c++/4.9/bits/basic_string.h' line='1761' column='1'/>
             <parameter type-id='type-id-18' filepath='/usr/bin/../lib/gcc/x86_64-linux-gnu/4.9/../../../../include/c++/4.9/bits/basic_string.h' line='1761' column='1'/>
             <parameter type-id='type-id-118' filepath='/usr/bin/../lib/gcc/x86_64-linux-gnu/4.9/../../../../include/c++/4.9/bits/basic_string.h' line='1761' column='1'/>
@@ -1260,7 +1260,7 @@
           </function-decl>
         </member-function>
         <member-function access='private' static='yes'>
-          <function-decl name='_S_construct_aux&lt;const char *&gt;' mangled-name='_ZNSs16_S_construct_auxIPKcEEPcT_S3_RKSaIcESt12__false_type' filepath='/usr/bin/../lib/gcc/x86_64-linux-gnu/4.9/../../../../include/c++/4.9/bits/basic_string.h' line='1739' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZNSs16_S_construct_auxIPKcEEPcT_S3_RKSaIcESt12__false_type' hash='21babdbcb7a34ebe'>
+          <function-decl name='_S_construct_aux&lt;constchar*&gt;' mangled-name='_ZNSs16_S_construct_auxIPKcEEPcT_S3_RKSaIcESt12__false_type' filepath='/usr/bin/../lib/gcc/x86_64-linux-gnu/4.9/../../../../include/c++/4.9/bits/basic_string.h' line='1739' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZNSs16_S_construct_auxIPKcEEPcT_S3_RKSaIcESt12__false_type' hash='21babdbcb7a34ebe'>
             <parameter type-id='type-id-18' filepath='/usr/bin/../lib/gcc/x86_64-linux-gnu/4.9/../../../../include/c++/4.9/bits/basic_string.h' line='1739' column='1'/>
             <parameter type-id='type-id-18' filepath='/usr/bin/../lib/gcc/x86_64-linux-gnu/4.9/../../../../include/c++/4.9/bits/basic_string.h' line='1739' column='1'/>
             <parameter type-id='type-id-118' filepath='/usr/bin/../lib/gcc/x86_64-linux-gnu/4.9/../../../../include/c++/4.9/bits/basic_string.h' line='1740' column='1'/>
@@ -1269,7 +1269,7 @@
           </function-decl>
         </member-function>
         <member-function access='private' static='yes'>
-          <function-decl name='_S_construct&lt;const char *&gt;' mangled-name='_ZNSs12_S_constructIPKcEEPcT_S3_RKSaIcESt20forward_iterator_tag' filepath='/usr/bin/../lib/gcc/x86_64-linux-gnu/4.9/../../../../include/c++/4.9/bits/basic_string.h' line='1777' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZNSs12_S_constructIPKcEEPcT_S3_RKSaIcESt20forward_iterator_tag' hash='21babdbcb7a34ebe'>
+          <function-decl name='_S_construct&lt;constchar*&gt;' mangled-name='_ZNSs12_S_constructIPKcEEPcT_S3_RKSaIcESt20forward_iterator_tag' filepath='/usr/bin/../lib/gcc/x86_64-linux-gnu/4.9/../../../../include/c++/4.9/bits/basic_string.h' line='1777' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZNSs12_S_constructIPKcEEPcT_S3_RKSaIcESt20forward_iterator_tag' hash='21babdbcb7a34ebe'>
             <parameter type-id='type-id-18' filepath='/usr/bin/../lib/gcc/x86_64-linux-gnu/4.9/../../../../include/c++/4.9/bits/basic_string.tcc' line='1777' column='1'/>
             <parameter type-id='type-id-18' filepath='/usr/bin/../lib/gcc/x86_64-linux-gnu/4.9/../../../../include/c++/4.9/bits/basic_string.tcc' line='1777' column='1'/>
             <parameter type-id='type-id-118' filepath='/usr/bin/../lib/gcc/x86_64-linux-gnu/4.9/../../../../include/c++/4.9/bits/basic_string.tcc' line='1777' column='1'/>
@@ -1278,7 +1278,7 @@
           </function-decl>
         </member-function>
         <member-function access='public'>
-          <function-decl name='append&lt;char *&gt;' mangled-name='_ZNSs6appendIPcEERSsT_S2_' filepath='/usr/bin/../lib/gcc/x86_64-linux-gnu/4.9/../../../../include/c++/4.9/bits/basic_string.h' line='1061' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZNSs6appendIPcEERSsT_S2_' hash='6faa8831d3af3ad4'>
+          <function-decl name='append&lt;char*&gt;' mangled-name='_ZNSs6appendIPcEERSsT_S2_' filepath='/usr/bin/../lib/gcc/x86_64-linux-gnu/4.9/../../../../include/c++/4.9/bits/basic_string.h' line='1061' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZNSs6appendIPcEERSsT_S2_' hash='6faa8831d3af3ad4'>
             <parameter type-id='type-id-124' is-artificial='yes'/>
             <parameter type-id='type-id-53' filepath='/usr/bin/../lib/gcc/x86_64-linux-gnu/4.9/../../../../include/c++/4.9/bits/basic_string.h' line='1061' column='1'/>
             <parameter type-id='type-id-53' filepath='/usr/bin/../lib/gcc/x86_64-linux-gnu/4.9/../../../../include/c++/4.9/bits/basic_string.h' line='1061' column='1'/>
@@ -1286,9 +1286,9 @@
           </function-decl>
         </member-function>
       </class-decl>
-      <class-decl name='basic_string&lt;wchar_t, std::char_traits&lt;wchar_t&gt;, std::allocator&lt;wchar_t&gt; &gt;' visibility='default' is-declaration-only='yes' id='type-id-364'>
+      <class-decl name='basic_string&lt;wchar_t,std::char_traits&lt;wchar_t&gt;,std::allocator&lt;wchar_t&gt;&gt;' visibility='default' is-declaration-only='yes' id='type-id-364'>
         <member-function access='public'>
-          <function-decl name='append&lt;wchar_t *&gt;' mangled-name='_ZNSbIwSt11char_traitsIwESaIwEE6appendIPwEERS2_T_S6_' filepath='/usr/bin/../lib/gcc/x86_64-linux-gnu/4.9/../../../../include/c++/4.9/bits/basic_string.h' line='1061' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZNSbIwSt11char_traitsIwESaIwEE6appendIPwEERS2_T_S6_' hash='52964de53fd173e9'>
+          <function-decl name='append&lt;wchar_t*&gt;' mangled-name='_ZNSbIwSt11char_traitsIwESaIwEE6appendIPwEERS2_T_S6_' filepath='/usr/bin/../lib/gcc/x86_64-linux-gnu/4.9/../../../../include/c++/4.9/bits/basic_string.h' line='1061' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZNSbIwSt11char_traitsIwESaIwEE6appendIPwEERS2_T_S6_' hash='52964de53fd173e9'>
             <parameter type-id='type-id-365' is-artificial='yes'/>
             <parameter type-id='type-id-100' filepath='/usr/bin/../lib/gcc/x86_64-linux-gnu/4.9/../../../../include/c++/4.9/bits/basic_string.h' line='1061' column='1'/>
             <parameter type-id='type-id-100' filepath='/usr/bin/../lib/gcc/x86_64-linux-gnu/4.9/../../../../include/c++/4.9/bits/basic_string.h' line='1061' column='1'/>
@@ -1296,7 +1296,7 @@
           </function-decl>
         </member-function>
       </class-decl>
-      <class-decl name='codecvt&lt;wchar_t, char, __mbstate_t&gt;' visibility='default' is-declaration-only='yes' id='type-id-367'/>
+      <class-decl name='codecvt&lt;wchar_t,char,__mbstate_t&gt;' visibility='default' is-declaration-only='yes' id='type-id-367'/>
       <class-decl name='runtime_error' visibility='default' is-declaration-only='yes' id='type-id-368'/>
       <class-decl name='type_info' visibility='default' is-declaration-only='yes' id='type-id-369'/>
       <function-decl name='operator==&lt;char&gt;' mangled-name='_ZSteqIcEbRKSaIT_ES3_' filepath='/usr/bin/../lib/gcc/x86_64-linux-gnu/4.9/../../../../include/c++/4.9/bits/allocator.h' line='133' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZSteqIcEbRKSaIT_ES3_' hash='c7c710e908194b91'>
@@ -1304,36 +1304,36 @@
         <parameter type-id='type-id-118' filepath='/usr/bin/../lib/gcc/x86_64-linux-gnu/4.9/../../../../include/c++/4.9/bits/allocator.h' line='133' column='1'/>
         <return type-id='type-id-1'/>
       </function-decl>
-      <function-decl name='move&lt;boost::filesystem::detail::dir_itr_imp *&amp;&gt;' mangled-name='_ZSt4moveIRPN5boost10filesystem6detail11dir_itr_impEEONSt16remove_referenceIT_E4typeEOS7_' filepath='/usr/bin/../lib/gcc/x86_64-linux-gnu/4.9/../../../../include/c++/4.9/bits/move.h' line='101' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZSt4moveIRPN5boost10filesystem6detail11dir_itr_impEEONSt16remove_referenceIT_E4typeEOS7_' hash='aead9990a12ef2a6'>
+      <function-decl name='move&lt;boost::filesystem::detail::dir_itr_imp*&amp;&gt;' mangled-name='_ZSt4moveIRPN5boost10filesystem6detail11dir_itr_impEEONSt16remove_referenceIT_E4typeEOS7_' filepath='/usr/bin/../lib/gcc/x86_64-linux-gnu/4.9/../../../../include/c++/4.9/bits/move.h' line='101' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZSt4moveIRPN5boost10filesystem6detail11dir_itr_impEEONSt16remove_referenceIT_E4typeEOS7_' hash='aead9990a12ef2a6'>
         <parameter type-id='type-id-177' filepath='/usr/bin/../lib/gcc/x86_64-linux-gnu/4.9/../../../../include/c++/4.9/bits/move.h' line='101' column='1'/>
         <return type-id='type-id-307'/>
       </function-decl>
-      <function-decl name='move&lt;boost::filesystem::filesystem_error::m_imp *&amp;&gt;' mangled-name='_ZSt4moveIRPN5boost10filesystem16filesystem_error5m_impEEONSt16remove_referenceIT_E4typeEOS7_' filepath='/usr/bin/../lib/gcc/x86_64-linux-gnu/4.9/../../../../include/c++/4.9/bits/move.h' line='101' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZSt4moveIRPN5boost10filesystem16filesystem_error5m_impEEONSt16remove_referenceIT_E4typeEOS7_' hash='8e1276aa610c823d'>
+      <function-decl name='move&lt;boost::filesystem::filesystem_error::m_imp*&amp;&gt;' mangled-name='_ZSt4moveIRPN5boost10filesystem16filesystem_error5m_impEEONSt16remove_referenceIT_E4typeEOS7_' filepath='/usr/bin/../lib/gcc/x86_64-linux-gnu/4.9/../../../../include/c++/4.9/bits/move.h' line='101' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZSt4moveIRPN5boost10filesystem16filesystem_error5m_impEEONSt16remove_referenceIT_E4typeEOS7_' hash='8e1276aa610c823d'>
         <parameter type-id='type-id-191' filepath='/usr/bin/../lib/gcc/x86_64-linux-gnu/4.9/../../../../include/c++/4.9/bits/move.h' line='101' column='1'/>
         <return type-id='type-id-309'/>
       </function-decl>
-      <function-decl name='swap&lt;boost::filesystem::detail::dir_itr_imp *&gt;' mangled-name='_ZSt4swapIPN5boost10filesystem6detail11dir_itr_impEEvRT_S6_' filepath='/usr/bin/../lib/gcc/x86_64-linux-gnu/4.9/../../../../include/c++/4.9/bits/move.h' line='166' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZSt4swapIPN5boost10filesystem6detail11dir_itr_impEEvRT_S6_' hash='0ccf57b27ec0c186'>
+      <function-decl name='swap&lt;boost::filesystem::detail::dir_itr_imp*&gt;' mangled-name='_ZSt4swapIPN5boost10filesystem6detail11dir_itr_impEEvRT_S6_' filepath='/usr/bin/../lib/gcc/x86_64-linux-gnu/4.9/../../../../include/c++/4.9/bits/move.h' line='166' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZSt4swapIPN5boost10filesystem6detail11dir_itr_impEEvRT_S6_' hash='0ccf57b27ec0c186'>
         <parameter type-id='type-id-177' filepath='/usr/bin/../lib/gcc/x86_64-linux-gnu/4.9/../../../../include/c++/4.9/bits/move.h' line='554' column='1'/>
         <parameter type-id='type-id-177' filepath='/usr/bin/../lib/gcc/x86_64-linux-gnu/4.9/../../../../include/c++/4.9/bits/move.h' line='554' column='1'/>
         <return type-id='type-id-119'/>
       </function-decl>
-      <function-decl name='swap&lt;boost::filesystem::filesystem_error::m_imp *&gt;' mangled-name='_ZSt4swapIPN5boost10filesystem16filesystem_error5m_impEEvRT_S6_' filepath='/usr/bin/../lib/gcc/x86_64-linux-gnu/4.9/../../../../include/c++/4.9/bits/move.h' line='166' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZSt4swapIPN5boost10filesystem16filesystem_error5m_impEEvRT_S6_' hash='73f6a78c1f5b7c21'>
+      <function-decl name='swap&lt;boost::filesystem::filesystem_error::m_imp*&gt;' mangled-name='_ZSt4swapIPN5boost10filesystem16filesystem_error5m_impEEvRT_S6_' filepath='/usr/bin/../lib/gcc/x86_64-linux-gnu/4.9/../../../../include/c++/4.9/bits/move.h' line='166' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZSt4swapIPN5boost10filesystem16filesystem_error5m_impEEvRT_S6_' hash='73f6a78c1f5b7c21'>
         <parameter type-id='type-id-191' filepath='/usr/bin/../lib/gcc/x86_64-linux-gnu/4.9/../../../../include/c++/4.9/bits/move.h' line='554' column='1'/>
         <parameter type-id='type-id-191' filepath='/usr/bin/../lib/gcc/x86_64-linux-gnu/4.9/../../../../include/c++/4.9/bits/move.h' line='554' column='1'/>
         <return type-id='type-id-119'/>
       </function-decl>
-      <function-decl name='__distance&lt;char *&gt;' mangled-name='_ZSt10__distanceIPcENSt15iterator_traitsIT_E15difference_typeES2_S2_St26random_access_iterator_tag' filepath='/usr/bin/../lib/gcc/x86_64-linux-gnu/4.9/../../../../include/c++/4.9/bits/stl_iterator_base_funcs.h' line='90' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZSt10__distanceIPcENSt15iterator_traitsIT_E15difference_typeES2_S2_St26random_access_iterator_tag' hash='803f4010b6c6d6fa'>
+      <function-decl name='__distance&lt;char*&gt;' mangled-name='_ZSt10__distanceIPcENSt15iterator_traitsIT_E15difference_typeES2_S2_St26random_access_iterator_tag' filepath='/usr/bin/../lib/gcc/x86_64-linux-gnu/4.9/../../../../include/c++/4.9/bits/stl_iterator_base_funcs.h' line='90' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZSt10__distanceIPcENSt15iterator_traitsIT_E15difference_typeES2_S2_St26random_access_iterator_tag' hash='803f4010b6c6d6fa'>
         <parameter type-id='type-id-53' filepath='/usr/bin/../lib/gcc/x86_64-linux-gnu/4.9/../../../../include/c++/4.9/bits/stl_iterator_base_funcs.h' line='90' column='1'/>
         <parameter type-id='type-id-53' filepath='/usr/bin/../lib/gcc/x86_64-linux-gnu/4.9/../../../../include/c++/4.9/bits/stl_iterator_base_funcs.h' line='90' column='1'/>
         <parameter type-id='type-id-357' filepath='/usr/bin/../lib/gcc/x86_64-linux-gnu/4.9/../../../../include/c++/4.9/bits/stl_iterator_base_funcs.h' line='91' column='1'/>
         <return type-id='type-id-354'/>
       </function-decl>
-      <function-decl name='distance&lt;char *&gt;' mangled-name='_ZSt8distanceIPcENSt15iterator_traitsIT_E15difference_typeES2_S2_' filepath='/usr/bin/../lib/gcc/x86_64-linux-gnu/4.9/../../../../include/c++/4.9/bits/stl_iterator_base_funcs.h' line='114' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZSt8distanceIPcENSt15iterator_traitsIT_E15difference_typeES2_S2_' hash='803f4010b6c6d6fa'>
+      <function-decl name='distance&lt;char*&gt;' mangled-name='_ZSt8distanceIPcENSt15iterator_traitsIT_E15difference_typeES2_S2_' filepath='/usr/bin/../lib/gcc/x86_64-linux-gnu/4.9/../../../../include/c++/4.9/bits/stl_iterator_base_funcs.h' line='114' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZSt8distanceIPcENSt15iterator_traitsIT_E15difference_typeES2_S2_' hash='803f4010b6c6d6fa'>
         <parameter type-id='type-id-53' filepath='/usr/bin/../lib/gcc/x86_64-linux-gnu/4.9/../../../../include/c++/4.9/bits/stl_iterator_base_funcs.h' line='114' column='1'/>
         <parameter type-id='type-id-53' filepath='/usr/bin/../lib/gcc/x86_64-linux-gnu/4.9/../../../../include/c++/4.9/bits/stl_iterator_base_funcs.h' line='114' column='1'/>
         <return type-id='type-id-354'/>
       </function-decl>
-      <function-decl name='__iterator_category&lt;char *&gt;' mangled-name='_ZSt19__iterator_categoryIPcENSt15iterator_traitsIT_E17iterator_categoryERKS2_' filepath='/usr/bin/../lib/gcc/x86_64-linux-gnu/4.9/../../../../include/c++/4.9/bits/stl_iterator_base_types.h' line='201' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZSt19__iterator_categoryIPcENSt15iterator_traitsIT_E17iterator_categoryERKS2_' hash='1d97c1e7f5b953b1'>
+      <function-decl name='__iterator_category&lt;char*&gt;' mangled-name='_ZSt19__iterator_categoryIPcENSt15iterator_traitsIT_E17iterator_categoryERKS2_' filepath='/usr/bin/../lib/gcc/x86_64-linux-gnu/4.9/../../../../include/c++/4.9/bits/stl_iterator_base_types.h' line='201' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZSt19__iterator_categoryIPcENSt15iterator_traitsIT_E17iterator_categoryERKS2_' hash='1d97c1e7f5b953b1'>
         <parameter type-id='type-id-226' filepath='/usr/bin/../lib/gcc/x86_64-linux-gnu/4.9/../../../../include/c++/4.9/bits/stl_iterator_base_types.h' line='201' column='1'/>
         <return type-id='type-id-356'/>
       </function-decl>
@@ -1378,7 +1378,7 @@
           </function-decl>
         </member-function>
         <member-function access='private' static='yes'>
-          <function-decl name='equal&lt;boost::filesystem::path::iterator, boost::filesystem::path::iterator&gt;' mangled-name='_ZN5boost20iterator_core_access5equalINS_10filesystem4path8iteratorES4_EEbRKT_RKT0_N4mpl_5bool_ILb1EEE' filepath='src/third_party/boost-1.56.0/boost/iterator/iterator_facade.hpp' line='530' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZN5boost20iterator_core_access5equalINS_10filesystem4path8iteratorES4_EEbRKT_RKT0_N4mpl_5bool_ILb1EEE' hash='d732a381829dd4c0'>
+          <function-decl name='equal&lt;boost::filesystem::path::iterator,boost::filesystem::path::iterator&gt;' mangled-name='_ZN5boost20iterator_core_access5equalINS_10filesystem4path8iteratorES4_EEbRKT_RKT0_N4mpl_5bool_ILb1EEE' filepath='src/third_party/boost-1.56.0/boost/iterator/iterator_facade.hpp' line='530' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZN5boost20iterator_core_access5equalINS_10filesystem4path8iteratorES4_EEbRKT_RKT0_N4mpl_5bool_ILb1EEE' hash='d732a381829dd4c0'>
             <parameter type-id='type-id-258'/>
             <parameter type-id='type-id-258'/>
             <parameter type-id='type-id-371'/>
@@ -1398,7 +1398,7 @@
           </function-decl>
         </member-function>
         <member-function access='private' static='yes'>
-          <function-decl name='equal&lt;boost::filesystem::directory_iterator, boost::filesystem::directory_iterator&gt;' mangled-name='_ZN5boost20iterator_core_access5equalINS_10filesystem18directory_iteratorES3_EEbRKT_RKT0_N4mpl_5bool_ILb1EEE' filepath='src/third_party/boost-1.56.0/boost/iterator/iterator_facade.hpp' line='530' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZN5boost20iterator_core_access5equalINS_10filesystem18directory_iteratorES3_EEbRKT_RKT0_N4mpl_5bool_ILb1EEE' hash='deb4f44f93b825ce'>
+          <function-decl name='equal&lt;boost::filesystem::directory_iterator,boost::filesystem::directory_iterator&gt;' mangled-name='_ZN5boost20iterator_core_access5equalINS_10filesystem18directory_iteratorES3_EEbRKT_RKT0_N4mpl_5bool_ILb1EEE' filepath='src/third_party/boost-1.56.0/boost/iterator/iterator_facade.hpp' line='530' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZN5boost20iterator_core_access5equalINS_10filesystem18directory_iteratorES3_EEbRKT_RKT0_N4mpl_5bool_ILb1EEE' hash='deb4f44f93b825ce'>
             <parameter type-id='type-id-247'/>
             <parameter type-id='type-id-247'/>
             <parameter type-id='type-id-371'/>
@@ -1412,7 +1412,7 @@
           </function-decl>
         </member-function>
       </class-decl>
-      <class-decl name='iterator_facade&lt;boost::filesystem::directory_iterator, boost::filesystem::directory_entry, boost::single_pass_traversal_tag, boost::filesystem::directory_entry &amp;, long&gt;' visibility='default' size-in-bits='8' filepath='src/third_party/boost-1.56.0/boost/iterator/iterator_facade.hpp' line='592' column='1' hash='add4a7f5ef11d634' id='type-id-202'>
+      <class-decl name='iterator_facade&lt;boost::filesystem::directory_iterator,boost::filesystem::directory_entry,boost::single_pass_traversal_tag,boost::filesystem::directory_entry&amp;,long&gt;' visibility='default' size-in-bits='8' filepath='src/third_party/boost-1.56.0/boost/iterator/iterator_facade.hpp' line='592' column='1' hash='2068942c6f4db1e6' id='type-id-202'>
         <member-type access='private'>
           <typedef-decl name='difference_type' type-id='type-id-10' size-in-bits='64' filepath='src/third_party/boost-1.56.0/boost/iterator/iterator_facade.hpp' line='631' column='1' hash='b119fe0931d2ee10' id='type-id-373'/>
         </member-type>
@@ -1453,7 +1453,7 @@
           </function-decl>
         </member-function>
       </class-decl>
-      <class-decl name='iterator_facade&lt;boost::filesystem::path::iterator, const boost::filesystem::path, boost::bidirectional_traversal_tag, const boost::filesystem::path &amp;, long&gt;' visibility='default' size-in-bits='8' filepath='src/third_party/boost-1.56.0/boost/iterator/iterator_facade.hpp' line='592' column='1' hash='1c345d1ffd43e3c5' id='type-id-204'>
+      <class-decl name='iterator_facade&lt;boost::filesystem::path::iterator,constboost::filesystem::path,boost::bidirectional_traversal_tag,constboost::filesystem::path&amp;,long&gt;' visibility='default' size-in-bits='8' filepath='src/third_party/boost-1.56.0/boost/iterator/iterator_facade.hpp' line='592' column='1' hash='7558de423e6245d8' id='type-id-204'>
         <member-type access='private'>
           <typedef-decl name='difference_type' type-id='type-id-10' size-in-bits='64' filepath='src/third_party/boost-1.56.0/boost/iterator/iterator_facade.hpp' line='631' column='1' hash='b119fe0931d2ee10' id='type-id-376'/>
         </member-type>
@@ -1636,7 +1636,7 @@
           </function-decl>
         </member-function>
       </class-decl>
-      <class-decl name='enable_if_c&lt;true, boost::filesystem::path &amp;&gt;' is-struct='yes' visibility='default' size-in-bits='8' filepath='src/third_party/boost-1.56.0/boost/core/enable_if.hpp' line='28' column='1' hash='13ec00e0e2ce2630' id='type-id-383'>
+      <class-decl name='enable_if_c&lt;true,boost::filesystem::path&amp;&gt;' is-struct='yes' visibility='default' size-in-bits='8' filepath='src/third_party/boost-1.56.0/boost/core/enable_if.hpp' line='28' column='1' hash='3b31ab18e75221ea' id='type-id-383'>
         <member-type access='public'>
           <typedef-decl name='type' type-id='type-id-193' size-in-bits='64' filepath='src/third_party/boost-1.56.0/boost/core/enable_if.hpp' line='29' column='1' hash='54199a9248c6bf47' id='type-id-384'/>
         </member-type>
@@ -1983,14 +1983,14 @@
             </function-decl>
           </member-function>
           <member-function access='public'>
-            <function-decl name='operator=&lt;char *&gt;' mangled-name='_ZN5boost10filesystem4pathaSIPcEENS_9enable_ifINS0_11path_traits11is_pathableINS_5decayIT_E4typeEEERS1_E4typeERKS8_' filepath='src/third_party/boost-1.56.0/boost/filesystem/path.hpp' line='199' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZN5boost10filesystem4pathaSIPcEENS_9enable_ifINS0_11path_traits11is_pathableINS_5decayIT_E4typeEEERS1_E4typeERKS8_' hash='6a9c663333cd7c29'>
+            <function-decl name='operator=&lt;char*&gt;' mangled-name='_ZN5boost10filesystem4pathaSIPcEENS_9enable_ifINS0_11path_traits11is_pathableINS_5decayIT_E4typeEEERS1_E4typeERKS8_' filepath='src/third_party/boost-1.56.0/boost/filesystem/path.hpp' line='199' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZN5boost10filesystem4pathaSIPcEENS_9enable_ifINS0_11path_traits11is_pathableINS_5decayIT_E4typeEEERS1_E4typeERKS8_' hash='6a9c663333cd7c29'>
               <parameter type-id='type-id-194' is-artificial='yes'/>
               <parameter type-id='type-id-226'/>
               <return type-id='type-id-384'/>
             </function-decl>
           </member-function>
           <member-function access='public'>
-            <function-decl name='assign&lt;char *&gt;' mangled-name='_ZN5boost10filesystem4path6assignIPcEERS1_T_S5_' filepath='src/third_party/boost-1.56.0/boost/filesystem/path.hpp' line='221' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZN5boost10filesystem4path6assignIPcEERS1_T_S5_' hash='eedc2a1726473882'>
+            <function-decl name='assign&lt;char*&gt;' mangled-name='_ZN5boost10filesystem4path6assignIPcEERS1_T_S5_' filepath='src/third_party/boost-1.56.0/boost/filesystem/path.hpp' line='221' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZN5boost10filesystem4path6assignIPcEERS1_T_S5_' hash='eedc2a1726473882'>
               <parameter type-id='type-id-194' is-artificial='yes'/>
               <parameter type-id='type-id-53'/>
               <parameter type-id='type-id-53'/>
@@ -2011,7 +2011,7 @@
             </function-decl>
           </member-function>
           <member-function access='public'>
-            <function-decl name='assign&lt;char *&gt;' mangled-name='_ZN5boost10filesystem4path6assignIPcEERS1_T_S5_RKSt7codecvtIwc11__mbstate_tE' filepath='src/third_party/boost-1.56.0/boost/filesystem/path.hpp' line='227' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZN5boost10filesystem4path6assignIPcEERS1_T_S5_RKSt7codecvtIwc11__mbstate_tE' hash='eedc2a1726473882'>
+            <function-decl name='assign&lt;char*&gt;' mangled-name='_ZN5boost10filesystem4path6assignIPcEERS1_T_S5_RKSt7codecvtIwc11__mbstate_tE' filepath='src/third_party/boost-1.56.0/boost/filesystem/path.hpp' line='227' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZN5boost10filesystem4path6assignIPcEERS1_T_S5_RKSt7codecvtIwc11__mbstate_tE' hash='eedc2a1726473882'>
               <parameter type-id='type-id-194' is-artificial='yes'/>
               <parameter type-id='type-id-53'/>
               <parameter type-id='type-id-53'/>
@@ -2121,7 +2121,7 @@
             </function-decl>
           </member-function>
           <member-function access='public'>
-            <function-decl name='path&lt;const char *&gt;' mangled-name='_ZN5boost10filesystem4pathC2IPKcEET_S5_' filepath='src/third_party/boost-1.56.0/boost/filesystem/path.hpp' line='161' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZN5boost10filesystem4pathC2IPKcEET_S5_' hash='3d5693612af11c46'>
+            <function-decl name='path&lt;constchar*&gt;' mangled-name='_ZN5boost10filesystem4pathC2IPKcEET_S5_' filepath='src/third_party/boost-1.56.0/boost/filesystem/path.hpp' line='161' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZN5boost10filesystem4pathC2IPKcEET_S5_' hash='3d5693612af11c46'>
               <parameter type-id='type-id-194' is-artificial='yes'/>
               <parameter type-id='type-id-18'/>
               <parameter type-id='type-id-18'/>
@@ -2159,7 +2159,7 @@
             </function-decl>
           </member-function>
           <member-function access='public'>
-            <function-decl name='operator=&lt;std::basic_string&lt;char&gt; &gt;' mangled-name='_ZN5boost10filesystem4pathaSISsEENS_9enable_ifINS0_11path_traits11is_pathableINS_5decayIT_E4typeEEERS1_E4typeERKS7_' filepath='src/third_party/boost-1.56.0/boost/filesystem/path.hpp' line='199' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZN5boost10filesystem4pathaSISsEENS_9enable_ifINS0_11path_traits11is_pathableINS_5decayIT_E4typeEEERS1_E4typeERKS7_' hash='3638d6630be4ad96'>
+            <function-decl name='operator=&lt;std::basic_string&lt;char&gt;&gt;' mangled-name='_ZN5boost10filesystem4pathaSISsEENS_9enable_ifINS0_11path_traits11is_pathableINS_5decayIT_E4typeEEERS1_E4typeERKS7_' filepath='src/third_party/boost-1.56.0/boost/filesystem/path.hpp' line='199' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZN5boost10filesystem4pathaSISsEENS_9enable_ifINS0_11path_traits11is_pathableINS_5decayIT_E4typeEEERS1_E4typeERKS7_' hash='3638d6630be4ad96'>
               <parameter type-id='type-id-194' is-artificial='yes'/>
               <parameter type-id='type-id-333'/>
               <return type-id='type-id-384'/>
@@ -2195,7 +2195,7 @@
             </function-decl>
           </member-function>
           <member-function access='public'>
-            <function-decl name='path&lt;std::basic_string&lt;wchar_t&gt; &gt;' mangled-name='_ZN5boost10filesystem4pathC2ISbIwSt11char_traitsIwESaIwEEEERKT_PNS_9enable_ifINS0_11path_traits11is_pathableINS_5decayIS7_E4typeEEEvE4typeE' filepath='src/third_party/boost-1.56.0/boost/filesystem/path.hpp' line='135' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZN5boost10filesystem4pathC2ISbIwSt11char_traitsIwESaIwEEEERKT_PNS_9enable_ifINS0_11path_traits11is_pathableINS_5decayIS7_E4typeEEEvE4typeE' hash='7f32ffea222edbe7'>
+            <function-decl name='path&lt;std::basic_string&lt;wchar_t&gt;&gt;' mangled-name='_ZN5boost10filesystem4pathC2ISbIwSt11char_traitsIwESaIwEEEERKT_PNS_9enable_ifINS0_11path_traits11is_pathableINS_5decayIS7_E4typeEEEvE4typeE' filepath='src/third_party/boost-1.56.0/boost/filesystem/path.hpp' line='135' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZN5boost10filesystem4pathC2ISbIwSt11char_traitsIwESaIwEEEERKT_PNS_9enable_ifINS0_11path_traits11is_pathableINS_5decayIS7_E4typeEEEvE4typeE' hash='7f32ffea222edbe7'>
               <parameter type-id='type-id-194' is-artificial='yes'/>
               <parameter type-id='type-id-395'/>
               <parameter type-id='type-id-396'/>
@@ -2596,7 +2596,7 @@
             <parameter type-id='type-id-328' filepath='src/third_party/boost-1.56.0/boost/filesystem/path_traits.hpp' line='141' column='1'/>
             <return type-id='type-id-119'/>
           </function-decl>
-          <function-decl name='dispatch&lt;char, std::basic_string&lt;char&gt; &gt;' mangled-name='_ZN5boost10filesystem11path_traits8dispatchIcSsEEvRKPT_RT0_RKSt7codecvtIwc11__mbstate_tE' filepath='src/third_party/boost-1.56.0/boost/filesystem/path_traits.hpp' line='211' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZN5boost10filesystem11path_traits8dispatchIcSsEEvRKPT_RT0_RKSt7codecvtIwc11__mbstate_tE' hash='1d97c1e7f5b953b1'>
+          <function-decl name='dispatch&lt;char,std::basic_string&lt;char&gt;&gt;' mangled-name='_ZN5boost10filesystem11path_traits8dispatchIcSsEEvRKPT_RT0_RKSt7codecvtIwc11__mbstate_tE' filepath='src/third_party/boost-1.56.0/boost/filesystem/path_traits.hpp' line='211' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZN5boost10filesystem11path_traits8dispatchIcSsEEvRKPT_RT0_RKSt7codecvtIwc11__mbstate_tE' hash='1d97c1e7f5b953b1'>
             <parameter type-id='type-id-226' filepath='src/third_party/boost-1.56.0/boost/filesystem/path_traits.hpp' line='211' column='1'/>
             <parameter type-id='type-id-120' filepath='src/third_party/boost-1.56.0/boost/filesystem/path_traits.hpp' line='211' column='1'/>
             <parameter type-id='type-id-328' filepath='src/third_party/boost-1.56.0/boost/filesystem/path_traits.hpp' line='211' column='1'/>
@@ -2626,28 +2626,28 @@
           </member-type>
         </class-decl>
       </namespace-decl>
-      <function-decl name='operator==&lt;boost::filesystem::directory_iterator, boost::filesystem::directory_entry, boost::single_pass_traversal_tag, boost::filesystem::directory_entry &amp;, long, boost::filesystem::directory_iterator, boost::filesystem::directory_entry, boost::single_pass_traversal_tag, boost::filesystem::directory_entry &amp;, long&gt;' mangled-name='_ZN5boosteqINS_10filesystem18directory_iteratorENS1_15directory_entryENS_25single_pass_traversal_tagERS3_lS2_S3_S4_S5_lEENS_6detail23enable_if_interoperableIT_T4_NS_3mpl6apply2INS6_12always_bool2ES8_S9_E4typeEE4typeERKNS_15iterator_facadeIS8_T0_T1_T2_T3_EERKNSH_IS9_T5_T6_T7_T8_EE' filepath='src/third_party/boost-1.56.0/boost/iterator/iterator_facade.hpp' line='832' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZN5boosteqINS_10filesystem18directory_iteratorENS1_15directory_entryENS_25single_pass_traversal_tagERS3_lS2_S3_S4_S5_lEENS_6detail23enable_if_interoperableIT_T4_NS_3mpl6apply2INS6_12always_bool2ES8_S9_E4typeEE4typeERKNS_15iterator_facadeIS8_T0_T1_T2_T3_EERKNSH_IS9_T5_T6_T7_T8_EE' hash='5bde4c4923a0fc4b'>
+      <function-decl name='operator==&lt;boost::filesystem::directory_iterator,boost::filesystem::directory_entry,boost::single_pass_traversal_tag,boost::filesystem::directory_entry&amp;,long,boost::filesystem::directory_iterator,boost::filesystem::directory_entry,boost::single_pass_traversal_tag,boost::filesystem::directory_entry&amp;,long&gt;' mangled-name='_ZN5boosteqINS_10filesystem18directory_iteratorENS1_15directory_entryENS_25single_pass_traversal_tagERS3_lS2_S3_S4_S5_lEENS_6detail23enable_if_interoperableIT_T4_NS_3mpl6apply2INS6_12always_bool2ES8_S9_E4typeEE4typeERKNS_15iterator_facadeIS8_T0_T1_T2_T3_EERKNSH_IS9_T5_T6_T7_T8_EE' filepath='src/third_party/boost-1.56.0/boost/iterator/iterator_facade.hpp' line='832' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZN5boosteqINS_10filesystem18directory_iteratorENS1_15directory_entryENS_25single_pass_traversal_tagERS3_lS2_S3_S4_S5_lEENS_6detail23enable_if_interoperableIT_T4_NS_3mpl6apply2INS6_12always_bool2ES8_S9_E4typeEE4typeERKNS_15iterator_facadeIS8_T0_T1_T2_T3_EERKNSH_IS9_T5_T6_T7_T8_EE' hash='d53dc4908b1bac27'>
         <parameter type-id='type-id-264' filepath='src/third_party/boost-1.56.0/boost/iterator/iterator_facade.hpp' line='833' column='1'/>
         <parameter type-id='type-id-264' filepath='src/third_party/boost-1.56.0/boost/iterator/iterator_facade.hpp' line='833' column='1'/>
         <return type-id='type-id-401'/>
       </function-decl>
-      <function-decl name='operator!=&lt;boost::filesystem::directory_iterator, boost::filesystem::directory_entry, boost::single_pass_traversal_tag, boost::filesystem::directory_entry &amp;, long, boost::filesystem::directory_iterator, boost::filesystem::directory_entry, boost::single_pass_traversal_tag, boost::filesystem::directory_entry &amp;, long&gt;' mangled-name='_ZN5boostneINS_10filesystem18directory_iteratorENS1_15directory_entryENS_25single_pass_traversal_tagERS3_lS2_S3_S4_S5_lEENS_6detail23enable_if_interoperableIT_T4_NS_3mpl6apply2INS6_12always_bool2ES8_S9_E4typeEE4typeERKNS_15iterator_facadeIS8_T0_T1_T2_T3_EERKNSH_IS9_T5_T6_T7_T8_EE' filepath='src/third_party/boost-1.56.0/boost/iterator/iterator_facade.hpp' line='833' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZN5boostneINS_10filesystem18directory_iteratorENS1_15directory_entryENS_25single_pass_traversal_tagERS3_lS2_S3_S4_S5_lEENS_6detail23enable_if_interoperableIT_T4_NS_3mpl6apply2INS6_12always_bool2ES8_S9_E4typeEE4typeERKNS_15iterator_facadeIS8_T0_T1_T2_T3_EERKNSH_IS9_T5_T6_T7_T8_EE' hash='5bde4c4923a0fc4b'>
+      <function-decl name='operator!=&lt;boost::filesystem::directory_iterator,boost::filesystem::directory_entry,boost::single_pass_traversal_tag,boost::filesystem::directory_entry&amp;,long,boost::filesystem::directory_iterator,boost::filesystem::directory_entry,boost::single_pass_traversal_tag,boost::filesystem::directory_entry&amp;,long&gt;' mangled-name='_ZN5boostneINS_10filesystem18directory_iteratorENS1_15directory_entryENS_25single_pass_traversal_tagERS3_lS2_S3_S4_S5_lEENS_6detail23enable_if_interoperableIT_T4_NS_3mpl6apply2INS6_12always_bool2ES8_S9_E4typeEE4typeERKNS_15iterator_facadeIS8_T0_T1_T2_T3_EERKNSH_IS9_T5_T6_T7_T8_EE' filepath='src/third_party/boost-1.56.0/boost/iterator/iterator_facade.hpp' line='833' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZN5boostneINS_10filesystem18directory_iteratorENS1_15directory_entryENS_25single_pass_traversal_tagERS3_lS2_S3_S4_S5_lEENS_6detail23enable_if_interoperableIT_T4_NS_3mpl6apply2INS6_12always_bool2ES8_S9_E4typeEE4typeERKNS_15iterator_facadeIS8_T0_T1_T2_T3_EERKNSH_IS9_T5_T6_T7_T8_EE' hash='d53dc4908b1bac27'>
         <parameter type-id='type-id-264' filepath='src/third_party/boost-1.56.0/boost/iterator/iterator_facade.hpp' line='833' column='1'/>
         <parameter type-id='type-id-264' filepath='src/third_party/boost-1.56.0/boost/iterator/iterator_facade.hpp' line='833' column='1'/>
         <return type-id='type-id-401'/>
       </function-decl>
-      <function-decl name='operator!=&lt;boost::filesystem::path::iterator, const boost::filesystem::path, boost::bidirectional_traversal_tag, const boost::filesystem::path &amp;, long, boost::filesystem::path::iterator, const boost::filesystem::path, boost::bidirectional_traversal_tag, const boost::filesystem::path &amp;, long&gt;' mangled-name='_ZN5boostneINS_10filesystem4path8iteratorEKS2_NS_27bidirectional_traversal_tagERS4_lS3_S4_S5_S6_lEENS_6detail23enable_if_interoperableIT_T4_NS_3mpl6apply2INS7_12always_bool2ES9_SA_E4typeEE4typeERKNS_15iterator_facadeIS9_T0_T1_T2_T3_EERKNSI_ISA_T5_T6_T7_T8_EE' filepath='src/third_party/boost-1.56.0/boost/iterator/iterator_facade.hpp' line='833' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZN5boostneINS_10filesystem4path8iteratorEKS2_NS_27bidirectional_traversal_tagERS4_lS3_S4_S5_S6_lEENS_6detail23enable_if_interoperableIT_T4_NS_3mpl6apply2INS7_12always_bool2ES9_SA_E4typeEE4typeERKNS_15iterator_facadeIS9_T0_T1_T2_T3_EERKNSI_ISA_T5_T6_T7_T8_EE' hash='176b9533a06a9ac9'>
+      <function-decl name='operator!=&lt;boost::filesystem::path::iterator,constboost::filesystem::path,boost::bidirectional_traversal_tag,constboost::filesystem::path&amp;,long,boost::filesystem::path::iterator,constboost::filesystem::path,boost::bidirectional_traversal_tag,constboost::filesystem::path&amp;,long&gt;' mangled-name='_ZN5boostneINS_10filesystem4path8iteratorEKS2_NS_27bidirectional_traversal_tagERS4_lS3_S4_S5_S6_lEENS_6detail23enable_if_interoperableIT_T4_NS_3mpl6apply2INS7_12always_bool2ES9_SA_E4typeEE4typeERKNS_15iterator_facadeIS9_T0_T1_T2_T3_EERKNSI_ISA_T5_T6_T7_T8_EE' filepath='src/third_party/boost-1.56.0/boost/iterator/iterator_facade.hpp' line='833' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZN5boostneINS_10filesystem4path8iteratorEKS2_NS_27bidirectional_traversal_tagERS4_lS3_S4_S5_S6_lEENS_6detail23enable_if_interoperableIT_T4_NS_3mpl6apply2INS7_12always_bool2ES9_SA_E4typeEE4typeERKNS_15iterator_facadeIS9_T0_T1_T2_T3_EERKNSI_ISA_T5_T6_T7_T8_EE' hash='c3aeabcb842b0dfd'>
         <parameter type-id='type-id-267' filepath='src/third_party/boost-1.56.0/boost/iterator/iterator_facade.hpp' line='833' column='1'/>
         <parameter type-id='type-id-267' filepath='src/third_party/boost-1.56.0/boost/iterator/iterator_facade.hpp' line='833' column='1'/>
         <return type-id='type-id-401'/>
       </function-decl>
       <namespace-decl name='mpl'>
-        <class-decl name='if_&lt;boost::detail::use_operator_brackets_proxy&lt;boost::filesystem::directory_entry, boost::filesystem::directory_entry &amp;&gt;, boost::detail::operator_brackets_proxy&lt;boost::filesystem::directory_iterator&gt;, boost::filesystem::directory_entry&gt;' is-struct='yes' visibility='default' size-in-bits='8' filepath='src/third_party/boost-1.56.0/boost/mpl/if.hpp' line='55' column='1' hash='0f36dd2d362e117a' id='type-id-402'>
+        <class-decl name='if_&lt;boost::detail::use_operator_brackets_proxy&lt;boost::filesystem::directory_entry,boost::filesystem::directory_entry&amp;&gt;,boost::detail::operator_brackets_proxy&lt;boost::filesystem::directory_iterator&gt;,boost::filesystem::directory_entry&gt;' is-struct='yes' visibility='default' size-in-bits='8' filepath='src/third_party/boost-1.56.0/boost/mpl/if.hpp' line='55' column='1' hash='5e0eadc948e9a503' id='type-id-402'>
           <member-type access='public'>
             <typedef-decl name='type' type-id='type-id-404' filepath='src/third_party/boost-1.56.0/boost/mpl/if.hpp' line='70' column='1' id='type-id-403'/>
           </member-type>
         </class-decl>
-        <class-decl name='if_&lt;boost::detail::use_operator_brackets_proxy&lt;const boost::filesystem::path, const boost::filesystem::path &amp;&gt;, boost::detail::operator_brackets_proxy&lt;boost::filesystem::path::iterator&gt;, const boost::filesystem::path&gt;' is-struct='yes' visibility='default' size-in-bits='8' filepath='src/third_party/boost-1.56.0/boost/mpl/if.hpp' line='55' column='1' hash='9239d33083eec5ef' id='type-id-405'>
+        <class-decl name='if_&lt;boost::detail::use_operator_brackets_proxy&lt;constboost::filesystem::path,constboost::filesystem::path&amp;&gt;,boost::detail::operator_brackets_proxy&lt;boost::filesystem::path::iterator&gt;,constboost::filesystem::path&gt;' is-struct='yes' visibility='default' size-in-bits='8' filepath='src/third_party/boost-1.56.0/boost/mpl/if.hpp' line='55' column='1' hash='7c6ceb1822357d56' id='type-id-405'>
           <member-type access='public'>
             <typedef-decl name='type' type-id='type-id-407' filepath='src/third_party/boost-1.56.0/boost/mpl/if.hpp' line='70' column='1' id='type-id-406'/>
           </member-type>
@@ -2655,12 +2655,12 @@
             <typedef-decl name='type' type-id='type-id-409' filepath='src/third_party/boost-1.56.0/boost/mpl/if.hpp' line='70' column='1' id='type-id-408'/>
           </member-type>
         </class-decl>
-        <class-decl name='if_c&lt;true, boost::detail::operator_brackets_proxy&lt;boost::filesystem::directory_iterator&gt;, boost::filesystem::directory_entry&gt;' is-struct='yes' visibility='default' size-in-bits='8' filepath='src/third_party/boost-1.56.0/boost/mpl/if.hpp' line='34' column='1' hash='03ee458f5dff754b' id='type-id-410'>
+        <class-decl name='if_c&lt;true,boost::detail::operator_brackets_proxy&lt;boost::filesystem::directory_iterator&gt;,boost::filesystem::directory_entry&gt;' is-struct='yes' visibility='default' size-in-bits='8' filepath='src/third_party/boost-1.56.0/boost/mpl/if.hpp' line='34' column='1' hash='d501c3acf1eddad1' id='type-id-410'>
           <member-type access='public'>
             <typedef-decl name='type' type-id='type-id-411' filepath='src/third_party/boost-1.56.0/boost/mpl/if.hpp' line='36' column='1' id='type-id-404'/>
           </member-type>
         </class-decl>
-        <class-decl name='if_c&lt;true, boost::detail::operator_brackets_proxy&lt;boost::filesystem::path::iterator&gt;, const boost::filesystem::path&gt;' is-struct='yes' visibility='default' size-in-bits='8' filepath='src/third_party/boost-1.56.0/boost/mpl/if.hpp' line='34' column='1' hash='790d9f22745466fb' id='type-id-412'>
+        <class-decl name='if_c&lt;true,boost::detail::operator_brackets_proxy&lt;boost::filesystem::path::iterator&gt;,constboost::filesystem::path&gt;' is-struct='yes' visibility='default' size-in-bits='8' filepath='src/third_party/boost-1.56.0/boost/mpl/if.hpp' line='34' column='1' hash='4b85c319bd66c5ec' id='type-id-412'>
           <member-type access='public'>
             <typedef-decl name='type' type-id='type-id-413' filepath='src/third_party/boost-1.56.0/boost/mpl/if.hpp' line='36' column='1' id='type-id-407'/>
           </member-type>
@@ -2669,7 +2669,7 @@
           </member-type>
         </class-decl>
       </namespace-decl>
-      <function-decl name='operator==&lt;boost::filesystem::detail::dir_itr_imp, boost::filesystem::detail::dir_itr_imp&gt;' mangled-name='_ZN5boosteqINS_10filesystem6detail11dir_itr_impES3_EEbRKNS_10shared_ptrIT_EERKNS4_IT0_EE' filepath='src/third_party/boost-1.56.0/boost/smart_ptr/shared_ptr.hpp' line='728' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZN5boosteqINS_10filesystem6detail11dir_itr_impES3_EEbRKNS_10shared_ptrIT_EERKNS4_IT0_EE' hash='b5eabc3b5dfc43b2'>
+      <function-decl name='operator==&lt;boost::filesystem::detail::dir_itr_imp,boost::filesystem::detail::dir_itr_imp&gt;' mangled-name='_ZN5boosteqINS_10filesystem6detail11dir_itr_impES3_EEbRKNS_10shared_ptrIT_EERKNS4_IT0_EE' filepath='src/third_party/boost-1.56.0/boost/smart_ptr/shared_ptr.hpp' line='728' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZN5boosteqINS_10filesystem6detail11dir_itr_impES3_EEbRKNS_10shared_ptrIT_EERKNS4_IT0_EE' hash='b5eabc3b5dfc43b2'>
         <parameter type-id='type-id-273' filepath='src/third_party/boost-1.56.0/boost/smart_ptr/shared_ptr.hpp' line='728' column='1'/>
         <parameter type-id='type-id-273' filepath='src/third_party/boost-1.56.0/boost/smart_ptr/shared_ptr.hpp' line='728' column='1'/>
         <return type-id='type-id-1'/>
@@ -2912,7 +2912,7 @@
           </data-member>
         </class-decl>
         <class-decl name='addressof_impl&lt;boost::filesystem::directory_entry&gt;' is-struct='yes' visibility='default' size-in-bits='8' filepath='src/third_party/boost-1.56.0/boost/core/addressof.hpp' line='36' column='1' hash='557f9b2ee6b73713' id='type-id-415'/>
-        <class-decl name='operator_arrow_dispatch&lt;boost::filesystem::directory_entry &amp;, boost::filesystem::directory_entry *&gt;' is-struct='yes' visibility='default' size-in-bits='8' filepath='src/third_party/boost-1.56.0/boost/iterator/iterator_facade.hpp' line='319' column='1' hash='a077f36529d16290' id='type-id-416'>
+        <class-decl name='operator_arrow_dispatch&lt;boost::filesystem::directory_entry&amp;,boost::filesystem::directory_entry*&gt;' is-struct='yes' visibility='default' size-in-bits='8' filepath='src/third_party/boost-1.56.0/boost/iterator/iterator_facade.hpp' line='319' column='1' hash='7083f56399a02936' id='type-id-416'>
           <member-type access='public'>
             <typedef-decl name='result_type' type-id='type-id-180' size-in-bits='64' filepath='src/third_party/boost-1.56.0/boost/iterator/iterator_facade.hpp' line='321' column='1' hash='9f005300b25295c6' id='type-id-375'/>
           </member-type>
@@ -2923,7 +2923,7 @@
             </function-decl>
           </member-function>
         </class-decl>
-        <class-decl name='operator_arrow_dispatch&lt;const boost::filesystem::path &amp;, const boost::filesystem::path *&gt;' is-struct='yes' visibility='default' size-in-bits='8' filepath='src/third_party/boost-1.56.0/boost/iterator/iterator_facade.hpp' line='319' column='1' hash='2f445d79d340e8c6' id='type-id-417'>
+        <class-decl name='operator_arrow_dispatch&lt;constboost::filesystem::path&amp;,constboost::filesystem::path*&gt;' is-struct='yes' visibility='default' size-in-bits='8' filepath='src/third_party/boost-1.56.0/boost/iterator/iterator_facade.hpp' line='319' column='1' hash='f42f7f70ff4a1668' id='type-id-417'>
           <member-type access='public'>
             <typedef-decl name='result_type' type-id='type-id-256' size-in-bits='64' filepath='src/third_party/boost-1.56.0/boost/iterator/iterator_facade.hpp' line='321' column='1' hash='8d5a29cf878d89fc' id='type-id-378'/>
           </member-type>
@@ -2934,12 +2934,12 @@
             </function-decl>
           </member-function>
         </class-decl>
-        <class-decl name='operator_brackets_result&lt;boost::filesystem::directory_iterator, boost::filesystem::directory_entry, boost::filesystem::directory_entry &amp;&gt;' is-struct='yes' visibility='default' size-in-bits='8' filepath='src/third_party/boost-1.56.0/boost/iterator/iterator_facade.hpp' line='383' column='1' hash='09621bda0c3b8cb1' id='type-id-418'>
+        <class-decl name='operator_brackets_result&lt;boost::filesystem::directory_iterator,boost::filesystem::directory_entry,boost::filesystem::directory_entry&amp;&gt;' is-struct='yes' visibility='default' size-in-bits='8' filepath='src/third_party/boost-1.56.0/boost/iterator/iterator_facade.hpp' line='383' column='1' hash='f1120ddc057a6835' id='type-id-418'>
           <member-type access='public'>
             <typedef-decl name='type' type-id='type-id-403' filepath='src/third_party/boost-1.56.0/boost/iterator/iterator_facade.hpp' line='389' column='1' id='type-id-419'/>
           </member-type>
         </class-decl>
-        <class-decl name='operator_brackets_result&lt;boost::filesystem::path::iterator, const boost::filesystem::path, const boost::filesystem::path &amp;&gt;' is-struct='yes' visibility='default' size-in-bits='8' filepath='src/third_party/boost-1.56.0/boost/iterator/iterator_facade.hpp' line='383' column='1' hash='5134e6078f126c6d' id='type-id-420'>
+        <class-decl name='operator_brackets_result&lt;boost::filesystem::path::iterator,constboost::filesystem::path,constboost::filesystem::path&amp;&gt;' is-struct='yes' visibility='default' size-in-bits='8' filepath='src/third_party/boost-1.56.0/boost/iterator/iterator_facade.hpp' line='383' column='1' hash='9c11dcacedc737fd' id='type-id-420'>
           <member-type access='public'>
             <typedef-decl name='type' type-id='type-id-406' filepath='src/third_party/boost-1.56.0/boost/iterator/iterator_facade.hpp' line='389' column='1' id='type-id-421'/>
           </member-type>
@@ -3000,13 +3000,13 @@
           <parameter is-variadic='yes'/>
           <return type-id='type-id-119'/>
         </function-decl>
-        <function-decl name='sp_pointer_construct&lt;boost::filesystem::detail::dir_itr_imp, boost::filesystem::detail::dir_itr_imp&gt;' mangled-name='_ZN5boost6detail20sp_pointer_constructINS_10filesystem6detail11dir_itr_impES4_EEvPNS_10shared_ptrIT_EEPT0_RNS0_12shared_countE' filepath='src/third_party/boost-1.56.0/boost/smart_ptr/shared_ptr.hpp' line='269' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZN5boost6detail20sp_pointer_constructINS_10filesystem6detail11dir_itr_impES4_EEvPNS_10shared_ptrIT_EEPT0_RNS0_12shared_countE' hash='384c521db19f0fb5'>
+        <function-decl name='sp_pointer_construct&lt;boost::filesystem::detail::dir_itr_imp,boost::filesystem::detail::dir_itr_imp&gt;' mangled-name='_ZN5boost6detail20sp_pointer_constructINS_10filesystem6detail11dir_itr_impES4_EEvPNS_10shared_ptrIT_EEPT0_RNS0_12shared_countE' filepath='src/third_party/boost-1.56.0/boost/smart_ptr/shared_ptr.hpp' line='269' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZN5boost6detail20sp_pointer_constructINS_10filesystem6detail11dir_itr_impES4_EEvPNS_10shared_ptrIT_EEPT0_RNS0_12shared_countE' hash='384c521db19f0fb5'>
           <parameter type-id='type-id-212' filepath='src/third_party/boost-1.56.0/boost/smart_ptr/shared_ptr.hpp' line='269' column='1'/>
           <parameter type-id='type-id-176' filepath='src/third_party/boost-1.56.0/boost/smart_ptr/shared_ptr.hpp' line='269' column='1'/>
           <parameter type-id='type-id-158' filepath='src/third_party/boost-1.56.0/boost/smart_ptr/shared_ptr.hpp' line='269' column='1'/>
           <return type-id='type-id-119'/>
         </function-decl>
-        <function-decl name='sp_pointer_construct&lt;boost::filesystem::filesystem_error::m_imp, boost::filesystem::filesystem_error::m_imp&gt;' mangled-name='_ZN5boost6detail20sp_pointer_constructINS_10filesystem16filesystem_error5m_impES4_EEvPNS_10shared_ptrIT_EEPT0_RNS0_12shared_countE' filepath='src/third_party/boost-1.56.0/boost/smart_ptr/shared_ptr.hpp' line='269' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZN5boost6detail20sp_pointer_constructINS_10filesystem16filesystem_error5m_impES4_EEvPNS_10shared_ptrIT_EEPT0_RNS0_12shared_countE' hash='656ff8ac5467f0ae'>
+        <function-decl name='sp_pointer_construct&lt;boost::filesystem::filesystem_error::m_imp,boost::filesystem::filesystem_error::m_imp&gt;' mangled-name='_ZN5boost6detail20sp_pointer_constructINS_10filesystem16filesystem_error5m_impES4_EEvPNS_10shared_ptrIT_EEPT0_RNS0_12shared_countE' filepath='src/third_party/boost-1.56.0/boost/smart_ptr/shared_ptr.hpp' line='269' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZN5boost6detail20sp_pointer_constructINS_10filesystem16filesystem_error5m_impES4_EEvPNS_10shared_ptrIT_EEPT0_RNS0_12shared_countE' hash='656ff8ac5467f0ae'>
           <parameter type-id='type-id-218' filepath='src/third_party/boost-1.56.0/boost/smart_ptr/shared_ptr.hpp' line='269' column='1'/>
           <parameter type-id='type-id-190' filepath='src/third_party/boost-1.56.0/boost/smart_ptr/shared_ptr.hpp' line='269' column='1'/>
           <parameter type-id='type-id-158' filepath='src/third_party/boost-1.56.0/boost/smart_ptr/shared_ptr.hpp' line='269' column='1'/>
@@ -3026,19 +3026,19 @@
     </function-type>
   </abi-instr>
   <abi-instr address-size='64' path='src/third_party/boost-1.56.0/libs/filesystem/src/path.cpp' comp-dir-path='/home/andrew/Documents/10gen/dev/src/mongodb' language='LANG_C_plus_plus'>
-    <reference-type-def kind='lvalue' type-id='type-id-437' size-in-bits='64' hash='4e43ae35d3b98dda' id='type-id-438'/>
-    <pointer-type-def type-id='type-id-437' size-in-bits='64' hash='067489684dd52907' id='type-id-439'/>
-    <reference-type-def kind='lvalue' type-id='type-id-440' size-in-bits='64' hash='95dc664d91f47c32' id='type-id-441'/>
-    <pointer-type-def type-id='type-id-440' size-in-bits='64' hash='b525d6ed80dfd65b' id='type-id-442'/>
-    <reference-type-def kind='lvalue' type-id='type-id-443' size-in-bits='64' hash='3fe5c22fccb977a4' id='type-id-444'/>
-    <pointer-type-def type-id='type-id-443' size-in-bits='64' hash='fb2639733acedf9f' id='type-id-445'/>
-    <qualified-type-def type-id='type-id-437' const='yes' hash='64f330d714e76398' id='type-id-446'/>
-    <pointer-type-def type-id='type-id-446' size-in-bits='64' hash='a29e52e4301a82d4' id='type-id-447'/>
-    <qualified-type-def type-id='type-id-440' const='yes' hash='f00bccd8bc2ce391' id='type-id-448'/>
-    <pointer-type-def type-id='type-id-448' size-in-bits='64' hash='2e62d7ce2054dd39' id='type-id-449'/>
-    <qualified-type-def type-id='type-id-443' const='yes' hash='e0a3a1a253dc837a' id='type-id-450'/>
-    <reference-type-def kind='lvalue' type-id='type-id-450' size-in-bits='64' hash='490e7d864c8172ea' id='type-id-451'/>
-    <pointer-type-def type-id='type-id-450' size-in-bits='64' hash='89c70a5ca2481056' id='type-id-452'/>
+    <reference-type-def kind='lvalue' type-id='type-id-437' size-in-bits='64' hash='9e710b45567d39cf' id='type-id-438'/>
+    <pointer-type-def type-id='type-id-437' size-in-bits='64' hash='1f365a5e2047b45c' id='type-id-439'/>
+    <reference-type-def kind='lvalue' type-id='type-id-440' size-in-bits='64' hash='ec44e546ccd443d7' id='type-id-441'/>
+    <pointer-type-def type-id='type-id-440' size-in-bits='64' hash='aa41d83d83d456fc' id='type-id-442'/>
+    <reference-type-def kind='lvalue' type-id='type-id-443' size-in-bits='64' hash='a96d00bd57004f1d' id='type-id-444'/>
+    <pointer-type-def type-id='type-id-443' size-in-bits='64' hash='f5c2cc93bc41edf1' id='type-id-445'/>
+    <qualified-type-def type-id='type-id-437' const='yes' hash='e179b4d1488b4be8' id='type-id-446'/>
+    <pointer-type-def type-id='type-id-446' size-in-bits='64' hash='c785dfd9aa6f2736' id='type-id-447'/>
+    <qualified-type-def type-id='type-id-440' const='yes' hash='ff5f0ae1418d6314' id='type-id-448'/>
+    <pointer-type-def type-id='type-id-448' size-in-bits='64' hash='f696062a498c6199' id='type-id-449'/>
+    <qualified-type-def type-id='type-id-443' const='yes' hash='d41e66a1f42e91dc' id='type-id-450'/>
+    <reference-type-def kind='lvalue' type-id='type-id-450' size-in-bits='64' hash='2e8bc41b53f71663' id='type-id-451'/>
+    <pointer-type-def type-id='type-id-450' size-in-bits='64' hash='23167565aeb9936d' id='type-id-452'/>
     <reference-type-def kind='lvalue' type-id='type-id-71' size-in-bits='64' hash='78bf127c69ae91c1' id='type-id-453'/>
     <qualified-type-def type-id='type-id-18' const='yes' hash='ec42cf78a9d93a8c' id='type-id-454'/>
     <reference-type-def kind='lvalue' type-id='type-id-454' size-in-bits='64' hash='99be3ab0d9b2fe43' id='type-id-455'/>
@@ -3068,7 +3068,7 @@
     <qualified-type-def type-id='type-id-14' restrict='yes' id='type-id-486'/>
     <qualified-type-def type-id='type-id-14' restrict='yes' id='type-id-487'/>
     <namespace-decl name='__gnu_cxx'>
-      <class-decl name='__normal_iterator&lt;char *, std::basic_string&lt;char&gt; &gt;' visibility='default' size-in-bits='64' filepath='/usr/bin/../lib/gcc/x86_64-linux-gnu/4.9/../../../../include/c++/4.9/bits/stl_iterator.h' line='709' column='1' hash='86a0fa6450df831c' id='type-id-437'>
+      <class-decl name='__normal_iterator&lt;char*,std::basic_string&lt;char&gt;&gt;' visibility='default' size-in-bits='64' filepath='/usr/bin/../lib/gcc/x86_64-linux-gnu/4.9/../../../../include/c++/4.9/bits/stl_iterator.h' line='709' column='1' hash='88d4c974a940b09e' id='type-id-437'>
         <member-type access='private'>
           <typedef-decl name='difference_type' type-id='type-id-354' size-in-bits='64' filepath='/usr/bin/../lib/gcc/x86_64-linux-gnu/4.9/../../../../include/c++/4.9/bits/stl_iterator.h' line='720' column='1' hash='b119fe0931d2ee10' id='type-id-488'/>
         </member-type>
@@ -3102,7 +3102,7 @@
           </function-decl>
         </member-function>
       </class-decl>
-      <class-decl name='__normal_iterator&lt;const char *, std::basic_string&lt;char&gt; &gt;' visibility='default' size-in-bits='64' filepath='/usr/bin/../lib/gcc/x86_64-linux-gnu/4.9/../../../../include/c++/4.9/bits/stl_iterator.h' line='709' column='1' hash='cc045b8f28462e3e' id='type-id-440'>
+      <class-decl name='__normal_iterator&lt;constchar*,std::basic_string&lt;char&gt;&gt;' visibility='default' size-in-bits='64' filepath='/usr/bin/../lib/gcc/x86_64-linux-gnu/4.9/../../../../include/c++/4.9/bits/stl_iterator.h' line='709' column='1' hash='e608a69cbb89ee0b' id='type-id-440'>
         <member-type access='private'>
           <typedef-decl name='difference_type' type-id='type-id-492' size-in-bits='64' filepath='/usr/bin/../lib/gcc/x86_64-linux-gnu/4.9/../../../../include/c++/4.9/bits/stl_iterator.h' line='720' column='1' hash='b119fe0931d2ee10' id='type-id-491'/>
         </member-type>
@@ -3136,12 +3136,12 @@
           </function-decl>
         </member-function>
       </class-decl>
-      <class-decl name='__enable_if&lt;true, bool&gt;' is-struct='yes' visibility='default' size-in-bits='8' filepath='/usr/bin/../lib/gcc/x86_64-linux-gnu/4.9/../../../../include/c++/4.9/ext/type_traits.h' line='47' column='1' hash='12afe874787f095c' id='type-id-497'>
+      <class-decl name='__enable_if&lt;true,bool&gt;' is-struct='yes' visibility='default' size-in-bits='8' filepath='/usr/bin/../lib/gcc/x86_64-linux-gnu/4.9/../../../../include/c++/4.9/ext/type_traits.h' line='47' column='1' hash='8fb440a9e510f5a2' id='type-id-497'>
         <member-type access='public'>
           <typedef-decl name='__type' type-id='type-id-1' size-in-bits='8' filepath='/usr/bin/../lib/gcc/x86_64-linux-gnu/4.9/../../../../include/c++/4.9/ext/type_traits.h' line='48' column='1' hash='5ba96bb22f4237fb' id='type-id-498'/>
         </member-type>
       </class-decl>
-      <function-decl name='__is_null_pointer&lt;const char&gt;' mangled-name='_ZN9__gnu_cxx17__is_null_pointerIKcEEbPT_' filepath='/usr/bin/../lib/gcc/x86_64-linux-gnu/4.9/../../../../include/c++/4.9/ext/type_traits.h' line='150' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZN9__gnu_cxx17__is_null_pointerIKcEEbPT_' hash='19a1d02fa5635f5c'>
+      <function-decl name='__is_null_pointer&lt;constchar&gt;' mangled-name='_ZN9__gnu_cxx17__is_null_pointerIKcEEbPT_' filepath='/usr/bin/../lib/gcc/x86_64-linux-gnu/4.9/../../../../include/c++/4.9/ext/type_traits.h' line='150' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZN9__gnu_cxx17__is_null_pointerIKcEEbPT_' hash='19a1d02fa5635f5c'>
         <parameter type-id='type-id-18' filepath='/usr/bin/../lib/gcc/x86_64-linux-gnu/4.9/../../../../include/c++/4.9/ext/type_traits.h' line='150' column='1'/>
         <return type-id='type-id-1'/>
       </function-decl>
@@ -3163,7 +3163,7 @@
           </function-decl>
         </member-function>
       </class-decl>
-      <class-decl name='iterator_traits&lt;const char *&gt;' is-struct='yes' visibility='default' size-in-bits='8' filepath='/usr/bin/../lib/gcc/x86_64-linux-gnu/4.9/../../../../include/c++/4.9/bits/stl_iterator_base_types.h' line='186' column='1' hash='db99a35d8b6472ba' id='type-id-500'>
+      <class-decl name='iterator_traits&lt;constchar*&gt;' is-struct='yes' visibility='default' size-in-bits='8' filepath='/usr/bin/../lib/gcc/x86_64-linux-gnu/4.9/../../../../include/c++/4.9/bits/stl_iterator_base_types.h' line='186' column='1' hash='209859ec784c6258' id='type-id-500'>
         <member-type access='public'>
           <typedef-decl name='difference_type' type-id='type-id-355' size-in-bits='64' filepath='/usr/bin/../lib/gcc/x86_64-linux-gnu/4.9/../../../../include/c++/4.9/bits/stl_iterator_base_types.h' line='190' column='1' hash='b119fe0931d2ee10' id='type-id-492'/>
         </member-type>
@@ -3179,9 +3179,9 @@
       </class-decl>
       <class-decl name='allocator&lt;char&gt;' visibility='default' is-declaration-only='yes' id='type-id-475'>
       </class-decl>
-      <class-decl name='basic_string&lt;char, std::char_traits&lt;char&gt;, std::allocator&lt;char&gt; &gt;' visibility='default' is-declaration-only='yes' id='type-id-392'>
+      <class-decl name='basic_string&lt;char,std::char_traits&lt;char&gt;,std::allocator&lt;char&gt;&gt;' visibility='default' is-declaration-only='yes' id='type-id-392'>
         <member-function access='public'>
-          <function-decl name='basic_string&lt;const char *&gt;' mangled-name='_ZNSsC2IPKcEET_S2_RKSaIcE' filepath='/usr/bin/../lib/gcc/x86_64-linux-gnu/4.9/../../../../include/c++/4.9/bits/basic_string.h' line='540' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZNSsC2IPKcEET_S2_RKSaIcE' hash='3d5693612af11c46'>
+          <function-decl name='basic_string&lt;constchar*&gt;' mangled-name='_ZNSsC2IPKcEET_S2_RKSaIcE' filepath='/usr/bin/../lib/gcc/x86_64-linux-gnu/4.9/../../../../include/c++/4.9/bits/basic_string.h' line='540' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZNSsC2IPKcEET_S2_RKSaIcE' hash='3d5693612af11c46'>
             <parameter type-id='type-id-123' is-artificial='yes'/>
             <parameter type-id='type-id-18' filepath='/usr/bin/../lib/gcc/x86_64-linux-gnu/4.9/../../../../include/c++/4.9/bits/basic_string.tcc' line='540' column='1'/>
             <parameter type-id='type-id-18' filepath='/usr/bin/../lib/gcc/x86_64-linux-gnu/4.9/../../../../include/c++/4.9/bits/basic_string.tcc' line='540' column='1'/>
@@ -3190,7 +3190,7 @@
           </function-decl>
         </member-function>
         <member-function access='private' static='yes'>
-          <function-decl name='_S_construct&lt;const char *&gt;' mangled-name='_ZNSs12_S_constructIPKcEEPcT_S3_RKSaIcE' filepath='/usr/bin/../lib/gcc/x86_64-linux-gnu/4.9/../../../../include/c++/4.9/bits/basic_string.h' line='1761' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZNSs12_S_constructIPKcEEPcT_S3_RKSaIcE' hash='21babdbcb7a34ebe'>
+          <function-decl name='_S_construct&lt;constchar*&gt;' mangled-name='_ZNSs12_S_constructIPKcEEPcT_S3_RKSaIcE' filepath='/usr/bin/../lib/gcc/x86_64-linux-gnu/4.9/../../../../include/c++/4.9/bits/basic_string.h' line='1761' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZNSs12_S_constructIPKcEEPcT_S3_RKSaIcE' hash='21babdbcb7a34ebe'>
             <parameter type-id='type-id-18' filepath='/usr/bin/../lib/gcc/x86_64-linux-gnu/4.9/../../../../include/c++/4.9/bits/basic_string.h' line='1761' column='1'/>
             <parameter type-id='type-id-18' filepath='/usr/bin/../lib/gcc/x86_64-linux-gnu/4.9/../../../../include/c++/4.9/bits/basic_string.h' line='1761' column='1'/>
             <parameter type-id='type-id-118' filepath='/usr/bin/../lib/gcc/x86_64-linux-gnu/4.9/../../../../include/c++/4.9/bits/basic_string.h' line='1761' column='1'/>
@@ -3198,7 +3198,7 @@
           </function-decl>
         </member-function>
         <member-function access='private' static='yes'>
-          <function-decl name='_S_construct_aux&lt;const char *&gt;' mangled-name='_ZNSs16_S_construct_auxIPKcEEPcT_S3_RKSaIcESt12__false_type' filepath='/usr/bin/../lib/gcc/x86_64-linux-gnu/4.9/../../../../include/c++/4.9/bits/basic_string.h' line='1739' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZNSs16_S_construct_auxIPKcEEPcT_S3_RKSaIcESt12__false_type' hash='21babdbcb7a34ebe'>
+          <function-decl name='_S_construct_aux&lt;constchar*&gt;' mangled-name='_ZNSs16_S_construct_auxIPKcEEPcT_S3_RKSaIcESt12__false_type' filepath='/usr/bin/../lib/gcc/x86_64-linux-gnu/4.9/../../../../include/c++/4.9/bits/basic_string.h' line='1739' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZNSs16_S_construct_auxIPKcEEPcT_S3_RKSaIcESt12__false_type' hash='21babdbcb7a34ebe'>
             <parameter type-id='type-id-18' filepath='/usr/bin/../lib/gcc/x86_64-linux-gnu/4.9/../../../../include/c++/4.9/bits/basic_string.h' line='1739' column='1'/>
             <parameter type-id='type-id-18' filepath='/usr/bin/../lib/gcc/x86_64-linux-gnu/4.9/../../../../include/c++/4.9/bits/basic_string.h' line='1739' column='1'/>
             <parameter type-id='type-id-118' filepath='/usr/bin/../lib/gcc/x86_64-linux-gnu/4.9/../../../../include/c++/4.9/bits/basic_string.h' line='1740' column='1'/>
@@ -3207,7 +3207,7 @@
           </function-decl>
         </member-function>
         <member-function access='private' static='yes'>
-          <function-decl name='_S_construct&lt;const char *&gt;' mangled-name='_ZNSs12_S_constructIPKcEEPcT_S3_RKSaIcESt20forward_iterator_tag' filepath='/usr/bin/../lib/gcc/x86_64-linux-gnu/4.9/../../../../include/c++/4.9/bits/basic_string.h' line='1777' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZNSs12_S_constructIPKcEEPcT_S3_RKSaIcESt20forward_iterator_tag' hash='21babdbcb7a34ebe'>
+          <function-decl name='_S_construct&lt;constchar*&gt;' mangled-name='_ZNSs12_S_constructIPKcEEPcT_S3_RKSaIcESt20forward_iterator_tag' filepath='/usr/bin/../lib/gcc/x86_64-linux-gnu/4.9/../../../../include/c++/4.9/bits/basic_string.h' line='1777' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZNSs12_S_constructIPKcEEPcT_S3_RKSaIcESt20forward_iterator_tag' hash='21babdbcb7a34ebe'>
             <parameter type-id='type-id-18' filepath='/usr/bin/../lib/gcc/x86_64-linux-gnu/4.9/../../../../include/c++/4.9/bits/basic_string.tcc' line='1777' column='1'/>
             <parameter type-id='type-id-18' filepath='/usr/bin/../lib/gcc/x86_64-linux-gnu/4.9/../../../../include/c++/4.9/bits/basic_string.tcc' line='1777' column='1'/>
             <parameter type-id='type-id-118' filepath='/usr/bin/../lib/gcc/x86_64-linux-gnu/4.9/../../../../include/c++/4.9/bits/basic_string.tcc' line='1777' column='1'/>
@@ -3216,7 +3216,7 @@
           </function-decl>
         </member-function>
         <member-function access='public'>
-          <function-decl name='basic_string&lt;char *&gt;' mangled-name='_ZNSsC2IPcEET_S1_RKSaIcE' filepath='/usr/bin/../lib/gcc/x86_64-linux-gnu/4.9/../../../../include/c++/4.9/bits/basic_string.h' line='540' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZNSsC2IPcEET_S1_RKSaIcE' hash='6faa8831d3af3ad4'>
+          <function-decl name='basic_string&lt;char*&gt;' mangled-name='_ZNSsC2IPcEET_S1_RKSaIcE' filepath='/usr/bin/../lib/gcc/x86_64-linux-gnu/4.9/../../../../include/c++/4.9/bits/basic_string.h' line='540' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZNSsC2IPcEET_S1_RKSaIcE' hash='6faa8831d3af3ad4'>
             <parameter type-id='type-id-117' is-artificial='yes'/>
             <parameter type-id='type-id-53' filepath='/usr/bin/../lib/gcc/x86_64-linux-gnu/4.9/../../../../include/c++/4.9/bits/basic_string.tcc' line='540' column='1'/>
             <parameter type-id='type-id-53' filepath='/usr/bin/../lib/gcc/x86_64-linux-gnu/4.9/../../../../include/c++/4.9/bits/basic_string.tcc' line='540' column='1'/>
@@ -3225,7 +3225,7 @@
           </function-decl>
         </member-function>
         <member-function access='public'>
-          <function-decl name='append&lt;const char *&gt;' mangled-name='_ZNSs6appendIPKcEERSsT_S3_' filepath='/usr/bin/../lib/gcc/x86_64-linux-gnu/4.9/../../../../include/c++/4.9/bits/basic_string.h' line='1061' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZNSs6appendIPKcEERSsT_S3_' hash='3d5693612af11c46'>
+          <function-decl name='append&lt;constchar*&gt;' mangled-name='_ZNSs6appendIPKcEERSsT_S3_' filepath='/usr/bin/../lib/gcc/x86_64-linux-gnu/4.9/../../../../include/c++/4.9/bits/basic_string.h' line='1061' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZNSs6appendIPKcEERSsT_S3_' hash='3d5693612af11c46'>
             <parameter type-id='type-id-117' is-artificial='yes'/>
             <parameter type-id='type-id-18' filepath='/usr/bin/../lib/gcc/x86_64-linux-gnu/4.9/../../../../include/c++/4.9/bits/basic_string.h' line='1061' column='1'/>
             <parameter type-id='type-id-18' filepath='/usr/bin/../lib/gcc/x86_64-linux-gnu/4.9/../../../../include/c++/4.9/bits/basic_string.h' line='1061' column='1'/>
@@ -3233,7 +3233,7 @@
           </function-decl>
         </member-function>
         <member-function access='private' static='yes'>
-          <function-decl name='_S_construct&lt;char *&gt;' mangled-name='_ZNSs12_S_constructIPcEES0_T_S1_RKSaIcE' filepath='/usr/bin/../lib/gcc/x86_64-linux-gnu/4.9/../../../../include/c++/4.9/bits/basic_string.h' line='1761' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZNSs12_S_constructIPcEES0_T_S1_RKSaIcE' hash='9895045035709c6f'>
+          <function-decl name='_S_construct&lt;char*&gt;' mangled-name='_ZNSs12_S_constructIPcEES0_T_S1_RKSaIcE' filepath='/usr/bin/../lib/gcc/x86_64-linux-gnu/4.9/../../../../include/c++/4.9/bits/basic_string.h' line='1761' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZNSs12_S_constructIPcEES0_T_S1_RKSaIcE' hash='9895045035709c6f'>
             <parameter type-id='type-id-53' filepath='/usr/bin/../lib/gcc/x86_64-linux-gnu/4.9/../../../../include/c++/4.9/bits/basic_string.h' line='1761' column='1'/>
             <parameter type-id='type-id-53' filepath='/usr/bin/../lib/gcc/x86_64-linux-gnu/4.9/../../../../include/c++/4.9/bits/basic_string.h' line='1761' column='1'/>
             <parameter type-id='type-id-118' filepath='/usr/bin/../lib/gcc/x86_64-linux-gnu/4.9/../../../../include/c++/4.9/bits/basic_string.h' line='1761' column='1'/>
@@ -3241,7 +3241,7 @@
           </function-decl>
         </member-function>
         <member-function access='private' static='yes'>
-          <function-decl name='_S_construct_aux&lt;char *&gt;' mangled-name='_ZNSs16_S_construct_auxIPcEES0_T_S1_RKSaIcESt12__false_type' filepath='/usr/bin/../lib/gcc/x86_64-linux-gnu/4.9/../../../../include/c++/4.9/bits/basic_string.h' line='1739' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZNSs16_S_construct_auxIPcEES0_T_S1_RKSaIcESt12__false_type' hash='9895045035709c6f'>
+          <function-decl name='_S_construct_aux&lt;char*&gt;' mangled-name='_ZNSs16_S_construct_auxIPcEES0_T_S1_RKSaIcESt12__false_type' filepath='/usr/bin/../lib/gcc/x86_64-linux-gnu/4.9/../../../../include/c++/4.9/bits/basic_string.h' line='1739' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZNSs16_S_construct_auxIPcEES0_T_S1_RKSaIcESt12__false_type' hash='9895045035709c6f'>
             <parameter type-id='type-id-53' filepath='/usr/bin/../lib/gcc/x86_64-linux-gnu/4.9/../../../../include/c++/4.9/bits/basic_string.h' line='1739' column='1'/>
             <parameter type-id='type-id-53' filepath='/usr/bin/../lib/gcc/x86_64-linux-gnu/4.9/../../../../include/c++/4.9/bits/basic_string.h' line='1739' column='1'/>
             <parameter type-id='type-id-118' filepath='/usr/bin/../lib/gcc/x86_64-linux-gnu/4.9/../../../../include/c++/4.9/bits/basic_string.h' line='1740' column='1'/>
@@ -3250,7 +3250,7 @@
           </function-decl>
         </member-function>
         <member-function access='private' static='yes'>
-          <function-decl name='_S_construct&lt;char *&gt;' mangled-name='_ZNSs12_S_constructIPcEES0_T_S1_RKSaIcESt20forward_iterator_tag' filepath='/usr/bin/../lib/gcc/x86_64-linux-gnu/4.9/../../../../include/c++/4.9/bits/basic_string.h' line='1777' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZNSs12_S_constructIPcEES0_T_S1_RKSaIcESt20forward_iterator_tag' hash='9895045035709c6f'>
+          <function-decl name='_S_construct&lt;char*&gt;' mangled-name='_ZNSs12_S_constructIPcEES0_T_S1_RKSaIcESt20forward_iterator_tag' filepath='/usr/bin/../lib/gcc/x86_64-linux-gnu/4.9/../../../../include/c++/4.9/bits/basic_string.h' line='1777' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZNSs12_S_constructIPcEES0_T_S1_RKSaIcESt20forward_iterator_tag' hash='9895045035709c6f'>
             <parameter type-id='type-id-53' filepath='/usr/bin/../lib/gcc/x86_64-linux-gnu/4.9/../../../../include/c++/4.9/bits/basic_string.tcc' line='1777' column='1'/>
             <parameter type-id='type-id-53' filepath='/usr/bin/../lib/gcc/x86_64-linux-gnu/4.9/../../../../include/c++/4.9/bits/basic_string.tcc' line='1777' column='1'/>
             <parameter type-id='type-id-118' filepath='/usr/bin/../lib/gcc/x86_64-linux-gnu/4.9/../../../../include/c++/4.9/bits/basic_string.tcc' line='1777' column='1'/>
@@ -3259,7 +3259,7 @@
           </function-decl>
         </member-function>
         <member-function access='public'>
-          <function-decl name='append&lt;char *&gt;' mangled-name='_ZNSs6appendIPcEERSsT_S2_' filepath='/usr/bin/../lib/gcc/x86_64-linux-gnu/4.9/../../../../include/c++/4.9/bits/basic_string.h' line='1061' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZNSs6appendIPcEERSsT_S2_' hash='6faa8831d3af3ad4'>
+          <function-decl name='append&lt;char*&gt;' mangled-name='_ZNSs6appendIPcEERSsT_S2_' filepath='/usr/bin/../lib/gcc/x86_64-linux-gnu/4.9/../../../../include/c++/4.9/bits/basic_string.h' line='1061' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZNSs6appendIPcEERSsT_S2_' hash='6faa8831d3af3ad4'>
             <parameter type-id='type-id-124' is-artificial='yes'/>
             <parameter type-id='type-id-53' filepath='/usr/bin/../lib/gcc/x86_64-linux-gnu/4.9/../../../../include/c++/4.9/bits/basic_string.h' line='1061' column='1'/>
             <parameter type-id='type-id-53' filepath='/usr/bin/../lib/gcc/x86_64-linux-gnu/4.9/../../../../include/c++/4.9/bits/basic_string.h' line='1061' column='1'/>
@@ -3267,9 +3267,9 @@
           </function-decl>
         </member-function>
       </class-decl>
-      <class-decl name='basic_string&lt;wchar_t, std::char_traits&lt;wchar_t&gt;, std::allocator&lt;wchar_t&gt; &gt;' visibility='default' is-declaration-only='yes' id='type-id-502'>
+      <class-decl name='basic_string&lt;wchar_t,std::char_traits&lt;wchar_t&gt;,std::allocator&lt;wchar_t&gt;&gt;' visibility='default' is-declaration-only='yes' id='type-id-502'>
         <member-function access='public'>
-          <function-decl name='append&lt;wchar_t *&gt;' mangled-name='_ZNSbIwSt11char_traitsIwESaIwEE6appendIPwEERS2_T_S6_' filepath='/usr/bin/../lib/gcc/x86_64-linux-gnu/4.9/../../../../include/c++/4.9/bits/basic_string.h' line='1061' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZNSbIwSt11char_traitsIwESaIwEE6appendIPwEERS2_T_S6_' hash='52964de53fd173e9'>
+          <function-decl name='append&lt;wchar_t*&gt;' mangled-name='_ZNSbIwSt11char_traitsIwESaIwEE6appendIPwEERS2_T_S6_' filepath='/usr/bin/../lib/gcc/x86_64-linux-gnu/4.9/../../../../include/c++/4.9/bits/basic_string.h' line='1061' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZNSbIwSt11char_traitsIwESaIwEE6appendIPwEERS2_T_S6_' hash='52964de53fd173e9'>
             <parameter type-id='type-id-365' is-artificial='yes'/>
             <parameter type-id='type-id-100' filepath='/usr/bin/../lib/gcc/x86_64-linux-gnu/4.9/../../../../include/c++/4.9/bits/basic_string.h' line='1061' column='1'/>
             <parameter type-id='type-id-100' filepath='/usr/bin/../lib/gcc/x86_64-linux-gnu/4.9/../../../../include/c++/4.9/bits/basic_string.h' line='1061' column='1'/>
@@ -3277,34 +3277,34 @@
           </function-decl>
         </member-function>
       </class-decl>
-      <class-decl name='codecvt&lt;wchar_t, char, __mbstate_t&gt;' visibility='default' is-declaration-only='yes' id='type-id-388'/>
+      <class-decl name='codecvt&lt;wchar_t,char,__mbstate_t&gt;' visibility='default' is-declaration-only='yes' id='type-id-388'/>
       <function-decl name='operator==&lt;char&gt;' mangled-name='_ZSteqIcEN9__gnu_cxx11__enable_ifIXsr9__is_charIT_EE7__valueEbE6__typeERKSbIS2_St11char_traitsIS2_ESaIS2_EESA_' filepath='/usr/bin/../lib/gcc/x86_64-linux-gnu/4.9/../../../../include/c++/4.9/bits/basic_string.h' line='2512' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZSteqIcEN9__gnu_cxx11__enable_ifIXsr9__is_charIT_EE7__valueEbE6__typeERKSbIS2_St11char_traitsIS2_ESaIS2_EESA_' hash='c7c710e908194b91'>
         <parameter type-id='type-id-333' filepath='/usr/bin/../lib/gcc/x86_64-linux-gnu/4.9/../../../../include/c++/4.9/bits/basic_string.h' line='2512' column='1'/>
         <parameter type-id='type-id-333' filepath='/usr/bin/../lib/gcc/x86_64-linux-gnu/4.9/../../../../include/c++/4.9/bits/basic_string.h' line='2513' column='1'/>
         <return type-id='type-id-498'/>
       </function-decl>
-      <function-decl name='operator==&lt;char, std::char_traits&lt;char&gt;, std::allocator&lt;char&gt; &gt;' mangled-name='_ZSteqIcSt11char_traitsIcESaIcEEbRKSbIT_T0_T1_EPKS3_' filepath='/usr/bin/../lib/gcc/x86_64-linux-gnu/4.9/../../../../include/c++/4.9/bits/basic_string.h' line='2538' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZSteqIcSt11char_traitsIcESaIcEEbRKSbIT_T0_T1_EPKS3_' hash='19a1d02fa5635f5c'>
+      <function-decl name='operator==&lt;char,std::char_traits&lt;char&gt;,std::allocator&lt;char&gt;&gt;' mangled-name='_ZSteqIcSt11char_traitsIcESaIcEEbRKSbIT_T0_T1_EPKS3_' filepath='/usr/bin/../lib/gcc/x86_64-linux-gnu/4.9/../../../../include/c++/4.9/bits/basic_string.h' line='2538' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZSteqIcSt11char_traitsIcESaIcEEbRKSbIT_T0_T1_EPKS3_' hash='19a1d02fa5635f5c'>
         <parameter type-id='type-id-333' filepath='/usr/bin/../lib/gcc/x86_64-linux-gnu/4.9/../../../../include/c++/4.9/bits/basic_string.h' line='2538' column='1'/>
         <parameter type-id='type-id-18' filepath='/usr/bin/../lib/gcc/x86_64-linux-gnu/4.9/../../../../include/c++/4.9/bits/basic_string.h' line='2539' column='1'/>
         <return type-id='type-id-1'/>
       </function-decl>
-      <function-decl name='operator&lt;&lt;char, std::char_traits&lt;char&gt;, std::allocator&lt;char&gt; &gt;' mangled-name='_ZStltIcSt11char_traitsIcESaIcEEbRKSbIT_T0_T1_ES8_' filepath='/usr/bin/../lib/gcc/x86_64-linux-gnu/4.9/../../../../include/c++/4.9/bits/basic_string.h' line='2588' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZStltIcSt11char_traitsIcESaIcEEbRKSbIT_T0_T1_ES8_' hash='c7c710e908194b91'>
+      <function-decl name='operator&lt;&lt;char,std::char_traits&lt;char&gt;,std::allocator&lt;char&gt;&gt;' mangled-name='_ZStltIcSt11char_traitsIcESaIcEEbRKSbIT_T0_T1_ES8_' filepath='/usr/bin/../lib/gcc/x86_64-linux-gnu/4.9/../../../../include/c++/4.9/bits/basic_string.h' line='2588' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZStltIcSt11char_traitsIcESaIcEEbRKSbIT_T0_T1_ES8_' hash='c7c710e908194b91'>
         <parameter type-id='type-id-333' filepath='/usr/bin/../lib/gcc/x86_64-linux-gnu/4.9/../../../../include/c++/4.9/bits/basic_string.h' line='2588' column='1'/>
         <parameter type-id='type-id-333' filepath='/usr/bin/../lib/gcc/x86_64-linux-gnu/4.9/../../../../include/c++/4.9/bits/basic_string.h' line='2589' column='1'/>
         <return type-id='type-id-1'/>
       </function-decl>
-      <function-decl name='__distance&lt;const char *&gt;' mangled-name='_ZSt10__distanceIPKcENSt15iterator_traitsIT_E15difference_typeES3_S3_St26random_access_iterator_tag' filepath='/usr/bin/../lib/gcc/x86_64-linux-gnu/4.9/../../../../include/c++/4.9/bits/stl_iterator_base_funcs.h' line='90' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZSt10__distanceIPKcENSt15iterator_traitsIT_E15difference_typeES3_S3_St26random_access_iterator_tag' hash='4d6816caec6fda1e'>
+      <function-decl name='__distance&lt;constchar*&gt;' mangled-name='_ZSt10__distanceIPKcENSt15iterator_traitsIT_E15difference_typeES3_S3_St26random_access_iterator_tag' filepath='/usr/bin/../lib/gcc/x86_64-linux-gnu/4.9/../../../../include/c++/4.9/bits/stl_iterator_base_funcs.h' line='90' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZSt10__distanceIPKcENSt15iterator_traitsIT_E15difference_typeES3_S3_St26random_access_iterator_tag' hash='4d6816caec6fda1e'>
         <parameter type-id='type-id-18' filepath='/usr/bin/../lib/gcc/x86_64-linux-gnu/4.9/../../../../include/c++/4.9/bits/stl_iterator_base_funcs.h' line='90' column='1'/>
         <parameter type-id='type-id-18' filepath='/usr/bin/../lib/gcc/x86_64-linux-gnu/4.9/../../../../include/c++/4.9/bits/stl_iterator_base_funcs.h' line='90' column='1'/>
         <parameter type-id='type-id-357' filepath='/usr/bin/../lib/gcc/x86_64-linux-gnu/4.9/../../../../include/c++/4.9/bits/stl_iterator_base_funcs.h' line='91' column='1'/>
         <return type-id='type-id-492'/>
       </function-decl>
-      <function-decl name='distance&lt;const char *&gt;' mangled-name='_ZSt8distanceIPKcENSt15iterator_traitsIT_E15difference_typeES3_S3_' filepath='/usr/bin/../lib/gcc/x86_64-linux-gnu/4.9/../../../../include/c++/4.9/bits/stl_iterator_base_funcs.h' line='114' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZSt8distanceIPKcENSt15iterator_traitsIT_E15difference_typeES3_S3_' hash='4d6816caec6fda1e'>
+      <function-decl name='distance&lt;constchar*&gt;' mangled-name='_ZSt8distanceIPKcENSt15iterator_traitsIT_E15difference_typeES3_S3_' filepath='/usr/bin/../lib/gcc/x86_64-linux-gnu/4.9/../../../../include/c++/4.9/bits/stl_iterator_base_funcs.h' line='114' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZSt8distanceIPKcENSt15iterator_traitsIT_E15difference_typeES3_S3_' hash='4d6816caec6fda1e'>
         <parameter type-id='type-id-18' filepath='/usr/bin/../lib/gcc/x86_64-linux-gnu/4.9/../../../../include/c++/4.9/bits/stl_iterator_base_funcs.h' line='114' column='1'/>
         <parameter type-id='type-id-18' filepath='/usr/bin/../lib/gcc/x86_64-linux-gnu/4.9/../../../../include/c++/4.9/bits/stl_iterator_base_funcs.h' line='114' column='1'/>
         <return type-id='type-id-492'/>
       </function-decl>
-      <function-decl name='__iterator_category&lt;const char *&gt;' mangled-name='_ZSt19__iterator_categoryIPKcENSt15iterator_traitsIT_E17iterator_categoryERKS3_' filepath='/usr/bin/../lib/gcc/x86_64-linux-gnu/4.9/../../../../include/c++/4.9/bits/stl_iterator_base_types.h' line='201' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZSt19__iterator_categoryIPKcENSt15iterator_traitsIT_E17iterator_categoryERKS3_' hash='b1603547bc97e161'>
+      <function-decl name='__iterator_category&lt;constchar*&gt;' mangled-name='_ZSt19__iterator_categoryIPKcENSt15iterator_traitsIT_E17iterator_categoryERKS3_' filepath='/usr/bin/../lib/gcc/x86_64-linux-gnu/4.9/../../../../include/c++/4.9/bits/stl_iterator_base_types.h' line='201' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZSt19__iterator_categoryIPKcENSt15iterator_traitsIT_E17iterator_categoryERKS3_' hash='b1603547bc97e161'>
         <parameter type-id='type-id-455' filepath='/usr/bin/../lib/gcc/x86_64-linux-gnu/4.9/../../../../include/c++/4.9/bits/stl_iterator_base_types.h' line='201' column='1'/>
         <return type-id='type-id-501'/>
       </function-decl>
@@ -3326,7 +3326,7 @@
         </namespace-decl>
         <namespace-decl name='path_traits'>
           <typedef-decl name='codecvt_type' type-id='type-id-388' filepath='src/third_party/boost-1.56.0/boost/filesystem/path_traits.hpp' line='52' column='1' id='type-id-473'/>
-          <function-decl name='dispatch&lt;std::basic_string&lt;char&gt; &gt;' mangled-name='_ZN5boost10filesystem11path_traits8dispatchISsEEvRKSsRT_RKSt7codecvtIwc11__mbstate_tE' filepath='src/third_party/boost-1.56.0/boost/filesystem/path_traits.hpp' line='171' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZN5boost10filesystem11path_traits8dispatchISsEEvRKSsRT_RKSt7codecvtIwc11__mbstate_tE' hash='7f32ffea222edbe7'>
+          <function-decl name='dispatch&lt;std::basic_string&lt;char&gt;&gt;' mangled-name='_ZN5boost10filesystem11path_traits8dispatchISsEEvRKSsRT_RKSt7codecvtIwc11__mbstate_tE' filepath='src/third_party/boost-1.56.0/boost/filesystem/path_traits.hpp' line='171' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZN5boost10filesystem11path_traits8dispatchISsEEvRKSsRT_RKSt7codecvtIwc11__mbstate_tE' hash='7f32ffea222edbe7'>
             <parameter type-id='type-id-340' filepath='src/third_party/boost-1.56.0/boost/filesystem/path_traits.hpp' line='171' column='1'/>
             <parameter type-id='type-id-120' filepath='src/third_party/boost-1.56.0/boost/filesystem/path_traits.hpp' line='171' column='1'/>
             <parameter type-id='type-id-328' filepath='src/third_party/boost-1.56.0/boost/filesystem/path_traits.hpp' line='171' column='1'/>
@@ -3334,7 +3334,7 @@
           </function-decl>
         </namespace-decl>
       </namespace-decl>
-      <function-decl name='operator==&lt;boost::filesystem::path::iterator, const boost::filesystem::path, boost::bidirectional_traversal_tag, const boost::filesystem::path &amp;, long, boost::filesystem::path::iterator, const boost::filesystem::path, boost::bidirectional_traversal_tag, const boost::filesystem::path &amp;, long&gt;' mangled-name='_ZN5boosteqINS_10filesystem4path8iteratorEKS2_NS_27bidirectional_traversal_tagERS4_lS3_S4_S5_S6_lEENS_6detail23enable_if_interoperableIT_T4_NS_3mpl6apply2INS7_12always_bool2ES9_SA_E4typeEE4typeERKNS_15iterator_facadeIS9_T0_T1_T2_T3_EERKNSI_ISA_T5_T6_T7_T8_EE' filepath='src/third_party/boost-1.56.0/boost/iterator/iterator_facade.hpp' line='832' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZN5boosteqINS_10filesystem4path8iteratorEKS2_NS_27bidirectional_traversal_tagERS4_lS3_S4_S5_S6_lEENS_6detail23enable_if_interoperableIT_T4_NS_3mpl6apply2INS7_12always_bool2ES9_SA_E4typeEE4typeERKNS_15iterator_facadeIS9_T0_T1_T2_T3_EERKNSI_ISA_T5_T6_T7_T8_EE' hash='176b9533a06a9ac9'>
+      <function-decl name='operator==&lt;boost::filesystem::path::iterator,constboost::filesystem::path,boost::bidirectional_traversal_tag,constboost::filesystem::path&amp;,long,boost::filesystem::path::iterator,constboost::filesystem::path,boost::bidirectional_traversal_tag,constboost::filesystem::path&amp;,long&gt;' mangled-name='_ZN5boosteqINS_10filesystem4path8iteratorEKS2_NS_27bidirectional_traversal_tagERS4_lS3_S4_S5_S6_lEENS_6detail23enable_if_interoperableIT_T4_NS_3mpl6apply2INS7_12always_bool2ES9_SA_E4typeEE4typeERKNS_15iterator_facadeIS9_T0_T1_T2_T3_EERKNSI_ISA_T5_T6_T7_T8_EE' filepath='src/third_party/boost-1.56.0/boost/iterator/iterator_facade.hpp' line='832' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZN5boosteqINS_10filesystem4path8iteratorEKS2_NS_27bidirectional_traversal_tagERS4_lS3_S4_S5_S6_lEENS_6detail23enable_if_interoperableIT_T4_NS_3mpl6apply2INS7_12always_bool2ES9_SA_E4typeEE4typeERKNS_15iterator_facadeIS9_T0_T1_T2_T3_EERKNSI_ISA_T5_T6_T7_T8_EE' hash='c3aeabcb842b0dfd'>
         <parameter type-id='type-id-267' filepath='src/third_party/boost-1.56.0/boost/iterator/iterator_facade.hpp' line='833' column='1'/>
         <parameter type-id='type-id-267' filepath='src/third_party/boost-1.56.0/boost/iterator/iterator_facade.hpp' line='833' column='1'/>
         <return type-id='type-id-401'/>
@@ -3342,12 +3342,12 @@
       <namespace-decl name='system'>
       </namespace-decl>
       <namespace-decl name='detail'>
-        <class-decl name='addr_impl_ref&lt;const boost::filesystem::path&gt;' is-struct='yes' visibility='default' size-in-bits='64' filepath='src/third_party/boost-1.56.0/boost/core/addressof.hpp' line='25' column='1' hash='cbc6667b51a33555' id='type-id-443'>
+        <class-decl name='addr_impl_ref&lt;constboost::filesystem::path&gt;' is-struct='yes' visibility='default' size-in-bits='64' filepath='src/third_party/boost-1.56.0/boost/core/addressof.hpp' line='25' column='1' hash='e75a093ea1d4406d' id='type-id-443'>
           <data-member access='public' layout-offset-in-bits='0'>
             <var-decl name='v_' type-id='type-id-255' visibility='default' filepath='src/third_party/boost-1.56.0/boost/core/addressof.hpp' line='27' column='1'/>
           </data-member>
         </class-decl>
-        <class-decl name='addressof_impl&lt;const boost::filesystem::path&gt;' is-struct='yes' visibility='default' size-in-bits='8' filepath='src/third_party/boost-1.56.0/boost/core/addressof.hpp' line='36' column='1' hash='516767c340501e3c' id='type-id-503'/>
+        <class-decl name='addressof_impl&lt;constboost::filesystem::path&gt;' is-struct='yes' visibility='default' size-in-bits='8' filepath='src/third_party/boost-1.56.0/boost/core/addressof.hpp' line='36' column='1' hash='ef7827b6f1d7ac6c' id='type-id-503'/>
         <class-decl name='operator_brackets_proxy&lt;boost::filesystem::path::iterator&gt;' visibility='default' is-declaration-only='yes' id='type-id-414'/>
       </namespace-decl>
     </namespace-decl>
@@ -3399,7 +3399,7 @@
           </enum-decl>
         </member-type>
       </class-decl>
-      <class-decl name='__codecvt_abstract_base&lt;wchar_t, char, __mbstate_t&gt;' visibility='default' is-declaration-only='yes' id='type-id-533'>
+      <class-decl name='__codecvt_abstract_base&lt;wchar_t,char,__mbstate_t&gt;' visibility='default' is-declaration-only='yes' id='type-id-533'>
         <member-type access='private'>
           <typedef-decl name='extern_type' type-id='type-id-2' size-in-bits='8' filepath='/usr/bin/../lib/gcc/x86_64-linux-gnu/4.9/../../../../include/c++/4.9/bits/codecvt.h' line='75' column='1' hash='65b2d157027b431a' id='type-id-510'/>
         </member-type>
@@ -3439,9 +3439,9 @@
           </function-decl>
         </member-function>
       </class-decl>
-      <class-decl name='basic_string&lt;char, std::char_traits&lt;char&gt;, std::allocator&lt;char&gt; &gt;' visibility='default' is-declaration-only='yes' id='type-id-540'>
+      <class-decl name='basic_string&lt;char,std::char_traits&lt;char&gt;,std::allocator&lt;char&gt;&gt;' visibility='default' is-declaration-only='yes' id='type-id-540'>
         <member-function access='public'>
-          <function-decl name='append&lt;char *&gt;' mangled-name='_ZNSs6appendIPcEERSsT_S2_' filepath='/usr/bin/../lib/gcc/x86_64-linux-gnu/4.9/../../../../include/c++/4.9/bits/basic_string.h' line='1061' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZNSs6appendIPcEERSsT_S2_' hash='6faa8831d3af3ad4'>
+          <function-decl name='append&lt;char*&gt;' mangled-name='_ZNSs6appendIPcEERSsT_S2_' filepath='/usr/bin/../lib/gcc/x86_64-linux-gnu/4.9/../../../../include/c++/4.9/bits/basic_string.h' line='1061' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZNSs6appendIPcEERSsT_S2_' hash='6faa8831d3af3ad4'>
             <parameter type-id='type-id-124' is-artificial='yes'/>
             <parameter type-id='type-id-53' filepath='/usr/bin/../lib/gcc/x86_64-linux-gnu/4.9/../../../../include/c++/4.9/bits/basic_string.h' line='1061' column='1'/>
             <parameter type-id='type-id-53' filepath='/usr/bin/../lib/gcc/x86_64-linux-gnu/4.9/../../../../include/c++/4.9/bits/basic_string.h' line='1061' column='1'/>
@@ -3449,7 +3449,7 @@
           </function-decl>
         </member-function>
         <member-function access='public'>
-          <function-decl name='basic_string&lt;char *&gt;' mangled-name='_ZNSsC2IPcEET_S1_RKSaIcE' filepath='/usr/bin/../lib/gcc/x86_64-linux-gnu/4.9/../../../../include/c++/4.9/bits/basic_string.h' line='540' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZNSsC2IPcEET_S1_RKSaIcE' hash='6faa8831d3af3ad4'>
+          <function-decl name='basic_string&lt;char*&gt;' mangled-name='_ZNSsC2IPcEET_S1_RKSaIcE' filepath='/usr/bin/../lib/gcc/x86_64-linux-gnu/4.9/../../../../include/c++/4.9/bits/basic_string.h' line='540' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZNSsC2IPcEET_S1_RKSaIcE' hash='6faa8831d3af3ad4'>
             <parameter type-id='type-id-117' is-artificial='yes'/>
             <parameter type-id='type-id-53' filepath='/usr/bin/../lib/gcc/x86_64-linux-gnu/4.9/../../../../include/c++/4.9/bits/basic_string.tcc' line='540' column='1'/>
             <parameter type-id='type-id-53' filepath='/usr/bin/../lib/gcc/x86_64-linux-gnu/4.9/../../../../include/c++/4.9/bits/basic_string.tcc' line='540' column='1'/>
@@ -3458,7 +3458,7 @@
           </function-decl>
         </member-function>
         <member-function access='public'>
-          <function-decl name='append&lt;const char *&gt;' mangled-name='_ZNSs6appendIPKcEERSsT_S3_' filepath='/usr/bin/../lib/gcc/x86_64-linux-gnu/4.9/../../../../include/c++/4.9/bits/basic_string.h' line='1061' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZNSs6appendIPKcEERSsT_S3_' hash='3d5693612af11c46'>
+          <function-decl name='append&lt;constchar*&gt;' mangled-name='_ZNSs6appendIPKcEERSsT_S3_' filepath='/usr/bin/../lib/gcc/x86_64-linux-gnu/4.9/../../../../include/c++/4.9/bits/basic_string.h' line='1061' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZNSs6appendIPKcEERSsT_S3_' hash='3d5693612af11c46'>
             <parameter type-id='type-id-117' is-artificial='yes'/>
             <parameter type-id='type-id-18' filepath='/usr/bin/../lib/gcc/x86_64-linux-gnu/4.9/../../../../include/c++/4.9/bits/basic_string.h' line='1061' column='1'/>
             <parameter type-id='type-id-18' filepath='/usr/bin/../lib/gcc/x86_64-linux-gnu/4.9/../../../../include/c++/4.9/bits/basic_string.h' line='1061' column='1'/>
@@ -3466,7 +3466,7 @@
           </function-decl>
         </member-function>
         <member-function access='private' static='yes'>
-          <function-decl name='_S_construct&lt;char *&gt;' mangled-name='_ZNSs12_S_constructIPcEES0_T_S1_RKSaIcE' filepath='/usr/bin/../lib/gcc/x86_64-linux-gnu/4.9/../../../../include/c++/4.9/bits/basic_string.h' line='1761' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZNSs12_S_constructIPcEES0_T_S1_RKSaIcE' hash='9895045035709c6f'>
+          <function-decl name='_S_construct&lt;char*&gt;' mangled-name='_ZNSs12_S_constructIPcEES0_T_S1_RKSaIcE' filepath='/usr/bin/../lib/gcc/x86_64-linux-gnu/4.9/../../../../include/c++/4.9/bits/basic_string.h' line='1761' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZNSs12_S_constructIPcEES0_T_S1_RKSaIcE' hash='9895045035709c6f'>
             <parameter type-id='type-id-53' filepath='/usr/bin/../lib/gcc/x86_64-linux-gnu/4.9/../../../../include/c++/4.9/bits/basic_string.h' line='1761' column='1'/>
             <parameter type-id='type-id-53' filepath='/usr/bin/../lib/gcc/x86_64-linux-gnu/4.9/../../../../include/c++/4.9/bits/basic_string.h' line='1761' column='1'/>
             <parameter type-id='type-id-118' filepath='/usr/bin/../lib/gcc/x86_64-linux-gnu/4.9/../../../../include/c++/4.9/bits/basic_string.h' line='1761' column='1'/>
@@ -3474,7 +3474,7 @@
           </function-decl>
         </member-function>
         <member-function access='private' static='yes'>
-          <function-decl name='_S_construct_aux&lt;char *&gt;' mangled-name='_ZNSs16_S_construct_auxIPcEES0_T_S1_RKSaIcESt12__false_type' filepath='/usr/bin/../lib/gcc/x86_64-linux-gnu/4.9/../../../../include/c++/4.9/bits/basic_string.h' line='1739' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZNSs16_S_construct_auxIPcEES0_T_S1_RKSaIcESt12__false_type' hash='9895045035709c6f'>
+          <function-decl name='_S_construct_aux&lt;char*&gt;' mangled-name='_ZNSs16_S_construct_auxIPcEES0_T_S1_RKSaIcESt12__false_type' filepath='/usr/bin/../lib/gcc/x86_64-linux-gnu/4.9/../../../../include/c++/4.9/bits/basic_string.h' line='1739' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZNSs16_S_construct_auxIPcEES0_T_S1_RKSaIcESt12__false_type' hash='9895045035709c6f'>
             <parameter type-id='type-id-53' filepath='/usr/bin/../lib/gcc/x86_64-linux-gnu/4.9/../../../../include/c++/4.9/bits/basic_string.h' line='1739' column='1'/>
             <parameter type-id='type-id-53' filepath='/usr/bin/../lib/gcc/x86_64-linux-gnu/4.9/../../../../include/c++/4.9/bits/basic_string.h' line='1739' column='1'/>
             <parameter type-id='type-id-118' filepath='/usr/bin/../lib/gcc/x86_64-linux-gnu/4.9/../../../../include/c++/4.9/bits/basic_string.h' line='1740' column='1'/>
@@ -3483,7 +3483,7 @@
           </function-decl>
         </member-function>
         <member-function access='private' static='yes'>
-          <function-decl name='_S_construct&lt;char *&gt;' mangled-name='_ZNSs12_S_constructIPcEES0_T_S1_RKSaIcESt20forward_iterator_tag' filepath='/usr/bin/../lib/gcc/x86_64-linux-gnu/4.9/../../../../include/c++/4.9/bits/basic_string.h' line='1777' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZNSs12_S_constructIPcEES0_T_S1_RKSaIcESt20forward_iterator_tag' hash='9895045035709c6f'>
+          <function-decl name='_S_construct&lt;char*&gt;' mangled-name='_ZNSs12_S_constructIPcEES0_T_S1_RKSaIcESt20forward_iterator_tag' filepath='/usr/bin/../lib/gcc/x86_64-linux-gnu/4.9/../../../../include/c++/4.9/bits/basic_string.h' line='1777' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZNSs12_S_constructIPcEES0_T_S1_RKSaIcESt20forward_iterator_tag' hash='9895045035709c6f'>
             <parameter type-id='type-id-53' filepath='/usr/bin/../lib/gcc/x86_64-linux-gnu/4.9/../../../../include/c++/4.9/bits/basic_string.tcc' line='1777' column='1'/>
             <parameter type-id='type-id-53' filepath='/usr/bin/../lib/gcc/x86_64-linux-gnu/4.9/../../../../include/c++/4.9/bits/basic_string.tcc' line='1777' column='1'/>
             <parameter type-id='type-id-118' filepath='/usr/bin/../lib/gcc/x86_64-linux-gnu/4.9/../../../../include/c++/4.9/bits/basic_string.tcc' line='1777' column='1'/>
@@ -3492,7 +3492,7 @@
           </function-decl>
         </member-function>
         <member-function access='public'>
-          <function-decl name='basic_string&lt;const char *&gt;' mangled-name='_ZNSsC2IPKcEET_S2_RKSaIcE' filepath='/usr/bin/../lib/gcc/x86_64-linux-gnu/4.9/../../../../include/c++/4.9/bits/basic_string.h' line='540' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZNSsC2IPKcEET_S2_RKSaIcE' hash='3d5693612af11c46'>
+          <function-decl name='basic_string&lt;constchar*&gt;' mangled-name='_ZNSsC2IPKcEET_S2_RKSaIcE' filepath='/usr/bin/../lib/gcc/x86_64-linux-gnu/4.9/../../../../include/c++/4.9/bits/basic_string.h' line='540' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZNSsC2IPKcEET_S2_RKSaIcE' hash='3d5693612af11c46'>
             <parameter type-id='type-id-123' is-artificial='yes'/>
             <parameter type-id='type-id-18' filepath='/usr/bin/../lib/gcc/x86_64-linux-gnu/4.9/../../../../include/c++/4.9/bits/basic_string.tcc' line='540' column='1'/>
             <parameter type-id='type-id-18' filepath='/usr/bin/../lib/gcc/x86_64-linux-gnu/4.9/../../../../include/c++/4.9/bits/basic_string.tcc' line='540' column='1'/>
@@ -3501,7 +3501,7 @@
           </function-decl>
         </member-function>
         <member-function access='private' static='yes'>
-          <function-decl name='_S_construct&lt;const char *&gt;' mangled-name='_ZNSs12_S_constructIPKcEEPcT_S3_RKSaIcE' filepath='/usr/bin/../lib/gcc/x86_64-linux-gnu/4.9/../../../../include/c++/4.9/bits/basic_string.h' line='1761' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZNSs12_S_constructIPKcEEPcT_S3_RKSaIcE' hash='21babdbcb7a34ebe'>
+          <function-decl name='_S_construct&lt;constchar*&gt;' mangled-name='_ZNSs12_S_constructIPKcEEPcT_S3_RKSaIcE' filepath='/usr/bin/../lib/gcc/x86_64-linux-gnu/4.9/../../../../include/c++/4.9/bits/basic_string.h' line='1761' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZNSs12_S_constructIPKcEEPcT_S3_RKSaIcE' hash='21babdbcb7a34ebe'>
             <parameter type-id='type-id-18' filepath='/usr/bin/../lib/gcc/x86_64-linux-gnu/4.9/../../../../include/c++/4.9/bits/basic_string.h' line='1761' column='1'/>
             <parameter type-id='type-id-18' filepath='/usr/bin/../lib/gcc/x86_64-linux-gnu/4.9/../../../../include/c++/4.9/bits/basic_string.h' line='1761' column='1'/>
             <parameter type-id='type-id-118' filepath='/usr/bin/../lib/gcc/x86_64-linux-gnu/4.9/../../../../include/c++/4.9/bits/basic_string.h' line='1761' column='1'/>
@@ -3509,7 +3509,7 @@
           </function-decl>
         </member-function>
         <member-function access='private' static='yes'>
-          <function-decl name='_S_construct_aux&lt;const char *&gt;' mangled-name='_ZNSs16_S_construct_auxIPKcEEPcT_S3_RKSaIcESt12__false_type' filepath='/usr/bin/../lib/gcc/x86_64-linux-gnu/4.9/../../../../include/c++/4.9/bits/basic_string.h' line='1739' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZNSs16_S_construct_auxIPKcEEPcT_S3_RKSaIcESt12__false_type' hash='21babdbcb7a34ebe'>
+          <function-decl name='_S_construct_aux&lt;constchar*&gt;' mangled-name='_ZNSs16_S_construct_auxIPKcEEPcT_S3_RKSaIcESt12__false_type' filepath='/usr/bin/../lib/gcc/x86_64-linux-gnu/4.9/../../../../include/c++/4.9/bits/basic_string.h' line='1739' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZNSs16_S_construct_auxIPKcEEPcT_S3_RKSaIcESt12__false_type' hash='21babdbcb7a34ebe'>
             <parameter type-id='type-id-18' filepath='/usr/bin/../lib/gcc/x86_64-linux-gnu/4.9/../../../../include/c++/4.9/bits/basic_string.h' line='1739' column='1'/>
             <parameter type-id='type-id-18' filepath='/usr/bin/../lib/gcc/x86_64-linux-gnu/4.9/../../../../include/c++/4.9/bits/basic_string.h' line='1739' column='1'/>
             <parameter type-id='type-id-118' filepath='/usr/bin/../lib/gcc/x86_64-linux-gnu/4.9/../../../../include/c++/4.9/bits/basic_string.h' line='1740' column='1'/>
@@ -3518,7 +3518,7 @@
           </function-decl>
         </member-function>
         <member-function access='private' static='yes'>
-          <function-decl name='_S_construct&lt;const char *&gt;' mangled-name='_ZNSs12_S_constructIPKcEEPcT_S3_RKSaIcESt20forward_iterator_tag' filepath='/usr/bin/../lib/gcc/x86_64-linux-gnu/4.9/../../../../include/c++/4.9/bits/basic_string.h' line='1777' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZNSs12_S_constructIPKcEEPcT_S3_RKSaIcESt20forward_iterator_tag' hash='21babdbcb7a34ebe'>
+          <function-decl name='_S_construct&lt;constchar*&gt;' mangled-name='_ZNSs12_S_constructIPKcEEPcT_S3_RKSaIcESt20forward_iterator_tag' filepath='/usr/bin/../lib/gcc/x86_64-linux-gnu/4.9/../../../../include/c++/4.9/bits/basic_string.h' line='1777' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZNSs12_S_constructIPKcEEPcT_S3_RKSaIcESt20forward_iterator_tag' hash='21babdbcb7a34ebe'>
             <parameter type-id='type-id-18' filepath='/usr/bin/../lib/gcc/x86_64-linux-gnu/4.9/../../../../include/c++/4.9/bits/basic_string.tcc' line='1777' column='1'/>
             <parameter type-id='type-id-18' filepath='/usr/bin/../lib/gcc/x86_64-linux-gnu/4.9/../../../../include/c++/4.9/bits/basic_string.tcc' line='1777' column='1'/>
             <parameter type-id='type-id-118' filepath='/usr/bin/../lib/gcc/x86_64-linux-gnu/4.9/../../../../include/c++/4.9/bits/basic_string.tcc' line='1777' column='1'/>
@@ -3527,9 +3527,9 @@
           </function-decl>
         </member-function>
       </class-decl>
-      <class-decl name='basic_string&lt;wchar_t, std::char_traits&lt;wchar_t&gt;, std::allocator&lt;wchar_t&gt; &gt;' visibility='default' is-declaration-only='yes' id='type-id-541'>
+      <class-decl name='basic_string&lt;wchar_t,std::char_traits&lt;wchar_t&gt;,std::allocator&lt;wchar_t&gt;&gt;' visibility='default' is-declaration-only='yes' id='type-id-541'>
         <member-function access='public'>
-          <function-decl name='append&lt;wchar_t *&gt;' mangled-name='_ZNSbIwSt11char_traitsIwESaIwEE6appendIPwEERS2_T_S6_' filepath='/usr/bin/../lib/gcc/x86_64-linux-gnu/4.9/../../../../include/c++/4.9/bits/basic_string.h' line='1061' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZNSbIwSt11char_traitsIwESaIwEE6appendIPwEERS2_T_S6_' hash='52964de53fd173e9'>
+          <function-decl name='append&lt;wchar_t*&gt;' mangled-name='_ZNSbIwSt11char_traitsIwESaIwEE6appendIPwEERS2_T_S6_' filepath='/usr/bin/../lib/gcc/x86_64-linux-gnu/4.9/../../../../include/c++/4.9/bits/basic_string.h' line='1061' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZNSbIwSt11char_traitsIwESaIwEE6appendIPwEERS2_T_S6_' hash='52964de53fd173e9'>
             <parameter type-id='type-id-365' is-artificial='yes'/>
             <parameter type-id='type-id-100' filepath='/usr/bin/../lib/gcc/x86_64-linux-gnu/4.9/../../../../include/c++/4.9/bits/basic_string.h' line='1061' column='1'/>
             <parameter type-id='type-id-100' filepath='/usr/bin/../lib/gcc/x86_64-linux-gnu/4.9/../../../../include/c++/4.9/bits/basic_string.h' line='1061' column='1'/>
@@ -3537,7 +3537,7 @@
           </function-decl>
         </member-function>
       </class-decl>
-      <class-decl name='codecvt&lt;wchar_t, char, __mbstate_t&gt;' visibility='default' is-declaration-only='yes' id='type-id-550'/>
+      <class-decl name='codecvt&lt;wchar_t,char,__mbstate_t&gt;' visibility='default' is-declaration-only='yes' id='type-id-550'/>
       <typedef-decl name='string' type-id='type-id-540' filepath='/usr/bin/../lib/gcc/x86_64-linux-gnu/4.9/../../../../include/c++/4.9/bits/stringfwd.h' line='62' column='1' id='type-id-536'/>
       <typedef-decl name='wstring' type-id='type-id-541' filepath='/usr/bin/../lib/gcc/x86_64-linux-gnu/4.9/../../../../include/c++/4.9/bits/stringfwd.h' line='68' column='1' id='type-id-542'/>
     </namespace-decl>
@@ -3608,9 +3608,9 @@
     <qualified-type-def type-id='type-id-14' restrict='yes' id='type-id-564'/>
     <qualified-type-def type-id='type-id-14' restrict='yes' id='type-id-565'/>
     <namespace-decl name='std'>
-      <class-decl name='basic_string&lt;char, std::char_traits&lt;char&gt;, std::allocator&lt;char&gt; &gt;' visibility='default' is-declaration-only='yes' id='type-id-557'>
+      <class-decl name='basic_string&lt;char,std::char_traits&lt;char&gt;,std::allocator&lt;char&gt;&gt;' visibility='default' is-declaration-only='yes' id='type-id-557'>
         <member-function access='public'>
-          <function-decl name='basic_string&lt;char *&gt;' mangled-name='_ZNSsC2IPcEET_S1_RKSaIcE' filepath='/usr/bin/../lib/gcc/x86_64-linux-gnu/4.9/../../../../include/c++/4.9/bits/basic_string.h' line='540' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZNSsC2IPcEET_S1_RKSaIcE' hash='6faa8831d3af3ad4'>
+          <function-decl name='basic_string&lt;char*&gt;' mangled-name='_ZNSsC2IPcEET_S1_RKSaIcE' filepath='/usr/bin/../lib/gcc/x86_64-linux-gnu/4.9/../../../../include/c++/4.9/bits/basic_string.h' line='540' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZNSsC2IPcEET_S1_RKSaIcE' hash='6faa8831d3af3ad4'>
             <parameter type-id='type-id-117' is-artificial='yes'/>
             <parameter type-id='type-id-53' filepath='/usr/bin/../lib/gcc/x86_64-linux-gnu/4.9/../../../../include/c++/4.9/bits/basic_string.tcc' line='540' column='1'/>
             <parameter type-id='type-id-53' filepath='/usr/bin/../lib/gcc/x86_64-linux-gnu/4.9/../../../../include/c++/4.9/bits/basic_string.tcc' line='540' column='1'/>
@@ -3619,7 +3619,7 @@
           </function-decl>
         </member-function>
         <member-function access='public'>
-          <function-decl name='append&lt;const char *&gt;' mangled-name='_ZNSs6appendIPKcEERSsT_S3_' filepath='/usr/bin/../lib/gcc/x86_64-linux-gnu/4.9/../../../../include/c++/4.9/bits/basic_string.h' line='1061' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZNSs6appendIPKcEERSsT_S3_' hash='3d5693612af11c46'>
+          <function-decl name='append&lt;constchar*&gt;' mangled-name='_ZNSs6appendIPKcEERSsT_S3_' filepath='/usr/bin/../lib/gcc/x86_64-linux-gnu/4.9/../../../../include/c++/4.9/bits/basic_string.h' line='1061' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZNSs6appendIPKcEERSsT_S3_' hash='3d5693612af11c46'>
             <parameter type-id='type-id-117' is-artificial='yes'/>
             <parameter type-id='type-id-18' filepath='/usr/bin/../lib/gcc/x86_64-linux-gnu/4.9/../../../../include/c++/4.9/bits/basic_string.h' line='1061' column='1'/>
             <parameter type-id='type-id-18' filepath='/usr/bin/../lib/gcc/x86_64-linux-gnu/4.9/../../../../include/c++/4.9/bits/basic_string.h' line='1061' column='1'/>
@@ -3627,7 +3627,7 @@
           </function-decl>
         </member-function>
         <member-function access='private' static='yes'>
-          <function-decl name='_S_construct&lt;char *&gt;' mangled-name='_ZNSs12_S_constructIPcEES0_T_S1_RKSaIcE' filepath='/usr/bin/../lib/gcc/x86_64-linux-gnu/4.9/../../../../include/c++/4.9/bits/basic_string.h' line='1761' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZNSs12_S_constructIPcEES0_T_S1_RKSaIcE' hash='9895045035709c6f'>
+          <function-decl name='_S_construct&lt;char*&gt;' mangled-name='_ZNSs12_S_constructIPcEES0_T_S1_RKSaIcE' filepath='/usr/bin/../lib/gcc/x86_64-linux-gnu/4.9/../../../../include/c++/4.9/bits/basic_string.h' line='1761' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZNSs12_S_constructIPcEES0_T_S1_RKSaIcE' hash='9895045035709c6f'>
             <parameter type-id='type-id-53' filepath='/usr/bin/../lib/gcc/x86_64-linux-gnu/4.9/../../../../include/c++/4.9/bits/basic_string.h' line='1761' column='1'/>
             <parameter type-id='type-id-53' filepath='/usr/bin/../lib/gcc/x86_64-linux-gnu/4.9/../../../../include/c++/4.9/bits/basic_string.h' line='1761' column='1'/>
             <parameter type-id='type-id-118' filepath='/usr/bin/../lib/gcc/x86_64-linux-gnu/4.9/../../../../include/c++/4.9/bits/basic_string.h' line='1761' column='1'/>
@@ -3635,7 +3635,7 @@
           </function-decl>
         </member-function>
         <member-function access='private' static='yes'>
-          <function-decl name='_S_construct_aux&lt;char *&gt;' mangled-name='_ZNSs16_S_construct_auxIPcEES0_T_S1_RKSaIcESt12__false_type' filepath='/usr/bin/../lib/gcc/x86_64-linux-gnu/4.9/../../../../include/c++/4.9/bits/basic_string.h' line='1739' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZNSs16_S_construct_auxIPcEES0_T_S1_RKSaIcESt12__false_type' hash='9895045035709c6f'>
+          <function-decl name='_S_construct_aux&lt;char*&gt;' mangled-name='_ZNSs16_S_construct_auxIPcEES0_T_S1_RKSaIcESt12__false_type' filepath='/usr/bin/../lib/gcc/x86_64-linux-gnu/4.9/../../../../include/c++/4.9/bits/basic_string.h' line='1739' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZNSs16_S_construct_auxIPcEES0_T_S1_RKSaIcESt12__false_type' hash='9895045035709c6f'>
             <parameter type-id='type-id-53' filepath='/usr/bin/../lib/gcc/x86_64-linux-gnu/4.9/../../../../include/c++/4.9/bits/basic_string.h' line='1739' column='1'/>
             <parameter type-id='type-id-53' filepath='/usr/bin/../lib/gcc/x86_64-linux-gnu/4.9/../../../../include/c++/4.9/bits/basic_string.h' line='1739' column='1'/>
             <parameter type-id='type-id-118' filepath='/usr/bin/../lib/gcc/x86_64-linux-gnu/4.9/../../../../include/c++/4.9/bits/basic_string.h' line='1740' column='1'/>
@@ -3644,7 +3644,7 @@
           </function-decl>
         </member-function>
         <member-function access='private' static='yes'>
-          <function-decl name='_S_construct&lt;char *&gt;' mangled-name='_ZNSs12_S_constructIPcEES0_T_S1_RKSaIcESt20forward_iterator_tag' filepath='/usr/bin/../lib/gcc/x86_64-linux-gnu/4.9/../../../../include/c++/4.9/bits/basic_string.h' line='1777' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZNSs12_S_constructIPcEES0_T_S1_RKSaIcESt20forward_iterator_tag' hash='9895045035709c6f'>
+          <function-decl name='_S_construct&lt;char*&gt;' mangled-name='_ZNSs12_S_constructIPcEES0_T_S1_RKSaIcESt20forward_iterator_tag' filepath='/usr/bin/../lib/gcc/x86_64-linux-gnu/4.9/../../../../include/c++/4.9/bits/basic_string.h' line='1777' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZNSs12_S_constructIPcEES0_T_S1_RKSaIcESt20forward_iterator_tag' hash='9895045035709c6f'>
             <parameter type-id='type-id-53' filepath='/usr/bin/../lib/gcc/x86_64-linux-gnu/4.9/../../../../include/c++/4.9/bits/basic_string.tcc' line='1777' column='1'/>
             <parameter type-id='type-id-53' filepath='/usr/bin/../lib/gcc/x86_64-linux-gnu/4.9/../../../../include/c++/4.9/bits/basic_string.tcc' line='1777' column='1'/>
             <parameter type-id='type-id-118' filepath='/usr/bin/../lib/gcc/x86_64-linux-gnu/4.9/../../../../include/c++/4.9/bits/basic_string.tcc' line='1777' column='1'/>
@@ -3653,7 +3653,7 @@
           </function-decl>
         </member-function>
         <member-function access='public'>
-          <function-decl name='basic_string&lt;const char *&gt;' mangled-name='_ZNSsC2IPKcEET_S2_RKSaIcE' filepath='/usr/bin/../lib/gcc/x86_64-linux-gnu/4.9/../../../../include/c++/4.9/bits/basic_string.h' line='540' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZNSsC2IPKcEET_S2_RKSaIcE' hash='3d5693612af11c46'>
+          <function-decl name='basic_string&lt;constchar*&gt;' mangled-name='_ZNSsC2IPKcEET_S2_RKSaIcE' filepath='/usr/bin/../lib/gcc/x86_64-linux-gnu/4.9/../../../../include/c++/4.9/bits/basic_string.h' line='540' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZNSsC2IPKcEET_S2_RKSaIcE' hash='3d5693612af11c46'>
             <parameter type-id='type-id-123' is-artificial='yes'/>
             <parameter type-id='type-id-18' filepath='/usr/bin/../lib/gcc/x86_64-linux-gnu/4.9/../../../../include/c++/4.9/bits/basic_string.tcc' line='540' column='1'/>
             <parameter type-id='type-id-18' filepath='/usr/bin/../lib/gcc/x86_64-linux-gnu/4.9/../../../../include/c++/4.9/bits/basic_string.tcc' line='540' column='1'/>
@@ -3662,7 +3662,7 @@
           </function-decl>
         </member-function>
         <member-function access='private' static='yes'>
-          <function-decl name='_S_construct&lt;const char *&gt;' mangled-name='_ZNSs12_S_constructIPKcEEPcT_S3_RKSaIcE' filepath='/usr/bin/../lib/gcc/x86_64-linux-gnu/4.9/../../../../include/c++/4.9/bits/basic_string.h' line='1761' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZNSs12_S_constructIPKcEEPcT_S3_RKSaIcE' hash='21babdbcb7a34ebe'>
+          <function-decl name='_S_construct&lt;constchar*&gt;' mangled-name='_ZNSs12_S_constructIPKcEEPcT_S3_RKSaIcE' filepath='/usr/bin/../lib/gcc/x86_64-linux-gnu/4.9/../../../../include/c++/4.9/bits/basic_string.h' line='1761' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZNSs12_S_constructIPKcEEPcT_S3_RKSaIcE' hash='21babdbcb7a34ebe'>
             <parameter type-id='type-id-18' filepath='/usr/bin/../lib/gcc/x86_64-linux-gnu/4.9/../../../../include/c++/4.9/bits/basic_string.h' line='1761' column='1'/>
             <parameter type-id='type-id-18' filepath='/usr/bin/../lib/gcc/x86_64-linux-gnu/4.9/../../../../include/c++/4.9/bits/basic_string.h' line='1761' column='1'/>
             <parameter type-id='type-id-118' filepath='/usr/bin/../lib/gcc/x86_64-linux-gnu/4.9/../../../../include/c++/4.9/bits/basic_string.h' line='1761' column='1'/>
@@ -3670,7 +3670,7 @@
           </function-decl>
         </member-function>
         <member-function access='private' static='yes'>
-          <function-decl name='_S_construct_aux&lt;const char *&gt;' mangled-name='_ZNSs16_S_construct_auxIPKcEEPcT_S3_RKSaIcESt12__false_type' filepath='/usr/bin/../lib/gcc/x86_64-linux-gnu/4.9/../../../../include/c++/4.9/bits/basic_string.h' line='1739' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZNSs16_S_construct_auxIPKcEEPcT_S3_RKSaIcESt12__false_type' hash='21babdbcb7a34ebe'>
+          <function-decl name='_S_construct_aux&lt;constchar*&gt;' mangled-name='_ZNSs16_S_construct_auxIPKcEEPcT_S3_RKSaIcESt12__false_type' filepath='/usr/bin/../lib/gcc/x86_64-linux-gnu/4.9/../../../../include/c++/4.9/bits/basic_string.h' line='1739' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZNSs16_S_construct_auxIPKcEEPcT_S3_RKSaIcESt12__false_type' hash='21babdbcb7a34ebe'>
             <parameter type-id='type-id-18' filepath='/usr/bin/../lib/gcc/x86_64-linux-gnu/4.9/../../../../include/c++/4.9/bits/basic_string.h' line='1739' column='1'/>
             <parameter type-id='type-id-18' filepath='/usr/bin/../lib/gcc/x86_64-linux-gnu/4.9/../../../../include/c++/4.9/bits/basic_string.h' line='1739' column='1'/>
             <parameter type-id='type-id-118' filepath='/usr/bin/../lib/gcc/x86_64-linux-gnu/4.9/../../../../include/c++/4.9/bits/basic_string.h' line='1740' column='1'/>
@@ -3679,7 +3679,7 @@
           </function-decl>
         </member-function>
         <member-function access='private' static='yes'>
-          <function-decl name='_S_construct&lt;const char *&gt;' mangled-name='_ZNSs12_S_constructIPKcEEPcT_S3_RKSaIcESt20forward_iterator_tag' filepath='/usr/bin/../lib/gcc/x86_64-linux-gnu/4.9/../../../../include/c++/4.9/bits/basic_string.h' line='1777' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZNSs12_S_constructIPKcEEPcT_S3_RKSaIcESt20forward_iterator_tag' hash='21babdbcb7a34ebe'>
+          <function-decl name='_S_construct&lt;constchar*&gt;' mangled-name='_ZNSs12_S_constructIPKcEEPcT_S3_RKSaIcESt20forward_iterator_tag' filepath='/usr/bin/../lib/gcc/x86_64-linux-gnu/4.9/../../../../include/c++/4.9/bits/basic_string.h' line='1777' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZNSs12_S_constructIPKcEEPcT_S3_RKSaIcESt20forward_iterator_tag' hash='21babdbcb7a34ebe'>
             <parameter type-id='type-id-18' filepath='/usr/bin/../lib/gcc/x86_64-linux-gnu/4.9/../../../../include/c++/4.9/bits/basic_string.tcc' line='1777' column='1'/>
             <parameter type-id='type-id-18' filepath='/usr/bin/../lib/gcc/x86_64-linux-gnu/4.9/../../../../include/c++/4.9/bits/basic_string.tcc' line='1777' column='1'/>
             <parameter type-id='type-id-118' filepath='/usr/bin/../lib/gcc/x86_64-linux-gnu/4.9/../../../../include/c++/4.9/bits/basic_string.tcc' line='1777' column='1'/>
@@ -3688,7 +3688,7 @@
           </function-decl>
         </member-function>
         <member-function access='public'>
-          <function-decl name='append&lt;char *&gt;' mangled-name='_ZNSs6appendIPcEERSsT_S2_' filepath='/usr/bin/../lib/gcc/x86_64-linux-gnu/4.9/../../../../include/c++/4.9/bits/basic_string.h' line='1061' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZNSs6appendIPcEERSsT_S2_' hash='6faa8831d3af3ad4'>
+          <function-decl name='append&lt;char*&gt;' mangled-name='_ZNSs6appendIPcEERSsT_S2_' filepath='/usr/bin/../lib/gcc/x86_64-linux-gnu/4.9/../../../../include/c++/4.9/bits/basic_string.h' line='1061' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZNSs6appendIPcEERSsT_S2_' hash='6faa8831d3af3ad4'>
             <parameter type-id='type-id-124' is-artificial='yes'/>
             <parameter type-id='type-id-53' filepath='/usr/bin/../lib/gcc/x86_64-linux-gnu/4.9/../../../../include/c++/4.9/bits/basic_string.h' line='1061' column='1'/>
             <parameter type-id='type-id-53' filepath='/usr/bin/../lib/gcc/x86_64-linux-gnu/4.9/../../../../include/c++/4.9/bits/basic_string.h' line='1061' column='1'/>
@@ -3696,7 +3696,7 @@
           </function-decl>
         </member-function>
       </class-decl>
-      <function-decl name='operator!=&lt;char, std::char_traits&lt;char&gt;, std::allocator&lt;char&gt; &gt;' mangled-name='_ZStneIcSt11char_traitsIcESaIcEEbRKSbIT_T0_T1_EPKS3_' filepath='/usr/bin/../lib/gcc/x86_64-linux-gnu/4.9/../../../../include/c++/4.9/bits/basic_string.h' line='2575' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZStneIcSt11char_traitsIcESaIcEEbRKSbIT_T0_T1_EPKS3_' hash='19a1d02fa5635f5c'>
+      <function-decl name='operator!=&lt;char,std::char_traits&lt;char&gt;,std::allocator&lt;char&gt;&gt;' mangled-name='_ZStneIcSt11char_traitsIcESaIcEEbRKSbIT_T0_T1_EPKS3_' filepath='/usr/bin/../lib/gcc/x86_64-linux-gnu/4.9/../../../../include/c++/4.9/bits/basic_string.h' line='2575' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZStneIcSt11char_traitsIcESaIcEEbRKSbIT_T0_T1_EPKS3_' hash='19a1d02fa5635f5c'>
         <parameter type-id='type-id-333' filepath='/usr/bin/../lib/gcc/x86_64-linux-gnu/4.9/../../../../include/c++/4.9/bits/basic_string.h' line='2538' column='1'/>
         <parameter type-id='type-id-18' filepath='/usr/bin/../lib/gcc/x86_64-linux-gnu/4.9/../../../../include/c++/4.9/bits/basic_string.h' line='2539' column='1'/>
         <return type-id='type-id-1'/>
@@ -3737,10 +3737,10 @@
     </namespace-decl>
   </abi-instr>
   <abi-instr address-size='64' path='src/third_party/boost-1.56.0/libs/filesystem/src/unique_path.cpp' comp-dir-path='/home/andrew/Documents/10gen/dev/src/mongodb' language='LANG_C_plus_plus'>
-    <reference-type-def kind='lvalue' type-id='type-id-566' size-in-bits='64' hash='c526cf9f64b03b29' id='type-id-567'/>
-    <pointer-type-def type-id='type-id-566' size-in-bits='64' hash='f467786f99f44631' id='type-id-568'/>
-    <qualified-type-def type-id='type-id-566' const='yes' hash='2ffe435c181b8717' id='type-id-569'/>
-    <pointer-type-def type-id='type-id-569' size-in-bits='64' hash='b7bbd593d5830268' id='type-id-570'/>
+    <reference-type-def kind='lvalue' type-id='type-id-566' size-in-bits='64' hash='3161bb2eaa9e9ef5' id='type-id-567'/>
+    <pointer-type-def type-id='type-id-566' size-in-bits='64' hash='385d3dd6d2065068' id='type-id-568'/>
+    <qualified-type-def type-id='type-id-566' const='yes' hash='bf6da67c1da5aa9b' id='type-id-569'/>
+    <pointer-type-def type-id='type-id-569' size-in-bits='64' hash='5d0e8b5def0dd443' id='type-id-570'/>
     <reference-type-def kind='lvalue' type-id='type-id-86' size-in-bits='64' hash='2c59108f0fd812ce' id='type-id-571'/>
     <qualified-type-def type-id='type-id-87' const='yes' hash='4280ffa5775babbc' id='type-id-572'/>
     <reference-type-def kind='lvalue' type-id='type-id-572' size-in-bits='64' hash='ca48e0c6b7419d86' id='type-id-573'/>
@@ -3764,7 +3764,7 @@
     <qualified-type-def type-id='type-id-14' restrict='yes' id='type-id-596'/>
     <qualified-type-def type-id='type-id-14' restrict='yes' id='type-id-597'/>
     <namespace-decl name='__gnu_cxx'>
-      <class-decl name='__normal_iterator&lt;const wchar_t *, std::basic_string&lt;wchar_t&gt; &gt;' visibility='default' size-in-bits='64' filepath='/usr/bin/../lib/gcc/x86_64-linux-gnu/4.9/../../../../include/c++/4.9/bits/stl_iterator.h' line='709' column='1' hash='a1e83584d96f9e5a' id='type-id-566'>
+      <class-decl name='__normal_iterator&lt;constwchar_t*,std::basic_string&lt;wchar_t&gt;&gt;' visibility='default' size-in-bits='64' filepath='/usr/bin/../lib/gcc/x86_64-linux-gnu/4.9/../../../../include/c++/4.9/bits/stl_iterator.h' line='709' column='1' hash='aa90888c60f34e44' id='type-id-566'>
         <member-type access='private'>
           <typedef-decl name='difference_type' type-id='type-id-599' size-in-bits='64' filepath='/usr/bin/../lib/gcc/x86_64-linux-gnu/4.9/../../../../include/c++/4.9/bits/stl_iterator.h' line='720' column='1' hash='b119fe0931d2ee10' id='type-id-598'/>
         </member-type>
@@ -3786,7 +3786,7 @@
       </class-decl>
     </namespace-decl>
     <namespace-decl name='std'>
-      <class-decl name='iterator_traits&lt;const wchar_t *&gt;' is-struct='yes' visibility='default' size-in-bits='8' filepath='/usr/bin/../lib/gcc/x86_64-linux-gnu/4.9/../../../../include/c++/4.9/bits/stl_iterator_base_types.h' line='186' column='1' hash='9d1b8466891e0175' id='type-id-604'>
+      <class-decl name='iterator_traits&lt;constwchar_t*&gt;' is-struct='yes' visibility='default' size-in-bits='8' filepath='/usr/bin/../lib/gcc/x86_64-linux-gnu/4.9/../../../../include/c++/4.9/bits/stl_iterator_base_types.h' line='186' column='1' hash='726815398693bf30' id='type-id-604'>
         <member-type access='public'>
           <typedef-decl name='difference_type' type-id='type-id-355' size-in-bits='64' filepath='/usr/bin/../lib/gcc/x86_64-linux-gnu/4.9/../../../../include/c++/4.9/bits/stl_iterator_base_types.h' line='190' column='1' hash='b119fe0931d2ee10' id='type-id-599'/>
         </member-type>
@@ -3797,9 +3797,9 @@
           <typedef-decl name='reference' type-id='type-id-571' size-in-bits='64' filepath='/usr/bin/../lib/gcc/x86_64-linux-gnu/4.9/../../../../include/c++/4.9/bits/stl_iterator_base_types.h' line='192' column='1' hash='2c59108f0fd812ce' id='type-id-603'/>
         </member-type>
       </class-decl>
-      <class-decl name='basic_string&lt;char, std::char_traits&lt;char&gt;, std::allocator&lt;char&gt; &gt;' visibility='default' is-declaration-only='yes' id='type-id-394'>
+      <class-decl name='basic_string&lt;char,std::char_traits&lt;char&gt;,std::allocator&lt;char&gt;&gt;' visibility='default' is-declaration-only='yes' id='type-id-394'>
         <member-function access='public'>
-          <function-decl name='basic_string&lt;char *&gt;' mangled-name='_ZNSsC2IPcEET_S1_RKSaIcE' filepath='/usr/bin/../lib/gcc/x86_64-linux-gnu/4.9/../../../../include/c++/4.9/bits/basic_string.h' line='540' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZNSsC2IPcEET_S1_RKSaIcE' hash='6faa8831d3af3ad4'>
+          <function-decl name='basic_string&lt;char*&gt;' mangled-name='_ZNSsC2IPcEET_S1_RKSaIcE' filepath='/usr/bin/../lib/gcc/x86_64-linux-gnu/4.9/../../../../include/c++/4.9/bits/basic_string.h' line='540' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZNSsC2IPcEET_S1_RKSaIcE' hash='6faa8831d3af3ad4'>
             <parameter type-id='type-id-117' is-artificial='yes'/>
             <parameter type-id='type-id-53' filepath='/usr/bin/../lib/gcc/x86_64-linux-gnu/4.9/../../../../include/c++/4.9/bits/basic_string.tcc' line='540' column='1'/>
             <parameter type-id='type-id-53' filepath='/usr/bin/../lib/gcc/x86_64-linux-gnu/4.9/../../../../include/c++/4.9/bits/basic_string.tcc' line='540' column='1'/>
@@ -3808,7 +3808,7 @@
           </function-decl>
         </member-function>
         <member-function access='public'>
-          <function-decl name='append&lt;const char *&gt;' mangled-name='_ZNSs6appendIPKcEERSsT_S3_' filepath='/usr/bin/../lib/gcc/x86_64-linux-gnu/4.9/../../../../include/c++/4.9/bits/basic_string.h' line='1061' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZNSs6appendIPKcEERSsT_S3_' hash='3d5693612af11c46'>
+          <function-decl name='append&lt;constchar*&gt;' mangled-name='_ZNSs6appendIPKcEERSsT_S3_' filepath='/usr/bin/../lib/gcc/x86_64-linux-gnu/4.9/../../../../include/c++/4.9/bits/basic_string.h' line='1061' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZNSs6appendIPKcEERSsT_S3_' hash='3d5693612af11c46'>
             <parameter type-id='type-id-117' is-artificial='yes'/>
             <parameter type-id='type-id-18' filepath='/usr/bin/../lib/gcc/x86_64-linux-gnu/4.9/../../../../include/c++/4.9/bits/basic_string.h' line='1061' column='1'/>
             <parameter type-id='type-id-18' filepath='/usr/bin/../lib/gcc/x86_64-linux-gnu/4.9/../../../../include/c++/4.9/bits/basic_string.h' line='1061' column='1'/>
@@ -3816,7 +3816,7 @@
           </function-decl>
         </member-function>
         <member-function access='private' static='yes'>
-          <function-decl name='_S_construct&lt;char *&gt;' mangled-name='_ZNSs12_S_constructIPcEES0_T_S1_RKSaIcE' filepath='/usr/bin/../lib/gcc/x86_64-linux-gnu/4.9/../../../../include/c++/4.9/bits/basic_string.h' line='1761' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZNSs12_S_constructIPcEES0_T_S1_RKSaIcE' hash='9895045035709c6f'>
+          <function-decl name='_S_construct&lt;char*&gt;' mangled-name='_ZNSs12_S_constructIPcEES0_T_S1_RKSaIcE' filepath='/usr/bin/../lib/gcc/x86_64-linux-gnu/4.9/../../../../include/c++/4.9/bits/basic_string.h' line='1761' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZNSs12_S_constructIPcEES0_T_S1_RKSaIcE' hash='9895045035709c6f'>
             <parameter type-id='type-id-53' filepath='/usr/bin/../lib/gcc/x86_64-linux-gnu/4.9/../../../../include/c++/4.9/bits/basic_string.h' line='1761' column='1'/>
             <parameter type-id='type-id-53' filepath='/usr/bin/../lib/gcc/x86_64-linux-gnu/4.9/../../../../include/c++/4.9/bits/basic_string.h' line='1761' column='1'/>
             <parameter type-id='type-id-118' filepath='/usr/bin/../lib/gcc/x86_64-linux-gnu/4.9/../../../../include/c++/4.9/bits/basic_string.h' line='1761' column='1'/>
@@ -3824,7 +3824,7 @@
           </function-decl>
         </member-function>
         <member-function access='private' static='yes'>
-          <function-decl name='_S_construct_aux&lt;char *&gt;' mangled-name='_ZNSs16_S_construct_auxIPcEES0_T_S1_RKSaIcESt12__false_type' filepath='/usr/bin/../lib/gcc/x86_64-linux-gnu/4.9/../../../../include/c++/4.9/bits/basic_string.h' line='1739' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZNSs16_S_construct_auxIPcEES0_T_S1_RKSaIcESt12__false_type' hash='9895045035709c6f'>
+          <function-decl name='_S_construct_aux&lt;char*&gt;' mangled-name='_ZNSs16_S_construct_auxIPcEES0_T_S1_RKSaIcESt12__false_type' filepath='/usr/bin/../lib/gcc/x86_64-linux-gnu/4.9/../../../../include/c++/4.9/bits/basic_string.h' line='1739' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZNSs16_S_construct_auxIPcEES0_T_S1_RKSaIcESt12__false_type' hash='9895045035709c6f'>
             <parameter type-id='type-id-53' filepath='/usr/bin/../lib/gcc/x86_64-linux-gnu/4.9/../../../../include/c++/4.9/bits/basic_string.h' line='1739' column='1'/>
             <parameter type-id='type-id-53' filepath='/usr/bin/../lib/gcc/x86_64-linux-gnu/4.9/../../../../include/c++/4.9/bits/basic_string.h' line='1739' column='1'/>
             <parameter type-id='type-id-118' filepath='/usr/bin/../lib/gcc/x86_64-linux-gnu/4.9/../../../../include/c++/4.9/bits/basic_string.h' line='1740' column='1'/>
@@ -3833,7 +3833,7 @@
           </function-decl>
         </member-function>
         <member-function access='private' static='yes'>
-          <function-decl name='_S_construct&lt;char *&gt;' mangled-name='_ZNSs12_S_constructIPcEES0_T_S1_RKSaIcESt20forward_iterator_tag' filepath='/usr/bin/../lib/gcc/x86_64-linux-gnu/4.9/../../../../include/c++/4.9/bits/basic_string.h' line='1777' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZNSs12_S_constructIPcEES0_T_S1_RKSaIcESt20forward_iterator_tag' hash='9895045035709c6f'>
+          <function-decl name='_S_construct&lt;char*&gt;' mangled-name='_ZNSs12_S_constructIPcEES0_T_S1_RKSaIcESt20forward_iterator_tag' filepath='/usr/bin/../lib/gcc/x86_64-linux-gnu/4.9/../../../../include/c++/4.9/bits/basic_string.h' line='1777' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZNSs12_S_constructIPcEES0_T_S1_RKSaIcESt20forward_iterator_tag' hash='9895045035709c6f'>
             <parameter type-id='type-id-53' filepath='/usr/bin/../lib/gcc/x86_64-linux-gnu/4.9/../../../../include/c++/4.9/bits/basic_string.tcc' line='1777' column='1'/>
             <parameter type-id='type-id-53' filepath='/usr/bin/../lib/gcc/x86_64-linux-gnu/4.9/../../../../include/c++/4.9/bits/basic_string.tcc' line='1777' column='1'/>
             <parameter type-id='type-id-118' filepath='/usr/bin/../lib/gcc/x86_64-linux-gnu/4.9/../../../../include/c++/4.9/bits/basic_string.tcc' line='1777' column='1'/>
@@ -3842,7 +3842,7 @@
           </function-decl>
         </member-function>
         <member-function access='public'>
-          <function-decl name='basic_string&lt;const char *&gt;' mangled-name='_ZNSsC2IPKcEET_S2_RKSaIcE' filepath='/usr/bin/../lib/gcc/x86_64-linux-gnu/4.9/../../../../include/c++/4.9/bits/basic_string.h' line='540' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZNSsC2IPKcEET_S2_RKSaIcE' hash='3d5693612af11c46'>
+          <function-decl name='basic_string&lt;constchar*&gt;' mangled-name='_ZNSsC2IPKcEET_S2_RKSaIcE' filepath='/usr/bin/../lib/gcc/x86_64-linux-gnu/4.9/../../../../include/c++/4.9/bits/basic_string.h' line='540' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZNSsC2IPKcEET_S2_RKSaIcE' hash='3d5693612af11c46'>
             <parameter type-id='type-id-123' is-artificial='yes'/>
             <parameter type-id='type-id-18' filepath='/usr/bin/../lib/gcc/x86_64-linux-gnu/4.9/../../../../include/c++/4.9/bits/basic_string.tcc' line='540' column='1'/>
             <parameter type-id='type-id-18' filepath='/usr/bin/../lib/gcc/x86_64-linux-gnu/4.9/../../../../include/c++/4.9/bits/basic_string.tcc' line='540' column='1'/>
@@ -3851,7 +3851,7 @@
           </function-decl>
         </member-function>
         <member-function access='private' static='yes'>
-          <function-decl name='_S_construct&lt;const char *&gt;' mangled-name='_ZNSs12_S_constructIPKcEEPcT_S3_RKSaIcE' filepath='/usr/bin/../lib/gcc/x86_64-linux-gnu/4.9/../../../../include/c++/4.9/bits/basic_string.h' line='1761' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZNSs12_S_constructIPKcEEPcT_S3_RKSaIcE' hash='21babdbcb7a34ebe'>
+          <function-decl name='_S_construct&lt;constchar*&gt;' mangled-name='_ZNSs12_S_constructIPKcEEPcT_S3_RKSaIcE' filepath='/usr/bin/../lib/gcc/x86_64-linux-gnu/4.9/../../../../include/c++/4.9/bits/basic_string.h' line='1761' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZNSs12_S_constructIPKcEEPcT_S3_RKSaIcE' hash='21babdbcb7a34ebe'>
             <parameter type-id='type-id-18' filepath='/usr/bin/../lib/gcc/x86_64-linux-gnu/4.9/../../../../include/c++/4.9/bits/basic_string.h' line='1761' column='1'/>
             <parameter type-id='type-id-18' filepath='/usr/bin/../lib/gcc/x86_64-linux-gnu/4.9/../../../../include/c++/4.9/bits/basic_string.h' line='1761' column='1'/>
             <parameter type-id='type-id-118' filepath='/usr/bin/../lib/gcc/x86_64-linux-gnu/4.9/../../../../include/c++/4.9/bits/basic_string.h' line='1761' column='1'/>
@@ -3859,7 +3859,7 @@
           </function-decl>
         </member-function>
         <member-function access='private' static='yes'>
-          <function-decl name='_S_construct_aux&lt;const char *&gt;' mangled-name='_ZNSs16_S_construct_auxIPKcEEPcT_S3_RKSaIcESt12__false_type' filepath='/usr/bin/../lib/gcc/x86_64-linux-gnu/4.9/../../../../include/c++/4.9/bits/basic_string.h' line='1739' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZNSs16_S_construct_auxIPKcEEPcT_S3_RKSaIcESt12__false_type' hash='21babdbcb7a34ebe'>
+          <function-decl name='_S_construct_aux&lt;constchar*&gt;' mangled-name='_ZNSs16_S_construct_auxIPKcEEPcT_S3_RKSaIcESt12__false_type' filepath='/usr/bin/../lib/gcc/x86_64-linux-gnu/4.9/../../../../include/c++/4.9/bits/basic_string.h' line='1739' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZNSs16_S_construct_auxIPKcEEPcT_S3_RKSaIcESt12__false_type' hash='21babdbcb7a34ebe'>
             <parameter type-id='type-id-18' filepath='/usr/bin/../lib/gcc/x86_64-linux-gnu/4.9/../../../../include/c++/4.9/bits/basic_string.h' line='1739' column='1'/>
             <parameter type-id='type-id-18' filepath='/usr/bin/../lib/gcc/x86_64-linux-gnu/4.9/../../../../include/c++/4.9/bits/basic_string.h' line='1739' column='1'/>
             <parameter type-id='type-id-118' filepath='/usr/bin/../lib/gcc/x86_64-linux-gnu/4.9/../../../../include/c++/4.9/bits/basic_string.h' line='1740' column='1'/>
@@ -3868,7 +3868,7 @@
           </function-decl>
         </member-function>
         <member-function access='private' static='yes'>
-          <function-decl name='_S_construct&lt;const char *&gt;' mangled-name='_ZNSs12_S_constructIPKcEEPcT_S3_RKSaIcESt20forward_iterator_tag' filepath='/usr/bin/../lib/gcc/x86_64-linux-gnu/4.9/../../../../include/c++/4.9/bits/basic_string.h' line='1777' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZNSs12_S_constructIPKcEEPcT_S3_RKSaIcESt20forward_iterator_tag' hash='21babdbcb7a34ebe'>
+          <function-decl name='_S_construct&lt;constchar*&gt;' mangled-name='_ZNSs12_S_constructIPKcEEPcT_S3_RKSaIcESt20forward_iterator_tag' filepath='/usr/bin/../lib/gcc/x86_64-linux-gnu/4.9/../../../../include/c++/4.9/bits/basic_string.h' line='1777' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZNSs12_S_constructIPKcEEPcT_S3_RKSaIcESt20forward_iterator_tag' hash='21babdbcb7a34ebe'>
             <parameter type-id='type-id-18' filepath='/usr/bin/../lib/gcc/x86_64-linux-gnu/4.9/../../../../include/c++/4.9/bits/basic_string.tcc' line='1777' column='1'/>
             <parameter type-id='type-id-18' filepath='/usr/bin/../lib/gcc/x86_64-linux-gnu/4.9/../../../../include/c++/4.9/bits/basic_string.tcc' line='1777' column='1'/>
             <parameter type-id='type-id-118' filepath='/usr/bin/../lib/gcc/x86_64-linux-gnu/4.9/../../../../include/c++/4.9/bits/basic_string.tcc' line='1777' column='1'/>
@@ -3877,7 +3877,7 @@
           </function-decl>
         </member-function>
         <member-function access='public'>
-          <function-decl name='append&lt;char *&gt;' mangled-name='_ZNSs6appendIPcEERSsT_S2_' filepath='/usr/bin/../lib/gcc/x86_64-linux-gnu/4.9/../../../../include/c++/4.9/bits/basic_string.h' line='1061' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZNSs6appendIPcEERSsT_S2_' hash='6faa8831d3af3ad4'>
+          <function-decl name='append&lt;char*&gt;' mangled-name='_ZNSs6appendIPcEERSsT_S2_' filepath='/usr/bin/../lib/gcc/x86_64-linux-gnu/4.9/../../../../include/c++/4.9/bits/basic_string.h' line='1061' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZNSs6appendIPcEERSsT_S2_' hash='6faa8831d3af3ad4'>
             <parameter type-id='type-id-124' is-artificial='yes'/>
             <parameter type-id='type-id-53' filepath='/usr/bin/../lib/gcc/x86_64-linux-gnu/4.9/../../../../include/c++/4.9/bits/basic_string.h' line='1061' column='1'/>
             <parameter type-id='type-id-53' filepath='/usr/bin/../lib/gcc/x86_64-linux-gnu/4.9/../../../../include/c++/4.9/bits/basic_string.h' line='1061' column='1'/>
@@ -3885,9 +3885,9 @@
           </function-decl>
         </member-function>
       </class-decl>
-      <class-decl name='basic_string&lt;wchar_t, std::char_traits&lt;wchar_t&gt;, std::allocator&lt;wchar_t&gt; &gt;' visibility='default' is-declaration-only='yes' id='type-id-586'>
+      <class-decl name='basic_string&lt;wchar_t,std::char_traits&lt;wchar_t&gt;,std::allocator&lt;wchar_t&gt;&gt;' visibility='default' is-declaration-only='yes' id='type-id-586'>
         <member-function access='public'>
-          <function-decl name='append&lt;wchar_t *&gt;' mangled-name='_ZNSbIwSt11char_traitsIwESaIwEE6appendIPwEERS2_T_S6_' filepath='/usr/bin/../lib/gcc/x86_64-linux-gnu/4.9/../../../../include/c++/4.9/bits/basic_string.h' line='1061' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZNSbIwSt11char_traitsIwESaIwEE6appendIPwEERS2_T_S6_' hash='52964de53fd173e9'>
+          <function-decl name='append&lt;wchar_t*&gt;' mangled-name='_ZNSbIwSt11char_traitsIwESaIwEE6appendIPwEERS2_T_S6_' filepath='/usr/bin/../lib/gcc/x86_64-linux-gnu/4.9/../../../../include/c++/4.9/bits/basic_string.h' line='1061' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZNSbIwSt11char_traitsIwESaIwEE6appendIPwEERS2_T_S6_' hash='52964de53fd173e9'>
             <parameter type-id='type-id-365' is-artificial='yes'/>
             <parameter type-id='type-id-100' filepath='/usr/bin/../lib/gcc/x86_64-linux-gnu/4.9/../../../../include/c++/4.9/bits/basic_string.h' line='1061' column='1'/>
             <parameter type-id='type-id-100' filepath='/usr/bin/../lib/gcc/x86_64-linux-gnu/4.9/../../../../include/c++/4.9/bits/basic_string.h' line='1061' column='1'/>
@@ -3895,14 +3895,14 @@
           </function-decl>
         </member-function>
       </class-decl>
-      <class-decl name='codecvt&lt;wchar_t, char, __mbstate_t&gt;' visibility='default' is-declaration-only='yes' id='type-id-390'/>
+      <class-decl name='codecvt&lt;wchar_t,char,__mbstate_t&gt;' visibility='default' is-declaration-only='yes' id='type-id-390'/>
       <typedef-decl name='string' type-id='type-id-394' filepath='/usr/bin/../lib/gcc/x86_64-linux-gnu/4.9/../../../../include/c++/4.9/bits/stringfwd.h' line='62' column='1' id='type-id-588'/>
       <typedef-decl name='wstring' type-id='type-id-586' filepath='/usr/bin/../lib/gcc/x86_64-linux-gnu/4.9/../../../../include/c++/4.9/bits/stringfwd.h' line='68' column='1' id='type-id-590'/>
     </namespace-decl>
     <typedef-decl name='FILE' type-id='type-id-595' filepath='/usr/include/stdio.h' line='48' column='1' id='type-id-574'/>
     <typedef-decl name='__FILE' type-id='type-id-595' filepath='/usr/include/stdio.h' line='64' column='1' id='type-id-577'/>
     <namespace-decl name='boost'>
-      <class-decl name='enable_if_c&lt;true, void&gt;' is-struct='yes' visibility='default' size-in-bits='8' filepath='src/third_party/boost-1.56.0/boost/core/enable_if.hpp' line='28' column='1' hash='07f7f3a65542219e' id='type-id-605'>
+      <class-decl name='enable_if_c&lt;true,void&gt;' is-struct='yes' visibility='default' size-in-bits='8' filepath='src/third_party/boost-1.56.0/boost/core/enable_if.hpp' line='28' column='1' hash='c5d9b083e05397dd' id='type-id-605'>
         <member-type access='public'>
           <typedef-decl name='type' type-id='type-id-119' filepath='src/third_party/boost-1.56.0/boost/core/enable_if.hpp' line='29' column='1' id='type-id-580'/>
         </member-type>
@@ -3917,7 +3917,7 @@
         </namespace-decl>
         <namespace-decl name='path_traits'>
           <typedef-decl name='codecvt_type' type-id='type-id-390' filepath='src/third_party/boost-1.56.0/boost/filesystem/path_traits.hpp' line='52' column='1' id='type-id-583'/>
-          <function-decl name='dispatch&lt;std::basic_string&lt;char&gt; &gt;' mangled-name='_ZN5boost10filesystem11path_traits8dispatchISsEEvRKSbIwSt11char_traitsIwESaIwEERT_RKSt7codecvtIwc11__mbstate_tE' filepath='src/third_party/boost-1.56.0/boost/filesystem/path_traits.hpp' line='177' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZN5boost10filesystem11path_traits8dispatchISsEEvRKSbIwSt11char_traitsIwESaIwEERT_RKSt7codecvtIwc11__mbstate_tE' hash='7f32ffea222edbe7'>
+          <function-decl name='dispatch&lt;std::basic_string&lt;char&gt;&gt;' mangled-name='_ZN5boost10filesystem11path_traits8dispatchISsEEvRKSbIwSt11char_traitsIwESaIwEERT_RKSt7codecvtIwc11__mbstate_tE' filepath='src/third_party/boost-1.56.0/boost/filesystem/path_traits.hpp' line='177' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZN5boost10filesystem11path_traits8dispatchISsEEvRKSbIwSt11char_traitsIwESaIwEERT_RKSt7codecvtIwc11__mbstate_tE' hash='7f32ffea222edbe7'>
             <parameter type-id='type-id-592' filepath='src/third_party/boost-1.56.0/boost/filesystem/path_traits.hpp' line='177' column='1'/>
             <parameter type-id='type-id-120' filepath='src/third_party/boost-1.56.0/boost/filesystem/path_traits.hpp' line='177' column='1'/>
             <parameter type-id='type-id-328' filepath='src/third_party/boost-1.56.0/boost/filesystem/path_traits.hpp' line='177' column='1'/>
@@ -3971,6 +3971,7 @@
           </function-decl>
         </member-function>
       </class-decl>
+      <class-decl name='codecvt&lt;wchar_t,char,__mbstate_t&gt;' visibility='default' is-declaration-only='yes' id='type-id-635'/>
     </namespace-decl>
     <typedef-decl name='FILE' type-id='type-id-631' filepath='/usr/include/stdio.h' line='48' column='1' id='type-id-623'/>
     <typedef-decl name='__FILE' type-id='type-id-631' filepath='/usr/include/stdio.h' line='64' column='1' id='type-id-626'/>
@@ -3978,7 +3979,7 @@
       <namespace-decl name='filesystem'>
         <namespace-decl name='detail'>
           <class-decl name='utf8_codecvt_facet' is-struct='yes' visibility='default' size-in-bits='192' filepath='src/third_party/boost-1.56.0/boost/detail/utf8_codecvt_facet.hpp' line='106' column='1' hash='4cc13da41afb68c3' id='type-id-610'>
-            <base-class access='public' layout-offset-in-bits='0' type-id='type-id-390'/>
+            <base-class access='public' layout-offset-in-bits='0' type-id='type-id-635'/>
             <member-function access='protected' const='yes'>
               <function-decl name='invalid_leading_octet' mangled-name='_ZNK5boost10filesystem6detail18utf8_codecvt_facet21invalid_leading_octetEh' filepath='src/third_party/boost-1.56.0/boost/detail/utf8_codecvt_facet.hpp' line='138' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZNK5boost10filesystem6detail18utf8_codecvt_facet21invalid_leading_octetEh' hash='d5e141ff0e52545d'>
                 <parameter type-id='type-id-614' is-artificial='yes'/>
@@ -4082,15 +4083,15 @@
     </namespace-decl>
   </abi-instr>
   <abi-instr address-size='64' path='src/third_party/boost-1.56.0/libs/filesystem/src/windows_file_codecvt.cpp' comp-dir-path='/home/andrew/Documents/10gen/dev/src/mongodb' language='LANG_C_plus_plus'>
-    <typedef-decl name='__mbstate_t' type-id='type-id-31' size-in-bits='128' filepath='/usr/include/wchar.h' line='94' column='1' id='type-id-635'/>
-    <typedef-decl name='mbstate_t' type-id='type-id-635' size-in-bits='128' filepath='/usr/include/wchar.h' line='106' column='1' id='type-id-636'/>
-    <qualified-type-def type-id='type-id-636' const='yes' hash='cac52d8ca574fdb5#2' id='type-id-637'/>
-    <pointer-type-def type-id='type-id-637' size-in-bits='64' hash='ff0e66f42762f560#2' id='type-id-638'/>
-    <pointer-type-def type-id='type-id-636' size-in-bits='64' hash='18fb85b101e2cd25#2' id='type-id-639'/>
-    <qualified-type-def type-id='type-id-639' restrict='yes' hash='42a15c82a35f0371#2' id='type-id-640'/>
-    <pointer-type-def type-id='type-id-641' size-in-bits='64' id='type-id-642'/>
-    <qualified-type-def type-id='type-id-642' restrict='yes' id='type-id-643'/>
-    <class-decl name='_IO_FILE' is-struct='yes' visibility='default' is-declaration-only='yes' id='type-id-644'/>
-    <typedef-decl name='__FILE' type-id='type-id-644' filepath='/usr/include/stdio.h' line='64' column='1' id='type-id-641'/>
+    <typedef-decl name='__mbstate_t' type-id='type-id-31' size-in-bits='128' filepath='/usr/include/wchar.h' line='94' column='1' id='type-id-636'/>
+    <typedef-decl name='mbstate_t' type-id='type-id-636' size-in-bits='128' filepath='/usr/include/wchar.h' line='106' column='1' id='type-id-637'/>
+    <qualified-type-def type-id='type-id-637' const='yes' hash='cac52d8ca574fdb5#2' id='type-id-638'/>
+    <pointer-type-def type-id='type-id-638' size-in-bits='64' hash='ff0e66f42762f560#2' id='type-id-639'/>
+    <pointer-type-def type-id='type-id-637' size-in-bits='64' hash='18fb85b101e2cd25#2' id='type-id-640'/>
+    <qualified-type-def type-id='type-id-640' restrict='yes' hash='42a15c82a35f0371#2' id='type-id-641'/>
+    <pointer-type-def type-id='type-id-642' size-in-bits='64' id='type-id-643'/>
+    <qualified-type-def type-id='type-id-643' restrict='yes' id='type-id-644'/>
+    <class-decl name='_IO_FILE' is-struct='yes' visibility='default' is-declaration-only='yes' id='type-id-645'/>
+    <typedef-decl name='__FILE' type-id='type-id-645' filepath='/usr/include/stdio.h' line='64' column='1' id='type-id-642'/>
   </abi-instr>
 </abi-corpus>

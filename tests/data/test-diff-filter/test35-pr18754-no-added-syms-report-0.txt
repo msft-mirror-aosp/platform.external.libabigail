@@ -8,7 +8,7 @@ Variable symbols changes summary: 0 Removed, 0 Added variable symbol not referen
   [D] 'function void COI::fini(void)'
   [D] 'function bool COI::init(void)'
   [D] 'function void* DL_sym(void*, const char*, const char*)'
-  [D] 'method COIRESULT Engine::compute(const std::__cxx11::list<coibuffer*, std::allocator<coibuffer*> >&, void*, uint16_t, void*, uint16_t, uint32_t, const COIEVENT*, COIEVENT*)'
+  [D] 'method COIRESULT Engine::compute(const std::__cxx11::list<coibuffer*,std::allocator<coibuffer*>>&, void*, uint16_t, void*, uint16_t, uint32_t, const COIEVENT*, COIEVENT*)'
   [D] 'method void FuncList::dump()'
   [D] 'method void* FuncList::find_addr(const char*)'
   [D] 'method const char* FuncList::find_name(void*)'
@@ -82,10 +82,10 @@ Variable symbols changes summary: 0 Removed, 0 Added variable symbol not referen
   [D] 'function const char* report_get_host_stage_str(int)'
   [D] 'function const char* report_get_message_str(error_types)'
   [D] 'function const char* report_get_target_stage_str(int)'
-  [D] 'function void std::__adjust_heap<VarList::BufEntry*, long int, VarList::BufEntry, __gnu_cxx::__ops::_Iter_comp_iter<bool (*)(const VarList::BufEntry&, const VarList::BufEntry&)> >(VarList::BufEntry*, long int, long int, VarList::BufEntry, __gnu_cxx::__ops::_Iter_comp_iter<bool (*)(const VarList::BufEntry&, const VarList::BufEntry&)>)'
-  [D] 'function void std::__insertion_sort<VarList::BufEntry*, __gnu_cxx::__ops::_Iter_comp_iter<bool (*)(const VarList::BufEntry&, const VarList::BufEntry&)> >(VarList::BufEntry*, VarList::BufEntry*, __gnu_cxx::__ops::_Iter_comp_iter<bool (*)(const VarList::BufEntry&, const VarList::BufEntry&)>)'
-  [D] 'function void std::__introsort_loop<VarList::BufEntry*, long int, __gnu_cxx::__ops::_Iter_comp_iter<bool (*)(const VarList::BufEntry&, const VarList::BufEntry&)> >(VarList::BufEntry*, VarList::BufEntry*, long int, __gnu_cxx::__ops::_Iter_comp_iter<bool (*)(const VarList::BufEntry&, const VarList::BufEntry&)>)'
-  [D] 'function void std::__unguarded_linear_insert<VarList::BufEntry*, __gnu_cxx::__ops::_Val_comp_iter<bool (*)(const VarList::BufEntry&, const VarList::BufEntry&)> >(VarList::BufEntry*, __gnu_cxx::__ops::_Val_comp_iter<bool (*)(const VarList::BufEntry&, const VarList::BufEntry&)>)'
+  [D] 'function void std::__adjust_heap<VarList::BufEntry*,longint,VarList::BufEntry,__gnu_cxx::__ops::_Iter_comp_iter<bool(*)(constVarList::BufEntry&,constVarList::BufEntry&)>>(VarList::BufEntry*, long int, long int, VarList::BufEntry, __gnu_cxx::__ops::_Iter_comp_iter<bool(*)(constVarList::BufEntry&,constVarList::BufEntry&)>)'
+  [D] 'function void std::__insertion_sort<VarList::BufEntry*,__gnu_cxx::__ops::_Iter_comp_iter<bool(*)(constVarList::BufEntry&,constVarList::BufEntry&)>>(VarList::BufEntry*, VarList::BufEntry*, __gnu_cxx::__ops::_Iter_comp_iter<bool(*)(constVarList::BufEntry&,constVarList::BufEntry&)>)'
+  [D] 'function void std::__introsort_loop<VarList::BufEntry*,longint,__gnu_cxx::__ops::_Iter_comp_iter<bool(*)(constVarList::BufEntry&,constVarList::BufEntry&)>>(VarList::BufEntry*, VarList::BufEntry*, long int, __gnu_cxx::__ops::_Iter_comp_iter<bool(*)(constVarList::BufEntry&,constVarList::BufEntry&)>)'
+  [D] 'function void std::__unguarded_linear_insert<VarList::BufEntry*,__gnu_cxx::__ops::_Val_comp_iter<bool(*)(constVarList::BufEntry&,constVarList::BufEntry&)>>(VarList::BufEntry*, __gnu_cxx::__ops::_Val_comp_iter<bool(*)(constVarList::BufEntry&,constVarList::BufEntry&)>)'
   [D] 'function void write_message(FILE*, int, __va_list_tag*)'
 
 7 functions with some indirect sub-type change:
@@ -102,7 +102,7 @@ Variable symbols changes summary: 0 Removed, 0 Added variable symbol not referen
           'mutex_t m_stream_lock', at offset 3456 (in bits)
           'int m_num_cores', at offset 3776 (in bits)
           'int m_num_threads', at offset 3808 (in bits)
-          'std::bitset<1024ul> m_cpus', at offset 3840 (in bits)
+          'std::bitset<1024> m_cpus', at offset 3840 (in bits)
           'DynLibList m_dyn_libs', at offset 4864 (in bits)
         4 data member changes:
           type of 'Engine::PtrSet m_ptr_set' changed:
@@ -307,11 +307,11 @@ Variable symbols changes summary: 0 Removed, 0 Added variable symbol not referen
       type name changed from 'void' to 'bool'
       type size changed from 0 to 8 (in bits)
 
-  [C] 'method std::pair<std::_Rb_tree_iterator<PtrData>, bool> std::_Rb_tree<PtrData, PtrData, std::_Identity<PtrData>, std::less<PtrData>, std::allocator<PtrData> >::_M_insert_unique<PtrData>(PtrData&&)' has some indirect sub-type changes:
+  [C] 'method std::pair<std::_Rb_tree_iterator<PtrData>,bool> std::_Rb_tree<PtrData,PtrData,std::_Identity<PtrData>,std::less<PtrData>,std::allocator<PtrData>>::_M_insert_unique<PtrData>(PtrData&&)' has some indirect sub-type changes:
     parameter 1 of type 'PtrData&&' changed:
       rvalue reference type 'PtrData&& became an lvalue reference type: 'PtrData&'
 
-  [C] 'method void std::vector<const VarTable::Entry*, std::allocator<const VarTable::Entry*> >::_M_emplace_back_aux<const VarTable::Entry*>(const VarTable::Entry*&&)' has some indirect sub-type changes:
+  [C] 'method void std::vector<constVarTable::Entry*,std::allocator<constVarTable::Entry*>>::_M_emplace_back_aux<constVarTable::Entry*>(const VarTable::Entry*&&)' has some indirect sub-type changes:
     Please note that the symbol of this function is _ZNSt6vectorIPKN8VarTable5EntryESaIS3_EE19_M_emplace_back_auxIJS3_EEEvDpOT_
      and it aliases symbol: _ZNSt6vectorIPKN8VarTable5EntryESaIS3_EE19_M_emplace_back_auxIIS3_EEEvDpOT_
     parameter 1 of type 'const VarTable::Entry*&&' changed:

@@ -53,13 +53,13 @@
             type of 'tbb::atomic<tbb::internal::concurrent_vector_base_v3::segment_t*> my_segment' changed:
               type size hasn't changed
               1 base class change:
-                'struct tbb::internal::atomic_impl_with_arithmetic<tbb::internal::concurrent_vector_base_v3::segment_t*, long int, tbb::internal::concurrent_vector_base_v3::segment_t>' at atomic.h:340:1 changed:
+                'struct tbb::internal::atomic_impl_with_arithmetic<tbb::internal::concurrent_vector_base_v3::segment_t*,longint,tbb::internal::concurrent_vector_base_v3::segment_t>' at atomic.h:340:1 changed:
                   type size hasn't changed
                   1 base class change:
                     'struct tbb::internal::atomic_impl<tbb::internal::concurrent_vector_base_v3::segment_t*>' at atomic.h:227:1 changed:
                       type size hasn't changed
                       1 data member change:
-                        type of 'tbb::internal::aligned_storage<tbb::internal::concurrent_vector_base_v3::segment_t*, 8ul> my_storage' changed:
+                        type of 'tbb::internal::aligned_storage<tbb::internal::concurrent_vector_base_v3::segment_t*,8> my_storage' changed:
                           type size hasn't changed
                           1 data member change:
                             type of 'segment_t* my_value' changed:

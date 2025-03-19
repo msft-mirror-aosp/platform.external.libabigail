@@ -303,10 +303,10 @@
     <reference-type-def kind='lvalue' type-id='type-id-13' size-in-bits='64' hash='0f0aa6b3fc1d81a2' id='type-id-49'/>
     <qualified-type-def type-id='type-id-16' const='yes' hash='8cef8df4b6728924' id='type-id-50'/>
     <reference-type-def kind='lvalue' type-id='type-id-50' size-in-bits='64' hash='5bb43a8603322674' id='type-id-51'/>
-    <qualified-type-def type-id='type-id-52' const='yes' hash='2cfd960e54efa3e6' id='type-id-53'/>
-    <pointer-type-def type-id='type-id-53' size-in-bits='64' hash='771f7d0f04e5e72c' id='type-id-54'/>
-    <qualified-type-def type-id='type-id-55' const='yes' hash='2e9505a9f0008086' id='type-id-56'/>
-    <pointer-type-def type-id='type-id-56' size-in-bits='64' hash='f65b21048402605b' id='type-id-57'/>
+    <qualified-type-def type-id='type-id-52' const='yes' hash='245d6801f3661a67' id='type-id-53'/>
+    <pointer-type-def type-id='type-id-53' size-in-bits='64' hash='32dd8cabe6dec2a0' id='type-id-54'/>
+    <qualified-type-def type-id='type-id-55' const='yes' hash='caef94cc52b0e795' id='type-id-56'/>
+    <pointer-type-def type-id='type-id-56' size-in-bits='64' hash='8aeb2117ff1ec8ba' id='type-id-57'/>
     <qualified-type-def type-id='type-id-35' const='yes' hash='645f4d0d44563fc6' id='type-id-58'/>
     <pointer-type-def type-id='type-id-58' size-in-bits='64' hash='61acb54cba0b002f' id='type-id-59'/>
     <qualified-type-def type-id='type-id-37' const='yes' hash='f2fba7dbc42fc9d5' id='type-id-60'/>
@@ -317,12 +317,12 @@
     <pointer-type-def type-id='type-id-14' size-in-bits='64' hash='dd31f93f4361bc41' id='type-id-65'/>
     <pointer-type-def type-id='type-id-66' size-in-bits='64' hash='fd7a63c0c6c822c4' id='type-id-20'/>
     <pointer-type-def type-id='type-id-16' size-in-bits='64' hash='3fd83b2c14ae2f2f' id='type-id-67'/>
-    <pointer-type-def type-id='type-id-52' size-in-bits='64' hash='c23efea4cbf2dbe8' id='type-id-68'/>
-    <pointer-type-def type-id='type-id-55' size-in-bits='64' hash='2745203f82579e30' id='type-id-69'/>
-    <pointer-type-def type-id='type-id-70' size-in-bits='64' hash='ddb802af71082c8b' id='type-id-71'/>
-    <pointer-type-def type-id='type-id-72' size-in-bits='64' hash='c9fa4a699a576c45' id='type-id-73'/>
-    <pointer-type-def type-id='type-id-74' size-in-bits='64' hash='1be2c2fb016d64b6' id='type-id-75'/>
-    <pointer-type-def type-id='type-id-76' size-in-bits='64' hash='f83871697b53394d' id='type-id-77'/>
+    <pointer-type-def type-id='type-id-52' size-in-bits='64' hash='18becb8991ad6ad0' id='type-id-68'/>
+    <pointer-type-def type-id='type-id-55' size-in-bits='64' hash='614fd6f978e4cfdb' id='type-id-69'/>
+    <pointer-type-def type-id='type-id-70' size-in-bits='64' hash='b0576e7469faefae' id='type-id-71'/>
+    <pointer-type-def type-id='type-id-72' size-in-bits='64' hash='341e4b0f0fe329d0' id='type-id-73'/>
+    <pointer-type-def type-id='type-id-74' size-in-bits='64' hash='7a58a4e0e4617da1' id='type-id-75'/>
+    <pointer-type-def type-id='type-id-76' size-in-bits='64' hash='a972783d8299e0f4' id='type-id-77'/>
     <pointer-type-def type-id='type-id-35' size-in-bits='64' hash='f0221758ecf0c0cb' id='type-id-78'/>
     <pointer-type-def type-id='type-id-79' size-in-bits='64' hash='fd7a63c0c6c822c4' id='type-id-80'/>
     <pointer-type-def type-id='type-id-81' size-in-bits='64' hash='473a9667a2856e32' id='type-id-82'/>
@@ -406,7 +406,7 @@
     <qualified-type-def type-id='type-id-81' restrict='yes' id='type-id-194'/>
     <qualified-type-def type-id='type-id-81' restrict='yes' id='type-id-195'/>
     <namespace-decl name='std'>
-      <class-decl name='basic_ios&lt;char, std::char_traits&lt;char&gt; &gt;' visibility='default' size-in-bits='2112' hash='55fa541409badd31' id='type-id-70'>
+      <class-decl name='basic_ios&lt;char,std::char_traits&lt;char&gt;&gt;' visibility='default' size-in-bits='2112' hash='90c2499bddefb6f0' id='type-id-70'>
         <member-function access='public' destructor='yes' vtable-offset='0'>
           <function-decl name='~basic_ios' filepath='/usr/bin/../lib/gcc/x86_64-linux-gnu/5.4.0/../../../../include/c++/5.4.0/bits/basic_ios.h' line='282' column='1' visibility='default' binding='global' size-in-bits='64' hash='7f32ffea222edbe7'>
             <parameter type-id='type-id-71' is-artificial='yes'/>
@@ -420,7 +420,7 @@
           </function-decl>
         </member-function>
       </class-decl>
-      <class-decl name='basic_iostream&lt;char, std::char_traits&lt;char&gt; &gt;' visibility='default' size-in-bits='2304' hash='f5dbc5c069abd934' id='type-id-72'>
+      <class-decl name='basic_iostream&lt;char,std::char_traits&lt;char&gt;&gt;' visibility='default' size-in-bits='2304' hash='5577caea0fe612e7' id='type-id-72'>
         <member-function access='public' destructor='yes' vtable-offset='0'>
           <function-decl name='~basic_iostream' filepath='/usr/bin/../lib/gcc/x86_64-linux-gnu/5.4.0/../../../../include/c++/5.4.0/istream' line='856' column='1' visibility='default' binding='global' size-in-bits='64' hash='7f32ffea222edbe7'>
             <parameter type-id='type-id-73' is-artificial='yes'/>
@@ -435,7 +435,7 @@
           </function-decl>
         </member-function>
       </class-decl>
-      <class-decl name='basic_istream&lt;char, std::char_traits&lt;char&gt; &gt;' visibility='default' size-in-bits='2240' hash='74c85271bbc60e1b' id='type-id-74'>
+      <class-decl name='basic_istream&lt;char,std::char_traits&lt;char&gt;&gt;' visibility='default' size-in-bits='2240' hash='30d88ea16ba7fd13' id='type-id-74'>
         <member-function access='public' destructor='yes' vtable-offset='0'>
           <function-decl name='~basic_istream' filepath='/usr/bin/../lib/gcc/x86_64-linux-gnu/5.4.0/../../../../include/c++/5.4.0/istream' line='103' column='1' visibility='default' binding='global' size-in-bits='64' hash='7f32ffea222edbe7'>
             <parameter type-id='type-id-75' is-artificial='yes'/>
@@ -450,7 +450,7 @@
           </function-decl>
         </member-function>
       </class-decl>
-      <class-decl name='basic_streambuf&lt;char, std::char_traits&lt;char&gt; &gt;' visibility='default' size-in-bits='512' hash='1c0b9ee5025f32b2' id='type-id-76'>
+      <class-decl name='basic_streambuf&lt;char,std::char_traits&lt;char&gt;&gt;' visibility='default' size-in-bits='512' hash='1f091411ca873b45' id='type-id-76'>
         <member-function access='public' destructor='yes' vtable-offset='0'>
           <function-decl name='~basic_streambuf' filepath='/usr/bin/../lib/gcc/x86_64-linux-gnu/5.4.0/../../../../include/c++/5.4.0/streambuf' line='197' column='1' visibility='default' binding='global' size-in-bits='64' hash='7f32ffea222edbe7'>
             <parameter type-id='type-id-77' is-artificial='yes'/>
@@ -526,7 +526,7 @@
         </member-type>
       </class-decl>
       <namespace-decl name='__cxx11'>
-        <class-decl name='basic_string&lt;char, std::char_traits&lt;char&gt;, std::allocator&lt;char&gt; &gt;' visibility='default' size-in-bits='256' hash='8884328e2c5242b7' id='type-id-52'>
+        <class-decl name='basic_string&lt;char,std::char_traits&lt;char&gt;,std::allocator&lt;char&gt;&gt;' visibility='default' size-in-bits='256' hash='bebff3931ded2f90' id='type-id-52'>
           <member-type access='private'>
             <typedef-decl name='const_pointer' type-id='type-id-218' size-in-bits='64' filepath='/usr/bin/../lib/gcc/x86_64-linux-gnu/5.4.0/../../../../include/c++/5.4.0/bits/basic_string.h' line='87' column='1' hash='c44743f354f6a443' id='type-id-217'/>
           </member-type>
@@ -573,8 +573,8 @@
             </function-decl>
           </member-function>
         </class-decl>
-        <class-decl name='basic_stringbuf&lt;char, std::char_traits&lt;char&gt;, std::allocator&lt;char&gt; &gt;' visibility='default' size-in-bits='832' hash='9d3fa306897c185e' id='type-id-239'/>
-        <class-decl name='basic_stringstream&lt;char, std::char_traits&lt;char&gt;, std::allocator&lt;char&gt; &gt;' visibility='default' size-in-bits='3136' hash='65f90cb4cb3a277f' id='type-id-55'>
+        <class-decl name='basic_stringbuf&lt;char,std::char_traits&lt;char&gt;,std::allocator&lt;char&gt;&gt;' visibility='default' size-in-bits='832' hash='59b371de107bd82f' id='type-id-239'/>
+        <class-decl name='basic_stringstream&lt;char,std::char_traits&lt;char&gt;,std::allocator&lt;char&gt;&gt;' visibility='default' size-in-bits='3136' hash='d34852a7d9d41d3b' id='type-id-55'>
           <member-type access='private'>
             <typedef-decl name='__string_type' type-id='type-id-52' size-in-bits='256' filepath='/usr/bin/../lib/gcc/x86_64-linux-gnu/5.4.0/../../../../include/c++/5.4.0/sstream' line='669' column='1' id='type-id-240'/>
           </member-type>
@@ -935,7 +935,7 @@
           <typedef-decl name='iterator' type-id='type-id-277' filepath='/usr/bin/../lib/gcc/x86_64-linux-gnu/5.4.0/../../../../include/c++/5.4.0/bits/stl_vector.h' line='231' column='1' id='type-id-447'/>
         </member-type>
         <member-function access='protected'>
-          <function-decl name='_M_emplace_back_aux&lt;std::unique_ptr&lt;mongo::FTDCCollectorInterface, std::default_delete&lt;mongo::FTDCCollectorInterface&gt; &gt; &gt;' mangled-name='_ZNSt6vectorISt10unique_ptrIN5mongo22FTDCCollectorInterfaceESt14default_deleteIS2_EESaIS5_EE19_M_emplace_back_auxIJS5_EEEvDpOT_' filepath='/usr/bin/../lib/gcc/x86_64-linux-gnu/5.4.0/../../../../include/c++/5.4.0/bits/vector.tcc' line='408' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZNSt6vectorISt10unique_ptrIN5mongo22FTDCCollectorInterfaceESt14default_deleteIS2_EESaIS5_EE19_M_emplace_back_auxIJS5_EEEvDpOT_' hash='7f32ffea222edbe7'>
+          <function-decl name='_M_emplace_back_aux&lt;std::unique_ptr&lt;mongo::FTDCCollectorInterface,std::default_delete&lt;mongo::FTDCCollectorInterface&gt;&gt;&gt;' mangled-name='_ZNSt6vectorISt10unique_ptrIN5mongo22FTDCCollectorInterfaceESt14default_deleteIS2_EESaIS5_EE19_M_emplace_back_auxIJS5_EEEvDpOT_' filepath='/usr/bin/../lib/gcc/x86_64-linux-gnu/5.4.0/../../../../include/c++/5.4.0/bits/vector.tcc' line='408' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZNSt6vectorISt10unique_ptrIN5mongo22FTDCCollectorInterfaceESt14default_deleteIS2_EESaIS5_EE19_M_emplace_back_auxIJS5_EEEvDpOT_' hash='7f32ffea222edbe7'>
             <parameter type-id='type-id-283' is-artificial='yes'/>
             <parameter type-id='type-id-95' filepath='/usr/bin/../lib/gcc/x86_64-linux-gnu/5.4.0/../../../../include/c++/5.4.0/bits/vector.tcc' line='936' column='1'/>
             <return type-id='type-id-196'/>
@@ -1662,8 +1662,8 @@
     </array-type-def>
     <reference-type-def kind='lvalue' type-id='type-id-747' size-in-bits='64' hash='71bf6726bf871678' id='type-id-749'/>
     <reference-type-def kind='lvalue' type-id='type-id-748' size-in-bits='64' hash='98c88facfb4d87cd' id='type-id-750'/>
-    <reference-type-def kind='lvalue' type-id='type-id-53' size-in-bits='64' hash='f19947f00281436f' id='type-id-751'/>
-    <reference-type-def kind='lvalue' type-id='type-id-52' size-in-bits='64' hash='d8ed513ed2f704b1' id='type-id-752'/>
+    <reference-type-def kind='lvalue' type-id='type-id-53' size-in-bits='64' hash='6b5675fb6c7040b9' id='type-id-751'/>
+    <reference-type-def kind='lvalue' type-id='type-id-52' size-in-bits='64' hash='eafca7fdb10b089a' id='type-id-752'/>
     <reference-type-def kind='lvalue' type-id='type-id-753' size-in-bits='64' hash='d5cdd5fca145544c' id='type-id-754'/>
     <pointer-type-def type-id='type-id-755' size-in-bits='64' id='type-id-756'/>
     <qualified-type-def type-id='type-id-756' restrict='yes' id='type-id-757'/>
@@ -1816,7 +1816,7 @@
       <class-decl name='allocator&lt;char&gt;' visibility='default' is-declaration-only='yes' id='type-id-987'/>
       <class-decl name='allocator_type' naming-typedef-id='type-id-929' visibility='default' is-declaration-only='yes' id='type-id-891'/>
       <class-decl name='allocator_type' naming-typedef-id='type-id-927' visibility='default' is-declaration-only='yes' id='type-id-988'/>
-      <class-decl name='basic_ostream&lt;char, std::char_traits&lt;char&gt; &gt;' visibility='default' size-in-bits='2176' hash='7d6e52e958f862dc' id='type-id-986'>
+      <class-decl name='basic_ostream&lt;char,std::char_traits&lt;char&gt;&gt;' visibility='default' size-in-bits='2176' hash='5320a43474e33c03' id='type-id-986'>
         <member-type access='private'>
           <typedef-decl name='__ostream_type' type-id='type-id-986' size-in-bits='2176' filepath='/usr/bin/../lib/gcc/x86_64-linux-gnu/5.4.0/../../../../include/c++/5.4.0/ostream' line='71' column='1' id='type-id-989'/>
         </member-type>
@@ -1854,7 +1854,7 @@
           </class-decl>
         </member-type>
         <member-function access='public'>
-          <function-decl name='thread&lt;std::_Bind&lt;std::_Mem_fn&lt;void (mongo::FTDCController::*)()&gt; (mongo::FTDCController *)&gt;&gt;' mangled-name='_ZNSt6threadC2ISt5_BindIFSt7_Mem_fnIMN5mongo14FTDCControllerEFvvEEPS4_EEJEEEOT_DpOT0_' filepath='/usr/bin/../lib/gcc/x86_64-linux-gnu/5.4.0/../../../../include/c++/5.4.0/thread' line='133' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZNSt6threadC2ISt5_BindIFSt7_Mem_fnIMN5mongo14FTDCControllerEFvvEEPS4_EEJEEEOT_DpOT0_' hash='7f32ffea222edbe7'>
+          <function-decl name='thread&lt;std::_Bind&lt;std::_Mem_fn&lt;void(mongo::FTDCController::*)()&gt;(mongo::FTDCController*)&gt;&gt;' mangled-name='_ZNSt6threadC2ISt5_BindIFSt7_Mem_fnIMN5mongo14FTDCControllerEFvvEEPS4_EEJEEEOT_DpOT0_' filepath='/usr/bin/../lib/gcc/x86_64-linux-gnu/5.4.0/../../../../include/c++/5.4.0/thread' line='133' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZNSt6threadC2ISt5_BindIFSt7_Mem_fnIMN5mongo14FTDCControllerEFvvEEPS4_EEJEEEOT_DpOT0_' hash='7f32ffea222edbe7'>
             <parameter type-id='type-id-802' is-artificial='yes'/>
             <parameter type-id='type-id-95' filepath='/usr/bin/../lib/gcc/x86_64-linux-gnu/5.4.0/../../../../include/c++/5.4.0/thread' line='133' column='1'/>
             <return type-id='type-id-196'/>
@@ -2043,7 +2043,7 @@
         <class-decl name='__anonymous_struct__3' is-struct='yes' visibility='default' is-anonymous='yes' is-declaration-only='yes' id='type-id-903'/>
       </namespace-decl>
       <namespace-decl name='__cxx11'>
-        <class-decl name='basic_ostringstream&lt;char, std::char_traits&lt;char&gt;, std::allocator&lt;char&gt; &gt;' visibility='default' is-declaration-only='yes' id='type-id-937'/>
+        <class-decl name='basic_ostringstream&lt;char,std::char_traits&lt;char&gt;,std::allocator&lt;char&gt;&gt;' visibility='default' is-declaration-only='yes' id='type-id-937'/>
       </namespace-decl>
     </namespace-decl>
     <namespace-decl name='__gnu_cxx'>
@@ -2390,7 +2390,7 @@
           </function-decl>
         </member-function>
         <member-function access='protected'>
-          <function-decl name='_M_emplace_back_aux&lt;mongo::BSONObj &amp;&gt;' mangled-name='_ZNSt6vectorIN5mongo7BSONObjESaIS1_EE19_M_emplace_back_auxIJRS1_EEEvDpOT_' filepath='/usr/bin/../lib/gcc/x86_64-linux-gnu/5.4.0/../../../../include/c++/5.4.0/bits/vector.tcc' line='408' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZNSt6vectorIN5mongo7BSONObjESaIS1_EE19_M_emplace_back_auxIJRS1_EEEvDpOT_' hash='7f32ffea222edbe7'>
+          <function-decl name='_M_emplace_back_aux&lt;mongo::BSONObj&amp;&gt;' mangled-name='_ZNSt6vectorIN5mongo7BSONObjESaIS1_EE19_M_emplace_back_auxIJRS1_EEEvDpOT_' filepath='/usr/bin/../lib/gcc/x86_64-linux-gnu/5.4.0/../../../../include/c++/5.4.0/bits/vector.tcc' line='408' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZNSt6vectorIN5mongo7BSONObjESaIS1_EE19_M_emplace_back_auxIJRS1_EEEvDpOT_' hash='7f32ffea222edbe7'>
             <parameter type-id='type-id-1088' is-artificial='yes'/>
             <parameter type-id='type-id-94' filepath='/usr/bin/../lib/gcc/x86_64-linux-gnu/5.4.0/../../../../include/c++/5.4.0/bits/vector.tcc' line='936' column='1'/>
             <return type-id='type-id-196'/>
@@ -2508,7 +2508,7 @@
       <class-decl name='type' naming-typedef-id='type-id-1227' visibility='default' is-declaration-only='yes' id='type-id-1129'/>
       <class-decl name='__anonymous_struct__' visibility='default' is-anonymous='yes' is-declaration-only='yes' id='type-id-1053'>
         <member-function access='public'>
-          <function-decl name='readAndAdvance&lt;mongo::Validated&lt;mongo::BSONObj&gt; &gt;' mangled-name='_ZN5mongo20ConstDataRangeCursor14readAndAdvanceINS_9ValidatedINS_7BSONObjEEEEENS_10StatusWithIT_EEv' filepath='src/mongo/base/data_range_cursor.h' line='88' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZN5mongo20ConstDataRangeCursor14readAndAdvanceINS_9ValidatedINS_7BSONObjEEEEENS_10StatusWithIT_EEv' hash='7f32ffea222edbe7'>
+          <function-decl name='readAndAdvance&lt;mongo::Validated&lt;mongo::BSONObj&gt;&gt;' mangled-name='_ZN5mongo20ConstDataRangeCursor14readAndAdvanceINS_9ValidatedINS_7BSONObjEEEEENS_10StatusWithIT_EEv' filepath='src/mongo/base/data_range_cursor.h' line='88' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZN5mongo20ConstDataRangeCursor14readAndAdvanceINS_9ValidatedINS_7BSONObjEEEEENS_10StatusWithIT_EEv' hash='7f32ffea222edbe7'>
             <parameter type-id='type-id-1054' is-artificial='yes'/>
             <return type-id='type-id-1228'/>
           </function-decl>
@@ -2700,9 +2700,9 @@
     <pointer-type-def type-id='type-id-1274' size-in-bits='64' hash='f4903706bce76c85#2' id='type-id-1276'/>
     <reference-type-def kind='lvalue' type-id='type-id-1273' size-in-bits='64' hash='75929b1513585467#2' id='type-id-1277'/>
     <pointer-type-def type-id='type-id-1273' size-in-bits='64' hash='4cef840ef4725ab6' id='type-id-1278'/>
-    <reference-type-def kind='rvalue' type-id='type-id-52' size-in-bits='64' hash='ec51377cb7a6961a' id='type-id-1279'/>
-    <pointer-type-def type-id='type-id-1280' size-in-bits='64' hash='4fec832664e550ba' id='type-id-1281'/>
-    <pointer-type-def type-id='type-id-986' size-in-bits='64' hash='3a1fc993dc44975f' id='type-id-1282'/>
+    <reference-type-def kind='rvalue' type-id='type-id-52' size-in-bits='64' hash='80fd925d1c950664' id='type-id-1279'/>
+    <pointer-type-def type-id='type-id-1280' size-in-bits='64' hash='cab5ea2b92a0cd5c' id='type-id-1281'/>
+    <pointer-type-def type-id='type-id-986' size-in-bits='64' hash='b2a3a36c60c91b80' id='type-id-1282'/>
     <reference-type-def kind='lvalue' type-id='type-id-989' size-in-bits='64' hash='baf2020c98a4e1ec' id='type-id-1283'/>
     <reference-type-def kind='lvalue' type-id='type-id-985' size-in-bits='64' hash='44e0c8e850e5931e' id='type-id-1284'/>
     <pointer-type-def type-id='type-id-1285' size-in-bits='64' id='type-id-1286'/>
@@ -2893,7 +2893,7 @@
     <qualified-type-def type-id='type-id-81' restrict='yes' id='type-id-1581'/>
     <qualified-type-def type-id='type-id-81' restrict='yes' id='type-id-1582'/>
     <namespace-decl name='std'>
-      <class-decl name='basic_ofstream&lt;char, std::char_traits&lt;char&gt; &gt;' visibility='default' size-in-bits='4096' hash='791dcff72b1b9b7c' id='type-id-1280'>
+      <class-decl name='basic_ofstream&lt;char,std::char_traits&lt;char&gt;&gt;' visibility='default' size-in-bits='4096' hash='2d161a50b728fa6f' id='type-id-1280'>
         <member-function access='public' destructor='yes' vtable-offset='0'>
           <function-decl name='~basic_ofstream' filepath='/usr/bin/../lib/gcc/x86_64-linux-gnu/5.4.0/../../../../include/c++/5.4.0/fstream' line='737' column='1' visibility='default' binding='global' size-in-bits='64' hash='7f32ffea222edbe7'>
             <parameter type-id='type-id-1281' is-artificial='yes'/>
@@ -2973,7 +2973,7 @@
           <typedef-decl name='const_iterator' type-id='type-id-1291' filepath='/usr/bin/../lib/gcc/x86_64-linux-gnu/5.4.0/../../../../include/c++/5.4.0/bits/stl_vector.h' line='233' column='1' id='type-id-1600'/>
         </member-type>
         <member-function access='protected'>
-          <function-decl name='_M_emplace_back_aux&lt;std::tuple&lt;mongo::FTDCBSONUtil::FTDCType, mongo::BSONObj, mongo::Date_t&gt; &gt;' mangled-name='_ZNSt6vectorISt5tupleIJN5mongo12FTDCBSONUtil8FTDCTypeENS1_7BSONObjENS1_6Date_tEEESaIS6_EE19_M_emplace_back_auxIJS6_EEEvDpOT_' filepath='/usr/bin/../lib/gcc/x86_64-linux-gnu/5.4.0/../../../../include/c++/5.4.0/bits/vector.tcc' line='408' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZNSt6vectorISt5tupleIJN5mongo12FTDCBSONUtil8FTDCTypeENS1_7BSONObjENS1_6Date_tEEESaIS6_EE19_M_emplace_back_auxIJS6_EEEvDpOT_' hash='7f32ffea222edbe7'>
+          <function-decl name='_M_emplace_back_aux&lt;std::tuple&lt;mongo::FTDCBSONUtil::FTDCType,mongo::BSONObj,mongo::Date_t&gt;&gt;' mangled-name='_ZNSt6vectorISt5tupleIJN5mongo12FTDCBSONUtil8FTDCTypeENS1_7BSONObjENS1_6Date_tEEESaIS6_EE19_M_emplace_back_auxIJS6_EEEvDpOT_' filepath='/usr/bin/../lib/gcc/x86_64-linux-gnu/5.4.0/../../../../include/c++/5.4.0/bits/vector.tcc' line='408' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZNSt6vectorISt5tupleIJN5mongo12FTDCBSONUtil8FTDCTypeENS1_7BSONObjENS1_6Date_tEEESaIS6_EE19_M_emplace_back_auxIJS6_EEEvDpOT_' hash='7f32ffea222edbe7'>
             <parameter type-id='type-id-1347' is-artificial='yes'/>
             <parameter type-id='type-id-95' filepath='/usr/bin/../lib/gcc/x86_64-linux-gnu/5.4.0/../../../../include/c++/5.4.0/bits/vector.tcc' line='936' column='1'/>
             <return type-id='type-id-196'/>
@@ -3114,7 +3114,7 @@
         </member-type>
       </class-decl>
       <class-decl name='__anonymous_struct__8' is-struct='yes' visibility='default' is-anonymous='yes' is-declaration-only='yes' id='type-id-1639'/>
-      <function-decl name='__move_median_to_first&lt;__gnu_cxx::__normal_iterator&lt;boost::filesystem::path *, std::vector&lt;boost::filesystem::path, std::allocator&lt;boost::filesystem::path&gt; &gt; &gt;, __gnu_cxx::__ops::_Iter_less_iter&gt;' mangled-name='_ZSt22__move_median_to_firstIN9__gnu_cxx17__normal_iteratorIPN5boost10filesystem4pathESt6vectorIS4_SaIS4_EEEENS0_5__ops15_Iter_less_iterEEvT_SC_SC_SC_T0_' filepath='/usr/bin/../lib/gcc/x86_64-linux-gnu/5.4.0/../../../../include/c++/5.4.0/bits/stl_algo.h' line='78' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZSt22__move_median_to_firstIN9__gnu_cxx17__normal_iteratorIPN5boost10filesystem4pathESt6vectorIS4_SaIS4_EEEENS0_5__ops15_Iter_less_iterEEvT_SC_SC_SC_T0_' hash='7f32ffea222edbe7'>
+      <function-decl name='__move_median_to_first&lt;__gnu_cxx::__normal_iterator&lt;boost::filesystem::path*,std::vector&lt;boost::filesystem::path,std::allocator&lt;boost::filesystem::path&gt;&gt;&gt;,__gnu_cxx::__ops::_Iter_less_iter&gt;' mangled-name='_ZSt22__move_median_to_firstIN9__gnu_cxx17__normal_iteratorIPN5boost10filesystem4pathESt6vectorIS4_SaIS4_EEEENS0_5__ops15_Iter_less_iterEEvT_SC_SC_SC_T0_' filepath='/usr/bin/../lib/gcc/x86_64-linux-gnu/5.4.0/../../../../include/c++/5.4.0/bits/stl_algo.h' line='78' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZSt22__move_median_to_firstIN9__gnu_cxx17__normal_iteratorIPN5boost10filesystem4pathESt6vectorIS4_SaIS4_EEEENS0_5__ops15_Iter_less_iterEEvT_SC_SC_SC_T0_' hash='7f32ffea222edbe7'>
         <parameter type-id='type-id-1293' filepath='/usr/bin/../lib/gcc/x86_64-linux-gnu/5.4.0/../../../../include/c++/5.4.0/bits/stl_algo.h' line='78' column='1'/>
         <parameter type-id='type-id-1293' filepath='/usr/bin/../lib/gcc/x86_64-linux-gnu/5.4.0/../../../../include/c++/5.4.0/bits/stl_algo.h' line='78' column='1'/>
         <parameter type-id='type-id-1293' filepath='/usr/bin/../lib/gcc/x86_64-linux-gnu/5.4.0/../../../../include/c++/5.4.0/bits/stl_algo.h' line='78' column='1'/>
@@ -3122,25 +3122,25 @@
         <parameter type-id='type-id-1485' filepath='/usr/bin/../lib/gcc/x86_64-linux-gnu/5.4.0/../../../../include/c++/5.4.0/bits/stl_algo.h' line='79' column='1'/>
         <return type-id='type-id-196'/>
       </function-decl>
-      <function-decl name='__unguarded_linear_insert&lt;__gnu_cxx::__normal_iterator&lt;boost::filesystem::path *, std::vector&lt;boost::filesystem::path, std::allocator&lt;boost::filesystem::path&gt; &gt; &gt;, __gnu_cxx::__ops::_Val_less_iter&gt;' mangled-name='_ZSt25__unguarded_linear_insertIN9__gnu_cxx17__normal_iteratorIPN5boost10filesystem4pathESt6vectorIS4_SaIS4_EEEENS0_5__ops14_Val_less_iterEEvT_T0_' filepath='/usr/bin/../lib/gcc/x86_64-linux-gnu/5.4.0/../../../../include/c++/5.4.0/bits/stl_algo.h' line='1816' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZSt25__unguarded_linear_insertIN9__gnu_cxx17__normal_iteratorIPN5boost10filesystem4pathESt6vectorIS4_SaIS4_EEEENS0_5__ops14_Val_less_iterEEvT_T0_' hash='7f32ffea222edbe7'>
+      <function-decl name='__unguarded_linear_insert&lt;__gnu_cxx::__normal_iterator&lt;boost::filesystem::path*,std::vector&lt;boost::filesystem::path,std::allocator&lt;boost::filesystem::path&gt;&gt;&gt;,__gnu_cxx::__ops::_Val_less_iter&gt;' mangled-name='_ZSt25__unguarded_linear_insertIN9__gnu_cxx17__normal_iteratorIPN5boost10filesystem4pathESt6vectorIS4_SaIS4_EEEENS0_5__ops14_Val_less_iterEEvT_T0_' filepath='/usr/bin/../lib/gcc/x86_64-linux-gnu/5.4.0/../../../../include/c++/5.4.0/bits/stl_algo.h' line='1816' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZSt25__unguarded_linear_insertIN9__gnu_cxx17__normal_iteratorIPN5boost10filesystem4pathESt6vectorIS4_SaIS4_EEEENS0_5__ops14_Val_less_iterEEvT_T0_' hash='7f32ffea222edbe7'>
         <parameter type-id='type-id-1293' filepath='/usr/bin/../lib/gcc/x86_64-linux-gnu/5.4.0/../../../../include/c++/5.4.0/bits/stl_algo.h' line='1816' column='1'/>
         <parameter type-id='type-id-1491' filepath='/usr/bin/../lib/gcc/x86_64-linux-gnu/5.4.0/../../../../include/c++/5.4.0/bits/stl_algo.h' line='1817' column='1'/>
         <return type-id='type-id-196'/>
       </function-decl>
-      <function-decl name='__insertion_sort&lt;__gnu_cxx::__normal_iterator&lt;boost::filesystem::path *, std::vector&lt;boost::filesystem::path, std::allocator&lt;boost::filesystem::path&gt; &gt; &gt;, __gnu_cxx::__ops::_Iter_less_iter&gt;' mangled-name='_ZSt16__insertion_sortIN9__gnu_cxx17__normal_iteratorIPN5boost10filesystem4pathESt6vectorIS4_SaIS4_EEEENS0_5__ops15_Iter_less_iterEEvT_SC_T0_' filepath='/usr/bin/../lib/gcc/x86_64-linux-gnu/5.4.0/../../../../include/c++/5.4.0/bits/stl_algo.h' line='1835' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZSt16__insertion_sortIN9__gnu_cxx17__normal_iteratorIPN5boost10filesystem4pathESt6vectorIS4_SaIS4_EEEENS0_5__ops15_Iter_less_iterEEvT_SC_T0_' hash='7f32ffea222edbe7'>
+      <function-decl name='__insertion_sort&lt;__gnu_cxx::__normal_iterator&lt;boost::filesystem::path*,std::vector&lt;boost::filesystem::path,std::allocator&lt;boost::filesystem::path&gt;&gt;&gt;,__gnu_cxx::__ops::_Iter_less_iter&gt;' mangled-name='_ZSt16__insertion_sortIN9__gnu_cxx17__normal_iteratorIPN5boost10filesystem4pathESt6vectorIS4_SaIS4_EEEENS0_5__ops15_Iter_less_iterEEvT_SC_T0_' filepath='/usr/bin/../lib/gcc/x86_64-linux-gnu/5.4.0/../../../../include/c++/5.4.0/bits/stl_algo.h' line='1835' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZSt16__insertion_sortIN9__gnu_cxx17__normal_iteratorIPN5boost10filesystem4pathESt6vectorIS4_SaIS4_EEEENS0_5__ops15_Iter_less_iterEEvT_SC_T0_' hash='7f32ffea222edbe7'>
         <parameter type-id='type-id-1293' filepath='/usr/bin/../lib/gcc/x86_64-linux-gnu/5.4.0/../../../../include/c++/5.4.0/bits/stl_heap.h' line='317' column='1'/>
         <parameter type-id='type-id-1293' filepath='/usr/bin/../lib/gcc/x86_64-linux-gnu/5.4.0/../../../../include/c++/5.4.0/bits/stl_heap.h' line='317' column='1'/>
         <parameter type-id='type-id-1485' filepath='/usr/bin/../lib/gcc/x86_64-linux-gnu/5.4.0/../../../../include/c++/5.4.0/bits/stl_heap.h' line='318' column='1'/>
         <return type-id='type-id-196'/>
       </function-decl>
-      <function-decl name='__introsort_loop&lt;__gnu_cxx::__normal_iterator&lt;boost::filesystem::path *, std::vector&lt;boost::filesystem::path, std::allocator&lt;boost::filesystem::path&gt; &gt; &gt;, long, __gnu_cxx::__ops::_Iter_less_iter&gt;' mangled-name='_ZSt16__introsort_loopIN9__gnu_cxx17__normal_iteratorIPN5boost10filesystem4pathESt6vectorIS4_SaIS4_EEEElNS0_5__ops15_Iter_less_iterEEvT_SC_T0_T1_' filepath='/usr/bin/../lib/gcc/x86_64-linux-gnu/5.4.0/../../../../include/c++/5.4.0/bits/stl_algo.h' line='1935' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZSt16__introsort_loopIN9__gnu_cxx17__normal_iteratorIPN5boost10filesystem4pathESt6vectorIS4_SaIS4_EEEElNS0_5__ops15_Iter_less_iterEEvT_SC_T0_T1_' hash='52c0efb08d2aa513'>
+      <function-decl name='__introsort_loop&lt;__gnu_cxx::__normal_iterator&lt;boost::filesystem::path*,std::vector&lt;boost::filesystem::path,std::allocator&lt;boost::filesystem::path&gt;&gt;&gt;,long,__gnu_cxx::__ops::_Iter_less_iter&gt;' mangled-name='_ZSt16__introsort_loopIN9__gnu_cxx17__normal_iteratorIPN5boost10filesystem4pathESt6vectorIS4_SaIS4_EEEElNS0_5__ops15_Iter_less_iterEEvT_SC_T0_T1_' filepath='/usr/bin/../lib/gcc/x86_64-linux-gnu/5.4.0/../../../../include/c++/5.4.0/bits/stl_algo.h' line='1935' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZSt16__introsort_loopIN9__gnu_cxx17__normal_iteratorIPN5boost10filesystem4pathESt6vectorIS4_SaIS4_EEEElNS0_5__ops15_Iter_less_iterEEvT_SC_T0_T1_' hash='52c0efb08d2aa513'>
         <parameter type-id='type-id-1293' filepath='/usr/bin/../lib/gcc/x86_64-linux-gnu/5.4.0/../../../../include/c++/5.4.0/bits/stl_algo.h' line='1935' column='1'/>
         <parameter type-id='type-id-1293' filepath='/usr/bin/../lib/gcc/x86_64-linux-gnu/5.4.0/../../../../include/c++/5.4.0/bits/stl_algo.h' line='1936' column='1'/>
         <parameter type-id='type-id-18' filepath='/usr/bin/../lib/gcc/x86_64-linux-gnu/5.4.0/../../../../include/c++/5.4.0/bits/stl_algo.h' line='1937' column='1'/>
         <parameter type-id='type-id-1485' filepath='/usr/bin/../lib/gcc/x86_64-linux-gnu/5.4.0/../../../../include/c++/5.4.0/bits/stl_algo.h' line='1937' column='1'/>
         <return type-id='type-id-196'/>
       </function-decl>
-      <function-decl name='__adjust_heap&lt;__gnu_cxx::__normal_iterator&lt;boost::filesystem::path *, std::vector&lt;boost::filesystem::path, std::allocator&lt;boost::filesystem::path&gt; &gt; &gt;, long, boost::filesystem::path, __gnu_cxx::__ops::_Iter_less_iter&gt;' mangled-name='_ZSt13__adjust_heapIN9__gnu_cxx17__normal_iteratorIPN5boost10filesystem4pathESt6vectorIS4_SaIS4_EEEElS4_NS0_5__ops15_Iter_less_iterEEvT_T0_SD_T1_T2_' filepath='/usr/bin/../lib/gcc/x86_64-linux-gnu/5.4.0/../../../../include/c++/5.4.0/bits/stl_heap.h' line='207' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZSt13__adjust_heapIN9__gnu_cxx17__normal_iteratorIPN5boost10filesystem4pathESt6vectorIS4_SaIS4_EEEElS4_NS0_5__ops15_Iter_less_iterEEvT_T0_SD_T1_T2_' hash='b1dcd91100b153bb'>
+      <function-decl name='__adjust_heap&lt;__gnu_cxx::__normal_iterator&lt;boost::filesystem::path*,std::vector&lt;boost::filesystem::path,std::allocator&lt;boost::filesystem::path&gt;&gt;&gt;,long,boost::filesystem::path,__gnu_cxx::__ops::_Iter_less_iter&gt;' mangled-name='_ZSt13__adjust_heapIN9__gnu_cxx17__normal_iteratorIPN5boost10filesystem4pathESt6vectorIS4_SaIS4_EEEElS4_NS0_5__ops15_Iter_less_iterEEvT_T0_SD_T1_T2_' filepath='/usr/bin/../lib/gcc/x86_64-linux-gnu/5.4.0/../../../../include/c++/5.4.0/bits/stl_heap.h' line='207' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZSt13__adjust_heapIN9__gnu_cxx17__normal_iteratorIPN5boost10filesystem4pathESt6vectorIS4_SaIS4_EEEElS4_NS0_5__ops15_Iter_less_iterEEvT_T0_SD_T1_T2_' hash='b1dcd91100b153bb'>
         <parameter type-id='type-id-1293' filepath='/usr/bin/../lib/gcc/x86_64-linux-gnu/5.4.0/../../../../include/c++/5.4.0/bits/stl_heap.h' line='207' column='1'/>
         <parameter type-id='type-id-18' filepath='/usr/bin/../lib/gcc/x86_64-linux-gnu/5.4.0/../../../../include/c++/5.4.0/bits/stl_heap.h' line='207' column='1'/>
         <parameter type-id='type-id-18' filepath='/usr/bin/../lib/gcc/x86_64-linux-gnu/5.4.0/../../../../include/c++/5.4.0/bits/stl_heap.h' line='208' column='1'/>
@@ -3148,14 +3148,14 @@
         <parameter type-id='type-id-1485' filepath='/usr/bin/../lib/gcc/x86_64-linux-gnu/5.4.0/../../../../include/c++/5.4.0/bits/stl_heap.h' line='208' column='1'/>
         <return type-id='type-id-196'/>
       </function-decl>
-      <function-decl name='__make_heap&lt;__gnu_cxx::__normal_iterator&lt;boost::filesystem::path *, std::vector&lt;boost::filesystem::path, std::allocator&lt;boost::filesystem::path&gt; &gt; &gt;, __gnu_cxx::__ops::_Iter_less_iter&gt;' mangled-name='_ZSt11__make_heapIN9__gnu_cxx17__normal_iteratorIPN5boost10filesystem4pathESt6vectorIS4_SaIS4_EEEENS0_5__ops15_Iter_less_iterEEvT_SC_T0_' filepath='/usr/bin/../lib/gcc/x86_64-linux-gnu/5.4.0/../../../../include/c++/5.4.0/bits/stl_heap.h' line='317' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZSt11__make_heapIN9__gnu_cxx17__normal_iteratorIPN5boost10filesystem4pathESt6vectorIS4_SaIS4_EEEENS0_5__ops15_Iter_less_iterEEvT_SC_T0_' hash='7f32ffea222edbe7'>
+      <function-decl name='__make_heap&lt;__gnu_cxx::__normal_iterator&lt;boost::filesystem::path*,std::vector&lt;boost::filesystem::path,std::allocator&lt;boost::filesystem::path&gt;&gt;&gt;,__gnu_cxx::__ops::_Iter_less_iter&gt;' mangled-name='_ZSt11__make_heapIN9__gnu_cxx17__normal_iteratorIPN5boost10filesystem4pathESt6vectorIS4_SaIS4_EEEENS0_5__ops15_Iter_less_iterEEvT_SC_T0_' filepath='/usr/bin/../lib/gcc/x86_64-linux-gnu/5.4.0/../../../../include/c++/5.4.0/bits/stl_heap.h' line='317' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZSt11__make_heapIN9__gnu_cxx17__normal_iteratorIPN5boost10filesystem4pathESt6vectorIS4_SaIS4_EEEENS0_5__ops15_Iter_less_iterEEvT_SC_T0_' hash='7f32ffea222edbe7'>
         <parameter type-id='type-id-1293' filepath='/usr/bin/../lib/gcc/x86_64-linux-gnu/5.4.0/../../../../include/c++/5.4.0/bits/stl_heap.h' line='317' column='1'/>
         <parameter type-id='type-id-1293' filepath='/usr/bin/../lib/gcc/x86_64-linux-gnu/5.4.0/../../../../include/c++/5.4.0/bits/stl_heap.h' line='317' column='1'/>
         <parameter type-id='type-id-1485' filepath='/usr/bin/../lib/gcc/x86_64-linux-gnu/5.4.0/../../../../include/c++/5.4.0/bits/stl_heap.h' line='318' column='1'/>
         <return type-id='type-id-196'/>
       </function-decl>
       <namespace-decl name='__cxx11'>
-        <class-decl name='basic_ostringstream&lt;char, std::char_traits&lt;char&gt;, std::allocator&lt;char&gt; &gt;' visibility='default' is-declaration-only='yes' id='type-id-1519'/>
+        <class-decl name='basic_ostringstream&lt;char,std::char_traits&lt;char&gt;,std::allocator&lt;char&gt;&gt;' visibility='default' is-declaration-only='yes' id='type-id-1519'/>
       </namespace-decl>
     </namespace-decl>
     <namespace-decl name='__gnu_cxx'>
@@ -3615,14 +3615,14 @@
     <qualified-type-def type-id='type-id-1700' const='yes' hash='0d301f00e830e5eb' id='type-id-1701'/>
     <reference-type-def kind='lvalue' type-id='type-id-1701' size-in-bits='64' hash='d98a60be7234f7c8' id='type-id-1702'/>
     <pointer-type-def type-id='type-id-1701' size-in-bits='64' hash='f4903706bce76c85' id='type-id-1703'/>
-    <qualified-type-def type-id='type-id-1704' const='yes' hash='049399dcd8701b5c' id='type-id-1705'/>
-    <pointer-type-def type-id='type-id-1705' size-in-bits='64' hash='aef4802709ddf11c' id='type-id-1706'/>
-    <qualified-type-def type-id='type-id-70' const='yes' hash='ffc0b3a354a68545' id='type-id-1707'/>
-    <pointer-type-def type-id='type-id-1707' size-in-bits='64' hash='fae1121e0d0a20ac' id='type-id-1708'/>
-    <qualified-type-def type-id='type-id-74' const='yes' hash='2dc94321f70dae71' id='type-id-1709'/>
-    <pointer-type-def type-id='type-id-1709' size-in-bits='64' hash='e31426f208572223' id='type-id-1710'/>
+    <qualified-type-def type-id='type-id-1704' const='yes' hash='65fc1c7f78bc53db' id='type-id-1705'/>
+    <pointer-type-def type-id='type-id-1705' size-in-bits='64' hash='93986bc5a516d103' id='type-id-1706'/>
+    <qualified-type-def type-id='type-id-70' const='yes' hash='0282e9d12ed9f739' id='type-id-1707'/>
+    <pointer-type-def type-id='type-id-1707' size-in-bits='64' hash='a51f21db49f0ae9a' id='type-id-1708'/>
+    <qualified-type-def type-id='type-id-74' const='yes' hash='cec8ad0861ddd63c' id='type-id-1709'/>
+    <pointer-type-def type-id='type-id-1709' size-in-bits='64' hash='2434989224c74536' id='type-id-1710'/>
     <reference-type-def kind='lvalue' type-id='type-id-1700' size-in-bits='64' hash='75929b1513585467' id='type-id-1711'/>
-    <pointer-type-def type-id='type-id-1712' size-in-bits='64' hash='57ef216dee6ecfdf' id='type-id-1713'/>
+    <pointer-type-def type-id='type-id-1712' size-in-bits='64' hash='71ed3574cb6aa6a4' id='type-id-1713'/>
     <pointer-type-def type-id='type-id-1714' size-in-bits='64' id='type-id-1715'/>
     <qualified-type-def type-id='type-id-1715' restrict='yes' id='type-id-1716'/>
     <pointer-type-def type-id='type-id-1717' size-in-bits='64' id='type-id-1718'/>
@@ -3764,8 +3764,8 @@
     <qualified-type-def type-id='type-id-81' restrict='yes' id='type-id-1925'/>
     <qualified-type-def type-id='type-id-81' restrict='yes' id='type-id-1926'/>
     <namespace-decl name='std'>
-      <class-decl name='basic_filebuf&lt;char, std::char_traits&lt;char&gt; &gt;' visibility='default' size-in-bits='1920' hash='42dada45ecd9e676' id='type-id-1704'/>
-      <class-decl name='basic_ifstream&lt;char, std::char_traits&lt;char&gt; &gt;' visibility='default' size-in-bits='4160' hash='d73fb5d661ecf935' id='type-id-1712'>
+      <class-decl name='basic_filebuf&lt;char,std::char_traits&lt;char&gt;&gt;' visibility='default' size-in-bits='1920' hash='170763135bd31dbc' id='type-id-1704'/>
+      <class-decl name='basic_ifstream&lt;char,std::char_traits&lt;char&gt;&gt;' visibility='default' size-in-bits='4160' hash='b4af7367d98c2414' id='type-id-1712'>
         <member-function access='public' destructor='yes' vtable-offset='0'>
           <function-decl name='~basic_ifstream' filepath='/usr/bin/../lib/gcc/x86_64-linux-gnu/5.4.0/../../../../include/c++/5.4.0/fstream' line='533' column='1' visibility='default' binding='global' size-in-bits='64' hash='7f32ffea222edbe7'>
             <parameter type-id='type-id-1713' is-artificial='yes'/>
@@ -3929,7 +3929,7 @@
           <typedef-decl name='pointer' type-id='type-id-1966' size-in-bits='64' filepath='/usr/bin/../lib/gcc/x86_64-linux-gnu/5.4.0/../../../../include/c++/5.4.0/bits/stl_vector.h' line='77' column='1' hash='f0221758ecf0c0cb#2' id='type-id-1965'/>
         </member-type>
       </class-decl>
-      <function-decl name='operator+&lt;char, std::char_traits&lt;char&gt;, std::allocator&lt;char&gt; &gt;' mangled-name='_ZStplIcSt11char_traitsIcESaIcEENSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_RKS8_' filepath='/usr/bin/../lib/gcc/x86_64-linux-gnu/5.4.0/../../../../include/c++/5.4.0/bits/basic_string.tcc' line='1151' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZStplIcSt11char_traitsIcESaIcEENSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_RKS8_' hash='0cb452c73a82e633'>
+      <function-decl name='operator+&lt;char,std::char_traits&lt;char&gt;,std::allocator&lt;char&gt;&gt;' mangled-name='_ZStplIcSt11char_traitsIcESaIcEENSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_RKS8_' filepath='/usr/bin/../lib/gcc/x86_64-linux-gnu/5.4.0/../../../../include/c++/5.4.0/bits/basic_string.tcc' line='1151' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZStplIcSt11char_traitsIcESaIcEENSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_RKS8_' hash='4cd7bb20df2f28a3'>
         <parameter type-id='type-id-43' filepath='/usr/bin/../lib/gcc/x86_64-linux-gnu/5.4.0/../../../../include/c++/5.4.0/bits/basic_string.tcc' line='1151' column='1'/>
         <parameter type-id='type-id-751' filepath='/usr/bin/../lib/gcc/x86_64-linux-gnu/5.4.0/../../../../include/c++/5.4.0/bits/basic_string.tcc' line='1152' column='1'/>
         <return type-id='type-id-52'/>
@@ -4004,7 +4004,7 @@
       <class-decl name='__anonymous_struct__21' visibility='default' is-anonymous='yes' is-declaration-only='yes' id='type-id-1819'/>
       <class-decl name='__anonymous_struct__22' visibility='default' is-anonymous='yes' is-declaration-only='yes' id='type-id-1792'>
         <member-function access='public' const='yes'>
-          <function-decl name='read&lt;mongo::Validated&lt;mongo::BSONObj&gt; &gt;' mangled-name='_ZNK5mongo14ConstDataRange4readINS_9ValidatedINS_7BSONObjEEEEENS_10StatusWithIT_EEm' filepath='src/mongo/base/data_range.h' line='83' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZNK5mongo14ConstDataRange4readINS_9ValidatedINS_7BSONObjEEEEENS_10StatusWithIT_EEm' hash='e0055d99adb0e173'>
+          <function-decl name='read&lt;mongo::Validated&lt;mongo::BSONObj&gt;&gt;' mangled-name='_ZNK5mongo14ConstDataRange4readINS_9ValidatedINS_7BSONObjEEEEENS_10StatusWithIT_EEm' filepath='src/mongo/base/data_range.h' line='83' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZNK5mongo14ConstDataRange4readINS_9ValidatedINS_7BSONObjEEEEENS_10StatusWithIT_EEm' hash='e0055d99adb0e173'>
             <parameter type-id='type-id-1842' is-artificial='yes'/>
             <parameter type-id='type-id-26' filepath='src/mongo/base/data_range.h' line='83' column='1'/>
             <return type-id='type-id-1796'/>
@@ -4771,7 +4771,7 @@
           <typedef-decl name='const_reference' type-id='type-id-2454' size-in-bits='64' filepath='/usr/bin/../lib/gcc/x86_64-linux-gnu/5.4.0/../../../../include/c++/5.4.0/bits/stl_vector.h' line='230' column='1' hash='29d715465e784177' id='type-id-2453'/>
         </member-type>
         <member-function access='protected'>
-          <function-decl name='_M_emplace_back_aux&lt;long long&gt;' mangled-name='_ZNSt6vectorImSaImEE19_M_emplace_back_auxIJxEEEvDpOT_' filepath='/usr/bin/../lib/gcc/x86_64-linux-gnu/5.4.0/../../../../include/c++/5.4.0/bits/vector.tcc' line='408' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZNSt6vectorImSaImEE19_M_emplace_back_auxIJxEEEvDpOT_' hash='1f1e19bd156c5b73'>
+          <function-decl name='_M_emplace_back_aux&lt;longlong&gt;' mangled-name='_ZNSt6vectorImSaImEE19_M_emplace_back_auxIJxEEEvDpOT_' filepath='/usr/bin/../lib/gcc/x86_64-linux-gnu/5.4.0/../../../../include/c++/5.4.0/bits/vector.tcc' line='408' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZNSt6vectorImSaImEE19_M_emplace_back_auxIJxEEEvDpOT_' hash='1f1e19bd156c5b73'>
             <parameter type-id='type-id-2261' is-artificial='yes'/>
             <parameter type-id='type-id-2248' filepath='/usr/bin/../lib/gcc/x86_64-linux-gnu/5.4.0/../../../../include/c++/5.4.0/bits/vector.tcc' line='936' column='1'/>
             <return type-id='type-id-196'/>
@@ -4785,7 +4785,7 @@
           </function-decl>
         </member-function>
         <member-function access='protected'>
-          <function-decl name='_M_emplace_back_aux&lt;unsigned int&gt;' mangled-name='_ZNSt6vectorImSaImEE19_M_emplace_back_auxIJjEEEvDpOT_' filepath='/usr/bin/../lib/gcc/x86_64-linux-gnu/5.4.0/../../../../include/c++/5.4.0/bits/vector.tcc' line='408' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZNSt6vectorImSaImEE19_M_emplace_back_auxIJjEEEvDpOT_' hash='815a598e8de5d8a8'>
+          <function-decl name='_M_emplace_back_aux&lt;unsignedint&gt;' mangled-name='_ZNSt6vectorImSaImEE19_M_emplace_back_auxIJjEEEvDpOT_' filepath='/usr/bin/../lib/gcc/x86_64-linux-gnu/5.4.0/../../../../include/c++/5.4.0/bits/vector.tcc' line='408' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZNSt6vectorImSaImEE19_M_emplace_back_auxIJjEEEvDpOT_' hash='815a598e8de5d8a8'>
             <parameter type-id='type-id-2261' is-artificial='yes'/>
             <parameter type-id='type-id-2251' filepath='/usr/bin/../lib/gcc/x86_64-linux-gnu/5.4.0/../../../../include/c++/5.4.0/bits/vector.tcc' line='936' column='1'/>
             <return type-id='type-id-196'/>
@@ -4847,7 +4847,7 @@
         </member-type>
       </class-decl>
       <namespace-decl name='__cxx11'>
-        <class-decl name='basic_ostringstream&lt;char, std::char_traits&lt;char&gt;, std::allocator&lt;char&gt; &gt;' visibility='default' is-declaration-only='yes' id='type-id-2419'/>
+        <class-decl name='basic_ostringstream&lt;char,std::char_traits&lt;char&gt;,std::allocator&lt;char&gt;&gt;' visibility='default' is-declaration-only='yes' id='type-id-2419'/>
       </namespace-decl>
     </namespace-decl>
     <namespace-decl name='__gnu_cxx'>
@@ -4997,7 +4997,7 @@
       <class-decl name='__anonymous_struct__3' visibility='default' is-anonymous='yes' is-declaration-only='yes' id='type-id-2298'/>
       <class-decl name='__anonymous_struct__30' visibility='default' is-anonymous='yes' is-declaration-only='yes' id='type-id-2328'>
         <member-function access='private'>
-          <function-decl name='appendIntegral&lt;long long&gt;' mangled-name='_ZN5mongo17StringBuilderImplINS_21SharedBufferAllocatorEE14appendIntegralIxEERS2_T_i' filepath='src/mongo/bson/util/builder.h' line='498' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZN5mongo17StringBuilderImplINS_21SharedBufferAllocatorEE14appendIntegralIxEERS2_T_i' hash='27d51c5c93237148'>
+          <function-decl name='appendIntegral&lt;longlong&gt;' mangled-name='_ZN5mongo17StringBuilderImplINS_21SharedBufferAllocatorEE14appendIntegralIxEERS2_T_i' filepath='src/mongo/bson/util/builder.h' line='498' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZN5mongo17StringBuilderImplINS_21SharedBufferAllocatorEE14appendIntegralIxEERS2_T_i' hash='27d51c5c93237148'>
             <parameter type-id='type-id-2329' is-artificial='yes'/>
             <parameter type-id='type-id-19' filepath='src/mongo/bson/util/builder.h' line='498' column='1'/>
             <parameter type-id='type-id-16' filepath='src/mongo/bson/util/builder.h' line='498' column='1'/>

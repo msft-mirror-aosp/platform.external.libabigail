@@ -61,15 +61,15 @@
                                     struct tbb::internal::padded<tbb::internal::arena_slot_line1> at tbb_stddef.h:261:1
                                     struct tbb::internal::padded<tbb::internal::arena_slot_line2> at tbb_stddef.h:261:1
                                   2 base class insertions:
-                                    struct tbb::internal::padded<tbb::internal::arena_slot_line1, 128ul> at tbb_stddef.h:251:1
-                                    struct tbb::internal::padded<tbb::internal::arena_slot_line2, 128ul> at tbb_stddef.h:251:1
+                                    struct tbb::internal::padded<tbb::internal::arena_slot_line1,128> at tbb_stddef.h:251:1
+                                    struct tbb::internal::padded<tbb::internal::arena_slot_line2,128> at tbb_stddef.h:251:1
                               type of 'arena* my_arena' changed:
                                 in pointed to type 'class tbb::internal::arena' at arena.h:160:1:
                                   type size hasn't changed
                                   1 base class deletion:
                                     struct tbb::internal::padded<tbb::internal::arena_base> at tbb_stddef.h:261:1
                                   1 base class insertion:
-                                    struct tbb::internal::padded<tbb::internal::arena_base, 128ul> at tbb_stddef.h:251:1
+                                    struct tbb::internal::padded<tbb::internal::arena_base,128> at tbb_stddef.h:251:1
                                   no data member change (1 filtered);
                               type of 'tbb::internal::mail_inbox my_inbox' changed:
                                 type size hasn't changed
@@ -80,7 +80,7 @@
                                       1 base class deletion:
                                         class tbb::internal::unpadded_mail_outbox at mailbox.h:97:1
                                       1 base class insertion:
-                                        struct tbb::internal::padded<tbb::internal::unpadded_mail_outbox, 128ul> at tbb_stddef.h:251:1
+                                        struct tbb::internal::padded<tbb::internal::unpadded_mail_outbox,128> at tbb_stddef.h:251:1
                                       1 data member deletion:
                                         'char pad[104]', at offset 136 (in bits) at mailbox.h:114:1
                         1 member function deletion:
@@ -135,8 +135,8 @@
                                   array element type 'struct tbb::internal::market::priority_level_info' changed:
                                     type size hasn't changed
                                     1 data member change:
-                                      type of 'tbb::internal::intrusive_list_base<tbb::internal::intrusive_list<tbb::internal::arena>, tbb::internal::arena>::iterator next_arena' changed:
-                                        entity changed from 'class tbb::internal::intrusive_list_base<tbb::internal::intrusive_list<tbb::internal::arena>, tbb::internal::arena>::iterator' to 'tbb::internal::arena*'
+                                      type of 'tbb::internal::intrusive_list_base<tbb::internal::intrusive_list<tbb::internal::arena>,tbb::internal::arena>::iterator next_arena' changed:
+                                        entity changed from 'class tbb::internal::intrusive_list_base<tbb::internal::intrusive_list<tbb::internal::arena>,tbb::internal::arena>::iterator' to 'tbb::internal::arena*'
                                         type size hasn't changed
                                   type size hasn't changed
                                 and offset changed from 576 to 640 (in bits) (by +64 bits)
@@ -154,10 +154,10 @@
                           'tbb::internal::context_list_node_t my_context_list_head' offset changed from 2240 to 2304 (in bits) (by +64 bits)
                           'tbb::spin_mutex my_context_list_mutex' offset changed from 2368 to 2432 (in bits) (by +64 bits)
                           'uintptr_t my_context_state_propagation_epoch' offset changed from 2432 to 2496 (in bits) (by +64 bits)
-                          'tbb::atomic<long unsigned int> my_local_ctx_list_update' offset changed from 2496 to 2560 (in bits) (by +64 bits)
+                          'tbb::atomic<longunsignedint> my_local_ctx_list_update' offset changed from 2496 to 2560 (in bits) (by +64 bits)
                           'uintptr_t my_local_reload_epoch' offset changed from 2816 to 2752 (in bits) (by -64 bits)
                           'volatile bool my_pool_reshuffling_pending' offset changed from 2880 to 2816 (in bits) (by -64 bits)
-                          'tbb::atomic<long unsigned int> my_nonlocal_ctx_list_update' offset changed from 2944 to 2880 (in bits) (by -64 bits)
+                          'tbb::atomic<longunsignedint> my_nonlocal_ctx_list_update' offset changed from 2944 to 2880 (in bits) (by -64 bits)
                           '__cilk_tbb_unwatch_thunk my_cilk_unwatch_thunk' offset changed from 3008 to 2944 (in bits) (by -64 bits)
 
     [C] 'method void tbb::internal::concurrent_queue_base_v3::assign(const tbb::internal::concurrent_queue_base&)' at concurrent_queue.cpp:529:1 has some indirect sub-type changes:
@@ -183,13 +183,13 @@
             type of 'tbb::atomic<tbb::internal::concurrent_vector_base_v3::segment_t*> my_segment' changed:
               type size hasn't changed
               1 base class change:
-                'struct tbb::internal::atomic_impl_with_arithmetic<tbb::internal::concurrent_vector_base_v3::segment_t*, long int, tbb::internal::concurrent_vector_base_v3::segment_t>' at atomic.h:340:1 changed:
+                'struct tbb::internal::atomic_impl_with_arithmetic<tbb::internal::concurrent_vector_base_v3::segment_t*,longint,tbb::internal::concurrent_vector_base_v3::segment_t>' at atomic.h:340:1 changed:
                   type size hasn't changed
                   1 base class change:
                     'struct tbb::internal::atomic_impl<tbb::internal::concurrent_vector_base_v3::segment_t*>' at atomic.h:227:1 changed:
                       type size hasn't changed
                       1 data member change:
-                        type of 'tbb::internal::aligned_storage<tbb::internal::concurrent_vector_base_v3::segment_t*, 8ul> my_storage' changed:
+                        type of 'tbb::internal::aligned_storage<tbb::internal::concurrent_vector_base_v3::segment_t*,8> my_storage' changed:
                           type size hasn't changed
                           1 data member change:
                             type of 'segment_t* my_value' changed:

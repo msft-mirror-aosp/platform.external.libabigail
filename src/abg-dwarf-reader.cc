@@ -251,6 +251,9 @@ static void
 maybe_set_member_type_access_specifier(decl_base_sptr member_type_declaration,
 				       Dwarf_Die* die);
 
+static void
+cleanup_decl_name(string&);
+
 /// Convenience typedef for a shared pointer to an
 /// addr_elf_symbol_sptr_map_type.
 typedef shared_ptr<addr_elf_symbol_sptr_map_type> addr_elf_symbol_sptr_map_sptr;
@@ -14420,6 +14423,7 @@ add_or_update_class_type(reader&	 rdr,
   string name, linkage_name;
   location loc;
   die_loc_and_name(rdr, die, loc, name, linkage_name);
+  cleanup_decl_name(name);
 
   bool is_anonymous = false;
   if (name.empty())
@@ -14872,6 +14876,7 @@ add_or_update_union_type(reader&	 rdr,
   string name, linkage_name;
   location loc;
   die_loc_and_name(rdr, die, loc, name, linkage_name);
+  cleanup_decl_name(name);
 
   bool is_anonymous = false;
   if (name.empty())
@@ -16812,6 +16817,7 @@ build_function_decl(reader&	rdr,
   string fname, flinkage_name;
   location floc;
   die_loc_and_name(rdr, die, floc, fname, flinkage_name);
+  cleanup_decl_name(fname);
 
   size_t is_inline = die_is_declared_inline(die);
   class_or_union_sptr is_method =
@@ -16959,6 +16965,20 @@ maybe_set_member_type_access_specifier(decl_base_sptr member_type_declaration,
       die_access_specifier(die, access);
       set_member_access_specifier(member_type_declaration, access);
     }
+}
+
+/// Normalize a decl name so that it can be compared to other decl
+/// names without risking to have spurious changes.
+///
+/// The function removes white spaces from the and normalizes
+/// numerical litterals.
+///
+/// @param str in/out parameter.  The string to normalize, in place.
+static void
+cleanup_decl_name(string& str)
+{
+  tools_utils::remove_white_spaces(str);
+  tools_utils::normalize_litterals(str);
 }
 
 /// This function tests if a given function which might be intented to
