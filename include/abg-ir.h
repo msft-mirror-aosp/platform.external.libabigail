@@ -2836,6 +2836,14 @@ public:
   enumerators&
   get_enumerators();
 
+  bool
+  find_enumerator_by_value(int64_t value,
+			   enum_type_decl::enumerator& result);
+
+  bool
+  find_enumerator_by_name(const string& name,
+			  enum_type_decl::enumerator& result);
+
   virtual string
   get_pretty_representation(bool internal = false,
 			    bool qualified_name = true) const;

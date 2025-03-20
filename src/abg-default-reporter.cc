@@ -203,14 +203,43 @@ default_reporter::report(const enum_diff& d, ostream& out,
 	   i != sorted_changed_enumerators.end();
 	   ++i)
 	{
-	  out << indent
-	      << "  '"
-	      << (first->get_is_anonymous()
-		  ? i->first.get_name()
-		  : i->first.get_qualified_name())
-	      << "' from value '"
-	      << i->first.get_value() << "' to '"
-	      << i->second.get_value() << "'";
+	  out << indent;
+	  if (i->first.get_value() != i->second.get_value())
+	    {
+	     out << "  '"
+		 << (first->get_is_anonymous()
+		     ? i->first.get_name()
+		     : i->first.get_qualified_name())
+		 << "' from value '"
+		 << i->first.get_value() << "' to '"
+		 << i->second.get_value() << "'";
+	    }
+	  else if (i->first.get_name() != i->second.get_name())
+	    {
+	      out << "from '"
+		  << (first->get_is_anonymous()
+		      ? i->first.get_name()
+		      : i->first.get_qualified_name())
+		  << " = " << i->first.get_value()
+		  << "' to '"
+		  << (second->get_is_anonymous()
+		  ? i->second.get_name()
+		  : i->second.get_qualified_name())
+		  << " = " << i->second.get_value()
+		  << "'";
+	    }
+	  else
+	    {
+	      out << "enumerator change from '"
+		  << i->first.get_name()
+		  << " = "
+		  << i->first.get_value()
+		  << "' to '"
+		  << i->second.get_name()
+		  << " = "
+		  << i->second.get_value()
+		  << "' could not be determined - please report as a bug";
+	    }
 	  report_loc_info(second, *ctxt, out);
 	  out << "\n";
 	}
@@ -245,7 +274,7 @@ default_reporter::report_non_type_typedef_changes(const typedef_diff &d,
 
   maybe_report_diff_for_member(f, s, d.context(), out, indent);
 
-  if ((filtering::has_harmless_name_change(f, s)
+  if ((filtering::has_harmless_name_change(f, s, d.context())
        && ((d.context()->get_allowed_category()
 	    & HARMLESS_DECL_NAME_CHANGE_CATEGORY)
 	   || d.context()->show_leaf_changes_only()))

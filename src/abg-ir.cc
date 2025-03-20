@@ -20025,6 +20025,54 @@ enum_type_decl::get_sorted_enumerators() const
   return priv_->sorted_enumerators_;
 }
 
+/// Find an enumerator by its value.
+///
+/// @param value the enumerator value to look for.
+///
+/// @param result output parameter.  This is set to the enumerator
+/// which value is @p value, if found.  This is set iff the function
+/// returns true.
+///
+/// @return true iff an enumerator with value @p value was found and
+/// returned by argument via @p result.
+bool
+enum_type_decl::find_enumerator_by_value(int64_t value,
+					 enum_type_decl:: enumerator& result)
+{
+  for (auto& e : get_enumerators())
+    if (e.get_value() == value)
+      {
+	result = e;
+	return true;
+      }
+
+  return false;
+}
+
+/// Find an enumerator by its name
+///
+/// @param name the enumerator name to look for.
+///
+/// @param result output parameter.  This is set to the enumerator
+/// which name is @p name, if found.  This is set iff the function
+/// returns true.
+///
+/// @return true iff an enumerator with name @p name was found and
+/// returned by argument via @p result.
+bool
+enum_type_decl::find_enumerator_by_name(const string& name,
+					enum_type_decl::enumerator& result)
+{
+  for (auto& e : get_enumerators())
+    if (e.get_name() == name)
+      {
+	result = e;
+	return true;
+      }
+
+  return false;
+}
+
 /// Get the pretty representation of the current instance of @ref
 /// enum_type_decl.
 ///

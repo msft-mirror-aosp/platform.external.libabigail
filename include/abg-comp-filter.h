@@ -25,7 +25,9 @@ namespace filtering
 {
 
 bool
-has_harmless_name_change(const decl_base_sptr& f, const decl_base_sptr& s);
+has_harmless_name_change(const decl_base_sptr& f,
+			 const decl_base_sptr& s,
+			 const diff_context_sptr& ctxt);
 
 bool union_diff_has_harmless_changes(const diff *d);
 

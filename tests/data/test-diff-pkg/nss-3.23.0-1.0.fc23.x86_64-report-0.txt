@@ -41,20 +41,7 @@
             type size hasn't changed
             1 data member insertion:
               'SSLAuthType authType', at offset 736 (in bits) at sslt.h:250:1
-            1 data member changes (1 filtered):
-              type of 'SSLAuthType authAlgorithm' changed:
-                underlying type 'enum SSLAuthType' at sslt.h:87:1 changed:
-                  type size hasn't changed
-                  1 enumerator deletion:
-                    'SSLAuthType::ssl_auth_rsa' value '1'
-                  7 enumerator insertions:
-                    'SSLAuthType::ssl_auth_rsa_decrypt' value '1'
-                    'SSLAuthType::ssl_auth_ecdh_rsa' value '5'
-                    'SSLAuthType::ssl_auth_ecdh_ecdsa' value '6'
-                    'SSLAuthType::ssl_auth_rsa_sign' value '7'
-                    'SSLAuthType::ssl_auth_rsa_pss' value '8'
-                    'SSLAuthType::ssl_auth_psk' value '9'
-                    'SSLAuthType::ssl_auth_size' value '10'
+            no data member changes (2 filtered);
 
   1 Changed variable:
 

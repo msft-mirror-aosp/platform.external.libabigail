@@ -4666,6 +4666,66 @@ enum_diff::ensure_lookup_tables_populated()
 	      }
 	  }
       }
+
+    // If a new enumerator is added with a value that already existed
+    // in the old enum but with a new name, then populate the
+    // enum_diff::priv_::changed_enumerators_ data member with a
+    // change that represents a change to an enumerator name.  The
+    // enum_diff::priv_::inserted_enumerators_ is adjusted accordingly
+    // an the 'new' enumerator is removed in this case.
+
+    enum_type_decl::enumerators enums_to_erase;
+    for (auto& entry : priv_->inserted_enumerators_)
+      {
+	enum_type_decl::enumerator& final_enumerator = entry.second;
+	enum_type_decl::enumerator initial_enumerator;
+	if (first_enum()->find_enumerator_by_value(entry.second.get_value(),
+						   initial_enumerator))
+	  {
+	    enum_type_decl::enumerator foo;
+	    if (!second_enum()->
+		find_enumerator_by_name(initial_enumerator.get_name(),
+					foo))
+	      {
+		priv_->changed_enumerators_[initial_enumerator.get_name()] =
+		  std::make_pair(initial_enumerator, final_enumerator);
+		enums_to_erase.push_back(final_enumerator);
+	      }
+	  }
+      }
+
+    for (auto& enomerator : enums_to_erase)
+      priv_->inserted_enumerators_.erase(enomerator.get_name());
+
+    // If an enumerator is deleted yet its value (with a new name) is
+    // still present among enumerators of the newer enum then populate
+    // the enum_diff::priv_::changed_enumerators_ data member with a
+    // change that represents a change to an enumerator name.  The
+    // enum_diff::priv_::deleted_enumerators_ is adjusted accordingly
+    // an the 'new' enumerator is removed in this case.
+
+    enums_to_erase.clear();
+    for (auto& entry : priv_->deleted_enumerators_)
+      {
+	enum_type_decl::enumerator& initial_enumerator = entry.second;
+	enum_type_decl::enumerator final_enumerator;
+	if (second_enum()->find_enumerator_by_value(entry.second.get_value(),
+						    final_enumerator))
+	  {
+	    enum_type_decl::enumerator foo;
+	    if (!first_enum()->
+		find_enumerator_by_name(final_enumerator.get_name(),
+					foo))
+	      {
+		priv_->changed_enumerators_[initial_enumerator.get_name()] =
+		  std::make_pair(initial_enumerator, final_enumerator);
+		enums_to_erase.push_back(initial_enumerator);
+	      }
+	  }
+      }
+
+    for (auto& enomerator : enums_to_erase)
+      priv_->deleted_enumerators_.erase(enomerator.get_name());
   }
 }
 

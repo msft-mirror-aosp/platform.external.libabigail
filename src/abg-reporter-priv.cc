@@ -544,7 +544,7 @@ represent(const var_diff_sptr	&diff,
 
   if (!filtering::has_anonymous_data_member_change(diff) && o_name != n_name)
     {
-      if (filtering::has_harmless_name_change(o, n)
+      if (filtering::has_harmless_name_change(o, n, ctxt)
 	  && !(ctxt->get_allowed_category()
 	       & HARMLESS_DECL_NAME_CHANGE_CATEGORY))
 	;
@@ -986,7 +986,7 @@ report_name_size_and_alignment_changes(decl_base_sptr		first,
       && fn != sn)
     {
       if (!(ctxt->get_allowed_category() & HARMLESS_DECL_NAME_CHANGE_CATEGORY)
-	  && filtering::has_harmless_name_change(first, second))
+	  && filtering::has_harmless_name_change(first, second, ctxt))
 	// This is a harmless name change.  but then
 	// HARMLESS_DECL_NAME_CHANGE_CATEGORY doesn't seem allowed.
 	;

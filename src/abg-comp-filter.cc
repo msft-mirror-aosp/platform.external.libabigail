@@ -40,6 +40,13 @@ static bool
 type_diff_has_cv_qual_change_only(const type_base_sptr& f,
 				  const type_base_sptr& s);
 
+static bool
+has_harmful_enum_change(const diff* diff);
+
+static bool
+has_harmless_enum_change(const type_base_sptr& f,
+			 const type_base_sptr& s,
+			 const diff_context_sptr& ctxt);
 using std::dynamic_pointer_cast;
 
 /// Walk the diff sub-trees of a a @ref corpus_diff and apply a filter
@@ -756,9 +763,14 @@ integral_type_has_harmless_name_change(const decl_base_sptr& f,
 ///
 /// @param s the second decl to consider in the comparison.
 ///
+/// @param ctxt the diff context to use for fine grained comparison of
+/// @p f and @p s.
+///
 /// @return true iff decl @p s represents a harmless change over @p f.
 bool
-has_harmless_name_change(const decl_base_sptr& f, const decl_base_sptr& s)
+has_harmless_name_change(const decl_base_sptr& f,
+			 const decl_base_sptr& s,
+			 const diff_context_sptr& ctxt)
 {
   // So, a harmless name change is either ...
   return (decl_name_changed(f, s)
@@ -785,23 +797,17 @@ has_harmless_name_change(const decl_base_sptr& f, const decl_base_sptr& s)
 	      // ... Only qualifers changed on the type without having
 	      // the underlying type changed ...
 	      || type_diff_has_cv_qual_change_only(is_type(f), is_type(s))
+	      || has_harmless_enum_change(is_type(f), is_type(s), ctxt)
 	      // ... or a data member name change, without having its
 	      // type changed ...
 	      || (is_data_member(f)
 		  && is_data_member(s)
 		  && (is_var_decl(f)->get_type()
 		      == is_var_decl(s)->get_type()))
-	      // .. an enum name change without having any other part
-	      // of the enum to change.
-	      || (is_enum_type(f)
-		  && is_enum_type(s)
-		  && !enum_has_non_name_change(*is_enum_type(f),
-					       *is_enum_type(s),
-					       0))
 	      || integral_type_has_harmless_name_change(f, s)));
 }
 
-/// Test if two decls represents a harmful name change.
+/// Test if two decls represent a harmful name change.
 ///
 /// A harmful name change is a name change that is not harmless, so
 /// this function uses the function has_harmless_name_change.
@@ -810,11 +816,15 @@ has_harmless_name_change(const decl_base_sptr& f, const decl_base_sptr& s)
 ///
 /// @param s the second decl to consider in the comparison.
 ///
+/// @param ctxt the diff context to use for comparison.
+///
 /// @return true iff decl @p s represents a harmful name change over
 /// @p f.
 bool
-has_harmful_name_change(const decl_base_sptr& f, const decl_base_sptr& s)
-{return decl_name_changed(f, s) && ! has_harmless_name_change(f, s);}
+has_harmful_name_change(const decl_base_sptr& f,
+			const decl_base_sptr& s,
+			const diff_context_sptr& ctxt)
+{return decl_name_changed(f, s) && ! has_harmless_name_change(f, s, ctxt);}
 
 /// Test if a diff node represents a harmful name change.
 ///
@@ -833,7 +843,7 @@ has_harmful_name_change(const diff* dif)
   decl_base_sptr f = is_decl(dif->first_subject()),
     s = is_decl(dif->second_subject());
 
-  return has_harmful_name_change(f, s);
+  return has_harmful_name_change(f, s, dif->context());
 }
 
 /// Test if a class_diff node has non-static members added or
@@ -1699,21 +1709,51 @@ has_enumerator_insertion(const diff* diff)
   return false;
 }
 
-/// Test if an enum_diff carries an enumerator removal.
+/// Test if an enum_diff carries an enumerator removal or an
+/// enumerator value change.
 ///
 /// @param diff the enum_diff to consider.
 ///
 /// @return true iff @p diff carries an enumerator removal or change.
 static bool
-has_enumerator_removal_or_change(const diff* diff)
+has_enumerator_removal_or_value_change(const diff* diff)
 {
   if (const enum_diff* d = dynamic_cast<const enum_diff*>(diff))
-    return (!d->deleted_enumerators().empty()
-	    || !d->changed_enumerators().empty());
+    {
+      if (!d->deleted_enumerators().empty())
+	return true;
+
+      for (auto& entry : d->changed_enumerators())
+	{
+	  const changed_enumerator& change = entry.second;
+	  if (change.first.get_value() != change.second.get_value())
+	    return true;
+	}
+    }
+  return false;
+}
+
+/// Test if a diff node carries an enumerator name or value change.
+///
+/// @param diff the diff node to consider.
+///
+/// @return true iff the diff node @p diff carries an enumerator name
+/// or value change.
+static bool
+has_enumerator_change(const diff* diff)
+{
+  if (const enum_diff* d = dynamic_cast<const enum_diff*>(diff))
+    return !d->changed_enumerators().empty();
   return false;
 }
 
 /// Test if an enum_diff carries a harmful change.
+///
+/// For now, a harmful enum change is either a change that:
+///
+///   - changes the size of the enum type
+///
+///   - or removes (or changes) an existing enumerator value.
 ///
 /// @param diff the enum_diff to consider.
 ///
@@ -1722,8 +1762,9 @@ static bool
 has_harmful_enum_change(const diff* diff)
 {
   if (const enum_diff* d = dynamic_cast<const enum_diff*>(diff))
-    return (has_enumerator_removal_or_change(d)
-	    || has_type_size_change(d));
+    if (has_type_size_change(d) || has_enumerator_removal_or_value_change(d))
+      return true;
+
   return false;
 }
 
@@ -1771,6 +1812,77 @@ has_harmless_enum_to_int_change(const diff* diff)
     }
 
   return false;
+}
+
+/// Test if two types represent a harmless (that can be filtered out
+/// by default) enum type change.
+///
+/// A harmless enum type change is either an enumerator insertion or
+/// an enumerator change that doesn't represents a harmful enum change
+/// at the same time.  Note that a harmless enum to int change is a
+/// harmless enum change too.
+///
+/// @param t1 the first version of the type to consider.
+///
+/// @param t2 the second version of the type to consider.
+///
+/// @param ctxt the diff context to use to compare @p t1 and @p t2.
+///
+/// @return true iff {t1, t2} represents a harmless enum change.
+static bool
+has_harmless_enum_change(const type_base_sptr& t1,
+			 const type_base_sptr& t2,
+			 const diff_context_sptr& ctxt)
+{
+  type_base_sptr f = peel_typedef_type(t1);
+  type_base_sptr s = peel_typedef_type(t2);
+  enum_type_decl_sptr e1 = is_enum_type(f);
+  enum_type_decl_sptr e2 = is_enum_type(s);
+
+  if (!e1 || !e2)
+    return false;
+
+  enum_diff_sptr dyf = compute_diff(e1, e2, ctxt);
+  if (((has_enumerator_insertion(dyf.get()) || has_enumerator_change(dyf.get()))
+       && !has_harmful_enum_change(dyf.get()))
+      || has_harmless_enum_to_int_change(dyf.get()))
+    return true;
+
+  return false;
+}
+
+/// Test if two types represent a harmless (that can be filtered out
+/// by default) enum type change.
+///
+/// A harmless enum type change is either an enumerator insertion or
+/// an enumerator change that doesn't represents a harmful enum change
+/// at the same time.  Note that a harmless enum to int change is a
+/// harmless enum change too.
+///
+/// @param t1 the first version of the type to consider.
+///
+/// @param t2 the second version of the type to consider.
+///
+/// @param ctxt the diff context to use to compare @p t1 and @p t2.
+///
+/// @return true iff {t1, t2} represents a harmless enum change.
+static bool
+has_harmless_enum_change(const diff* d)
+{
+  if (!d)
+    return false;
+
+  if (((has_enumerator_insertion(d) || has_enumerator_change(d))
+       && !has_harmful_enum_change(d))
+      || has_harmless_enum_to_int_change(d))
+    return true;
+
+  type_base_sptr f = is_type(d->first_subject());
+  type_base_sptr s = is_type(d->second_subject());
+  if (!f || !s)
+    return false;
+
+  return has_harmless_enum_change(f, s, d->context());
 }
 
 /// Test if an @ref fn_parm_diff node has a top cv qualifier change on
@@ -2132,7 +2244,7 @@ categorize_harmless_diff_node(diff *d, bool pre)
       if (is_compatible_change(f, s))
 	category |= COMPATIBLE_TYPE_CHANGE_CATEGORY;
 
-      if (has_harmless_name_change(f, s)
+      if (has_harmless_name_change(f, s, d->context())
 	  || class_diff_has_harmless_odr_violation_change(d))
 	category |= HARMLESS_DECL_NAME_CHANGE_CATEGORY;
 
@@ -2150,9 +2262,7 @@ categorize_harmless_diff_node(diff *d, bool pre)
       if (has_data_member_replaced_by_anon_dm(d))
 	category |= HARMLESS_DATA_MEMBER_CHANGE_CATEGORY;
 
-      if ((has_enumerator_insertion(d)
-	   && !has_harmful_enum_change(d))
-	  || has_harmless_enum_to_int_change(d))
+      if (has_harmless_enum_change(d))
 	category |= HARMLESS_ENUM_CHANGE_CATEGORY;
 
       if (function_name_changed_but_not_symbol(d))
