@@ -1,0 +1,23 @@
+Functions changes summary: 0 Removed, 2 Changed (2 filtered out), 0 Added functions
+Variables changes summary: 0 Removed, 0 Changed, 0 Added variable
+
+2 functions with some indirect sub-type change:
+
+  [C] 'method C0::C0()' has some indirect sub-type changes:
+    implicit parameter 0 of type 'C0*' has sub-type changes:
+      in pointed to type 'class C0':
+        type size hasn't changed
+        1 member function changes (1 filtered):
+          'method virtual unsigned int C0::vfn2(char)' has some sub-type changes:
+            return type changed:
+              type name changed from 'unsigned int' to 'int'
+              type size hasn't changed
+            implicit parameter 0 of type 'C0*' has sub-type changes:
+              pointed to type 'class C0' changed, as being reported
+        no data member change (1 filtered);
+
+  [C] 'method virtual unsigned int C0::vfn2(char)' has some indirect sub-type changes:
+    return type changed:
+      type name changed from 'unsigned int' to 'int'
+      type size hasn't changed
+

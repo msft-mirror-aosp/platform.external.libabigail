@@ -1252,6 +1252,10 @@ decl_base_sptr
 get_type_declaration(const type_base_sptr);
 
 bool
+classes_have_same_layout(const type_base_sptr& f,
+			 const type_base_sptr& s);
+
+bool
 types_are_compatible(const type_base_sptr,
 		     const type_base_sptr);
 

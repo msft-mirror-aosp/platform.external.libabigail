@@ -10222,7 +10222,96 @@ decl_base_sptr
 get_type_declaration(const type_base_sptr t)
 {return dynamic_pointer_cast<decl_base>(t);}
 
-/// Test if two types are equal modulo a typedef.
+/// Test if two classes have the same layout.
+///
+/// Test if all the types and offsets of the members are equal,
+/// regardless of their access modifiers.
+///
+/// @param f the first class to take into account.
+///
+/// @param s the second class to take into account.
+///
+/// @return true iff @p s and @p f are class types with the same
+/// layout.
+bool
+classes_have_same_layout(const type_base_sptr& f, const type_base_sptr& s)
+{
+  class_decl_sptr fc = is_class_type(peel_qualified_or_typedef_type(f)),
+    sc = is_class_type(peel_qualified_or_typedef_type(s));
+
+  if (!fc
+      || !sc
+      || (fc->get_qualified_name() != sc->get_qualified_name())
+      || (fc->get_size_in_bits() != sc->get_size_in_bits())
+      || (fc->get_data_members().size() != sc->get_data_members().size()))
+    return false;
+
+  if (*fc == *sc)
+    return true;
+
+  // Compare the types and offsets of data members one by one.
+  for (auto f_decl_it = fc->get_data_members().begin(),
+	 s_decl_it = sc->get_data_members().begin();
+       (f_decl_it != fc->get_data_members().end()
+	&& s_decl_it != sc->get_data_members().end());
+       ++f_decl_it, ++s_decl_it)
+    {
+      var_decl_sptr dm1 = *f_decl_it, dm2 = *s_decl_it;
+      type_base_sptr dm1_type = dm1->get_type(), dm2_type = dm2->get_type();
+
+      if (*dm1_type != *dm2_type
+	  || get_data_member_offset(dm1) != get_data_member_offset(dm2))
+	return false;
+    }
+
+  // Compare the layout of base types
+  for (auto f_bs_it = fc->get_base_specifiers().begin(),
+	 s_bs_it = sc->get_base_specifiers().end();
+       (f_bs_it != fc->get_base_specifiers().end()
+	&& s_bs_it != sc->get_base_specifiers().end());
+       ++f_bs_it, ++s_bs_it)
+    {
+      class_decl::base_spec_sptr f_bs = *f_bs_it, s_bs = *s_bs_it;
+      if ((f_bs->get_is_virtual() != s_bs->get_is_virtual())
+	  || (f_bs->get_offset_in_bits() != s_bs->get_offset_in_bits()))
+	return false;
+
+      class_decl_sptr fb = f_bs->get_base_class(), sb = s_bs->get_base_class();
+      if (!classes_have_same_layout(fb, sb))
+	return false;
+    }
+
+  if (fc->has_vtable() != sc->has_vtable())
+    return false;
+
+  // Compare virtual function types
+  if (fc->has_vtable())
+    {
+      if (fc->get_virtual_mem_fns().size() > sc->get_virtual_mem_fns().size())
+	// Some virtual member function got removed.  Bad.
+	return false;
+
+      for (auto it1 = fc->get_virtual_mem_fns().begin(),
+	     it2 = sc->get_virtual_mem_fns().begin();
+	   (it1 != fc->get_virtual_mem_fns().end()
+	    && it2 != sc->get_virtual_mem_fns().end());
+	   ++it1, ++it2)
+	{
+	  method_decl_sptr method1 = *it1;
+	  method_decl_sptr method2 = *it2;
+
+	  if ((get_member_function_vtable_offset(method1)
+	       != get_member_function_vtable_offset(method2))
+	      || types_are_compatible(method1->get_type(),
+				      method2->get_type()))
+	    return false;
+	}
+    }
+
+  return true;
+}
+
+/// Test if two types are equal modulo a typedef or CV qualifiers.
 ///
 /// Type A and B are compatible if
 ///
@@ -10230,6 +10319,7 @@ get_type_declaration(const type_base_sptr t)
 ///	- or A and B are integral types with harmless name change
 ///	- or if one type is a typedef of the other one.
 ///	- or if one type is the CV qualified version of the other
+///	- or if A and B are classes with the same layout.
 ///	- or if A and B are pointers, references or arrays of
 ///	  compatible types
 ///
@@ -10286,6 +10376,35 @@ types_are_compatible(const type_base_sptr type1, const type_base_sptr type2)
 
       return true;
     }
+
+  if (function_type_sptr fn_type1 = is_function_type(t1))
+    if (function_type_sptr fn_type2 = is_function_type(t2))
+      {
+	// Compare return types
+	if (!types_are_compatible(fn_type1->get_return_type(),
+				  fn_type2->get_return_type()))
+	  return false;
+
+	// Compare parameter types, omitting the implicit parameter to
+	// avoid infinite recursion when we are being called from
+	// classes_have_same_layout on classes with virtual member
+	// functions.
+	if (fn_type1->get_parameters().size()
+	    != fn_type2->get_parameters().size())
+	  return false;
+
+	for (auto p1 = fn_type1->get_first_non_implicit_parm(),
+	     p2 = fn_type2->get_first_non_implicit_parm();
+	     (p1 != fn_type1->get_parameters().end()
+	      && p2 != fn_type2->get_parameters().end());
+	     ++p1, ++p2)
+	  if (!types_are_compatible((*p1)->get_type(),
+				    (*p2)->get_type()))
+	    return false;
+      }
+
+  if (classes_have_same_layout(t1, t2))
+    return true;
 
   return false;
 }

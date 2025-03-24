@@ -94,6 +94,20 @@ InOutSpec in_out_specs[] =
     "output/test-diff-filter/test5-report.txt",
   },
   {
+    "data/test-diff-filter/test5-2-v0.o",
+    "data/test-diff-filter/test5-2-v1.o",
+    "--no-default-suppression --no-linkage-name --no-show-locs --no-redundant",
+    "data/test-diff-filter/test5-2-report.txt",
+    "output/test-diff-filter/test5-2-report.txt",
+  },
+  {
+    "data/test-diff-filter/test5-3-v0.o",
+    "data/test-diff-filter/test5-3-v1.o",
+    "--no-default-suppression --no-linkage-name --no-show-locs --no-redundant",
+    "data/test-diff-filter/test5-3-report.txt",
+    "output/test-diff-filter/test5-3-report.txt",
+  },
+  {
     "data/test-diff-filter/test6-v0.o",
     "data/test-diff-filter/test6-v1.o",
     "--no-default-suppression --no-linkage-name --no-show-locs --no-redundant",
