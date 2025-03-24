@@ -3052,6 +3052,17 @@ var_equals_modulo_types(const var_decl&, const var_decl&, change_kind*);
 bool
 equals_modulo_cv_qualifier(const array_type_def*, const array_type_def*);
 
+bool
+equals_modulo_cv_qualifier(const array_type_def_sptr& l,
+			   const array_type_def_sptr& r);
+
+bool
+equals_modulo_cv_qualifier(const pointer_type_def*, const pointer_type_def*);
+
+bool
+equals_modulo_cv_qualifier(const pointer_type_def_sptr&,
+			   const pointer_type_def_sptr&);
+
 /// Abstracts a variable declaration.
 class var_decl : public virtual decl_base
 {

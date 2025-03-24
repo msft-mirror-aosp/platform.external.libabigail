@@ -10227,7 +10227,11 @@ get_type_declaration(const type_base_sptr t)
 /// Type A and B are compatible if
 ///
 ///	- A and B are equal
+///	- or A and B are integral types with harmless name change
 ///	- or if one type is a typedef of the other one.
+///	- or if one type is the CV qualified version of the other
+///	- or if A and B are pointers, references or arrays of
+///	  compatible types
 ///
 /// @param type1 the first type to consider.
 ///
@@ -10235,29 +10239,55 @@ get_type_declaration(const type_base_sptr t)
 ///
 /// @return true iff @p type1 and @p type2 are compatible.
 bool
-types_are_compatible(const type_base_sptr type1,
-		     const type_base_sptr type2)
+types_are_compatible(const type_base_sptr type1, const type_base_sptr type2)
 {
   if (!type1 || !type2)
     return false;
 
-  if (type1 == type2)
+  if (type1 == type2 || *type1 == *type2)
     return true;
 
-  // Normally we should strip typedefs entirely, but this is
-  // potentially costly, especially on binaries with huge changesets
-  // like the Linux Kernel.  So we just get the leaf types for now.
-  //
-  // Maybe there should be an option by which users accepts to pay the
-  // CPU usage toll in exchange for finer filtering?
+  type_base_sptr t1 = peel_qualified_or_typedef_type(type1);
+  type_base_sptr t2 = peel_qualified_or_typedef_type(type2);
 
-  // type_base_sptr t1 = strip_typedef(type1);
-  // type_base_sptr t2 = strip_typedef(type2);
+  if (t1 && t2 && *t1 == *t2)
+    return true;
 
-  type_base_sptr t1 = peel_typedef_type(type1);
-  type_base_sptr t2 = peel_typedef_type(type2);
+  if (integral_type_has_harmless_name_change(t1, t2))
+    return true;
 
-  return t1 == t2;
+  if (is_pointer_type(t1) && is_pointer_type(t2))
+    {
+      t1 = is_pointer_type(t1)->get_pointed_to_type();
+      t2 = is_pointer_type(t2)->get_pointed_to_type();
+      return types_are_compatible(t1, t2);
+    }
+
+  if (is_reference_type(t1) && is_reference_type(t2))
+    {
+      t1 = is_reference_type(t1)->get_pointed_to_type();
+      t2 = is_reference_type(t2)->get_pointed_to_type();
+      return types_are_compatible(t1, t2);
+    }
+
+  if (is_array_type(t1) && is_array_type(t2))
+    {
+      array_type_def_sptr a1 = is_array_type(t1);
+      array_type_def_sptr a2 =is_array_type(t2);
+      type_base_sptr e1 = a1->get_element_type();
+      type_base_sptr e2 = a2->get_element_type();
+      e1 = peel_qualified_or_typedef_type(e1);
+      e2 = peel_qualified_or_typedef_type(e2);
+
+      if ((a1->get_size_in_bits() != a2->get_size_in_bits())
+	  || (a1->get_dimension_count() != a2->get_dimension_count())
+	  || !types_are_compatible(e1, e2))
+	return false;
+
+      return true;
+    }
+
+  return false;
 }
 
 /// Test if two types are equal modulo a typedef.
@@ -19664,7 +19694,7 @@ equals(const array_type_def& l, const array_type_def& r, change_kind* k)
   ABG_RETURN(result);
 }
 
-/// Test if two variables are equals modulo CV qualifiers.
+/// Test if two array types are equals modulo CV qualifiers.
 ///
 /// @param l the first array of the comparison.
 ///
@@ -19707,6 +19737,72 @@ equals_modulo_cv_qualifier(const array_type_def* l, const array_type_def* r)
 
   return true;
 }
+
+/// Test if two array types are equals modulo CV qualifiers.
+///
+/// @param l the first array of the comparison.
+///
+/// @param r the second array of the comparison.
+///
+/// @return true iff @p l equals @p r or, if they are different, the
+/// difference between the too is just a matter of CV qualifiers.
+bool
+equals_modulo_cv_qualifier(const array_type_def_sptr& l,
+			   const array_type_def_sptr& r)
+{return equals_modulo_cv_qualifier(l.get(), r.get());}
+
+/// Test if two pointer types are equals modulo CV qualifiers.
+///
+/// @param l the first pointer of the comparison.
+///
+/// @param r the second pointer of the comparison.
+///
+/// @return true iff @p l equals @p r or, if they are different, the
+/// difference between the too is just a matter of CV qualifiers.
+bool
+equals_modulo_cv_qualifier(const pointer_type_def* l, const pointer_type_def* r)
+{
+  if (l == r)
+    return true;
+
+  if (!l || !r)
+    ABG_RETURN_FALSE;
+
+  type_base_sptr l_ptt = l->get_pointed_to_type(),
+    r_ptt = r->get_pointed_to_type();
+
+  do
+    {
+      l_ptt = peel_qualified_or_typedef_type(l_ptt);
+      r_ptt = peel_qualified_or_typedef_type(r_ptt);
+
+      l_ptt = is_pointer_type(l_ptt)
+	? is_pointer_type(l_ptt)->get_pointed_to_type()
+	: l_ptt;
+
+      r_ptt = is_pointer_type(r_ptt)
+	? is_pointer_type(r_ptt)->get_pointed_to_type()
+	: r_ptt;
+    } while (is_pointer_type(l_ptt) && is_pointer_type(r_ptt));
+
+  l_ptt = peel_qualified_or_typedef_type(l_ptt);
+  r_ptt = peel_qualified_or_typedef_type(r_ptt);
+
+  return *l_ptt == *r_ptt;
+}
+
+/// Test if two pointer types are equals modulo CV qualifiers.
+///
+/// @param l the first pointer of the comparison.
+///
+/// @param r the second pointer of the comparison.
+///
+/// @return true iff @p l equals @p r or, if they are different, the
+/// difference between the too is just a matter of CV qualifiers.
+bool
+equals_modulo_cv_qualifier(const pointer_type_def_sptr& l,
+			   const pointer_type_def_sptr& r)
+{return equals_modulo_cv_qualifier(l.get(), r.get());}
 
 /// Get the language of the array.
 ///
@@ -29335,6 +29431,100 @@ add_outer_ptr_to_mbr_type_expr(const ptr_to_mbr_type* p,
 
   return result;
 }
+
+/// Test if two decls have different names.
+///
+/// Note that this function takes into account decls whose names are
+/// relevant from an ABI standpoint.  For instance, function parameter
+/// names are not relevant in that context.
+///
+/// @param d1 the first declaration to consider.
+///
+/// @param d2 the second declaration to consider.
+///
+/// @return true if d1 and d2 have different names.
+bool
+decl_name_changed(const type_or_decl_base* a1, const type_or_decl_base *a2)
+{
+  string d1_name, d2_name;
+
+  const decl_base *d1 = dynamic_cast<const decl_base*>(a1);
+  if (d1 == 0)
+    return false;
+
+  const decl_base *d2 = dynamic_cast<const decl_base*>(a2);
+  if (d2 == 0)
+    return false;
+
+  if (is_function_parameter(d1) || is_function_parameter(d2))
+    // Name changes for fn parms are irrelevant.
+    return false;
+
+  d1_name = d1->get_qualified_name();
+  d2_name = d2->get_qualified_name();
+
+  return d1_name != d2_name;
+}
+
+/// Test if two decls have different names.
+///
+/// @param d1 the first declaration to consider.
+///
+/// @param d2 the second declaration to consider.
+///
+/// @return true if d1 and d2 have different names.
+bool
+decl_name_changed(const type_or_decl_base_sptr& d1,
+		  const type_or_decl_base_sptr& d2)
+{return decl_name_changed(d1.get(), d2.get());}
+
+/// Test if a diff node carries a change whereby two integral types
+/// have different names in a harmless way.
+///
+/// Basically, if the integral type name change is accompanied by a
+/// size change then the change is considered harmful.  If there are
+/// modifiers change, the change is considered harmful.
+bool
+integral_type_has_harmless_name_change(const type_base_sptr& f,
+				       const type_base_sptr& s)
+{
+  if (is_decl(f)
+      && is_decl(s)
+      && (is_integral_type(f) || is_decl(f)->get_name().empty())
+      && (is_integral_type(s) || is_decl(s)->get_name().empty())
+      && decl_name_changed(is_decl(f), is_decl(s))
+      && (f->get_size_in_bits() == s->get_size_in_bits())
+      && (f->get_alignment_in_bits() == s->get_alignment_in_bits()))
+    {
+      real_type fi, si;
+      ABG_ASSERT(is_decl(f)->get_name().empty()
+		 || parse_real_type(is_decl(f)->get_name(), fi));
+      ABG_ASSERT(is_decl(s)->get_name().empty()
+		 || parse_real_type(is_decl(s)->get_name(), si));
+
+      if (fi.get_base_type() == si.get_base_type()
+	  && fi.get_modifiers() != si.get_modifiers())
+	// The base type hasn't changed.  That means only modifiers
+	// changed.  This is considered has harmful by default.
+	return false;
+
+      return true;
+    }
+
+  return false;
+}
+
+/// Test if a diff node carries a change whereby two integral types
+/// have different names in a harmless way.
+///
+/// Basically, if the integral type name change is accompanied by a
+/// size change then the change is considered harmful.  If there are
+/// modifiers change, the change is considered harmful.
+bool
+integral_type_has_harmless_name_change(const decl_base_sptr& f,
+				       const decl_base_sptr& s)
+{return integral_type_has_harmless_name_change(is_type(f), is_type(s));}
+
 
 /// When constructing the name of a pointer to mebmer type, add the
 /// return type to the left of the existing type identifier, and the

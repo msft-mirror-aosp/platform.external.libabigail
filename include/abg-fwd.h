@@ -1647,6 +1647,21 @@ find_first_data_member_matching_regexp(const class_or_union& t,
 var_decl_sptr
 find_last_data_member_matching_regexp(const class_or_union& t,
 				      const regex::regex_t_sptr& regex);
+
+bool
+decl_name_changed(const type_or_decl_base* a1, const type_or_decl_base *a2);
+
+bool
+decl_name_changed(const type_or_decl_base_sptr& d1,
+		  const type_or_decl_base_sptr& d2);
+
+bool
+integral_type_has_harmless_name_change(const decl_base_sptr& f,
+				       const decl_base_sptr& s);
+
+bool
+integral_type_has_harmless_name_change(const type_base_sptr& f,
+				       const type_base_sptr& s);
 } // end namespace ir
 
 using namespace abigail::ir;

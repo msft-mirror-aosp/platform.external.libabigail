@@ -34,11 +34,11 @@ has_offset_changes(const string_decl_base_sptr_map& f_data_members,
 		   const string_decl_base_sptr_map& s_data_members);
 
 static bool
-type_diff_has_cv_qual_change_only(const diff *type_dif);
+type_diff_has_typedef_cv_qual_change_only(const diff *type_dif);
 
 static bool
-type_diff_has_cv_qual_change_only(const type_base_sptr& f,
-				  const type_base_sptr& s);
+type_diff_has_typedef_cv_qual_change_only(const type_base_sptr& f,
+					  const type_base_sptr& s);
 
 static bool
 has_harmful_enum_change(const diff* diff);
@@ -636,6 +636,24 @@ is_compatible_change(const decl_base_sptr& d1, const decl_base_sptr& d2)
   return false;
 }
 
+/// Test if a diff node carries a compatible type change.
+///
+/// @param d the diff node to consider.
+///
+/// @return true iff @p carries a compatible type change.
+static bool
+is_compatible_type_change(const diff* d)
+{
+  if (!d)
+    return false;
+
+  if (type_base_sptr t1 = is_type(d->first_subject()))
+    if (type_base_sptr t2 = is_type(d->second_subject()))
+      return types_are_compatible(t1, t2);
+
+  return false;
+}
+
 /// Test if a diff node carries a non-compatible change between two
 /// types of different kinds.
 ///
@@ -653,7 +671,7 @@ is_non_compatible_distinct_change(const diff *d)
   if (const distinct_diff* dd = is_distinct_diff(d))
     {
       if (dd->compatible_child_diff()
-	  || type_diff_has_cv_qual_change_only(d)
+	  || is_compatible_type_change(d)
 	  || (!dd->first_subject() || !dd->second_subject()))
 	// The distinct diff node carries a compatible or benign
 	// change
@@ -667,46 +685,6 @@ is_non_compatible_distinct_change(const diff *d)
   return false;
 }
 
-/// Test if two decls have different names.
-///
-/// @param d1 the first declaration to consider.
-///
-/// @param d2 the second declaration to consider.
-///
-/// @return true if d1 and d2 have different names.
-static bool
-decl_name_changed(const type_or_decl_base* a1, const type_or_decl_base *a2)
-{
-  string d1_name, d2_name;
-
-  const decl_base *d1 = dynamic_cast<const decl_base*>(a1);
-  if (d1 == 0)
-    return false;
-
-  const decl_base *d2 = dynamic_cast<const decl_base*>(a2);
-  if (d2 == 0)
-    return false;
-
-  if (d1)
-    d1_name = d1->get_qualified_name();
-  if (d2)
-    d2_name = d2->get_qualified_name();
-
-  return d1_name != d2_name;
-}
-
-/// Test if two decls have different names.
-///
-/// @param d1 the first declaration to consider.
-///
-/// @param d2 the second declaration to consider.
-///
-/// @return true if d1 and d2 have different names.
-static bool
-decl_name_changed(const type_or_decl_base_sptr& d1,
-		  const type_or_decl_base_sptr& d2)
-{return decl_name_changed(d1.get(), d2.get());}
-
 /// Test if a diff node carries a changes in which two decls have
 /// different names.
 ///
@@ -717,42 +695,6 @@ decl_name_changed(const type_or_decl_base_sptr& d1,
 static bool
 decl_name_changed(const diff *d)
 {return decl_name_changed(d->first_subject(), d->second_subject());}
-
-/// Test if a diff node carries a change whereby two integral types
-/// have different names in a harmless way.
-///
-/// Basically, if the integral type name change is accompanied by a
-/// size change then the change is considered harmful.  If there are
-/// modifiers change, the change is considered harmful.
-static bool
-integral_type_has_harmless_name_change(const decl_base_sptr& f,
-				       const decl_base_sptr& s)
-{
-  if ((is_integral_type(f) || f->get_name().empty())
-      && (is_integral_type(s) || s->get_name().empty())
-      && decl_name_changed(f, s)
-      && (is_type(f)->get_size_in_bits()
-	  == is_type(s)->get_size_in_bits())
-      && (is_type(f)->get_alignment_in_bits()
-	  == is_type(s)->get_alignment_in_bits()))
-    {
-      real_type fi, si;
-      ABG_ASSERT(f->get_name().empty()
-		 || parse_real_type(f->get_name(), fi));
-      ABG_ASSERT(s->get_name().empty()
-		 || parse_real_type(s->get_name(), si));
-
-      if (fi.get_base_type() == si.get_base_type()
-	  && fi.get_modifiers() != si.get_modifiers())
-	// The base type hasn't changed.  That means only modifiers
-	// changed.  This is considered has harmful by default.
-	return false;
-
-      return true;
-    }
-
-  return false;
-}
 
 /// Test if two decls represents a harmless name change.
 ///
@@ -784,27 +726,18 @@ has_harmless_name_change(const decl_base_sptr& f,
 		&& s->get_is_anonymous_or_has_anonymous_parent())
 	       && tools_utils::decl_names_equal(f->get_qualified_name(),
 						s->get_qualified_name()))
-	      // ... a typedef name change, without having the
-	      // underlying type changed ...
-	      || (is_typedef(f)
-		  && is_typedef(s)
-		  && (is_typedef(f)->get_underlying_type()
-		   == is_typedef(s)->get_underlying_type()))
-	      // ... Types are compatible (equal modulo a typedef) ...
+	      // ... Types are compatible (equal modulo a typedef or
+	      // cv quals) ...
 	      || (is_type(f)
 		  && is_type(s)
 		  && types_are_compatible(is_type(f), is_type(s)))
-	      // ... Only qualifers changed on the type without having
-	      // the underlying type changed ...
-	      || type_diff_has_cv_qual_change_only(is_type(f), is_type(s))
 	      || has_harmless_enum_change(is_type(f), is_type(s), ctxt)
 	      // ... or a data member name change, without having its
 	      // type changed ...
 	      || (is_data_member(f)
 		  && is_data_member(s)
 		  && (is_var_decl(f)->get_type()
-		      == is_var_decl(s)->get_type()))
-	      || integral_type_has_harmless_name_change(f, s)));
+		      == is_var_decl(s)->get_type()))));
 }
 
 /// Test if two decls represent a harmful name change.
@@ -1951,7 +1884,7 @@ has_fn_parm_type_top_cv_qual_change(const diff* diff)
 ///
 /// @return true iff the type_diff carries a CV qualifier only change.
 static bool
-type_diff_has_cv_qual_change_only(const diff *type_dif)
+type_diff_has_typedef_cv_qual_change_only(const diff *type_dif)
 {
   if (!type_dif)
     return false;
@@ -1959,10 +1892,13 @@ type_diff_has_cv_qual_change_only(const diff *type_dif)
   type_base_sptr f = is_type(type_dif->first_subject());
   type_base_sptr s = is_type(type_dif->second_subject());
 
-  return type_diff_has_cv_qual_change_only(f, s);
+  return type_diff_has_typedef_cv_qual_change_only(f, s);
 }
 
 /// Test if a type only carries a CV qualifier-only change.
+///
+/// Note that for pointers and array types, the functions look at
+/// pointed-to types for comparison.
 ///
 /// @param f the first version of the type.
 ///
@@ -1970,8 +1906,8 @@ type_diff_has_cv_qual_change_only(const diff *type_dif)
 ///
 /// @return true iff the change is only a qualifier change.
 static bool
-type_diff_has_cv_qual_change_only(const type_base_sptr& f,
-				  const type_base_sptr& s)
+type_diff_has_typedef_cv_qual_change_only(const type_base_sptr& f,
+					  const type_base_sptr& s)
 {
   type_base_sptr a = f;
   type_base_sptr b = s;
@@ -1983,29 +1919,17 @@ type_diff_has_cv_qual_change_only(const type_base_sptr& f,
     return true;
 
   if (is_pointer_type(a) && is_pointer_type(b))
-    {
-      a = peel_pointer_type(a);
-      b = peel_pointer_type(b);
-    }
-
-  if (a && b && *a == *b)
-    return true;
-
-  a = peel_qualified_or_typedef_type(a);
-  b = peel_qualified_or_typedef_type(b);
-
-  if (a && b && *a == *b)
-    return true;
+    return equals_modulo_cv_qualifier(is_pointer_type(a), is_pointer_type(b));
 
   // If f and s are arrays, note that they can differ only by the cv
   // qualifier of the array element type.  That cv qualifier is not
   // removed by peel_qualified_type.  So we need to test this case
   // specifically.
-  if (array_type_def *f_a = is_array_type(a.get()))
-    if (array_type_def *s_a = is_array_type(b.get()))
+  if (array_type_def_sptr f_a = is_array_type(a))
+    if (array_type_def_sptr s_a = is_array_type(b))
       return equals_modulo_cv_qualifier(f_a, s_a);
 
-  return (a && b && *a == *b);
+  return false;
 }
 
 /// Test if an @ref fn_parm_diff node has a cv qualifier change on the
@@ -2029,7 +1953,7 @@ has_fn_parm_type_cv_qual_change(const diff* dif)
     return false;
 
   const diff *type_dif = parm_diff->type_diff().get();
-  return type_diff_has_cv_qual_change_only(type_dif);
+  return type_diff_has_typedef_cv_qual_change_only(type_dif);
 }
 
 /// Test if a function type or decl diff node carries a CV
@@ -2053,7 +1977,7 @@ has_fn_return_type_cv_qual_change(const diff* dif)
     return false;
 
   const diff* return_type_diff = fn_type_diff->return_type_diff().get();
-  return type_diff_has_cv_qual_change_only(return_type_diff);
+  return type_diff_has_typedef_cv_qual_change_only(return_type_diff);
 }
 
 /// Test if a function type or decl diff node carries a function
@@ -2101,7 +2025,7 @@ has_var_type_cv_qual_change(const diff* dif)
   if (!type_dif)
     return false;
 
-  return type_diff_has_cv_qual_change_only(type_dif);
+  return type_diff_has_typedef_cv_qual_change_only(type_dif);
 }
 
 /// Test if a type change is a "void pointer to pointer" change.
