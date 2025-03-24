@@ -1035,6 +1035,39 @@ leaf_reporter::report(const translation_unit_diff& d,
   static_cast<const scope_diff&>(d).report(out, indent);
 }
 
+/// Emit a report about changes carried by a @ref var_diff node.
+///
+/// @param ctxt the diff context to use.
+///
+/// @param var_diff the @êef var_diff node to consider.
+///
+/// @param out the output stream to emit the report to.
+///
+/// @param indent the indentation string to use for the report.
+static void
+emit_changed_var_report(const diff_context_sptr& ctxt,
+			const var_diff_sptr& var_diff,
+			ostream& out, const string indent)
+{
+  diff_sptr diff = var_diff;
+  if (!diff
+      || !diff->to_be_reported()
+      || !diff->has_local_changes())
+    return;
+
+  string n1 = diff->first_subject()->get_pretty_representation();
+  string n2 = diff->second_subject()->get_pretty_representation();
+
+  out << indent << "  [C] '" << n1 << "' was changed";
+  if (n1 != n2)
+    out << " to '" << n2 << "'";
+  report_loc_info(diff->second_subject(), *ctxt, out);
+  out << ":\n";
+  diff->report(out, indent + "    ");
+  // Extra spacing.
+  out << "\n";
+}
+
 /// Report the changes carried by a @ref corpus_diff node.
 ///
 /// @param out the output stream to report to.
@@ -1307,33 +1340,35 @@ leaf_reporter::report(const corpus_diff& d,
 
   if (ctxt->show_changed_vars())
     {
-      size_t num_changed = s.net_num_leaf_var_changes();
-      if (num_changed == 1)
-	out << indent << "1 Changed variable:\n\n";
-      else if (num_changed > 1)
-	out << indent << num_changed
-	    << " Changed variables:\n\n";
-      string n1, n2;
-      for (diff_sptr diff : d.priv_->sorted_changed_vars_)
+      if (size_t num_changed = s.num_var_with_incompatible_changes())
 	{
-	  if (!diff)
-	    continue;
+	  if (num_changed == 1)
+	    out << indent << "1 variable with incompatible sub-type changes:\n\n";
+	  else if (num_changed  > 1)
+	    out << indent << num_changed
+		<< " variables with incompatible sub-type changes:\n\n";
 
-	  if (!diff_to_be_reported(diff.get()))
-	    continue;
-
-	  n1 = diff->first_subject()->get_pretty_representation();
-	  n2 = diff->second_subject()->get_pretty_representation();
-
-	  out << indent << "  [C] '" << n1 << "' was changed";
-	  if (n1 != n2)
-	    out << " to '" << n2 << "'";
-	  report_loc_info(diff->second_subject(), *ctxt, out);
-	  out << ":\n";
-	  diff->report(out, indent + "    ");
-	  // Extra spacing.
-	  out << "\n";
+	  sort_var_diffs(const_cast<corpus_diff&>(d).
+			 incompatible_changed_variables());
+	  for (auto& var_diff : d.incompatible_changed_variables())
+	    if (var_diff)
+	      emit_changed_var_report(ctxt, var_diff, out, indent);
 	}
+
+      if (size_t num_changed = (s.net_num_leaf_var_changes()
+				- s.num_var_with_incompatible_changes()))
+	{
+	  if (num_changed == 1)
+	    out << indent << "1 Changed variable:\n\n";
+	  else if (num_changed > 1)
+	    out << indent << num_changed
+		<< " Changed variables:\n\n";
+	  string n1, n2;
+	  for (var_diff_sptr diff : d.priv_->sorted_changed_vars_)
+	    if (diff && !filtering::has_incompatible_fn_or_var_change(diff))
+	      emit_changed_var_report(ctxt, diff, out, indent);
+	}
+
       // Changed variables have extra spacing already. No new line here.
     }
 

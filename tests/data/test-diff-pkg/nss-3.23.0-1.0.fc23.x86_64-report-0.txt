@@ -43,7 +43,7 @@
               'SSLAuthType authType', at offset 736 (in bits) at sslt.h:250:1
             no data member changes (2 filtered);
 
-  1 Changed variable:
+  1 variable with incompatible sub-type changes:
 
     [C] 'const PRUint16 SSL_ImplementedCiphers[74]' was changed to 'const PRUint16 SSL_ImplementedCiphers[69]' at sslenum.c:51:1:
       size of symbol changed from 148 to 138

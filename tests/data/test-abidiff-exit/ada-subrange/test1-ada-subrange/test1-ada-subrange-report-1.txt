@@ -1,15 +1,17 @@
 Functions changes summary: 0 Removed, 2 Changed, 0 Added functions
 Variables changes summary: 0 Removed, 0 Changed, 0 Added variable
 
-2 functions with some indirect sub-type change:
+1 function with incompatible sub-type changes:
 
-  [C] 'function test1__my_int[6] test1__first_function(void)' at test1.adb:6:1 has some indirect sub-type changes:
+  [C] 'function test1__my_int[6] test1__first_function(void)' at test1.adb:6:1 has some sub-type changes:
     return type changed:
       type name changed from 'test1__my_int[6]' to 'test1__my_int[7]'
       array type size changed from 96 to 112
       array type subrange 1 changed length from 6 to 7
       array subrange changed: 
         upper bound of '<anonymous range>[6]' change from '5' to '6'
+
+1 function with some indirect sub-type change:
 
   [C] 'function test1__my_index test1__second_function(void)' at test1.adb:14:1 has some indirect sub-type changes:
     return type changed:

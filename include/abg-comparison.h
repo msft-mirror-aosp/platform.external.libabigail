@@ -506,6 +506,9 @@ get_default_harmless_categories_bitmap();
 diff_category
 get_default_harmful_categories_bitmap();
 
+bool
+is_harmful_category(diff_category);
+
 ostream&
 operator<<(ostream& o, diff_category);
 
@@ -2535,10 +2538,16 @@ public:
   added_functions();
 
   const string_function_decl_diff_sptr_map&
-  changed_functions();
+  changed_functions() const;
 
   const function_decl_diff_sptrs_type&
-  changed_functions_sorted();
+  changed_functions_sorted() const;
+
+  const function_decl_diff_sptrs_type&
+  incompatible_changed_functions() const;
+
+  function_decl_diff_sptrs_type&
+  incompatible_changed_functions();
 
   const string_var_ptr_map&
   deleted_variables() const;
@@ -2551,6 +2560,12 @@ public:
 
   const var_diff_sptrs_type&
   changed_variables_sorted();
+
+  const var_diff_sptrs_type&
+  incompatible_changed_variables() const;
+
+  var_diff_sptrs_type&
+  incompatible_changed_variables();
 
   const string_elf_symbol_map&
   deleted_unrefed_function_symbols() const;
@@ -2690,7 +2705,21 @@ public:
   size_t num_func_with_virtual_offset_changes() const;
   void num_func_with_virtual_offset_changes(size_t);
 
+  size_t num_func_with_local_harmful_changes() const;
+  void num_func_with_local_harmful_changes(size_t);
+
+  size_t num_func_with_incompatible_changes() const;
+  void num_func_with_incompatible_changes(size_t);
+
+  size_t num_var_with_local_harmful_changes() const;
+  void num_var_with_local_harmful_changes(size_t);
+
+  size_t num_var_with_incompatible_changes() const;
+  void num_var_with_incompatible_changes(size_t);
+
   size_t net_num_func_changed() const;
+
+  size_t net_num_non_incompatible_func_changed() const;
 
   size_t num_vars_removed() const;
   void num_vars_removed(size_t);
@@ -2715,6 +2744,8 @@ public:
   void num_changed_vars_filtered_out(size_t);
 
   size_t net_num_vars_changed() const;
+
+  size_t net_num_non_incompatible_var_changed() const;
 
   size_t num_func_syms_removed() const;
   void num_func_syms_removed(size_t);

@@ -167,7 +167,8 @@ InOutSpec in_out_specs[] =
     "",
     "",
     "--no-show-locs --leaf-changes-only",
-    abigail::tools_utils::ABIDIFF_ABI_CHANGE,
+    abigail::tools_utils::ABIDIFF_ABI_CHANGE
+    | abigail::tools_utils::ABIDIFF_ABI_INCOMPATIBLE_CHANGE,
     "data/test-abidiff-exit/test-leaf-stats-report.txt",
     "output/test-abidiff-exit/test-leaf-stats-report.txt"
   },
@@ -533,7 +534,8 @@ InOutSpec in_out_specs[] =
     "",
     "",
     "",
-    abigail::tools_utils::ABIDIFF_ABI_CHANGE,
+    abigail::tools_utils::ABIDIFF_ABI_CHANGE
+    | abigail::tools_utils::ABIDIFF_ABI_INCOMPATIBLE_CHANGE,
     "data/test-abidiff-exit/test-crc-report.txt",
     "output/test-abidiff-exit/test-crc-report.txt"
   },
@@ -608,7 +610,8 @@ InOutSpec in_out_specs[] =
     "",
     "",
     "--no-default-suppression",
-    abigail::tools_utils::ABIDIFF_ABI_CHANGE,
+    abigail::tools_utils::ABIDIFF_ABI_CHANGE
+    | abigail::tools_utils::ABIDIFF_ABI_INCOMPATIBLE_CHANGE,
     "data/test-abidiff-exit/test-ld-2.28-210.so--ld-2.28-211.so.txt",
     "output/test-abidiff-exit/test-ld-2.28-210.so--ld-2.28-211.so.txt"
   },
@@ -638,7 +641,8 @@ InOutSpec in_out_specs[] =
     "",
     "",
     "--no-default-suppression",
-    abigail::tools_utils::ABIDIFF_ABI_CHANGE,
+    abigail::tools_utils::ABIDIFF_ABI_CHANGE
+    | abigail::tools_utils::ABIDIFF_ABI_INCOMPATIBLE_CHANGE,
     "data/test-abidiff-exit/PR30048-test-report-0.txt",
     "output/test-abidiff-exit/PR30048-test-report-0.txt"
   },
@@ -653,7 +657,8 @@ InOutSpec in_out_specs[] =
     "",
     "",
     "--no-default-suppression",
-    abigail::tools_utils::ABIDIFF_ABI_CHANGE,
+    abigail::tools_utils::ABIDIFF_ABI_CHANGE
+    | abigail::tools_utils::ABIDIFF_ABI_INCOMPATIBLE_CHANGE,
     "data/test-abidiff-exit/PR30048-test-2-report-1.txt",
     "output/test-abidiff-exit/PR30048-test-2-report-1.txt"
   },
@@ -923,7 +928,8 @@ InOutSpec in_out_specs[] =
     "",
     "",
     "--no-default-suppression",
-    abigail::tools_utils::ABIDIFF_ABI_CHANGE,
+    abigail::tools_utils::ABIDIFF_ABI_CHANGE
+    | abigail::tools_utils::ABIDIFF_ABI_INCOMPATIBLE_CHANGE,
     "data/test-abidiff-exit/ada-subrange/test1-ada-subrange/test1-ada-subrange-report-1.txt",
     "output/test-abidiff-exit/ada-subrange/test1-ada-subrange/test1-ada-subrange-report-1.txt"
   },
@@ -938,7 +944,8 @@ InOutSpec in_out_specs[] =
     "",
     "",
     "--no-default-suppression --leaf-changes-only",
-    abigail::tools_utils::ABIDIFF_ABI_CHANGE,
+    abigail::tools_utils::ABIDIFF_ABI_CHANGE
+    | abigail::tools_utils::ABIDIFF_ABI_INCOMPATIBLE_CHANGE,
     "data/test-abidiff-exit/ada-subrange/test1-ada-subrange/test1-ada-subrange-report-2.txt",
     "output/test-abidiff-exit/ada-subrange/test1-ada-subrange/test1-ada-subrange-report-2.txt"
   },
@@ -953,7 +960,8 @@ InOutSpec in_out_specs[] =
     "",
     "",
     "--no-default-suppression",
-    abigail::tools_utils::ABIDIFF_ABI_CHANGE,
+    abigail::tools_utils::ABIDIFF_ABI_CHANGE
+    | abigail::tools_utils::ABIDIFF_ABI_INCOMPATIBLE_CHANGE,
     "data/test-abidiff-exit/ada-subrange/test2-ada-subrange-redundant/test2-ada-subrange-redundant-report-1.txt",
     "output/test-abidiff-exit/ada-subrange/test2-ada-subrange-redundant/test2-ada-subrange-redundant-report-1.txt"
   },
@@ -968,7 +976,8 @@ InOutSpec in_out_specs[] =
     "",
     "",
     "--no-default-suppression --leaf-changes-only",
-    abigail::tools_utils::ABIDIFF_ABI_CHANGE,
+    abigail::tools_utils::ABIDIFF_ABI_CHANGE
+    | abigail::tools_utils::ABIDIFF_ABI_INCOMPATIBLE_CHANGE,
     "data/test-abidiff-exit/ada-subrange/test2-ada-subrange-redundant/test2-ada-subrange-redundant-report-2.txt",
     "output/test-abidiff-exit/ada-subrange/test2-ada-subrange-redundant/test2-ada-subrange-redundant-report-2.txt"
   },
@@ -1031,6 +1040,99 @@ InOutSpec in_out_specs[] =
     abigail::tools_utils::ABIDIFF_ABI_CHANGE,
     "data/test-abidiff-exit/test-enumerator-changes1-report-1.txt",
     "output/test-abidiff-exit/test-enumerator-changes1-report-1.txt"
+  },
+  {
+    "data/test-abidiff-exit/test-enumerator-changes2-v0.o",
+    "data/test-abidiff-exit/test-enumerator-changes2-v1.o",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "--no-default-suppression",
+    abigail::tools_utils::ABIDIFF_OK,
+    "data/test-abidiff-exit/test-enumerator-changes2-report-1.txt",
+    "output/test-abidiff-exit/test-enumerator-changes2-report-1.txt"
+  },
+  {
+    "data/test-abidiff-exit/test-enumerator-changes3-v0.o",
+    "data/test-abidiff-exit/test-enumerator-changes3-v1.o",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "--no-default-suppression",
+    abigail::tools_utils::ABIDIFF_OK,
+    "data/test-abidiff-exit/test-enumerator-changes3-report-1.txt",
+    "output/test-abidiff-exit/test-enumerator-changes3-report-1.txt"
+  },
+  {
+    "data/test-abidiff-exit/test-enumerator-changes3-v0.o",
+    "data/test-abidiff-exit/test-enumerator-changes3-v1.o",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "--no-default-suppression --harmless",
+    abigail::tools_utils::ABIDIFF_ABI_CHANGE,
+    "data/test-abidiff-exit/test-enumerator-changes3-report-2.txt",
+    "output/test-abidiff-exit/test-enumerator-changes3-report-2.txt"
+  },
+  {
+    "data/test-abidiff-exit/test-enumerator-changes4-v0.o",
+    "data/test-abidiff-exit/test-enumerator-changes4-v1.o",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "--no-default-suppression",
+    abigail::tools_utils::ABIDIFF_ABI_CHANGE
+    | abigail::tools_utils::ABIDIFF_ABI_INCOMPATIBLE_CHANGE,
+    "data/test-abidiff-exit/test-enumerator-changes4-report-1.txt",
+    "output/test-abidiff-exit/test-enumerator-changes4-report-1.txt"
+  },
+  {
+    "data/test-abidiff-exit/test-enumerator-changes5-v0.o",
+    "data/test-abidiff-exit/test-enumerator-changes5-v1.o",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "--no-default-suppression",
+    abigail::tools_utils::ABIDIFF_ABI_CHANGE
+    | abigail::tools_utils::ABIDIFF_ABI_INCOMPATIBLE_CHANGE,
+    "data/test-abidiff-exit/test-enumerator-changes5-report-1.txt",
+    "output/test-abidiff-exit/test-enumerator-changes5-report-1.txt"
+  },
+  {
+    "data/test-abidiff-exit/test-enumerator-changes6-v0.o",
+    "data/test-abidiff-exit/test-enumerator-changes6-v1.o",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "--no-default-suppression",
+    abigail::tools_utils::ABIDIFF_ABI_CHANGE
+    | abigail::tools_utils::ABIDIFF_ABI_INCOMPATIBLE_CHANGE,
+    "data/test-abidiff-exit/test-enumerator-changes6-report-1.txt",
+    "output/test-abidiff-exit/test-enumerator-changes6-report-1.txt"
   },
   {
     "data/test-abidiff-exit/test-anonymous-enums-change-v0.o",
@@ -1226,7 +1328,8 @@ InOutSpec in_out_specs[] =
     "",
     "",
     "--no-default-suppression",
-    abigail::tools_utils::ABIDIFF_ABI_CHANGE,
+    abigail::tools_utils::ABIDIFF_ABI_CHANGE
+    | abigail::tools_utils::ABIDIFF_ABI_INCOMPATIBLE_CHANGE,
     "data/test-abidiff-exit/pointer-to-member/test-ptr-to-mbr1-output-1.txt",
     "output/test-abidiff-exit/pointer-to-member/test-ptr-to-mbr1-output-1.txt"
   },
@@ -1241,7 +1344,8 @@ InOutSpec in_out_specs[] =
     "",
     "",
     "--no-default-suppression",
-    abigail::tools_utils::ABIDIFF_ABI_CHANGE,
+    abigail::tools_utils::ABIDIFF_ABI_CHANGE
+    | abigail::tools_utils::ABIDIFF_ABI_INCOMPATIBLE_CHANGE,
     "data/test-abidiff-exit/pointer-to-member/test-ptr-to-mbr2-output-1.txt",
     "output/test-abidiff-exit/pointer-to-member/test-ptr-to-mbr2-output-1.txt"
   },
@@ -1256,7 +1360,8 @@ InOutSpec in_out_specs[] =
     "",
     "",
     "--no-default-suppression",
-    abigail::tools_utils::ABIDIFF_ABI_CHANGE,
+    abigail::tools_utils::ABIDIFF_ABI_CHANGE
+    | abigail::tools_utils::ABIDIFF_ABI_INCOMPATIBLE_CHANGE,
     "data/test-abidiff-exit/pointer-to-member/test-ptr-to-mbr3-output-1.txt",
     "output/test-abidiff-exit/pointer-to-member/test-ptr-to-mbr3-output-1.txt"
   },
@@ -1271,7 +1376,8 @@ InOutSpec in_out_specs[] =
     "",
     "",
     "--no-default-suppression",
-    abigail::tools_utils::ABIDIFF_ABI_CHANGE,
+    abigail::tools_utils::ABIDIFF_ABI_CHANGE
+    | abigail::tools_utils::ABIDIFF_ABI_INCOMPATIBLE_CHANGE,
     "data/test-abidiff-exit/pointer-to-member/test-ptr-to-mbr4-output-1.txt",
     "output/test-abidiff-exit/pointer-to-member/test-ptr-to-mbr4-output-1.txt"
   },
@@ -1410,6 +1516,38 @@ InOutSpec in_out_specs[] =
     "data/test-abidiff-exit/non-del-anon-dm/non-regr/report0.txt",
     "output/test-abidiff-exit/non-del-anon-dm/non-regr/report0.txt"
   },
+  {
+    "data/test-abidiff-exit/incompatible-changes/1/test-1-v0.o",
+    "data/test-abidiff-exit/incompatible-changes/1/test-1-v1.o",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "--no-default-suppression",
+    abigail::tools_utils::ABIDIFF_ABI_CHANGE
+    | abigail::tools_utils::ABIDIFF_ABI_INCOMPATIBLE_CHANGE,
+    "data/test-abidiff-exit/incompatible-changes/1/report0.txt",
+    "output/test-abidiff-exit/incompatible-changes/1/report0.txt"
+  },
+  {
+    "data/test-abidiff-exit/test-changed-var-1-v0.o",
+    "data/test-abidiff-exit/test-changed-var-1-v1.o",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "--no-default-suppression",
+    abigail::tools_utils::ABIDIFF_ABI_CHANGE
+    | abigail::tools_utils::ABIDIFF_ABI_INCOMPATIBLE_CHANGE,
+    "data/test-abidiff-exit/test-changed-var-1-report-1.txt",
+    "output/test-abidiff-exit/test-changed-var-1-report-1.txt"
+  },
 #ifdef WITH_BTF
   {
     "data/test-abidiff-exit/btf/test0-v0.o",
@@ -1422,7 +1560,8 @@ InOutSpec in_out_specs[] =
     "",
     "",
     "--no-default-suppression --btf",
-    abigail::tools_utils::ABIDIFF_ABI_CHANGE,
+    abigail::tools_utils::ABIDIFF_ABI_CHANGE
+    | abigail::tools_utils::ABIDIFF_ABI_INCOMPATIBLE_CHANGE,
     "data/test-abidiff-exit/btf/test0-report-1.txt",
     "output/test-abidiff-exit/btf/test0-report-1.txt"
   },
@@ -1437,7 +1576,8 @@ InOutSpec in_out_specs[] =
     "",
     "",
     "--no-default-suppression --harmless --btf",
-    abigail::tools_utils::ABIDIFF_ABI_CHANGE,
+    abigail::tools_utils::ABIDIFF_ABI_CHANGE
+    | abigail::tools_utils::ABIDIFF_ABI_INCOMPATIBLE_CHANGE,
     "data/test-abidiff-exit/btf/test0-report-2.txt",
     "output/test-abidiff-exit/btf/test0-report-2.txt"
   },

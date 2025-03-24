@@ -2087,10 +2087,20 @@ elf_symbol::create(const environment& e,
 /// are not taken into account.  Only the name, type, and version of
 /// the symbols are compared.
 ///
+/// @parm l the first ELF symbol to take into consideration in the
+/// comparison.
+///
+/// @param r the second ELF symbol to take into consideration in the
+/// comparison.
+///
+/// @param k a pointer to a bitfield that gives information about the
+/// kind of changes there are between @p l and @p r.  This one is set
+/// iff it's non-null and if the function returns false.
+///
 /// @return true iff the two symbols are textually equal.
 static bool
-textually_equals(const elf_symbol&l,
-		 const elf_symbol&r)
+textually_equals(const elf_symbol&l, const elf_symbol&r,
+		 change_kind* k = nullptr)
 {
   bool equals = (l.get_name() == r.get_name()
 		 && l.get_type() == r.get_type()
@@ -2101,12 +2111,21 @@ textually_equals(const elf_symbol&l,
 		 && l.get_crc() == r.get_crc()
 		 && l.get_namespace() == r.get_namespace());
 
+  if (!equals)
+    if (k)
+      *k |= LOCAL_NON_TYPE_CHANGE_KIND;
+
   if (equals && l.is_variable())
     // These are variable symbols.  Let's compare their symbol size.
     // The symbol size in this case is the size taken by the storage
     // of the variable.  If that size changes, then it's an ABI
     // change.
-    equals = l.get_size() == r.get_size();
+    if (l.get_size() != r.get_size())
+      {
+	equals = false;
+	if (k)
+	  *k| LOCAL_TYPE_CHANGE_KIND;
+      }
 
   return equals;
 }
@@ -21455,12 +21474,10 @@ var_equals_modulo_types(const var_decl& l, const var_decl& r, change_kind* k)
       else
 	ABG_RETURN_FALSE;
     }
-  else if (s0 && s0 != s1)
+  else if (s0 && !textually_equals(*s0, *s1, k))
     {
       result = false;
-      if (k)
-	*k |= LOCAL_NON_TYPE_CHANGE_KIND;
-      else
+      if (!k)
 	ABG_RETURN_FALSE;
     }
   bool symbols_are_equal = (s0 && s1 && result);

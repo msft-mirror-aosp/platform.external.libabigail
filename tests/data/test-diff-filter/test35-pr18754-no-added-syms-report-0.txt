@@ -367,7 +367,7 @@ Variable symbols changes summary: 0 Removed, 0 Added variable symbol not referen
   [D] 'const char* prefix'
   [D] 'int timer_enabled'
 
-1 Changed variable:
+1 variable with incompatible sub-type changes:
 
   [C] 'static const char* Engine::m_func_names[6]' was changed to 'static const char* Engine::m_func_names[7]':
     size of symbol changed from 48 to 56

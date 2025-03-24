@@ -40,6 +40,9 @@ static bool
 type_diff_has_typedef_cv_qual_change_only(const type_base_sptr& f,
 					  const type_base_sptr& s);
 
+static diff_category
+has_harmful_change(const diff* d);
+
 static bool
 has_harmful_enum_change(const diff* diff);
 
@@ -1993,7 +1996,7 @@ static bool
 has_added_or_removed_function_parameters(const diff *dif)
 {
   const function_type_diff *fn_type_diff = is_function_type_diff(dif);
-    if (!fn_type_diff)
+  if (!fn_type_diff)
     if (const function_decl_diff* fn_decl_diff = is_function_decl_diff(dif))
       fn_type_diff = fn_decl_diff->type_diff().get();
 
@@ -2006,6 +2009,155 @@ has_added_or_removed_function_parameters(const diff *dif)
 
   return false;
 }
+
+/// Test if a diff node is a function diff node that carries either a
+/// return or a parameter type change that is deemed harmful.
+///
+/// @param d the diff node to consider.
+///
+/// @return the category of the change carried by @p or zero if
+/// doesn't carry any change.
+diff_category
+has_fn_return_or_parm_harmful_change(const diff* d)
+{
+  const function_decl_diff* fn_decl_diff = nullptr;
+  const function_type_diff* fn_type_diff = is_function_type_diff(d);
+
+  if (!fn_type_diff)
+    fn_decl_diff = is_function_decl_diff(d);
+
+  if (!fn_decl_diff && !fn_type_diff)
+    return NO_CHANGE_CATEGORY;
+
+  diff_category category = NO_CHANGE_CATEGORY;
+  if (fn_decl_diff)
+    category = fn_decl_diff->get_local_category();
+
+  if (is_harmful_category(category))
+    return category;
+
+  if (fn_decl_diff)
+    fn_type_diff = fn_decl_diff->type_diff().get();
+
+  if (!fn_type_diff)
+    return NO_CHANGE_CATEGORY;
+
+  diff_sptr return_type_diff = fn_type_diff->return_type_diff();
+  if (return_type_diff && !has_void_to_non_void_change(return_type_diff))
+    category = return_type_diff->get_local_category();
+
+  if (is_harmful_category(category))
+    return category;
+
+  for (const auto& entry : fn_type_diff->subtype_changed_parms())
+    {
+      category = entry.second->get_local_category();
+      if (is_harmful_category(category))
+	return category;
+    }
+
+  return NO_CHANGE_CATEGORY;
+}
+
+/// Test if a diff node carries a change to the offset of a virtual
+/// function.
+///
+/// @param d the diff node to consider.
+///
+/// @return true iff @p carries a change to the offset of a virtual
+/// function.
+bool
+has_fn_with_virtual_offset_change(const diff* d)
+{
+  const function_decl_diff* fn_diff = is_function_decl_diff(d);
+  if (!fn_diff)
+    return false;
+
+  if (fn_diff->get_local_category() & VIRTUAL_MEMBER_CHANGE_CATEGORY)
+    return true;
+
+  return false;
+}
+
+/// Test if a diff node carries a change to the offset of a virtual
+/// function.
+///
+/// @param d the diff node to consider.
+///
+/// @return true iff @p carries a change to the offset of a virtual
+/// function.
+bool
+has_fn_with_virtual_offset_change(const diff_sptr& d)
+{return has_fn_with_virtual_offset_change(d.get());}
+
+
+/// Test if a diff node carries a harmful local change to a variable.
+///
+/// @param d the diff node to consider.
+///
+/// @return the @ref diff_category of the harmful local change or zero
+/// if the diff node carries no harmful local change.
+diff_category
+has_var_harmful_local_change(const diff* d)
+{
+  const var_diff* vd = is_var_diff(d);
+  diff_category cat = NO_CHANGE_CATEGORY;
+
+  if (!vd || has_benign_array_of_unknown_size_change(d))
+    return cat;
+
+  cat = vd->get_local_category();
+  if (is_harmful_category(cat))
+    return cat;
+
+  diff_sptr type_diff = vd->type_diff();
+
+  cat = type_diff->get_local_category();
+  if (is_harmful_category(cat))
+    return cat;
+
+  return NO_CHANGE_CATEGORY;
+}
+
+/// Test if diff node carries a harmful local change to a variable.
+///
+/// @param d the diff node to consider.
+///
+/// @return the @ref diff_category of the harmful local change or zero
+/// if the diff node carries no harmful local change.
+diff_category
+has_var_harmful_local_change(const diff_sptr& d)
+{return has_var_harmful_local_change(d.get());}
+
+/// Test if a diff node carries an incompatible ABI change.
+///
+/// An incompatible ABI change is a potentially harmful ABI change
+/// (i.e, one that cannot be filtered out) that definitely makes the
+/// new ABI incompatible with the previous one.
+///
+/// @param d the diff node to consider.
+///
+/// @return true iff @p d carries an incompatible ABI change.
+bool
+has_incompatible_fn_or_var_change(const diff* d)
+{
+  return (has_fn_return_or_parm_harmful_change(d)
+	  || has_fn_with_virtual_offset_change(d)
+	  || has_var_harmful_local_change(d));
+}
+
+/// Test if a diff node carries an incompatible ABI change.
+///
+/// An incompatible ABI change is a potentially harmful ABI change
+/// (i.e, one that cannot be filtered out) that definitely makes the
+/// new ABI incompatible with the previous one.
+///
+/// @param d the diff node to consider.
+///
+/// @return true iff @p d carries an incompatible ABI change.
+bool
+has_incompatible_fn_or_var_change(const diff_sptr& d)
+{return has_incompatible_fn_or_var_change(d.get());}
 
 /// Test if a variable diff node carries a CV qualifier change on its type.
 ///
@@ -2048,6 +2200,79 @@ is_void_ptr_to_ptr(const type_base* f, const type_base* s)
 
   return false;
 }
+
+/// Test if a pair of types represents a "void-to-non-void" change.
+///
+/// The test looks through potential typedefs.
+///
+/// @param f the first type to consider.
+///
+/// @param s the second type to consider.
+///
+/// @return true iff the pair of types represents a void-to-non-void
+/// type change.
+static bool
+is_void_to_non_void(const type_base* f, const type_base* s)
+{
+  f = peel_typedef_type(f);
+  s = peel_typedef_type(s);
+
+  if (!f || !s)
+    return false;
+
+  const environment& env = f->get_environment();
+  if (env.is_void_type(f) &&  !env.is_void_type(s))
+    return true;
+
+  return false;
+}
+
+/// Test if a pair of types represents a "void-to-non-void" change.
+///
+/// The test looks through potential typedefs.
+///
+/// @param f the first type to consider.
+///
+/// @param s the second type to consider.
+///
+/// @return true iff the pair of types represents a void-to-non-void
+/// type change.
+static bool
+is_void_to_non_void(const type_base_sptr& f, const type_base_sptr s)
+{return is_void_to_non_void(f.get(), s.get());}
+
+/// Test if a diff node carries a "void-to-non-void" type change
+///
+/// The test looks through potential typedefs.
+///
+/// @param f the first type to consider.
+///
+/// @param s the second type to consider.
+///
+/// @return true iff the pair of types represents a void-to-non-void
+/// type change.
+bool
+has_void_to_non_void_change(const diff* d)
+{
+  type_base_sptr f = is_type(d->first_subject());
+  type_base_sptr s = is_type(d->second_subject());
+
+  return is_void_to_non_void(f, s);
+}
+
+/// Test if a diff node carries a "void-to-non-void" type change
+///
+/// The test looks through potential typedefs.
+///
+/// @param f the first type to consider.
+///
+/// @param s the second type to consider.
+///
+/// @return true iff the pair of types represents a void-to-non-void
+/// type change.
+bool
+has_void_to_non_void_change(const diff_sptr& d)
+{return has_void_to_non_void_change(d.get());}
 
 /// Test if a diff node carries a void* to pointer type change.
 ///
@@ -2135,8 +2360,74 @@ union_diff_has_harmless_changes(const diff *d)
   return false;
 }
 
+/// Test if a diff node carries a change that is categorized as
+/// "harmful".
+///
+/// A harmful change is a change that is not harmless.  OK, that
+/// smells bit like a tasteless tautology, but bear with me please.
+///
+/// A harmless change is a change that should be filtered out by
+/// default to avoid unnecessarily cluttering the change report.
+///
+/// A harmful change is thus a change that SHOULD NOT be filtered out
+/// by default because it CAN represent an incompatible ABI change.
+///
+/// An incompatbile ABI change is a harmful change that makes the new
+/// ABI incompatible with the previous one.
+///
+/// @return the category of the harmful changes carried by the diff
+/// node or zero if the change carries no harmful change.
+static diff_category
+has_harmful_change(const diff* d)
+{
+  diff_category category = NO_CHANGE_CATEGORY;
+  decl_base_sptr f = is_decl(d->first_subject()),
+    s = is_decl(d->second_subject());
+
+  // Detect size or offset changes as well as data member addition
+  // or removal.
+  //
+  // TODO: be more specific -- not all size changes are harmful.
+  if (!has_class_decl_only_def_change(d)
+      && !has_enum_decl_only_def_change(d)
+      && (type_size_changed(f, s)
+	  || type_has_offset_changes(f, s)
+	  || data_member_offset_changed(f, s)
+	  || non_static_data_member_type_size_changed(f, s)
+	  || non_static_data_member_added_or_removed(d)
+	  || base_classes_removed(d)
+	  || has_harmful_enum_change(d)
+	  || crc_changed(d)
+	  || namespace_changed(d)))
+    category |= SIZE_OR_OFFSET_CHANGE_CATEGORY;
+
+  if (has_virtual_mem_fn_change(d))
+    category |= VIRTUAL_MEMBER_CHANGE_CATEGORY;
+
+  if (has_lvalue_reference_ness_change(d))
+    category |= REFERENCE_LVALUENESS_CHANGE_CATEGORY;
+
+  if (has_added_or_removed_function_parameters(d))
+    category |= FN_PARM_ADD_REMOVE_CHANGE_CATEGORY;
+
+  if (is_non_compatible_distinct_change(d))
+    category |= NON_COMPATIBLE_DISTINCT_CHANGE_CATEGORY;
+
+  if (has_harmful_name_change(d))
+    category |= NON_COMPATIBLE_NAME_CHANGE_CATEGORY;
+
+  return category;
+}
+
 /// Detect if the changes carried by a given diff node are deemed
 /// harmless and do categorize the diff node accordingly.
+///
+/// A harmless change is a change that ought to be filtered out by
+/// default from the change report.  Filtering out harmless changes is
+/// to avoid unnecessarily cluttering the change report.
+///
+/// A change is not harmless is a harmful node.  Note that harmful
+/// diff nodes are categorized by @ref categorize_harmful_diff_node.
 ///
 /// @param d the diff node being visited.
 ///
@@ -2225,6 +2516,21 @@ categorize_harmless_diff_node(diff *d, bool pre)
 /// Detect if the changes carried by a given diff node are deemed
 /// harmful and do categorize the diff node accordingly.
 ///
+/// A harmful change is a change that is not harmless.  OK, that
+/// smells bit like a tasteless tautology, but bear with me please.
+///
+/// A harmless change is a change that should be filtered out by
+/// default to avoid unnecessarily cluttering the change report.
+///
+/// A harmful change is thus a change that SHOULD NOT be filtered out
+/// by default because it CAN represent an incompatible ABI change.
+///
+/// An incompatbile ABI change is a harmful change that makes the new
+/// ABI incompatible with the previous one.
+///
+/// Note that harmless diff nodes are categorized by
+/// @ref categorize_harmless_diff_node.
+///
 /// @param d the diff node being visited.
 ///
 /// @param pre this is true iff the node is being visited *before* the
@@ -2241,40 +2547,7 @@ categorize_harmful_diff_node(diff *d, bool pre)
   if (pre)
     {
       diff_category category = NO_CHANGE_CATEGORY;
-      decl_base_sptr f = is_decl(d->first_subject()),
-	s = is_decl(d->second_subject());
-
-      // Detect size or offset changes as well as data member addition
-      // or removal.
-      //
-      // TODO: be more specific -- not all size changes are harmful.
-      if (!has_class_decl_only_def_change(d)
-	  && !has_enum_decl_only_def_change(d)
-	  && (type_size_changed(f, s)
-	      || type_has_offset_changes(f, s)
-	      || data_member_offset_changed(f, s)
-	      || non_static_data_member_type_size_changed(f, s)
-	      || non_static_data_member_added_or_removed(d)
-	      || base_classes_removed(d)
-	      || has_harmful_enum_change(d)
-	      || crc_changed(d)
-	      || namespace_changed(d)))
-	category |= SIZE_OR_OFFSET_CHANGE_CATEGORY;
-
-      if (has_virtual_mem_fn_change(d))
-	category |= VIRTUAL_MEMBER_CHANGE_CATEGORY;
-
-      if (has_lvalue_reference_ness_change(d))
-	category |= REFERENCE_LVALUENESS_CHANGE_CATEGORY;
-
-      if (has_added_or_removed_function_parameters(d))
-	category |= FN_PARM_ADD_REMOVE_CHANGE_CATEGORY;
-
-      if (is_non_compatible_distinct_change(d))
-	category |= NON_COMPATIBLE_DISTINCT_CHANGE_CATEGORY;
-
-      if (has_harmful_name_change(d))
-	category |= NON_COMPATIBLE_NAME_CHANGE_CATEGORY;
+      category = has_harmful_change(d);
 
       if (category)
 	{

@@ -184,7 +184,8 @@ InOutSpec in_out_specs[] =
     "data/test-abicompat/libtest7-fn-changed-libapp-v1.so",
     "",
     "--show-base-names --no-show-locs --no-redundant",
-    abigail::tools_utils::ABIDIFF_ABI_CHANGE,
+    abigail::tools_utils::ABIDIFF_ABI_CHANGE
+    | abigail::tools_utils::ABIDIFF_ABI_INCOMPATIBLE_CHANGE,
     "data/test-abicompat/test7-fn-changed-report-0.txt",
     "output/test-abicompat/test7-fn-changed-report-0.txt",
   },
@@ -195,7 +196,8 @@ InOutSpec in_out_specs[] =
     "data/test-abicompat/libtest7-fn-changed-libapp-btf-v1.so",
     "",
     "--show-base-names --no-show-locs --no-redundant --btf",
-    abigail::tools_utils::ABIDIFF_ABI_CHANGE,
+    abigail::tools_utils::ABIDIFF_ABI_CHANGE
+    | abigail::tools_utils::ABIDIFF_ABI_INCOMPATIBLE_CHANGE,
     "data/test-abicompat/test7-fn-changed-report-0.1.txt",
     "output/test-abicompat/test7-fn-changed-report-0.1.txt",
   },

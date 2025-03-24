@@ -1,0 +1,16 @@
+enum E
+{
+  FIRST_ENUMERATOR,
+  SECOND_ENUMERATOR = 1,
+  THIRD_ENUMERATOR = 2,
+  FOURTH_ENUMERATOR = 3,
+  FIFTH_ENUMERATOR = 4,
+  LAST_ENUMERATOR
+};
+
+enum E
+foo()
+{
+  enum E e = FIRST_ENUMERATOR;
+  return e;
+}

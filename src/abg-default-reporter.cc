@@ -1889,6 +1889,143 @@ default_reporter::report(const translation_unit_diff& d,
   static_cast<const scope_diff&>(d).report(out, indent);
 }
 
+/// Emit a report about a changed function.
+///
+/// @param ctxt the diff context to use for the report.
+///
+/// @param fn_diff the function_diff node to emit the report for.
+///
+/// @param out the output stream to emit the report to.
+///
+/// @param indent the indentation string to use.
+///
+/// @param indirect_changed_subtypes if true, this means there are
+/// indirect sub-types changes.  Indirect means it's a pointed-to-type
+/// that changed.
+///
+/// @param emit_redundant_fn_changes if true, the function reports
+/// about changes carried by @fn_diff even if they are redundant.
+static void
+emit_changed_fn_report(const diff_context_sptr& ctxt,
+		       const function_decl_diff_sptr& fn_diff,
+		       ostream& out, const string indent,
+		       bool indirect_changed_subtypes = false,
+		       bool emit_redundant_fn_changes = true)
+{
+  bool saved_show_redundant_changes = ctxt->show_redundant_changes();
+  ctxt->show_redundant_changes(emit_redundant_fn_changes);
+
+  if (fn_diff->to_be_reported())
+    {
+      function_decl_sptr fn = fn_diff->first_function_decl();
+      out << indent << "  [C] '"
+	  << fn->get_pretty_representation() << "'";
+      report_loc_info(fn_diff->first_function_decl(), *ctxt, out);
+
+      out << " has some";
+      if (indirect_changed_subtypes)
+	out << " indirect";
+      out << " sub-type changes:\n";
+
+      if (// The symbol of the function has aliases and the
+	  // function is not a cdtor (yeah because c++ cdtors
+	  // usually have several aliases).
+	  (fn->get_symbol()->has_aliases()
+	   && !(is_member_function(fn)
+		&& get_member_function_is_ctor(fn))
+	   && !(is_member_function(fn)
+		&& get_member_function_is_dtor(fn)))
+	  || // We are in C and the name of the function is
+	  // different from the symbol name -- without
+	  // taking the possible symbol version into
+	  // account (this usually means the programmers
+	  // was playing tricks with symbol names and
+	  // versions).
+	  (is_c_language(get_translation_unit(fn)->get_language())
+	   && fn->get_name() != fn->get_symbol()->get_name()))
+	{
+	  // As the name of the symbol of the function doesn't
+	  // seem to be obvious here, make sure to tell the
+	  // user about the name of the (function) symbol she
+	  // is looking at here.
+	  int number_of_aliases =
+	    fn->get_symbol()->get_number_of_aliases();
+	  if (number_of_aliases == 0)
+	    {
+	      out << indent << "    "
+		  << "Please note that the exported symbol of "
+		"this function is "
+		  << fn->get_symbol()->get_id_string()
+		  << "\n";
+	    }
+	  else
+	    {
+	      out << indent << "    "
+		  << "Please note that the symbol of this function is "
+		  << fn->get_symbol()->get_id_string()
+		  << "\n     and it aliases symbol";
+	      if (number_of_aliases > 1)
+		out << "s";
+	      out << ": "
+		  << fn->get_symbol()->get_aliases_id_string(false)
+		  << "\n";
+	    }
+	}
+      fn_diff->report(out, indent + "    ");
+      // Extra spacing.
+      out << "\n";
+    }
+
+  ctxt->show_redundant_changes(saved_show_redundant_changes);
+}
+
+/// Emit a report about a changed variable.
+///
+/// @param ctxt the diff context to use for the report.
+///
+/// @param fn_diff the var_diff node to emit the report for.
+///
+/// @param out the output stream to emit the report to.
+///
+/// @param indent the indentation string to use.
+///
+/// @param indirect_changed_subtypes if true, this means there are
+/// indirect sub-types changes.  Indirect means it's a pointed-to-type
+/// that changed.
+///
+/// @param emit_redundant_var_changes if true, the function reports
+/// about changes carried by @fn_diff even if they are redundant.
+static void
+emit_changed_var_report(const diff_context_sptr& ctxt,
+			const var_diff_sptr& var_diff,
+			ostream& out, const string indent,
+			bool emit_redundant_var_changes = true)
+{
+  diff_sptr diff = var_diff;
+  if (!diff)
+    return;
+
+  bool saved_show_redundant_changes = ctxt->show_redundant_changes();
+  ctxt->show_redundant_changes(emit_redundant_var_changes);
+
+  if (diff->to_be_reported())
+    {
+      string n1 = diff->first_subject()->get_pretty_representation();
+      string n2 = diff->second_subject()->get_pretty_representation();
+
+      out << indent << "  [C] '" << n1 << "' was changed";
+      if (n1 != n2)
+	out << " to '" << n2 << "'";
+      report_loc_info(diff->second_subject(), *ctxt, out);
+      out << ":\n";
+      diff->report(out, indent + "    ");
+      // Extra spacing.
+      out << "\n";
+    }
+
+  ctxt->show_redundant_changes(saved_show_redundant_changes);
+}
+
 /// Report the changes carried by a @ref corpus_diff node in a
 /// serialized form.
 ///
@@ -1968,6 +2105,21 @@ default_reporter::report(const corpus_diff& d, ostream& out,
 	out << "\n";
     }
 
+  if (size_t num_changed = s.num_func_with_incompatible_changes())
+    {
+      if (num_changed == 1)
+	out << indent << "1 function with incompatible sub-type changes:\n\n";
+      else if (num_changed > 1)
+	out << indent << num_changed
+	    << " functions with incompatible sub-type changes:\n\n";
+
+      sort_function_decl_diffs(const_cast<corpus_diff&>(d).
+			       incompatible_changed_functions());
+      for (auto& fn_diff : d.incompatible_changed_functions())
+	if (fn_diff)
+	  emit_changed_fn_report(ctxt, fn_diff, out, indent);
+    }
+
   if (ctxt->show_added_fns())
     {
       if (s.net_num_func_added() == 1)
@@ -2016,8 +2168,8 @@ default_reporter::report(const corpus_diff& d, ostream& out,
     }
 
   if (ctxt->show_changed_fns())
+    if (size_t num_changed = s.net_num_non_incompatible_func_changed())
     {
-      size_t num_changed = s.num_func_changed() - s.num_changed_func_filtered_out();
       if (num_changed == 1)
 	out << indent << "1 function with some indirect sub-type change:\n\n";
       else if (num_changed > 1)
@@ -2027,71 +2179,11 @@ default_reporter::report(const corpus_diff& d, ostream& out,
       vector<function_decl_diff_sptr> sorted_changed_fns;
       sort_string_function_decl_diff_sptr_map(d.priv_->changed_fns_map_,
 					      sorted_changed_fns);
-      for (vector<function_decl_diff_sptr>::const_iterator i =
-	     sorted_changed_fns.begin();
-	   i != sorted_changed_fns.end();
-	   ++i)
-	{
-	  diff_sptr diff = *i;
-	  if (!diff)
-	    continue;
-
-	  if (diff->to_be_reported())
-	    {
-	      function_decl_sptr fn = (*i)->first_function_decl();
-	      out << indent << "  [C] '"
-		  << fn->get_pretty_representation() << "'";
-	      report_loc_info((*i)->first_function_decl(), *ctxt, out);
-	      out << " has some indirect sub-type changes:\n";
-	      if (// The symbol of the function has aliases and the
-		  // function is not a cdtor (yeah because c++ cdtors
-		  // usually have several aliases).
-		  (fn->get_symbol()->has_aliases()
-		   && !(is_member_function(fn)
-			&& get_member_function_is_ctor(fn))
-		   && !(is_member_function(fn)
-			&& get_member_function_is_dtor(fn)))
-		  || // We are in C and the name of the function is
-		     // different from the symbol name -- without
-		     // taking the possible symbol version into
-		     // account (this usually means the programmers
-		     // was playing tricks with symbol names and
-		     // versions).
-		  (is_c_language(get_translation_unit(fn)->get_language())
-		   && fn->get_name() != fn->get_symbol()->get_name()))
-		{
-		  // As the name of the symbol of the function doesn't
-		  // seem to be obvious here, make sure to tell the
-		  // user about the name of the (function) symbol she
-		  // is looking at here.
-		  int number_of_aliases =
-		    fn->get_symbol()->get_number_of_aliases();
-		  if (number_of_aliases == 0)
-		    {
-		      out << indent << "    "
-			  << "Please note that the exported symbol of "
-			"this function is "
-			  << fn->get_symbol()->get_id_string()
-			  << "\n";
-		    }
-		  else
-		    {
-		      out << indent << "    "
-			  << "Please note that the symbol of this function is "
-			  << fn->get_symbol()->get_id_string()
-			  << "\n     and it aliases symbol";
-		      if (number_of_aliases > 1)
-			out << "s";
-		      out << ": "
-			  << fn->get_symbol()->get_aliases_id_string(false)
-			  << "\n";
-		    }
-		}
-	      diff->report(out, indent + "    ");
-	      // Extra spacing.
-	      out << "\n";
-	    }
-	}
+      for (auto& fn_diff : sorted_changed_fns)
+	if (fn_diff && !filtering::has_incompatible_fn_or_var_change(fn_diff))
+	  emit_changed_fn_report(ctxt, fn_diff, out, indent,
+				 /*indirect_changed_subtypes=*/true,
+				 /*emit_redundant_fns=*/false);
       // Changed functions have extra spacing already. No new line here.
     }
 
@@ -2134,6 +2226,21 @@ default_reporter::report(const corpus_diff& d, ostream& out,
 	out << "\n";
     }
 
+  if (size_t num_changed = s.num_var_with_incompatible_changes())
+    {
+      if (num_changed == 1)
+	out << indent << "1 variable with incompatible sub-type changes:\n\n";
+      else if (num_changed  > 1)
+	out << indent << num_changed
+	    << " variables with incompatible sub-type changes:\n\n";
+
+      sort_var_diffs(const_cast<corpus_diff&>(d).
+		     incompatible_changed_variables());
+      for (auto& var_diff : d.incompatible_changed_variables())
+	if (var_diff)
+	  emit_changed_var_report(ctxt, var_diff, out, indent);
+    }
+
   if (ctxt->show_added_vars())
     {
       if (s.net_num_vars_added() == 1)
@@ -2171,9 +2278,8 @@ default_reporter::report(const corpus_diff& d, ostream& out,
     }
 
   if (ctxt->show_changed_vars())
+    if (size_t num_changed = s.net_num_non_incompatible_var_changed())
     {
-      size_t num_changed =
-	s.num_vars_changed() - s.num_changed_vars_filtered_out();
       if (num_changed == 1)
 	out << indent << "1 Changed variable:\n\n";
       else if (num_changed > 1)
@@ -2181,31 +2287,10 @@ default_reporter::report(const corpus_diff& d, ostream& out,
 	    << " Changed variables:\n\n";
       string n1, n2;
 
-      for (var_diff_sptrs_type::const_iterator i =
-	     d.priv_->sorted_changed_vars_.begin();
-	   i != d.priv_->sorted_changed_vars_.end();
-	   ++i)
-	{
-	  diff_sptr diff = *i;
-
-	  if (!diff)
-	    continue;
-
-	  if (!diff->to_be_reported())
-	    continue;
-
-	  n1 = diff->first_subject()->get_pretty_representation();
-	  n2 = diff->second_subject()->get_pretty_representation();
-
-	  out << indent << "  [C] '" << n1 << "' was changed";
-	  if (n1 != n2)
-	    out << " to '" << n2 << "'";
-	  report_loc_info(diff->second_subject(), *ctxt, out);
-	  out << ":\n";
-	  diff->report(out, indent + "    ");
-	  // Extra spacing.
-	  out << "\n";
-	}
+      for (auto& var_diff : d.priv_->sorted_changed_vars_)
+	if (var_diff
+	    && !filtering::has_incompatible_fn_or_var_change(var_diff))
+	  emit_changed_var_report(ctxt, var_diff, out, indent);
       // Changed variables have extra spacing already. No new line here.
     }
 

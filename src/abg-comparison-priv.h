@@ -714,6 +714,13 @@ struct base_diff_comp
   {return operator()(l.get(), r.get());}
 }; // end struct base_diff_comp
 
+bool
+is_less_than(const decl_diff_base& first, const decl_diff_base& second);
+
+bool
+is_less_than(const decl_diff_base_sptr& first,
+	     const decl_diff_base_sptr& second);
+
 /// A comparison functor to compare two instances of @ref var_diff
 /// that represent changed data members based on the offset of the
 /// initial data members, or if equal, based on their qualified name.
@@ -775,10 +782,7 @@ struct data_member_diff_comp
 
     return name1 < name2;
   }
-}; // end struct var_diff_comp
-
-bool
-is_less_than(const function_decl_diff& first, const function_decl_diff& second);
+}; // end struct data_member_diff_comp
 
 /// A comparison functor for instances of @ref function_decl_diff that
 /// represent changes between two virtual member functions.
@@ -1079,11 +1083,13 @@ struct corpus_diff::priv
   string_function_ptr_map		suppressed_added_fns_;
   string_function_decl_diff_sptr_map	changed_fns_map_;
   function_decl_diff_sptrs_type	changed_fns_;
+  function_decl_diff_sptrs_type	incompatible_changed_fns_;
   string_var_ptr_map			deleted_vars_;
   string_var_ptr_map			suppressed_deleted_vars_;
   string_var_ptr_map			added_vars_;
   string_var_ptr_map			suppressed_added_vars_;
   string_var_diff_sptr_map		changed_vars_map_;
+  var_diff_sptrs_type			incompatible_changed_vars_;
   var_diff_sptrs_type			sorted_changed_vars_;
   string_elf_symbol_map		added_unrefed_fn_syms_;
   string_elf_symbol_map		suppressed_added_unrefed_fn_syms_;
@@ -1302,11 +1308,9 @@ struct var_diff_sptr_comp
   ///
   /// @return true if @p f is less than @p s.
   bool
-  operator()(const var_diff_sptr f,
-	     const var_diff_sptr s)
+  operator()(const var_diff_sptr f, const var_diff_sptr s)
   {
-    return (f->first_var()->get_qualified_name()
-	    < s->first_var()->get_qualified_name());
+    return is_less_than(f, s);
   }
 }; // end struct var_diff_sptr_comp
 
@@ -1323,6 +1327,10 @@ struct corpus_diff::diff_stats::priv
   size_t		num_func_changed;
   size_t		num_changed_func_filtered_out;
   size_t		num_func_with_virt_offset_changes;
+  size_t		num_func_with_local_harmful_changes;
+  size_t		num_func_with_incompatible_changes;
+  size_t		num_var_with_local_harmful_changes;
+  size_t		num_var_with_incompatible_changes;
   size_t		num_vars_removed;
   size_t		num_removed_vars_filtered_out;
   size_t		num_vars_added;
@@ -1361,6 +1369,10 @@ struct corpus_diff::diff_stats::priv
       num_func_changed(),
       num_changed_func_filtered_out(),
       num_func_with_virt_offset_changes(),
+      num_func_with_local_harmful_changes(),
+      num_func_with_incompatible_changes(),
+      num_var_with_local_harmful_changes(),
+      num_var_with_incompatible_changes(),
       num_vars_removed(),
       num_removed_vars_filtered_out(),
       num_vars_added(),
@@ -1429,8 +1441,14 @@ sort_string_function_decl_diff_sptr_map
  function_decl_diff_sptrs_type& sorted);
 
 void
+sort_function_decl_diffs(function_decl_diff_sptrs_type& fn_diffs);
+
+void
 sort_string_var_diff_sptr_map(const string_var_diff_sptr_map& map,
 			      var_diff_sptrs_type& sorted);
+
+void
+sort_var_diffs(var_diff_sptrs_type& var_diffs);
 
 void
 sort_string_elf_symbol_map(const string_elf_symbol_map& map,

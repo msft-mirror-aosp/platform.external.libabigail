@@ -114,10 +114,37 @@ bool
 has_void_ptr_to_ptr_change(const diff* d);
 
 bool
+has_void_to_non_void_change(const diff* d);
+
+bool
+has_void_to_non_void_change(const diff_sptr& d);
+
+bool
 has_harmless_enum_to_int_change(const diff* d);
 
 bool
 has_benign_array_of_unknown_size_change(const diff* dif);
+
+diff_category
+has_fn_return_or_parm_harmful_change(const diff* d);
+
+diff_category
+has_var_harmful_local_change(const diff* d);
+
+diff_category
+has_var_harmful_local_change(const diff_sptr& d);
+
+bool
+has_fn_with_virtual_offset_change(const diff* d);
+
+bool
+has_fn_with_virtual_offset_change(const diff_sptr& d);
+
+bool
+has_incompatible_fn_or_var_change(const diff* d);
+
+bool
+has_incompatible_fn_or_var_change(const diff_sptr& d);
 
 struct filter_base;
 /// Convenience typedef for a shared pointer to filter_base

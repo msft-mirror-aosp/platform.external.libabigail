@@ -1362,12 +1362,12 @@ enum change_kind
   NO_CHANGE_KIND = 0,
 
   /// This means that a given IR artifact has a local type change.
-  LOCAL_TYPE_CHANGE_KIND = 1 << 0,
+  LOCAL_TYPE_CHANGE_KIND = 1 << 1,
 
   /// This means that a given IR artifact has a local non-type change.
   /// That is a change that is carried by the artifact itself, not by
   /// its type.
-  LOCAL_NON_TYPE_CHANGE_KIND = 1 << 1,
+  LOCAL_NON_TYPE_CHANGE_KIND = 1 << 2,
 
   /// Testing (anding) against this mask means that a given IR artifact has
   /// local differences, with respect to the other artifact it was compared
@@ -1378,7 +1378,7 @@ enum change_kind
   /// This means that a given IR artifact has changes in some of its
   /// sub-types, with respect to the other artifact it was compared
   /// against.
-  SUBTYPE_CHANGE_KIND = 1 << 2,
+  SUBTYPE_CHANGE_KIND = 1 << 3,
 };// end enum change_kind
 
 change_kind

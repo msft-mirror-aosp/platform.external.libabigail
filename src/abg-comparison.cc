@@ -168,18 +168,39 @@ sort_changed_data_members(changed_var_sptrs_type& to_sort)
   std::sort(to_sort.begin(), to_sort.end(), comp);
 }
 
-/// Compare two @ref function_decl_diff for the purpose of sorting.
+/// Get the ELF symbol associated to a decl.
 ///
-/// @param first the first @ref function_decl_diff to consider.
+/// Please note that ELF symbol are only associated to function or
+/// global variable decls.  So for any other kind of decl, this
+/// function returns nullptr.
+///
+/// @param d the decl to consider.
+///
+/// @return the ELF symbol associated to @p if any or nullptr.
+static elf_symbol_sptr
+get_symbol(const decl_base_sptr& d)
+{
+  if (function_decl_sptr fn = is_function_decl(d))
+    return fn->get_symbol();
+  else if (var_decl_sptr var = is_var_decl(d))
+    return var->get_symbol();
+
+  return elf_symbol_sptr();
+}
+
+/// Compare two decl diff nodes (@ref decl_diff_base) for the purpose
+/// of sorting.
+///
+/// @param first the first @ref decl_diff to consider.
 ///
 /// @param second the second @ref function_decl_diff to consider.
 ///
 /// @return true iff @p first compares less than @p second.
 bool
-is_less_than(const function_decl_diff& first, const function_decl_diff& second)
+is_less_than(const decl_diff_base& first, const decl_diff_base& second)
 {
-  function_decl_sptr f = first.first_function_decl(),
-    s = second.first_function_decl();
+  decl_base_sptr f = is_decl(first.first_subject()),
+    s = is_decl(second.first_subject());
 
   string fr = f->get_qualified_name(), sr = s->get_qualified_name();
 
@@ -195,18 +216,36 @@ is_less_than(const function_decl_diff& first, const function_decl_diff& second)
 	return fr < sr;
     }
 
-  if (f->get_symbol() && s->get_symbol())
+  if (get_symbol(f) && get_symbol(s))
     {
-      fr = f->get_symbol()->get_id_string();
-      sr = s->get_symbol()->get_id_string();
+      fr = get_symbol(f)->get_id_string();
+      sr = get_symbol(s)->get_id_string();
       if (fr != sr)
 	return fr < sr;
     }
-	
+
   fr = f->get_pretty_representation(true, true);
   sr = s->get_pretty_representation(true, true);
 
   return fr < sr;
+}
+
+/// Compare two decl diff nodes (@ref decl_diff_base) for the purpose
+/// of sorting.
+///
+/// @param first the first @ref decl_diff to consider.
+///
+/// @param second the second @ref function_decl_diff to consider.
+///
+/// @return true iff @p first compares less than @p second.
+bool
+is_less_than(const decl_diff_base_sptr& first,
+	     const decl_diff_base_sptr& second)
+{
+  if (!first || !second)
+    return false;
+
+  return is_less_than(*first, *second);
 }
 
 /// Sort an instance of @ref string_function_ptr_map map and stuff a
@@ -272,6 +311,19 @@ sort_string_function_decl_diff_sptr_map
   std::sort(sorted.begin(), sorted.end(), comp);
 }
 
+/// Sort a vector of @ref function_decl_diff_sptr.
+///
+/// The comparison functor used is function_decl_diff_comp.
+///
+/// @param fn_diffs in/out parameter.  The vector of @ref
+/// function_decl_diff_sptr to sort.
+void
+sort_function_decl_diffs(function_decl_diff_sptrs_type& fn_diffs)
+{
+  function_decl_diff_comp comp;
+  std::sort(fn_diffs.begin(), fn_diffs.end(), comp);
+}
+
 /// Sort of an instance of @ref string_var_diff_sptr_map map.
 ///
 /// @param map the input map to sort.
@@ -290,6 +342,19 @@ sort_string_var_diff_sptr_map(const string_var_diff_sptr_map& map,
 
   var_diff_sptr_comp comp;
   std::sort(sorted.begin(), sorted.end(), comp);
+}
+
+/// Sort a vector of @ref var_diff_sptr.
+///
+/// The comparison functor used is @ref var_diff_sptr_comp.
+///
+/// @param var_diffs in/out parameter the vector of @ref var_diff_sptr
+/// to sort.
+void
+sort_var_diffs(var_diff_sptrs_type& var_diffs)
+{
+  var_diff_sptr_comp comp;
+  std::sort(var_diffs.begin(), var_diffs.end(), comp);
 }
 
 /// Sort a map of string -> pointer to @ref elf_symbol.
@@ -3186,6 +3251,32 @@ get_default_harmful_categories_bitmap()
 	  | abigail::comparison::NON_COMPATIBLE_DISTINCT_CHANGE_CATEGORY
 	  | abigail::comparison::NON_COMPATIBLE_NAME_CHANGE_CATEGORY
 	  | abigail::comparison::FN_PARM_ADD_REMOVE_CHANGE_CATEGORY);
+}
+
+/// Test if an instance of @ref diff_category (a category bit-field)
+/// is harmful or not.
+///
+/// A harmful change is a change that is not harmless.  OK, that
+/// smells bit like a tasteless tautology, but bear with me please.
+///
+/// A harmless change is a change that should be filtered out by
+/// default to avoid unnecessarily cluttering the change report.
+///
+/// A harmful change is thus a change that SHOULD NOT be filtered out
+/// by default because it CAN represent an incompatible ABI change.
+///
+/// An incompatbile ABI change is a harmful change that makes the new
+/// ABI incompatible with the previous one.
+///
+/// @param c the instance of @ref diff_category to consider.  It is a
+/// bit-field of the categories of a given diff node.
+///
+/// @return true 
+bool
+is_harmful_category(diff_category c)
+{
+  diff_category dc = get_default_harmful_categories_bitmap();
+  return c & dc;
 }
 
 /// Serialize an instance of @ref diff_category to an output stream.
@@ -8860,6 +8951,74 @@ void
 corpus_diff::diff_stats::num_func_with_virtual_offset_changes(size_t n)
 {priv_->num_func_with_virt_offset_changes = n;}
 
+/// Getter for the number of functions with local harmful changes.
+///
+/// A local harmful change is a harmful change that is local to the
+/// function itself or is local to a return or parameter type.
+///
+/// @return the number of functions with local harmful changes.
+size_t
+corpus_diff::diff_stats::num_func_with_local_harmful_changes() const
+{return priv_->num_func_with_local_harmful_changes;}
+
+/// Setter for the number of functions with local harmful changes.
+///
+/// A local harmful change is a harmful change that is local to the
+/// function itself or is local to a return or parameter type.
+///
+/// @param n the number of functions with local harmful changes.
+void
+corpus_diff::diff_stats::num_func_with_local_harmful_changes(size_t n)
+{priv_->num_func_with_local_harmful_changes = n;}
+
+/// Getter for the number of variables with local harmful changes.
+///
+/// A local harmful change is a harmful change that is local to the
+/// variable itself or is local to its type.
+///
+/// @return the number of variables with local harmful changes.
+size_t
+corpus_diff::diff_stats::num_var_with_local_harmful_changes() const
+{return priv_->num_var_with_local_harmful_changes;}
+
+/// Setter for the number of variables with local harmful changes.
+///
+/// A local harmful change is a harmful change that is local to the
+/// variable itself or is local to its type.
+///
+/// @param n the number of variables with local harmful changes.
+void
+corpus_diff::diff_stats::num_var_with_local_harmful_changes(size_t n)
+{priv_->num_var_with_local_harmful_changes = n;}
+
+/// Getter for the number of functions with incompatible changes.
+///
+/// @return the number of functions with incompatible changes.
+size_t
+corpus_diff::diff_stats::num_func_with_incompatible_changes() const
+{return priv_->num_func_with_incompatible_changes;}
+
+/// Setter for the number of functions with incompatible changes.
+///
+/// @param n the number of functions with incompatible changes.
+void
+corpus_diff::diff_stats::num_func_with_incompatible_changes(size_t n)
+{priv_->num_func_with_incompatible_changes = n;}
+
+/// Getter for the number of variables with incompatible changes.
+///
+/// @return the number of variables with incompatible changes.
+size_t
+corpus_diff::diff_stats::num_var_with_incompatible_changes() const
+{return priv_->num_var_with_incompatible_changes;}
+
+/// Setter for the number of variables with incompatible changes.
+///
+/// @param n the number of variables with incompatible changes.
+void
+corpus_diff::diff_stats::num_var_with_incompatible_changes(size_t n)
+{priv_->num_var_with_incompatible_changes = n;}
+
 /// Getter for the number of functions that have a change in their
 /// sub-types, minus the number of these functions that got filtered
 /// out from the diff.
@@ -8870,6 +9029,15 @@ corpus_diff::diff_stats::num_func_with_virtual_offset_changes(size_t n)
 size_t
 corpus_diff::diff_stats::net_num_func_changed() const
 {return num_func_changed() - num_changed_func_filtered_out();}
+
+/// Getter of the net number of functions with changes that are not
+/// incompatible.
+///
+/// @return net number of functions with changes that are not
+/// incompatible.
+size_t
+corpus_diff::diff_stats::net_num_non_incompatible_func_changed() const
+{return net_num_func_changed() - num_func_with_incompatible_changes();}
 
 /// Getter for the number of variables removed.
 ///
@@ -9013,6 +9181,15 @@ corpus_diff::diff_stats::num_changed_vars_filtered_out(size_t n)
 size_t
 corpus_diff::diff_stats::net_num_vars_changed() const
 {return num_vars_changed() - num_changed_vars_filtered_out();}
+
+/// Getter of the net number of variables with changes that are not
+/// incompatible.
+///
+/// @return net number of variables with changes that are not
+/// incompatible.
+size_t
+corpus_diff::diff_stats::net_num_non_incompatible_var_changed() const
+{return net_num_vars_changed() - num_var_with_incompatible_changes();}
 
 /// Getter for the number of function symbols (not referenced by any
 /// debug info) that got removed.
@@ -10890,6 +11067,7 @@ corpus_diff::priv::apply_filters_and_compute_diff_stats(diff_stats& stat)
        i != changed_fns_.end();
        ++i)
     {
+      bool incompatible_change = false;
       if ((*i)->is_filtered_out())
 	{
 	  stat.num_changed_func_filtered_out
@@ -10899,16 +11077,36 @@ corpus_diff::priv::apply_filters_and_compute_diff_stats(diff_stats& stat)
 	    stat.num_leaf_func_changes_filtered_out
 	      (stat.num_leaf_func_changes_filtered_out() + 1);
 	}
-      else
+      else if (!(*i)->is_suppressed())
 	{
-	  if ((*i)->get_category() & VIRTUAL_MEMBER_CHANGE_CATEGORY)
-	    stat.num_func_with_virtual_offset_changes
-	      (stat.num_func_with_virtual_offset_changes() + 1);
+	  if (filtering::has_fn_with_virtual_offset_change(*i))
+	    {
+	      stat.num_func_with_virtual_offset_changes
+		(stat.num_func_with_virtual_offset_changes() + 1);
+	      incompatible_change = true;
+	    }
+
+	  // Are any of the local changes of the function_diff harmful?
+	  // If yes, then set stat.num_func_with_local_harmful_changes()
+	  // and stat.num_var_with_local_harmful_changes().
+	  if (filtering::has_fn_return_or_parm_harmful_change((*i).get()))
+	    {
+	      stat.num_func_with_local_harmful_changes
+		(stat.num_func_with_local_harmful_changes() + 1);
+	      incompatible_change = true;
+	    }
 	}
 
       if ((*i)->has_local_changes())
 	stat.num_leaf_func_changes
 	  (stat.num_leaf_func_changes() + 1);
+
+      if (incompatible_change)
+	{
+	  incompatible_changed_fns_.push_back(*i);
+	  stat.num_func_with_incompatible_changes
+	    (stat.num_func_with_incompatible_changes() + 1);
+	}
     }
 
   if (get_context()->do_log())
@@ -10937,6 +11135,18 @@ corpus_diff::priv::apply_filters_and_compute_diff_stats(diff_stats& stat)
 	    stat.num_leaf_var_changes_filtered_out
 	      (stat.num_leaf_var_changes_filtered_out() + 1);
 	}
+      else if (!(*i)->is_suppressed())
+	{
+	  if (filtering::has_var_harmful_local_change(*i))
+	    {
+	      incompatible_changed_vars_.push_back(*i);
+	      stat.num_var_with_local_harmful_changes
+		(stat.num_var_with_local_harmful_changes() + 1);
+	      stat.num_var_with_incompatible_changes
+		(stat.num_var_with_incompatible_changes() + 1);
+	    }
+	}
+
       if ((*i)->has_local_changes())
 	stat.num_leaf_var_changes
 	  (stat.num_leaf_var_changes() + 1);
@@ -11578,7 +11788,7 @@ corpus_diff::added_functions()
 /// usually made of the name and version of the underlying ELF symbol
 /// of the function for corpora that were built from ELF files.
 const string_function_decl_diff_sptr_map&
-corpus_diff::changed_functions()
+corpus_diff::changed_functions() const
 {return priv_->changed_fns_map_;}
 
 /// Getter for a sorted vector of functions which signature didn't
@@ -11587,8 +11797,26 @@ corpus_diff::changed_functions()
 /// @return a sorted vector of functions which signature didn't
 /// change, but which do have some indirect changes in their parms.
 const function_decl_diff_sptrs_type&
-corpus_diff::changed_functions_sorted()
+corpus_diff::changed_functions_sorted() const
 {return priv_->changed_fns_;}
+
+/// Getter of the set of diff nodes representing incompatibly changed
+/// functions
+///
+/// @return the set of diff nodes representing incompatibly changed
+/// functions
+const function_decl_diff_sptrs_type&
+corpus_diff::incompatible_changed_functions() const
+{return priv_->incompatible_changed_fns_;}
+
+/// Getter of the set of diff nodes representing incompatibly changed
+/// functions
+///
+/// @return the set of diff nodes representing incompatibly changed
+/// functions
+function_decl_diff_sptrs_type&
+corpus_diff::incompatible_changed_functions()
+{return priv_->incompatible_changed_fns_;}
 
 /// Getter for the variables that got deleted from the first subject
 /// of the diff.
@@ -11620,6 +11848,24 @@ corpus_diff::changed_variables()
 const var_diff_sptrs_type&
 corpus_diff::changed_variables_sorted()
 {return priv_->sorted_changed_vars_;}
+
+/// Getter of the set of diff nodes representing incompatibly changed
+/// global variables.
+///
+/// @return the set of diff nodes representing incompatibly changed
+/// global variables.
+const var_diff_sptrs_type&
+corpus_diff::incompatible_changed_variables() const
+{return priv_->incompatible_changed_vars_;}
+
+/// Getter of the set of diff nodes representing incompatibly changed
+/// global variables.
+///
+/// @return the set of diff nodes representing incompatibly changed
+/// global variables.
+var_diff_sptrs_type&
+corpus_diff::incompatible_changed_variables()
+{return priv_->incompatible_changed_vars_;}
 
 /// Getter for function symbols not referenced by any debug info and
 /// that got deleted.
@@ -11804,18 +12050,21 @@ corpus_diff::has_incompatible_changes() const
     apply_filters_and_suppressions_before_reporting();
 
   bool has_incompatible_changes  =
-    (soname_changed() || architecture_changed()
-	  || stats.net_num_func_removed() != 0
-	  || (stats.num_func_with_virtual_offset_changes() != 0
-	      // If all reports about functions with sub-type changes
-	      // have been suppressed, then even those about functions
-	      // that are virtual don't matter anymore because the
-	      // user willingly requested to shut them down
-	      && stats.net_num_func_changed() != 0)
-	  || stats.net_num_vars_removed() != 0
-	  || stats.net_num_removed_func_syms() != 0
-	  || stats.net_num_removed_var_syms() != 0
-	  || stats.net_num_removed_unreachable_types() != 0);
+    (soname_changed()
+     || architecture_changed()
+     || stats.net_num_func_removed() != 0
+     || (stats.num_func_with_incompatible_changes()
+	 // If all reports about functions changes have been
+	 // suppressed, then even those about incompatible changes
+	 // don't matter anymore because the user willingly requested
+	 // to shut them down.
+	 && stats.net_num_func_changed() != 0)
+     || stats.net_num_vars_removed() != 0
+     || (stats.num_var_with_incompatible_changes()
+	 && stats.net_num_vars_changed() != 0)
+     || stats.net_num_removed_func_syms() != 0
+     || stats.net_num_removed_var_syms() != 0
+     || stats.net_num_removed_unreachable_types() != 0);
 
   // If stats.net_num_changed_unreachable_types() != 0 then walk the
   // corpus_diff::priv::changed_unreachable_types_, and see if there
@@ -13391,11 +13640,13 @@ struct redundancy_marking_visitor : public diff_node_visitor
       }
     else
       {
-	// Propagate the redundancy categorization of the children nodes
-	// to this node.  But if this node has local changes, then it
-	// doesn't inherit redundancy from its children nodes.
+	// Propagate the redundancy categorization of the children
+	// nodes to this node.  But if this node has local harmful
+	// changes then it doesn't inherit redundancy from its
+	// children nodes.
 	if (!(d->get_category() & REDUNDANT_CATEGORY)
-	    && (!d->has_local_changes_to_be_reported()
+	    && ((!d->has_local_changes_to_be_reported()
+		 || !is_harmful_category(d->get_local_category()))
 		// By default, pointer, reference, array and qualified
 		// types consider that a local changes to their
 		// underlying type is always a local change for

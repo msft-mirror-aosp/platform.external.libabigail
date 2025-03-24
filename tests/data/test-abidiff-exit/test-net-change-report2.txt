@@ -26,7 +26,7 @@ Removed/Changed/Added variables summary: 1 Removed, 1 Changed, 1 Added variable
 
   [A] 'long int var_added'    {var_added}
 
-1 Changed variable:
+1 variable with incompatible sub-type changes:
 
   [C] 'int var_changed' was changed to 'long int var_changed':
     size of symbol changed from 4 to 8
