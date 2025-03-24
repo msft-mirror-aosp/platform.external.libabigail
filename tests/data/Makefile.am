@@ -1369,6 +1369,11 @@ test-diff-filter/test-PR29811-0-v0.o \
 test-diff-filter/test-PR29811-0-v1.o \
 test-diff-filter/test-PR29811-0-v0.c \
 test-diff-filter/test-PR29811-0-v1.c \
+test-diff-filter/test-multi-array1-v0.cc \
+test-diff-filter/test-multi-array1-v0.o \
+test-diff-filter/test-multi-array1-v1.cc \
+test-diff-filter/test-multi-array1-v1.o \
+test-diff-filter/test-multi-array1.txt \
 \
 test-diff-suppr/test0-type-suppr-v0.cc	\
 test-diff-suppr/test0-type-suppr-v1.cc	\

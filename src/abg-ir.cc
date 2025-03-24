@@ -28615,14 +28615,39 @@ types_have_similar_structure(const type_base* first,
   if (const array_type_def* ty1 = is_array_type(first))
     {
       const array_type_def* ty2 = is_array_type(second);
-      // TODO: Handle int[5][2] vs int[2][5] better.
       if (!indirect_type)
 	{
 	  if (ty1->get_size_in_bits() != ty2->get_size_in_bits()
 	      || ty1->get_dimension_count() != ty2->get_dimension_count())
 	    return false;
+
+	  // Handle int[5][2] vs int[2][5] ...
+	  //
+	  // 6.2.5/20 of
+	  //  https://www.open-std.org/jtc1/sc22/WG14/www/docs/n1256.pdf
+	  //  says:
+	  //
+	  //  "Array types are characterized by their element
+	  //  type and by the number of elements in the array"
+	  //
+	  // and 6.5.2.1/3 says:
+	  //
+	  //  "arrays are stored in row-major order (last subscript
+	  //   varies fastest)."
+	  //
+	  // So, let's ensure that all dimensions (sub-ranges) have
+	  // the same length.
+
+	  for (auto r1 = ty1->get_subranges().begin(),
+		 r2 = ty1->get_subranges().begin();
+	       (r1 != ty1->get_subranges().end()
+		&& r2 != ty2->get_subranges().end());
+	       ++r1, ++r2)
+	    if ((*r1)->get_length() != (*r2)->get_length())
+	      return false;
 	}
 
+      // ... then compare the elements of the arrays.
       if (!types_have_similar_structure(ty1->get_element_type(),
 					ty2->get_element_type(),
 					/*indirect_type=*/true))
