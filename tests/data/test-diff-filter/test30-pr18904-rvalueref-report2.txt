@@ -1199,7 +1199,7 @@ Variable symbols changes summary: 0 Removed, 0 Added variable symbol not referen
             array type size changed from 0x180 to 0x1c0
             array type subrange 1 changed length from 6 to 7
             array subrange changed: 
-              upper bound of '<anonymous range>[7]' change from '0x5' to '0x6'
+              upper bound of '<anonymous range>[6]' change from '0x5' to '0x6'
           and offset changed from 0x128 to 0x278 (in bytes) (by +0x150 bytes)
 
   [C] 'method void OffloadDescriptor::cleanup()' at offload_host.cpp:2294:1 has some indirect sub-type changes:

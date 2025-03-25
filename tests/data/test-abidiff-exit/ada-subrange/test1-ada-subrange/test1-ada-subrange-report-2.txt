@@ -13,7 +13,7 @@ Removed/Changed/Added variables summary: 0 Removed, 0 Changed, 0 Added variable
 
   [C] 'function test1__my_index test1__second_function(void)' at test1.adb:14:1 has some sub-type changes:
     return type changed:
-      upper bound of '<range test1__my_index>[7]' change from '5' to '6'
+      upper bound of '<range test1__my_index>[6]' change from '5' to '6'
 
 '<range test1__my_index>[6]' changed:
-  upper bound of '<range test1__my_index>[7]' change from '5' to '6'
+  upper bound of '<range test1__my_index>[6]' change from '5' to '6'

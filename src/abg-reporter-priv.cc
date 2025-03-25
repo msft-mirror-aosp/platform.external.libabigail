@@ -763,7 +763,7 @@ represent(const subrange_diff&		d,
 
   if (oub != nub)
     {
-      out << indent << "upper bound of '" << nr  << "' change from '";
+      out << indent << "upper bound of '" << oor  << "' change from '";
       emit_num_value(oub, *ctxt, out);
       out << "' to '";
       emit_num_value(nub, *ctxt, out);

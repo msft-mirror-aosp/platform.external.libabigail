@@ -13,12 +13,12 @@ Removed/Changed/Added variables summary: 0 Removed, 0 Changed, 0 Added variable
 
   [C] 'function test__my_index test__second_function(const test__my_index)' at test.adb:12:1 has some sub-type changes:
     return type changed:
-      upper bound of '<range test__my_index>[201]' change from '100' to '200'
+      upper bound of '<range test__my_index>[101]' change from '100' to '200'
     parameter 1 of type 'const test__my_index' changed:
       in unqualified underlying type '<range test__my_index>[101]':
-        upper bound of '<range test__my_index>[201]' change from '100' to '200'
+        upper bound of '<range test__my_index>[101]' change from '100' to '200'
 
 'test__Tmy_indexB' changed:
   type size changed from 8 to 16 (in bits)
 '<range test__my_index>[101]' changed:
-  upper bound of '<range test__my_index>[201]' change from '100' to '200'
+  upper bound of '<range test__my_index>[101]' change from '100' to '200'

@@ -9,9 +9,9 @@ Variables changes summary: 0 Removed, 0 Changed, 0 Added variable
       array type size changed from 96 to 112
       array type subrange 1 changed length from 6 to 7
       array subrange changed: 
-        upper bound of '<anonymous range>[7]' change from '5' to '6'
+        upper bound of '<anonymous range>[6]' change from '5' to '6'
 
   [C] 'function test1__my_index test1__second_function(void)' at test1.adb:14:1 has some indirect sub-type changes:
     return type changed:
-      upper bound of '<range test1__my_index>[7]' change from '5' to '6'
+      upper bound of '<range test1__my_index>[6]' change from '5' to '6'
 
