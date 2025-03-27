@@ -1097,6 +1097,9 @@ public:
   is_suppressed(bool &is_private_type) const;
 
   bool
+  is_categorized_as_suppressed() const;
+
+  bool
   to_be_reported() const;
 
   bool

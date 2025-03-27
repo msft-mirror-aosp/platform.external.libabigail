@@ -2709,6 +2709,20 @@ diff::is_suppressed(bool &is_private_type) const
   return do_suppress;
 }
 
+/// Test if the current diff node has been suppressed by a suppression
+/// specification or it has been categorized as suppressed due to
+/// category propagation.
+///
+/// @return true iff the current diff node has been suppressed by a
+/// suppression specification or it has been categorized as suppressed
+/// due to category propagation.
+bool
+diff::is_categorized_as_suppressed() const
+{
+  return (get_category() & SUPPRESSED_CATEGORY
+	  || get_category()  & PRIVATE_TYPE_CATEGORY);
+}
+
 /// Test if this diff tree node should be reported.
 ///
 /// @return true iff the current node should be reported.
@@ -11077,8 +11091,18 @@ corpus_diff::priv::apply_filters_and_compute_diff_stats(diff_stats& stat)
 	    stat.num_leaf_func_changes_filtered_out
 	      (stat.num_leaf_func_changes_filtered_out() + 1);
 	}
-      else if (!(*i)->is_suppressed())
+
+      // Now let's detect functions with incompatible changes.
+      if (!(*i)->is_categorized_as_suppressed())
 	{
+	  // Note that a filtered-out function diff (because of
+	  // redundancy) can still carry an incompatible change.  In
+	  // that case, the diff will later be removed from the
+	  // account of filtered diff nodes.
+	  //
+	  // Also note that such a filtered-out function was *NOT*
+	  // suppressed by a user-provided suppression specification.
+
 	  if (filtering::has_fn_with_virtual_offset_change(*i))
 	    {
 	      stat.num_func_with_virtual_offset_changes
@@ -11106,6 +11130,19 @@ corpus_diff::priv::apply_filters_and_compute_diff_stats(diff_stats& stat)
 	  incompatible_changed_fns_.push_back(*i);
 	  stat.num_func_with_incompatible_changes
 	    (stat.num_func_with_incompatible_changes() + 1);
+
+	  if ((*i)->is_filtered_out())
+	    {
+	      // If the incompatible change was filtered-out (possibly
+	      // b/c of redundancy) consider it as not being filtered
+	      // out anymore.
+	      stat.num_changed_func_filtered_out
+		(stat.num_changed_func_filtered_out() - 1);
+
+	      if ((*i)->has_local_changes())
+		stat.num_leaf_func_changes_filtered_out
+		  (stat.num_leaf_func_changes_filtered_out() - 1);
+	    }
 	}
     }
 
@@ -11120,8 +11157,9 @@ corpus_diff::priv::apply_filters_and_compute_diff_stats(diff_stats& stat)
       t.start();
     }
 
-  // Walk the changed variables diff nodes to count the number of
-  // filtered-out variables.
+  // Similarly to function diff nodes above, walk the changed
+  // variables diff nodes to count the number of filtered-out,
+  // suppressed and incompatible variable diff nodes.
   for (var_diff_sptrs_type ::const_iterator i = sorted_changed_vars_.begin();
        i != sorted_changed_vars_.end();
        ++i)
@@ -11135,7 +11173,8 @@ corpus_diff::priv::apply_filters_and_compute_diff_stats(diff_stats& stat)
 	    stat.num_leaf_var_changes_filtered_out
 	      (stat.num_leaf_var_changes_filtered_out() + 1);
 	}
-      else if (!(*i)->is_suppressed())
+
+      if (!(*i)->is_categorized_as_suppressed())
 	{
 	  if (filtering::has_var_harmful_local_change(*i))
 	    {
@@ -11144,6 +11183,16 @@ corpus_diff::priv::apply_filters_and_compute_diff_stats(diff_stats& stat)
 		(stat.num_var_with_local_harmful_changes() + 1);
 	      stat.num_var_with_incompatible_changes
 		(stat.num_var_with_incompatible_changes() + 1);
+
+	      if ((*i)->is_filtered_out())
+		{
+		  stat.num_changed_vars_filtered_out
+		    (stat.num_changed_vars_filtered_out() - 1);
+
+		  if ((*i)->has_local_changes())
+		    stat.num_leaf_var_changes_filtered_out
+		      (stat.num_leaf_var_changes_filtered_out() - 1);
+		}
 	    }
 	}
 
