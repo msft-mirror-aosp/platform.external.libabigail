@@ -816,7 +816,7 @@ The remaining bits are not used for the moment.
 Usage examples
 ==============
 
-  1. Detecting a change in a sub-type of a function: ::
+  1. Detecting an ABI change in a sub-type of a function: ::
 
 	$ cat -n test-v0.cc
 		 1	// Compile this with:
@@ -856,7 +856,7 @@ Usage examples
 	$ g++ -g -Wall -shared -o libtest-v0.so test-v0.cc
 	$ g++ -g -Wall -shared -o libtest-v1.so test-v1.cc
 	$ 
-	$ ../build/tools/abidiff libtest-v0.so libtest-v1.so
+	$ abidiff libtest-v0.so libtest-v1.so; echo "exit code: $?"
 	Functions changes summary: 0 Removed, 1 Changed, 0 Added function
 	Variables changes summary: 0 Removed, 0 Changed, 0 Added variable
 
@@ -870,10 +870,81 @@ Usage examples
 		      struct type_base
 		    1 data member change:
 		     'int S0::m0' offset changed from 0 to 32
+        exit code: 4
 	$
 
+Note how the exit code is 4, meaning the third bit ABIDIFF_ABI_CHANGE
+of value 4 is set to 1.  This means the tool categorizes the ABI
+change as :ref:`harmful <harmfulchangeconcept_label>` and thus
+requires a user review.
 
-  2. Detecting another change in a sub-type of a function: ::
+  2. Detecting an incompatible ABI change in the type of a function: ::
+
+	$ cat -n test-v0.cc
+	     1	// Compile this with:
+	     2	//   g++ -g -Wall -shared -o libtest-v0.so test-v0.cc
+	     3	
+	     4	struct S0
+	     5	{
+	     6	  int m0;
+	     7	};
+	     8	
+	     9	S0
+	    10	foo()
+	    11	{
+	    12	  S0 s = {};
+	    13	  return s;
+	    14	}
+	$
+	$ cat -n test-v1.cc
+	     1	// Compile this with:
+	     2	//   g++ -g -Wall -shared -o libtest-v1.so test-v1.cc
+	     3	
+	     4	struct type_base
+	     5	{
+	     6	  int inserted;
+	     7	};
+	     8	
+	     9	struct S0 : public type_base
+	    10	{
+	    11	  int m0;
+	    12	};
+	    13	
+	    14	S0
+	    15	foo()
+	    16	{
+	    17	  S0 s = {};
+	    18	  return s;
+	    19	}
+	$ 
+	$ g++ -g -Wall -shared -o libtest-v0.so test-v0.cc
+	$ g++ -g -Wall -shared -o libtest-v1.so test-v1.cc
+	$
+	$ abidiff libtest-v0.so libtest-v1.so; echo "exit code: $?"
+	Functions changes summary: 0 Removed, 1 Changed, 0 Added function
+	Variables changes summary: 0 Removed, 0 Changed, 0 Added variable
+
+	1 function with incompatible sub-type changes:
+
+	  [C] 'function S0 foo(void)' at test-v0.cc:10:1 has some sub-type changes:
+	    return type changed:
+	      type size changed from 32 to 64 (in bits)
+	      1 base class insertion:
+		struct type_base at test-v1.cc:4:1
+	      1 data member change:
+		'int m0' offset changed from 0 to 32 (in bits) (by +32 bits)
+
+	exit code: 12
+        $ 
+
+Note how the exit code is 12, meaning both the third bit
+ABIDIFF_ABI_CHANGE of value 4 and the fourth bit
+ABIDIFF_ABI_INCOMPATIBLE_CHANGE of value 8 are set to 1.  This means
+the tool categorizes the ABI change as :ref:`incompatible
+<incompatiblechangeconcept_label>`.  It's an ABI break.
+
+
+  3. Detecting another change in a sub-type of a function: ::
 
 	$ cat -n test-v0.cc
 		 1	// Compile this with:
@@ -909,7 +980,7 @@ Usage examples
 	$ g++ -g -Wall -shared -o libtest-v0.so test-v0.cc
 	$ g++ -g -Wall -shared -o libtest-v1.so test-v1.cc
 	$ 
-	$ ../build/tools/abidiff libtest-v0.so libtest-v1.so
+	$ abidiff libtest-v0.so libtest-v1.so; echo "exit code: $?"
 	Functions changes summary: 0 Removed, 1 Changed, 0 Added function
 	Variables changes summary: 0 Removed, 0 Changed, 0 Added variable
 
@@ -924,10 +995,10 @@ Usage examples
 		    1 data member change:
 		     'int S0::m0' offset changed from 0 to 32
 
-
+        exit code: 4
 	$
 
-  3. Detecting that functions got removed or added to a library: ::
+  4. Detecting that functions got removed or added to a library: ::
 
 	$ cat -n test-v0.cc
 		 1	// Compile this with:
@@ -963,7 +1034,7 @@ Usage examples
 	$ g++ -g -Wall -shared -o libtest-v0.so test-v0.cc
 	$ g++ -g -Wall -shared -o libtest-v1.so test-v1.cc
 	$ 
-	$ ../build/tools/abidiff libtest-v0.so libtest-v1.so
+	$ abidiff libtest-v0.so libtest-v1.so; echo "exit code: $?"
 	Functions changes summary: 1 Removed, 0 Changed, 1 Added functions
 	Variables changes summary: 0 Removed, 0 Changed, 0 Added variable
 
@@ -973,9 +1044,10 @@ Usage examples
 	1 Added function:
 	  'function void bar(S0&)'    {_Z3barR2S0}
 
+        exit code: 12
 	$
 
-  4. Comparing two sets of binaries that are passed on the command line: ::
+  5. Comparing two sets of binaries that are passed on the command line: ::
 
            $ abidiff --add-binaries1=file2-v1              \
                      --add-binaries2=file2-v2,file2-v1     \
@@ -987,7 +1059,7 @@ Usage examples
      found in ``dir1`` and ``dir2`` or in the current directory.
 
 
-  5. Compare two libraries and their dependencies: ::
+  6. Compare two libraries and their dependencies: ::
 
            $ abidiff --follow-dependencies			\
 	             --added-binaries-dir1 /some/where		\

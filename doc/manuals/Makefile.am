@@ -12,6 +12,9 @@ abilint.rst \
 conf.py \
 index.rst \
 libabigail-concepts.rst \
+abi-artifacts.rst \
+abi-changes.rst \
+suppression-specifications.rst \
 libabigail-overview.rst \
 libabigail-tools.rst \
 fedabipkgdiff.rst \
