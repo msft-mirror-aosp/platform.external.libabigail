@@ -1548,6 +1548,36 @@ InOutSpec in_out_specs[] =
     "data/test-abidiff-exit/test-changed-var-1-report-1.txt",
     "output/test-abidiff-exit/test-changed-var-1-report-1.txt"
   },
+  {
+    "data/test-abidiff-exit/PR28505-test-v0.o",
+    "data/test-abidiff-exit/PR28505-test-v1.o",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "--no-default-suppression",
+    abigail::tools_utils::ABIDIFF_OK,
+    "data/test-abidiff-exit/PR28505-test-report.txt",
+    "output/test-abidiff-exit/PR28505-test-report.txt"
+  },
+  {
+    "data/test-abidiff-exit/PR28505-test-v0.o",
+    "data/test-abidiff-exit/PR28505-test-v1.o",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "--no-default-suppression --harmless",
+    abigail::tools_utils::ABIDIFF_ABI_CHANGE,
+    "data/test-abidiff-exit/PR28505-test-report-2.txt",
+    "output/test-abidiff-exit/PR28505-test-report-2.txt"
+  },
 #ifdef WITH_BTF
   {
     "data/test-abidiff-exit/btf/test0-v0.o",

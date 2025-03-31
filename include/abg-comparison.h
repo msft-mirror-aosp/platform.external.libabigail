@@ -2961,6 +2961,9 @@ print_diff_tree(corpus_diff_sptr diff_tree,
 		std::ostream&);
 
 void
+print_category(diff_category c);
+
+void
 categorize_redundancy(diff* diff_tree);
 
 void

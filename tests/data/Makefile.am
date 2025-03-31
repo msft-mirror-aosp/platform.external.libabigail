@@ -491,6 +491,12 @@ test-abidiff-exit/test-changed-var-1-v0.cc \
 test-abidiff-exit/test-changed-var-1-v0.o \
 test-abidiff-exit/test-changed-var-1-v1.cc \
 test-abidiff-exit/test-changed-var-1-v1.o \
+test-abidiff-exit/PR28505-test-report.txt \
+test-abidiff-exit/PR28505-test-report-2.txt \
+test-abidiff-exit/PR28505-test-v0.c \
+test-abidiff-exit/PR28505-test-v0.o \
+test-abidiff-exit/PR28505-test-v1.c \
+test-abidiff-exit/PR28505-test-v1.o \
 \
 test-diff-dwarf/test0-v0.cc		\
 test-diff-dwarf/test0-v0.o			\

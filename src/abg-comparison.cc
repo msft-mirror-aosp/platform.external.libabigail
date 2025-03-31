@@ -12963,6 +12963,21 @@ struct category_propagation_visitor : public diff_node_visitor
 	c &= (~NON_COMPATIBLE_NAME_CHANGE_CATEGORY
 	      & ~NON_COMPATIBLE_DISTINCT_CHANGE_CATEGORY);
 	d->set_category(c);
+	if (is_pointer_diff(d) || is_reference_diff(d))
+	  {
+	    // For pointers and references, changes to
+	    // pointed-to-types are considered local.  So, if some
+	    // pointed-to-types have non-compatible name or distinct
+	    // change, then the local category of the
+	    // pointer/reference will reflect that.  Let's thus clear
+	    // those NON_COMPATIBLE_DISTINCT_CHANGE_CATEGORY and
+	    // NON_COMPATIBLE_NAME_CHANGE_CATEGORY bits from the local
+	    // category as well.
+	    c = d->get_local_category();
+	    c &= (~NON_COMPATIBLE_NAME_CHANGE_CATEGORY
+		  & ~NON_COMPATIBLE_DISTINCT_CHANGE_CATEGORY);
+	    d->set_local_category(c);
+	  }
       }
 
     if (filtering::has_benign_array_of_unknown_size_change(d))
@@ -13532,6 +13547,15 @@ void
 print_diff_tree(corpus_diff_sptr diff_tree,
 		std::ostream& o)
 {print_diff_tree(diff_tree.get(), o);}
+
+/// Print a given category out to stdout for debuging purposes
+///
+/// @param c the category to print to stdout.
+void
+print_category(diff_category c)
+{
+  std::cout << c << std::endl;
+}
 
 // <redundancy_marking_visitor>
 
