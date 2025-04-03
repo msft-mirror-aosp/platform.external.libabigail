@@ -174,9 +174,14 @@
 #########################################
 [suppress_function]
   # Suppress ABI change reports about functions starting with the name
-  # krb5int_* in libraries named libkrb5<something>.so
-  soname_regexp = libkrb5.*\\.so.*
-  name_regexp = ^krb5int_.*
+  # krb5int_*, or k5_ in various libraries of the krb5-libs package
+  # because they are private functions.  Note that deleted functions
+  # are also suppressed.
+  soname_regexp = lib(krb5|k5crypto|gssrpc|kdb5|krb5support|gssapi_krb5).*\\.so.*
+  change_kind = all
+  name_regexp = (^krb5int|^k5)_.*
+  symbol_name_regexp = (^krb5int|^k5)_.*
+
 ##########################################
 # End of krb5 suppression specifications
 #########################################
