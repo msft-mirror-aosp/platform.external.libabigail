@@ -1442,20 +1442,25 @@ emit_alt_debug_info_not_found_error(abigail::elf_based_reader&	reader,
 				    ostream&			out,
 				    bool			is_old_package)
 {
-  ABG_ASSERT(is_old_package
-	     ? !opts.debug_packages1.empty()
-	     : !opts.debug_packages2.empty());
+  string fname;
+  tools_utils::base_name(elf_file.path, fname);
 
-  string filename;
-  tools_utils::base_name(elf_file.path, filename);
+  const vector<string>& debug_pkgs_list =
+    is_old_package
+    ? opts.debug_packages1
+    : opts.debug_packages2;
+
+  if (debug_pkgs_list.empty())
+    emit_prefix("abipkgdiff", out)
+      << "Could not find alternate debug info found for file '" << fname << "'"
+      << "Maybe look into properly setting up debuginfod service "
+      << "to fetch debug info?\n";
+
   emit_prefix("abipkgdiff", out)
-    << "While reading elf file '"
-    << filename
-    << "', could not find alternate debug info in provided "
-    "debug info package(s) "
-    << get_pretty_printed_list_of_packages(is_old_package
-					   ? opts.debug_packages1
-					   : opts.debug_packages2)
+    << "While reading elf file '" << fname << "'"
+    << ", could not find alternate debug info in provided "
+    << "debug info package(s) "
+    << get_pretty_printed_list_of_packages(debug_pkgs_list)
     << "\n";
 
   string alt_di_path;
