@@ -1851,3 +1851,7 @@ The suppression specification could be reduced using
 	      'int S3::m0' offset changed from 0 to 32
 
   $
+
+
+.. _Ini File Syntax: http://en.wikipedia.org/wiki/INI_file
+.. _GNU C Library: http://www.gnu.org/software/libc

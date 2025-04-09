@@ -27,3 +27,5 @@ union of the return type and parameter types of the function.
 
 Functions and variables are declarations that have a name and a type.
 They are both associated with an `ELF`_ symbol.
+
+.. _ELF: http://en.wikipedia.org/wiki/Executable_and_Linkable_Format
