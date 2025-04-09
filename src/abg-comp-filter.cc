@@ -333,7 +333,7 @@ has_offset_changes(const string_decl_base_sptr_map& f_data_members,
 
 /// Test if the local changes of a @ref class_diff are harmless.
 ///
-/// Potentially harmful changes are basically:
+/// Harmful changes are basically:
 ///   1/ name change (that changes the type altogether)
 ///   2/ size change
 ///   3/ offset change of any data member
@@ -373,7 +373,7 @@ class_diff_has_only_harmless_changes(const class_diff* d)
 
 /// Test if the local changes of a @ref class_diff are harmless.
 ///
-/// Potentially harmful changes are basically:
+/// Harmful changes are basically:
 ///   1/ name change (that changes the type altogether)
 ///   2/ size change
 ///   3/ offset change of any data member
@@ -2131,9 +2131,9 @@ has_var_harmful_local_change(const diff_sptr& d)
 
 /// Test if a diff node carries an incompatible ABI change.
 ///
-/// An incompatible ABI change is a potentially harmful ABI change
-/// (i.e, one that cannot be filtered out) that definitely makes the
-/// new ABI incompatible with the previous one.
+/// An incompatible ABI change is a harmful ABI change (i.e, one that
+/// cannot be filtered out) that definitely makes the new ABI
+/// incompatible with the previous one.
 ///
 /// @param d the diff node to consider.
 ///
@@ -2148,9 +2148,9 @@ has_incompatible_fn_or_var_change(const diff* d)
 
 /// Test if a diff node carries an incompatible ABI change.
 ///
-/// An incompatible ABI change is a potentially harmful ABI change
-/// (i.e, one that cannot be filtered out) that definitely makes the
-/// new ABI incompatible with the previous one.
+/// An incompatible ABI change is a harmful ABI change (i.e, one that
+/// cannot be filtered out) that definitely makes the new ABI
+/// incompatible with the previous one.
 ///
 /// @param d the diff node to consider.
 ///
