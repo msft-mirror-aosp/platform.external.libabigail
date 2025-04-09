@@ -8932,11 +8932,17 @@ get_internal_real_type_name(const type_base* t)
 interned_string
 get_type_name(const type_base* t, bool qualified, bool internal)
 {
+  interned_string empty_string;
+
+  if (!t)
+    return empty_string;
+
   const decl_base* d = dynamic_cast<const decl_base*>(t);
   if (!d)
     {
       const function_type* fn_type = is_function_type(t);
-      ABG_ASSERT(fn_type);
+      if (!fn_type)
+	return empty_string;
       return fn_type->get_cached_name(internal);
     }
 
