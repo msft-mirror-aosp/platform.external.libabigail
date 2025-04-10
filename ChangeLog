@@ -1,3 +1,1108 @@
+2025-04-10  Dodji Seketeli <dodji@redhat.com>
+
+	ChangeLog: Update for 2.7 release
+	* ChangeLog: Update automatically by running "make
+	update-changelog".
+
+2025-04-10  Dodji Seketeli <dodji@redhat.com>
+
+	configure: Bump libabigail_so_current to 6
+	* configure.ac: Bump libabigail_so_current version number to 6.
+
+2025-04-09  Dodji Seketeli <dodji@redhat.com>
+
+	Bug 32794 - ir: avoid asserting in get_type_name
+	* src/abg-ir.cc (get_type_name): Be prepared for a type with nullptr
+	value and for types with no declaration.
+
+2025-04-09  Dodji Seketeli <dodji@redhat.com>
+
+	manuals: Fix broken links
+	* doc/manuals/abi-artifacts.rst: Add forgotten link definition
+	for `ELF`_.
+	* doc/manuals/libabigail-concepts.rst: Remove unused link
+	definitions for `ELF_`, `Ini File Syntax`_ and `GNU C Library`_.
+	* doc/manuals/suppression-specifications.rst: Add forgotten link
+	definition for `Ini File Syntax`_, `GNU C Library`_.
+
+2025-04-09  Dodji Seketeli <dodji@redhat.com>
+
+	abg-comp-filter: Fix some documentation thinko
+	* src/abg-comp-filter.cc (class_diff_has_only_harmless_changes)
+	(has_var_harmful_local_change, has_incompatible_fn_or_var_change):
+	Fix thinkos.
+
+2025-04-09  Dodji Seketeli <dodji@redhat.com>
+
+	abg-comp-filter: Fix declaration of has_harmful_name_change
+	* include/abg-comp-filter.h (has_harmful_name_change): Add the
+	missing diff_context_sptr& parameter.
+
+2025-03-31  Dodji Seketeli <dodji@redhat.com>
+
+	libabigail-concepts: Document the incompatible changes concept
+	* doc/manuals/abi-artifacts.rst: New file.  Move the ABI artifacts
+	section in here.
+	* doc/manuals/abi-changes.rst: New file.  Introduce the concept of
+	ABI change.  Polish and move the section about harmless and
+	harmful changes here.  Introduce a section about incompatible
+	changes.
+	* doc/manuals/suppression-specifications.rst: New file.  Move the
+	content about suppression specifications in here.
+	* doc/manuals/Makefile.am: Add the new files above to source
+	distribution.
+	* doc/manuals/libabigail-concepts.rst: This file now only contains
+	a table of content linking to the three new files introduced
+	above.
+	* doc/manuals/abidiff.rst: Amend the documentation to include
+	examples showing incompatible changes being reported by abidiff.
+	* doc/manuals/index.rst: Change the depth of the table of content
+	to 3.
+	Thanks-to: Sam James <sam@gentoo.org>
+
+2025-04-07  Dodji Seketeli <dodji@redhat.com>
+
+	abidiff.rst: Sort option documentation bullets in lexicographic order
+	* doc/manuals/abidiff.rst: Sort option documentation bullets in
+	lexicographic order.
+
+2025-04-07  Dodji Seketeli <dodji@redhat.com>
+
+	manuals/conf.py: Update copyright years in the manuals
+	* doc/manuals/conf.py: Update copyright years.
+
+2025-04-04  Dodji Seketeli <dodji@redhat.com>
+
+	rhbz2355363 - abipkgdiff: Don't abort when alternate debug info is not found
+	* tools/abipkgdiff.cc (emit_alt_debug_info_not_found_error): Avoid
+	asserting here.
+
+2025-04-03  Dodji Seketeli <dodji@redhat.com>
+
+	default.abignore: Improve default suppression for krb5 libraries
+	* default.abignore: Recognize more SONAMEs for the different krb5
+	shared libraries, namely libk5crypto.so, libgssrpc.so, libkdb5.so,
+	libkrb5support.so and libgssapi_krb5.so. Suppress all function
+	changes to libraries with these sonames.  Suppress functions (and
+	their symbols) starting with names k5_, in addition to krb5int_.
+
+2025-04-01  Dodji Seketeli <dodji@redhat.com>
+
+	big-test: Update to e772c1e67aba14141dd16735ecdf19368b0cb29e
+	* include/abg-comparison.h (diff::is_categorized_as_suppressed):
+	Declare ...
+	* src/abg-comparison.cc (diff::is_categorized_as_suppressed):
+	... new member function.
+	(corpus_diff::priv::apply_filters_and_compute_diff_stats): Use the
+	new diff::is_categorized_as_suppressed.  Look for incompatible fns
+	and vars changes among filtered-out (and non-suppressed) diff
+	nodes.
+	* tests/data/test-abidiff-exit/test1-voffset-change-report0.txt:
+	Adjust.
+
+2025-03-31  Dodji Seketeli <dodji@redhat.com>
+
+	Bug 28505 - Fix a case of pointer to void* change filtering
+	* include/abg-comparison.h (print_category): Declare ...
+	* src/abg-comparison.cc (print_category): ... new debugging
+	function.
+	(category_propagation_visitor::visit_end): Clear
+	NON_COMPATIBLE_DISTINCT_CHANGE_CATEGORY
+	NON_COMPATIBLE_NAME_CHANGE_CATEGORY from the local category of
+	pointer/reference diff nodes when propagating those categorizing
+	bits from the underlying diff nodes of pointer/reference diff
+	nodes.
+	* tests/data/test-abidiff-exit/PR28505-test-report.txt: New test
+	reference output file.
+	* tests/data/test-abidiff-exit/PR28505-test-report-2.txt:
+	Likewise.
+	* tests/data/test-abidiff-exit/PR28505-test-v{0,1}.{c,o}: Source
+	code and binary test input files.
+	* tests/data/Makefile.am: Add the new test material above to
+	source distribution.
+	* tests/test-abidiff-exit.cc (in_out_specs): Add the new input
+	tests to this test harness.
+
+2025-03-27  Dodji Seketeli <dodji@redhat.com>
+
+	Bug 31642 - Don't forget filtered-out incompatible fns and var changes
+	* include/abg-comparison.h (diff::is_categorized_as_suppressed):
+	Declare ...
+	* src/abg-comparison.cc (diff::is_categorized_as_suppressed):
+	... new member function.
+	(corpus_diff::priv::apply_filters_and_compute_diff_stats): Use the
+	new diff::is_categorized_as_suppressed.  Look for incompatible fns
+	and vars changes among filtered-out (and non-suppressed) diff
+	nodes.
+	* tests/data/test-abidiff-exit/test1-voffset-change-report0.txt:
+	Adjust.
+
+2025-03-24  Dodji Seketeli <dodji@redhat.com>
+
+	Bug 31642 - Categorize incompatible changes on functions and variables
+	* include/abg-comp-filter.h (has_void_to_non_void_change)
+	(has_fn_return_or_parm_harmful_change)
+	(has_var_harmful_local_change, has_fn_with_virtual_offset_change)
+	(has_incompatible_fn_or_var_change): Declared new functions.
+	* include/abg-comparison.h (is_harmful_category): Declare new
+	function.
+	(corpus_diff::{changed_functions, changed_function_sorted}):
+	Consitify declarations.
+	(corpus_diff::{incompatible_changed_functions,
+	incompatible_changed_variables}): Declare new member functions.
+	(corpus_diff::diff_stats::{num_func_with_local_harmful_changes,
+	num_func_with_incompatible_changes, void
+	num_var_with_local_harmful_changes, void
+	num_var_with_incompatible_changes,
+	net_num_non_incompatible_var_changed}): Declare new accessors.
+	* include/abg-ir.h (change_kind::LOCAL_TYPE_CHANGE_KIND): Fix the
+	value of this enumerator.
+	(change_kind::{LOCAL_NON_TYPE_CHANGE,SUBTYPE_CHANGE_KIND}_KIND):
+	Adjust values of these enumerator as a consequence.
+	* src/abg-comp-filter.cc
+	(has_harmful_change, has_harmful_enum_change)
+	(has_harmless_enum_change, is_void_to_non_void): Define new static
+	functions.
+	(is_1_dim_unknown_size_array_change): Factorize this function out
+	of ...
+	(is_var_1_dim_unknown_size_array_change): ... this.
+	(has_fn_parm_type_cv_qual_change): Adjust to the use of
+	type_diff_has_typedef_cv_qual_change_only.
+	(has_added_or_removed_function_parameters): Fix indentation.
+	(has_fn_return_or_parm_harmful_change)
+	(has_fn_with_virtual_offset_change, has_var_harmful_local_change)
+	(has_var_harmful_local_change, has_incompatible_fn_or_var_change)
+	(has_void_to_non_void_change): Define new functions.
+	(categorize_harmful_diff_node): Improve documentation.  Use the
+	new has_harmful_change which is a factorization of this function.
+	* src/abg-comparison-priv.h (is_less_than): Declare new function
+	that takes a pair of decl_diff_base.  Remove the previous one that was
+	taking a pair of function_decl_diff.
+	(corpus_diff::priv::{incompatible_changed_fns_,
+	incompatible_changed_vars_}): Define new member variables.
+	(var_diff_sptr_comp::operator()): Adjust, make this use
+	is_less_than.
+	(corpus_diff::diff_stats::priv::{num_func_with_local_harmful_changes,
+	num_func_with_incompatible_changes,
+	num_var_with_local_harmful_changes,
+	num_var_with_incompatible_changes}): Define new member variables.
+	(corpus_diff::diff_stats::priv::priv): Initialize these new
+	member variables.
+	(sort_function_decl_diffs, sort_var_diffs): Declare new functions.
+	* src/abg-comparison.cc (get_symbol): Define new static function.
+	(is_less_than): Take decl_diff_base instead of function_decl_diff.
+	Adjust to use the new get_symbol function.  Update comments.  Add
+	a new overload.
+	(sort_function_decl_diffs, sort_var_diffs, is_harmful_category):
+	Define new functions.
+	(corpus_diff::diff_stats::{num_func_with_local_harmful_changes,
+	num_var_with_local_harmful_changes,
+	num_func_with_incompatible_changes,
+	num_var_with_incompatible_changes,
+	net_num_non_incompatible_func_changed,
+	net_num_non_incompatible_var_changed}): Define new member
+	functions.
+	(corpus_diff::{changed_functions, changed_functions_sorted}):
+	Constify this member function.
+	(corpus_diff::{incompatible_changed_functions,
+	incompatible_changed_variables}): Likewise.
+	(corpus_diff::priv::apply_filters_and_compute_diff_stats): Count
+	function diff node carrying virtual member changes and return or
+	parameter types harmful changes as functions with incompatible
+	changes.  Likewise, count variable diff node carrying local
+	harmful changes as variables with incompatible changes.
+	(corpus_diff::has_incompatible_changes): Take into account
+	functions with virtual offset changes or with local harmful
+	changes, as well as variables with incompatible changes.
+	(redundancy_marking_visitor::visit_end): If the diff node has
+	local /harmful/ changes then it won't inherit redundancy from its
+	children nodes.
+	* src/abg-default-reporter.cc (emit_changed_fn_report)
+	(emit_changed_var_report): Define new static functions.
+	(default_reporter::report): In the overload for enum_diff, support
+	emitting a report about changed enumerator name.  In the overload
+	for corpus_diff, emit a new section for incompatible changes to
+	functions and variables.  Use the new emit_changed_fn_report and
+	emit_changed_var_report which have been factorized out of this
+	function anyway.
+	* src/abg-ir.cc (textually_equals): Add a change_kind* parameter
+	to tell the kind of change there are between two ELF symbols if
+	they are different.
+	(var_equals_modulo_types): Adjust to use textually_equals for a
+	more fined grained change_kind when it comes to ELF symbol
+	changes.
+	(decl_name_changed, integral_type_has_harmless_name_change):
+	Define new functions.
+	* src/abg-leaf-reporter.cc (emit_changed_var_report): Define new
+	static function.
+	(leaf_reporter::report): In the overload for corpus_diff, use the
+	new emit_changed_var_report as it's was factorized from there.
+	* src/abg-reporter-priv.cc (represent): In the overload for
+	var_diff, adjust the call to filtering::has_harmless_name_change.
+	(report_name_size_and_alignment_changes): Likewise.
+	* tests/data/test-abidiff-exit/incompatible-changes/1/report0.txt:
+	New test input.
+	* tests/data/test-abidiff-exit/incompatible-changes/1/test-1-v{0,1}.{cc,o}:
+	Likewise.
+	* tests/data/test-abidiff-exit/test-changed-var-1-report-1.txt:
+	Likewise.
+	* tests/data/test-abidiff-exit/test-changed-var-1-v{0,1}.cc:
+	Likewise.
+	* tests/data/test-abidiff-exit/test-changed-var-1-v{0,1}.o:
+	Likewise.
+	* tests/data/test-abidiff-exit/test-enumerator-changes{2,3,4,5,6}-report-{1,2}.txt:
+	Likewise.
+	* tests/data/test-abidiff-exit/test-enumerator-changes{2,3,4,5,6}-v{0,1}.cc:
+	Likewise.
+	* tests/data/test-abidiff-exit/test-enumerator-changes{2,3,4,5,6}-v{0,1}.o:
+	Likewise.
+	* tests/data/Makefile.am: Add the new test material above to
+	source distribution.
+	* tests/data/test-abicompat/test7-fn-changed-report-0.1.txt:
+	Adjust.
+	* tests/data/test-abicompat/test7-fn-changed-report-0.txt:
+	Likewise.
+	* tests/data/test-abidiff-exit/PR30048-test-2-report-1.txt:
+	Likewise.
+	* tests/data/test-abidiff-exit/PR30048-test-report-0.txt:
+	Likewise.
+	* tests/data/test-abidiff-exit/PR31513/reported/PR31513-reported-report-1.txt:
+	Likewise.
+	* tests/data/test-abidiff-exit/ada-subrange/test1-ada-subrange/test1-ada-subrange-report-1.txt:
+	Likewise.
+	* tests/data/test-abidiff-exit/ada-subrange/test2-ada-subrange-redundant/test2-ada-subrange-redundant-report-1.txt:
+	Likewise.
+	* tests/data/test-abidiff-exit/btf/test0-report-1.txt: Likewise.
+	* tests/data/test-abidiff-exit/btf/test0-report-2.txt: Likewise.
+	* tests/data/test-abidiff-exit/pointer-to-member/test-ptr-to-mbr1-output-1.txt:
+	Likewise.
+	* tests/data/test-abidiff-exit/pointer-to-member/test-ptr-to-mbr2-output-1.txt:
+	Likewise.
+	* tests/data/test-abidiff-exit/pointer-to-member/test-ptr-to-mbr3-output-1.txt:
+	Likewise.
+	* tests/data/test-abidiff-exit/pointer-to-member/test-ptr-to-mbr4-output-1.txt:
+	Likewise.
+	* tests/data/test-abidiff-exit/test-crc-report.txt: Likewise.
+	* tests/data/test-abidiff-exit/test-ld-2.28-210.so--ld-2.28-211.so.txt:
+	Likewise.
+	* tests/data/test-abidiff-exit/test-leaf-more-report.txt:
+	Likewise.
+	* tests/data/test-abidiff-exit/test-leaf-stats-report.txt:
+	Likewise.
+	* tests/data/test-abidiff-exit/test-net-change-report0.txt:
+	Likewise.
+	* tests/data/test-abidiff-exit/test-net-change-report2.txt:
+	Likewise.
+	* tests/data/test-abidiff-exit/test1-voffset-change-report0.txt:
+	Likewise.
+	* tests/data/test-abidiff/test-crc-report-0-1.txt: Likewise.
+	* tests/data/test-abidiff/test-crc-report-1-0.txt: Likewise.
+	* tests/data/test-abidiff/test-crc-report-1-2.txt: Likewise.
+	* tests/data/test-abidiff/test-namespace-report.txt: Likewise.
+	* tests/data/test-annotate/libtest23.so.abi: Likewise.
+	* tests/data/test-annotate/libtest24-drop-fns-2.so.abi: Likewise.
+	* tests/data/test-annotate/libtest24-drop-fns.so.abi: Likewise.
+	* tests/data/test-annotate/test15-pr18892.so.abi: Likewise.
+	* tests/data/test-annotate/test17-pr19027.so.abi: Likewise.
+	* tests/data/test-annotate/test18-pr19037-libvtkRenderingLIC-6.1.so.abi:
+	Likewise.
+	* tests/data/test-annotate/test19-pr19023-libtcmalloc_and_profiler.so.abi:
+	Likewise.
+	* tests/data/test-annotate/test20-pr19025-libvtkParallelCore-6.1.so.abi:
+	Likewise.
+	* tests/data/test-annotate/test21-pr19092.so.abi: Likewise.
+	* tests/data/test-diff-dwarf/test20-add-fn-parm-report-0.txt:
+	Likewise.
+	* tests/data/test-diff-dwarf/test24-added-fn-parms-report-0.txt:
+	Likewise.
+	* tests/data/test-diff-dwarf/test25-removed-fn-parms-report-0.txt:
+	Likewise.
+	* tests/data/test-diff-dwarf/test26-added-parms-before-variadic-report.txt:
+	Likewise.
+	* tests/data/test-diff-dwarf/test28-vtable-changes-report-0.txt:
+	Likewise.
+	* tests/data/test-diff-dwarf/test30-vtable-changes-report-0.txt:
+	Likewise.
+	* tests/data/test-diff-dwarf/test31-vtable-changes-report-0.txt:
+	Likewise.
+	* tests/data/test-diff-dwarf/test32-fnptr-changes-report-0.txt:
+	Likewise.
+	* tests/data/test-diff-dwarf/test33-fnref-changes-report-0.txt:
+	Likewise.
+	* tests/data/test-diff-dwarf/test35-pr19173-libfoo-long-clang-report-0.txt:
+	Likewise.
+	* tests/data/test-diff-dwarf/test35-pr19173-libfoo-long-gcc-report-0.txt:
+	Likewise.
+	* tests/data/test-diff-dwarf/test42-PR21296-clanggcc-report0.txt:
+	Likewise.
+	* tests/data/test-diff-dwarf/test46-rust-report-0.txt: Likewise.
+	* tests/data/test-diff-dwarf/test9-report.txt: Likewise.
+	* tests/data/test-diff-filter/libtest45-basic-type-change-report-0.txt:
+	Likewise.
+	* tests/data/test-diff-filter/test-PR27569-report-0.txt: Likewise.
+	* tests/data/test-diff-filter/test-PR28013-fn-variadic.c.report.txt:
+	Likewise.
+	* tests/data/test-diff-filter/test15-0-report.txt: Likewise.
+	* tests/data/test-diff-filter/test30-pr18904-rvalueref-report0.txt:
+	Likewise.
+	* tests/data/test-diff-filter/test30-pr18904-rvalueref-report1.txt:
+	Likewise.
+	* tests/data/test-diff-filter/test30-pr18904-rvalueref-report2.txt:
+	Likewise.
+	* tests/data/test-diff-filter/test35-pr18754-no-added-syms-report-0.txt:
+	Likewise.
+	* tests/data/test-diff-filter/test35-pr18754-no-added-syms-report-1.txt:
+	Likewise.
+	* tests/data/test-diff-filter/test41-report-0.txt: Likewise.
+	* tests/data/test-diff-filter/test5-2-report.txt: Likewise.
+	* tests/data/test-diff-filter/test6-report.txt: Likewise.
+	* tests/data/test-diff-filter/test7-report.txt: Likewise.
+	* tests/data/test-diff-pkg/libcdio-0.94-1.fc26.x86_64--libcdio-0.94-2.fc26.x86_64-report.1.txt:
+	Likewise.
+	* tests/data/test-diff-pkg/nss-3.23.0-1.0.fc23.x86_64-report-0.txt:
+	Likewise.
+	* tests/data/test-diff-pkg/tbb-4.1-9.20130314.fc22.x86_64--tbb-4.3-3.20141204.fc23.x86_64-report-0.txt:
+	Likewise.
+	* tests/data/test-diff-pkg/tbb-4.1-9.20130314.fc22.x86_64--tbb-4.3-3.20141204.fc23.x86_64-report-1.txt:
+	Likewise.
+	* tests/data/test-diff-suppr/PR31646/test-PR31646-result-1.txt:
+	Likewise.
+	* tests/data/test-diff-suppr/PR31646/test-PR31646-result-3.txt:
+	Likewise.
+	* tests/data/test-diff-suppr/test-has-data-member-inserted-between-1-report-2.txt:
+	Likewise.
+	* tests/data/test-diff-suppr/test-has-data-member-inserted-between-1-report-3.txt:
+	Likewise.
+	* tests/data/test-diff-suppr/test-has-data-member-inserted-between-1-report-4.txt:
+	Likewise.
+	* tests/data/test-diff-suppr/test-has-strict-flexible-array-data-member-conversion-report-1.txt:
+	Likewise.
+	* tests/data/test-diff-suppr/test-has-strict-flexible-array-data-member-conversion-report-2.txt:
+	Likewise.
+	* tests/data/test-diff-suppr/test10-changed-parm-c-report-0.txt:
+	Likewise.
+	* tests/data/test-diff-suppr/test30-report-0.txt: Likewise.
+	* tests/data/test-read-dwarf/PR22015-libboost_iostreams.so.abi:
+	Likewise.
+	* tests/data/test-read-dwarf/PR22122-libftdc.so.abi: Likewise.
+	* tests/data/test-read-dwarf/libtest23.so.abi: Likewise.
+	* tests/data/test-read-dwarf/libtest24-drop-fns-2.so.abi:
+	Likewise.
+	* tests/data/test-read-dwarf/libtest24-drop-fns.so.abi: Likewise.
+	* tests/data/test-read-dwarf/test-libandroid.so.abi: Likewise.
+	* tests/data/test-read-dwarf/test10-pr18818-gcc.so.abi: Likewise.
+	* tests/data/test-read-dwarf/test11-pr18828.so.abi: Likewise.
+	* tests/data/test-read-dwarf/test12-pr18844.so.abi: Likewise.
+	* tests/data/test-read-dwarf/test15-pr18892.so.abi: Likewise.
+	* tests/data/test-read-dwarf/test16-pr18904.so.abi: Likewise.
+	* tests/data/test-read-dwarf/test17-pr19027.so.abi: Likewise.
+	* tests/data/test-read-dwarf/test18-pr19037-libvtkRenderingLIC-6.1.so.abi:
+	Likewise.
+	* tests/data/test-read-dwarf/test19-pr19023-libtcmalloc_and_profiler.so.abi:
+	Likewise.
+	* tests/data/test-read-dwarf/test20-pr19025-libvtkParallelCore-6.1.so.abi:
+	Likewise.
+	* tests/data/test-read-dwarf/test21-pr19092.so.abi: Likewise.
+	* tests/data/test-read-dwarf/test22-pr19097-libstdc++.so.6.0.17.so.abi:
+	Likewise.
+	* tests/data/test-read-dwarf/test9-pr18818-clang.so.abi: Likewise.
+	* tests/test-abicompat.cc: Likewise.
+	* tests/test-abidiff-exit.cc: Likewise.
+	* tests/data/test-diff-suppr/test-has-strict-flexible-array-data-member-conversion-v{0,1}.o:
+	Recompile these using gcc -g -c.
+
+2025-03-19  Dodji Seketeli <dodji@redhat.com>
+
+	Bug 21296 - Normalize declaration names read from DWARF
+	* include/abg-tools-utils.h (remove_white_spaces)
+	(normalize_litterals): Declare new functions.
+	* src/abg-tools-utils.cc (remove_white_spaces)
+	(normalize_litterals): Define new functions.
+	(get_litteral_regex): Define new static function.
+	* src/abg-dwarf-reader.cc (cleanup_decl_name): Define new static
+	function.
+	(add_or_update_class_type, add_or_update_union_type)
+	(build_function_decl): Use the new cleanup_decl_name.
+	* tests/data/test-abidiff-exit/PR31513/reported/PR31513-reported-report-1.txt:
+	Adjust.
+	* tests/data/test-annotate/libtest23.so.abi: Adjust.
+	* tests/data/test-annotate/libtest24-drop-fns-2.so.abi: Adjust.
+	* tests/data/test-annotate/libtest24-drop-fns.so.abi: Adjust.
+	* tests/data/test-annotate/test15-pr18892.so.abi: Adjust.
+	* tests/data/test-annotate/test17-pr19027.so.abi: Adjust.
+	* tests/data/test-annotate/test18-pr19037-libvtkRenderingLIC-6.1.so.abi:
+	Adjust.
+	* tests/data/test-annotate/test19-pr19023-libtcmalloc_and_profiler.so.abi:
+	Adjust.
+	* tests/data/test-annotate/test20-pr19025-libvtkParallelCore-6.1.so.abi:
+	Adjust.
+	* tests/data/test-annotate/test21-pr19092.so.abi: Adjust.
+	* tests/data/test-diff-dwarf-abixml/test0-pr19026-libvtkIOSQL-6.1.so.1.abi:
+	Adjust.
+	* tests/data/test-diff-dwarf/test42-PR21296-clanggcc-report0.txt:
+	Adjust.
+	* tests/data/test-diff-filter/test30-pr18904-rvalueref-report0.txt:
+	Adjust.
+	* tests/data/test-diff-filter/test30-pr18904-rvalueref-report1.txt:
+	Adjust.
+	* tests/data/test-diff-filter/test30-pr18904-rvalueref-report2.txt:
+	Adjust.
+	* tests/data/test-diff-filter/test35-pr18754-no-added-syms-report-0.txt:
+	Adjust.
+	* tests/data/test-diff-filter/test35-pr18754-no-added-syms-report-1.txt:
+	Adjust.
+	* tests/data/test-diff-filter/test41-report-0.txt: Adjust.
+	* tests/data/test-diff-pkg/libsigc++-2.0-0c2a_2.4.0-1_amd64--libsigc++-2.0-0v5_2.4.1-1ubuntu2_amd64-report-0.txt:
+	Adjust.
+	* tests/data/test-diff-pkg/libcdio-0.94-1.fc26.x86_64--libcdio-0.94-2.fc26.x86_64-report.1.txt:
+	Adjust.
+	* tests/data/test-diff-pkg/tbb-4.1-9.20130314.fc22.x86_64--tbb-4.3-3.20141204.fc23.x86_64-report-0.txt:
+	Adjust.
+	* tests/data/test-diff-pkg/tbb-4.1-9.20130314.fc22.x86_64--tbb-4.3-3.20141204.fc23.x86_64-report-1.txt:
+	Adjust.
+	* tests/data/test-read-dwarf/PR22015-libboost_iostreams.so.abi:
+	Adjust.
+	* tests/data/test-read-dwarf/PR22122-libftdc.so.abi: Adjust.
+	* tests/data/test-read-dwarf/libtest23.so.abi: Adjust.
+	* tests/data/test-read-dwarf/libtest24-drop-fns-2.so.abi: Adjust.
+	* tests/data/test-read-dwarf/libtest24-drop-fns.so.abi: Adjust.
+	* tests/data/test-read-dwarf/test-libandroid.so.abi: Adjust.
+	* tests/data/test-read-dwarf/test10-pr18818-gcc.so.abi: Adjust.
+	* tests/data/test-read-dwarf/test11-pr18828.so.abi: Adjust.
+	* tests/data/test-read-dwarf/test12-pr18844.so.abi: Adjust.
+	* tests/data/test-read-dwarf/test15-pr18892.so.abi: Adjust.
+	* tests/data/test-read-dwarf/test16-pr18904.so.abi: Adjust.
+	* tests/data/test-read-dwarf/test17-pr19027.so.abi: Adjust.
+	* tests/data/test-read-dwarf/test18-pr19037-libvtkRenderingLIC-6.1.so.abi:
+	Adjust.
+	* tests/data/test-read-dwarf/test19-pr19023-libtcmalloc_and_profiler.so.abi:
+	Adjust.
+	* tests/data/test-read-dwarf/test20-pr19025-libvtkParallelCore-6.1.so.abi:
+	Adjust.
+	* tests/data/test-read-dwarf/test21-pr19092.so.abi: Adjust.
+	* tests/data/test-read-dwarf/test22-pr19097-libstdc++.so.6.0.17.so.abi:
+	Adjust.
+	* tests/data/test-read-dwarf/test9-pr18818-clang.so.abi: Adjust.
+
+2025-03-24  Dodji Seketeli <dodji@redhat.com>
+
+	ir: Recognize classes of same layout as being compatible
+	* include/abg-fwd.h (classes_have_same_layout): Declare ...
+	* src/abg-ir.cc (classes_have_same_layout): ... new function.
+	(types_are_compatible): Use the new classes_have_same_layout.
+	* tests/data/test-diff-filter/test5-report.txt: Adjust.
+	* tests/data/test-diff-filter/test5-{2,3}-report.txt: Add new
+	reference test output.
+	* tests/data/test-diff-filter/test5-{2,3}-v{0,1}.{cc,o}: Add new
+	source code and binary test input.
+	* tests/test-diff-filter.cc (in_out_specs): Add the binary test
+	inputs to the test harness.
+
+2025-03-24  Dodji Seketeli <dodji@redhat.com>
+
+	comp-filter,ir: Simplify logic of has_harmless_name_change
+	* include/abg-fwd.h (decl_name_changed)
+	(integral_type_has_harmless_name_change): Declare new functions.
+	* include/abg-ir.h (equals_modulo_cv_qualifier): Declare new
+	overloads for array_type_def_pstr and pointer_type_def_sptr.
+	* src/abg-comp-filter.cc
+	(type_diff_has_typedef_cv_qual_change_only): Rename
+	type_diff_has_cv_qual_change_only into this for better legibility.
+	Use equals_modulo_cv_qualifier rather than poorly open-coding its
+	functionality.
+	(has_fn_parm_type_cv_qual_change)
+	(has_fn_return_type_cv_qual_change, has_var_type_cv_qual_change):
+	Adjust the call to the new
+	type_diff_has_typedef_cv_qual_change_only.
+	(is_compatible_type_change): Declare new static function.
+	(is_non_compatible_distinct_change): Remove
+	type_diff_has_cv_qual_change_only and use the more generic
+	is_compatible_type_change.
+	(has_harmless_name_change): Remove the redundant and too much low
+	level messing up with typedefs, CV qualifiers and harmless
+	integral name changes.  types_are_compatible should now take care
+	of that minutiae.
+	(decl_name_changed, integral_type_has_harmless_name_change): Move
+	these static function ...
+	* src/abg-ir.cc (decl_name_changed)
+	(integral_type_has_harmless_name_change): ... here and make them
+	non-static.
+	(types_are_compatible): Simplify logic.  Look through qualified,
+	typedef, pointers, reference and array types.
+	(equals_modulo_cv_qualifier): Define new overloads for
+	array_type_def_sptr and pointer_type_def_sptr.
+
+2025-03-24  Dodji Seketeli <dodji@redhat.com>
+
+	ir: Better handle int[5][2] changed into int[2][5]
+	* src/abg-ir.cc (types_have_similar_structure): Arrays of
+	dimensions of different sizes should not be considered as having a
+	similar structure.
+	* tests/data/test-diff-filter/test-multi-array1-v{0,1}.cc: Add new
+	source files for binary test input.
+	* tests/data/test-diff-filter/test-multi-array1-v{0,1}.o: Add new
+	binaries.
+	* tests/data/test-diff-filter/test-multi-array1.txt: Add new
+	reference output.
+	* tests/data/Makefile.am: Add the new test material above to
+	source distribution.
+	* tests/test-diff-filter.cc (in_out_specs): Add the new test input
+	above to the test harness.
+
+2025-03-20  Dodji Seketeli <dodji@redhat.com>
+
+	comp-filter: Better detection of harmless/harmful enum changes
+	* include/abg-comp-filter.h (has_harmless_name_change): Take an
+	additional diff_context_sptr parameter.
+	* include/abg-ir.h (enum_type_decl::find_enumerator_by_{value,
+	name}): Declare new member functions.
+	* src/abg-comp-filter.cc (has_harmful_enum_change)
+	(has_harmless_enum_change)
+	(has_enumerator_change): Define new static functions.
+	(has_harmless_name_change): Take an
+	additional diff_context_sptr parameter.  Use the new
+	has_harmless_enum_change instead of getting deep into minutiae
+	concerning enums.  The diff_context_sptr argument is passed to
+	has_harmless_enum_change.  Adjust the other overload.
+	(has_harmful_name_change): Take an additional diff_context_sptr
+	parameter and pass it to has_harmless_name_change.  Adjust
+	comment.  Adjust the overload for diff node.
+	(has_enumerator_removal_or_value_change): Rename
+	has_enumerator_removal_or_change into this.  Walk the changed
+	enumerators to see if any of their value changed.
+	(has_harmful_enum_change): Adjust to use
+	has_enumerator_removal_or_value_change.
+	(categorize_harmless_diff_node): Adjust the use of
+	has_harmless_name_change.  Also, use the new
+	has_harmless_enum_change instead of diving into minutiae to handle
+	enum changes.
+	* src/abg-comparison.cc
+	(enum_diff::ensure_lookup_tables_populated): Use the new
+	enum_type_decl::find_enumerator_by_{value,name} to populate
+	enum_diff::priv::changed_enumerators_ and remove the changed
+	enumerators from enum_diff::priv::{deleted,
+	inserted}_enumerators_.
+	* src/abg-default-reporter.cc (default_reporter::report): In the
+	overload for enum_diff, report change of enumerator value or
+	change of enumerator name.
+	(default_reporter::report_non_type_typedef_changes): Adjust the
+	use of filtering::has_harmless_name_change.
+	* src/abg-ir.cc (enum_type_decl::find_enumerator_by_{value,
+	name}): Define new member functions.
+	* src/abg-reporter-priv.cc (represent): In the overload for
+	var_diff_sptr, adjust the use of
+	filtering::has_harmless_name_change.
+	(report_name_size_and_alignment_changes): Likewise.
+	* tests/data/test-abidiff/test-enum0-report.txt: Adjust.
+	* tests/data/test-diff-dwarf/PR25058-liblttng-ctl-report-1.txt:
+	Adjust.
+	* tests/data/test-diff-pkg/nss-3.23.0-1.0.fc23.x86_64-report-0.txt:
+	Adjust.
+	* tests/data/test-diff-pkg/spice-server-0.12.4-19.el7.x86_64-0.12.8-1.el7.x86_64-report-0.txt:
+	Adjust.
+	* tests/data/test-diff-pkg/spice-server-0.12.4-19.el7.x86_64-0.12.8-1.el7.x86_64-report-1.txt:
+	Adjust.
+	* tests/data/test-diff-pkg/spice-server-0.12.4-19.el7.x86_64-0.12.8-1.el7.x86_64-report-2.txt:
+	Adjust.
+	* tests/data/test-diff-pkg/spice-server-0.12.4-19.el7.x86_64-0.12.8-1.el7.x86_64-report-3.txt:
+	Adjust.
+
+2025-03-25  Dodji Seketeli <dodji@redhat.com>
+
+	reporter-priv: Fix a thinko in sub-range change report
+	* src/abg-reporter-priv.cc (represent): In the overload for
+	subranges, fix a thinko.  We need to refer to the old subrange in
+	the change report.
+	* tests/data/test-abidiff-exit/ada-subrange/test1-ada-subrange/test1-ada-subrange-report-1.txt:
+	Adjust.
+	* tests/data/test-abidiff-exit/ada-subrange/test1-ada-subrange/test1-ada-subrange-report-2.txt:
+	Likewise.
+	* tests/data/test-abidiff-exit/ada-subrange/test2-ada-subrange-redundant/test2-ada-subrange-redundant-report-1.txt:
+	Likewise.
+	* tests/data/test-abidiff-exit/ada-subrange/test2-ada-subrange-redundant/test2-ada-subrange-redundant-report-2.txt:
+	Likewise.
+	* tests/data/test-abidiff-exit/test-allow-type-array-v0--v1-report-1.txt:
+	Likewise.
+	* tests/data/test-abidiff-exit/test-allow-type-array-v0--v3-report-1.txt:
+	Likewise.
+	* tests/data/test-abidiff/test-PR27985-report.txt: Likewise.
+	* tests/data/test-diff-dwarf/test10-report.txt: Likewise.
+	* tests/data/test-diff-dwarf/test11-report.txt: Likewise.
+	* tests/data/test-diff-dwarf/test35-pr19173-libfoo-long-clang-report-0.txt:
+	Likewise.
+	* tests/data/test-diff-dwarf/test35-pr19173-libfoo-long-gcc-report-0.txt:
+	Likewise.
+	* tests/data/test-diff-filter/test30-pr18904-rvalueref-report0.txt:
+	Likewise.
+	* tests/data/test-diff-filter/test30-pr18904-rvalueref-report1.txt:
+	Likewise.
+	* tests/data/test-diff-filter/test30-pr18904-rvalueref-report2.txt:
+	Likewise.
+	* tests/data/test-diff-filter/test35-pr18754-no-added-syms-report-0.txt:
+	Likewise.
+	* tests/data/test-diff-pkg/nss-3.23.0-1.0.fc23.x86_64-report-0.txt:
+	Likewise.
+	* tests/data/test-diff-pkg/tbb-4.1-9.20130314.fc22.x86_64--tbb-4.3-3.20141204.fc23.x86_64-report-0.txt:
+	Likewise.
+	* tests/data/test-diff-pkg/tbb-4.1-9.20130314.fc22.x86_64--tbb-4.3-3.20141204.fc23.x86_64-report-1.txt:
+	Likewise.
+	* tests/data/test-diff-suppr/test-has-data-member-inserted-at-1-report-1.txt:
+	Likewise.
+
+2025-03-13  Dodji Seketeli <dodji@redhat.com>
+
+	abipkgdiff: Avoid wrongly considering binaries being added/removed
+	* tools/abipkgdiff.cc (create_maps_of_package_set_content): Use
+	the SONAME when present as the key of the binary.
+	* tests/data/test-diff-pkg/dbus-glib-0.104-3.fc23.x86_64--dbus-glib-0.104-3.fc23.armv7hl-report-0.txt: Adjust.
+
+2025-02-18  Dodji Seketeli <dodji@redhat.com>
+
+	big-tests: Sync with libabigail hashe 229682
+	* tools/abipkgdiff.cc
+	(compare_prepared_linux_kernel_package_sets): Use the base name of
+	input RPMs in the output message.
+
+2025-02-17  Dodji Seketeli <dodji@redhat.com>
+
+	abipkgdiff: Don't use full Linux kernel pkg path in change reports
+	* tools/abipkgdiff.cc
+	(compare_prepared_linux_kernel_package_sets): Use the base name of
+	input RPMs in the output message.
+
+2025-02-13  Dodji Seketeli <dodji@redhat.com>
+
+	configure.ac: Add a new --enable-inlined-xxhash option
+	* configure.ac: Recognize the --enable-inlined-xxhash option,
+	define the ENABLE_INLINED_XXHASH variable accordingly and use it to
+	determine when to set the -DXXH_INLINE_ALL=1 macro or when to link
+	against the xxhash shared library.  Also, update the package
+	configuration report to reflect the status of the
+	--enable-inlined-xxhash option.
+
+2025-02-12  Sam James <sam@gentoo.org>
+
+	configure.ac: fix typos for XXHASH_LIBS, LZMA_LIBS
+	* configure.ac: Fix typos for $XXHASH_LIBS and $LZMA_LIBS.
+
+2025-02-12  Dodji Seketeli <dodji@redhat.com>
+
+	{ctf,dwarf}-reader.cc: Fix a virtual method name conflict in elf_base_reader
+	* src/abg-ctf-reader.cc (ctf::reader::initialize): Adjust.
+	(ctf::reader::reset): Rename ctf::reader::initialize into this.
+	* src/abg-dwarf-reader.cc (reader::initialize): Adjust.
+	(dwarf::reader::reset): Rename dwarf::reader::initialize into
+	this.
+
+2025-02-06  Dodji Seketeli <dodji@redhat.com>
+
+	big-tests: Update to latest commit 2afebc4
+	* big-tests:
+
+2025-01-30  Dodji Seketeli <dodji@redhat.com>
+
+	Bug PR32476 - abipkgdiff: Support comparing sets of packages
+	* doc/manuals/abipkgdiff.rst: Add documentation for the new
+	--set{1,2} options.  Update the documentation to describe
+	abipkgdiff as a tool to compare sets of packages.
+	* tools/abipkgdiff.cc (options::{package_set_paths1,
+	package_set_paths2, pkg_set1, pkg_set2}): New data members.
+	(options::{package1, package2, pkg1, pkg2}): Remove these data
+	members.
+	(get_interesting_files_under): Rename
+	get_interesting_files_under_dir into this.  Add a new overload
+	that takes a package_set instead of a directory path.
+	(package::package): Make this destructor virtual, so that we can
+	RTTI to the package class.
+	(package::load_elf_file_paths): Adjust to calling
+	get_interesting_files_under.
+	(class package_set): Define new class.
+	(package_set_sptr): Define new typedef.
+	(class pkg_set_prepare_task): Rename pkg_prepare_task into this.
+	(pkg_set_prepare_task_sptr): Renamed pkg_prepare_task_sptr into
+	this.
+	(create_maps_of_package_set_content): Renamed
+	create_maps_of_package_content into this and adjust to make it
+	take a package_set_sptr.
+	(extract_package_set_and_map_its_content): Renamed
+	extract_package_and_map_its_content into this and adjust to make
+	it take a package_set_sptr.
+	(prepare_package_sets): Renamed prepare_packages into this and
+	adjust to make it take a package_set_sptr.
+	(compare_prepared_userspace_package_sets): Renamed
+	compare_prepared_userspace_packages into this and adjust to make
+	it take a package_set_sptr.
+	(self_compare_prepared_userspace_package_set)
+	(self_compare_prepared_package_set): Renamed
+	self_compare_prepared_userspace_package and
+	self_compare_prepared_package into these* and adjust to make it
+	take a package_set_sptr.
+	(compare_prepared_linux_kernel_package_sets): Renamed
+	compare_prepared_linux_kernel_packages into this and adjust to
+	make it take a package_set_sptr.
+	(compare_prepared_package_set): Renamed compare_prepared_package
+	into this and adjust to make it take a package_set_sptr.
+	(pkg_set_prepare_task::perform): Adjust.
+	(is_kernel_package, get_core_kernel_package, is_package_set):
+	Define new static functions.
+	(extract_package, maybe_erase_temp_dirs): Take a package_sptr
+	rather than a reference to a package.
+	(extract_package_set_and_map_its_content)
+	(erase_created_temporary_directories)
+	(create_private_types_suppressions)
+	(maybe_create_public_dso_sonames_set)
+	(must_compare_public_dso_only, maybe_handle_kabi_stablelist_pkg)
+	(compare, compare_to_self): Make these functions take a
+	package_set_sptr rather than a reference to a package.
+	(compare_to_self): Adjust.
+	(parse_command_line): Make this take --set{1,2} options and adjust
+	accordingly.  Fix detection of non-existent file input by using
+	options::wrong_arg instead options::wrong_option.
+	(main): Adjust to using options::wrong_args to detect non-existing
+	or wrong input files.  Adjust to consider only package sets to be
+	compared now.
+
+2025-02-07  Dodji Seketeli <dodji@redhat.com>
+
+	configure: Disable abidb on python version < 3.9
+	* configure.ac: Disable abidb on systems that have python version
+	less than 3.9.
+
+2025-01-16  Dodji Seketeli <dodji@redhat.com>
+
+	abipkgdiff: Rename whitelist into stablelist
+	* tools/abipkgdiff.cc (options::kabi_stablelist_{packages,paths}):
+	Renamed kabi_whitelist_* into these.
+	(package::KIND_KABI_STABLELIST): Renamed the KIND_KABI_WHITELIST
+	enumerator into this.
+	(package::kabi_stablelist_package_): Renamed
+	kabi_whitelist_package_ into this.
+	(package::kabi_stablelist_package): Likewise for the getter/setter
+	pair.
+	(package::erase_extraction_directories): Renamed whitelist into
+	stablelist here.
+	(maybe_check_suppression_files, maybe_collect_kabi_stablelists)
+	(get_kabi_stablelists_from_arch_under_dir)
+	(maybe_handle_kabi_stablelist_pkg)
+	(extract_package_and_map_its_content)
+	(compare_prepared_linux_kernel_packages): Likewise.
+	(parse_command_line): Adjust.
+
+2025-01-29  Dodji Seketeli <dodji@redhat.com>
+
+	Add support for reading XZ-compressed files
+	* configure.ac: Detect the liblzma library.
+	* include/abg-tools-utils.h (enum file_type): Add a new
+	FILE_TYPE_XZ enumerator.
+	(class xz_decompressor_type): Declare a new custom std::streambuf
+	class.
+	* src/abg-elf-helpers.h: Include elfutils/libdwelf.h.
+	* src/abg-elf-reader.cc (get_type_of_elf_file): Use
+	dwelf_elf_begin instead of elf_begin to transparently handle
+	compressed input file.
+	* src/abg-tools-util*s.cc (struct xz_decompressor_type::priv):
+	Define private type.
+	(xz_decompressor_type::{xz_decompressor_type,
+	~xz_decompressor_type, underflow}): Define new methods for
+	xz_decompressor_type.
+	(operator<<(ostream&, file_type)): Add
+	support for the new FILE_TYPE_XZ enumerator.
+	(enum compression_kind): Define new enum.
+	(is_compressed_file_type, get_decompressed_streambuf): Define new
+	static functions.
+	(guess_file_type): In the overload for std::istream, detect the XZ file
+	type.  In the overload for std::string, use the new
+	is_compressed_file_type and get_decompressed_streambuf to
+	decompress a compressed file on the fly and handing the resulting
+	decompressed istream to the overload for std::istream.
+	* tests/data/test-read-dwarf/test0.xz: New input binary test.
+	* tests/data/test-read-dwarf/test0.xzbinary: Likewise.
+	* tests/data/test-read-write/test28.xml.xz: Likewise.
+	* tests/data/test-read-write/test28.xml.xzed: Likewise.
+	* tests/data/Makefile.am: Add the new test input to source
+	distribution.
+	* tests/test-read-dwarf.cc (in_out_specs): Add the new test input
+	to this test harness.
+	* tests/test-read-write.cc (in_out_specs): Likewise.
+	* tools/abicompat.cc (read_corpus): Add support for the new
+	abigail::tools_utils::FILE_TYPE_XZ.
+	* tools/abidiff.cc (main): Likewise.
+	* tools/abilint.cc (main): Likewise.
+
+2025-01-29  Dodji Seketeli <dodji@redhat.com>
+
+	configure: Add $ELF_CFLAGS and $DW_CFLAGS to DEPS_CPPFLAGS
+	* configure.ac: Add $ELF_CFLAGS and $DW_CFLAGS to DEPS_CPPFLAGS.
+
+2025-01-28  Dodji Seketeli <dodji@redhat.com>
+
+	configure: Fix xxhash detection code
+	* configure.ac: Substitute XXHASH_CFLAGS and XXHASH_LIBS in the
+	Makefiles.  Add XXHASH_CFLAGS to DEPS_CPPFLAGS and XXHASH_LIBS to
+	DEPS_LIBS.
+
+2025-01-16  Dodji Seketeli <dodji@redhat.com>
+
+	abipkgdiff: Recognize stablelist files in their package
+	* tools/abipkgdiff.cc (maybe_collect_kabi_whitelists):  Recognize
+	files with prefix "kabi_stablelist_" as being a stablelist file,
+	in addition to the old kabi_whitelist_ prefix.
+
+2025-01-31  Dodji Seketeli <dodji@redhat.com>
+
+	abipkgdiff.rst: Sort options documentation items alphabetically
+	* abipkgdiff.rst: Sort the options alphabetically.
+
+2025-01-16  Dodji Seketeli <dodji@redhat.com>
+
+	abipkgdiff: Add new --verbose-diff option
+	* doc/manuals/abipkgdiff.rst: Document the new --verbose-diff
+	option.
+	* tools/abipkgdiff.cc (options::verbose_diff): New data member.
+	(options::options): Initialize the new data member.
+	(set_diff_context_from_opts): Activate logging of the diffing
+	process when the user issues the --verbose-diff option.
+	(parse_command_line): Parse --verbose-diff.  Activate --verbose
+	when --verbose-diff is given.
+
+2025-01-15  Dodji Seketeli <dodji@redhat.com>
+
+	abipkgdiff: Add more verbose logging
+	* src/abg-tools-utils.cc (load_vmlinux_corpus): Log stable list
+	loading.
+	* tools/abipkgdiff.cc (compare_prepared_linux_kernel_packages):
+	Log building of corpora for Linux kernels and diffing them.
+
+2025-01-30  Dodji Seketeli <dodji@redhat.com>
+
+	tools-utils: Add missing comment
+	* src/abg-tools-utils.cc (guess_file_type): Add comment for RPM
+	format magic number.
+
+2025-01-30  Dodji Seketeli <dodji@redhat.com>
+
+	tools-utils: Fix indentation
+	* src/abg-tools-utils.cc (rpm_contains_file): Fix indentation.
+
+2025-01-15  Dodji Seketeli <dodji@redhat.com>
+
+	abipkgdiff: Fix indentation
+	* tools/abipkgdiff.cc (compare_prepared_linux_kernel_packages):
+	Fix indentation.
+
+2025-01-15  Dodji Seketeli <dodji@redhat.com>
+
+	abipkgdiff: Fix spacing in usage text output
+	* tools/abipkgdiff.cc (display_usage): Fix spacing.
+
+2025-01-13  Dodji Seketeli <dodji@redhat.com>
+
+	configure.ac: Add a missing preamble
+	* configure.ac: Add missing preamble.
+
+2025-01-13  Dodji Seketeli <dodji@redhat.com>
+
+	Update copyright years for 2025
+	* include/abg-btf-reader.h: Update copyright year to include 2025.
+	* include/abg-comp-filter.h: Likewise.
+	* include/abg-comparison.h: Likewise.
+	* include/abg-config.h: Likewise.
+	* include/abg-corpus.h: Likewise.
+	* include/abg-ctf-reader.h: Likewise.
+	* include/abg-cxx-compat.h: Likewise.
+	* include/abg-diff-utils.h: Likewise.
+	* include/abg-dwarf-reader.h: Likewise.
+	* include/abg-elf-based-reader.h: Likewise.
+	* include/abg-elf-reader.h: Likewise.
+	* include/abg-fe-iface.h: Likewise.
+	* include/abg-fwd.h: Likewise.
+	* include/abg-hash.h: Likewise.
+	* include/abg-ini.h: Likewise.
+	* include/abg-interned-str.h: Likewise.
+	* include/abg-ir.h: Likewise.
+	* include/abg-libxml-utils.h: Likewise.
+	* include/abg-reader.h: Likewise.
+	* include/abg-regex.h: Likewise.
+	* include/abg-reporter.h: Likewise.
+	* include/abg-sptr-utils.h: Likewise.
+	* include/abg-suppression.h: Likewise.
+	* include/abg-tools-utils.h: Likewise.
+	* include/abg-traverse.h: Likewise.
+	* include/abg-viz-common.h: Likewise.
+	* include/abg-viz-dot.h: Likewise.
+	* include/abg-viz-svg.h: Likewise.
+	* include/abg-workers.h: Likewise.
+	* include/abg-writer.h: Likewise.
+	* src/abg-btf-reader.cc: Likewise.
+	* src/abg-comp-filter.cc: Likewise.
+	* src/abg-comparison-priv.h: Likewise.
+	* src/abg-comparison.cc: Likewise.
+	* src/abg-config.cc: Likewise.
+	* src/abg-corpus-priv.h: Likewise.
+	* src/abg-corpus.cc: Likewise.
+	* src/abg-ctf-reader.cc: Likewise.
+	* src/abg-default-reporter.cc: Likewise.
+	* src/abg-diff-utils.cc: Likewise.
+	* src/abg-dwarf-reader.cc: Likewise.
+	* src/abg-elf-based-reader.cc: Likewise.
+	* src/abg-elf-helpers.cc: Likewise.
+	* src/abg-elf-helpers.h: Likewise.
+	* src/abg-elf-reader.cc: Likewise.
+	* src/abg-fe-iface.cc: Likewise.
+	* src/abg-hash.cc: Likewise.
+	* src/abg-ini.cc: Likewise.
+	* src/abg-internal.h: Likewise.
+	* src/abg-ir-priv.h: Likewise.
+	* src/abg-ir.cc: Likewise.
+	* src/abg-leaf-reporter.cc: Likewise.
+	* src/abg-libxml-utils.cc: Likewise.
+	* src/abg-reader.cc: Likewise.
+	* src/abg-regex.cc: Likewise.
+	* src/abg-reporter-priv.cc: Likewise.
+	* src/abg-reporter-priv.h: Likewise.
+	* src/abg-suppression-priv.h: Likewise.
+	* src/abg-suppression.cc: Likewise.
+	* src/abg-symtab-reader.cc: Likewise.
+	* src/abg-symtab-reader.h: Likewise.
+	* src/abg-tools-utils.cc: Likewise.
+	* src/abg-traverse.cc: Likewise.
+	* src/abg-viz-common.cc: Likewise.
+	* src/abg-viz-dot.cc: Likewise.
+	* src/abg-viz-svg.cc: Likewise.
+	* src/abg-workers.cc: Likewise.
+	* src/abg-writer.cc: Likewise.
+	* tests/print-diff-tree.cc: Likewise.
+	* tests/test-abicompat.cc: Likewise.
+	* tests/test-abidiff-exit.cc: Likewise.
+	* tests/test-abidiff.cc: Likewise.
+	* tests/test-alt-dwarf-file.cc: Likewise.
+	* tests/test-core-diff.cc: Likewise.
+	* tests/test-cxx-compat.cc: Likewise.
+	* tests/test-diff-dwarf-abixml.cc: Likewise.
+	* tests/test-diff-dwarf.cc: Likewise.
+	* tests/test-diff-filter.cc: Likewise.
+	* tests/test-diff-pkg.cc: Likewise.
+	* tests/test-diff-suppr.cc: Likewise.
+	* tests/test-diff2.cc: Likewise.
+	* tests/test-dot.cc: Likewise.
+	* tests/test-elf-helpers.cc: Likewise.
+	* tests/test-ini.cc: Likewise.
+	* tests/test-ir-walker.cc: Likewise.
+	* tests/test-kmi-whitelist.cc: Likewise.
+	* tests/test-lookup-syms.cc: Likewise.
+	* tests/test-read-btf.cc: Likewise.
+	* tests/test-read-ctf.cc: Likewise.
+	* tests/test-read-dwarf.cc: Likewise.
+	* tests/test-read-write.cc: Likewise.
+	* tests/test-svg.cc: Likewise.
+	* tests/test-symtab-reader.cc: Likewise.
+	* tests/test-symtab.cc: Likewise.
+	* tests/test-tools-utils.cc: Likewise.
+	* tests/test-types-stability.cc: Likewise.
+	* tests/test-utils.cc: Likewise.
+	* tests/test-utils.h: Likewise.
+	* tools/abicompat.cc: Likewise.
+	* tools/abidiff.cc: Likewise.
+	* tools/abidw.cc: Likewise.
+	* tools/abilint.cc: Likewise.
+	* tools/abipkgdiff.cc: Likewise.
+	* tools/abisym.cc: Likewise.
+	* tools/binilint.cc: Likewise.
+	* tools/kmidiff.cc: Likewise.
+	* update-copyright.sh: Likewise.
+
+2025-01-09  Dodji Seketeli <dodji@redhat.com>
+
+	Bug 32402 - dwarf-reader,ir: Recognize new DWARF 5 languages
+	* configure.ac: Detect the presence of DW_LANG_* language
+	enumerators that were not supported before and for new ones that
+	got introduced in DWARF 5.
+	* include/abg-ir.h (translation_unit::LANG_{C17, C23,
+	C_plus_plus_17, C_plus_plus_20, C_plus_plus_23, OCaml, D, Go,
+	Rust, Zig, Metal, Fortran18, Fortran23, Ada2005, Ada2012, Kotlin,
+	C_sharp, Ruby, Assembly, Crystal, HIP, Mojo, GLSL, GLSL_ES, HLSL,
+	OpenCL_CPP, CPP_for_OpenCL, SYCL, Odin, P4, Move, Hylo}): Add new
+	languages enumerators.
+	* src/abg-dwarf-reader.cc (dwarf_language_to_tu_language)
+	(get_default_array_lower_bound): Recognize & support the new
+	languages enumerators above.
+	* src/abg-ir.cc (translation_unit_language_to_string): Likewise.
+	(is_c_language): Recognize translation_unit::LANG_C{17,23}.
+	(is_cplus_plus_language): Recognize
+	translation_unit::LANG_C_plus_plus_{20,23}.
+	(is_ada_language): Recognize
+	translation_unit::LANG_Ada{95,2005,2012}.
+
+2025-01-09  Dodji Seketeli <dodji@redhat.com>
+
+	configure: Support using custom builds of elfutils
+	* configure.ac: Add support for --with-libdw and --with-libelf.
+	Use pkg-config to detect the presence of libdw and libelf either
+	on the system or below the prefixes specified by the new
+	aforementionned options.
+
+2024-12-05  Dodji Seketeli <dodji@redhat.com>
+
+	abidiff.rst: Fix typo in the doc for --kmi-whitelist
+	* doc/manuals/abidiff.rst: It's not -kaw, but -w.
+
+2024-11-13  Dodji Seketeli <dodji@redhat.com>
+
+	fedabipkgdiff: Add a new --private-dso option
+	* doc/manuals/fedabipkgdiff.rst: Add documentation for the new
+	--private-dso option.
+	* tools/fedabipkgdiff (abipkgdiff): Pass the --private-dso option
+	to abipkgdiff when asked by the user.
+	(build_commandline_args_parser): Support the new --private-dso
+	option.
+
+2024-11-13  Dodji Seketeli <dodji@redhat.com>
+
+	fedabipkgdiff.rst: Sort options documentation alphabetically
+	* doc/manuals/fedabipkgdiff.rst: Sort the documentation of options
+	alphabetically.
+
+2024-11-12  Dodji Seketeli <dodji@redhat.com>
+
+	SECURITY: New security policy text
+	* SECURITY: New security policy text file.
+	* Makefile.am: Add the new SECURITY file to the distribution.
+	Reviewed-by:   Frank Ch. Eigler <fche@redhat.com>
+
+2024-11-04  Dodji Seketeli <dodji@redhat.com>
+
+	configure.ac: Bump version number to 2.7
+	* configure.ac: Bump version number to 2.7
+
+2024-11-01  Dodji Seketeli <dodji@redhat.com>
+
+	big-tests: Update to commit bd0c1f8909a7b2f5018d54b82f7d6829c4849b59
+	* big-tests: Update sub-module to upstream
+	bd0c1f8909a7b2f5018d54b82f7d6829c4849b59.
+
+2024-11-01  Dodji Seketeli <dodji@redhat.com>
+
+	Makefile.am: Update tag-and-all rule to do a full-check
+	* Makefile.am: Make the tag-and-all rule do a full-check instead
+	of just a check-self-compare.
+
+2024-11-01  Dodji Seketeli <dodji@redhat.com>
+
+	mainpage.txt: Update content for 2.6 release
+	* doc/website/mainpage.txt: Change reference to 2.5 into 2.6.  Add
+	xxhash as a dependency.
+
+2024-11-01  Dodji Seketeli <dodji@redhat.com>
+
+	NEWS: Update for 2.6 release
+	* NEWS: Update with the result of the command
+	"git shortlog libabigail-2.5..HEAD"
+
+2024-11-01  Dodji Seketeli <dodji@redhat.com>
+
+	ChangeLog: Update ChangeLog in preparation for 2.6 release
+	* ChangeLog: Update with "make update-changelog".
+
 2024-11-01  Dodji Seketeli <dodji@redhat.com>
 
 	configure: Bump LIBABIGAIL_SO_CURRENT version to 5
