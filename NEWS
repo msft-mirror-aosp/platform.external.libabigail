@@ -1,3 +1,65 @@
+2.7
+===
+Dodji Seketeli (49):
+      Makefile.am: Update tag-and-all rule to do a full-check
+      big-tests: Update to commit bd0c1f8909a7b2f5018d54b82f7d6829c4849b59
+      configure.ac: Bump version number to 2.7
+      SECURITY: New security policy text
+      fedabipkgdiff.rst: Sort options documentation alphabetically
+      fedabipkgdiff: Add a new --private-dso option
+      abidiff.rst: Fix typo in the doc for --kmi-whitelist
+      configure: Support using custom builds of elfutils
+      Bug 32402 - dwarf-reader,ir: Recognize new DWARF 5 languages
+      Update copyright years for 2025
+      configure.ac: Add a missing preamble
+      abipkgdiff: Fix spacing in usage text output
+      abipkgdiff: Fix indentation
+      tools-utils: Fix indentation
+      tools-utils: Add missing comment
+      abipkgdiff: Add more verbose logging
+      abipkgdiff: Add new --verbose-diff option
+      abipkgdiff.rst: Sort options documentation items alphabetically
+      abipkgdiff: Recognize stablelist files in their package
+      configure: Fix xxhash detection code
+      configure: Add $ELF_CFLAGS and $DW_CFLAGS to DEPS_CPPFLAGS
+      Add support for reading XZ-compressed files
+      abipkgdiff: Rename whitelist into stablelist
+      configure: Disable abidb on python version < 3.9
+      Bug PR32476 - abipkgdiff: Support comparing sets of packages
+      big-tests: Update to latest commit 2afebc4
+      {ctf,dwarf}-reader.cc: Fix a virtual method name conflict in elf_base_reader
+      configure.ac: Add a new --enable-inlined-xxhash option
+      abipkgdiff: Don't use full Linux kernel pkg path in change reports
+      big-tests: Sync with libabigail hashe 229682
+      abipkgdiff: Avoid wrongly considering binaries being added/removed
+      reporter-priv: Fix a thinko in sub-range change report
+      comp-filter: Better detection of harmless/harmful enum changes
+      ir: Better handle int[5][2] changed into int[2][5]
+      comp-filter,ir: Simplify logic of has_harmless_name_change
+      ir: Recognize classes of same layout as being compatible
+      Bug 21296 - Normalize declaration names read from DWARF
+      Bug 31642 - Categorize incompatible changes on functions and variables
+      Bug 31642 - Don't forget filtered-out incompatible fns and var changes
+      Bug 28505 - Fix a case of pointer to void* change filtering
+      big-test: Update to e772c1e67aba14141dd16735ecdf19368b0cb29e
+      default.abignore: Improve default suppression for krb5 libraries
+      rhbz2355363 - abipkgdiff: Don't abort when alternate debug info is not found
+      manuals/conf.py: Update copyright years in the manuals
+      abidiff.rst: Sort option documentation bullets in lexicographic order
+      libabigail-concepts: Document the incompatible changes concept
+      abg-comp-filter: Fix declaration of has_harmful_name_change
+      abg-comp-filter: Fix some documentation thinko
+      manuals: Fix broken links
+      Bug 32794 - ir: avoid asserting in get_type_name
+      configure: Bump libabigail_so_current to 6
+      ChangeLog: Update for 2.7 release
+      NEWS: Update for 2.7 release
+
+Sam James (1):
+      configure.ac: fix typos for XXHASH_LIBS, LZMA_LIBS
+
+2.6
+===
 Claudiu Zissulescu (3):
       ctf-reader: Optimize calling sorting function for functions and variables.
       ctf-reader: Add time logging to CTF reader
