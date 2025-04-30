@@ -18,6 +18,7 @@ ABG_BEGIN_EXPORT_DECLARATIONS
 #include "abg-comp-filter.h"
 #include "abg-tools-utils.h"
 #include "abg-ir-priv.h"
+#include "abg-sptr-utils.h"
 
 ABG_END_EXPORT_DECLARATIONS
 // </headers defining libabigail's API>
@@ -50,6 +51,15 @@ static bool
 has_harmless_enum_change(const type_base_sptr& f,
 			 const type_base_sptr& s,
 			 const diff_context_sptr& ctxt);
+
+static bool
+type_size_changed_with_impact(const type_base* f,
+			      const type_base* s);
+
+static bool
+type_size_changed_with_impact(const decl_base* f,
+			      const decl_base* s);
+
 using std::dynamic_pointer_cast;
 
 /// Walk the diff sub-trees of a a @ref corpus_diff and apply a filter
@@ -116,14 +126,27 @@ apply_filter(filter_base_sptr filter, diff_sptr d)
 /// @return true if either classes are declaration-only, false
 /// otherwise.
 static bool
-there_is_a_decl_only_class(const class_decl_sptr& class1,
-			   const class_decl_sptr& class2)
+there_is_a_decl_only_class(const class_decl* class1, const class_decl* class2)
 {
   if ((class1 && class1->get_is_declaration_only())
       || (class2 && class2->get_is_declaration_only()))
     return true;
   return false;
 }
+
+/// Test if there is a class that is declaration-only among the two
+/// classes in parameter.
+///
+/// @param class1 the first class to consider.
+///
+/// @param class2 the second class to consider.
+///
+/// @return true if either classes are declaration-only, false
+/// otherwise.
+static bool
+there_is_a_decl_only_class(const class_decl_sptr& class1,
+			   const class_decl_sptr& class2)
+{return there_is_a_decl_only_class(class1.get(), class2.get());}
 
 /// Test if there is a enum that is declaration-only among the two
 /// enums in parameter.
@@ -135,8 +158,8 @@ there_is_a_decl_only_class(const class_decl_sptr& class1,
 /// @return true if either enums are declaration-only, false
 /// otherwise.
 static bool
-there_is_a_decl_only_enum(const enum_type_decl_sptr& enum1,
-			  const enum_type_decl_sptr& enum2)
+there_is_a_decl_only_enum(const enum_type_decl* enum1,
+			  const enum_type_decl* enum2)
 {
   if ((enum1 && enum1->get_is_declaration_only())
       || (enum2 && enum2->get_is_declaration_only()))
@@ -166,7 +189,7 @@ diff_involves_decl_only_class(const class_diff* diff)
 ///
 /// @return true if the type size changed, false otherwise.
 static bool
-type_size_changed(const type_base_sptr f, const type_base_sptr s)
+type_size_changed(const type_base* f, const type_base* s)
 {
   if (!f || !s
       || f->get_size_in_bits() == 0
@@ -179,6 +202,17 @@ type_size_changed(const type_base_sptr f, const type_base_sptr s)
 
   return f->get_size_in_bits() != s->get_size_in_bits();
 }
+
+/// Tests if the size of a given type changed.
+///
+/// @param f the first version of the type to consider.
+///
+/// @param s the second version of the type to consider.
+///
+/// @return true if the type size changed, false otherwise.
+static bool
+type_size_changed(const type_base_sptr f, const type_base_sptr s)
+{return type_size_changed(f.get(), s.get());}
 
 /// Detect if a type has offset changes.
 ///
@@ -226,21 +260,28 @@ type_has_offset_changes(const type_base_sptr f, const type_base_sptr s)
 /// @return true iff the type has a data member which has an offset
 /// change.
 static bool
+type_has_offset_changes(const type_base* f, const type_base* s)
+{
+  type_base_sptr first(const_cast<type_base*>(f), sptr_utils::noop_deleter());
+  type_base_sptr second(const_cast<type_base*>(s), sptr_utils::noop_deleter());
+
+  return type_has_offset_changes(first, second);
+}
+
+/// Detect if a type has offset changes.
+///
+/// The type must be either a class or a union.  This function returns
+/// true iff the type has a data member which has an offset change.
+///
+/// @param f the first version of the type to consider.
+///
+/// @param s the second version of the type to consider.
+///
+/// @return true iff the type has a data member which has an offset
+/// change.
+static bool
 type_has_offset_changes(const decl_base_sptr f, const decl_base_sptr s)
 {return type_has_offset_changes(is_type(f), is_type(s));}
-
-/// Tests if the size of a given type changed.
-///
-/// @param f the declaration of the first version of the type to
-/// consider.
-///
-/// @param s the declaration of the second version of the type to
-/// consider.
-///
-/// @return true if the type size changed, false otherwise.
-static bool
-type_size_changed(const decl_base_sptr f, const decl_base_sptr s)
-{return type_size_changed(is_type(f), is_type(s));}
 
 /// Test if a given type diff node carries a type size change.
 ///
@@ -263,6 +304,192 @@ has_type_size_change(const diff* diff)
     return false;
 
   return type_size_changed(f, s);
+}
+
+/// Tests if the size of a given type changed and if its containing
+/// type (if any) has a size change too, possibly as a consequence.
+///
+/// Please note that the function also tests if the cause of the size
+/// change does have an impact on the type itself in terms of data
+/// member offset change.
+///
+/// @param f the first version of the type to consider.
+///
+/// @param s the second version of the type to consider.
+///
+/// @param fs the scope of @p f.
+///
+/// @param ss the scope of @p s.
+///
+/// @return true if the type size changed and if that change did
+/// impact the containing scope, false otherwise.
+static bool
+type_size_changed_with_impact(const type_base* f, const type_base *s,
+			      const scope_decl* fs, const scope_decl* ss)
+{
+  bool result = false;
+  if (type_size_changed(f, s))
+    {// Let's see if the type size has an impact on its scope.
+      if (is_type(ss))
+	// The scope is itself a type.  Let's see if that type scope
+	// itself has a type size with an impact to its scope.
+	result = type_size_changed_with_impact (is_type(fs), is_type(ss));
+      else
+	{// The scope is not a type.  So let's look at things in a
+	 // more subtle way.
+	  if (type_has_offset_changes(f, s))
+	    // The type has an offset change so it looks like the size
+	    // change is caused by something that did have an impact
+	    // (in terms of ABI) on the type anyway.
+	    result = true;
+
+	  if (// If the type itself is anonymous (and not named by a
+	      // typedef), its size impact is going to be seen on the
+	      // declaration of that type.  And that would be tested
+	      // separately anyway, for instance by
+	      // has_harmful_change.  So let's not consider that case
+	      // here.
+	      !is_anonymous_type(f)
+	      && !is_anonymous_type(s)
+	      && type_size_changed(f, s))
+	    result = true;
+	}
+    }
+  return result;
+}
+
+/// Tests if the size of a given type changed and if its containing
+/// type (if any) has a size change too, possibly as a consequence.
+///
+/// Please note that the function also tests if the cause of the size
+/// change does have an impact on the type itself in terms of data
+/// member offset change.
+///
+/// @param f the first version of the type to consider.
+///
+/// @param s the second version of the type to consider.
+///
+/// @return true if the type size changed and if that change did
+/// impact the containing scope, false otherwise.
+static bool
+type_size_changed_with_impact(const type_base* f, const type_base *s)
+{
+  const decl_base* first_type = get_type_declaration(f),
+    *second_type = get_type_declaration(s);
+
+  if (!first_type || !second_type)
+    return false;
+
+  scope_decl* fs = first_type->get_scope();
+  scope_decl* ss = second_type->get_scope();
+
+  return type_size_changed_with_impact(f, s, fs, ss);
+}
+
+/// Tests if the size of the type of a given decl changed and if its
+/// containing type (if any) has a size change too, possibly as a
+/// consequence.
+///
+/// Please note that the function also tests if the cause of the size
+/// change does have an impact on the type itself in terms of data
+/// member offset change.
+///
+/// Also, if we are looking at a type then test for the type directly.
+///
+/// @param f the first declaration to consider.
+///
+/// @param s the second declaration to consider.
+///
+/// @return true if the type size changed and if that change did
+/// impact the containing scope, false otherwise.
+static bool
+type_size_changed_with_impact(const decl_base* f, const decl_base *s)
+{
+  if (!f || !s)
+    return false;
+
+  if (is_type(f) && is_type(s))
+    return type_size_changed_with_impact(is_type(f), is_type(s));
+
+  var_decl* f_var = is_var_decl(f);
+  var_decl* s_var = is_var_decl(s);
+
+  if (!f_var || !s_var)
+    return false;
+
+  scope_decl* fs = f->get_scope();
+  scope_decl* ss = s->get_scope();
+
+  const type_base* first_type = f_var->get_type().get();
+  const type_base* second_type = s_var->get_type().get();
+
+  return type_size_changed_with_impact(first_type, second_type, fs, ss);
+}
+
+/// Tests if the size of a given type changed and if its containing
+/// type (if any) has a size change too, possibly as a consequence.
+///
+/// Please note that the function also tests if the cause of the size
+/// change does have an impact on the type itself in terms of data
+/// member offset change.
+///
+/// @param f the first version of the type to consider.
+///
+/// @param s the second version of the type to consider.
+///
+/// @return true if the type size changed and if that change did
+/// impact the containing scope, false otherwise.
+static bool
+type_size_changed_with_impact(const type_base_sptr& f, const type_base_sptr& s)
+{return type_size_changed_with_impact(f.get(), s.get());}
+
+/// Tests if the size of a given type changed and if its containing
+/// type (if any) has a size change too, possibly as a consequence.
+///
+/// Please note that the function also tests if the cause of the size
+/// change does have an impact on the type itself in terms of data
+/// member offset change.
+///
+/// @param f the declaration of the first version of the type to
+/// consider.
+///
+/// @param s the declaration of the second version of the type to
+/// consider.
+///
+/// @return true if the type size changed and if that change did
+/// impact the containing scope, false otherwise.
+static bool
+type_size_changed_with_impact(const decl_base_sptr& f, const decl_base_sptr& s)
+{return type_size_changed_with_impact(f.get(), s.get());}
+
+/// Tests if the diff node carries a type change in which the size
+/// changed and the containing type (if any) has a size change too,
+/// possibly as a consequence.
+///
+/// Please note that the function also tests if the cause of the size
+/// change does have an impact on the type itself in terms of data
+/// member offset change.
+///
+/// @param d the diff node to consider.
+///
+/// @return true iff the diff node carries a type change in which the
+/// size changed and containing type (if any) has a size change too,
+/// possibly as a consequence.
+static bool
+has_type_size_change_with_impact(const diff* d)
+{
+  if (!d)
+    return false;
+
+  if (const fn_parm_diff* fn_parm_d = is_fn_parm_diff(d))
+    d = fn_parm_d->type_diff().get();
+
+  if (is_type(d->first_subject()) || is_type(d->second_subject()))
+    return type_size_changed_with_impact(is_type(d->first_subject()),
+					 is_type(d->second_subject()));
+
+  return type_size_changed_with_impact(is_decl(d->first_subject()),
+				       is_decl(d->second_subject()));
 }
 
 /// Find a data member that is at a given offset.
@@ -579,7 +806,7 @@ data_member_offset_changed(decl_base_sptr f, decl_base_sptr s)
 ///
 /// @param s the second version of the non-static data member.
 static bool
-non_static_data_member_type_size_changed(const decl_base_sptr& f,
+non_static_data_member_type_size_changed_with_impact(const decl_base_sptr& f,
 					 const decl_base_sptr& s)
 {
   if (!is_member_decl(f)
@@ -594,7 +821,7 @@ non_static_data_member_type_size_changed(const decl_base_sptr& f,
       || get_member_is_static(sv))
     return false;
 
-  return type_size_changed(fv->get_type(), sv->get_type());
+  return type_size_changed_with_impact(fv, sv);
 }
 
 /// Test if the size of a static data member changed accross two
@@ -782,15 +1009,15 @@ has_harmful_name_change(const diff* dif)
   return has_harmful_name_change(f, s, dif->context());
 }
 
-/// Test if a class_diff node has non-static members added or
-/// removed.
+/// Test if a class_diff node has non-static members added or removed,
+/// with a possible impact on (type) scopes using the class.
 ///
 /// @param diff the diff node to consider.
 ///
 /// @return true iff the class_diff node has non-static members added
 /// or removed.
 static bool
-non_static_data_member_added_or_removed(const class_diff* diff)
+non_static_data_member_added_or_removed_with_impact(const class_diff* diff)
 {
   if (diff && !diff_involves_decl_only_class(diff))
     {
@@ -799,7 +1026,17 @@ non_static_data_member_added_or_removed(const class_diff* diff)
 	   i != diff->inserted_data_members().end();
 	   ++i)
 	if (!get_member_is_static(i->second))
-	  return true;
+	  {
+	    class_decl_sptr second_class = diff->second_class_decl();
+	    ABG_ASSERT(second_class);
+	    if (!is_anonymous_type(second_class))
+	      // The class that has data member added somewhere is
+	      // *NOT* anonymous so it means it can be reused
+	      // somewhere else but where it's currently declared.  So
+	      // the data member addition might have a visible
+	      // external impact.
+	      return true;
+	  }
 
       for (string_decl_base_sptr_map::const_iterator i =
 	     diff->deleted_data_members().begin();
@@ -812,16 +1049,17 @@ non_static_data_member_added_or_removed(const class_diff* diff)
   return false;
 }
 
-/// Test if a class_diff node has members added or removed.
+/// Test if a class_diff node has non-static members added or removed,
+/// with a possible impact on (type) scopes using the class.
 ///
 /// @param diff the diff node to consider.
 ///
 /// @return true iff the class_diff node has members added or removed.
 static bool
-non_static_data_member_added_or_removed(const diff* diff)
+non_static_data_member_added_or_removed_with_impact(const diff* diff)
 {
-  return non_static_data_member_added_or_removed
-    (dynamic_cast<const class_diff*>(diff));
+  return non_static_data_member_added_or_removed_with_impact
+    (is_class_diff(diff));
 }
 
 /// Test if a @ref class_or_union_diff has a data member replaced by
@@ -2386,15 +2624,13 @@ has_harmful_change(const diff* d)
 
   // Detect size or offset changes as well as data member addition
   // or removal.
-  //
-  // TODO: be more specific -- not all size changes are harmful.
   if (!has_class_decl_only_def_change(d)
       && !has_enum_decl_only_def_change(d)
-      && (type_size_changed(f, s)
+      && (has_type_size_change_with_impact(d)
 	  || type_has_offset_changes(f, s)
 	  || data_member_offset_changed(f, s)
-	  || non_static_data_member_type_size_changed(f, s)
-	  || non_static_data_member_added_or_removed(d)
+	  || non_static_data_member_type_size_changed_with_impact(f, s)
+	  || non_static_data_member_added_or_removed_with_impact(d)
 	  || base_classes_removed(d)
 	  || has_harmful_enum_change(d)
 	  || crc_changed(d)

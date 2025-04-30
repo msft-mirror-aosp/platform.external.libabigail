@@ -468,6 +468,9 @@ is_typedef(const type_base*);
 typedef_decl*
 is_typedef(type_base*);
 
+const enum_type_decl*
+is_compatible_with_enum_type(const type_base*);
+
 enum_type_decl_sptr
 is_compatible_with_enum_type(const type_base_sptr&);
 
@@ -537,6 +540,9 @@ is_union_type(const type_or_decl_base*);
 
 union_decl_sptr
 is_union_type(const type_or_decl_base_sptr&);
+
+const class_decl*
+is_compatible_with_class_type(const type_base*);
 
 class_decl_sptr
 is_compatible_with_class_type(const type_base_sptr&);

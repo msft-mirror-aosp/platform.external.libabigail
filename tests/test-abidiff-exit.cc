@@ -214,7 +214,8 @@ InOutSpec in_out_specs[] =
     "",
     "",
     "--leaf-changes-only",
-    abigail::tools_utils::ABIDIFF_ABI_CHANGE,
+    abigail::tools_utils::ABIDIFF_ABI_CHANGE
+    | abigail::tools_utils::ABIDIFF_ABI_INCOMPATIBLE_CHANGE,
     "data/test-abidiff-exit/test-leaf-redundant-report.txt",
     "output/test-abidiff-exit/test-leaf-redundant-report.txt"
   },
@@ -1577,6 +1578,36 @@ InOutSpec in_out_specs[] =
     abigail::tools_utils::ABIDIFF_ABI_CHANGE,
     "data/test-abidiff-exit/PR28505-test-report-2.txt",
     "output/test-abidiff-exit/PR28505-test-report-2.txt"
+  },
+  {
+    "data/test-abidiff-exit/test-PR32902/test-PR32902-1.v0.o",
+    "data/test-abidiff-exit/test-PR32902/test-PR32902-1.v1.o",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "--no-default-suppression",
+    abigail::tools_utils::ABIDIFF_OK,
+    "data/test-abidiff-exit/test-PR32902/test-PR32902-1-report-1.txt",
+    "output/test-abidiff-exit/test-PR32902/test-PR32902-1-report-1.txt"
+  },
+  {
+    "data/test-abidiff-exit/test-PR32902/test-PR32902-2.v0.o",
+    "data/test-abidiff-exit/test-PR32902/test-PR32902-2.v1.o",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "--no-default-suppression",
+    abigail::tools_utils::ABIDIFF_OK,
+    "data/test-abidiff-exit/test-PR32902/test-PR32902-2-report-1.txt",
+    "output/test-abidiff-exit/test-PR32902/test-PR32902-2-report-1.txt"
   },
 #ifdef WITH_BTF
   {

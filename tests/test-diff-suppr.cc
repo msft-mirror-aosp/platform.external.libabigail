@@ -474,7 +474,7 @@ InOutSpec in_out_specs[] =
     "",
     "--no-default-suppression --no-show-locs --no-redundant",
     "data/test-diff-suppr/test9-changed-parm-c-report-0.txt",
-    "output/test-diff-suppr/est9-changed-parm-c-report-0.txt"
+    "output/test-diff-suppr/test9-changed-parm-c-report-0.txt"
   },
   {
     "data/test-diff-suppr/libtest9-changed-parm-c-v0.so",
@@ -484,7 +484,7 @@ InOutSpec in_out_specs[] =
     "",
     "--no-default-suppression --no-show-locs --redundant",
     "data/test-diff-suppr/test9-changed-parm-c-report-1.txt",
-    "output/test-diff-suppr/est9-changed-parm-c-report-1.txt"
+    "output/test-diff-suppr/test9-changed-parm-c-report-1.txt"
   },
   {
     "data/test-diff-suppr/libtest10-changed-parm-c-v0.so",

@@ -5799,8 +5799,8 @@ get_last_data_member(const class_or_union_sptr &klass)
 ///
 /// If the class contains any anonymous data member, this function
 /// looks through it to collect the non-anonymous data members that it
-/// contains.  The function also also looks through the base classes
-/// of the current type.
+/// contains.  The function also looks through the base classes of the
+/// current type.
 ///
 /// @param cou the class or union type to consider.
 ///
@@ -10998,6 +10998,23 @@ is_typedef(type_base* t)
 const typedef_decl*
 is_typedef(const type_or_decl_base* t)
 {return dynamic_cast<const typedef_decl*>(t);}
+
+/// Test if a type is an enum. This function looks through typedefs.
+///
+/// @parm t the type to consider.
+///
+/// @return the enum_decl if @p t is an @ref enum_decl or null
+/// otherwise.
+const enum_type_decl*
+is_compatible_with_enum_type(const type_base* t)
+{
+  if (!t)
+    return nullptr;
+
+  type_base* ty = const_cast<type_base*>(peel_typedef_type(t));
+  return is_enum_type(ty);
+}
+
 /// Test if a type is an enum. This function looks through typedefs.
 ///
 /// @parm t the type to consider.
@@ -11049,6 +11066,21 @@ is_enum_type(const type_or_decl_base* d)
 enum_type_decl_sptr
 is_enum_type(const type_or_decl_base_sptr& d)
 {return dynamic_pointer_cast<enum_type_decl>(d);}
+
+/// Test if a type is a class. This function looks through typedefs.
+///
+/// @parm t the type to consider.
+///
+/// @return the class_decl if @p t is a class_decl or null otherwise.
+const class_decl*
+is_compatible_with_class_type(const type_base* t)
+{
+  if(!t)
+    return nullptr;
+
+  const type_base* ty = peel_typedef_type(t);
+  return is_class_type(ty);
+}
 
 /// Test if a type is a class. This function looks through typedefs.
 ///
