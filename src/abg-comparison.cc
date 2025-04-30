@@ -13455,6 +13455,8 @@ struct diff_node_printer : public diff_node_visitor
     do_indent(level_ + 1);
     out_ << "category: "<< d->get_category() << "\n";
     do_indent(level_ + 1);
+    out_ << "local category: "<< d->get_local_category() << "\n";
+    do_indent(level_ + 1);
     out_ << "@: " << std::hex << d << std::dec << "\n";
     do_indent(level_ + 1);
     out_ << "@-canonical: " << std::hex
