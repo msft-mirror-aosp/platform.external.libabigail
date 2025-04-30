@@ -1105,6 +1105,130 @@ report_mem_header(ostream& out,
   out << indent << "there are " << section_name << " " << change << ":\n";
 }
 
+/// Emit a report about a changed function.
+///
+/// @param ctxt the diff context to use for the report.
+///
+/// @param fn_diff the function_diff node to emit the report for.
+///
+/// @param out the output stream to emit the report to.
+///
+/// @param indent the indentation string to use.
+///
+/// @param indirect_changed_subtypes if true, this means there are
+/// indirect sub-types changes.  Indirect means it's a pointed-to-type
+/// that changed.
+///
+/// @param emit_redundant_fn_changes if true, the function reports
+/// about changes carried by @fn_diff even if they are redundant.
+void
+emit_changed_fn_report(const diff_context_sptr& ctxt,
+		       const function_decl_diff_sptr& fn_diff,
+		       ostream& out, const string indent,
+		       bool indirect_changed_subtypes,
+		       bool emit_redundant_fn_changes)
+{
+  bool saved_show_redundant_changes = ctxt->show_redundant_changes();
+  ctxt->show_redundant_changes(emit_redundant_fn_changes);
+
+  if (fn_diff->to_be_reported())
+    {
+      function_decl_sptr fn = fn_diff->first_function_decl();
+      out << indent << "  [C] '"
+	  << fn->get_pretty_representation() << "'";
+      report_loc_info(fn_diff->first_function_decl(), *ctxt, out);
+
+      out << " has some";
+      if (indirect_changed_subtypes)
+	out << " indirect";
+      out << " sub-type changes:\n";
+
+      if ((fn->get_symbol()->has_aliases()
+	   && !(is_member_function(fn)
+		&& get_member_function_is_ctor(fn))
+	   && !(is_member_function(fn)
+		&& get_member_function_is_dtor(fn)))
+	  || (is_c_language(get_translation_unit(fn)->get_language())
+	      && fn->get_name() != fn->get_linkage_name()))
+	{
+	  int number_of_aliases =
+	    fn->get_symbol()->get_number_of_aliases();
+	  if (number_of_aliases == 0)
+	    {
+	      out << indent << "    "
+		  << "Please note that the exported symbol of "
+		"this function is "
+		  << fn->get_symbol()->get_id_string()
+		  << "\n";
+	    }
+	  else
+	    {
+	      out << indent << "    "
+		  << "Please note that the symbol of this function is "
+		  << fn->get_symbol()->get_id_string()
+		  << "\n     and it aliases symbol";
+	      if (number_of_aliases > 1)
+		out << "s";
+	      out << ": "
+		  << fn->get_symbol()->get_aliases_id_string(false)
+		  << "\n";
+	    }
+	}
+      fn_diff->report(out, indent + "    ");
+      // Extra spacing.
+      out << "\n";
+    }
+
+  ctxt->show_redundant_changes(saved_show_redundant_changes);
+}
+
+/// Emit a report about a changed variable.
+///
+/// @param ctxt the diff context to use for the report.
+///
+/// @param fn_diff the var_diff node to emit the report for.
+///
+/// @param out the output stream to emit the report to.
+///
+/// @param indent the indentation string to use.
+///
+/// @param indirect_changed_subtypes if true, this means there are
+/// indirect sub-types changes.  Indirect means it's a pointed-to-type
+/// that changed.
+///
+/// @param emit_redundant_var_changes if true, the function reports
+/// about changes carried by @fn_diff even if they are redundant.
+void
+emit_changed_var_report(const diff_context_sptr& ctxt,
+			const var_diff_sptr& var_diff,
+			ostream& out, const string indent,
+			bool emit_redundant_var_changes)
+{
+  diff_sptr diff = var_diff;
+  if (!diff)
+    return;
+
+  bool saved_show_redundant_changes = ctxt->show_redundant_changes();
+  ctxt->show_redundant_changes(emit_redundant_var_changes);
+
+  if (diff->to_be_reported())
+    {
+      string n1 = diff->first_subject()->get_pretty_representation();
+      string n2 = diff->second_subject()->get_pretty_representation();
+
+      out << indent << "  [C] '" << n1 << "' was changed";
+      if (n1 != n2)
+	out << " to '" << n2 << "'";
+      report_loc_info(diff->second_subject(), *ctxt, out);
+      out << ":\n";
+      diff->report(out, indent + "    ");
+      // Extra spacing.
+      out << "\n";
+    }
+
+  ctxt->show_redundant_changes(saved_show_redundant_changes);
+}
+
 /// Report the differences in access specifiers and static-ness for
 /// class members.
 ///

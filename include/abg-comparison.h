@@ -2798,16 +2798,24 @@ public:
   size_t num_leaf_func_changes() const;
   void num_leaf_func_changes(size_t);
 
+  size_t num_leaf_func_with_incompatible_changes() const;
+  void num_leaf_func_with_incompatible_changes(size_t);
+
   size_t num_leaf_func_changes_filtered_out() const;
   void num_leaf_func_changes_filtered_out(size_t);
   size_t net_num_leaf_func_changes() const;
+  size_t net_num_leaf_func_non_incompatible_changes() const;
 
   size_t num_leaf_var_changes() const;
   void num_leaf_var_changes(size_t);
 
+  size_t num_leaf_var_with_incompatible_changes() const;
+  void num_leaf_var_with_incompatible_changes(size_t);
+
   size_t num_leaf_var_changes_filtered_out() const;
   void num_leaf_var_changes_filtered_out(size_t);
   size_t net_num_leaf_var_changes() const;
+  size_t net_num_leaf_var_non_incompatible_changes() const;
 
   size_t num_added_unreachable_types() const;
   void num_added_unreachable_types(size_t);

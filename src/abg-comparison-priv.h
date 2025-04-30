@@ -1350,8 +1350,10 @@ struct corpus_diff::diff_stats::priv
   size_t		num_leaf_type_changes;
   size_t		num_leaf_type_changes_filtered_out;
   size_t		num_leaf_func_changes;
+  size_t		num_leaf_func_with_incompatible_changes;
   size_t		num_leaf_func_changes_filtered_out;
   size_t		num_leaf_var_changes;
+  size_t		num_leaf_var_with_incompatible_changes;
   size_t		num_leaf_var_changes_filtered_out;
   size_t		num_added_unreachable_types;
   size_t		num_added_unreachable_types_filtered_out;
@@ -1392,8 +1394,10 @@ struct corpus_diff::diff_stats::priv
       num_leaf_type_changes(),
       num_leaf_type_changes_filtered_out(),
       num_leaf_func_changes(),
+      num_leaf_func_with_incompatible_changes(),
       num_leaf_func_changes_filtered_out(),
       num_leaf_var_changes(),
+      num_leaf_var_with_incompatible_changes(),
       num_leaf_var_changes_filtered_out(),
       num_added_unreachable_types(),
       num_added_unreachable_types_filtered_out(),

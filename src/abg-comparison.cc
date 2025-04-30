@@ -9536,6 +9536,24 @@ void
 corpus_diff::diff_stats::num_leaf_func_changes(size_t n)
 {priv_->num_leaf_func_changes = n;}
 
+/// Getter for the number of leaf function diff nodes that carry
+/// incompatible changes.
+///
+/// @return the number of leaf function diff nodes that carry
+/// incompatible changes.
+size_t
+corpus_diff::diff_stats::num_leaf_func_with_incompatible_changes() const
+{return priv_->num_leaf_func_with_incompatible_changes;}
+
+/// Setter for the number of leaf function diff nodes that carry
+/// incompatible changes.
+///
+/// @param n the new number of leaf function diff nodes that carry
+/// incompatible changes.
+void
+corpus_diff::diff_stats::num_leaf_func_with_incompatible_changes(size_t n)
+{priv_->num_leaf_func_with_incompatible_changes = n;}
+
 /// Getter for the number of leaf function change diff nodes that were
 /// filtered out.
 ///
@@ -9565,6 +9583,18 @@ size_t
 corpus_diff::diff_stats::net_num_leaf_func_changes() const
 {return num_leaf_func_changes() - num_leaf_func_changes_filtered_out();}
 
+/// Getter for the net number of leaf function diff nodes that carry
+/// changes that are NOT incompatible.
+///
+/// @return net number of leaf function diff nodes that carry changes
+/// that are NOT incompatible.
+size_t
+corpus_diff::diff_stats::net_num_leaf_func_non_incompatible_changes() const
+{
+  return (net_num_leaf_func_changes()
+	  - num_leaf_func_with_incompatible_changes());
+}
+
 /// Getter for the number of leaf variable change diff nodes.
 ///
 /// @return the number of leaf variable change diff nodes.
@@ -9578,6 +9608,24 @@ corpus_diff::diff_stats::num_leaf_var_changes() const
 void
 corpus_diff::diff_stats::num_leaf_var_changes(size_t n)
 {priv_->num_leaf_var_changes = n;}
+
+/// Getter for the number of leaf variable diff nodes that carry
+/// incompatible changes.
+///
+/// @return the number of leaf variable diff nodes that carry
+/// incompatible changes.
+size_t
+corpus_diff::diff_stats::num_leaf_var_with_incompatible_changes() const
+{return priv_->num_leaf_var_with_incompatible_changes;}
+
+/// Setter for the number of leaf variable diff nodes that carry
+/// incompatible changes.
+///
+/// @param n the new number of leaf variable diff nodes that carry
+/// incompatible changes.
+void
+corpus_diff::diff_stats::num_leaf_var_with_incompatible_changes(size_t n)
+{priv_->num_leaf_var_with_incompatible_changes = n;}
 
 /// Getter of the number of added types that are unreachable from the
 /// public interface of the ABI corpus.
@@ -9804,7 +9852,14 @@ size_t
 corpus_diff::diff_stats::net_num_leaf_var_changes() const
 {return num_leaf_var_changes() - num_leaf_var_changes_filtered_out();}
 
-
+/// Getter for the net number of leaf variable diff nodes that carry
+/// changes that are NOT incompatible.
+///
+/// @return the net number of leaf variable diff nodes that carry
+/// changes that are NOT incompatible.
+size_t
+corpus_diff::diff_stats::net_num_leaf_var_non_incompatible_changes() const
+{return net_num_leaf_var_changes() - num_leaf_var_with_incompatible_changes();}
 // <corpus_diff stuff>
 
 /// Getter of the context associated with this corpus.
@@ -11131,6 +11186,11 @@ corpus_diff::priv::apply_filters_and_compute_diff_stats(diff_stats& stat)
 	  stat.num_func_with_incompatible_changes
 	    (stat.num_func_with_incompatible_changes() + 1);
 
+	  if ((*i)->has_local_changes())
+	    // The function is a leaf node.
+	    stat.num_leaf_func_with_incompatible_changes
+	      (stat.num_leaf_func_with_incompatible_changes() + 1);
+
 	  if ((*i)->is_filtered_out())
 	    {
 	      // If the incompatible change was filtered-out (possibly
@@ -11164,6 +11224,7 @@ corpus_diff::priv::apply_filters_and_compute_diff_stats(diff_stats& stat)
        i != sorted_changed_vars_.end();
        ++i)
     {
+      bool incompatible_change = false;
       if ((*i)->is_filtered_out())
 	{
 	  stat.num_changed_vars_filtered_out
@@ -11178,6 +11239,7 @@ corpus_diff::priv::apply_filters_and_compute_diff_stats(diff_stats& stat)
 	{
 	  if (filtering::has_var_harmful_local_change(*i))
 	    {
+	      incompatible_change = true;
 	      incompatible_changed_vars_.push_back(*i);
 	      stat.num_var_with_local_harmful_changes
 		(stat.num_var_with_local_harmful_changes() + 1);
@@ -11197,8 +11259,14 @@ corpus_diff::priv::apply_filters_and_compute_diff_stats(diff_stats& stat)
 	}
 
       if ((*i)->has_local_changes())
-	stat.num_leaf_var_changes
-	  (stat.num_leaf_var_changes() + 1);
+	{
+	  stat.num_leaf_var_changes
+	    (stat.num_leaf_var_changes() + 1);
+
+	  if (incompatible_change)
+	    stat.num_leaf_var_with_incompatible_changes
+	      (stat.num_leaf_var_with_incompatible_changes() + 1);
+	}
     }
 
   if (get_context()->do_log())
