@@ -264,7 +264,14 @@ AC_ARG_WITH(libelf,
 			   [Set the path to the libelf library prefix]),
 	    WITH_ELF_LIBS_PATH=$withval,
 	    WITH_ELF_LIBS_PATH=auto)
-			  
+
+WITH_LIBXML2_PATH=auto
+AC_ARG_WITH(libxml2,
+	    AS_HELP_STRING([--with-libxml2=/path/to/libxml2-library/prefix],
+			   [Set the path to the libxml2 library prefix]),
+	    WITH_LIBXML2_PATH=$withval,
+	    WITH_LIBXML2_PATH=auto)
+
 dnl *************************************************
 dnl check for dependencies
 dnl *************************************************
@@ -526,7 +533,16 @@ fi
 
 dnl Check for dependency: libxml
 LIBXML2_VERSION=2.6.22
+SAVED_PKG_CONFIG_PATH=$PKG_CONFIG_PATH
+if test $WITH_LIBXML2_PATH != xauto; then
+  export PKG_CONFIG_PATH="$WITH_LIBXML2_PATH/lib/pkgconfig:$PKG_CONFIG_PATH"
+fi
+
+AC_MSG_NOTICE([used PKG_CONFIG_PATH=$PKG_CONFIG_PATH to check for libxml2]);
 PKG_CHECK_MODULES(XML, libxml-2.0 >= $LIBXML2_VERSION)
+if test $WITH_LIBXML2_PATH != xauto; then
+  PKG_CONFIG_PATH=$SAVED_PKG_CONFIG_PATH
+fi
 
 AC_SUBST(LIBXML2_VERSION)
 AC_SUBST(XML_LIBS)
@@ -1662,6 +1678,8 @@ AC_MSG_NOTICE([
     ELF_CFLAGS					   : ${ELF_CFLAGS}
     DW_LIBS					   : ${DW_LIBS}
     DW_CFLAGS					   : ${DW_CFLAGS}
+    XML_LIBS					   $ ${XML_LIBS}
+    XML_CFLAGS					   $ ${XML_CFLAGS}
     DEPS_LIBS					   $ ${DEPS_LIBS}
     Python					   : ${PYTHON}
 
