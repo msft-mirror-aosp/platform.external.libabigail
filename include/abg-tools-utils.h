@@ -408,7 +408,9 @@ create_best_elf_based_reader(const string& elf_file_path,
 ///        while (nb_bytes_read && !input_stream.bad())
 ///          {
 ///            for (auto c : decompressed_data)
-///            std::out << c;
+///              std::out << c;
+///            input_stream.read(decompressed_data.data(), BUFFER_SIZE);
+///            nb_bytes_read = input_stream.gcount();
 ///          }
 ///        input_file.close();
 ///
