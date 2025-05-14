@@ -3533,7 +3533,7 @@ xz_decompressor_type::~xz_decompressor_type()
 }
 
 /// The implementation of the virtual protected
-/// std:streambuf::underlying method.  This method is invoked by the
+/// std:streambuf::underflow method.  This method is invoked by the
 /// std::streambuf facility to re-fill its internals buffers with data
 /// coming from the associated input stream and to update the gptr()
 /// and egptr() pointers by using the std::streambuf::setg method.
@@ -3549,24 +3549,26 @@ xz_decompressor_type::underflow()
   // Let's read 'nr' bytes of xz data into inbuf
   priv_->xz_istream.read(priv_->inbuf, sizeof(priv_->inbuf));
   size_t nr = priv_->xz_istream.gcount();
-  if (nr == 0)
+
+  if (nr != 0)
     {
-      // Tell the lzma machinery that we've reached the end of the
-      // data.
-      lzma_ret result = lzma_code(&priv_->lzma, LZMA_FINISH);
-      ABG_ASSERT(result == LZMA_OK || result == LZMA_STREAM_END);
-      return EOF;
+      // So there is fresh compressed input to be decompressed.  Let's
+      // prepare the lzma input stream machinery then.
+      priv_->lzma.avail_in = nr;
+      priv_->lzma.next_in = reinterpret_cast<uint8_t*>(priv_->inbuf);
     }
 
-  // Let's prepare the lzma input/output stream/machinery.
-  priv_->lzma.avail_in = nr;
-  priv_->lzma.next_in = reinterpret_cast<uint8_t*>(priv_->inbuf);
+  if (priv_->lzma.avail_out || priv_->lzma.avail_in)
+    {
+      // There is still compressed data in the lzma context to
+      // decompress, so let's tell lzma where to put the decompressed
+      // data.
+      priv_->lzma.avail_out = sizeof(priv_->outbuf);
+      priv_->lzma.next_out = reinterpret_cast<uint8_t*>(priv_->outbuf);
+    }
 
-  priv_->lzma.avail_out = sizeof(priv_->outbuf);
-  priv_->lzma.next_out = reinterpret_cast<uint8_t*>(priv_->outbuf);
-
-  // Let's now ask the lzma machinery to decompress the inbuf and
-  // put the result into outbuf.
+  // Let's now ask the lzma machinery to decompress the next_in buffer
+  // and put the result into the next_out buffer.
   lzma_ret result = lzma_code(&priv_->lzma, LZMA_RUN);
   if (result != LZMA_OK && result != LZMA_STREAM_END)
     {
@@ -3591,7 +3593,12 @@ xz_decompressor_type::underflow()
   if (nr_decompressed_bytes > 0)
     return *gptr();
 
-  return EOF;
+  // If we reached this point, then it means we there is no more
+  // decompressed bytes in the decompressed stream.  Tell the lzma
+  // machinery that we've reached the end of the data.
+  result = lzma_code(&priv_->lzma, LZMA_FINISH);
+  ABG_ASSERT(result == LZMA_OK || result == LZMA_STREAM_END);
+  return traits_type::eof();
 }
 
 /// ---------------------------------------------------
