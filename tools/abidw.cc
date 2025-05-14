@@ -1144,6 +1144,8 @@ main(int argc, char* argv[])
 {
   options opts;
 
+  abigail::tools_utils::initialize();
+
   if (!parse_command_line(argc, argv, opts)
       || (opts.in_file_path.empty()
 	  && !opts.display_version

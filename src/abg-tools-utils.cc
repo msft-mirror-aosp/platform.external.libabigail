@@ -55,6 +55,7 @@
 #endif
 #include "abg-internal.h"
 #include "abg-regex.h"
+#include "abg-libxml-utils.h"
 
 // <headers defining libabigail's API go under here>
 ABG_BEGIN_EXPORT_DECLARATIONS
@@ -89,8 +90,7 @@ namespace tools_utils
 void
 initialize()
 {
-  LIBXML_TEST_VERSION;
-  xmlInitParser();
+  xml::initialize();
 }
 
 /// Get the value of $libdir variable of the autotools build
@@ -1831,9 +1831,13 @@ get_decompressed_streambuf(std::istream& compressed_input,
 ///
 /// @param file_path the path to the file to consider.
 ///
+/// @param look_through_compression if true, then decompress the file
+/// and try to guess the type of the decompressed content.  Otherwise,
+/// just return that it's a compressed type.
+///
 /// @return the type of content guessed.
 file_type
-guess_file_type(const string& file_path)
+guess_file_type(const string& file_path, bool look_through_compression)
 {
   if (is_dir(file_path))
     return FILE_TYPE_DIR;
@@ -1862,9 +1866,15 @@ guess_file_type(const string& file_path)
   if (string_ends_with(file_path, ".lzma")
       || string_ends_with(file_path, ".lz")
       || string_ends_with(file_path, ".xz"))
-    compr_kind = COMPRESSION_KIND_XZ;
+    {
+      r = FILE_TYPE_XZ;
+      compr_kind = COMPRESSION_KIND_XZ;
+    }
   // else if there are other compression schemes supported, recognize
   // their file suffix here!
+
+  if (is_compressed_file_type(r) && !look_through_compression)
+    return r;
 
   do
     {
@@ -1891,11 +1901,16 @@ guess_file_type(const string& file_path)
 	  compr_kind = is_compressed_file_type(r);
 	  if (compr_kind)
 	    {
-	      // yes, we found out the input file is compressed, so we
-	      // do have the means to decompress it.  However, we
-	      // haven't yet gotten the de-compressor; that might be
-	      // because we detected the compression just by looking
-	      // at the file name suffix.  Let's go back to calling
+	      if (!look_through_compression)
+		// The caller wants us to report that this file is
+		// compressed.
+		return r;
+
+	      // We found out the input file is compressed, so we do
+	      // have the means to decompress it.  However, we haven't
+	      // yet gotten the de-compressor; that might be because
+	      // we detected the compression just by looking at the
+	      // file name suffix.  Let's go back to calling
 	      // get_decompressed_streambuf again to get the
 	      // decompressor.
 	      ;
@@ -3498,13 +3513,12 @@ struct xz_decompressor_type::priv
 {
   std::istream& xz_istream;
   lzma_stream lzma;
-  // A 10k bytes buffer for xz data coming from the
-  // xz'ed istream.  That buffer is going to be fed into the lzma
-  // decoding machinery.
-  char inbuf[1024 * 10] = {};
-  // A 10k bytes buffer for decompressed data coming
-  // out of the lzma machinery
-  char outbuf[1024 * 10] = {};
+  // A 100k bytes buffer for xz data coming from the xz'ed istream.
+  // That buffer is going to be fed into the lzma decoding machinery.
+  char inbuf[1024 * 100] = {};
+  // A 100k bytes buffer for decompressed data coming out of the lzma
+  // machinery
+  char outbuf[1024 * 100] = {};
 
   priv(std::istream& i)
     : xz_istream(i),

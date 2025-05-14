@@ -1313,6 +1313,8 @@ display_dependencies(const string& prog_name,
 int
 main(int argc, char* argv[])
 {
+  abigail::tools_utils::initialize();
+
   options opts;
   if (!parse_command_line(argc, argv, opts))
     {

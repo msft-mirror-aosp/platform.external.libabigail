@@ -339,7 +339,8 @@ operator<<(ostream& output, file_type r);
 
 file_type guess_file_type(istream& in);
 
-file_type guess_file_type(const string& file_path);
+file_type guess_file_type(const string& file_path,
+			  bool look_through_compression = true);
 
 bool
 get_rpm_name(const string& str, string& name);

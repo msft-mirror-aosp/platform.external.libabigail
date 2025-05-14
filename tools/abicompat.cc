@@ -911,6 +911,8 @@ main(int argc, char* argv[])
 {
   options opts(argv[0]);
 
+  abigail::tools_utils::initialize();
+
   if (!parse_command_line(argc, argv, opts))
     {
       if (!opts.unknow_option.empty())

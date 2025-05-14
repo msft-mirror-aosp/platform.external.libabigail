@@ -702,6 +702,8 @@ set_reader_options(abigail::fe_iface& reader, const options& opts)
 int
 main(int argc, char* argv[])
 {
+  abigail::tools_utils::initialize();
+
   options opts;
   if (!parse_command_line(argc, argv, opts))
     {

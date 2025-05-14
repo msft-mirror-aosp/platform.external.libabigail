@@ -4010,6 +4010,8 @@ parse_command_line(int argc, char* argv[], options& opts)
 int
 main(int argc, char* argv[])
 {
+  abigail::tools_utils::initialize();
+
   options opts(argv[0]);
 
   if (!parse_command_line(argc, argv, opts))
@@ -4262,8 +4264,6 @@ main(int argc, char* argv[])
       return (abigail::tools_utils::ABIDIFF_USAGE_ERROR
 	      | abigail::tools_utils::ABIDIFF_ERROR);
     }
-
-  abigail::tools_utils::initialize();
 
   if (opts.self_check)
     return compare_to_self(first_package_set, opts);
