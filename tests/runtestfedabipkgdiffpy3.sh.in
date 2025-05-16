@@ -8,7 +8,7 @@
 
 PY3_TEMP=$(mktemp -d --tmpdir libabigail-py3-temp-XXXXXXXX)
 
-ln -s $(which @PYTHON3_INTERPRETER@) $PY3_TEMP/python
+ln -s $(command -v @PYTHON3_INTERPRETER@) $PY3_TEMP/python
 
 export PATH=$PY3_TEMP:$PATH
 
