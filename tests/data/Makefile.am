@@ -507,6 +507,11 @@ test-abidiff-exit/test-PR32902/test-PR32902-2.v0.c \
 test-abidiff-exit/test-PR32902/test-PR32902-2.v0.o \
 test-abidiff-exit/test-PR32902/test-PR32902-2.v1.c \
 test-abidiff-exit/test-PR32902/test-PR32902-2.v1.o \
+test-abidiff-exit/replace-dm-with-compatible-anon-dm-1-v0.c \
+test-abidiff-exit/replace-dm-with-compatible-anon-dm-1-v0.o \
+test-abidiff-exit/replace-dm-with-compatible-anon-dm-1-v1.c \
+test-abidiff-exit/replace-dm-with-compatible-anon-dm-1-v1.o \
+test-abidiff-exit/replace-dm-with-compatible-anon-dm-1-report-1.txt \
 \
 test-diff-dwarf/test0-v0.cc		\
 test-diff-dwarf/test0-v0.o			\

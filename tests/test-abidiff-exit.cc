@@ -1609,6 +1609,21 @@ InOutSpec in_out_specs[] =
     "data/test-abidiff-exit/test-PR32902/test-PR32902-2-report-1.txt",
     "output/test-abidiff-exit/test-PR32902/test-PR32902-2-report-1.txt"
   },
+  {
+    "data/test-abidiff-exit/replace-dm-with-compatible-anon-dm-1-v0.o",
+    "data/test-abidiff-exit/replace-dm-with-compatible-anon-dm-1-v1.o",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "--no-default-suppression",
+    abigail::tools_utils::ABIDIFF_OK,
+    "data/test-abidiff-exit/replace-dm-with-compatible-anon-dm-1-report-1.txt",
+    "output/test-abidiff-exit/replace-dm-with-compatible-anon-dm-1-report-1.txt"
+  },
 #ifdef WITH_BTF
   {
     "data/test-abidiff-exit/btf/test0-v0.o",

@@ -148,6 +148,26 @@ has_incompatible_fn_or_var_change(const diff* d);
 bool
 has_incompatible_fn_or_var_change(const diff_sptr& d);
 
+bool
+is_type_to_compatible_anonymous_type_change(const diff* d);
+
+bool
+is_type_to_compatible_anonymous_type_change(const diff_sptr& d);
+
+bool
+is_type_to_compatible_anonymous_type_change(const type_base_sptr&,
+					    const type_base_sptr&);
+
+bool
+is_data_member_to_compatible_anonymous_dm_change(const diff* d);
+
+bool
+is_data_member_to_compatible_anonymous_dm_change(const diff_sptr& d);
+
+bool
+is_data_member_to_compatible_anonymous_dm_change(const decl_base_sptr&,
+						 const decl_base_sptr&);
+
 struct filter_base;
 /// Convenience typedef for a shared pointer to filter_base
 typedef shared_ptr<filter_base> filter_base_sptr;

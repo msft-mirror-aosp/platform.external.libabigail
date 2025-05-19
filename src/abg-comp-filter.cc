@@ -902,6 +902,7 @@ is_non_compatible_distinct_change(const diff *d)
     {
       if (dd->compatible_child_diff()
 	  || is_compatible_type_change(d)
+	  || is_type_to_compatible_anonymous_type_change(d)
 	  || (!dd->first_subject() || !dd->second_subject()))
 	// The distinct diff node carries a compatible or benign
 	// change
@@ -961,7 +962,18 @@ has_harmless_name_change(const decl_base_sptr& f,
 	      || (is_type(f)
 		  && is_type(s)
 		  && types_are_compatible(is_type(f), is_type(s)))
+	      // ... a harmless enum change ...
 	      || has_harmless_enum_change(is_type(f), is_type(s), ctxt)
+	      // ... a type replaced by a compatible anonymous union
+	      // or struct ...
+	      || (is_type(f) && is_type(s)
+		  && is_type_to_compatible_anonymous_type_change(is_type(f),
+								 is_type(s)))
+	      // ... a data member replaced by a compatible anonymous
+	      // data member ...
+	      || (is_data_member(f) && is_data_member(s)
+		  && is_data_member_to_compatible_anonymous_dm_change(is_decl(f),
+								      is_decl(s)))
 	      // ... or a data member name change, without having its
 	      // type changed ...
 	      || (is_data_member(f)
@@ -1853,8 +1865,10 @@ is_mostly_distinct_diff(const diff *d)
 bool
 has_anonymous_data_member_change(const diff *d)
 {
-  if (is_anonymous_data_member(d->first_subject())
-      || is_anonymous_data_member(d->second_subject()))
+  if ((is_anonymous_data_member(d->first_subject())
+       && !is_anonymous_data_member(d->second_subject()))
+      || (is_anonymous_data_member(d->second_subject())
+	  && !is_anonymous_data_member(d->first_subject())))
     return true;
   return false;
 }
@@ -2396,6 +2410,157 @@ has_incompatible_fn_or_var_change(const diff* d)
 bool
 has_incompatible_fn_or_var_change(const diff_sptr& d)
 {return has_incompatible_fn_or_var_change(d.get());}
+
+/// Test if a diff node carries a change where a type T is modified
+/// into an anonymous type T' of the same size which contains a data
+/// member of the same type as T.
+///
+/// T and T' are thus said to be compatible.
+///
+/// @param d the diff node to consider.
+///
+/// @return true iff @p d carriesa change where a type T is modified
+/// into an anonymous type T' of the same size which contains a data
+/// member of the same type as T.
+bool
+is_type_to_compatible_anonymous_type_change(const diff_sptr& d)
+{return is_type_to_compatible_anonymous_type_change(d.get());}
+
+/// Test if a diff node carries a change where a type T is modified
+/// into an anonymous type T' of the same size which contains a data
+/// member of the same type as T.
+///
+/// T and T' are thus said to be compatible.
+///
+/// @param d the diff node to consider.
+///
+/// @return true iff @p d carriesa change where a type T is modified
+/// into an anonymous type T' of the same size which contains a data
+/// member of the same type as T.
+bool
+is_type_to_compatible_anonymous_type_change(const diff* d)
+{
+  type_base_sptr fs = is_type(d->first_subject());
+  type_base_sptr ss = is_type(d->second_subject());
+
+  return is_type_to_compatible_anonymous_type_change(fs, ss);
+}
+
+/// Test if a type 'F' is modified into an anonymous type 'S' of the
+/// same size which contains a data member of the same type as 'F'.
+///
+/// F and S are thus said to be compatible.
+///
+/// @param F the first type to consider.
+///
+/// @param S the second version of type @p S to consider.
+///
+/// @return true iff @p 'F' is modified into an anonymous type 'S' of
+/// the same size which contains a data member of the same type as
+/// 'F'.
+bool
+is_type_to_compatible_anonymous_type_change(const type_base_sptr& f,
+					    const type_base_sptr& s)
+
+{
+  if (!f || !s)
+    return false;
+
+  if (is_anonymous_type(f) || !is_anonymous_type(s))
+    return false;
+
+  class_or_union_sptr second_cou = is_class_or_union_type(s);
+  if (!second_cou)
+    return false;
+
+  if (f->get_size_in_bits() != second_cou->get_size_in_bits()
+      || f->get_alignment_in_bits() != second_cou->get_alignment_in_bits())
+    return false;
+
+  string_decl_base_sptr_map non_anonymous_dms_in_second_class;
+  collect_non_anonymous_data_members(second_cou,
+				       non_anonymous_dms_in_second_class);
+  for (const auto& entry : non_anonymous_dms_in_second_class)
+    if (var_decl_sptr dm = is_data_member(entry.second))
+      if (type_base_sptr t = dm->get_type())
+	if (types_are_compatible(f, t))
+	return true;
+
+  return false;
+}
+
+/// Test if a diff node carries a change where a data member F is
+/// modified into an anonymous data member S that contains F at the
+/// same offset.
+///
+/// F and S are thus said to be compatible.
+///
+/// @param d the diff node to consider.
+///
+/// @return true iff @p d carries a change where a data member F is
+/// modified into an anonymous data member S that contains F at the
+/// same offset.
+bool
+is_data_member_to_compatible_anonymous_dm_change(const diff* d)
+{
+  var_decl_sptr f_dm = is_data_member(d->first_subject());
+  var_decl_sptr s_dm = is_data_member(d->second_subject());
+  return is_data_member_to_compatible_anonymous_dm_change(f_dm, s_dm);
+}
+
+/// Test if a diff node carries a change where a data member F is
+/// modified into an anonymous data member S that contains F at the
+/// same offset.
+///
+/// F and S are thus said to be compatible.
+///
+/// @param d the diff node to consider.
+///
+/// @return true iff @p d carries a change where a data member F is
+/// modified into an anonymous data member S that contains F at the
+/// same offset.
+bool
+is_data_member_to_compatible_anonymous_dm_change(const diff_sptr& d)
+{return is_data_member_to_compatible_anonymous_dm_change(d.get());}
+
+/// Test if a data member F is modified into an anonymous data member
+/// S that contains F at the same offset.
+///
+/// F and S are thus said to be compatible.
+///
+/// @param f the first data member to consider.
+///
+/// @param s the second data member to consider.
+///
+/// @return true iff @p f is modified into @p s that contains F at the
+/// same offset.
+bool
+is_data_member_to_compatible_anonymous_dm_change(const decl_base_sptr& f,
+						 const decl_base_sptr& s)
+{
+  var_decl_sptr f_dm = is_data_member(f);
+  var_decl_sptr s_dm = is_data_member(s);
+
+  if (!f_dm || !s_dm)
+    return false;
+
+  if (is_anonymous_data_member(f_dm)
+      || !is_anonymous_data_member(s_dm)
+      || get_data_member_offset(f_dm) != get_data_member_offset(s_dm))
+    return false;
+
+  string_decl_base_sptr_map non_anonymous_dms_in_second_dm;
+  class_or_union_sptr cou = anonymous_data_member_to_class_or_union(s_dm);
+  ABG_ASSERT(cou);
+  collect_non_anonymous_data_members(cou, non_anonymous_dms_in_second_dm);
+
+  for (const auto& entry : non_anonymous_dms_in_second_dm)
+    if (var_decl_sptr dm = is_data_member(entry.second))
+      if (types_are_compatible(f_dm->get_type(), dm->get_type()))
+	return true;
+
+  return false;
+}
 
 /// Test if a variable diff node carries a CV qualifier change on its type.
 ///
