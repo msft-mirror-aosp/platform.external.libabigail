@@ -100,151 +100,6 @@ find_alt_dwarf_debug_info_link(Dwfl_Module *elf_module,
   return false;
 }
 
-/// Find alternate debuginfo file of a given "link" under a set of
-/// root directories.
-///
-/// The link is a string that is read by the function
-/// find_alt_dwarf_debug_info_link().  That link is a path that is relative
-/// to a given debug info file, e.g, "../../../.dwz/something.debug".
-/// It designates the alternate debug info file associated to a given
-/// debug info file.
-///
-/// This function will thus try to find the .dwz/something.debug file
-/// under some given root directories.
-///
-/// @param root_dirs the set of root directories to look from.
-///
-/// @param alt_file_name a relative path to the alternate debug info
-/// file to look for.
-///
-/// @param alt_file_path the resulting absolute path to the alternate
-/// debuginfo path denoted by @p alt_file_name and found under one of
-/// the directories in @p root_dirs.  This is set iff the function
-/// returns true.
-///
-/// @return true iff the function found the alternate debuginfo file.
-static bool
-find_alt_dwarf_debug_info_path(const vector<char**> root_dirs,
-			       const string &alt_file_name,
-			       string &alt_file_path)
-{
-  if (alt_file_name.empty())
-    return false;
-
-  string altfile_name = tools_utils::trim_leading_string(alt_file_name, "../");
-  // In case the alt dwarf debug info file is to be found under
-  // "/usr/lib/debug", look for it under the provided root directories
-  // instead.
-  altfile_name = tools_utils::trim_leading_string(altfile_name,
-						  "/usr/lib/debug/");
-
-  for (vector<char**>::const_iterator i = root_dirs.begin();
-       i != root_dirs.end();
-       ++i)
-    if (tools_utils::find_file_under_dir(**i, altfile_name, alt_file_path))
-      return true;
-
-  return false;
-}
-
-/// Return the alternate debug info associated to a given main debug
-/// info file.
-///
-/// @param elf_module the elf module to consider.
-///
-/// @param debug_root_dirs a set of root debuginfo directories under
-/// which too look for the alternate debuginfo file.
-///
-/// @param alt_file_name output parameter.  This is set to the file
-/// path of the alternate debug info file associated to @p elf_module.
-/// This is set iff the function returns a non-null result.
-///
-/// @param alt_fd the file descriptor used to access the alternate
-/// debug info.  If this parameter is set by the function, then the
-/// caller needs to fclose it, otherwise the file descriptor is going
-/// to be leaked.  Note however that on recent versions of elfutils
-/// where libdw.h contains the function dwarf_getalt(), this parameter
-/// is set to 0, so it doesn't need to be fclosed.
-///
-/// Note that the alternate debug info file is a DWARF extension as of
-/// DWARF 4 ans is decribed at
-/// http://www.dwarfstd.org/ShowIssue.php?issue=120604.1.
-///
-/// @return the alternate debuginfo, or null.  If @p alt_fd is
-/// non-zero, then the caller of this function needs to call
-/// dwarf_end() on the returned alternate debuginfo pointer,
-/// otherwise, it's going to be leaked.
-static Dwarf*
-find_alt_dwarf_debug_info(Dwfl_Module *elf_module,
-			  const vector<char**> debug_root_dirs,
-			  string& alt_file_name,
-			  int& alt_fd)
-{
-  if (elf_module == 0)
-    return 0;
-
-  Dwarf* result = 0;
-  find_alt_dwarf_debug_info_link(elf_module, alt_file_name);
-
-#ifdef LIBDW_HAS_DWARF_GETALT
-  // We are on recent versions of elfutils where the function
-  // dwarf_getalt exists, so let's use it.
-  Dwarf_Addr bias = 0;
-  Dwarf* dwarf = dwfl_module_getdwarf(elf_module, &bias);
-  result = dwarf_getalt(dwarf);
-  alt_fd = 0;
-#else
-  // We are on an old version of elfutils where the function
-  // dwarf_getalt doesn't exist yet, so let's open code its
-  // functionality
-  char *alt_name = 0;
-  const char *file_name = 0;
-  void **user_data = 0;
-  Dwarf_Addr low_addr = 0;
-  char *alt_file = 0;
-
-  file_name = dwfl_module_info(elf_module, &user_data,
-			       &low_addr, 0, 0, 0, 0, 0);
-
-  alt_fd = dwfl_standard_find_debuginfo(elf_module, user_data,
-					file_name, low_addr,
-					alt_name, file_name,
-					0, &alt_file);
-
-  result = dwarf_begin(alt_fd, DWARF_C_READ);
-#endif
-
-  if (result == 0)
-    {
-      // So we didn't find the alternate debuginfo file from the
-      // information that is in the debuginfo file associated to
-      // elf_module.  Maybe the alternate debuginfo file is located
-      // under one of the directories in debug_root_dirs.  So let's
-      // look in there.
-      string alt_file_path;
-      if (!find_alt_dwarf_debug_info_path(debug_root_dirs,
-					  alt_file_name,
-					  alt_file_path))
-	return result;
-
-      // If we reach this point it means we have found the path to the
-      // alternate debuginfo file and it's in alt_file_path.  So let's
-      // open it and read it.
-      alt_fd = open(alt_file_path.c_str(), O_RDONLY);
-      if (alt_fd == -1)
-	return result;
-      result = dwarf_begin(alt_fd, DWARF_C_READ);
-
-#ifdef LIBDW_HAS_DWARF_GETALT
-      Dwarf_Addr bias = 0;
-      Dwarf* dwarf = dwfl_module_getdwarf(elf_module, &bias);
-      dwarf_setalt(dwarf, result);
-#endif
-    }
-
-  return result;
-}
-
 /// Private data of the @ref elf::reader type.
 struct reader::priv
 {
@@ -258,6 +113,14 @@ struct reader::priv
   mutable symtab_reader::symtab_sptr	symt;
   // Where split debug info is to be searched for on disk.
   vector<char**>			debug_info_root_paths;
+  // The formatted string version of debug_info_root_paths.  The
+  // format is according to what elfutils expects.  For the details of
+  // what elfutils expects, please read the comments of the function
+  // dwfl_build_id_find_elf in /usr/include/elfutils/libdwfl.h.
+  string				formated_di_root_paths;
+  // A pointer to where the string held by formated_di_root_paths is.
+  // This is fed to elfutils.
+  char*				raw_formated_di_root_paths = nullptr;
   // Some very useful callback functions that elfutils needs to
   // perform various tasks.
   Dwfl_Callbacks			offline_callbacks;
@@ -311,6 +174,8 @@ struct reader::priv
     dt_needed.clear();
     symt.reset();
     debug_info_root_paths = debug_info_roots;
+    formated_di_root_paths.clear();
+    raw_formated_di_root_paths = nullptr;
     memset(&offline_callbacks, 0, sizeof(offline_callbacks));
     dwfl_handle.reset();
     elf_module = nullptr;
@@ -324,6 +189,31 @@ struct reader::priv
     alt_ctf_fd = 0;
   }
 
+  /// Initialize the debug info root path.  The format of this path is
+  /// described in /usr/include/elfutils/libdwfl.h in the comment for
+  /// the function dwfl_build_id_find_elf.
+  ///
+  /// The string must start with '-' to disable CRC32 checksum
+  /// validation.  Directories must be separated by the ':' character.
+  /// The search order depends on if each path is absolute or relative
+  /// as described by that comment.
+  ///
+  /// In any case, let's format the debuginfo search path here for
+  /// elfutils consumption.
+  void
+  initialize_debug_info_root_paths()
+  {
+    for (auto path : debug_info_root_paths)
+      {
+	if (formated_di_root_paths.empty())
+	  formated_di_root_paths = "-";
+	if (*path)
+	  formated_di_root_paths += string(*path) + string (":");
+      }
+    raw_formated_di_root_paths =
+      const_cast<char*>(formated_di_root_paths.c_str());
+  }
+
   /// Setup the necessary plumbing to open the ELF file and find all
   /// the associated split debug info files.
   ///
@@ -333,10 +223,11 @@ struct reader::priv
   crack_open_elf_file()
   {
     // Initialize the callback functions used by elfutils.
+    initialize_debug_info_root_paths();
     elf_helpers::initialize_dwfl_callbacks(offline_callbacks,
-					   debug_info_root_paths.empty()
+					   formated_di_root_paths.empty()
 					   ? nullptr
-					   : debug_info_root_paths.front());
+					   : &raw_formated_di_root_paths);
 
     // Create a handle to the DWARF Front End Library that we'll need.
     dwfl_handle = elf_helpers::create_new_dwfl_handle(offline_callbacks);
@@ -356,25 +247,6 @@ struct reader::priv
     GElf_Addr bias = 0;
     elf_handle = dwfl_module_getelf(elf_module, &bias);
     ABG_ASSERT(elf_handle);
-  }
-
-  /// Find the alternate debuginfo file associated to a given elf file.
-  ///
-  /// @param elf_module represents the elf file to consider.
-  ///
-  /// @param alt_file_name the resulting path to the alternate
-  /// debuginfo file found.  This is set iff the function returns a
-  /// non-nil value.
-  Dwarf*
-  find_alt_dwarf_debug_info(Dwfl_Module*	elf_module,
-			    string&		alt_file_name,
-			    int&		alt_fd)
-  {
-    Dwarf *result = 0;
-    result = elf::find_alt_dwarf_debug_info(elf_module,
-					    debug_info_root_paths,
-					    alt_file_name, alt_fd);
-    return result;
   }
 
   /// Clear the resources related to the alternate DWARF data.
@@ -405,24 +277,10 @@ struct reader::priv
     if (dwarf_handle)
       return;
 
-    // First let's see if the ELF file that was cracked open does have
-    // some DWARF debug info embedded.
     Dwarf_Addr bias = 0;
     dwarf_handle = dwfl_module_getdwarf(elf_module, &bias);
-
-    // If no debug info was found in the binary itself, then look for
-    // split debuginfo files under multiple possible debuginfo roots.
-    for (vector<char**>::const_iterator i = debug_info_root_paths.begin();
-	 dwarf_handle == 0 && i != debug_info_root_paths.end();
-	 ++i)
-      {
-	offline_callbacks.debuginfo_path = *i;
-	dwarf_handle = dwfl_module_getdwarf(elf_module, &bias);
-      }
-
-    alt_dwarf_handle = find_alt_dwarf_debug_info(elf_module,
-						 alt_dwarf_path,
-						 alt_dwarf_fd);
+    alt_dwarf_handle = dwarf_getalt(dwarf_handle);
+    find_alt_dwarf_debug_info_link(elf_module, alt_dwarf_path);
   }
 
   /// Clear the resources related to the alternate CTF data.
