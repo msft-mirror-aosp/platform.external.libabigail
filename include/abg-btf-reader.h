@@ -56,7 +56,7 @@ namespace btf
   /// @return a smart pointer to the resulting btf::reader.
   elf_based_reader_sptr
   create_reader(const std::string& elf_path,
-		const vector<char**>& debug_info_root_paths,
+		const vector<string>& debug_info_root_paths,
 		environment& env,
 		bool load_all_types = false,
 		bool linux_kernel_mode = false);

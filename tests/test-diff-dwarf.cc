@@ -385,7 +385,7 @@ main()
 	abigail::fe_iface::STATUS_UNKNOWN;
 
       environment env;
-      std::vector<char**> di_roots;
+      std::vector<string> di_roots;
       abigail::corpus_sptr corp0 =
 	dwarf::read_corpus_from_elf(in_elfv0_path,
 				    /*debug_info_root_path=*/di_roots,

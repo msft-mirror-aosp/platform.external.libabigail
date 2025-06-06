@@ -85,8 +85,6 @@ using abigail::suppr::suppression_sptr;
 using abigail::suppr::suppressions_type;
 using abigail::suppr::read_suppressions;
 
-
-
 class options
 {
   options();
@@ -97,9 +95,9 @@ public:
   string		app_path;
   string		lib1_path;
   string		lib2_path;
-  shared_ptr<char>	app_di_root_path;
-  shared_ptr<char>	lib1_di_root_path;
-  shared_ptr<char>	lib2_di_root_path;
+  string		app_di_root_path;
+  string		lib1_di_root_path;
+  string		lib2_di_root_path;
   vector<string>	suppression_paths;
   bool			display_help;
   bool			display_version;
@@ -295,7 +293,7 @@ parse_command_line(int argc, char* argv[], options& opts)
 	  // elfutils wants the root path to the debug info to be
 	  // absolute.
 	  opts.app_di_root_path =
-	    abigail::tools_utils::make_path_absolute(argv[i + 1]);
+	    abigail::tools_utils::make_path_absolute(string(argv[i + 1]));
 	  ++i;
 	}
       else if (!strcmp(argv[i], "--lib-debug-info-dir1")
@@ -307,7 +305,7 @@ parse_command_line(int argc, char* argv[], options& opts)
 	  // elfutils wants the root path to the debug info to be
 	  // absolute.
 	  opts.lib1_di_root_path =
-	    abigail::tools_utils::make_path_absolute(argv[i + 1]);
+	    abigail::tools_utils::make_path_absolute(string(argv[i + 1]));
 	  ++i;
 	}
       else if (!strcmp(argv[i], "--lib-debug-info-dir2")
@@ -319,7 +317,7 @@ parse_command_line(int argc, char* argv[], options& opts)
 	  // elfutils wants the root path to the debug info to be
 	  // absolute.
 	  opts.lib2_di_root_path =
-	    abigail::tools_utils::make_path_absolute(argv[i + 1]);
+	    abigail::tools_utils::make_path_absolute(string(argv[i + 1]));
 	  ++i;
 	}
       else if (!strcmp(argv[i], "--suppressions")
@@ -849,7 +847,7 @@ perform_compat_check_in_weak_mode(options& opts,
 static corpus_sptr
 read_corpus(options			opts,
 	    abigail::fe_iface::status&	status,
-	    const vector<char**>	di_roots,
+	    const vector<string>	di_roots,
 	    environment		&env,
 	    const string		&path)
 {
@@ -982,9 +980,10 @@ main(int argc, char* argv[])
     return abigail::tools_utils::ABIDIFF_OK;
 
   // Read the application ELF file.
-  char * app_di_root = opts.app_di_root_path.get();
-  vector<char**> app_di_roots;
-  app_di_roots.push_back(&app_di_root);
+  string& app_di_root = opts.app_di_root_path;
+  vector<string> app_di_roots;
+  if (!app_di_root.empty())
+    app_di_roots.push_back(app_di_root);
   abigail::fe_iface::status status = abigail::fe_iface::STATUS_UNKNOWN;
   environment env;
 
@@ -1042,9 +1041,10 @@ main(int argc, char* argv[])
   if (!abigail::tools_utils::check_file(opts.lib1_path, cerr, opts.prog_name))
     return abigail::tools_utils::ABIDIFF_ERROR;
 
-  char * lib1_di_root = opts.lib1_di_root_path.get();
-  vector<char**> lib1_di_roots;
-  lib1_di_roots.push_back(&lib1_di_root);
+  string& lib1_di_root = opts.lib1_di_root_path;
+  vector<string> lib1_di_roots;
+  if (!lib1_di_root.empty())
+    lib1_di_roots.push_back(lib1_di_root);
   corpus_sptr lib1_corpus = read_corpus(opts, status,
 					lib1_di_roots,
 					env, opts.lib1_path);
@@ -1077,9 +1077,10 @@ main(int argc, char* argv[])
   if (!opts.weak_mode)
     {
       ABG_ASSERT(!opts.lib2_path.empty());
-      char * lib2_di_root = opts.lib2_di_root_path.get();
-      vector<char**> lib2_di_roots;
-      lib2_di_roots.push_back(&lib2_di_root);
+      string& lib2_di_root = opts.lib2_di_root_path;
+      vector<string> lib2_di_roots;
+      if (!lib2_di_root.empty())
+	lib2_di_roots.push_back(lib2_di_root);
       lib2_corpus = read_corpus(opts, status,
 				lib2_di_roots, env,
 				opts.lib2_path);

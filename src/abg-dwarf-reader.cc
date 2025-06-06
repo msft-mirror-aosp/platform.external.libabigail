@@ -2114,7 +2114,7 @@ protected:
   /// linux kernel symbol tables when determining if a symbol is
   /// exported or not.
   reader(const string&		elf_path,
-	 const vector<char**>&	debug_info_root_paths,
+	 const vector<string>&	debug_info_root_paths,
 	 environment&		environment,
 	 bool			load_all_types,
 	 bool			linux_kernel_mode)
@@ -2215,7 +2215,7 @@ public:
   /// is exported or not.
   void
   initialize(const string&		elf_path,
-	     const vector<char**>&	debug_info_root_paths,
+	     const vector<string>&	debug_info_root_paths,
 	     bool			load_all_types,
 	     bool			linux_kernel_mode)
   {
@@ -2242,7 +2242,7 @@ public:
   /// is exported or not.
   static dwarf::reader_sptr
   create(const std::string&	elf_path,
-	 const vector<char**>&	debug_info_root_paths,
+	 const vector<string>&	debug_info_root_paths,
 	 environment&		environment,
 	 bool			load_all_types,
 	 bool			linux_kernel_mode)
@@ -17801,7 +17801,7 @@ build_ir_node_from_die(reader&	rdr,
 /// @return a smart pointer to the resulting dwarf::reader.
 elf_based_reader_sptr
 create_reader(const std::string&	elf_path,
-	      const vector<char**>&	debug_info_root_paths,
+	      const vector<string>&	debug_info_root_paths,
 	      environment&		environment,
 	      bool			load_all_types,
 	      bool			linux_kernel_mode)
@@ -17852,7 +17852,7 @@ create_reader(const std::string&	elf_path,
 void
 reset_reader(elf_based_reader&	rdr,
 	     const std::string&	elf_path,
-	     const vector<char**>&debug_info_root_path,
+	     const vector<string>&debug_info_root_path,
 	     bool		read_all_types,
 	     bool		linux_kernel_mode)
 {
@@ -17895,7 +17895,7 @@ reset_reader(elf_based_reader&	rdr,
 /// @return the resulting status.
 corpus_sptr
 read_corpus_from_elf(const std::string& elf_path,
-		     const vector<char**>& debug_info_root_paths,
+		     const vector<string>& debug_info_root_paths,
 		     environment&	environment,
 		     bool		load_all_types,
 		     fe_iface::status&	status)

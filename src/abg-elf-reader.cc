@@ -112,7 +112,7 @@ struct reader::priv
   // demand.
   mutable symtab_reader::symtab_sptr	symt;
   // Where split debug info is to be searched for on disk.
-  vector<char**>			debug_info_root_paths;
+  vector<string>			debug_info_root_paths;
   // The formatted string version of debug_info_root_paths.  The
   // format is according to what elfutils expects.  For the details of
   // what elfutils expects, please read the comments of the function
@@ -145,7 +145,7 @@ struct reader::priv
   Elf_Scn*				btf_section		= nullptr;
 
   priv(reader& reeder, const std::string& elf_path,
-       const vector<char**>& debug_info_roots)
+       const vector<string>& debug_info_roots)
     : rdr(reeder)
   {
     rdr.corpus_path(elf_path);
@@ -163,7 +163,7 @@ struct reader::priv
   /// @param debug_info_roots the vector of new directories where to
   /// look for split debug info file.
   void
-  initialize(const vector<char**>& debug_info_roots)
+  initialize(const vector<string>& debug_info_roots)
   {
     clear_alt_dwarf_debug_info_data();
     clear_alt_ctf_debug_info_data();
@@ -207,8 +207,8 @@ struct reader::priv
       {
 	if (formated_di_root_paths.empty())
 	  formated_di_root_paths = "-";
-	if (*path)
-	  formated_di_root_paths += string(*path) + string (":");
+	if (!path.empty())
+	  formated_di_root_paths += path + ":";
       }
     raw_formated_di_root_paths =
       const_cast<char*>(formated_di_root_paths.c_str());
@@ -325,7 +325,7 @@ struct reader::priv
       for (const auto& path : rdr.debug_info_root_paths())
 	{
 	  std::string file_path;
-	  if (!tools_utils::find_file_under_dir(*path, name, file_path))
+	  if (!tools_utils::find_file_under_dir(path, name, file_path))
 	    continue;
 
 	  if ((alt_ctf_fd = open(file_path.c_str(), O_RDONLY)) == -1)
@@ -371,7 +371,7 @@ struct reader::priv
 ///
 /// @param env the environment which the reader operates in.
 reader::reader(const string&		elf_path,
-	       const vector<char**>&	debug_info_roots,
+	       const vector<string>&	debug_info_roots,
 	       ir::environment&	env)
   : fe_iface(elf_path, env),
     priv_(new priv(*this, elf_path, debug_info_roots))
@@ -397,7 +397,7 @@ reader::~reader()
 /// for split debug information files.
 void
 reader::initialize(const std::string&		elf_path,
-		   const vector<char**>&	debug_info_roots)
+		   const vector<string>&	debug_info_roots)
 {
   fe_iface::initialize(elf_path);
   corpus_path(elf_path);
@@ -417,7 +417,7 @@ reader::initialize(const std::string&		elf_path,
 void
 reader::initialize(const std::string&	elf_path)
 {
-  vector<char**> v;
+  vector<string> v;
   initialize(elf_path, v);
 }
 
@@ -426,7 +426,7 @@ reader::initialize(const std::string&	elf_path)
 ///
 /// @return the vector of directory paths to look into for split
 /// debug information files.
-const vector<char**>&
+const vector<string>&
 reader::debug_info_root_paths() const
 {return priv_->debug_info_root_paths;}
 

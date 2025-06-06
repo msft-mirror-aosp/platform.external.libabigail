@@ -104,7 +104,7 @@ main(int argc, char* argv[])
       corpus_sptr c1, c2;
 
       environment env;
-      vector<char**> di_roots;
+      vector<string> di_roots;
       c1 = dwarf::read_corpus_from_elf(opts.elf1, di_roots, env,
 				       /*load_all_types=*/false,
 				       c1_status);

@@ -409,7 +409,7 @@ protected:
   /// @param linux_kernel_mode
   void
   initialize(const string&		elf_path,
-	     const vector<char**>&	debug_info_root_paths,
+	     const vector<string>&	debug_info_root_paths,
 	     bool			load_all_types,
 	     bool			linux_kernel_mode)
   {
@@ -448,7 +448,7 @@ protected:
   /// @param linux_kernel_mode if true, then consider the binary being
   /// analyzed as a linux kernel binary.
   reader(const string&		elf_path,
-	 const vector<char**>&	debug_info_root_paths,
+	 const vector<string>&	debug_info_root_paths,
 	 environment&		environment,
 	 bool			load_all_types,
 	 bool			linux_kernel_mode)
@@ -479,7 +479,7 @@ public:
   /// analyzed as a linux kernel binary.
   static btf::reader_sptr
   create(const string&		elf_path,
-	 const vector<char**>&	debug_info_root_paths,
+	 const vector<string>&	debug_info_root_paths,
 	 environment&		environment,
 	 bool			load_all_types,
 	 bool			linux_kernel_mode)
@@ -1330,7 +1330,7 @@ public:
 /// @return a smart pointer to the resulting btf::reader.
 elf_based_reader_sptr
 create_reader(const std::string&	elf_path,
-	      const vector<char**>&	debug_info_root_paths,
+	      const vector<string>&	debug_info_root_paths,
 	      environment&		env,
 	      bool			load_all_types,
 	      bool			linux_kernel_mode)

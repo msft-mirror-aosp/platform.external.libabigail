@@ -461,7 +461,7 @@ dir_contains_ctf_archive(const string& directory,
 /// that contains debug info.
 bool
 file_has_dwarf_debug_info(const string& elf_file_path,
-			  const vector<char**>& debug_info_root_paths)
+			  const vector<string>& debug_info_root_paths)
 {
   if (guess_file_type(elf_file_path) != FILE_TYPE_ELF)
     return false;
@@ -497,7 +497,7 @@ file_has_dwarf_debug_info(const string& elf_file_path,
 /// that contains debug info.
 bool
 file_has_ctf_debug_info(const string& elf_file_path,
-			const vector<char**>& debug_info_root_paths)
+			const vector<string>& debug_info_root_paths)
 {
   if (guess_file_type(elf_file_path) != FILE_TYPE_ELF)
     return false;
@@ -521,7 +521,7 @@ file_has_ctf_debug_info(const string& elf_file_path,
 
   // vmlinux.ctfa could be provided with --debug-info-dir
   for (const auto& path : debug_info_root_paths)
-    if (path && *path && find_file_under_dir(*path, "vmlinux.ctfa", vmlinux))
+    if (!path.empty() && find_file_under_dir(path, "vmlinux.ctfa", vmlinux))
       return true;
 
   return false;
@@ -541,7 +541,7 @@ file_has_ctf_debug_info(const string& elf_file_path,
 /// that contains debug info.
 bool
 file_has_btf_debug_info(const string& elf_file_path,
-			const vector<char**>& debug_info_root_paths)
+			const vector<string>& debug_info_root_paths)
 {
     if (guess_file_type(elf_file_path) != FILE_TYPE_ELF)
     return false;
@@ -2178,6 +2178,31 @@ make_path_absolute(const char*p)
 /// absolute path by prefixing it with the concatenation of the result
 /// of get_current_dir_name() and the '/' character.
 ///
+///
+/// @param p the path to turn into an absolute path.
+///
+/// @return The resulting absolute path.
+string
+make_path_absolute(const string& p)
+{
+  string result;
+
+  if (!p.empty() && p[0] != '/')
+    {
+      shared_ptr<char> pwd(get_current_dir_name(),
+			   malloced_char_star_deleter());
+      result = string(pwd.get()) + "/" + p;
+    }
+  else if (!p.empty())
+    result = p;
+
+  return result;
+}
+
+/// Return a copy of the path given in argument, turning it into an
+/// absolute path by prefixing it with the concatenation of the result
+/// of get_current_dir_name() and the '/' character.
+///
 /// The result being a pointer to an allocated memory region, it must
 /// be freed by the caller.
 ///
@@ -3210,7 +3235,7 @@ load_vmlinux_corpus(elf_based_reader_sptr rdr,
                     const string&       vmlinux,
                     vector<string>&     modules,
                     const string&       root,
-                    vector<char**>&     di_roots,
+                    vector<string>&     di_roots,
                     vector<string>&     suppr_paths,
                     vector<string>&     kabi_wl_paths,
                     suppressions_type&  supprs,
@@ -3372,20 +3397,17 @@ build_corpus_group_from_kernel_dist_under(const string&	root,
 
   if (got_binary_paths)
     {
-      shared_ptr<char> di_root =
-	make_path_absolute(debug_info_root.c_str());
-      char *di_root_ptr = di_root.get();
-      vector<char**> di_roots;
-      di_roots.push_back(&di_root_ptr);
+      string di_root =
+	make_path_absolute(debug_info_root);
+      vector<string> di_roots;
+      di_roots.push_back(di_root);
 
 #ifdef WITH_CTF
-      shared_ptr<char> di_root_ctf;
-      char *di_root_ctf_ptr;
+      string di_root_ctf;
       if (requested_fe_kind & corpus::CTF_ORIGIN)
         {
-          di_root_ctf = make_path_absolute(root.c_str());
-          di_root_ctf_ptr = di_root_ctf.get();
-          di_roots.push_back(&di_root_ctf_ptr);
+          di_root_ctf = make_path_absolute(root);
+          di_roots.push_back(di_root_ctf);
         }
 #endif
 
@@ -3443,7 +3465,7 @@ build_corpus_group_from_kernel_dist_under(const string&	root,
 /// designated by @p elf_file_path.
 elf_based_reader_sptr
 create_best_elf_based_reader(const string& elf_file_path,
-			     const vector<char**>& debug_info_root_paths,
+			     const vector<string>& debug_info_root_paths,
 			     environment& env,
 			     corpus::origin requested_fe_kind,
 			     bool show_all_types,

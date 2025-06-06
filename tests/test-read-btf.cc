@@ -107,7 +107,7 @@ test_task_btf::perform()
 
   abigail::fe_iface::status status =
     abigail::fe_iface::STATUS_UNKNOWN;
-  vector<char**> di_roots;
+  vector<string> di_roots;
   ABG_ASSERT(abigail::tools_utils::file_exists(in_elf_path));
 
   abigail::elf_based_reader_sptr rdr = abigail::btf::create_reader(in_elf_path,

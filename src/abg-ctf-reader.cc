@@ -261,7 +261,7 @@ public:
   /// that ABI artifacts that are to be compared all need to be
   /// created within the same environment.
   reader(const string&		elf_path,
-	 const vector<char**>&	debug_info_root_paths,
+	 const vector<string>&	debug_info_root_paths,
 	 environment&		env)
     : elf_based_reader(elf_path, debug_info_root_paths, env),
       ctfa(), ctf_sect(), symtab_sect(), strtab_sect()
@@ -311,7 +311,7 @@ public:
   ///
   void
   initialize(const string&		elf_path,
-             const vector<char**>&	debug_info_root_paths,
+             const vector<string>&	debug_info_root_paths,
              bool			load_all_types = false,
              bool			linux_kernel_mode = false)
   {
@@ -385,7 +385,7 @@ public:
     // for vmlinux.ctfa should be provided with --debug-info-dir
     // option.
     for (const auto& path : debug_info_root_paths())
-      if (tools_utils::find_file_under_dir(*path, "vmlinux.ctfa", ctfa_file))
+      if (tools_utils::find_file_under_dir(path, "vmlinux.ctfa", ctfa_file))
         return true;
 
     return false;
@@ -1753,7 +1753,7 @@ fill_ctf_section(const Elf_Scn *elf_section, ctf_sect_t *ctf_section)
 /// @param env a libabigail IR environment.
 elf_based_reader_sptr
 create_reader(const std::string& elf_path,
-	      const vector<char**>& debug_info_root_paths,
+	      const vector<string>& debug_info_root_paths,
 	      environment& env)
 {
   reader_sptr result(new reader(elf_path,
@@ -1781,7 +1781,7 @@ create_reader(const std::string& elf_path,
 void
 reset_reader(elf_based_reader&		rdr,
 	     const std::string&	elf_path,
-	     const vector<char**>&	debug_info_root_path)
+	     const vector<string>&	debug_info_root_path)
 {
   ctf::reader& r = dynamic_cast<reader&>(rdr);
   r.initialize(elf_path, debug_info_root_path);

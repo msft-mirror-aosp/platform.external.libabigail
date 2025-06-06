@@ -40,11 +40,11 @@ const char* get_anonymous_subrange_internal_name_prefix();
 bool file_exists(const string&);
 bool is_regular_file(const string&);
 bool file_has_dwarf_debug_info(const string& elf_file_path,
-			       const vector<char**>& debug_info_root_paths);
+			       const vector<string>& debug_info_root_paths);
 bool file_has_ctf_debug_info(const string& elf_file_path,
-			     const vector<char**>& debug_info_root_paths);
+			     const vector<string>& debug_info_root_paths);
 bool file_has_btf_debug_info(const string& elf_file_path,
-			     const vector<char**>& debug_info_root_paths);
+			     const vector<string>& debug_info_root_paths);
 bool is_dir(const string&);
 bool dir_exists(const string&);
 bool dir_is_empty(const string &);
@@ -113,6 +113,9 @@ bool
 get_binary_paths_from_kernel_dist(const string&	dist_root,
 				  string&		vmlinux_path,
 				  vector<string>&	module_paths);
+
+bool
+get_file_path_dirs_under_dir(const string& root, vector<string>& dirs);
 
 string
 get_default_system_suppression_file_path();
@@ -366,6 +369,9 @@ file_is_kernel_debuginfo_package(const string& file_path,
 std::shared_ptr<char>
 make_path_absolute(const char*p);
 
+string
+make_path_absolute(const string& p);
+
 char*
 make_path_absolute_to_be_freed(const char*p);
 
@@ -382,7 +388,7 @@ build_corpus_group_from_kernel_dist_under(const string&	root,
 
 elf_based_reader_sptr
 create_best_elf_based_reader(const string& elf_file_path,
-			     const vector<char**>& debug_info_root_paths,
+			     const vector<string>& debug_info_root_paths,
 			     environment& env,
 			     corpus::origin requested_debug_info_kind,
 			     bool show_all_types,

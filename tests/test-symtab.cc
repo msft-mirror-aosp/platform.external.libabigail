@@ -48,7 +48,7 @@ read_corpus(const std::string&		    path,
   const std::string& absolute_path = test_data_dir + path;
 
   environment env;
-  const std::vector<char**> debug_info_root_paths;
+  const std::vector<string> debug_info_root_paths;
   abigail::elf_based_reader_sptr rdr =
     dwarf::create_reader(absolute_path, debug_info_root_paths,
 			 env, /* load_all_type = */ true,

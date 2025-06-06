@@ -67,19 +67,19 @@ class reader : public fe_iface
  public:
 
   reader(const std::string&	elf_path,
-	 const vector<char**>&	debug_info_roots,
+	 const vector<string>&	debug_info_roots,
 	 environment&		env);
 
   ~reader();
 
   virtual void
   initialize(const std::string&	elf_path,
-	     const vector<char**>&	debug_info_roots);
+	     const vector<string>&	debug_info_roots);
 
   virtual void
   initialize(const std::string& elf_path);
 
-  const vector<char**>&
+  const vector<string>&
   debug_info_root_paths() const;
 
   const Dwfl_Callbacks&

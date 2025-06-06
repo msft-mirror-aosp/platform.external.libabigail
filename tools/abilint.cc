@@ -86,7 +86,7 @@ struct options
 #ifdef WITH_CTF
   bool				use_ctf;
 #endif
-  std::shared_ptr<char>	di_root_path;
+  string			di_root_path;
   vector<string>		suppression_paths;
   string			headers_dir;
   vector<string>		header_files;
@@ -544,7 +544,7 @@ parse_command_line(int argc, char* argv[], options& opts)
 	    // elfutils wants the root path to the debug info to be
 	    // absolute.
 	    opts.di_root_path =
-	      abigail::tools_utils::make_path_absolute(argv[i + 1]);
+	      abigail::tools_utils::make_path_absolute(string(argv[i + 1]));
 	    ++i;
 	  }
       else if (!strcmp(argv[i], "--headers-dir")
@@ -778,7 +778,7 @@ main(int argc, char* argv[])
       abigail::corpus_sptr corp;
       abigail::corpus_group_sptr group;
       abigail::fe_iface::status s = abigail::fe_iface::STATUS_OK;
-      char* di_root_path = 0;
+      string di_root_path;
       file_type type = guess_file_type(opts.file_path);
 
       switch (type)
@@ -800,9 +800,9 @@ main(int argc, char* argv[])
 	case abigail::tools_utils::FILE_TYPE_ELF:
 	case abigail::tools_utils::FILE_TYPE_AR:
 	  {
-	    di_root_path = opts.di_root_path.get();
-	    vector<char**> di_roots;
-	    di_roots.push_back(&di_root_path);
+	    di_root_path = opts.di_root_path;
+	    vector<string> di_roots;
+	    di_roots.push_back(di_root_path);
 	    abigail::elf_based_reader_sptr rdr;
 #ifdef WITH_CTF
             if (opts.use_ctf)
@@ -855,7 +855,7 @@ main(int argc, char* argv[])
 	      if (s & abigail::fe_iface::STATUS_DEBUG_INFO_NOT_FOUND)
 		{
 		  cerr << "could not find the debug info";
-		  if(di_root_path == 0)
+		  if(di_root_path.empty())
 		    emit_prefix(argv[0], cerr)
 		      << " Maybe you should consider using the "
 		      "--debug-info-dir1 option to tell me about the "

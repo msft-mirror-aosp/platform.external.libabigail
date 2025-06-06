@@ -1532,12 +1532,11 @@ compare(const elf_file&		elf1,
 	ostream&			out,
 	abigail::fe_iface::status*	detailed_error_status = 0)
 {
-  char *di_dir1 = (char*) debug_dir1.c_str(),
-	*di_dir2 = (char*) debug_dir2.c_str();
-
-  vector<char**> di_dirs1, di_dirs2;
-  di_dirs1.push_back(&di_dir1);
-  di_dirs2.push_back(&di_dir2);
+  vector<string> di_dirs1, di_dirs2;
+  if (!debug_dir1.empty())
+    di_dirs1.push_back(debug_dir1);
+  if (!debug_dir2.empty())
+    di_dirs2.push_back(debug_dir2);
 
   if (opts.verbose)
     emit_prefix("abipkgdiff", cerr)
@@ -1645,8 +1644,8 @@ compare(const elf_file&		elf1,
 		<< "while reading file" << elf1.path << "\n";
 
 	    emit_prefix("abipkgdiff", cerr) << "Could not find debug info file";
-	    if (di_dir1 && strcmp(di_dir1, ""))
-	      cerr << " under " << di_dir1 << "\n";
+	    if (!debug_dir1.empty())
+	      cerr << " under " << debug_dir1 << "\n";
 	    else
 	       cerr << "\n";
 
@@ -1734,8 +1733,8 @@ compare(const elf_file&		elf1,
 		<< "while reading file" << elf2.path << "\n";
 
 	    emit_prefix("abipkgdiff", cerr) << "Could not find debug info file";
-	    if (di_dir2 && strcmp(di_dir2, ""))
-	      cerr << " under " << di_dir2 << "\n";
+	    if (!debug_dir2.empty())
+	      cerr << " under " << debug_dir2 << "\n";
 	    else
 	      cerr << "\n";
 
@@ -1815,10 +1814,9 @@ compare_to_self(const elf_file&		elf,
 		ostream&			out,
 		abigail::fe_iface::status*	detailed_error_status = 0)
 {
-  char *di_dir = (char*) debug_dir.c_str();
-
-  vector<char**> di_dirs;
-  di_dirs.push_back(&di_dir);
+  vector<string> di_dirs;
+  if (!debug_dir.empty())
+    di_dirs.push_back(debug_dir);
 
   abigail::fe_iface::status c_status = abigail::fe_iface::STATUS_OK;
 

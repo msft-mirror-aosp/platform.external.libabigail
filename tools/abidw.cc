@@ -87,8 +87,7 @@ struct options
   string		wrong_option;
   string		in_file_path;
   string		out_file_path;
-  vector<char*>	di_root_paths;
-  vector<char**>	prepared_di_root_paths;
+  vector<string>	di_root_paths;
   vector<string>	headers_dirs;
   vector<string>	header_files;
   vector<string>	added_bins_dirs;
@@ -189,12 +188,6 @@ struct options
 
   ~options()
   {
-    for (vector<char*>::iterator i = di_root_paths.begin();
-	 i != di_root_paths.end();
-	 ++i)
-      free(*i);
-
-    prepared_di_root_paths.clear();
   }
 };
 
@@ -789,7 +782,7 @@ load_corpus_and_write_abixml(char* argv[],
   // specfied in opts ...
   abigail::elf_based_reader_sptr reader =
     create_best_elf_based_reader(opts.in_file_path,
-				 opts.prepared_di_root_paths,
+				 opts.di_root_paths,
 				 env, requested_fe_kind,
 				 opts.load_all_types,
 				 opts.linux_kernel_mode);
@@ -865,7 +858,7 @@ load_corpus_and_write_abixml(char* argv[],
 	      emit_prefix(argv[0], cerr)
 		<< "Could not read debug info for '" << opts.in_file_path
 		<< "' from debug info root directory '";
-	      for (vector<char*>::const_iterator i =
+	      for (vector<string>::const_iterator i =
 		     opts.di_root_paths.begin();
 		   i != opts.di_root_paths.end();
 		   ++i)
@@ -1127,18 +1120,6 @@ load_kernel_corpus_group_and_write_abixml(char* argv[],
   return exit_code;
 }
 
-/// Convert options::di_root_paths into
-/// options::prepared_di_root_paths which is the suitable type format
-/// that the dwarf_reader expects.
-///
-/// @param o the options to consider.
-static void
-prepare_di_root_paths(options& o)
-{
-  tools_utils::convert_char_stars_to_char_star_stars(o.di_root_paths,
-						     o.prepared_di_root_paths);
-}
-
 int
 main(int argc, char* argv[])
 {
@@ -1185,8 +1166,6 @@ main(int argc, char* argv[])
       if (!abigail::tools_utils::check_file(opts.in_file_path, cerr, argv[0]))
 	return 1;
     }
-
-  prepare_di_root_paths(opts);
 
   if (!maybe_check_suppression_files(opts))
     return 1;
