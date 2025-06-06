@@ -372,10 +372,6 @@ if test $WITH_DW_LIBS_PATH != xauto; then
   PKG_CONFIG_PATH=$SAVED_PKG_CONFIG_PATH
 fi
 
-dnl From elfutils version 0.159 onward, the dwarf_getalt function is
-dnl always present.
-FOUND_DWARF_GETALT_IN_LIBDW=yes
-
 
 dnl Allow users to compile with the NDEBUG macro defined,
 dnl meaning they are compiling in a mode where the
@@ -383,11 +379,6 @@ dnl assert call does nothing.  With the directive below,
 dnl users just need to pass the --disable-assert
 dnl option to configure.
 AC_HEADER_ASSERT
-
-if test x$FOUND_DWARF_GETALT_IN_LIBDW = xyes; then
-   AC_DEFINE([LIBDW_HAS_DWARF_GETALT], 1,
-	     [Defined if libdw has the function dwarf_getalt])
-fi
 
 AC_SUBST(DW_LIBS)
 AC_SUBST(DW_CFLAGS)
@@ -1685,7 +1676,6 @@ AC_MSG_NOTICE([
 
  OPTIONAL FEATURES:
     C++ standard level                             : ${CXX_STANDARD}
-    libdw has the dwarf_getalt function            : ${FOUND_DWARF_GETALT_IN_LIBDW}
     Enable inlined-only xxhash library		   : ${ENABLE_INLINED_XXHASH}
     Enable rpm support in abipkgdiff               : ${ENABLE_RPM}
     Enable rpm/zstd in abipkgdiff testing          : ${ENABLE_RPM_ZSTD}
