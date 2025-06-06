@@ -2979,6 +2979,20 @@ is_kernel_module(const FTSENT *entry)
   return false;
 }
 
+/// Test if a given file denoted by a FTSENT* is a regular file or a
+/// symlink.
+///
+/// @param entry returned by the combo fts_open/fts_read.
+///
+/// @return true iff @p entry is for a regular file or a symlink.
+static bool
+is_file(const FTSENT *entry)
+{
+  return (entry
+	  && (entry->fts_info == FTS_F
+	      || entry->fts_info == FTS_SL));
+}
+
 /// Find a vmlinux and its kernel modules in a given directory tree.
 ///
 /// @param from the directory tree to start looking from.
@@ -3066,6 +3080,50 @@ find_vmlinux_path(const string&	from,
   fts_close(file_hierarchy);
 
   return found_vmlinux;
+}
+
+/// Get all the sub-directories (which contain a regular file) of a
+/// given directory.
+///
+/// @param root_dir the root directory to consider.
+///
+/// @param dirs the sub-directories of @p root_dir which contain a
+/// file.
+bool
+get_file_path_dirs_under_dir(const string& root_dir, vector<string>& dirs)
+{
+  char* paths[] = {const_cast<char*>(root_dir.c_str()), 0};
+  FTS *file_hierarchy = fts_open(paths,
+				 FTS_PHYSICAL|FTS_NOCHDIR|FTS_XDEV, 0);
+  if (!file_hierarchy)
+    return false;
+
+  string r = root_dir;
+  if (!string_ends_with(r, "/"))
+    r += "/";
+
+  bool found_file = false;
+  FTSENT *entry;
+  while ((entry = fts_read(file_hierarchy)))
+    {
+      // Skip descendents of symbolic links.
+      if (entry->fts_info == FTS_SL || entry->fts_info == FTS_SLNONE)
+	{
+	  fts_set(file_hierarchy, entry, FTS_SKIP);
+	  continue;
+	}
+
+      if (is_file(entry))
+	found_file = true;
+
+      string path = entry->fts_path;
+      dir_name(path, path);
+      dirs.push_back(path);
+    }
+
+  fts_close(file_hierarchy);
+
+  return found_file;
 }
 
 /// Get the paths of the vmlinux and kernel module binaries under

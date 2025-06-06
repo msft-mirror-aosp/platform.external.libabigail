@@ -203,7 +203,25 @@ struct reader::priv
   void
   initialize_debug_info_root_paths()
   {
+    vector<string> root_paths = debug_info_root_paths;
+
     for (auto path : debug_info_root_paths)
+      if (tools_utils::string_begins_with(path, "/"))
+	{
+	  // For absolute root directories, let's add all the
+	  // sub-directories of these directories that contain a
+	  // (debug info) file.  This can be helpful to help elfutils
+	  // find alternate debuginfo files when the altdebuginfolink
+	  // is itself an absolute file path that is contained under
+	  // the root directory.  This what we see in PR30329 and its
+	  // associated regression test in test-abidiff-exit.cc
+	  vector<string> additional_subdirs;
+	  tools_utils::get_file_path_dirs_under_dir(path, additional_subdirs);
+	  for (auto& subdir : additional_subdirs)
+	    root_paths.push_back(subdir);
+	}
+
+    for (auto path : root_paths)
       {
 	if (formated_di_root_paths.empty())
 	  formated_di_root_paths = "-";

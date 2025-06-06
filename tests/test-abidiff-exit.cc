@@ -998,6 +998,21 @@ InOutSpec in_out_specs[] =
     "output/test-abidiff-exit/PR30329/PR30329-report-1.txt"
   },
   {
+    "data/test-abidiff-exit/PR30329/old-image/usr/lib/x86_64-linux-gnu/libsqlite3.so.0.8.6",
+    "data/test-abidiff-exit/PR30329/new-image/usr/lib/x86_64-linux-gnu/libsqlite3.so.0.8.6",
+    "",
+    "",
+    "",
+    "data/test-abidiff-exit/PR30329/old-image/usr/lib/debug,data/test-abidiff-exit/PR30329/old-image/usr/lib/debug/dwz/components/sqlite.bst",
+    "data/test-abidiff-exit/PR30329/new-image/usr/lib/debug,data/test-abidiff-exit/PR30329/old-image/usr/lib/debug/dwz/components/sqlite.bst",
+    "",
+    "",
+    "--no-default-suppression",
+    abigail::tools_utils::ABIDIFF_ABI_CHANGE,
+    "data/test-abidiff-exit/PR30329/PR30329-report-1.txt",
+    "output/test-abidiff-exit/PR30329/PR30329-report-1.txt"
+  },
+  {
     "data/test-abidiff-exit/PR30503/libsdl/1.2.60/lib64/libSDL-1.2.so.1.2.60",
     "data/test-abidiff-exit/PR30503/libsdl/1.2.64/lib64/libSDL-1.2.so.1.2.64",
     "",
@@ -1692,7 +1707,8 @@ main()
     in_suppression_path, abidiff_options, abidiff, cmd, diff_cmd,
     ref_diff_report_path, out_diff_report_path, in_elfv0_debug_dir,
     in_elfv1_debug_dir, in_elfv0_added_bins_dir, in_elfv1_added_bins_dir;
-  vector<string> in_elfv0_headers_dirs, in_elfv1_headers_dirs;
+  vector<string> in_elfv0_headers_dirs, in_elfv1_headers_dirs,
+    in_elfv0_debug_dirs, in_elfv1_debug_dirs;
   string source_dir_prefix = string(get_src_dir()) + "/tests/";
   string build_dir_prefix = string(get_build_dir()) + "/tests/";
 
@@ -1704,9 +1720,19 @@ main()
 	in_elfv0_debug_dir.clear();
 	in_elfv1_debug_dir.clear();
 	if (s->in_elfv0_debug_dir && strcmp(s->in_elfv0_debug_dir, ""))
-	  in_elfv0_debug_dir = source_dir_prefix + s->in_elfv0_debug_dir;
+	  {
+	    if (!split_string(s->in_elfv0_debug_dir, ",", in_elfv0_debug_dirs))
+	      in_elfv0_debug_dirs.push_back(s->in_elfv0_debug_dir);
+	    for (auto& dd : in_elfv0_debug_dirs)
+	      dd = source_dir_prefix + dd;
+	  }
 	if (s->in_elfv1_debug_dir && strcmp(s->in_elfv1_debug_dir, ""))
-	  in_elfv1_debug_dir = source_dir_prefix + s->in_elfv1_debug_dir;
+	  {
+	    if (!split_string(s->in_elfv1_debug_dir, ",", in_elfv1_debug_dirs))
+	      in_elfv1_debug_dirs.push_back(s->in_elfv1_debug_dir);
+	    for (auto& dd : in_elfv1_debug_dirs)
+	      dd = source_dir_prefix + dd;
+	  }
 	in_elfv0_headers_dirs.clear();
 	in_elfv1_headers_dirs.clear();
 	in_elfv0_added_bins_dir.clear();
@@ -1762,11 +1788,11 @@ main()
 	if (!in_elfv1_added_bins_dir.empty())
 	  abidiff += " --added-binaries-dir2 " + in_elfv1_added_bins_dir;
 
-	if (!in_elfv0_debug_dir.empty())
-	  abidiff += " --debug-info-dir1 " + in_elfv0_debug_dir;
+	for (auto& dd : in_elfv0_debug_dirs)
+	  abidiff += " --debug-info-dir1 " + dd;
 
-	if (!in_elfv1_debug_dir.empty())
-	  abidiff += " --debug-info-dir2 " + in_elfv1_debug_dir;
+	for (auto& dd : in_elfv1_debug_dirs)
+	  abidiff += " --debug-info-dir2 " + dd;
 
 	if (!in_elfv0_headers_dirs.empty())
 	  for (vector<string>::const_iterator s = in_elfv0_headers_dirs.begin();

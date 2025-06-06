@@ -100,6 +100,9 @@ gen_suppr_spec_from_kernel_abi_whitelists
    (const vector<string>& abi_whitelist_paths);
 
 bool
+get_file_path_dirs_under_dir(const string& root_dir, vector<string>& dirs);
+
+bool
 get_vmlinux_path_from_kernel_dist(const string&	from,
 				  string&		vmlinux_path);
 
