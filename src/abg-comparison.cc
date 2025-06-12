@@ -14013,18 +14013,40 @@ void
 clear_redundancy_categorization(corpus_diff_sptr diff_tree)
 {clear_redundancy_categorization(diff_tree.get());}
 
-/// Apply the @ref diff tree filters that have been associated to the
-/// context of the a given @ref corpus_diff tree.  As a result, the
-/// nodes of the @diff tree are going to be categorized into one of
-/// several of the categories of @ref diff_category.
+/// Apply the @ref diff tree filters that have been associated with
+/// the context of the a given @ref diff, categorize the diff nodes
+/// subsequently.  As a result, the nodes of the @p diff_tree tree are
+/// going to be properly filtered out at reporting time.
 ///
-/// @param diff_tree the @ref corpus_diff instance which @ref diff are
-/// to be categorized.
+/// @param diff_tree the @ref diff instance to consider.
 void
-apply_filters(corpus_diff_sptr diff_tree)
+apply_filters_and_categorize_diff_node_tree(diff_sptr& diff_tree)
 {
-  diff_tree->context()->maybe_apply_filters(diff_tree);
-  propagate_categories(diff_tree);
+  if (!diff_tree)
+    return;
+
+  diff_context_sptr ctxt = diff_tree->context();
+  ABG_ASSERT(ctxt);
+
+  if (!ctxt->perform_change_categorization())
+    return;
+
+  apply_suppressions(diff_tree);
+  ctxt->maybe_apply_filters(diff_tree);
+  categorize_redundancy(diff_tree);
+}
+
+/// Apply the @ref diff tree filters that have been associated with
+/// the context of the a given @ref corpus_diff, categorize the diff
+/// nodes subsequently.  As a result, the nodes of the @p c tree are
+/// going to be properly filtered out at reporting time.
+///
+/// @param c the @ref corpus_diff instance to consider.
+void
+apply_filters_and_categorize_diff_node_tree(corpus_diff_sptr& c)
+{
+  if (c)
+    c->apply_filters_and_suppressions_before_reporting();
 }
 
 /// Test if a diff node represents the difference between a variadic

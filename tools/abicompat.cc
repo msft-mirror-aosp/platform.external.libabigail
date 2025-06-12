@@ -81,6 +81,8 @@ using abigail::comparison::corpus_diff;
 using abigail::comparison::corpus_diff_sptr;
 using abigail::comparison::function_type_diff_sptr;
 using abigail::comparison::compute_diff;
+using abigail::comparison::get_default_harmless_categories_bitmap;
+using abigail::comparison::apply_filters_and_categorize_diff_node_tree;
 using abigail::suppr::suppression_sptr;
 using abigail::suppr::suppressions_type;
 using abigail::suppr::read_suppressions;
@@ -400,14 +402,7 @@ create_diff_context(const options& opts)
   ctxt->show_locs(opts.show_locs);
   // Intentional logic flip of ignore_soname
   ctxt->show_soname_change(!opts.ignore_soname);
-  ctxt->switch_categories_off
-    (abigail::comparison::ACCESS_CHANGE_CATEGORY
-     | abigail::comparison::COMPATIBLE_TYPE_CHANGE_CATEGORY
-     | abigail::comparison::HARMLESS_DECL_NAME_CHANGE_CATEGORY
-     | abigail::comparison::NON_VIRT_MEM_FUN_CHANGE_CATEGORY
-     | abigail::comparison::STATIC_DATA_MEMBER_CHANGE_CATEGORY
-     | abigail::comparison::HARMLESS_ENUM_CHANGE_CATEGORY
-     | abigail::comparison::HARMLESS_SYMBOL_ALIAS_CHANGE_CATEGORY);
+  ctxt->switch_categories_off(get_default_harmless_categories_bitmap());
 
   // Load suppression specifications, if there are any.
   suppressions_type supprs;
@@ -481,6 +476,8 @@ compare_expected_against_provided_functions(diff_context_sptr&		ctxt,
 		compute_diff(expected_fn->get_type(),
 			     exported_fn->get_type(),
 			     ctxt);
+	      diff_sptr diff_tree = is_diff(fn_type_diff);
+	      apply_filters_and_categorize_diff_node_tree(diff_tree);
 	      if (fn_type_diff && fn_type_diff->to_be_reported())
 		{
 		  // So there is a type change between the function
@@ -555,6 +552,7 @@ compare_expected_against_provided_variables(diff_context_sptr&		ctxt,
 		compute_diff(expected_var->get_type(),
 			     exported_var->get_type(),
 			     ctxt);
+	      apply_filters_and_categorize_diff_node_tree(type_diff);
 	      if (type_diff && type_diff->to_be_reported())
 		{
 		  // So there is a type change between the variable

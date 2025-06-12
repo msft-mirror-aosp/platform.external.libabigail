@@ -1168,6 +1168,20 @@ compute_diff(const type_base_sptr,
 	     const type_base_sptr,
 	     diff_context_sptr ctxt);
 
+/// Convert the type of a particular diff node into the generic @ref
+/// diff_sptr type.
+///
+/// @tparam DiffNodePtr the specific type of the diff node to convert
+/// into @ref diff_sptr
+///
+/// @param n the diff node to consider.
+///
+/// @return the instance of @ref diff_sptr @p n was converted into.
+template <class DiffNodePtr>
+diff_sptr
+is_diff(DiffNodePtr& n)
+{return std::dynamic_pointer_cast<diff>(n);}
+
 /// The base class of diff between types.
 class type_diff_base : public diff
 {
@@ -2996,7 +3010,10 @@ void
 clear_redundancy_categorization(corpus_diff_sptr diff_tree);
 
 void
-apply_filters(corpus_diff_sptr diff_tree);
+apply_filters_and_categorize_diff_node_tree(diff_sptr& diff_tree);
+
+void
+apply_filters_and_categorize_diff_node_tree(corpus_diff_sptr& c);
 
 bool
 is_diff_of_variadic_parameter_type(const diff*);

@@ -189,6 +189,26 @@ InOutSpec in_out_specs[] =
     "data/test-abicompat/test7-fn-changed-report-0.txt",
     "output/test-abicompat/test7-fn-changed-report-0.txt",
   },
+  {
+    "data/test-abicompat/test-diff-ptr-to-void-ptr/test-diff-ptr-to-void-ptr-app",
+    "data/test-abicompat/test-diff-ptr-to-void-ptr/0/libtest-diff-ptr-to-void-ptr-fn.so",
+    "",
+    "",
+    "--show-base-names --no-show-locs --no-redundant",
+    abigail::tools_utils::ABIDIFF_OK,
+    "data/test-abicompat/test-diff-ptr-to-void-ptr/test-diff-ptr-to-void-ptr-report-0.txt",
+    "output/test-abicompat/test-diff-ptr-to-void-ptr/test-diff-ptr-to-void-ptr-report-0.txt",
+  },
+  {
+    "data/test-abicompat/test-diff-ptr-to-void-ptr/test-diff-ptr-to-void-ptr-app",
+    "data/test-abicompat/test-diff-ptr-to-void-ptr/1/libtest-diff-ptr-to-void-ptr-fn.so",
+    "",
+    "",
+    "--show-base-names --no-show-locs --no-redundant",
+    abigail::tools_utils::ABIDIFF_OK,
+    "data/test-abicompat/test-diff-ptr-to-void-ptr/test-diff-ptr-to-void-ptr-report-1.txt",
+    "output/test-abicompat/test-diff-ptr-to-void-ptr/test-diff-ptr-to-void-ptr-report-1.txt",
+  },
 #ifdef WITH_BTF
   {
     "data/test-abicompat/test7-fn-changed-app.btf",

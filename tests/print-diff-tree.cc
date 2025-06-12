@@ -22,7 +22,6 @@ using abigail::ir::environment_sptr;
 using abigail::comparison::corpus_diff_sptr;
 using abigail::comparison::compute_diff;
 using abigail::comparison::print_diff_tree;
-using abigail::comparison::apply_filters;
 using namespace abigail;
 
 struct options
@@ -131,11 +130,8 @@ main(int argc, char* argv[])
 	  return 1;
 	}
 
-      if (opts.categorize_redundancy)
-	categorize_redundancy(diff);
-
-      if (opts.apply_filters)
-	apply_filters(diff);
+      if (opts.categorize_redundancy || opts.apply_filters)
+	apply_filters_and_categorize_diff_node_tree(diff);
 
       print_diff_tree(diff, cout);
       return 0;

@@ -2265,6 +2265,14 @@ test-abicompat/test10/test10-fn-changed-report-1.txt \
 test-abicompat/test10/test10-fn-changed-report-2.txt \
 test-abicompat/test10/test10-fn-changed-report-3.txt \
 test-abicompat/test10/test10-fn-changed-report-4.txt \
+test-abicompat/test-diff-ptr-to-void-ptr/0/libtest-diff-ptr-to-void-ptr-fn.so \
+test-abicompat/test-diff-ptr-to-void-ptr/0/test-diff-ptr-to-void-ptr-fn-v0.c \
+test-abicompat/test-diff-ptr-to-void-ptr/1/libtest-diff-ptr-to-void-ptr-fn.so \
+test-abicompat/test-diff-ptr-to-void-ptr/1/test-diff-ptr-to-void-ptr-fn-v1.c \
+test-abicompat/test-diff-ptr-to-void-ptr/test-diff-ptr-to-void-ptr-app \
+test-abicompat/test-diff-ptr-to-void-ptr/test-diff-ptr-to-void-ptr-app.c \
+test-abicompat/test-diff-ptr-to-void-ptr/test-diff-ptr-to-void-ptr-report-0.txt \
+test-abicompat/test-diff-ptr-to-void-ptr/test-diff-ptr-to-void-ptr-report-1.txt \
 \
 test-diff-pkg/dbus-glib-0.104-3.fc23.x86_64.rpm \
 test-diff-pkg/dbus-glib-0.80-3.fc12.x86_64.rpm \
