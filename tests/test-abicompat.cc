@@ -413,7 +413,10 @@ main()
                << std::endl;
 	  if (status != s->status)
 	    cout << BRIGHT_RED_COLOR
-		 << "expected abicompat exit code: " << s->status << ", got: " << status << std::endl;
+		 << "expected abicompat exit code: " << s->status
+		 << ", got: " << status
+		 << std::endl
+		 << DEFAULT_TERMINAL_COLOR;
 	  cnt_failed++;
 	}
       cnt_total++;
