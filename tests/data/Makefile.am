@@ -512,6 +512,12 @@ test-abidiff-exit/replace-dm-with-compatible-anon-dm-1-v0.o \
 test-abidiff-exit/replace-dm-with-compatible-anon-dm-1-v1.c \
 test-abidiff-exit/replace-dm-with-compatible-anon-dm-1-v1.o \
 test-abidiff-exit/replace-dm-with-compatible-anon-dm-1-report-1.txt \
+test-abidiff-exit/PR33055/Makefile \
+test-abidiff-exit/PR33055/PR33055-report-1.txt \
+test-abidiff-exit/PR33055/PR33055-report-2.txt \
+test-abidiff-exit/PR33055/file.cpp \
+test-abidiff-exit/PR33055/new-lib.so \
+test-abidiff-exit/PR33055/old-lib.so \
 \
 test-diff-dwarf/test0-v0.cc		\
 test-diff-dwarf/test0-v0.o			\

@@ -1639,6 +1639,36 @@ InOutSpec in_out_specs[] =
     "data/test-abidiff-exit/replace-dm-with-compatible-anon-dm-1-report-1.txt",
     "output/test-abidiff-exit/replace-dm-with-compatible-anon-dm-1-report-1.txt"
   },
+  {
+    "data/test-abidiff-exit/PR33055/old-lib.so",
+    "data/test-abidiff-exit/PR33055/new-lib.so",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "--no-default-suppression",
+    abigail::tools_utils::ABIDIFF_ABI_CHANGE,
+    "data/test-abidiff-exit/PR33055/PR33055-report-1.txt",
+    "output/test-abidiff-exit/PR33055/PR33055-report-1.txt"
+  },
+  {
+    "data/test-abidiff-exit/PR33055/old-lib.so",
+    "data/test-abidiff-exit/PR33055/new-lib.so",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "--no-default-suppression --harmless",
+    abigail::tools_utils::ABIDIFF_ABI_CHANGE,
+    "data/test-abidiff-exit/PR33055/PR33055-report-2.txt",
+    "output/test-abidiff-exit/PR33055/PR33055-report-2.txt"
+  },
 #ifdef WITH_BTF
   {
     "data/test-abidiff-exit/btf/test0-v0.o",

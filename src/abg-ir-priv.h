@@ -28,6 +28,7 @@ namespace ir
 {
 
 using std::string;
+using std::unordered_set;
 using abg_compat::optional;
 
 /// The result of structural comparison of type ABI artifacts.
@@ -1601,7 +1602,9 @@ struct class_or_union::priv
   member_function_templates	member_function_templates_;
   member_class_templates	member_class_templates_;
   bool				is_printing_flat_representation_ = false;
-
+  // The set of classes which layouts are currently being compared
+  // against this one.  This is to avoid endless loops.
+  unordered_set<type_base*>	comparing_class_layouts_;
   priv()
   {}
 

@@ -10261,6 +10261,37 @@ get_type_declaration(const type_base_sptr t)
 bool
 classes_have_same_layout(const type_base_sptr& f, const type_base_sptr& s)
 {
+#ifdef RETURN_FROM_CLASSES_HAVE_SAME_LAYOUT
+#undef RETURN_FROM_CLASSES_HAVE_SAME_LAYOUT
+#endif
+
+#ifdef ENSURE_NO_ENDLESS_LOOP
+#undef ENSURE_NO_ENDLESS_LOOP
+#endif
+
+#define RETURN_FROM_CLASSES_HAVE_SAME_LAYOUT(VALUE)		\
+  do								\
+    {								\
+      auto t1 = is_class_or_union_type(f);			\
+      auto t2 = is_class_or_union_type(s);			\
+      t1->priv_->comparing_class_layouts_.erase(t2.get());	\
+      t2->priv_->comparing_class_layouts_.erase(t1.get());	\
+      return VALUE;						\
+    } while (false)
+
+#define ENSURE_NO_ENDLESS_LOOP						\
+  do									\
+    {									\
+      auto t1 = is_class_or_union_type(f);				\
+      auto t2 = is_class_or_union_type(s);				\
+      const auto& END = t1->priv_->comparing_class_layouts_.end();	\
+      if (t1->priv_->comparing_class_layouts_.find(t2.get()) != END	\
+	  || t2->priv_->comparing_class_layouts_.find(t1.get()) != END) \
+	return true;							\
+      t1->priv_->comparing_class_layouts_.insert(t2.get());		\
+      t2->priv_->comparing_class_layouts_.insert(t1.get());		\
+    } while (false)
+
   class_decl_sptr fc = is_class_type(peel_qualified_or_typedef_type(f)),
     sc = is_class_type(peel_qualified_or_typedef_type(s));
 
@@ -10272,7 +10303,7 @@ classes_have_same_layout(const type_base_sptr& f, const type_base_sptr& s)
     return false;
 
   if (*fc == *sc)
-    return true;
+    RETURN_FROM_CLASSES_HAVE_SAME_LAYOUT(true);
 
   // Compare the types and offsets of data members one by one.
   for (auto f_decl_it = fc->get_data_members().begin(),
@@ -10286,7 +10317,7 @@ classes_have_same_layout(const type_base_sptr& f, const type_base_sptr& s)
 
       if (*dm1_type != *dm2_type
 	  || get_data_member_offset(dm1) != get_data_member_offset(dm2))
-	return false;
+	RETURN_FROM_CLASSES_HAVE_SAME_LAYOUT(false);
     }
 
   // Compare the layout of base types
@@ -10299,22 +10330,23 @@ classes_have_same_layout(const type_base_sptr& f, const type_base_sptr& s)
       class_decl::base_spec_sptr f_bs = *f_bs_it, s_bs = *s_bs_it;
       if ((f_bs->get_is_virtual() != s_bs->get_is_virtual())
 	  || (f_bs->get_offset_in_bits() != s_bs->get_offset_in_bits()))
-	return false;
+	RETURN_FROM_CLASSES_HAVE_SAME_LAYOUT(false);
 
       class_decl_sptr fb = f_bs->get_base_class(), sb = s_bs->get_base_class();
       if (!classes_have_same_layout(fb, sb))
-	return false;
+	RETURN_FROM_CLASSES_HAVE_SAME_LAYOUT(false);
     }
 
   if (fc->has_vtable() != sc->has_vtable())
-    return false;
+    RETURN_FROM_CLASSES_HAVE_SAME_LAYOUT(false);
 
   // Compare virtual function types
+  ENSURE_NO_ENDLESS_LOOP;
   if (fc->has_vtable())
     {
       if (fc->get_virtual_mem_fns().size() > sc->get_virtual_mem_fns().size())
 	// Some virtual member function got removed.  Bad.
-	return false;
+	RETURN_FROM_CLASSES_HAVE_SAME_LAYOUT(false);
 
       for (auto it1 = fc->get_virtual_mem_fns().begin(),
 	     it2 = sc->get_virtual_mem_fns().begin();
@@ -10329,11 +10361,19 @@ classes_have_same_layout(const type_base_sptr& f, const type_base_sptr& s)
 	       != get_member_function_vtable_offset(method2))
 	      || !types_are_compatible(method1->get_type(),
 				       method2->get_type()))
-	    return false;
+	    RETURN_FROM_CLASSES_HAVE_SAME_LAYOUT(false);
 	}
     }
 
-  return true;
+  RETURN_FROM_CLASSES_HAVE_SAME_LAYOUT(true);
+
+#ifdef RETURN_FROM_CLASSES_HAVE_SAME_LAYOUT
+#undef RETURN_FROM_CLASSES_HAVE_SAME_LAYOUT
+#endif
+
+#ifdef ENSURE_NO_ENDLESS_LOOP
+#undef ENSURE_NO_ENDLESS_LOOP
+#endif
 }
 
 /// Test if two types are equal modulo a typedef or CV qualifiers.
