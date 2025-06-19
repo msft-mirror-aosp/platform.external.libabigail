@@ -23,7 +23,7 @@ Variables changes summary: 0 Removed, 1 Changed, 0 Added variable
         2 data member changes:
           type of 'const int* m0' changed:
             in pointed to type 'const int':
-              entity changed from 'const int' to 'int'
+              entity changed from 'const int' to compatible type 'int'
               type size hasn't changed
           type of 'volatile const u_type* m5' changed:
             in pointed to type 'volatile const u_type':

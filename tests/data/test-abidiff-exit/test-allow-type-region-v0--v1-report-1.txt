@@ -8,10 +8,7 @@ Variables changes summary: 0 Removed, 0 Changed, 0 Added variable
       in pointed to type 'struct C0' at test-allow-type-region-v1.c:1:1:
         type size hasn't changed
         1 data member change:
-          type of 'unsigned int rh_kabi_reserved1' changed:
-            type name changed from 'unsigned int' to 'int'
-            type size hasn't changed
-          and name of 'C0::rh_kabi_reserved1' changed to 'C0::correctly_inserted' at test-allow-type-region-v1.c:5:1
+          name of 'C0::rh_kabi_reserved1' changed to 'C0::correctly_inserted' at test-allow-type-region-v1.c:5:1
     parameter 2 of type 'C1*' has sub-type changes:
       in pointed to type 'struct C1' at test-allow-type-region-v1.c:12:1:
         type size hasn't changed

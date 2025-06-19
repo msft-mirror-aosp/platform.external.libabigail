@@ -1,5 +1,5 @@
 Functions changes summary: 0 Removed, 0 Changed, 0 Added function
-Variables changes summary: 0 Removed, 2 Changed, 0 Added variables
+Variables changes summary: 0 Removed, 1 Changed (1 filtered out), 0 Added variables
 
 1 variable with incompatible sub-type changes:
 
@@ -11,14 +11,4 @@ Variables changes summary: 0 Removed, 2 Changed, 0 Added variables
         'long long int added_member', at offset 64 (in bits) at test-changed-var-1-v1.cc:4:1
       1 data member change:
         'char m1' offset changed from 32 to 128 (in bits) (by +96 bits)
-
-1 Changed variable:
-
-  [C] 'S1 v1' was changed at test-changed-var-1-v1.cc:16:1:
-    type of variable changed:
-      type size hasn't changed
-      1 data member change:
-        type of 'int m1' changed:
-          type name changed from 'int' to 'unsigned int'
-          type size hasn't changed
 

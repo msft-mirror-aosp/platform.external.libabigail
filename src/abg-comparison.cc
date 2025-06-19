@@ -2955,16 +2955,17 @@ distinct_diff::compatible_child_diff() const
 {
   if (!priv_->compatible_child_diff)
     {
-      type_base_sptr fs = strip_typedef(is_type(first())),
-	ss = strip_typedef(is_type(second()));
+      if (entities_are_of_distinct_kinds(first(), second())
+	  && types_are_compatible(is_type(first()), is_type(second())))
+	{
+	  type_base_sptr fs = peel_qualified_or_typedef_type(is_type(first())),
+	    ss = peel_qualified_or_typedef_type(is_type(second()));
 
-      if (fs && ss
-	  && !entities_are_of_distinct_kinds(get_type_declaration(fs),
-					     get_type_declaration(ss))
-	  && *fs == *ss)
-	priv_->compatible_child_diff = compute_diff(get_type_declaration(fs),
-						    get_type_declaration(ss),
-						    context());
+	    priv_->compatible_child_diff =
+	      compute_diff(get_type_declaration(fs),
+			   get_type_declaration(ss),
+			   context());
+	}
     }
   return priv_->compatible_child_diff;
 }

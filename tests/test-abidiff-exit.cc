@@ -122,7 +122,7 @@ InOutSpec in_out_specs[] =
     "",
     "",
     "",
-    abigail::tools_utils::ABIDIFF_ABI_CHANGE,
+    abigail::tools_utils::ABIDIFF_OK,
     "data/test-abidiff-exit/test-loc-with-locs-report.txt",
     "output/test-abidiff-exit/test-loc-with-locs-report.txt"
   },
@@ -137,7 +137,7 @@ InOutSpec in_out_specs[] =
     "",
     "",
     "--no-show-locs",
-    abigail::tools_utils::ABIDIFF_ABI_CHANGE,
+    abigail::tools_utils::ABIDIFF_OK,
     "data/test-abidiff-exit/test-loc-without-locs-report.txt",
     "output/test-abidiff-exit/test-loc-without-locs-report.txt"
   },

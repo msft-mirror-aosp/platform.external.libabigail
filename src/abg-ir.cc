@@ -10327,8 +10327,8 @@ classes_have_same_layout(const type_base_sptr& f, const type_base_sptr& s)
 
 	  if ((get_member_function_vtable_offset(method1)
 	       != get_member_function_vtable_offset(method2))
-	      || types_are_compatible(method1->get_type(),
-				      method2->get_type()))
+	      || !types_are_compatible(method1->get_type(),
+				       method2->get_type()))
 	    return false;
 	}
     }
@@ -10426,6 +10426,8 @@ types_are_compatible(const type_base_sptr type1, const type_base_sptr type2)
 	  if (!types_are_compatible((*p1)->get_type(),
 				    (*p2)->get_type()))
 	    return false;
+
+	return true;
       }
 
   if (classes_have_same_layout(t1, t2))
@@ -29664,26 +29666,17 @@ integral_type_has_harmless_name_change(const type_base_sptr& f,
 {
   if (is_decl(f)
       && is_decl(s)
-      && (is_integral_type(f) || is_decl(f)->get_name().empty())
-      && (is_integral_type(s) || is_decl(s)->get_name().empty())
+      && ((is_integral_type(f) && is_integral_type(s))
+	  || (is_decl(f)->get_name().empty()
+	      && is_type_decl(f)
+	      && is_integral_type(s))
+	  || (is_decl(s)->get_name().empty()
+	      && is_type_decl(s)
+	      && is_integral_type(f)))
       && decl_name_changed(is_decl(f), is_decl(s))
       && (f->get_size_in_bits() == s->get_size_in_bits())
       && (f->get_alignment_in_bits() == s->get_alignment_in_bits()))
-    {
-      real_type fi, si;
-      ABG_ASSERT(is_decl(f)->get_name().empty()
-		 || parse_real_type(is_decl(f)->get_name(), fi));
-      ABG_ASSERT(is_decl(s)->get_name().empty()
-		 || parse_real_type(is_decl(s)->get_name(), si));
-
-      if (fi.get_base_type() == si.get_base_type()
-	  && fi.get_modifiers() != si.get_modifiers())
-	// The base type hasn't changed.  That means only modifiers
-	// changed.  This is considered has harmful by default.
-	return false;
-
       return true;
-    }
 
   return false;
 }

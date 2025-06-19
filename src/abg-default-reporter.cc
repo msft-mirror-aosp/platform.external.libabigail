@@ -1638,10 +1638,7 @@ default_reporter::report(const distinct_diff& d, ostream& out,
   type_base_sptr fs = strip_typedef(is_type(f)),
     ss = strip_typedef(is_type(s));
 
-  if (diff)
-    diff->report(out, indent + "  ");
-  else
-    report_size_and_alignment_changes(f, s, d.context(), out, indent);
+  report_size_and_alignment_changes(f, s, d.context(), out, indent);
 }
 
 /// Serialize a report of the changes encapsulated in the current
