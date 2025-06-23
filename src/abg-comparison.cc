@@ -10021,8 +10021,30 @@ corpus_diff::priv::ensure_lookup_tables_populated()
 	const var_decl_sptr deleted_var = first_->get_variables()[i];
 	string n = deleted_var->get_id();
 	ABG_ASSERT(!n.empty());
-	ABG_ASSERT(deleted_vars_.find(n) == deleted_vars_.end());
-	deleted_vars_[n] = deleted_var;
+	// The below is commented out because there can be several
+	// global variables with the same ID in the corpus.  So
+	// several global variables with the same ID can be deleted.
+	//
+	// In general these are static member variables.  There can be
+	// multiple instances of these (one per translation unit) that
+	// appear to be different, but they are put into a COMDAT
+	// section (with CLOOS ELF binding in modern toolchains) in
+	// the end.
+	//
+	// In that case, let's keep track of the first global variable
+	// removed and let's ignore the subsequent ones as they should
+	// all be "merged" into one by the linker.
+	//
+	// ABG_ASSERT(deleted_vars_.find(n) == deleted_vars_.end());
+	string_var_ptr_map::const_iterator j = deleted_vars_.find(n);
+	if (j != deleted_vars_.end())
+	  {
+	    ABG_ASSERT(is_member_decl(j->second)
+		       && get_member_is_static(j->second));
+	    continue;
+	  }
+	else
+	  deleted_vars_[n] = deleted_var;
       }
 
     for (vector<insertion>::const_iterator it = e.insertions().begin();
