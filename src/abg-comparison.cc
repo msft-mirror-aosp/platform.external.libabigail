@@ -10065,7 +10065,7 @@ corpus_diff::priv::ensure_lookup_tables_populated()
 	      if ( k != added_vars_.end())
 		{
 		  ABG_ASSERT(is_member_decl(k->second)
-			 && get_member_is_static(k->second));
+			     && get_member_is_static(k->second));
 		  continue;
 		}
 	    }
