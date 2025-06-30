@@ -551,15 +551,6 @@ symtab::load_(Elf*	       elf_handle,
 	 elf_helpers::stv_to_elf_symbol_visibility
 	 (GELF_ST_VISIBILITY(sym->st_other)));
 
-      // We do not take suppressed symbols into our symbol vector to avoid
-      // accidental leakage. But we ensure supressed symbols are otherwise set
-      // up for lookup.
-      if (!(is_suppressed && is_suppressed(symbol_sptr)))
-	// add to the symbol vector
-	symbols_.push_back(symbol_sptr);
-      else
-	symbol_sptr->set_is_suppressed(true);
-
       // add to the name->symbol lookup
       name_symbol_map_[name].push_back(symbol_sptr);
 
@@ -581,6 +572,25 @@ symtab::load_(Elf*	       elf_handle,
 	}
       else if (symbol_sptr->is_defined())
 	setup_symbol_lookup_tables(elf_handle, sym, symbol_sptr);
+    }
+
+  // Now that symbols aliases have been constructed, let's determine
+  // what symbol has been suppressed or not.  Suppression takes into
+  // account
+  for (auto& elem : name_symbol_map_)
+    {
+      auto& symbols = elem.second;
+      for (auto& symbol : symbols)
+	{
+	  // We do not take suppressed symbols into our symbol vector
+	  // to avoid accidental leakage. But we ensure supressed
+	  // symbols are otherwise set up for lookup.
+	  if (!(is_suppressed && is_suppressed(symbol)))
+	    // add to the symbol vector
+	    symbols_.push_back(symbol);
+	  else
+	    symbol->set_is_suppressed(true);
+	}
     }
 
   add_alternative_address_lookups(elf_handle);

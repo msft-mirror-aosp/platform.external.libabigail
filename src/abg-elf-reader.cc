@@ -645,7 +645,24 @@ reader::symtab() const
     priv_->symt = symtab_reader::symtab::load
       (elf_handle(), options().env,
        [&](const elf_symbol_sptr& symbol)
-       {return suppr::is_elf_symbol_suppressed(*this, symbol);});
+       {
+	 // This closure determines if a given symbol is suppressed by
+	 // taking into accont symbol aliases.  Basically, a symbol is
+	 // suppressed if all its aliases are suppressed.
+	 if (!symbol)
+	   return false;
+	 if (!suppr::is_elf_symbol_suppressed(*this, symbol))
+	   return false;
+	 for (elf_symbol_sptr a = symbol->get_next_alias();
+	      a && a.get() != symbol->get_main_symbol().get();
+	      a = a->get_next_alias())
+	   {
+	     if (!suppr::is_elf_symbol_suppressed(*this, a))
+	       return false;
+	   }
+	 return true;
+       }
+       );
 
   if (!priv_->symt)
     std::cerr << "Symbol table of '" << corpus_path()

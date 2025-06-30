@@ -10,6 +10,7 @@
 #ifndef __TEST_READ_COMMON_H__
 #define __TEST_READ_COMMON_H__
 
+#include <cstring>
 #include <string>
 #include "abg-ir.h"
 #include "abg-corpus.h"
@@ -77,7 +78,7 @@ struct test_task : public abigail::workers::task
   void
   set_in_suppr_spec_path()
   {
-    if (spec.in_suppr_spec_path)
+    if (spec.in_suppr_spec_path && strcmp(spec.in_suppr_spec_path, ""))
       in_suppr_spec_path = in_elf_base + spec.in_suppr_spec_path;
     else
       in_suppr_spec_path.clear();

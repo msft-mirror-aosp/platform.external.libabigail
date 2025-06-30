@@ -661,10 +661,12 @@ test_task_dwarf::perform()
     return;
 
   string abidw = string(get_build_dir()) + "/tools/abidw";
-  string drop_private_types;
+  string drop_private_types, suppr_specs;
   if (!in_public_headers_path.empty())
     drop_private_types += "--headers-dir " + in_public_headers_path +
       " --drop-private-types";
+  if (!in_suppr_spec_path.empty())
+    suppr_specs = " --suppr " + in_suppr_spec_path + " ";
   string type_id_style = "sequence";
   if (spec.type_id_style == HASH_TYPE_ID_STYLE)
     type_id_style = "hash";
@@ -672,7 +674,7 @@ test_task_dwarf::perform()
   string cmd = abidw + " --no-parameter-names --no-architecture --no-load-undefined-interfaces"
     + " --type-id-style " + type_id_style
     + " --no-corpus-path "
-    + drop_private_types + " " + in_elf_path
+    + drop_private_types + suppr_specs + " " + in_elf_path
     +" > " + out_abi_path;
 
   if (system(cmd.c_str()))
