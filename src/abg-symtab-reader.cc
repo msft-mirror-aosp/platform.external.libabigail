@@ -706,7 +706,7 @@ symtab::update_main_symbol(GElf_Addr addr, const std::string& name)
 /// Various adjustments and bookkeeping may be needed to provide a correct
 /// interpretation (one that matches DWARF addresses) of raw symbol values.
 ///
-/// This is a sub-routine for symtab::load_and
+/// This is a sub-routine for symtab::load_ and
 /// symtab::add_alternative_address_lookups and must be called only
 /// once (per symbol) during the execution of the former.
 ///
