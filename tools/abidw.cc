@@ -133,6 +133,7 @@ struct options
   bool			annotate;
   bool			do_log;
   bool			drop_private_types;
+  bool			force_early_suppression;
   bool			drop_undefined_syms;
   bool			assume_odr_for_cplusplus;
   bool			leverage_dwarf_factorization;
@@ -180,6 +181,7 @@ struct options
       annotate(),
       do_log(),
       drop_private_types(false),
+      force_early_suppression(false),
       drop_undefined_syms(false),
       assume_odr_for_cplusplus(true),
       leverage_dwarf_factorization(true),
@@ -222,10 +224,11 @@ display_usage(const string& prog_name, ostream& out)
     << "  --debug-tc  debug the type canonicalization process\n"
     << "  --debug-dc  debug the DIE canonicalization process\n"
 #endif
-    << "  --drop-private-types  drop private types from representation\n"
     << "  --drop-undefined-syms  drop undefined symbols from representation\n"
     << "  --exported-interfaces-only  analyze exported interfaces only\n"
     << "  --follow-dependencies  build a corpus group with the dependencies\n"
+    << "  --follow-dependencies  build a corpus group with the dependencies\n"
+    << "  --force-early-suppression  drop IR nodes that match suppression specifications\n"
     << "  --headers-dir|--hd <path> the path to headers of the elf file\n"
     << "  --header-file|--hf <path> the path one header of the elf file\n"
     << "  --help|-h  display this message\n"
@@ -307,6 +310,10 @@ parse_command_line(int argc, char* argv[], options& opts)
 	  if (j >= argc)
 	    return false;
 	  opts.headers_dirs.push_back(argv[j]);
+	  // The user is indirectly defining private types so she
+	  // really wants those types to be removed from the ABIXML.
+	  // So let's drop them from the IR.
+	  opts.drop_private_types = true;
 	  ++i;
 	}
       else if (!strcmp(argv[i], "--added-binaries-dir")
@@ -325,6 +332,10 @@ parse_command_line(int argc, char* argv[], options& opts)
 	  if (j >= argc)
 	    return false;
 	  opts.header_files.push_back(argv[j]);
+	  // The user is indirectly defining private types so she
+	  // really wants those types to be removed from the ABIXML.
+	  // So let's drop them from the IR.
+	  opts.drop_private_types = true;
 	  ++i;
 	}
       else if (!strcmp(argv[i], "--out-file")
@@ -447,6 +458,8 @@ parse_command_line(int argc, char* argv[], options& opts)
 	opts.load_undefined_interfaces = false;
       else if (!strcmp(argv[i], "--drop-private-types"))
 	opts.drop_private_types = true;
+      else if (!strcmp(argv[i], "--force-early-suppression"))
+	opts.force_early_suppression = true;
       else if (!strcmp(argv[i], "--drop-undefined-syms"))
 	opts.drop_undefined_syms = true;
       else if (!strcmp(argv[i], "--exported-interfaces-only"))
@@ -576,6 +589,13 @@ set_suppressions(abigail::elf_based_reader& rdr, options& opts)
        i != opts.suppression_paths.end();
        ++i)
     read_suppressions(*i, supprs);
+
+  if (opts.force_early_suppression)
+    // User asked to unconditionally drop suppressed artifacts from
+    // the IR.  Let's drop all nodes matched by suppression
+    // specifications from the IR.
+    for (auto& s : supprs)
+      s->set_drops_artifact_from_ir(true);
 
   suppression_sptr suppr =
     abigail::tools_utils::gen_suppr_spec_from_headers(opts.headers_dirs,

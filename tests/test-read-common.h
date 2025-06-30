@@ -58,6 +58,7 @@ struct test_task : public abigail::workers::task
   string in_abi_path;
   string in_suppr_spec_path;
   string in_public_headers_path;
+  string in_options;
   string out_abi_path;
 
 
@@ -91,10 +92,23 @@ struct test_task : public abigail::workers::task
   void
   set_in_public_headers_path()
   {
+    in_public_headers_path.clear();
     if (spec.in_public_headers_path)
       in_public_headers_path = spec.in_public_headers_path;
     if (!in_public_headers_path.empty())
       in_public_headers_path = in_elf_base + spec.in_public_headers_path;
+  }
+
+  /// A setter for the in_options field.
+  ///
+  /// The in_options is the additional option to be passed to the
+  /// abidw command at run time.
+  void
+  set_in_options()
+  {
+    in_options.clear();
+    if (spec.options)
+      in_options = spec.options;
   }
 
   /// A setter for `out_abi_path` field.

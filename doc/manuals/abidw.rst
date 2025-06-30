@@ -1,3 +1,4 @@
+.. _abidw_label:
 
 ======
 abidw
@@ -187,13 +188,20 @@ Options
     the --enable-debug-type-canonicalization option.
 
 
+    .. _abidw_drop_private_types_option_label:
   * ``--drop-private-types``
 
-    This option is to be used with the ``--headers-dir`` and/or
-    ``header-file`` options.  With this option, types that are *NOT*
-    defined in the headers are entirely dropped from the internal
-    representation build by Libabigail to represent the ABI and will
-    not end up in the abi XML file.
+    This option is implicitly set by option :ref:`--headers-dir
+    <abidw_header_dir_option_label>` and :ref:`--header-file
+    <abidw_header_file_option_label>` options.
+
+    With this option, types that are *NOT* defined in the headers are
+    entirely dropped from the internal representation build by
+    Libabigail to represent the ABI and will not end up in the abi XML
+    file.
+
+    This option is provided or compatibility reasons only and should
+    not be explicitly used anymore.
 
 
   * ``--drop-undefined-syms``
@@ -240,14 +248,32 @@ Options
     Group is then serialized out.
 
 
+    .. _abidw_force_early_suppression_option_label:
+  * ``--force-early-suppression``
+
+    This option must be used alongside option :ref:`--suppression
+    <abidw_suppressions_option_label>`.
+
+    It forces :ref:`suppression specifications <suppr_spec_label>` to
+    be applied in :ref:`early suppression mode
+    <early_suppression_mode_label>`.  Artifacts of the internal
+    representation that are matched by suppression specifications are
+    thus suppressed from memory.
+
+    If this option is not used then only suppression specifications
+    with the :ref:`drop property set to 'yes' <drop_property_label>`
+    are effective.  All other suppression specification directives
+    will appear to be ignored.
 
 
-
+    .. _abidw_header_dir_option_label:
   * ``--headers-dir | --hd`` <headers-directory-path-1>
 
     Specifies where to find the public headers of the binary that the
     tool has to consider.  The tool will thus filter out types that
-    are not defined in public headers.
+    are not defined in public headers.  This option implicitly sets
+    option :ref:`--drop-private-types
+    <abidw_drop_private_types_option_label>`.
 
     Note that several public header directories can be specified for
     the binary to consider.  In that case the ``--header-dir`` option
@@ -266,6 +292,9 @@ Options
     Specifies where to find one of the public headers of the abi file
     that the tool has to consider.  The tool will thus filter out
     types that are not defined in public headers.
+
+    This option implicitly sets option :ref:`--drop-private-types
+    <abidw_drop_private_types_option_label>`.
 
 
   * ``--help | -h``
@@ -433,6 +462,8 @@ Options
     Emit statistics about various internal things.
 
 
+    .. _abidw_suppressions_option_label:
+
   * ``--suppressions | suppr`` <*path-to-suppression-specifications-file*>
 
     Use a :ref:`suppression specification <suppr_spec_label>` file
@@ -441,6 +472,13 @@ Options
     that case, all of the provided suppression specification files are
     taken into account.  ABI artifacts matched by the suppression
     specifications are suppressed from the output of this tool.
+
+    Only suppression specifications that have the :ref:`drop property
+    set to 'yes' <drop_property_label>` are going to be effective.
+    All other suppression specification directives will appear as
+    being ignored, unless the command line option
+    :ref:`--force-early-suppression
+    <abidw_force_early_suppression_option_label>` is provided.
 
 
   * ``--type-id-style`` <``sequence``|``hash``>

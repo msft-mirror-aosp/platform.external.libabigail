@@ -893,6 +893,14 @@ test-read-dwarf/PR29692-kdelibs3-libkjava.so.1.0.0.abi \
 test-read-dwarf/test-pointer-to-member-1.cc \
 test-read-dwarf/test-pointer-to-member-1.o \
 test-read-dwarf/test-pointer-to-member-1.o.abi \
+test-read-dwarf/PR33090/bug1.c \
+test-read-dwarf/PR33090/bug2.c \
+test-read-dwarf/PR33090/impl1.so \
+test-read-dwarf/PR33090/impl1.so.abi \
+test-read-dwarf/PR33090/impl2.so \
+test-read-dwarf/PR33090/impl2.so.abi \
+test-read-dwarf/PR33090/interface.h \
+test-read-dwarf/PR33090/private.suppr \
 \
 test-read-ctf/test0		\
 test-read-ctf/test0.abi		\

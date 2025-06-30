@@ -118,6 +118,10 @@ is just not mentioned in the ABI change report.  The change report can
 still mention statistics about the number of changed ABI artifacts
 that were suppressed.
 
+This is the default mode of interpretation of suppression
+specifications for most tools including :ref:`abidiff <abidiff_label>`
+and :ref:`abidw <abidw_label>`.
+
 .. _early_suppression_mode_label:
 
 There is another operating mode called the "early suppression mode"
@@ -129,9 +133,19 @@ change about the matched ABI artifact is going to be mentioned in the
 ABI change report and no statistic about the number of suppressed ABI
 changes is available.  Also, please note that because suppressed ABI
 artifacts are removed from the in-memory internal representation in
-this mode, the amount memory used by the internal representation is
+this mode, the amount of memory used by the internal representation is
 potentially smaller than the memory consumption in the late
 suppression mode.
+
+Please note that this mode suppresses data from the internal
+representation constructed by libabigail and thus can lead to
+unintended and surprising consequences.  Consequently this mode has to
+be set explicitly by users either by using the :ref:`drop
+property<drop_property_label>` in a suppression specification or by
+using a special tool command line option like
+:ref:`abidw --force-early-suppression
+<abidw_force_early_suppression_option_label>`.
+
 
 Sections
 ^^^^^^^^
@@ -341,7 +355,7 @@ The potential properties of this sections are listed below:
   Note that for this property to be applied to changes to an enum
   type, the size of the enum type must *NOT* have changed.
 
-
+ .. _drop_property_label:
 * ``drop``
 
  Usage:

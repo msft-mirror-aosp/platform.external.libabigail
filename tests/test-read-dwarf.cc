@@ -586,6 +586,24 @@ static InOutSpec in_out_specs[] =
     "output/test-read-dwarf/test-pointer-to-member-1.o.abi",
     NULL,
   },
+  {
+    "data/test-read-dwarf/PR33090/impl1.so",
+    "data/test-read-dwarf/PR33090/private.suppr",
+    "",
+    SEQUENCE_TYPE_ID_STYLE,
+    "data/test-read-dwarf/PR33090/impl1.so.abi",
+    "output/test-read-dwarf/PR33090/impl1.so.abi",
+    "--force-early-suppression",
+  },
+  {
+    "data/test-read-dwarf/PR33090/impl2.so",
+    "data/test-read-dwarf/PR33090/private.suppr",
+    "",
+    SEQUENCE_TYPE_ID_STYLE,
+    "data/test-read-dwarf/PR33090/impl2.so.abi",
+    "output/test-read-dwarf/PR33090/impl2.so.abi",
+    "--force-early-suppression",
+  },
   // DWARF fallback feature.
   {
     "data/test-read-dwarf/test-fallback.o",
@@ -655,18 +673,21 @@ test_task_dwarf::perform()
   set_in_elf_path();
   set_in_suppr_spec_path();
   set_in_public_headers_path();
+  set_in_options();
 
   if (!set_out_abi_path()
       || in_elf_path.empty())
     return;
 
   string abidw = string(get_build_dir()) + "/tools/abidw";
-  string drop_private_types, suppr_specs;
+  string drop_private_types, suppr_specs, options;
   if (!in_public_headers_path.empty())
     drop_private_types += "--headers-dir " + in_public_headers_path +
       " --drop-private-types";
   if (!in_suppr_spec_path.empty())
     suppr_specs = " --suppr " + in_suppr_spec_path + " ";
+  if (!in_options.empty())
+    options = " " + in_options + " ";
   string type_id_style = "sequence";
   if (spec.type_id_style == HASH_TYPE_ID_STYLE)
     type_id_style = "hash";
@@ -674,7 +695,7 @@ test_task_dwarf::perform()
   string cmd = abidw + " --no-parameter-names --no-architecture --no-load-undefined-interfaces"
     + " --type-id-style " + type_id_style
     + " --no-corpus-path "
-    + drop_private_types + suppr_specs + " " + in_elf_path
+    + drop_private_types + suppr_specs + options + " " + in_elf_path
     +" > " + out_abi_path;
 
   if (system(cmd.c_str()))
