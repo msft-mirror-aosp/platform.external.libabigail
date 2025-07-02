@@ -288,9 +288,11 @@ AC_LANG([C++])
 AC_LANG_COMPILER_REQUIRE
 
 dnl
-dnl We use C++11
+dnl We use C++14.  It has been the default in G++ since GCC 6.  In el8
+dnl (that we still support), we do have GCC 8.x with c++14 as the
+dnl default, still.
 dnl
-CXX_STANDARD=c++11
+CXX_STANDARD=c++14
 
 dnl
 dnl check if the c++ compiler has support __attribute__((visibility("hidden")))
