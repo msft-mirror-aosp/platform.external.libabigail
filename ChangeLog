@@ -1,3 +1,647 @@
+2025-07-04  Dodji Seketeli <dodji@redhat.com>
+
+	NEWS: Update for 2.8 release
+	* NEWS: Update for 2.8 release.
+
+2025-07-04  Dodji Seketeli <dodji@redhat.com>
+
+	configure: Bump libabigail_so_current to 7
+	* configure.ac: bump libabigail_so_current to 7.
+
+2025-07-02  Dodji Seketeli <dodji@redhat.com>
+
+	Bug 26021 - Upgrade the C++ standard to C++14
+	* configure.ac: Upgrade the code base to c++14.  This is the
+	default in GCC 8.5, used in EL8, the oldest platform that we
+	currently support.
+
+2025-06-30  Dodji Seketeli <dodji@redhat.com>
+
+	tests/data/test-read-dwarf/PR33090: Add missing test material
+	* tests/data/test-read-dwarf/PR33090/bug{1,2}.c: Really add this.
+	* tests/data/test-read-dwarf/PR33090/impl{1,2}.so: Likewise.
+	* tests/data/test-read-dwarf/PR33090/impl{1,2}.so.abi: Likewise.
+	* tests/data/test-read-dwarf/PR33090/interface.h: Likewise.
+	* tests/data/test-read-dwarf/PR33090/private.suppr: Likewise.
+
+2025-06-30  Dodji Seketeli <dodji@redhat.com>
+
+	Bug 33090 - Implement abidw --force-early-suppression
+	* doc/manuals/abidw.rst: Add documentation for the new
+	--force-early-suppression.  Adjust the docs for the
+	--drop-private-types, --headers-dir, --headers-file and
+	--suppressions.
+	* doc/manuals/suppression-specifications.rst:  Adjust
+	documentation for early suppression mode.
+	* tools/abidw.cc (options::force_early_suppression): Define new
+	data member.
+	(options::options): Initialize the new
+	options::force_early_suppression.
+	(display_usage): Document the new --force-early-suppression.
+	(parse_command_line): Support the new --force-early-suppression.
+	Also, if --header-dirs or --header-file is set, then set
+	--drop-private-types.
+	(set_suppressions): If --force-early-suppression is provided, then
+	force suppressed IR node to be dropped from memory.
+	* tests/test-read-common.h
+	(test_task::set_in_public_headers_path): Reset the
+	in_public_headers_path by default.
+	(test_task::set_in_options): Define new member function.
+	* tests/test-read-dwarf.cc (in_out_specs): Add the new test input
+	binaries below to the test harness.
+	(test_task_dwarf::perform): Take the additional command line
+	options into account.
+	* tests/data/test-read-dwarf/PR33090/bug[12].c: Source code
+	for new test input binary.
+	* tests/data/test-read-dwarf/PR33090/impl{1,2}.so: Add new binary
+	test input.
+	* tests/data/test-read-dwarf/PR33090/impl{1,2}.so.abi: Add new
+	expected ABIXML output.
+	* tests/data/test-read-dwarf/PR33090/interface.h: Source code for
+	new test input binary.
+	* tests/data/test-read-dwarf/PR33090/private.suppr: Suppression
+	specification for new input test.
+
+2025-06-30  Dodji Seketeli <dodji@redhat.com>
+
+	elf-reader,symtab-reader: Fix suppression of aliased symbols
+	* src/abg-elf-reader.cc (reader::symtab): Rewrite the closure that
+	determines if a symbol is suppressed.  Make it so that all aliases
+	of a symbol has to be suppressed for the symbol to be suppressed.
+	* src/abg-symtab-reader.cc (symtab::load_): Wait until all symbols
+	aliases are constructed before determining if they are suppressed.
+	This is because aliases are now necessary to determine if a symbol
+	is suppressed.
+	* tests/test-read-common.h (test_task::set_in_suppr_spec_path):
+	Empty suppression specification shouldn't trigger us.
+	* tests/test-read-dwarf.cc (test_task_dwarf::perform): Take the
+	suppression specifications into account on the command line.
+	* tests/data/test-read-dwarf/libtest24-drop-fns.so.abi: Adjust.
+	* tests/data/test-read-dwarf/test-suppressed-alias.o.abi:
+	Likewise.
+	* tests/data/test-read-dwarf/test3-alias-1.so.hash.abi: Likewise.
+	* tests/data/test-read-dwarf/test3-alias-2.so.hash.abi: Likewise.
+	* tests/data/test-read-dwarf/test3-alias-3.so.hash.abi: Likewise.
+	* tests/data/test-read-dwarf/test3-alias-4.so.hash.abi: Likewise.
+
+2025-06-30  Dodji Seketeli <dodji@redhat.com>
+
+	abidw: Sort options documentation alphabetically
+	* doc/manuals/abidw.rst: Sort items of options documentation
+	alphabetically.
+	* tools/abidw.cc (display_usage): Likewise.
+
+2025-06-30  Dodji Seketeli <dodji@redhat.com>
+
+	symtab-reader: Add missing space
+	* src/abg-symtab-reader.cc (symtab::setup_symbol_lookup_tables):
+	Add a missing space to the comment.
+
+2025-06-23  Dodji Seketeli <dodji@redhat.com>
+
+	abg-comparison: Fix indentation
+	* src/abg-comparison.cc
+	(corpus_diff::priv::ensure_lookup_tables_populated): Fix
+	indentation.
+
+2025-06-23  Dodji Seketeli <dodji@redhat.com>
+
+	abg-comparison: Do not abort when a static data member is deleted
+	* src/abg-comparison.cc
+	(corpus_diff::priv::ensure_lookup_tables_populated): Do not choke
+	if a static data member is removed.
+
+2025-06-16  Dodji Seketeli <dodji@redhat.com>
+
+	Bug 33055 - classes_have_same_layout & types_are_compatible enter in endless loop
+	* src/abg-ir-priv.h (class_or_union::priv): Add a set of
+	type_base* to record the classes which layouts are being compared
+	against this one.
+	* src/abg-ir.cc (classes_have_same_layout): If this type is
+	already involved in comparing class layouts using
+	classes_have_same_layout then do get out early to avoid calling
+	types_are_compatible.
+	* tests/data/test-abidiff-exit/PR33055/Makefile: New Makefile to
+	build the test input binaries.
+	* tests/data/test-abidiff-exit/PR33055/PR33055-report-[12].txt:
+	New expected reference test output.
+	* tests/data/test-abidiff-exit/PR33055/file.cpp: Source code of
+	the test binaries.
+	* tests/data/test-abidiff-exit/PR33055/{new,old}-lib.so: New test
+	input binaries.
+	* tests/data/Makefile.am: Add the new test material to source
+	distribution.
+	* tests/test-abidiff-exit.cc (in_out_specs): Add the new test
+	binary inputs to this harness.
+
+2025-06-19  Dodji Seketeli <dodji@redhat.com>
+
+	Improve harmless integral type change filtering
+	* src/abg-comparison.cc (distinct_diff::compatible_child_diff):
+	Simplify and fix logic.  If the diff subjects are entities are of
+	distinct kind and if they are compatible types then make this node
+	describe the actual changes between the peeled down subjects.
+	* src/abg-default-reporter.cc (default_reporter::report): In the
+	overload for const distinct_diff, do not report the child diff
+	node describing the peeled down changes to avoid endless
+	recursion.
+	* src/abg-ir.cc (classes_have_same_layout): Fix a thinko in the
+	detection of compatible method types.
+	(integral_type_has_harmless_name_change): Simplify and fix
+	logic. Two integral types of the same size/alignment but with
+	different names are considered as a harmless change.  Note that
+	for types with empty names, for now, detecting if they are
+	integral types is broken.  So let's consider them as integral for
+	now.  This will have to be changed when the DWARF reader is fixed
+	for better handling the case of integral types detection.
+	* tests/data/test-abidiff-exit/PR30048-test-report-0.txt: Adjust.
+	* tests/data/test-abidiff-exit/btf/test0-report-2.txt: Likewise.
+	* tests/data/test-abidiff-exit/qualifier-typedef-array-report-1.txt:
+	Likewise
+	* tests/data/test-abidiff-exit/test-allow-type-region-v0--v1-report-1.txt:
+	Likewise.
+	* tests/data/test-abidiff-exit/test-allow-type-region-v0--v4-report-1.txt:
+	Likewise.
+	* tests/data/test-abidiff-exit/test-allow-type-region-v0--v5-report-1.txt:
+	Likewise.
+	* tests/data/test-abidiff-exit/test-allow-type-region-v0--v5-report-2.txt:
+	Likewise.
+	* tests/data/test-abidiff-exit/test-changed-var-1-report-1.txt:
+	Likewise.
+	* tests/data/test-abidiff-exit/test-loc-with-locs-report.txt:
+	Likewise.
+	* tests/data/test-abidiff-exit/test-loc-without-locs-report.txt:
+	Likewise.
+	* tests/data/test-diff-dwarf/test2-report.txt: Likewise.
+	* tests/data/test-diff-dwarf/test4-report.txt: Likewise.
+	* tests/data/test-diff-dwarf/test5-report.txt: Likewise.
+	* tests/data/test-diff-filter/test18-report.txt: Likewise.
+	* tests/data/test-diff-filter/test24-compatible-vars-report-1.txt:
+	Likewise.
+	* tests/data/test-diff-filter/test27-redundant-and-filtered-children-nodes-report-2.txt:
+	Likewise.
+	* tests/data/test-diff-filter/test36-report-0.txt: Likewise.
+	* tests/data/test-diff-filter/test5-2-report.txt: Likewise.
+	* tests/data/test-diff-pkg-ctf/gmp-6.x.x86_64-report-0.txt: Likewise.
+	* tests/data/test-diff-suppr/test-has-data-member-inserted-at-2-report.1.txt:
+	Likewise.
+	* tests/data/test-diff-suppr/test-has-data-member-inserted-at-2-report.txt:
+	Likewise.
+	* tests/test-abidiff-exit.cc (in_out_specs): Now that several
+	benign integral type changes are considered harmless, adjust the
+	expected result of the tests.
+
+2025-06-12  Dodji Seketeli <dodji@redhat.com>
+
+	test-abicompat: Fix color setting
+	* tests/test-abicompat.cc (main): Set the terminal default back.
+
+2025-06-12  Dodji Seketeli <dodji@redhat.com>
+
+	Bug 33076 - abicompat doesn't filter out harmless diff nodes
+	* include/abg-comparison.h (is_diff): Add a new template function.
+	(apply_filters_and_categorize_diff_node_tree): Rename
+	apply_filters into this new function.
+	* src/abg-comparison.cc
+	(apply_filters_and_categorize_diff_node_tree): Rename
+	apply_filters into this.  Make it apply suppression
+	specifications and all categorization filters.
+	* tests/data/test-abicompat/test-diff-ptr-to-void-ptr/0/libtest-diff-ptr-to-void-ptr-fn.so:
+	New binary test input.
+	* tests/data/test-abicompat/test-diff-ptr-to-void-ptr/0/test-diff-ptr-to-void-ptr-fn-v0.c:
+	Source code of binary test input.
+	* tests/data/test-abicompat/test-diff-ptr-to-void-ptr/1/libtest-diff-ptr-to-void-ptr-fn.so:
+	New binary test input.
+	* tests/data/test-abicompat/test-diff-ptr-to-void-ptr/1/test-diff-ptr-to-void-ptr-fn-v1.c:
+	Source code of binary test input.
+	* tests/data/test-abicompat/test-diff-ptr-to-void-ptr/test-diff-ptr-to-void-ptr-app:
+	New binary test input.
+	* tests/data/test-abicompat/test-diff-ptr-to-void-ptr/test-diff-ptr-to-void-ptr-app.c:
+	Source code of binary test input.
+	* tests/data/test-abicompat/test-diff-ptr-to-void-ptr/test-diff-ptr-to-void-ptr-report-[01].txt:
+	New reference test output.
+	* tests/data/Makefile.am: Add new test material to source
+	distribution.
+	* tests/test-abicompat.cc: Add new test input to this harness.
+	* tests/print-diff-tree.cc (main): Adjust.
+	* tools/abicompat.cc (create_diff_context): Filter out harmless
+	change categories by default.
+	(compare_expected_against_provided_{function,variable}s): Use the
+	new apply_filters_and_categorize_diff_node_tree.
+
+2025-06-06  Dodji Seketeli <dodji@redhat.com>
+
+	Bug 30329 - Fix regression in support for absolute path to alt DWARF
+	* src/abg-elf-reader.cc (find_alt_dwarf_debug_info_path)
+	(find_alt_dwarf_debug_info): Remove static functions.
+	(reader::priv::find_alt_dwarf_debug_info): Remove member function.h
+	(reader::priv::{formated_di_root_paths,
+	raw_formated_di_root_paths}): Add new data members.
+	(reader::priv::initialize): Initialize the new data members.
+	(reader::priv::initialize_debug_info_root_paths): Define new
+	member function.
+	(reader::priv::crack_open_elf_file): Invoke the new
+	initialize_debug_info_root_paths above.  Adjust the call to
+	elf_helpers::initialize_dwfl_callbacks to pass the new
+	raw_formated_di_root_paths.
+	(reader::priv::locate_dwarf_debug_info): Remove all the
+	unnecessary cruft.  Just rely on elfutils finding the debug info,
+	now that it's been properly initialized.  Use the dwarf_getalt
+	function that is now always present in the versions of elfutils
+	that we use.
+	That later fix actually temporarily broke the initial fix for "Bug
+	30329".
+	This patch handles the case of a DWZ-produced alternate DWARF being
+	referenced by an absolute path which happens to be under the root
+	debug info dir (e.g,
+	"/usr/lib/debug/dwz/components/sqlite.bst/x86_64-unknown-linux-gnu",
+	under the root dir "/usr/lib/debug").
+	The idea of the fix is to automatically add a
+	"/usr/lib/debug/dwz/components/sqlite.bst" as a debuginfo dir because
+	it is under the root dir /usr/lib/debug and because it contains a
+	file.
+	* include/abg-tools-utils.h (get_file_path_dirs_under_dir):
+	Declare ...
+	* src/abg-tools-utils.cc (get_file_path_dirs_under_dir): ... new
+	function.
+	(is_file): Define new static function.
+	* src/abg-elf-reader.cc
+	(reader::priv::initialize_debug_info_root_paths): Add
+	sub-directories (that contain files) of root debuginfo dirs to the
+	set of debug info root paths to be considered by elfutils.
+	* tests/test-abidiff-exit.cc (in_out_specs): Add a new test case
+	for
+	data/test-abidiff-exit/PR30329/old-image/usr/lib/x86_64-linux-gnu/libsqlite3.so.0.8.6
+	where two debuginfo root dirs are added.
+	(main): Support adding several comma-separated debuginfo root
+	dirs to InOutSpec::in_elfv[01]_debug_dir.
+
+2025-06-06  Dodji Seketeli <dodji@redhat.com>
+
+	Change debuginfo root paths type from vector<char**> to vector<string>
+	* include/abg-btf-reader.h (btf::create_reader): Take
+	vector<string>& instead of vector<char**>& for
+	debug_info_root_paths.
+	* include/abg-ctf-reader.h (ctf::{create,reset}_reader):
+	Likewise.
+	* include/abg-dwarf-reader.h (dwarf::{create,reset}_reader)
+	(read_corpus_from_elf): Likewise.
+	* include/abg-elf-based-reader.h (elf_based_reader::initialize):
+	Likewise.
+	* include/abg-elf-reader.h (elf::reader::{reader, initialize,
+	debug_info_root_paths}): Likewise.
+	* include/abg-tools-utils.h (file_has_{dwarf,ctf,btf}_debug_info)
+	(create_best_elf_based_reader): Likewise.
+	(get_file_path_dirs_under_dir): Declare new function.
+	(make_path_absolute): Add an overload for string.
+	* src/abg-btf-reader.cc (btf::reader::{initialize, reader, create,
+	create_reader}): Take vector<string>& instead of vector<char**>&
+	for debug_info_root_paths.
+	* src/abg-ctf-reader.cc (ctf::reader::{reader, initialize,
+	create_reader, reset_reader}): Likewise.
+	* src/abg-dwarf-reader.cc (dwarf::reader::{reader, initialize,
+	create, create_reader, read_corpus_from_elf}): Likewise.
+	* src/abg-elf-based-reader.cc
+	(elf_based_reader::{elf_based_reader, initialize}): Likewise.
+	* src/abg-elf-reader.cc
+	(elf::reader::priv::debug_info_root_paths): Change the type of
+	this data member from vector<char**> to vector<string>.
+	(elf::reader::priv::{priv, initialize}): Take vector<string>&
+	instead of vector<char**>& for debug_info_root_paths and adjust
+	the body accordingly.
+	(elf::reader::{reader, initialize, debug_info_root_paths}): Take
+	or return vector<string>& instead of vector<char**>&
+	* src/abg-tools-utils.cc (file_has_{dwarf,ctf,btf}_debug_info)
+	(load_vmlinux_corpus, create_best_elf_based_reader): Likewise.
+	(make_path_absolute): New overload for const string&.
+	(build_corpus_group_from_kernel_dist_under): Adjust to using
+	vector<string> instead of vector<char**>.
+	* tests/print-diff-tree.cc (main): Likewise.
+	* tests/test-diff-dwarf.cc (main): Likewise.
+	* tests/test-ir-walker.cc (main): Likewise.
+	* tests/test-read-btf.cc (test_task_btf::perform(): Likewise.
+	* tests/test-read-ctf.cc (test_task_ctf::perform): Likewise.
+	* tests/test-symtab.cc (read_corpus): Likewise.
+	* tools/abicompat.cc (options::{app_di_root_path,
+	lib1_di_root_path, lib2_di_root_path}): Switch types of these data
+	member from shared_ptr<char> to string.
+	(parse_command_line): Adjust to using the string overload of
+	tools_utils::make_path_absolute.
+	(read_corpus): Take a vector<string> instead of vector<char**> for
+	debuginfo root dirs.
+	(main): Adjust to using string & vector<string> for debuginfo root
+	directories instead of char* and vector<char**>.
+	* tools/abidiff.cc (options::{di_root_paths[12]}): Change the
+	types of these data members from vector<char**> to vector<string>.
+	(options::prepared_di_root_paths[12]): Remove these data members.
+	(options::~options): Remove.
+	(parse_command_line): Adjust to using the string overload of
+	tools_utils::make_path_absolute.
+	(prepare_di_root_paths): Remove.
+	(handle_error): Adjust.
+	(main): Remove call to prepare_di_root_paths & adjust.
+	* tools/abidw.cc (options::di_root_paths): Adjust type to
+	vector<string> from vector<char**>
+	(options::prepared_di_root_paths1): Remove data member.
+	(options::~options): Remove.
+	(load_corpus_and_write_abixml): Adjust.
+	(prepare_di_root_paths): Remove.
+	* tools/abilint.cc (options::di_root_path): Change type from
+	shared_ptr<char> to string.
+	(parse_command_line): Adjust.
+	(main): Adjust.
+	* tools/abipkgdiff.cc (compare, compare_to_self): Adjust.
+
+2025-06-06  Dodji Seketeli <dodji@redhat.com>
+
+	fedabipkgdiff: Fix getting the latest RPM version of a given Fedora distro
+	* tools/fedabipkgdiff (get_distro_from_string): Make this properly
+	get the distro sub-string from the release string, even for
+	release strings like "1.eln123" and '1.2.fc40app2'.  The distro
+	sub-strings returned for these two examples are 'eln123' and None.
+	None is returned in the later case because it doesn't follow the
+	"proper" Fedora scheme for distro sub-strings of the Release
+	string.
+
+2025-06-06  Dodji Seketeli <dodji@redhat.com>
+
+	configure: Remove the unnecessary FOUND_DWARF_GETALT_IN_LIBDW variable
+	* configure.ac: Remove the FOUND_DWARF_GETALT_IN_LIBDW variable
+	and the LIBDW_HAS_DWARF_GETALT configuration C macro.
+
+2025-06-06  Dodji Seketeli <dodji@redhat.com>
+
+	elf-reader: Fix elfutils initialization of debuginfo lookup paths
+	* src/abg-elf-reader.cc (find_alt_dwarf_debug_info_path)
+	(find_alt_dwarf_debug_info): Remove static functions.
+	(reader::priv::find_alt_dwarf_debug_info): Remove member function.
+	(reader::priv::{formated_di_root_paths,
+	raw_formated_di_root_paths}): Add new data members.
+	(reader::priv::initialize): Initialize the new data members.
+	(reader::priv::initialize_debug_info_root_paths): Define new
+	member function.
+	(reader::priv::crack_open_elf_file): Invoke the new
+	initialize_debug_info_root_paths above.  Adjust the call to
+	elf_helpers::initialize_dwfl_callbacks to pass the new
+	raw_formated_di_root_paths.
+	(reader::priv::locate_dwarf_debug_info): Remove all the
+	unnecessary cruft.  Just rely on elfutils finding the debug info,
+	now that it's been properly initialized.  Use the dwarf_getalt
+	function that is now always present in the versions of elfutils
+	that we use.
+
+2025-05-19  Dodji Seketeli <dodji@redhat.com>
+
+	Bug 32975 - Filter out replacing a data member with a compatible union
+	* include/abg-comp-filter.h
+	(is_type_to_compatible_anonymous_type_change)
+	(is_data_member_to_compatible_anonymous_dm_change): Declare ...
+	* src/abg-comp-filter.cc
+	(is_type_to_compatible_anonymous_type_change)
+	(is_data_member_to_compatible_anonymous_dm_change): ... new
+	functions.
+	(is_non_compatible_distinct_change): Use the new
+	is_type_to_compatible_anonymous_type_change.
+	(has_harmless_name_change): Use the new
+	is_type_to_compatible_anonymous_type_change and
+	is_data_member_to_compatible_anonymous_dm_change.
+	(has_anonymous_data_member_change): Tighten this up by making the
+	test more precise.
+	* tests/data/test-abidiff-exit/replace-dm-with-compatible-anon-dm-1-report-1.txt:
+	Add new reference test output.
+	* tests/data/test-abidiff-exit/replace-dm-with-compatible-anon-dm-1-v{0,1}.{c,o}:
+	Add new test binary output as well as its source code.
+	* tests/data/Makefile.am: Add the new test input material to
+	source distribution.
+	* tests/test-abidiff-exit.cc (in_out_specs): Add the new test to
+	this harness.
+
+2025-05-16  Mark Wielaard <mark@klomp.org>
+
+	tests/runtestfedabipkgdiffpy3.sh.in: Don't use which to find python3
+	* tests/runtestfedabipkgdiffpy3.sh.in: Replace which with
+	command -v.
+
+2025-05-14  Dodji Seketeli <dodji@redhat.com>
+
+	libxml-utils,tools-utils: Add an I/O handler for XZ input in libxml2
+	* include/abg-libxml-utils.h (xml::initialize): Declare ...
+	* src/abg-libxml-utils.cc (xml::initialize): ... new function.
+	(xz_io_match_cb, xz_io_open_cb, xz_io_read_cb, xz_io_close_cb):
+	New static functions.
+	(struct xz_ctxt_type): New type.
+	* include/abg-tools-utils.h (tools_utils::guess_file_type): Add a
+	new look_through_compression parameter with a default argument.
+	* src/abg-tools-utils.cc (initialize): Call the new
+	xml::initialize instead of xmlInitParser.
+	(guess_file_type): Add a new look_through_compression parameter.
+	If that parameter is set to false, return FILE_TYPE_XZ compression
+	for an XZ-compressed file.
+	(xz_decompressor_type::priv::inbuf): Set the size of the input
+	buffer to 100K bytes instead of 10K.  This reduces the number of
+	reads when looking at files that are bigger than 10k bytes.
+	(xz_decompressor_type::priv::outbuf): Likewise.
+	* tools/abicompat.cc (main): Call tools_utils::initialize here.
+	* tools/abidiff.cc (main): Likewise.
+	* tools/abidw.cc (main): Likewise.
+	* tools/abilint.cc (main): Likewise.
+	* tools/abipkgdiff.cc (main): Call tools_utils::initialize near
+	the beginning of the function.
+
+2025-05-14  Dodji Seketeli <dodji@redhat.com>
+
+	tools-utils: Fix XZ decompression after all compression data is read
+	* src/abg-tools-utils.cc (xz_decompressor_type::underflow): Fix
+	comment.  Decouple reading the compressed input and decompressing
+	it.  Once all the compressed data is read, cycle over it to
+	decompress it in chunk.
+
+2025-05-14  Dodji Seketeli <dodji@redhat.com>
+
+	tools-utils: Fix a comment
+	* include/abg-tools-utils.h (class xz_decompressor_type): Fix the
+	comment.
+
+2025-05-09  Dodji Seketeli <dodji@redhat.com>
+
+	configure: Add --with-libxml2 option
+	* configure.ac: Add the --with-libxml2 option.  Emit $XML_LIBS and
+	$XML_CFLAGS in the package configuration summary.
+
+2025-04-30  Dodji Seketeli <dodji@redhat.com>
+
+	Bug 32902 - Recognize harmless type size increase
+	* include/abg-fwd.h (is_compatible_with_enum_type)
+	(is_compatible_with_class_type): Declare ...
+	* src/abg-ir.cc (is_compatible_with_enum_type)
+	(is_compatible_with_class_type): new functions.
+	(collect_non_anonymous_data_members): Fix comment.
+	* src/abg-comp-filter.cc (type_size_changed_with_impact)
+	(has_type_size_change_with_impact): Define static functions.
+	(there_is_a_decl_only_class): Add an overload for class_decl* and
+	make the overload for class_decl_sptr use it.
+	(there_is_a_decl_only_enum, type_size_changed)
+	(type_has_offset_changes): Likewise.
+	(non_static_data_member_type_size_changed_with_impact): Renamed
+	non_static_data_member_type_size_changed into this.  Use the new
+	type_size_changed_with_impact instead of the old
+	type_size_changed.
+	(non_static_data_member_added_or_removed_with_impact):
+	non_static_data_member_added_or_removed renamed into this.  If the
+	containing type is anonymous then adding a new non-static data
+	member to it might not have an impact outside on the declaration
+	that currently has that anonymous type as a type.
+	(has_harmful_change): Replace the use of type_size_changed with
+	has_type_size_change_with_impact.  Adjust for the renaming of
+	non_static_data_member_added_or_removed, into
+	non_static_data_member_added_or_removed_with_impact as well as
+	non_static_data_member_added_or_removed into
+	non_static_data_member_type_size_changed_with_impact.
+	* tests/data/test-abicompat/test7-fn-changed-report-0.1.txt:
+	Adjust.
+	* tests/data/test-abicompat/test7-fn-changed-report-0.txt:
+	Likewise.
+	* tests/data/test-abidiff-exit/test-leaf-redundant-report.txt:
+	Likewise.
+	* tests/data/test-diff-dwarf/test22-changed-parm-c-report-0.txt:
+	Likewise.
+	* tests/data/test-diff-filter/test-PR26309-report-0.txt: Likewise.
+	* tests/data/test-diff-filter/test-PR29387-report.txt: Likewise.
+	* tests/data/test-diff-filter/test29-finer-redundancy-marking-report-0.txt:
+	Likewise.
+	* tests/data/test-diff-pkg-ctf/dirpkg-1-report-1.txt: Likewise.
+	* tests/data/test-diff-pkg-ctf/dirpkg-3-report-1.txt: Likewise.
+	* tests/data/test-diff-pkg-ctf/dirpkg-3-report-2.txt: Likewise.
+	* tests/data/test-diff-pkg-ctf/symlink-dir-test1-report0.txt:
+	Likewise.
+	* tests/data/test-diff-pkg-ctf/tarpkg-0-report-0.txt: Likewise.
+	* tests/data/test-diff-suppr/test13-suppr-through-pointer-report-0.txt:
+	Likewise.
+	* tests/data/test-diff-suppr/test13-suppr-through-pointer-report-1.1.txt:
+	Likewise.
+	* tests/data/test-diff-suppr/test13-suppr-through-pointer-report-1.txt:
+	Likewise.
+	* tests/data/test-diff-suppr/test42-negative-suppr-type-report-0.txt:
+	Likewise.
+	* tests/data/test-diff-suppr/test42-negative-suppr-type-report-1.txt:
+	Likewise.
+	* tests/data/test-diff-suppr/test5-fn-suppr-report-0.txt:
+	Likewise.
+	* tests/data/test-diff-suppr/test5-fn-suppr-report-1.txt:
+	Likewise.
+	* tests/data/test-diff-suppr/test5-fn-suppr-report-2.txt:
+	Likewise.
+	* tests/data/test-diff-suppr/test5-fn-suppr-report-3.txt:
+	Likewise.
+	* tests/data/test-diff-suppr/test5-fn-suppr-report-5.txt:
+	Likewise.
+	* tests/data/test-diff-suppr/test9-changed-parm-c-report-0.txt:
+	Likewise.
+	* tests/data/test-diff-suppr/test9-changed-parm-c-report-1.txt:
+	Likewise.
+	* tests/test-diff-suppr.cc: Likewise.
+	* tests/data/test-abidiff-exit/test-PR32902/test-PR32902-{1,2}-report-1.txt:
+	New reference output files.
+	* tests/data/test-abidiff-exit/test-PR32902/test-PR32902-{1,2}.v{0,1}.{c,o}:
+	New binaries and their source code.
+	* tests/data/Makefile.am: Add the new test material above to
+	source distribution.
+	* tests/test-abidiff-exit.cc (in_out_specs): Add the new input
+	test binaries to this test harness.
+
+2025-04-30  Dodji Seketeli <dodji@redhat.com>
+
+	{default,leaf}-reporter: Add incompatible changes to leaf reporter
+	* include/abg-comparison.h
+	(corpus_diff::diff_stats::{num_leaf_func_with_incompatible_changes,
+	net_num_leaf_func_non_incompatible_changes,
+	num_leaf_var_with_incompatible_changes,
+	net_num_leaf_var_non_incompatible_changes}): Declare new member
+	functions.
+	* src/abg-comparison-priv.h
+	(corpus_diff::diff_stats::priv::{num_leaf_func_with_incompatible_changes,
+	num_leaf_var_with_incompatible_changes}): Define new data members.
+	(corpus_diff::diff_stats::priv::priv): Initialize the new data
+	members.
+	* src/abg-comparison.cc
+	(corpus_diff::diff_stats::{num_leaf_func_with_incompatible_changes,
+	net_num_leaf_func_non_incompatible_changes,
+	num_leaf_var_with_incompatible_changes,
+	net_num_leaf_var_non_incompatible_changes}): Define new member
+	functions.
+	(corpus_diff::priv::apply_filters_and_compute_diff_stats): Set the
+	diff_stats::{num_leaf_func_with_incompatible_changes,
+	num_leaf_var_with_incompatible_changes} properties.
+	* src/abg-default-reporter.cc (emit_changed_fn_report)
+	(emit_changed_var_report): Moved these static functions ...
+	* src/abg-reporter-priv.cc (emit_changed_fn_report)
+	(emit_changed_var_report): ... here.
+	* src/abg-reporter-priv.h (emit_changed_fn_report)
+	(emit_changed_var_report): Declare them here.
+	* src/abg-leaf-reporter.cc (emit_changed_var_report): Remove this
+	static function.
+	(leaf_reporter::report): In the overload for corpus_diff, emit a
+	report for leaf functions with incompatible changes using the new
+	emit_changed_fn_report declared in src/abg-reporter-priv.h.
+	Likewise, use the emit_changed_var_report declared in
+	src/abg-reporter-priv.h to emit a report for leaf variables with
+	incompatible changes.  Use
+	diff_stats::net_num_leaf_func_non_incompatible_changes to emit
+	changes to leaf functions that are not necessarily incompatible,
+	with the emit_changed_fn_report declared in
+	src/abg-reporter-priv.h.  Similarly, use
+	diff_stats::net_num_leaf_var_non_incompatible_changes to emit
+	changes to leaf variables that are not necessarily incompatible.
+	* tests/data/test-abidiff-exit/ada-subrange/test1-ada-subrange/test1-ada-subrange-report-2.txt:
+	Adjust.
+	* tests/data/test-abidiff-exit/ada-subrange/test2-ada-subrange-redundant/test2-ada-subrange-redundant-report-2.txt:
+	Likewise.
+	* tests/data/test-abidiff-exit/test-leaf-cxx-members-report.txt:
+	Likewise.
+	* tests/data/test-abidiff-exit/test-leaf-more-report.txt:
+	Likewise.
+	* tests/data/test-abidiff-exit/test-leaf-redundant-report.txt:
+	Likewise.
+	* tests/data/test-abidiff-exit/test-leaf-stats-report.txt:
+	Likewise.
+	* tests/data/test-abidiff-exit/test-net-change-report2.txt:
+	Likewise.
+	* tests/data/test-diff-filter/libtest45-basic-type-change-report-1.txt:
+	Likewise.
+	* tests/data/test-diff-filter/test-PR26309-report-0.txt: Likewise.
+
+2025-04-30  Dodji Seketeli <dodji@redhat.com>
+
+	comparison: Emit local diff node category in tree dump
+	* src/abg-comparison.cc (diff_node_printer::visit): Emit a dump of
+	the local category of the current diff node.
+
+2025-04-22  Frank Ch. Eigler <fche@redhat.com>
+
+	tests/runtestabidb2.sh.in: Take more care while doing cleanup
+	* tests/runtestabidb2.sh.in (clean_env): Clean more carefully.
+
+2024-07-18  Frank Ch. Eigler <fche@redhat.com>
+
+	PR31533: abidb: drop debuginfod-client verbosity env variables
+	* tools/abidb: del os.environment(stuff)
+
+2025-04-11  Dodji Seketeli <dodji@redhat.com>
+
+	configure: Bump libabigail version to 2.8
+	* configure.ac: Now that 2.7 is out of the door, bump version
+	number to 2.8.
+
+2025-04-11  Dodji Seketeli <dodji@redhat.com>
+
+	doc/website/mainpage.txt: Update to 2.7
+	* doc/website/mainpage.txt: Update to 2.7
+
+2025-04-10  Dodji Seketeli <dodji@redhat.com>
+
+	NEWS: Update for 2.7 release
+	* NEWS: Update for 2.7 release.
+
 2025-04-10  Dodji Seketeli <dodji@redhat.com>
 
 	ChangeLog: Update for 2.7 release
