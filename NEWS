@@ -1,3 +1,45 @@
+2.8
+===
+Dodji Seketeli (30):
+      ChangeLog: Update for 2.7 release
+      NEWS: Update for 2.7 release
+      doc/website/mainpage.txt: Update to 2.7
+      configure: Bump libabigail version to 2.8
+      comparison: Emit local diff node category in tree dump
+      {default,leaf}-reporter: Add incompatible changes to leaf reporter
+      Bug 32902 - Recognize harmless type size increase
+      configure: Add --with-libxml2 option
+      tools-utils: Fix a comment
+      tools-utils: Fix XZ decompression after all compression data is read
+      libxml-utils,tools-utils: Add an I/O handler for XZ input in libxml2
+      Bug 32975 - Filter out replacing a data member with a compatible union
+      elf-reader: Fix elfutils initialization of debuginfo lookup paths
+      configure: Remove the unnecessary FOUND_DWARF_GETALT_IN_LIBDW variable
+      fedabipkgdiff: Fix getting the latest RPM version of a given Fedora distro
+      Change debuginfo root paths type from vector<char**> to vector<string>
+      Bug 30329 - Fix regression in support for absolute path to alt DWARF
+      Bug 33076 - abicompat doesn't filter out harmless diff nodes
+      test-abicompat: Fix color setting
+      Improve harmless integral type change filtering
+      Bug 33055 - classes_have_same_layout & types_are_compatible enter in endless loop
+      abg-comparison: Do not abort when a static data member is deleted
+      abg-comparison: Fix indentation
+      symtab-reader: Add missing space
+      abidw: Sort options documentation alphabetically
+      elf-reader,symtab-reader: Fix suppression of aliased symbols
+      Bug 33090 - Implement abidw --force-early-suppression
+      tests/data/test-read-dwarf/PR33090: Add missing test material
+      Bug 26021 - Upgrade the C++ standard to C++14
+      configure: Bump libabigail_so_current to 7
+
+Frank Ch. Eigler (2):
+      PR31533: abidb: drop debuginfod-client verbosity env variables
+      tests/runtestabidb2.sh.in: Take more care while doing cleanup
+
+Mark Wielaard (1):
+      tests/runtestfedabipkgdiffpy3.sh.in: Don't use which to find python3
+
+
 2.7
 ===
 Dodji Seketeli (49):
