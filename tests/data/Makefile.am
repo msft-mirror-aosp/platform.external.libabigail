@@ -784,6 +784,7 @@ test-read-dwarf/test0.xz		\
 test-read-dwarf/test0.abi		\
 test-read-dwarf/test0.hash.abi		\
 test-read-dwarf/test0.cc		\
+test-read-dwarf/test0.deps.abi		\
 test-read-dwarf/test1			\
 test-read-dwarf/test1.abi		\
 test-read-dwarf/test1.hash.abi		\

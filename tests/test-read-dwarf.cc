@@ -74,6 +74,15 @@ static InOutSpec in_out_specs[] =
     NULL,
   },
   {
+    "data/test-read-dwarf/test0",
+    "",
+    "",
+    SEQUENCE_TYPE_ID_STYLE,
+    "data/test-read-dwarf/test0.deps.abi",
+    "output/test-read-dwarf/test0.deps.abi",
+    "--follow-dependencies",
+  },
+  {
     "data/test-read-dwarf/test1",
     "",
     "",

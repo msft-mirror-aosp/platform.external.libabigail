@@ -941,7 +941,7 @@ load_corpus_and_write_abixml(char* argv[],
       // corpus group.
 
       // If a corpus_group already exists, use that one ...
-      if (!corp_group->is_empty())
+      if (corp_group && !corp_group->is_empty())
 	add_dependencies_into_corpus_group(reader, *corp,
 					   opts.added_bins_dirs,
 					   *corp_group);
