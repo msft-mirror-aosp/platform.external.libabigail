@@ -224,16 +224,16 @@ public:
   virtual const functions&
   get_functions() const;
 
-  const std::unordered_set<function_decl*>*
+  virtual const std::unordered_set<function_decl*>*
   lookup_functions(const interned_string& id) const;
 
-  const std::unordered_set<function_decl*>*
+  virtual const std::unordered_set<function_decl*>*
   lookup_functions(const char* id) const;
 
-  const std::unordered_set<var_decl_sptr>*
+  virtual const std::unordered_set<var_decl_sptr>*
   lookup_variables(const interned_string& id) const;
 
-  const std::unordered_set<var_decl_sptr>*
+  virtual const std::unordered_set<var_decl_sptr>*
   lookup_variables(const char* id) const;
 
   void
@@ -445,6 +445,18 @@ public:
 
   bool
   operator==(const corpus_group&) const;
+
+  virtual const std::unordered_set<function_decl*>*
+  lookup_functions(const interned_string& id) const;
+
+  virtual const std::unordered_set<function_decl*>*
+  lookup_functions(const char* id) const;
+
+  virtual const std::unordered_set<var_decl_sptr>*
+  lookup_variables(const interned_string& id) const;
+
+  virtual const std::unordered_set<var_decl_sptr>*
+  lookup_variables(const char* id) const;
 }; // end class corpus_group
 
 corpus_group_sptr

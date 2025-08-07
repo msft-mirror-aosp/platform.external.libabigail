@@ -334,6 +334,16 @@ InOutSpec in_out_specs[] =
     "data/test-abicompat/test10/test10-fn-changed-report-4.txt",
     "output/test-abicompat/test10/test10-fn-changed-report-4.txt",
   },
+  {
+    "data/test-abicompat/test11-fn-changed-app.xml",
+    "data/test-abicompat/libtest11-fn-changed.xml",
+    "",
+    "",
+    "--show-base-names --weak-mode",
+    abigail::tools_utils::ABIDIFF_ABI_CHANGE,
+    "data/test-abicompat/test11-fn-changed.txt",
+    "output/test-abicompat/test11-fn-changed.txt",
+  },
   // This entry must be the last one.
   {0, 0, 0, 0, 0, abigail::tools_utils::ABIDIFF_OK, 0, 0}
 };

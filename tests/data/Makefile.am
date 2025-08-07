@@ -2280,6 +2280,9 @@ test-abicompat/test10/test10-fn-changed-report-1.txt \
 test-abicompat/test10/test10-fn-changed-report-2.txt \
 test-abicompat/test10/test10-fn-changed-report-3.txt \
 test-abicompat/test10/test10-fn-changed-report-4.txt \
+test-abicompat/libtest11-fn-changed.xml \
+test-abicompat/test11-fn-changed-app.xml \
+test-abicompat/test11-fn-changed.txt \
 test-abicompat/test-diff-ptr-to-void-ptr/0/libtest-diff-ptr-to-void-ptr-fn.so \
 test-abicompat/test-diff-ptr-to-void-ptr/0/test-diff-ptr-to-void-ptr-fn-v0.c \
 test-abicompat/test-diff-ptr-to-void-ptr/1/libtest-diff-ptr-to-void-ptr-fn.so \

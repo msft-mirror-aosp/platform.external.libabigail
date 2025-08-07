@@ -2267,6 +2267,102 @@ bool
 corpus_group::recording_types_reachable_from_public_interface_supported()
 {return !get_public_types_pretty_representations()->empty();}
 
+/// Lookup the function which has a given function ID.
+///
+/// Note that there can have been several functions with the same ID.
+/// This is because debug info can declare the same function in
+/// several different translation units.  Normally, all these
+/// functions should be equal.  But still, this function returns all
+/// these functions.
+///
+/// Also, note that this function cycles over each corpora of the
+/// corpus group, invokes corpus::lookup_functions on them and returns
+/// the result of the first one that succeeds.
+///
+/// @param id the ID of the function to lookup.  This ID must be
+/// either the result of invoking function::get_id() of
+/// elf_symbol::get_id_string().
+///
+/// @return the set of functions which ID is @p id, or nil if no
+/// function with that ID was found.
+const std::unordered_set<function_decl*>*
+corpus_group::lookup_functions(const interned_string& id) const
+{
+  for (auto& corp :get_corpora())
+    if (auto fns = corp->lookup_functions(id))
+      return fns;
+
+  return nullptr;
+}
+
+/// Lookup the function which has a given function ID.
+///
+/// Note that there can have been several functions with the same ID.
+/// This is because debug info can declare the same function in
+/// several different translation units.  Normally, all these
+/// functions should be equal.  But still, this function returns all
+/// these functions.
+///
+/// Also, note that this function cycles over each corpora of the
+/// corpus group, invokes corpus::lookup_functions on them and returns
+/// the result of the first one that succeeds.
+///
+/// @param id the ID of the function to lookup.  This ID must be
+/// either the result of invoking function::get_id() of
+/// elf_symbol::get_id_string().
+///
+/// @return the set of functions which ID is @p id, or nil if no
+/// function with that ID was found.
+const std::unordered_set<function_decl*>*
+corpus_group::lookup_functions(const char* id) const
+{
+  for (auto& corp :get_corpora())
+    if (const auto& fns = corp->lookup_functions(id))
+      return fns;
+
+  return nullptr;
+}
+
+/// Lookup the exported variables which all have a given variable ID.
+///
+/// Note that this function cycles over each corpora of the corpus
+/// group, invokes corpus::lookup_variabless on them and returns the
+/// result of the first one that succeeds.
+///
+/// @param id the ID of the variable to look up.
+///
+/// @return a pointer to the set of variables with ID @p id, or
+/// nullptr if no variable was found with that ID.
+const std::unordered_set<var_decl_sptr>*
+corpus_group::lookup_variables(const interned_string& id) const
+{
+  for (auto& corp :get_corpora())
+    if (const auto& vars = corp->lookup_variables(id))
+      return vars;
+
+  return nullptr;
+}
+
+/// Lookup the exported variables which all have a given variable ID.
+///
+/// Note that this function cycles over each corpora of the corpus
+/// group, invokes corpus::lookup_variabless on them and returns the
+/// result of the first one that succeeds.
+///
+/// @param id the ID of the variable to look up.
+///
+/// @return a pointer to the set of variables with ID @p id, or
+/// nullptr if no variable was found with that ID.
+const std::unordered_set<var_decl_sptr>*
+corpus_group::lookup_variables(const char* id) const
+{
+  for (auto& corp :get_corpora())
+    if (const auto& vars = corp->lookup_variables(id))
+      return vars;
+
+  return nullptr;
+}
+
 /// Test if a @ref corpus is a @ref corpus_group.
 ///
 /// @param corpus the corpus to consider.

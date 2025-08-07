@@ -881,14 +881,17 @@ read_corpus(options			opts,
       }
       break;
     case abigail::tools_utils::FILE_TYPE_XML_CORPUS:
+    case abigail::tools_utils::FILE_TYPE_XML_CORPUS_GROUP:
       {
 	rdr = abixml::create_reader(path, env);
 	assert(rdr);
-	retval = rdr->read_corpus(status);
+	retval =
+	  (type == abigail::tools_utils::FILE_TYPE_XML_CORPUS_GROUP)
+	  ? abixml::read_corpus_group_from_input(*rdr)
+	  : rdr->read_corpus(status);
       }
       break;
     case abigail::tools_utils::FILE_TYPE_AR:
-    case abigail::tools_utils::FILE_TYPE_XML_CORPUS_GROUP:
     case abigail::tools_utils::FILE_TYPE_RPM:
     case abigail::tools_utils::FILE_TYPE_SRPM:
     case abigail::tools_utils::FILE_TYPE_DEB:

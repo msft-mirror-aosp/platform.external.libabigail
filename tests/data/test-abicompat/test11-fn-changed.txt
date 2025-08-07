@@ -1,0 +1,14 @@
+functions defined in library 'libtest11-fn-changed.xml'
+have sub-types that are different from what application 'test11-fn-changed-app.xml' expects:
+
+  function foo* first_func(void):
+    return type changed:
+      in pointed to type 'struct foo' at test1.h:1:1:
+        type size changed from 32 to 64 (in bits)
+        1 data member insertion:
+          'char m1', at offset 32 (in bits) at test1.h:4:1
+
+  function void second_func(foo&):
+    parameter 1 of type 'foo&' has sub-type changes:
+      referenced type 'struct foo' changed at test0.h:1:1, as reported earlier
+
