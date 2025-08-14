@@ -224,7 +224,8 @@ def main() -> list[str]:
                     cmd = "cat" # default: pass through to libarchive
                 else:
                     cmd = "=".join(extcmd[1:]) # the rest of the command, filling other ='s back in
-                    ra["."+ext] = cmd
+                ra["."+ext] = cmd
+                logging.debug(f"parsing libarchive extension {ext} with {cmd}")
 
 
         def submit_file_generator(args):
