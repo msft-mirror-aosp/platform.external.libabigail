@@ -615,9 +615,6 @@ const char*
 get_anonymous_union_internal_name_prefix()
 {return ANONYMOUS_UNION_INTERNAL_NAME;}
 
-static int ANONYMOUS_SUBRANGE_INTERNAL_NAME_LEN =
-  strlen(ANONYMOUS_SUBRANGE_INTERNAL_NAME);
-
 /// Getter of the prefix for the name of anonymous enums.
 ///
 /// @reaturn the prefix for the name of anonymous enums.

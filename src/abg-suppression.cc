@@ -312,7 +312,9 @@ is_negated_suppression(const suppression_base& s)
   bool result = true;
   try
     {
-      dynamic_cast<const negated_suppression_base&>(s);
+      if (const negated_suppression_base* s_prime =
+	   &dynamic_cast<const negated_suppression_base&>(s))
+	return !!s_prime;
     }
   catch (...)
     {

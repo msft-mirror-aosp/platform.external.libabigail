@@ -1188,14 +1188,14 @@ class type_diff_base : public diff
   struct priv;
   std::unique_ptr<priv> priv_;
 
-  type_diff_base();
-
 protected:
   type_diff_base(type_base_sptr	first_subject,
 		 type_base_sptr	second_subject,
 		 diff_context_sptr	ctxt);
 
 public:
+
+  type_diff_base() = delete;
 
   virtual enum change_kind
   has_local_changes() const = 0;
@@ -1454,7 +1454,7 @@ class ptr_to_mbr_diff : public type_diff_base
   struct priv;
   std::unique_ptr<priv> priv_;
 
-  ptr_to_mbr_diff()  = default;
+  ptr_to_mbr_diff()  = delete;
 
 protected:
   ptr_to_mbr_diff(const ptr_to_mbr_type_sptr& first,

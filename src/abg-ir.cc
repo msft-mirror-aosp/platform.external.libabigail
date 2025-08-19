@@ -5840,7 +5840,7 @@ collect_non_anonymous_data_members(const class_or_union* cou,
 	  result = true;
 	}
     }
-  return true;
+  return result;
 }
 
 /// Collect all the non-anonymous data members of a class or union type.

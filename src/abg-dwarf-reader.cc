@@ -3287,25 +3287,6 @@ public:
     return i->second;
   }
 
-  /// Get the qualified name of a given DIE.
-  ///
-  /// If the name of the DIE was already computed before just return
-  /// that name from a cache.  Otherwise, build the name, cache it and
-  /// return it.
-  ///
-  /// @param die the DIE to consider.
-  ///
-  /// @param where_offset where in the DIE stream we logically are.
-  ///
-  /// @return the interned string representing the qualified name of
-  /// @p die.
-  interned_string
-  get_die_qualified_name(Dwarf_Die *die, size_t where_offset) const
-  {
-    return const_cast<reader*>(this)->
-      get_die_qualified_name(die, where_offset);
-  }
-
   /// Get the qualified name of a given DIE which is considered to be
   /// the DIE for a type.
   ///
@@ -10994,7 +10975,10 @@ die_enum_flat_representation(const reader&	rdr,
       while (dwarf_siblingof(&child, &child) == 0);
     }
 
-  o << one_line ? string("}") : "\n" + indent;
+  o << (one_line
+	? string("}")
+	: "\n" + indent);
+
   o << "}";
 
   return o.str();
