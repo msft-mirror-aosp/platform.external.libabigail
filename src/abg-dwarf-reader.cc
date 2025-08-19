@@ -9602,6 +9602,8 @@ die_virtual_function_index(Dwarf_Die* die,
 
   Dwarf_Op* expr = NULL;
   size_t expr_len = 0;
+  if (die_is_virtual(die))
+    vindex = 0;
   if (!die_location_expr(die, DW_AT_vtable_elem_location,
 			 &expr, &expr_len))
     return false;

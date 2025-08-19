@@ -247,7 +247,7 @@
       <data-member access='private' layout-offset-in-bits='27520'>
         <var-decl name='output_triangles' type-id='type-id-3' visibility='default' filepath='libnurbs/interface/glcurveval.h' line='154' column='1'/>
       </data-member>
-      <member-function access='private' destructor='yes' vtable-offset='-1'>
+      <member-function access='private' destructor='yes' vtable-offset='0'>
         <function-decl name='~OpenGLCurveEvaluator' filepath='libnurbs/interface/glcurveval.cc' line='78' column='1' visibility='default' binding='global' size-in-bits='64' hash='388da3fa973fde78'>
           <parameter type-id='type-id-31' is-artificial='yes'/>
           <parameter type-id='type-id-3' is-artificial='yes'/>
@@ -398,7 +398,7 @@
           <enumerator name='playAndRecord' value='2'/>
         </enum-decl>
       </member-type>
-      <member-function access='private' destructor='yes' vtable-offset='-1'>
+      <member-function access='private' destructor='yes' vtable-offset='0'>
         <function-decl name='~CachingEvaluator' filepath='libnurbs/internals/cachingeval.h' line='41' column='1' visibility='default' binding='global' size-in-bits='64' hash='388da3fa973fde78'>
           <parameter type-id='type-id-37' is-artificial='yes'/>
           <parameter type-id='type-id-3'/>
@@ -455,7 +455,7 @@
     </class-decl>
     <class-decl name='BasicCurveEvaluator' visibility='default' size-in-bits='64' filepath='libnurbs/internals/basiccrveval.h' line='43' column='1' hash='c931bb487f51cb63' id='type-id-22'>
       <base-class access='public' layout-offset-in-bits='0' type-id='type-id-36'/>
-      <member-function access='private' destructor='yes' vtable-offset='-1'>
+      <member-function access='private' destructor='yes' vtable-offset='0'>
         <function-decl name='~BasicCurveEvaluator' filepath='libnurbs/internals/basiccrveval.h' line='45' column='1' visibility='default' binding='global' size-in-bits='64' hash='388da3fa973fde78'>
           <parameter type-id='type-id-51' is-artificial='yes'/>
           <parameter type-id='type-id-3' is-artificial='yes'/>
@@ -951,7 +951,7 @@
       <data-member access='private' layout-offset-in-bits='1073984'>
         <var-decl name='texcoord_flag' type-id='type-id-3' visibility='default' filepath='libnurbs/interface/glsurfeval.h' line='360' column='1'/>
       </data-member>
-      <member-function access='public' destructor='yes' vtable-offset='-1'>
+      <member-function access='public' destructor='yes' vtable-offset='0'>
         <function-decl name='~OpenGLSurfaceEvaluator' filepath='libnurbs/interface/glsurfeval.cc' line='162' column='1' visibility='default' binding='global' size-in-bits='64' hash='388da3fa973fde78'>
           <parameter type-id='type-id-80' is-artificial='yes'/>
           <parameter type-id='type-id-3' filepath='libnurbs/interface/glsurfeval.h' line='153' column='1'/>
@@ -1506,7 +1506,7 @@
       <data-member access='private' layout-offset-in-bits='47552'>
         <var-decl name='dl' type-id='type-id-127' visibility='default' filepath='libnurbs/internals/nurbstess.h' line='168' column='1'/>
       </data-member>
-      <member-function access='private' destructor='yes' vtable-offset='-1'>
+      <member-function access='private' destructor='yes' vtable-offset='0'>
         <function-decl name='~NurbsTessellator' filepath='libnurbs/internals/nurbsinterfac.cc' line='88' column='1' visibility='default' binding='global' size-in-bits='64' hash='388da3fa973fde78'>
           <parameter type-id='type-id-128' is-artificial='yes'/>
           <parameter type-id='type-id-3'/>
@@ -1648,7 +1648,7 @@
     <pointer-type-def type-id='type-id-143' size-in-bits='64' id='type-id-144'/>
     <class-decl name='BasicSurfaceEvaluator' visibility='default' size-in-bits='64' filepath='libnurbs/internals/basicsurfeval.h' line='43' column='1' hash='eea24f113fefc500' id='type-id-85'>
       <base-class access='public' layout-offset-in-bits='0' type-id='type-id-36'/>
-      <member-function access='private' destructor='yes' vtable-offset='-1'>
+      <member-function access='private' destructor='yes' vtable-offset='0'>
         <function-decl name='~BasicSurfaceEvaluator' filepath='libnurbs/internals/basicsurfeval.h' line='45' column='1' visibility='default' binding='global' size-in-bits='64' hash='388da3fa973fde78'>
           <parameter type-id='type-id-145' is-artificial='yes'/>
           <parameter type-id='type-id-3' is-artificial='yes'/>
@@ -2381,7 +2381,7 @@
     <pointer-type-def type-id='type-id-230' size-in-bits='64' hash='f2756299d11b5293' id='type-id-231'/>
     <class-decl name='FlistSorter' visibility='default' size-in-bits='128' filepath='libnurbs/internals/flistsorter.h' line='42' column='1' hash='4a25006e8d053432' id='type-id-202'>
       <base-class access='public' layout-offset-in-bits='0' type-id='type-id-192'/>
-      <member-function access='private' destructor='yes' vtable-offset='-1'>
+      <member-function access='private' destructor='yes' vtable-offset='0'>
         <function-decl name='~FlistSorter' filepath='libnurbs/internals/flistsorter.h' line='45' column='1' visibility='default' binding='global' size-in-bits='64' hash='388da3fa973fde78'>
           <parameter type-id='type-id-232' is-artificial='yes'/>
           <parameter type-id='type-id-3' is-artificial='yes'/>
@@ -2443,7 +2443,7 @@
       <data-member access='private' layout-offset-in-bits='64'>
         <var-decl name='es' type-id='type-id-3' visibility='default' filepath='libnurbs/internals/sorter.h' line='49' column='1'/>
       </data-member>
-      <member-function access='private' destructor='yes' vtable-offset='-1'>
+      <member-function access='private' destructor='yes' vtable-offset='0'>
         <function-decl name='~Sorter' filepath='libnurbs/internals/sorter.h' line='39' column='1' visibility='default' binding='global' size-in-bits='64' hash='388da3fa973fde78'>
           <parameter type-id='type-id-226' is-artificial='yes'/>
           <parameter type-id='type-id-3'/>

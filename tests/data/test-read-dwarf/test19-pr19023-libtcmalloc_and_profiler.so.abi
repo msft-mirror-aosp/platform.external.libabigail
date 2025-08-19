@@ -5650,20 +5650,20 @@
           <return type-id='type-id-58'/>
         </function-decl>
       </member-function>
-      <member-function access='private' destructor='yes' vtable-offset='-1'>
+      <member-function access='private' destructor='yes' vtable-offset='0'>
         <function-decl name='~MallocExtension' filepath='src/malloc_extension.cc' line='111' column='1' visibility='default' binding='global' size-in-bits='64' hash='388da3fa973fde78'>
           <parameter type-id='type-id-1218' is-artificial='yes'/>
           <parameter type-id='type-id-1' is-artificial='yes'/>
           <return type-id='type-id-58'/>
         </function-decl>
       </member-function>
-      <member-function access='private' destructor='yes' vtable-offset='-1'>
+      <member-function access='private' destructor='yes' vtable-offset='0'>
         <function-decl name='~MallocExtension' mangled-name='_ZN15MallocExtensionD0Ev' filepath='src/malloc_extension.cc' line='111' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZN15MallocExtensionD0Ev' hash='7f32ffea222edbe7'>
           <parameter type-id='type-id-1218' is-artificial='yes'/>
           <return type-id='type-id-58'/>
         </function-decl>
       </member-function>
-      <member-function access='private' destructor='yes' vtable-offset='-1'>
+      <member-function access='private' destructor='yes' vtable-offset='0'>
         <function-decl name='~MallocExtension' mangled-name='_ZN15MallocExtensionD1Ev' filepath='src/malloc_extension.cc' line='111' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZN15MallocExtensionD1Ev' hash='7f32ffea222edbe7'>
           <parameter type-id='type-id-1218' is-artificial='yes'/>
           <return type-id='type-id-58'/>
@@ -5845,20 +5845,20 @@
       </member-function>
     </class-decl>
     <class-decl name='SysAllocator' visibility='default' size-in-bits='64' filepath='src/gperftools/malloc_extension.h' line='75' column='1' hash='ab9779cb633bb77f' id='type-id-1225'>
-      <member-function access='private' destructor='yes' vtable-offset='-1'>
+      <member-function access='private' destructor='yes' vtable-offset='0'>
         <function-decl name='~SysAllocator' filepath='src/malloc_extension.cc' line='108' column='1' visibility='default' binding='global' size-in-bits='64' hash='388da3fa973fde78'>
           <parameter type-id='type-id-1222' is-artificial='yes'/>
           <parameter type-id='type-id-1' is-artificial='yes'/>
           <return type-id='type-id-58'/>
         </function-decl>
       </member-function>
-      <member-function access='private' destructor='yes' vtable-offset='-1'>
+      <member-function access='private' destructor='yes' vtable-offset='0'>
         <function-decl name='~SysAllocator' mangled-name='_ZN12SysAllocatorD0Ev' filepath='src/malloc_extension.cc' line='108' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZN12SysAllocatorD0Ev' hash='7f32ffea222edbe7'>
           <parameter type-id='type-id-1222' is-artificial='yes'/>
           <return type-id='type-id-58'/>
         </function-decl>
       </member-function>
-      <member-function access='private' destructor='yes' vtable-offset='-1'>
+      <member-function access='private' destructor='yes' vtable-offset='0'>
         <function-decl name='~SysAllocator' mangled-name='_ZN12SysAllocatorD1Ev' filepath='src/malloc_extension.cc' line='108' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZN12SysAllocatorD1Ev' hash='7f32ffea222edbe7'>
           <parameter type-id='type-id-1222' is-artificial='yes'/>
           <return type-id='type-id-58'/>
