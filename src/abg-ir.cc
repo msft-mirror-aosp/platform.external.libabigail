@@ -16133,7 +16133,8 @@ maybe_adjust_canonical_type(const type_base_sptr& canonical,
 		      m->set_symbol(s1);
 		  }
 		else
-		  if (canonical_class->get_corpus()
+		  if (!is_anonymous_type(cl)
+		      && canonical_class->get_corpus()
 		      && cl->get_corpus()
 		      && (cl->get_corpus() == canonical_class->get_corpus()))
 		    // There is a member function defined and publicly
