@@ -16783,7 +16783,7 @@ create_default_fn_sym(const string& sym_name, const environment& env)
 /// @param called_for_public_decl this is set to true if the function
 /// was called for a public (function) decl.
 static function_decl_sptr
-build_function_decl(reader&	rdr,
+build_function_decl(reader&		rdr,
 		    Dwarf_Die*		die,
 		    size_t		where_offset,
 		    function_decl_sptr	fn)
