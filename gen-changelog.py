@@ -70,7 +70,8 @@ def process_commit(lines, files):
 
     if not fileincommit:
         for f in files:
-            print('\t* %s:' % f.strip())
+            description = re.sub('.*:', '', lines[subject_line_index].strip())
+            print('\t* %s: %s' % (f.strip(), description.strip()))
         print()
 
     if first_cl_body_line_index > 0:
