@@ -51,23 +51,23 @@ def process_commit(lines, files):
     # Clean up top line of ChangeLog entry:
     fields = top_line.split(' ')
 
-    # 1. remove the time and timezone stuff in "2008-05-13 07:10:28 +0000  name"
+    # remove the time and timezone stuff in "2008-05-13 07:10:28 +0000  name"
     if fields[2].startswith('+') or fields[2].startswith('-'):
       del fields[2]
     if fields[1][2] == ':' and fields[1][5] == ':':
       del fields[1]
 
-    # 2. munge at least my @src.gnome.org e-mail address...
-    if fields[-1] == '<tpm@src.gnome.org>':
-      fields[-1] = '<tim@centricular.net>'
-
+    # Emit the top line made of "date name email".
     top_line = ' '.join(fields)
     print(top_line.strip())
     print()
 
+    # Emit the description of one ChangeLog entry.
     if subject_line_index > 0:
         print('\t%s' % lines[subject_line_index].strip())
 
+    # For faulty commit logs that lack ChangeLog entry, let's assemble
+    # a ChangeLog entry thath looks like * file: description-of-the-commit
     if not fileincommit:
         for f in files:
             description = re.sub('.*:', '', lines[subject_line_index].strip())
