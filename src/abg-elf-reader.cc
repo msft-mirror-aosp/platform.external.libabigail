@@ -346,20 +346,30 @@ struct reader::priv
 	  if (!tools_utils::find_file_under_dir(path, name, file_path))
 	    continue;
 
-	  if ((alt_ctf_fd = open(file_path.c_str(), O_RDONLY)) == -1)
+	  int fd;
+	  if ((fd = open(file_path.c_str(), O_RDONLY)) == -1)
 	    continue;
 
-	  if ((alt_ctf_handle = elf_begin(alt_ctf_fd,
-					  ELF_C_READ,
-					  nullptr)) == nullptr)
-	    continue;
+	  Elf* handle;
+	  if ((handle = elf_begin(fd, ELF_C_READ, nullptr)) == nullptr)
+	    {
+	      close(fd);
+	      continue;
+	    }
 
 	  // unlikely .ctf was designed to be present in stripped file
-	  alt_ctf_section =
-	    elf_helpers::find_section(alt_ctf_handle, ".ctf", SHT_PROGBITS);
+	  alt_ctf_section = elf_helpers::find_section(handle,
+						      ".ctf",
+						      SHT_PROGBITS);
 
 	  if (alt_ctf_section)
-	    break;
+	    {
+	      alt_ctf_fd = fd;
+	      alt_ctf_handle = handle;
+	      break;
+	    }
+	  close(fd);
+	  elf_end(handle);
 	}
   }
 
