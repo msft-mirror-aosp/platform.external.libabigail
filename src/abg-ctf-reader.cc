@@ -316,8 +316,8 @@ public:
              bool			linux_kernel_mode = false)
   {
     reset();
-    load_all_types = load_all_types;
-    linux_kernel_mode = linux_kernel_mode;
+    options().load_all_types = load_all_types;
+    options().load_in_linux_kernel_mode = linux_kernel_mode;
     elf_based_reader::initialize(elf_path, debug_info_root_paths);
   }
 
