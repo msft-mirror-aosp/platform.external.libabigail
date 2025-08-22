@@ -2657,6 +2657,7 @@ find_file_under_dir(const string& root_dir,
       if (entry_of_file_with_name(entry, file_path_to_look_for, r))
 	{
 	  result = entry->fts_path;
+	  fts_close(file_hierarchy);
 	  return true;
 	}
       // Skip descendents of symbolic links.
