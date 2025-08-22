@@ -137,9 +137,9 @@ struct reader::priv
   // and make the DWARF reference it in here.
   Dwarf*				alt_dwarf_handle	= nullptr;
   string				alt_dwarf_path;
-  int					alt_dwarf_fd		= 0;
+  int					alt_dwarf_fd		= -1;
   Elf_Scn*				ctf_section		= nullptr;
-  int					alt_ctf_fd		= 0;
+  int					alt_ctf_fd		= -1;
   Elf*					alt_ctf_handle		= nullptr;
   Elf_Scn*				alt_ctf_section	= nullptr;
   Elf_Scn*				btf_section		= nullptr;
@@ -182,11 +182,11 @@ struct reader::priv
     dwarf_handle = nullptr;
     alt_dwarf_handle = nullptr;
     alt_dwarf_path.clear();
-    alt_dwarf_fd = 0;
+    alt_dwarf_fd = -1;
     ctf_section = nullptr;
     alt_ctf_section = nullptr;
     alt_ctf_handle = nullptr;
-    alt_ctf_fd = 0;
+    alt_ctf_fd = -1;
   }
 
   /// Initialize the debug info root path.  The format of this path is
@@ -271,7 +271,7 @@ struct reader::priv
   void
   clear_alt_dwarf_debug_info_data()
   {
-    if (alt_dwarf_fd)
+    if (alt_dwarf_fd != -1)
       {
         if (alt_dwarf_handle)
           {
@@ -279,7 +279,7 @@ struct reader::priv
             alt_dwarf_handle = nullptr;
           }
         close(alt_dwarf_fd);
-        alt_dwarf_fd = 0;
+        alt_dwarf_fd = -1;
       }
     alt_dwarf_path.clear();
   }
@@ -305,10 +305,10 @@ struct reader::priv
   void
   clear_alt_ctf_debug_info_data()
   {
-    if (alt_ctf_fd)
+    if (alt_ctf_fd != -1)
       {
 	close(alt_ctf_fd);
-	alt_ctf_fd = 0;
+	alt_ctf_fd = -1;
       }
     if (alt_ctf_handle)
       {
