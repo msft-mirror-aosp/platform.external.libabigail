@@ -220,6 +220,7 @@ public:
   bool		leverage_dwarf_factorization;
   bool		assume_odr_for_cplusplus;
   bool		self_check;
+  bool		ignore_soname;
   optional<bool> exported_interfaces_only;
 #ifdef WITH_CTF
   bool		use_ctf;
@@ -268,7 +269,8 @@ public:
       show_identical_binaries(),
       leverage_dwarf_factorization(true),
       assume_odr_for_cplusplus(true),
-      self_check()
+      self_check(),
+      ignore_soname()
 #ifdef WITH_CTF
       ,
       use_ctf()
@@ -663,9 +665,7 @@ public:
   convert_path_to_relative(const string& path, string& converted_path) const
   {
     string root = extracted_dir_path_;
-    real_path(root, root);
     string p = path;
-    real_path(p, p);
     return string_suffix(p, root, converted_path);
   }
 
@@ -1013,6 +1013,7 @@ display_usage(const string& prog_name, ostream& out)
     << " --redundant                    display redundant changes\n"
     << " --harmless                     display the harmless changes\n"
     << " --no-show-locs                 do not show location information\n"
+    << " --ignore-soname                do not take the SONAMEs into account\n"
     << " --show-bytes  show size and offsets in bytes\n"
     << " --show-bits  show size and offsets in bits\n"
     << " --show-hex  show size and offset in hexadecimal\n"
@@ -1384,6 +1385,8 @@ set_diff_context_from_opts(diff_context_sptr ctxt,
   ctxt->show_offsets_sizes_in_bits(opts.show_offsets_sizes_in_bits);
   ctxt->show_relative_offset_changes(opts.show_relative_offset_changes);
   ctxt->show_locs(opts.show_locs);
+  // Intentional logic flip of ignore_soname
+  ctxt->show_soname_change(!opts.ignore_soname);
   ctxt->show_linkage_names(opts.show_linkage_names);
   ctxt->show_added_fns(opts.show_added_syms);
   ctxt->show_added_vars(opts.show_added_syms);
@@ -2427,7 +2430,14 @@ public:
       {
 	if (args->opts.show_identical_binaries)
 	  {
-	    out << "No ABI change detected\n";
+	    out << "No ABI change detected";
+	    if (diff && diff->first_corpus() && diff->second_corpus())
+	      {
+		string path = diff->first_corpus()->get_path();
+		args->opts.pkg_set1->convert_path_to_relative(path, path);
+		out << " for " << path;
+	      }
+	    out << "\n";
 	    pretty_output += out.str();
 	  }
       }
@@ -2593,7 +2603,15 @@ maybe_update_package_content(const FTSENT*		entry,
     }
 
   if (guess_file_type(path) == abigail::tools_utils::FILE_TYPE_ELF)
-    paths.insert(path);
+    {
+      if (opts.ignore_soname)
+	// We want to look at a symlink to a shared library,
+	// independantly from SONAME considerations.  That is, if a
+	// libfoo.so is symbolic link to libfoo.so.5, we want to keep
+	// libfoo.so.
+	path = entry->fts_path;
+      paths.insert(path);
+    }
   else if (opts.abignore && string_ends_with(path, ".abignore"))
     opts.suppression_paths.push_back(path);
 }
@@ -2815,9 +2833,10 @@ create_maps_of_package_set_content(const package_set_sptr& ps,
 	    }
 	}
 
-      if (e->soname.empty())
+      if (e->soname.empty() || opts.ignore_soname)
 	{
 	  if (e->type == abigail::elf::ELF_TYPE_DSO
+	      && e->soname.empty()
 	      && must_compare_public_dso_only(ps, opts))
 	    {
 	      // We are instructed to compare public DSOs only.  Yet
@@ -2831,10 +2850,15 @@ create_maps_of_package_set_content(const package_set_sptr& ps,
 	    }
 
 	  // Several binaries at different paths can have the same
-	  // base name.  So let's consider the full path of the binary
-	  // inside the extracted directory.
+	  // base name.  So, unless we want to compare binaries
+	  // regardless of their SONAME, let's consider the full
+	  // (resolved) path of the binary inside the extracted
+	  // directory.  A resolved path is a path where symlinks are
+	  // resolved to their target file.
 	  string key = e->name;
-	  ps->convert_path_to_unique_suffix(resolved_e_path, key);
+	  if (!opts.ignore_soname)
+	    ps->convert_path_to_unique_suffix(resolved_e_path, key);
+
 	  if (ps->path_elf_file_sptr_map().find(key)
 	      != ps->path_elf_file_sptr_map().end())
 	    // 'key' has already been seen before.  So we won't map it
@@ -3982,6 +4006,11 @@ parse_command_line(int argc, char* argv[], options& opts)
 	else if (!strcmp(argv[i], "--btf"))
           opts.use_btf = true;
 #endif
+      else if (!strcmp(argv[i], "--ignore-soname"))
+	{
+	  opts.ignore_soname = true;
+	  opts.show_identical_binaries = true;
+	}
       else if (!strcmp(argv[i], "--help")
 	       || !strcmp(argv[i], "-h"))
         {

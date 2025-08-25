@@ -797,6 +797,30 @@ static InOutSpec in_out_specs[] =
     "data/test-diff-pkg/infinipath-psm-3.3-26_g604758e_open.6.fc36.5.x86_64-self-check-report.txt",
     "output/test-diff-pkg/infinipath-psm-3.3-26_g604758e_open.6.fc36.5.x86_64-self-check-report.txt"
   },
+  {
+    "data/test-diff-pkg/PR33264/simdjson-3.12.3/simdjson-3.12.3-2.el10.x86_64.rpm",
+    "data/test-diff-pkg/PR33264/simdjson-3.13.0/simdjson-3.13.0-1.el10.x86_64.rpm",
+    "",
+    "",
+    "data/test-diff-pkg/PR33264/simdjson-3.12.3/simdjson-debuginfo-3.12.3-2.el10.x86_64.rpm",
+    "data/test-diff-pkg/PR33264/simdjson-3.13.0/simdjson-debuginfo-3.13.0-1.el10.x86_64.rpm",
+    "data/test-diff-pkg/PR33264/simdjson-3.12.3/simdjson-devel-3.12.3-2.el10.x86_64.rpm",
+    "data/test-diff-pkg/PR33264/simdjson-3.13.0/simdjson-devel-3.13.0-1.el10.x86_64.rpm",
+    "data/test-diff-pkg/PR33264/simdjson-3.12.3-2.el10.x86_64--simdjson-3.13.0-1.el10.x86_64-report-1.txt",
+    "output/test-diff-pkg/PR33264/simdjson-3.12.3-2.el10.x86_64--simdjson-3.13.0-1.el10.x86_64-report-1.txt"
+  },
+  {
+    "data/test-diff-pkg/PR33264/simdjson-3.12.3/simdjson-3.12.3-2.el10.x86_64.rpm",
+    "data/test-diff-pkg/PR33264/simdjson-3.13.0/simdjson-3.13.0-1.el10.x86_64.rpm",
+    "--ignore-soname",
+    "",
+    "data/test-diff-pkg/PR33264/simdjson-3.12.3/simdjson-debuginfo-3.12.3-2.el10.x86_64.rpm",
+    "data/test-diff-pkg/PR33264/simdjson-3.13.0/simdjson-debuginfo-3.13.0-1.el10.x86_64.rpm",
+    "data/test-diff-pkg/PR33264/simdjson-3.12.3/simdjson-devel-3.12.3-2.el10.x86_64.rpm",
+    "data/test-diff-pkg/PR33264/simdjson-3.13.0/simdjson-devel-3.13.0-1.el10.x86_64.rpm",
+    "data/test-diff-pkg/PR33264/simdjson-3.12.3-2.el10.x86_64--simdjson-3.13.0-1.el10.x86_64-report-2.txt",
+    "output/test-diff-pkg/PR33264/simdjson-3.12.3-2.el10.x86_64--simdjson-3.13.0-1.el10.x86_64-report-2.txt"
+  },
 #endif // WITH_RPM_ZSTD
 #endif //WITH_RPM
 

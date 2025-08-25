@@ -281,8 +281,15 @@ Options
 
     Display a short help about the command and exit.
 
+  * ``--ignore-soname``
 
-  * ``--impacted-interfaces``
+    If two binaries with different SONAMEs have the same name in the
+    old and new packages to be compared, this option forces abipkgdiff
+    to compare them regardless of their obvious SONAME change. This
+    allows the analysis of the ABI changes that might have led
+    developers to change the SONAME.
+
+  *  ``--impacted-interfaces``
 
     When showing leaf changes, this option instructs abipkgdiff to
     show the list of impacted interfaces.  This option is thus to be
