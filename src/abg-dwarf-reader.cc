@@ -3,6 +3,7 @@
 //
 // Copyright (C) 2013-2026 Red Hat, Inc.
 //
+//
 // Author: Dodji Seketeli
 
 /// @file
@@ -91,149 +92,88 @@ enum die_source
 				// enumerator
 };
 
+/// A convenience typedef for a vector of void*, representing the
+/// address of a DIE.
+typedef vector<void*> dwarf_addrs_type;
 
-/// A convenience typedef for a vector of Dwarf_Off.
-typedef vector<Dwarf_Off> dwarf_offsets_type;
+/// A convenience typedef for a std::pair of void*, , representing the
+/// address of a DIE.
+typedef std::pair<void*, void*> dwarf_addr_pair_type;
 
-/// Convenience typedef for a map which key is the offset of a dwarf
+/// Convenience typedef for a map which key is the address of a dwarf
 /// die and which value is the corresponding artefact.
-typedef unordered_map<Dwarf_Off, type_or_decl_base_sptr> die_artefact_map_type;
+typedef unordered_map<void*, type_or_decl_base_sptr> die_artefact_map_type;
 
-/// Convenience typedef for a map which key is the offset of a dwarf
-/// die, (given by dwarf_dieoffset()) and which value is the
-/// corresponding class_decl.
-typedef unordered_map<Dwarf_Off, class_decl_sptr> die_class_map_type;
+/// Convenience typedef for a map which key is the address of a dwarf
+/// die and which value is the corresponding class_decl.
+typedef unordered_map<void*, class_decl_sptr> die_class_map_type;
 
-/// Convenience typedef for a map which key is the offset of a dwarf
-/// die, (given by dwarf_dieoffset()) and which value is the
-/// corresponding class_or_union_sptr.
-typedef unordered_map<Dwarf_Off, class_or_union_sptr> die_class_or_union_map_type;
+/// Convenience typedef for a map which key is the address of a dwarf
+/// die and which value is the corresponding class_or_union_sptr.
+typedef unordered_map<void*,
+		      class_or_union_sptr> die_class_or_union_map_type;
 
-/// Convenience typedef for a map which key the offset of a dwarf die
-/// and which value is the corresponding function_decl.
-typedef unordered_map<Dwarf_Off, function_decl_sptr> die_function_decl_map_type;
+/// Convenience typedef for a map which key is the address of a dwarf
+/// die and which value is the corresponding function_decl.
+typedef unordered_map<void*,
+		      function_decl_sptr> die_function_decl_map_type;
 
-/// Convenience typedef for a map which key is the offset of a dwarf
+/// Convenience typedef for a map which key is the address of a dwarf
 /// die and which value is the corresponding function_type.
-typedef unordered_map<Dwarf_Off, function_type_sptr> die_function_type_map_type;
+typedef unordered_map<void*,
+		      function_type_sptr> die_function_type_map_type;
 
-/// Convenience typedef for a map which key is the offset of a
+/// Convenience typedef for a map which key is the address of a
 /// DW_TAG_compile_unit and the value is the corresponding @ref
 /// translation_unit_sptr.
-typedef unordered_map<Dwarf_Off, translation_unit_sptr> die_tu_map_type;
+typedef unordered_map<void*, translation_unit_sptr> die_tu_map_type;
 
-/// Convenience typedef for a map which key is the offset of a DIE and
+/// Convenience typedef for a map which key is the address of a DIE and
 /// the value is the corresponding qualified name of the DIE.
-typedef unordered_map<Dwarf_Off, interned_string> die_istring_map_type;
+typedef unordered_map<void*, interned_string> die_istring_map_type;
 
 /// Convenience typedef for a map which is an interned_string and
-/// which value is a vector of offsets.
+/// which value is a vector of DIE addresses.
 typedef unordered_map<interned_string,
-		      dwarf_offsets_type,
+		      dwarf_addrs_type,
 		      hash_interned_string>
-istring_dwarf_offsets_map_type;
+istring_dwarf_addrs_map_type;
 
-/// A hasher for a pair of Dwarf_Off.  This is used as a hasher for
-/// the type @ref dwarf_offset_pair_set_type.
-struct dwarf_offset_pair_hash
+/// A hasher for a pair of void*.  This is used as a hasher for
+/// the type @ref dwarf_addr_pair_set_type.
+struct dwarf_addr_pair_hash
 {
   size_t
-  operator()(const std::pair<Dwarf_Off, Dwarf_Off>& p) const
-  {return *abigail::hashing::combine_hashes(hash_t(p.first), hash_t(p.second));}
-};// end struct dwarf_offset_pair_hash
-
-typedef unordered_set<std::pair<Dwarf_Off,
-				Dwarf_Off>,
-		      dwarf_offset_pair_hash> dwarf_offset_pair_set_type;
-
-/// An abstraction of a DIE offset that also encapsulate the source of
-/// the DIE.
-struct offset_type
-{
-  die_source source_;
-  Dwarf_Off offset_;
-
-  offset_type()
-    : source_(PRIMARY_DEBUG_INFO_DIE_SOURCE),
-      offset_(0)
-  {}
-
-  offset_type(die_source source, Dwarf_Off offset)
-    : source_(source),
-      offset_(offset)
-  {}
-
-  offset_type(Dwarf_Off offset)
-    : source_(PRIMARY_DEBUG_INFO_DIE_SOURCE),
-      offset_(offset)
-  {}
-
-  bool operator==(const offset_type& o) const
-  {return source_ == o.source_ && offset_ == o.offset_;}
-
-  operator Dwarf_Off() const
-  {return offset_;}
-}; // end struct offset_type
-
-/// A convenience typedef for a pair of offset_type.
-typedef std::pair<offset_type, offset_type> offset_pair_type;
-
-/// A hasher for an instance of offset_type.
-struct offset_hash
-{
-  size_t
-  operator()(const offset_type& p) const
+  operator()(const dwarf_addr_pair_type& p) const
   {
-    return *abigail::hashing::combine_hashes(hash_t(p.source_),
-					     hash_t(p.offset_));
+    ABG_ASSERT(sizeof(void*) <= sizeof(uint64_t));
+    return *abigail::hashing::combine_hashes(hash_t(reinterpret_cast<uint64_t>(p.first)),
+					     hash_t(reinterpret_cast<uint64_t>(p.second)));
   }
-};// end struct offset_hash
+};// end struct dwarf_addr_pair_hash
 
-/// A hasher for a pair of offset_type.  This is used as a hasher for
-/// the type @ref offset_pair_set_type, for instance.
-struct offset_pair_hash
-{
-  size_t
-  operator()(const std::pair<offset_type, offset_type>& p) const
-  {
-    hash_t h1 = abigail::hashing::combine_hashes(hash_t(p.first.source_),
-						 hash_t(p.first.offset_));
-    hash_t h2 = abigail::hashing::combine_hashes(hash_t(p.second.source_),
-						 hash_t(p.second.offset_));
-    return *abigail::hashing::combine_hashes(h1, h2);
-  }
-};// end struct offset_pair_hash
+typedef unordered_set<dwarf_addr_pair_type,
+		      dwarf_addr_pair_hash> dwarf_addr_pair_set_type;
 
-/// A convenience typedef for an unordered set of DIE offsets.
-typedef unordered_set<offset_type, offset_hash> offset_set_type;
-
-///A convenience typedef for an unordered set of pairs of offset_type.
-typedef unordered_set<std::pair<offset_type,
-				offset_type>,
-		      offset_pair_hash> offset_pair_set_type;
-
-/// A convenience typedef for a vector of pairs of offset_type.
-typedef vector<std::pair<offset_type, offset_type>> offset_pair_vector_type;
+/// A convenience typedef for a vector of pairs of void*
+typedef vector<dwarf_addr_pair_type> dwarf_addr_pairs_type;
 
 /// A convenience typedef for an unordered map that associates a pair
-/// of offset_type to a vector of pairs offset_type.
-typedef unordered_map<std::pair<offset_type, offset_type>,
-		      offset_pair_vector_type,
-		      offset_pair_hash> offset_pair_vect_map_type;
+/// of dwarf_addr_pair_type to a vector of pairs void*.
+typedef unordered_map<dwarf_addr_pair_type,
+		      dwarf_addr_pairs_type,
+		      dwarf_addr_pair_hash> dwarf_addr_pairs_map_type;
 
 /// A convenience typedef for an unordered_map that associates a pair
-/// of offset_type to a set of pairs of offset_type.
-typedef unordered_map<std::pair<offset_type, offset_type>,
-		      offset_pair_set_type,
-		      offset_pair_hash> offset_pair_set_map_type;
-
-/// A convenience typedef for a vector of pairs of offset_type.
-typedef vector<std::pair<offset_type, offset_type>> offset_pair_vector_type;
+/// of dwarf_addr_type to a set of pairs of void*.
+typedef unordered_map<dwarf_addr_pair_type,
+		      dwarf_addr_pair_set_type,
+		      dwarf_addr_pair_hash> dwarf_addr_pair_set_map_type;
 
 class reader;
 
 static translation_unit_sptr
-build_translation_unit_and_add_to_ir(reader&	rdr,
+build_translation_unit_and_add_to_ir(reader&		rdr,
 				     Dwarf_Die*	die,
 				     char		address_size);
 
@@ -269,9 +209,9 @@ typedef unordered_map<interned_string,
 /// that is being built.
 typedef stack<scope_decl*> scope_stack_type;
 
-/// Convenience typedef for a map which key is a dwarf offset.  The
-/// value is also a dwarf offset.
-typedef unordered_map<Dwarf_Off, Dwarf_Off> offset_offset_map_type;
+/// Convenience typedef for a map which key is a dwarf DIE address.
+/// The value is also a dwarf address.
+typedef unordered_map<void*, void*> addr_addr_map_type;
 
 /// Convenience typedef for a map which key is a string and which
 /// value is a vector of smart pointer to a class_or_union_sptr.
@@ -289,72 +229,41 @@ typedef unordered_map<string, enums_type> string_enums_map;
 /// imported.  This is what the DW_TAG_imported_unit DIE expresses.
 ///
 /// This type thus contains:
-///	- the offset to which the partial unit is imported
-///	- the offset of the imported partial unit.
-///	- the offset of the imported partial unit.
+///	- the addr to which the partial unit is imported
+///	- the addr of the imported partial unit.
+///	- the addr of the imported partial unit tree.
 struct imported_unit_point
 {
-  Dwarf_Off	offset_of_import;
-  // The boolean below is true iff the imported unit comes from the
-  // alternate debug info file.
-  die_source	imported_unit_die_source;
-  Dwarf_Off	imported_unit_die_off;
-  Dwarf_Off	imported_unit_cu_off;
-  Dwarf_Off	imported_unit_child_off;
+  void*	addr_of_import = nullptr;
+  void*	imported_unit_die_addr = nullptr;
+  void*	imported_unit_child_addr = nullptr;
 
-  /// Default constructor for @ref the type imported_unit_point.
-  imported_unit_point()
-    : offset_of_import(),
-      imported_unit_die_source(PRIMARY_DEBUG_INFO_DIE_SOURCE),
-      imported_unit_die_off(),
-      imported_unit_cu_off(),
-      imported_unit_child_off()
+  /// Constructor of @ref the type imported_unit_point.
+  ///
+  /// @param import_addr the address of the point at which the unit
+  /// has been imported.
+  imported_unit_point(const void* import_addr)
+    : addr_of_import(const_cast<void*>(import_addr))
   {}
 
   /// Constructor of @ref the type imported_unit_point.
   ///
-  /// @param import_off the offset of the point at which the unit has
-  /// been imported.
-  imported_unit_point(Dwarf_Off import_off)
-    : offset_of_import(import_off),
-      imported_unit_die_source(PRIMARY_DEBUG_INFO_DIE_SOURCE),
-      imported_unit_die_off(),
-      imported_unit_cu_off(),
-      imported_unit_child_off()
-  {}
-
-  /// Constructor of @ref the type imported_unit_point.
-  ///
-  /// @param import_off the offset of the point at which the unit has
+  /// @param import_addr the addressof the point at which the unit has
   /// been imported.
   ///
   /// @param from where the imported DIE comes from.
   ///
   /// @param imported_die the die of the unit that has been imported.
-  imported_unit_point(Dwarf_Off	import_off,
-		      const Dwarf_Die& imported_die,
-		      die_source from)
-    : offset_of_import(import_off),
-      imported_unit_die_source(from),
-      imported_unit_die_off(dwarf_dieoffset
-			    (const_cast<Dwarf_Die*>(&imported_die))),
-      imported_unit_cu_off(),
-      imported_unit_child_off()
+  imported_unit_point(void* import_addr, const Dwarf_Die& imported_die)
+    : addr_of_import(import_addr),
+      imported_unit_die_addr(imported_die.addr)
   {
     Dwarf_Die imported_unit_child;
 
     ABG_ASSERT(dwarf_child(const_cast<Dwarf_Die*>(&imported_die),
 			   &imported_unit_child) == 0);
 
-    imported_unit_child_off =
-      dwarf_dieoffset(const_cast<Dwarf_Die*>(&imported_unit_child));
-
-    Dwarf_Die cu_die_memory;
-    Dwarf_Die *cu_die;
-
-    cu_die = dwarf_diecu(const_cast<Dwarf_Die*>(&imported_unit_child),
-			 &cu_die_memory, 0, 0);
-    imported_unit_cu_off = dwarf_dieoffset(cu_die);
+    imported_unit_child_addr = imported_unit_child.addr;
   }
 }; // struct imported_unit_point
 
@@ -362,7 +271,7 @@ struct imported_unit_point
 typedef vector<imported_unit_point> imported_unit_points_type;
 
 /// Convenience typedef for a vector of @ref imported_unit_point.
-typedef unordered_map<Dwarf_Off, imported_unit_points_type>
+typedef unordered_map<void*, imported_unit_points_type>
 tu_die_imported_unit_points_map_type;
 
 /// "Less than" operator for instances of @ref imported_unit_point
@@ -375,18 +284,18 @@ tu_die_imported_unit_points_map_type;
 /// @return true iff @p l is less than @p r.
 static bool
 operator<(const imported_unit_point& l, const imported_unit_point& r)
-{return l.offset_of_import < r.offset_of_import;}
+{return l.addr_of_import < r.addr_of_import;}
 
 static bool
 get_parent_die(const reader&	rdr,
 	       const Dwarf_Die*	die,
 	       Dwarf_Die&		parent_die,
-	       size_t			where_offset);
+	       void*			where);
 
 static bool
 get_scope_die(const reader&	rdr,
 	      const Dwarf_Die*		die,
-	      size_t			where_offset,
+	      void*			where_addr,
 	      Dwarf_Die&		scope_die);
 
 static bool
@@ -477,7 +386,7 @@ fn_die_first_parameter_die(const Dwarf_Die* die, Dwarf_Die& first_parm_die);
 static bool
 member_fn_die_has_this_pointer(const reader& rdr,
 			       const Dwarf_Die* die,
-			       size_t where_offset,
+			       void* where,
 			       Dwarf_Die& class_die,
 			       Dwarf_Die& object_pointer_die);
 
@@ -497,7 +406,7 @@ is_type_die_to_be_canonicalized(const Dwarf_Die *die);
 static bool
 die_is_at_class_scope(const reader& rdr,
 		      const Dwarf_Die* die,
-		      size_t where_offset,
+		      void* where,
 		      Dwarf_Die& class_scope_die);
 static bool
 eval_last_constant_dwarf_sub_expr(Dwarf_Op*	expr,
@@ -580,47 +489,46 @@ build_internal_anonymous_die_name(const string &base_name,
 				  size_t anonymous_type_index);
 
 static string
-die_qualified_type_name(const reader& rdr,
-			const Dwarf_Die* die,
-			size_t where,
-			unordered_set<uint64_t>& guard);
+die_qualified_type_name(const reader&			rdr,
+			const Dwarf_Die*		die,
+			void*				where,
+			unordered_set<void*>&	guard);
 
 static string
 die_qualified_decl_name(const reader& rdr,
 			const Dwarf_Die* die,
-			size_t where,
-			unordered_set<uint64_t>& guard);
+			void* where,
+			unordered_set<void*>& guard);
 
 static string
 die_qualified_name(const reader& rdr,
 		   const Dwarf_Die* die,
-		   size_t where,
-		   unordered_set<uint64_t>& guard);
+		   void* where,
+		   unordered_set<void*>& guard);
 
 static string
 die_qualified_name(const reader& rdr,
 		   const Dwarf_Die* die,
-		   size_t where);
+		   void* where);
 
 static string
 die_type_name(const reader& rdr, const Dwarf_Die* die,
-	      bool qualified_name, size_t where_offset,
-	      unordered_set<uint64_t>& infinite_loop_guard);
+	      bool qualified_name, void* where_addr,
+	      unordered_set<void*>& infinite_loop_guard);
 
 static string
 die_type_name(const reader& rdr, const Dwarf_Die* die,
-	      bool qualified_name, size_t where_offset);
+	      bool qualified_name, void* where_addr);
 
 static bool
-die_qualified_type_name_empty(const reader& rdr,
-			      const Dwarf_Die* die, size_t where,
-			      string &qualified_name,
-			      unordered_set<uint64_t>& infinite_loop_guard);
+die_qualified_type_name_empty(const reader& rdr, const Dwarf_Die* die,
+			      void* where, string &qualified_name,
+			      unordered_set<void*>& infinite_loop_guard);
 
 static void
 die_return_and_parm_names_from_fn_type_die(const reader& rdr,
 					   const Dwarf_Die* die,
-					   size_t where_offset,
+					   void* where,
 					   bool pretty_print,
 					   bool qualified_name,
 					   bool &is_method_type,
@@ -629,14 +537,14 @@ die_return_and_parm_names_from_fn_type_die(const reader& rdr,
 					   vector<string>& parm_names,
 					   bool& is_const,
 					   bool& is_static,
-					   unordered_set<uint64_t>& infinite_loop_guard);
+					   unordered_set<void*>& infinite_loop_guard);
 
 static string
 die_function_signature(const reader& rdr,
 		       const Dwarf_Die *die,
 		       bool qualified_name,
-		       size_t where_offset,
-		       unordered_set<uint64_t>& infinite_loop_guard);
+		       void* where_addr,
+		       unordered_set<void*>& infinite_loop_guard);
 
 static bool
 die_peel_qual_ptr(Dwarf_Die *die, Dwarf_Die& peeled_die);
@@ -650,7 +558,7 @@ die_peel_typedef(Dwarf_Die *die, Dwarf_Die& peeled_die);
 static bool
 die_function_type_is_method_type(const reader& rdr,
 				 const Dwarf_Die *die,
-				 size_t where_offset,
+				 void* where,
 				 Dwarf_Die& object_pointer_die,
 				 Dwarf_Die& class_die,
 				 bool& is_static);
@@ -661,7 +569,7 @@ die_enum_flat_representation(const reader&	rdr,
 			     const string&	indent,
 			     bool		one_line,
 			     bool		qualified_names,
-			     size_t		where_offset);
+			     void*		where);
 
 static string
 die_class_flat_representation(const reader&	rdr,
@@ -669,8 +577,8 @@ die_class_flat_representation(const reader&	rdr,
 			      const string&	indent,
 			      bool		one_line,
 			      bool		qualified_names,
-			      size_t		where_offset,
-			      unordered_set<uint64_t>& infinite_loop_guard);
+			      void*		where,
+			      unordered_set<void*>& infinite_loop_guard);
 
 static string
 die_class_or_enum_flat_representation(const reader&	rdr,
@@ -678,8 +586,8 @@ die_class_or_enum_flat_representation(const reader&	rdr,
 				      const string&	indent,
 				      bool		one_line,
 				      bool		qualified_names,
-				      size_t		where_offset,
-				      unordered_set<uint64_t>& infinite_loop_guard);
+				      void*		where_addr,
+				      unordered_set<void*>& infinite_loop_guard);
 
 static string
 die_class_or_enum_flat_representation(const reader&	rdr,
@@ -687,27 +595,27 @@ die_class_or_enum_flat_representation(const reader&	rdr,
 				      const string&	indent,
 				      bool		one_line,
 				      bool		qualified_names,
-				      size_t		where_offset);
+				      void*		where_addr);
 
 static string
 die_pretty_print_type(const reader& rdr,
 		      const Dwarf_Die* die,
-		      size_t where_offset,
-		      unordered_set<uint64_t>& guard);
+		      void* where_addr,
+		      unordered_set<void*>& guard);
 
 static string
 die_pretty_print_decl(const reader& rdr,
 		      const Dwarf_Die* die,
 		      bool qualified_name,
 		      bool include_fns,
-		      size_t where_offset,
-		      unordered_set<uint64_t>& infinite_loop_guard);
+		      void* where_addr,
+		      unordered_set<void*>& infinite_loop_guard);
 
 static string
-die_pretty_print(reader& rdr,
-		 const Dwarf_Die* die,
-		 size_t where_offset,
-		 unordered_set<uint64_t>& infinite_loop_guard);
+die_pretty_print(reader&			rdr,
+		 const Dwarf_Die*		die,
+		 void*				where_addr,
+		 unordered_set<void*>&	infinite_loop_guard);
 
 static void
 maybe_canonicalize_type(const type_base_sptr&	t,
@@ -718,20 +626,20 @@ get_default_array_lower_bound(translation_unit::language l);
 
 static bool
 find_lower_bound_in_imported_unit_points(const imported_unit_points_type&,
-					 Dwarf_Off,
+					 const void*,
 					 imported_unit_points_type::const_iterator&);
 
 static array_type_def::subrange_sptr
 build_subrange_type(reader&	rdr,
 		    const Dwarf_Die*	die,
-		    size_t		where_offset,
+		    void*		where,
 		    bool		associate_type_to_die = true);
 
 static void
 build_subranges_from_array_type_die(const reader&			rdr,
 				    const Dwarf_Die*			die,
 				    array_type_def::subranges_type&	subranges,
-				    size_t				where_offset,
+				    void*				where,
 				    bool				associate_type_to_die = true);
 
 static comparison_result
@@ -1880,105 +1788,6 @@ class reader : public elf_based_reader
 {
 public:
 
-  /// A set of containers that contains one container per kind of @ref
-  /// die_source.  This allows to associate DIEs to things, depending
-  /// on the source of the DIE.
-  template <typename ContainerType>
-  class die_source_dependant_container_set
-  {
-    ContainerType primary_debug_info_container_;
-    ContainerType alt_debug_info_container_;
-    ContainerType type_unit_container_;
-
-  public:
-
-    /// Getter for the container associated to DIEs coming from a
-    /// given @ref die_source.
-    ///
-    /// @param source the die_source for which we want the container.
-    ///
-    /// @return the container that associates DIEs coming from @p
-    /// source to something.
-    ContainerType&
-    get_container(die_source source)
-    {
-      ContainerType *result = 0;
-      switch (source)
-	{
-	case PRIMARY_DEBUG_INFO_DIE_SOURCE:
-	  result = &primary_debug_info_container_;
-	  break;
-	case ALT_DEBUG_INFO_DIE_SOURCE:
-	  result = &alt_debug_info_container_;
-	  break;
-	case TYPE_UNIT_DIE_SOURCE:
-	  result = &type_unit_container_;
-	  break;
-	case NO_DEBUG_INFO_DIE_SOURCE:
-	case NUMBER_OF_DIE_SOURCES:
-	  ABG_ASSERT_NOT_REACHED;
-	}
-      return *result;
-    }
-
-    /// Getter for the container associated to DIEs coming from a
-    /// given @ref die_source.
-    ///
-    /// @param source the die_source for which we want the container.
-    ///
-    /// @return the container that associates DIEs coming from @p
-    /// source to something.
-    const ContainerType&
-    get_container(die_source source) const
-    {
-      return const_cast<die_source_dependant_container_set*>(this)->
-	get_container(source);
-    }
-
-    /// Getter for the container associated to DIEs coming from the
-    /// same source as a given DIE.
-    ///
-    /// @param rdr the DWARF reader to consider.
-    ///
-    /// @param die the DIE which should have the same source as the
-    /// source of the container we want.
-    ///
-    /// @return the container that associates DIEs coming from the
-    /// same source as @p die.
-    ContainerType&
-    get_container(const reader& rdr, const Dwarf_Die *die)
-    {
-      const die_source source = rdr.get_die_source(die);
-      return get_container(source);
-    }
-
-    /// Getter for the container associated to DIEs coming from the
-    /// same source as a given DIE.
-    ///
-    /// @param rdr the DWARF reader to consider.
-    ///
-    /// @param die the DIE which should have the same source as the
-    /// source of the container we want.
-    ///
-    /// @return the container that associates DIEs coming from the
-    /// same source as @p die.
-    const ContainerType&
-    get_container(const reader& rdr, const Dwarf_Die *die) const
-    {
-      return const_cast<die_source_dependant_container_set*>(this)->
-	get_container(rdr, die);
-    }
-
-    /// Clear the container set.
-    void
-    clear()
-    {
-      primary_debug_info_container_.clear();
-      alt_debug_info_container_.clear();
-      type_unit_container_.clear();
-    }
-  }; // end die_dependant_container_set
-
   /// Statistics to help for debugging purposes.
   struct stats
   {
@@ -2002,47 +1811,38 @@ public:
   Dwarf_Die*			cur_tu_die_;
   mutable dwarf_expr_eval_context	dwarf_expr_eval_context_;
   // A set of maps (one per kind of die source) that associates a decl
-  // string representation with the DIEs (offsets) representing that
+  // string representation with the DIEs (addresses) representing that
   // decl.
-  mutable die_source_dependant_container_set<istring_dwarf_offsets_map_type>
-  decl_die_repr_die_offsets_maps_;
+  mutable istring_dwarf_addrs_map_type decl_die_repr_die_addrs_maps_;
   // A set of maps (one per kind of die source) that associates a type
-  // string representation with the DIEs (offsets) representing that
+  // string representation with the DIEs (addresses) representing that
   // type.
-  mutable die_source_dependant_container_set<istring_dwarf_offsets_map_type>
-  type_die_repr_die_offsets_maps_;
-  mutable die_source_dependant_container_set<die_istring_map_type>
-  die_qualified_name_maps_;
-  mutable die_source_dependant_container_set<die_istring_map_type>
-  die_pretty_repr_maps_;
-  mutable die_source_dependant_container_set<die_istring_map_type>
-  die_pretty_type_repr_maps_;
+  mutable istring_dwarf_addrs_map_type type_die_repr_die_addrs_maps_;
+  mutable die_istring_map_type die_qualified_name_maps_;
+  mutable die_istring_map_type die_pretty_repr_maps_;
+  mutable die_istring_map_type die_pretty_type_repr_maps_;
   // A set of maps (one per kind of die source) that associates the
   // offset of a decl die to its corresponding decl artifact.
-  mutable die_source_dependant_container_set<die_artefact_map_type>
-  decl_die_artefact_maps_;
+  mutable die_artefact_map_type decl_die_artefact_maps_;
   // A set of maps (one per kind of die source) that associates the
   // offset of a type die to its corresponding type artifact.
-  mutable die_source_dependant_container_set<die_artefact_map_type>
-  type_die_artefact_maps_;
-  /// A set of vectors (one per kind of die source) that associates
-  /// the offset of a type DIE to the offset of its canonical DIE.
-  mutable die_source_dependant_container_set<offset_offset_map_type>
-  canonical_type_die_offsets_;
-  /// A set of vectors (one per kind of die source) that associates
-  /// the offset of a decl DIE to the offset of its canonical DIE.
-  mutable die_source_dependant_container_set<offset_offset_map_type>
-  canonical_decl_die_offsets_;
+  mutable die_artefact_map_type type_die_artefact_maps_;
+  /// A map that associates the addr of a type DIE to the addr of its
+  /// canonical DIE.
+  mutable addr_addr_map_type canonical_type_die_addrs_;
+  /// A map that associates the addr of a decl DIE to the addr of its
+  /// canonical DIE.
+  mutable addr_addr_map_type canonical_decl_die_addrs_;
   /// A map that associates a function type representations to
   /// function types, inside a translation unit.
   mutable istring_fn_type_map_type per_tu_repr_to_fn_type_maps_;
-  /// A map that associates a pair of DIE offsets to the result of the
+  /// A map that associates a pair of DIE addresses to the result of the
   /// comparison of that pair.
-  mutable std::unordered_map<std::pair<offset_type,offset_type>,
+  mutable std::unordered_map<dwarf_addr_pair_type,
 			     abigail::ir::comparison_result,
-			     dwarf_offset_pair_hash> die_comparison_results_;
+			     dwarf_addr_pair_hash> die_comparison_results_;
   // The set of types pair that have been canonical-type-propagated.
-  mutable offset_pair_set_type propagated_types_;
+  mutable dwarf_addr_pair_set_type propagated_types_;
   die_class_or_union_map_type	die_wip_classes_map_;
   die_class_or_union_map_type	alternate_die_wip_classes_map_;
   die_class_or_union_map_type	type_unit_die_wip_classes_map_;
@@ -2057,18 +1857,10 @@ public:
   translation_unit_sptr	cur_tu_;
   scope_decl_sptr		nil_scope_;
   scope_stack_type		scope_stack_;
-  offset_offset_map_type	primary_die_parent_map_;
+  addr_addr_map_type		die_parent_map_;
   // A map that associates each tu die to a vector of unit import
-  // points, in the main debug info
+  // points
   tu_die_imported_unit_points_map_type tu_die_imported_unit_points_map_;
-  // A map that associates each tu die to a vector of unit import
-  // points, in the alternate debug info
-  tu_die_imported_unit_points_map_type alt_tu_die_imported_unit_points_map_;
-  tu_die_imported_unit_points_map_type type_units_tu_die_imported_unit_points_map_;
-  // A DIE -> parent map for DIEs coming from the alternate debug info
-  // file.
-  offset_offset_map_type	alternate_die_parent_map_;
-  offset_offset_map_type	type_section_die_parent_map_;
   list<var_decl_sptr>		var_decls_to_add_;
 #ifdef WITH_DEBUG_TYPE_CANONICALIZATION
   bool				debug_die_canonicalization_is_on_;
@@ -2151,15 +1943,15 @@ public:
   {
     dwarf_version_ = 0;
     cur_tu_die_ =  0;
-    decl_die_repr_die_offsets_maps_.clear();
-    type_die_repr_die_offsets_maps_.clear();
+    decl_die_repr_die_addrs_maps_.clear();
+    type_die_repr_die_addrs_maps_.clear();
     die_qualified_name_maps_.clear();
     die_pretty_repr_maps_.clear();
     die_pretty_type_repr_maps_.clear();
     decl_die_artefact_maps_.clear();
     type_die_artefact_maps_.clear();
-    canonical_type_die_offsets_.clear();
-    canonical_decl_die_offsets_.clear();
+    canonical_type_die_addrs_.clear();
+    canonical_decl_die_addrs_.clear();
     die_wip_classes_map_.clear();
     alternate_die_wip_classes_map_.clear();
     type_unit_die_wip_classes_map_.clear();
@@ -2173,12 +1965,8 @@ public:
     corpus().reset();
     corpus_group().reset();
     cur_tu_.reset();
-    primary_die_parent_map_.clear();
+    die_parent_map_.clear();
     tu_die_imported_unit_points_map_.clear();
-    alt_tu_die_imported_unit_points_map_.clear();
-    type_units_tu_die_imported_unit_points_map_.clear();
-    alternate_die_parent_map_.clear();
-    type_section_die_parent_map_.clear();
     var_decls_to_add_.clear();
     clear_per_translation_unit_data();
     clear_per_corpus_data();
@@ -2651,428 +2439,6 @@ public:
   dwarf_is_splitted() const
   {return dwarf_elf_handle() != elf_handle();}
 
-  /// Return the correct debug info, depending on the DIE source we
-  /// are looking at.
-  ///
-  /// @param source the DIE source to consider.
-  ///
-  /// @return the right debug info, depending on @p source.
-  const Dwarf*
-  dwarf_per_die_source(die_source source) const
-  {
-    const Dwarf *result = 0;
-    switch(source)
-      {
-      case PRIMARY_DEBUG_INFO_DIE_SOURCE:
-      case TYPE_UNIT_DIE_SOURCE:
-	result = dwarf_debug_info();
-	break;
-      case ALT_DEBUG_INFO_DIE_SOURCE:
-	result = alternate_dwarf_debug_info();
-	break;
-      case NO_DEBUG_INFO_DIE_SOURCE:
-      case NUMBER_OF_DIE_SOURCES:
-	ABG_ASSERT_NOT_REACHED;
-      }
-    return result;
-  }
-
-  /// Return the path to the ELF path we are reading.
-  ///
-  /// @return the elf path.
-  const string&
-  elf_path() const
-  {return corpus_path();}
-
-  const Dwarf_Die*
-  cur_tu_die() const
-  {return cur_tu_die_;}
-
-  void
-  cur_tu_die(Dwarf_Die* cur_tu_die)
-  {cur_tu_die_ = cur_tu_die;}
-
-  dwarf_expr_eval_context&
-  dwarf_expr_eval_ctxt() const
-  {return dwarf_expr_eval_context_;}
-
-  /// Getter of the maps set that associates a representation of a
-  /// decl DIE to a vector of offsets of DIEs having that representation.
-  ///
-  /// @return the maps set that associates a representation of a decl
-  /// DIE to a vector of offsets of DIEs having that representation.
-  const die_source_dependant_container_set<istring_dwarf_offsets_map_type>&
-  decl_die_repr_die_offsets_maps() const
-  {return decl_die_repr_die_offsets_maps_;}
-
-  /// Getter of the maps set that associates a representation of a
-  /// decl DIE to a vector of offsets of DIEs having that representation.
-  ///
-  /// @return the maps set that associates a representation of a decl
-  /// DIE to a vector of offsets of DIEs having that representation.
-  die_source_dependant_container_set<istring_dwarf_offsets_map_type>&
-  decl_die_repr_die_offsets_maps()
-  {return decl_die_repr_die_offsets_maps_;}
-
-  /// Getter of the maps set that associate a representation of a type
-  /// DIE to a vector of offsets of DIEs having that representation.
-  ///
-  /// @return the maps set that associate a representation of a type
-  /// DIE to a vector of offsets of DIEs having that representation.
-  const die_source_dependant_container_set<istring_dwarf_offsets_map_type>&
-  type_die_repr_die_offsets_maps() const
-  {return type_die_repr_die_offsets_maps_;}
-
-  /// Getter of the maps set that associate a representation of a type
-  /// DIE to a vector of offsets of DIEs having that representation.
-  ///
-  /// @return the maps set that associate a representation of a type
-  /// DIE to a vector of offsets of DIEs having that representation.
-  die_source_dependant_container_set<istring_dwarf_offsets_map_type>&
-  type_die_repr_die_offsets_maps()
-  {return type_die_repr_die_offsets_maps_;}
-
-
-  /// Compute the offset of the canonical DIE of a given DIE.
-  ///
-  /// @param die the DIE to consider.
-  ///
-  /// @param canonical_die_offset out parameter.  This is set to the
-  /// resulting canonical DIE that was computed.
-  ///
-  /// @param die_as_type if yes, it means @p die has to be considered
-  /// as a type.
-  void
-  compute_canonical_die_offset(const Dwarf_Die *die,
-			       Dwarf_Off &canonical_die_offset,
-			       bool die_as_type) const
-  {
-    offset_offset_map_type &canonical_dies =
-      die_as_type
-      ? const_cast<reader*>(this)->canonical_type_die_offsets_.
-      get_container(*this, die)
-      : const_cast<reader*>(this)->canonical_decl_die_offsets_.
-      get_container(*this, die);
-
-    Dwarf_Die canonical_die;
-    compute_canonical_die(die, canonical_dies, canonical_die, die_as_type);
-
-    canonical_die_offset = dwarf_dieoffset(&canonical_die);
-  }
-
-  /// Compute (find) the canonical DIE of a given DIE.
-  ///
-  /// @param die the DIE to consider.
-  ///
-  /// @param canonical_dies the vector in which the canonical dies ar
-  /// stored.  The index of each element is the offset of the DIE we
-  /// want the canonical DIE for.  And the value of the element at
-  /// that index is the canonical DIE offset we are looking for.
-  ///
-  /// @param canonical_die_offset out parameter.  This is set to the
-  /// resulting canonical DIE that was computed.
-  ///
-  /// @param die_as_type if yes, it means @p die has to be considered
-  /// as a type.
-  void
-  compute_canonical_die(const Dwarf_Die *die,
-			offset_offset_map_type& canonical_dies,
-			Dwarf_Die &canonical_die,
-			bool die_as_type) const
-  {
-    const die_source source = get_die_source(die);
-
-    Dwarf_Off die_offset = dwarf_dieoffset(const_cast<Dwarf_Die*>(die));
-
-    compute_canonical_die(die_offset, source,
-			  canonical_dies,
-			  canonical_die, die_as_type);
-  }
-
-  /// Compute (find) the canonical DIE of a given DIE.
-  ///
-  /// @param die_offset the offset of the DIE to consider.
-  ///
-  /// @param source the source of the DIE to consider.
-  ///
-  /// @param canonical_dies the vector in which the canonical dies ar
-  /// stored.  The index of each element is the offset of the DIE we
-  /// want the canonical DIE for.  And the value of the element at
-  /// that index is the canonical DIE offset we are looking for.
-  ///
-  /// @param canonical_die_offset out parameter.  This is set to the
-  /// resulting canonical DIE that was computed.
-  ///
-  /// @param die_as_type if yes, it means @p die has to be considered
-  /// as a type.
-  void
-  compute_canonical_die(Dwarf_Off die_offset,
-			die_source source,
-			offset_offset_map_type& canonical_dies,
-			Dwarf_Die &canonical_die,
-			bool die_as_type) const
-  {
-    // The map that associates the string representation of 'die'
-    // with a vector of offsets of potentially equivalent DIEs.
-    istring_dwarf_offsets_map_type& map =
-      die_as_type
-      ? (const_cast<reader*>(this)->
-	 type_die_repr_die_offsets_maps().get_container(source))
-      : (const_cast<reader*>(this)->
-	 decl_die_repr_die_offsets_maps().get_container(source));
-
-    Dwarf_Die die;
-    ABG_ASSERT(dwarf_offdie(const_cast<Dwarf*>(dwarf_per_die_source(source)),
-			    die_offset, &die));
-
-    // The variable repr is the the string representation of 'die'.
-    //
-    // Even if die_as_type is true -- which means that 'die' is said
-    // to be considered as a type -- we always consider a
-    // DW_TAG_subprogram DIE as a decl here, as far as its string
-    // representation is concerned.
-    interned_string name =
-      (die_as_type)
-      ? get_die_pretty_type_representation(&die, /*where=*/0)
-      : get_die_pretty_representation(&die, /*where=*/0);
-
-    Dwarf_Off canonical_die_offset = 0;
-    istring_dwarf_offsets_map_type::iterator i = map.find(name);
-    if (i == map.end())
-      {
-	dwarf_offsets_type offsets;
-	offsets.push_back(die_offset);
-	map[name] = offsets;
-	set_canonical_die_offset(canonical_dies, die_offset, die_offset);
-	get_die_from_offset(source, die_offset, &canonical_die);
-	return;
-      }
-
-    Dwarf_Off cur_die_offset;
-    Dwarf_Die potential_canonical_die;
-    for (dwarf_offsets_type::const_iterator o = i->second.begin();
-	 o != i->second.end();
-	 ++o)
-      {
-	cur_die_offset = *o;
-	get_die_from_offset(source, cur_die_offset, &potential_canonical_die);
-	if (compare_dies(*this, &die, &potential_canonical_die,
-			 /*update_canonical_dies_on_the_fly=*/false))
-	  {
-	    canonical_die_offset = cur_die_offset;
-	    set_canonical_die_offset(canonical_dies, die_offset,
-				     canonical_die_offset);
-	    get_die_from_offset(source, canonical_die_offset, &canonical_die);
-	    return;
-	  }
-      }
-
-    canonical_die_offset = die_offset;
-    i->second.push_back(die_offset);
-    set_canonical_die_offset(canonical_dies, die_offset, die_offset);
-    get_die_from_offset(source, canonical_die_offset, &canonical_die);
-  }
-
-  /// Getter of the canonical DIE of a given DIE.
-  ///
-  /// @param die the DIE to consider.
-  ///
-  /// @param canonical_die output parameter.  Is set to the resulting
-  /// canonical die, if this function returns true.
-  ///
-  /// @param where the offset of the logical DIE we are supposed to be
-  /// calling this function from.  If set to zero this means this is
-  /// to be ignored.
-  ///
-  /// @param die_as_type if set to yes, it means @p die is to be
-  /// considered as a type DIE.
-  ///
-  /// @return true iff a canonical DIE was found for @p die.
-  bool
-  get_canonical_die(const Dwarf_Die *die,
-		    Dwarf_Die &canonical_die,
-		    size_t where,
-		    bool die_as_type)
-  {
-    const die_source source = get_die_source(die);
-
-    offset_offset_map_type &canonical_dies =
-      die_as_type
-      ? const_cast<reader*>(this)->canonical_type_die_offsets_.
-      get_container(source)
-      : const_cast<reader*>(this)->canonical_decl_die_offsets_.
-      get_container(source);
-
-    Dwarf_Off die_offset = dwarf_dieoffset(const_cast<Dwarf_Die*>(die));
-    if (Dwarf_Off canonical_die_offset =
-	get_canonical_die_offset(canonical_dies, die_offset))
-      {
-	get_die_from_offset(source, canonical_die_offset, &canonical_die);
-	return true;
-      }
-
-    // The map that associates the string representation of 'die'
-    // with a vector of offsets of potentially equivalent DIEs.
-    istring_dwarf_offsets_map_type& map =
-      die_as_type
-      ? (const_cast<reader*>(this)->
-	 type_die_repr_die_offsets_maps().get_container(*this, die))
-      : (const_cast<reader*>(this)->
-	 decl_die_repr_die_offsets_maps().get_container(*this, die));
-
-    // The variable repr is the the string representation of 'die'.
-    //
-    // Even if die_as_type is true -- which means that 'die' is said
-    // to be considered as a type -- we always consider a
-    // DW_TAG_subprogram DIE as a decl here, as far as its string
-    // representation is concerned.
-    interned_string name =
-      (die_as_type /*&& dwarf_tag(die) != DW_TAG_subprogram*/)
-      ? get_die_pretty_type_representation(die, where)
-      : get_die_pretty_representation(die, where);
-
-    istring_dwarf_offsets_map_type::iterator i = map.find(name);
-    if (i == map.end())
-      return false;
-
-    Dwarf_Off cur_die_offset;
-    for (dwarf_offsets_type::const_iterator o = i->second.begin();
-	 o != i->second.end();
-	 ++o)
-      {
-	cur_die_offset = *o;
-	get_die_from_offset(source, cur_die_offset, &canonical_die);
-	// compare die and canonical_die.
-	if (compare_dies_during_canonicalization(const_cast<reader&>(*this),
-						 die, &canonical_die,
-						 /*update_canonical_dies_on_the_fly=*/true))
-	  {
-	    set_canonical_die_offset(canonical_dies,
-				     die_offset,
-				     cur_die_offset);
-	    return true;
-	  }
-      }
-
-    return false;
-  }
-
-  /// Retrieve the canonical DIE of a given DIE.
-  ///
-  /// The canonical DIE is a DIE that is structurally equivalent to
-  /// this one.
-  ///
-  /// Note that this function caches the canonical DIE that was
-  /// computed.  Subsequent invocations of this function on the same
-  /// DIE return the same cached DIE.
-  ///
-  /// @param die the DIE to get a canonical type for.
-  ///
-  /// @param canonical_die the resulting canonical DIE.
-  ///
-  /// @param where the offset of the logical DIE we are supposed to be
-  /// calling this function from.  If set to zero this means this is
-  /// to be ignored.
-  ///
-  /// @param die_as_type if true, consider DIE is a type.
-  ///
-  /// @return true if an *existing* canonical DIE was found.
-  /// Otherwise, @p die is considered as being a canonical DIE for
-  /// itself. @p canonical_die is thus set to the canonical die in
-  /// either cases.
-  bool
-  get_or_compute_canonical_die(const Dwarf_Die* die,
-			       Dwarf_Die& canonical_die,
-			       size_t where,
-			       bool die_as_type) const
-  {
-    const die_source source = get_die_source(die);
-
-    offset_offset_map_type &canonical_dies =
-      die_as_type
-      ? const_cast<reader*>(this)->canonical_type_die_offsets_.
-      get_container(source)
-      : const_cast<reader*>(this)->canonical_decl_die_offsets_.
-      get_container(source);
-
-    Dwarf_Off initial_die_offset = dwarf_dieoffset(const_cast<Dwarf_Die*>(die));
-
-    if (Dwarf_Off canonical_die_offset =
-	get_canonical_die_offset(canonical_dies,
-				 initial_die_offset))
-      {
-	get_die_from_offset(source, canonical_die_offset, &canonical_die);
-	return true;
-      }
-
-    if (!is_type_die_to_be_canonicalized(die))
-      return false;
-
-    // The map that associates the string representation of 'die'
-    // with a vector of offsets of potentially equivalent DIEs.
-    istring_dwarf_offsets_map_type& map =
-      die_as_type
-      ? (const_cast<reader*>(this)->
-	 type_die_repr_die_offsets_maps().get_container(*this, die))
-      : (const_cast<reader*>(this)->
-	 decl_die_repr_die_offsets_maps().get_container(*this, die));
-
-    // The variable repr is the the string representation of 'die'.
-    //
-    // Even if die_as_type is true -- which means that 'die' is said
-    // to be considered as a type -- we always consider a
-    // DW_TAG_subprogram DIE as a decl here, as far as its string
-    // representation is concerned.
-    interned_string name =
-      (die_as_type)
-      ? get_die_pretty_type_representation(die, where)
-      : get_die_pretty_representation(die, where);
-
-    istring_dwarf_offsets_map_type::iterator i = map.find(name);
-    if (i == map.end())
-      {
-	dwarf_offsets_type offsets;
-	offsets.push_back(initial_die_offset);
-	map[name] = offsets;
-	get_die_from_offset(source, initial_die_offset, &canonical_die);
-	set_canonical_die_offset(canonical_dies,
-				 initial_die_offset,
-				 initial_die_offset);
-	return false;
-      }
-
-    // walk i->second without any iterator (using a while loop rather
-    // than a for loop) because compare_dies might add new content to
-    // the end of the i->second vector during the walking.
-    dwarf_offsets_type::size_type n = 0, s = i->second.size();
-    while (n < s)
-      {
-	Dwarf_Off die_offset = i->second[n];
-	get_die_from_offset(source, die_offset, &canonical_die);
-	// compare die and canonical_die.
-	if (compare_dies_during_canonicalization(const_cast<reader&>(*this),
-						 die, &canonical_die,
-						 /*update_canonical_dies_on_the_fly=*/true))
-	  {
-	    set_canonical_die_offset(canonical_dies,
-				     initial_die_offset,
-				     die_offset);
-	    return true;
-	  }
-	++n;
-      }
-
-    // We didn't find a canonical DIE for 'die'.  So let's consider
-    // that it is its own canonical DIE.
-    get_die_from_offset(source, initial_die_offset, &canonical_die);
-    i->second.push_back(initial_die_offset);
-    set_canonical_die_offset(canonical_dies,
-			     initial_die_offset,
-			     initial_die_offset);
-
-    return false;
-  }
-
   /// Get the source of the DIE.
   ///
   /// The function returns an enumerator value saying if the DIE comes
@@ -3149,23 +2515,346 @@ public:
     return true;
   }
 
-  /// Getter for the DIE designated by an offset.
+  /// Return the correct debug info, depending on the DIE source we
+  /// are looking at.
   ///
-  /// @param source the source of the DIE to get.
+  /// @param source the DIE source to consider.
   ///
-  /// @param offset the offset of the DIE to get.
-  ///
-  /// @param die the resulting DIE.  The pointer has to point to an
-  /// allocated memory region.
-  void
-  get_die_from_offset(die_source source, Dwarf_Off offset, Dwarf_Die *die) const
+  /// @return the right debug info, depending on @p source.
+  const Dwarf*
+  dwarf_per_die_source(die_source source) const
   {
-    if (source == TYPE_UNIT_DIE_SOURCE)
-      ABG_ASSERT(dwarf_offdie_types(const_cast<Dwarf*>(dwarf_per_die_source(source)),
-				    offset, die));
-    else
-      ABG_ASSERT(dwarf_offdie(const_cast<Dwarf*>(dwarf_per_die_source(source)),
-			      offset, die));
+    const Dwarf *result = 0;
+    switch(source)
+      {
+      case PRIMARY_DEBUG_INFO_DIE_SOURCE:
+      case TYPE_UNIT_DIE_SOURCE:
+	result = dwarf_debug_info();
+	break;
+      case ALT_DEBUG_INFO_DIE_SOURCE:
+	result = alternate_dwarf_debug_info();
+	break;
+      case NO_DEBUG_INFO_DIE_SOURCE:
+      case NUMBER_OF_DIE_SOURCES:
+	ABG_ASSERT_NOT_REACHED;
+      }
+    return result;
+  }
+
+  /// Return the path to the ELF path we are reading.
+  ///
+  /// @return the elf path.
+  const string&
+  elf_path() const
+  {return corpus_path();}
+
+  const Dwarf_Die*
+  cur_tu_die() const
+  {return cur_tu_die_;}
+
+  void
+  cur_tu_die(Dwarf_Die* cur_tu_die)
+  {cur_tu_die_ = cur_tu_die;}
+
+  dwarf_expr_eval_context&
+  dwarf_expr_eval_ctxt() const
+  {return dwarf_expr_eval_context_;}
+
+  /// Getter of the maps set that associates a representation of a
+  /// decl DIE to a vector of addresses of DIEs having that
+  /// representation.
+  ///
+  /// @return the maps set that associates a representation of a decl
+  /// DIE to a vector of addresses of DIEs having that representation.
+  const istring_dwarf_addrs_map_type& decl_die_repr_die_addrs_maps() const
+  {return decl_die_repr_die_addrs_maps_;}
+
+  /// Getter of the maps set that associates a representation of a
+  /// decl DIE to a vector of addresses of DIEs having that representation.
+  ///
+  /// @return the maps set that associates a representation of a decl
+  /// DIE to a vector of addresses of DIEs having that representation.
+  istring_dwarf_addrs_map_type& decl_die_repr_die_addrs_maps()
+  {return decl_die_repr_die_addrs_maps_;}
+
+  /// Getter of the maps set that associate a representation of a type
+  /// DIE to a vector of addresss of DIEs having that representation.
+  ///
+  /// @return the maps set that associate a representation of a type
+  /// DIE to a vector of addresses of DIEs having that representation.
+  const istring_dwarf_addrs_map_type& type_die_repr_die_addrs_maps() const
+  {return type_die_repr_die_addrs_maps_;}
+
+  /// Getter of the maps set that associate a representation of a type
+  /// DIE to a vector of addresses of DIEs having that representation.
+  ///
+  /// @return the maps set that associate a representation of a type
+  /// DIE to a vector of addresses of DIEs having that representation.
+  istring_dwarf_addrs_map_type& type_die_repr_die_addrs_maps()
+  {return type_die_repr_die_addrs_maps_;}
+
+  /// Retrieve the a DIE that corresponds to a DIE address.
+  ///
+  /// @param die_addr the address of the DIE to consider.
+  ///
+  /// @param die the output to set to the DIE that matches @p
+  /// die_addr, iff the function returns true.
+  ///
+  /// @return true iff the function could retrieve the DIE which
+  /// address is @p die_addr.
+  bool
+  get_die_from_addr(const void* die_addr, Dwarf_Die& die) const
+  {
+    Dwarf* debug_info = const_cast<Dwarf*>(dwarf_debug_info());
+    if (!debug_info || !die_addr)
+      return false;
+
+    return !! dwarf_die_addr_die(debug_info, const_cast<void*>(die_addr), &die);
+  }
+
+  /// Compute (find) the canonical DIE of a given DIE.
+  ///
+  /// @param die the DIE to consider.
+  ///
+  /// @param canonical_dies the vector in which the canonical dies ar
+  /// stored.  The index of each element is the offset of the DIE we
+  /// want the canonical DIE for.  And the value of the element at
+  /// that index is the canonical DIE address we are looking for.
+  ///
+  /// @param canonical_die_offset out parameter.  This is set to the
+  /// resulting canonical DIE that was computed.
+  ///
+  /// @param die_as_type if yes, it means @p die has to be considered
+  /// as a type.
+  void
+  compute_canonical_die(const Dwarf_Die&	die,
+			addr_addr_map_type&	canonical_dies,
+			Dwarf_Die&		canonical_die,
+			bool			die_as_type) const
+  {
+    // The map that associates the string representation of 'die'
+    // with a vector of addresses of potentially equivalent DIEs.
+    istring_dwarf_addrs_map_type& map =
+      die_as_type
+      ? const_cast<reader*>(this)->type_die_repr_die_addrs_maps()
+      : const_cast<reader*>(this)->decl_die_repr_die_addrs_maps();
+
+    // The variable repr is the the string representation of 'die'.
+    //
+    // Even if die_as_type is true -- which means that 'die' is said
+    // to be considered as a type -- we always consider a
+    // DW_TAG_subprogram DIE as a decl here, as far as its string
+    // representation is concerned.
+    interned_string name =
+      (die_as_type)
+      ? get_die_pretty_type_representation(&die, /*where=*/0)
+      : get_die_pretty_representation(&die, /*where=*/0);
+
+    istring_dwarf_addrs_map_type::iterator i = map.find(name);
+    if (i == map.end())
+      {
+	dwarf_addrs_type addrs;
+	addrs.push_back(die.addr);
+	map[name] = addrs;
+	set_canonical_die_addr(canonical_dies, die.addr, die.addr);
+	ABG_ASSERT(get_die_from_addr(die.addr, canonical_die));
+	return;
+      }
+
+    Dwarf_Die potential_canonical_die;
+    void* canonical_die_addr = nullptr;
+    for (const auto& cur_die_addr : i->second)
+      {
+	get_die_from_addr(cur_die_addr, potential_canonical_die);
+	if (compare_dies(*this, &die, &potential_canonical_die,
+			 /*update_canonical_dies_on_the_fly=*/false))
+	  {
+	    canonical_die_addr = cur_die_addr;
+	    set_canonical_die_addr(canonical_dies, die.addr,
+				   canonical_die_addr);
+	    ABG_ASSERT(get_die_from_addr(canonical_die_addr, canonical_die));
+	    return;
+	  }
+      }
+
+    canonical_die_addr = die.addr;
+    i->second.push_back(die.addr);
+    set_canonical_die_addr(canonical_dies, die.addr, die.addr);
+    ABG_ASSERT(get_die_from_addr(canonical_die_addr, canonical_die));
+  }
+
+  /// Getter of the canonical DIE of a given DIE.
+  ///
+  /// @param die the DIE to consider.
+  ///
+  /// @param canonical_die output parameter.  Is set to the resulting
+  /// canonical die, if this function returns true.
+  ///
+  /// @param where the address of the logical DIE we are supposed to
+  /// be calling this function from.  If set to zero this means this
+  /// is to be ignored.
+  ///
+  /// @param die_as_type if set to yes, it means @p die is to be
+  /// considered as a type DIE.
+  ///
+  /// @return true iff a canonical DIE was found for @p die.
+  bool
+  get_canonical_die(const Dwarf_Die	*die,
+		    Dwarf_Die		&canonical_die,
+		    void*		where,
+		    bool		die_as_type)
+  {
+    addr_addr_map_type &canonical_dies =
+      die_as_type
+      ? const_cast<reader*>(this)->canonical_type_die_addrs_
+      : const_cast<reader*>(this)->canonical_decl_die_addrs_;
+
+    if (void* canonical_die_addr = get_canonical_die_addr(canonical_dies,
+							  die->addr))
+      {
+	ABG_ASSERT(get_die_from_addr(canonical_die_addr, canonical_die));
+	return true;
+      }
+
+    // The map that associates the string representation of 'die'
+    // with a vector of addrs of potentially equivalent DIEs.
+    istring_dwarf_addrs_map_type& map =
+      die_as_type
+      ? const_cast<reader*>(this)->type_die_repr_die_addrs_maps()
+      : const_cast<reader*>(this)->decl_die_repr_die_addrs_maps();
+
+    // The variable repr is the the string representation of 'die'.
+    //
+    // Even if die_as_type is true -- which means that 'die' is said
+    // to be considered as a type -- we always consider a
+    // DW_TAG_subprogram DIE as a decl here, as far as its string
+    // representation is concerned.
+    interned_string name =
+      (die_as_type /*&& dwarf_tag(die) != DW_TAG_subprogram*/)
+      ? get_die_pretty_type_representation(die, where)
+      : get_die_pretty_representation(die, where);
+
+    istring_dwarf_addrs_map_type::iterator i = map.find(name);
+    if (i == map.end())
+      return false;
+
+    for (const auto& cur_die_addr : i->second)
+      {
+	ABG_ASSERT(get_die_from_addr(cur_die_addr, canonical_die));
+	// compare die and canonical_die.
+	if (compare_dies_during_canonicalization(const_cast<reader&>(*this),
+						 die, &canonical_die,
+						 /*update_canonical_dies_on_the_fly=*/true))
+	  {
+	    set_canonical_die_addr(canonical_dies,
+				   die->addr,
+				   cur_die_addr);
+	    return true;
+	  }
+      }
+
+    return false;
+  }
+
+  /// Retrieve the canonical DIE of a given DIE.
+  ///
+  /// The canonical DIE is a DIE that is structurally equivalent to
+  /// this one.
+  ///
+  /// Note that this function caches the canonical DIE that was
+  /// computed.  Subsequent invocations of this function on the same
+  /// DIE return the same cached DIE.
+  ///
+  /// @param die the DIE to get a canonical type for.
+  ///
+  /// @param canonical_die the resulting canonical DIE.
+  ///
+  /// @param where the address of the logical DIE we are supposed to
+  /// be calling this function from.  If set to zero this means this
+  /// is to be ignored.
+  ///
+  /// @param die_as_type if true, consider DIE is a type.
+  ///
+  /// @return true if an *existing* canonical DIE was found.
+  /// Otherwise, @p die is considered as being a canonical DIE for
+  /// itself. @p canonical_die is thus set to the canonical die in
+  /// either cases.
+  bool
+  get_or_compute_canonical_die(const Dwarf_Die* die,
+			       Dwarf_Die&	canonical_die,
+			       void*		where,
+			       bool		die_as_type) const
+  {
+    addr_addr_map_type &canonical_dies =
+      die_as_type
+      ? const_cast<reader*>(this)->canonical_type_die_addrs_
+      : const_cast<reader*>(this)->canonical_decl_die_addrs_;
+
+    if (void* canonical_die_addr
+	= get_canonical_die_addr(canonical_dies, die->addr))
+      {
+	ABG_ASSERT(get_die_from_addr(canonical_die_addr, canonical_die));
+	return true;
+      }
+
+    if (!is_type_die_to_be_canonicalized(die))
+      return false;
+
+    // The map that associates the string representation of 'die'
+    // with a vector of addrs of potentially equivalent DIEs.
+    istring_dwarf_addrs_map_type& map =
+      die_as_type
+      ? const_cast<reader*>(this)->type_die_repr_die_addrs_maps()
+      : const_cast<reader*>(this)->decl_die_repr_die_addrs_maps();
+
+    // The variable repr is the the string representation of 'die'.
+    //
+    // Even if die_as_type is true -- which means that 'die' is said
+    // to be considered as a type -- we always consider a
+    // DW_TAG_subprogram DIE as a decl here, as far as its string
+    // representation is concerned.
+    interned_string name =
+      (die_as_type)
+      ? get_die_pretty_type_representation(die, where)
+      : get_die_pretty_representation(die, where);
+
+    istring_dwarf_addrs_map_type::iterator i = map.find(name);
+    if (i == map.end())
+      {
+	dwarf_addrs_type addrs;
+	addrs.push_back(die->addr);
+	map[name] = addrs;
+	ABG_ASSERT(get_die_from_addr(die->addr, canonical_die));
+	set_canonical_die_addr(canonical_dies, die->addr, die->addr);
+	return false;
+      }
+
+    // walk i->second without any iterator (using a while loop rather
+    // than a for loop) because compare_dies might add new content to
+    // the end of the i->second vector during the walking.
+    dwarf_addrs_type::size_type n = 0, s = i->second.size();
+    while (n < s)
+      {
+	void* die_addr = i->second[n];
+	ABG_ASSERT(get_die_from_addr(die_addr, canonical_die));
+	// compare die and canonical_die.
+	if (compare_dies_during_canonicalization(const_cast<reader&>(*this),
+						 die, &canonical_die,
+						 /*update_canonical_dies_on_the_fly=*/true))
+	  {
+	    set_canonical_die_addr(canonical_dies, die->addr, die_addr);
+	    return true;
+	  }
+	++n;
+      }
+
+    // We didn't find a canonical DIE for 'die'.  So let's consider
+    // that it is its own canonical DIE.
+    ABG_ASSERT(get_die_from_addr(die->addr, canonical_die));
+    i->second.push_back(die->addr);
+    set_canonical_die_addr(canonical_dies, die->addr, die->addr);
+
+    return false;
   }
 
 public:
@@ -3176,7 +2865,7 @@ public:
   ///
   /// @param decl the decl to consider.
   ///
-  /// @param where_offset where in the DIE stream we logically are.
+  /// @param where_addr where in the DIE stream we logically are.
   ///
   /// @param do_associate_by_repr if true then this function
   /// associates the representation string of @p die with the
@@ -3191,55 +2880,41 @@ public:
   /// just one declaration associated with a DIE of the string
   /// representation of @p die.
   void
-  associate_die_to_decl(Dwarf_Die* die,
-			decl_base_sptr decl,
-			size_t where_offset,
-			bool do_associate_by_repr = false)
+  associate_die_to_decl(Dwarf_Die*	die,
+			decl_base_sptr	decl,
+			void*		where_addr,
+			bool		do_associate_by_repr = false)
   {
-    const die_source source = get_die_source(die);
+    die_artefact_map_type& m = decl_die_artefact_maps();
 
-    die_artefact_map_type& m =
-      decl_die_artefact_maps().get_container(source);
-
-    size_t die_offset;
+    void* die_addr = die->addr;
     if (do_associate_by_repr)
       {
 	Dwarf_Die equiv_die;
-	if (!get_or_compute_canonical_die(die, equiv_die, where_offset,
+	if (!get_or_compute_canonical_die(die, equiv_die, where_addr,
 					  /*die_as_type=*/false))
 	  return;
-	die_offset = dwarf_dieoffset(&equiv_die);
+	die_addr = equiv_die.addr;
       }
-    else
-      die_offset = dwarf_dieoffset(die);
 
-    m[die_offset] = decl;
+    m[die_addr] = decl;
   }
 
   /// Lookup the decl for a given DIE.
   ///
-  /// The returned decl is either the decl of the DIE that as the
-  /// exact offset @p die_offset
-  /// die_offset, or
-  /// give
+  /// The returned decl which of the DIE that has the exact address @p
+  /// die_addr.
   ///
-  /// @param die_offset the offset of the DIE to consider.
+  /// @param die_addr the address of the DIE to consider.
   ///
-  /// @param source where the DIE represented by @p die_offset comes
-  /// from.
-  ///
-  /// Note that "alternate debug info sections" is a GNU extension as
-  /// of DWARF4 and is described at
-  /// http://www.dwarfstd.org/ShowIssue.php?issue=120604.1
   ///
   /// @return the resulting decl, or null if no decl is associated to
-  /// the DIE represented by @p die_offset.
+  /// the DIE represented by @p die_addr.
   decl_base_sptr
-  lookup_decl_from_die_offset(Dwarf_Off die_offset, die_source source)
+  lookup_decl_from_die_addr(void* die_addr)
   {
     decl_base_sptr result =
-      is_decl(lookup_artifact_from_die_offset(die_offset, source,
-					      /*die_as_type=*/false));
+      is_decl(lookup_artifact_from_die_addr(die_addr, /*die_as_type=*/false));
 
     return result;
   }
@@ -3252,9 +2927,9 @@ public:
   ///
   /// @param die the DIE to consider.
   ///
-  /// @param where_offset where in the DIE stream we logically are.
+  /// @param where_addr where in the DIE stream we logically are.
   ///
-  /// @param guard the set of DIE offsets of the stack of DIEs
+  /// @param guard the set of DIE addresses of the stack of DIEs
   /// involved in the construction of the qualified name of the type.
   /// This set is used to detect (and avoid) cycles in the stack of
   /// DIEs that is going to be walked to compute the qualified type
@@ -3263,24 +2938,23 @@ public:
   /// @return the interned string representing the qualified name of
   /// @p die.
   interned_string
-  get_die_qualified_name(Dwarf_Die *die, size_t where_offset,
-			 unordered_set<uint64_t>& guard) const
+  get_die_qualified_name(Dwarf_Die *die, void* where_addr,
+			 unordered_set<void*>& guard) const
   {
     ABG_ASSERT(die);
-    die_istring_map_type& map =
-      die_qualified_name_maps_.get_container(*this, die);
+    die_istring_map_type& map = die_qualified_name_maps_;
 
-    size_t die_offset = dwarf_dieoffset(die);
-    die_istring_map_type::const_iterator i = map.find(die_offset);
+    void* die_addr = die->addr;
+    die_istring_map_type::const_iterator i = map.find(die_addr);
 
     if (i == map.end())
       {
 	reader& rdr  = *const_cast<reader*>(this);
 	string qualified_name = die_qualified_name(rdr, die,
-						   where_offset,
+						   where_addr,
 						   guard);
 	interned_string istr = env().intern(qualified_name);
-	map[die_offset] = istr;
+	map[die_addr] = istr;
 	return istr;
       }
 
@@ -3302,7 +2976,7 @@ public:
   ///
   /// @param where_offset where in the DIE stream we logically are.
   ///
-  /// @param guard the set of DIE offsets of the stack of DIEs
+  /// @param guard the set of DIE addresses of the stack of DIEs
   /// involved in the construction of the qualified name of the type.
   /// This set is used to detect (and avoid) cycles in the stack of
   /// DIEs that is going to be walked to compute the qualified type
@@ -3311,8 +2985,8 @@ public:
   /// @return the interned string representing the qualified name of
   /// @p die.
   interned_string
-  get_die_qualified_type_name(const Dwarf_Die *die, size_t where_offset,
-			      unordered_set<uint64_t>& guard) const
+  get_die_qualified_type_name(const Dwarf_Die *die, void* where_addr,
+			      unordered_set<void*>& guard) const
   {
     ABG_ASSERT(die);
 
@@ -3320,13 +2994,8 @@ public:
     if (die == cur_tu_die())
       return env().intern("");
 
-    die_istring_map_type& map =
-      die_qualified_name_maps_.get_container(*const_cast<reader*>(this),
-					     die);
-
-    size_t die_offset = dwarf_dieoffset(const_cast<Dwarf_Die*>(die));
-    die_istring_map_type::const_iterator i =
-      map.find(die_offset);
+    die_istring_map_type& map = die_qualified_name_maps_;
+    die_istring_map_type::const_iterator i = map.find(die->addr);
 
     if (i == map.end())
       {
@@ -3341,15 +3010,15 @@ public:
 	    die_class_or_enum_flat_representation(*this, die, /*indent=*/"",
 						  /*one_line=*/true,
 						  /*qualified_name=*/false,
-						  where_offset,
+						  where_addr,
 						  guard);
 	else
 	  qualified_name = die_qualified_type_name(rdr, die,
-						   where_offset,
+						   where_addr,
 						   guard);
 
 	interned_string istr = env().intern(qualified_name);
-	map[die_offset] = istr;
+	map[die->addr] = istr;
 	return istr;
       }
 
@@ -3370,7 +3039,7 @@ public:
   ///
   /// @param where_offset where in the DIE stream we logically are.
   ///
-  /// @param guard the set of DIE offsets of the stack of DIEs
+  /// @param guard the set of DIE addresses of the stack of DIEs
   /// involved in the construction of the pretty representation of the
   /// type.  This set is used to detect (and avoid) cycles in the
   /// stack of DIEs that is going to be walked to compute the
@@ -3379,32 +3048,28 @@ public:
   /// @return the interned_string that represents the pretty
   /// representation.
   interned_string
-  get_die_pretty_type_representation(const Dwarf_Die *die,
-				     size_t where_offset,
-				     unordered_set<uint64_t>& guard) const
+  get_die_pretty_type_representation(const Dwarf_Die*		die,
+				     void*			where_addr,
+				     unordered_set<void*>&	guard) const
   {
     ABG_ASSERT(die);
-    die_istring_map_type& map =
-      die_pretty_type_repr_maps_.get_container(*const_cast<reader*>(this),
-					       die);
+    die_istring_map_type& map = die_pretty_type_repr_maps_;
 
-    size_t die_offset = dwarf_dieoffset(const_cast<Dwarf_Die*>(die));
-    die_istring_map_type::const_iterator i = map.find(die_offset);
+    die_istring_map_type::const_iterator i = map.find(die->addr);
 
     if (i == map.end())
       {
 	reader& rdr = *const_cast<reader*>(this);
 	string pretty_representation =
-	  die_pretty_print_type(rdr, die, where_offset, guard);
+	  die_pretty_print_type(rdr, die, where_addr, guard);
 	interned_string istr = env().intern(pretty_representation);
-	map[die_offset] = istr;
+	map[die->addr] = istr;
 	return istr;
       }
 
     return i->second;
   }
 
-  
   /// Get the pretty representation of a DIE that represents a type.
   ///
   /// For instance, for the DW_TAG_subprogram, this function computes
@@ -3423,10 +3088,10 @@ public:
   /// representation.
   interned_string
   get_die_pretty_type_representation(const Dwarf_Die *die,
-				     size_t where_offset) const
+				     void* where_addr) const
   {
-    unordered_set<uint64_t> guard;
-    return get_die_pretty_type_representation(die, where_offset, guard);
+    unordered_set<void*> guard;
+    return get_die_pretty_type_representation(die, where_addr, guard);
   }
 
   /// Get the pretty representation of a DIE.
@@ -3439,7 +3104,7 @@ public:
   ///
   /// @param where_offset where in the DIE stream we logically are.
   ///
-  /// @param guard the set of DIE offsets of the stack of DIEs
+  /// @param guard the set of DIE addresses of the stack of DIEs
   /// involved in the construction of the pretty representation of the
   /// type.  This set is used to detect (and avoid) cycles in the
   /// stack of DIEs that is going to be walked to compute the
@@ -3448,25 +3113,21 @@ public:
   /// @return the interned_string that represents the pretty
   /// representation.
   interned_string
-  get_die_pretty_representation(const Dwarf_Die *die, size_t where_offset,
-				  unordered_set<uint64_t>& guard) const
+  get_die_pretty_representation(const Dwarf_Die *die, void* where_addr,
+				  unordered_set<void*>& guard) const
   {
     ABG_ASSERT(die);
 
-    die_istring_map_type& map =
-      die_pretty_repr_maps_.get_container(*const_cast<reader*>(this),
-					  die);
-
-    size_t die_offset = dwarf_dieoffset(const_cast<Dwarf_Die*>(die));
-    die_istring_map_type::const_iterator i = map.find(die_offset);
+    die_istring_map_type& map = die_pretty_repr_maps_;
+    die_istring_map_type::const_iterator i = map.find(die->addr);
 
     if (i == map.end())
       {
 	reader& rdr = *const_cast<reader*>(this);
 	string pretty_representation =
-	  die_pretty_print(rdr, die, where_offset, guard);
+	  die_pretty_print(rdr, die, where_addr, guard);
 	interned_string istr = env().intern(pretty_representation);
-	map[die_offset] = istr;
+	map[die->addr] = istr;
 	return istr;
       }
 
@@ -3486,9 +3147,9 @@ public:
   /// @return the interned_string that represents the pretty
   /// representation.
   interned_string
-  get_die_pretty_representation(const Dwarf_Die *die, size_t where_offset) const
+  get_die_pretty_representation(const Dwarf_Die *die, void* where_offset) const
   {
-    unordered_set<uint64_t> guard;
+    unordered_set<void*> guard;
     return get_die_pretty_representation(die, where_offset, guard);
   }
 
@@ -3545,12 +3206,9 @@ public:
       return type_or_decl_base_sptr();
 
     const die_artefact_map_type& m =
-      die_as_type
-      ? type_die_artefact_maps().get_container(*this, &equiv_die)
-      : decl_die_artefact_maps().get_container(*this, &equiv_die);
+      die_as_type ? type_die_artefact_maps() : decl_die_artefact_maps();
 
-    size_t die_offset = dwarf_dieoffset(&equiv_die);
-    die_artefact_map_type::const_iterator i = m.find(die_offset);
+    die_artefact_map_type::const_iterator i = m.find(die->addr);
 
     if (i == m.end())
       return type_or_decl_base_sptr();
@@ -3577,16 +3235,13 @@ public:
   ///
   /// @return the artifact found.
   type_or_decl_base_sptr
-  lookup_artifact_from_die_offset(Dwarf_Off die_offset,
-				  die_source source,
-				  bool die_as_type = false) const
+  lookup_artifact_from_die_addr(void* die_addr,
+				bool die_as_type = false) const
   {
     const die_artefact_map_type& m =
-      die_as_type
-      ? type_die_artefact_maps().get_container(source)
-      : decl_die_artefact_maps().get_container(source);
+      die_as_type ? type_die_artefact_maps() : decl_die_artefact_maps();
 
-    die_artefact_map_type::const_iterator i = m.find(die_offset);
+    die_artefact_map_type::const_iterator i = m.find(die_addr);
     if (i == m.end())
       return type_or_decl_base_sptr();
     return i->second;
@@ -3650,39 +3305,37 @@ public:
     return odr_is_relevant(lang);
   }
 
-  /// Getter for the maps set that associates a decl DIE offset to an
+  /// Getter for the maps set that associates a decl DIE address to an
   /// artifact.
   ///
-  /// @return the maps set that associates a decl DIE offset to an
+  /// @return the maps set that associates a decl DIE address to an
   /// artifact.
-  die_source_dependant_container_set<die_artefact_map_type>&
-  decl_die_artefact_maps()
+  die_artefact_map_type& decl_die_artefact_maps()
   {return decl_die_artefact_maps_;}
 
-  /// Getter for the maps set that associates a decl DIE offset to an
+  /// Getter for the maps set that associates a decl DIE address to an
   /// artifact.
   ///
-  /// @return the maps set that associates a decl DIE offset to an
+  /// @return the maps set that associates a decl DIE address to an
   /// artifact.
-  const die_source_dependant_container_set<die_artefact_map_type>&
-  decl_die_artefact_maps() const
+  const die_artefact_map_type& decl_die_artefact_maps() const
   {return decl_die_artefact_maps_;}
 
-  /// Getter for the maps set that associates a type DIE offset to an
+  /// Getter for the maps set that associates a type DIE address to an
   /// artifact.
   ///
-  /// @return the maps set that associates a type DIE offset to an
+  /// @return the maps set that associates a type DIE address to an
   /// artifact.
-  die_source_dependant_container_set<die_artefact_map_type>&
+  die_artefact_map_type&
   type_die_artefact_maps()
   {return type_die_artefact_maps_;}
 
-  /// Getter for the maps set that associates a type DIE offset to an
+  /// Getter for the maps set that associates a type DIE address to an
   /// artifact.
   ///
-  /// @return the maps set that associates a type DIE offset to an
+  /// @return the maps set that associates a type DIE address to an
   /// artifact.
-  const die_source_dependant_container_set<die_artefact_map_type>&
+  const die_artefact_map_type&
   type_die_artefact_maps() const
   {return type_die_artefact_maps_;}
 
@@ -3752,23 +3405,24 @@ public:
     return i->second;
   }
 
-  /// Set the canonical DIE offset of a given DIE.
+  /// Set the canonical DIE address of a given DIE.
   ///
   /// @param canonical_dies the vector that holds canonical DIEs.
   ///
   /// @param die_offset the offset of the DIE to set the canonical DIE
   /// for.
   ///
-  /// @param canonical_die_offset the canonical DIE offset to
+  /// @param canonical_die_offset the canonical DIE address to
   /// associate to @p die_offset.
   void
-  set_canonical_die_offset(offset_offset_map_type &canonical_dies,
-			   Dwarf_Off die_offset,
-			   Dwarf_Off canonical_die_offset) const
+  set_canonical_die_addr(addr_addr_map_type &canonical_dies,
+			 void* die_addr,
+			 void* canonical_die_addr) const
   {
-    canonical_dies[die_offset] = canonical_die_offset;}
+    canonical_dies[die_addr] =canonical_die_addr;
+  }
 
-  /// Set the canonical DIE offset of a given DIE.
+  /// Set the canonical DIE address of a given DIE.
   ///
   ///
   /// @param die_offset the offset of the DIE to set the canonical DIE
@@ -3776,54 +3430,43 @@ public:
   ///
   /// @param source the source of the DIE denoted by @p die_offset.
   ///
-  /// @param canonical_die_offset the canonical DIE offset to
+  /// @param canonical_die_offset the canonical DIE address to
   /// associate to @p die_offset.
   ///
   /// @param die_as_type if true, it means that @p die_offset has to
   /// be considered as a type.
   void
-  set_canonical_die_offset(Dwarf_Off die_offset,
-			   die_source source,
-			   Dwarf_Off canonical_die_offset,
-			   bool die_as_type) const
+  set_canonical_die_addr(void* die_addr,
+			 void* canonical_die_addr,
+			 bool die_as_type) const
   {
-    offset_offset_map_type &canonical_dies =
+    addr_addr_map_type &canonical_dies =
       die_as_type
-      ? const_cast<reader*>(this)->canonical_type_die_offsets_.
-      get_container(source)
-      : const_cast<reader*>(this)->canonical_decl_die_offsets_.
-      get_container(source);
+      ? const_cast<reader*>(this)->canonical_type_die_addrs_
+      : const_cast<reader*>(this)->canonical_decl_die_addrs_;
 
-    set_canonical_die_offset(canonical_dies,
-			     die_offset,
-			     canonical_die_offset);
+    set_canonical_die_addr(canonical_dies, die_addr, canonical_die_addr);
   }
 
-  /// Set the canonical DIE offset of a given DIE.
+  /// Set the canonical DIE address of a given DIE.
   ///
   ///
   /// @param die the DIE to set the canonical DIE for.
   ///
-  /// @param canonical_die_offset the canonical DIE offset to
+  /// @param canonical_die_offset the canonical DIE address to
   /// associate to @p die_offset.
   ///
   /// @param die_as_type if true, it means that @p die has to be
   /// considered as a type.
   void
-  set_canonical_die_offset(const Dwarf_Die *die,
-			   Dwarf_Off canonical_die_offset,
-			   bool die_as_type) const
+  set_canonical_die_addr(const Dwarf_Die *die,
+			 void* canonical_die_addr,
+			 bool die_as_type) const
   {
-    const die_source source = get_die_source(die);
-
-    Dwarf_Off die_offset = dwarf_dieoffset(const_cast<Dwarf_Die*>(die));
-
-    set_canonical_die_offset(die_offset, source,
-			     canonical_die_offset,
-			     die_as_type);
+    set_canonical_die_addr(die->addr, canonical_die_addr, die_as_type);
   }
 
-  /// Get the canonical DIE offset of a given DIE.
+  /// Get the canonical DIE address of a given DIE.
   ///
   /// @param canonical_dies the vector that contains canonical DIES.
   ///
@@ -3831,40 +3474,34 @@ public:
   ///
   /// @return the canonical of the DIE denoted by @p die_offset, or
   /// zero if no canonical DIE was found.
-  Dwarf_Off
-  get_canonical_die_offset(offset_offset_map_type &canonical_dies,
-			   Dwarf_Off die_offset) const
+  void*
+  get_canonical_die_addr(addr_addr_map_type &canonical_dies,
+			 void* die_addr) const
   {
-    offset_offset_map_type::const_iterator it = canonical_dies.find(die_offset);
+    addr_addr_map_type::const_iterator it = canonical_dies.find(die_addr);
     if (it == canonical_dies.end())
       return 0;
     return it->second;
   }
 
-  /// Get the canonical DIE offset of a given DIE.
+  /// Get the canonical DIE address of a given DIE.
   ///
   /// @param die_offset the offset of the DIE to consider.
-  ///
-  /// @param source the source of the DIE denoted by @p die_offset.
   ///
   /// @param die_as_type if true, it means that @p is to be considered
   /// as a type DIE.
   ///
   /// @return the canonical of the DIE denoted by @p die_offset, or
   /// zero if no canonical DIE was found.
-  Dwarf_Off
-  get_canonical_die_offset(Dwarf_Off die_offset,
-			   die_source source,
-			   bool die_as_type) const
+  void*
+  get_canonical_die_addr(void* die_addr, bool die_as_type) const
   {
-    offset_offset_map_type &canonical_dies =
+    addr_addr_map_type &canonical_dies =
       die_as_type
-      ? const_cast<reader*>(this)->canonical_type_die_offsets_.
-      get_container(source)
-      : const_cast<reader*>(this)->canonical_decl_die_offsets_.
-      get_container(source);
+      ? const_cast<reader*>(this)->canonical_type_die_addrs_
+      : const_cast<reader*>(this)->canonical_decl_die_addrs_;
 
-    return get_canonical_die_offset(canonical_dies, die_offset);
+    return get_canonical_die_addr(canonical_dies, die_addr);
   }
 
   /// Erase the canonical type of a given DIE.
@@ -3879,18 +3516,14 @@ public:
   /// @return the canonical of the DIE denoted by @p die_offset, or
   /// zero if no canonical DIE was found and erased..
   bool
-  erase_canonical_die_offset(Dwarf_Off die_offset,
-			     die_source source,
-			     bool die_as_type) const
+  erase_canonical_die_addr(void* die_addr, bool die_as_type) const
   {
-    offset_offset_map_type &canonical_dies =
+    addr_addr_map_type &canonical_dies =
       die_as_type
-      ? const_cast<reader*>(this)->canonical_type_die_offsets_.
-      get_container(source)
-      : const_cast<reader*>(this)->canonical_decl_die_offsets_.
-      get_container(source);
+      ? const_cast<reader*>(this)->canonical_type_die_addrs_
+      : const_cast<reader*>(this)->canonical_decl_die_addrs_;
 
-    return canonical_dies.erase(die_offset);
+    return canonical_dies.erase(die_addr);
   }
 
 
@@ -3905,7 +3538,7 @@ public:
   void
   associate_die_to_type(const Dwarf_Die	*die,
 			type_base_sptr	type,
-			size_t		where)
+			void*		where)
   {
     if (!type)
       return;
@@ -3915,11 +3548,8 @@ public:
 				      /*die_as_type=*/true))
       return;
 
-    die_artefact_map_type& m =
-      type_die_artefact_maps().get_container(*this, &equiv_die);
-
-    size_t die_offset = dwarf_dieoffset(&equiv_die);
-    m[die_offset] = type;
+    die_artefact_map_type& m = type_die_artefact_maps();
+    m[equiv_die.addr] = type;
   }
 
   /// Lookup the type associated to a given DIE.
@@ -3956,12 +3586,11 @@ public:
   /// @return the type associated to the DIE or NULL if no type is
   /// associated to the DIE.
   type_base_sptr
-  lookup_type_from_die_offset(size_t die_offset, die_source source) const
+  lookup_type_from_die_addr(void* die_addr) const
   {
     type_base_sptr result;
-    const die_artefact_map_type& m =
-      type_die_artefact_maps().get_container(source);
-    die_artefact_map_type::const_iterator i = m.find(die_offset);
+    const die_artefact_map_type& m = type_die_artefact_maps();
+    die_artefact_map_type::const_iterator i = m.find(die_addr);
     if (i != m.end())
       {
 	if (function_decl_sptr fn = is_function_decl(i->second))
@@ -3972,8 +3601,8 @@ public:
     if (!result)
       {
 	// Maybe we are looking for a class type being constructed?
-	const die_class_or_union_map_type& m = die_wip_classes_map(source);
-	die_class_or_union_map_type::const_iterator i = m.find(die_offset);
+	const die_class_or_union_map_type& m = die_wip_classes_map();
+	die_class_or_union_map_type::const_iterator i = m.find(die_addr);
 
 	if (i != m.end())
 	  result = i->second;
@@ -3982,9 +3611,8 @@ public:
     if (!result)
       {
 	// Maybe we are looking for a function type being constructed?
-	const die_function_type_map_type& m =
-	  die_wip_function_types_map(source);
-	die_function_type_map_type::const_iterator i = m.find(die_offset);
+	const die_function_type_map_type& m = die_wip_function_types_map();
+	die_function_type_map_type::const_iterator i = m.find(die_addr);
 
 	if (i != m.end())
 	  result = i->second;
@@ -4002,8 +3630,8 @@ public:
   /// @return the map that associates a DIE to the class that is being
   /// built.
   const die_class_or_union_map_type&
-  die_wip_classes_map(die_source source) const
-  {return const_cast<reader*>(this)->die_wip_classes_map(source);}
+  die_wip_classes_map() const
+  {return const_cast<reader*>(this)->die_wip_classes_map();}
 
   /// Getter of a map that associates a die that represents a
   /// class/struct with the declaration of the class, while the class
@@ -4014,22 +3642,8 @@ public:
   /// @return the map that associates a DIE to the class that is being
   /// built.
   die_class_or_union_map_type&
-  die_wip_classes_map(die_source source)
-  {
-    switch (source)
-      {
-      case PRIMARY_DEBUG_INFO_DIE_SOURCE:
-	break;
-      case ALT_DEBUG_INFO_DIE_SOURCE:
-	return alternate_die_wip_classes_map_;
-      case TYPE_UNIT_DIE_SOURCE:
-	return type_unit_die_wip_classes_map_;
-      case NO_DEBUG_INFO_DIE_SOURCE:
-      case NUMBER_OF_DIE_SOURCES:
-	ABG_ASSERT_NOT_REACHED;
-      }
-    return die_wip_classes_map_;
-  }
+  die_wip_classes_map()
+  {return die_wip_classes_map_;}
 
   /// Getter for a map that associates a die (that represents a
   /// function type) whith a function type, while the function type is
@@ -4039,8 +3653,8 @@ public:
   ///
   /// @return the map of wip function types.
   const die_function_type_map_type&
-  die_wip_function_types_map(die_source source) const
-  {return const_cast<reader*>(this)->die_wip_function_types_map(source);}
+  die_wip_function_types_map() const
+  {return const_cast<reader*>(this)->die_wip_function_types_map();}
 
   /// Getter for a map that associates a die (that represents a
   /// function type) whith a function type, while the function type is
@@ -4050,22 +3664,8 @@ public:
   ///
   /// @return the map of wip function types.
   die_function_type_map_type&
-  die_wip_function_types_map(die_source source)
-  {
-    switch (source)
-      {
-      case PRIMARY_DEBUG_INFO_DIE_SOURCE:
-	break;
-      case ALT_DEBUG_INFO_DIE_SOURCE:
-	return alternate_die_wip_function_types_map_;
-      case TYPE_UNIT_DIE_SOURCE:
-	return type_unit_die_wip_function_types_map_;
-      case NO_DEBUG_INFO_DIE_SOURCE:
-      case NUMBER_OF_DIE_SOURCES:
-	ABG_ASSERT_NOT_REACHED;
-      }
-    return die_wip_function_types_map_;
-  }
+  die_wip_function_types_map()
+  {return die_wip_function_types_map_;}
 
   /// Getter for a map that associates a die with a function decl
   /// which has a linkage name but no elf symbol yet.
@@ -4078,40 +3678,38 @@ public:
   die_function_decl_with_no_symbol_map()
   {return die_function_with_no_symbol_map_;}
 
-  /// Return true iff a given offset is for the DIE of a class that is
+  /// Return true iff a given address is for the DIE of a class that is
   /// being built, but that is not fully built yet.  WIP == "work in
   /// progress".
   ///
-  /// @param offset the DIE offset to consider.
+  /// @param addr the DIE address to consider.
   ///
   /// @param source where the DIE of the map come from.
   ///
-  /// @return true iff @p offset is the offset of the DIE of a class
+  /// @return true iff @p addr is the address of the DIE of a class
   /// that is being currently built.
   bool
-  is_wip_class_die_offset(Dwarf_Off offset, die_source source) const
+  is_wip_class_die_addr(void* addr) const
   {
     die_class_or_union_map_type::const_iterator i =
-      die_wip_classes_map(source).find(offset);
-    return (i != die_wip_classes_map(source).end());
+      die_wip_classes_map().find(addr);
+    return (i != die_wip_classes_map().end());
   }
 
-  /// Return true iff a given offset is for the DIE of a function type
+  /// Return true iff a given address is for the DIE of a function type
   /// that is being built at the moment, but is not fully built yet.
   /// WIP == work in progress.
   ///
-  /// @param offset DIE offset to consider.
+  /// @param addr DIE address to consider.
   ///
-  /// @param source where the DIE comes from.
-  ///
-  /// @return true iff @p offset is the offset of the DIE of a
+  /// @return true iff @p addr is the address of the DIE of a
   /// function type that is being currently built.
   bool
-  is_wip_function_type_die_offset(Dwarf_Off offset, die_source source) const
+  is_wip_function_type_die_address(void* addr) const
   {
     die_function_type_map_type::const_iterator i =
-      die_wip_function_types_map(source).find(offset);
-    return (i != die_wip_function_types_map(source).end());
+      die_wip_function_types_map().find(addr);
+    return (i != die_wip_function_types_map().end());
   }
 
   /// Sometimes, a data member die can erroneously have an empty name as
@@ -5060,12 +4658,10 @@ public:
     types_to_canonicalize_.push_back(t);
   }
 
-  /// Canonicalize types which DIE offsets are stored in vectors on
-  /// the side.  This is a sub-routine of
+  /// Canonicalize types which that are stored in vectors on the side.
+  /// This is a sub-routine of
   /// reader::perform_late_type_canonicalizing().
   ///
-  /// @param source where the DIE of the types to canonicalize are
-  /// from.
   void
   canonicalize_types_scheduled()
   {
@@ -5171,8 +4767,8 @@ public:
   ///
   /// @return the map.
   const tu_die_imported_unit_points_map_type&
-  tu_die_imported_unit_points_map(die_source source) const
-  {return const_cast<reader*>(this)->tu_die_imported_unit_points_map(source);}
+  tu_die_imported_unit_points_map() const
+  {return const_cast<reader*>(this)->tu_die_imported_unit_points_map();}
 
   /// Getter for the map that associates a translation unit DIE to the
   /// vector of imported unit points that it contains.
@@ -5181,23 +4777,8 @@ public:
   ///
   /// @return the map.
   tu_die_imported_unit_points_map_type&
-  tu_die_imported_unit_points_map(die_source source)
-  {
-    switch (source)
-      {
-      case PRIMARY_DEBUG_INFO_DIE_SOURCE:
-	break;
-      case ALT_DEBUG_INFO_DIE_SOURCE:
-	return alt_tu_die_imported_unit_points_map_;
-      case TYPE_UNIT_DIE_SOURCE:
-	return type_units_tu_die_imported_unit_points_map_;
-      case NO_DEBUG_INFO_DIE_SOURCE:
-      case NUMBER_OF_DIE_SOURCES:
-	// We cannot reach this point.
-	ABG_ASSERT_NOT_REACHED;
-      }
-    return tu_die_imported_unit_points_map_;
-  }
+  tu_die_imported_unit_points_map()
+  {return tu_die_imported_unit_points_map_;}
 
   /// Reset the current corpus being constructed.
   ///
@@ -5212,9 +4793,9 @@ public:
   /// @param source where the DIEs in the map come from.
   ///
   /// @return the DIE -> parent map.
-  const offset_offset_map_type&
-  die_parent_map(die_source source) const
-  {return const_cast<reader*>(this)->die_parent_map(source);}
+  addr_addr_map_type&
+  die_parent_map()
+  {return die_parent_map_;}
 
   /// Get the map that associates each DIE to its parent DIE.  This is
   /// for DIEs coming from the main debug info sections.
@@ -5222,31 +4803,9 @@ public:
   /// @param source where the DIEs in the map come from.
   ///
   /// @return the DIE -> parent map.
-  offset_offset_map_type&
-  die_parent_map(die_source source)
-  {
-    switch (source)
-      {
-      case PRIMARY_DEBUG_INFO_DIE_SOURCE:
-	break;
-      case ALT_DEBUG_INFO_DIE_SOURCE:
-	return alternate_die_parent_map_;
-      case TYPE_UNIT_DIE_SOURCE:
-	return type_section_die_parent_map();
-      case NO_DEBUG_INFO_DIE_SOURCE:
-      case NUMBER_OF_DIE_SOURCES:
-	ABG_ASSERT_NOT_REACHED;
-      }
-    return primary_die_parent_map_;
-  }
-
-  const offset_offset_map_type&
-  type_section_die_parent_map() const
-  {return type_section_die_parent_map_;}
-
-  offset_offset_map_type&
-  type_section_die_parent_map()
-  {return type_section_die_parent_map_;}
+  const addr_addr_map_type&
+  die_parent_map() const
+  {return die_parent_map_;}
 
   /// Getter of the current translation unit.
   ///
@@ -5657,7 +5216,7 @@ public:
   /// Test if it's allowed to assume that the DWARF debug info has
   /// been factorized (for instance, with the DWZ tool) so that if two
   /// type DIEs originating from the .gnu_debugaltlink section have
-  /// different offsets, they represent different types.
+  /// different addresss, they represent different types.
   ///
   /// @return true iff we can assume that the DWARF debug info has
   /// been factorized.
@@ -5732,17 +5291,16 @@ public:
   ///
   /// @param source where the DIE @p die comes from.
   ///
-  /// @param imported_units a vector containing all the offsets of the
+  /// @param imported_units a vector containing all the addresses of the
   /// points where unit have been imported, under @p die.
   void
   build_die_parent_relations_under(Dwarf_Die*			die,
-				   die_source			source,
 				   imported_unit_points_type &	imported_units)
   {
     if (!die)
       return;
 
-    offset_offset_map_type& parent_of = die_parent_map(source);
+    addr_addr_map_type& parent_of = die_parent_map();
 
     Dwarf_Die child;
     if (dwarf_child(die, &child) != 0)
@@ -5750,7 +5308,7 @@ public:
 
     do
       {
-	parent_of[dwarf_dieoffset(&child)] = dwarf_dieoffset(die);
+	parent_of[child.addr] = die->addr;
 	if (dwarf_tag(&child) == DW_TAG_imported_unit)
 	  {
 	    Dwarf_Die imported_unit;
@@ -5767,15 +5325,11 @@ public:
 		// expects the imported_unit to have a sub-tree.
 		&& die_has_children(&imported_unit))
 	      {
-		die_source imported_unit_die_source = NO_DEBUG_INFO_DIE_SOURCE;
-		ABG_ASSERT(get_die_source(imported_unit, imported_unit_die_source));
-		imported_units.push_back
-		  (imported_unit_point(dwarf_dieoffset(&child),
-				       imported_unit,
-				       imported_unit_die_source));
+		imported_units.push_back(imported_unit_point(child.addr,
+							     imported_unit));
 	      }
 	  }
-	build_die_parent_relations_under(&child, source, imported_units);
+	build_die_parent_relations_under(&child, imported_units);
       }
     while (dwarf_siblingof(&child, &child) == 0);
 
@@ -5871,7 +5425,6 @@ public:
 
     // Build the DIE -> parent relation for DIEs coming from the
     // .debug_info section in the alternate debug info file.
-    die_source source = ALT_DEBUG_INFO_DIE_SOURCE;
     for (Dwarf_Off offset = 0, next_offset = 0;
 	 (dwarf_next_unit(const_cast<Dwarf*>(alternate_dwarf_debug_info()),
 			  offset, &next_offset, &header_size,
@@ -5886,14 +5439,13 @@ public:
 	cur_tu_die(&cu);
 
 	imported_unit_points_type& imported_units =
-	  tu_die_imported_unit_points_map(source)[die_offset] =
+	  tu_die_imported_unit_points_map()[cu.addr] =
 	  imported_unit_points_type();
-	build_die_parent_relations_under(&cu, source, imported_units);
+	build_die_parent_relations_under(&cu, imported_units);
       }
 
     // Build the DIE -> parent relation for DIEs coming from the
     // .debug_info section of the main debug info file.
-    source = PRIMARY_DEBUG_INFO_DIE_SOURCE;
     address_size = 0;
     header_size = 0;
     for (Dwarf_Off offset = 0, next_offset = 0;
@@ -5909,14 +5461,13 @@ public:
 	  continue;
 	cur_tu_die(&cu);
 	imported_unit_points_type& imported_units =
-	  tu_die_imported_unit_points_map(source)[die_offset] =
+	  tu_die_imported_unit_points_map()[cu.addr] =
 	  imported_unit_points_type();
-	build_die_parent_relations_under(&cu, source, imported_units);
+	build_die_parent_relations_under(&cu,imported_units);
       }
 
     // Build the DIE -> parent relation for DIEs coming from the
     // .debug_types section.
-    source = TYPE_UNIT_DIE_SOURCE;
     address_size = 0;
     header_size = 0;
     uint64_t type_signature = 0;
@@ -5936,9 +5487,9 @@ public:
 	  continue;
 	cur_tu_die(&cu);
 	imported_unit_points_type& imported_units =
-	  tu_die_imported_unit_points_map(source)[die_offset] =
+	  tu_die_imported_unit_points_map()[cu.addr] =
 	  imported_unit_points_type();
-	build_die_parent_relations_under(&cu, source, imported_units);
+	build_die_parent_relations_under(&cu, imported_units);
       }
   }
 };// end class reader.
@@ -5953,33 +5504,33 @@ public:
 ///
 /// This is also useful for implementing a very important optimization
 /// that takes place during the canonicalization
-struct offset_pairs_stack_type
+struct addr_pairs_stack_type
 {
   // The DWARF DWARF reader that is useful for so many things.
   const reader& rdr_;
   // The set of types that are being compared.  This is to speed up
   // searches.
-  offset_pair_set_type set_;
+  dwarf_addr_pair_set_type set_;
   // The stack of  types that are being compared.  The top of the
   // stack is the back of the vector.
-  offset_pair_vector_type vect_;
+  dwarf_addr_pairs_type vect_;
   // A map that associates a redundant type pair to the vector of
   // types that depends on it.
-  offset_pair_vect_map_type redundant_types_;
+  dwarf_addr_pairs_map_type redundant_types_;
   // A map that associates a dependant type to the vector of redundant
   // types it depends on.
-  offset_pair_vect_map_type dependant_types_;
+  dwarf_addr_pairs_map_type dependant_types_;
 
-  offset_pairs_stack_type(const reader& rdr)
+  addr_pairs_stack_type(const reader& rdr)
     : rdr_ (rdr)
   {}
 
   /// Add a pair of types being compared to the stack of aggregates
   /// being compared.
   ///
-  /// @param p the pair of offsets of the type DIEs to consider.
+  /// @param p the pair of addresses of the type DIEs to consider.
   void
-  add(const offset_pair_type& p)
+  add(const dwarf_addr_pair_type& p)
   {
     set_.insert(p);
     vect_.push_back(p);
@@ -5988,15 +5539,15 @@ struct offset_pairs_stack_type
   /// Erase a pair of types being compared from the stack of
   /// aggregates being compared.
   ///
-  /// @param p the pair of offsets of the type DIEs to consider.
+  /// @param p the pair of addresses of the type DIEs to consider.
   ///
   /// @return true iff @p was found and erased from the stack.
   bool
-  erase(const offset_pair_type& p)
+  erase(const dwarf_addr_pair_type& p)
   {
     if (set_.erase(p))
       {
-	offset_pair_vector_type::iterator i;
+	dwarf_addr_pairs_type::iterator i;
 
 	for (i = vect_.begin();i < vect_.end(); ++i)
 	  if (*i == p)
@@ -6014,12 +5565,12 @@ struct offset_pairs_stack_type
   /// Test if a pair of type DIEs is part of the stack of type DIEs
   /// being compared.
   ///
-  /// @param p the pair of offsets of the type DIEs to consider.
+  /// @param p the pair of addresses of the type DIEs to consider.
   ///
   /// @return true iff @p was found in the stack of types being
   /// compared.
   bool
-  contains(const offset_pair_type &p) const
+  contains(const dwarf_addr_pair_type &p) const
   {
     if (set_.find(p) == set_.end())
       return false;
@@ -6045,15 +5596,15 @@ struct offset_pairs_stack_type
   /// @return true iff comparison pairs depending on @p have been
   /// found and collected in @pairs.
   bool
-  get_pairs_that_depend_on(const offset_pair_type& p,
-			   offset_pair_vector_type& pairs) const
+  get_pairs_that_depend_on(const dwarf_addr_pair_type& p,
+			   dwarf_addr_pairs_type& pairs) const
   {
     bool result = false;
     if (!contains(p))
       return result;
 
     // First, get an iterator on the position of 'p'.
-    offset_pair_vector_type::const_iterator i;
+    dwarf_addr_pairs_type::const_iterator i;
     for (i = vect_.begin(); i != vect_.end(); ++i)
       if (*i == p)
 	break;
@@ -6082,8 +5633,8 @@ struct offset_pairs_stack_type
   ///
   /// @param dependant_types the set of types that depends on @p.
   void
-  record_dependant_types(const offset_pair_type& p,
-			 const offset_pair_vector_type& dependant_types)
+  record_dependant_types(const dwarf_addr_pair_type& p,
+			 const dwarf_addr_pairs_type& dependant_types)
   {
     for (auto type_pair : dependant_types)
       dependant_types_[type_pair].push_back(p);
@@ -6094,9 +5645,9 @@ struct offset_pairs_stack_type
   ///
   /// @param p the comparison pair to record as redundant.
   void
-  record_redundant_type_die_pair(const offset_pair_type& p)
+  record_redundant_type_die_pair(const dwarf_addr_pair_type& p)
   {
-    offset_pair_vector_type dependant_types;
+    dwarf_addr_pairs_type dependant_types;
     get_pairs_that_depend_on(p, dependant_types);
 
     // First, record the relationship "p -> [pairs that depend on p]".
@@ -6122,7 +5673,7 @@ struct offset_pairs_stack_type
   ///
   /// @return iff @p is redundant.
   bool
-  is_redundant(const offset_pair_type& p)
+  is_redundant(const dwarf_addr_pair_type& p)
   {
     auto i = redundant_types_.find(p);
     if (i != redundant_types_.end())
@@ -6136,7 +5687,7 @@ struct offset_pairs_stack_type
   ///
   /// @return true iff @p depends on a redundant type.
   bool
-  depends_on_redundant_types(const offset_pair_type& p)
+  depends_on_redundant_types(const dwarf_addr_pair_type& p)
   {
     auto i = dependant_types_.find(p);
     if (i == dependant_types_.end())
@@ -6152,11 +5703,11 @@ struct offset_pairs_stack_type
   ///
   /// @param p the pair to consider.
   ///
-  /// @param erase_canonical_die_offset if true then erase the cached
+  /// @param erase_canonical_die_addr if true then erase the cached
   /// comparison results for the redundant pair and its dependant
   /// types.
   void
-  erase_redundant_type_pair_entry(const offset_pair_type& p,
+  erase_redundant_type_pair_entry(const dwarf_addr_pair_type& p,
 				  bool erase_cached_results = false)
   {
     // First, update the dependant types that depend on the redundant
@@ -6204,7 +5755,7 @@ struct offset_pairs_stack_type
   ///
   /// @param p the comparison pair to consider.
   void
-  confirm_canonical_propagated_type(const offset_pair_type& p)
+  confirm_canonical_propagated_type(const dwarf_addr_pair_type& p)
   {erase_redundant_type_pair_entry(p, /*erase_cached_results=*/true);}
 
   /// Walk the types that depend on a comparison pair and cancel their
@@ -6215,9 +5766,9 @@ struct offset_pairs_stack_type
   ///
   /// @param p the pair to consider.
   void
-  cancel_canonical_propagated_type(const offset_pair_type& p)
+  cancel_canonical_propagated_type(const dwarf_addr_pair_type& p)
   {
-    offset_pair_set_type dependant_types;
+    dwarf_addr_pair_set_type dependant_types;
     get_dependant_types(p, dependant_types, /*transitive_closure=*/true);
     for (auto dependant_type : dependant_types)
       {
@@ -6226,9 +5777,8 @@ struct offset_pairs_stack_type
 	if (rdr_.propagated_types_.find(dependant_type)
 	    != rdr_.propagated_types_.end())
 	  {
-	    rdr_.erase_canonical_die_offset(dependant_type.first.offset_,
-					     dependant_type.first.source_,
-					     /*die_as_type=*/true);
+	    rdr_.erase_canonical_die_addr(dependant_type.first,
+					  /*die_as_type=*/true);
 	    rdr_.propagated_types_.erase(dependant_type);
 	    rdr_.cancelled_propagation_count_++;
 	  }
@@ -6255,9 +5805,7 @@ struct offset_pairs_stack_type
 
     if (rdr_.propagated_types_.find(p) != rdr_.propagated_types_.end())
       {
-	rdr_.erase_canonical_die_offset(p.first.offset_,
-					 p.first.source_,
-					 /*die_as_type=*/true);
+	rdr_.erase_canonical_die_addr(p.first, /*die_as_type=*/true);
 	rdr_.propagated_types_.erase(p);
 	rdr_.cancelled_propagation_count_++;
       }
@@ -6276,8 +5824,8 @@ struct offset_pairs_stack_type
   /// @return true iff @result could be filled with the dependant
   /// types.
   bool
-  get_dependant_types(const offset_pair_type& p,
-		      offset_pair_set_type& result,
+  get_dependant_types(const dwarf_addr_pair_type& p,
+		      dwarf_addr_pair_set_type& result,
 		      bool transitive_closure = false)
   {
     auto i = redundant_types_.find(p);
@@ -6294,14 +5842,14 @@ struct offset_pairs_stack_type
       }
     return false;
   }
-}; // end struct offset_pairs_stack_type
+}; // end struct addr_pairs_stack_type
 
 static type_or_decl_base_sptr
 build_ir_node_from_die(reader&		rdr,
 		       Dwarf_Die*	die,
 		       scope_decl*	scope,
 		       bool		called_from_public_decl,
-		       size_t		where_offset,
+		       void*		where_addr,
 		       bool		is_declaration_only = true,
 		       bool		is_required_decl_spec = false);
 
@@ -6309,7 +5857,7 @@ static type_or_decl_base_sptr
 build_ir_node_from_die(reader&		rdr,
 		       Dwarf_Die*	die,
 		       bool		called_from_public_decl,
-		       size_t		where_offset);
+		       void*		where_addr);
 
 static decl_base_sptr
 build_ir_node_for_void_type(reader& rdr);
@@ -6324,7 +5872,7 @@ add_or_update_class_type(reader&	 rdr,
 			 bool		 is_struct,
 			 class_decl_sptr klass,
 			 bool		 called_from_public_decl,
-			 size_t		 where_offset,
+			 void*		 where,
 			 bool		 is_declaration_only);
 
 static union_decl_sptr
@@ -6333,7 +5881,7 @@ add_or_update_union_type(reader&	 rdr,
 			 scope_decl*	 scope,
 			 union_decl_sptr union_type,
 			 bool		 called_from_public_decl,
-			 size_t		 where_offset,
+			 void*		 where,
 			 bool		 is_declaration_only);
 
 static decl_base_sptr
@@ -6343,9 +5891,9 @@ static decl_base_sptr
 build_ir_node_for_variadic_parameter_type(reader &rdr);
 
 static function_decl_sptr
-build_function_decl(reader&	rdr,
+build_function_decl(reader&		rdr,
 		    Dwarf_Die*		die,
-		    size_t		where_offset,
+		    void*		where,
 		    function_decl_sptr	fn);
 
 static bool
@@ -6358,21 +5906,21 @@ static function_decl_sptr
 build_or_get_fn_decl_if_not_suppressed(reader&	rdr,
 				       scope_decl	*scope,
 				       Dwarf_Die	*die,
-				       size_t	where_offset,
+				       void*		where,
 				       bool is_declaration_only,
 				       function_decl_sptr f);
 
 static var_decl_sptr
 build_var_decl(reader&	rdr,
 	       Dwarf_Die	*die,
-	       size_t		where_offset,
+	       void*		where,
 	       var_decl_sptr	result = var_decl_sptr());
 
 static var_decl_sptr
 build_or_get_var_decl_if_not_suppressed(reader&	rdr,
 					scope_decl	*scope,
 					Dwarf_Die	*die,
-					size_t	where_offset,
+					void*		where,
 					bool is_declaration_only,
 					var_decl_sptr	res = var_decl_sptr(),
 					bool is_required_decl_spec = false);
@@ -7107,8 +6655,7 @@ die_is_effectively_public_decl(const reader& rdr,
     {
       // The DIE is a variable.
       Dwarf_Die parent_die;
-      size_t where_offset = 0;
-      if (!get_parent_die(rdr, die, parent_die, where_offset))
+      if (!get_parent_die(rdr, die, parent_die, /*where_addr=*/nullptr))
 	return false;
 
       tag = dwarf_tag(&parent_die);
@@ -7353,13 +6900,13 @@ type_comparison_result_to_be_cached(unsigned tag)
 ///
 /// @param tag the tag of the DIEs to consider.
 ///
-/// @param p the offsets of the pair of DIEs being compared.
+/// @param p the addresses of the pair of DIEs being compared.
 ///
 /// @param result the comparison result to be cached.
 static bool
 maybe_cache_type_comparison_result(const reader& rdr,
 				   int tag,
-				   const offset_pair_type& p,
+				   const dwarf_addr_pair_type& p,
 				   comparison_result result)
 {
   if (!type_comparison_result_to_be_cached(tag)
@@ -7379,7 +6926,7 @@ maybe_cache_type_comparison_result(const reader& rdr,
 ///
 /// @param tag the tag of the pair of DIEs to consider.
 ///
-/// @param p the offsets of the pair of DIEs to consider.
+/// @param p the addresses of the pair of DIEs to consider.
 ///
 /// @param result out parameter set to the cached result of the
 /// comparison of @p p if it has been found.
@@ -7388,7 +6935,7 @@ maybe_cache_type_comparison_result(const reader& rdr,
 /// found and set into @p result.
 static bool
 get_cached_type_comparison_result(const reader& rdr,
-				  const offset_pair_type& p,
+				  const dwarf_addr_pair_type& p,
 				  comparison_result& result)
 {
   auto i = rdr.die_comparison_results_.find(p);
@@ -7407,7 +6954,7 @@ get_cached_type_comparison_result(const reader& rdr,
 ///
 /// @param tag the tag of the pair of DIEs to consider.
 ///
-/// @param p the offsets of the pair of DIEs to consider.
+/// @param p the addresses of the pair of DIEs to consider.
 ///
 /// @param result out parameter set to the cached result of the
 /// comparison of @p p if it has been found.
@@ -7417,7 +6964,7 @@ get_cached_type_comparison_result(const reader& rdr,
 static bool
 maybe_get_cached_type_comparison_result(const reader& rdr,
 					int tag,
-					const offset_pair_type& p,
+					const dwarf_addr_pair_type& p,
 					comparison_result& result)
 {
   if (type_comparison_result_to_be_cached(tag))
@@ -7825,7 +7372,7 @@ fn_die_first_parameter_die(const Dwarf_Die* die, Dwarf_Die& first_parm_die)
 static bool
 member_fn_die_has_this_pointer(const reader& rdr,
 			       const Dwarf_Die* die,
-			       size_t where_offset,
+			       void* where_addr,
 			       Dwarf_Die& class_die,
 			       Dwarf_Die& object_pointer_die)
 {
@@ -7837,7 +7384,7 @@ member_fn_die_has_this_pointer(const reader& rdr,
     return false;
 
   if (tag == DW_TAG_subprogram
-      && !die_is_at_class_scope(rdr, die, where_offset, class_die))
+      && !die_is_at_class_scope(rdr, die, where_addr, class_die))
     return false;
 
   Dwarf_Die first_parm_die;
@@ -7982,12 +7529,10 @@ die_object_pointer_is_for_const_method(Dwarf_Die* die)
 /// class_scope_die is set to the DIE of the class that contains @p
 /// die.
 static bool
-die_is_at_class_scope(const reader& rdr,
-		      const Dwarf_Die* die,
-		      size_t where_offset,
-		      Dwarf_Die& class_scope_die)
+die_is_at_class_scope(const reader& rdr, const Dwarf_Die* die,
+		      void* where, Dwarf_Die& class_scope_die)
 {
-  if (!get_scope_die(rdr, die, where_offset, class_scope_die))
+  if (!get_scope_die(rdr, die, where, class_scope_die))
     return false;
 
   int tag = dwarf_tag(&class_scope_die);
@@ -8180,7 +7725,7 @@ die_peel_pointer_and_typedef(const Dwarf_Die *die, Dwarf_Die& peeled_die)
 static bool
 die_function_type_is_method_type(const reader& rdr,
 				 const Dwarf_Die *die,
-				 size_t where_offset,
+				 void* where_addr,
 				 Dwarf_Die& object_pointer_die,
 				 Dwarf_Die& class_die,
 				 bool& is_static)
@@ -8191,12 +7736,13 @@ die_function_type_is_method_type(const reader& rdr,
   int tag = dwarf_tag(const_cast<Dwarf_Die*>(die));
   ABG_ASSERT(tag == DW_TAG_subroutine_type || tag == DW_TAG_subprogram);
 
-  if (member_fn_die_has_this_pointer(rdr, die, where_offset, class_die, object_pointer_die))
+  if (member_fn_die_has_this_pointer(rdr, die, where_addr,
+				     class_die, object_pointer_die))
     {
       is_static = false;
       return true;
     }
-  else if (die_is_at_class_scope(rdr, die, where_offset, class_die))
+  else if (die_is_at_class_scope(rdr, die, where_addr, class_die))
     {
       is_static = true;
       return true;
@@ -9802,7 +9348,7 @@ build_internal_anonymous_die_name(const string &base_name,
 /// @param where_offset where in the are logically are in the DIE
 /// stream.
 ///
-/// @param guard the set of DIE offsets of the stack of DIEs involved
+/// @param guard the set of DIE addresses of the stack of DIEs involved
 /// in the construction of the qualified name of the type.  This set
 /// is used to detect (and avoid) cycles in the stack of DIEs that is
 /// going to be walked to compute the qualified type name.
@@ -9811,8 +9357,8 @@ build_internal_anonymous_die_name(const string &base_name,
 static string
 die_qualified_type_name(const reader& rdr,
 			const Dwarf_Die* die,
-			size_t where_offset,
-			unordered_set<uint64_t>& guard)
+			void* where,
+			unordered_set<void*>& guard)
 {
   if (!die)
     return "";
@@ -9826,7 +9372,7 @@ die_qualified_type_name(const reader& rdr,
   string name = die_name(die);
 
   Dwarf_Die scope_die;
-  if (!get_scope_die(rdr, die, where_offset, scope_die))
+  if (!get_scope_die(rdr, die, where, scope_die))
     return "";
 
   bool colon_colon = die_is_type(die) || die_is_namespace(die);
@@ -9862,11 +9408,11 @@ die_qualified_type_name(const reader& rdr,
 	  repr = die_class_or_enum_flat_representation(rdr, die, /*indent=*/"",
 						       /*one_line=*/true,
 						       /*qualed_name=*/false,
-						       where_offset, guard);
+						       where, guard);
 	else
 	  {
 	    string parent_name = die_qualified_name(rdr, &scope_die,
-						    where_offset, guard);
+						    where, guard);
 	    repr = parent_name.empty() ? name : parent_name + separator + name;
 	  }
       }
@@ -9916,7 +9462,7 @@ die_qualified_type_name(const reader& rdr,
 	if (has_underlying_type_die)
 	  underlying_type_repr =
 	    die_qualified_type_name(rdr, &underlying_type_die,
-				    where_offset, guard);
+				    where, guard);
 	else
 	  underlying_type_repr = "void";
 
@@ -9956,7 +9502,7 @@ die_qualified_type_name(const reader& rdr,
 
 	string pointed_type_repr =
 	  die_qualified_type_name(rdr, &pointed_to_type_die,
-				  where_offset, guard);
+				  where, guard);
 
 	repr = pointed_type_repr;
 	if (repr.empty())
@@ -9987,7 +9533,7 @@ die_qualified_type_name(const reader& rdr,
 	// that type to the current type tree being built.
 	array_type_def::subrange_sptr s =
 	  build_subrange_type(const_cast<reader&>(rdr),
-			      die, where_offset,
+			      die, where,
 			      /*associate_die_to_type=*/false);
 	repr += s->as_string();
 	break;
@@ -9999,13 +9545,13 @@ die_qualified_type_name(const reader& rdr,
 	if (!die_die_attribute(die, DW_AT_type, element_type_die))
 	  break;
 	string element_type_name =
-	  die_qualified_type_name(rdr, &element_type_die, where_offset, guard);
+	  die_qualified_type_name(rdr, &element_type_die, where, guard);
 	if (element_type_name.empty())
 	  break;
 
 	array_type_def::subranges_type subranges;
 	build_subranges_from_array_type_die(const_cast<reader&>(rdr),
-					    die, subranges, where_offset,
+					    die, subranges, where,
 					    /*associate_type_to_die=*/false);
 
 	repr = element_type_name;
@@ -10022,7 +9568,7 @@ die_qualified_type_name(const reader& rdr,
 	bool is_const = false;
 	bool is_static = false;
 	bool is_method_type = false;
-	die_return_and_parm_names_from_fn_type_die(rdr, die, where_offset,
+	die_return_and_parm_names_from_fn_type_die(rdr, die, where,
 						   /*pretty_print=*/true,
 						   /*qualified_name=*/true,
 						   is_method_type,
@@ -10078,7 +9624,7 @@ die_qualified_type_name(const reader& rdr,
 /// @param where_offset where in the are logically are in the DIE
 /// stream.
 ///
-/// @param guard the set of DIE offsets of the stack of DIEs involved
+/// @param guard the set of DIE addresses of the stack of DIEs involved
 /// in the construction of the name of the type.  This set is used to
 /// detect (and avoid) cycles in the stack of DIEs that is going to be
 /// walked to compute the type name.
@@ -10089,8 +9635,8 @@ static string
 die_type_name(const reader&	rdr,
 	      const Dwarf_Die*	die,
 	      bool		qualified_name,
-	      size_t		where_offset,
-	      unordered_set<uint64_t>& guard)
+	      void*		where_addr,
+	      unordered_set<void*>& guard)
 {
   if (!die)
     return "";
@@ -10104,7 +9650,7 @@ die_type_name(const reader&	rdr,
   string name = die_name(die);
 
   Dwarf_Die scope_die;
-  if (!get_scope_die(rdr, die, where_offset, scope_die))
+  if (!get_scope_die(rdr, die, where_addr, scope_die))
     return "";
 
   bool colon_colon = die_is_type(die) || die_is_namespace(die);
@@ -10140,7 +9686,7 @@ die_type_name(const reader&	rdr,
 	  repr = die_class_or_enum_flat_representation(rdr, die, /*indent=*/"",
 						       /*one_line=*/true,
 						       /*qualed_name=*/false,
-						       where_offset,
+						       where_addr,
 						       guard);
 	else
 	  {
@@ -10149,7 +9695,7 @@ die_type_name(const reader&	rdr,
 	      {
 		if (!is_anonymous_type_die(&scope_die))
 		  parent_name = die_qualified_name(rdr, &scope_die,
-						   where_offset, guard);
+						   where_addr, guard);
 	      }
 	    repr = parent_name.empty() ? name : parent_name + separator + name;
 	  }
@@ -10200,7 +9746,7 @@ die_type_name(const reader&	rdr,
 	if (has_underlying_type_die)
 	  underlying_type_repr =
 	    die_type_name(rdr, &underlying_type_die,
-			  qualified_name, where_offset,
+			  qualified_name, where_addr,
 			  guard);
 	else
 	  underlying_type_repr = "void";
@@ -10241,7 +9787,7 @@ die_type_name(const reader&	rdr,
 
 	string pointed_type_repr =
 	  die_type_name(rdr, &pointed_to_type_die,
-			qualified_name, where_offset,
+			qualified_name, where_addr,
 			guard);
 
 	repr = pointed_type_repr;
@@ -10273,7 +9819,7 @@ die_type_name(const reader&	rdr,
 	// that type to the current type tree being built.
 	array_type_def::subrange_sptr s =
 	  build_subrange_type(const_cast<reader&>(rdr),
-			      die, where_offset,
+			      die, where_addr,
 			      /*associate_die_to_type=*/false);
 	repr += s->as_string();
 	break;
@@ -10286,14 +9832,14 @@ die_type_name(const reader&	rdr,
 	  break;
 	string element_type_name =
 	  die_type_name(rdr, &element_type_die,
-			qualified_name, where_offset,
+			qualified_name, where_addr,
 			guard);
 	if (element_type_name.empty())
 	  break;
 
 	array_type_def::subranges_type subranges;
 	build_subranges_from_array_type_die(const_cast<reader&>(rdr),
-					    die, subranges, where_offset,
+					    die, subranges, where_addr,
 					    /*associate_type_to_die=*/false);
 
 	repr = element_type_name;
@@ -10310,7 +9856,7 @@ die_type_name(const reader&	rdr,
 	bool is_const = false;
 	bool is_static = false;
 	bool is_method_type = false;
-	die_return_and_parm_names_from_fn_type_die(rdr, die, where_offset,
+	die_return_and_parm_names_from_fn_type_die(rdr, die, where_addr,
 						   /*pretty_print=*/true,
 						   qualified_name,
 						   is_method_type,
@@ -10375,10 +9921,10 @@ static string
 die_type_name(const reader&	rdr,
 	      const Dwarf_Die*	die,
 	      bool		qualified_name,
-	      size_t		where_offset)
+	      void*		where_addr)
 {
-  unordered_set<uint64_t> guard;
-  return die_type_name(rdr, die, qualified_name, where_offset, guard);
+  unordered_set<void*> guard;
+  return die_type_name(rdr, die, qualified_name, where_addr, guard);
 }
 
 /// Compute the qualified name of a decl represented by a given DIE.
@@ -10392,7 +9938,7 @@ die_type_name(const reader&	rdr,
 ///
 /// @param where_offset where we are logically at in the DIE stream.
 ///
-/// @param guard the set of DIE offsets of the stack of DIEs involved
+/// @param guard the set of DIE addresses of the stack of DIEs involved
 /// in the construction of the qualified name of the decl.  This set
 /// is used to detect (and avoid) cycles in the stack of DIEs that is
 /// going to be walked to compute the qualified decl name.
@@ -10401,8 +9947,8 @@ die_type_name(const reader&	rdr,
 static string
 die_qualified_decl_name(const reader& rdr,
 			const Dwarf_Die* die,
-			size_t where_offset,
-			unordered_set<uint64_t>& guard)
+			void* where_addr,
+			unordered_set<void*>& guard)
 {
   if (!die || !die_is_decl(die))
     return "";
@@ -10410,10 +9956,10 @@ die_qualified_decl_name(const reader& rdr,
   string name = die_name(die);
 
   Dwarf_Die scope_die;
-  if (!get_scope_die(rdr, die, where_offset, scope_die))
+  if (!get_scope_die(rdr, die, where_addr, scope_die))
     return "";
 
-  string scope_name = die_qualified_name(rdr, &scope_die, where_offset, guard);
+  string scope_name = die_qualified_name(rdr, &scope_die, where_addr, guard);
   string separator = "::";
 
   string repr;
@@ -10429,7 +9975,7 @@ die_qualified_decl_name(const reader& rdr,
     case DW_TAG_subprogram:
       repr = die_function_signature(rdr, die,
 				    /*qualified_name=*/true,
-				    where_offset, guard);
+				    where_addr, guard);
       break;
 
     case DW_TAG_unspecified_parameters:
@@ -10461,7 +10007,7 @@ die_qualified_decl_name(const reader& rdr,
 ///
 /// @param where_offset where we are logically at in the DIE stream.
 ///
-/// @param guard the set of DIE offsets of the stack of DIEs involved
+/// @param guard the set of DIE addresses of the stack of DIEs involved
 /// in the construction of the qualified name of the DIE.  This set is
 /// used to detect (and avoid) cycles in the stack of DIEs that is
 /// going to be walked to compute the qualified DIE name.
@@ -10469,7 +10015,7 @@ die_qualified_decl_name(const reader& rdr,
 /// @return a copy of the computed name.
 static string
 die_qualified_name(const reader& rdr, const Dwarf_Die* die,
-		   size_t where, unordered_set<uint64_t>& guard)
+		   void* where, unordered_set<void*>& guard)
 {
   if (die_is_type(die))
     return die_qualified_type_name(rdr, die, where, guard);
@@ -10495,9 +10041,9 @@ die_qualified_name(const reader& rdr, const Dwarf_Die* die,
 ///
 /// @return a copy of the computed name.
 static string
-die_qualified_name(const reader& rdr, const Dwarf_Die* die, size_t where)
+die_qualified_name(const reader& rdr, const Dwarf_Die* die, void* where)
 {
-  unordered_set<uint64_t> guard;
+  unordered_set<void*> guard;
   return die_qualified_name(rdr, die, where, guard);
 }
 
@@ -10517,7 +10063,7 @@ die_qualified_name(const reader& rdr, const Dwarf_Die* die, size_t where)
 /// @param qualified_name the qualified name of the DIE.  This is set
 /// only iff the function returns false.
 ///
-/// @param guard the set of DIE offsets of the stack of DIEs involved
+/// @param guard the set of DIE addresses of the stack of DIEs involved
 /// in the construction of the qualified name of the type.  This set
 /// is used to detect (and avoid) cycles in the stack of DIEs that is
 /// going to be walked to compute the qualified type name.
@@ -10526,8 +10072,8 @@ die_qualified_name(const reader& rdr, const Dwarf_Die* die, size_t where)
 static bool
 die_qualified_type_name_empty(const reader& rdr,
 			      const Dwarf_Die* die,
-			      size_t where, string &qualified_name,
-			      unordered_set<uint64_t>& guard)
+			      void* where, string &qualified_name,
+			      unordered_set<void*>& guard)
 {
   if (!die)
     return true;
@@ -10610,7 +10156,7 @@ die_qualified_type_name_empty(const reader& rdr,
 /// @param is_static out parameter.  If the function is a static
 /// member function, then this is set to true.
 ///
-/// @param guard the set of DIE offsets of the stack of DIEs involved
+/// @param guard the set of DIE addresses of the stack of DIEs involved
 /// in the construction of the qualified name of the function type.
 /// This set is used to detect (and avoid) cycles in the stack of DIEs
 /// that is going to be walked to compute the qualified function type
@@ -10618,7 +10164,7 @@ die_qualified_type_name_empty(const reader& rdr,
 static void
 die_return_and_parm_names_from_fn_type_die(const reader& rdr,
 					   const Dwarf_Die* die,
-					   size_t where_offset,
+					   void* where_addr,
 					   bool pretty_print,
 					   bool qualified_name,
 					   bool &is_method_type,
@@ -10627,12 +10173,14 @@ die_return_and_parm_names_from_fn_type_die(const reader& rdr,
 					   vector<string>& parm_names,
 					   bool& is_const,
 					   bool& is_static,
-					   unordered_set<uint64_t>& guard)
+					   unordered_set<void*>& guard)
 {
-  uint64_t off = dwarf_dieoffset(const_cast<Dwarf_Die*>(die));
-  if (guard.find(off) != guard.end())
+  if (!die)
     return;
-  guard.insert(off);
+
+  if (guard.find(die->addr) != guard.end())
+    return;
+  guard.insert(die->addr);
 
   Dwarf_Die child;
   Dwarf_Die ret_type_die;
@@ -10642,9 +10190,9 @@ die_return_and_parm_names_from_fn_type_die(const reader& rdr,
     {
       return_type_name =
 	pretty_print
-	? rdr.get_die_pretty_representation(&ret_type_die, where_offset, guard)
+	? rdr.get_die_pretty_representation(&ret_type_die, where_addr, guard)
 	: die_type_name(rdr, &ret_type_die, qualified_name,
-			where_offset, guard);
+			where_addr, guard);
     }
 
   if (return_type_name.empty())
@@ -10652,7 +10200,7 @@ die_return_and_parm_names_from_fn_type_die(const reader& rdr,
 
   Dwarf_Die object_pointer_die, class_die;
   is_method_type =
-    die_function_type_is_method_type(rdr, die, where_offset,
+    die_function_type_is_method_type(rdr, die, where_addr,
 				     object_pointer_die,
 				     class_die, is_static);
 
@@ -10661,7 +10209,7 @@ die_return_and_parm_names_from_fn_type_die(const reader& rdr,
     {
       if (!is_anonymous_type_die(&class_die))
 	class_name = die_type_name(rdr, &class_die, qualified_name,
-				   where_offset, guard);
+				   where_addr, guard);
 
       Dwarf_Die this_pointer_die;
       Dwarf_Die pointed_to_die;
@@ -10701,9 +10249,9 @@ die_return_and_parm_names_from_fn_type_die(const reader& rdr,
 	    string qname =
 	      pretty_print
 	      ? rdr.get_die_pretty_representation(&parm_type_die,
-						  where_offset, guard)
+						  where_addr, guard)
 	      : die_type_name(rdr, &parm_type_die,
-			      qualified_name, where_offset, guard);
+			      qualified_name, where_addr, guard);
 
 	    if (qname.empty())
 	      continue;
@@ -10727,18 +10275,18 @@ die_return_and_parm_names_from_fn_type_die(const reader& rdr,
   if (class_name.empty())
     {
       Dwarf_Die parent_die;
-      if (get_parent_die(rdr, die, parent_die, where_offset))
+      if (get_parent_die(rdr, die, parent_die, where_addr))
 	{
 	  if (die_is_class_type(&parent_die)
 	      && !is_anonymous_type_die(&parent_die))
 	    class_name = die_type_name(rdr, &parent_die,
 				       qualified_name,
-				       where_offset,
+				       where_addr,
 				       guard);
 	}
     }
 
-  guard.erase(off);
+  guard.erase(die->addr);
 }
 
 /// This computes the signature of the a function declaration
@@ -10754,7 +10302,7 @@ die_return_and_parm_names_from_fn_type_die(const reader& rdr,
 /// @param where_offset where we are logically at in the stream of
 /// DIEs.
 ///
-/// @param guard the set of DIE offsets of the stack of DIEs involved
+/// @param guard the set of DIE addresses of the stack of DIEs involved
 /// in the construction of the signature of the function type.  This
 /// set is used to detect (and avoid) cycles in the stack of DIEs that
 /// is going to be walked to compute the signature.
@@ -10764,8 +10312,8 @@ static string
 die_function_signature(const reader& rdr,
 		       const Dwarf_Die *fn_die,
 		       bool qualified_name,
-		       size_t where_offset,
-		       unordered_set<uint64_t>& guard)
+		       void* where_addr,
+		       unordered_set<void*>& guard)
 {
 
   translation_unit::language lang;
@@ -10794,7 +10342,7 @@ die_function_signature(const reader& rdr,
   Dwarf_Die ret_type_die;
   if (die_die_attribute(fn_die, DW_AT_type, ret_type_die))
     return_type_name = rdr.get_die_qualified_type_name(&ret_type_die,
-						       where_offset,
+						       where_addr,
 						       guard);
 
   if (return_type_name.empty())
@@ -10802,8 +10350,8 @@ die_function_signature(const reader& rdr,
 
   Dwarf_Die scope_die;
   string scope_name;
-  if (qualified_name && get_scope_die(rdr, fn_die, where_offset, scope_die))
-    scope_name = rdr.get_die_qualified_name(&scope_die, where_offset, guard);
+  if (qualified_name && get_scope_die(rdr, fn_die, where_addr, scope_die))
+    scope_name = rdr.get_die_qualified_name(&scope_die, where_addr, guard);
   string fn_name = die_name(fn_die);
   if (!scope_name.empty())
     fn_name  = scope_name + "::" + fn_name;
@@ -10814,7 +10362,7 @@ die_function_signature(const reader& rdr,
   bool is_static = false;
   bool is_method_type = false;
 
-  die_return_and_parm_names_from_fn_type_die(rdr, fn_die, where_offset,
+  die_return_and_parm_names_from_fn_type_die(rdr, fn_die, where_addr,
 					     /*pretty_print=*/false,
 					     qualified_name, is_method_type,
 					     return_type_name, class_name,
@@ -10890,7 +10438,7 @@ die_function_signature(const reader& rdr,
 /// @param where_offset where in the are logically are in the DIE
 /// stream.
 ///
-/// @param guard the set of DIE offsets of the stack of DIEs involved
+/// @param guard the set of DIE addresses of the stack of DIEs involved
 /// in the construction of the flat representation of the type.  This
 /// set is used to detect (and avoid) cycles in the stack of DIEs that
 /// is going to be walked to compute the flat representation.
@@ -10900,8 +10448,8 @@ die_class_flat_representation(const reader&	rdr,
 			      const string&	indent,
 			      bool		one_line,
 			      bool		qualified_names,
-			      size_t		where_offset,
-			      unordered_set<uint64_t>& guard)
+			      void*		where_addr,
+			      unordered_set<void*>& guard)
 {
   int tag = dwarf_tag(const_cast<Dwarf_Die*>(die));
 
@@ -10922,17 +10470,16 @@ die_class_flat_representation(const reader&	rdr,
 
   if (die_is_anonymous(die))
     {
-      uint64_t off = dwarf_dieoffset(const_cast<Dwarf_Die*>(die));
-      if (guard.find(off) != guard.end())
+      if (guard.find(die->addr) != guard.end())
 	{
 	  repr += "{}";
 	  return repr;
 	}
-      guard.insert(off);
+      guard.insert(die->addr);
     }
 
   if (!die_is_anonymous(die))
-    repr += die_qualified_name(rdr, die, where_offset, guard);
+    repr += die_qualified_name(rdr, die, where_addr, guard);
 
   repr += "{";
 
@@ -10964,7 +10511,7 @@ die_class_flat_representation(const reader&	rdr,
       repr += die_pretty_print_decl(rdr, &member_child_die,
 				    qualified_names,
 				    /*include_fns=*/false,
-				    where_offset,
+				    where_addr,
 				    guard);
       repr += ";";
     }
@@ -10975,10 +10522,7 @@ die_class_flat_representation(const reader&	rdr,
     repr += indent + "}";
 
   if (die_is_anonymous(die))
-    {
-      uint64_t off = dwarf_dieoffset(const_cast<Dwarf_Die*>(die));
-      guard.erase(off);
-    }
+    guard.erase(die->addr);
   return repr;
 }
 
@@ -11013,7 +10557,7 @@ die_enum_flat_representation(const reader&	rdr,
 			     const string&	indent,
 			     bool		one_line,
 			     bool		qualified_names,
-			     size_t		where_offset)
+			     void*		where_addr)
 {
   int tag = dwarf_tag(const_cast<Dwarf_Die*>(die));
 
@@ -11030,7 +10574,7 @@ die_enum_flat_representation(const reader&	rdr,
 
   if (!die_is_anonymous(die))
     o << (qualified_names
-	  ? die_qualified_name(rdr, die, where_offset)
+	  ? die_qualified_name(rdr, die, where_addr)
 	  : die_name(die));
 
   o << "{";
@@ -11100,7 +10644,7 @@ die_enum_flat_representation(const reader&	rdr,
 /// @param where_offset where in the are logically are in the DIE
 /// stream.
 ///
-/// @param guard the set of DIE offsets of the stack of DIEs involved
+/// @param guard the set of DIE addresses of the stack of DIEs involved
 /// in the construction of the flat representation of the type.  This
 /// set is used to detect (and avoid) cycles in the stack of DIEs that
 /// is going to be walked to compute the flat representation.
@@ -11110,8 +10654,8 @@ die_class_or_enum_flat_representation(const reader&	rdr,
 				      const string&	indent,
 				      bool		one_line,
 				      bool		qualified_names,
-				      size_t		where_offset,
-				      unordered_set<uint64_t>& guard)
+				      void*		where_addr,
+				      unordered_set<void*>& guard)
 {
   if (!die)
     return string();
@@ -11126,13 +10670,13 @@ die_class_or_enum_flat_representation(const reader&	rdr,
     case DW_TAG_union_type:
       result = die_class_flat_representation(rdr, die, indent,
 					     one_line, qualified_names,
-					     where_offset,
+					     where_addr,
 					     guard);
       break;
     case DW_TAG_enumeration_type:
       result = die_enum_flat_representation(rdr, die, indent,
 					    one_line, qualified_names,
-					    where_offset);
+					    where_addr);
       break;
     default:
       ABG_ASSERT_NOT_REACHED;
@@ -11173,12 +10717,12 @@ die_class_or_enum_flat_representation(const reader&	rdr,
 				      const string&	indent,
 				      bool		one_line,
 				      bool		qualified_names,
-				      size_t		where_offset)
+				      void*		where_addr)
 {
-  unordered_set<uint64_t> guard;
+  unordered_set<void*> guard;
   return die_class_or_enum_flat_representation(rdr, die, indent,
 					       one_line, qualified_names,
-					       where_offset, guard);
+					       where_addr, guard);
 }
 
 /// Return a pretty string representation of a type, for internal purposes.
@@ -11197,7 +10741,7 @@ die_class_or_enum_flat_representation(const reader&	rdr,
 /// this.  It's useful to handle inclusion of DW_TAG_compile_unit
 /// entries.
 ///
-/// @param guard the set of DIE offsets of the stack of DIEs involved
+/// @param guard the set of DIE addresses of the stack of DIEs involved
 /// in the construction of the pretty representation of the type.
 /// This set is used to detect (and avoid) cycles in the stack of DIEs
 /// that is going to be walked to compute the pretty representation.
@@ -11206,8 +10750,8 @@ die_class_or_enum_flat_representation(const reader&	rdr,
 static string
 die_pretty_print_type(const reader& rdr,
 		      const Dwarf_Die* die,
-		      size_t where_offset,
-		      unordered_set<uint64_t>& guard)
+		      void* where_addr,
+		      unordered_set<void*>& guard)
 {
   if (!die
       || (!die_is_type(die)
@@ -11235,19 +10779,19 @@ die_pretty_print_type(const reader& rdr,
       break;
 
     case DW_TAG_namespace:
-      repr = "namespace " + rdr.get_die_qualified_type_name(die, where_offset,
+      repr = "namespace " + rdr.get_die_qualified_type_name(die, where_addr,
 							    guard);
       break;
 
     case DW_TAG_base_type:
-      repr = rdr.get_die_qualified_type_name(die, where_offset, guard);
+      repr = rdr.get_die_qualified_type_name(die, where_addr, guard);
       break;
 
     case DW_TAG_typedef:
       {
 	string qualified_name;
 	if (!die_qualified_type_name_empty(rdr, die,
-					   where_offset,
+					   where_addr,
 					   qualified_name,
 					   guard))
 	  repr = "typedef " + qualified_name;
@@ -11260,13 +10804,13 @@ die_pretty_print_type(const reader& rdr,
     case DW_TAG_pointer_type:
     case DW_TAG_reference_type:
     case DW_TAG_rvalue_reference_type:
-      repr = rdr.get_die_qualified_type_name(die, where_offset, guard);
+      repr = rdr.get_die_qualified_type_name(die, where_addr, guard);
       break;
 
     case DW_TAG_enumeration_type:
       {
 	string qualified_name =
-	  rdr.get_die_qualified_type_name(die, where_offset, guard);
+	  rdr.get_die_qualified_type_name(die, where_addr, guard);
 	repr = "enum " + qualified_name;
       }
       break;
@@ -11275,7 +10819,7 @@ die_pretty_print_type(const reader& rdr,
     case DW_TAG_class_type:
       {
 	string qualified_name =
-	  rdr.get_die_qualified_type_name(die, where_offset, guard);
+	  rdr.get_die_qualified_type_name(die, where_addr, guard);
 	repr = "class " + qualified_name;
       }
       break;
@@ -11283,7 +10827,7 @@ die_pretty_print_type(const reader& rdr,
     case DW_TAG_union_type:
       {
 	string qualified_name =
-	  rdr.get_die_qualified_type_name(die, where_offset, guard);
+	  rdr.get_die_qualified_type_name(die, where_addr, guard);
 	repr = "union " + qualified_name;
       }
       break;
@@ -11295,12 +10839,12 @@ die_pretty_print_type(const reader& rdr,
 	  break;
 	string element_type_name =
 	  rdr.get_die_qualified_type_name(&element_type_die,
-					  where_offset, guard);
+					  where_addr, guard);
 	if (element_type_name.empty())
 	  break;
 
 	array_type_def::subranges_type subranges;
-	build_subranges_from_array_type_die(rdr, die, subranges, where_offset,
+	build_subranges_from_array_type_die(rdr, die, subranges, where_addr,
 					    /*associate_type_to_die=*/false);
 
 	repr = element_type_name;
@@ -11318,7 +10862,7 @@ die_pretty_print_type(const reader& rdr,
 	// subrange type is its name.  We might need something more
 	// advance, should the needs of the users get more
 	// complicated.
-	repr += die_qualified_type_name(rdr, die, where_offset, guard);
+	repr += die_qualified_type_name(rdr, die, where_addr, guard);
       }
       break;
 
@@ -11331,7 +10875,7 @@ die_pretty_print_type(const reader& rdr,
 	bool is_const = false;
 	bool is_static = false;
 	bool is_method_type = false;
-	die_return_and_parm_names_from_fn_type_die(rdr, die, where_offset,
+	die_return_and_parm_names_from_fn_type_die(rdr, die, where_addr,
 						   /*pretty_print=*/true,
 						   /*qualified_name=*/true,
 						   is_method_type,
@@ -11342,7 +10886,7 @@ die_pretty_print_type(const reader& rdr,
 	  repr = "function type";
 	else
 	  repr = "method type";
-	repr += " " + rdr.get_die_qualified_type_name(die, where_offset, guard);
+	repr += " " + rdr.get_die_qualified_type_name(die, where_addr, guard);
       }
       break;
 
@@ -11377,7 +10921,7 @@ die_pretty_print_type(const reader& rdr,
 /// this.  It's useful to handle inclusion of DW_TAG_compile_unit
 /// entries.
 ///
-/// @param guard the set of DIE offsets of the stack of DIEs involved
+/// @param guard the set of DIE addresses of the stack of DIEs involved
 /// in the construction of the pretty representation of the decl.
 /// This set is used to detect (and avoid) cycles in the stack of DIEs
 /// that is going to be walked to compute the pretty representation.
@@ -11388,8 +10932,8 @@ die_pretty_print_decl(const reader& rdr,
 		      const Dwarf_Die* die,
 		      bool qualified_name,
 		      bool include_fns,
-		      size_t where_offset,
-		      unordered_set<uint64_t>& guard)
+		      void* where_offset,
+		      unordered_set<void*>& guard)
 {
   if (!die || !die_is_decl(die))
     return "";
@@ -11451,23 +10995,23 @@ die_pretty_print_decl(const reader& rdr,
 ///
 /// @param where_offset we in the DIE stream we are logically at.
 ///
-/// @param guard the set of DIE offsets of the stack of DIEs involved
+/// @param guard the set of DIE addresses of the stack of DIEs involved
 /// in the construction of the pretty representation of the DIe.  This
 /// set is used to detect (and avoid) cycles in the stack of DIEs that
 /// is going to be walked to compute the pretty representation.
 ///
 /// @return a copy of the pretty printed artifact.
 static string
-die_pretty_print(reader& rdr, const Dwarf_Die* die, size_t where_offset,
-		 unordered_set<uint64_t>& guard)
+die_pretty_print(reader& rdr, const Dwarf_Die* die, void* where_addr,
+		 unordered_set<void*>& guard)
 {
   if (die_is_type(die))
-    return die_pretty_print_type(rdr, die, where_offset, guard);
+    return die_pretty_print_type(rdr, die, where_addr, guard);
   else if (die_is_decl(die))
     return die_pretty_print_decl(rdr, die,
 				 /*qualified_names=*/true,
 				 /*include_fns=*/true,
-				 where_offset, guard);
+				 where_addr, guard);
   return "";
 }
 
@@ -11709,12 +11253,11 @@ fn_die_equal_by_linkage_name(const Dwarf_Die *l,
 /// l_offset.
 static bool
 try_canonical_die_comparison(const reader& rdr,
-			     Dwarf_Off l_offset, Dwarf_Off r_offset,
-			     die_source l_die_source, die_source r_die_source,
-			     bool& l_has_canonical_die_offset,
-			     bool& r_has_canonical_die_offset,
-			     Dwarf_Off& l_canonical_die_offset,
-			     Dwarf_Off& r_canonical_die_offset,
+			     void* l_addr, void* r_addr,
+			     bool& l_has_canonical_die_addr,
+			     bool& r_has_canonical_die_addr,
+			     void* & l_canonical_die_addr,
+			     void* & r_canonical_die_addr,
 			     bool& result)
 {
 #ifdef WITH_DEBUG_TYPE_CANONICALIZATION
@@ -11724,19 +11267,17 @@ try_canonical_die_comparison(const reader& rdr,
 #endif
 
 
-  l_has_canonical_die_offset =
-    (l_canonical_die_offset =
-     rdr.get_canonical_die_offset(l_offset, l_die_source,
-				   /*die_as_type=*/true));
+  l_has_canonical_die_addr =
+    (l_canonical_die_addr =
+     rdr.get_canonical_die_addr(l_addr, /*die_as_type=*/true));
 
-  r_has_canonical_die_offset =
-    (r_canonical_die_offset =
-     rdr.get_canonical_die_offset(r_offset, r_die_source,
-				   /*die_as_type=*/true));
+  r_has_canonical_die_addr =
+    (r_canonical_die_addr =
+     rdr.get_canonical_die_addr(r_addr, /*die_as_type=*/true));
 
-  if (l_has_canonical_die_offset && r_has_canonical_die_offset)
+  if (l_has_canonical_die_addr && r_has_canonical_die_addr)
     {
-      result = (l_canonical_die_offset == r_canonical_die_offset);
+      result = (l_canonical_die_addr == r_canonical_die_addr);
       return true;
     }
 
@@ -11978,48 +11519,32 @@ maybe_propagate_canonical_type(const reader& rdr,
 /// type is propagated to @p l.
 static void
 propagate_canonical_type(const reader& rdr,
-			 const Dwarf_Die* l,
-			 const Dwarf_Die* r)
+			 const Dwarf_Die* l, const Dwarf_Die* r)
 {
   ABG_ASSERT(l && r);
 
-  // If 'l' has no canonical DIE and if 'r' has one, then propagage
-  // the canonical DIE of 'r' to 'l'.
-  //
-  // In case 'r' has no canonical DIE, then compute it, and then
-  // propagate that canonical DIE to 'r'.
-  const die_source l_source = rdr.get_die_source(l);
-  const die_source r_source = rdr.get_die_source(r);
+  void* l_addr = l->addr;
+  void* r_addr = r->addr;
+  bool l_has_canonical_die_addr = false;
+  bool r_has_canonical_die_addr= false;
+  void* l_canonical_die_addr = nullptr;
+  void* r_canonical_die_addr = nullptr;
 
-  Dwarf_Off l_offset = dwarf_dieoffset(const_cast<Dwarf_Die*>(l));
-  Dwarf_Off r_offset = dwarf_dieoffset(const_cast<Dwarf_Die*>(r));
-  bool l_has_canonical_die_offset = false;
-  bool r_has_canonical_die_offset = false;
-  Dwarf_Off l_canonical_die_offset = 0;
-  Dwarf_Off r_canonical_die_offset = 0;
+  l_has_canonical_die_addr =
+    (l_canonical_die_addr =
+     rdr.get_canonical_die_addr(l_addr, /*die_as_type=*/true));
 
-  l_has_canonical_die_offset =
-    (l_canonical_die_offset =
-     rdr.get_canonical_die_offset(l_offset, l_source,
-				   /*die_as_type=*/true));
-
-  r_has_canonical_die_offset =
-    (r_canonical_die_offset =
-     rdr.get_canonical_die_offset(r_offset, r_source,
-				   /*die_as_type=*/true));
+  r_has_canonical_die_addr =
+    (r_canonical_die_addr =
+     rdr.get_canonical_die_addr(r_addr, /*die_as_type=*/true));
 
 
-  if (!l_has_canonical_die_offset
-      && r_has_canonical_die_offset
-      // A DIE can be equivalent only to another DIE of the same
-      // source.
-      && l_source == r_source)
+  if (!l_has_canonical_die_addr && r_has_canonical_die_addr)
     {
-      ABG_ASSERT(r_canonical_die_offset);
-      rdr.set_canonical_die_offset(l, r_canonical_die_offset,
-				    /*die_as_type=*/true);
-      offset_type l_off = {l_source, l_offset}, r_off = {r_source, r_offset};
-      rdr.propagated_types_.insert(std::make_pair(l_off,r_off));
+      ABG_ASSERT(r_canonical_die_addr);
+      rdr.set_canonical_die_addr(l, r_canonical_die_addr,
+				 /*die_as_type=*/true);
+      rdr.propagated_types_.insert(std::make_pair(l_addr ,r_addr));
       rdr.canonical_propagated_count_++;
     }
 }
@@ -12042,7 +11567,7 @@ propagate_canonical_type(const reader& rdr,
 ///
 /// @param r the right-hand-side DIE being compared.
 ///
-/// @param cur_dies the pair of die offsets of l and r.  This is
+/// @param cur_dies the pair of die addresses of l and r.  This is
 /// redundant as it can been computed from @p l and @p r.  However,
 /// getting it as an argument is an optimization to avoid computing it
 /// over and over again, given how often this function is invoked from
@@ -12058,11 +11583,10 @@ propagate_canonical_type(const reader& rdr,
 /// @p r and if @p r has a canonical type, then the canonical type of
 /// @p l is set to the canonical type of @p r.
 static comparison_result
-return_comparison_result(const Dwarf_Die* l,
-			 const Dwarf_Die* r,
-			 const offset_pair_type& cur_dies,
+return_comparison_result(const Dwarf_Die* l, const Dwarf_Die* r,
+			 const dwarf_addr_pair_type& cur_dies,
 			 comparison_result result,
-			 offset_pairs_stack_type& comparison_stack,
+			 addr_pairs_stack_type& comparison_stack,
 			 bool do_propagate_canonical_type = true)
 {
   int l_tag = dwarf_tag(const_cast<Dwarf_Die*>(l));
@@ -12226,28 +11750,13 @@ return_comparison_result(const Dwarf_Die* l,
 static comparison_result
 compare_dies(const reader& rdr,
 	     const Dwarf_Die *l, const Dwarf_Die *r,
-	     offset_pairs_stack_type& aggregates_being_compared,
+	     addr_pairs_stack_type& aggregates_being_compared,
 	     bool update_canonical_dies_on_the_fly)
 {
   ABG_ASSERT(l);
   ABG_ASSERT(r);
 
-  const die_source l_die_source = rdr.get_die_source(l);
-  const die_source r_die_source = rdr.get_die_source(r);
-
-  offset_type l_offset =
-    {
-      l_die_source,
-      dwarf_dieoffset(const_cast<Dwarf_Die*>(l))
-    };
-
-  offset_type r_offset =
-    {
-      r_die_source,
-      dwarf_dieoffset(const_cast<Dwarf_Die*>(r))
-    };
-
-  offset_pair_type dies_being_compared(l_offset, r_offset);
+  dwarf_addr_pair_type dies_being_compared(l->addr, r->addr);
 
   int l_tag = dwarf_tag(const_cast<Dwarf_Die*>(l)),
     r_tag = dwarf_tag(const_cast<Dwarf_Die*>(r));
@@ -12255,13 +11764,13 @@ compare_dies(const reader& rdr,
   if (l_tag != r_tag)
     ABG_RETURN_FALSE;
 
-  if (l_offset == r_offset)
+  if (l->addr == r->addr)
     return COMPARISON_RESULT_EQUAL;
 
   if (rdr.leverage_dwarf_factorization()
-      && (l_die_source == ALT_DEBUG_INFO_DIE_SOURCE
-	  && r_die_source == ALT_DEBUG_INFO_DIE_SOURCE))
-    if (l_offset != r_offset)
+      && rdr.get_die_source(l) == ALT_DEBUG_INFO_DIE_SOURCE
+      && rdr.get_die_source(r) == ALT_DEBUG_INFO_DIE_SOURCE)
+    if (l->addr != r->addr)
       return COMPARISON_RESULT_DIFFERENT;
 
   comparison_result result = COMPARISON_RESULT_EQUAL;
@@ -12270,20 +11779,19 @@ compare_dies(const reader& rdr,
 					      result))
     return result;
 
-  Dwarf_Off l_canonical_die_offset = 0, r_canonical_die_offset = 0;
-  bool l_has_canonical_die_offset = false, r_has_canonical_die_offset = false;
+  void *l_canonical_die_addr = nullptr, *r_canonical_die_addr = nullptr;
+  bool l_has_canonical_die_addr = false, r_has_canonical_die_addr = false;
 
   // If 'l' and 'r' already have canonical DIEs, then just compare the
-  // offsets of their canonical DIEs.
+  // addresses of their canonical DIEs.
   if (is_type_die_to_be_canonicalized(l) && is_type_die_to_be_canonicalized(r))
     {
       bool canonical_compare_result = false;
-      if (try_canonical_die_comparison(rdr, l_offset, r_offset,
-				       l_die_source, r_die_source,
-				       l_has_canonical_die_offset,
-				       r_has_canonical_die_offset,
-				       l_canonical_die_offset,
-				       r_canonical_die_offset,
+      if (try_canonical_die_comparison(rdr, l->addr, r->addr,
+				       l_has_canonical_die_addr,
+				       r_has_canonical_die_addr,
+				       l_canonical_die_addr,
+				       r_canonical_die_addr,
 				       canonical_compare_result))
 	{
 	  comparison_result result;
@@ -12295,8 +11803,6 @@ compare_dies(const reader& rdr,
 	  return result;
 	}
     }
-
-
 
   switch (l_tag)
     {
@@ -12860,7 +12366,7 @@ compare_dies(const reader& rdr,
 	     const Dwarf_Die *r,
 	     bool update_canonical_dies_on_the_fly)
 {
-  offset_pairs_stack_type aggregates_being_compared(rdr);
+  addr_pairs_stack_type aggregates_being_compared(rdr);
   return compare_dies(rdr, l, r, aggregates_being_compared,
 		      update_canonical_dies_on_the_fly);
 }
@@ -12958,19 +12464,22 @@ compare_dies_during_canonicalization(reader& rdr,
 /// @return true iff an imported unit is found between @p
 /// first_die_offset and @p last_die_offset.
 static bool
-find_import_unit_point_between_dies(const reader& rdr,
-				    size_t		partial_unit_offset,
-				    Dwarf_Off		first_die_offset,
-				    Dwarf_Off		first_die_cu_offset,
-				    die_source		source,
-				    size_t		last_die_offset,
-				    size_t&		imported_point_offset)
+find_import_unit_point_between_dies(const reader&	rdr,
+				    void*		partial_unit_addr,
+				    void*		first_die_addr,
+				    void*		last_die_addr,
+				    void*&		imported_point_addr)
 {
   const tu_die_imported_unit_points_map_type& tu_die_imported_unit_points_map =
-    rdr.tu_die_imported_unit_points_map(source);
+    rdr.tu_die_imported_unit_points_map();
+
+  Dwarf_Die first_die, first_die_cu;
+  ABG_ASSERT(rdr.get_die_from_addr(first_die_addr, first_die));
+  ABG_ASSERT(dwarf_diecu(&first_die, &first_die_cu, 0, 0));
+  void *first_die_cu_addr = first_die_cu.addr;
 
   tu_die_imported_unit_points_map_type::const_iterator iter =
-    tu_die_imported_unit_points_map.find(first_die_cu_offset);
+    tu_die_imported_unit_points_map.find(first_die_cu_addr);
 
   ABG_ASSERT(iter != tu_die_imported_unit_points_map.end());
 
@@ -12982,53 +12491,49 @@ find_import_unit_point_between_dies(const reader& rdr,
   imported_unit_points_type::const_iterator e = imported_unit_points.end();
 
   find_lower_bound_in_imported_unit_points(imported_unit_points,
-					   first_die_offset,
+					   first_die_addr,
 					   b);
 
-  if (last_die_offset != static_cast<size_t>(-1))
+  if (last_die_addr != nullptr)
     find_lower_bound_in_imported_unit_points(imported_unit_points,
-					     last_die_offset,
+					     last_die_addr,
 					     e);
 
   if (e != imported_unit_points.end())
     {
       for (imported_unit_points_type::const_iterator i = e; i >= b; --i)
-	if (i->imported_unit_die_off == partial_unit_offset)
+	if (i->imported_unit_die_addr == partial_unit_addr)
 	  {
-	    imported_point_offset = i->offset_of_import ;
+	    imported_point_addr = i->addr_of_import ;
 	    return true;
 	  }
 
       for (imported_unit_points_type::const_iterator i = e; i >= b; --i)
 	{
 	  if (find_import_unit_point_between_dies(rdr,
-						  partial_unit_offset,
-						  i->imported_unit_child_off,
-						  i->imported_unit_cu_off,
-						  i->imported_unit_die_source,
-						  /*(Dwarf_Off)*/-1,
-						  imported_point_offset))
+						  partial_unit_addr,
+						  i->imported_unit_child_addr,
+						  /*last_die_addr*/nullptr,
+						  imported_point_addr))
 	    return true;
 	}
     }
   else
     {
       for (imported_unit_points_type::const_iterator i = b; i != e; ++i)
-	if (i->imported_unit_die_off == partial_unit_offset)
+	if (i->imported_unit_die_addr == partial_unit_addr)
 	  {
-	    imported_point_offset = i->offset_of_import ;
+	    imported_point_addr = i->addr_of_import ;
 	    return true;
 	  }
 
       for (imported_unit_points_type::const_iterator i = b; i != e; ++i)
 	{
 	  if (find_import_unit_point_between_dies(rdr,
-						  partial_unit_offset,
-						  i->imported_unit_child_off,
-						  i->imported_unit_cu_off,
-						  i->imported_unit_die_source,
-						  /*(Dwarf_Off)*/-1,
-						  imported_point_offset))
+						  partial_unit_addr,
+						  i->imported_unit_child_addr,
+						  /*last_die_addr*/nullptr,
+						  imported_point_addr))
 	    return true;
 	}
     }
@@ -13062,37 +12567,28 @@ find_import_unit_point_between_dies(const reader& rdr,
 /// imported_point_offset is set and the function return false.
 static bool
 find_import_unit_point_before_die(const reader&	rdr,
-				  size_t		partial_unit_offset,
-				  size_t		where_offset,
-				  size_t&		imported_point_offset)
+				  void*		partial_unit_addr,
+				  void*		where_addr,
+				  void*&		imported_point_addr)
 {
-  size_t import_point_offset = 0;
+  void* import_point_addr = nullptr;
   Dwarf_Die first_die_of_tu;
 
   if (dwarf_child(const_cast<Dwarf_Die*>(rdr.cur_tu_die()),
 		  &first_die_of_tu) != 0)
     return false;
 
-  Dwarf_Die cu_die_memory;
-  Dwarf_Die *cu_die;
-
-  cu_die = dwarf_diecu(const_cast<Dwarf_Die*>(&first_die_of_tu),
-		       &cu_die_memory, 0, 0);
-
-  if (find_import_unit_point_between_dies(rdr, partial_unit_offset,
-					  dwarf_dieoffset(&first_die_of_tu),
-					  dwarf_dieoffset(cu_die),
-					  /*source=*/PRIMARY_DEBUG_INFO_DIE_SOURCE,
-					  where_offset,
-					  import_point_offset))
+  if (find_import_unit_point_between_dies(rdr, partial_unit_addr,
+					  first_die_of_tu.addr,
+					  where_addr, import_point_addr))
     {
-      imported_point_offset = import_point_offset;
+      imported_point_addr = import_point_addr;
       return true;
     }
 
-  if (import_point_offset)
+  if (import_point_addr)
     {
-      imported_point_offset = import_point_offset;
+      imported_point_addr = import_point_addr;
       return true;
     }
 
@@ -13120,54 +12616,32 @@ find_import_unit_point_before_die(const reader&	rdr,
 /// @return true if the function could get a parent DIE, false
 /// otherwise.
 static bool
-get_parent_die(const reader&	rdr,
+get_parent_die(const reader&		rdr,
 	       const Dwarf_Die*	die,
 	       Dwarf_Die&		parent_die,
-	       size_t			where_offset)
+	       void*			where_addr)
 {
   ABG_ASSERT(rdr.dwarf_debug_info());
 
-  const die_source source = rdr.get_die_source(die);
-
-  const offset_offset_map_type& m = rdr.die_parent_map(source);
-  offset_offset_map_type::const_iterator i =
-    m.find(dwarf_dieoffset(const_cast<Dwarf_Die*>(die)));
+  const addr_addr_map_type& m = rdr.die_parent_map();
+  addr_addr_map_type::const_iterator i = m.find(die->addr);
 
   if (i == m.end())
     return false;
 
-  switch (source)
-    {
-    case PRIMARY_DEBUG_INFO_DIE_SOURCE:
-      ABG_ASSERT(dwarf_offdie(const_cast<Dwarf*>(rdr.dwarf_debug_info()),
-			      i->second, &parent_die));
-      break;
-    case ALT_DEBUG_INFO_DIE_SOURCE:
-      ABG_ASSERT(dwarf_offdie(const_cast<Dwarf*>(rdr.alternate_dwarf_debug_info()),
-			      i->second, &parent_die));
-      break;
-    case TYPE_UNIT_DIE_SOURCE:
-      ABG_ASSERT(dwarf_offdie_types(const_cast<Dwarf*>(rdr.dwarf_debug_info()),
-				    i->second, &parent_die));
-      break;
-    case NO_DEBUG_INFO_DIE_SOURCE:
-    case NUMBER_OF_DIE_SOURCES:
-      ABG_ASSERT_NOT_REACHED;
-    }
+  rdr.get_die_from_addr(i->second, parent_die);
 
   if (dwarf_tag(&parent_die) == DW_TAG_partial_unit)
     {
-      if (where_offset == 0)
+      if (where_addr == nullptr)
 	{
 	  parent_die = *rdr.cur_tu_die();
 	  return true;
 	}
-      size_t import_point_offset = 0;
-      bool found =
-	find_import_unit_point_before_die(rdr,
-					  dwarf_dieoffset(&parent_die),
-					  where_offset,
-					  import_point_offset);
+      void* import_point_addr = nullptr;
+      bool found = find_import_unit_point_before_die(rdr, parent_die.addr,
+						     where_addr,
+						     import_point_addr);
       if (!found)
 	// It looks like parent_die (which comes from the alternate
 	// debug info file) hasn't been imported into this TU.  So,
@@ -13176,13 +12650,12 @@ get_parent_die(const reader&	rdr,
 	parent_die = *rdr.cur_tu_die();
       else
 	{
-	  ABG_ASSERT(import_point_offset);
+	  ABG_ASSERT(import_point_addr);
 	  Dwarf_Die import_point_die;
-	  ABG_ASSERT(dwarf_offdie(const_cast<Dwarf*>(rdr.dwarf_debug_info()),
-				  import_point_offset,
-				  &import_point_die));
+	  ABG_ASSERT(rdr.get_die_from_addr(import_point_addr,
+					   import_point_die));
 	  return get_parent_die(rdr, &import_point_die,
-				parent_die, where_offset);
+				parent_die, where_addr);
 	}
     }
 
@@ -13217,7 +12690,7 @@ get_parent_die(const reader&	rdr,
 static bool
 get_scope_die(const reader&	rdr,
 	      const Dwarf_Die*	dye,
-	      size_t		where_offset,
+	      void*		where_addr,
 	      Dwarf_Die&	scope_die)
 {
   Dwarf_Die origin_die_mem;
@@ -13228,19 +12701,19 @@ get_scope_die(const reader&	rdr,
   translation_unit::language die_lang = translation_unit::LANG_UNKNOWN;
   get_die_language(die, die_lang);
   if (is_c_language(die_lang)
-      || rdr.die_parent_map(rdr.get_die_source(die)).empty())
+      || rdr.die_parent_map().empty())
     {
       ABG_ASSERT(dwarf_tag(const_cast<Dwarf_Die*>(die)) != DW_TAG_member);
       return dwarf_diecu(const_cast<Dwarf_Die*>(die), &scope_die, 0, 0);
     }
 
-  if (!get_parent_die(rdr, die, scope_die, where_offset))
+  if (!get_parent_die(rdr, die, scope_die, where_addr))
     return false;
 
   if (dwarf_tag(&scope_die) == DW_TAG_subprogram
       || dwarf_tag(&scope_die) == DW_TAG_subroutine_type
       || dwarf_tag(&scope_die) == DW_TAG_array_type)
-    return get_scope_die(rdr, &scope_die, where_offset, scope_die);
+    return get_scope_die(rdr, &scope_die, where_addr, scope_die);
 
   return true;
 }
@@ -13273,7 +12746,7 @@ static scope_decl_sptr
 get_scope_for_die(reader&	rdr,
 		  Dwarf_Die*	dye,
 		  bool		called_for_public_decl,
-		  size_t	where_offset)
+		  void*	where_addr)
 {
   Dwarf_Die origin_die_mem;
   Dwarf_Die *die = &origin_die_mem;
@@ -13283,12 +12756,10 @@ get_scope_for_die(reader&	rdr,
     // above point to the content of the input "dye".
     memcpy(&origin_die_mem, dye, sizeof(origin_die_mem));
 
-  const die_source source_of_die = rdr.get_die_source(die);
-
   translation_unit::language die_lang = translation_unit::LANG_UNKNOWN;
   get_die_language(die, die_lang);
   if (is_c_language(die_lang)
-      || rdr.die_parent_map(source_of_die).empty())
+      || rdr.die_parent_map().empty())
     {
       // In units for the C languages all decls belong to the global
       // namespace.  This is generally the case if Libabigail
@@ -13299,7 +12770,7 @@ get_scope_for_die(reader&	rdr,
 
   Dwarf_Die parent_die;
 
-  if (!get_parent_die(rdr, die, parent_die, where_offset))
+  if (!get_parent_die(rdr, die, parent_die, where_addr))
     return rdr.nil_scope();
 
   if (dwarf_tag(&parent_die) == DW_TAG_compile_unit
@@ -13309,8 +12780,6 @@ get_scope_for_die(reader&	rdr,
       if (dwarf_tag(&parent_die) == DW_TAG_partial_unit
 	  || dwarf_tag(&parent_die) == DW_TAG_type_unit)
 	{
-	  ABG_ASSERT(source_of_die == ALT_DEBUG_INFO_DIE_SOURCE
-		     || source_of_die == TYPE_UNIT_DIE_SOURCE);
 	  return rdr.cur_transl_unit()->get_global_scope();
 	}
 
@@ -13321,7 +12790,7 @@ get_scope_for_die(reader&	rdr,
       // build the translation unit of parent_die.  Otherwise, just
       // return the global scope of the current translation unit.
       die_tu_map_type::const_iterator i =
-	rdr.die_tu_map().find(dwarf_dieoffset(&parent_die));
+	rdr.die_tu_map().find(parent_die.addr);
       if (i != rdr.die_tu_map().end())
 	return i->second->get_global_scope();
       return rdr.cur_transl_unit()->get_global_scope();
@@ -13344,7 +12813,7 @@ get_scope_for_die(reader&	rdr,
     {
       scope_decl_sptr s = get_scope_for_die(rdr, &parent_die,
 					    called_for_public_decl,
-					    where_offset);
+					    where_addr);
       if (is_anonymous_type_die(die))
 	// For anonymous type that have nothing to do in a function or
 	// array type context, let's put it in the containing
@@ -13352,18 +12821,18 @@ get_scope_for_die(reader&	rdr,
 	// or union where it has nothing to do.
 	while (is_class_or_union_type(s))
 	  {
-	    if (!get_parent_die(rdr, &parent_die, parent_die, where_offset))
+	    if (!get_parent_die(rdr, &parent_die, parent_die, where_addr))
 	      return rdr.nil_scope();
 	    s = get_scope_for_die(rdr, &parent_die,
 				  called_for_public_decl,
-				  where_offset);
+				  where_addr);
 	  }
       return s;
     }
   else
     d = build_ir_node_from_die(rdr, &parent_die,
 			       called_for_public_decl,
-			       where_offset);
+			       where_addr);
   s =  dynamic_pointer_cast<scope_decl>(d);
   if (!s)
     // this is an entity defined in someting that is not a scope.
@@ -13675,8 +13144,8 @@ get_default_array_lower_bound(translation_unit::language l)
   return value;
 }
 
-/// For a given offset, find the lower bound of a sorted vector of
-/// imported unit point offset.
+/// For a given DIE address, find the lower bound of a sorted vector
+/// of imported unit point addressed.
 ///
 /// The lower bound is the smallest point (the point with the smallest
 /// offset) which is the greater than a given offset.
@@ -13693,7 +13162,7 @@ get_default_array_lower_bound(translation_unit::language l)
 /// @return true iff the lower bound has been found.
 static bool
 find_lower_bound_in_imported_unit_points(const imported_unit_points_type& p,
-					 Dwarf_Off val,
+					 const void* val,
 					 imported_unit_points_type::const_iterator& r)
 {
   imported_unit_point v(val);
@@ -13722,7 +13191,7 @@ find_lower_bound_in_imported_unit_points(const imported_unit_points_type& p,
 ///
 /// @return a pointer to the resulting translation_unit.
 static translation_unit_sptr
-build_translation_unit_and_add_to_ir(reader&	rdr,
+build_translation_unit_and_add_to_ir(reader&		rdr,
 				     Dwarf_Die*	die,
 				     char		address_size)
 {
@@ -13777,7 +13246,7 @@ build_translation_unit_and_add_to_ir(reader&	rdr,
     }
 
   rdr.cur_transl_unit(result);
-  rdr.die_tu_map()[dwarf_dieoffset(die)] = result;
+  rdr.die_tu_map()[die->addr] = result;
 
   Dwarf_Die child;
   if (dwarf_child(die, &child) != 0)
@@ -13803,7 +13272,7 @@ build_translation_unit_and_add_to_ir(reader&	rdr,
 			       // so that types that are reachable
 			       // from it get analyzed as well.
 			       /*die_is_public=*/true,
-			       dwarf_dieoffset(&child));
+			       child.addr);
       }
     else if (!rdr.env().analyze_exported_interfaces_only()
 	     || rdr.is_decl_die_with_exported_symbol(&child))
@@ -13812,7 +13281,7 @@ build_translation_unit_and_add_to_ir(reader&	rdr,
 	// analyze exported interfaces and the types reachables from them.
 	build_ir_node_from_die(rdr, &child,
 			       die_is_public_decl(&child),
-			       dwarf_dieoffset(&child));
+			       child.addr);
       }
   while (dwarf_siblingof(&child, &child) == 0);
 
@@ -13898,8 +13367,8 @@ build_translation_unit_and_add_to_ir(reader&	rdr,
 /// couldn't be created.
 static namespace_decl_sptr
 build_namespace_decl_and_add_to_ir(reader&	rdr,
-				   Dwarf_Die*		die,
-				   size_t		where_offset)
+				   Dwarf_Die*	die,
+				   void*	where_addr)
 {
   namespace_decl_sptr result;
 
@@ -13912,7 +13381,7 @@ build_namespace_decl_and_add_to_ir(reader&	rdr,
 
   scope_decl_sptr scope = get_scope_for_die(rdr, die,
 					    /*called_for_public_decl=*/false,
-					    where_offset);
+					    where_addr);
 
   string name, linkage_name;
   location loc;
@@ -13920,7 +13389,7 @@ build_namespace_decl_and_add_to_ir(reader&	rdr,
 
   result.reset(new namespace_decl(rdr.env(), name, loc));
   add_decl_to_scope(result, scope.get());
-  rdr.associate_die_to_decl(die, result, where_offset);
+  rdr.associate_die_to_decl(die, result, where_addr);
 
   Dwarf_Die child;
   if (dwarf_child(die, &child) != 0)
@@ -13935,7 +13404,7 @@ build_namespace_decl_and_add_to_ir(reader&	rdr,
 			   // public decls are considered public.
 			   /*called_from_public_decl=*/
 			   die_is_public_decl(die) && die_is_public_decl(&child),
-			   where_offset);
+			   where_addr);
   while (dwarf_siblingof(&child, &child) == 0);
   rdr.scope_stack().pop();
 
@@ -13952,7 +13421,7 @@ build_namespace_decl_and_add_to_ir(reader&	rdr,
 ///
 /// @return the resulting decl_base_sptr.
 static type_decl_sptr
-build_type_decl(reader& rdr, Dwarf_Die* die, size_t where_offset)
+build_type_decl(reader& rdr, Dwarf_Die* die, void* where_addr)
 {
   type_decl_sptr result;
 
@@ -14000,7 +13469,7 @@ build_type_decl(reader& rdr, Dwarf_Die* die, size_t where_offset)
   if (!result)
     result.reset(new type_decl(rdr.env(), type_name, bit_size,
 			       /*alignment=*/0, loc, linkage_name));
-  rdr.associate_die_to_type(die, result, where_offset);
+  rdr.associate_die_to_type(die, result, where_addr);
   return result;
 }
 
@@ -14057,7 +13526,7 @@ static enum_type_decl_sptr
 build_enum_type(reader&	rdr,
 		Dwarf_Die*	die,
 		scope_decl*	scope,
-		size_t		where_offset,
+		void*		where_addr,
 		bool		is_declaration_only)
 {
   enum_type_decl_sptr result;
@@ -14115,7 +13584,7 @@ build_enum_type(reader&	rdr,
 
       if (result)
 	{
-	  rdr.associate_die_to_type(die, result, where_offset);
+	  rdr.associate_die_to_type(die, result, where_addr);
 	  return result;
 	}
     }
@@ -14162,7 +13631,7 @@ build_enum_type(reader&	rdr,
   result->set_is_anonymous(is_anonymous);
   result->set_is_declaration_only(is_declaration_only);
   result->set_is_artificial(is_artificial);
-  rdr.associate_die_to_type(die, result, where_offset);
+  rdr.associate_die_to_type(die, result, where_addr);
 
   return result;
 }
@@ -14240,13 +13709,12 @@ finish_member_function_reading(Dwarf_Die*			die,
       // DWARF input, then the part of build_function_decl() that
       // updates the function to set its underlying symbol will
       // de-schedule this function wrt fixup pass.
-      Dwarf_Off die_offset = dwarf_dieoffset(die);
       die_function_decl_map_type &fns_with_no_symbol =
 	rdr.die_function_decl_with_no_symbol_map();
       die_function_decl_map_type::const_iterator i =
-	fns_with_no_symbol.find(die_offset);
+	fns_with_no_symbol.find(die->addr);
       if (i == fns_with_no_symbol.end())
-	fns_with_no_symbol[die_offset] = f;
+	fns_with_no_symbol[die->addr] = f;
     }
 
 }
@@ -14269,11 +13737,11 @@ finish_member_function_reading(Dwarf_Die*			die,
 static function_decl_sptr
 maybe_finish_function_decl_reading(reader&		rdr,
 				   Dwarf_Die*			die,
-				   size_t			where_offset,
+				   void*			where,
 				   const function_decl_sptr&	existing_fn)
 {
   function_decl_sptr result = build_function_decl(rdr, die,
-						  where_offset,
+						  where,
 						  existing_fn);
 
   return result;
@@ -14316,7 +13784,7 @@ static type_base_sptr
 lookup_class_or_typedef_from_corpus(reader& rdr,
 				    Dwarf_Die* die,
 				    bool called_for_public_decl,
-				    size_t where_offset)
+				    void* where)
 {
   if (!die)
     return class_decl_sptr();
@@ -14327,7 +13795,7 @@ lookup_class_or_typedef_from_corpus(reader& rdr,
 
   scope_decl_sptr scope = get_scope_for_die(rdr, die,
 					    called_for_public_decl,
-					    where_offset);
+					    where);
   if (scope)
     return lookup_class_or_typedef_from_corpus(scope.get(), class_name);
 
@@ -14406,7 +13874,7 @@ add_or_update_member_function(reader& rdr,
 			      Dwarf_Die* function_die,
 			      const class_or_union_sptr& class_type,
 			      bool called_from_public_decl,
-			      size_t where_offset)
+			      void* where)
 {
   method_decl_sptr method =
     is_function_for_die_a_member_of_class(rdr, function_die, class_type);
@@ -14415,7 +13883,7 @@ add_or_update_member_function(reader& rdr,
     method = is_method_decl(build_ir_node_from_die(rdr, function_die,
 						   class_type.get(),
 						   called_from_public_decl,
-						   where_offset));
+						   where));
   if (!method)
     return method_decl_sptr();
 
@@ -14468,14 +13936,12 @@ add_or_update_class_type(reader&	 rdr,
 			 bool		 is_struct,
 			 class_decl_sptr klass,
 			 bool		 called_from_public_decl,
-			 size_t		 where_offset,
+			 void*		 where,
 			 bool		 is_declaration_only)
 {
   class_decl_sptr result;
   if (!die)
     return result;
-
-  const die_source source = rdr.get_die_source(die);
 
   unsigned tag = dwarf_tag(die);
 
@@ -14484,8 +13950,8 @@ add_or_update_class_type(reader&	 rdr,
 
   {
     die_class_or_union_map_type::const_iterator i =
-      rdr.die_wip_classes_map(source).find(dwarf_dieoffset(die));
-    if (i != rdr.die_wip_classes_map(source).end())
+      rdr.die_wip_classes_map().find(die->addr);
+    if (i != rdr.die_wip_classes_map().end())
       {
 	class_decl_sptr class_type = is_class_type(i->second);
 	ABG_ASSERT(class_type);
@@ -14538,7 +14004,7 @@ add_or_update_class_type(reader&	 rdr,
 		  || (!result->get_is_declaration_only()
 		      && is_declaration_only)))
 	    {
-	      rdr.associate_die_to_type(die, result, where_offset);
+	      rdr.associate_die_to_type(die, result, where);
 	      return result;
 	    }
 	  else
@@ -14620,14 +14086,14 @@ add_or_update_class_type(reader&	 rdr,
 
   result->set_is_artificial(is_artificial);
 
-  rdr.associate_die_to_type(die, result, where_offset);
+  rdr.associate_die_to_type(die, result, where);
 
   if (!has_child)
     // TODO: set the access specifier for the declaration-only class
     // here.
     return result;
 
-  rdr.die_wip_classes_map(source)[dwarf_dieoffset(die)] = result;
+  rdr.die_wip_classes_map()[die->addr] = result;
 
   bool is_incomplete_type = false;
   if (is_declaration_only && size == 0 && has_child)
@@ -14666,7 +14132,7 @@ add_or_update_class_type(reader&	 rdr,
 
 	      string type_name = die_type_name(rdr, &type_die,
 					       /*qualified_name=*/true,
-					       where_offset);
+					       where);
 	      type_base_sptr base_type;
 	      if (!type_name.empty())
 		{
@@ -14678,12 +14144,12 @@ add_or_update_class_type(reader&	 rdr,
 	      base_type =
 		lookup_class_or_typedef_from_corpus(rdr, &type_die,
 						    called_from_public_decl,
-						    where_offset);
+						    where);
 	      if (!base_type)
 		base_type =
 		  is_type(build_ir_node_from_die(rdr, &type_die,
 						 called_from_public_decl,
-						 where_offset));
+						 where));
 
 	      // Sometimes base_type can be a typedef.  Let's make
 	      // sure that typedef is compatible with a class type.
@@ -14771,7 +14237,7 @@ add_or_update_class_type(reader&	 rdr,
 
 	      decl_base_sptr ty = is_decl(build_ir_node_from_die(rdr, &type_die,
 								 called_from_public_decl,
-								 where_offset));
+								 where));
 	      type_base_sptr t = is_type(ty);
 	      if (!t)
 		continue;
@@ -14816,7 +14282,7 @@ add_or_update_class_type(reader&	 rdr,
 	      result->add_data_member(dm, access, is_laid_out,
 				      is_static, offset_in_bits);
 	      ABG_ASSERT(has_scope(dm));
-	      rdr.associate_die_to_decl(&child, dm, where_offset,
+	      rdr.associate_die_to_decl(&child, dm, where,
 					/*associate_by_repr=*/false);
 	    }
 	  // Handle member functions;
@@ -14825,9 +14291,9 @@ add_or_update_class_type(reader&	 rdr,
 	      decl_base_sptr r =
 		add_or_update_member_function(rdr, &child, result,
 					      called_from_public_decl,
-					      where_offset);
+					      where);
 	      if (function_decl_sptr f = is_function_decl(r))
-		rdr.associate_die_to_decl(&child, f, where_offset,
+		rdr.associate_die_to_decl(&child, f, where,
 					  /*associate_by_repr=*/true);
 	    }
 	  // Handle member types
@@ -14839,7 +14305,7 @@ add_or_update_class_type(reader&	 rdr,
 		  && !result->find_member_type(die_name(&child)))
 		build_ir_node_from_die(rdr, &child, result.get(),
 				       called_from_public_decl,
-				       where_offset);
+				       where);
 	      else if (is_anonymous_type_die(&child))
 		{
 		  // Lookup the anonymous type DIE direcly by building
@@ -14850,11 +14316,11 @@ add_or_update_class_type(reader&	 rdr,
 							  /*indent=*/"",
 							  /*one_line=*/true,
 							  /*qualed_name=*/false,
-							  where_offset);
+							  where);
 		  if (type_base_sptr member_t =
 		      result->find_member_type(anonymous_type_name))
 		    rdr.associate_die_to_decl(&child, is_decl(member_t),
-					      where_offset,
+					      where,
 					      /*Associate_by_repr=*/false);
 		  else
 		    {
@@ -14862,7 +14328,7 @@ add_or_update_class_type(reader&	 rdr,
 			is_type(build_ir_node_from_die(rdr, &child,
 						       /*scope=*/result.get(),
 						       called_from_public_decl,
-						       where_offset));
+						       where));
 		      if (t)
 			{
 			  add_decl_to_scope(is_decl(t), result.get());
@@ -14879,13 +14345,13 @@ add_or_update_class_type(reader&	 rdr,
 
   {
     die_class_or_union_map_type::const_iterator i =
-      rdr.die_wip_classes_map(source).find(dwarf_dieoffset(die));
-    if (i != rdr.die_wip_classes_map(source).end())
+      rdr.die_wip_classes_map().find(die->addr);
+    if (i != rdr.die_wip_classes_map().end())
       {
 	if (is_member_type(i->second))
 	  set_member_access_specifier(res,
 				      get_member_access_specifier(i->second));
-	rdr.die_wip_classes_map(source).erase(i);
+	rdr.die_wip_classes_map().erase(i);
       }
   }
 
@@ -14917,13 +14383,13 @@ add_or_update_class_type(reader&	 rdr,
 ///
 /// @return the resulting @ref union_decl type.
 static union_decl_sptr
-add_or_update_union_type(reader&	 rdr,
-			 Dwarf_Die*	 die,
-			 scope_decl*	 scope,
-			 union_decl_sptr union_type,
-			 bool		 called_from_public_decl,
-			 size_t	 where_offset,
-			 bool		 is_declaration_only)
+add_or_update_union_type(reader&		rdr,
+			 Dwarf_Die*		die,
+			 scope_decl*		scope,
+			 union_decl_sptr	union_type,
+			 bool			called_from_public_decl,
+			 void*			where_addr,
+			 bool			is_declaration_only)
 {
   union_decl_sptr result;
   if (!die)
@@ -14934,11 +14400,10 @@ add_or_update_union_type(reader&	 rdr,
   if (tag != DW_TAG_union_type)
     return result;
 
-  const die_source source = rdr.get_die_source(die);
   {
     die_class_or_union_map_type::const_iterator i =
-      rdr.die_wip_classes_map(source).find(dwarf_dieoffset(die));
-    if (i != rdr.die_wip_classes_map(source).end())
+      rdr.die_wip_classes_map().find(die->addr);
+    if (i != rdr.die_wip_classes_map().end())
       {
 	union_decl_sptr u = is_union_type(i->second);
 	ABG_ASSERT(u);
@@ -14985,7 +14450,7 @@ add_or_update_union_type(reader&	 rdr,
 
 	  if (result)
 	    {
-	      rdr.associate_die_to_type(die, result, where_offset);
+	      rdr.associate_die_to_type(die, result, where_addr);
 	      return result;
 	    }
 	}
@@ -15029,14 +14494,14 @@ add_or_update_union_type(reader&	 rdr,
 
   result->set_is_artificial(is_artificial);
 
-  rdr.associate_die_to_type(die, result, where_offset);
+  rdr.associate_die_to_type(die, result, where_addr);
 
   Dwarf_Die child;
   bool has_child = (dwarf_child(die, &child) == 0);
   if (!has_child)
     return result;
 
-  rdr.die_wip_classes_map(source)[dwarf_dieoffset(die)] = result;
+  rdr.die_wip_classes_map()[die->addr] = result;
 
   scope_decl_sptr scop =
     dynamic_pointer_cast<scope_decl>(result);
@@ -15070,7 +14535,7 @@ add_or_update_union_type(reader&	 rdr,
 	      decl_base_sptr ty =
 		is_decl(build_ir_node_from_die(rdr, &type_die,
 					       called_from_public_decl,
-					       where_offset));
+					       where_addr));
 	      type_base_sptr t = is_type(ty);
 	      if (!t)
 		continue;
@@ -15097,7 +14562,7 @@ add_or_update_union_type(reader&	 rdr,
 				      /*is_static=*/false,
 				      offset_in_bits);
 	      ABG_ASSERT(has_scope(dm));
-	      rdr.associate_die_to_decl(&child, dm, where_offset,
+	      rdr.associate_die_to_decl(&child, dm, where_addr,
 					 /*associate_by_repr=*/false);
 	    }
 	  // Handle member functions;
@@ -15107,7 +14572,7 @@ add_or_update_union_type(reader&	 rdr,
 		is_decl(build_ir_node_from_die(rdr, &child,
 					       result.get(),
 					       called_from_public_decl,
-					       where_offset));
+					       where_addr));
 	      if (!r)
 		continue;
 
@@ -15116,7 +14581,7 @@ add_or_update_union_type(reader&	 rdr,
 
 	      finish_member_function_reading(&child, f, result, rdr);
 
-	      rdr.associate_die_to_decl(&child, f, where_offset,
+	      rdr.associate_die_to_decl(&child, f, where_addr,
 					 /*associate_by_repr=*/false);
 	    }
 	  // Handle member types
@@ -15124,16 +14589,16 @@ add_or_update_union_type(reader&	 rdr,
 	    {
 	      string type_name = die_type_name(rdr, &child,
 					       /*qualified_name=*/false,
-					       where_offset);
+					       where_addr);
 	      if (type_base_sptr member_t = result->find_member_type(type_name))
 		rdr.associate_die_to_decl(&child, is_decl(member_t),
-					  where_offset,
+					  where_addr,
 					  /*associate_by_repr=*/false);
 	      else
 		decl_base_sptr td =
 		  is_decl(build_ir_node_from_die(rdr, &child, result.get(),
 						 called_from_public_decl,
-						 where_offset));
+						 where_addr));
 	    }
 	} while (dwarf_siblingof(&child, &child) == 0);
     }
@@ -15142,13 +14607,13 @@ add_or_update_union_type(reader&	 rdr,
 
   {
     die_class_or_union_map_type::const_iterator i =
-      rdr.die_wip_classes_map(source).find(dwarf_dieoffset(die));
-    if (i != rdr.die_wip_classes_map(source).end())
+      rdr.die_wip_classes_map().find(die->addr);
+    if (i != rdr.die_wip_classes_map().end())
       {
 	if (is_member_type(i->second))
 	  set_member_access_specifier(result,
 				      get_member_access_specifier(i->second));
-	rdr.die_wip_classes_map(source).erase(i);
+	rdr.die_wip_classes_map().erase(i);
       }
   }
 
@@ -15176,7 +14641,7 @@ static type_base_sptr
 build_qualified_type(reader&	rdr,
 		     Dwarf_Die*	die,
 		     bool		called_from_public_decl,
-		     size_t		where_offset)
+		     void*		where_addr)
 {
   type_base_sptr result;
   if (!die)
@@ -15200,7 +14665,7 @@ build_qualified_type(reader&	rdr,
   if (!utype_decl)
     utype_decl = is_decl(build_ir_node_from_die(rdr, &underlying_type_die,
 						called_from_public_decl,
-						where_offset));
+						where_addr));
   if (!utype_decl)
     return result;
 
@@ -15209,7 +14674,7 @@ build_qualified_type(reader&	rdr,
   if (type_base_sptr t = rdr.lookup_type_from_die(die))
     {
       result = t;
-      rdr.associate_die_to_type(die, result, where_offset);
+      rdr.associate_die_to_type(die, result, where_addr);
       return result;
     }
 
@@ -15229,7 +14694,7 @@ build_qualified_type(reader&	rdr,
   if (!result)
     result.reset(new qualified_type_def(utype, qual, location()));
 
-  rdr.associate_die_to_type(die, result, where_offset);
+  rdr.associate_die_to_type(die, result, where_addr);
 
   return result;
 }
@@ -15392,7 +14857,7 @@ static pointer_type_def_sptr
 build_pointer_type_def(reader&	rdr,
 		       Dwarf_Die*	die,
 		       bool		called_from_public_decl,
-		       size_t		where_offset)
+		       void*		where_addr)
 {
   pointer_type_def_sptr result;
 
@@ -15416,7 +14881,7 @@ build_pointer_type_def(reader&	rdr,
   if (!utype_decl && has_underlying_type_die)
     utype_decl = build_ir_node_from_die(rdr, &underlying_type_die,
 					called_from_public_decl,
-					where_offset);
+					where_addr);
   if (!utype_decl)
     return result;
 
@@ -15451,7 +14916,7 @@ build_pointer_type_def(reader&	rdr,
   if (is_void_pointer_type(result))
     result = is_pointer_type(build_ir_node_for_void_pointer_type(rdr));
 
-  rdr.associate_die_to_type(die, result, where_offset);
+  rdr.associate_die_to_type(die, result, where_addr);
   return result;
 }
 
@@ -15476,7 +14941,7 @@ static reference_type_def_sptr
 build_reference_type(reader&	rdr,
 		     Dwarf_Die*	die,
 		     bool		called_from_public_decl,
-		     size_t		where_offset)
+		     void*		where_addr)
 {
   reference_type_def_sptr result;
 
@@ -15495,7 +14960,7 @@ build_reference_type(reader&	rdr,
   type_or_decl_base_sptr utype_decl =
     build_ir_node_from_die(rdr, &underlying_type_die,
 			   called_from_public_decl,
-			   where_offset);
+			   where_addr);
   if (!utype_decl)
     return result;
 
@@ -15530,7 +14995,7 @@ build_reference_type(reader&	rdr,
   if (corpus_sptr corp = rdr.corpus())
     if (reference_type_def_sptr t = lookup_reference_type(*result, *corp))
       result = t;
-  rdr.associate_die_to_type(die, result, where_offset);
+  rdr.associate_die_to_type(die, result, where_addr);
   return result;
 }
 
@@ -15556,7 +15021,7 @@ static ptr_to_mbr_type_sptr
 build_ptr_to_mbr_type(reader&		rdr,
 		      Dwarf_Die*	die,
 		      bool		called_from_public_decl,
-		      size_t		where_offset)
+		      void*		where_addr)
 {
   ptr_to_mbr_type_sptr result;
 
@@ -15575,13 +15040,13 @@ build_ptr_to_mbr_type(reader&		rdr,
 
   type_or_decl_base_sptr data_member_type =
     build_ir_node_from_die(rdr, &data_member_type_die,
-			   called_from_public_decl, where_offset);
+			   called_from_public_decl, where_addr);
   if (!data_member_type)
     return result;
 
   type_or_decl_base_sptr containing_type =
     build_ir_node_from_die(rdr, &containing_type_die,
-			   called_from_public_decl, where_offset);
+			   called_from_public_decl, where_addr);
   if (!containing_type)
     return result;
 
@@ -15605,7 +15070,7 @@ build_ptr_to_mbr_type(reader&		rdr,
 				   /*alignment=*/0,
 				   location()));
 
-  rdr.associate_die_to_type(die, result, where_offset);
+  rdr.associate_die_to_type(die, result, where_addr);
   return result;
 }
 
@@ -15629,7 +15094,7 @@ static function_type_sptr
 build_function_type(reader&	rdr,
 		    Dwarf_Die*		die,
 		    class_or_union_sptr is_method,
-		    size_t		where_offset)
+		    void*		where_addr)
 {
   function_type_sptr result;
 
@@ -15639,12 +15104,9 @@ build_function_type(reader&	rdr,
   ABG_ASSERT(dwarf_tag(die) == DW_TAG_subroutine_type
 	     || dwarf_tag(die) == DW_TAG_subprogram);
 
-  const die_source source = rdr.get_die_source(die);
-
   {
-    size_t off = dwarf_dieoffset(die);
-    auto i = rdr.die_wip_function_types_map(source).find(off);
-    if (i != rdr.die_wip_function_types_map(source).end())
+    auto i = rdr.die_wip_function_types_map().find(die->addr);
+    if (i != rdr.die_wip_function_types_map().end())
       {
 	function_type_sptr fn_type = is_function_type(i->second);
 	ABG_ASSERT(fn_type);
@@ -15664,7 +15126,7 @@ build_function_type(reader&	rdr,
     {
       result = is_function_type(t);
       ABG_ASSERT(result);
-      rdr.associate_die_to_type(die, result, where_offset);
+      rdr.associate_die_to_type(die, result, where_addr);
       return result;
     }
 
@@ -15681,7 +15143,7 @@ build_function_type(reader&	rdr,
       if (function_type_sptr fn_type =
 	  is_function_type(rdr.lookup_type_artifact_from_die(die)))
 	{
-	  rdr.associate_die_to_type(die, fn_type, where_offset);
+	  rdr.associate_die_to_type(die, fn_type, where_addr);
 	  return fn_type;
 	}
     }
@@ -15694,7 +15156,7 @@ build_function_type(reader&	rdr,
   Dwarf_Die object_pointer_die;
   Dwarf_Die class_type_die;
   bool has_this_parm_die =
-    die_function_type_is_method_type(rdr, die, where_offset,
+    die_function_type_is_method_type(rdr, die, where_addr,
 				     object_pointer_die,
 				     class_type_die,
 				     is_static);
@@ -15714,7 +15176,7 @@ build_function_type(reader&	rdr,
 	  class_or_union_sptr klass_type =
 	    is_class_or_union_type(build_ir_node_from_die(rdr, &class_type_die,
 							  /*called_from_pub_decl=*/true,
-							  where_offset));
+							  where_addr));
 	  if (!klass_type)
 	    {
 	      // We could not create the class type.  For instance,
@@ -15737,8 +15199,8 @@ build_function_type(reader&	rdr,
 				 /*alignment=*/0)
 	       : new function_type(rdr.env(), tu->get_address_size(),
 				   /*alignment=*/0));
-  rdr.associate_die_to_type(die, result, where_offset);
-  rdr.die_wip_function_types_map(source)[dwarf_dieoffset(die)] = result;
+  rdr.associate_die_to_type(die, result, where_addr);
+  rdr.die_wip_function_types_map()[die->addr] = result;
 
   type_base_sptr return_type;
   Dwarf_Die ret_type_die;
@@ -15746,7 +15208,7 @@ build_function_type(reader&	rdr,
     return_type =
       is_type(build_ir_node_from_die(rdr, &ret_type_die,
 				     /*called_from_public_decl=*/true,
-				     where_offset));
+				     where_addr));
   if (!return_type)
     return_type = is_type(build_ir_node_for_void_type(rdr));
   result->set_return_type(return_type);
@@ -15775,7 +15237,7 @@ build_function_type(reader&	rdr,
 	      parm_type =
 		is_type(build_ir_node_from_die(rdr, &parm_type_die,
 					       /*called_from_public_decl=*/true,
-					       where_offset));
+					       where_addr));
 	    if (!parm_type)
 	      continue;
 	    if (is_method
@@ -15836,10 +15298,9 @@ build_function_type(reader&	rdr,
 
   {
     die_function_type_map_type::const_iterator i =
-      rdr.die_wip_function_types_map(source).
-      find(dwarf_dieoffset(die));
-    if (i != rdr.die_wip_function_types_map(source).end())
-      rdr.die_wip_function_types_map(source).erase(i);
+      rdr.die_wip_function_types_map().find(die->addr);
+    if (i != rdr.die_wip_function_types_map().end())
+      rdr.die_wip_function_types_map().erase(i);
   }
 
   maybe_canonicalize_type(result, rdr);
@@ -15871,7 +15332,7 @@ build_function_type(reader&	rdr,
 static array_type_def::subrange_sptr
 build_subrange_type(reader&		rdr,
 		    const Dwarf_Die*	die,
-		    size_t		where_offset,
+		    void*		where,
 		    bool		associate_type_to_die)
 {
   array_type_def::subrange_sptr result;
@@ -15895,7 +15356,7 @@ build_subrange_type(reader&		rdr,
       is_type(build_ir_node_from_die(rdr,
 				     &underlying_type_die,
 				     /*called_from_public_decl=*/true,
-				     where_offset));
+				     where));
 
   if (underlying_type)
     {
@@ -16016,7 +15477,7 @@ build_subrange_type(reader&		rdr,
 			     - result->get_lower_bound() + 1)));
 
   if (associate_type_to_die)
-    rdr.associate_die_to_type(die, result, where_offset);
+    rdr.associate_die_to_type(die, result, where);
 
   return result;
 }
@@ -16041,7 +15502,7 @@ static void
 build_subranges_from_array_type_die(const reader&			rdr,
 				    const Dwarf_Die*			die,
 				    array_type_def::subranges_type&	subranges,
-				    size_t				where_offset,
+				    void*				where,
 				    bool				associate_type_to_die)
 {
   Dwarf_Die child;
@@ -16062,7 +15523,7 @@ build_subranges_from_array_type_die(const reader&			rdr,
 		  type_or_decl_base_sptr t =
 		    build_ir_node_from_die(const_cast<reader&>(rdr), &child,
 					   /*called_from_public_decl=*/true,
-					   where_offset);
+					   where);
 		  s = is_subrange_type(t);
 		}
 	      else
@@ -16070,7 +15531,7 @@ build_subranges_from_array_type_die(const reader&			rdr,
 		// add it to the current tyupe tree, *NOR* associate
 		// it to the DIE it's been created from.
 		s = build_subrange_type(const_cast<reader&>(rdr), &child,
-					where_offset,
+					where,
 					/*associate_type_to_die=*/false);
 	      if (s)
 		subranges.push_back(s);
@@ -16100,7 +15561,7 @@ static array_type_def_sptr
 build_array_type(reader&	rdr,
 		 Dwarf_Die*	die,
 		 bool		called_from_public_decl,
-		 size_t	where_offset)
+		 void*		where_addr)
 {
   array_type_def_sptr result;
 
@@ -16117,7 +15578,7 @@ build_array_type(reader&	rdr,
   if (die_die_attribute(die, DW_AT_type, type_die))
     type_decl = is_decl(build_ir_node_from_die(rdr, &type_die,
 					       called_from_public_decl,
-					       where_offset));
+					       where_addr));
   if (!type_decl)
     return result;
 
@@ -16135,10 +15596,10 @@ build_array_type(reader&	rdr,
 
   array_type_def::subranges_type subranges;
 
-  build_subranges_from_array_type_die(rdr, die, subranges, where_offset);
+  build_subranges_from_array_type_die(rdr, die, subranges, where_addr);
 
   result.reset(new array_type_def(type, subranges, location()));
-  rdr.associate_die_to_type(die, result, where_offset);
+  rdr.associate_die_to_type(die, result, where_addr);
   return result;
 }
 
@@ -16162,7 +15623,7 @@ static typedef_decl_sptr
 build_typedef_type(reader&	rdr,
 		   Dwarf_Die*		die,
 		   bool		called_from_public_decl,
-		   size_t		where_offset)
+		   void*		where_addr)
 {
   typedef_decl_sptr result;
 
@@ -16195,7 +15656,7 @@ build_typedef_type(reader&	rdr,
 	  is_type(build_ir_node_from_die(rdr,
 					 &underlying_type_die,
 					 called_from_public_decl,
-					 where_offset));
+					 where_addr));
       if (!utype)
 	return result;
 
@@ -16214,7 +15675,7 @@ build_typedef_type(reader&	rdr,
 	}
     }
 
-  rdr.associate_die_to_type(die, result, where_offset);
+  rdr.associate_die_to_type(die, result, where_addr);
 
   return result;
 }
@@ -16254,7 +15715,7 @@ static var_decl_sptr
 build_or_get_var_decl_if_not_suppressed(reader&	rdr,
 					scope_decl	*scope,
 					Dwarf_Die	*die,
-					size_t		where_offset,
+					void*		where_addr,
 					bool		is_declaration_only,
 					var_decl_sptr	result,
 					bool		is_required_decl_spec)
@@ -16279,7 +15740,7 @@ build_or_get_var_decl_if_not_suppressed(reader&	rdr,
   // The variable was not suppressed.
   ++rdr.stats_.number_of_suppressed_variables;
 
-  var = build_var_decl(rdr, die, where_offset, result);
+  var = build_var_decl(rdr, die, where_addr, result);
   return var;
 }
 
@@ -16304,7 +15765,7 @@ build_or_get_var_decl_if_not_suppressed(reader&	rdr,
 static var_decl_sptr
 build_var_decl(reader&	rdr,
 	       Dwarf_Die	*die,
-	       size_t		where_offset,
+	       void*		where_addr,
 	       var_decl_sptr	result)
 {
   if (!die)
@@ -16323,7 +15784,7 @@ build_var_decl(reader&	rdr,
       decl_base_sptr ty =
 	is_decl(build_ir_node_from_die(rdr, &type_die,
 				       /*called_from_public_decl=*/true,
-				       where_offset));
+				       where_addr));
       if (!ty)
 	return result;
       type = is_type(ty);
@@ -16513,7 +15974,7 @@ static function_decl_sptr
 build_or_get_fn_decl_if_not_suppressed(reader&			rdr,
 				       scope_decl		*scope,
 				       Dwarf_Die		*fn_die,
-				       size_t			where_offset,
+				       void*			where_addr,
 				       bool			is_declaration_only,
 				       function_decl_sptr	result)
 {
@@ -16548,9 +16009,10 @@ build_or_get_fn_decl_if_not_suppressed(reader&			rdr,
     {
       if ((fn = is_function_decl(rdr.lookup_artifact_from_die(fn_die))))
 	{
-	  fn = maybe_finish_function_decl_reading(rdr, fn_die, where_offset, fn);
-	  rdr.associate_die_to_decl(fn_die, fn, /*do_associate_by_repr=*/true);
-	  rdr.associate_die_to_type(fn_die, fn->get_type(), where_offset);
+	  fn = maybe_finish_function_decl_reading(rdr, fn_die, where_addr, fn);
+	  rdr.associate_die_to_decl(fn_die, fn, where_addr,
+				    /*do_associate_by_repr=*/true);
+	  rdr.associate_die_to_type(fn_die, fn->get_type(), where_addr);
 	  return fn;
 	}
     }
@@ -16577,7 +16039,7 @@ build_or_get_fn_decl_if_not_suppressed(reader&			rdr,
     // any associated symbol will be dropped on the floor by
     // potential_member_fn_should_be_dropped.  So let's build or a new
     // function IR or complete the existing partial IR.
-    fn = build_function_decl(rdr, fn_die, where_offset, result);
+    fn = build_function_decl(rdr, fn_die, where_addr, result);
 
   return fn;
 }
@@ -16748,7 +16210,7 @@ static type_or_decl_base_sptr
 get_opaque_version_of_type(reader	&rdr,
 			   scope_decl	*scope,
 			   Dwarf_Die	*type_die,
-			   size_t	where_offset)
+			   void*	where_addr)
 {
   type_or_decl_base_sptr result;
 
@@ -16795,7 +16257,7 @@ get_opaque_version_of_type(reader	&rdr,
 	  klass->set_is_declaration_only(true);
 	  klass->set_is_artificial(die_is_artificial(type_die));
 	  add_decl_to_scope(klass, scope);
-	  rdr.associate_die_to_type(type_die, klass, where_offset);
+	  rdr.associate_die_to_type(type_die, klass, where_addr);
 	  rdr.maybe_schedule_declaration_only_class_for_resolution(klass);
 	  result = klass;
 	}
@@ -16872,7 +16334,7 @@ create_default_fn_sym(const string& sym_name, const environment& env)
 static function_decl_sptr
 build_function_decl(reader&		rdr,
 		    Dwarf_Die*		die,
-		    size_t		where_offset,
+		    void*		where_addr,
 		    function_decl_sptr	fn)
 {
   function_decl_sptr result = fn;
@@ -16894,7 +16356,7 @@ build_function_decl(reader&		rdr,
 
   size_t is_inline = die_is_declared_inline(die);
   class_or_union_sptr is_method =
-    is_class_or_union_type(get_scope_for_die(rdr, die, true, where_offset));
+    is_class_or_union_type(get_scope_for_die(rdr, die, true, where_addr));
 
   if (result)
     {
@@ -16917,7 +16379,7 @@ build_function_decl(reader&		rdr,
   else
     {
       function_type_sptr fn_type(build_function_type(rdr, die, is_method,
-						     where_offset));
+						     where_addr));
       if (!fn_type)
 	return result;
 
@@ -16973,9 +16435,7 @@ build_function_decl(reader&		rdr,
 	}
     }
 
-  rdr.associate_die_to_type(die, result->get_type(), where_offset);
-
-  size_t die_offset = dwarf_dieoffset(die);
+  rdr.associate_die_to_type(die, result->get_type(), where_addr);
 
   if (fn
       && is_member_function(fn)
@@ -16986,7 +16446,7 @@ build_function_decl(reader&		rdr,
     // It thus doesn't need any fixup related to elf symbol.  So
     // remove it from the set of virtual member functions with linkage
     // names and no elf symbol that need to be fixed up.
-    rdr.die_function_decl_with_no_symbol_map().erase(die_offset);
+    rdr.die_function_decl_with_no_symbol_map().erase(die->addr);
   return result;
 }
 
@@ -17126,7 +16586,7 @@ build_ir_node_from_die(reader&		rdr,
 		       Dwarf_Die*	die,
 		       scope_decl*	scope,
 		       bool		called_from_public_decl,
-		       size_t		where_offset,
+		       void*		where_addr,
 		       bool		is_declaration_only,
 		       bool		is_required_decl_spec)
 {
@@ -17150,10 +16610,7 @@ build_ir_node_from_die(reader&		rdr,
 	return result;
     }
 
-  const die_source source_of_die = rdr.get_die_source(die);
-
-  if ((result = rdr.lookup_decl_from_die_offset(dwarf_dieoffset(die),
-						 source_of_die)))
+  if ((result = rdr.lookup_decl_from_die_addr(die->addr)))
     {
       if (rdr.load_all_types())
 	if (called_from_public_decl)
@@ -17174,7 +16631,7 @@ build_ir_node_from_die(reader&		rdr,
     {
       // Type DIEs we support.
     case DW_TAG_base_type:
-      if (type_decl_sptr t = build_type_decl(rdr, die, where_offset))
+      if (type_decl_sptr t = build_type_decl(rdr, die, where_addr))
 	{
 	  result =
 	    add_decl_to_scope(t, rdr.cur_transl_unit()->get_global_scope());
@@ -17186,7 +16643,7 @@ build_ir_node_from_die(reader&		rdr,
       {
 	typedef_decl_sptr t = build_typedef_type(rdr, die,
 						 called_from_public_decl,
-						 where_offset);
+						 where_addr);
 
 	result = add_decl_to_scope(t, scope);
 	if (result)
@@ -17202,7 +16659,7 @@ build_ir_node_from_die(reader&		rdr,
 	pointer_type_def_sptr p =
 	  build_pointer_type_def(rdr, die,
 				 called_from_public_decl,
-				 where_offset);
+				 where_addr);
 	if (p)
 	  {
 	    result =
@@ -17219,7 +16676,7 @@ build_ir_node_from_die(reader&		rdr,
 	reference_type_def_sptr r =
 	  build_reference_type(rdr, die,
 			       called_from_public_decl,
-			       where_offset);
+			       where_addr);
 	if (r)
 	  {
 	    result =
@@ -17233,7 +16690,7 @@ build_ir_node_from_die(reader&		rdr,
       {
 	ptr_to_mbr_type_sptr p =
 	  build_ptr_to_mbr_type(rdr, die, called_from_public_decl,
-				where_offset);
+				where_addr);
 	if (p)
 	  {
 	    result =
@@ -17251,7 +16708,7 @@ build_ir_node_from_die(reader&		rdr,
 	type_base_sptr q =
 	  build_qualified_type(rdr, die,
 			       called_from_public_decl,
-			       where_offset);
+			       where_addr);
 	if (q)
 	  {
 	    // Strip some potentially redundant type qualifiers from
@@ -17265,7 +16722,7 @@ build_ir_node_from_die(reader&		rdr,
 	    // Associate the die to type ty again because 'ty'might be
 	    // different from 'q', because 'ty' is 'q' possibly
 	    // stripped from some redundant type qualifier.
-	    rdr.associate_die_to_type(die, ty, where_offset);
+	    rdr.associate_die_to_type(die, ty, where_addr);
 	    result =
 	      add_decl_to_scope(d, rdr.cur_transl_unit()->get_global_scope());
 	    maybe_canonicalize_type(is_type(result), rdr);
@@ -17286,13 +16743,13 @@ build_ir_node_from_die(reader&		rdr,
 	    // non-suppressed instances are opaque versions of the
 	    // suppressed private type.  Lets return one of these opaque
 	    // types then.
-	    result = get_opaque_version_of_type(rdr, scope, die, where_offset);
+	    result = get_opaque_version_of_type(rdr, scope, die, where_addr);
 	    maybe_canonicalize_type(is_type(result), rdr);
 	  }
 	else if (!type_suppressed)
 	  {
 	    enum_type_decl_sptr e = build_enum_type(rdr, die, scope,
-						    where_offset,
+						    where_addr,
 						    is_declaration_only);
 	    result = add_decl_to_scope(e, scope);
 	    if (result)
@@ -17319,7 +16776,7 @@ build_ir_node_from_die(reader&		rdr,
 	    // non-suppressed instances are opaque versions of the
 	    // suppressed private type.  Lets return one of these opaque
 	    // types then.
-	    result = get_opaque_version_of_type(rdr, scope, die, where_offset);
+	    result = get_opaque_version_of_type(rdr, scope, die, where_addr);
 	    maybe_canonicalize_type(is_type(result), rdr);
 	  }
 	else if (!type_suppressed)
@@ -17331,13 +16788,13 @@ build_ir_node_from_die(reader&		rdr,
 		scope_decl_sptr skope =
 		  get_scope_for_die(rdr, &spec_die,
 				    called_from_public_decl,
-				    where_offset);
+				    where_addr);
 		ABG_ASSERT(skope);
 		decl_base_sptr cl =
 		  is_decl(build_ir_node_from_die(rdr, &spec_die,
 						 skope.get(),
 						 called_from_public_decl,
-						 where_offset,
+						 where_addr,
 						 is_declaration_only,
 						 /*is_required_decl_spec=*/false));
 		ABG_ASSERT(cl);
@@ -17350,7 +16807,7 @@ build_ir_node_from_die(reader&		rdr,
 					   tag == DW_TAG_structure_type,
 					   klass,
 					   called_from_public_decl,
-					   where_offset,
+					   where_addr,
 					   is_declaration_only);
 	      }
 	    else
@@ -17359,7 +16816,7 @@ build_ir_node_from_die(reader&		rdr,
 		  {
 		    string type_name = die_type_name(rdr, die,
 						     /*qualified_name=*/false,
-						     where_offset);
+						     where_addr);
 		    if (class_decl_sptr c =
 			is_class_type(class_sc->find_member_type(type_name)))
 		      klass = c;
@@ -17369,7 +16826,7 @@ build_ir_node_from_die(reader&		rdr,
 						 tag == DW_TAG_structure_type,
 						 class_decl_sptr(),
 						 called_from_public_decl,
-						 where_offset,
+						 where_addr,
 						 is_declaration_only);
 		  }
 		else
@@ -17378,7 +16835,7 @@ build_ir_node_from_die(reader&		rdr,
 					     tag == DW_TAG_structure_type,
 					     class_decl_sptr(),
 					     called_from_public_decl,
-					     where_offset,
+					     where_addr,
 					     is_declaration_only);
 	      }
 	    if (klass)
@@ -17398,7 +16855,7 @@ build_ir_node_from_die(reader&		rdr,
 	    {
 	      string type_name = die_type_name(rdr, die,
 					       /*qualified_name=*/false,
-					       where_offset);
+					       where_addr);
 	      if (union_decl_sptr u =
 		  is_union_type(class_sc->find_member_type(type_name)))
 		union_type = u;
@@ -17409,7 +16866,7 @@ build_ir_node_from_die(reader&		rdr,
 	      add_or_update_union_type(rdr, die, scope,
 				       union_decl_sptr(),
 				       called_from_public_decl,
-				       where_offset,
+				       where_addr,
 				       is_declaration_only);
 
 	  if (union_type)
@@ -17426,7 +16883,7 @@ build_ir_node_from_die(reader&		rdr,
       {
 	function_type_sptr f = build_function_type(rdr, die,
 						   class_decl_sptr(),
-						   where_offset);
+						   where_addr);
 	if (f)
 	  {
 	    result = f;
@@ -17440,7 +16897,7 @@ build_ir_node_from_die(reader&		rdr,
 	array_type_def_sptr a = build_array_type(rdr,
 						 die,
 						 called_from_public_decl,
-						 where_offset);
+						 where_addr);
 	if (a)
 	  {
 	    result =
@@ -17455,7 +16912,7 @@ build_ir_node_from_die(reader&		rdr,
 	// form" defined in the global namespace of the current
 	// translation unit, like what is found in Ada.
 	array_type_def::subrange_sptr s =
-	  build_subrange_type(rdr, die, where_offset,
+	  build_subrange_type(rdr, die, where_addr,
 			      /*associate_type_to_die=*/true);
 	if (s)
 	  {
@@ -17487,7 +16944,7 @@ build_ir_node_from_die(reader&		rdr,
 
     case DW_TAG_namespace:
     case DW_TAG_module:
-      result = build_namespace_decl_and_add_to_ir(rdr, die, where_offset);
+      result = build_namespace_decl_and_add_to_ir(rdr, die, where_addr);
       break;
 
     case DW_TAG_variable:
@@ -17500,10 +16957,10 @@ build_ir_node_from_die(reader&		rdr,
 	  get_scope_for_die(rdr, die,
 			    /*called_from_public_decl=*/
 			    die_is_effectively_public_decl(rdr, die),
-			    where_offset);
+			    where_addr);
 	var_decl_sptr v =
 	  build_or_get_var_decl_if_not_suppressed(rdr, var_scope.get(), die,
-						  where_offset,
+						  where_addr,
 						  is_declaration_only,
 						  /*result=*/var_decl_sptr(),
 						  is_required_decl_spec);
@@ -17514,7 +16971,7 @@ build_ir_node_from_die(reader&		rdr,
 	  // Read the specific attributes of this concrete
 	  // implementation and add them to the existing IR node we
 	  // have.
-	  v = build_var_decl(rdr, die, where_offset, v);
+	  v = build_var_decl(rdr, die, where_addr, v);
 
 	Dwarf_Addr addr = 0;
 	bool has_data_location = false;
@@ -17540,7 +16997,7 @@ build_ir_node_from_die(reader&		rdr,
 	    else
 	      rdr.var_decls_to_re_add_to_tree().push_back(v);
 	    rdr.add_var_to_exported_or_undefined_decls(v);
-	    rdr.associate_die_to_decl(die, v, where_offset,
+	    rdr.associate_die_to_decl(die, v, where_addr,
 				      /*associate_by_repr=*/false);
 	    result = v;
 	  }
@@ -17560,7 +17017,7 @@ build_ir_node_from_die(reader&		rdr,
 
 
 	scope_decl_sptr s = get_scope_for_die(rdr, die, called_from_public_decl,
-					      where_offset);
+					      where_addr);
 	scope_decl* interface_scope = scope ? scope : s.get();
 
 	class_decl* class_scope = is_class_type(interface_scope);
@@ -17599,7 +17056,7 @@ build_ir_node_from_die(reader&		rdr,
 	  // Let's see if this function is the implementation of an
 	  // existing interface.  In that case, let's read the
 	  // specification of the origin interface ...
-	  existing_fn = build_function_decl(rdr, &abstract_origin_die, where_offset,
+	  existing_fn = build_function_decl(rdr, &abstract_origin_die, where_addr,
 					    /*existing_fn=*/nullptr);
 
 	rdr.scope_stack().push(interface_scope);
@@ -17610,7 +17067,7 @@ build_ir_node_from_die(reader&		rdr,
 	// DIE for that IR node.
 	result =
 	  build_or_get_fn_decl_if_not_suppressed(rdr, interface_scope,
-						 die, where_offset,
+						 die, where_addr,
 						 is_declaration_only,
 						 existing_fn);
 
@@ -17651,7 +17108,7 @@ build_ir_node_from_die(reader&		rdr,
 	      // the canonicalization of their parent type.  So let's
 	      // not do it here.
 	      rdr.add_fn_to_exported_or_undefined_decls(fn.get());
-	    rdr.associate_die_to_decl(die, fn, where_offset,
+	    rdr.associate_die_to_decl(die, fn, where_addr,
 				      /*associate_by_repr=*/false);
 	    maybe_canonicalize_type(fn->get_type(), rdr);
 	  }
@@ -17720,7 +17177,7 @@ build_ir_node_from_die(reader&		rdr,
     }
 
   if (result && tag != DW_TAG_subroutine_type)
-    rdr.associate_die_to_decl(die, is_decl(result), where_offset,
+    rdr.associate_die_to_decl(die, is_decl(result), where_addr,
 			       /*associate_by_repr=*/false);
 
   if (result)
@@ -17826,7 +17283,7 @@ static type_or_decl_base_sptr
 build_ir_node_from_die(reader&	rdr,
 		       Dwarf_Die*	die,
 		       bool		called_from_public_decl,
-		       size_t		where_offset)
+		       void*		where_addr)
 {
   if (!die)
     return decl_base_sptr();
@@ -17843,13 +17300,13 @@ build_ir_node_from_die(reader&	rdr,
     called_from_public_decl || die_is_effectively_public_decl(rdr, die);
   scope_decl_sptr scope = get_scope_for_die(rdr, die,
 					    consider_as_called_from_public_decl,
-					    where_offset);
+					    where_addr);
   if (!scope)
     scope = rdr.global_scope();
 
   return build_ir_node_from_die(rdr, die, scope.get(),
 				called_from_public_decl,
-				where_offset, true);
+				where_addr, true);
 }
 
 /// Create a dwarf::reader.

@@ -349,7 +349,7 @@ dnl didnt have pkgconfig capabilities to easily query for its version.
 dnl Those were added in version 0.165.
 
 dnl look for libelf
-ELF_LIBS_VERSION=0.165
+ELF_LIBS_VERSION=0.171
 SAVED_PKG_CONFIG_PATH=$PKG_CONFIG_PATH
 if test $WITH_ELF_LIBS_PATH != xauto; then
   export PKG_CONFIG_PATH="$WITH_ELF_LIBS_PATH/lib/pkgconfig:$PKG_CONFIG_PATH"
@@ -362,7 +362,7 @@ if test $WITH_ELF_LIBS_PATH != xauto; then
 fi
 
 dnl Look for libdw
-DW_LIBS_VERSION=0.165
+DW_LIBS_VERSION=0.171
 SAVED_PKG_CONFIG_PATH=$PKG_CONFIG_PATH
 if test $WITH_DW_LIBS_PATH != xauto; then
   export PKG_CONFIG_PATH="$WITH_DW_LIBS_PATH/lib/pkgconfig:$PKG_CONFIG_PATH"

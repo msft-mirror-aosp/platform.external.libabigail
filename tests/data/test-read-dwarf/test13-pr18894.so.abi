@@ -280,18 +280,7 @@
         <var-decl name='padding1' type-id='type-id-9' visibility='default' filepath='../dbus/dbus-errors.h' line='59' column='1'/>
       </data-member>
     </class-decl>
-    <class-decl name='DBusList' is-struct='yes' visibility='default' size-in-bits='192' filepath='../dbus/dbus-list.h' line='35' column='1' hash='3dbb5da63af363a8' id='type-id-10'>
-      <data-member access='public' layout-offset-in-bits='0'>
-        <var-decl name='prev' type-id='type-id-5' visibility='default' filepath='/tmp/legendre/spack-stage/spack-stage-hI99PR/dbus-1.9.0/dbus/dbus-list.h' line='36' column='1'/>
-      </data-member>
-      <data-member access='public' layout-offset-in-bits='64'>
-        <var-decl name='next' type-id='type-id-5' visibility='default' filepath='/tmp/legendre/spack-stage/spack-stage-hI99PR/dbus-1.9.0/dbus/dbus-list.h' line='37' column='1'/>
-      </data-member>
-      <data-member access='public' layout-offset-in-bits='128'>
-        <var-decl name='data' type-id='type-id-9' visibility='default' filepath='/tmp/legendre/spack-stage/spack-stage-hI99PR/dbus-1.9.0/dbus/dbus-list.h' line='38' column='1'/>
-      </data-member>
-    </class-decl>
-    <class-decl name='DBusString' is-struct='yes' visibility='default' size-in-bits='192' filepath='../dbus/dbus-string.h' line='43' column='1' hash='7484d1c87b690207' id='type-id-11'>
+    <class-decl name='DBusString' is-struct='yes' visibility='default' size-in-bits='192' filepath='../dbus/dbus-string.h' line='43' column='1' hash='7484d1c87b690207' id='type-id-10'>
       <data-member access='public' layout-offset-in-bits='0'>
         <var-decl name='dummy1' type-id='type-id-9' visibility='default' filepath='../dbus/dbus-string.h' line='47' column='1'/>
       </data-member>
@@ -314,17 +303,17 @@
         <var-decl name='dummy_bits' type-id='type-id-8' visibility='default' filepath='../dbus/dbus-string.h' line='54' column='1'/>
       </data-member>
     </class-decl>
-    <typedef-decl name='DBusAddressEntry' type-id='type-id-3' size-in-bits='320' filepath='/tmp/legendre/spack-stage/spack-stage-hI99PR/dbus-1.9.0/dbus/dbus-address.h' line='41' column='1' id='type-id-12'/>
-    <typedef-decl name='DBusError' type-id='type-id-6' size-in-bits='256' filepath='../dbus/dbus-errors.h' line='43' column='1' id='type-id-13'/>
-    <typedef-decl name='DBusList' type-id='type-id-10' size-in-bits='192' filepath='../dbus/dbus-sysdeps.h' line='74' column='1' id='type-id-14'/>
-    <typedef-decl name='DBusString' type-id='type-id-11' size-in-bits='192' filepath='../dbus/dbus-string.h' line='40' column='1' id='type-id-4'/>
+    <typedef-decl name='DBusAddressEntry' type-id='type-id-3' size-in-bits='320' filepath='/tmp/legendre/spack-stage/spack-stage-hI99PR/dbus-1.9.0/dbus/dbus-address.h' line='41' column='1' id='type-id-11'/>
+    <typedef-decl name='DBusError' type-id='type-id-6' size-in-bits='256' filepath='../dbus/dbus-errors.h' line='43' column='1' id='type-id-12'/>
+    <typedef-decl name='DBusList' type-id='type-id-13' size-in-bits='192' filepath='../dbus/dbus-sysdeps.h' line='74' column='1' id='type-id-14'/>
+    <typedef-decl name='DBusString' type-id='type-id-10' size-in-bits='192' filepath='../dbus/dbus-string.h' line='40' column='1' id='type-id-4'/>
     <typedef-decl name='dbus_bool_t' type-id='type-id-15' size-in-bits='32' filepath='../dbus/dbus-types.h' line='35' column='1' hash='e66b43f97c38e87a' id='type-id-16'/>
     <typedef-decl name='dbus_uint32_t' type-id='type-id-8' size-in-bits='32' filepath='../dbus/dbus-arch-deps.h' line='43' column='1' hash='e66b43f97c38e87a' id='type-id-15'/>
     <type-decl name='unsigned int' size-in-bits='32' hash='e66b43f97c38e87a' id='type-id-8'/>
-    <pointer-type-def type-id='type-id-12' size-in-bits='64' hash='d93aa7875ae672b4' id='type-id-17'/>
+    <pointer-type-def type-id='type-id-11' size-in-bits='64' hash='d93aa7875ae672b4' id='type-id-17'/>
     <pointer-type-def type-id='type-id-17' size-in-bits='64' hash='07a67f2c3990adc5' id='type-id-18'/>
     <pointer-type-def type-id='type-id-18' size-in-bits='64' hash='6dd89505e1dc5a2d' id='type-id-19'/>
-    <pointer-type-def type-id='type-id-13' size-in-bits='64' hash='39f062157d8b0d43' id='type-id-20'/>
+    <pointer-type-def type-id='type-id-12' size-in-bits='64' hash='39f062157d8b0d43' id='type-id-20'/>
     <pointer-type-def type-id='type-id-14' size-in-bits='64' hash='41394a30fcdfe4d0' id='type-id-5'/>
     <pointer-type-def type-id='type-id-1' size-in-bits='64' hash='e533f42d1dd4942c' id='type-id-21'/>
     <qualified-type-def type-id='type-id-1' const='yes' hash='3e50fd33f9bb78d9' id='type-id-22'/>
@@ -1263,7 +1252,7 @@
     </function-type>
   </abi-instr>
   <abi-instr address-size='64' path='dbus-errors.c' comp-dir-path='/tmp/legendre/spack-stage/spack-stage-hI99PR/dbus-1.9.0/dbus' language='LANG_C89'>
-    <qualified-type-def type-id='type-id-13' const='yes' hash='853b531cd1f3009f' id='type-id-142'/>
+    <qualified-type-def type-id='type-id-12' const='yes' hash='853b531cd1f3009f' id='type-id-142'/>
     <pointer-type-def type-id='type-id-142' size-in-bits='64' hash='b30a18635c18621b' id='type-id-143'/>
     <function-decl name='dbus_error_init' mangled-name='dbus_error_init' filepath='/tmp/legendre/spack-stage/spack-stage-hI99PR/dbus-1.9.0/dbus/dbus-errors.c' line='188' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='dbus_error_init' hash='7fef4e7db2dcc5a6'>
       <parameter type-id='type-id-20' filepath='/tmp/legendre/spack-stage/spack-stage-hI99PR/dbus-1.9.0/dbus/dbus-errors.c' line='188' column='1'/>
@@ -1333,6 +1322,17 @@
     </function-type>
   </abi-instr>
   <abi-instr address-size='64' path='dbus-message.c' comp-dir-path='/tmp/legendre/spack-stage/spack-stage-hI99PR/dbus-1.9.0/dbus' language='LANG_C89'>
+    <class-decl name='DBusList' is-struct='yes' visibility='default' size-in-bits='192' filepath='../dbus/dbus-list.h' line='35' column='1' hash='3dbb5da63af363a8' id='type-id-13'>
+      <data-member access='public' layout-offset-in-bits='0'>
+        <var-decl name='prev' type-id='type-id-5' visibility='default' filepath='../dbus/dbus-list.h' line='36' column='1'/>
+      </data-member>
+      <data-member access='public' layout-offset-in-bits='64'>
+        <var-decl name='next' type-id='type-id-5' visibility='default' filepath='../dbus/dbus-list.h' line='37' column='1'/>
+      </data-member>
+      <data-member access='public' layout-offset-in-bits='128'>
+        <var-decl name='data' type-id='type-id-9' visibility='default' filepath='../dbus/dbus-list.h' line='38' column='1'/>
+      </data-member>
+    </class-decl>
     <class-decl name='DBusMessageIter' is-struct='yes' visibility='default' size-in-bits='576' filepath='../dbus/dbus-message.h' line='52' column='1' hash='8ba09671025fb4b6' id='type-id-147'>
       <data-member access='public' layout-offset-in-bits='0'>
         <var-decl name='dummy1' type-id='type-id-9' visibility='default' filepath='../dbus/dbus-message.h' line='53' column='1'/>
