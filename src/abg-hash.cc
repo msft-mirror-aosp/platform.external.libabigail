@@ -504,11 +504,15 @@ typedef_decl::hash::operator()(const typedef_decl& t) const
   // The hash value of a typedef is the same as the hash value of its
   // underlying type.
   type_base_sptr u = look_through_decl_only_type(t.get_underlying_type());
-  hashing::hashing_state s = hashing::get_hashing_state(*u);
-  hashing::set_hashing_state(*u, hashing::HASHING_SUBTYPE_STATE);
-  hash_t v = u->hash_value();
-  hashing::set_hashing_state(*u, s);
-  MAYBE_FLAG_TYPE_AS_RECURSIVE(t, u, v);
+  hash_t v = peek_hash_value(*u);
+  if (!v)
+    {
+      hashing::hashing_state s = hashing::get_hashing_state(*u);
+      hashing::set_hashing_state(*u, hashing::HASHING_SUBTYPE_STATE);
+      v = u->hash_value();
+      hashing::set_hashing_state(*u, s);
+      MAYBE_FLAG_TYPE_AS_RECURSIVE(t, u, v);
+    }
 
   hashing::set_hashing_state(t, hashing::HASHING_NOT_DONE_STATE);
 

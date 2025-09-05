@@ -1510,6 +1510,24 @@ get_fn_decl_or_var_decl_diff_ancestor(const diff *);
 bool
 is_diff_of_global_decls(const diff*);
 
+/// Get the identifier of an ABI artifact (either a function or a
+/// variable) that is not supposed to change (too much) when the
+/// artifact changes without being removed.  The concept of "change"
+/// is intentionnaly fuzzy here.
+///
+/// @tparm Artefact the type of the of the artifact.  It's basically
+/// either a function_decl or a var_decl.
+template <class Artefact>
+string
+get_identifier_relevant_across_change(Artefact& artefact)
+{
+  string n = artefact->get_symbol()
+    ? artefact->get_symbol()->get_id_string()
+    : artefact->get_linkage_name();
+  if (n.empty())
+    n = artefact->get_pretty_representation();
+  return n;
+}
 } // end namespace comparison
 
 } // namespace abigail

@@ -164,7 +164,10 @@
       implicit parameter 0 of type 'tbb::internal::concurrent_queue_base_v3*' has sub-type changes:
         in pointed to type 'class tbb::internal::concurrent_queue_base_v3' at _concurrent_queue_impl.h:834:1:
           type size hasn't changed
-          no member function changes (7 filtered);
+          2 member function insertions:
+            'method virtual tbb::internal::concurrent_queue_base_v3::~concurrent_queue_base_v3()' at concurrent_queue.cpp:370:1, virtual at voffset 0/6 of linkage name '_ZN3tbb8internal24concurrent_queue_base_v3D0Ev'
+            'method virtual tbb::internal::concurrent_queue_base_v3::~concurrent_queue_base_v3()' at concurrent_queue.cpp:370:1, virtual at voffset 0/6 of linkage name '_ZN3tbb8internal24concurrent_queue_base_v3D4Ev'
+          no member function changes (6 filtered);
           1 data member change:
             type of 'concurrent_queue_rep* my_rep' changed:
               in pointed to type 'class tbb::internal::concurrent_queue_rep' at concurrent_queue.cpp:129:1:

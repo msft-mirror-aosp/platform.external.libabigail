@@ -11,14 +11,11 @@ Variables changes summary: 0 Removed, 0 Changed, 0 Added variable
         type size hasn't changed
         1 member function insertion:
           'method virtual void S::fvtable_breaker()', virtual at voffset 3/4
-        5 member function changes:
-          'method virtual S::~S()' has some sub-type changes:
+        4 member function changes:
+          'method virtual S::~S()' of linkage name: '_ZN1SD0Ev' has some sub-type changes:
             implicit parameter 0 of type 'S*' has sub-type changes:
               pointed to type 'struct S' changed, as being reported
-          'method virtual S::~S()' has some sub-type changes:
-            implicit parameter 0 of type 'S*' has sub-type changes:
-              pointed to type 'struct S' changed, as being reported
-          'method virtual S::~S(int)' has some sub-type changes:
+          'method virtual S::~S()' of linkage name: '_ZN1SD2Ev' has some sub-type changes:
             implicit parameter 0 of type 'S*' has sub-type changes:
               pointed to type 'struct S' changed, as being reported
           'method virtual void S::fn0()' has some sub-type changes:

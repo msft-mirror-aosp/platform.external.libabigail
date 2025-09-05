@@ -4302,6 +4302,28 @@ const translation_unit*
 type_or_decl_base::get_translation_unit() const
 {return const_cast<type_or_decl_base*>(this)->get_translation_unit();}
 
+/// Get the original artefact that the current artefact was copied from.
+///
+/// If the current artefact wasn't copied from anything else, then
+/// this returns nullptr.  This is set, for instance, by
+/// copy_member_function or copy_member_variable by invoking
+/// type_or_decl_base::set_original_artefact.
+///
+/// @return the original artefact that the current artefact was copied
+/// from.
+const type_or_decl_base*
+type_or_decl_base::get_original_artefact() const
+{return priv_->original_artefact_;}
+
+/// Set the original artefact that the current artefact was copied
+/// from.
+///
+/// @param o the original artefact that the current artefact was
+/// copied from.
+void
+type_or_decl_base::set_original_artefact(const type_or_decl_base* o)
+{priv_->original_artefact_ = o;}
+
 /// Traverse the the ABI artifact.
 ///
 /// @param v the visitor used to traverse the sub-tree nodes of the
@@ -7073,7 +7095,8 @@ peel_typedef_type(const type_base_sptr& type)
   if (!t)
     return type;
 
-  if (is_typedef(t->get_underlying_type()))
+  if (is_typedef(t->get_underlying_type())
+      && *t->get_underlying_type() != *type)
     return peel_typedef_type(t->get_underlying_type());
   return t->get_underlying_type();
 }
@@ -10646,6 +10669,42 @@ is_at_class_scope(const decl_base& decl)
     return cl;
   return 0;
 }
+
+/// Tests whether a given decl is at function scope.
+///
+/// @param decl the decl to consider.
+///
+/// @return true iff decl is at function scope.
+function_decl*
+is_at_function_scope(const decl_base& decl)
+{
+  scope_decl* scope = decl.get_scope();
+  if (function_decl* fn = is_function_decl(scope))
+    return fn;
+  return nullptr;
+}
+
+/// Tests whether a given decl is at function scope.
+///
+/// @param decl the decl to consider.
+///
+/// @return true iff decl is at function scope.
+function_decl*
+is_at_function_scope(const decl_base* decl)
+{
+  if (decl)
+    return is_at_function_scope(*decl);
+  return nullptr;
+}
+
+/// Tests whether a given decl is at function scope.
+///
+/// @param decl the decl to consider.
+///
+/// @return true iff decl is at function scope.
+function_decl*
+is_at_function_scope(const decl_base_sptr& decl)
+{return is_at_function_scope(decl.get());}
 
 /// Find a data member inside an anonymous data member.
 ///
@@ -15894,20 +15953,19 @@ type_base::get_canonical_type_for(type_base_sptr t)
   if (decl_only_class_equals_definition)
     if (class_or_union)
       if (class_or_union->get_is_declaration_only())
-	return type_base_sptr();
+	{
+	  if (class_decl_sptr klass = is_class_type(class_or_union))
+	    {
+	      if (!has_defined_virtual_mem_fn(klass))
+		return type_base_sptr();
+	    }
+	  else // we are looking at decl-only union
+	    return type_base_sptr();
+	}
 
   class_decl_sptr is_class = is_class_type(t);
   if (t->get_canonical_type())
     return t->get_canonical_type();
-
-  // For classes and union, ensure that an anonymous class doesn't
-  // have a linkage name.  If it does in the future, then me must be
-  // mindful that the linkage name respects the type identity
-  // constraints which states that "if two linkage names are different
-  // then the two types are different".
-  ABG_ASSERT(!class_or_union
-	     || !class_or_union->get_is_anonymous()
-	     || class_or_union->get_linkage_name().empty());
 
   // We want the pretty representation of the type, but for an
   // internal use, not for a user-facing purpose.
@@ -16116,6 +16174,19 @@ maybe_adjust_canonical_type(const type_base_sptr& canonical,
   if (type->get_naked_canonical_type())
     return;
 
+  class_or_union_sptr cou = is_class_or_union_type(canonical);
+  if (cou)
+    {
+      // Ensure that the canonical type has the union of the member
+      // functions and variables of the types that are in its class of
+      // equivalence.  This way, just emitting a canonical type (in
+      // the ABIXML format, for instance) is enough to capture the
+      // member functions and variables of all the types that are in
+      // its class of equivalence.
+      copy_missing_member_functions(cou, is_class_or_union_type(type));
+      copy_missing_member_variables(cou, is_class_or_union_type(type));
+    }
+
   class_decl_sptr canonical_class = is_class_type(canonical);
 
   if (class_decl_sptr cl = is_class_type(type))
@@ -16126,20 +16197,19 @@ maybe_adjust_canonical_type(const type_base_sptr& canonical,
 	{
 	  // Set symbols of member functions that might be missing
 	  // theirs.
-	  for (class_decl::member_functions::const_iterator i =
-		 cl->get_member_functions().begin();
-	       i != cl->get_member_functions().end();
-	       ++i)
-	    if ((*i)->get_symbol())
+	  for (auto& mem_fn  : cl->get_member_functions())
+	    if (mem_fn->get_symbol())
 	      {
-		if (method_decl *m = canonical_class->
-		    find_member_function((*i)->get_linkage_name()))
+		string n = mem_fn->get_linkage_name();
+		if (n.empty())
+		  n = mem_fn->get_name();
+		if (method_decl *m = canonical_class->find_member_function(n))
 		  {
-		    elf_symbol_sptr s1 = (*i)->get_symbol();
+		    elf_symbol_sptr s1 = mem_fn->get_symbol();
 		    if (s1 && !m->get_symbol())
 		      // Method 'm' in the canonical type is not
 		      // linked to the underlying symbol of '*i'.
-		      // Let's link it now.  have th
+		      // Let's link it now.
 		      m->set_symbol(s1);
 		  }
 		else
@@ -16283,14 +16353,14 @@ canonicalize(type_base_sptr t, bool do_log, bool show_stats)
   if (do_log && show_stats)
     std::cerr << tmr << "\n";
 
-  maybe_adjust_canonical_type(canonical, t);
-
   t->priv_->canonical_type = canonical;
-  t->priv_->naked_canonical_type = canonical.get();
-
   if (canonical)
-    if (!t->priv_->canonical_type_index)
-      t->priv_->canonical_type_index = canonical->priv_->canonical_type_index;
+    {
+      maybe_adjust_canonical_type(canonical, t);
+      if (!t->priv_->canonical_type_index)
+	t->priv_->canonical_type_index = canonical->priv_->canonical_type_index;
+    }
+  t->priv_->naked_canonical_type = canonical.get();
 
   if (class_decl_sptr cl = is_class_type(t))
     if (type_base_sptr d = is_type(cl->get_earlier_declaration()))
@@ -16331,6 +16401,19 @@ canonicalize(type_base_sptr t, bool do_log, bool show_stats)
 
   t->on_canonical_type_set();
   return canonical;
+}
+
+/// Hash and canonicalize a type.
+///
+/// @param t the type to hash and then canonicalize.
+void
+hash_and_canonicalize_type(type_base_sptr t)
+{
+  if (!t)
+    return;
+
+  t->hash_value();
+  canonicalize(t);
 }
 
 /// Set the definition of this declaration-only @ref decl_base.
@@ -17823,16 +17906,15 @@ qualified_type_def::get_qualified_name(bool internal) const
 	  // We are asked to return a temporary *internal* name.
 	  // Lets compute it and return a reference to where it's
 	  // stored.
-	  if (priv_->temporary_internal_name_.empty())
-	    priv_->temporary_internal_name_ =
-	      env.intern(build_name(true, /*internal=*/true));
+	  priv_->temporary_internal_name_ =
+	    env.intern(build_name(true, /*internal=*/true));
 	  return priv_->temporary_internal_name_;
 	}
       else
 	{
 	  // We are asked to return a temporary non-internal name.
-	    set_temporary_qualified_name
-	      (env.intern(build_name(true, /*internal=*/false)));
+	  set_temporary_qualified_name
+	    (env.intern(build_name(true, /*internal=*/false)));
 	  return peek_temporary_qualified_name();
 	}
     }
@@ -18321,16 +18403,14 @@ pointer_type_def::get_qualified_name(bool internal) const
 	  // (and so its name) can change.  So let's invalidate the
 	  // cache where we store its name at each invocation of this
 	  // function.
-	  if (pointed_to_type)
-	    if (priv_->temp_internal_qualified_name_.empty())
-	      priv_->temp_internal_qualified_name_ =
-		pointer_declaration_name(this,
-					 /*variable_name=*/"",
-					 /*qualified_name=*/
-					 is_typedef(pointed_to_type)
-					 ? false
-					 : true,
-					 /*internal=*/true);
+	  priv_->temp_internal_qualified_name_ =
+	    pointer_declaration_name(this,
+				     /*variable_name=*/"",
+				     /*qualified_name=*/
+				     is_typedef(pointed_to_type)
+				     ? false
+				     : true,
+				     /*internal=*/true);
 	  return priv_->temp_internal_qualified_name_;
 	}
     }
@@ -18742,16 +18822,14 @@ reference_type_def::get_qualified_name(bool internal) const
 	  // (and so its name) can change.  So let's invalidate the
 	  // cache where we store its name at each invocation of this
 	  // function.
-	  if (pointed_to_type)
-	    if (priv_->temp_internal_qualified_name_.empty())
-	      priv_->temp_internal_qualified_name_ =
-		get_name_of_reference_to_type(*pointed_to_type,
-					      is_lvalue(),
-					      /*qualified_name=*/
-					      is_typedef(pointed_to_type)
-					      ? false
-					      : true,
-					      /*internal=*/true);
+	  priv_->temp_internal_qualified_name_ =
+	    get_name_of_reference_to_type(*pointed_to_type,
+					  is_lvalue(),
+					  /*qualified_name=*/
+					  is_typedef(pointed_to_type)
+					  ? false
+					  : true,
+					  /*internal=*/true);
 	  return priv_->temp_internal_qualified_name_;
 	}
     }
@@ -21070,10 +21148,18 @@ typedef_decl::get_size_in_bits() const
 {
   if (!get_underlying_type())
     return 0;
-  size_t s = get_underlying_type()->get_size_in_bits();
+
+  size_t s = type_base::get_size_in_bits();
+  type_base_sptr u = get_underlying_type();
+  if (is_typedef(u))
+    return s;
+  if (type_base_sptr t = peel_typedef_type(u))
+    s = t->get_size_in_bits();
+  else
+    s = get_underlying_type()->get_size_in_bits();
   if (s != type_base::get_size_in_bits())
     const_cast<typedef_decl*>(this)->set_size_in_bits(s);
-  return type_base::get_size_in_bits();
+  return s;
 }
 
 /// Return the alignment of the typedef.
@@ -21087,10 +21173,18 @@ typedef_decl::get_alignment_in_bits() const
 {
   if (!get_underlying_type())
     return 0;
-  size_t s = get_underlying_type()->get_alignment_in_bits();
-  if (s != type_base::get_alignment_in_bits())
-    const_cast<typedef_decl*>(this)->set_alignment_in_bits(s);
-  return type_base::get_alignment_in_bits();
+
+  size_t a = type_base::get_alignment_in_bits();
+  type_base_sptr u = get_underlying_type();
+  if (is_typedef(u))
+    return a;
+  if (type_base_sptr t = peel_typedef_type(u))
+    a = t->get_alignment_in_bits();
+  else
+    a = get_underlying_type()->get_alignment_in_bits();
+  if (a != type_base::get_alignment_in_bits())
+    const_cast<typedef_decl*>(this)->set_alignment_in_bits(a);
+  return a;
 }
 
 /// Compares two instances of @ref typedef_decl.
@@ -21128,7 +21222,9 @@ equals(const typedef_decl& l, const typedef_decl& r, change_kind* k)
 	ABG_RETURN_FALSE;
     }
 
-  if (*l.get_underlying_type() != *r.get_underlying_type())
+  if ((!!l.get_underlying_type() != !!r.get_underlying_type())
+      || (l.get_underlying_type() && r.get_underlying_type()
+	  && *l.get_underlying_type() != *r.get_underlying_type()))
     {
       // Changes to the underlying type of a typedef are considered
       // local, a bit like for pointers.
@@ -21190,7 +21286,6 @@ string
 typedef_decl::get_pretty_representation(bool internal,
 					bool qualified_name) const
 {
-
   string result = "typedef ";
   if (qualified_name)
     result += get_qualified_name(internal);
@@ -22260,6 +22355,33 @@ function_type::get_first_non_implicit_parm() const
   return i;
 }
 
+/// Get the first parameter of the function that is not
+/// compiler-generated.
+///
+/// If the function is a non-static member function, the parameter
+/// returned is the first one following the implicit 'this' parameter,
+/// that is defined by the code of the user.
+///
+/// @return the first non-implicit non-artificial parameter of the
+/// function.  If the function has no non-implicit non-artificial
+/// parameter then returns function_type::get_parameters().end();
+function_type::parameters::const_iterator
+function_type::get_first_non_artificial_parm() const
+{
+  if (get_parameters().empty())
+    return get_parameters().end();
+
+  bool is_method = dynamic_cast<const method_type*>(this);
+  parameters::const_iterator i = get_parameters().begin();
+
+  if (is_method)
+    for (; i != get_parameters().end(); ++i)
+      if (!(*i)->get_is_artificial())
+	return i;
+
+  return i;
+}
+
 /// Get the first parameter of the function.
 ///
 /// Note that if the function is a non-static member function, the
@@ -22641,7 +22763,7 @@ method_type::get_is_for_static_method() const
   type_base_sptr candidate_class_type =
     is_pointer_type(this_ptr_type)->get_pointed_to_type();
   candidate_class_type = peel_qualified_type(candidate_class_type);
-  if (is_class_type(candidate_class_type)
+  if (is_class_or_union_type(candidate_class_type)
       && get_type_name(candidate_class_type) == get_type_name(get_class_type()))
     // At this point, we are sure we are looking at a *non-static*
     // method.
@@ -22719,6 +22841,7 @@ function_decl::function_decl(const string& name,
   : type_or_decl_base(function_type->get_environment(),
 		      FUNCTION_DECL | ABSTRACT_DECL_BASE),
     decl_base(function_type->get_environment(), name, locus, mangled_name, vis),
+    scope_decl(function_type->get_environment(), "", locus),
     priv_(new priv(function_type, declared_inline, bind))
 {
   runtime_type_instance(this);
@@ -22757,6 +22880,7 @@ function_decl::function_decl(const string&	name,
   : type_or_decl_base(fn_type->get_environment(),
 		      FUNCTION_DECL | ABSTRACT_DECL_BASE),
     decl_base(fn_type->get_environment(), name, locus, linkage_name, vis),
+    scope_decl(fn_type->get_environment(), "", locus),
     priv_(new priv(dynamic_pointer_cast<function_type>(fn_type),
 		   declared_inline,
 		   bind))
@@ -22846,7 +22970,7 @@ function_decl::get_pretty_representation(bool internal,
 /// @return the pretty representation for the part of the function
 /// declaration that starts at the declarator.
 string
-function_decl::get_pretty_representation_of_declarator (bool internal) const
+function_decl::get_pretty_representation_of_declarator(bool internal) const
 {
   const method_decl* mem_fn =
     dynamic_cast<const method_decl*>(this);
@@ -22893,6 +23017,33 @@ function_decl::get_first_non_implicit_parm() const
   parameters::const_iterator i = get_parameters().begin();
   if (is_method)
     ++i;
+
+  return i;
+}
+
+/// Get the first parameter of the function that is not
+/// compiler-generated.
+///
+/// If the function is a non-static member function, the parameter
+/// returned is the first one following the implicit 'this' parameter,
+/// that is defined by the code of the user.
+///
+/// @return the first non-implicit non-artificial parameter of the
+/// function.  If the function has no non-implicit non-artificial
+/// parameter then returns function_decl::get_parameters().end();
+function_decl::parameters::const_iterator
+function_decl::get_first_non_artificial_parm() const
+{
+  if (get_parameters().empty())
+    return get_parameters().end();
+
+  bool is_method = dynamic_cast<const method_type*>(this);
+  parameters::const_iterator i = get_parameters().begin();
+
+  if (is_method)
+    for (; i != get_parameters().end(); ++i)
+      if (!(*i)->get_is_artificial())
+	return i;
 
   return i;
 }
@@ -23229,6 +23380,51 @@ function_decl::is_variadic() const
 }
 
 /// Return an ID that tries to uniquely identify the function inside a
+/// program or a library, given a given ELF symbol.
+///
+/// The ID is the concatenation of the function's representation, its
+/// symbol name and its version.
+///
+/// @param s the ELF symbol to use to construct the function ID.
+///
+/// @return the ID.
+interned_string
+function_decl::get_id(const elf_symbol_sptr& s) const
+{
+  const environment& env = get_type()->get_environment();
+  std::ostringstream id;
+  id << get_pretty_representation(/*internal=*/true, /*qualified_name*/true);
+  if (s)
+    {
+      string virtual_member_suffix;
+      if (is_method_decl(this))
+	{
+	  method_decl* m = is_method_decl(this);
+	  ABG_ASSERT(m);
+	  if (get_member_function_is_virtual(m))
+	    {
+	      if (is_declaration_only_class_or_union_type
+		  (m->get_type()->get_class_type(),
+		   /*look_through_decl_only=*/true))
+		virtual_member_suffix += "/o";
+	    }
+	}
+
+      // Let's use the full symbol name with its version as ID.
+      id <<  "{" << s->get_id_string() << "}";
+
+      if (!virtual_member_suffix.empty())
+	id << virtual_member_suffix;
+    }
+  else if (!get_linkage_name().empty())
+    id << "#" << get_linkage_name() << "#";
+
+ interned_string result = env.intern(id.str());
+
+ return result;
+}
+
+/// Return an ID that tries to uniquely identify the function inside a
 /// program or a library.
 ///
 /// So if the function has an underlying elf symbol, the ID is the
@@ -23241,40 +23437,7 @@ interned_string
 function_decl::get_id() const
 {
   if (priv_->id_.empty())
-    {
-      const environment& env = get_type()->get_environment();
-      if (elf_symbol_sptr s = get_symbol())
-	{
-	  string virtual_member_suffix;
-	  if (is_member_function(this))
-	      {
-		method_decl* m = is_method_decl(this);
-		ABG_ASSERT(m);
-		if (get_member_function_is_virtual(m))
-		  {
-		    if (is_declaration_only_class_or_union_type
-			(m->get_type()->get_class_type(),
-			 /*look_through_decl_only=*/true))
-		      virtual_member_suffix += "/o";
-		  }
-	      }
-	  if (s->has_aliases())
-	    // The symbol has several aliases, so let's use a scheme
-	    // that allows all aliased functions to have different
-	    // IDs.
-	    priv_->id_ = env.intern(get_name() + "/" + s->get_id_string());
-	  else
-	    // Let's use the full symbol name with its version as ID.
-	    priv_->id_ = env.intern(s->get_id_string());
-
-	  if (!virtual_member_suffix.empty())
-	    priv_->id_ = env.intern(priv_->id_ + virtual_member_suffix);
-	}
-      else if (!get_linkage_name().empty())
-	priv_->id_= env.intern(get_linkage_name());
-      else
-	priv_->id_ = env.intern(get_pretty_representation());
-    }
+    priv_->id_ = get_id(get_symbol());
   return priv_->id_;
 }
 
@@ -24298,6 +24461,8 @@ class_or_union::add_member_function(method_decl_sptr f,
   // so that class_or_union::find_member_function() can function.
   if (!f->get_linkage_name().empty())
     priv_->mem_fns_map_[f->get_linkage_name()] = f;
+  else
+    priv_->mem_fns_map_[f->get_name()] = f;
 }
 
 /// Get the member functions of this @ref class_or_union.
@@ -24760,7 +24925,6 @@ equals(const class_or_union& l, const class_or_union& r, change_kind* k)
 #undef RETURN
 }
 
-
 /// Copy a method of a @ref class_or_union into a new @ref
 /// class_or_union.
 ///
@@ -24773,7 +24937,6 @@ method_decl_sptr
 copy_member_function(class_or_union_sptr t,
 		     const method_decl_sptr& method)
 {return copy_member_function(t, method.get());}
-
 
 /// Copy a method of a @ref class_or_union into a new @ref
 /// class_or_union.
@@ -24825,6 +24988,11 @@ copy_member_function(class_or_union_sptr t, const method_decl* method)
 			   get_member_function_is_ctor(*method),
 			   get_member_function_is_dtor(*method),
 			   get_member_function_is_const(*method));
+
+  new_method->set_original_artefact(method);
+
+  
+
   return new_method;
 }
 
@@ -24863,6 +25031,8 @@ copy_member_variable(class_or_union_sptr t, const var_decl* variable)
 		     get_data_member_is_laid_out(*variable),
 		     get_member_is_static(*variable),
 		     offset_in_bits);
+
+  new_variable->set_original_artefact(variable);
 
   return new_variable;
 }
@@ -25546,6 +25716,7 @@ method_decl::method_decl(const string&		name,
 		      | ABSTRACT_DECL_BASE
 		      |FUNCTION_DECL),
     decl_base(type->get_environment(), name, locus, linkage_name, vis),
+    scope_decl(type->get_environment(), "", locus),
     function_decl(name, static_pointer_cast<function_type>(type),
 		  declared_inline, locus, linkage_name, vis, bind)
 {
@@ -25583,9 +25754,9 @@ method_decl::method_decl(const string&		name,
 		      | ABSTRACT_DECL_BASE
 		      | FUNCTION_DECL),
     decl_base(type->get_environment(), name, locus, linkage_name, vis),
-    function_decl(name, static_pointer_cast<function_type>
-		  (dynamic_pointer_cast<method_type>(type)),
-		  declared_inline, locus, linkage_name, vis, bind)
+    scope_decl(type->get_environment(), "", locus),
+    function_decl(name, type, declared_inline, locus,
+		  linkage_name, vis, bind)
 {
   runtime_type_instance(this);
   set_context_rel(new mem_fn_context_rel(0));
@@ -25620,9 +25791,9 @@ method_decl::method_decl(const string&		name,
 		      | ABSTRACT_DECL_BASE
 		      | FUNCTION_DECL),
     decl_base(type->get_environment(), name, locus, linkage_name, vis),
-    function_decl(name, static_pointer_cast<function_type>
-		  (dynamic_pointer_cast<method_type>(type)),
-		  declared_inline, locus, linkage_name, vis, bind)
+    scope_decl(type->get_environment(), "", locus),
+    function_decl(name, type, declared_inline, locus,
+		  linkage_name, vis, bind)
 {
   runtime_type_instance(this);
   set_context_rel(new mem_fn_context_rel(0));
@@ -26186,8 +26357,7 @@ equals(const class_decl& l, const class_decl& r, change_kind* k)
 
   // So, there should be the same number of different vtable
   // offsets, the size of two maps must be equals.
-  if (l.get_virtual_mem_fns_map().size()
-      != r.get_virtual_mem_fns_map().size())
+  if (l.get_virtual_mem_fns_map().size() != r.get_virtual_mem_fns_map().size())
     {
       result = false;
       if (k)
@@ -27362,6 +27532,71 @@ copy_member_function(union_decl_sptr union_type,
 {
   const class_or_union_sptr t = union_type;
   return copy_member_function(t, f);
+}
+
+/// Copy missing member functions from a source @ref class_decl to a
+/// destination one.
+///
+/// If a function is present on the source @ref class_decl and not
+/// on the destination one, then it's copied from the source class
+/// to the destination one.
+void
+copy_missing_member_functions(class_or_union_sptr& dest_class,
+			      const class_or_union_sptr& src_class)
+{
+  if (dest_class && dest_class->get_corpus()
+      && src_class && src_class->get_corpus()
+      && dest_class->get_corpus() == src_class->get_corpus())
+    {
+      vector<method_decl_sptr> methods_to_copy;
+
+      for (auto& method : src_class->get_member_functions())
+	{
+	  string n = method->get_linkage_name();
+	  if (n.empty())
+	    n = method->get_name();
+	  if (!dest_class->find_member_function(n))
+	    methods_to_copy.push_back(method);
+	}
+
+      for (auto& method : methods_to_copy)
+	{
+	  method_decl_sptr copied_method =
+	    copy_member_function(dest_class, method);
+	  ABG_ASSERT(copied_method);
+
+	  if (copied_method->get_type())
+	    hash_and_canonicalize_type(copied_method->get_type());
+	}
+    }
+
+}
+
+/// Copy missing data members from a source @ref class_decl to a
+/// destination one.
+///
+/// If a data membe is present on the source @ref class_decl and not
+/// on the destination one, then it's copied from the source class
+/// to the destination one.
+///
+/// @param dest_class the destination class type to copy the data
+/// member to.
+///
+/// @param src_class the source class type to copy the data member
+/// from.
+void
+copy_missing_member_variables(class_or_union_sptr& dest_class,
+			      const class_or_union_sptr& src_class)
+{
+  if (src_class)
+    for (auto& var : src_class->get_data_members())
+      if (!var->get_name().empty())
+	if (!dest_class->find_data_member(var->get_name()))
+	  {
+	    var_decl_sptr copied_data_member =
+	      copy_member_variable(dest_class, var);
+	    ABG_ASSERT(copied_data_member);
+	  }
 }
 
 /// Turn equality of shared_ptr of union_decl into a deep equality;
@@ -28551,6 +28786,59 @@ peek_hash_value(const type_or_decl_base& artefact)
   return hash_t();
 }
 
+/// Test if a class has at least one member function which has a
+/// defined and exported symbol.
+///
+/// @param klass the class to consider.
+///
+/// @return true iff @p klass has at least one member function which
+/// has a defined and exported symbol.
+bool
+has_defined_virtual_mem_fn(const class_decl& klass)
+{
+  const type_base * type =
+    peel_typedef_pointer_or_reference_type(&klass, /*peel_qual_type=*/true);
+
+  if (class_decl* klass = is_class_type(type))
+    for (const auto& mem_fn : klass->get_member_functions())
+      if (get_member_function_is_virtual(mem_fn))
+	{
+	  if (mem_fn->get_symbol()
+	      && mem_fn->get_symbol()->is_public()
+	      && mem_fn->get_symbol()->is_defined())
+	    return true;
+	}
+
+  return false;
+}
+
+/// Test if a class has at least one member function which has a
+/// defined and exported symbol.
+///
+/// @param klass the class to consider.
+///
+/// @return true iff @p klass has at least one member function which
+/// has a defined and exported symbol.
+bool
+has_defined_virtual_mem_fn(const class_decl* klass)
+{
+  if (!klass)
+    return false;
+
+  return has_defined_virtual_mem_fn(*klass);
+}
+
+/// Test if a class has at least one member function which has a
+/// defined and exported symbol.
+///
+/// @param klass the class to consider.
+///
+/// @return true iff @p klass has at least one member function which
+/// has a defined and exported symbol.
+bool
+has_defined_virtual_mem_fn(const class_decl_sptr& klass)
+{return has_defined_virtual_mem_fn(klass.get());}
+
 /// Test if a given type is allowed to be non canonicalized
 ///
 /// This is a subroutine of hash_as_canonical_type_or_constant.
@@ -28567,25 +28855,38 @@ is_non_canonicalized_type(const type_base *t)
   if (!t)
     return true;
 
-  return (// The IR nodes for the types below are unique across the
-	  // entire ABI corpus.  Thus, no need to canonicalize them.
-	  // Maybe we could say otherwise and canonicalize them once
-	  // for all so that they can be removed from here.
-	  is_unique_type(t)
+  if (// The IR nodes for the types below are unique across the
+      // entire ABI corpus.  Thus, no need to canonicalize them.
+      // Maybe we could say otherwise and canonicalize them once
+      // for all so that they can be removed from here.
+      is_unique_type(t)
 
-	  // An IR node for the types below can be equal to several
-	  // other types (i.e, a decl-only type t equals a fully
-	  // defined type of the same name in ODR-supported
-	  // languages). Hence, they can't be given a canonical type.
-	  //
-	  // TODO: Maybe add a mode that would detect ODR violations
-	  // that would make a decl-only type co-exists with several
-	  // different definitions of the type in the ABI corpus.
-	  || is_void_pointer_type_equivalent(t)
-	  || is_declaration_only_class_or_union_type(t,
-						     /*look_through_decl_only=*/true)
-	  || is_typedef_ptr_or_ref_to_decl_only_class_or_union_type(t));
+      // An IR node for the types below can be equal to several
+      // other types (i.e, a decl-only type t equals a fully
+      // defined type of the same name in ODR-supported
+      // languages). Hence, they can't be given a canonical type.
+      //
+      // TODO: Maybe add a mode that would detect ODR violations
+      // that would make a decl-only type co-exists with several
+      // different definitions of the type in the ABI corpus.
+      || is_void_pointer_type_equivalent(t))
+    return true;
 
+  if (is_declaration_only_class_or_union_type(t,
+					      /*look_through_decl_only=*/true)
+      || is_typedef_ptr_or_ref_to_decl_only_class_or_union_type(t))
+    {
+      const type_base * type =
+	peel_typedef_pointer_or_reference_type(t, /*peel_qual_type=*/true);
+
+      if (class_decl* klass = is_class_type(type))
+	if (has_defined_virtual_mem_fn(klass))
+	  return false;
+
+      return true;
+    }
+
+  return false;
 }
 
 /// Test if a type is unique in the entire environment.
@@ -29176,10 +29477,12 @@ stream_pretty_representation_of_fn_parms(const function_type& fn_type,
     {
       type_base_sptr type;
       auto end = fn_type.get_parameters().end();
-      auto first_parm = fn_type.get_first_non_implicit_parm();
+      auto first_parm = fn_type.get_first_non_artificial_parm();
       function_decl::parameter_sptr parm;
       const environment& env = fn_type.get_environment();
-      for (auto i = fn_type.get_first_non_implicit_parm(); i != end; ++i)
+      for (auto i = fn_type.get_first_non_artificial_parm();
+	   i != end;
+	   ++i)
 	{
 	  if (i != first_parm)
 	    o << ", ";

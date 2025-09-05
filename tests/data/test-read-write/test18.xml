@@ -5,25 +5,25 @@
       <var-decl name='a' type-id='type-id-1' visibility='default' filepath='../../prtests/test8.cc' line='3' column='8'/>
     </data-member>
     <member-function access='public'>
-      <function-decl name='operator 1' mangled-name='_ZN1ScvcEv' filepath='../../prtests/test8.cc' line='15' column='1' visibility='default' binding='global' size-in-bits='8' alignment-in-bits='8' hash='ddc7f1d3f6ec3ad0'>
-        <parameter type-id='type-id-3'/>
+      <function-decl name='operator 1' mangled-name='_ZN1ScvcEv' filepath='../../prtests/test8.cc' line='15' column='1' visibility='default' binding='global' size-in-bits='8' alignment-in-bits='8' hash='ddc7f1d3f6ec3ad0' id='type-id-3'>
+        <parameter type-id='type-id-4'/>
         <return type-id='type-id-1'/>
       </function-decl>
     </member-function>
     <member-function access='public'>
-      <function-decl name='set' mangled-name='_ZN1S3setEc' filepath='../../prtests/test8.cc' line='21' column='1' visibility='default' binding='global' size-in-bits='8' alignment-in-bits='8' hash='9bd448aaac64c46e'>
-        <parameter type-id='type-id-3'/>
+      <function-decl name='set' mangled-name='_ZN1S3setEc' filepath='../../prtests/test8.cc' line='21' column='1' visibility='default' binding='global' size-in-bits='8' alignment-in-bits='8' hash='9bd448aaac64c46e' id='type-id-5'>
+        <parameter type-id='type-id-4'/>
         <parameter type-id='type-id-1'/>
-        <return type-id='type-id-4'/>
+        <return type-id='type-id-6'/>
       </function-decl>
     </member-function>
   </class-decl>
-  <typedef-decl name='stype' type-id='type-id-2' size-in-bits='8' alignment-in-bits='8' filepath='../../prtests/test8.cc' line='26' column='11' hash='a59b4fd2daaba14f' id='type-id-5'/>
-  <pointer-type-def type-id='type-id-2' size-in-bits='64' alignment-in-bits='64' hash='7c7f4af69cf93700' id='type-id-3'/>
-  <reference-type-def kind='lvalue' type-id='type-id-5' size-in-bits='64' alignment-in-bits='64' hash='16d5f8434543b7eb' id='type-id-6'/>
-  <function-decl name='foo' mangled-name='_Z3fooR1S' filepath='../../prtests/test8.cc' line='29' column='1' visibility='default' binding='global' size-in-bits='8' alignment-in-bits='8' hash='bdac415dc6f9a093'>
-    <parameter type-id='type-id-6'/>
+  <typedef-decl name='stype' type-id='type-id-2' size-in-bits='8' alignment-in-bits='8' filepath='../../prtests/test8.cc' line='26' column='11' hash='a59b4fd2daaba14f' id='type-id-7'/>
+  <pointer-type-def type-id='type-id-2' size-in-bits='64' alignment-in-bits='64' hash='7c7f4af69cf93700' id='type-id-4'/>
+  <reference-type-def kind='lvalue' type-id='type-id-7' size-in-bits='64' alignment-in-bits='64' hash='16d5f8434543b7eb' id='type-id-8'/>
+  <function-decl name='foo' mangled-name='_Z3fooR1S' filepath='../../prtests/test8.cc' line='29' column='1' visibility='default' binding='global' size-in-bits='8' alignment-in-bits='8' hash='bdac415dc6f9a093' id='type-id-9'>
+    <parameter type-id='type-id-8'/>
     <return type-id='type-id-1'/>
   </function-decl>
-  <type-decl name='void' id='type-id-4'/>
+  <type-decl name='void' id='type-id-6'/>
 </abi-instr>

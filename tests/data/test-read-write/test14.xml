@@ -7,12 +7,12 @@
           <pointer-type-def type-id='type-id-3' hash='76e2ac011d858705' id='type-id-4'/>
         </template-parameter-type-composition>
         <template-non-type-parameter type-id='type-id-4' name='U'/>
-        <function-decl name='foo' binding='global' size-in-bits='8' alignment-in-bits='8' hash='4f1f5b73727b981c'>
+        <function-decl name='foo' binding='global' size-in-bits='8' alignment-in-bits='8' hash='4f1f5b73727b981c' id='type-id-5'>
           <parameter type-id='type-id-4' name='first'/>
-          <return type-id='type-id-5'/>
+          <return type-id='type-id-6'/>
         </function-decl>
       </function-template-decl>
     </member-template>
   </class-decl>
-  <type-decl name='int' size-in-bits='32' hash='4a717ba79cf927da' id='type-id-5'/>
+  <type-decl name='int' size-in-bits='32' hash='4a717ba79cf927da' id='type-id-6'/>
 </abi-instr>

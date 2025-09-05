@@ -62,6 +62,9 @@ using std::istream;
 /// strings.
 typedef unordered_map<string, vector<string>> string_strings_map_type;
 
+class reader;
+
+string 	debug_type_id(xmlNodePtr node);
 static bool	read_is_declaration_only(xmlNodePtr, bool&);
 static bool	read_is_artificial(xmlNodePtr, bool&);
 static bool	read_tracking_non_reachable_types(xmlNodePtr, bool&);
@@ -120,6 +123,10 @@ resolve_symbol_aliases(string_elf_symbols_map_sptr&	fn_syms,
 		       string_strings_map_type&	non_resolved_var_sym_aliases);
 static bool
 read_type_hash_and_cti(xmlNodePtr, uint64_t& hash, uint64_t& cti);
+
+static bool
+node_is_member_function(xmlNodePtr node,
+			xmlNodePtr& parent_class_node);
 
 /// The ABIXML reader object.
 ///
@@ -1566,7 +1573,12 @@ static ptr_to_mbr_type_sptr
 build_ptr_to_mbr_type(reader&, const xmlNodePtr, bool);
 
 static shared_ptr<function_type>
-build_function_type(reader&, const xmlNodePtr, bool);
+build_function_type(reader&, const xmlNodePtr, class_or_union_sptr, bool);
+
+static shared_ptr<function_type>
+build_function_type(reader&, const xmlNodePtr,
+		    class_or_union_sptr,
+		    vector<decl_base_sptr>&, bool);
 
 static array_type_def::subrange_sptr
 build_subrange_type(reader&, const xmlNodePtr, bool);
@@ -1655,6 +1667,63 @@ static decl_base_sptr	handle_class_tdecl(reader&, xmlNodePtr, bool);
 #define RECORD_ARTIFACTS_AS_USED_IN_FN_TYPE(rdr, fn_type)
 #endif
 
+/// When looking at a parent XML element that represents a member
+/// type, function or template, get the XML element for the enclosing
+/// scope.  While doing so, look through the decorating XML elements
+/// that are only there to carry meta-data like access properties etc.
+///
+/// @param node the XML element node to consider.  If the node is a
+/// decorating XML element like "data-member", "member-type",
+/// "member-function", etc, then his node is set to its enclosing
+/// parent node and the function returns true.
+///
+/// @param access out parameter.  This is set by the function iff @p
+/// ndoe is a decorating XML element and has an access property.  This
+/// is set only if the function returns true *and* if the decorating
+/// XML element has an access property.
+///
+/// @return true iff the function actually looked through decorating
+/// XML elements like "data-member", "member-type", "member-function"
+/// etc.
+static bool
+maybe_look_through_decorating_member_element(xmlNodePtr& node,
+					     access_specifier& access)
+{
+  if (node
+      && (xmlStrEqual(node->name, BAD_CAST("data-member"))
+	  || xmlStrEqual(node->name, BAD_CAST("member-type"))
+	  || xmlStrEqual(node->name, BAD_CAST("member-function"))
+	  || xmlStrEqual(node->name, BAD_CAST("member-template"))
+	  || xmlStrEqual(node->name, BAD_CAST("template-parameter-type-composition"))
+	  || xmlStrEqual(node->name, BAD_CAST("array-type-def"))))
+    {
+      read_access(node, access);
+      node = node->parent;
+      return true;
+    }
+  return false;
+}
+
+/// If the current XML element node is a decorating XML element like
+/// "data-member", "member-type", "member-function", etc, then get its
+/// enclosing parent node.
+///
+/// @param node the XML element node to consider.  If it's a
+/// decorating XML element, then this is set to its enclosing parent
+/// scope.
+///
+/// @param access out parameter.  If @p node is a decorating XML
+/// element containig an access property, then this parameter is set
+/// to the value of the access property.
+static void
+maybe_get_enclosing_scope(xmlNodePtr& node, access_specifier& access)
+{
+  bool keep_going;
+  do
+    keep_going = maybe_look_through_decorating_member_element(node, access);
+  while (keep_going);
+}
+
 /// Get the IR node representing the scope for a given XML node.
 ///
 /// This function might trigger the building of a full sub-tree of IR.
@@ -1677,17 +1746,7 @@ reader::get_scope_for_node(xmlNodePtr node, access_specifier& access)
 
   xmlNodePtr parent = node->parent;
   access = no_access;
-  if (parent
-      && (xmlStrEqual(parent->name, BAD_CAST("data-member"))
-	  || xmlStrEqual(parent->name, BAD_CAST("member-type"))
-	  || xmlStrEqual(parent->name, BAD_CAST("member-function"))
-	  || xmlStrEqual(parent->name, BAD_CAST("member-template"))
-	  || xmlStrEqual(parent->name, BAD_CAST("template-parameter-type-composition"))
-	  || xmlStrEqual(parent->name, BAD_CAST("array-type-def"))))
-    {
-      read_access(parent, access);
-      parent = parent->parent;
-    }
+  maybe_get_enclosing_scope(parent, access);
 
   xml_node_decl_base_sptr_map::const_iterator i =
     get_xml_node_decl_map().find(parent);
@@ -1703,6 +1762,7 @@ reader::get_scope_for_node(xmlNodePtr node, access_specifier& access)
       access_specifier a = no_access;
       scope_decl_sptr parent_scope = get_scope_for_node(parent, a);
       push_decl(parent_scope);
+
       scope = dynamic_pointer_cast<scope_decl>
 	(handle_element_node(*this, parent, /*add_decl_to_scope=*/true));
       ABG_ASSERT(scope);
@@ -2576,6 +2636,7 @@ handle_element_node(reader& rdr, xmlNodePtr node,
    ||(decl = handle_pointer_type_def(rdr, node,
 				     add_to_current_scope))
    || (decl = handle_reference_type_def(rdr, node, add_to_current_scope))
+   || (decl = handle_function_decl(rdr, node, add_to_current_scope))
    || (decl = handle_function_type(rdr, node, add_to_current_scope))
    || (decl = handle_array_type_def(rdr, node, add_to_current_scope))
    || (decl = handle_enum_type_decl(rdr, node,
@@ -2584,8 +2645,6 @@ handle_element_node(reader& rdr, xmlNodePtr node,
 				  add_to_current_scope))
    || (decl = handle_var_decl(rdr, node,
 			      add_to_current_scope))
-   || (decl = handle_function_decl(rdr, node,
-				   add_to_current_scope))
    || (decl = handle_class_decl(rdr, node,
 				add_to_current_scope))
    || (decl = handle_union_decl(rdr, node,
@@ -3206,6 +3265,58 @@ read_type_id_string(xmlNodePtr node, string& type_id)
       return true;
     }
   return false;
+}
+
+/// Test if an XML node is for a member function.
+///
+/// If the node is for a member function then we get the node of the
+/// enclosing parent class.
+///
+/// @param node the XML node to consider.
+/// 
+/// @param parent_class_node output parameter.  This is set to the
+/// enclosing parent class if @p node is a member function, and thus,
+/// iff the function return true.
+///
+/// @return true iff @p represent a member function.
+static bool
+node_is_member_function(xmlNodePtr node,
+			xmlNodePtr& parent_class_node)
+{
+  if (!node || xmlStrcmp(node->name, (xmlChar*)"function-decl"))
+    return false;
+
+  xmlNodePtr parent = node->parent;
+  if (!parent || xmlStrcmp(parent->name, (xmlChar*)"member-function"))
+    return false;
+
+  parent = parent->parent;
+  if (!parent
+      || (xmlStrcmp(parent->name, (xmlChar*)"class-decl")
+	  && xmlStrcmp(parent->name, (xmlChar*)"union-decl")))
+    return false;
+
+  parent_class_node = parent;
+
+  return true;
+}
+
+/// Emit the type-id of an ABIXML node representing a type.
+///
+/// @param node the ABIXML node.
+///
+/// @return the type-id or empty string if the node has none.
+string
+debug_type_id(xmlNodePtr node)
+{
+  if (!node)
+    return "";
+
+  string s;
+  if (read_type_id_string(node, s))
+    return s;
+
+  return "";
 }
 
 /// Read of the value of the "name" attribute from a given XML node.
@@ -3845,6 +3956,14 @@ build_function_decl(reader&		rdr,
   if (!xmlStrEqual(node->name, BAD_CAST("function-decl")))
     return nil;
 
+  xmlNodePtr parent_class_node;
+  string parent_class_id;
+  if (!as_method_decl && node_is_member_function(node, parent_class_node))
+    // So we are looking a member function, even if as_method_decl
+    // wasn't properly set.  We're now aware so we'll create a
+    // method_decl rather than a simple function_decl.
+    read_type_id_string(parent_class_node, parent_class_id);
+
   string name;
   if (xml_char_sptr s = XML_NODE_GET_ATTRIBUTE(node, "name"))
     name = xml::unescape_xml_string(CHAR_STR(s));
@@ -3852,6 +3971,19 @@ build_function_decl(reader&		rdr,
   string mangled_name;
   if (xml_char_sptr s = XML_NODE_GET_ATTRIBUTE(node, "mangled-name"))
     mangled_name = xml::unescape_xml_string(CHAR_STR(s));
+
+  if (!as_method_decl && add_to_exported_decls)
+    if (is_class_type(rdr.get_cur_scope()))
+      {
+	class_decl_sptr class_scope(is_class_type(rdr.get_cur_decl()));
+	as_method_decl = class_scope;
+      }
+
+  if (!as_method_decl && !parent_class_id.empty())
+    // as_method_decl hasn't been properly set by the caller but we
+    // are looking a method.  So let's properly set as_method_decl
+    // then.
+    as_method_decl = is_class_or_union_type(rdr.get_type_decl(parent_class_id));
 
   if (as_method_decl
       && !mangled_name.empty()
@@ -3880,38 +4012,10 @@ build_function_decl(reader&		rdr,
   location loc;
   read_location(rdr, node, loc);
 
-  const environment& env = rdr.get_environment();
-
-  std::vector<function_decl::parameter_sptr> parms;
-  type_base_sptr return_type = env.get_void_type();
-
-  for (xmlNodePtr n = xmlFirstElementChild(node);
-       n ;
-       n = xmlNextElementSibling(n))
-    {
-      if (xmlStrEqual(n->name, BAD_CAST("parameter")))
-	{
-	  if (function_decl::parameter_sptr p =
-	      build_function_parameter(rdr, n))
-	    parms.push_back(p);
-	}
-      else if (xmlStrEqual(n->name, BAD_CAST("return")))
-	{
-	  string type_id;
-	  if (xml_char_sptr s =
-	      xml::build_sptr(xmlGetProp(n, BAD_CAST("type-id"))))
-	    type_id = CHAR_STR(s);
-	  if (!type_id.empty())
-	    return_type = rdr.build_or_get_type_decl(type_id, true);
-	}
-    }
-
-  function_type_sptr fn_type(as_method_decl
-			     ? new method_type(return_type, as_method_decl,
-					       parms, /*is_const=*/false,
-					       size, align)
-			     : new function_type(return_type,
-						 parms, size, align));
+  vector<decl_base_sptr> member_decls;
+  function_type_sptr fn_type =
+    build_function_type(rdr, node, as_method_decl, member_decls,
+			/*consider_function_decl=*/true);
 
   ABG_ASSERT(fn_type);
 
@@ -3934,6 +4038,8 @@ build_function_decl(reader&		rdr,
 			 ? rdr.get_scope_ptr_for_node(node)
 			 : nullptr);
   RECORD_ARTIFACTS_AS_USED_IN_FN_DECL(rdr, fn_decl);
+  for (const auto& member_decl : member_decls)
+    add_decl_to_scope(member_decl, fn_decl);
 
   elf_symbol_sptr sym = build_elf_symbol_from_reference(rdr, node);
   if (sym)
@@ -3941,8 +4047,6 @@ build_function_decl(reader&		rdr,
 
   if (fn_decl->get_symbol() && fn_decl->get_symbol()->is_public())
     fn_decl->set_is_in_public_symbol_table(true);
-
-  rdr.get_translation_unit()->bind_function_type_life_time(fn_type);
 
   rdr.schedule_type_for_canonicalization(fn_type);
 
@@ -4739,31 +4843,69 @@ build_ptr_to_mbr_type(reader&		rdr,
 ///
 /// @param node the xml node to build the function_type from.
 ///
-/// @param add_to_current_scope if set to yes, the result of
-/// this function is added to its current scope.
+/// @param member_decls the declarations of member types used in the
+/// signature of the function.
+///
+/// @param consider_function_decl if yes, then consider
+/// 'function-decl' XML Node as being a function type.
 ///
 /// @return a pointer to a newly built function_type upon
 /// successful completion, a null pointer otherwise.
 static function_type_sptr
-build_function_type(reader&	rdr,
-		    const xmlNodePtr	node,
-		    bool /*add_to_current_scope*/)
+build_function_type(reader&			rdr,
+		    const xmlNodePtr		node,
+		    class_or_union_sptr	as_method_decl,
+		    vector<decl_base_sptr>&	member_decls,
+		    bool			consider_function_decl)
 {
   function_type_sptr nil;
+  xmlNodePtr parent_class_node = nullptr;
 
   if (!xmlStrEqual(node->name, BAD_CAST("function-type")))
-    return nil;
+    {
+      if (consider_function_decl)
+	{
+	  if (!xmlStrEqual(node->name, BAD_CAST("function-decl")))
+	      return nil;
+	  else
+	    // We are going to build a function type from the
+	    // funciton-decl.  Are we looking at a method_type rather
+	    // than an function_type?
+	    node_is_member_function(node, parent_class_node);
+	}
+      else
+	return nil;
+    }
 
   string id;
   if (xml_char_sptr s = XML_NODE_GET_ATTRIBUTE(node, "id"))
     id = CHAR_STR(s);
-  ABG_ASSERT(!id.empty());
+
+  if (!id.empty())
+    {
+      function_type_sptr fn = is_function_type(rdr.get_type_decl(id));
+      if (fn)
+	return fn;
+    }
 
   string method_class_id;
-  if (xml_char_sptr s = XML_NODE_GET_ATTRIBUTE(node, "method-class-id"))
-    method_class_id = CHAR_STR(s);
+  bool is_method_t = false;
 
-  bool is_method_t = !method_class_id.empty();
+  if (!as_method_decl)
+    {
+      xml_char_sptr s = XML_NODE_GET_ATTRIBUTE(node, "method-class-id");
+      if (!s && parent_class_node)
+	// We are looking a method_type so let's get the ID of the
+	// enclosing parent class.
+	s = XML_NODE_GET_ATTRIBUTE(parent_class_node, "id");
+      if (s)
+	{
+	  method_class_id = CHAR_STR(s);
+	  is_method_t = !method_class_id.empty();
+	}
+    }
+  else
+    is_method_t = true;
 
   size_t size = rdr.get_translation_unit()->get_address_size(), align = 0;
   read_size_and_alignment(node, size, align);
@@ -4773,13 +4915,15 @@ build_function_type(reader&	rdr,
   type_base_sptr return_type = env.get_void_type();
 
   class_or_union_sptr method_class_type;
-  if (is_method_t)
+  if (is_method_t && !method_class_id.empty())
     {
       method_class_type =
 	is_class_or_union_type(rdr.build_or_get_type_decl(method_class_id,
 							  /*add_decl_to_scope=*/true));
       ABG_ASSERT(method_class_type);
     }
+  else
+    method_class_type = as_method_decl;
 
   function_type_sptr fn_type(is_method_t
 			     ? new method_type(method_class_type,
@@ -4792,7 +4936,11 @@ build_function_type(reader&	rdr,
   rdr.read_hash_and_stash(node, fn_type);
 
   rdr.get_translation_unit()->bind_function_type_life_time(fn_type);
-  rdr.key_type_decl(fn_type, id);
+  if (!id.empty())
+    {
+      MAYBE_MAP_TYPE_WITH_TYPE_ID(fn_type, node);
+      rdr.key_type_decl(fn_type, id);
+    }
   RECORD_ARTIFACTS_AS_USED_IN_FN_TYPE(rdr, fn_type);
 
   for (xmlNodePtr n = xmlFirstElementChild(node);
@@ -4818,6 +4966,14 @@ build_function_type(reader&	rdr,
 	    ret_type = return_type;
 	  fn_type->set_return_type(ret_type);
 	}
+      else
+	{
+	  // Support member types here.
+	  if (decl_base_sptr member_type_decl =
+	      is_decl(handle_element_node(rdr, n,
+					  /*add_to_current_scope=*/false)))
+	    member_decls.push_back(member_type_decl);
+	}
     }
   if (!fn_type->get_return_type())
       fn_type->set_return_type(return_type);
@@ -4825,6 +4981,25 @@ build_function_type(reader&	rdr,
   fn_type->set_parameters(parms);
 
   return fn_type;
+}
+
+/// Build a function_type from a pointer to 'function-type'
+/// xml node.
+///
+/// @param rdr the context of the parsing.
+///
+/// @param node the xml node to build the function_type from.
+///
+/// @return a pointer to a newly built function_type upon
+/// successful completion, a null pointer otherwise.
+static function_type_sptr
+build_function_type(reader& rdr, const xmlNodePtr node,
+		    class_or_union_sptr as_method_decl,
+		    bool consider_function_decl)
+{
+  vector<decl_base_sptr> member_decls;
+  return build_function_type(rdr, node, as_method_decl, member_decls,
+			     consider_function_decl);
 }
 
 /// Build a array_type_def::subrange_type from a 'subrange' xml node.
@@ -5302,7 +5477,7 @@ build_enum_type_decl(reader&	rdr,
 /// @return a pointer to a newly built typedef_decl upon successful
 /// completion, a null pointer otherwise.
 static shared_ptr<typedef_decl>
-build_typedef_decl(reader&	rdr,
+build_typedef_decl(reader&		rdr,
 		   const xmlNodePtr	node,
 		   bool		add_to_current_scope)
 {
@@ -5342,29 +5517,25 @@ build_typedef_decl(reader&	rdr,
     type_id = CHAR_STR(s);
   ABG_ASSERT(!type_id.empty());
 
-  type_base_sptr underlying_type(rdr.build_or_get_type_decl(type_id, true));
+  type_base_sptr underlying_type;
+  typedef_decl_sptr typedef_type(new typedef_decl(name, rdr.get_environment(),
+						  loc, name));
+  rdr.push_and_key_type_decl(typedef_type, node, add_to_current_scope);
+  rdr.map_xml_node_to_decl(node, typedef_type);
+
+  underlying_type = rdr.build_or_get_type_decl(type_id, true);
   ABG_ASSERT(underlying_type);
 
-  // Maybe the building of the underlying type triggered the building
-  // of the current type.  If so, then return it.
-  if (type_base_sptr t = rdr.get_type_decl(id))
-    {
-      typedef_decl_sptr result = is_typedef(t);
-      ABG_ASSERT(result);
-      return result;
-    }
+  typedef_type->set_underlying_type(underlying_type);
 
-  typedef_decl_sptr t(new typedef_decl(name, underlying_type, loc));
-  maybe_set_artificial_location(rdr, node, t);
+  maybe_set_artificial_location(rdr, node, typedef_type);
 
   // Read the hash from the XML node and stash it into the IR node.
-  rdr.read_hash_and_stash(node, t);
+  rdr.read_hash_and_stash(node, typedef_type);
 
-  rdr.push_and_key_type_decl(t, node, add_to_current_scope);
-  rdr.map_xml_node_to_decl(node, t);
-  RECORD_ARTIFACT_AS_USED_BY(rdr, underlying_type, t);
+  RECORD_ARTIFACT_AS_USED_BY(rdr, underlying_type, typedef_type);
 
-  return t;
+  return typedef_type;
 }
 
 /// Build a class from its XML node if it is not suppressed by a
@@ -6648,7 +6819,8 @@ build_type(reader&	rdr,
    || (t = build_pointer_type_def(rdr, node, add_to_current_scope))
    || (t = build_reference_type_def(rdr, node , add_to_current_scope))
    || (t = build_ptr_to_mbr_type(rdr, node , add_to_current_scope))
-   || (t = build_function_type(rdr, node, add_to_current_scope))
+   || (t = build_function_type(rdr, node, /*as_method_decl*/nullptr,
+			       /*consider_function_decl=*/true))
    || (t = build_array_type_def(rdr, node, add_to_current_scope))
    || (t = build_subrange_type(rdr, node, add_to_current_scope))
    || (t = build_enum_type_decl_if_not_suppressed(rdr, node,
@@ -6769,12 +6941,13 @@ handle_reference_type_def(reader& rdr,
 ///
 /// function_type is added to.
 static type_base_sptr
-handle_function_type(reader&	rdr,
+handle_function_type(reader&		rdr,
 		     xmlNodePtr	node,
-		     bool		add_to_current_scope)
+		     bool		/*add_to_current_scope*/)
 {
   function_type_sptr type = build_function_type(rdr, node,
-						  add_to_current_scope);
+						/*as_method_decl=*/nullptr,
+						/*consider_function_decl=*/false);
   MAYBE_MAP_TYPE_WITH_TYPE_ID(type, node);
   rdr.schedule_type_for_canonicalization(type);
   return type;

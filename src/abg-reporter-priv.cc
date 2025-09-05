@@ -207,9 +207,15 @@ represent(const diff_context& ctxt,
 	  out << "/";
 	  emit_num_value(biggest_voffset, ctxt, out);
 	}
+
+      if (get_member_function_is_dtor(mem_fn)
+	  && !meth->get_linkage_name().empty())
+	out << " of linkage name '" << meth->get_linkage_name() << "'";
     }
 
   if (ctxt.show_linkage_names()
+      && !(get_member_function_is_dtor(meth)
+	   && get_member_function_is_virtual(meth))
       && (mem_fn->get_symbol()))
     {
       out << "    {"
@@ -1149,6 +1155,7 @@ emit_changed_fn_report(const diff_context_sptr& ctxt,
 	   && !(is_member_function(fn)
 		&& get_member_function_is_dtor(fn)))
 	  || (is_c_language(get_translation_unit(fn)->get_language())
+	      && !fn->get_linkage_name().empty()
 	      && fn->get_name() != fn->get_linkage_name()))
 	{
 	  int number_of_aliases =

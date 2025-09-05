@@ -1,33 +1,33 @@
-<abi-corpus version='2.4'>
+<abi-corpus version='2.5'>
   <elf-function-symbols>
     <elf-symbol name='fun' type='func-type' binding='global-binding' visibility='default-visibility' is-defined='yes'/>
   </elf-function-symbols>
   <abi-instr address-size='64' path='tests/data/test-read-common/test-PR26568-2.c' comp-dir-path='/home/byby/oracle/src/libabigail-upstream' language='LANG_C11'>
-    <type-decl name='int' size-in-bits='32' hash='09d17c08f594edc7' id='type-id-1'/>
-    <type-decl name='long int' size-in-bits='64' hash='b119fe0931d2ee10#2' id='type-id-2'/>
-    <class-decl name='__anonymous_struct__' is-struct='yes' visibility='default' size-in-bits='32' is-anonymous='yes' filepath='tests/data/test-read-common/test-PR26568-2.c' line='5' column='1' hash='90b12ea823f31926' id='type-id-3'>
+    <pointer-type-def type-id='type-id-1' size-in-bits='64' hash='df2c7743181ac90a' id='type-id-2'/>
+    <type-decl name='int' size-in-bits='32' hash='09d17c08f594edc7' id='type-id-3'/>
+    <type-decl name='long int' size-in-bits='64' hash='b119fe0931d2ee10#2' id='type-id-4'/>
+    <class-decl name='__anonymous_struct__' is-struct='yes' visibility='default' size-in-bits='32' is-anonymous='yes' filepath='tests/data/test-read-common/test-PR26568-2.c' line='5' column='1' hash='90b12ea823f31926' id='type-id-5'>
       <data-member access='public' layout-offset-in-bits='0'>
-        <var-decl name='x' type-id='type-id-1' visibility='default' filepath='tests/data/test-read-common/test-PR26568-2.c' line='6' column='1'/>
+        <var-decl name='x' type-id='type-id-3' visibility='default' filepath='tests/data/test-read-common/test-PR26568-2.c' line='6' column='1'/>
       </data-member>
     </class-decl>
-    <class-decl name='__anonymous_struct__1' is-struct='yes' visibility='default' size-in-bits='64' is-anonymous='yes' filepath='tests/data/test-read-common/test-PR26568-2.c' line='8' column='1' hash='7005b6e65f15bc13#2' id='type-id-4'>
+    <class-decl name='__anonymous_struct__' is-struct='yes' visibility='default' size-in-bits='64' is-anonymous='yes' filepath='tests/data/test-read-common/test-PR26568-2.c' line='8' column='1' hash='7005b6e65f15bc13#2' id='type-id-6'>
       <data-member access='public' layout-offset-in-bits='0'>
-        <var-decl name='y' type-id='type-id-2' visibility='default' filepath='tests/data/test-read-common/test-PR26568-2.c' line='9' column='1'/>
+        <var-decl name='y' type-id='type-id-4' visibility='default' filepath='tests/data/test-read-common/test-PR26568-2.c' line='9' column='1'/>
       </data-member>
     </class-decl>
-    <union-decl name='A' visibility='default' size-in-bits='64' filepath='tests/data/test-read-common/test-PR26568-2.c' line='4' column='1' hash='2bac55448bb7fa7b' id='type-id-5'>
+    <union-decl name='A' visibility='default' size-in-bits='64' filepath='tests/data/test-read-common/test-PR26568-2.c' line='4' column='1' hash='2bac55448bb7fa7b' id='type-id-1'>
       <data-member access='public'>
-        <var-decl name='' type-id='type-id-3' visibility='default'/>
+        <var-decl name='' type-id='type-id-5' visibility='default'/>
       </data-member>
       <data-member access='public'>
-        <var-decl name='' type-id='type-id-4' visibility='default'/>
+        <var-decl name='' type-id='type-id-6' visibility='default'/>
       </data-member>
     </union-decl>
-    <pointer-type-def type-id='type-id-5' size-in-bits='64' hash='df2c7743181ac90a' id='type-id-6'/>
-    <function-decl name='fun' mangled-name='fun' filepath='tests/data/test-read-common/test-PR26568-2.c' line='13' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='fun' hash='b972cd108ad3614f'>
-      <parameter type-id='type-id-6' filepath='tests/data/test-read-common/test-PR26568-2.c' line='13' column='1'/>
-      <return type-id='type-id-7'/>
+    <function-decl name='fun' filepath='tests/data/test-read-common/test-PR26568-2.c' line='13' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='fun' hash='b972cd108ad3614f' id='type-id-7'>
+      <parameter type-id='type-id-2' filepath='tests/data/test-read-common/test-PR26568-2.c' line='13' column='1'/>
+      <return type-id='type-id-8'/>
     </function-decl>
-    <type-decl name='void' id='type-id-7'/>
+    <type-decl name='void' id='type-id-8'/>
   </abi-instr>
 </abi-corpus>

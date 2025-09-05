@@ -1,30 +1,30 @@
-<abi-corpus version='2.4' path='data/test-read-ctf/test-dynamic-array.o'>
+<abi-corpus version='2.5' path='data/test-read-ctf/test-dynamic-array.o'>
   <elf-function-symbols>
     <elf-symbol name='use_struct_s' type='func-type' binding='global-binding' visibility='default-visibility' is-defined='yes'/>
   </elf-function-symbols>
   <abi-instr address-size='64' language='LANG_C'>
-    <type-decl name='char' size-in-bits='8' hash='65b2d157027b431a' id='type-id-1'/>
-    <array-type-def dimensions='1' type-id='type-id-1' size-in-bits='unknown' hash='6915b710ae33e54a' id='type-id-2'>
-      <subrange length='unknown' lower-bound='0' upper-bound='0' type-id='type-id-3' size-in-bits='64' is-anonymous='yes' hash='eba0a2b392137dcb' id='type-id-4'/>
+    <pointer-type-def type-id='type-id-1' size-in-bits='64' alignment-in-bits='64' hash='cf7a55801d29a217' id='type-id-2'/>
+    <type-decl name='char' size-in-bits='8' hash='65b2d157027b431a' id='type-id-3'/>
+    <pointer-type-def type-id='type-id-3' size-in-bits='64' alignment-in-bits='64' hash='f0d67b75f875f482' id='type-id-4'/>
+    <array-type-def dimensions='1' type-id='type-id-3' size-in-bits='unknown' hash='6915b710ae33e54a' id='type-id-5'>
+      <subrange length='unknown' lower-bound='0' upper-bound='0' type-id='type-id-6' size-in-bits='64' is-anonymous='yes' hash='eba0a2b392137dcb' id='type-id-7'/>
     </array-type-def>
-    <class-decl name='S' is-struct='yes' visibility='default' size-in-bits='64' hash='b7a3b7da11e15e5a' id='type-id-5'>
+    <class-decl name='S' is-struct='yes' visibility='default' size-in-bits='64' hash='b7a3b7da11e15e5a' id='type-id-1'>
       <data-member access='public' layout-offset-in-bits='0'>
-        <var-decl name='a' type-id='type-id-6' visibility='default'/>
+        <var-decl name='a' type-id='type-id-4' visibility='default'/>
       </data-member>
       <data-member access='public' layout-offset-in-bits='64'>
-        <var-decl name='b' type-id='type-id-2' visibility='default'/>
+        <var-decl name='b' type-id='type-id-5' visibility='default'/>
       </data-member>
       <data-member access='public' layout-offset-in-bits='64'>
-        <var-decl name='c' type-id='type-id-2' visibility='default'/>
+        <var-decl name='c' type-id='type-id-5' visibility='default'/>
       </data-member>
     </class-decl>
-    <type-decl name='unsigned long int' size-in-bits='64' hash='8fdc5eea2983a729' id='type-id-3'/>
-    <pointer-type-def type-id='type-id-5' size-in-bits='64' alignment-in-bits='64' hash='cf7a55801d29a217' id='type-id-7'/>
-    <pointer-type-def type-id='type-id-1' size-in-bits='64' alignment-in-bits='64' hash='f0d67b75f875f482' id='type-id-6'/>
-    <function-decl name='use_struct_s' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='use_struct_s' hash='b10bf0483ab5ebcb'>
-      <parameter type-id='type-id-7'/>
-      <return type-id='type-id-8'/>
+    <type-decl name='unsigned long int' size-in-bits='64' hash='8fdc5eea2983a729' id='type-id-6'/>
+    <function-decl name='use_struct_s' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='use_struct_s' hash='b10bf0483ab5ebcb' id='type-id-8'>
+      <parameter type-id='type-id-2'/>
+      <return type-id='type-id-9'/>
     </function-decl>
-    <type-decl name='void' id='type-id-8'/>
+    <type-decl name='void' id='type-id-9'/>
   </abi-instr>
 </abi-corpus>

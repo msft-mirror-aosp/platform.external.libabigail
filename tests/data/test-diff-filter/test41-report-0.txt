@@ -1,4 +1,4 @@
-Functions changes summary: 8 Removed, 5 Changed (6 filtered out), 16 Added functions
+Functions changes summary: 8 Removed, 6 Changed (7 filtered out), 16 Added functions
 Variables changes summary: 0 Removed, 0 Changed, 0 Added variable
 Function symbols changes summary: 1 Removed, 0 Added function symbol not referenced by debug info
 Variable symbols changes summary: 0 Removed, 0 Added variable symbol not referenced by debug info
@@ -14,7 +14,7 @@ Variable symbols changes summary: 0 Removed, 0 Added variable symbol not referen
   [D] 'method std::pair<bool,longunsignedint> std::tr1::__detail::_Prime_rehash_policy::_M_need_rehash(std::size_t, std::size_t, std::size_t) const'    {_ZNKSt3tr18__detail20_Prime_rehash_policy14_M_need_rehashEmmm}
   [D] 'method std::tr1::__shared_count<(__gnu_cxx::_Lock_policy)2>& std::tr1::__shared_count<(__gnu_cxx::_Lock_policy)2>::operator=(const std::tr1::__shared_count<(__gnu_cxx::_Lock_policy)2>&)'    {_ZNSt3tr114__shared_countILN9__gnu_cxx12_Lock_policyE2EEaSERKS3_}
 
-2 functions with incompatible sub-type changes:
+3 functions with incompatible sub-type changes:
 
   [C] 'method void std::_Deque_base<std::__cxx11::basic_string<char,std::char_traits<char>,std::allocator<char>>,std::allocator<std::__cxx11::basic_string<char,std::char_traits<char>,std::allocator<char>>>>::_M_initialize_map(std::size_t)' at stl_deque.h:679:1 has some sub-type changes:
     'method void std::_Deque_base<std::__cxx11::basic_string<char,std::char_traits<char>,std::allocator<char>>,std::allocator<std::__cxx11::basic_string<char,std::char_traits<char>,std::allocator<char>>>>::_M_initialize_map(std::size_t) {_ZNSt11_Deque_baseINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaIS5_EE17_M_initialize_mapEm}' now becomes 'method void std::_Deque_base<std::__cxx11::basic_string<char>,std::allocator<std::__cxx11::basic_string<char>>>::_M_initialize_map(std::size_t) {_ZNSt11_Deque_baseINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaIS5_EE17_M_initialize_mapEm}'
@@ -62,8 +62,55 @@ Variable symbols changes summary: 0 Removed, 0 Added variable symbol not referen
               and name of 'std::_Deque_base<std::__cxx11::basic_string<char,std::char_traits<char>,std::allocator<char>>,std::allocator<std::__cxx11::basic_string<char,std::char_traits<char>,std::allocator<char>>>>::_Deque_impl::_M_finish' changed to 'std::_Deque_base<std::__cxx11::basic_string<char>,std::allocator<std::__cxx11::basic_string<char>>>::_Deque_impl::_M_finish' at stl_deque.h:553:1
           and name of 'std::_Deque_base<std::__cxx11::basic_string<char,std::char_traits<char>,std::allocator<char>>,std::allocator<std::__cxx11::basic_string<char,std::char_traits<char>,std::allocator<char>>>>::_M_impl' changed to 'std::_Deque_base<std::__cxx11::basic_string<char>,std::allocator<std::__cxx11::basic_string<char>>>::_M_impl' at stl_deque.h:631:1
 
+  [C] 'method std::deque<std::__cxx11::basic_string<char,std::char_traits<char>,std::allocator<char>>,std::allocator<std::__cxx11::basic_string<char,std::char_traits<char>,std::allocator<char>>>>::~deque()' at stl_deque.h:1040:1 has some sub-type changes:
+    linkage names of method std::deque<std::__cxx11::basic_string<char,std::char_traits<char>,std::allocator<char>>,std::allocator<std::__cxx11::basic_string<char,std::char_traits<char>,std::allocator<char>>>>::~deque()
+    changed from '_ZNSt5dequeINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaIS5_EED2Ev, _ZNSt5dequeINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaIS5_EED1Ev' to '_ZNSt5dequeINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaIS5_EED2Ev'
+    'method std::deque<std::__cxx11::basic_string<char,std::char_traits<char>,std::allocator<char>>,std::allocator<std::__cxx11::basic_string<char,std::char_traits<char>,std::allocator<char>>>>::~deque() {_ZNSt5dequeINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaIS5_EED2Ev, _ZNSt5dequeINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaIS5_EED1Ev}' now becomes 'method std::deque<std::__cxx11::basic_string<char>,std::allocator<std::__cxx11::basic_string<char>>>::~deque() {_ZNSt5dequeINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaIS5_EED2Ev}'
+    method std::deque<std::__cxx11::basic_string<char>,std::allocator<std::__cxx11::basic_string<char>>>::~deque() is not declared inline anymore
+    implicit parameter 0 of type 'std::deque<std::__cxx11::basic_string<char,std::char_traits<char>,std::allocator<char>>,std::allocator<std::__cxx11::basic_string<char,std::char_traits<char>,std::allocator<char>>>>*' changed:
+      in pointed to type 'class std::deque<std::__cxx11::basic_string<char,std::char_traits<char>,std::allocator<char>>,std::allocator<std::__cxx11::basic_string<char,std::char_traits<char>,std::allocator<char>>>>' at stl_deque.h:829:1:
+        type name changed from 'std::deque<std::__cxx11::basic_string<char,std::char_traits<char>,std::allocator<char>>,std::allocator<std::__cxx11::basic_string<char,std::char_traits<char>,std::allocator<char>>>>' to 'std::deque<std::__cxx11::basic_string<char>,std::allocator<std::__cxx11::basic_string<char>>>'
+        type size hasn't changed
+        1 base class deletion:
+          class std::_Deque_base<std::__cxx11::basic_string<char,std::char_traits<char>,std::allocator<char>>,std::allocator<std::__cxx11::basic_string<char,std::char_traits<char>,std::allocator<char>>>> at stl_deque.h:458:1
+        1 base class insertion:
+          class std::_Deque_base<std::__cxx11::basic_string<char>,std::allocator<std::__cxx11::basic_string<char>>> at stl_deque.h:458:1
+
   [C] 'method virtual void std::tr1::_Sp_counted_base<(__gnu_cxx::_Lock_policy)2>::_M_destroy()' at shared_ptr.h:120:1 has some sub-type changes:
+    'method virtual void std::tr1::_Sp_counted_base<(__gnu_cxx::_Lock_policy)2>::_M_destroy() {_ZNSt3tr116_Sp_counted_baseILN9__gnu_cxx12_Lock_policyE2EE10_M_destroyEv}' now becomes 'method virtual void std::tr1::_Sp_counted_base<__gnu_cxx::_Lock_policy::_S_atomic>::_M_destroy() {_ZNSt3tr116_Sp_counted_baseILN9__gnu_cxx12_Lock_policyE2EE10_M_destroyEv}'
     method virtual void std::tr1::_Sp_counted_base<__gnu_cxx::_Lock_policy::_S_atomic>::_M_destroy() is not declared inline anymore
+    implicit parameter 0 of type 'std::tr1::_Sp_counted_base<(__gnu_cxx::_Lock_policy)2>*' changed:
+      in pointed to type 'class std::tr1::_Sp_counted_base<(__gnu_cxx::_Lock_policy)2>' at shared_ptr.h:102:1:
+        type name changed from 'std::tr1::_Sp_counted_base<(__gnu_cxx::_Lock_policy)2>' to 'std::tr1::_Sp_counted_base<__gnu_cxx::_Lock_policy::_S_atomic>'
+        type size hasn't changed
+        1 base class deletion:
+          class std::tr1::_Mutex_base<(__gnu_cxx::_Lock_policy)2> at shared_ptr.h:83:1
+        1 base class insertion:
+          class std::tr1::_Mutex_base<__gnu_cxx::_Lock_policy::_S_atomic> at shared_ptr.h:83:1
+        2 member function deletions:
+          'method virtual std::tr1::_Sp_counted_base<(__gnu_cxx::_Lock_policy)2>::~_Sp_counted_base()' at shared_ptr.h:110:1, virtual at voffset 0/4 of linkage name '_ZNSt3tr116_Sp_counted_baseILN9__gnu_cxx12_Lock_policyE2EED0Ev'
+          'method virtual std::tr1::_Sp_counted_base<(__gnu_cxx::_Lock_policy)2>::~_Sp_counted_base()' at shared_ptr.h:110:1, virtual at voffset 0/4 of linkage name '_ZNSt3tr116_Sp_counted_baseILN9__gnu_cxx12_Lock_policyE2EED4Ev'
+        4 member function changes:
+          'method virtual std::tr1::_Sp_counted_base<(__gnu_cxx::_Lock_policy)2>::~_Sp_counted_base()' of linkage name: '_ZNSt3tr116_Sp_counted_baseILN9__gnu_cxx12_Lock_policyE2EED2Ev' has some sub-type changes:
+            method virtual std::tr1::_Sp_counted_base<(__gnu_cxx::_Lock_policy)2>::~_Sp_counted_base() didn't have any linkage name, and it now has: '_ZNSt3tr116_Sp_counted_baseILN9__gnu_cxx12_Lock_policyE2EED2Ev'
+            'method virtual std::tr1::_Sp_counted_base<(__gnu_cxx::_Lock_policy)2>::~_Sp_counted_base() {}' now becomes 'method virtual std::tr1::_Sp_counted_base<__gnu_cxx::_Lock_policy::_S_atomic>::~_Sp_counted_base() {_ZNSt3tr116_Sp_counted_baseILN9__gnu_cxx12_Lock_policyE2EED2Ev}'
+            method virtual std::tr1::_Sp_counted_base<__gnu_cxx::_Lock_policy::_S_atomic>::~_Sp_counted_base() is not declared inline anymore
+            implicit parameter 0 of type 'std::tr1::_Sp_counted_base<(__gnu_cxx::_Lock_policy)2>*' changed:
+              pointed to type 'class std::tr1::_Sp_counted_base<(__gnu_cxx::_Lock_policy)2>' changed, as being reported
+            parameter 1 of type 'int' was removed
+          'method virtual void std::tr1::_Sp_counted_base<(__gnu_cxx::_Lock_policy)2>::_M_dispose()' has some sub-type changes:
+            'method virtual void std::tr1::_Sp_counted_base<(__gnu_cxx::_Lock_policy)2>::_M_dispose() {}' now becomes 'method virtual void std::tr1::_Sp_counted_base<__gnu_cxx::_Lock_policy::_S_atomic>::_M_dispose() {}'
+            implicit parameter 0 of type 'std::tr1::_Sp_counted_base<(__gnu_cxx::_Lock_policy)2>*' changed:
+              pointed to type 'class std::tr1::_Sp_counted_base<(__gnu_cxx::_Lock_policy)2>' changed, as being reported
+          'method virtual void std::tr1::_Sp_counted_base<(__gnu_cxx::_Lock_policy)2>::_M_destroy()' has some sub-type changes:
+            'method virtual void std::tr1::_Sp_counted_base<(__gnu_cxx::_Lock_policy)2>::_M_destroy() {_ZNSt3tr116_Sp_counted_baseILN9__gnu_cxx12_Lock_policyE2EE10_M_destroyEv}' now becomes 'method virtual void std::tr1::_Sp_counted_base<__gnu_cxx::_Lock_policy::_S_atomic>::_M_destroy() {_ZNSt3tr116_Sp_counted_baseILN9__gnu_cxx12_Lock_policyE2EE10_M_destroyEv}'
+            method virtual void std::tr1::_Sp_counted_base<__gnu_cxx::_Lock_policy::_S_atomic>::_M_destroy() is not declared inline anymore
+            implicit parameter 0 of type 'std::tr1::_Sp_counted_base<(__gnu_cxx::_Lock_policy)2>*' changed:
+              pointed to type 'class std::tr1::_Sp_counted_base<(__gnu_cxx::_Lock_policy)2>' changed, as being reported
+          'method virtual void* std::tr1::_Sp_counted_base<(__gnu_cxx::_Lock_policy)2>::_M_get_deleter(const std::type_info&)' has some sub-type changes:
+            'method virtual void* std::tr1::_Sp_counted_base<(__gnu_cxx::_Lock_policy)2>::_M_get_deleter(const std::type_info&) {}' now becomes 'method virtual void* std::tr1::_Sp_counted_base<__gnu_cxx::_Lock_policy::_S_atomic>::_M_get_deleter(const std::type_info&) {}'
+            implicit parameter 0 of type 'std::tr1::_Sp_counted_base<(__gnu_cxx::_Lock_policy)2>*' changed:
+              pointed to type 'class std::tr1::_Sp_counted_base<(__gnu_cxx::_Lock_policy)2>' changed, as being reported
 
 16 Added functions:
 
@@ -140,15 +187,10 @@ Variable symbols changes summary: 0 Removed, 0 Added variable symbol not referen
             1 base class insertion:
               class std::tr1::__shared_ptr<abigail::ir::type_base,__gnu_cxx::_Lock_policy::_S_atomic> at shared_ptr.h:539:1
 
-  [C] 'function bool abigail::xml_writer::write_corpus_to_native_xml(const abigail::ir::corpus_sptr, unsigned int, std::ostream&, const bool)' at abg-writer.cc:3862:1 has some indirect sub-type changes:
-    parameter 1 of type 'const abigail::ir::corpus_sptr' has sub-type changes:
-      in unqualified underlying type 'typedef abigail::ir::corpus_sptr' at abg-fwd.h:101:1:
-        underlying type 'class std::tr1::shared_ptr<abigail::ir::corpus>' at shared_ptr.h:983:1 changed:
-          type size hasn't changed
-          1 base class deletion:
-            class std::tr1::__shared_ptr<abigail::ir::corpus,(__gnu_cxx::_Lock_policy)2> at shared_ptr.h:539:1
-          1 base class insertion:
-            class std::tr1::__shared_ptr<abigail::ir::corpus,__gnu_cxx::_Lock_policy::_S_atomic> at shared_ptr.h:539:1
+  [C] 'function bool abigail::xml_writer::write_corpus_to_native_xml(abigail::ir::corpus_sptr, unsigned int, std::ostream&, bool)' at abg-writer.cc:3862:1 has some indirect sub-type changes:
+    parameter 1 of type 'typedef abigail::ir::corpus_sptr' changed:
+      entity changed from 'typedef abigail::ir::corpus_sptr' to compatible type 'const abigail::ir::corpus_sptr'
+      type size hasn't changed
 
 1 Removed function symbol not referenced by debug info:
 

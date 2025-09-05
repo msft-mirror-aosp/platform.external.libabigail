@@ -1,4 +1,4 @@
-<abi-corpus version='2.4' path='repr7' architecture='elf-amd-x86_64'>
+<abi-corpus version='2.5' path='repr7' architecture='elf-amd-x86_64'>
   <elf-function-symbols>
     <elf-symbol name='_Z2fni' type='func-type' binding='global-binding' visibility='default-visibility' is-defined='yes'/>
   </elf-function-symbols>
@@ -7,24 +7,20 @@
     <elf-symbol name='fnptr1' type='object-type' binding='global-binding' visibility='default-visibility' is-defined='yes'/>
   </elf-variable-symbols>
   <abi-instr address-size='64' path='../../../repr7.cc' language='LANG_C_plus_plus'>
-    <type-decl name='double' size-in-bits='64' hash='dd6a39d113d88170' id='type-id-1'/>
-    <type-decl name='int' size-in-bits='32' hash='4a717ba79cf927da' id='type-id-2'/>
-    <pointer-type-def type-id='type-id-3' size-in-bits='64' hash='e31e6bb01953539e' id='type-id-4'/>
-    <pointer-type-def type-id='type-id-5' size-in-bits='64' hash='e31e6bb01953539e' id='type-id-6'/>
+    <type-decl name='double' size-in-bits='64' hash='e9e9b320886d9aa6' id='type-id-1'/>
+    <type-decl name='int' size-in-bits='32' hash='09d17c08f594edc7' id='type-id-2'/>
+    <pointer-type-def type-id='type-id-3' size-in-bits='64' hash='fd7a63c0c6c822c4' id='type-id-4'/>
+    <pointer-type-def type-id='type-id-5' size-in-bits='64' hash='fd7a63c0c6c822c4' id='type-id-6'/>
     <type-decl name='void' id='type-id-7'/>
-    <function-decl name='fn' mangled-name='_Z2fni' filepath='../../../repr7.cc' line='3' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_Z2fni' hash='fe10a5a479353bf6'>
+    <function-decl name='fn' mangled-name='_Z2fni' filepath='../../../repr7.cc' line='3' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_Z2fni' hash='388da3fa973fde78' id='type-id-5'>
       <parameter type-id='type-id-2'/>
       <return type-id='type-id-7'/>
     </function-decl>
     <var-decl name='fnptr0' type-id='type-id-6' mangled-name='fnptr0' visibility='default' filepath='../../../repr7.cc' line='1' column='1' elf-symbol-id='fnptr0'/>
     <var-decl name='fnptr1' type-id='type-id-4' mangled-name='fnptr1' visibility='default' filepath='../../../repr7.cc' line='7' column='1' elf-symbol-id='fnptr1'/>
-    <function-type size-in-bits='64' hash='d80ed615ad05a604' id='type-id-3'>
+    <function-type size-in-bits='64' hash='fc29fb400cf17181' id='type-id-3'>
       <parameter type-id='type-id-1'/>
       <return type-id='type-id-1'/>
-    </function-type>
-    <function-type size-in-bits='64' hash='fe10a5a479353bf6' id='type-id-5'>
-      <parameter type-id='type-id-2'/>
-      <return type-id='type-id-7'/>
     </function-type>
   </abi-instr>
 </abi-corpus>

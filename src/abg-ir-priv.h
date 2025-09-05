@@ -218,6 +218,8 @@ struct type_or_decl_base::priv
   // artificially by the compiler or by libabigail itself).
   bool				is_artificial_;
 
+  const type_or_decl_base*  original_artefact_;
+
   /// Constructor of the type_or_decl_base::priv private type.
   ///
   /// @param e the environment in which the ABI artifact was created.
@@ -233,7 +235,8 @@ struct type_or_decl_base::priv
       is_recursive_artefact_(),
       env_(e),
       translation_unit_(),
-      is_artificial_()
+      is_artificial_(),
+      original_artefact_()
   {}
 
   /// Getter of the kind of the IR node.
@@ -472,9 +475,6 @@ struct type_base::priv
   // canonical_type above implies creating a shared_ptr, and that has
   // been measured to be slow for some performance hot spots.
   type_base*		naked_canonical_type;
-  // Computing the representation of a type again and again can be
-  // costly.  So we cache the internal and non-internal type
-  // representation strings here.
   interned_string	internal_cached_repr_;
   interned_string	cached_repr_;
 
@@ -494,6 +494,32 @@ struct type_base::priv
       canonical_type(c),
       naked_canonical_type(c.get())
   {}
+
+  /// This is to be called right before type canonicalization happens.
+  ///
+  /// Currently, this clears the cache of the type representation,
+  /// which is useful to speed up various type comparisons that happen
+  /// during type canonicalization.
+  ///
+  /// The reason why the cache needs to be cleared is that what is
+  /// cached likely reflects a state where the type was not yet
+  /// complete, i.e, it was only partially constructed.  For instance,
+  /// maybe a function type didn't yet have all its parameters, or
+  /// maybe a typedef type didn't have its underlying type set yet.
+  /// 
+  /// At the point of the invocation of this function however, we are
+  /// sure that the type is completely constructed.  So let's clear
+  /// the previously cached pretty string representation so that a new
+  /// one can be constructed, cached, and reused.
+  void
+  get_ready_for_canonicalization()
+  {
+    // Right before type canonicalization, let's clear the cache of
+    // pretty representation so that it can represent the current
+    // final state of the type.
+    internal_cached_repr_.clear();
+    cached_repr_.clear();
+  }
 }; // end struct type_base::priv
 
 bool
@@ -1160,77 +1186,6 @@ struct type_topo_comp
 		    == corpus::NATIVE_XML_ORIGIN))))
       return compare_using_locations(is_decl(f), is_decl(s));
 
-    bool f_is_ptr_ref_or_qual = is_ptr_ref_or_qual_type(f);
-    bool s_is_ptr_ref_or_qual = is_ptr_ref_or_qual_type(s);
-
-    if (f_is_ptr_ref_or_qual != s_is_ptr_ref_or_qual)
-      return !f_is_ptr_ref_or_qual && s_is_ptr_ref_or_qual;
-
-    if (f_is_ptr_ref_or_qual && s_is_ptr_ref_or_qual
-	&& !has_artificial_or_natural_location(f)
-	&& !has_artificial_or_natural_location(s))
-      {
-	interned_string s1 = f->get_cached_pretty_representation(/*internal=*/false);
-	interned_string s2 = s->get_cached_pretty_representation(/*internal=*/false);
-	if (s1 == s2)
-	  {
-	    if (qualified_type_def * q = is_qualified_type(f))
-	      {
-		if (q->get_cv_quals() == qualified_type_def::CV_NONE)
-		  if (!is_qualified_type(s))
-		    // We are looking at two types that are the result of
-		    // an optimization that happens during the IR
-		    // construction.  Namely, type f is a cv-qualified
-		    // type with no qualifier (no const, no volatile, no
-		    // nothing, we call it an empty-qualified type).
-		    // These are the result of an optimization which
-		    // removes "redundant qualifiers" from some types.
-		    // For instance, consider a "const reference".  The
-		    // const there is redundant because a reference is
-		    // always const.  So as a result of the optimizaton
-		    // that type is going to be transformed into an
-		    // empty-qualified reference. If we don't make that
-		    // optimization, then we risk having spurious change
-		    // reports down the road.  But then, as a consequence
-		    // of that optimization, we need to sort the
-		    // empty-qualified type and its non-qualified variant
-		    // e.g, to ensure stability in the abixml output; both
-		    // types are logically equal, but here, we decide that
-		    // the empty-qualified one is topologically "less
-		    // than" the non-qualified counterpart.
-		    //
-		    // So here, type f is an empty-qualified type and type
-		    // s is its non-qualified variant.  We decide that f
-		    // is topologically less than s.
-		    return true;
-	      }
-	    // Now let's peel off the pointer (or reference types) and
-	    // see if the ultimate underlying types have the same
-	    // textual representation; if not, use that as sorting
-	    // criterion.
-	    type_base *peeled_f =
-	      peel_pointer_or_reference_type(f, true);
-	    type_base *peeled_s =
-	      peel_pointer_or_reference_type(s, true);
-
-	    s1 = peeled_f->get_cached_pretty_representation(/*internal=*/false);
-	    s2 = peeled_s->get_cached_pretty_representation(/*internal=*/false);
-	    if (s1 != s2)
-	      return s1 < s2;
-
-	    // The underlying type of pointer/reference have the same
-	    // textual representation; let's try to peel of typedefs
-	    // as well and we'll consider sorting the result as decls.
-	    peeled_f = peel_typedef_pointer_or_reference_type(peeled_f, true);
-	    peeled_s = peel_typedef_pointer_or_reference_type(peeled_s, true);
-
-	    s1 = peeled_f->get_cached_pretty_representation(false);
-	    s2 = peeled_s->get_cached_pretty_representation(false);
-	    if (s1 != s2)
-	      return s1 < s2;
-	  }
-      }
-
     interned_string s1 = f->get_cached_pretty_representation(false);
     interned_string s2 = s->get_cached_pretty_representation(false);
 
@@ -1241,6 +1196,7 @@ struct type_topo_comp
       {
 	s1 = is_typedef(f)->get_underlying_type()->get_cached_pretty_representation(false);
 	s2 = is_typedef(s)->get_underlying_type()->get_cached_pretty_representation(false);
+
 	if (s1 != s2)
 	  return s1 < s2;
       }
@@ -1547,6 +1503,10 @@ hash_and_canonicalize_types(IteratorType	begin,
       std::cerr << "sorting types before canonicalization ... \n";
       tmr.start();
     }
+
+  for (IteratorType t = begin; t != end; ++t)
+    if (deref(t))
+      deref(t)->priv_->get_ready_for_canonicalization();
 
   sort_types_for_hash_computing_and_c14n(begin, end);
 
@@ -1923,6 +1883,7 @@ get_canonical_type_index(const type_base& t);
 
 bool
 type_originates_from_corpus(type_base_sptr t, corpus_sptr& c);
+
 } // end namespace ir
 
 } // end namespace abigail

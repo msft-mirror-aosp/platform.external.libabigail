@@ -329,7 +329,18 @@ static bool
 die_is_variable_decl(const Dwarf_Die *die);
 
 static bool
+die_is_virtual(const Dwarf_Die* die);
+
+static bool
 die_is_function_decl(const Dwarf_Die *die);
+
+static bool
+die_is_member_function(const reader& rdr,
+		       const Dwarf_Die *die,
+		       void* where_addr, Dwarf_Die& class_die);
+
+static bool
+die_is_destructor(const Dwarf_Die *die);
 
 static bool
 die_has_size_attribute(const Dwarf_Die *die);
@@ -382,6 +393,11 @@ die_has_children(const Dwarf_Die* die);
 
 static bool
 fn_die_first_parameter_die(const Dwarf_Die* die, Dwarf_Die& first_parm_die);
+
+static bool
+get_member_fn_class_die_from_object_pointer(const Dwarf_Die*	die,
+					    Dwarf_Die&		class_die,
+					    Dwarf_Die&		object_ptr_die);
 
 static bool
 member_fn_die_has_this_pointer(const reader& rdr,
@@ -485,14 +501,10 @@ static string
 get_internal_anonymous_die_prefix_name(const Dwarf_Die *die);
 
 static string
-build_internal_anonymous_die_name(const string &base_name,
-				  size_t anonymous_type_index);
-
-static string
 die_qualified_type_name(const reader&			rdr,
 			const Dwarf_Die*		die,
 			void*				where,
-			unordered_set<void*>&	guard);
+			unordered_set<void*>&		guard);
 
 static string
 die_qualified_decl_name(const reader& rdr,
@@ -2295,8 +2307,6 @@ public:
 	}
     }
 
-    merge_member_functions_and_variables_in_classes_of_same_names();
-
     /// Now, look at the types that needs to be canonicalized after the
     /// translation has been constructed (which is just now) and
     /// canonicalize them.
@@ -3705,12 +3715,36 @@ public:
   /// @return true iff @p addr is the address of the DIE of a
   /// function type that is being currently built.
   bool
-  is_wip_function_type_die_address(void* addr) const
+  is_wip_function_type_die_address(const void* addr) const
   {
     die_function_type_map_type::const_iterator i =
-      die_wip_function_types_map().find(addr);
+      die_wip_function_types_map().find(const_cast<void*>(addr));
     return (i != die_wip_function_types_map().end());
   }
+
+  /// Return true iff a given DIE represents a function type that is
+  /// being built at the moment, but is not fully built yet.  WIP ==
+  /// work in progress.
+  ///
+  /// @param d DIE to consider.
+  ///
+  /// @return true iff @p d is the DIE of a function type that is
+  /// being currently built.
+  bool
+  is_wip_function_type_die(const Dwarf_Die& d) const
+  {return is_wip_function_type_die_address(d.addr);}
+
+  /// Return true iff a given DIE represents a function type that is
+  /// being built at the moment, but is not fully built yet.  WIP ==
+  /// work in progress.
+  ///
+  /// @param d DIE to consider.
+  ///
+  /// @return true iff @p d is the DIE of a function type that is
+  /// being currently built.
+  bool
+  is_wip_function_type_die(const Dwarf_Die* d) const
+  {return d && is_wip_function_type_die(*d);}
 
   /// Sometimes, a data member die can erroneously have an empty name as
   /// a result of a bug of the DWARF emitter.
@@ -4402,9 +4436,6 @@ public:
 	  // will be two virtual member functions with the same symbol
 	  // in the class and that leads to spurious hard-to-debug
 	  // change reports later down the road.
-	  if (i->second->get_symbol()
-	      || symbol_already_belongs_to_a_function(sym))
-	    continue;
 
 	  ABG_ASSERT(is_member_function(i->second));
 	  ABG_ASSERT(get_member_function_is_virtual(i->second));
@@ -4419,214 +4450,6 @@ public:
 	}
 
     fns_with_no_symbol.clear();
-  }
-
-  /// Copy missing member functions from a source @ref class_decl to a
-  /// destination one.
-  ///
-  /// If a function is present on the source @ref class_decl and not
-  /// on the destination one, then it's copied from the source class
-  /// to the destination one.
-  void
-  copy_missing_member_functions(class_decl_sptr& dest_class,
-				const class_decl_sptr& src_class)
-  {
-    for (auto method : src_class->get_member_functions())
-      if (!method->get_linkage_name().empty())
-	if (!dest_class->find_member_function(method->get_linkage_name()))
-	  {
-	    method_decl_sptr copied_method =
-	      copy_member_function(dest_class, method);
-	    ABG_ASSERT(copied_method);
-	    schedule_type_for_late_canonicalization(copied_method->get_type());
-	  }
-  }
-
-  /// Copy missing data members from a source @ref class_decl to a
-  /// destination one.
-  ///
-  /// If a data membe is present on the source @ref class_decl and not
-  /// on the destination one, then it's copied from the source class
-  /// to the destination one.
-  ///
-  /// @param dest_class the destination class type to copy the data
-  /// member to.
-  ///
-  /// @param src_class the source class type to copy the data member
-  /// from.
-  void
-  copy_missing_member_variables(class_decl_sptr& dest_class,
-				const class_decl_sptr& src_class)
-  {
-    for (auto var : src_class->get_data_members())
-      if (!var->get_name().empty())
-	if (!dest_class->find_data_member(var->get_name()))
-	  {
-	    var_decl_sptr copied_data_member =
-	      copy_member_variable(dest_class, var);
-	    ABG_ASSERT(copied_data_member);
-	  }
-  }
-
-  /// Test if there is an interator in a given range that points to
-  /// an anonymous class.
-  ///
-  /// @param begin the start of the iterator range to consider.
-  ///
-  /// @param end the end of the iterator range to consider.  This
-  /// points to after the range.
-  template <typename iterator_type>
-  bool
-  contains_anonymous_class(const iterator_type& begin,
-			   const iterator_type& end)
-  {
-    for (auto i = begin; i < end; ++i)
-      {
-	type_base_sptr t(*i);
-	class_decl_sptr c = is_class_type(t);
-	if (c && c->get_is_anonymous())
-	  return true;
-      }
-    return false;
-  }
-
-  /// Ensure that all classes of the same name have the same virtual
-  /// member functions.  So copy the virtual member functions from a
-  /// class C that have them to another class C that doesn't.
-  ///
-  /// @param begin an iterator to the first member of the set of
-  /// classes which to merge virtual member functions for.
-  ///
-  /// @param end an iterator to the last member (one past the end
-  /// actually) of the set of classes which to merge virtual member
-  /// functions for.
-  template <typename iterator_type>
-  void
-  merge_member_functions_of_classes(const iterator_type& begin,
-				    const iterator_type& end)
-  {
-    if (contains_anonymous_class(begin, end))
-      return;
-
-    for (auto i = begin; i < end; ++i)
-      {
-	type_base_sptr t(*i);
-	class_decl_sptr reference_class = is_class_type(t);
-	if (!reference_class)
-	  continue;
-
-	string n1 = reference_class->get_pretty_representation(true, true);
-	string n2;
-	for (auto j = begin; j < end; ++j)
-	  {
-	    if (j == i)
-	      continue;
-
-	    type_base_sptr type(*j);
-	    class_decl_sptr klass = is_class_type(type);
-	    if (!klass)
-	      continue;
-
-	    n2 = klass->get_pretty_representation(true, true);
-	    if (n1 != n2)
-	      continue;
-
-	    copy_missing_member_functions(reference_class, klass);
-	    copy_missing_member_functions(klass, reference_class);
-	  }
-      }
-  }
-
-  /// Ensure that all classes of the same name have the same data
-  /// members.
-  ///
-  /// So copy the data mebmers from a class C that have them to
-  /// another class C that doesn't.
-  ///
-  /// @param begin an iterator to the first member of the set of
-  /// classes which to merge data members for.
-  ///
-  /// @param end an iterator to the last member (one past the end
-  /// actually) of the set of classes which to merge data members for.
-  template <typename iterator_type>
-  void
-  merge_member_variables_of_classes(const iterator_type& begin,
-				    const iterator_type& end)
-  {
-    if (contains_anonymous_class(begin, end))
-      return;
-
-    for (auto i = begin; i < end; ++i)
-      {
-	type_base_sptr t(*i);
-	class_decl_sptr reference_class = is_class_type(t);
-	if (!reference_class)
-	  continue;
-
-	string n1 = reference_class->get_pretty_representation(true, true);
-	string n2;
-	for (auto j = begin; j < end; ++j)
-	  {
-	    if (j == i)
-	      continue;
-
-	    type_base_sptr type(*j);
-	    class_decl_sptr klass = is_class_type(type);
-	    if (!klass)
-	      continue;
-
-	    n2 = klass->get_pretty_representation(true, true);
-	    if (n1 != n2)
-	      continue;
-
-	    copy_missing_member_variables(reference_class, klass);
-	    copy_missing_member_variables(klass, reference_class);
-	  }
-      }
-  }
-
-  /// Ensure that all classes of the same name have the same virtual
-  /// member functions.  So copy the virtual member functions from a
-  /// class C that have them to another class C that doesn't.
-  void
-  merge_member_functions_and_variables_in_classes_of_same_names()
-  {
-    corpus_sptr abi = corpus();
-    if (!abi)
-      return;
-
-    istring_type_base_wptrs_map_type& class_types =
-      abi->get_types().class_types();
-
-    for (auto entry : class_types)
-      {
-	auto& classes = entry.second;
-	type_base_sptr first(classes.front());
-
-	if (classes.size() > 1 && !is_anonymous_type(first))
-	  {
-	    bool a_class_has_member_fns = false;
-	    bool a_class_has_member_vars = false;
-	    for (auto& c : classes)
-	      {
-		type_base_sptr t(c);
-		if (class_decl_sptr klass = is_class_type(t))
-		  {
-		    if (!klass->get_member_functions().empty())
-		      a_class_has_member_fns = true;
-
-		    if (!klass->get_static_data_members().empty())
-		      a_class_has_member_vars = true;
-		  }
-	      }
-	    if (a_class_has_member_fns)
-	      merge_member_functions_of_classes(classes.begin(),
-						classes.end());
-	    if (a_class_has_member_vars)
-	      merge_member_variables_of_classes(classes.begin(),
-						classes.end());
-	  }
-      }
   }
 
   /// @return vectors of types created during the analysis of the
@@ -5138,6 +4961,25 @@ public:
 
     address = maybe_adjust_fn_sym_address(address);
     return true;
+  }
+
+  /// Test if a function DIE has an associated symbol address.
+  ///
+  /// @param function_die the function DIE to consider.
+  ///
+  /// @return true iff the function DIE @p function_die has an
+  /// associated symbol address.
+  bool
+  function_has_address(const Dwarf_Die* function_die) const
+  {
+    if (!function_die || dwarf_tag(const_cast<Dwarf_Die*>(function_die)) != DW_TAG_subprogram)
+      return false;
+
+    Dwarf_Addr address = 0;
+    if (get_function_address(function_die, address))
+      return true;
+
+    return false;
   }
 
   /// Get the address of the global variable.
@@ -5857,7 +5699,8 @@ static type_or_decl_base_sptr
 build_ir_node_from_die(reader&		rdr,
 		       Dwarf_Die*	die,
 		       bool		called_from_public_decl,
-		       void*		where_addr);
+		       void*		where_addr,
+		       bool		is_required_decl_spec = false);
 
 static decl_base_sptr
 build_ir_node_for_void_type(reader& rdr);
@@ -6626,7 +6469,17 @@ die_is_public_decl(const Dwarf_Die* die)
 
   int tag = dwarf_tag(const_cast<Dwarf_Die*>(die));
   if (tag == DW_TAG_subprogram || tag == DW_TAG_variable)
-    die_flag_attribute(die, DW_AT_external, is_public);
+    {
+      die_flag_attribute(die, DW_AT_external, is_public);
+      if (!is_public)
+	{
+	  // try linkage name
+	  string n = die_string_attribute(die, DW_AT_MIPS_linkage_name);
+	  if (n.empty())
+	    n = die_string_attribute(die, DW_AT_linkage_name);
+	  is_public = !n.empty();
+	}
+    }
   else if (tag == DW_TAG_namespace)
     {
       string name = die_name(die);
@@ -6710,6 +6563,53 @@ die_is_function_decl(const Dwarf_Die *die)
   int tag = dwarf_tag(const_cast<Dwarf_Die*>(die));
   if (tag == DW_TAG_subprogram)
     return true;
+  return false;
+}
+
+/// Test if a DIE is for a member function.
+///
+/// @param rdr the DWARF reader to use to read the properties of the
+/// DIE.
+///
+/// @param die the DIE to consider.
+///
+/// @param where_addr where we currently are in the DIE tree.  This is
+/// useful when dealing with DWARF compressed with the 'dwz' tool.
+///
+/// @param class_die output parameter that is set iff @p die is a
+/// member function and thus, iff the function returns true.  This is
+/// set to the containing class DIE of the member function.
+///
+/// @return true iff @p die is for a member function.
+static bool
+die_is_member_function(const reader& rdr, const Dwarf_Die *die,
+		       void* where_addr, Dwarf_Die& class_die)
+{
+  if (!die_is_function_decl(die))
+    return false;
+
+  if (die_is_at_class_scope(rdr, die, where_addr, class_die))
+    return true;
+
+  return false;
+}
+
+/// Test if a DIE is for a function decl representing a destructor.
+///
+/// @param die the DIE to consider.
+///
+/// @return true iff @p die represents a function decl representing a
+/// destructor.
+static bool
+die_is_destructor(const Dwarf_Die *die)
+{
+  if (!die_is_function_decl(die))
+    return false;
+
+  string name = die_name(die);
+  if (!name.empty() && name[0] == '~')
+    return true;
+
   return false;
 }
 
@@ -7342,6 +7242,64 @@ fn_die_first_parameter_die(const Dwarf_Die* die, Dwarf_Die& first_parm_die)
   return false;
 }
 
+/// Get the class DIE from a member function DIE by looking following
+/// the DW_AT_object_pointer attribute.
+///
+/// @param die the DW_TAG_subprogram or DW_TAG_subroutine_type DIE
+/// representing the member function (or member function type) to
+/// consider.
+///
+/// @param class_die  output parameter.  This is set by the function to
+/// the resulting class DIE found by following the value of the
+/// DW_AT_object_pointer attribute of @p die.  This is set iff the
+/// function returns true.
+///
+/// @param object_ptr_die output parameter.  This is set by the
+/// function to the DIE for object pointer (this pointer), iff the
+/// function returns true.
+///
+/// @return true if @p die has a DW_AT_object_pointer and a class_die
+/// could be found from it, then this function returns true after
+/// setting @p class_die and @p object_ptr_die accordingly.
+static bool
+get_member_fn_class_die_from_object_pointer(const Dwarf_Die*	die,
+					    Dwarf_Die&		class_die,
+					    Dwarf_Die&		object_ptr_die)
+{
+  if (!die)
+    return false;
+
+  int tag = dwarf_tag(const_cast<Dwarf_Die*>(die));
+  if (tag != DW_TAG_subprogram && tag != DW_TAG_subroutine_type)
+    return false;
+
+  Dwarf_Die first_parm_die;
+  Dwarf_Die parm_type_die;
+  if (die_has_object_pointer(die, object_ptr_die))
+    {
+      // This can be either a member function with a
+      // DW_AT_object_pointer attribute or a DW_TAG_subroutine_type
+      // with a DW_AT_object_pointer.  In the later case, we are
+      // looking at a member function type.
+      memcpy(&first_parm_die, &object_ptr_die, sizeof(Dwarf_Die));
+      if (!die_die_attribute(&first_parm_die, DW_AT_type, parm_type_die))
+	return false;
+      die_peel_qual_ptr(&parm_type_die, parm_type_die);
+      die_peel_typedef(&parm_type_die, parm_type_die);
+    }
+  else
+    return false;
+
+  tag = dwarf_tag(&parm_type_die);
+  if (tag == DW_TAG_class_type || tag == DW_TAG_structure_type)
+    {
+      memcpy(&class_die, &parm_type_die, sizeof(Dwarf_Die));
+      return true;
+    }
+
+  return false;
+}
+
 /// Test if a member function denoted by a given DIE has a parameter
 /// which is a "this pointer".
 ///
@@ -7387,21 +7345,13 @@ member_fn_die_has_this_pointer(const reader& rdr,
       && !die_is_at_class_scope(rdr, die, where_addr, class_die))
     return false;
 
+  if (get_member_fn_class_die_from_object_pointer(die, class_die,
+						  object_pointer_die))
+    return true;
+
   Dwarf_Die first_parm_die;
   Dwarf_Die parm_type_die;
-  if (die_has_object_pointer(die, object_pointer_die))
-    {
-      // This can be either a member function with a
-      // DW_AT_object_pointer attribute or a DW_TAG_subroutine_type
-      // with a DW_AT_object_pointer.  In the later case, we are
-      // looking at a member function type.
-      memcpy(&first_parm_die, &object_pointer_die, sizeof(Dwarf_Die));
-      if (!die_die_attribute(&first_parm_die, DW_AT_type, parm_type_die))
-	return false;
-      die_peel_qual_ptr(&parm_type_die, parm_type_die);
-      die_peel_typedef(&parm_type_die, parm_type_die);
-    }
-  else if (fn_die_first_parameter_die(die, first_parm_die))
+  if (fn_die_first_parameter_die(die, first_parm_die))
     {
       memcpy(&object_pointer_die, &first_parm_die, sizeof(Dwarf_Die));
       bool is_artificial = false;
@@ -9304,32 +9254,6 @@ get_internal_anonymous_die_prefix_name(const Dwarf_Die *die)
     type_name = tools_utils::get_anonymous_enum_internal_name_prefix();
 
   return type_name;
-}
-
-/// Build a full internal anonymous type name.
-///
-/// @param base_name this is the base name as returned by the function
-/// @ref get_internal_anonymous_die_prefix_name.
-///
-/// @param anonymous_type_index this is the index of the anonymous
-/// type in its scope.  That is, if there are more than one anonymous
-/// types of a given kind in a scope, this index is what tells them
-/// appart, starting from 0.
-///
-/// @return the built string, which is a concatenation of @p base_name
-/// and @p anonymous_type_index.
-static string
-build_internal_anonymous_die_name(const string &base_name,
-				  size_t anonymous_type_index)
-{
-  string name = base_name;
-  if (anonymous_type_index && !base_name.empty())
-    {
-      std::ostringstream o;
-      o << base_name << anonymous_type_index;
-      name = o.str();
-    }
-  return name;
 }
 
 // ------------------------------------
@@ -12700,8 +12624,7 @@ get_scope_die(const reader&	rdr,
 
   translation_unit::language die_lang = translation_unit::LANG_UNKNOWN;
   get_die_language(die, die_lang);
-  if (is_c_language(die_lang)
-      || rdr.die_parent_map().empty())
+  if (is_c_language(die_lang) || rdr.die_parent_map().empty())
     {
       ABG_ASSERT(dwarf_tag(const_cast<Dwarf_Die*>(die)) != DW_TAG_member);
       return dwarf_diecu(const_cast<Dwarf_Die*>(die), &scope_die, 0, 0);
@@ -12710,9 +12633,9 @@ get_scope_die(const reader&	rdr,
   if (!get_parent_die(rdr, die, scope_die, where_addr))
     return false;
 
-  if (dwarf_tag(&scope_die) == DW_TAG_subprogram
-      || dwarf_tag(&scope_die) == DW_TAG_subroutine_type
-      || dwarf_tag(&scope_die) == DW_TAG_array_type)
+  if (dwarf_tag(&scope_die) == DW_TAG_array_type)
+    // The scope DIE is for an array type.  Let's return the scope of
+    // the array.
     return get_scope_die(rdr, &scope_die, where_addr, scope_die);
 
   return true;
@@ -12758,19 +12681,29 @@ get_scope_for_die(reader&	rdr,
 
   translation_unit::language die_lang = translation_unit::LANG_UNKNOWN;
   get_die_language(die, die_lang);
-  if (is_c_language(die_lang)
-      || rdr.die_parent_map().empty())
+  if (is_c_language(die_lang) || rdr.die_parent_map().empty())
     {
-      // In units for the C languages all decls belong to the global
-      // namespace.  This is generally the case if Libabigail
-      // determined that no DIE -> parent map was needed.
+      // In compilation units originating from the C languages all
+      // decls belong to the global namespace.  This is generally the
+      // case if Libabigail determined that no DIE -> parent map was
+      // needed.
       ABG_ASSERT(dwarf_tag(die) != DW_TAG_member);
       return rdr.global_scope();
     }
 
+  int tag = dwarf_tag(die);
   Dwarf_Die parent_die;
+  bool got_parent = false;
 
-  if (!get_parent_die(rdr, die, parent_die, where_addr))
+  if (tag == DW_TAG_subprogram)
+    {
+      Dwarf_Die object_ptr_die;
+      if (get_member_fn_class_die_from_object_pointer(die, parent_die,
+						      object_ptr_die))
+	got_parent = true;
+    }
+
+  if (!got_parent && !get_parent_die(rdr, die, parent_die, where_addr))
     return rdr.nil_scope();
 
   if (dwarf_tag(&parent_die) == DW_TAG_compile_unit
@@ -12798,25 +12731,22 @@ get_scope_for_die(reader&	rdr,
 
   scope_decl_sptr s;
   type_or_decl_base_sptr d;
-  if (dwarf_tag(&parent_die) == DW_TAG_subprogram
-      || dwarf_tag(&parent_die) == DW_TAG_array_type
+  if (dwarf_tag(&parent_die) == DW_TAG_array_type
       || dwarf_tag(&parent_die) == DW_TAG_lexical_block)
-    // this is an entity defined in a scope that is a function.
-    // Normally, I would say that this should be dropped.  But I have
-    // seen a case where a typedef DIE needed by a function parameter
-    // was defined right before the parameter, under the scope of the
-    // function.  Yeah, weird.  So if I drop the typedef DIE, I'd drop
-    // the function parm too.  So for that case, let's say that the
-    // scope is the scope of the function itself.  Note that this is
-    // an error of the DWARF emitter.  We should never see this DIE in
-    // this context.
+    // this is an entity defined in a scope that is either an array or
+    // a lexical block inside a function.  Normally, I would say that
+    // this should be dropped.  But I have seen cases where a typedef
+    // DIE needed by a relevant ABI artifact is defined in array (if
+    // the ABI artifact is the arrya) or in the lexical block where
+    // the ABI artifact is defined.  Yeah, weird. So for those cases,
+    // let's take/consider the scope of the array/lexical block.
     {
       scope_decl_sptr s = get_scope_for_die(rdr, &parent_die,
 					    called_for_public_decl,
 					    where_addr);
       if (is_anonymous_type_die(die))
-	// For anonymous type that have nothing to do in a function or
-	// array type context, let's put it in the containing
+	// For an anonymous type that have nothing to do in a lexical
+	// block or array type context, let's put it in the containing
 	// namespace.  That is, do not let it be in a containing class
 	// or union where it has nothing to do.
 	while (is_class_or_union_type(s))
@@ -12832,7 +12762,8 @@ get_scope_for_die(reader&	rdr,
   else
     d = build_ir_node_from_die(rdr, &parent_die,
 			       called_for_public_decl,
-			       where_addr);
+			       where_addr,
+			       /*is_required_decl_spec=*/true);
   s =  dynamic_pointer_cast<scope_decl>(d);
   if (!s)
     // this is an entity defined in someting that is not a scope.
@@ -13514,10 +13445,6 @@ build_enum_underlying_type(reader& rdr,
 ///
 /// @param die the DIE to read from.
 ///
-/// @param scope the scope of the final enum.  Note that this function
-/// does *NOT* add the built type to this scope.  The scope is just so
-/// that the function knows how to name anonymous enums.
-///
 /// @param is_declaration_only is true if the DIE denoted by @p die is
 /// a declaration-only DIE.
 ///
@@ -13525,7 +13452,6 @@ build_enum_underlying_type(reader& rdr,
 static enum_type_decl_sptr
 build_enum_type(reader&	rdr,
 		Dwarf_Die*	die,
-		scope_decl*	scope,
 		void*		where_addr,
 		bool		is_declaration_only)
 {
@@ -13549,10 +13475,6 @@ build_enum_type(reader&	rdr,
       ABG_ASSERT(!name.empty());
       // But we remember that the type is anonymous.
       is_anonymous = true;
-
-      scope_decl* sc = scope ? scope : rdr.global_scope().get();
-      if (size_t s = sc->get_num_anonymous_member_enums())
-	name = build_internal_anonymous_die_name(name, s);
     }
 
   bool use_odr = rdr.odr_is_relevant(die);
@@ -13716,7 +13638,6 @@ finish_member_function_reading(Dwarf_Die*			die,
       if (i == fns_with_no_symbol.end())
 	fns_with_no_symbol[die->addr] = f;
     }
-
 }
 
 /// If a function DIE has attributes which have not yet been read and
@@ -13887,9 +13808,10 @@ add_or_update_member_function(reader& rdr,
   if (!method)
     return method_decl_sptr();
 
-  finish_member_function_reading(function_die,
-				 is_function_decl(method),
-				 class_type, rdr);
+  if (!rdr.is_wip_function_type_die(function_die))
+    finish_member_function_reading(function_die,
+				   is_function_decl(method),
+				   class_type, rdr);
   return method;
 }
 
@@ -13973,13 +13895,6 @@ add_or_update_class_type(reader&	 rdr,
       ABG_ASSERT(!name.empty());
       // But we remember that the type is anonymous.
       is_anonymous = true;
-
-      size_t s = 0;
-      if (scope)
-	s = scope->get_num_anonymous_member_classes();
-      else
-	s = rdr.global_scope()->get_num_anonymous_member_classes();
-      name = build_internal_anonymous_die_name(name, s);
     }
 
   if (!is_anonymous)
@@ -14425,13 +14340,6 @@ add_or_update_union_type(reader&		rdr,
       ABG_ASSERT(!name.empty());
       // But we remember that the type is anonymous.
       is_anonymous = true;
-
-      size_t s = 0;
-      if (scope)
-	s = scope->get_num_anonymous_member_unions();
-      else
-	s = rdr.global_scope()->get_num_anonymous_member_classes();
-      name = build_internal_anonymous_die_name(name, s);
     }
 
   // If the type has location, then associate it to its
@@ -14579,7 +14487,8 @@ add_or_update_union_type(reader&		rdr,
 	      function_decl_sptr f = dynamic_pointer_cast<function_decl>(r);
 	      ABG_ASSERT(f);
 
-	      finish_member_function_reading(&child, f, result, rdr);
+	      if (!rdr.is_wip_function_type_die(&child))
+		finish_member_function_reading(&child, f, result, rdr);
 
 	      rdr.associate_die_to_decl(&child, f, where_addr,
 					 /*associate_by_repr=*/false);
@@ -15084,17 +14993,23 @@ build_ptr_to_mbr_type(reader&		rdr,
 /// building the type for a method.  This is the enclosing class or
 /// union of the method.
 ///
-/// @param where_offset the offset of the DIE where we are "logically"
+/// @param where_addr the address of the DIE where we are "logically"
 /// positioned at, in the DIE tree.  This is useful when @p die is
 /// e.g, DW_TAG_partial_unit that can be included in several places in
 /// the DIE tree.
 ///
-/// @return a pointer to the resulting function_type_sptr.
+/// @param decls the declarations of the types declared in the scope
+/// of the function and used by the ABI of the function decl that uses
+/// this function type as a type.
+///
+/// @return a pointer to the resulting function_type_sptr iff the
+/// function could build it.
 static function_type_sptr
-build_function_type(reader&	rdr,
-		    Dwarf_Die*		die,
-		    class_or_union_sptr is_method,
-		    void*		where_addr)
+build_function_type(reader&			rdr,
+		    Dwarf_Die*			die,
+		    class_or_union_sptr	is_method,
+		    void*			where_addr,
+		    vector<decl_base_sptr>&	decls)
 {
   function_type_sptr result;
 
@@ -15285,6 +15200,18 @@ build_function_type(reader&	rdr,
 	    // only for the first one.
 	    break;
 	  }
+	else
+	  {
+	    // This might be the declaration of a type that is used by
+	    // one of the function parameters.  This is rare, but it
+	    // happens.
+	    type_or_decl_base_sptr ir_node =
+	      build_ir_node_from_die(rdr, &child,
+				     /*called_from_public_decl=*/true,
+				     where_addr);
+	    if (decl_base_sptr d = is_decl(ir_node))
+	      decls.push_back(d);
+	  }
       }
     while (dwarf_siblingof(&child, &child) == 0);
 
@@ -15305,6 +15232,33 @@ build_function_type(reader&	rdr,
 
   maybe_canonicalize_type(result, rdr);
   return result;
+}
+
+/// Build a subroutine type from a DW_TAG_subroutine_type DIE.
+///
+/// @param rdr the DWARF reader to consider.
+///
+/// @param die the DIE to read from.
+///
+/// @param is_method points to a class or union declaration iff we're
+/// building the type for a method.  This is the enclosing class or
+/// union of the method.
+///
+/// @param where_addr the address of the DIE where we are "logically"
+/// positioned at, in the DIE tree.  This is useful when @p die is
+/// e.g, DW_TAG_partial_unit that can be included in several places in
+/// the DIE tree.
+///
+/// @return a pointer to the resulting function_type_sptr iff the
+/// function could build it.
+static function_type_sptr
+build_function_type(reader&		rdr,
+		    Dwarf_Die*		die,
+		    class_or_union_sptr is_method,
+		    void*		where_addr)
+{
+  vector<decl_base_sptr> decls;
+  return build_function_type(rdr, die, is_method, where_addr, decls);
 }
 
 /// Build a subrange type from a DW_TAG_subrange_type.
@@ -15613,17 +15567,17 @@ build_array_type(reader&	rdr,
 /// from a context where either a public function or a public variable
 /// is being built.
 ///
-/// @param where_offset the offset of the DIE where we are "logically"
-/// positionned at, in the DIE tree.  This is useful when @p die is
-/// e.g, DW_TAG_partial_unit that can be included in several places in
-/// the DIE tree.
+/// @param where_addr the address of the DIE where we are "logically"
+/// positionned at, in the DIE tree.  This is useful when @p die is in
+/// a e.g, DW_TAG_partial_unit that can be included in several places
+/// in the DIE tree.
 ///
 /// @return the newly created typedef_decl.
 static typedef_decl_sptr
 build_typedef_type(reader&	rdr,
-		   Dwarf_Die*		die,
-		   bool		called_from_public_decl,
-		   void*		where_addr)
+		   Dwarf_Die*	die,
+		   bool	called_from_public_decl,
+		   void*	where_addr)
 {
   typedef_decl_sptr result;
 
@@ -15707,7 +15661,8 @@ build_typedef_type(reader&	rdr,
 ///
 /// @param is_required_decl_spec this is true iff the variable to
 /// build is referred to as being the specification of another
-/// variable.
+/// variable.  So it *has* to be emitted, i.e, it is not going to be
+/// dropped on the floor.
 ///
 /// @return a pointer to the newly created var_decl.  If the var_decl
 /// could not be built, this function returns NULL.
@@ -15763,8 +15718,8 @@ build_or_get_var_decl_if_not_suppressed(reader&	rdr,
 /// @return a pointer to the newly created var_decl.  If the var_decl
 /// could not be built, this function returns NULL.
 static var_decl_sptr
-build_var_decl(reader&	rdr,
-	       Dwarf_Die	*die,
+build_var_decl(reader&		rdr,
+	       Dwarf_Die*	die,
 	       void*		where_addr,
 	       var_decl_sptr	result)
 {
@@ -15978,6 +15933,9 @@ build_or_get_fn_decl_if_not_suppressed(reader&			rdr,
 				       bool			is_declaration_only,
 				       function_decl_sptr	result)
 {
+  if (!die_is_function_decl(fn_die))
+    return result;
+
   function_decl_sptr fn;
   if (function_is_suppressed(rdr, scope, fn_die, is_declaration_only))
     {
@@ -15987,17 +15945,21 @@ build_or_get_fn_decl_if_not_suppressed(reader&			rdr,
 
   string name = die_name(fn_die);
   string linkage_name = die_linkage_name(fn_die);
-  bool is_dtor = !name.empty() && name[0]== '~';
+  Dwarf_Die class_die;
+  bool is_member_function = die_is_member_function(rdr, fn_die, where_addr, class_die);
+  bool is_dtor = is_member_function && die_is_destructor(fn_die);
   bool is_virtual = false;
   if (is_dtor)
-    {
-      Dwarf_Attribute attr;
-      if (dwarf_attr_integrate(const_cast<Dwarf_Die*>(fn_die),
-			       DW_AT_vtable_elem_location,
-			       &attr))
-	is_virtual = true;
-    }
+    is_virtual = die_is_virtual(fn_die);
 
+  // Reject functions not having an associated ELF symbol, unless they
+  // are member functions or functions which linkage name denotes
+  // their association with an undefined symbol, in which case later
+  // fixup is going to associate the proper ELF symbols.
+  if (!rdr.function_has_address(fn_die)
+      && !is_member_function
+      && !rdr.is_decl_die_with_undefined_symbol(fn_die))
+    return fn;
 
   // If we've already built an IR for a function with the same
   // signature (from another DIE), reuse it, unless that function is a
@@ -16341,7 +16303,10 @@ build_function_decl(reader&		rdr,
   if (!die)
     return result;
   int tag = dwarf_tag(die);
-  ABG_ASSERT(tag == DW_TAG_subprogram || tag == DW_TAG_inlined_subroutine);
+
+  ABG_ASSERT(tag == DW_TAG_subprogram
+	     || tag == DW_TAG_inlined_subroutine
+	     || tag == DW_TAG_dwarf_procedure);
 
   if (!die_is_public_decl(die))
     return result;
@@ -16378,12 +16343,23 @@ build_function_decl(reader&		rdr,
     }
   else
     {
+      // These are decls of types that might be used by the ABI of the
+      // function.
+      vector<decl_base_sptr> decls;
       function_type_sptr fn_type(build_function_type(rdr, die, is_method,
-						     where_addr));
+						     where_addr, decls));
       if (!fn_type)
 	return result;
 
       maybe_canonicalize_type(fn_type, rdr);
+
+      // The building of the function type might have created this
+      // function_decl.  If that is the case, return it.
+      if ((result = is_function_decl(rdr.lookup_decl_from_die_addr(die->addr))))
+	{
+	  rdr.associate_die_to_type(die, result->get_type(), where_addr);
+	  return result;
+	}
 
       result.reset(is_method
 		   ? new method_decl(fname, fn_type,
@@ -16392,11 +16368,18 @@ build_function_decl(reader&		rdr,
 		   : new function_decl(fname, fn_type,
 				       is_inline, floc,
 				       flinkage_name));
+
+      // Add the types that might be used by the ABI (parameters or
+      // return type) of the function and are declared rgit diffight before
+      // the function itself into the scope of the type.
+      for (const auto& decl : decls)
+	add_decl_to_scope(decl, result);
     }
 
-  // Set the symbol of the function.  If the linkage name is not set
-  // or is wrong, set it to the name of the underlying symbol.
-  if (!result->get_symbol())
+  // Set the symbol of the function.  If the linkage name doesn't
+  // match the name of the symbol, then update the symbol.
+  if (!result->get_symbol()
+      || result->get_symbol()->get_name() != result->get_linkage_name())
     {
       elf_symbol_sptr fn_sym;
       Dwarf_Addr      fn_addr;
@@ -16410,12 +16393,9 @@ build_function_decl(reader&		rdr,
 	  fn_sym = rdr.function_symbol_is_exported(fn_addr);
 	}
 
-      if (fn_sym && !rdr.symbol_already_belongs_to_a_function(fn_sym))
+      if (fn_sym)
 	{
 	  result->set_symbol(fn_sym);
-	  string linkage_name = result->get_linkage_name();
-	  if (linkage_name.empty())
-	    result->set_linkage_name(fn_sym->get_name());
 	  result->set_is_in_public_symbol_table(true);
 	}
 
@@ -16437,16 +16417,6 @@ build_function_decl(reader&		rdr,
 
   rdr.associate_die_to_type(die, result->get_type(), where_addr);
 
-  if (fn
-      && is_member_function(fn)
-      && get_member_function_is_virtual(fn)
-      && !result->get_linkage_name().empty())
-    // This function is a virtual member function which has its
-    // linkage name *and* and has its underlying symbol correctly set.
-    // It thus doesn't need any fixup related to elf symbol.  So
-    // remove it from the set of virtual member functions with linkage
-    // names and no elf symbol that need to be fixed up.
-    rdr.die_function_decl_with_no_symbol_map().erase(die->addr);
   return result;
 }
 
@@ -16568,17 +16538,22 @@ potential_member_fn_should_be_dropped(const function_decl_sptr& fn,
 /// This is done to avoid emitting IR nodes for types that are not
 /// referenced by public functions or variables.
 ///
-/// @param where_offset the offset of the DIE where we are "logically"
+/// @param where_addr the address of the DIE where we are "logically"
 /// positionned at, in the DIE tree.  This is useful when @p die is
 /// e.g, DW_TAG_partial_unit that can be included in several places in
 /// the DIE tree.
 ///
-/// @param is_required_decl_spec if true, it means the ir node to
-/// build is for a decl that is a specification for another decl that
-/// is concrete.  If you don't know what this is, set it to false.
-///
 /// @param is_declaration_only is true if the DIE denoted by @p die is
 /// a declaration-only DIE.
+///
+/// @param is_required_decl_spec this is set to true if the IR node of
+/// the DIE is considered like if it is going to be added to the IR
+/// being built.  E.g, if the IR node is for a function_decl, and if
+/// the function_decl has no asscociated ELF symbol,
+/// build_ir_node_from_die is supposed to silently drop the resulting
+/// IR node on the floor and return nullptr.  But if this this
+/// parameter is set to true, then the IR node for the function_decl
+/// is NOT going to be dropped on the floor.
 ///
 /// @return the resulting IR node.
 static type_or_decl_base_sptr
@@ -16748,8 +16723,7 @@ build_ir_node_from_die(reader&		rdr,
 	  }
 	else if (!type_suppressed)
 	  {
-	    enum_type_decl_sptr e = build_enum_type(rdr, die, scope,
-						    where_addr,
+	    enum_type_decl_sptr e = build_enum_type(rdr, die, where_addr,
 						    is_declaration_only);
 	    result = add_decl_to_scope(e, scope);
 	    if (result)
@@ -17011,17 +16985,20 @@ build_ir_node_from_die(reader&		rdr,
 	  break;
 
 	Dwarf_Die abstract_origin_die;
-	bool has_abstract_origin = die_die_attribute(die, DW_AT_abstract_origin,
-						     abstract_origin_die,
-						     /*recursive=*/true);
+	memset(&abstract_origin_die, 0, sizeof(abstract_origin_die));
 
+	// The abstract origin is the ultimate value of the
+	// DW_AT_abstract_origin or DW_AT_specification attribute.
+	bool has_abstract_origin = die_origin_die(die, abstract_origin_die);
 
 	scope_decl_sptr s = get_scope_for_die(rdr, die, called_from_public_decl,
 					      where_addr);
 	scope_decl* interface_scope = scope ? scope : s.get();
+	class_or_union* class_scope =
+	  is_class_or_union_type(interface_scope);
 
-	class_decl* class_scope = is_class_type(interface_scope);
 	string linkage_name = die_linkage_name(die);
+
 	string spec_linkage_name;
 	function_decl_sptr existing_fn;
 
@@ -17029,13 +17006,17 @@ build_ir_node_from_die(reader&		rdr,
 	  {
 	    // The scope of the function DIE we are looking at is a
 	    // class.  So we are looking at a member function.
-	    if (!linkage_name.empty())
+	    if (!linkage_name.empty() || has_abstract_origin)
 	      {
 		if ((existing_fn =
+		     is_function_decl
+		     (rdr.lookup_decl_from_die_addr(abstract_origin_die.addr)))
+		    ||
+		    (existing_fn =
 		     class_scope->find_member_function_sptr(linkage_name)))
 		  {
 		    // A function with the same linkage name has
-		    // already been created.  Let's see if we are a
+ 		    // already been created.  Let's see if we are a
 		    // clone of it or not.
 		    spec_linkage_name = existing_fn->get_linkage_name();
 		    if (has_abstract_origin
@@ -17076,7 +17057,8 @@ build_ir_node_from_die(reader&		rdr,
 	    // We built a brand new IR for the function DIE.  Now
 	    // there should be enough information on that IR to know
 	    // if we should drop it on the floor or keep it ...
-	    if (potential_member_fn_should_be_dropped(is_function_decl(result), die)
+	    if (potential_member_fn_should_be_dropped(is_function_decl(result),
+						      die)
 		&& !is_required_decl_spec)
 	      {
 		// So apparently we should drop that function IR on
@@ -17091,7 +17073,7 @@ build_ir_node_from_die(reader&		rdr,
 	result = add_decl_to_scope(is_decl(result), interface_scope);
 
 	function_decl_sptr fn = is_function_decl(result);
-	if (fn && is_member_function(fn))
+	if (fn && is_member_function(fn) && !rdr.is_wip_function_type_die(die))
 	  {
 	    class_decl_sptr klass(static_cast<class_decl*>(interface_scope),
 				  sptr_utils::noop_deleter());
@@ -17102,11 +17084,10 @@ build_ir_node_from_die(reader&		rdr,
 	if (fn)
 	  {
 	    if (!is_member_function(fn)
-		|| !get_member_function_is_virtual(fn))
-	      // Virtual member functions are added to the set of
-	      // functions exported by the current ABI corpus *after*
-	      // the canonicalization of their parent type.  So let's
-	      // not do it here.
+		|| (fn->get_symbol() && fn->get_symbol()->is_public()))
+	      // Among member functions, only those with public ELF
+	      // symbols are added to the set of functions exported by
+	      // the current ABI corpus.
 	      rdr.add_fn_to_exported_or_undefined_decls(fn.get());
 	    rdr.associate_die_to_decl(die, fn, where_addr,
 				      /*associate_by_repr=*/false);
@@ -17273,17 +17254,27 @@ build_ir_node_for_variadic_parameter_type(reader &rdr)
 /// This is done to avoid emitting IR nodes for types that are not
 /// referenced by public functions or variables.
 ///
-/// @param where_offset the offset of the DIE where we are "logically"
-/// positionned at, in the DIE tree.  This is useful when @p die is
-/// e.g, DW_TAG_partial_unit that can be included in several places in
-/// the DIE tree.
+/// @param where_addr the address of the DIE where we are "logically"
+/// positionned at, in the DIE tree.  This is useful when @p die is in
+/// a e.g, DW_TAG_partial_unit that can be included in several places
+/// in the DIE tree.
+///
+/// @param is_required_decl_spec this is set to true if the IR node of
+/// the DIE is considered like if it is going to be added to the IR
+/// being built.  E.g, if the IR node is for a function_decl, and if
+/// the function_decl has no asscociated ELF symbol,
+/// build_ir_node_from_die is supposed to silently drop the resulting
+/// IR node on the floor and return nullptr.  But if this this
+/// parameter is set to true, then the IR node for the function_decl
+/// is NOT going to be dropped on the floor.
 ///
 /// @return the resulting IR node.
 static type_or_decl_base_sptr
-build_ir_node_from_die(reader&	rdr,
+build_ir_node_from_die(reader&		rdr,
 		       Dwarf_Die*	die,
 		       bool		called_from_public_decl,
-		       void*		where_addr)
+		       void*		where_addr,
+		       bool		is_required_decl_spec)
 {
   if (!die)
     return decl_base_sptr();
@@ -17306,7 +17297,8 @@ build_ir_node_from_die(reader&	rdr,
 
   return build_ir_node_from_die(rdr, die, scope.get(),
 				called_from_public_decl,
-				where_addr, true);
+				where_addr, true,
+				is_required_decl_spec);
 }
 
 /// Create a dwarf::reader.

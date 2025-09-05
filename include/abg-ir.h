@@ -1515,6 +1515,12 @@ public:
   translation_unit*
   get_translation_unit();
 
+  const type_or_decl_base*
+  get_original_artefact() const;
+
+  void
+  set_original_artefact(const type_or_decl_base*);
+
   virtual bool
   traverse(ir_node_visitor&);
 
@@ -1863,7 +1869,7 @@ public:
   /// Convenience typedef for a vector of @ref scope_decl_sptr.
   typedef std::vector<scope_decl_sptr>	scopes;
 
-  scope_decl();
+  scope_decl() = delete;
 
 protected:
   virtual decl_base_sptr
@@ -3151,7 +3157,7 @@ bool
 equals(const function_decl&, const function_decl&, change_kind*);
 
 /// Abstraction for a function declaration.
-class function_decl : public virtual decl_base
+class function_decl : public virtual scope_decl
 {
   struct priv;
   // This priv pointer is not handled by a shared_ptr because
@@ -3214,6 +3220,9 @@ public:
   parameters::const_iterator
   get_first_non_implicit_parm() const;
 
+  parameters::const_iterator
+  get_first_non_artificial_parm() const;
+
   const function_type_sptr
   get_type() const;
 
@@ -3254,6 +3263,9 @@ public:
   /// of parameters.
   bool
   is_variadic() const;
+
+  interned_string
+  get_id(const elf_symbol_sptr& s) const;
 
   interned_string
   get_id() const;
@@ -3468,6 +3480,9 @@ public:
 
   parameters::const_iterator
   get_first_non_implicit_parm() const;
+
+  parameters::const_iterator
+  get_first_non_artificial_parm() const;
 
   parameters::const_iterator
   get_first_parm() const;

@@ -116,8 +116,12 @@ class location;
 class location_manager;
 
 class type_or_decl_base;
+
 /// A convenience typedef for a shared_ptr to @ref type_or_decl_base.
 typedef shared_ptr<type_or_decl_base> type_or_decl_base_sptr;
+
+/// A convenience typedef for a weak_ptr to @ref type_or_decl_base.
+typedef weak_ptr<type_or_decl_base> type_or_decl_base_wptr;
 
 class type_base;
 
@@ -392,6 +396,15 @@ is_at_class_scope(const decl_base*);
 
 class_or_union*
 is_at_class_scope(const decl_base&);
+
+function_decl*
+is_at_function_scope(const decl_base& decl);
+
+function_decl*
+is_at_function_scope(const decl_base* decl);
+
+function_decl*
+is_at_function_scope(const decl_base_sptr& decl);
 
 bool
 is_at_template_scope(const decl_base_sptr);
@@ -1588,6 +1601,9 @@ type_or_void(const type_base_sptr, const environment&);
 type_base_sptr
 canonicalize(type_base_sptr type, bool do_log= false, bool show_stats= false);
 
+void
+hash_and_canonicalize_type(type_base_sptr t);
+
 type_base*
 type_has_non_canonicalized_subtype(type_base_sptr t);
 
@@ -1606,6 +1622,15 @@ hash_type_or_decl(const type_or_decl_base *);
 
 size_t
 hash_type_or_decl(const type_or_decl_base_sptr &);
+
+bool
+has_defined_virtual_mem_fn(const class_decl&);
+
+bool
+has_defined_virtual_mem_fn(const class_decl*);
+
+bool
+has_defined_virtual_mem_fn(const class_decl_sptr&);
 
 bool
 is_non_canonicalized_type(const type_base *);
@@ -1672,6 +1697,14 @@ integral_type_has_harmless_name_change(const decl_base_sptr& f,
 bool
 integral_type_has_harmless_name_change(const type_base_sptr& f,
 				       const type_base_sptr& s);
+
+void
+copy_missing_member_functions(class_or_union_sptr& dest_class,
+			      const class_or_union_sptr& src_class);
+
+void
+copy_missing_member_variables(class_or_union_sptr& dest_class,
+			      const class_or_union_sptr& src_class);
 } // end namespace ir
 
 using namespace abigail::ir;

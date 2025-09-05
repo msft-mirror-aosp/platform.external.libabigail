@@ -1,28 +1,28 @@
-<abi-corpus version='2.4'>
+<abi-corpus version='2.5'>
   <elf-function-symbols>
     <elf-symbol name='_ZN4stac14buggy_functionEPFvPFfiiEE' type='func-type' binding='global-binding' visibility='default-visibility' is-defined='yes'/>
   </elf-function-symbols>
   <abi-instr address-size='64' path='dwarf_bug.cpp' comp-dir-path='/remote/users/lstacul' language='LANG_C_plus_plus'>
     <type-decl name='float' size-in-bits='32' hash='d7ec3bf03d3c5690' id='type-id-1'/>
-    <type-decl name='int' size-in-bits='32' hash='09d17c08f594edc7' id='type-id-2'/>
-    <typedef-decl name='Callback_t' type-id='type-id-3' size-in-bits='64' filepath='/remote/users/lstacul/dwarf_bug.cpp' line='3' column='1' hash='fd7a63c0c6c822c4' id='type-id-4'/>
-    <pointer-type-def type-id='type-id-5' size-in-bits='64' hash='fd7a63c0c6c822c4' id='type-id-3'/>
+    <pointer-type-def type-id='type-id-2' size-in-bits='64' hash='fd7a63c0c6c822c4' id='type-id-3'/>
+    <type-decl name='int' size-in-bits='32' hash='09d17c08f594edc7' id='type-id-4'/>
+    <typedef-decl name='Callback_t' type-id='type-id-3' size-in-bits='64' filepath='/remote/users/lstacul/dwarf_bug.cpp' line='3' column='1' hash='fd7a63c0c6c822c4' id='type-id-5'/>
     <pointer-type-def type-id='type-id-6' size-in-bits='64' hash='fd7a63c0c6c822c4' id='type-id-7'/>
     <namespace-decl name='stac'>
-      <function-decl name='buggy_function' mangled-name='_ZN4stac14buggy_functionEPFvPFfiiEE' filepath='/remote/users/lstacul/dwarf_bug.cpp' line='10' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZN4stac14buggy_functionEPFvPFfiiEE' hash='5695f5ce05a4c55f'>
+      <function-decl name='buggy_function' mangled-name='_ZN4stac14buggy_functionEPFvPFfiiEE' filepath='/remote/users/lstacul/dwarf_bug.cpp' line='10' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZN4stac14buggy_functionEPFvPFfiiEE' hash='5695f5ce05a4c55f' id='type-id-8'>
         <parameter type-id='type-id-7'/>
-        <return type-id='type-id-8'/>
+        <return type-id='type-id-9'/>
       </function-decl>
     </namespace-decl>
-    <type-decl name='void' id='type-id-8'/>
-    <function-type size-in-bits='64' hash='c2df35cb0de2616d' id='type-id-5'>
-      <parameter type-id='type-id-2'/>
-      <parameter type-id='type-id-2'/>
+    <type-decl name='void' id='type-id-9'/>
+    <function-type size-in-bits='64' hash='c2df35cb0de2616d' id='type-id-2'>
+      <parameter type-id='type-id-4'/>
+      <parameter type-id='type-id-4'/>
       <return type-id='type-id-1'/>
     </function-type>
     <function-type size-in-bits='64' hash='5695f5ce05a4c55f' id='type-id-6'>
-      <parameter type-id='type-id-4'/>
-      <return type-id='type-id-8'/>
+      <parameter type-id='type-id-5'/>
+      <return type-id='type-id-9'/>
     </function-type>
   </abi-instr>
 </abi-corpus>

@@ -6217,7 +6217,9 @@ class_diff::ensure_lookup_tables_populated(void) const
 	unsigned i = it->index();
 	method_decl_sptr mem_fn =
 	  first_class_decl()->get_virtual_mem_fns()[i];
-	string name = mem_fn->get_linkage_name();
+	string name = mem_fn->get_symbol()
+	  ? mem_fn->get_symbol()->get_name()
+	  : mem_fn->get_linkage_name();
 	if (name.empty())
 	  name = mem_fn->get_pretty_representation();
 	ABG_ASSERT(!name.empty());
@@ -6240,7 +6242,9 @@ class_diff::ensure_lookup_tables_populated(void) const
 
 	    method_decl_sptr mem_fn =
 	      second_class_decl()->get_virtual_mem_fns()[i];
-	    string name = mem_fn->get_linkage_name();
+	    string name = mem_fn->get_symbol()
+	      ? mem_fn->get_symbol()->get_name()
+	      : mem_fn->get_linkage_name();
 	    if (name.empty())
 	      name = mem_fn->get_pretty_representation();
 	    ABG_ASSERT(!name.empty());
@@ -9914,14 +9918,14 @@ corpus_diff::priv::compare_fns_vars_and_ensure_lookup_tables_populated()
     first_fns_map.reserve(first_->get_functions().size());
     for (const auto* fn : first_->get_functions())
       {
-	string n = get_function_id_or_pretty_representation(fn);
+	string n = get_identifier_relevant_across_change(fn);
 	ABG_ASSERT(!n.empty());
 	first_fns_map[n] = fn;
       }
 
     for (const auto* fn : second_->get_functions())
       {
-	string n = get_function_id_or_pretty_representation(fn);
+	string n = get_identifier_relevant_across_change(fn);
 	ABG_ASSERT(!n.empty());
 	auto j = first_fns_map.find(n);
 	if (j != first_fns_map.end())
@@ -10002,19 +10006,20 @@ corpus_diff::priv::compare_fns_vars_and_ensure_lookup_tables_populated()
     first_vars_map.reserve(first_->get_variables().size());
     for (const auto& var : first_->get_variables())
       {
-	string n = var->get_id();
+	string n = get_identifier_relevant_across_change(var);
 	ABG_ASSERT(!n.empty());
 	// Keep only the first instance of duplicate IDs (static
 	// member variables from multiple translation units).
 	if (first_vars_map.find(n) == first_vars_map.end())
 	  first_vars_map[n] = var;
 	else
-	  ABG_ASSERT(is_member_decl(var) && get_member_is_static(var));
+	  ABG_ASSERT((is_member_decl(var) && get_member_is_static(var))
+		     || !is_member_decl(var));
       }
 
     for (const auto& var : second_->get_variables())
       {
-	string n = var->get_id();
+	string n = get_identifier_relevant_across_change(var);
 	ABG_ASSERT(!n.empty());
 	auto j = first_vars_map.find(n);
 	if (j != first_vars_map.end())
@@ -10532,8 +10537,9 @@ corpus_diff::priv::deleted_function_is_suppressed(const function_decl* fn) const
   if (!fn)
     return false;
 
+  string n = get_identifier_relevant_across_change(fn);
   string_function_ptr_map::const_iterator i =
-    suppressed_deleted_fns_.find(fn->get_id());
+    suppressed_deleted_fns_.find(n);
 
   return (i != suppressed_deleted_fns_.end());
 }
@@ -10595,8 +10601,9 @@ corpus_diff::priv::added_function_is_suppressed(const function_decl* fn) const
   if (!fn)
     return false;
 
+  string n = get_identifier_relevant_across_change(fn);
   string_function_ptr_map::const_iterator i =
-    suppressed_added_fns_.find(fn->get_id());
+    suppressed_added_fns_.find(n);
 
   return (i != suppressed_added_fns_.end());
 }
@@ -10614,8 +10621,9 @@ corpus_diff::priv::deleted_variable_is_suppressed(const var_decl_sptr& var) cons
   if (!var)
     return false;
 
+  string n = get_identifier_relevant_across_change(var);
   string_var_ptr_map::const_iterator i =
-    suppressed_deleted_vars_.find(var->get_id());
+    suppressed_deleted_vars_.find(n);
 
   return (i != suppressed_deleted_vars_.end());
 }
@@ -10633,8 +10641,9 @@ corpus_diff::priv::added_variable_is_suppressed(const var_decl_sptr& var) const
   if (!var)
     return false;
 
+  string n = get_identifier_relevant_across_change(var);
   string_var_ptr_map::const_iterator i =
-    suppressed_added_vars_.find(var->get_id());
+    suppressed_added_vars_.find(n);
 
   return (i != suppressed_added_vars_.end());
 }

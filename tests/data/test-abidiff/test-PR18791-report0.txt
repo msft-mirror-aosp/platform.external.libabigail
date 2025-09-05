@@ -96,7 +96,7 @@ Variables changes summary: 0 Removed, 0 Changed, 0 Added variable
     implicit parameter 0 of type 'sigc::connection*' has sub-type changes:
       pointed to type 'struct sigc::connection' changed, as reported earlier
 
-  [C] 'method sigc::connection::~connection(int)' has some indirect sub-type changes:
+  [C] 'method sigc::connection::~connection()' has some indirect sub-type changes:
     implicit parameter 0 of type 'sigc::connection*' has sub-type changes:
       pointed to type 'struct sigc::connection' changed, as reported earlier
 
@@ -168,7 +168,7 @@ Variables changes summary: 0 Removed, 0 Changed, 0 Added variable
     implicit parameter 0 of type 'sigc::internal::signal_impl*' has sub-type changes:
       pointed to type 'struct sigc::internal::signal_impl' changed, as reported earlier
 
-  [C] 'method sigc::internal::trackable_callback_list::~trackable_callback_list(int)' has some indirect sub-type changes:
+  [C] 'method sigc::internal::trackable_callback_list::~trackable_callback_list()' has some indirect sub-type changes:
     implicit parameter 0 of type 'sigc::internal::trackable_callback_list*' has sub-type changes:
       pointed to type 'struct sigc::internal::trackable_callback_list' changed, as reported earlier
 
@@ -256,7 +256,7 @@ Variables changes summary: 0 Removed, 0 Changed, 0 Added variable
     implicit parameter 0 of type 'sigc::signal_base*' has sub-type changes:
       pointed to type 'struct sigc::signal_base' changed, as reported earlier
 
-  [C] 'method sigc::signal_base::~signal_base(int)' has some indirect sub-type changes:
+  [C] 'method sigc::signal_base::~signal_base()' has some indirect sub-type changes:
     implicit parameter 0 of type 'sigc::signal_base*' has sub-type changes:
       pointed to type 'struct sigc::signal_base' changed, as reported earlier
 
@@ -277,7 +277,7 @@ Variables changes summary: 0 Removed, 0 Changed, 0 Added variable
     implicit parameter 0 of type 'sigc::slot_base*' has sub-type changes:
       pointed to type 'class sigc::slot_base' changed, as reported earlier
 
-  [C] 'method sigc::slot_base::~slot_base(int)' has some indirect sub-type changes:
+  [C] 'method sigc::slot_base::~slot_base()' has some indirect sub-type changes:
     implicit parameter 0 of type 'sigc::slot_base*' has sub-type changes:
       pointed to type 'class sigc::slot_base' changed, as reported earlier
 
@@ -292,7 +292,7 @@ Variables changes summary: 0 Removed, 0 Changed, 0 Added variable
     implicit parameter 0 of type 'sigc::trackable*' has sub-type changes:
       pointed to type 'struct sigc::trackable' changed, as reported earlier
 
-  [C] 'method sigc::trackable::~trackable(int)' has some indirect sub-type changes:
+  [C] 'method sigc::trackable::~trackable()' has some indirect sub-type changes:
     implicit parameter 0 of type 'sigc::trackable*' has sub-type changes:
       pointed to type 'struct sigc::trackable' changed, as reported earlier
 

@@ -1,4 +1,4 @@
-<abi-corpus version='2.4' path='data/test-read-ctf/test1.so'>
+<abi-corpus version='2.5' path='data/test-read-ctf/test1.so'>
   <elf-needed>
     <dependency name='libc.so.6'/>
   </elf-needed>
@@ -11,21 +11,21 @@
       <enumerator name='e0' value='0'/>
       <enumerator name='e1' value='1'/>
     </enum-decl>
-    <class-decl name='opaque_struct' is-struct='yes' visibility='default' size-in-bits='32' hash='76b8be93c7b2042b' id='type-id-3'>
+    <pointer-type-def type-id='type-id-3' size-in-bits='64' alignment-in-bits='64' hash='7e09fd30fc6f7f14' id='type-id-4'/>
+    <pointer-type-def type-id='type-id-5' size-in-bits='64' alignment-in-bits='64' hash='3417842a41c6a5f9' id='type-id-6'/>
+    <class-decl name='opaque_struct' is-struct='yes' visibility='default' size-in-bits='32' hash='76b8be93c7b2042b' id='type-id-7'>
       <data-member access='public' layout-offset-in-bits='0'>
-        <var-decl name='m0' type-id='type-id-4' visibility='default'/>
+        <var-decl name='m0' type-id='type-id-3' visibility='default'/>
       </data-member>
     </class-decl>
-    <typedef-decl name='opaque_enum' type-id='type-id-1' size-in-bits='32' alignment-in-bits='32' hash='8052a48aba79331b' id='type-id-4'/>
-    <typedef-decl name='opaque_struct' type-id='type-id-3' size-in-bits='32' id='type-id-5'/>
+    <typedef-decl name='opaque_enum' type-id='type-id-1' size-in-bits='32' alignment-in-bits='32' hash='8052a48aba79331b' id='type-id-3'/>
+    <typedef-decl name='opaque_struct' type-id='type-id-7' size-in-bits='32' hash='76b8be93c7b2042b' id='type-id-5'/>
     <type-decl name='unnamed-enum-underlying-type-32' size-in-bits='32' alignment-in-bits='32' is-anonymous='yes' hash='5181a58e665b3619' id='type-id-2'/>
-    <pointer-type-def type-id='type-id-4' size-in-bits='64' alignment-in-bits='64' hash='7e09fd30fc6f7f14' id='type-id-6'/>
-    <pointer-type-def type-id='type-id-5' size-in-bits='64' alignment-in-bits='64' hash='9049c6536b43efe1' id='type-id-7'/>
-    <function-decl name='fn' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='fn' hash='e762c5a57679e6a9'>
-      <parameter type-id='type-id-7'/>
+    <function-decl name='fn' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='fn' hash='b76bf6d98c10cd0d' id='type-id-8'>
       <parameter type-id='type-id-6'/>
-      <return type-id='type-id-8'/>
+      <parameter type-id='type-id-4'/>
+      <return type-id='type-id-9'/>
     </function-decl>
-    <type-decl name='void' id='type-id-8'/>
+    <type-decl name='void' id='type-id-9'/>
   </abi-instr>
 </abi-corpus>

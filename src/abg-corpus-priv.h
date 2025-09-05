@@ -398,34 +398,41 @@ public:
   /// the set of exported functions.
   ///
   /// @param fn the function to add to the map.
+  ///
+  /// @param fn_id the ID to use as identifier for the function to be
+  /// added to the map.  This identifier is the key to the element
+  /// being added to the map.
   void
-  add_fn_to_id_fns_map(function_decl* fn)
+  add_fn_to_id_fns_map(function_decl* fn, const interned_string& fn_id)
   {
     if (!fn)
       return;
 
-    // First associate the function id to the function.
-    interned_string fn_id = fn->get_id();
     std::unordered_set<function_decl*>* fns = fn_id_is_in_id_fns_map(fn_id);
     if (!fns)
       fns = &(id_fns_map()[fn_id] = std::unordered_set<function_decl*>());
     fns->insert(fn);
+  }
 
-    // Now associate all aliases of the underlying symbol to the
+  /// Add a given function to the map of functions that are present in
+  /// the set of exported functions.
+  ///
+  /// @param fn the function to add to the map.
+  void
+  add_fn_to_id_fns_map(function_decl* fn)
+  {
+    // Associate all aliases of the underlying symbol to the
     // function too.
     elf_symbol_sptr sym = fn->get_symbol();
     ABG_ASSERT(sym);
-    string sym_id;
+    sym = sym->get_main_symbol();
+    interned_string fn_id;
     do
       {
-	sym_id = sym->get_id_string();
-	if (sym_id == fn_id)
-	  goto loop;
-	fns = fn_id_is_in_id_fns_map(fn_id);
-	if (!fns)
-	  fns = &(id_fns_map()[fn_id] = std::unordered_set<function_decl*>());
-	fns->insert(fn);
-      loop:
+	fn_id = fn->get_id(sym);
+	add_fn_to_id_fns_map(fn, fn_id);
+	fn_id = fn->get_environment().intern(sym->get_id_string());
+	add_fn_to_id_fns_map(fn, fn_id);
 	sym = sym->get_next_alias();
       }
     while (sym && !sym->is_main_symbol());

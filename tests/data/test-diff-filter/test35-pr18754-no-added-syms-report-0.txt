@@ -1,4 +1,4 @@
-Functions changes summary: 82 Removed, 7 Changed (32 filtered out), 0 Added (1081 filtered out) functions
+Functions changes summary: 82 Removed, 19 Changed (93 filtered out), 0 Added (938 filtered out) functions
 Variables changes summary: 47 Removed, 1 Changed, 0 Added (11 filtered out) variables
 Function symbols changes summary: 7 Removed, 0 Added (76 filtered out) function symbols not referenced by debug info
 Variable symbols changes summary: 0 Removed, 0 Added variable symbol not referenced by debug info
@@ -88,7 +88,37 @@ Variable symbols changes summary: 0 Removed, 0 Added variable symbol not referen
   [D] 'function void std::__unguarded_linear_insert<VarList::BufEntry*,__gnu_cxx::__ops::_Val_comp_iter<bool(*)(constVarList::BufEntry&,constVarList::BufEntry&)>>(VarList::BufEntry*, __gnu_cxx::__ops::_Val_comp_iter<bool(*)(constVarList::BufEntry&,constVarList::BufEntry&)>)'
   [D] 'function void write_message(FILE*, int, __va_list_tag*)'
 
-7 functions with some indirect sub-type change:
+4 functions with incompatible sub-type changes:
+
+  [C] 'method std::pair<std::_Rb_tree_iterator<AutoData>,bool>::pair<std::_Rb_tree_iterator<AutoData>,bool>(std::_Rb_tree_iterator<AutoData>&&, bool&&)' has some sub-type changes:
+    'method std::pair<std::_Rb_tree_iterator<AutoData>,bool>::pair<std::_Rb_tree_iterator<AutoData>,bool>(std::_Rb_tree_iterator<AutoData>&&, bool&&) {_ZNSt4pairISt17_Rb_tree_iteratorI8AutoDataEbEC2IS2_bLb1EEEOT_OT0_, _ZNSt4pairISt17_Rb_tree_iteratorI8AutoDataEbEC1IS2_bLb1EEEOT_OT0_}' now becomes 'method void std::pair<std::_Rb_tree_iterator<AutoData>,bool>::pair<std::_Rb_tree_iterator<AutoData>,bool,1>(std::_Rb_tree_iterator<AutoData>&, bool&) {_ZNSt4pairISt17_Rb_tree_iteratorI8AutoDataEbEC2IS2_bLb1EEEOT_OT0_, _ZNSt4pairISt17_Rb_tree_iteratorI8AutoDataEbEC1IS2_bLb1EEEOT_OT0_}'
+    parameter 1 of type 'std::_Rb_tree_iterator<AutoData>&&' changed:
+      rvalue reference type 'std::_Rb_tree_iterator<AutoData>&& became an lvalue reference type: 'std::_Rb_tree_iterator<AutoData>&'
+    parameter 2 of type 'bool&&' changed:
+      rvalue reference type 'bool&& became an lvalue reference type: 'bool&'
+
+  [C] 'method std::pair<std::_Rb_tree_iterator<AutoData>,std::_Rb_tree_iterator<AutoData>>::pair<std::_Rb_tree_iterator<AutoData>,std::_Rb_tree_iterator<AutoData>>(std::_Rb_tree_iterator<AutoData>&&, std::_Rb_tree_iterator<AutoData>&&)' has some sub-type changes:
+    'method std::pair<std::_Rb_tree_iterator<AutoData>,std::_Rb_tree_iterator<AutoData>>::pair<std::_Rb_tree_iterator<AutoData>,std::_Rb_tree_iterator<AutoData>>(std::_Rb_tree_iterator<AutoData>&&, std::_Rb_tree_iterator<AutoData>&&) {_ZNSt4pairISt17_Rb_tree_iteratorI8AutoDataES2_EC2IS2_S2_Lb1EEEOT_OT0_, _ZNSt4pairISt17_Rb_tree_iteratorI8AutoDataES2_EC1IS2_S2_Lb1EEEOT_OT0_}' now becomes 'method void std::pair<std::_Rb_tree_iterator<AutoData>,std::_Rb_tree_iterator<AutoData>>::pair<std::_Rb_tree_iterator<AutoData>,std::_Rb_tree_iterator<AutoData>,1>(std::_Rb_tree_iterator<AutoData>&, std::_Rb_tree_iterator<AutoData>&) {_ZNSt4pairISt17_Rb_tree_iteratorI8AutoDataES2_EC2IS2_S2_Lb1EEEOT_OT0_, _ZNSt4pairISt17_Rb_tree_iteratorI8AutoDataES2_EC1IS2_S2_Lb1EEEOT_OT0_}'
+    parameter 1 of type 'std::_Rb_tree_iterator<AutoData>&&' changed:
+      rvalue reference type 'std::_Rb_tree_iterator<AutoData>&& became an lvalue reference type: 'std::_Rb_tree_iterator<AutoData>&'
+    parameter 2 of type 'std::_Rb_tree_iterator<AutoData>&&' changed:
+      rvalue reference type 'std::_Rb_tree_iterator<AutoData>&& became an lvalue reference type: 'std::_Rb_tree_iterator<AutoData>&'
+
+  [C] 'method std::pair<std::_Rb_tree_iterator<PtrData>,bool>::pair<std::_Rb_tree_iterator<PtrData>,bool>(std::_Rb_tree_iterator<PtrData>&&, bool&&)' has some sub-type changes:
+    'method std::pair<std::_Rb_tree_iterator<PtrData>,bool>::pair<std::_Rb_tree_iterator<PtrData>,bool>(std::_Rb_tree_iterator<PtrData>&&, bool&&) {_ZNSt4pairISt17_Rb_tree_iteratorI7PtrDataEbEC2IS2_bLb1EEEOT_OT0_, _ZNSt4pairISt17_Rb_tree_iteratorI7PtrDataEbEC1IS2_bLb1EEEOT_OT0_}' now becomes 'method void std::pair<std::_Rb_tree_iterator<PtrData>,bool>::pair<std::_Rb_tree_iterator<PtrData>,bool,1>(std::_Rb_tree_iterator<PtrData>&, bool&) {_ZNSt4pairISt17_Rb_tree_iteratorI7PtrDataEbEC2IS2_bLb1EEEOT_OT0_, _ZNSt4pairISt17_Rb_tree_iteratorI7PtrDataEbEC1IS2_bLb1EEEOT_OT0_}'
+    parameter 1 of type 'std::_Rb_tree_iterator<PtrData>&&' changed:
+      rvalue reference type 'std::_Rb_tree_iterator<PtrData>&& became an lvalue reference type: 'std::_Rb_tree_iterator<PtrData>&'
+    parameter 2 of type 'bool&&' changed:
+      rvalue reference type 'bool&& became an lvalue reference type: 'bool&'
+
+  [C] 'method std::pair<std::_Rb_tree_iterator<PtrData>,std::_Rb_tree_iterator<PtrData>>::pair<std::_Rb_tree_iterator<PtrData>,std::_Rb_tree_iterator<PtrData>>(std::_Rb_tree_iterator<PtrData>&&, std::_Rb_tree_iterator<PtrData>&&)' has some sub-type changes:
+    'method std::pair<std::_Rb_tree_iterator<PtrData>,std::_Rb_tree_iterator<PtrData>>::pair<std::_Rb_tree_iterator<PtrData>,std::_Rb_tree_iterator<PtrData>>(std::_Rb_tree_iterator<PtrData>&&, std::_Rb_tree_iterator<PtrData>&&) {_ZNSt4pairISt17_Rb_tree_iteratorI7PtrDataES2_EC2IS2_S2_Lb1EEEOT_OT0_, _ZNSt4pairISt17_Rb_tree_iteratorI7PtrDataES2_EC1IS2_S2_Lb1EEEOT_OT0_}' now becomes 'method void std::pair<std::_Rb_tree_iterator<PtrData>,std::_Rb_tree_iterator<PtrData>>::pair<std::_Rb_tree_iterator<PtrData>,std::_Rb_tree_iterator<PtrData>,1>(std::_Rb_tree_iterator<PtrData>&, std::_Rb_tree_iterator<PtrData>&) {_ZNSt4pairISt17_Rb_tree_iteratorI7PtrDataES2_EC2IS2_S2_Lb1EEEOT_OT0_, _ZNSt4pairISt17_Rb_tree_iteratorI7PtrDataES2_EC1IS2_S2_Lb1EEEOT_OT0_}'
+    parameter 1 of type 'std::_Rb_tree_iterator<PtrData>&&' changed:
+      rvalue reference type 'std::_Rb_tree_iterator<PtrData>&& became an lvalue reference type: 'std::_Rb_tree_iterator<PtrData>&'
+    parameter 2 of type 'std::_Rb_tree_iterator<PtrData>&&' changed:
+      rvalue reference type 'std::_Rb_tree_iterator<PtrData>&& became an lvalue reference type: 'std::_Rb_tree_iterator<PtrData>&'
+
+15 functions with some indirect sub-type change:
 
   [C] 'method void Engine::fini_process(bool)' has some indirect sub-type changes:
     implicit parameter 0 of type 'Engine*' has sub-type changes:
@@ -140,7 +170,7 @@ Variable symbols changes summary: 0 Removed, 0 Added variable symbol not referen
               type size hasn't changed
               1 data member change:
                 type of 'union {struct {uint32_t is_static; uint32_t is_static_dstn; uint32_t has_length; uint32_t is_stack_buf; uint32_t sink_addr; uint32_t alloc_disp; uint32_t is_noncont_src; uint32_t is_noncont_dst;}; uint32_t bits;} flags' changed:
-                  type name changed from 'VarDesc::__anonymous_union__2' to 'varDescFlags'
+                  type name changed from 'VarDesc::__anonymous_union__' to 'varDescFlags'
                   type size hasn't changed
                   1 data member change:
                     anonymous data member at offset 0 (in bits) changed from:
@@ -296,6 +326,63 @@ Variable symbols changes summary: 0 Removed, 0 Added variable symbol not referen
           'error_types::c_report_myorelease' from value '122' to '126'
           'error_types::c_coipipe_max_number' from value '123' to '133'
 
+  [C] 'method void __gnu_cxx::new_allocator<constVarTable::Entry*>::construct<constVarTable::Entry*,constVarTable::Entry*>(const VarTable::Entry**, const VarTable::Entry*&&)' has some indirect sub-type changes:
+    Please note that the symbol of this function is _ZN9__gnu_cxx13new_allocatorIPKN8VarTable5EntryEE9constructIS4_JS4_EEEvPT_DpOT0_
+     and it aliases symbol: _ZN9__gnu_cxx13new_allocatorIPKN8VarTable5EntryEE9constructIS4_IS4_EEEvPT_DpOT0_
+    method void __gnu_cxx::new_allocator<constVarTable::Entry*>::construct<constVarTable::Entry*,constVarTable::Entry*>(const VarTable::Entry**, const VarTable::Entry*&) is not declared inline anymore
+    parameter 2 of type 'const VarTable::Entry*&&' changed:
+      rvalue reference type 'const VarTable::Entry*&& became an lvalue reference type: 'const VarTable::Entry*&'
+
+  [C] 'method void __gnu_cxx::new_allocator<std::_List_node<MyoTable>>::construct<MyoTable,MyoTable>(MyoTable*, MyoTable&&)' has some indirect sub-type changes:
+    Please note that the symbol of this function is _ZN9__gnu_cxx13new_allocatorISt10_List_nodeI8MyoTableEE9constructIS2_JS2_EEEvPT_DpOT0_
+     and it aliases symbol: _ZN9__gnu_cxx13new_allocatorISt10_List_nodeI8MyoTableEE9constructIS2_IS2_EEEvPT_DpOT0_
+    method void __gnu_cxx::new_allocator<std::_List_node<MyoTable>>::construct<MyoTable,MyoTable>(MyoTable*, MyoTable&) is not declared inline anymore
+    parameter 2 of type 'MyoTable&&' changed:
+      rvalue reference type 'MyoTable&& became an lvalue reference type: 'MyoTable&'
+
+  [C] 'method void __gnu_cxx::new_allocator<std::_List_node<PersistData>>::construct<PersistData,constPersistData&>(PersistData*, const PersistData&)' has some indirect sub-type changes:
+    Please note that the symbol of this function is _ZN9__gnu_cxx13new_allocatorISt10_List_nodeI11PersistDataEE9constructIS2_JRKS2_EEEvPT_DpOT0_
+     and it aliases symbol: _ZN9__gnu_cxx13new_allocatorISt10_List_nodeI11PersistDataEE9constructIS2_IRKS2_EEEvPT_DpOT0_
+    method void __gnu_cxx::new_allocator<std::_List_node<PersistData>>::construct<PersistData,constPersistData&>(PersistData*, const PersistData&) is not declared inline anymore
+    parameter 1 of type 'PersistData*' has sub-type changes:
+      in pointed to type 'struct PersistData':
+        type size changed from 256 to 320 (in bits)
+        1 data member insertion:
+          'uint64_t thread_id', at offset 128 (in bits)
+        2 data member changes:
+          'PtrData* stack_ptr_data' offset changed from 128 to 192 (in bits) (by +64 bits)
+          'char* cpu_stack_addr' offset changed from 192 to 256 (in bits) (by +64 bits)
+
+  [C] 'method void __gnu_cxx::new_allocator<std::_List_node<TargetImage>>::construct<TargetImage,TargetImage>(TargetImage*, TargetImage&&)' has some indirect sub-type changes:
+    Please note that the symbol of this function is _ZN9__gnu_cxx13new_allocatorISt10_List_nodeI11TargetImageEE9constructIS2_JS2_EEEvPT_DpOT0_
+     and it aliases symbol: _ZN9__gnu_cxx13new_allocatorISt10_List_nodeI11TargetImageEE9constructIS2_IS2_EEEvPT_DpOT0_
+    method void __gnu_cxx::new_allocator<std::_List_node<TargetImage>>::construct<TargetImage,TargetImage>(TargetImage*, TargetImage&) is not declared inline anymore
+    parameter 2 of type 'TargetImage&&' changed:
+      rvalue reference type 'TargetImage&& became an lvalue reference type: 'TargetImage&'
+
+  [C] 'method void __gnu_cxx::new_allocator<std::_Rb_tree_node<AutoData>>::construct<AutoData,AutoData>(AutoData*, AutoData&&)' has some indirect sub-type changes:
+    Please note that the symbol of this function is _ZN9__gnu_cxx13new_allocatorISt13_Rb_tree_nodeI8AutoDataEE9constructIS2_JS2_EEEvPT_DpOT0_
+     and it aliases symbol: _ZN9__gnu_cxx13new_allocatorISt13_Rb_tree_nodeI8AutoDataEE9constructIS2_IS2_EEEvPT_DpOT0_
+    method void __gnu_cxx::new_allocator<std::_Rb_tree_node<AutoData>>::construct<AutoData,AutoData>(AutoData*, AutoData&) is not declared inline anymore
+    parameter 2 of type 'AutoData&&' changed:
+      rvalue reference type 'AutoData&& became an lvalue reference type: 'AutoData&'
+
+  [C] 'method void __gnu_cxx::new_allocator<std::_Rb_tree_node<PtrData>>::construct<PtrData,PtrData>(PtrData*, PtrData&&)' has some indirect sub-type changes:
+    Please note that the symbol of this function is _ZN9__gnu_cxx13new_allocatorISt13_Rb_tree_nodeI7PtrDataEE9constructIS2_JS2_EEEvPT_DpOT0_
+     and it aliases symbol: _ZN9__gnu_cxx13new_allocatorISt13_Rb_tree_nodeI7PtrDataEE9constructIS2_IS2_EEEvPT_DpOT0_
+    method void __gnu_cxx::new_allocator<std::_Rb_tree_node<PtrData>>::construct<PtrData,PtrData>(PtrData*, PtrData&) is not declared inline anymore
+    parameter 2 of type 'PtrData&&' changed:
+      rvalue reference type 'PtrData&& became an lvalue reference type: 'PtrData&'
+
+  [C] 'method void __gnu_cxx::new_allocator<std::_Rb_tree_node<std::pair<voidconst*const,OffloadDescriptor*>>>::construct<std::pair<voidconst*const,OffloadDescriptor*>,conststd::piecewise_construct_t&,std::tuple<voidconst*const&>,std::tuple<>>(std::pair<voidconst*const,OffloadDescriptor*>*, const std::piecewise_construct_t&, std::tuple<voidconst*const&>&&, std::tuple<>&&)' has some indirect sub-type changes:
+    Please note that the symbol of this function is _ZN9__gnu_cxx13new_allocatorISt13_Rb_tree_nodeISt4pairIKPKvP17OffloadDescriptorEEE9constructIS8_JRKSt21piecewise_construct_tSt5tupleIJRS5_EESF_IJEEEEEvPT_DpOT0_
+     and it aliases symbol: _ZN9__gnu_cxx13new_allocatorISt13_Rb_tree_nodeISt4pairIKPKvP17OffloadDescriptorEEE9constructIS8_IRKSt21piecewise_construct_tSt5tupleIIRS5_EESF_IIEEEEEvPT_DpOT0_
+    method void __gnu_cxx::new_allocator<std::_Rb_tree_node<std::pair<voidconst*const,OffloadDescriptor*>>>::construct<std::pair<voidconst*const,OffloadDescriptor*>,conststd::piecewise_construct_t&,std::tuple<voidconst*const&>,std::tuple<>>(std::pair<voidconst*const,OffloadDescriptor*>*, const std::piecewise_construct_t&, std::tuple<voidconst*const&>&, std::tuple<>&) is not declared inline anymore
+    parameter 3 of type 'std::tuple<voidconst*const&>&&' changed:
+      rvalue reference type 'std::tuple<voidconst*const&>&& became an lvalue reference type: 'std::tuple<voidconst*const&>&'
+    parameter 4 of type 'std::tuple<>&&' changed:
+      rvalue reference type 'std::tuple<>&& became an lvalue reference type: 'std::tuple<>&'
+
   [C] 'function void __offload_myoRegisterTables(InitTableEntry*, SharedTableEntry*, FptrTableEntry*)' has some indirect sub-type changes:
     parameter 1 of type 'InitTableEntry*' has sub-type changes:
       in pointed to type 'struct InitTableEntry':
@@ -307,15 +394,34 @@ Variable symbols changes summary: 0 Removed, 0 Added variable symbol not referen
       type name changed from 'void' to 'bool'
       type size changed from 0 to 8 (in bits)
 
-  [C] 'method std::pair<std::_Rb_tree_iterator<PtrData>,bool> std::_Rb_tree<PtrData,PtrData,std::_Identity<PtrData>,std::less<PtrData>,std::allocator<PtrData>>::_M_insert_unique<PtrData>(PtrData&&)' has some indirect sub-type changes:
-    parameter 1 of type 'PtrData&&' changed:
-      rvalue reference type 'PtrData&& became an lvalue reference type: 'PtrData&'
+  [C] 'method std::__cxx11::list<PersistData,std::allocator<PersistData>>::_Node* std::__cxx11::list<PersistData,std::allocator<PersistData>>::_M_create_node<constPersistData&>(const PersistData&)' has some indirect sub-type changes:
+    Please note that the symbol of this function is _ZNSt7__cxx114listI11PersistDataSaIS1_EE14_M_create_nodeIJRKS1_EEEPSt10_List_nodeIS1_EDpOT_
+     and it aliases symbol: _ZNSt7__cxx114listI11PersistDataSaIS1_EE14_M_create_nodeIIRKS1_EEEPSt10_List_nodeIS1_EDpOT_
+    method std::__cxx11::list<PersistData,std::allocator<PersistData>>::_Node* std::__cxx11::list<PersistData,std::allocator<PersistData>>::_M_create_node<constPersistData&>(const PersistData&) is not declared inline anymore
+    return type changed:
+      in pointed to type 'typedef std::__cxx11::list<PersistData,std::allocator<PersistData>>::_Node':
+        underlying type 'struct std::_List_node<PersistData>' changed:
+          type size changed from 384 to 448 (in bits)
+          1 data member change:
+            type of '__gnu_cxx::__aligned_membuf<PersistData> _M_storage' changed:
+              type size changed from 256 to 320 (in bits)
+              1 data member change:
+                type of 'unsigned char _M_storage[32]' changed:
+                  type name changed from 'unsigned char[32]' to 'unsigned char[40]'
+                  array type size changed from 256 to 320
+                  array type subrange 1 changed length from 32 to 40
+                  array subrange changed: 
+                    upper bound of '<anonymous range>[32]' change from '31' to '39'
 
-  [C] 'method void std::vector<constVarTable::Entry*,std::allocator<constVarTable::Entry*>>::_M_emplace_back_aux<constVarTable::Entry*>(const VarTable::Entry*&&)' has some indirect sub-type changes:
-    Please note that the symbol of this function is _ZNSt6vectorIPKN8VarTable5EntryESaIS3_EE19_M_emplace_back_auxIJS3_EEEvDpOT_
-     and it aliases symbol: _ZNSt6vectorIPKN8VarTable5EntryESaIS3_EE19_M_emplace_back_auxIIS3_EEEvDpOT_
-    parameter 1 of type 'const VarTable::Entry*&&' changed:
-      rvalue reference type 'const VarTable::Entry*&& became an lvalue reference type: 'const VarTable::Entry*&'
+  [C] 'method std::pair<std::_Rb_tree_const_iterator<AutoData>,bool> std::set<AutoData,std::less<AutoData>,std::allocator<AutoData>>::insert(std::set<AutoData,std::less<AutoData>,std::allocator<AutoData>>::value_type&&)' has some indirect sub-type changes:
+    method std::pair<std::_Rb_tree_const_iterator<AutoData>,bool> std::set<AutoData,std::less<AutoData>,std::allocator<AutoData>>::insert(std::set<AutoData,std::less<AutoData>,std::allocator<AutoData>>::value_type&) is not declared inline anymore
+    parameter 1 of type 'std::set<AutoData,std::less<AutoData>,std::allocator<AutoData>>::value_type&&' changed:
+      rvalue reference type 'std::set<AutoData,std::less<AutoData>,std::allocator<AutoData>>::value_type&& became an lvalue reference type: 'std::set<AutoData,std::less<AutoData>,std::allocator<AutoData>>::value_type&'
+
+  [C] 'method std::pair<std::_Rb_tree_const_iterator<PtrData>,bool> std::set<PtrData,std::less<PtrData>,std::allocator<PtrData>>::insert(std::set<PtrData,std::less<PtrData>,std::allocator<PtrData>>::value_type&&)' has some indirect sub-type changes:
+    method std::pair<std::_Rb_tree_const_iterator<PtrData>,bool> std::set<PtrData,std::less<PtrData>,std::allocator<PtrData>>::insert(std::set<PtrData,std::less<PtrData>,std::allocator<PtrData>>::value_type&) is not declared inline anymore
+    parameter 1 of type 'std::set<PtrData,std::less<PtrData>,std::allocator<PtrData>>::value_type&&' changed:
+      rvalue reference type 'std::set<PtrData,std::less<PtrData>,std::allocator<PtrData>>::value_type&& became an lvalue reference type: 'std::set<PtrData,std::less<PtrData>,std::allocator<PtrData>>::value_type&'
 
 47 Removed variables:
 

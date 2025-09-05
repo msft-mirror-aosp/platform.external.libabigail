@@ -286,17 +286,22 @@ compare_expected_against_provided_functions(diff_context_sptr&		ctxt,
 					    bool			reverse_direction)
 {
   abidiff_status status = abigail::tools_utils::ABIDIFF_OK;
-  for (auto expected_fn :
-	 reverse_direction
-	 ? lib_corpus->get_sorted_undefined_functions()
-	 : app_corpus->get_sorted_undefined_functions())
+  const environment& env = app_corpus->get_environment();
+  // The corpus where expected ABI artifacts are defined.
+  corpus_sptr definition_corpus = reverse_direction ? app_corpus : lib_corpus ;
+  corpus_sptr expecting_corpus = reverse_direction ? lib_corpus : app_corpus;
+
+  for (auto expected_fn : expecting_corpus->get_sorted_undefined_functions())
     {
       interned_string fn_id = expected_fn->get_id();
       // ... against the functions exported by the library!
       const std::unordered_set<function_decl*> *exported_fns =
-	reverse_direction
-	? app_corpus->lookup_functions(fn_id)
-	: lib_corpus->lookup_functions(fn_id);
+	definition_corpus->lookup_functions(fn_id);
+      if (!exported_fns && expected_fn->get_symbol())
+	{
+	  fn_id = env.intern(expected_fn->get_symbol()->get_id_string());
+	  exported_fns = definition_corpus->lookup_functions(fn_id);
+	}
       if (exported_fns)
 	{
 	  for (auto exported_fn : *exported_fns)
@@ -439,10 +444,13 @@ report_function_changes(const options&			opts,
 
       for (auto& change : fn_changes)
 	{
-	  cout << "  "
-	       << change.decl->get_pretty_representation()
-	       << ":\n";
-	  change.diff->report(cout, "    ");
+	  if (change.diff)
+	    {
+	      cout << "  "
+		   << change.decl->get_pretty_representation()
+		   << ":\n";
+	      change.diff->report(cout, "    ");
+	    }
 	  cout << "\n";
 	}
     }

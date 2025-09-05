@@ -1171,9 +1171,15 @@ default_reporter::report(const class_or_union_diff& d,
 	  if (!diff || !diff->to_be_reported())
 	    continue;
 
-	  string repr =
-	    (*i)->first_function_decl()->get_pretty_representation();
-	  out << indent << "  '" << repr << "' has some sub-type changes:\n";
+	  string repr = "'" +
+	    (*i)->first_function_decl()->get_pretty_representation() + "'";
+	  if (get_member_function_is_virtual((*i)->first_function_decl())
+	      && get_member_function_is_dtor((*i)->first_function_decl())
+	      && !(*i)->first_function_decl()->get_linkage_name().empty())
+	    repr += " of linkage name: '"
+	      + (*i)->first_function_decl()->get_linkage_name()
+	      + "'";
+	  out << indent << "  " << repr << " has some sub-type changes:\n";
 	  diff->report(out, indent + "    ");
 	}
     }

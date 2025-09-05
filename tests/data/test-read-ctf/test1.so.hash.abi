@@ -1,4 +1,4 @@
-<abi-corpus version='2.4' path='data/test-read-ctf/test1.so'>
+<abi-corpus version='2.5' path='data/test-read-ctf/test1.so'>
   <elf-needed>
     <dependency name='libc.so.6'/>
   </elf-needed>
@@ -11,17 +11,17 @@
       <enumerator name='e0' value='0'/>
       <enumerator name='e1' value='1'/>
     </enum-decl>
+    <pointer-type-def type-id='99fcd3a5' size-in-bits='64' alignment-in-bits='64' hash='7e09fd30fc6f7f14' id='0e0526e0'/>
+    <pointer-type-def type-id='dae69ca1' size-in-bits='64' alignment-in-bits='64' hash='3417842a41c6a5f9' id='3f6e71d0'/>
     <class-decl name='opaque_struct' is-struct='yes' visibility='default' size-in-bits='32' hash='76b8be93c7b2042b' id='6cde5052'>
       <data-member access='public' layout-offset-in-bits='0'>
         <var-decl name='m0' type-id='99fcd3a5' visibility='default'/>
       </data-member>
     </class-decl>
     <typedef-decl name='opaque_enum' type-id='55763a91' size-in-bits='32' alignment-in-bits='32' hash='8052a48aba79331b' id='99fcd3a5'/>
-    <typedef-decl name='opaque_struct' type-id='6cde5052' size-in-bits='32' id='dae69ca1'/>
+    <typedef-decl name='opaque_struct' type-id='6cde5052' size-in-bits='32' hash='76b8be93c7b2042b' id='dae69ca1'/>
     <type-decl name='unnamed-enum-underlying-type-32' size-in-bits='32' alignment-in-bits='32' is-anonymous='yes' hash='5181a58e665b3619' id='9cac1fee'/>
-    <pointer-type-def type-id='99fcd3a5' size-in-bits='64' alignment-in-bits='64' hash='7e09fd30fc6f7f14' id='0e0526e0'/>
-    <pointer-type-def type-id='dae69ca1' size-in-bits='64' alignment-in-bits='64' hash='9049c6536b43efe1' id='3f6e71d0'/>
-    <function-decl name='fn' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='fn' hash='e762c5a57679e6a9'>
+    <function-decl name='fn' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='fn' hash='b76bf6d98c10cd0d' id='d31c0966'>
       <parameter type-id='3f6e71d0'/>
       <parameter type-id='0e0526e0'/>
       <return type-id='48b5725f'/>

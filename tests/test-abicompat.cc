@@ -403,14 +403,22 @@ main()
       if (status != s->status)
 	abicompat_ok = false;
 
+      diffcmd = "diff -u " + ref_report_path + " " + out_report_path;
       if (abicompat_ok)
 	{
-	  diffcmd = "diff -u " + ref_report_path + " " + out_report_path;
 	  if (system(diffcmd.c_str()))
 	    is_ok = false;
 	}
       else
-	is_ok = false;
+	{
+	  is_ok = false;
+	  diffcmd = "diff -u " + ref_report_path + " " + out_report_path;
+	  if (system(diffcmd.c_str()))
+	    is_ok = false; // this is useless but we have to check the
+			   // keep the compiler happy.
+			   // result of the function call system() to
+			   // keep the compiler happy.
+	}
 
       if (is_ok)
 	cnt_passed++;

@@ -757,6 +757,20 @@ public:
   /// @return true if the decl has already been emitted, false
   /// otherwise.
   bool
+  decl_is_emitted(const decl_base* decl) const
+  {
+    if (!decl)
+      return false;
+    return decl_is_emitted(*decl);
+  }
+
+  /// Test if a given decl has been written out to the XML output.
+  ///
+  /// @param the decl to consider.
+  ///
+  /// @return true if the decl has already been emitted, false
+  /// otherwise.
+  bool
   decl_is_emitted(const decl_base_sptr& decl) const
   {
     ABG_ASSERT(!is_type(decl));
@@ -774,6 +788,10 @@ public:
     string repr = get_pretty_representation(decl, true);
     interned_string irepr = decl->get_environment().intern(repr);
     m_emitted_decls_set.insert(irepr);
+
+    if (function_decl_sptr fn_decl = is_function_decl(decl))
+      // Record the type of the function we emitted.
+      record_type_as_emitted(fn_decl->get_type());
   }
 
   /// Test if a corpus has already been emitted.
@@ -899,14 +917,32 @@ static bool write_elf_symbols_table(const elf_symbols&,
 				    write_context&, unsigned);
 static bool write_var_decl(const var_decl_sptr&,
 			   write_context&, bool, unsigned);
+static bool write_function_decl_opening_tag(const function_decl_sptr&,
+					    write_context&,
+					    unsigned);
+static bool write_function_decl_closing_tag(const function_decl_sptr&,
+					    write_context&,
+					    unsigned indent);
+static void write_fn_parm_and_return_types(const function_type_sptr& fun_type,
+					   bool skip_first_parm,
+					   write_context& ctxt,
+					   unsigned indent);
+static void write_function_member_decls(const function_decl_sptr& decl,
+					write_context& ctxt, unsigned indent);
 static bool write_function_decl(const function_decl_sptr&,
 				write_context&, bool, unsigned);
 static bool write_function_type(const function_type_sptr&,
 				write_context&, unsigned);
 static bool write_member_type_opening_tag(const type_base_sptr&,
 					  write_context&, unsigned);
+static bool write_member_function_opening_tag(const function_decl_sptr&,
+					      write_context&, unsigned);
+static bool write_member_function_closing_tag(const function_decl_sptr& fn_decl,
+					      write_context& ctxt, unsigned indent);
 static bool write_member_type(const type_base_sptr&,
 			      write_context&, unsigned);
+static bool write_member_function(const function_decl_sptr&,
+				  write_context&, unsigned);
 static bool write_class_decl_opening_tag(const class_decl_sptr&, const string&,
 					 write_context&, unsigned, bool);
 static bool write_class_decl(const class_decl_sptr&,
@@ -2132,18 +2168,27 @@ write_decl_in_scope(const decl_base_sptr&	decl,
 	      || (type && !ctxt.type_is_emitted(type))
 	      || (!type && !ctxt.decl_is_emitted(decl)))
 	    {
+	      annotate(class_type, ctxt, indent);
 	      write_class_decl_opening_tag(class_type, "", ctxt, indent,
 					   /*prepare_to_handle_empty=*/false);
 	      closing_tags.push("</class-decl>");
 	      closing_indents.push(indent);
-
 	      unsigned nb_ws = get_indent_to_level(ctxt, indent, 1);
-	      write_member_type_opening_tag(type, ctxt, nb_ws);
 	      indent = nb_ws;
-	      closing_tags.push("</member-type>");
+	      if (type)
+		{
+		  write_member_type_opening_tag(type, ctxt, nb_ws);
+		  closing_tags.push("</member-type>");
+		  closing_indents.push(indent);
+		}
+	      else if (function_decl_sptr fn_decl = is_function_decl(decl))
+		{
+		  write_member_function_opening_tag(fn_decl, ctxt, nb_ws);
+		  closing_tags.push("</member-function>");
+		  closing_indents.push(indent);
+		}
 	      closing_indents.push(nb_ws);
 	    }
-
 	  if (do_break)
 	    break;
 	}
@@ -2170,9 +2215,39 @@ write_decl_in_scope(const decl_base_sptr&	decl,
 	      closing_indents.push(nb_ws);
 	    }
 	}
+      else if (function_decl* f = is_function_decl(*i))
+	{
+	  function_decl_sptr fn(f, noop_deleter());
+	  write_member_function_opening_tag(fn, ctxt, indent);
+	  write_function_decl_opening_tag(fn, ctxt, get_indent_to_level(ctxt, indent, 1));
+	  if (is_function_decl(decl->get_scope()) == f)
+	    {
+	      write_function_member_decls(fn, ctxt,
+					  get_indent_to_level(ctxt, indent, 2));
+	      if (type)
+		ABG_ASSERT(ctxt.type_is_emitted(type));
+	      else
+		ABG_ASSERT(ctxt.decl_is_emitted(decl));
+	      write_fn_parm_and_return_types(fn->get_type(),
+					     /*skip_first_parm=*/false,
+					     ctxt, indent);
+	      write_function_decl_closing_tag(fn, ctxt, indent);
+	      write_member_function_closing_tag(fn, ctxt, indent);
+	      ctxt.record_decl_as_emitted(fn);
+	    }
+	  else
+	    ABG_ASSERT_NOT_REACHED; // TODO: this case is not yet
+				    // supported. Basically, it
+				    // requires writting the fn parms
+				    // and return types, but not the
+				    // decl closing tags nor mem-fn
+				    // closing tags.  Those would be
+				    // witten down later.
+	}
       else
-	// We should never reach this point.
-	abort();
+	// What other kind of decls can we emit?  Let's assume we
+	// should never reach this point for now ...
+	ABG_ASSERT_NOT_REACHED;
       indent += c.get_xml_element_indent();
     }
 
@@ -3510,6 +3585,85 @@ write_var_decl(const var_decl_sptr& decl, write_context& ctxt,
   return true;
 }
 
+/// Write the function-decl opening tag for a given function decl.
+///
+/// @param decl the function decl to consider.
+///
+/// @param ctxt the writer context to consider.
+///
+/// @param indent the number of white spaces to emit for indentation.
+///
+/// @return true iff the function decl opening tag was emitted.
+static bool
+write_function_decl_opening_tag(const function_decl_sptr& decl,
+				write_context& ctxt, unsigned indent)
+{
+  if (!decl || !is_function_decl(decl))
+    return false;
+
+  ostream &o = ctxt.get_ostream();
+  annotate(decl, ctxt, indent);
+
+  do_indent(o, indent);
+  o << "<function-decl name='"
+    << xml::escape_xml_string(decl->get_name())
+    << "'";
+
+  if (!decl->get_linkage_name().empty())
+    o << " mangled-name='"
+      << xml::escape_xml_string(decl->get_linkage_name()) << "'";
+
+  write_location(decl, ctxt);
+
+  if (decl->is_declared_inline())
+    o << " declared-inline='yes'";
+
+  write_visibility(decl, o);
+
+  write_binding(decl, o);
+
+  write_size_and_alignment(decl->get_type(), o,
+			   (ctxt.get_write_default_sizes()
+			    ? 0
+			    : decl->get_translation_unit()->get_address_size()),
+			   0);
+  if (elf_symbol_sptr sym = decl->get_symbol())
+    if (corpus* abi = decl->get_corpus())
+      write_elf_symbol_reference(ctxt, decl->get_symbol(), *abi, o);
+
+  write_type_hash_and_cti(decl->get_type(), o);
+
+  string i = ctxt.get_id_for_type(decl->get_type());
+  o << " id='" << i << "'";
+
+  o << ">\n";
+
+  return true;
+}
+
+/// Write the function-decl closing tag for a given function decl.
+///
+/// @param decl the function decl to consider.
+///
+/// @param ctxt the writer context to consider.
+///
+/// @param indent the number of white spaces to emit for indentation.
+///
+/// @return true iff the function decl closing tag was emitted.
+static bool
+write_function_decl_closing_tag(const function_decl_sptr& decl,
+				write_context& ctxt, unsigned indent)
+{
+  if (!decl || !is_function_decl(decl))
+    return false;
+
+  ostream &o = ctxt.get_ostream();
+  do_indent(o, indent);
+  o << "</function-decl>\n";
+
+  return true;
+}
+
 /// Write the parameters and return part of the ABIXML description of
 /// a function_type.
 ///
@@ -3580,6 +3734,36 @@ write_fn_parm_and_return_types(const function_type_sptr& fun_type,
     }
 }
 
+/// Write the member declarations of a given function decl.
+///
+/// @param decl the function decl to consider.
+///
+/// @param ctxt the writer context to consider.
+///
+/// @param indent the number spaces to use for indentation.
+static void
+write_function_member_decls(const function_decl_sptr& decl,
+			    write_context& ctxt, unsigned indent)
+{
+  const config &c = ctxt.get_config();
+  function_decl* fn = decl.get();
+  for (; fn; fn = is_function_decl(fn->get_original_artefact()))
+    {
+      write_canonical_types_of_scope(*fn, ctxt,
+				     indent + c.get_xml_element_indent());
+      const scope_decl::declarations& decls = fn->get_sorted_member_decls();
+      for (const auto& d :decls)
+	{
+	  if (type_base_sptr t = is_type(d))
+	    if (ctxt.type_is_emitted(t))
+	      // This type has already been emitted to the current
+	      // translation unit so do not emit it again.
+	      continue;
+	  write_decl(d, ctxt, indent + c.get_xml_element_indent());
+	}
+    }
+}
+
 /// Serialize a pointer to a function_decl.
 ///
 /// @param decl the pointer to function_decl to serialize.
@@ -3596,51 +3780,14 @@ static bool
 write_function_decl(const function_decl_sptr& decl, write_context& ctxt,
 		    bool skip_first_parm, unsigned indent)
 {
-  if (!decl)
+  if (!write_function_decl_opening_tag(decl, ctxt, indent))
     return false;
 
-  annotate(decl, ctxt, indent);
+  write_function_member_decls(decl, ctxt, indent);
 
-  ostream &o = ctxt.get_ostream();
+  write_fn_parm_and_return_types(decl->get_type(), skip_first_parm, ctxt, indent);
 
-  do_indent(o, indent);
-
-  o << "<function-decl name='"
-    << xml::escape_xml_string(decl->get_name())
-    << "'";
-
-  if (!decl->get_linkage_name().empty())
-    o << " mangled-name='"
-      << xml::escape_xml_string(decl->get_linkage_name()) << "'";
-
-  write_location(decl, ctxt);
-
-  if (decl->is_declared_inline())
-    o << " declared-inline='yes'";
-
-  write_visibility(decl, o);
-
-  write_binding(decl, o);
-
-  write_size_and_alignment(decl->get_type(), o,
-			   (ctxt.get_write_default_sizes()
-			    ? 0
-			    : decl->get_translation_unit()->get_address_size()),
-			   0);
-  if (elf_symbol_sptr sym = decl->get_symbol())
-    if (corpus* abi = decl->get_corpus())
-      write_elf_symbol_reference(ctxt, decl->get_symbol(), *abi, o);
-
-  write_type_hash_and_cti(decl->get_type(), o);
-
-  o << ">\n";
-
-  write_fn_parm_and_return_types(decl->get_type(),
-				 skip_first_parm,
-				 ctxt, indent);
-
-  do_indent(o, indent);
-  o << "</function-decl>\n";
+  write_function_decl_closing_tag(decl, ctxt, indent);
 
   ctxt.record_decl_as_emitted(decl);
 
@@ -3701,6 +3848,96 @@ write_function_type(const function_type_sptr& fun_type,
   do_indent(o, indent);
 
   o << "</function-type>\n";
+
+  return true;
+}
+
+/// Write the opening tag of a member-function XML element
+/// representing a member function.
+///
+/// @param @fn_decl the member function to emit the opening tag for.
+///
+/// @param ctxt the write context to consider.
+///
+/// @param indent the number of white space indentation to use.
+///
+/// @return true iff the opening tag was emitted.
+static bool
+write_member_function_opening_tag(const function_decl_sptr& fn_decl,
+				  write_context& ctxt, unsigned indent)
+{
+  if (!fn_decl || !is_member_function(fn_decl))
+    return false;
+
+  ostream& o = ctxt.get_ostream();
+
+  do_indent_to_level(ctxt, indent, 0);
+
+  o << "<member-function";
+  write_access(get_member_access_specifier(fn_decl), o);
+  write_cdtor_const_static(get_member_function_is_ctor(fn_decl),
+			   get_member_function_is_dtor(fn_decl),
+			   get_member_function_is_const(fn_decl),
+			   get_member_is_static(fn_decl),
+			   o);
+  if (get_member_function_is_virtual(fn_decl))
+    write_voffset(fn_decl, o);
+  o << ">\n";
+
+  return true;
+}
+
+/// Write the closing tag of a member-function XML element
+/// representing a member function.
+///
+/// @param @fn_decl the member function to emit the closing tag for.
+///
+/// @param ctxt the write context to consider.
+///
+/// @param indent the number of white space indentation to use.
+///
+/// @return true iff the closing tag was emitted.
+static bool
+write_member_function_closing_tag(const function_decl_sptr& fn_decl,
+				  write_context& ctxt, unsigned indent)
+{
+  if (!fn_decl || !is_member_function(fn_decl))
+    return false;
+
+  ostream& o = ctxt.get_ostream();
+
+  do_indent_to_level(ctxt, indent, 0);
+  o << "</member-function>\n";
+
+  return true;
+}
+
+/// Emit the XML element for a member function.
+///
+/// @param fn_decl the function decl to write the XML element for.
+///
+/// @param ctxt the write context to consider.
+///
+/// @param indent the number of white space indentation to use.
+///
+/// @return true iff the function emitted the XML element for the
+/// member function.
+static bool
+write_member_function(const function_decl_sptr& fn_decl,
+		      write_context& ctxt, unsigned indent)
+{
+  if (!fn_decl || !is_member_function(fn_decl))
+    return false;
+
+  write_member_function_opening_tag(fn_decl, ctxt,
+				    get_indent_to_level(ctxt, indent, 0));
+
+  write_function_decl(fn_decl, ctxt,
+		      /*skip_first_parameter=*/false,
+		      get_indent_to_level(ctxt, indent, 1));
+
+  write_member_function_closing_tag(fn_decl, ctxt,
+				    get_indent_to_level(ctxt, indent, 0));
 
   return true;
 }
@@ -4014,22 +4251,7 @@ write_class_decl(const class_decl_sptr& d,
 
 	  ABG_ASSERT(!get_member_function_is_virtual(fn));
 
-	  do_indent(o, nb_ws);
-	  o << "<member-function";
-	  write_access(get_member_access_specifier(fn), o);
-	  write_cdtor_const_static( get_member_function_is_ctor(fn),
-				    get_member_function_is_dtor(fn),
-				    get_member_function_is_const(fn),
-				    get_member_is_static(fn),
-				    o);
-	  o << ">\n";
-
-	  write_function_decl(fn, ctxt,
-			      /*skip_first_parameter=*/false,
-			      get_indent_to_level(ctxt, indent, 2));
-
-	  do_indent_to_level(ctxt, indent, 1);
-	  o << "</member-function>\n";
+	  write_member_function(fn, ctxt, get_indent_to_level(ctxt, indent, 1));
 	}
 
       for (class_decl::member_functions::const_iterator f =
@@ -4041,23 +4263,7 @@ write_class_decl(const class_decl_sptr& d,
 
 	  ABG_ASSERT(get_member_function_is_virtual(fn));
 
-	  do_indent(o, nb_ws);
-	  o << "<member-function";
-	  write_access(get_member_access_specifier(fn), o);
-	  write_cdtor_const_static( get_member_function_is_ctor(fn),
-				    get_member_function_is_dtor(fn),
-				    get_member_function_is_const(fn),
-				    get_member_is_static(fn),
-				    o);
-	  write_voffset(fn, o);
-	  o << ">\n";
-
-	  write_function_decl(fn, ctxt,
-			      /*skip_first_parameter=*/false,
-			      get_indent_to_level(ctxt, indent, 2));
-
-	  do_indent_to_level(ctxt, indent, 1);
-	  o << "</member-function>\n";
+	  write_member_function(fn, ctxt, get_indent_to_level(ctxt, indent, 1));
 	}
 
       for (member_function_templates::const_iterator fn =
@@ -4197,22 +4403,7 @@ write_union_decl(const union_decl_sptr& d,
 
 	  ABG_ASSERT(!get_member_function_is_virtual(fn));
 
-	  do_indent(o, nb_ws);
-	  o << "<member-function";
-	  write_access(get_member_access_specifier(fn), o);
-	  write_cdtor_const_static( get_member_function_is_ctor(fn),
-				    get_member_function_is_dtor(fn),
-				    get_member_function_is_const(fn),
-				    get_member_is_static(fn),
-				    o);
-	  o << ">\n";
-
-	  write_function_decl(fn, ctxt,
-			      /*skip_first_parameter=*/false,
-			      get_indent_to_level(ctxt, indent, 2));
-
-	  do_indent_to_level(ctxt, indent, 1);
-	  o << "</member-function>\n";
+	  write_member_function(fn, ctxt, get_indent_to_level(ctxt, indent, 1));
 	}
 
       for (member_function_templates::const_iterator fn =
@@ -4287,7 +4478,8 @@ write_member_type_opening_tag(const type_base_sptr& t,
   ABG_ASSERT(decl);
 
   o << "<member-type";
-  write_access(decl, o);
+  if (is_member_type(is_type(decl)))
+    write_access(decl, o);
   o << ">\n";
 
   return true;

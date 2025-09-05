@@ -8,7 +8,7 @@
           <pointer-type-def type-id='type-id-3' hash='76e2ac011d858705' id='type-id-4'/>
         </template-parameter-type-composition>
         <template-non-type-parameter type-id='type-id-4' name='U'/>
-        <function-decl name='foo' binding='global' size-in-bits='8' alignment-in-bits='8' hash='5f1b63ec63e31225'>
+        <function-decl name='foo' binding='global' size-in-bits='8' alignment-in-bits='8' hash='5f1b63ec63e31225' id='type-id-5'>
           <parameter type-id='type-id-3' name='first'/>
           <return type-id='type-id-1'/>
         </function-decl>
@@ -18,10 +18,10 @@
   <namespace-decl name='ns2'>
     <namespace-decl name='ns3'>
       <namespace-decl name='ns4'>
-        <function-template-decl id='fn-tmpl-id-5'>
-          <template-type-parameter id='type-id-6' name='T'/>
-          <function-decl name='bar' binding='global' hash='c1bab0b2e7fe66d1#2'>
-            <parameter type-id='type-id-6' name='first'/>
+        <function-template-decl id='fn-tmpl-id-6'>
+          <template-type-parameter id='type-id-7' name='T'/>
+          <function-decl name='bar' binding='global' hash='c1bab0b2e7fe66d1#2' id='type-id-8'>
+            <parameter type-id='type-id-7' name='first'/>
             <return type-id='type-id-1'/>
           </function-decl>
         </function-template-decl>
