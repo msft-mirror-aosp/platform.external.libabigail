@@ -11799,9 +11799,6 @@
         <member-type access='private'>
           <typedef-decl name='result_type' type-id='type-id-24' size-in-bits='64' filepath='/export/users/iverbin/gcc_build_host/x86_64-pc-linux-gnu/libstdc++-v3/include/bits/random.h' line='482' column='1' hash='8fdc5eea2983a729' id='type-id-2176'/>
         </member-type>
-        <data-member access='public' static='yes'>
-          <var-decl name='state_size' type-id='type-id-2185' mangled-name='_ZNSt23mersenne_twister_engineImLm32ELm624ELm397ELm31ELm2567483615ELm11ELm4294967295ELm7ELm2636928640ELm15ELm4022730752ELm18ELm1812433253EE10state_sizeE' visibility='default' filepath='/export/users/iverbin/gcc_build_host/x86_64-pc-linux-gnu/libstdc++-v3/include/bits/random.h' line='486' column='1'/>
-        </data-member>
         <data-member access='private' layout-offset-in-bits='0'>
           <var-decl name='_M_x' type-id='type-id-2026' visibility='default' filepath='/export/users/iverbin/gcc_build_host/x86_64-pc-linux-gnu/libstdc++-v3/include/bits/random.h' line='621' column='1'/>
         </data-member>
@@ -18681,17 +18678,11 @@
         <member-type access='public'>
           <typedef-decl name='value_type' type-id='type-id-63' size-in-bits='8' filepath='/export/users/iverbin/gcc_build_host/x86_64-pc-linux-gnu/libstdc++-v3/include/type_traits' line='72' column='1' hash='5ba96bb22f4237fb' id='type-id-3869'/>
         </member-type>
-        <data-member access='public' static='yes'>
-          <var-decl name='value' type-id='type-id-133' mangled-name='_ZNSt17integral_constantIbLb0EE5valueE' visibility='default' filepath='/export/users/iverbin/gcc_build_host/x86_64-pc-linux-gnu/libstdc++-v3/include/type_traits' line='71' column='1'/>
-        </data-member>
       </class-decl>
       <class-decl name='integral_constant&lt;bool,true&gt;' is-struct='yes' visibility='default' size-in-bits='8' filepath='/export/users/iverbin/gcc_build_host/x86_64-pc-linux-gnu/libstdc++-v3/include/type_traits' line='69' column='1' hash='7b1a2ce56212e852' id='type-id-1647'>
         <member-type access='public'>
           <typedef-decl name='value_type' type-id='type-id-63' size-in-bits='8' filepath='/export/users/iverbin/gcc_build_host/x86_64-pc-linux-gnu/libstdc++-v3/include/type_traits' line='72' column='1' hash='5ba96bb22f4237fb' id='type-id-3870'/>
         </member-type>
-        <data-member access='public' static='yes'>
-          <var-decl name='value' type-id='type-id-133' mangled-name='_ZNSt17integral_constantIbLb1EE5valueE' visibility='default' filepath='/export/users/iverbin/gcc_build_host/x86_64-pc-linux-gnu/libstdc++-v3/include/type_traits' line='71' column='1'/>
-        </data-member>
       </class-decl>
       <class-decl name='iterator_traits&lt;char*&gt;' is-struct='yes' visibility='default' size-in-bits='8' filepath='/export/users/iverbin/gcc_build_host/x86_64-pc-linux-gnu/libstdc++-v3/include/bits/stl_iterator_base_types.h' line='178' column='1' hash='3b3695ef601bd8ee' id='type-id-3871'>
         <member-type access='public'>
@@ -18950,55 +18941,14 @@
           <typedef-decl name='value_type' type-id='type-id-3862' size-in-bits='8' filepath='/export/users/iverbin/gcc_build_host/x86_64-pc-linux-gnu/libstdc++-v3/include/ext/alloc_traits.h' line='58' column='1' hash='65b2d157027b431a' id='type-id-3760'/>
         </member-type>
       </class-decl>
-      <class-decl name='__numeric_traits_floating&lt;double&gt;' is-struct='yes' visibility='default' size-in-bits='8' filepath='/export/users/iverbin/gcc_build_host/x86_64-pc-linux-gnu/libstdc++-v3/include/ext/numeric_traits.h' line='100' column='1' hash='97510daadd34721d' id='type-id-3922'>
-        <data-member access='public' static='yes'>
-          <var-decl name='__max_exponent10' type-id='type-id-373' mangled-name='_ZN9__gnu_cxx25__numeric_traits_floatingIdE16__max_exponent10E' visibility='default' filepath='/export/users/iverbin/gcc_build_host/x86_64-pc-linux-gnu/libstdc++-v3/include/ext/numeric_traits.h' line='108' column='1'/>
-        </data-member>
-      </class-decl>
-      <class-decl name='__numeric_traits_floating&lt;float&gt;' is-struct='yes' visibility='default' size-in-bits='8' filepath='/export/users/iverbin/gcc_build_host/x86_64-pc-linux-gnu/libstdc++-v3/include/ext/numeric_traits.h' line='100' column='1' hash='90f7e9ff0282071c' id='type-id-3923'>
-        <data-member access='public' static='yes'>
-          <var-decl name='__max_exponent10' type-id='type-id-373' mangled-name='_ZN9__gnu_cxx25__numeric_traits_floatingIfE16__max_exponent10E' visibility='default' filepath='/export/users/iverbin/gcc_build_host/x86_64-pc-linux-gnu/libstdc++-v3/include/ext/numeric_traits.h' line='108' column='1'/>
-        </data-member>
-      </class-decl>
-      <class-decl name='__numeric_traits_floating&lt;longdouble&gt;' is-struct='yes' visibility='default' size-in-bits='8' filepath='/export/users/iverbin/gcc_build_host/x86_64-pc-linux-gnu/libstdc++-v3/include/ext/numeric_traits.h' line='100' column='1' hash='81585e129fe5e5e4' id='type-id-3924'>
-        <data-member access='public' static='yes'>
-          <var-decl name='__max_exponent10' type-id='type-id-373' mangled-name='_ZN9__gnu_cxx25__numeric_traits_floatingIeE16__max_exponent10E' visibility='default' filepath='/export/users/iverbin/gcc_build_host/x86_64-pc-linux-gnu/libstdc++-v3/include/ext/numeric_traits.h' line='108' column='1'/>
-        </data-member>
-      </class-decl>
-      <class-decl name='__numeric_traits_integer&lt;char&gt;' is-struct='yes' visibility='default' size-in-bits='8' filepath='/export/users/iverbin/gcc_build_host/x86_64-pc-linux-gnu/libstdc++-v3/include/ext/numeric_traits.h' line='55' column='1' hash='b155c1439fb8f926' id='type-id-3925'>
-        <data-member access='public' static='yes'>
-          <var-decl name='__max' type-id='type-id-3694' mangled-name='_ZN9__gnu_cxx24__numeric_traits_integerIcE5__maxE' visibility='default' filepath='/export/users/iverbin/gcc_build_host/x86_64-pc-linux-gnu/libstdc++-v3/include/ext/numeric_traits.h' line='59' column='1'/>
-        </data-member>
-      </class-decl>
-      <class-decl name='__numeric_traits_integer&lt;int&gt;' is-struct='yes' visibility='default' size-in-bits='8' filepath='/export/users/iverbin/gcc_build_host/x86_64-pc-linux-gnu/libstdc++-v3/include/ext/numeric_traits.h' line='55' column='1' hash='93106c70be9cc18a' id='type-id-3926'>
-        <data-member access='public' static='yes'>
-          <var-decl name='__max' type-id='type-id-373' mangled-name='_ZN9__gnu_cxx24__numeric_traits_integerIiE5__maxE' visibility='default' filepath='/export/users/iverbin/gcc_build_host/x86_64-pc-linux-gnu/libstdc++-v3/include/ext/numeric_traits.h' line='59' column='1'/>
-        </data-member>
-        <data-member access='public' static='yes'>
-          <var-decl name='__min' type-id='type-id-373' mangled-name='_ZN9__gnu_cxx24__numeric_traits_integerIiE5__minE' visibility='default' filepath='/export/users/iverbin/gcc_build_host/x86_64-pc-linux-gnu/libstdc++-v3/include/ext/numeric_traits.h' line='58' column='1'/>
-        </data-member>
-      </class-decl>
-      <class-decl name='__numeric_traits_integer&lt;longint&gt;' is-struct='yes' visibility='default' size-in-bits='8' filepath='/export/users/iverbin/gcc_build_host/x86_64-pc-linux-gnu/libstdc++-v3/include/ext/numeric_traits.h' line='55' column='1' hash='b83b6d736c3d7a3d' id='type-id-3927'>
-        <data-member access='public' static='yes'>
-          <var-decl name='__max' type-id='type-id-3788' mangled-name='_ZN9__gnu_cxx24__numeric_traits_integerIlE5__maxE' visibility='default' filepath='/export/users/iverbin/gcc_build_host/x86_64-pc-linux-gnu/libstdc++-v3/include/ext/numeric_traits.h' line='59' column='1'/>
-        </data-member>
-        <data-member access='public' static='yes'>
-          <var-decl name='__min' type-id='type-id-3788' mangled-name='_ZN9__gnu_cxx24__numeric_traits_integerIlE5__minE' visibility='default' filepath='/export/users/iverbin/gcc_build_host/x86_64-pc-linux-gnu/libstdc++-v3/include/ext/numeric_traits.h' line='58' column='1'/>
-        </data-member>
-      </class-decl>
-      <class-decl name='__numeric_traits_integer&lt;longunsignedint&gt;' is-struct='yes' visibility='default' size-in-bits='8' filepath='/export/users/iverbin/gcc_build_host/x86_64-pc-linux-gnu/libstdc++-v3/include/ext/numeric_traits.h' line='55' column='1' hash='43c9314f28796314' id='type-id-3928'>
-        <data-member access='public' static='yes'>
-          <var-decl name='__digits' type-id='type-id-373' mangled-name='_ZN9__gnu_cxx24__numeric_traits_integerImE8__digitsE' visibility='default' filepath='/export/users/iverbin/gcc_build_host/x86_64-pc-linux-gnu/libstdc++-v3/include/ext/numeric_traits.h' line='64' column='1'/>
-        </data-member>
-      </class-decl>
-      <class-decl name='__numeric_traits_integer&lt;shortint&gt;' is-struct='yes' visibility='default' size-in-bits='8' filepath='/export/users/iverbin/gcc_build_host/x86_64-pc-linux-gnu/libstdc++-v3/include/ext/numeric_traits.h' line='55' column='1' hash='9d7868ef0e2cc9d6' id='type-id-3929'>
-        <data-member access='public' static='yes'>
-          <var-decl name='__max' type-id='type-id-3791' mangled-name='_ZN9__gnu_cxx24__numeric_traits_integerIsE5__maxE' visibility='default' filepath='/export/users/iverbin/gcc_build_host/x86_64-pc-linux-gnu/libstdc++-v3/include/ext/numeric_traits.h' line='59' column='1'/>
-        </data-member>
-        <data-member access='public' static='yes'>
-          <var-decl name='__min' type-id='type-id-3791' mangled-name='_ZN9__gnu_cxx24__numeric_traits_integerIsE5__minE' visibility='default' filepath='/export/users/iverbin/gcc_build_host/x86_64-pc-linux-gnu/libstdc++-v3/include/ext/numeric_traits.h' line='58' column='1'/>
-        </data-member>
-      </class-decl>
+      <class-decl name='__numeric_traits_floating&lt;double&gt;' is-struct='yes' visibility='default' size-in-bits='8' filepath='/export/users/iverbin/gcc_build_host/x86_64-pc-linux-gnu/libstdc++-v3/include/ext/numeric_traits.h' line='100' column='1' hash='97510daadd34721d' id='type-id-3922'/>
+      <class-decl name='__numeric_traits_floating&lt;float&gt;' is-struct='yes' visibility='default' size-in-bits='8' filepath='/export/users/iverbin/gcc_build_host/x86_64-pc-linux-gnu/libstdc++-v3/include/ext/numeric_traits.h' line='100' column='1' hash='90f7e9ff0282071c' id='type-id-3923'/>
+      <class-decl name='__numeric_traits_floating&lt;longdouble&gt;' is-struct='yes' visibility='default' size-in-bits='8' filepath='/export/users/iverbin/gcc_build_host/x86_64-pc-linux-gnu/libstdc++-v3/include/ext/numeric_traits.h' line='100' column='1' hash='81585e129fe5e5e4' id='type-id-3924'/>
+      <class-decl name='__numeric_traits_integer&lt;char&gt;' is-struct='yes' visibility='default' size-in-bits='8' filepath='/export/users/iverbin/gcc_build_host/x86_64-pc-linux-gnu/libstdc++-v3/include/ext/numeric_traits.h' line='55' column='1' hash='b155c1439fb8f926' id='type-id-3925'/>
+      <class-decl name='__numeric_traits_integer&lt;int&gt;' is-struct='yes' visibility='default' size-in-bits='8' filepath='/export/users/iverbin/gcc_build_host/x86_64-pc-linux-gnu/libstdc++-v3/include/ext/numeric_traits.h' line='55' column='1' hash='93106c70be9cc18a' id='type-id-3926'/>
+      <class-decl name='__numeric_traits_integer&lt;longint&gt;' is-struct='yes' visibility='default' size-in-bits='8' filepath='/export/users/iverbin/gcc_build_host/x86_64-pc-linux-gnu/libstdc++-v3/include/ext/numeric_traits.h' line='55' column='1' hash='b83b6d736c3d7a3d' id='type-id-3927'/>
+      <class-decl name='__numeric_traits_integer&lt;longunsignedint&gt;' is-struct='yes' visibility='default' size-in-bits='8' filepath='/export/users/iverbin/gcc_build_host/x86_64-pc-linux-gnu/libstdc++-v3/include/ext/numeric_traits.h' line='55' column='1' hash='43c9314f28796314' id='type-id-3928'/>
+      <class-decl name='__numeric_traits_integer&lt;shortint&gt;' is-struct='yes' visibility='default' size-in-bits='8' filepath='/export/users/iverbin/gcc_build_host/x86_64-pc-linux-gnu/libstdc++-v3/include/ext/numeric_traits.h' line='55' column='1' hash='9d7868ef0e2cc9d6' id='type-id-3929'/>
     </namespace-decl>
     <type-decl name='variadic parameter type' id='type-id-3930'/>
     <function-type size-in-bits='64' hash='388da3fa973fde78' id='type-id-3819'>

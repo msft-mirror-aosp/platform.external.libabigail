@@ -4117,9 +4117,6 @@
         <member-type access='public'>
           <typedef-decl name='result_type' type-id='type-id-77' size-in-bits='64' filepath='/usr/include/c++/4.9/bits/random.h' line='482' column='1' hash='8fdc5eea2983a729' id='type-id-1227'/>
         </member-type>
-        <data-member access='public' static='yes'>
-          <var-decl name='state_size' type-id='type-id-1278' mangled-name='_ZNSt23mersenne_twister_engineImLm32ELm624ELm397ELm31ELm2567483615ELm11ELm4294967295ELm7ELm2636928640ELm15ELm4022730752ELm18ELm1812433253EE10state_sizeE' visibility='default' filepath='/usr/include/c++/4.9/bits/random.h' line='486' column='1'/>
-        </data-member>
         <data-member access='private' layout-offset-in-bits='0'>
           <var-decl name='_M_x' type-id='type-id-95' visibility='default' filepath='/usr/include/c++/4.9/bits/random.h' line='621' column='1'/>
         </data-member>
@@ -6126,65 +6123,41 @@
         <member-type access='public'>
           <typedef-decl name='value_type' type-id='type-id-1' size-in-bits='8' filepath='/usr/include/c++/4.9/type_traits' line='72' column='1' hash='5ba96bb22f4237fb' id='type-id-2819'/>
         </member-type>
-        <data-member access='public' static='yes'>
-          <var-decl name='value' type-id='type-id-310' mangled-name='_ZNSt17integral_constantIbLb0EE5valueE' visibility='default' filepath='/usr/include/c++/4.9/type_traits' line='71' column='1'/>
-        </data-member>
       </class-decl>
       <class-decl name='integral_constant&lt;bool,true&gt;' is-struct='yes' visibility='default' size-in-bits='8' filepath='/usr/include/c++/4.9/type_traits' line='69' column='1' hash='7b1a2ce56212e852' id='type-id-1140'>
         <member-type access='public'>
           <typedef-decl name='value_type' type-id='type-id-1' size-in-bits='8' filepath='/usr/include/c++/4.9/type_traits' line='72' column='1' hash='5ba96bb22f4237fb' id='type-id-2820'/>
         </member-type>
-        <data-member access='public' static='yes'>
-          <var-decl name='value' type-id='type-id-310' mangled-name='_ZNSt17integral_constantIbLb1EE5valueE' visibility='default' filepath='/usr/include/c++/4.9/type_traits' line='71' column='1'/>
-        </data-member>
       </class-decl>
       <class-decl name='integral_constant&lt;longint,1000000000&gt;' is-struct='yes' visibility='default' size-in-bits='8' filepath='/usr/include/c++/4.9/type_traits' line='69' column='1' hash='b9d6af653bf5b480' id='type-id-1143'>
         <member-type access='public'>
           <typedef-decl name='value_type' type-id='type-id-27' size-in-bits='64' filepath='/usr/include/c++/4.9/type_traits' line='72' column='1' hash='b119fe0931d2ee10' id='type-id-2821'/>
         </member-type>
-        <data-member access='public' static='yes'>
-          <var-decl name='value' type-id='type-id-339' mangled-name='_ZNSt17integral_constantIlLl1000000000EE5valueE' visibility='default' filepath='/usr/include/c++/4.9/type_traits' line='71' column='1'/>
-        </data-member>
       </class-decl>
       <class-decl name='integral_constant&lt;longint,1000000&gt;' is-struct='yes' visibility='default' size-in-bits='8' filepath='/usr/include/c++/4.9/type_traits' line='69' column='1' hash='97f86bd198ffc31a' id='type-id-1146'>
         <member-type access='public'>
           <typedef-decl name='value_type' type-id='type-id-27' size-in-bits='64' filepath='/usr/include/c++/4.9/type_traits' line='72' column='1' hash='b119fe0931d2ee10' id='type-id-2822'/>
         </member-type>
-        <data-member access='public' static='yes'>
-          <var-decl name='value' type-id='type-id-339' mangled-name='_ZNSt17integral_constantIlLl1000000EE5valueE' visibility='default' filepath='/usr/include/c++/4.9/type_traits' line='71' column='1'/>
-        </data-member>
       </class-decl>
       <class-decl name='integral_constant&lt;longint,1000&gt;' is-struct='yes' visibility='default' size-in-bits='8' filepath='/usr/include/c++/4.9/type_traits' line='69' column='1' hash='d180754a3a6bd048' id='type-id-1149'>
         <member-type access='public'>
           <typedef-decl name='value_type' type-id='type-id-27' size-in-bits='64' filepath='/usr/include/c++/4.9/type_traits' line='72' column='1' hash='b119fe0931d2ee10' id='type-id-2823'/>
         </member-type>
-        <data-member access='public' static='yes'>
-          <var-decl name='value' type-id='type-id-339' mangled-name='_ZNSt17integral_constantIlLl1000EE5valueE' visibility='default' filepath='/usr/include/c++/4.9/type_traits' line='71' column='1'/>
-        </data-member>
       </class-decl>
       <class-decl name='integral_constant&lt;longint,1&gt;' is-struct='yes' visibility='default' size-in-bits='8' filepath='/usr/include/c++/4.9/type_traits' line='69' column='1' hash='6f43aff2beee7b54' id='type-id-1152'>
         <member-type access='public'>
           <typedef-decl name='value_type' type-id='type-id-27' size-in-bits='64' filepath='/usr/include/c++/4.9/type_traits' line='72' column='1' hash='b119fe0931d2ee10' id='type-id-2824'/>
         </member-type>
-        <data-member access='public' static='yes'>
-          <var-decl name='value' type-id='type-id-339' mangled-name='_ZNSt17integral_constantIlLl1EE5valueE' visibility='default' filepath='/usr/include/c++/4.9/type_traits' line='71' column='1'/>
-        </data-member>
       </class-decl>
       <class-decl name='integral_constant&lt;longunsignedint,2&gt;' is-struct='yes' visibility='default' size-in-bits='8' filepath='/usr/include/c++/4.9/type_traits' line='69' column='1' hash='bb6bf9e7ed676005' id='type-id-1155'>
         <member-type access='public'>
           <typedef-decl name='value_type' type-id='type-id-77' size-in-bits='64' filepath='/usr/include/c++/4.9/type_traits' line='72' column='1' hash='8fdc5eea2983a729' id='type-id-2825'/>
         </member-type>
-        <data-member access='public' static='yes'>
-          <var-decl name='value' type-id='type-id-1406' mangled-name='_ZNSt17integral_constantImLm2EE5valueE' visibility='default' filepath='/usr/include/c++/4.9/type_traits' line='71' column='1'/>
-        </data-member>
       </class-decl>
       <class-decl name='integral_constant&lt;longunsignedint,8&gt;' is-struct='yes' visibility='default' size-in-bits='8' filepath='/usr/include/c++/4.9/type_traits' line='69' column='1' hash='ed15ddffc4fb654b' id='type-id-1158'>
         <member-type access='public'>
           <typedef-decl name='value_type' type-id='type-id-77' size-in-bits='64' filepath='/usr/include/c++/4.9/type_traits' line='72' column='1' hash='8fdc5eea2983a729' id='type-id-2826'/>
         </member-type>
-        <data-member access='public' static='yes'>
-          <var-decl name='value' type-id='type-id-1406' mangled-name='_ZNSt17integral_constantImLm8EE5valueE' visibility='default' filepath='/usr/include/c++/4.9/type_traits' line='71' column='1'/>
-        </data-member>
       </class-decl>
       <class-decl name='iterator&lt;std::random_access_iterator_tag,bool,longint,bool*,bool&amp;&gt;' is-struct='yes' visibility='default' size-in-bits='8' filepath='/usr/include/c++/4.9/bits/stl_iterator_base_types.h' line='118' column='1' hash='2589561c9b6cc978' id='type-id-2605'>
         <member-type access='public'>
@@ -6479,54 +6452,12 @@
           <typedef-decl name='rebind' type-id='type-id-42' filepath='/usr/include/c++/4.9/bits/ptr_traits.h' line='160' column='1' id='type-id-2808'/>
         </member-type>
       </class-decl>
-      <class-decl name='ratio&lt;1,1000000000&gt;' is-struct='yes' visibility='default' size-in-bits='8' filepath='/usr/include/c++/4.9/ratio' line='263' column='1' hash='b088b0f996272ee7' id='type-id-2902'>
-        <data-member access='public' static='yes'>
-          <var-decl name='num' type-id='type-id-338' mangled-name='_ZNSt5ratioILl1ELl1000000000EE3numE' visibility='default' filepath='/usr/include/c++/4.9/ratio' line='270' column='1'/>
-        </data-member>
-        <data-member access='public' static='yes'>
-          <var-decl name='den' type-id='type-id-338' mangled-name='_ZNSt5ratioILl1ELl1000000000EE3denE' visibility='default' filepath='/usr/include/c++/4.9/ratio' line='273' column='1'/>
-        </data-member>
-      </class-decl>
-      <class-decl name='ratio&lt;1,1000000&gt;' is-struct='yes' visibility='default' size-in-bits='8' filepath='/usr/include/c++/4.9/ratio' line='263' column='1' hash='1e9f4dd973802c64' id='type-id-2903'>
-        <data-member access='public' static='yes'>
-          <var-decl name='num' type-id='type-id-338' mangled-name='_ZNSt5ratioILl1ELl1000000EE3numE' visibility='default' filepath='/usr/include/c++/4.9/ratio' line='270' column='1'/>
-        </data-member>
-        <data-member access='public' static='yes'>
-          <var-decl name='den' type-id='type-id-338' mangled-name='_ZNSt5ratioILl1ELl1000000EE3denE' visibility='default' filepath='/usr/include/c++/4.9/ratio' line='273' column='1'/>
-        </data-member>
-      </class-decl>
-      <class-decl name='ratio&lt;1,1000&gt;' is-struct='yes' visibility='default' size-in-bits='8' filepath='/usr/include/c++/4.9/ratio' line='263' column='1' hash='73515edf506c77a9' id='type-id-2904'>
-        <data-member access='public' static='yes'>
-          <var-decl name='num' type-id='type-id-338' mangled-name='_ZNSt5ratioILl1ELl1000EE3numE' visibility='default' filepath='/usr/include/c++/4.9/ratio' line='270' column='1'/>
-        </data-member>
-        <data-member access='public' static='yes'>
-          <var-decl name='den' type-id='type-id-338' mangled-name='_ZNSt5ratioILl1ELl1000EE3denE' visibility='default' filepath='/usr/include/c++/4.9/ratio' line='273' column='1'/>
-        </data-member>
-      </class-decl>
-      <class-decl name='ratio&lt;1,1&gt;' is-struct='yes' visibility='default' size-in-bits='8' filepath='/usr/include/c++/4.9/ratio' line='263' column='1' hash='fc5cee94eca2f16d' id='type-id-2905'>
-        <data-member access='public' static='yes'>
-          <var-decl name='num' type-id='type-id-338' mangled-name='_ZNSt5ratioILl1ELl1EE3numE' visibility='default' filepath='/usr/include/c++/4.9/ratio' line='270' column='1'/>
-        </data-member>
-        <data-member access='public' static='yes'>
-          <var-decl name='den' type-id='type-id-338' mangled-name='_ZNSt5ratioILl1ELl1EE3denE' visibility='default' filepath='/usr/include/c++/4.9/ratio' line='273' column='1'/>
-        </data-member>
-      </class-decl>
-      <class-decl name='ratio&lt;1000,1&gt;' is-struct='yes' visibility='default' size-in-bits='8' filepath='/usr/include/c++/4.9/ratio' line='263' column='1' hash='6ddbcfb2bcc1b015' id='type-id-2906'>
-        <data-member access='public' static='yes'>
-          <var-decl name='num' type-id='type-id-338' mangled-name='_ZNSt5ratioILl1000ELl1EE3numE' visibility='default' filepath='/usr/include/c++/4.9/ratio' line='270' column='1'/>
-        </data-member>
-        <data-member access='public' static='yes'>
-          <var-decl name='den' type-id='type-id-338' mangled-name='_ZNSt5ratioILl1000ELl1EE3denE' visibility='default' filepath='/usr/include/c++/4.9/ratio' line='273' column='1'/>
-        </data-member>
-      </class-decl>
-      <class-decl name='ratio&lt;1000000000,1&gt;' is-struct='yes' visibility='default' size-in-bits='8' filepath='/usr/include/c++/4.9/ratio' line='263' column='1' hash='6f9f292d0b220737' id='type-id-2907'>
-        <data-member access='public' static='yes'>
-          <var-decl name='num' type-id='type-id-338' mangled-name='_ZNSt5ratioILl1000000000ELl1EE3numE' visibility='default' filepath='/usr/include/c++/4.9/ratio' line='270' column='1'/>
-        </data-member>
-        <data-member access='public' static='yes'>
-          <var-decl name='den' type-id='type-id-338' mangled-name='_ZNSt5ratioILl1000000000ELl1EE3denE' visibility='default' filepath='/usr/include/c++/4.9/ratio' line='273' column='1'/>
-        </data-member>
-      </class-decl>
+      <class-decl name='ratio&lt;1,1000000000&gt;' is-struct='yes' visibility='default' size-in-bits='8' filepath='/usr/include/c++/4.9/ratio' line='263' column='1' hash='b088b0f996272ee7' id='type-id-2902'/>
+      <class-decl name='ratio&lt;1,1000000&gt;' is-struct='yes' visibility='default' size-in-bits='8' filepath='/usr/include/c++/4.9/ratio' line='263' column='1' hash='1e9f4dd973802c64' id='type-id-2903'/>
+      <class-decl name='ratio&lt;1,1000&gt;' is-struct='yes' visibility='default' size-in-bits='8' filepath='/usr/include/c++/4.9/ratio' line='263' column='1' hash='73515edf506c77a9' id='type-id-2904'/>
+      <class-decl name='ratio&lt;1,1&gt;' is-struct='yes' visibility='default' size-in-bits='8' filepath='/usr/include/c++/4.9/ratio' line='263' column='1' hash='fc5cee94eca2f16d' id='type-id-2905'/>
+      <class-decl name='ratio&lt;1000,1&gt;' is-struct='yes' visibility='default' size-in-bits='8' filepath='/usr/include/c++/4.9/ratio' line='263' column='1' hash='6ddbcfb2bcc1b015' id='type-id-2906'/>
+      <class-decl name='ratio&lt;1000000000,1&gt;' is-struct='yes' visibility='default' size-in-bits='8' filepath='/usr/include/c++/4.9/ratio' line='263' column='1' hash='6f9f292d0b220737' id='type-id-2907'/>
       <class-decl name='remove_reference&lt;conststd::basic_string&lt;char,std::char_traits&lt;char&gt;,std::allocator&lt;char&gt;&gt;&amp;&gt;' is-struct='yes' visibility='default' size-in-bits='8' filepath='/usr/include/c++/4.9/type_traits' line='1504' column='1' hash='c6e33719e9a5f671' id='type-id-2908'>
         <member-type access='public'>
           <typedef-decl name='type' type-id='type-id-1064' size-in-bits='64' filepath='/usr/include/c++/4.9/type_traits' line='1505' column='1' hash='876836f44f3494e5' id='type-id-2007'/>
@@ -7638,55 +7569,14 @@
           <typedef-decl name='value_type' type-id='type-id-1920' size-in-bits='128' filepath='/usr/include/c++/4.9/ext/alloc_traits.h' line='103' column='1' id='type-id-114'/>
         </member-type>
       </class-decl>
-      <class-decl name='__numeric_traits_floating&lt;double&gt;' is-struct='yes' visibility='default' size-in-bits='8' filepath='/usr/include/c++/4.9/ext/numeric_traits.h' line='100' column='1' hash='97510daadd34721d' id='type-id-3043'>
-        <data-member access='public' static='yes'>
-          <var-decl name='__max_exponent10' type-id='type-id-336' mangled-name='_ZN9__gnu_cxx25__numeric_traits_floatingIdE16__max_exponent10E' visibility='default' filepath='/usr/include/c++/4.9/ext/numeric_traits.h' line='108' column='1'/>
-        </data-member>
-      </class-decl>
-      <class-decl name='__numeric_traits_floating&lt;float&gt;' is-struct='yes' visibility='default' size-in-bits='8' filepath='/usr/include/c++/4.9/ext/numeric_traits.h' line='100' column='1' hash='90f7e9ff0282071c' id='type-id-3044'>
-        <data-member access='public' static='yes'>
-          <var-decl name='__max_exponent10' type-id='type-id-336' mangled-name='_ZN9__gnu_cxx25__numeric_traits_floatingIfE16__max_exponent10E' visibility='default' filepath='/usr/include/c++/4.9/ext/numeric_traits.h' line='108' column='1'/>
-        </data-member>
-      </class-decl>
-      <class-decl name='__numeric_traits_floating&lt;longdouble&gt;' is-struct='yes' visibility='default' size-in-bits='8' filepath='/usr/include/c++/4.9/ext/numeric_traits.h' line='100' column='1' hash='81585e129fe5e5e4' id='type-id-3045'>
-        <data-member access='public' static='yes'>
-          <var-decl name='__max_exponent10' type-id='type-id-336' mangled-name='_ZN9__gnu_cxx25__numeric_traits_floatingIeE16__max_exponent10E' visibility='default' filepath='/usr/include/c++/4.9/ext/numeric_traits.h' line='108' column='1'/>
-        </data-member>
-      </class-decl>
-      <class-decl name='__numeric_traits_integer&lt;char&gt;' is-struct='yes' visibility='default' size-in-bits='8' filepath='/usr/include/c++/4.9/ext/numeric_traits.h' line='55' column='1' hash='b155c1439fb8f926' id='type-id-3046'>
-        <data-member access='public' static='yes'>
-          <var-decl name='__max' type-id='type-id-328' mangled-name='_ZN9__gnu_cxx24__numeric_traits_integerIcE5__maxE' visibility='default' filepath='/usr/include/c++/4.9/ext/numeric_traits.h' line='59' column='1'/>
-        </data-member>
-      </class-decl>
-      <class-decl name='__numeric_traits_integer&lt;int&gt;' is-struct='yes' visibility='default' size-in-bits='8' filepath='/usr/include/c++/4.9/ext/numeric_traits.h' line='55' column='1' hash='93106c70be9cc18a' id='type-id-3047'>
-        <data-member access='public' static='yes'>
-          <var-decl name='__min' type-id='type-id-336' mangled-name='_ZN9__gnu_cxx24__numeric_traits_integerIiE5__minE' visibility='default' filepath='/usr/include/c++/4.9/ext/numeric_traits.h' line='58' column='1'/>
-        </data-member>
-        <data-member access='public' static='yes'>
-          <var-decl name='__max' type-id='type-id-336' mangled-name='_ZN9__gnu_cxx24__numeric_traits_integerIiE5__maxE' visibility='default' filepath='/usr/include/c++/4.9/ext/numeric_traits.h' line='59' column='1'/>
-        </data-member>
-      </class-decl>
-      <class-decl name='__numeric_traits_integer&lt;longint&gt;' is-struct='yes' visibility='default' size-in-bits='8' filepath='/usr/include/c++/4.9/ext/numeric_traits.h' line='55' column='1' hash='b83b6d736c3d7a3d' id='type-id-3048'>
-        <data-member access='public' static='yes'>
-          <var-decl name='__min' type-id='type-id-339' mangled-name='_ZN9__gnu_cxx24__numeric_traits_integerIlE5__minE' visibility='default' filepath='/usr/include/c++/4.9/ext/numeric_traits.h' line='58' column='1'/>
-        </data-member>
-        <data-member access='public' static='yes'>
-          <var-decl name='__max' type-id='type-id-339' mangled-name='_ZN9__gnu_cxx24__numeric_traits_integerIlE5__maxE' visibility='default' filepath='/usr/include/c++/4.9/ext/numeric_traits.h' line='59' column='1'/>
-        </data-member>
-      </class-decl>
-      <class-decl name='__numeric_traits_integer&lt;longunsignedint&gt;' is-struct='yes' visibility='default' size-in-bits='8' filepath='/usr/include/c++/4.9/ext/numeric_traits.h' line='55' column='1' hash='43c9314f28796314' id='type-id-3049'>
-        <data-member access='public' static='yes'>
-          <var-decl name='__digits' type-id='type-id-336' mangled-name='_ZN9__gnu_cxx24__numeric_traits_integerImE8__digitsE' visibility='default' filepath='/usr/include/c++/4.9/ext/numeric_traits.h' line='64' column='1'/>
-        </data-member>
-      </class-decl>
-      <class-decl name='__numeric_traits_integer&lt;shortint&gt;' is-struct='yes' visibility='default' size-in-bits='8' filepath='/usr/include/c++/4.9/ext/numeric_traits.h' line='55' column='1' hash='9d7868ef0e2cc9d6' id='type-id-3050'>
-        <data-member access='public' static='yes'>
-          <var-decl name='__min' type-id='type-id-626' mangled-name='_ZN9__gnu_cxx24__numeric_traits_integerIsE5__minE' visibility='default' filepath='/usr/include/c++/4.9/ext/numeric_traits.h' line='58' column='1'/>
-        </data-member>
-        <data-member access='public' static='yes'>
-          <var-decl name='__max' type-id='type-id-626' mangled-name='_ZN9__gnu_cxx24__numeric_traits_integerIsE5__maxE' visibility='default' filepath='/usr/include/c++/4.9/ext/numeric_traits.h' line='59' column='1'/>
-        </data-member>
-      </class-decl>
+      <class-decl name='__numeric_traits_floating&lt;double&gt;' is-struct='yes' visibility='default' size-in-bits='8' filepath='/usr/include/c++/4.9/ext/numeric_traits.h' line='100' column='1' hash='97510daadd34721d' id='type-id-3043'/>
+      <class-decl name='__numeric_traits_floating&lt;float&gt;' is-struct='yes' visibility='default' size-in-bits='8' filepath='/usr/include/c++/4.9/ext/numeric_traits.h' line='100' column='1' hash='90f7e9ff0282071c' id='type-id-3044'/>
+      <class-decl name='__numeric_traits_floating&lt;longdouble&gt;' is-struct='yes' visibility='default' size-in-bits='8' filepath='/usr/include/c++/4.9/ext/numeric_traits.h' line='100' column='1' hash='81585e129fe5e5e4' id='type-id-3045'/>
+      <class-decl name='__numeric_traits_integer&lt;char&gt;' is-struct='yes' visibility='default' size-in-bits='8' filepath='/usr/include/c++/4.9/ext/numeric_traits.h' line='55' column='1' hash='b155c1439fb8f926' id='type-id-3046'/>
+      <class-decl name='__numeric_traits_integer&lt;int&gt;' is-struct='yes' visibility='default' size-in-bits='8' filepath='/usr/include/c++/4.9/ext/numeric_traits.h' line='55' column='1' hash='93106c70be9cc18a' id='type-id-3047'/>
+      <class-decl name='__numeric_traits_integer&lt;longint&gt;' is-struct='yes' visibility='default' size-in-bits='8' filepath='/usr/include/c++/4.9/ext/numeric_traits.h' line='55' column='1' hash='b83b6d736c3d7a3d' id='type-id-3048'/>
+      <class-decl name='__numeric_traits_integer&lt;longunsignedint&gt;' is-struct='yes' visibility='default' size-in-bits='8' filepath='/usr/include/c++/4.9/ext/numeric_traits.h' line='55' column='1' hash='43c9314f28796314' id='type-id-3049'/>
+      <class-decl name='__numeric_traits_integer&lt;shortint&gt;' is-struct='yes' visibility='default' size-in-bits='8' filepath='/usr/include/c++/4.9/ext/numeric_traits.h' line='55' column='1' hash='9d7868ef0e2cc9d6' id='type-id-3050'/>
       <class-decl name='new_allocator&lt;bool&gt;' is-struct='yes' visibility='default' size-in-bits='8' filepath='/usr/include/c++/4.9/ext/new_allocator.h' line='58' column='1' hash='ae7b5776f2fdf6ca' id='type-id-130'>
         <member-type access='public'>
           <typedef-decl name='const_pointer' type-id='type-id-312' size-in-bits='64' filepath='/usr/include/c++/4.9/ext/new_allocator.h' line='64' column='1' hash='8ffcf060e49a3fe3' id='type-id-3051'/>
@@ -10508,71 +10398,16 @@
       <class-decl name='shared_ptr&lt;boost::program_options::option_description&gt;' visibility='default' is-declaration-only='yes' id='type-id-2118'/>
       <class-decl name='shared_ptr&lt;boost::program_options::options_description&gt;' visibility='default' is-declaration-only='yes' id='type-id-2121'/>
       <namespace-decl name='detail'>
-        <class-decl name='integer_traits_base&lt;int,-2147483648,2147483647&gt;' visibility='default' size-in-bits='8' filepath='src/third_party/boost-1.56.0/boost/integer_traits.hpp' line='52' column='1' hash='e52c5cfb59d87c42' id='type-id-3201'>
-          <data-member access='public' static='yes'>
-            <var-decl name='const_min' type-id='type-id-336' mangled-name='_ZN5boost6detail19integer_traits_baseIiLin2147483648ELi2147483647EE9const_minE' visibility='default' filepath='src/third_party/boost-1.56.0/boost/integer_traits.hpp' line='56' column='1'/>
-          </data-member>
-          <data-member access='public' static='yes'>
-            <var-decl name='const_max' type-id='type-id-336' mangled-name='_ZN5boost6detail19integer_traits_baseIiLin2147483648ELi2147483647EE9const_maxE' visibility='default' filepath='src/third_party/boost-1.56.0/boost/integer_traits.hpp' line='57' column='1'/>
-          </data-member>
-        </class-decl>
-        <class-decl name='integer_traits_base&lt;longint,-9223372036854775808,9223372036854775807&gt;' visibility='default' size-in-bits='8' filepath='src/third_party/boost-1.56.0/boost/integer_traits.hpp' line='52' column='1' hash='269ddccc4d8a3f21' id='type-id-3202'>
-          <data-member access='public' static='yes'>
-            <var-decl name='const_min' type-id='type-id-339' mangled-name='_ZN5boost6detail19integer_traits_baseIlLln9223372036854775808ELl9223372036854775807EE9const_minE' visibility='default' filepath='src/third_party/boost-1.56.0/boost/integer_traits.hpp' line='56' column='1'/>
-          </data-member>
-          <data-member access='public' static='yes'>
-            <var-decl name='const_max' type-id='type-id-339' mangled-name='_ZN5boost6detail19integer_traits_baseIlLln9223372036854775808ELl9223372036854775807EE9const_maxE' visibility='default' filepath='src/third_party/boost-1.56.0/boost/integer_traits.hpp' line='57' column='1'/>
-          </data-member>
-        </class-decl>
-        <class-decl name='integer_traits_base&lt;longlongint,-9223372036854775808,9223372036854775807&gt;' visibility='default' size-in-bits='8' filepath='src/third_party/boost-1.56.0/boost/integer_traits.hpp' line='52' column='1' hash='c12fe1ba354217e6' id='type-id-3203'>
-          <data-member access='public' static='yes'>
-            <var-decl name='const_min' type-id='type-id-340' mangled-name='_ZN5boost6detail19integer_traits_baseIxLxn9223372036854775808ELx9223372036854775807EE9const_minE' visibility='default' filepath='src/third_party/boost-1.56.0/boost/integer_traits.hpp' line='56' column='1'/>
-          </data-member>
-          <data-member access='public' static='yes'>
-            <var-decl name='const_max' type-id='type-id-340' mangled-name='_ZN5boost6detail19integer_traits_baseIxLxn9223372036854775808ELx9223372036854775807EE9const_maxE' visibility='default' filepath='src/third_party/boost-1.56.0/boost/integer_traits.hpp' line='57' column='1'/>
-          </data-member>
-        </class-decl>
-        <class-decl name='integer_traits_base&lt;longlongunsignedint,0,18446744073709551615&gt;' visibility='default' size-in-bits='8' filepath='src/third_party/boost-1.56.0/boost/integer_traits.hpp' line='52' column='1' hash='969a54af2615ca28' id='type-id-3204'>
-          <data-member access='public' static='yes'>
-            <var-decl name='const_max' type-id='type-id-1409' mangled-name='_ZN5boost6detail19integer_traits_baseIyLy0ELy18446744073709551615EE9const_maxE' visibility='default' filepath='src/third_party/boost-1.56.0/boost/integer_traits.hpp' line='57' column='1'/>
-          </data-member>
-        </class-decl>
-        <class-decl name='integer_traits_base&lt;longunsignedint,0,18446744073709551615&gt;' visibility='default' size-in-bits='8' filepath='src/third_party/boost-1.56.0/boost/integer_traits.hpp' line='52' column='1' hash='c54f11347ac7ba26' id='type-id-3205'>
-          <data-member access='public' static='yes'>
-            <var-decl name='const_max' type-id='type-id-1406' mangled-name='_ZN5boost6detail19integer_traits_baseImLm0ELm18446744073709551615EE9const_maxE' visibility='default' filepath='src/third_party/boost-1.56.0/boost/integer_traits.hpp' line='57' column='1'/>
-          </data-member>
-        </class-decl>
-        <class-decl name='integer_traits_base&lt;shortint,-32768,32767&gt;' visibility='default' size-in-bits='8' filepath='src/third_party/boost-1.56.0/boost/integer_traits.hpp' line='52' column='1' hash='56ab62d786d0e5fd' id='type-id-3206'>
-          <data-member access='public' static='yes'>
-            <var-decl name='const_min' type-id='type-id-626' mangled-name='_ZN5boost6detail19integer_traits_baseIsLsn32768ELs32767EE9const_minE' visibility='default' filepath='src/third_party/boost-1.56.0/boost/integer_traits.hpp' line='56' column='1'/>
-          </data-member>
-          <data-member access='public' static='yes'>
-            <var-decl name='const_max' type-id='type-id-626' mangled-name='_ZN5boost6detail19integer_traits_baseIsLsn32768ELs32767EE9const_maxE' visibility='default' filepath='src/third_party/boost-1.56.0/boost/integer_traits.hpp' line='57' column='1'/>
-          </data-member>
-        </class-decl>
-        <class-decl name='integer_traits_base&lt;shortunsignedint,0,65535&gt;' visibility='default' size-in-bits='8' filepath='src/third_party/boost-1.56.0/boost/integer_traits.hpp' line='52' column='1' hash='07eb54ea387cc801' id='type-id-3207'>
-          <data-member access='public' static='yes'>
-            <var-decl name='const_max' type-id='type-id-1410' mangled-name='_ZN5boost6detail19integer_traits_baseItLt0ELt65535EE9const_maxE' visibility='default' filepath='src/third_party/boost-1.56.0/boost/integer_traits.hpp' line='57' column='1'/>
-          </data-member>
-        </class-decl>
-        <class-decl name='integer_traits_base&lt;signedchar,-128,127&gt;' visibility='default' size-in-bits='8' filepath='src/third_party/boost-1.56.0/boost/integer_traits.hpp' line='52' column='1' hash='c2dd258ef8af435b' id='type-id-3208'>
-          <data-member access='public' static='yes'>
-            <var-decl name='const_min' type-id='type-id-627' mangled-name='_ZN5boost6detail19integer_traits_baseIaLan128ELa127EE9const_minE' visibility='default' filepath='src/third_party/boost-1.56.0/boost/integer_traits.hpp' line='56' column='1'/>
-          </data-member>
-          <data-member access='public' static='yes'>
-            <var-decl name='const_max' type-id='type-id-627' mangled-name='_ZN5boost6detail19integer_traits_baseIaLan128ELa127EE9const_maxE' visibility='default' filepath='src/third_party/boost-1.56.0/boost/integer_traits.hpp' line='57' column='1'/>
-          </data-member>
-        </class-decl>
-        <class-decl name='integer_traits_base&lt;unsignedchar,0,255&gt;' visibility='default' size-in-bits='8' filepath='src/third_party/boost-1.56.0/boost/integer_traits.hpp' line='52' column='1' hash='7dd592a282c2bdb2' id='type-id-3209'>
-          <data-member access='public' static='yes'>
-            <var-decl name='const_max' type-id='type-id-1403' mangled-name='_ZN5boost6detail19integer_traits_baseIhLh0ELh255EE9const_maxE' visibility='default' filepath='src/third_party/boost-1.56.0/boost/integer_traits.hpp' line='57' column='1'/>
-          </data-member>
-        </class-decl>
-        <class-decl name='integer_traits_base&lt;unsignedint,0,4294967295&gt;' visibility='default' size-in-bits='8' filepath='src/third_party/boost-1.56.0/boost/integer_traits.hpp' line='52' column='1' hash='52a3f30db60ff6e1' id='type-id-3210'>
-          <data-member access='public' static='yes'>
-            <var-decl name='const_max' type-id='type-id-1404' mangled-name='_ZN5boost6detail19integer_traits_baseIjLj0ELj4294967295EE9const_maxE' visibility='default' filepath='src/third_party/boost-1.56.0/boost/integer_traits.hpp' line='57' column='1'/>
-          </data-member>
-        </class-decl>
+        <class-decl name='integer_traits_base&lt;int,-2147483648,2147483647&gt;' visibility='default' size-in-bits='8' filepath='src/third_party/boost-1.56.0/boost/integer_traits.hpp' line='52' column='1' hash='e52c5cfb59d87c42' id='type-id-3201'/>
+        <class-decl name='integer_traits_base&lt;longint,-9223372036854775808,9223372036854775807&gt;' visibility='default' size-in-bits='8' filepath='src/third_party/boost-1.56.0/boost/integer_traits.hpp' line='52' column='1' hash='269ddccc4d8a3f21' id='type-id-3202'/>
+        <class-decl name='integer_traits_base&lt;longlongint,-9223372036854775808,9223372036854775807&gt;' visibility='default' size-in-bits='8' filepath='src/third_party/boost-1.56.0/boost/integer_traits.hpp' line='52' column='1' hash='c12fe1ba354217e6' id='type-id-3203'/>
+        <class-decl name='integer_traits_base&lt;longlongunsignedint,0,18446744073709551615&gt;' visibility='default' size-in-bits='8' filepath='src/third_party/boost-1.56.0/boost/integer_traits.hpp' line='52' column='1' hash='969a54af2615ca28' id='type-id-3204'/>
+        <class-decl name='integer_traits_base&lt;longunsignedint,0,18446744073709551615&gt;' visibility='default' size-in-bits='8' filepath='src/third_party/boost-1.56.0/boost/integer_traits.hpp' line='52' column='1' hash='c54f11347ac7ba26' id='type-id-3205'/>
+        <class-decl name='integer_traits_base&lt;shortint,-32768,32767&gt;' visibility='default' size-in-bits='8' filepath='src/third_party/boost-1.56.0/boost/integer_traits.hpp' line='52' column='1' hash='56ab62d786d0e5fd' id='type-id-3206'/>
+        <class-decl name='integer_traits_base&lt;shortunsignedint,0,65535&gt;' visibility='default' size-in-bits='8' filepath='src/third_party/boost-1.56.0/boost/integer_traits.hpp' line='52' column='1' hash='07eb54ea387cc801' id='type-id-3207'/>
+        <class-decl name='integer_traits_base&lt;signedchar,-128,127&gt;' visibility='default' size-in-bits='8' filepath='src/third_party/boost-1.56.0/boost/integer_traits.hpp' line='52' column='1' hash='c2dd258ef8af435b' id='type-id-3208'/>
+        <class-decl name='integer_traits_base&lt;unsignedchar,0,255&gt;' visibility='default' size-in-bits='8' filepath='src/third_party/boost-1.56.0/boost/integer_traits.hpp' line='52' column='1' hash='7dd592a282c2bdb2' id='type-id-3209'/>
+        <class-decl name='integer_traits_base&lt;unsignedint,0,4294967295&gt;' visibility='default' size-in-bits='8' filepath='src/third_party/boost-1.56.0/boost/integer_traits.hpp' line='52' column='1' hash='52a3f30db60ff6e1' id='type-id-3210'/>
       </namespace-decl>
       <namespace-decl name='program_options'>
         <class-decl name='options_description' visibility='default' size-in-bits='832' filepath='src/third_party/boost-1.56.0/boost/program_options/options_description.hpp' line='173' column='1' hash='d84272d670a68e70' id='type-id-196'>
@@ -10673,114 +10508,30 @@
         <class-decl name='option_description' visibility='default' is-declaration-only='yes' id='type-id-2130'/>
       </namespace-decl>
       <namespace-decl name='type_traits'>
-        <class-decl name='ice_eq&lt;8,16&gt;' is-struct='yes' visibility='default' size-in-bits='8' filepath='src/third_party/boost-1.56.0/boost/type_traits/detail/ice_eq.hpp' line='17' column='1' hash='dc23d6bffb98fd2c' id='type-id-3211'>
-          <data-member access='public' static='yes'>
-            <var-decl name='value' type-id='type-id-310' mangled-name='_ZN5boost11type_traits6ice_eqILi8ELi16EE5valueE' visibility='default' filepath='src/third_party/boost-1.56.0/boost/type_traits/detail/ice_eq.hpp' line='19' column='1'/>
-          </data-member>
-        </class-decl>
+        <class-decl name='ice_eq&lt;8,16&gt;' is-struct='yes' visibility='default' size-in-bits='8' filepath='src/third_party/boost-1.56.0/boost/type_traits/detail/ice_eq.hpp' line='17' column='1' hash='dc23d6bffb98fd2c' id='type-id-3211'/>
       </namespace-decl>
     </namespace-decl>
     <namespace-decl name='mpl_'>
-      <class-decl name='bool_&lt;false&gt;' is-struct='yes' visibility='default' size-in-bits='8' filepath='src/third_party/boost-1.56.0/boost/mpl/bool.hpp' line='23' column='1' hash='dff69c22a318a328' id='type-id-566'>
-        <data-member access='public' static='yes'>
-          <var-decl name='value' type-id='type-id-310' mangled-name='_ZN4mpl_5bool_ILb0EE5valueE' visibility='default' filepath='src/third_party/boost-1.56.0/boost/mpl/bool.hpp' line='25' column='1'/>
-        </data-member>
-      </class-decl>
-      <class-decl name='bool_&lt;true&gt;' is-struct='yes' visibility='default' size-in-bits='8' filepath='src/third_party/boost-1.56.0/boost/mpl/bool.hpp' line='23' column='1' hash='d9328a5fcc474fb2' id='type-id-569'>
-        <data-member access='public' static='yes'>
-          <var-decl name='value' type-id='type-id-310' mangled-name='_ZN4mpl_5bool_ILb1EE5valueE' visibility='default' filepath='src/third_party/boost-1.56.0/boost/mpl/bool.hpp' line='25' column='1'/>
-        </data-member>
-      </class-decl>
-      <class-decl name='int_&lt;-1&gt;' is-struct='yes' visibility='default' size-in-bits='8' filepath='src/third_party/boost-1.56.0/boost/mpl/aux_/integral_wrapper.hpp' line='43' column='1' hash='29ae40883f7af830' id='type-id-572'>
-        <data-member access='public' static='yes'>
-          <var-decl name='value' type-id='type-id-336' mangled-name='_ZN4mpl_4int_ILin1EE5valueE' visibility='default' filepath='src/third_party/boost-1.56.0/boost/mpl/aux_/integral_wrapper.hpp' line='45' column='1'/>
-        </data-member>
-      </class-decl>
-      <class-decl name='int_&lt;0&gt;' is-struct='yes' visibility='default' size-in-bits='8' filepath='src/third_party/boost-1.56.0/boost/mpl/aux_/integral_wrapper.hpp' line='43' column='1' hash='3b20bee9998d2116' id='type-id-575'>
-        <data-member access='public' static='yes'>
-          <var-decl name='value' type-id='type-id-336' mangled-name='_ZN4mpl_4int_ILi0EE5valueE' visibility='default' filepath='src/third_party/boost-1.56.0/boost/mpl/aux_/integral_wrapper.hpp' line='45' column='1'/>
-        </data-member>
-      </class-decl>
-      <class-decl name='int_&lt;10&gt;' is-struct='yes' visibility='default' size-in-bits='8' filepath='src/third_party/boost-1.56.0/boost/mpl/aux_/integral_wrapper.hpp' line='43' column='1' hash='8bcc6547b26114fa' id='type-id-578'>
-        <data-member access='public' static='yes'>
-          <var-decl name='value' type-id='type-id-336' mangled-name='_ZN4mpl_4int_ILi10EE5valueE' visibility='default' filepath='src/third_party/boost-1.56.0/boost/mpl/aux_/integral_wrapper.hpp' line='45' column='1'/>
-        </data-member>
-      </class-decl>
-      <class-decl name='int_&lt;11&gt;' is-struct='yes' visibility='default' size-in-bits='8' filepath='src/third_party/boost-1.56.0/boost/mpl/aux_/integral_wrapper.hpp' line='43' column='1' hash='e9eb387008a4654a' id='type-id-581'>
-        <data-member access='public' static='yes'>
-          <var-decl name='value' type-id='type-id-336' mangled-name='_ZN4mpl_4int_ILi11EE5valueE' visibility='default' filepath='src/third_party/boost-1.56.0/boost/mpl/aux_/integral_wrapper.hpp' line='45' column='1'/>
-        </data-member>
-      </class-decl>
-      <class-decl name='int_&lt;12&gt;' is-struct='yes' visibility='default' size-in-bits='8' filepath='src/third_party/boost-1.56.0/boost/mpl/aux_/integral_wrapper.hpp' line='43' column='1' hash='99f41c00b2d2708b' id='type-id-584'>
-        <data-member access='public' static='yes'>
-          <var-decl name='value' type-id='type-id-336' mangled-name='_ZN4mpl_4int_ILi12EE5valueE' visibility='default' filepath='src/third_party/boost-1.56.0/boost/mpl/aux_/integral_wrapper.hpp' line='45' column='1'/>
-        </data-member>
-      </class-decl>
-      <class-decl name='int_&lt;13&gt;' is-struct='yes' visibility='default' size-in-bits='8' filepath='src/third_party/boost-1.56.0/boost/mpl/aux_/integral_wrapper.hpp' line='43' column='1' hash='eb4956d38d4efef1' id='type-id-587'>
-        <data-member access='public' static='yes'>
-          <var-decl name='value' type-id='type-id-336' mangled-name='_ZN4mpl_4int_ILi13EE5valueE' visibility='default' filepath='src/third_party/boost-1.56.0/boost/mpl/aux_/integral_wrapper.hpp' line='45' column='1'/>
-        </data-member>
-      </class-decl>
-      <class-decl name='int_&lt;1&gt;' is-struct='yes' visibility='default' size-in-bits='8' filepath='src/third_party/boost-1.56.0/boost/mpl/aux_/integral_wrapper.hpp' line='43' column='1' hash='0e19b60c1759c28c' id='type-id-590'>
-        <data-member access='public' static='yes'>
-          <var-decl name='value' type-id='type-id-336' mangled-name='_ZN4mpl_4int_ILi1EE5valueE' visibility='default' filepath='src/third_party/boost-1.56.0/boost/mpl/aux_/integral_wrapper.hpp' line='45' column='1'/>
-        </data-member>
-      </class-decl>
-      <class-decl name='int_&lt;2&gt;' is-struct='yes' visibility='default' size-in-bits='8' filepath='src/third_party/boost-1.56.0/boost/mpl/aux_/integral_wrapper.hpp' line='43' column='1' hash='60d212e012e8b1ce' id='type-id-593'>
-        <data-member access='public' static='yes'>
-          <var-decl name='value' type-id='type-id-336' mangled-name='_ZN4mpl_4int_ILi2EE5valueE' visibility='default' filepath='src/third_party/boost-1.56.0/boost/mpl/aux_/integral_wrapper.hpp' line='45' column='1'/>
-        </data-member>
-      </class-decl>
-      <class-decl name='int_&lt;3&gt;' is-struct='yes' visibility='default' size-in-bits='8' filepath='src/third_party/boost-1.56.0/boost/mpl/aux_/integral_wrapper.hpp' line='43' column='1' hash='caa02f038170dbed' id='type-id-596'>
-        <data-member access='public' static='yes'>
-          <var-decl name='value' type-id='type-id-336' mangled-name='_ZN4mpl_4int_ILi3EE5valueE' visibility='default' filepath='src/third_party/boost-1.56.0/boost/mpl/aux_/integral_wrapper.hpp' line='45' column='1'/>
-        </data-member>
-      </class-decl>
-      <class-decl name='int_&lt;4&gt;' is-struct='yes' visibility='default' size-in-bits='8' filepath='src/third_party/boost-1.56.0/boost/mpl/aux_/integral_wrapper.hpp' line='43' column='1' hash='7c3b7931549bfbc4' id='type-id-599'>
-        <data-member access='public' static='yes'>
-          <var-decl name='value' type-id='type-id-336' mangled-name='_ZN4mpl_4int_ILi4EE5valueE' visibility='default' filepath='src/third_party/boost-1.56.0/boost/mpl/aux_/integral_wrapper.hpp' line='45' column='1'/>
-        </data-member>
-      </class-decl>
-      <class-decl name='int_&lt;5&gt;' is-struct='yes' visibility='default' size-in-bits='8' filepath='src/third_party/boost-1.56.0/boost/mpl/aux_/integral_wrapper.hpp' line='43' column='1' hash='23df37f1a16beea3' id='type-id-602'>
-        <data-member access='public' static='yes'>
-          <var-decl name='value' type-id='type-id-336' mangled-name='_ZN4mpl_4int_ILi5EE5valueE' visibility='default' filepath='src/third_party/boost-1.56.0/boost/mpl/aux_/integral_wrapper.hpp' line='45' column='1'/>
-        </data-member>
-      </class-decl>
-      <class-decl name='int_&lt;6&gt;' is-struct='yes' visibility='default' size-in-bits='8' filepath='src/third_party/boost-1.56.0/boost/mpl/aux_/integral_wrapper.hpp' line='43' column='1' hash='bbd393400f4bcd1f' id='type-id-605'>
-        <data-member access='public' static='yes'>
-          <var-decl name='value' type-id='type-id-336' mangled-name='_ZN4mpl_4int_ILi6EE5valueE' visibility='default' filepath='src/third_party/boost-1.56.0/boost/mpl/aux_/integral_wrapper.hpp' line='45' column='1'/>
-        </data-member>
-      </class-decl>
-      <class-decl name='int_&lt;7&gt;' is-struct='yes' visibility='default' size-in-bits='8' filepath='src/third_party/boost-1.56.0/boost/mpl/aux_/integral_wrapper.hpp' line='43' column='1' hash='b0cd3bc3fa7d1fb8' id='type-id-608'>
-        <data-member access='public' static='yes'>
-          <var-decl name='value' type-id='type-id-336' mangled-name='_ZN4mpl_4int_ILi7EE5valueE' visibility='default' filepath='src/third_party/boost-1.56.0/boost/mpl/aux_/integral_wrapper.hpp' line='45' column='1'/>
-        </data-member>
-      </class-decl>
-      <class-decl name='int_&lt;8&gt;' is-struct='yes' visibility='default' size-in-bits='8' filepath='src/third_party/boost-1.56.0/boost/mpl/aux_/integral_wrapper.hpp' line='43' column='1' hash='e39761d1c99d5dd3' id='type-id-611'>
-        <data-member access='public' static='yes'>
-          <var-decl name='value' type-id='type-id-336' mangled-name='_ZN4mpl_4int_ILi8EE5valueE' visibility='default' filepath='src/third_party/boost-1.56.0/boost/mpl/aux_/integral_wrapper.hpp' line='45' column='1'/>
-        </data-member>
-      </class-decl>
-      <class-decl name='int_&lt;9&gt;' is-struct='yes' visibility='default' size-in-bits='8' filepath='src/third_party/boost-1.56.0/boost/mpl/aux_/integral_wrapper.hpp' line='43' column='1' hash='fa07022885bea938' id='type-id-614'>
-        <data-member access='public' static='yes'>
-          <var-decl name='value' type-id='type-id-336' mangled-name='_ZN4mpl_4int_ILi9EE5valueE' visibility='default' filepath='src/third_party/boost-1.56.0/boost/mpl/aux_/integral_wrapper.hpp' line='45' column='1'/>
-        </data-member>
-      </class-decl>
-      <class-decl name='integral_c&lt;longunsignedint,0&gt;' is-struct='yes' visibility='default' size-in-bits='8' filepath='src/third_party/boost-1.56.0/boost/mpl/aux_/integral_wrapper.hpp' line='43' column='1' hash='f82ba519136edbb0' id='type-id-617'>
-        <data-member access='public' static='yes'>
-          <var-decl name='value' type-id='type-id-1406' mangled-name='_ZN4mpl_10integral_cImLm0EE5valueE' visibility='default' filepath='src/third_party/boost-1.56.0/boost/mpl/aux_/integral_wrapper.hpp' line='45' column='1'/>
-        </data-member>
-      </class-decl>
-      <class-decl name='integral_c&lt;longunsignedint,16&gt;' is-struct='yes' visibility='default' size-in-bits='8' filepath='src/third_party/boost-1.56.0/boost/mpl/aux_/integral_wrapper.hpp' line='43' column='1' hash='bf20f443df2999a6' id='type-id-620'>
-        <data-member access='public' static='yes'>
-          <var-decl name='value' type-id='type-id-1406' mangled-name='_ZN4mpl_10integral_cImLm16EE5valueE' visibility='default' filepath='src/third_party/boost-1.56.0/boost/mpl/aux_/integral_wrapper.hpp' line='45' column='1'/>
-        </data-member>
-      </class-decl>
-      <class-decl name='integral_c&lt;longunsignedint,8&gt;' is-struct='yes' visibility='default' size-in-bits='8' filepath='src/third_party/boost-1.56.0/boost/mpl/aux_/integral_wrapper.hpp' line='43' column='1' hash='847d08994d7acbb3' id='type-id-623'>
-        <data-member access='public' static='yes'>
-          <var-decl name='value' type-id='type-id-1406' mangled-name='_ZN4mpl_10integral_cImLm8EE5valueE' visibility='default' filepath='src/third_party/boost-1.56.0/boost/mpl/aux_/integral_wrapper.hpp' line='45' column='1'/>
-        </data-member>
-      </class-decl>
+      <class-decl name='bool_&lt;false&gt;' is-struct='yes' visibility='default' size-in-bits='8' filepath='src/third_party/boost-1.56.0/boost/mpl/bool.hpp' line='23' column='1' hash='dff69c22a318a328' id='type-id-566'/>
+      <class-decl name='bool_&lt;true&gt;' is-struct='yes' visibility='default' size-in-bits='8' filepath='src/third_party/boost-1.56.0/boost/mpl/bool.hpp' line='23' column='1' hash='d9328a5fcc474fb2' id='type-id-569'/>
+      <class-decl name='int_&lt;-1&gt;' is-struct='yes' visibility='default' size-in-bits='8' filepath='src/third_party/boost-1.56.0/boost/mpl/aux_/integral_wrapper.hpp' line='43' column='1' hash='29ae40883f7af830' id='type-id-572'/>
+      <class-decl name='int_&lt;0&gt;' is-struct='yes' visibility='default' size-in-bits='8' filepath='src/third_party/boost-1.56.0/boost/mpl/aux_/integral_wrapper.hpp' line='43' column='1' hash='3b20bee9998d2116' id='type-id-575'/>
+      <class-decl name='int_&lt;10&gt;' is-struct='yes' visibility='default' size-in-bits='8' filepath='src/third_party/boost-1.56.0/boost/mpl/aux_/integral_wrapper.hpp' line='43' column='1' hash='8bcc6547b26114fa' id='type-id-578'/>
+      <class-decl name='int_&lt;11&gt;' is-struct='yes' visibility='default' size-in-bits='8' filepath='src/third_party/boost-1.56.0/boost/mpl/aux_/integral_wrapper.hpp' line='43' column='1' hash='e9eb387008a4654a' id='type-id-581'/>
+      <class-decl name='int_&lt;12&gt;' is-struct='yes' visibility='default' size-in-bits='8' filepath='src/third_party/boost-1.56.0/boost/mpl/aux_/integral_wrapper.hpp' line='43' column='1' hash='99f41c00b2d2708b' id='type-id-584'/>
+      <class-decl name='int_&lt;13&gt;' is-struct='yes' visibility='default' size-in-bits='8' filepath='src/third_party/boost-1.56.0/boost/mpl/aux_/integral_wrapper.hpp' line='43' column='1' hash='eb4956d38d4efef1' id='type-id-587'/>
+      <class-decl name='int_&lt;1&gt;' is-struct='yes' visibility='default' size-in-bits='8' filepath='src/third_party/boost-1.56.0/boost/mpl/aux_/integral_wrapper.hpp' line='43' column='1' hash='0e19b60c1759c28c' id='type-id-590'/>
+      <class-decl name='int_&lt;2&gt;' is-struct='yes' visibility='default' size-in-bits='8' filepath='src/third_party/boost-1.56.0/boost/mpl/aux_/integral_wrapper.hpp' line='43' column='1' hash='60d212e012e8b1ce' id='type-id-593'/>
+      <class-decl name='int_&lt;3&gt;' is-struct='yes' visibility='default' size-in-bits='8' filepath='src/third_party/boost-1.56.0/boost/mpl/aux_/integral_wrapper.hpp' line='43' column='1' hash='caa02f038170dbed' id='type-id-596'/>
+      <class-decl name='int_&lt;4&gt;' is-struct='yes' visibility='default' size-in-bits='8' filepath='src/third_party/boost-1.56.0/boost/mpl/aux_/integral_wrapper.hpp' line='43' column='1' hash='7c3b7931549bfbc4' id='type-id-599'/>
+      <class-decl name='int_&lt;5&gt;' is-struct='yes' visibility='default' size-in-bits='8' filepath='src/third_party/boost-1.56.0/boost/mpl/aux_/integral_wrapper.hpp' line='43' column='1' hash='23df37f1a16beea3' id='type-id-602'/>
+      <class-decl name='int_&lt;6&gt;' is-struct='yes' visibility='default' size-in-bits='8' filepath='src/third_party/boost-1.56.0/boost/mpl/aux_/integral_wrapper.hpp' line='43' column='1' hash='bbd393400f4bcd1f' id='type-id-605'/>
+      <class-decl name='int_&lt;7&gt;' is-struct='yes' visibility='default' size-in-bits='8' filepath='src/third_party/boost-1.56.0/boost/mpl/aux_/integral_wrapper.hpp' line='43' column='1' hash='b0cd3bc3fa7d1fb8' id='type-id-608'/>
+      <class-decl name='int_&lt;8&gt;' is-struct='yes' visibility='default' size-in-bits='8' filepath='src/third_party/boost-1.56.0/boost/mpl/aux_/integral_wrapper.hpp' line='43' column='1' hash='e39761d1c99d5dd3' id='type-id-611'/>
+      <class-decl name='int_&lt;9&gt;' is-struct='yes' visibility='default' size-in-bits='8' filepath='src/third_party/boost-1.56.0/boost/mpl/aux_/integral_wrapper.hpp' line='43' column='1' hash='fa07022885bea938' id='type-id-614'/>
+      <class-decl name='integral_c&lt;longunsignedint,0&gt;' is-struct='yes' visibility='default' size-in-bits='8' filepath='src/third_party/boost-1.56.0/boost/mpl/aux_/integral_wrapper.hpp' line='43' column='1' hash='f82ba519136edbb0' id='type-id-617'/>
+      <class-decl name='integral_c&lt;longunsignedint,16&gt;' is-struct='yes' visibility='default' size-in-bits='8' filepath='src/third_party/boost-1.56.0/boost/mpl/aux_/integral_wrapper.hpp' line='43' column='1' hash='bf20f443df2999a6' id='type-id-620'/>
+      <class-decl name='integral_c&lt;longunsignedint,8&gt;' is-struct='yes' visibility='default' size-in-bits='8' filepath='src/third_party/boost-1.56.0/boost/mpl/aux_/integral_wrapper.hpp' line='43' column='1' hash='847d08994d7acbb3' id='type-id-623'/>
     </namespace-decl>
     <type-decl name='variadic parameter type' id='type-id-3212'/>
     <type-decl name='void' id='type-id-62'/>

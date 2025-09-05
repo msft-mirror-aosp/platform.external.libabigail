@@ -17512,13 +17512,24 @@ build_ir_node_from_die(reader&		rdr,
 	  // have.
 	  v = build_var_decl(rdr, die, where_offset, v);
 
-	if (v)
+	Dwarf_Addr addr = 0;
+	bool has_data_location = false;
+	has_data_location = rdr.get_variable_address(die, addr);
+
+	if ((v && has_data_location && is_class_type(var_scope))
+	    // This is most likely for a static data member's variable
+	    // that has data location ...
+	    || (v && rdr.is_decl_die_with_undefined_symbol(die))
+	    || (v && rdr.is_decl_die_with_exported_symbol(die))
+	    // ... or this is for an undefined or defined & exported
+	    // global variable.
+	    )
 	  {
 	    add_decl_to_scope(v, var_scope);
 	    if (is_data_member(v))
 	      // We are sure this is a static data member at this
 	      // point because a non-static data member would have
-	      // been encountered a a child of a class or union DIE
+	      // been encountered as a child of a class or union DIE
 	      // and thus handled by add_or_update_class_type or
 	      // add_or_update_union_type.
 	      set_member_is_static(v, true);

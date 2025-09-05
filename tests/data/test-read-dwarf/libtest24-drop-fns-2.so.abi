@@ -351,40 +351,11 @@
           <typedef-decl name='size_type' type-id='type-id-95' size-in-bits='64' filepath='/usr/include/c++/5.3.1/ext/new_allocator.h' line='61' column='1' hash='8fdc5eea2983a729' id='type-id-117'/>
         </member-type>
       </class-decl>
-      <class-decl name='__numeric_traits_integer&lt;char&gt;' is-struct='yes' visibility='default' size-in-bits='8' filepath='/usr/include/c++/5.3.1/ext/numeric_traits.h' line='55' column='1' hash='b155c1439fb8f926' id='type-id-118'>
-        <data-member access='public' static='yes'>
-          <var-decl name='__max' type-id='type-id-41' mangled-name='_ZN9__gnu_cxx24__numeric_traits_integerIcE5__maxE' visibility='default' filepath='/usr/include/c++/5.3.1/ext/numeric_traits.h' line='59' column='1'/>
-        </data-member>
-      </class-decl>
-      <class-decl name='__numeric_traits_integer&lt;int&gt;' is-struct='yes' visibility='default' size-in-bits='8' filepath='/usr/include/c++/5.3.1/ext/numeric_traits.h' line='55' column='1' hash='93106c70be9cc18a' id='type-id-119'>
-        <data-member access='public' static='yes'>
-          <var-decl name='__min' type-id='type-id-44' mangled-name='_ZN9__gnu_cxx24__numeric_traits_integerIiE5__minE' visibility='default' filepath='/usr/include/c++/5.3.1/ext/numeric_traits.h' line='58' column='1'/>
-        </data-member>
-        <data-member access='public' static='yes'>
-          <var-decl name='__max' type-id='type-id-44' mangled-name='_ZN9__gnu_cxx24__numeric_traits_integerIiE5__maxE' visibility='default' filepath='/usr/include/c++/5.3.1/ext/numeric_traits.h' line='59' column='1'/>
-        </data-member>
-      </class-decl>
-      <class-decl name='__numeric_traits_integer&lt;longint&gt;' is-struct='yes' visibility='default' size-in-bits='8' filepath='/usr/include/c++/5.3.1/ext/numeric_traits.h' line='55' column='1' hash='b83b6d736c3d7a3d' id='type-id-120'>
-        <data-member access='public' static='yes'>
-          <var-decl name='__min' type-id='type-id-45' mangled-name='_ZN9__gnu_cxx24__numeric_traits_integerIlE5__minE' visibility='default' filepath='/usr/include/c++/5.3.1/ext/numeric_traits.h' line='58' column='1'/>
-        </data-member>
-        <data-member access='public' static='yes'>
-          <var-decl name='__max' type-id='type-id-45' mangled-name='_ZN9__gnu_cxx24__numeric_traits_integerIlE5__maxE' visibility='default' filepath='/usr/include/c++/5.3.1/ext/numeric_traits.h' line='59' column='1'/>
-        </data-member>
-      </class-decl>
-      <class-decl name='__numeric_traits_integer&lt;longunsignedint&gt;' is-struct='yes' visibility='default' size-in-bits='8' filepath='/usr/include/c++/5.3.1/ext/numeric_traits.h' line='55' column='1' hash='43c9314f28796314' id='type-id-121'>
-        <data-member access='public' static='yes'>
-          <var-decl name='__digits' type-id='type-id-44' mangled-name='_ZN9__gnu_cxx24__numeric_traits_integerImE8__digitsE' visibility='default' filepath='/usr/include/c++/5.3.1/ext/numeric_traits.h' line='64' column='1'/>
-        </data-member>
-      </class-decl>
-      <class-decl name='__numeric_traits_integer&lt;shortint&gt;' is-struct='yes' visibility='default' size-in-bits='8' filepath='/usr/include/c++/5.3.1/ext/numeric_traits.h' line='55' column='1' hash='9d7868ef0e2cc9d6' id='type-id-122'>
-        <data-member access='public' static='yes'>
-          <var-decl name='__min' type-id='type-id-48' mangled-name='_ZN9__gnu_cxx24__numeric_traits_integerIsE5__minE' visibility='default' filepath='/usr/include/c++/5.3.1/ext/numeric_traits.h' line='58' column='1'/>
-        </data-member>
-        <data-member access='public' static='yes'>
-          <var-decl name='__max' type-id='type-id-48' mangled-name='_ZN9__gnu_cxx24__numeric_traits_integerIsE5__maxE' visibility='default' filepath='/usr/include/c++/5.3.1/ext/numeric_traits.h' line='59' column='1'/>
-        </data-member>
-      </class-decl>
+      <class-decl name='__numeric_traits_integer&lt;char&gt;' is-struct='yes' visibility='default' size-in-bits='8' filepath='/usr/include/c++/5.3.1/ext/numeric_traits.h' line='55' column='1' hash='b155c1439fb8f926' id='type-id-118'/>
+      <class-decl name='__numeric_traits_integer&lt;int&gt;' is-struct='yes' visibility='default' size-in-bits='8' filepath='/usr/include/c++/5.3.1/ext/numeric_traits.h' line='55' column='1' hash='93106c70be9cc18a' id='type-id-119'/>
+      <class-decl name='__numeric_traits_integer&lt;longint&gt;' is-struct='yes' visibility='default' size-in-bits='8' filepath='/usr/include/c++/5.3.1/ext/numeric_traits.h' line='55' column='1' hash='b83b6d736c3d7a3d' id='type-id-120'/>
+      <class-decl name='__numeric_traits_integer&lt;longunsignedint&gt;' is-struct='yes' visibility='default' size-in-bits='8' filepath='/usr/include/c++/5.3.1/ext/numeric_traits.h' line='55' column='1' hash='43c9314f28796314' id='type-id-121'/>
+      <class-decl name='__numeric_traits_integer&lt;shortint&gt;' is-struct='yes' visibility='default' size-in-bits='8' filepath='/usr/include/c++/5.3.1/ext/numeric_traits.h' line='55' column='1' hash='9d7868ef0e2cc9d6' id='type-id-122'/>
       <class-decl name='__normal_iterator&lt;char*,std::basic_string&lt;char,std::char_traits&lt;char&gt;,std::allocator&lt;char&gt;&gt;&gt;' visibility='default' is-declaration-only='yes' id='type-id-105'/>
       <class-decl name='__normal_iterator&lt;charconst*,std::basic_string&lt;char,std::char_traits&lt;char&gt;,std::allocator&lt;char&gt;&gt;&gt;' visibility='default' is-declaration-only='yes' id='type-id-101'/>
     </namespace-decl>

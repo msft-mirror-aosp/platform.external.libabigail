@@ -363,52 +363,15 @@
     <!-- namespace __gnu_cxx -->
     <namespace-decl name='__gnu_cxx'>
       <!-- struct __gnu_cxx::__numeric_traits_integer<char> -->
-      <class-decl name='__numeric_traits_integer&lt;char&gt;' is-struct='yes' visibility='default' is-declaration-only='yes' id='type-id-102'>
-        <data-member access='public' static='yes'>
-          <!-- static const char __gnu_cxx::__numeric_traits_integer<char>::__max -->
-          <var-decl name='__max' type-id='type-id-32' mangled-name='_ZN9__gnu_cxx24__numeric_traits_integerIcE5__maxE' visibility='default' filepath='/usr/include/c++/4.8.2/ext/numeric_traits.h' line='59' column='1'/>
-        </data-member>
-      </class-decl>
+      <class-decl name='__numeric_traits_integer&lt;char&gt;' is-struct='yes' visibility='default' is-declaration-only='yes' id='type-id-102'/>
       <!-- struct __gnu_cxx::__numeric_traits_integer<int> -->
-      <class-decl name='__numeric_traits_integer&lt;int&gt;' is-struct='yes' visibility='default' is-declaration-only='yes' id='type-id-103'>
-        <data-member access='public' static='yes'>
-          <!-- static const int __gnu_cxx::__numeric_traits_integer<int>::__min -->
-          <var-decl name='__min' type-id='type-id-35' mangled-name='_ZN9__gnu_cxx24__numeric_traits_integerIiE5__minE' visibility='default' filepath='/usr/include/c++/4.8.2/ext/numeric_traits.h' line='58' column='1'/>
-        </data-member>
-        <data-member access='public' static='yes'>
-          <!-- static const int __gnu_cxx::__numeric_traits_integer<int>::__max -->
-          <var-decl name='__max' type-id='type-id-35' mangled-name='_ZN9__gnu_cxx24__numeric_traits_integerIiE5__maxE' visibility='default' filepath='/usr/include/c++/4.8.2/ext/numeric_traits.h' line='59' column='1'/>
-        </data-member>
-      </class-decl>
+      <class-decl name='__numeric_traits_integer&lt;int&gt;' is-struct='yes' visibility='default' is-declaration-only='yes' id='type-id-103'/>
       <!-- struct __gnu_cxx::__numeric_traits_integer<longint> -->
-      <class-decl name='__numeric_traits_integer&lt;longint&gt;' is-struct='yes' visibility='default' is-declaration-only='yes' id='type-id-104'>
-        <data-member access='public' static='yes'>
-          <!-- static const long int __gnu_cxx::__numeric_traits_integer<longint>::__min -->
-          <var-decl name='__min' type-id='type-id-36' mangled-name='_ZN9__gnu_cxx24__numeric_traits_integerIlE5__minE' visibility='default' filepath='/usr/include/c++/4.8.2/ext/numeric_traits.h' line='58' column='1'/>
-        </data-member>
-        <data-member access='public' static='yes'>
-          <!-- static const long int __gnu_cxx::__numeric_traits_integer<longint>::__max -->
-          <var-decl name='__max' type-id='type-id-36' mangled-name='_ZN9__gnu_cxx24__numeric_traits_integerIlE5__maxE' visibility='default' filepath='/usr/include/c++/4.8.2/ext/numeric_traits.h' line='59' column='1'/>
-        </data-member>
-      </class-decl>
+      <class-decl name='__numeric_traits_integer&lt;longint&gt;' is-struct='yes' visibility='default' is-declaration-only='yes' id='type-id-104'/>
       <!-- struct __gnu_cxx::__numeric_traits_integer<longunsignedint> -->
-      <class-decl name='__numeric_traits_integer&lt;longunsignedint&gt;' is-struct='yes' visibility='default' is-declaration-only='yes' id='type-id-105'>
-        <data-member access='public' static='yes'>
-          <!-- static const int __gnu_cxx::__numeric_traits_integer<longunsignedint>::__digits -->
-          <var-decl name='__digits' type-id='type-id-35' mangled-name='_ZN9__gnu_cxx24__numeric_traits_integerImE8__digitsE' visibility='default' filepath='/usr/include/c++/4.8.2/ext/numeric_traits.h' line='64' column='1'/>
-        </data-member>
-      </class-decl>
+      <class-decl name='__numeric_traits_integer&lt;longunsignedint&gt;' is-struct='yes' visibility='default' is-declaration-only='yes' id='type-id-105'/>
       <!-- struct __gnu_cxx::__numeric_traits_integer<shortint> -->
-      <class-decl name='__numeric_traits_integer&lt;shortint&gt;' is-struct='yes' visibility='default' is-declaration-only='yes' id='type-id-106'>
-        <data-member access='public' static='yes'>
-          <!-- static const short int __gnu_cxx::__numeric_traits_integer<shortint>::__min -->
-          <var-decl name='__min' type-id='type-id-39' mangled-name='_ZN9__gnu_cxx24__numeric_traits_integerIsE5__minE' visibility='default' filepath='/usr/include/c++/4.8.2/ext/numeric_traits.h' line='58' column='1'/>
-        </data-member>
-        <data-member access='public' static='yes'>
-          <!-- static const short int __gnu_cxx::__numeric_traits_integer<shortint>::__max -->
-          <var-decl name='__max' type-id='type-id-39' mangled-name='_ZN9__gnu_cxx24__numeric_traits_integerIsE5__maxE' visibility='default' filepath='/usr/include/c++/4.8.2/ext/numeric_traits.h' line='59' column='1'/>
-        </data-member>
-      </class-decl>
+      <class-decl name='__numeric_traits_integer&lt;shortint&gt;' is-struct='yes' visibility='default' is-declaration-only='yes' id='type-id-106'/>
     </namespace-decl>
     <!-- typedef _IO_FILE __FILE -->
     <typedef-decl name='__FILE' type-id='type-id-99' filepath='/usr/include/stdio.h' line='64' column='1' id='type-id-60'/>
@@ -439,52 +402,15 @@
     <!-- namespace __gnu_cxx -->
     <namespace-decl name='__gnu_cxx'>
       <!-- struct __gnu_cxx::__numeric_traits_integer<char> -->
-      <class-decl name='__numeric_traits_integer&lt;char&gt;' is-struct='yes' visibility='default' is-declaration-only='yes' id='type-id-111'>
-        <data-member access='public' static='yes'>
-          <!-- static const char __gnu_cxx::__numeric_traits_integer<char>::__max -->
-          <var-decl name='__max' type-id='type-id-32' mangled-name='_ZN9__gnu_cxx24__numeric_traits_integerIcE5__maxE' visibility='default' filepath='/usr/include/c++/4.8.2/ext/numeric_traits.h' line='59' column='1'/>
-        </data-member>
-      </class-decl>
+      <class-decl name='__numeric_traits_integer&lt;char&gt;' is-struct='yes' visibility='default' is-declaration-only='yes' id='type-id-111'/>
       <!-- struct __gnu_cxx::__numeric_traits_integer<int> -->
-      <class-decl name='__numeric_traits_integer&lt;int&gt;' is-struct='yes' visibility='default' is-declaration-only='yes' id='type-id-112'>
-        <data-member access='public' static='yes'>
-          <!-- static const int __gnu_cxx::__numeric_traits_integer<int>::__min -->
-          <var-decl name='__min' type-id='type-id-35' mangled-name='_ZN9__gnu_cxx24__numeric_traits_integerIiE5__minE' visibility='default' filepath='/usr/include/c++/4.8.2/ext/numeric_traits.h' line='58' column='1'/>
-        </data-member>
-        <data-member access='public' static='yes'>
-          <!-- static const int __gnu_cxx::__numeric_traits_integer<int>::__max -->
-          <var-decl name='__max' type-id='type-id-35' mangled-name='_ZN9__gnu_cxx24__numeric_traits_integerIiE5__maxE' visibility='default' filepath='/usr/include/c++/4.8.2/ext/numeric_traits.h' line='59' column='1'/>
-        </data-member>
-      </class-decl>
+      <class-decl name='__numeric_traits_integer&lt;int&gt;' is-struct='yes' visibility='default' is-declaration-only='yes' id='type-id-112'/>
       <!-- struct __gnu_cxx::__numeric_traits_integer<longint> -->
-      <class-decl name='__numeric_traits_integer&lt;longint&gt;' is-struct='yes' visibility='default' is-declaration-only='yes' id='type-id-113'>
-        <data-member access='public' static='yes'>
-          <!-- static const long int __gnu_cxx::__numeric_traits_integer<longint>::__min -->
-          <var-decl name='__min' type-id='type-id-36' mangled-name='_ZN9__gnu_cxx24__numeric_traits_integerIlE5__minE' visibility='default' filepath='/usr/include/c++/4.8.2/ext/numeric_traits.h' line='58' column='1'/>
-        </data-member>
-        <data-member access='public' static='yes'>
-          <!-- static const long int __gnu_cxx::__numeric_traits_integer<longint>::__max -->
-          <var-decl name='__max' type-id='type-id-36' mangled-name='_ZN9__gnu_cxx24__numeric_traits_integerIlE5__maxE' visibility='default' filepath='/usr/include/c++/4.8.2/ext/numeric_traits.h' line='59' column='1'/>
-        </data-member>
-      </class-decl>
+      <class-decl name='__numeric_traits_integer&lt;longint&gt;' is-struct='yes' visibility='default' is-declaration-only='yes' id='type-id-113'/>
       <!-- struct __gnu_cxx::__numeric_traits_integer<longunsignedint> -->
-      <class-decl name='__numeric_traits_integer&lt;longunsignedint&gt;' is-struct='yes' visibility='default' is-declaration-only='yes' id='type-id-114'>
-        <data-member access='public' static='yes'>
-          <!-- static const int __gnu_cxx::__numeric_traits_integer<longunsignedint>::__digits -->
-          <var-decl name='__digits' type-id='type-id-35' mangled-name='_ZN9__gnu_cxx24__numeric_traits_integerImE8__digitsE' visibility='default' filepath='/usr/include/c++/4.8.2/ext/numeric_traits.h' line='64' column='1'/>
-        </data-member>
-      </class-decl>
+      <class-decl name='__numeric_traits_integer&lt;longunsignedint&gt;' is-struct='yes' visibility='default' is-declaration-only='yes' id='type-id-114'/>
       <!-- struct __gnu_cxx::__numeric_traits_integer<shortint> -->
-      <class-decl name='__numeric_traits_integer&lt;shortint&gt;' is-struct='yes' visibility='default' is-declaration-only='yes' id='type-id-115'>
-        <data-member access='public' static='yes'>
-          <!-- static const short int __gnu_cxx::__numeric_traits_integer<shortint>::__min -->
-          <var-decl name='__min' type-id='type-id-39' mangled-name='_ZN9__gnu_cxx24__numeric_traits_integerIsE5__minE' visibility='default' filepath='/usr/include/c++/4.8.2/ext/numeric_traits.h' line='58' column='1'/>
-        </data-member>
-        <data-member access='public' static='yes'>
-          <!-- static const short int __gnu_cxx::__numeric_traits_integer<shortint>::__max -->
-          <var-decl name='__max' type-id='type-id-39' mangled-name='_ZN9__gnu_cxx24__numeric_traits_integerIsE5__maxE' visibility='default' filepath='/usr/include/c++/4.8.2/ext/numeric_traits.h' line='59' column='1'/>
-        </data-member>
-      </class-decl>
+      <class-decl name='__numeric_traits_integer&lt;shortint&gt;' is-struct='yes' visibility='default' is-declaration-only='yes' id='type-id-115'/>
     </namespace-decl>
     <!-- typedef _IO_FILE __FILE -->
     <typedef-decl name='__FILE' type-id='type-id-110' filepath='/usr/include/stdio.h' line='64' column='1' id='type-id-108'/>
