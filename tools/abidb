@@ -309,6 +309,7 @@ def main() -> list[str]:
                     continue
 
                 cmdline = ["timeout", str(args.timeout), args.abidw,
+                           "--no-corpus-path", # skip path='/tmp/foobar' attribute in <abi-corpus> element
                            # option? "--load-all-types"
                            pn]
                 logging.debug(f"running {cmdline}")                
