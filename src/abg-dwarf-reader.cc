@@ -2507,7 +2507,7 @@ public:
 	}
     }
 
-    merge_member_functions_in_classes_of_same_names();
+    merge_member_functions_and_variables_in_classes_of_same_names();
 
     /// Now, look at the types that needs to be canonicalized after the
     /// translation has been constructed (which is just now) and
@@ -4844,6 +4844,32 @@ public:
 	  }
   }
 
+  /// Copy missing data members from a source @ref class_decl to a
+  /// destination one.
+  ///
+  /// If a data membe is present on the source @ref class_decl and not
+  /// on the destination one, then it's copied from the source class
+  /// to the destination one.
+  ///
+  /// @param dest_class the destination class type to copy the data
+  /// member to.
+  ///
+  /// @param src_class the source class type to copy the data member
+  /// from.
+  void
+  copy_missing_member_variables(class_decl_sptr& dest_class,
+				const class_decl_sptr& src_class)
+  {
+    for (auto var : src_class->get_data_members())
+      if (!var->get_name().empty())
+	if (!dest_class->find_data_member(var->get_name()))
+	  {
+	    var_decl_sptr copied_data_member =
+	      copy_member_variable(dest_class, var);
+	    ABG_ASSERT(copied_data_member);
+	  }
+  }
+
   /// Test if there is an interator in a given range that points to
   /// an anonymous class.
   ///
@@ -4913,11 +4939,59 @@ public:
       }
   }
 
+  /// Ensure that all classes of the same name have the same data
+  /// members.
+  ///
+  /// So copy the data mebmers from a class C that have them to
+  /// another class C that doesn't.
+  ///
+  /// @param begin an iterator to the first member of the set of
+  /// classes which to merge data members for.
+  ///
+  /// @param end an iterator to the last member (one past the end
+  /// actually) of the set of classes which to merge data members for.
+  template <typename iterator_type>
+  void
+  merge_member_variables_of_classes(const iterator_type& begin,
+				    const iterator_type& end)
+  {
+    if (contains_anonymous_class(begin, end))
+      return;
+
+    for (auto i = begin; i < end; ++i)
+      {
+	type_base_sptr t(*i);
+	class_decl_sptr reference_class = is_class_type(t);
+	if (!reference_class)
+	  continue;
+
+	string n1 = reference_class->get_pretty_representation(true, true);
+	string n2;
+	for (auto j = begin; j < end; ++j)
+	  {
+	    if (j == i)
+	      continue;
+
+	    type_base_sptr type(*j);
+	    class_decl_sptr klass = is_class_type(type);
+	    if (!klass)
+	      continue;
+
+	    n2 = klass->get_pretty_representation(true, true);
+	    if (n1 != n2)
+	      continue;
+
+	    copy_missing_member_variables(reference_class, klass);
+	    copy_missing_member_variables(klass, reference_class);
+	  }
+      }
+  }
+
   /// Ensure that all classes of the same name have the same virtual
   /// member functions.  So copy the virtual member functions from a
   /// class C that have them to another class C that doesn't.
   void
-  merge_member_functions_in_classes_of_same_names()
+  merge_member_functions_and_variables_in_classes_of_same_names()
   {
     corpus_sptr abi = corpus();
     if (!abi)
@@ -4929,21 +5003,29 @@ public:
     for (auto entry : class_types)
       {
 	auto& classes = entry.second;
-	if (classes.size() > 1)
+	type_base_sptr first(classes.front());
+
+	if (classes.size() > 1 && !is_anonymous_type(first))
 	  {
 	    bool a_class_has_member_fns = false;
+	    bool a_class_has_member_vars = false;
 	    for (auto& c : classes)
 	      {
 		type_base_sptr t(c);
 		if (class_decl_sptr klass = is_class_type(t))
-		  if (!klass->get_member_functions().empty())
-		    {
+		  {
+		    if (!klass->get_member_functions().empty())
 		      a_class_has_member_fns = true;
-		      break;
-		    }
+
+		    if (!klass->get_static_data_members().empty())
+		      a_class_has_member_vars = true;
+		  }
 	      }
 	    if (a_class_has_member_fns)
 	      merge_member_functions_of_classes(classes.begin(),
+						classes.end());
+	    if (a_class_has_member_vars)
+	      merge_member_variables_of_classes(classes.begin(),
 						classes.end());
 	  }
       }

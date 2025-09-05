@@ -16160,14 +16160,21 @@ maybe_adjust_canonical_type(const type_base_sptr& canonical,
 	      const auto& canonical_data_member =
 		canonical_class->find_data_member(data_member->get_name());
 	      if (!canonical_data_member)
-		// Hmmh, maybe we
-		// should consider
-		// static data members
-		// when comparing two
-		// classes for the
-		// purpose of type
-		// canonicalization?
-		continue;
+		{
+		  // Two classes my be equivalent (same name, non-static
+		  // sub-objects) and yet not have the same number of
+		  // static data members, if they are coming from
+		  // different corpora.  If they are in the same corpus,
+		  // however then that means there is a problem!
+		  if (!is_anonymous_type(cl)
+		      && canonical_class->get_corpus()
+		      && cl->get_corpus()
+		      && canonical_class->get_corpus() == cl->get_corpus())
+		    ABG_ASSERT_NOT_REACHED;
+
+		  continue;
+		}
+
 	      if (!canonical_data_member->get_symbol())
 		canonical_data_member->set_symbol(sym);
 	    }
@@ -24890,6 +24897,70 @@ copy_member_function(class_or_union_sptr t, const method_decl* method)
   return new_method;
 }
 
+/// Copy a data member of a @ref class_or_union into a new @ref
+/// class_or_union.
+///
+/// @param t the @ref class_or_union into which the data member is to
+/// be copied.
+///
+/// @param variable the data member to copy into @p t.
+///
+/// @return the resulting newly copied method.
+var_decl_sptr
+copy_member_variable(class_or_union_sptr t, const var_decl* variable)
+{
+  ABG_ASSERT(variable);
+  ABG_ASSERT(is_data_member(variable));
+  ABG_ASSERT(t);
+  ABG_ASSERT(!t->find_data_member(variable->get_name()));
+
+  type_base_sptr old_type = variable->get_type();
+
+  var_decl_sptr new_variable(new var_decl(variable->get_name(),
+					  old_type,
+					  variable->get_location(),
+					  variable->get_linkage_name(),
+					  variable->get_visibility(),
+					  variable->get_binding()));
+
+  size_t offset_in_bits = 0;
+  if (get_data_member_is_laid_out(*variable))
+    offset_in_bits = get_data_member_offset(*variable);
+
+  t->add_data_member(new_variable,
+		     get_member_access_specifier(*variable),
+		     get_data_member_is_laid_out(*variable),
+		     get_member_is_static(*variable),
+		     offset_in_bits);
+
+  return new_variable;
+}
+
+/// Copy a data member of a @ref class_or_union into a new @ref
+/// class_or_union.
+///
+/// @param t the @ref class_or_union into which the data member is to
+/// be copied.
+///
+/// @param variable the data member to copy into @p t.
+///
+/// @return the resulting newly copied method.
+var_decl_sptr
+copy_member_variable(class_or_union_sptr t, const var_decl_sptr& variable)
+{return copy_member_variable(t, variable.get());}
+
+/// Copy a data member of a @ref class_or_union into a new @ref
+/// class_or_union.
+///
+/// @param t the @ref class_or_union into which the data member is to
+/// be copied.
+///
+/// @param variable the data member to copy into @p t.
+///
+/// @return the resulting newly copied method.
+var_decl_sptr
+copy_member_variable(class_decl_sptr t, const var_decl_sptr& variable)
+{return copy_member_variable(static_pointer_cast<class_or_union>(t), variable);}
 // </class_or_union definitions>
 
 // <class_decl definitions>

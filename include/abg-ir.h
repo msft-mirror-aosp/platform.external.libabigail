@@ -4140,6 +4140,13 @@ public:
   copy_member_function(class_or_union_sptr t,
 		       const method_decl_sptr& m);
 
+  friend var_decl_sptr
+  copy_member_variable(class_or_union_sptr t,
+		       const var_decl* variable);
+
+  friend var_decl_sptr
+  copy_member_variable(class_or_union_sptr t, const var_decl_sptr& variable);
+
   friend void
   fixup_virtual_member_function(method_decl_sptr method);
 
@@ -4293,6 +4300,9 @@ public:
   traverse(ir_node_visitor& v);
 
   virtual ~class_decl();
+
+  friend var_decl_sptr
+  copy_member_variable(class_decl_sptr t, const var_decl_sptr& variable);
 
   friend void
   fixup_virtual_member_function(method_decl_sptr method);
