@@ -24832,7 +24832,7 @@ equals(const class_or_union& l, const class_or_union& r, change_kind* k)
 ///
 /// @return the resulting newly copied method.
 method_decl_sptr
-copy_member_function(const class_or_union_sptr& t,
+copy_member_function(class_or_union_sptr t,
 		     const method_decl_sptr& method)
 {return copy_member_function(t, method.get());}
 
@@ -24846,7 +24846,7 @@ copy_member_function(const class_or_union_sptr& t,
 ///
 /// @return the resulting newly copied method.
 method_decl_sptr
-copy_member_function(const class_or_union_sptr& t, const method_decl* method)
+copy_member_function(class_or_union_sptr t, const method_decl* method)
 {
   ABG_ASSERT(t);
   ABG_ASSERT(method);
@@ -26259,7 +26259,7 @@ equals(const class_decl& l, const class_decl& r, change_kind* k)
 ///
 /// @return the resulting newly copied method.
 method_decl_sptr
-copy_member_function(const class_decl_sptr& clazz, const method_decl_sptr& f)
+copy_member_function(class_decl_sptr clazz, const method_decl_sptr& f)
 {return copy_member_function(static_pointer_cast<class_or_union>(clazz), f);}
 
 /// Copy a method of a class into a new class.
@@ -26270,7 +26270,7 @@ copy_member_function(const class_decl_sptr& clazz, const method_decl_sptr& f)
 ///
 /// @return the resulting newly copied method.
 method_decl_sptr
-copy_member_function(const class_decl_sptr& clazz, const method_decl* f)
+copy_member_function(class_decl_sptr clazz, const method_decl* f)
 {return copy_member_function(static_pointer_cast<class_or_union>(clazz), f);}
 
 /// Comparison operator for @ref class_decl.
@@ -27342,7 +27342,7 @@ equals(const union_decl& l, const union_decl& r, change_kind* k)
 ///
 /// @return the resulting newly copied method.
 method_decl_sptr
-copy_member_function(const union_decl_sptr& union_type,
+copy_member_function(union_decl_sptr union_type,
 		     const method_decl_sptr& f)
 {return copy_member_function(union_type, f.get());}
 
@@ -27355,7 +27355,7 @@ copy_member_function(const union_decl_sptr& union_type,
 ///
 /// @return the resulting newly copied method.
 method_decl_sptr
-copy_member_function(const union_decl_sptr& union_type,
+copy_member_function(union_decl_sptr union_type,
 		     const method_decl* f)
 {
   const class_or_union_sptr t = union_type;

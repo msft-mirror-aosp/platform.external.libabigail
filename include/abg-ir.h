@@ -4133,11 +4133,11 @@ public:
   virtual ~class_or_union();
 
   friend method_decl_sptr
-  copy_member_function(class_or_union_sptr& t,
+  copy_member_function(class_or_union_sptr t,
 		       const method_decl*m);
 
   friend method_decl_sptr
-  copy_member_function(class_or_union_sptr& t,
+  copy_member_function(class_or_union_sptr t,
 		       const method_decl_sptr& m);
 
   friend void
@@ -4155,14 +4155,6 @@ public:
   friend class method_decl;
   friend class class_decl;
 }; // end class class_or_union
-
-method_decl_sptr
-copy_member_function(const class_or_union_sptr& clazz,
-		     const method_decl_sptr& f);
-
-method_decl_sptr
-copy_member_function(const class_or_union_sptr& clazz,
-		     const method_decl* f);
 
 bool
 operator==(const class_or_union_sptr& l, const class_or_union_sptr& r);
@@ -4319,11 +4311,11 @@ bool
 equals(const class_decl&, const class_decl&, change_kind*);
 
 method_decl_sptr
-copy_member_function(const class_decl_sptr& clazz,
+copy_member_function(class_decl_sptr clazz,
 		     const method_decl_sptr& f);
 
 method_decl_sptr
-copy_member_function(const class_decl_sptr& clazz,
+copy_member_function(class_decl_sptr clazz,
 		     const method_decl* f);
 void
 fixup_virtual_member_function(method_decl_sptr method);
@@ -4476,11 +4468,11 @@ bool
 equals(const union_decl&, const union_decl&, change_kind*);
 
 method_decl_sptr
-copy_member_function(const union_decl_sptr& union_type,
+copy_member_function(union_decl_sptr union_type,
 		     const method_decl_sptr& f);
 
 method_decl_sptr
-copy_member_function(const union_decl_sptr& union_type,
+copy_member_function(union_decl_sptr union_type,
 		     const method_decl* f);
 
 bool

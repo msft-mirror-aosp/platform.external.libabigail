@@ -4830,7 +4830,7 @@ public:
   /// on the destination one, then it's copied from the source class
   /// to the destination one.
   void
-  copy_missing_member_functions(const class_decl_sptr& dest_class,
+  copy_missing_member_functions(class_decl_sptr& dest_class,
 				const class_decl_sptr& src_class)
   {
     for (auto method : src_class->get_member_functions())
