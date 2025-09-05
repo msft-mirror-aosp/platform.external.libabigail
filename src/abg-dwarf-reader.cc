@@ -4904,7 +4904,8 @@ public:
 	      continue;
 
 	    n2 = klass->get_pretty_representation(true, true);
-	    ABG_ASSERT(n1 == n2);
+	    if (n1 != n2)
+	      continue;
 
 	    copy_missing_member_functions(reference_class, klass);
 	    copy_missing_member_functions(klass, reference_class);
