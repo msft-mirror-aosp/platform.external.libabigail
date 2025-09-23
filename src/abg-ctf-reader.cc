@@ -493,7 +493,7 @@ public:
 	ctf_sym_type = lookup_symbol_in_ctf_archive(ctfa, &ctf_dict,
 						    sym_name.c_str());
 	if (ctf_sym_type == CTF_ERR)
-          continue;
+	  continue;
 
 	if (ctf_type_kind(ctf_dict, ctf_sym_type) != CTF_K_FUNCTION)
 	  {
@@ -1702,16 +1702,13 @@ lookup_symbol_in_ctf_archive(ctf_archive_t *ctfa, ctf_dict_t **ctf_dict,
 				    /*skip_parent=*/true,
 				    &ctf_err)) != nullptr)
         {
-          if ((ctf_type = ctf_lookup_by_symbol_name (fp, sym_name)) == CTF_ERR)
-            ctf_type = ctf_lookup_variable(fp, sym_name);
-
-          if (ctf_type != CTF_ERR)
-            {
-              *ctf_dict = fp;
-              break;
-            }
-          ctf_dict_close(fp);
+	  if ((ctf_type = ctf_lookup_by_symbol_name (fp, sym_name)) == CTF_ERR)
+	    ctf_type = ctf_lookup_variable(fp, sym_name);
+	  ctf_dict_close(fp);
+	  if (ctf_type != CTF_ERR)
+	    break;
         }
+      ctf_next_destroy(i);
     }
 
   return ctf_type;
