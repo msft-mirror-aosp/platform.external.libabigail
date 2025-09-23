@@ -267,7 +267,7 @@ new_reader_from_istream(std::istream* in)
 /// @return true if the shared pointer to xmlChar contained a non NULL
 /// string, false otherwise.
 bool
-xml_char_sptr_to_string(xml_char_sptr ssptr, std::string& s)
+xml_char_sptr_to_string(xml_char_sptr& ssptr, std::string& s)
 {
   bool non_nil = false;
   if (CHAR_STR(ssptr))

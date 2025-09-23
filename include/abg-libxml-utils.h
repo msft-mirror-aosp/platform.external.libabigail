@@ -52,7 +52,7 @@ void initialize();
 reader_sptr new_reader_from_file(const std::string& path);
 reader_sptr new_reader_from_buffer(const std::string& buffer);
 reader_sptr new_reader_from_istream(std::istream*);
-bool xml_char_sptr_to_string(xml_char_sptr, std::string&);
+bool xml_char_sptr_to_string(xml_char_sptr&, std::string&);
 
 int get_xml_node_depth(xmlNodePtr);
 
