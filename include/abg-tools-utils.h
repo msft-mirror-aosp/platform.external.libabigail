@@ -375,9 +375,6 @@ make_path_absolute(const char*p);
 string
 make_path_absolute(const string& p);
 
-char*
-make_path_absolute_to_be_freed(const char*p);
-
 corpus_group_sptr
 build_corpus_group_from_kernel_dist_under(const string&	root,
 					  const string		debug_info_root,

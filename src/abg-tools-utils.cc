@@ -2196,35 +2196,6 @@ make_path_absolute(const string& p)
   return result;
 }
 
-/// Return a copy of the path given in argument, turning it into an
-/// absolute path by prefixing it with the concatenation of the result
-/// of get_current_dir_name() and the '/' character.
-///
-/// The result being a pointer to an allocated memory region, it must
-/// be freed by the caller.
-///
-/// @param p the path to turn into an absolute path.
-///
-/// @return a pointer to the resulting absolute path.  It must be
-/// freed by the caller.
-char*
-make_path_absolute_to_be_freed(const char*p)
-{
-    char* result = 0;
-
-  if (p && p[0] != '/')
-    {
-      char* pwd = get_current_dir_name();
-      string s = string(pwd) + "/" + p;
-      free(pwd);
-      result = strdup(s.c_str());
-    }
-  else
-    result = strdup(p);
-
-  return result;
-}
-
 /// This is a sub-routine of gen_suppr_spec_from_headers and
 /// handle_fts_entry.
 ///

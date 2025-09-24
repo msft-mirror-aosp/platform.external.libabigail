@@ -373,7 +373,7 @@ parse_command_line(int argc, char* argv[], options& opts)
 	  // elfutils wants the root path to the debug info to be
 	  // absolute.
 	  opts.di_root_paths2.push_back
-	    (abigail::tools_utils::make_path_absolute_to_be_freed(argv[j]));
+	    (abigail::tools_utils::make_path_absolute(string(argv[j])));
 	  ++i;
 	}
       else if (!strcmp(argv[i], "--headers-dir1")
