@@ -257,7 +257,7 @@ VALGRIND_SUPPRESSIONS_FILES = ${srcdir}/test-valgrind-suppressions.supp
 RECURSIVE_VALGRIND_FLAGS = \
 --num-callers=30 \
 --trace-children=yes \
---trace-children-skip=/bin/diff,/bin/rm,/bin/mkdir,/bin/cd,*cpio,/bin/dpkg,/bin/rpm,/bin/test,/bin/tar,/bin/sed,/bin/ls,/bin/g++,/*collect*,/bin/ld
+--trace-children-skip=/bin/diff,/bin/rm,/bin/mkdir,/bin/cd,*cpio,/bin/dpkg,/bin/rpm,/bin/test,/bin/tar,/bin/sed,/bin/ls,/bin/g++,/*collect*,/bin/ld,/usr/bin/sed,/usr/bin/diff,/usr/bin/ls
 
 # Use the target below to run tests under Valgrind's memcheck tool by
 # telling it to follow children process, so that it can also check
