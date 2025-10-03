@@ -124,21 +124,10 @@ symtab::lookup_symbol(GElf_Addr symbol_addr) const
 const elf_symbol_sptr
 symtab::lookup_undefined_function_symbol(const std::string& sym_name)
 {
-  symtab_filter f = make_filter();
-  f.set_variables(false);
-  f.set_public_symbols(false);
-  f.set_functions(true);
-  f.set_undefined_symbols(true);
-
-  elf_symbol_sptr result;
-  for (auto sym : filtered_symtab(*this, f))
-    if (sym_name == sym->get_name())
-      {
-	result = sym;
-	break;
-      }
-
-  return result;
+  auto it = undefined_fn_symbols_.find(sym_name);
+  if (it == undefined_fn_symbols_.end())
+    return elf_symbol_sptr();
+  return it->second;
 }
 
 /// Lookup an undefined variable symbol with a given name.
@@ -586,8 +575,17 @@ symtab::load_(Elf*	       elf_handle,
 	  // to avoid accidental leakage. But we ensure supressed
 	  // symbols are otherwise set up for lookup.
 	  if (!(is_suppressed && is_suppressed(symbol)))
-	    // add to the symbol vector
-	    symbols_.push_back(symbol);
+	    {
+	      // add to the symbol vector
+	      symbols_.push_back(symbol);
+	      if (!symbol->is_defined())
+		{
+		  if (symbol->is_function())
+		    undefined_fn_symbols_[symbol->get_name()] = symbol;
+		  else if (symbol->is_variable())
+		    undefined_var_symbols_[symbol->get_name()] = symbol;
+		}
+	    }
 	  else
 	    symbol->set_is_suppressed(true);
 	}
@@ -660,7 +658,11 @@ symtab::load_(string_elf_symbols_map_sptr function_symbol_map,
 	for (const auto& symbol : symbol_map_entry.second)
 	  {
 	    if (!symbol->is_suppressed())
-	      symbols_.push_back(symbol);
+	      {
+		symbols_.push_back(symbol);
+		if (!symbol->is_defined())
+		  undefined_fn_symbols_[symbol->get_name()] = symbol;
+	      }
 	  }
 	ABG_ASSERT(name_symbol_map_.insert(symbol_map_entry).second);
       }
@@ -671,7 +673,11 @@ symtab::load_(string_elf_symbols_map_sptr function_symbol_map,
 	for (const auto& symbol : symbol_map_entry.second)
 	  {
 	    if (!symbol->is_suppressed())
-	      symbols_.push_back(symbol);
+	      {
+		symbols_.push_back(symbol);
+		if (!symbol->is_defined())
+		  undefined_var_symbols_[symbol->get_name()] = symbol;
+	      }
 	  }
 	ABG_ASSERT(name_symbol_map_.insert(symbol_map_entry).second);
       }

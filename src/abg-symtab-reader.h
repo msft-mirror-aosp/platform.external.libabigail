@@ -285,6 +285,14 @@ private:
   /// The vector of symbols we discovered.
   elf_symbols symbols_;
 
+  // A map of undefined function ymbols to speedup the function
+  // lookup_undefined_function_symbol
+  unordered_map<string, elf_symbol_sptr> undefined_fn_symbols_;
+
+  // Similarly, a map of undefined symbols to speedup the function
+  // lookup_undefined_variable_symbol
+  unordered_map<string, elf_symbol_sptr> undefined_var_symbols_;
+
   /// Whether this is a Linux Kernel binary
   bool is_kernel_binary_;
 
