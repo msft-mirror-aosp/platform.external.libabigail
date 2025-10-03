@@ -4,11 +4,12 @@
     <function-template-decl id='fn-tmpl-id-2'>
       <template-type-parameter id='type-id-3' name='T'/>
       <template-type-parameter id='type-id-4' name='U'/>
-      <function-decl name='func' binding='global' size-in-bits='8' alignment-in-bits='8' hash='bd4d7b0514561a65' id='type-id-5'>
-        <parameter type-id='type-id-3' name='first'/>
-        <parameter type-id='type-id-4' name='second'/>
-        <return type-id='type-id-1'/>
-      </function-decl>
+      <function-decl name='func' type-id='type-id-5' binding='global' size-in-bits='8' alignment-in-bits='8'/>
     </function-template-decl>
   </namespace-decl>
+  <function-type size-in-bits='8' alignment-in-bits='8' hash='bd4d7b0514561a65' id='type-id-5'>
+    <parameter type-id='type-id-3' name='first'/>
+    <parameter type-id='type-id-4' name='second'/>
+    <return type-id='type-id-1'/>
+  </function-type>
 </abi-instr>

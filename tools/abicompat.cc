@@ -295,7 +295,7 @@ compare_expected_against_provided_functions(diff_context_sptr&		ctxt,
     {
       interned_string fn_id = expected_fn->get_id();
       // ... against the functions exported by the library!
-      const std::unordered_set<function_decl*> *exported_fns =
+      const std::unordered_set<const function_decl*> *exported_fns =
 	definition_corpus->lookup_functions(fn_id);
       if (!exported_fns && expected_fn->get_symbol())
 	{

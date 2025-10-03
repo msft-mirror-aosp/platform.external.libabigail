@@ -1258,9 +1258,9 @@ translation_unit::get_types()
 /// Get the vector of function types that are used in the current
 /// translation unit.
 ///
-/// @return the vector of function types that are used in the current
+/// @return the set of function types that are used in the current
 /// translation unit.
-const vector<function_type_sptr>&
+const type_sptr_set_type&
 translation_unit::get_live_fn_types() const
 {return priv_->live_fn_types_;}
 
@@ -1495,7 +1495,10 @@ translation_unit::bind_function_type_life_time(function_type_sptr ftype) const
 {
   const environment& env = get_environment();
 
-  const_cast<translation_unit*>(this)->priv_->live_fn_types_.push_back(ftype);
+  if (ftype->get_translation_unit())
+    return;
+
+  const_cast<translation_unit*>(this)->priv_->live_fn_types_.insert(ftype);
 
   interned_string repr = get_type_name(ftype);
   const_cast<translation_unit*>(this)->get_types().function_types()[repr].
@@ -5481,7 +5484,7 @@ is_scope_decl(const decl_base* d)
 /// @return the a pointer to the @ref scope_decl sub-object of @p d,
 /// if d is a @ref scope_decl.
 scope_decl_sptr
-is_scope_decl(const decl_base_sptr& d)
+is_scope_decl(const type_or_decl_base_sptr& d)
 {return dynamic_pointer_cast<scope_decl>(d);}
 
 /// Tests if a type is a class member.
@@ -9200,25 +9203,38 @@ get_function_type_name(const function_type& fn_type,
   return env.intern(o.str());
 }
 
-/// Get the ID of a function, or, if the ID can designate several
-/// different functions, get its pretty representation.
-///
-/// @param fn the function to consider
-///
-/// @return the function ID of pretty representation of @p fn.
 interned_string
-get_function_id_or_pretty_representation(const function_decl *fn)
+get_function_symbol_id(const function_decl *fn)
 {
   ABG_ASSERT(fn);
 
-  interned_string result = fn->get_environment().intern(fn->get_id());
+  string n = fn->get_symbol()
+    ? fn->get_symbol()->get_id_string()
+    : fn->get_linkage_name();
+
+  interned_string result = fn->get_environment().intern(n);
+
+  return result;
+}
+
+/// Get the ID of the symbol of a function, or, if the ID can
+/// designate several different functions, get its unique function ID.
+///
+/// @param fn the function to consider
+///
+/// @return the function symbol ID or unique function ID if there are
+/// several functions for the same symbol ID.
+interned_string
+get_function_symbol_id_if_unique(const function_decl *fn)
+{
+  interned_string result = get_function_symbol_id(fn);
 
   if (const corpus *c = fn->get_corpus())
     {
       corpus::exported_decls_builder_sptr b =
 	c->get_exported_decls_builder();
       if (b->fn_id_maps_to_several_fns(fn))
-	result = fn->get_environment().intern(fn->get_pretty_representation());
+	result = fn->get_environment().intern(fn->get_id());
     }
 
   return result;
@@ -16397,6 +16413,24 @@ canonicalize(type_base_sptr t, bool do_log, bool show_stats)
 	  // emitted.  This can be the case for the result of the
 	  // function strip_typedef, for instance.
 	}
+
+      // Make sure the (exported) member function of the canonical
+      // type which has a given function ID is the one that is
+      // actually recorded as being the ABI entry point of the corpus.
+      if (class_or_union_sptr cou = is_class_type(canonical))
+	{
+	  if (corpus* corp = cou->get_corpus())
+	    for (auto& mem_fn : cou->get_member_functions())
+	      {
+		if (mem_fn->get_symbol()
+		    && mem_fn->get_symbol()->is_public()
+		    && mem_fn->get_is_in_public_symbol_table()
+		    && corp->get_exported_decls_builder())
+		  corp->get_exported_decls_builder()->
+		    maybe_add_fn_to_exported_fns(mem_fn.get(),
+						 /*do_update=*/true);
+	      }
+	}
     }
 
   t->on_canonical_type_set();
@@ -21729,9 +21763,14 @@ var_decl::get_id() const
 	sym_str = get_linkage_name();
 
       const environment& env = get_type()->get_environment();
-      priv_->id_ = env.intern(repr);
+      interned_string id = env.intern(repr);
       if (!sym_str.empty())
-	priv_->id_ = env.intern(priv_->id_ + "{" + sym_str + "}");
+	id = env.intern(id + "{" + sym_str + "}");
+
+      if (get_type() && get_type()->get_naked_canonical_type())
+	priv_->id_ = id;
+      else
+	return id;
     }
   return priv_->id_;
 }
@@ -22438,9 +22477,10 @@ function_type::get_cached_name(bool internal) const
 	}
       else
 	{
-	  priv_->cached_name_ =
-	    get_function_type_name(this, /*internal=*/false);
-	  return priv_->cached_name_;
+	  if (priv_->temp_cached_name_.empty())
+	    priv_->temp_cached_name_ =
+	      get_function_type_name(this, /*internal=*/false);
+	  return priv_->temp_cached_name_;
 	}
     }
 }
@@ -23437,7 +23477,17 @@ interned_string
 function_decl::get_id() const
 {
   if (priv_->id_.empty())
-    priv_->id_ = get_id(get_symbol());
+    {
+      interned_string id = get_id(get_symbol());
+      if (get_type() && get_type()->get_naked_canonical_type())
+	// If the type of the function is canonicalized (i.e, we are
+	// sure the type is fully constructed) then cache its ID for
+	// future invocations of this function ...
+	priv_->id_ = id;
+      else
+	// ... otherwise do not cache the ID.
+	return id;
+    }
   return priv_->id_;
 }
 
@@ -28943,7 +28993,7 @@ get_exemplar_type(const type_base* type)
       type = is_type(decl);
       ABG_ASSERT(type);
     }
-  type_base *exemplar = type->get_naked_canonical_type();
+  type_base *exemplar = type ? type->get_naked_canonical_type(): nullptr;
   if (!exemplar)
     {
       // The type has no canonical type.  Let's be sure that it's one
@@ -28954,6 +29004,20 @@ get_exemplar_type(const type_base* type)
     }
   return exemplar;
 }
+
+/// For a given type, return its exemplar type.
+///
+/// For a given type, its exemplar type is either its canonical type
+/// or the canonical type of the definition type of a given
+/// declaration-only type.  If the neither of those two types exist,
+/// then the exemplar type is the given type itself.
+///
+/// @param type the input to consider.
+///
+/// @return the exemplar type.
+type_base*
+get_exemplar_type(const type_base_sptr& type)
+{return get_exemplar_type(type.get());}
 
 /// Test if a given type is allowed to be non canonicalized
 ///

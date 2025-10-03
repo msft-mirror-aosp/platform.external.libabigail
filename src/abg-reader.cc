@@ -1539,6 +1539,10 @@ static function_decl_sptr
 build_function_decl(reader&, const xmlNodePtr,
 		    class_or_union_sptr, bool, bool);
 
+static method_decl_sptr
+build_member_function_decl(reader&, const xmlNodePtr,
+			   class_or_union_sptr, bool, bool);
+
 static function_decl_sptr
 build_function_decl_if_not_suppressed(reader&, const xmlNodePtr,
 				      class_or_union_sptr, bool, bool);
@@ -1763,8 +1767,27 @@ reader::get_scope_for_node(xmlNodePtr node, access_specifier& access)
       scope_decl_sptr parent_scope = get_scope_for_node(parent, a);
       push_decl(parent_scope);
 
-      scope = dynamic_pointer_cast<scope_decl>
-	(handle_element_node(*this, parent, /*add_decl_to_scope=*/true));
+      // Handle the case where 'parent' is a function-decl which is
+      // actually a child node of 'member-function' (so it's a member
+      // function).  In that case, we hand the work over to
+      // build_member_function.
+      //
+      if (parent->parent
+	  && xmlStrEqual(parent->name, BAD_CAST("function-decl"))
+	  && xmlStrEqual(parent->parent->name, BAD_CAST("member-function")))
+	{
+	  class_decl_sptr klass = is_class_type(parent_scope);
+	  ABG_ASSERT(klass);
+	  scope = build_member_function_decl(*this, parent->parent, klass,
+					     /*add_to_current_scope=*/true,
+					     /*add_to_exported_decls=*/true);
+	}
+      // TODO: We should also have something similar for
+      // var-decl/data-member.  The below would then be the default
+      // "catch-all" case.
+      else
+	scope = is_scope_decl(handle_element_node(*this, parent,
+						  /*add_decl_to_scope=*/true));
       ABG_ASSERT(scope);
       pop_scope_or_abort(parent_scope);
     }
@@ -3935,10 +3958,10 @@ build_function_parameter(reader& rdr, const xmlNodePtr node)
 /// shared_ptr<function_decl> that is returned is then really a
 /// shared_ptr<method_decl>.
 ///
-/// @param add_to_current_scope if set to yes, the result of
+/// @param add_to_current_scope if set to true, the result of
 /// this function is added to its current scope.
 ///
-/// @param add_to_exported_decls if set to yes, the resulting of this
+/// @param add_to_exported_decls if set to true, the resulting of this
 /// function is added to the set of decls exported by the current
 /// corpus being built.
 ///
@@ -4013,15 +4036,26 @@ build_function_decl(reader&		rdr,
   read_location(rdr, node, loc);
 
   vector<decl_base_sptr> member_decls;
-  function_type_sptr fn_type =
-    build_function_type(rdr, node, as_method_decl, member_decls,
-			/*consider_function_decl=*/true);
+  string type_id;
+  if (xml_char_sptr s = XML_NODE_GET_ATTRIBUTE(node, "type-id"))
+    type_id = CHAR_STR(s);
 
-  ABG_ASSERT(fn_type);
+  function_type_sptr fn_type;
+  if (!type_id.empty())
+    fn_type = is_function_type(rdr.build_or_get_type_decl(type_id, true));
 
-  rdr.read_hash_and_stash(node, fn_type);
-
-  fn_type->set_is_artificial(true);
+  if (!fn_type)
+    {
+      // We are probably looking at an old-format function-decl that
+      // has no 'type-id property.  So parse its parameters and return
+      // type.'
+      fn_type = build_function_type(rdr, node, as_method_decl, member_decls,
+				    /*consider_function_decl=*/true);
+      // At this point fn_type *must* be non-nil.
+      ABG_ASSERT(fn_type);
+      fn_type->set_is_artificial(true);
+      rdr.read_hash_and_stash(node, fn_type);
+    }
 
   function_decl_sptr fn_decl(as_method_decl
 			     ? new method_decl (name, fn_type,
@@ -4033,10 +4067,14 @@ build_function_decl(reader&		rdr,
 						 bind));
 
   maybe_set_artificial_location(rdr, node, fn_decl);
-  rdr.push_decl_to_scope(fn_decl,
-			 add_to_current_scope
-			 ? rdr.get_scope_ptr_for_node(node)
-			 : nullptr);
+  if (add_to_current_scope)
+    {
+      if (as_method_decl)
+	rdr.push_decl_to_scope(fn_decl, as_method_decl.get());
+      else
+	rdr.push_decl_to_scope(fn_decl, node);
+    }
+
   RECORD_ARTIFACTS_AS_USED_IN_FN_DECL(rdr, fn_decl);
   for (const auto& member_decl : member_decls)
     add_decl_to_scope(member_decl, fn_decl);
@@ -4051,9 +4089,94 @@ build_function_decl(reader&		rdr,
   rdr.schedule_type_for_canonicalization(fn_type);
 
   if (add_to_exported_decls)
-    rdr.add_fn_to_exported_or_undefined_decls(fn_decl.get());
+    rdr.add_fn_to_exported_or_undefined_decls(fn_decl.get(),
+					      /*do_update=*/true);
 
   return fn_decl;
+}
+
+/// Build a member function from a "member-function" XML element.
+///
+/// @param rdr the ABIXML reader to use.
+///
+/// @param node the "member-function" XML element to parse.
+///
+/// @param klass the container class or union of the member function
+/// to construct.
+///
+/// @param add_to_current_scope if set to true then the member
+/// function is added to @p klass.
+///
+/// @param add_to_exported_decls if set to true then the member
+/// function is added to the set of exported decls.
+///
+/// @return a pointer to the resulting @ref method_decl.
+static method_decl_sptr
+build_member_function_decl(reader&		rdr,
+			   const xmlNodePtr	node,
+			   class_or_union_sptr	klass,
+			   bool		add_to_current_scope,
+			   bool		add_to_exported_decls)
+{
+  method_decl_sptr result;
+
+  if (!node || !klass)
+    return result;
+
+  if (!xmlStrEqual(node->name, BAD_CAST("member-function")))
+    return result;
+
+  bool is_struct = is_class_type(klass)
+    ? is_class_type(klass)->is_struct()
+    : false;
+
+  access_specifier access =
+    is_struct
+    ? public_access
+    : private_access;
+
+  read_access(node, access);
+
+  bool is_virtual = false;
+  ssize_t vtable_offset = -1;
+  if (xml_char_sptr s =
+      XML_NODE_GET_ATTRIBUTE(node, "vtable-offset"))
+    {
+      is_virtual = true;
+      vtable_offset = atoi(CHAR_STR(s));
+    }
+
+  bool is_static = false;
+  read_static(node, is_static);
+
+  bool is_ctor = false, is_dtor = false, is_const = false;
+  read_cdtor_const(node, is_ctor, is_dtor, is_const);
+
+  for (xmlNodePtr p = xmlFirstElementChild(node);
+       p;
+       p = xmlNextElementSibling(p))
+    {
+      if (function_decl_sptr f =
+	  build_function_decl_if_not_suppressed(rdr, p, klass,
+						add_to_current_scope,
+						add_to_exported_decls))
+	{
+	  method_decl_sptr m = is_method_decl(f);
+	  ABG_ASSERT(m);
+	  set_member_access_specifier(m, access);
+	  set_member_is_static(m, is_static);
+	  if (is_virtual)
+	    set_member_function_virtuality(m, is_virtual, vtable_offset);
+	  set_member_function_is_ctor(m, is_ctor);
+	  set_member_function_is_dtor(m, is_dtor);
+	  set_member_function_is_const(m, is_const);
+	  rdr.map_xml_node_to_decl(p, m);
+	  result = m;
+	  break;
+	}
+    }
+
+  return result;
 }
 
 /// Build a function_decl from a 'function-decl' xml node if it's not
@@ -4239,12 +4362,12 @@ variable_is_suppressed(const reader& rdr,
 ///
 /// @return a pointer to a newly built var_decl upon successful
 /// completion, a null pointer otherwise.
-static shared_ptr<var_decl>
-build_var_decl(reader&	rdr,
-	       const xmlNodePtr node,
-	       bool		add_to_current_scope)
+static var_decl_sptr
+build_var_decl(reader&			rdr,
+	       const xmlNodePtr	node,
+	       bool			add_to_current_scope)
 {
-  shared_ptr<var_decl> nil;
+  var_decl_sptr nil;
 
   if (!xmlStrEqual(node->name, BAD_CAST("var-decl")))
     return nil;
@@ -5518,15 +5641,20 @@ build_typedef_decl(reader&		rdr,
   ABG_ASSERT(!type_id.empty());
 
   type_base_sptr underlying_type;
-  typedef_decl_sptr typedef_type(new typedef_decl(name, rdr.get_environment(),
-						  loc, name));
-  rdr.push_and_key_type_decl(typedef_type, node, add_to_current_scope);
-  rdr.map_xml_node_to_decl(node, typedef_type);
-
   underlying_type = rdr.build_or_get_type_decl(type_id, true);
   ABG_ASSERT(underlying_type);
 
-  typedef_type->set_underlying_type(underlying_type);
+  if (type_base_sptr t = rdr.get_type_decl(id))
+    {
+      typedef_decl_sptr result = is_typedef(t);
+      ABG_ASSERT(result);
+      return result;
+    }
+
+  typedef_decl_sptr typedef_type(new typedef_decl(name, underlying_type,
+						  loc, name));
+  rdr.push_and_key_type_decl(typedef_type, node, add_to_current_scope);
+  rdr.map_xml_node_to_decl(node, typedef_type);
 
   maybe_set_artificial_location(rdr, node, typedef_type);
 
@@ -5932,52 +6060,9 @@ build_class_decl(reader&		rdr,
 	    }
 	}
       else if (xmlStrEqual(n->name, BAD_CAST("member-function")))
-	{
-	  access_specifier access =
-	    is_struct
-	    ? public_access
-	    : private_access;
-	  read_access(n, access);
-
-	  bool is_virtual = false;
-	  ssize_t vtable_offset = -1;
-	  if (xml_char_sptr s =
-	      XML_NODE_GET_ATTRIBUTE(n, "vtable-offset"))
-	    {
-	      is_virtual = true;
-	      vtable_offset = atoi(CHAR_STR(s));
-	    }
-
-	  bool is_static = false;
-	  read_static(n, is_static);
-
-	  bool is_ctor = false, is_dtor = false, is_const = false;
-	  read_cdtor_const(n, is_ctor, is_dtor, is_const);
-
-	  for (xmlNodePtr p = xmlFirstElementChild(n);
-	       p;
-	       p = xmlNextElementSibling(p))
-	    {
-	      if (function_decl_sptr f =
-		  build_function_decl_if_not_suppressed(rdr, p, decl,
-							/*add_to_cur_sc=*/true,
-							/*add_to_exported_decls=*/false))
-		{
-		  method_decl_sptr m = is_method_decl(f);
-		  ABG_ASSERT(m);
-		  set_member_access_specifier(m, access);
-		  set_member_is_static(m, is_static);
-		  if (is_virtual)
-		    set_member_function_virtuality(m, is_virtual, vtable_offset);
-		  set_member_function_is_ctor(m, is_ctor);
-		  set_member_function_is_dtor(m, is_dtor);
-		  set_member_function_is_const(m, is_const);
-		  rdr.map_xml_node_to_decl(p, m);
-		  rdr.add_fn_to_exported_or_undefined_decls(f.get());
-		  break;
-		}
-	    }
-	}
+	build_member_function_decl(rdr, n, decl,
+				   add_to_current_scope,
+				   /*add_to_exported_decls=*/true);
       else if (xmlStrEqual(n->name, BAD_CAST("member-template")))
 	{
 	  rdr.map_xml_node_to_decl(n, decl);
@@ -6249,8 +6334,6 @@ build_union_decl(reader& rdr,
 		  xml_char_sptr i= XML_NODE_GET_ATTRIBUTE(p, "id");
 		  string id = CHAR_STR(i);
 		  ABG_ASSERT(!id.empty());
-		  rdr.key_type_decl(t, id);
-		  rdr.map_xml_node_to_decl(p, td);
 		}
 	    }
 	}
@@ -6312,39 +6395,9 @@ build_union_decl(reader& rdr,
 	    }
 	}
       else if (xmlStrEqual(n->name, BAD_CAST("member-function")))
-	{
-	  rdr.map_xml_node_to_decl(n, decl);
-
-	  access_specifier access = private_access;
-	  read_access(n, access);
-
-	  bool is_static = false;
-	  read_static(n, is_static);
-
-	  bool is_ctor = false, is_dtor = false, is_const = false;
-	  read_cdtor_const(n, is_ctor, is_dtor, is_const);
-
-	  for (xmlNodePtr p = xmlFirstElementChild(n);
-	       p;
-	       p = xmlNextElementSibling(p))
-	    {
-	      if (function_decl_sptr f =
-		  build_function_decl_if_not_suppressed(rdr, p, decl,
-							/*add_to_cur_sc=*/true,
-							/*add_to_exported_decls=*/false))
-		{
-		  method_decl_sptr m = is_method_decl(f);
-		  ABG_ASSERT(m);
-		  set_member_access_specifier(m, access);
-		  set_member_is_static(m, is_static);
-		  set_member_function_is_ctor(m, is_ctor);
-		  set_member_function_is_dtor(m, is_dtor);
-		  set_member_function_is_const(m, is_const);
-		  rdr.add_fn_to_exported_or_undefined_decls(f.get());
-		  break;
-		}
-	    }
-	}
+	build_member_function_decl(rdr, n, decl,
+				   add_to_current_scope,
+				   /*add_to_exported_decls=*/true);
       else if (xmlStrEqual(n->name, BAD_CAST("member-template")))
 	{
 	  rdr.map_xml_node_to_decl(n, decl);
@@ -6808,7 +6861,7 @@ build_template_parameter(reader&		rdr,
 /// @return a pointer to the newly built type_base upon successful
 /// completion, a null pointer otherwise.
 static type_base_sptr
-build_type(reader&	rdr,
+build_type(reader&		rdr,
 	   const xmlNodePtr	node,
 	   bool		add_to_current_scope)
 {

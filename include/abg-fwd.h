@@ -736,7 +736,7 @@ const scope_decl*
 is_scope_decl(const decl_base*);
 
 scope_decl_sptr
-is_scope_decl(const decl_base_sptr&);
+is_scope_decl(const type_or_decl_base_sptr&);
 
 bool
 is_member_type(const type_base_sptr&);
@@ -1130,7 +1130,10 @@ interned_string
 get_function_type_name(const function_type&, bool internal = false);
 
 interned_string
-get_function_id_or_pretty_representation(const function_decl *fn);
+get_function_symbol_id(const function_decl *fn);
+
+interned_string
+get_function_symbol_id_if_unique(const function_decl *fn);
 
 interned_string
 get_method_type_name(const method_type_sptr&, bool internal = false);
@@ -1644,18 +1647,11 @@ is_unique_type(const type_base_sptr&);
 bool
 is_unique_type(const type_base*);
 
-/// For a given type, return its exemplar type.
-///
-/// For a given type, its exemplar type is either its canonical type
-/// or the canonical type of the definition type of a given
-/// declaration-only type.  If the neither of those two types exist,
-/// then the exemplar type is the given type itself.
-///
-/// @param type the input to consider.
-///
-/// @return the exemplar type.
 type_base*
 get_exemplar_type(const type_base* type);
+
+type_base*
+get_exemplar_type(const type_base_sptr& type);
 
 bool
 function_decl_is_less_than(const function_decl&f, const function_decl &s);

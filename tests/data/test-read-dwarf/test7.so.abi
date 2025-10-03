@@ -53,9 +53,10 @@
         <var-decl name='f' type-id='type-id-10' visibility='default' filepath='/home/ooprala/rh/u/libabigail/tests/data/test-read-dwarf/test7.cc' line='8' column='1'/>
       </data-member>
     </class-decl>
-    <function-decl name='foo' mangled-name='_Z3fooR1S' filepath='/home/ooprala/rh/u/libabigail/tests/data/test-read-dwarf/test7.cc' line='11' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_Z3fooR1S' hash='c4ba3a67b022926a' id='type-id-24'>
+    <function-decl name='foo' type-id='type-id-24' mangled-name='_Z3fooR1S' filepath='/home/ooprala/rh/u/libabigail/tests/data/test-read-dwarf/test7.cc' line='11' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_Z3fooR1S'/>
+    <function-type size-in-bits='64' hash='c4ba3a67b022926a' id='type-id-24'>
       <parameter type-id='type-id-2'/>
       <return type-id='type-id-16'/>
-    </function-decl>
+    </function-type>
   </abi-instr>
 </abi-corpus>

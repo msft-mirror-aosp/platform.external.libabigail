@@ -20,6 +20,7 @@
 // <headers defining libabigail's API go under here>
 #include <memory>
 #include <unordered_set>
+#include <algorithm>
 ABG_BEGIN_EXPORT_DECLARATIONS
 
 #include "abg-hash.h"
@@ -1073,9 +1074,9 @@ struct corpus_diff::priv
   corpus_diff::diff_stats_sptr		diff_stats_;
   bool					sonames_equal_;
   bool					architectures_equal_;
-  string_function_ptr_map		deleted_fns_;
+  istring_functions_set_omap_type	deleted_fns_;
   string_function_ptr_map		suppressed_deleted_fns_;
-  string_function_ptr_map		added_fns_;
+  istring_functions_set_map_type	added_fns_;
   string_function_ptr_map		suppressed_added_fns_;
   string_function_decl_diff_sptr_map	changed_fns_map_;
   function_decl_diff_sptrs_type	changed_fns_;
@@ -1142,6 +1143,12 @@ struct corpus_diff::priv
 
   void
   compare_fns_vars_and_ensure_lookup_tables_populated();
+
+  void
+  add_function_to_deleted_functions(const function_decl* fn);
+
+  void
+  add_function_to_added_functions(const function_decl* fn);
 
   void
   apply_supprs_to_added_removed_fns_vars_unreachable_types();
@@ -1273,7 +1280,10 @@ struct function_decl_diff_comp
   operator()(const function_decl_diff& first,
 	     const function_decl_diff& second)
   {
-    return is_less_than(first, second);
+    function_decl_sptr f = first.first_function_decl();
+    function_decl_sptr s = second.first_function_decl();
+    function_comp comp;
+    return comp(f, s);
   }
 
   /// The actual less than operator.
@@ -1427,6 +1437,29 @@ void
 sort_string_function_ptr_map(const string_function_ptr_map& map,
 			     vector<const function_decl*>& sorted);
 
+/// Sort the instances of function_decl* in a map of strings
+/// associated to sets of function_decl* in a vector.
+///
+/// @tparam StringFunctionsSetMapType the type of map to sort.  It can
+/// ordered or not.
+///
+/// @param map the map to sort.
+///
+/// @param sorted output parameter, the sorted vector.
+template <typename StringFunctionsSetMapType>
+void
+sort_string_functions_set_map(const StringFunctionsSetMapType& map,
+			      vector<const function_decl*>& sorted)
+{
+  sorted.reserve(map.size());
+  for (auto& entry : map)
+    for (auto& fn : entry.second)
+      sorted.push_back(fn);
+
+  function_comp compare;
+  std::sort(sorted.begin(), sorted.end(), compare);
+}
+
 void
 sort_string_member_function_sptr_map(const string_member_function_sptr_map& map,
 				     class_or_union::member_functions& sorted);
@@ -1510,24 +1543,6 @@ get_fn_decl_or_var_decl_diff_ancestor(const diff *);
 bool
 is_diff_of_global_decls(const diff*);
 
-/// Get the identifier of an ABI artifact (either a function or a
-/// variable) that is not supposed to change (too much) when the
-/// artifact changes without being removed.  The concept of "change"
-/// is intentionnaly fuzzy here.
-///
-/// @tparm Artefact the type of the of the artifact.  It's basically
-/// either a function_decl or a var_decl.
-template <class Artefact>
-string
-get_identifier_relevant_across_change(Artefact& artefact)
-{
-  string n = artefact->get_symbol()
-    ? artefact->get_symbol()->get_id_string()
-    : artefact->get_linkage_name();
-  if (n.empty())
-    n = artefact->get_pretty_representation();
-  return n;
-}
 } // end namespace comparison
 
 } // namespace abigail

@@ -47,9 +47,10 @@
       </data-member>
     </class-decl>
     <type-decl name='unsigned long int' size-in-bits='64' hash='8fdc5eea2983a729' id='type-id-6'/>
-    <function-decl name='foo' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='foo' hash='86766259792c2f3c' id='type-id-22'>
+    <function-decl name='foo' type-id='type-id-22' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='foo'/>
+    <function-type size-in-bits='64' hash='86766259792c2f3c' id='type-id-22'>
       <parameter type-id='type-id-2'/>
       <return type-id='type-id-14'/>
-    </function-decl>
+    </function-type>
   </abi-instr>
 </abi-corpus>

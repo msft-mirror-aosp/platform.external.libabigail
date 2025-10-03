@@ -21,16 +21,18 @@
       </data-member>
     </class-decl>
     <pointer-type-def type-id='8581546e' size-in-bits='64' alignment-in-bits='64' id='6e97a70c'/>
-    <function-decl name='bar' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='bar' hash='fa0338db5155d271' id='492db0de'>
-      <parameter type-id='5e30a4f9'/>
-      <return type-id='48b5725f'/>
-    </function-decl>
-    <function-decl name='foo' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='foo' hash='c5821292ef88ca9c' id='6450859d'>
-      <parameter type-id='842ea234'/>
-      <return type-id='48b5725f'/>
-    </function-decl>
+    <function-decl name='bar' type-id='492db0de' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='bar'/>
+    <function-decl name='foo' type-id='6450859d' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='foo'/>
     <typedef-decl name='POINTER' type-id='6e97a70c' size-in-bits='64' alignment-in-bits='64' id='8a34a235'/>
     <type-decl name='void' id='48b5725f'/>
     <pointer-type-def type-id='48b5725f' id='eaa32e2f'/>
+    <function-type size-in-bits='64' hash='c5821292ef88ca9c' id='6450859d'>
+      <parameter type-id='842ea234'/>
+      <return type-id='48b5725f'/>
+    </function-type>
+    <function-type size-in-bits='64' hash='fa0338db5155d271' id='492db0de'>
+      <parameter type-id='5e30a4f9'/>
+      <return type-id='48b5725f'/>
+    </function-type>
   </abi-instr>
 </abi-corpus>

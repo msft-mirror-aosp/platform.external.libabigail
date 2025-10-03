@@ -129,13 +129,15 @@
     <!-- unsigned int -->
     <type-decl name='unsigned int' size-in-bits='32' hash='e66b43f97c38e87a' id='type-id-15'/>
     <!-- void foo(S&) -->
-    <function-decl name='foo' mangled-name='_Z3fooR1S' filepath='/home/dodji/git/libabigail/fixes/tests/data/test-annotate/test-anonymous-members-0.cc' line='30' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_Z3fooR1S' hash='496d27d0376df047' id='type-id-16'>
+    <function-decl name='foo' type-id='type-id-16' mangled-name='_Z3fooR1S' filepath='/home/dodji/git/libabigail/fixes/tests/data/test-annotate/test-anonymous-members-0.cc' line='30' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_Z3fooR1S'/>
+    <!-- void -->
+    <type-decl name='void' id='type-id-17'/>
+    <!-- void (S&) -->
+    <function-type size-in-bits='64' hash='496d27d0376df047' id='type-id-16'>
       <!-- parameter of type 'S&' -->
       <parameter type-id='type-id-2'/>
       <!-- void -->
       <return type-id='type-id-17'/>
-    </function-decl>
-    <!-- void -->
-    <type-decl name='void' id='type-id-17'/>
+    </function-type>
   </abi-instr>
 </abi-corpus>

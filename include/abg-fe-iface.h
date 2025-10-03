@@ -142,7 +142,8 @@ protected:
   should_reuse_type_from_corpus_group();
 
   void
-  add_fn_to_exported_or_undefined_decls(const function_decl* fn);
+  add_fn_to_exported_or_undefined_decls(const function_decl* fn,
+					bool do_update = false);
 
   void
   add_var_to_exported_or_undefined_decls(const var_decl_sptr& var);

@@ -12,7 +12,6 @@
 
 #include <ctype.h>
 #include <libgen.h>
-#include <algorithm>
 #include <sstream>
 #include <set>
 
@@ -9900,6 +9899,43 @@ corpus_diff::priv::clear_lookup_tables()
   changed_vars_map_.clear();
 }
 
+/// Add a @ref function_decl* to the 'deleted_fns_' map in the current
+/// instance of @ref corpus_diff::priv.
+///
+/// @param fn the function to add to the 'deleted_fns_' data member of
+/// @ref corpus_diff::priv.
+void
+corpus_diff::priv::add_function_to_deleted_functions(const function_decl* fn)
+{
+
+  if (!fn)
+    return;
+
+  interned_string id = get_function_symbol_id_if_unique(fn);
+  auto it = deleted_fns_.find(id);
+  if (it == deleted_fns_.end())
+    it = deleted_fns_.emplace(id, functions_set_type()).first;
+  it->second.insert(fn);
+}
+
+/// Add a @ref function_decl* to the 'added_fns_' map in the current
+/// instance of @ref corpus_diff::priv.
+///
+/// @param fn the function to add to the 'added_fns_' data member of
+/// @ref corpus_diff::priv.
+void
+corpus_diff::priv::add_function_to_added_functions(const function_decl* fn)
+{
+  if (!fn)
+    return;
+
+  interned_string id = get_function_symbol_id_if_unique(fn);
+  auto it = added_fns_.find(id);
+  if (it == added_fns_.end())
+    it = added_fns_.emplace(id, functions_set_type()).first;
+  it->second.insert(fn);
+}
+
 /// If the lookup tables are not yet built, walk the differences and
 /// fill the lookup tables.
 void
@@ -9918,14 +9954,14 @@ corpus_diff::priv::compare_fns_vars_and_ensure_lookup_tables_populated()
     first_fns_map.reserve(first_->get_functions().size());
     for (const auto* fn : first_->get_functions())
       {
-	string n = get_identifier_relevant_across_change(fn);
+	string n = get_function_symbol_id_if_unique(fn);
 	ABG_ASSERT(!n.empty());
 	first_fns_map[n] = fn;
       }
 
     for (const auto* fn : second_->get_functions())
       {
-	string n = get_identifier_relevant_across_change(fn);
+	string n = get_function_symbol_id_if_unique(fn);
 	ABG_ASSERT(!n.empty());
 	auto j = first_fns_map.find(n);
 	if (j != first_fns_map.end())
@@ -9943,12 +9979,13 @@ corpus_diff::priv::compare_fns_vars_and_ensure_lookup_tables_populated()
 	    first_fns_map.erase(j);
 	  }
 	else
-	  added_fns_[n] = fn;
+	  add_function_to_added_functions(fn);
       }
+
 
     // Remaining entries in first_fns_map are deleted functions.
     for (const auto& entry : first_fns_map)
-      deleted_fns_[entry.first] = entry.second;
+      add_function_to_deleted_functions(entry.second);
 
     sort_string_function_decl_diff_sptr_map(changed_fns_map_, changed_fns_);
 
@@ -9956,46 +9993,75 @@ corpus_diff::priv::compare_fns_vars_and_ensure_lookup_tables_populated()
     // underlying symbols are deleted as well; otherwise, consider
     // that the function in question hasn't been deleted.
 
-    vector<string> to_delete;
-    for (string_function_ptr_map::const_iterator i = deleted_fns_.begin();
-	 i != deleted_fns_.end();
-	 ++i)
-      if (second_->lookup_function_symbol(*i->second->get_symbol()))
-	to_delete.push_back(i->first);
+    vector<interned_string> to_delete;
+    for (auto& entry : deleted_fns_)
+      {
+	// If the entry describing a deleted function designated by a
+	// function ID has at least one associated function then let's
+	// see if the associated ELF symbol is present in the second
+	// corpus.  If it is, then the entry should be removed as the
+	// function is not removed from the corpus.  Let's schedule
+	// the entry for removal then.
+	bool do_delete = entry.second.empty();
+	for (auto fn : entry.second)
+	  if (second_->lookup_function_symbol(*fn->get_symbol()))
+	    {
+	      do_delete = true;
+	      break;
+	    }
 
-    for (vector<string>::const_iterator i = to_delete.begin();
-	 i != to_delete.end();
-	 ++i)
+	if (do_delete)
+	  to_delete.push_back(entry.first);
+      }
+
+    for (auto i = to_delete.begin(); i != to_delete.end(); ++i)
       deleted_fns_.erase(*i);
 
     // Do something similar for added functions.
-
     to_delete.clear();
-    for (string_function_ptr_map::const_iterator i = added_fns_.begin();
-	 i != added_fns_.end();
-	 ++i)
+    for (auto& entry : added_fns_)
       {
-	if (first_->lookup_function_symbol(*i->second->get_symbol()))
-	  to_delete.push_back(i->first);
-	else if (! i->second->get_symbol()->get_version().is_empty()
-		 && i->second->get_symbol()->get_version().is_default())
-	  // We are looking for a symbol that has a default version,
-	  // and which seems to be newly added.  Let's see if the same
-	  // symbol with *no* version was already present in the
-	  // former corpus.  If yes, then the symbol shouldn't be
-	  // considered as 'added'.
+	bool do_delete = entry.second.empty();
+	for (auto f : entry.second)
+	  if (first_->lookup_function_symbol(*f->get_symbol()))
+	    {
+	      do_delete = true;
+	      break;
+	    }
+
+	if (do_delete)
+	  to_delete.push_back(entry.first);
+	else
 	  {
-	    elf_symbol::version empty_version;
-	    if (first_->lookup_function_symbol(i->second->get_symbol()->get_name(),
-					       empty_version))
-	      to_delete.push_back(i->first);
+	    if (!entry.second.empty())
+	      {
+		const function_decl* f = *entry.second.begin();
+		if (!f->get_symbol()->get_version().is_empty()
+		    && f->get_symbol()->get_version().is_default())
+		  // We are looking for a symbol that has a default version,
+		  // and which seems to be newly added.  Let's see if the same
+		  // symbol with *no* version was already present in the
+		  // former corpus.  If yes, then the symbol shouldn't be
+		  // considered as 'added'.
+		  {
+		    const string& sym_name = f->get_symbol()->get_name();
+		    elf_symbol::version empty_version;
+		    if (first_->lookup_function_symbol(sym_name,
+						       empty_version))
+		      // The ELF symbol of the 'added function' was
+		      // already present in the first corpus.  So
+		      // let's schedule the removal the added function
+		      // from the set of added functions.
+		      to_delete.push_back(entry.first);
+		  }
+	      }
 	  }
       }
 
-    for (vector<string>::const_iterator i = to_delete.begin();
-	 i != to_delete.end();
-	 ++i)
-      added_fns_.erase(*i);
+    // Let's remove the added functions that have been scheduled for
+    // removal.
+    for (auto& s : to_delete)
+      added_fns_.erase(s);
   }
 
   // Use hash-based set difference to classify variables as
@@ -10006,7 +10072,7 @@ corpus_diff::priv::compare_fns_vars_and_ensure_lookup_tables_populated()
     first_vars_map.reserve(first_->get_variables().size());
     for (const auto& var : first_->get_variables())
       {
-	string n = get_identifier_relevant_across_change(var);
+	string n = var->get_id();
 	ABG_ASSERT(!n.empty());
 	// Keep only the first instance of duplicate IDs (static
 	// member variables from multiple translation units).
@@ -10019,7 +10085,7 @@ corpus_diff::priv::compare_fns_vars_and_ensure_lookup_tables_populated()
 
     for (const auto& var : second_->get_variables())
       {
-	string n = get_identifier_relevant_across_change(var);
+	string n = var->get_id();
 	ABG_ASSERT(!n.empty());
 	auto j = first_vars_map.find(n);
 	if (j != first_vars_map.end())
@@ -10390,22 +10456,18 @@ corpus_diff::priv::apply_supprs_to_added_removed_fns_vars_unreachable_types()
       if (function_suppression_sptr fn_suppr = is_function_suppression(*i))
 	{
 	  // Added functions
-	  for (string_function_ptr_map::const_iterator e = added_fns_.begin();
-	       e != added_fns_.end();
-	       ++e)
-	    if (function_is_suppressed(e->second, fn_suppr,
+	  for (auto& entry : added_fns_)
+	    if (function_is_suppressed(*entry.second.begin(), fn_suppr,
 				       function_suppression::ADDED_FUNCTION_CHANGE_KIND,
 				       ctxt))
-	      suppressed_added_fns_[e->first] = e->second;
+	      suppressed_added_fns_[entry.first] = *entry.second.begin();
 
 	  // Deleted functions.
-	  for (string_function_ptr_map::const_iterator e = deleted_fns_.begin();
-	       e != deleted_fns_.end();
-	       ++e)
-	    if (function_is_suppressed(e->second, fn_suppr,
+	  for (auto& entry : deleted_fns_)
+	    if (function_is_suppressed(*entry.second.begin(), fn_suppr,
 				       function_suppression::DELETED_FUNCTION_CHANGE_KIND,
 				       ctxt))
-	      suppressed_deleted_fns_[e->first] = e->second;
+	      suppressed_deleted_fns_[entry.first] = *entry.second.begin();
 
 	  // Added function symbols not referenced by any debug info
 	  for (string_elf_symbol_map::const_iterator e =
@@ -10433,33 +10495,33 @@ corpus_diff::priv::apply_supprs_to_added_removed_fns_vars_unreachable_types()
       else if (type_suppression_sptr type_suppr = is_type_suppression(*i))
 	{
 	  // Added virtual functions
-	  for (string_function_ptr_map::const_iterator e = added_fns_.begin();
-	       e != added_fns_.end();
-	       ++e)
-	    if (is_member_function(e->second)
-		&& get_member_function_is_virtual(e->second))
-	      {
-		const function_decl *f = e->second;
-		class_decl_sptr c =
-		  is_class_type(is_method_type(f->get_type())->get_class_type());
-		ABG_ASSERT(c);
-		if (type_suppr->suppresses_type(c, ctxt))
-		  suppressed_added_fns_[e->first] = e->second;
-	      }
+	  for (auto& entry : added_fns_)
+	    {
+	      const function_decl* f = *entry.second.begin();
+	      if (is_member_function(f)
+		  && get_member_function_is_virtual(f))
+		{
+		  class_decl_sptr c =
+		    is_class_type(is_method_type(f->get_type())->get_class_type());
+		  ABG_ASSERT(c);
+		  if (type_suppr->suppresses_type(c, ctxt))
+		    suppressed_added_fns_[entry.first] = f;
+		}
+	    }
 	  // Deleted virtual functions
-	  for (string_function_ptr_map::const_iterator e = deleted_fns_.begin();
-	       e != deleted_fns_.end();
-	       ++e)
-	    if (is_member_function(e->second)
-		&& get_member_function_is_virtual(e->second))
-	      {
-		const function_decl *f = e->second;
-		class_decl_sptr c =
-		  is_class_type(is_method_type(f->get_type())->get_class_type());
-		ABG_ASSERT(c);
-		if (type_suppr->suppresses_type(c, ctxt))
-		  suppressed_deleted_fns_[e->first] = e->second;
-	      }
+	  for (auto& entry : deleted_fns_)
+	    {
+	      const function_decl* f = *entry.second.begin();
+	      if (is_member_function(f)
+		  && get_member_function_is_virtual(f))
+		{
+		  class_decl_sptr c =
+		    is_class_type(is_method_type(f->get_type())->get_class_type());
+		  ABG_ASSERT(c);
+		  if (type_suppr->suppresses_type(c, ctxt))
+		    suppressed_deleted_fns_[entry.first] = f;
+		}
+	    }
 
 	  // Apply this type suppression to deleted types
 	  // non-reachable from a public interface.
@@ -10537,7 +10599,7 @@ corpus_diff::priv::deleted_function_is_suppressed(const function_decl* fn) const
   if (!fn)
     return false;
 
-  string n = get_identifier_relevant_across_change(fn);
+  string n = get_function_symbol_id_if_unique(fn);
   string_function_ptr_map::const_iterator i =
     suppressed_deleted_fns_.find(n);
 
@@ -10601,7 +10663,7 @@ corpus_diff::priv::added_function_is_suppressed(const function_decl* fn) const
   if (!fn)
     return false;
 
-  string n = get_identifier_relevant_across_change(fn);
+  string n = get_function_symbol_id_if_unique(fn);
   string_function_ptr_map::const_iterator i =
     suppressed_added_fns_.find(n);
 
@@ -10621,7 +10683,7 @@ corpus_diff::priv::deleted_variable_is_suppressed(const var_decl_sptr& var) cons
   if (!var)
     return false;
 
-  string n = get_identifier_relevant_across_change(var);
+  string n = var->get_id();
   string_var_ptr_map::const_iterator i =
     suppressed_deleted_vars_.find(n);
 
@@ -10641,7 +10703,7 @@ corpus_diff::priv::added_variable_is_suppressed(const var_decl_sptr& var) const
   if (!var)
     return false;
 
-  string n = get_identifier_relevant_across_change(var);
+  string n = var->get_id();
   string_var_ptr_map::const_iterator i =
     suppressed_added_vars_.find(n);
 
@@ -10962,9 +11024,6 @@ corpus_diff::priv::apply_filters_and_compute_diff_stats(diff_stats& stat)
       // filters
       for (auto& diff : changed_unreachable_types_sorted())
 	ctxt->maybe_apply_filters(diff);
-
-      for (auto& entry : changed_unreachable_types())
-	ctxt->maybe_apply_filters(entry.second);
 
       if (get_context()->do_log())
 	{
@@ -11736,14 +11795,14 @@ corpus_diff::architecture_changed() const
 /// Getter for the deleted functions of the diff.
 ///
 /// @return the the deleted functions of the diff.
-const string_function_ptr_map&
+const istring_functions_set_omap_type&
 corpus_diff::deleted_functions() const
 {return priv_->deleted_fns_;}
 
 /// Getter for the added functions of the diff.
 ///
 /// @return the added functions of the diff.
-const string_function_ptr_map&
+const istring_functions_set_map_type&
 corpus_diff::added_functions()
 {return priv_->added_fns_;}
 

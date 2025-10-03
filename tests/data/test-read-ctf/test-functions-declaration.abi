@@ -7,18 +7,16 @@
     <type-decl name='int' size-in-bits='32' hash='09d17c08f594edc7' id='type-id-1'/>
     <type-decl name='long int' size-in-bits='64' hash='b119fe0931d2ee10#2' id='type-id-2'/>
     <pointer-type-def type-id='type-id-3' size-in-bits='64' alignment-in-bits='64' hash='d125197fd9fb707c' id='type-id-4'/>
-    <function-decl name='attribute_container_add_device' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='attribute_container_add_device' hash='225bda74fa3d80b9' id='type-id-5'>
-      <parameter type-id='type-id-4'/>
-      <return type-id='type-id-6'/>
-    </function-decl>
-    <function-decl name='attribute_container_device_trigger' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='attribute_container_device_trigger' hash='225bda74fa3d80b9' id='type-id-5'>
-      <parameter type-id='type-id-4'/>
-      <return type-id='type-id-6'/>
-    </function-decl>
+    <function-decl name='attribute_container_add_device' type-id='type-id-5' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='attribute_container_add_device'/>
+    <function-decl name='attribute_container_device_trigger' type-id='type-id-5' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='attribute_container_device_trigger'/>
     <type-decl name='void' id='type-id-6'/>
     <function-type size-in-bits='64' hash='c62f1f6f1aa640e5' id='type-id-3'>
       <parameter type-id='type-id-1'/>
       <parameter type-id='type-id-2'/>
+      <return type-id='type-id-6'/>
+    </function-type>
+    <function-type size-in-bits='64' hash='225bda74fa3d80b9' id='type-id-5'>
+      <parameter type-id='type-id-4'/>
       <return type-id='type-id-6'/>
     </function-type>
   </abi-instr>

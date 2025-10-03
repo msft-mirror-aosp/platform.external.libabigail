@@ -3766,7 +3766,7 @@ public:
 
     interned_string id = corp->get_environment().intern(fn->get_id_string());
 
-    const std::unordered_set<function_decl*> *fns = corp->lookup_functions(id);
+    const std::unordered_set<const function_decl*> *fns = corp->lookup_functions(id);
     if (!fns)
       return false;
 
@@ -12303,8 +12303,6 @@ build_function_type(reader&			rdr,
 
   result->set_parameters(function_parms);
 
-  tu->bind_function_type_life_time(result);
-
   result->set_is_artificial(true);
 
   {
@@ -12314,7 +12312,6 @@ build_function_type(reader&			rdr,
       rdr.die_wip_function_types_map().erase(i);
   }
 
-  maybe_canonicalize_type(result, rdr);
   return result;
 }
 
@@ -13018,13 +13015,13 @@ build_or_get_fn_decl_if_not_suppressed(reader&			rdr,
 				       function_decl_sptr	result)
 {
   if (!die_is_function_decl(fn_die))
-    return result;
+    return nullptr;
 
   function_decl_sptr fn;
   if (function_is_suppressed(rdr, scope, fn_die, is_declaration_only))
     {
       ++rdr.stats_.number_of_suppressed_functions;
-      return fn;
+      return nullptr;
     }
 
   string name = die_name(fn_die);
@@ -13043,7 +13040,7 @@ build_or_get_fn_decl_if_not_suppressed(reader&			rdr,
   if (!rdr.function_has_address(fn_die)
       && !is_member_function
       && !rdr.is_decl_die_with_undefined_symbol(fn_die))
-    return fn;
+    return nullptr;
 
   // If we've already built an IR for a function with the same
   // signature (from another DIE), reuse it, unless that function is a
@@ -13433,8 +13430,6 @@ build_function_decl(reader&		rdr,
       if (!fn_type)
 	return result;
 
-      maybe_canonicalize_type(fn_type, rdr);
-
       // The building of the function type might have created this
       // function_decl.  If that is the case, return it.
       if ((result = is_function_decl(rdr.lookup_decl_from_die_addr(die->addr))))
@@ -13452,7 +13447,7 @@ build_function_decl(reader&		rdr,
 				       flinkage_name));
 
       // Add the types that might be used by the ABI (parameters or
-      // return type) of the function and are declared rgit diffight before
+      // return type) of the function and are declared right before
       // the function itself into the scope of the type.
       for (const auto& decl : decls)
 	add_decl_to_scope(decl, result);
@@ -13943,6 +13938,8 @@ build_ir_node_from_die(reader&		rdr,
 	  {
 	    result = f;
 	    result->set_is_artificial(false);
+	    translation_unit_sptr tu = rdr.cur_transl_unit();
+	    tu->bind_function_type_life_time(f);
 	    maybe_canonicalize_type(f, rdr);
 	  }
       }
@@ -14168,9 +14165,11 @@ build_ir_node_from_die(reader&		rdr,
 	      // Among member functions, only those with public ELF
 	      // symbols are added to the set of functions exported by
 	      // the current ABI corpus.
-	      rdr.add_fn_to_exported_or_undefined_decls(fn.get());
+	      rdr.add_fn_to_exported_or_undefined_decls(fn.get(), /*update=*/true);
 	    rdr.associate_die_to_decl(die, fn);
 	    maybe_canonicalize_type(fn->get_type(), rdr);
+	    translation_unit_sptr tu = rdr.cur_transl_unit();
+	    tu->bind_function_type_life_time(fn->get_type());
 	  }
 
 	rdr.scope_stack().pop();

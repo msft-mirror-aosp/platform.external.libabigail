@@ -34,12 +34,7 @@
     <class-decl name='B' is-struct='yes' visibility='default' size-in-bits='8' filepath='/home/skumari/Tasks/source_repo/dodji/libabigail/tests/data/test-read-dwarf/test6.cc' line='9' column='1' hash='f395800fc5ce683f' id='type-id-1'>
       <member-function access='public'>
         <!-- int B::foo() -->
-        <function-decl name='foo' mangled-name='_ZN1B3fooEv' filepath='/home/skumari/Tasks/source_repo/dodji/libabigail/tests/data/test-read-dwarf/test6.cc' line='11' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZN1B3fooEv' hash='388da3fa973fde78' id='type-id-5'>
-          <!-- implicit parameter of type 'B*' -->
-          <parameter type-id='type-id-2' is-artificial='yes'/>
-          <!-- int -->
-          <return type-id='type-id-4'/>
-        </function-decl>
+        <function-decl name='foo' type-id='type-id-5' mangled-name='_ZN1B3fooEv' filepath='/home/skumari/Tasks/source_repo/dodji/libabigail/tests/data/test-read-dwarf/test6.cc' line='11' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZN1B3fooEv'/>
       </member-function>
     </class-decl>
     <!-- struct C<int> -->
@@ -50,14 +45,20 @@
       </data-member>
     </class-decl>
     <!-- int bar() -->
-    <function-decl name='bar' mangled-name='_Z3barv' filepath='/home/skumari/Tasks/source_repo/dodji/libabigail/tests/data/test-read-dwarf/test6.cc' line='19' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_Z3barv' hash='388da3fa973fde78' id='type-id-7'>
-      <!-- int -->
-      <return type-id='type-id-4'/>
-    </function-decl>
+    <function-decl name='bar' type-id='type-id-7' mangled-name='_Z3barv' filepath='/home/skumari/Tasks/source_repo/dodji/libabigail/tests/data/test-read-dwarf/test6.cc' line='19' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_Z3barv'/>
     <!-- int bleh() -->
-    <function-decl name='bleh' mangled-name='_Z4blehv' filepath='/home/skumari/Tasks/source_repo/dodji/libabigail/tests/data/test-read-dwarf/test6.cc' line='34' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_Z4blehv' hash='388da3fa973fde78' id='type-id-7'>
+    <function-decl name='bleh' type-id='type-id-7' mangled-name='_Z4blehv' filepath='/home/skumari/Tasks/source_repo/dodji/libabigail/tests/data/test-read-dwarf/test6.cc' line='34' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_Z4blehv'/>
+    <!-- int (void) -->
+    <function-type size-in-bits='64' hash='388da3fa973fde78' id='type-id-7'>
       <!-- int -->
       <return type-id='type-id-4'/>
-    </function-decl>
+    </function-type>
+    <!-- int (B::*) () -->
+    <function-type method-class-id='type-id-1' size-in-bits='64' hash='388da3fa973fde78' id='type-id-5'>
+      <!-- implicit parameter of type 'B*' -->
+      <parameter type-id='type-id-2' is-artificial='yes'/>
+      <!-- int -->
+      <return type-id='type-id-4'/>
+    </function-type>
   </abi-instr>
 </abi-corpus>

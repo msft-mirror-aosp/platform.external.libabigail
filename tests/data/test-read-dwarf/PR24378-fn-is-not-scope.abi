@@ -9,10 +9,7 @@
     <typedef-decl name='Callback_t' type-id='type-id-3' size-in-bits='64' filepath='/remote/users/lstacul/dwarf_bug.cpp' line='3' column='1' hash='fd7a63c0c6c822c4' id='type-id-5'/>
     <pointer-type-def type-id='type-id-6' size-in-bits='64' hash='fd7a63c0c6c822c4' id='type-id-7'/>
     <namespace-decl name='stac'>
-      <function-decl name='buggy_function' mangled-name='_ZN4stac14buggy_functionEPFvPFfiiEE' filepath='/remote/users/lstacul/dwarf_bug.cpp' line='10' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZN4stac14buggy_functionEPFvPFfiiEE' hash='5695f5ce05a4c55f' id='type-id-8'>
-        <parameter type-id='type-id-7'/>
-        <return type-id='type-id-9'/>
-      </function-decl>
+      <function-decl name='buggy_function' type-id='type-id-8' mangled-name='_ZN4stac14buggy_functionEPFvPFfiiEE' filepath='/remote/users/lstacul/dwarf_bug.cpp' line='10' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZN4stac14buggy_functionEPFvPFfiiEE'/>
     </namespace-decl>
     <type-decl name='void' id='type-id-9'/>
     <function-type size-in-bits='64' hash='c2df35cb0de2616d' id='type-id-2'>
@@ -22,6 +19,10 @@
     </function-type>
     <function-type size-in-bits='64' hash='5695f5ce05a4c55f' id='type-id-6'>
       <parameter type-id='type-id-5'/>
+      <return type-id='type-id-9'/>
+    </function-type>
+    <function-type size-in-bits='64' hash='5695f5ce05a4c55f' id='type-id-8'>
+      <parameter type-id='type-id-7'/>
       <return type-id='type-id-9'/>
     </function-type>
   </abi-instr>

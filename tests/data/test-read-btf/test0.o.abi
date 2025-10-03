@@ -77,10 +77,11 @@
     <qualified-type-def type-id='type-id-15' volatile='yes' hash='4323a933d6d5b8ee' id='type-id-34'/>
     <pointer-type-def type-id='type-id-34' size-in-bits='64' hash='fea7cd23d606c9a5' id='type-id-28'/>
     <var-decl name='foos' type-id='type-id-24' mangled-name='foos' visibility='default' elf-symbol-id='foos'/>
-    <function-decl name='fn0' mangled-name='fn0' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='fn0' hash='0dcec1c3e8967b0f' id='type-id-35'>
+    <function-decl name='fn0' type-id='type-id-35' mangled-name='fn0' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='fn0'/>
+    <type-decl name='void' id='type-id-36'/>
+    <function-type size-in-bits='64' hash='0dcec1c3e8967b0f' id='type-id-35'>
       <parameter type-id='type-id-8' name='p'/>
       <return type-id='type-id-36'/>
-    </function-decl>
-    <type-decl name='void' id='type-id-36'/>
+    </function-type>
   </abi-instr>
 </abi-corpus>

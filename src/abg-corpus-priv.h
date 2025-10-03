@@ -50,7 +50,7 @@ str_fn_ptr_set_map_type;
 /// Convenience typedef for a hash map which key is an interned_string
 /// and which data is a set of abigail::ir::function_decl*
 typedef unordered_map<interned_string,
-		      std::unordered_set<function_decl*>,
+		      std::unordered_set<const function_decl*>,
 		      hash_interned_string> istr_fn_ptr_set_map_type;
 
 /// Convenience typedef for a hash map which key is a string and
@@ -289,7 +289,7 @@ public:
   ///
   /// @return the pointer to the vector of functions with ID @p fn_id,
   /// or nil if no function with that ID exists.
-  std::unordered_set<function_decl*>*
+  std::unordered_set<const function_decl*>*
   fn_id_is_in_id_fns_map(const interned_string& fn_id)
   {
     istr_fn_ptr_set_map_type& m = id_fns_map();
@@ -299,8 +299,8 @@ public:
     return &i->second;
   }
 
-  /// Test if a a function if the same ID as a given function is
-  /// present in the id-functions map.
+  /// Test if a function of the same ID as a given function is present
+  /// in the id-functions map.
   ///
   /// @param fn the function to consider.
   ///
@@ -308,10 +308,10 @@ public:
   /// @p fn, that are present in the id-functions map, or nil if no
   /// function with the same ID as @p fn is present in the
   /// id-functions map.
-  std::unordered_set<function_decl*>*
+  std::unordered_set<const function_decl*>*
   fn_id_is_in_id_fns_map(const function_decl* fn)
   {
-    interned_string fn_id = fn->get_id();
+    interned_string fn_id = get_function_symbol_id(fn);
     return fn_id_is_in_id_fns_map(fn_id);
   }
 
@@ -324,8 +324,8 @@ public:
   ///
   /// @parm fns the set of functions to consider.
   static bool
-  fn_is_in_fns(function_decl* fn,
-	       const std::unordered_set<function_decl*>& fns)
+  fn_is_in_fns(const function_decl* fn,
+	       const std::unordered_set<const function_decl*>& fns)
   {
     if (fns.empty())
       return false;
@@ -360,8 +360,8 @@ public:
   ///
   /// @return true if @p fn is present in @p fns.
   static bool
-  fn_is_in_fns_by_repr(function_decl* fn,
-		       const std::unordered_set<function_decl*>& fns,
+  fn_is_in_fns_by_repr(const function_decl* fn,
+		       const std::unordered_set<const function_decl*>& fns,
 		       string& pretty_representation)
   {
     if (!fn_is_in_fns(fn, fns))
@@ -388,7 +388,7 @@ public:
   bool
   fn_is_in_id_fns_map(function_decl* fn)
   {
-    std::unordered_set<function_decl*>* fns = fn_id_is_in_id_fns_map(fn);
+    std::unordered_set<const function_decl*>* fns = fn_id_is_in_id_fns_map(fn);
     if (fns && fn_is_in_fns(fn, *fns))
       return true;
     return false;
@@ -408,9 +408,9 @@ public:
     if (!fn)
       return;
 
-    std::unordered_set<function_decl*>* fns = fn_id_is_in_id_fns_map(fn_id);
+    std::unordered_set<const function_decl*>* fns = fn_id_is_in_id_fns_map(fn_id);
     if (!fns)
-      fns = &(id_fns_map()[fn_id] = std::unordered_set<function_decl*>());
+      fns = &(id_fns_map()[fn_id] = std::unordered_set<const function_decl*>());
     fns->insert(fn);
   }
 
@@ -559,11 +559,18 @@ public:
 
   /// Add a function to the set of exported functions.
   ///
+  /// The function is added if it's not already present in the
+  /// id-functions map.
+  ///
   /// @param fn the function to add to the set of exported functions.
+  ///
+  /// @param do_update if true then add the function is added
+  /// unconditionnaly, even if a function with the same ID was already
+  /// present in the map.
   void
-  add_fn_to_exported(function_decl* fn)
+  add_fn_to_exported(function_decl* fn, bool do_update = false)
   {
-    if (!fn_is_in_id_fns_map(fn))
+    if (do_update || !fn_is_in_id_fns_map(fn))
       {
 	fns_.push_back(fn);
 	add_fn_to_id_fns_map(fn);
@@ -928,8 +935,11 @@ public:
   unordered_set<interned_string, hash_interned_string>*
   get_public_types_pretty_representations();
 
-  std::unordered_set<function_decl*>*
+  const std::unordered_set<const function_decl*>*
   lookup_functions(const interned_string& id);
+
+  void
+  remove_redundant_functions();
 
   ~priv();
 }; // end struct corpus::priv

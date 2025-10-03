@@ -27,6 +27,13 @@ Invocation
 Options
 =======
 
+  * ``--abidiff``
+
+    Perform an ABI comparison between the internal representation
+    against the input ABIXML and the internal representation of the
+    file saved to disk and read back into memory.  The result of the
+    comparison should be the empty set, unless Libabigail has a bug.
+
   * ``--annotate``
 
     Annotate the ABIXML output with comments above most elements.  The

@@ -53,13 +53,15 @@
     </union-decl>
     <type-decl name='unsigned int' size-in-bits='32' hash='e66b43f97c38e87a' id='type-id-14'/>
     <type-decl name='unsigned short int' size-in-bits='16' hash='d7723bb93a30b11d#2' id='type-id-12'/>
-    <function-decl name='testexport' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='testexport' hash='388da3fa973fde78' id='type-id-17'>
-      <return type-id='type-id-1'/>
-    </function-decl>
-    <function-decl name='testexport2' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='testexport2' hash='4cd0947b0a677714' id='type-id-18'>
+    <function-decl name='testexport' type-id='type-id-17' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='testexport'/>
+    <function-decl name='testexport2' type-id='type-id-18' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='testexport2'/>
+    <var-decl name='global_sym' type-id='type-id-1' mangled-name='global_sym' visibility='default' elf-symbol-id='global_sym'/>
+    <function-type size-in-bits='64' hash='4cd0947b0a677714' id='type-id-18'>
       <parameter type-id='type-id-3'/>
       <return type-id='type-id-1'/>
-    </function-decl>
-    <var-decl name='global_sym' type-id='type-id-1' mangled-name='global_sym' visibility='default' elf-symbol-id='global_sym'/>
+    </function-type>
+    <function-type size-in-bits='64' hash='388da3fa973fde78' id='type-id-17'>
+      <return type-id='type-id-1'/>
+    </function-type>
   </abi-instr>
 </abi-corpus>

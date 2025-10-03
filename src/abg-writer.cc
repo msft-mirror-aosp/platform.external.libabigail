@@ -245,8 +245,9 @@ class write_context
   class_tmpl_shared_ptr_map		m_class_tmpl_id_map;
   string_elf_symbol_sptr_map_type	m_fun_symbol_map;
   string_elf_symbol_sptr_map_type	m_var_symbol_map;
-  unordered_set<interned_string, hash_interned_string>	m_emitted_decls_set;
-  unordered_set<string>				m_emitted_corpora_set;
+  vars_set_type			m_emitted_var_decls_set;
+  functions_set_type			m_emitted_function_decls_set;
+  unordered_set<string>		m_emitted_corpora_set;
 
   write_context();
 
@@ -591,9 +592,13 @@ public:
   {
     for (const auto t : get_referenced_types())
       if (!type_is_emitted(t))
-	  return false;
+	  return true;
 
-    return true;
+    for (const auto t : get_referenced_function_types())
+      if (!type_is_emitted(t))
+	return true;
+
+    return false;
   }
 
   /// Record a given type as being referenced by a pointer, a
@@ -631,6 +636,27 @@ public:
       return m_referenced_types_set.find(t) != m_referenced_types_set.end();
   }
 
+  /// Sort the content of a set of type pointers into a vector.
+  ///
+  /// The pointers are sorted by using their string representation as
+  /// the key to sort, lexicographically.
+  ///
+  /// @param types the map to sort.
+  ///
+  /// @param sorted the resulted sorted vector.  It's set by this
+  /// function with the result of the sorting.
+  void
+  sort_types(type_ptr_set_type& types, vector<type_base*>& sorted)
+  {
+    string id;
+    for (type_ptr_set_type::const_iterator i = types.begin();
+	 i != types.end();
+	 ++i)
+      sorted.push_back(const_cast<type_base*>(*i));
+    type_topo_comp comp;
+    sort(sorted.begin(), sorted.end(), comp);
+  }
+
   /// Sort the content of a map of type pointers into a vector.
   ///
   /// The pointers are sorted by using their string representation as
@@ -641,14 +667,11 @@ public:
   /// @param sorted the resulted sorted vector.  It's set by this
   /// function with the result of the sorting.
   void
-  sort_types(type_ptr_set_type& types,
-	     vector<type_base*>& sorted)
+  sort_types(const type_sptr_set_type& types, vector<type_base_sptr>& sorted)
   {
     string id;
-    for (type_ptr_set_type::const_iterator i = types.begin();
-	 i != types.end();
-	 ++i)
-      sorted.push_back(const_cast<type_base*>(*i));
+    for (auto& type : types)
+      sorted.push_back(type);
     type_topo_comp comp;
     sort(sorted.begin(), sorted.end(), comp);
   }
@@ -745,9 +768,7 @@ public:
   bool
   decl_is_emitted(const decl_base& decl) const
   {
-    string repr = decl.get_pretty_representation(true);
-    interned_string irepr = decl.get_environment().intern(repr);
-    return m_emitted_decls_set.find(irepr) != m_emitted_decls_set.end();
+    return decl_is_emitted(&decl);
   }
 
   /// Test if a given decl has been written out to the XML output.
@@ -759,9 +780,14 @@ public:
   bool
   decl_is_emitted(const decl_base* decl) const
   {
-    if (!decl)
-      return false;
-    return decl_is_emitted(*decl);
+    bool result = false;
+    if (const var_decl *var = is_var_decl(decl))
+      result = (m_emitted_var_decls_set.find(var)
+		!= m_emitted_var_decls_set.end());
+    else if (function_decl *fn = is_function_decl(decl))
+      result = (m_emitted_function_decls_set.find(fn)
+		!= m_emitted_function_decls_set.end());
+    return result;
   }
 
   /// Test if a given decl has been written out to the XML output.
@@ -773,10 +799,7 @@ public:
   bool
   decl_is_emitted(const decl_base_sptr& decl) const
   {
-    ABG_ASSERT(!is_type(decl));
-    string repr = get_pretty_representation(decl, true);
-    interned_string irepr = decl->get_environment().intern(repr);
-    return m_emitted_decls_set.find(irepr) != m_emitted_decls_set.end();
+    return decl_is_emitted(decl.get());
   }
 
   /// Record a declaration as emitted in the abixml output.
@@ -785,13 +808,12 @@ public:
   void
   record_decl_as_emitted(const decl_base_sptr& decl)
   {
-    string repr = get_pretty_representation(decl, true);
-    interned_string irepr = decl->get_environment().intern(repr);
-    m_emitted_decls_set.insert(irepr);
-
-    if (function_decl_sptr fn_decl = is_function_decl(decl))
-      // Record the type of the function we emitted.
-      record_type_as_emitted(fn_decl->get_type());
+    if (var_decl_sptr var = is_var_decl(decl))
+      m_emitted_var_decls_set.insert(var.get());
+    else if (function_decl_sptr fn = is_function_decl(decl))
+      m_emitted_function_decls_set.insert(fn.get());
+    else
+      ABG_ASSERT_NOT_REACHED;
   }
 
   /// Test if a corpus has already been emitted.
@@ -929,8 +951,7 @@ static void write_fn_parm_and_return_types(const function_type_sptr& fun_type,
 					   unsigned indent);
 static void write_function_member_decls(const function_decl_sptr& decl,
 					write_context& ctxt, unsigned indent);
-static bool write_function_decl(const function_decl_sptr&,
-				write_context&, bool, unsigned);
+static bool write_function_decl(const function_decl_sptr&, write_context&, unsigned);
 static bool write_function_type(const function_type_sptr&,
 				write_context&, unsigned);
 static bool write_member_type_opening_tag(const type_base_sptr&,
@@ -1993,7 +2014,11 @@ write_common_type_info(const type_base_sptr& t,
 
 /// Helper to serialize a type artifact.
 ///
-/// @param type the type to serialize.
+/// The function actually serializes the canonical type of the type
+/// artifact.  It's the ultimate way to de-duplicate the resulting
+/// ABIXML.
+///
+/// @param t the type to serialize.
 ///
 /// @param ctxt the @ref write_context to use.
 ///
@@ -2001,8 +2026,10 @@ write_common_type_info(const type_base_sptr& t,
 ///
 /// @return true upon successful completion.
 static bool
-write_type(const type_base_sptr& type, write_context& ctxt, unsigned indent)
+write_type(const type_base_sptr& t, write_context& ctxt, unsigned indent)
 {
+  type_base_sptr type(get_exemplar_type(t.get()), noop_deleter());
+
   if (write_type_decl(dynamic_pointer_cast<type_decl> (type),
 		      ctxt, indent)
       || write_qualified_type_def (dynamic_pointer_cast<qualified_type_def>
@@ -2046,38 +2073,23 @@ write_type(const type_base_sptr& type, write_context& ctxt, unsigned indent)
 static bool
 write_decl(const decl_base_sptr& decl, write_context& ctxt, unsigned indent)
 {
-  if (write_type_decl(dynamic_pointer_cast<type_decl> (decl),
-		      ctxt, indent)
-      || write_namespace_decl(dynamic_pointer_cast<namespace_decl>(decl),
-			      ctxt, indent)
-      || write_qualified_type_def (dynamic_pointer_cast<qualified_type_def>
-				   (decl),
-				   ctxt, indent)
-      || write_pointer_type_def(dynamic_pointer_cast<pointer_type_def>(decl),
-				ctxt, indent)
-      || write_reference_type_def(dynamic_pointer_cast
-				  <reference_type_def>(decl), ctxt, indent)
-      || write_ptr_to_mbr_type(dynamic_pointer_cast
-			       <ptr_to_mbr_type>(decl),
-			       ctxt, indent)
-      || write_array_type_def(dynamic_pointer_cast
-			      <array_type_def>(decl), ctxt, indent)
-      || write_array_subrange_type(dynamic_pointer_cast
-				   <array_type_def::subrange_type>(decl),
-				   ctxt, indent)
-      || write_enum_type_decl(dynamic_pointer_cast<enum_type_decl>(decl),
-			      ctxt, indent)
-      || write_typedef_decl(dynamic_pointer_cast<typedef_decl>(decl),
-			    ctxt, indent)
-      || write_var_decl(dynamic_pointer_cast<var_decl>(decl), ctxt,
-			/*write_linkage_name=*/true, indent)
-      || write_function_decl(dynamic_pointer_cast<method_decl>
-			     (decl), ctxt, /*skip_first_parameter=*/true,
-			     indent)
-      || write_function_decl(dynamic_pointer_cast<function_decl>(decl),
-			     ctxt, /*skip_first_parameter=*/false, indent)
-      || write_class_decl(is_class_type(decl), ctxt, indent)
-      || write_union_decl(is_union_type(decl), ctxt, indent)
+  type_base_sptr type(get_exemplar_type(is_type(decl).get()), noop_deleter());
+
+  if (write_type_decl(is_type_decl(type), ctxt, indent)
+      || write_namespace_decl(is_namespace(decl), ctxt, indent)
+      || write_qualified_type_def (is_qualified_type(type), ctxt, indent)
+      || write_pointer_type_def(is_pointer_type(type), ctxt, indent)
+      || write_reference_type_def(is_reference_type(type), ctxt, indent)
+      || write_ptr_to_mbr_type(is_ptr_to_mbr_type(type), ctxt, indent)
+      || write_array_type_def(is_array_type(type), ctxt, indent)
+      || write_array_subrange_type(is_subrange_type(type), ctxt, indent)
+      || write_enum_type_decl(is_enum_type(type), ctxt, indent)
+      || write_typedef_decl(is_typedef(type), ctxt, indent)
+      || write_var_decl(is_var_decl(decl), ctxt, /*write_linkage_name=*/true, indent)
+      || write_function_decl(is_method_decl(decl), ctxt, indent)
+      || write_function_decl(is_function_decl(decl), ctxt, indent)
+      || write_class_decl(is_class_type(type), ctxt, indent)
+      || write_union_decl(is_union_type(type), ctxt, indent)
       || (write_function_tdecl
 	  (dynamic_pointer_cast<function_tdecl>(decl), ctxt, indent))
       || (write_class_tdecl
@@ -2639,7 +2651,7 @@ write_translation_unit(write_context&		ctxt,
 
   if (is_last
       && tu.is_empty()
-      && ctxt.has_non_emitted_referenced_types())
+      && !ctxt.has_non_emitted_referenced_types())
     return false;
 
   ostream& o = ctxt.get_ostream();
@@ -2739,7 +2751,7 @@ write_translation_unit(write_context&		ctxt,
 
   // Now handle all function types that were not only referenced by
   // emitted types.
-  const vector<function_type_sptr>& t = tu.get_live_fn_types();
+  const type_sptr_set_type& t = tu.get_live_fn_types();
   vector<type_base_sptr> sorted_types;
   ctxt.sort_types(t, sorted_types);
 
@@ -3215,7 +3227,8 @@ write_array_type_def(const array_type_def_sptr&	decl,
   o << " dimensions='" << decl->get_dimension_count() << "'";
 
   type_base_sptr element_type = decl->get_element_type();
-  o << " type-id='" << ctxt.get_id_for_type(element_type) << "'";
+  string type_id = ctxt.get_id_for_type(element_type);
+  o << " type-id='" << type_id << "'";
 
   ctxt.record_type_as_referenced(element_type);
 
@@ -3585,6 +3598,30 @@ write_var_decl(const var_decl_sptr& decl, write_context& ctxt,
   return true;
 }
 
+/// Test if a function and all its original artefacts (i.e, the origin
+/// from where it got copied from, potentially copied from) have any
+/// member decl.
+///
+/// @param decl the function decl to consider.
+///
+/// @return true iff the function and all its potential original
+/// artefact have at least one member decl.
+static bool
+function_has_member_decls(const function_decl_sptr& decl)
+{
+  bool has_member_decls = false;
+  for (function_decl* fn = decl.get();
+       fn;
+       fn = is_function_decl(fn->get_original_artefact()))
+    if (!fn->get_member_decls().empty())
+      {
+	has_member_decls = true;
+	break;
+      }
+
+  return has_member_decls;
+}
+
 /// Write the function-decl opening tag for a given function decl.
 ///
 /// @param decl the function decl to consider.
@@ -3609,6 +3646,11 @@ write_function_decl_opening_tag(const function_decl_sptr& decl,
     << xml::escape_xml_string(decl->get_name())
     << "'";
 
+  type_base_sptr fn_type = decl->get_type();
+  string type_id = ctxt.get_id_for_type(fn_type);
+  o << " type-id='" << type_id << "'";
+  ctxt.record_type_as_referenced(fn_type);
+
   if (!decl->get_linkage_name().empty())
     o << " mangled-name='"
       << xml::escape_xml_string(decl->get_linkage_name()) << "'";
@@ -3631,11 +3673,8 @@ write_function_decl_opening_tag(const function_decl_sptr& decl,
     if (corpus* abi = decl->get_corpus())
       write_elf_symbol_reference(ctxt, decl->get_symbol(), *abi, o);
 
-  write_type_hash_and_cti(decl->get_type(), o);
-
-  string i = ctxt.get_id_for_type(decl->get_type());
-  o << " id='" << i << "'";
-
+  if (!function_has_member_decls(decl))
+    o << "/";
   o << ">\n";
 
   return true;
@@ -3654,7 +3693,9 @@ static bool
 write_function_decl_closing_tag(const function_decl_sptr& decl,
 				write_context& ctxt, unsigned indent)
 {
-  if (!decl || !is_function_decl(decl))
+  if (!decl
+      || !is_function_decl(decl)
+      || !function_has_member_decls(decl))
     return false;
 
   ostream &o = ctxt.get_ostream();
@@ -3666,6 +3707,9 @@ write_function_decl_closing_tag(const function_decl_sptr& decl,
 
 /// Write the parameters and return part of the ABIXML description of
 /// a function_type.
+///
+/// Note that the function emits the canonical type of the function
+/// type.  This is mainly to de-duplicate the ABIXML output.
 ///
 /// @param fun_type the function type to consider.
 ///
@@ -3682,10 +3726,8 @@ write_fn_parm_and_return_types(const function_type_sptr& fun_type,
 			       write_context& ctxt,
 			       unsigned indent)
 {
-  function_type_sptr t =
-    fun_type->get_canonical_type()
-    ? is_function_type(fun_type->get_canonical_type())
-    : fun_type;
+  function_type_sptr t(is_function_type(get_exemplar_type(fun_type)),
+		       noop_deleter());
 
   unsigned cur_indent =
     indent + ctxt.get_config().get_xml_element_indent();
@@ -3705,7 +3747,7 @@ write_fn_parm_and_return_types(const function_type_sptr& fun_type,
         }
       else
 	{
-	  parm_type = (*pi)->get_type();
+	  parm_type.reset(get_exemplar_type((*pi)->get_type()), noop_deleter());
 
           annotate(*pi, ctxt, cur_indent);
           do_indent(o, cur_indent);
@@ -3723,7 +3765,8 @@ write_fn_parm_and_return_types(const function_type_sptr& fun_type,
       o << "/>\n";
     }
 
-  if (shared_ptr<type_base> return_type = t->get_return_type())
+  type_base_sptr return_type(get_exemplar_type(t->get_return_type()), noop_deleter());
+  if (return_type)
     {
       annotate(return_type , ctxt, cur_indent);
       do_indent(o, cur_indent);
@@ -3770,22 +3813,18 @@ write_function_member_decls(const function_decl_sptr& decl,
 ///
 /// @param ctxt the context of the serialization.
 ///
-/// @param skip_first_parm if true, do not serialize the first
-/// parameter of the function decl.
 ///
 /// @param indent the number of indentation white spaces to use.
 ///
 /// @return true upon succesful completion, false otherwise.
 static bool
-write_function_decl(const function_decl_sptr& decl, write_context& ctxt,
-		    bool skip_first_parm, unsigned indent)
+write_function_decl(const function_decl_sptr& decl,
+		    write_context& ctxt, unsigned indent)
 {
   if (!write_function_decl_opening_tag(decl, ctxt, indent))
     return false;
 
   write_function_member_decls(decl, ctxt, indent);
-
-  write_fn_parm_and_return_types(decl->get_type(), skip_first_parm, ctxt, indent);
 
   write_function_decl_closing_tag(decl, ctxt, indent);
 
@@ -3932,9 +3971,7 @@ write_member_function(const function_decl_sptr& fn_decl,
   write_member_function_opening_tag(fn_decl, ctxt,
 				    get_indent_to_level(ctxt, indent, 0));
 
-  write_function_decl(fn_decl, ctxt,
-		      /*skip_first_parameter=*/false,
-		      get_indent_to_level(ctxt, indent, 1));
+  write_function_decl(fn_decl, ctxt, get_indent_to_level(ctxt, indent, 1));
 
   write_member_function_closing_tag(fn_decl, ctxt,
 				    get_indent_to_level(ctxt, indent, 0));
@@ -4254,15 +4291,9 @@ write_class_decl(const class_decl_sptr& d,
 	  write_member_function(fn, ctxt, get_indent_to_level(ctxt, indent, 1));
 	}
 
-      for (class_decl::member_functions::const_iterator f =
-	     decl->get_virtual_mem_fns().begin();
-	   f != decl->get_virtual_mem_fns().end();
-	   ++f)
+      for (auto& fn : decl->get_virtual_mem_fns())
 	{
-	  function_decl_sptr fn = *f;
-
 	  ABG_ASSERT(get_member_function_is_virtual(fn));
-
 	  write_member_function(fn, ctxt, get_indent_to_level(ctxt, indent, 1));
 	}
 
@@ -4526,8 +4557,7 @@ write_member_type(const type_base_sptr& t, write_context& ctxt, unsigned indent)
 				   id, ctxt, nb_ws)
 	     || write_union_decl(dynamic_pointer_cast<union_decl>(t),
 				 id, ctxt, nb_ws)
-	     || write_class_decl(dynamic_pointer_cast<class_decl>(t),
-				 id, ctxt, nb_ws));
+	     || write_class_decl(is_class_type(t), id, ctxt, nb_ws));
 
   do_indent_to_level(ctxt, indent, 0);
   o << "</member-type>\n";
@@ -4782,7 +4812,6 @@ write_function_tdecl(const shared_ptr<function_tdecl> decl,
   write_template_parameters(decl, ctxt, indent);
 
   write_function_decl(decl->get_pattern(), ctxt,
-		      /*skip_first_parameter=*/false,
 		      get_indent_to_level(ctxt, indent, 1));
 
   do_indent_to_level(ctxt, indent, 0);

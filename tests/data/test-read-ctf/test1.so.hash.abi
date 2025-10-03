@@ -21,11 +21,12 @@
     <typedef-decl name='opaque_enum' type-id='55763a91' size-in-bits='32' alignment-in-bits='32' hash='8052a48aba79331b' id='99fcd3a5'/>
     <typedef-decl name='opaque_struct' type-id='6cde5052' size-in-bits='32' hash='76b8be93c7b2042b' id='dae69ca1'/>
     <type-decl name='unnamed-enum-underlying-type-32' size-in-bits='32' alignment-in-bits='32' is-anonymous='yes' hash='5181a58e665b3619' id='9cac1fee'/>
-    <function-decl name='fn' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='fn' hash='b76bf6d98c10cd0d' id='d31c0966'>
+    <function-decl name='fn' type-id='d31c0966' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='fn'/>
+    <type-decl name='void' id='48b5725f'/>
+    <function-type size-in-bits='64' hash='b76bf6d98c10cd0d' id='d31c0966'>
       <parameter type-id='3f6e71d0'/>
       <parameter type-id='0e0526e0'/>
       <return type-id='48b5725f'/>
-    </function-decl>
-    <type-decl name='void' id='48b5725f'/>
+    </function-type>
   </abi-instr>
 </abi-corpus>

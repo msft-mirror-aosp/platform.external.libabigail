@@ -13,11 +13,12 @@
     <pointer-type-def type-id='9b45d938' size-in-bits='64' alignment-in-bits='64' hash='9bf427260cf2e703' id='80f4b756'/>
     <qualified-type-def type-id='80f4b756' restrict='yes' hash='cd8a5982cb898d92' id='9d26089a'/>
     <type-decl name='unsigned int' size-in-bits='32' hash='e66b43f97c38e87a' id='f0981eeb'/>
-    <function-decl name='cpy' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='cpy' hash='e385bd2f4794e8a6' id='6236f2b1'>
+    <function-decl name='cpy' type-id='6236f2b1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='cpy'/>
+    <function-type size-in-bits='64' hash='e385bd2f4794e8a6' id='6236f2b1'>
       <parameter type-id='266fe297'/>
       <parameter type-id='9d26089a'/>
       <parameter type-id='f0981eeb'/>
       <return type-id='26a90f95'/>
-    </function-decl>
+    </function-type>
   </abi-instr>
 </abi-corpus>

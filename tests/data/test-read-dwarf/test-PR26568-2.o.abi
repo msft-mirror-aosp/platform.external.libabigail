@@ -24,10 +24,11 @@
         <var-decl name='' type-id='type-id-6' visibility='default'/>
       </data-member>
     </union-decl>
-    <function-decl name='fun' filepath='tests/data/test-read-common/test-PR26568-2.c' line='13' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='fun' hash='b972cd108ad3614f' id='type-id-7'>
+    <function-decl name='fun' type-id='type-id-7' filepath='tests/data/test-read-common/test-PR26568-2.c' line='13' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='fun'/>
+    <type-decl name='void' id='type-id-8'/>
+    <function-type size-in-bits='64' hash='b972cd108ad3614f' id='type-id-7'>
       <parameter type-id='type-id-2' filepath='tests/data/test-read-common/test-PR26568-2.c' line='13' column='1'/>
       <return type-id='type-id-8'/>
-    </function-decl>
-    <type-decl name='void' id='type-id-8'/>
+    </function-type>
   </abi-instr>
 </abi-corpus>

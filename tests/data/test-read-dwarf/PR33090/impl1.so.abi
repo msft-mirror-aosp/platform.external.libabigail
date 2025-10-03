@@ -10,13 +10,15 @@
   <abi-instr address-size='64' path='bug1.c' comp-dir-path='/home/dodji/git/libabigail/fixes/prtests/PR33090' language='LANG_C11'>
     <type-decl name='double' size-in-bits='64' hash='e9e9b320886d9aa6' id='type-id-1'/>
     <type-decl name='int' size-in-bits='32' hash='09d17c08f594edc7' id='type-id-2'/>
-    <function-decl name='public_func1' filepath='/home/dodji/git/libabigail/fixes/prtests/PR33090/bug1.c' line='2' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='public_func1' hash='d628501fd2223339' id='type-id-3'>
-      <parameter type-id='type-id-2' filepath='/home/dodji/git/libabigail/fixes/prtests/PR33090/bug1.c' line='2' column='1'/>
-      <return type-id='type-id-2'/>
-    </function-decl>
-    <function-decl name='public_func2' filepath='/home/dodji/git/libabigail/fixes/prtests/PR33090/bug1.c' line='5' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='public_func2' hash='fc29fb400cf17181' id='type-id-4'>
+    <function-decl name='public_func1' type-id='type-id-3' filepath='/home/dodji/git/libabigail/fixes/prtests/PR33090/bug1.c' line='2' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='public_func1'/>
+    <function-decl name='public_func2' type-id='type-id-4' filepath='/home/dodji/git/libabigail/fixes/prtests/PR33090/bug1.c' line='5' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='public_func2'/>
+    <function-type size-in-bits='64' hash='fc29fb400cf17181' id='type-id-4'>
       <parameter type-id='type-id-1' filepath='/home/dodji/git/libabigail/fixes/prtests/PR33090/bug1.c' line='5' column='1'/>
       <return type-id='type-id-1'/>
-    </function-decl>
+    </function-type>
+    <function-type size-in-bits='64' hash='d628501fd2223339' id='type-id-3'>
+      <parameter type-id='type-id-2' filepath='/home/dodji/git/libabigail/fixes/prtests/PR33090/bug1.c' line='2' column='1'/>
+      <return type-id='type-id-2'/>
+    </function-type>
   </abi-instr>
 </abi-corpus>

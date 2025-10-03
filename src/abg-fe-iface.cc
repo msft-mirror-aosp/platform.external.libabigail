@@ -306,15 +306,25 @@ fe_iface::should_reuse_type_from_corpus_group()
 /// it's going to be added to the sef of undefined functions used by
 /// the current corpus.
 ///
-/// @param fn the internal representation of the ABI of a function.
+/// If a function of the same ID already exists, the function doesn't
+/// add it again, unless explicitely instructed by the caller.
+///
+/// @param fn the internal representation of the ABI of a function to
+/// be added to the set of exported or undefined functions.
+///
+/// @param do_update if true then @p fn is added unconditionnaly even
+/// if a function of the same ID already exists in the list of
+/// exported or undefined decls.
 void
-fe_iface::add_fn_to_exported_or_undefined_decls(const function_decl* fn)
+fe_iface::add_fn_to_exported_or_undefined_decls(const function_decl* fn,
+						bool do_update)
 {
   bool added = false;
   if (fn)
     if (corpus::exported_decls_builder* b =
 	corpus()->get_exported_decls_builder().get())
-      added = b->maybe_add_fn_to_exported_fns(const_cast<function_decl*>(fn));
+      added = b->maybe_add_fn_to_exported_fns(const_cast<function_decl*>(fn),
+					      do_update);
 
   if (fn && !added)
     {

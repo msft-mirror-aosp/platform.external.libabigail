@@ -122,14 +122,8 @@
       <typedef-decl name='ostream' type-id='type-id-53' filepath='/usr/include/c++/5.3.1/iosfwd' line='141' column='1' id='type-id-54'/>
     </namespace-decl>
     <pointer-type-def type-id='type-id-54' size-in-bits='64' id='type-id-55'/>
-    <function-decl name='foo' mangled-name='_Z3fooRKSs' filepath='/home/dodji/git/libabigail.git/suppr/tests/data/test-read-dwarf/test24-drop-fns.cc' line='14' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_Z3fooRKSs' hash='e72068784ab1704f' id='type-id-56'>
-      <parameter type-id='type-id-31' filepath='/home/dodji/git/libabigail.git/suppr/tests/data/test-read-dwarf/test24-drop-fns.cc' line='14' column='1'/>
-      <return type-id='type-id-29'/>
-    </function-decl>
-    <function-decl name='bar' mangled-name='_Z3barRKSs' filepath='/home/dodji/git/libabigail.git/suppr/tests/data/test-read-dwarf/test24-drop-fns.cc' line='21' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_Z3barRKSs' hash='adac8473c44274fe' id='type-id-57'>
-      <parameter type-id='type-id-31' filepath='/home/dodji/git/libabigail.git/suppr/tests/data/test-read-dwarf/test24-drop-fns.cc' line='21' column='1'/>
-      <return type-id='type-id-55'/>
-    </function-decl>
+    <function-decl name='foo' type-id='type-id-56' mangled-name='_Z3fooRKSs' filepath='/home/dodji/git/libabigail.git/suppr/tests/data/test-read-dwarf/test24-drop-fns.cc' line='14' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_Z3fooRKSs'/>
+    <function-decl name='bar' type-id='type-id-57' mangled-name='_Z3barRKSs' filepath='/home/dodji/git/libabigail.git/suppr/tests/data/test-read-dwarf/test24-drop-fns.cc' line='21' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_Z3barRKSs'/>
     <namespace-decl name='__gnu_cxx'>
       <class-decl name='new_allocator&lt;char&gt;' visibility='default' size-in-bits='8' filepath='/usr/include/c++/5.3.1/ext/new_allocator.h' line='58' column='1' hash='084a85392ac35fed' id='type-id-1'>
         <member-type access='public'>
@@ -158,5 +152,13 @@
     </namespace-decl>
     <type-decl name='void' id='type-id-68'/>
     <pointer-type-def type-id='type-id-68' id='type-id-69'/>
+    <function-type size-in-bits='64' hash='adac8473c44274fe' id='type-id-57'>
+      <parameter type-id='type-id-31' filepath='/home/dodji/git/libabigail.git/suppr/tests/data/test-read-dwarf/test24-drop-fns.cc' line='21' column='1'/>
+      <return type-id='type-id-55'/>
+    </function-type>
+    <function-type size-in-bits='64' hash='e72068784ab1704f' id='type-id-56'>
+      <parameter type-id='type-id-31' filepath='/home/dodji/git/libabigail.git/suppr/tests/data/test-read-dwarf/test24-drop-fns.cc' line='14' column='1'/>
+      <return type-id='type-id-29'/>
+    </function-type>
   </abi-instr>
 </abi-corpus>

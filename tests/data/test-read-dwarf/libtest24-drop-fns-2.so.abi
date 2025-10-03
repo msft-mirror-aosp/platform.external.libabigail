@@ -130,10 +130,7 @@
           <typedef-decl name='int_type' type-id='type-id-13' size-in-bits='32' filepath='/usr/include/c++/5.3.1/bits/char_traits.h' line='236' column='1' hash='09d17c08f594edc7' id='type-id-35'/>
         </member-type>
         <member-function access='public' static='yes'>
-          <function-decl name='length' mangled-name='_ZNSt11char_traitsIcE6lengthEPKc' filepath='/usr/include/c++/5.3.1/bits/char_traits.h' line='266' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZNSt11char_traitsIcE6lengthEPKc' hash='020ad60f75c8b018' id='type-id-69'>
-            <parameter type-id='type-id-34'/>
-            <return type-id='type-id-55'/>
-          </function-decl>
+          <function-decl name='length' type-id='type-id-69' mangled-name='_ZNSt11char_traitsIcE6lengthEPKc' filepath='/usr/include/c++/5.3.1/bits/char_traits.h' line='266' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZNSt11char_traitsIcE6lengthEPKc'/>
         </member-function>
       </class-decl>
       <typedef-decl name='size_t' type-id='type-id-51' size-in-bits='64' filepath='/usr/include/c++/5.3.1/x86_64-redhat-linux/bits/c++config.h' line='1969' column='1' hash='8fdc5eea2983a729' id='type-id-55'/>
@@ -141,22 +138,12 @@
       <class-decl name='basic_ostream&lt;char,std::char_traits&lt;char&gt;&gt;' visibility='default' is-declaration-only='yes' id='type-id-70'/>
       <class-decl name='reverse_iterator&lt;__gnu_cxx::__normal_iterator&lt;char*,std::basic_string&lt;char,std::char_traits&lt;char&gt;,std::allocator&lt;char&gt;&gt;&gt;&gt;' visibility='default' is-declaration-only='yes' id='type-id-67'/>
       <class-decl name='reverse_iterator&lt;__gnu_cxx::__normal_iterator&lt;charconst*,std::basic_string&lt;char,std::char_traits&lt;char&gt;,std::allocator&lt;char&gt;&gt;&gt;&gt;' visibility='default' is-declaration-only='yes' id='type-id-63'/>
-      <function-decl name='operator+&lt;char,std::char_traits&lt;char&gt;,std::allocator&lt;char&gt;&gt;' mangled-name='_ZStplIcSt11char_traitsIcESaIcEESbIT_T0_T1_EPKS3_RKS6_' filepath='/usr/include/c++/5.3.1/bits/basic_string.tcc' line='1151' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZStplIcSt11char_traitsIcESaIcEESbIT_T0_T1_EPKS3_RKS6_' hash='e176adab2711438b' id='type-id-71'>
-        <parameter type-id='type-id-12'/>
-        <parameter type-id='type-id-24'/>
-        <return type-id='type-id-22'/>
-      </function-decl>
+      <function-decl name='operator+&lt;char,std::char_traits&lt;char&gt;,std::allocator&lt;char&gt;&gt;' type-id='type-id-71' mangled-name='_ZStplIcSt11char_traitsIcESaIcEESbIT_T0_T1_EPKS3_RKS6_' filepath='/usr/include/c++/5.3.1/bits/basic_string.tcc' line='1151' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZStplIcSt11char_traitsIcESaIcEESbIT_T0_T1_EPKS3_RKS6_'/>
       <typedef-decl name='ostream' type-id='type-id-70' filepath='/usr/include/c++/5.3.1/iosfwd' line='141' column='1' id='type-id-72'/>
     </namespace-decl>
     <pointer-type-def type-id='type-id-72' size-in-bits='64' id='type-id-73'/>
-    <function-decl name='foo' mangled-name='_Z3fooRKSs' filepath='/home/dodji/git/libabigail.git/suppr/tests/data/test-read-dwarf/test24-drop-fns.cc' line='14' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_Z3fooRKSs' hash='e72068784ab1704f' id='type-id-74'>
-      <parameter type-id='type-id-40' filepath='/home/dodji/git/libabigail.git/suppr/tests/data/test-read-dwarf/test24-drop-fns.cc' line='14' column='1'/>
-      <return type-id='type-id-38'/>
-    </function-decl>
-    <function-decl name='bar' mangled-name='_Z3barRKSs' filepath='/home/dodji/git/libabigail.git/suppr/tests/data/test-read-dwarf/test24-drop-fns.cc' line='21' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_Z3barRKSs' hash='adac8473c44274fe' id='type-id-75'>
-      <parameter type-id='type-id-40' filepath='/home/dodji/git/libabigail.git/suppr/tests/data/test-read-dwarf/test24-drop-fns.cc' line='21' column='1'/>
-      <return type-id='type-id-73'/>
-    </function-decl>
+    <function-decl name='foo' type-id='type-id-74' mangled-name='_Z3fooRKSs' filepath='/home/dodji/git/libabigail.git/suppr/tests/data/test-read-dwarf/test24-drop-fns.cc' line='14' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_Z3fooRKSs'/>
+    <function-decl name='bar' type-id='type-id-75' mangled-name='_Z3barRKSs' filepath='/home/dodji/git/libabigail.git/suppr/tests/data/test-read-dwarf/test24-drop-fns.cc' line='21' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_Z3barRKSs'/>
     <namespace-decl name='__gnu_cxx'>
       <class-decl name='new_allocator&lt;char&gt;' visibility='default' size-in-bits='8' filepath='/usr/include/c++/5.3.1/ext/new_allocator.h' line='58' column='1' hash='084a85392ac35fed' id='type-id-1'>
         <member-type access='public'>
@@ -185,5 +172,22 @@
     </namespace-decl>
     <type-decl name='void' id='type-id-86'/>
     <pointer-type-def type-id='type-id-86' id='type-id-87'/>
+    <function-type size-in-bits='64' hash='e176adab2711438b' id='type-id-71'>
+      <parameter type-id='type-id-12'/>
+      <parameter type-id='type-id-24'/>
+      <return type-id='type-id-22'/>
+    </function-type>
+    <function-type size-in-bits='64' hash='adac8473c44274fe' id='type-id-75'>
+      <parameter type-id='type-id-40' filepath='/home/dodji/git/libabigail.git/suppr/tests/data/test-read-dwarf/test24-drop-fns.cc' line='21' column='1'/>
+      <return type-id='type-id-73'/>
+    </function-type>
+    <function-type size-in-bits='64' hash='e72068784ab1704f' id='type-id-74'>
+      <parameter type-id='type-id-40' filepath='/home/dodji/git/libabigail.git/suppr/tests/data/test-read-dwarf/test24-drop-fns.cc' line='14' column='1'/>
+      <return type-id='type-id-38'/>
+    </function-type>
+    <function-type method-class-id='type-id-68' size-in-bits='64' hash='020ad60f75c8b018' id='type-id-69'>
+      <parameter type-id='type-id-34' filepath='/usr/include/c++/5.3.1/bits/char_traits.h' line='266' column='1'/>
+      <return type-id='type-id-55'/>
+    </function-type>
   </abi-instr>
 </abi-corpus>

@@ -65,52 +65,64 @@
       <!-- typedef long long int ns0::long_long -->
       <typedef-decl name='long_long' type-id='type-id-6' size-in-bits='64' filepath='/home/dodji/git/libabigail/dwarf/tests/data/test-read-dwarf/test0.cc' line='25' column='1' hash='5ae7f9eec1fc43d6' id='type-id-10'/>
       <!-- void ns0::bar(int, ...) -->
-      <function-decl name='bar' mangled-name='_ZN3ns03barEiz' filepath='/home/dodji/git/libabigail/dwarf/tests/data/test-read-dwarf/test0.cc' line='12' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZN3ns03barEiz' hash='388da3fa973fde78' id='type-id-11'>
-        <!-- parameter of type 'int' -->
-        <parameter type-id='type-id-3'/>
-        <parameter is-variadic='yes'/>
-        <!-- void -->
-        <return type-id='type-id-12'/>
-      </function-decl>
+      <function-decl name='bar' type-id='type-id-11' mangled-name='_ZN3ns03barEiz' filepath='/home/dodji/git/libabigail/dwarf/tests/data/test-read-dwarf/test0.cc' line='12' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZN3ns03barEiz'/>
       <!-- void ns0::baz(int&) -->
-      <function-decl name='baz' mangled-name='_ZN3ns03bazERi' filepath='/home/dodji/git/libabigail/dwarf/tests/data/test-read-dwarf/test0.cc' line='16' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZN3ns03bazERi' hash='0e5b30a2f67d8249' id='type-id-13'>
-        <!-- parameter of type 'int&' -->
-        <parameter type-id='type-id-4'/>
-        <!-- void -->
-        <return type-id='type-id-12'/>
-      </function-decl>
+      <function-decl name='baz' type-id='type-id-12' mangled-name='_ZN3ns03bazERi' filepath='/home/dodji/git/libabigail/dwarf/tests/data/test-read-dwarf/test0.cc' line='16' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZN3ns03bazERi'/>
       <!-- void ns0::bar2(ns0::E&) -->
-      <function-decl name='bar2' mangled-name='_ZN3ns04bar2ERNS_1EE' filepath='/home/dodji/git/libabigail/dwarf/tests/data/test-read-dwarf/test0.cc' line='22' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZN3ns04bar2ERNS_1EE' hash='1480a50c3620ae2b' id='type-id-14'>
-        <!-- parameter of type 'ns0::E&' -->
-        <parameter type-id='type-id-8'/>
-        <!-- void -->
-        <return type-id='type-id-12'/>
-      </function-decl>
+      <function-decl name='bar2' type-id='type-id-13' mangled-name='_ZN3ns04bar2ERNS_1EE' filepath='/home/dodji/git/libabigail/dwarf/tests/data/test-read-dwarf/test0.cc' line='22' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZN3ns04bar2ERNS_1EE'/>
       <!-- ns0::long_long ns0::baz2(int&) -->
-      <function-decl name='baz2' mangled-name='_ZN3ns04baz2ERi' filepath='/home/dodji/git/libabigail/dwarf/tests/data/test-read-dwarf/test0.cc' line='28' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZN3ns04baz2ERi' hash='da172ae1923a8466' id='type-id-15'>
-        <!-- parameter of type 'int&' -->
-        <parameter type-id='type-id-4'/>
-        <!-- typedef ns0::long_long -->
-        <return type-id='type-id-10'/>
-      </function-decl>
+      <function-decl name='baz2' type-id='type-id-14' mangled-name='_ZN3ns04baz2ERi' filepath='/home/dodji/git/libabigail/dwarf/tests/data/test-read-dwarf/test0.cc' line='28' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZN3ns04baz2ERi'/>
       <!-- long int ns0::foo(char*, long int) -->
-      <function-decl name='foo' mangled-name='_ZN3ns03fooEPcl' filepath='/home/dodji/git/libabigail/dwarf/tests/data/test-read-dwarf/test0.cc' line='45' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZN3ns03fooEPcl' hash='3b4a00f2cef71048' id='type-id-16'>
-        <!-- parameter of type 'char*' -->
-        <parameter type-id='type-id-2'/>
-        <!-- parameter of type 'long int' -->
-        <parameter type-id='type-id-5'/>
-        <!-- long int -->
-        <return type-id='type-id-5'/>
-      </function-decl>
+      <function-decl name='foo' type-id='type-id-15' mangled-name='_ZN3ns03fooEPcl' filepath='/home/dodji/git/libabigail/dwarf/tests/data/test-read-dwarf/test0.cc' line='45' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZN3ns03fooEPcl'/>
     </namespace-decl>
     <!-- int main() -->
-    <function-decl name='main' filepath='/home/dodji/git/libabigail/dwarf/tests/data/test-read-dwarf/test0.cc' line='49' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='main' hash='388da3fa973fde78' id='type-id-17'>
+    <function-decl name='main' type-id='type-id-16' filepath='/home/dodji/git/libabigail/dwarf/tests/data/test-read-dwarf/test0.cc' line='49' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='main'/>
+    <!-- variadic parameter type -->
+    <type-decl name='variadic parameter type' id='type-id-17'/>
+    <!-- void -->
+    <type-decl name='void' id='type-id-18'/>
+    <!-- int (void) -->
+    <function-type size-in-bits='64' hash='388da3fa973fde78' id='type-id-16'>
       <!-- int -->
       <return type-id='type-id-3'/>
-    </function-decl>
-    <!-- variadic parameter type -->
-    <type-decl name='variadic parameter type' id='type-id-18'/>
-    <!-- void -->
-    <type-decl name='void' id='type-id-12'/>
+    </function-type>
+    <!-- long int (char*, long int) -->
+    <function-type size-in-bits='64' hash='3b4a00f2cef71048' id='type-id-15'>
+      <!-- parameter of type 'char*' -->
+      <parameter type-id='type-id-2'/>
+      <!-- parameter of type 'long int' -->
+      <parameter type-id='type-id-5'/>
+      <!-- long int -->
+      <return type-id='type-id-5'/>
+    </function-type>
+    <!-- ns0::long_long (int&) -->
+    <function-type size-in-bits='64' hash='da172ae1923a8466' id='type-id-14'>
+      <!-- parameter of type 'int&' -->
+      <parameter type-id='type-id-4'/>
+      <!-- typedef ns0::long_long -->
+      <return type-id='type-id-10'/>
+    </function-type>
+    <!-- void (int&) -->
+    <function-type size-in-bits='64' hash='0e5b30a2f67d8249' id='type-id-12'>
+      <!-- parameter of type 'int&' -->
+      <parameter type-id='type-id-4'/>
+      <!-- void -->
+      <return type-id='type-id-18'/>
+    </function-type>
+    <!-- void (int, ...) -->
+    <function-type size-in-bits='64' hash='388da3fa973fde78' id='type-id-11'>
+      <!-- parameter of type 'int' -->
+      <parameter type-id='type-id-3'/>
+      <parameter is-variadic='yes'/>
+      <!-- void -->
+      <return type-id='type-id-18'/>
+    </function-type>
+    <!-- void (ns0::E&) -->
+    <function-type size-in-bits='64' hash='1480a50c3620ae2b' id='type-id-13'>
+      <!-- parameter of type 'ns0::E&' -->
+      <parameter type-id='type-id-8'/>
+      <!-- void -->
+      <return type-id='type-id-18'/>
+    </function-type>
   </abi-instr>
 </abi-corpus>

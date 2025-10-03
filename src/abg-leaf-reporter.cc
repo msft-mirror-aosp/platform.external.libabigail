@@ -1081,7 +1081,7 @@ leaf_reporter::report(const corpus_diff& d,
 
       bool emitted = false;
       corpus::functions sorted_deleted_fns;
-      sort_string_function_ptr_map(d.priv_->deleted_fns_, sorted_deleted_fns);
+      sort_string_functions_set_map(d.priv_->deleted_fns_, sorted_deleted_fns);
       for (auto f : sorted_deleted_fns)
 	{
 	  if (d.priv_->deleted_function_is_suppressed(f))
@@ -1139,7 +1139,7 @@ leaf_reporter::report(const corpus_diff& d,
 	    << " Added functions:\n\n";
       bool emitted = false;
       corpus::functions sorted_added_fns;
-      sort_string_function_ptr_map(d.priv_->added_fns_, sorted_added_fns);
+      sort_string_functions_set_map(d.priv_->added_fns_, sorted_added_fns);
       for (auto f : sorted_added_fns)
 	{
 	  if (d.priv_->added_function_is_suppressed(f))

@@ -21,10 +21,11 @@
       </data-member>
     </class-decl>
     <type-decl name='unsigned long int' size-in-bits='64' hash='8fdc5eea2983a729' id='type-id-6'/>
-    <function-decl name='use_struct_s' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='use_struct_s' hash='b10bf0483ab5ebcb' id='type-id-8'>
+    <function-decl name='use_struct_s' type-id='type-id-8' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='use_struct_s'/>
+    <type-decl name='void' id='type-id-9'/>
+    <function-type size-in-bits='64' hash='b10bf0483ab5ebcb' id='type-id-8'>
       <parameter type-id='type-id-2'/>
       <return type-id='type-id-9'/>
-    </function-decl>
-    <type-decl name='void' id='type-id-9'/>
+    </function-type>
   </abi-instr>
 </abi-corpus>

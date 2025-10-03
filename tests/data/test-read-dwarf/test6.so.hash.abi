@@ -22,10 +22,7 @@
     <type-decl name='int' size-in-bits='32' hash='09d17c08f594edc7' id='95e97e5e'/>
     <class-decl name='B' is-struct='yes' visibility='default' size-in-bits='8' filepath='/home/skumari/Tasks/source_repo/dodji/libabigail/tests/data/test-read-dwarf/test6.cc' line='9' column='1' hash='f395800fc5ce683f' id='41d98c5d'>
       <member-function access='public'>
-        <function-decl name='foo' mangled-name='_ZN1B3fooEv' filepath='/home/skumari/Tasks/source_repo/dodji/libabigail/tests/data/test-read-dwarf/test6.cc' line='11' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZN1B3fooEv' hash='388da3fa973fde78' id='e6cf2fbb'>
-          <parameter type-id='06dd347d' is-artificial='yes'/>
-          <return type-id='95e97e5e'/>
-        </function-decl>
+        <function-decl name='foo' type-id='e6cf2fbb' mangled-name='_ZN1B3fooEv' filepath='/home/skumari/Tasks/source_repo/dodji/libabigail/tests/data/test-read-dwarf/test6.cc' line='11' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZN1B3fooEv'/>
       </member-function>
     </class-decl>
     <class-decl name='C&lt;int&gt;' is-struct='yes' visibility='default' size-in-bits='8' filepath='/home/skumari/Tasks/source_repo/dodji/libabigail/tests/data/test-read-dwarf/test6.cc' line='26' column='1' hash='d091b1798bc45305' id='923eef9f'>
@@ -33,11 +30,14 @@
         <var-decl name='bar' type-id='95e97e5e' mangled-name='_ZN1CIiE3barE' visibility='default' filepath='/home/skumari/Tasks/source_repo/dodji/libabigail/tests/data/test-read-dwarf/test6.cc' line='31' column='1' elf-symbol-id='_ZN1CIiE3barE'/>
       </data-member>
     </class-decl>
-    <function-decl name='bar' mangled-name='_Z3barv' filepath='/home/skumari/Tasks/source_repo/dodji/libabigail/tests/data/test-read-dwarf/test6.cc' line='19' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_Z3barv' hash='388da3fa973fde78' id='b39d85cf'>
+    <function-decl name='bar' type-id='b39d85cf' mangled-name='_Z3barv' filepath='/home/skumari/Tasks/source_repo/dodji/libabigail/tests/data/test-read-dwarf/test6.cc' line='19' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_Z3barv'/>
+    <function-decl name='bleh' type-id='b39d85cf' mangled-name='_Z4blehv' filepath='/home/skumari/Tasks/source_repo/dodji/libabigail/tests/data/test-read-dwarf/test6.cc' line='34' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_Z4blehv'/>
+    <function-type size-in-bits='64' hash='388da3fa973fde78' id='b39d85cf'>
       <return type-id='95e97e5e'/>
-    </function-decl>
-    <function-decl name='bleh' mangled-name='_Z4blehv' filepath='/home/skumari/Tasks/source_repo/dodji/libabigail/tests/data/test-read-dwarf/test6.cc' line='34' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_Z4blehv' hash='388da3fa973fde78' id='b39d85cf'>
+    </function-type>
+    <function-type method-class-id='41d98c5d' size-in-bits='64' hash='388da3fa973fde78' id='e6cf2fbb'>
+      <parameter type-id='06dd347d' is-artificial='yes'/>
       <return type-id='95e97e5e'/>
-    </function-decl>
+    </function-type>
   </abi-instr>
 </abi-corpus>

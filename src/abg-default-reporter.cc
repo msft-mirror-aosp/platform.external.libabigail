@@ -1937,7 +1937,7 @@ default_reporter::report(const corpus_diff& d, ostream& out,
 
       bool emitted = false;
       corpus::functions sorted_deleted_fns;
-      sort_string_function_ptr_map(d.priv_->deleted_fns_, sorted_deleted_fns);
+      sort_string_functions_set_map(d.priv_->deleted_fns_, sorted_deleted_fns);
       for (auto f : sorted_deleted_fns)
 	{
 	  if (d.priv_->deleted_function_is_suppressed(f))
@@ -1995,7 +1995,7 @@ default_reporter::report(const corpus_diff& d, ostream& out,
 	    << " Added functions:\n\n";
       bool emitted = false;
       corpus::functions sorted_added_fns;
-      sort_string_function_ptr_map(d.priv_->added_fns_, sorted_added_fns);
+      sort_string_functions_set_map(d.priv_->added_fns_, sorted_added_fns);
       for (auto f : sorted_added_fns)
 	{
 	  if (d.priv_->added_function_is_suppressed(f))
@@ -2042,10 +2042,7 @@ default_reporter::report(const corpus_diff& d, ostream& out,
 	out << indent << num_changed
 	    << " functions with some indirect sub-type change:\n\n";
 
-      vector<function_decl_diff_sptr> sorted_changed_fns;
-      sort_string_function_decl_diff_sptr_map(d.priv_->changed_fns_map_,
-					      sorted_changed_fns);
-      for (auto& fn_diff : sorted_changed_fns)
+      for (auto& fn_diff : d.changed_functions_sorted())
 	if (fn_diff && !filtering::has_incompatible_fn_or_var_change(fn_diff))
 	  emit_changed_fn_report(ctxt, fn_diff, out, indent,
 				 /*indirect_changed_subtypes=*/true,

@@ -9905,185 +9905,45 @@
     <pointer-type-def type-id='type-id-1547' size-in-bits='64' id='type-id-899'/>
     <pointer-type-def type-id='type-id-1548' size-in-bits='64' id='type-id-1553'/>
     <pointer-type-def type-id='type-id-1549' size-in-bits='64' id='type-id-1244'/>
-    <function-decl name='sdhci_dumpregs' filepath='/ws/android/kernel/aosp/common-mainline/common/drivers/mmc/host/sdhci.c' line='53' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='sdhci_dumpregs' hash='1d626795ceff8937' id='type-id-1406'>
-      <parameter type-id='type-id-779'/>
-      <return type-id='type-id-1554'/>
-    </function-decl>
-    <function-decl name='sdhci_enable_v4_mode' filepath='/ws/android/kernel/aosp/common-mainline/common/drivers/mmc/host/sdhci.c' line='138' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='sdhci_enable_v4_mode' hash='1d626795ceff8937' id='type-id-1406'>
-      <parameter type-id='type-id-779'/>
-      <return type-id='type-id-1554'/>
-    </function-decl>
-    <function-decl name='sdhci_reset' filepath='/ws/android/kernel/aosp/common-mainline/common/drivers/mmc/host/sdhci.c' line='198' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='sdhci_reset' hash='492076319b5984eb' id='type-id-1410'>
-      <parameter type-id='type-id-779'/>
-      <parameter type-id='type-id-868'/>
-      <return type-id='type-id-1554'/>
-    </function-decl>
-    <function-decl name='sdhci_adma_write_desc' filepath='/ws/android/kernel/aosp/common-mainline/common/drivers/mmc/host/sdhci.c' line='663' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='sdhci_adma_write_desc' hash='d7b5c893e3397262' id='type-id-1413'>
-      <parameter type-id='type-id-779'/>
-      <parameter type-id='type-id-1433'/>
-      <parameter type-id='type-id-276'/>
-      <parameter type-id='type-id-164'/>
-      <parameter type-id='type-id-237'/>
-      <return type-id='type-id-1554'/>
-    </function-decl>
-    <function-decl name='sdhci_send_command' filepath='/ws/android/kernel/aosp/common-mainline/common/drivers/mmc/host/sdhci.c' line='1342' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='sdhci_send_command' hash='eecb4512a4105e73' id='type-id-1408'>
-      <parameter type-id='type-id-779'/>
-      <parameter type-id='type-id-684'/>
-      <return type-id='type-id-1554'/>
-    </function-decl>
-    <function-decl name='sdhci_calc_clk' filepath='/ws/android/kernel/aosp/common-mainline/common/drivers/mmc/host/sdhci.c' line='1539' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='sdhci_calc_clk' hash='1960c75948510cf4' id='type-id-1555'>
-      <parameter type-id='type-id-779' filepath='/ws/android/kernel/aosp/common-mainline/common/drivers/mmc/host/sdhci.c' line='1539' column='1'/>
-      <parameter type-id='type-id-237' filepath='/ws/android/kernel/aosp/common-mainline/common/drivers/mmc/host/sdhci.c' line='1539' column='1'/>
-      <parameter type-id='type-id-1024' filepath='/ws/android/kernel/aosp/common-mainline/common/drivers/mmc/host/sdhci.c' line='1540' column='1'/>
-      <return type-id='type-id-232'/>
-    </function-decl>
-    <function-decl name='sdhci_enable_clk' filepath='/ws/android/kernel/aosp/common-mainline/common/drivers/mmc/host/sdhci.c' line='1632' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='sdhci_enable_clk' hash='80183ce1d4ccdfeb' id='type-id-1556'>
-      <parameter type-id='type-id-779' filepath='/ws/android/kernel/aosp/common-mainline/common/drivers/mmc/host/sdhci.c' line='1632' column='1'/>
-      <parameter type-id='type-id-232' filepath='/ws/android/kernel/aosp/common-mainline/common/drivers/mmc/host/sdhci.c' line='1632' column='1'/>
-      <return type-id='type-id-1554'/>
-    </function-decl>
-    <function-decl name='sdhci_set_clock' filepath='/ws/android/kernel/aosp/common-mainline/common/drivers/mmc/host/sdhci.c' line='1661' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='sdhci_set_clock' hash='12df253760721a6b' id='type-id-1412'>
-      <parameter type-id='type-id-779'/>
-      <parameter type-id='type-id-237'/>
-      <return type-id='type-id-1554'/>
-    </function-decl>
-    <function-decl name='sdhci_set_power_noreg' filepath='/ws/android/kernel/aosp/common-mainline/common/drivers/mmc/host/sdhci.c' line='1690' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='sdhci_set_power_noreg' hash='e2a96919020a109b' id='type-id-1411'>
-      <parameter type-id='type-id-779'/>
-      <parameter type-id='type-id-234'/>
-      <parameter type-id='type-id-875'/>
-      <return type-id='type-id-1554'/>
-    </function-decl>
-    <function-decl name='sdhci_set_power' filepath='/ws/android/kernel/aosp/common-mainline/common/drivers/mmc/host/sdhci.c' line='1764' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='sdhci_set_power' hash='e2a96919020a109b' id='type-id-1411'>
-      <parameter type-id='type-id-779'/>
-      <parameter type-id='type-id-234'/>
-      <parameter type-id='type-id-875'/>
-      <return type-id='type-id-1554'/>
-    </function-decl>
-    <function-decl name='sdhci_request' filepath='/ws/android/kernel/aosp/common-mainline/common/drivers/mmc/host/sdhci.c' line='1780' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='sdhci_request' hash='a8637d24b746cf04' id='type-id-1398'>
-      <parameter type-id='type-id-690'/>
-      <parameter type-id='type-id-697'/>
-      <return type-id='type-id-1554'/>
-    </function-decl>
-    <function-decl name='sdhci_set_bus_width' filepath='/ws/android/kernel/aosp/common-mainline/common/drivers/mmc/host/sdhci.c' line='1820' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='sdhci_set_bus_width' hash='a97fb9cf50caf488' id='type-id-1407'>
-      <parameter type-id='type-id-779'/>
-      <parameter type-id='type-id-164'/>
-      <return type-id='type-id-1554'/>
-    </function-decl>
-    <function-decl name='sdhci_set_uhs_signaling' filepath='/ws/android/kernel/aosp/common-mainline/common/drivers/mmc/host/sdhci.c' line='1840' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='sdhci_set_uhs_signaling' hash='12df253760721a6b' id='type-id-1412'>
-      <parameter type-id='type-id-779'/>
-      <parameter type-id='type-id-237'/>
-      <return type-id='type-id-1554'/>
-    </function-decl>
-    <function-decl name='sdhci_set_ios' filepath='/ws/android/kernel/aosp/common-mainline/common/drivers/mmc/host/sdhci.c' line='1865' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='sdhci_set_ios' hash='cdcda26f4b0c3ae9' id='type-id-1397'>
-      <parameter type-id='type-id-690'/>
-      <parameter type-id='type-id-692'/>
-      <return type-id='type-id-1554'/>
-    </function-decl>
-    <function-decl name='sdhci_enable_sdio_irq' filepath='/ws/android/kernel/aosp/common-mainline/common/drivers/mmc/host/sdhci.c' line='2114' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='sdhci_enable_sdio_irq' hash='708e3120ed61240d' id='type-id-1395'>
-      <parameter type-id='type-id-690'/>
-      <parameter type-id='type-id-164'/>
-      <return type-id='type-id-1554'/>
-    </function-decl>
-    <function-decl name='sdhci_start_signal_voltage_switch' filepath='/ws/android/kernel/aosp/common-mainline/common/drivers/mmc/host/sdhci.c' line='2147' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='sdhci_start_signal_voltage_switch' hash='0748d3cbb84cff66' id='type-id-521'>
-      <parameter type-id='type-id-690'/>
-      <parameter type-id='type-id-692'/>
-      <return type-id='type-id-164'/>
-    </function-decl>
-    <function-decl name='sdhci_start_tuning' filepath='/ws/android/kernel/aosp/common-mainline/common/drivers/mmc/host/sdhci.c' line='2265' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='sdhci_start_tuning' hash='1d626795ceff8937' id='type-id-1406'>
-      <parameter type-id='type-id-779'/>
-      <return type-id='type-id-1554'/>
-    </function-decl>
-    <function-decl name='sdhci_end_tuning' filepath='/ws/android/kernel/aosp/common-mainline/common/drivers/mmc/host/sdhci.c' line='2290' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='sdhci_end_tuning' hash='1d626795ceff8937' id='type-id-1406'>
-      <parameter type-id='type-id-779'/>
-      <return type-id='type-id-1554'/>
-    </function-decl>
-    <function-decl name='sdhci_reset_tuning' filepath='/ws/android/kernel/aosp/common-mainline/common/drivers/mmc/host/sdhci.c' line='2297' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='sdhci_reset_tuning' hash='1d626795ceff8937' id='type-id-1406'>
-      <parameter type-id='type-id-779'/>
-      <return type-id='type-id-1554'/>
-    </function-decl>
-    <function-decl name='sdhci_send_tuning' filepath='/ws/android/kernel/aosp/common-mainline/common/drivers/mmc/host/sdhci.c' line='2327' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='sdhci_send_tuning' hash='12df253760721a6b' id='type-id-1409'>
-      <parameter type-id='type-id-779'/>
-      <parameter type-id='type-id-874'/>
-      <return type-id='type-id-1554'/>
-    </function-decl>
-    <function-decl name='sdhci_execute_tuning' filepath='/ws/android/kernel/aosp/common-mainline/common/drivers/mmc/host/sdhci.c' line='2417' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='sdhci_execute_tuning' hash='9599279b246e3b01' id='type-id-525'>
-      <parameter type-id='type-id-690'/>
-      <parameter type-id='type-id-874'/>
-      <return type-id='type-id-164'/>
-    </function-decl>
-    <function-decl name='sdhci_suspend_host' filepath='/ws/android/kernel/aosp/common-mainline/common/drivers/mmc/host/sdhci.c' line='3244' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='sdhci_suspend_host' hash='c17021a754dc5ab2' id='type-id-539'>
-      <parameter type-id='type-id-779'/>
-      <return type-id='type-id-164'/>
-    </function-decl>
-    <function-decl name='sdhci_resume_host' filepath='/ws/android/kernel/aosp/common-mainline/common/drivers/mmc/host/sdhci.c' line='3263' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='sdhci_resume_host' hash='c17021a754dc5ab2' id='type-id-539'>
-      <parameter type-id='type-id-779'/>
-      <return type-id='type-id-164'/>
-    </function-decl>
-    <function-decl name='sdhci_runtime_suspend_host' filepath='/ws/android/kernel/aosp/common-mainline/common/drivers/mmc/host/sdhci.c' line='3301' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='sdhci_runtime_suspend_host' hash='c17021a754dc5ab2' id='type-id-539'>
-      <parameter type-id='type-id-779'/>
-      <return type-id='type-id-164'/>
-    </function-decl>
-    <function-decl name='sdhci_runtime_resume_host' filepath='/ws/android/kernel/aosp/common-mainline/common/drivers/mmc/host/sdhci.c' line='3323' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='sdhci_runtime_resume_host' hash='40fb47fbde3d07c1' id='type-id-1557'>
-      <parameter type-id='type-id-779' filepath='/ws/android/kernel/aosp/common-mainline/common/drivers/mmc/host/sdhci.c' line='3323' column='1'/>
-      <parameter type-id='type-id-164' filepath='/ws/android/kernel/aosp/common-mainline/common/drivers/mmc/host/sdhci.c' line='3323' column='1'/>
-      <return type-id='type-id-164'/>
-    </function-decl>
-    <function-decl name='sdhci_cqe_enable' filepath='/ws/android/kernel/aosp/common-mainline/common/drivers/mmc/host/sdhci.c' line='3381' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='sdhci_cqe_enable' hash='51f22ab5a5741799' id='type-id-1394'>
-      <parameter type-id='type-id-690'/>
-      <return type-id='type-id-1554'/>
-    </function-decl>
-    <function-decl name='sdhci_cqe_disable' filepath='/ws/android/kernel/aosp/common-mainline/common/drivers/mmc/host/sdhci.c' line='3425' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='sdhci_cqe_disable' hash='d6e4826cd6cc39a1' id='type-id-1558'>
-      <parameter type-id='type-id-690' filepath='/ws/android/kernel/aosp/common-mainline/common/drivers/mmc/host/sdhci.c' line='3425' column='1'/>
-      <parameter type-id='type-id-56' filepath='/ws/android/kernel/aosp/common-mainline/common/drivers/mmc/host/sdhci.c' line='3425' column='1'/>
-      <return type-id='type-id-1554'/>
-    </function-decl>
-    <function-decl name='sdhci_cqe_irq' filepath='/ws/android/kernel/aosp/common-mainline/common/drivers/mmc/host/sdhci.c' line='3449' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='sdhci_cqe_irq' hash='b663cc7e290ee531' id='type-id-1559'>
-      <parameter type-id='type-id-779' filepath='/ws/android/kernel/aosp/common-mainline/common/drivers/mmc/host/sdhci.c' line='3449' column='1'/>
-      <parameter type-id='type-id-874' filepath='/ws/android/kernel/aosp/common-mainline/common/drivers/mmc/host/sdhci.c' line='3449' column='1'/>
-      <parameter type-id='type-id-589' filepath='/ws/android/kernel/aosp/common-mainline/common/drivers/mmc/host/sdhci.c' line='3449' column='1'/>
-      <parameter type-id='type-id-589' filepath='/ws/android/kernel/aosp/common-mainline/common/drivers/mmc/host/sdhci.c' line='3450' column='1'/>
-      <return type-id='type-id-56'/>
-    </function-decl>
-    <function-decl name='sdhci_alloc_host' filepath='/ws/android/kernel/aosp/common-mainline/common/drivers/mmc/host/sdhci.c' line='3499' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='sdhci_alloc_host' hash='d1788a754b48af37' id='type-id-1560'>
-      <parameter type-id='type-id-263' filepath='/ws/android/kernel/aosp/common-mainline/common/drivers/mmc/host/sdhci.c' line='3499' column='1'/>
-      <parameter type-id='type-id-864' filepath='/ws/android/kernel/aosp/common-mainline/common/drivers/mmc/host/sdhci.c' line='3500' column='1'/>
-      <return type-id='type-id-779'/>
-    </function-decl>
-    <function-decl name='__sdhci_read_caps' filepath='/ws/android/kernel/aosp/common-mainline/common/drivers/mmc/host/sdhci.c' line='3568' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='__sdhci_read_caps' hash='91ff2db73982ad4f' id='type-id-1561'>
-      <parameter type-id='type-id-779' filepath='/ws/android/kernel/aosp/common-mainline/common/drivers/mmc/host/sdhci.c' line='3568' column='1'/>
-      <parameter type-id='type-id-1344' filepath='/ws/android/kernel/aosp/common-mainline/common/drivers/mmc/host/sdhci.c' line='3568' column='1'/>
-      <parameter type-id='type-id-1299' filepath='/ws/android/kernel/aosp/common-mainline/common/drivers/mmc/host/sdhci.c' line='3568' column='1'/>
-      <parameter type-id='type-id-1299' filepath='/ws/android/kernel/aosp/common-mainline/common/drivers/mmc/host/sdhci.c' line='3568' column='1'/>
-      <return type-id='type-id-1554'/>
-    </function-decl>
-    <function-decl name='sdhci_setup_host' filepath='/ws/android/kernel/aosp/common-mainline/common/drivers/mmc/host/sdhci.c' line='3695' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='sdhci_setup_host' hash='c17021a754dc5ab2' id='type-id-539'>
-      <parameter type-id='type-id-779'/>
-      <return type-id='type-id-164'/>
-    </function-decl>
-    <function-decl name='sdhci_cleanup_host' filepath='/ws/android/kernel/aosp/common-mainline/common/drivers/mmc/host/sdhci.c' line='4235' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='sdhci_cleanup_host' hash='1d626795ceff8937' id='type-id-1406'>
-      <parameter type-id='type-id-779'/>
-      <return type-id='type-id-1554'/>
-    </function-decl>
-    <function-decl name='__sdhci_add_host' filepath='/ws/android/kernel/aosp/common-mainline/common/drivers/mmc/host/sdhci.c' line='4251' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='__sdhci_add_host' hash='c17021a754dc5ab2' id='type-id-539'>
-      <parameter type-id='type-id-779'/>
-      <return type-id='type-id-164'/>
-    </function-decl>
-    <function-decl name='sdhci_add_host' filepath='/ws/android/kernel/aosp/common-mainline/common/drivers/mmc/host/sdhci.c' line='4313' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='sdhci_add_host' hash='c17021a754dc5ab2' id='type-id-539'>
-      <parameter type-id='type-id-779'/>
-      <return type-id='type-id-164'/>
-    </function-decl>
-    <function-decl name='sdhci_remove_host' filepath='/ws/android/kernel/aosp/common-mainline/common/drivers/mmc/host/sdhci.c' line='4334' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='sdhci_remove_host' hash='a97fb9cf50caf488' id='type-id-1407'>
-      <parameter type-id='type-id-779'/>
-      <parameter type-id='type-id-164'/>
-      <return type-id='type-id-1554'/>
-    </function-decl>
-    <function-decl name='sdhci_free_host' filepath='/ws/android/kernel/aosp/common-mainline/common/drivers/mmc/host/sdhci.c' line='4385' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='sdhci_free_host' hash='1d626795ceff8937' id='type-id-1406'>
-      <parameter type-id='type-id-779'/>
-      <return type-id='type-id-1554'/>
-    </function-decl>
+    <function-decl name='sdhci_dumpregs' type-id='type-id-1406' filepath='/ws/android/kernel/aosp/common-mainline/common/drivers/mmc/host/sdhci.c' line='53' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='sdhci_dumpregs'/>
+    <function-decl name='sdhci_enable_v4_mode' type-id='type-id-1406' filepath='/ws/android/kernel/aosp/common-mainline/common/drivers/mmc/host/sdhci.c' line='138' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='sdhci_enable_v4_mode'/>
+    <function-decl name='sdhci_reset' type-id='type-id-1410' filepath='/ws/android/kernel/aosp/common-mainline/common/drivers/mmc/host/sdhci.c' line='198' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='sdhci_reset'/>
+    <function-decl name='sdhci_adma_write_desc' type-id='type-id-1413' filepath='/ws/android/kernel/aosp/common-mainline/common/drivers/mmc/host/sdhci.c' line='663' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='sdhci_adma_write_desc'/>
+    <function-decl name='sdhci_send_command' type-id='type-id-1408' filepath='/ws/android/kernel/aosp/common-mainline/common/drivers/mmc/host/sdhci.c' line='1342' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='sdhci_send_command'/>
+    <function-decl name='sdhci_calc_clk' type-id='type-id-1554' filepath='/ws/android/kernel/aosp/common-mainline/common/drivers/mmc/host/sdhci.c' line='1539' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='sdhci_calc_clk'/>
+    <function-decl name='sdhci_enable_clk' type-id='type-id-1555' filepath='/ws/android/kernel/aosp/common-mainline/common/drivers/mmc/host/sdhci.c' line='1632' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='sdhci_enable_clk'/>
+    <function-decl name='sdhci_set_clock' type-id='type-id-1412' filepath='/ws/android/kernel/aosp/common-mainline/common/drivers/mmc/host/sdhci.c' line='1661' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='sdhci_set_clock'/>
+    <function-decl name='sdhci_set_power_noreg' type-id='type-id-1411' filepath='/ws/android/kernel/aosp/common-mainline/common/drivers/mmc/host/sdhci.c' line='1690' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='sdhci_set_power_noreg'/>
+    <function-decl name='sdhci_set_power' type-id='type-id-1411' filepath='/ws/android/kernel/aosp/common-mainline/common/drivers/mmc/host/sdhci.c' line='1764' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='sdhci_set_power'/>
+    <function-decl name='sdhci_request' type-id='type-id-1398' filepath='/ws/android/kernel/aosp/common-mainline/common/drivers/mmc/host/sdhci.c' line='1780' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='sdhci_request'/>
+    <function-decl name='sdhci_set_bus_width' type-id='type-id-1407' filepath='/ws/android/kernel/aosp/common-mainline/common/drivers/mmc/host/sdhci.c' line='1820' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='sdhci_set_bus_width'/>
+    <function-decl name='sdhci_set_uhs_signaling' type-id='type-id-1412' filepath='/ws/android/kernel/aosp/common-mainline/common/drivers/mmc/host/sdhci.c' line='1840' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='sdhci_set_uhs_signaling'/>
+    <function-decl name='sdhci_set_ios' type-id='type-id-1397' filepath='/ws/android/kernel/aosp/common-mainline/common/drivers/mmc/host/sdhci.c' line='1865' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='sdhci_set_ios'/>
+    <function-decl name='sdhci_enable_sdio_irq' type-id='type-id-1395' filepath='/ws/android/kernel/aosp/common-mainline/common/drivers/mmc/host/sdhci.c' line='2114' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='sdhci_enable_sdio_irq'/>
+    <function-decl name='sdhci_start_signal_voltage_switch' type-id='type-id-521' filepath='/ws/android/kernel/aosp/common-mainline/common/drivers/mmc/host/sdhci.c' line='2147' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='sdhci_start_signal_voltage_switch'/>
+    <function-decl name='sdhci_start_tuning' type-id='type-id-1406' filepath='/ws/android/kernel/aosp/common-mainline/common/drivers/mmc/host/sdhci.c' line='2265' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='sdhci_start_tuning'/>
+    <function-decl name='sdhci_end_tuning' type-id='type-id-1406' filepath='/ws/android/kernel/aosp/common-mainline/common/drivers/mmc/host/sdhci.c' line='2290' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='sdhci_end_tuning'/>
+    <function-decl name='sdhci_reset_tuning' type-id='type-id-1406' filepath='/ws/android/kernel/aosp/common-mainline/common/drivers/mmc/host/sdhci.c' line='2297' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='sdhci_reset_tuning'/>
+    <function-decl name='sdhci_send_tuning' type-id='type-id-1409' filepath='/ws/android/kernel/aosp/common-mainline/common/drivers/mmc/host/sdhci.c' line='2327' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='sdhci_send_tuning'/>
+    <function-decl name='sdhci_execute_tuning' type-id='type-id-525' filepath='/ws/android/kernel/aosp/common-mainline/common/drivers/mmc/host/sdhci.c' line='2417' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='sdhci_execute_tuning'/>
+    <function-decl name='sdhci_suspend_host' type-id='type-id-539' filepath='/ws/android/kernel/aosp/common-mainline/common/drivers/mmc/host/sdhci.c' line='3244' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='sdhci_suspend_host'/>
+    <function-decl name='sdhci_resume_host' type-id='type-id-539' filepath='/ws/android/kernel/aosp/common-mainline/common/drivers/mmc/host/sdhci.c' line='3263' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='sdhci_resume_host'/>
+    <function-decl name='sdhci_runtime_suspend_host' type-id='type-id-539' filepath='/ws/android/kernel/aosp/common-mainline/common/drivers/mmc/host/sdhci.c' line='3301' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='sdhci_runtime_suspend_host'/>
+    <function-decl name='sdhci_runtime_resume_host' type-id='type-id-1556' filepath='/ws/android/kernel/aosp/common-mainline/common/drivers/mmc/host/sdhci.c' line='3323' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='sdhci_runtime_resume_host'/>
+    <function-decl name='sdhci_cqe_enable' type-id='type-id-1394' filepath='/ws/android/kernel/aosp/common-mainline/common/drivers/mmc/host/sdhci.c' line='3381' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='sdhci_cqe_enable'/>
+    <function-decl name='sdhci_cqe_disable' type-id='type-id-1557' filepath='/ws/android/kernel/aosp/common-mainline/common/drivers/mmc/host/sdhci.c' line='3425' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='sdhci_cqe_disable'/>
+    <function-decl name='sdhci_cqe_irq' type-id='type-id-1558' filepath='/ws/android/kernel/aosp/common-mainline/common/drivers/mmc/host/sdhci.c' line='3449' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='sdhci_cqe_irq'/>
+    <function-decl name='sdhci_alloc_host' type-id='type-id-1559' filepath='/ws/android/kernel/aosp/common-mainline/common/drivers/mmc/host/sdhci.c' line='3499' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='sdhci_alloc_host'/>
+    <function-decl name='__sdhci_read_caps' type-id='type-id-1560' filepath='/ws/android/kernel/aosp/common-mainline/common/drivers/mmc/host/sdhci.c' line='3568' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='__sdhci_read_caps'/>
+    <function-decl name='sdhci_setup_host' type-id='type-id-539' filepath='/ws/android/kernel/aosp/common-mainline/common/drivers/mmc/host/sdhci.c' line='3695' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='sdhci_setup_host'/>
+    <function-decl name='sdhci_cleanup_host' type-id='type-id-1406' filepath='/ws/android/kernel/aosp/common-mainline/common/drivers/mmc/host/sdhci.c' line='4235' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='sdhci_cleanup_host'/>
+    <function-decl name='__sdhci_add_host' type-id='type-id-539' filepath='/ws/android/kernel/aosp/common-mainline/common/drivers/mmc/host/sdhci.c' line='4251' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='__sdhci_add_host'/>
+    <function-decl name='sdhci_add_host' type-id='type-id-539' filepath='/ws/android/kernel/aosp/common-mainline/common/drivers/mmc/host/sdhci.c' line='4313' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='sdhci_add_host'/>
+    <function-decl name='sdhci_remove_host' type-id='type-id-1407' filepath='/ws/android/kernel/aosp/common-mainline/common/drivers/mmc/host/sdhci.c' line='4334' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='sdhci_remove_host'/>
+    <function-decl name='sdhci_free_host' type-id='type-id-1406' filepath='/ws/android/kernel/aosp/common-mainline/common/drivers/mmc/host/sdhci.c' line='4385' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='sdhci_free_host'/>
     <typedef-decl name='fl_owner_t' type-id='type-id-849' filepath='/ws/android/kernel/aosp/common-mainline/common/include/linux/fs.h' line='1012' column='1' id='type-id-953'/>
-    <type-decl name='void' id='type-id-1554'/>
-    <pointer-type-def type-id='type-id-1554' id='type-id-849'/>
+    <type-decl name='void' id='type-id-1561'/>
+    <pointer-type-def type-id='type-id-1561' id='type-id-849'/>
     <function-type size-in-bits='64' hash='5703957f01f56833' id='type-id-6'>
       <parameter type-id='type-id-312'/>
       <parameter type-id='type-id-1517'/>
@@ -10116,6 +9976,13 @@
     <function-type size-in-bits='64' hash='47a65432575b6e47' id='type-id-52'>
       <parameter type-id='type-id-714'/>
       <parameter type-id='type-id-1338'/>
+      <return type-id='type-id-56'/>
+    </function-type>
+    <function-type size-in-bits='64' hash='b663cc7e290ee531' id='type-id-1558'>
+      <parameter type-id='type-id-779' filepath='/ws/android/kernel/aosp/common-mainline/common/drivers/mmc/host/sdhci.c' line='3449' column='1'/>
+      <parameter type-id='type-id-874' filepath='/ws/android/kernel/aosp/common-mainline/common/drivers/mmc/host/sdhci.c' line='3449' column='1'/>
+      <parameter type-id='type-id-589' filepath='/ws/android/kernel/aosp/common-mainline/common/drivers/mmc/host/sdhci.c' line='3449' column='1'/>
+      <parameter type-id='type-id-589' filepath='/ws/android/kernel/aosp/common-mainline/common/drivers/mmc/host/sdhci.c' line='3450' column='1'/>
       <return type-id='type-id-56'/>
     </function-type>
     <function-type size-in-bits='64' hash='c7c710e908194b91' id='type-id-54'>
@@ -10697,9 +10564,19 @@
       <parameter type-id='type-id-682'/>
       <return type-id='type-id-164'/>
     </function-type>
+    <function-type size-in-bits='64' hash='0748d3cbb84cff66' id='type-id-521'>
+      <parameter type-id='type-id-690'/>
+      <parameter type-id='type-id-692'/>
+      <return type-id='type-id-164'/>
+    </function-type>
     <function-type size-in-bits='64' hash='4cc7dcd3fa5bb064' id='type-id-523'>
       <parameter type-id='type-id-690'/>
       <parameter type-id='type-id-697'/>
+      <return type-id='type-id-164'/>
+    </function-type>
+    <function-type size-in-bits='64' hash='9599279b246e3b01' id='type-id-525'>
+      <parameter type-id='type-id-690'/>
+      <parameter type-id='type-id-874'/>
       <return type-id='type-id-164'/>
     </function-type>
     <function-type size-in-bits='64' hash='fa58f04f4a8ab15e' id='type-id-527'>
@@ -10730,6 +10607,15 @@
     <function-type size-in-bits='64' hash='cd07b5e872ecfa5e' id='type-id-537'>
       <parameter type-id='type-id-714'/>
       <parameter type-id='type-id-1553'/>
+      <return type-id='type-id-164'/>
+    </function-type>
+    <function-type size-in-bits='64' hash='c17021a754dc5ab2' id='type-id-539'>
+      <parameter type-id='type-id-779'/>
+      <return type-id='type-id-164'/>
+    </function-type>
+    <function-type size-in-bits='64' hash='40fb47fbde3d07c1' id='type-id-1556'>
+      <parameter type-id='type-id-779' filepath='/ws/android/kernel/aosp/common-mainline/common/drivers/mmc/host/sdhci.c' line='3323' column='1'/>
+      <parameter type-id='type-id-164' filepath='/ws/android/kernel/aosp/common-mainline/common/drivers/mmc/host/sdhci.c' line='3323' column='1'/>
       <return type-id='type-id-164'/>
     </function-type>
     <function-type size-in-bits='64' hash='8b6c19b0b05d40ea' id='type-id-541'>
@@ -10921,6 +10807,11 @@
       <parameter type-id='type-id-357'/>
       <return type-id='type-id-755'/>
     </function-type>
+    <function-type size-in-bits='64' hash='d1788a754b48af37' id='type-id-1559'>
+      <parameter type-id='type-id-263' filepath='/ws/android/kernel/aosp/common-mainline/common/drivers/mmc/host/sdhci.c' line='3499' column='1'/>
+      <parameter type-id='type-id-864' filepath='/ws/android/kernel/aosp/common-mainline/common/drivers/mmc/host/sdhci.c' line='3500' column='1'/>
+      <return type-id='type-id-779'/>
+    </function-type>
     <function-type size-in-bits='64' hash='d8f65d422e633f5b' id='type-id-780'>
       <parameter type-id='type-id-30'/>
       <parameter type-id='type-id-782'/>
@@ -11047,6 +10938,12 @@
       <parameter type-id='type-id-665'/>
       <return type-id='type-id-1341'/>
     </function-type>
+    <function-type size-in-bits='64' hash='1960c75948510cf4' id='type-id-1554'>
+      <parameter type-id='type-id-779' filepath='/ws/android/kernel/aosp/common-mainline/common/drivers/mmc/host/sdhci.c' line='1539' column='1'/>
+      <parameter type-id='type-id-237' filepath='/ws/android/kernel/aosp/common-mainline/common/drivers/mmc/host/sdhci.c' line='1539' column='1'/>
+      <parameter type-id='type-id-1024' filepath='/ws/android/kernel/aosp/common-mainline/common/drivers/mmc/host/sdhci.c' line='1540' column='1'/>
+      <return type-id='type-id-232'/>
+    </function-type>
     <function-type size-in-bits='64' hash='b65bab91c2430d86' id='type-id-1345'>
       <parameter type-id='type-id-779'/>
       <parameter type-id='type-id-874'/>
@@ -11104,45 +11001,45 @@
     </function-type>
     <function-type size-in-bits='64' hash='89d5fbdbf9e8c314' id='type-id-1363'>
       <parameter type-id='type-id-65'/>
-      <return type-id='type-id-1554'/>
+      <return type-id='type-id-1561'/>
     </function-type>
     <function-type size-in-bits='64' hash='8b6b691f2272bdc0' id='type-id-1364'>
       <parameter type-id='type-id-93'/>
-      <return type-id='type-id-1554'/>
+      <return type-id='type-id-1561'/>
     </function-type>
     <function-type size-in-bits='64' hash='7952001dcadc2d13' id='type-id-1365'>
       <parameter type-id='type-id-209'/>
       <parameter type-id='type-id-718'/>
-      <return type-id='type-id-1554'/>
+      <return type-id='type-id-1561'/>
     </function-type>
     <function-type size-in-bits='64' hash='0c95efd22ff4f5eb' id='type-id-1366'>
       <parameter type-id='type-id-252'/>
-      <return type-id='type-id-1554'/>
+      <return type-id='type-id-1561'/>
     </function-type>
     <function-type size-in-bits='64' hash='74e8bf88a99060a4' id='type-id-1367'>
       <parameter type-id='type-id-252'/>
       <parameter type-id='type-id-357'/>
-      <return type-id='type-id-1554'/>
+      <return type-id='type-id-1561'/>
     </function-type>
     <function-type size-in-bits='64' hash='88aec1bd0f29b59f' id='type-id-1368'>
       <parameter type-id='type-id-260'/>
-      <return type-id='type-id-1554'/>
+      <return type-id='type-id-1561'/>
     </function-type>
     <function-type size-in-bits='64' hash='5d29214e5138bffb' id='type-id-1369'>
       <parameter type-id='type-id-263'/>
-      <return type-id='type-id-1554'/>
+      <return type-id='type-id-1561'/>
     </function-type>
     <function-type size-in-bits='64' hash='8f384ef552b68fd0' id='type-id-1370'>
       <parameter type-id='type-id-263'/>
       <parameter type-id='type-id-56'/>
-      <return type-id='type-id-1554'/>
+      <return type-id='type-id-1561'/>
     </function-type>
     <function-type size-in-bits='64' hash='ae3f479811a073dc' id='type-id-1371'>
       <parameter type-id='type-id-263'/>
       <parameter type-id='type-id-276'/>
       <parameter type-id='type-id-864'/>
       <parameter type-id='type-id-287'/>
-      <return type-id='type-id-1554'/>
+      <return type-id='type-id-1561'/>
     </function-type>
     <function-type size-in-bits='64' hash='9c4ca3be87bf33d8' id='type-id-1372'>
       <parameter type-id='type-id-263'/>
@@ -11150,25 +11047,25 @@
       <parameter type-id='type-id-864'/>
       <parameter type-id='type-id-287'/>
       <parameter type-id='type-id-239'/>
-      <return type-id='type-id-1554'/>
+      <return type-id='type-id-1561'/>
     </function-type>
     <function-type size-in-bits='64' hash='eb2c9a3dd3db8165' id='type-id-1373'>
       <parameter type-id='type-id-263'/>
       <parameter type-id='type-id-638'/>
       <parameter type-id='type-id-616'/>
-      <return type-id='type-id-1554'/>
+      <return type-id='type-id-1561'/>
     </function-type>
     <function-type size-in-bits='64' hash='6d3f8d79af620df5' id='type-id-1374'>
       <parameter type-id='type-id-263'/>
       <parameter type-id='type-id-220'/>
-      <return type-id='type-id-1554'/>
+      <return type-id='type-id-1561'/>
     </function-type>
     <function-type size-in-bits='64' hash='29a4381e9f18ad74' id='type-id-1375'>
       <parameter type-id='type-id-263'/>
       <parameter type-id='type-id-773'/>
       <parameter type-id='type-id-164'/>
       <parameter type-id='type-id-287'/>
-      <return type-id='type-id-1554'/>
+      <return type-id='type-id-1561'/>
     </function-type>
     <function-type size-in-bits='64' hash='99ed91caafda85bb' id='type-id-1376'>
       <parameter type-id='type-id-263'/>
@@ -11176,7 +11073,7 @@
       <parameter type-id='type-id-164'/>
       <parameter type-id='type-id-287'/>
       <parameter type-id='type-id-239'/>
-      <return type-id='type-id-1554'/>
+      <return type-id='type-id-1561'/>
     </function-type>
     <function-type size-in-bits='64' hash='a2a7f9086a9707d3' id='type-id-1377'>
       <parameter type-id='type-id-263'/>
@@ -11184,179 +11081,258 @@
       <parameter type-id='type-id-849'/>
       <parameter type-id='type-id-276'/>
       <parameter type-id='type-id-239'/>
-      <return type-id='type-id-1554'/>
+      <return type-id='type-id-1561'/>
     </function-type>
     <function-type size-in-bits='64' hash='2cfda51cb23117ca' id='type-id-1378'>
       <parameter type-id='type-id-263'/>
       <parameter type-id='type-id-849'/>
       <parameter type-id='type-id-864'/>
       <parameter type-id='type-id-287'/>
-      <return type-id='type-id-1554'/>
+      <return type-id='type-id-1561'/>
     </function-type>
     <function-type size-in-bits='64' hash='cdf06146c4321080' id='type-id-1379'>
       <parameter type-id='type-id-279'/>
-      <return type-id='type-id-1554'/>
+      <return type-id='type-id-1561'/>
     </function-type>
     <function-type size-in-bits='64' hash='e9d92e720d2597ba' id='type-id-1380'>
       <parameter type-id='type-id-312'/>
-      <return type-id='type-id-1554'/>
+      <return type-id='type-id-1561'/>
     </function-type>
     <function-type size-in-bits='64' hash='a1c436e887dad952' id='type-id-1381'>
       <parameter type-id='type-id-314'/>
-      <return type-id='type-id-1554'/>
+      <return type-id='type-id-1561'/>
     </function-type>
     <function-type size-in-bits='64' hash='57c8c5bcea6a3064' id='type-id-1382'>
       <parameter type-id='type-id-314'/>
       <parameter type-id='type-id-314'/>
-      <return type-id='type-id-1554'/>
+      <return type-id='type-id-1561'/>
     </function-type>
     <function-type size-in-bits='64' hash='099e5ca91c1a48dd' id='type-id-1383'>
       <parameter type-id='type-id-314'/>
       <parameter type-id='type-id-1433'/>
-      <return type-id='type-id-1554'/>
+      <return type-id='type-id-1561'/>
     </function-type>
     <function-type size-in-bits='64' hash='7f32ffea222edbe7' id='type-id-1384'>
       <parameter type-id='type-id-953'/>
-      <return type-id='type-id-1554'/>
+      <return type-id='type-id-1561'/>
     </function-type>
     <function-type size-in-bits='64' hash='e1dfefa940f2b53e' id='type-id-1385'>
       <parameter type-id='type-id-324'/>
-      <return type-id='type-id-1554'/>
+      <return type-id='type-id-1561'/>
     </function-type>
     <function-type size-in-bits='64' hash='e9556d8086a49cfa' id='type-id-1386'>
       <parameter type-id='type-id-357'/>
-      <return type-id='type-id-1554'/>
+      <return type-id='type-id-1561'/>
     </function-type>
     <function-type size-in-bits='64' hash='16768966993b453e' id='type-id-1387'>
       <parameter type-id='type-id-357'/>
       <parameter type-id='type-id-164'/>
-      <return type-id='type-id-1554'/>
+      <return type-id='type-id-1561'/>
     </function-type>
     <function-type size-in-bits='64' hash='388da3fa973fde78' id='type-id-1335'>
       <parameter type-id='type-id-164'/>
-      <return type-id='type-id-1554'/>
+      <return type-id='type-id-1561'/>
     </function-type>
     <function-type size-in-bits='64' hash='64da50808fb17f33' id='type-id-1388'>
       <parameter type-id='type-id-604'/>
-      <return type-id='type-id-1554'/>
+      <return type-id='type-id-1561'/>
     </function-type>
     <function-type size-in-bits='64' hash='545aba187e0e8524' id='type-id-1389'>
       <parameter type-id='type-id-620'/>
       <parameter type-id='type-id-667'/>
       <parameter type-id='type-id-667'/>
-      <return type-id='type-id-1554'/>
+      <return type-id='type-id-1561'/>
     </function-type>
     <function-type size-in-bits='64' hash='f5e3eeea089bafc5' id='type-id-1390'>
       <parameter type-id='type-id-626'/>
-      <return type-id='type-id-1554'/>
+      <return type-id='type-id-1561'/>
     </function-type>
     <function-type size-in-bits='64' hash='39bb1e2592b9a302' id='type-id-1391'>
       <parameter type-id='type-id-626'/>
       <parameter type-id='type-id-638'/>
       <parameter type-id='type-id-616'/>
-      <return type-id='type-id-1554'/>
+      <return type-id='type-id-1561'/>
     </function-type>
     <function-type size-in-bits='64' hash='4040d49fe0507e9b' id='type-id-1392'>
       <parameter type-id='type-id-642'/>
-      <return type-id='type-id-1554'/>
+      <return type-id='type-id-1561'/>
     </function-type>
     <function-type size-in-bits='64' hash='f3e6f64e171a080e' id='type-id-1393'>
       <parameter type-id='type-id-642'/>
       <parameter type-id='type-id-290'/>
-      <return type-id='type-id-1554'/>
+      <return type-id='type-id-1561'/>
+    </function-type>
+    <function-type size-in-bits='64' hash='51f22ab5a5741799' id='type-id-1394'>
+      <parameter type-id='type-id-690'/>
+      <return type-id='type-id-1561'/>
+    </function-type>
+    <function-type size-in-bits='64' hash='d6e4826cd6cc39a1' id='type-id-1557'>
+      <parameter type-id='type-id-690' filepath='/ws/android/kernel/aosp/common-mainline/common/drivers/mmc/host/sdhci.c' line='3425' column='1'/>
+      <parameter type-id='type-id-56' filepath='/ws/android/kernel/aosp/common-mainline/common/drivers/mmc/host/sdhci.c' line='3425' column='1'/>
+      <return type-id='type-id-1561'/>
+    </function-type>
+    <function-type size-in-bits='64' hash='708e3120ed61240d' id='type-id-1395'>
+      <parameter type-id='type-id-690'/>
+      <parameter type-id='type-id-164'/>
+      <return type-id='type-id-1561'/>
     </function-type>
     <function-type size-in-bits='64' hash='81f6f6b44048d335' id='type-id-1396'>
       <parameter type-id='type-id-690'/>
       <parameter type-id='type-id-682'/>
-      <return type-id='type-id-1554'/>
+      <return type-id='type-id-1561'/>
+    </function-type>
+    <function-type size-in-bits='64' hash='cdcda26f4b0c3ae9' id='type-id-1397'>
+      <parameter type-id='type-id-690'/>
+      <parameter type-id='type-id-692'/>
+      <return type-id='type-id-1561'/>
+    </function-type>
+    <function-type size-in-bits='64' hash='a8637d24b746cf04' id='type-id-1398'>
+      <parameter type-id='type-id-690'/>
+      <parameter type-id='type-id-697'/>
+      <return type-id='type-id-1561'/>
     </function-type>
     <function-type size-in-bits='64' hash='60f8735852257fbb' id='type-id-1399'>
       <parameter type-id='type-id-690'/>
       <parameter type-id='type-id-697'/>
       <parameter type-id='type-id-164'/>
-      <return type-id='type-id-1554'/>
+      <return type-id='type-id-1561'/>
     </function-type>
     <function-type size-in-bits='64' hash='22efbecef5c34f37' id='type-id-1400'>
       <parameter type-id='type-id-697'/>
-      <return type-id='type-id-1554'/>
+      <return type-id='type-id-1561'/>
     </function-type>
     <function-type size-in-bits='64' hash='98cd438c18a5a3da' id='type-id-1401'>
       <parameter type-id='type-id-702'/>
-      <return type-id='type-id-1554'/>
+      <return type-id='type-id-1561'/>
     </function-type>
     <function-type size-in-bits='64' hash='bb0825d8e1cb5d31' id='type-id-1402'>
       <parameter type-id='type-id-702'/>
       <parameter type-id='type-id-107'/>
-      <return type-id='type-id-1554'/>
+      <return type-id='type-id-1561'/>
     </function-type>
     <function-type size-in-bits='64' hash='5808c2e6779f0bfd' id='type-id-1403'>
       <parameter type-id='type-id-714'/>
-      <return type-id='type-id-1554'/>
+      <return type-id='type-id-1561'/>
     </function-type>
     <function-type size-in-bits='64' hash='60d0d4c2924efac7' id='type-id-1404'>
       <parameter type-id='type-id-714'/>
       <parameter type-id='type-id-57'/>
       <parameter type-id='type-id-57'/>
-      <return type-id='type-id-1554'/>
+      <return type-id='type-id-1561'/>
     </function-type>
     <function-type size-in-bits='64' hash='acfa6d42e85d9a9e' id='type-id-1405'>
       <parameter type-id='type-id-714'/>
       <parameter type-id='type-id-237'/>
       <parameter type-id='type-id-237'/>
-      <return type-id='type-id-1554'/>
+      <return type-id='type-id-1561'/>
     </function-type>
     <function-type size-in-bits='64' hash='fbae7c95820d3d9f' id='type-id-1339'>
       <parameter type-id='type-id-720'/>
-      <return type-id='type-id-1554'/>
+      <return type-id='type-id-1561'/>
+    </function-type>
+    <function-type size-in-bits='64' hash='1d626795ceff8937' id='type-id-1406'>
+      <parameter type-id='type-id-779'/>
+      <return type-id='type-id-1561'/>
+    </function-type>
+    <function-type size-in-bits='64' hash='a97fb9cf50caf488' id='type-id-1407'>
+      <parameter type-id='type-id-779'/>
+      <parameter type-id='type-id-164'/>
+      <return type-id='type-id-1561'/>
+    </function-type>
+    <function-type size-in-bits='64' hash='eecb4512a4105e73' id='type-id-1408'>
+      <parameter type-id='type-id-779'/>
+      <parameter type-id='type-id-684'/>
+      <return type-id='type-id-1561'/>
+    </function-type>
+    <function-type size-in-bits='64' hash='80183ce1d4ccdfeb' id='type-id-1555'>
+      <parameter type-id='type-id-779' filepath='/ws/android/kernel/aosp/common-mainline/common/drivers/mmc/host/sdhci.c' line='1632' column='1'/>
+      <parameter type-id='type-id-232' filepath='/ws/android/kernel/aosp/common-mainline/common/drivers/mmc/host/sdhci.c' line='1632' column='1'/>
+      <return type-id='type-id-1561'/>
+    </function-type>
+    <function-type size-in-bits='64' hash='91ff2db73982ad4f' id='type-id-1560'>
+      <parameter type-id='type-id-779' filepath='/ws/android/kernel/aosp/common-mainline/common/drivers/mmc/host/sdhci.c' line='3568' column='1'/>
+      <parameter type-id='type-id-1344' filepath='/ws/android/kernel/aosp/common-mainline/common/drivers/mmc/host/sdhci.c' line='3568' column='1'/>
+      <parameter type-id='type-id-1299' filepath='/ws/android/kernel/aosp/common-mainline/common/drivers/mmc/host/sdhci.c' line='3568' column='1'/>
+      <parameter type-id='type-id-1299' filepath='/ws/android/kernel/aosp/common-mainline/common/drivers/mmc/host/sdhci.c' line='3568' column='1'/>
+      <return type-id='type-id-1561'/>
+    </function-type>
+    <function-type size-in-bits='64' hash='12df253760721a6b' id='type-id-1409'>
+      <parameter type-id='type-id-779'/>
+      <parameter type-id='type-id-874'/>
+      <return type-id='type-id-1561'/>
+    </function-type>
+    <function-type size-in-bits='64' hash='492076319b5984eb' id='type-id-1410'>
+      <parameter type-id='type-id-779'/>
+      <parameter type-id='type-id-868'/>
+      <return type-id='type-id-1561'/>
+    </function-type>
+    <function-type size-in-bits='64' hash='e2a96919020a109b' id='type-id-1411'>
+      <parameter type-id='type-id-779'/>
+      <parameter type-id='type-id-234'/>
+      <parameter type-id='type-id-875'/>
+      <return type-id='type-id-1561'/>
+    </function-type>
+    <function-type size-in-bits='64' hash='12df253760721a6b' id='type-id-1412'>
+      <parameter type-id='type-id-779'/>
+      <parameter type-id='type-id-237'/>
+      <return type-id='type-id-1561'/>
+    </function-type>
+    <function-type size-in-bits='64' hash='d7b5c893e3397262' id='type-id-1413'>
+      <parameter type-id='type-id-779'/>
+      <parameter type-id='type-id-1433'/>
+      <parameter type-id='type-id-276'/>
+      <parameter type-id='type-id-164'/>
+      <parameter type-id='type-id-237'/>
+      <return type-id='type-id-1561'/>
     </function-type>
     <function-type size-in-bits='64' hash='e9d92e720d2597ba' id='type-id-1414'>
       <parameter type-id='type-id-998'/>
       <parameter type-id='type-id-312'/>
-      <return type-id='type-id-1554'/>
+      <return type-id='type-id-1561'/>
     </function-type>
     <function-type size-in-bits='64' hash='7f32ffea222edbe7' id='type-id-1415'>
       <parameter type-id='type-id-998'/>
       <parameter type-id='type-id-849'/>
-      <return type-id='type-id-1554'/>
+      <return type-id='type-id-1561'/>
     </function-type>
     <function-type size-in-bits='64' hash='b4455f554b7cb5b7' id='type-id-1416'>
       <parameter type-id='type-id-866'/>
-      <return type-id='type-id-1554'/>
+      <return type-id='type-id-1561'/>
     </function-type>
     <function-type size-in-bits='64' hash='543337cba32ce40c' id='type-id-1417'>
       <parameter type-id='type-id-1319'/>
-      <return type-id='type-id-1554'/>
+      <return type-id='type-id-1561'/>
     </function-type>
     <function-type size-in-bits='64' hash='e11435099cddfbbc' id='type-id-1418'>
       <parameter type-id='type-id-1249'/>
-      <return type-id='type-id-1554'/>
+      <return type-id='type-id-1561'/>
     </function-type>
     <function-type size-in-bits='64' hash='72d55219a5f8151c' id='type-id-1419'>
       <parameter type-id='type-id-1360'/>
       <parameter type-id='type-id-239'/>
       <parameter type-id='type-id-239'/>
-      <return type-id='type-id-1554'/>
+      <return type-id='type-id-1561'/>
     </function-type>
     <function-type size-in-bits='64' hash='7f32ffea222edbe7' id='type-id-1331'>
-      <return type-id='type-id-1554'/>
+      <return type-id='type-id-1561'/>
     </function-type>
     <function-type size-in-bits='64' hash='7f32ffea222edbe7' id='type-id-1420'>
       <parameter type-id='type-id-849'/>
-      <return type-id='type-id-1554'/>
+      <return type-id='type-id-1561'/>
     </function-type>
     <function-type size-in-bits='64' hash='7f32ffea222edbe7' id='type-id-1421'>
       <parameter type-id='type-id-849'/>
       <parameter type-id='type-id-1477'/>
-      <return type-id='type-id-1554'/>
+      <return type-id='type-id-1561'/>
     </function-type>
     <function-type size-in-bits='64' hash='7f32ffea222edbe7' id='type-id-1422'>
       <parameter type-id='type-id-849'/>
       <parameter type-id='type-id-849'/>
-      <return type-id='type-id-1554'/>
+      <return type-id='type-id-1561'/>
     </function-type>
     <function-type size-in-bits='64' hash='6f4af733c5f312bd' id='type-id-1423'>
       <parameter type-id='type-id-1434'/>
-      <return type-id='type-id-1554'/>
+      <return type-id='type-id-1561'/>
     </function-type>
     <function-type size-in-bits='64' hash='df90c525215fbd4d' id='type-id-1424'>
       <parameter type-id='type-id-154'/>

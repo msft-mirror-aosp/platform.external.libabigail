@@ -82,10 +82,12 @@
     <!-- int U::* pmcu -->
     <var-decl name='pmcu' type-id='type-id-12' mangled-name='pmcu' visibility='default' filepath='/home/dodji/git/libabigail/PR30260/tests/data/test-read-dwarf/test-pointer-to-member-1.cc' line='24' column='1' elf-symbol-id='pmcu'/>
     <!-- int main() -->
-    <function-decl name='main' filepath='/home/dodji/git/libabigail/PR30260/tests/data/test-read-dwarf/test-pointer-to-member-1.cc' line='27' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='main' hash='388da3fa973fde78' id='type-id-18'>
+    <function-decl name='main' type-id='type-id-18' filepath='/home/dodji/git/libabigail/PR30260/tests/data/test-read-dwarf/test-pointer-to-member-1.cc' line='27' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='main'/>
+    <!-- int (void) -->
+    <function-type size-in-bits='64' hash='388da3fa973fde78' id='type-id-18'>
       <!-- int -->
       <return type-id='type-id-8'/>
-    </function-decl>
+    </function-type>
     <!-- void (X::*) (int) -->
     <function-type method-class-id='type-id-1' size-in-bits='64' hash='388da3fa973fde78' id='type-id-15'>
       <!-- implicit parameter of type 'X*' -->

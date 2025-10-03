@@ -1,4 +1,4 @@
-Functions changes summary: 82 Removed, 19 Changed (93 filtered out), 0 Added (938 filtered out) functions
+Functions changes summary: 82 Removed, 16 Changed (76 filtered out), 0 Added (968 filtered out) functions
 Variables changes summary: 47 Removed, 1 Changed, 0 Added (11 filtered out) variables
 Function symbols changes summary: 7 Removed, 0 Added (76 filtered out) function symbols not referenced by debug info
 Variable symbols changes summary: 0 Removed, 0 Added variable symbol not referenced by debug info
@@ -88,7 +88,7 @@ Variable symbols changes summary: 0 Removed, 0 Added variable symbol not referen
   [D] 'function void std::__unguarded_linear_insert<VarList::BufEntry*,__gnu_cxx::__ops::_Val_comp_iter<bool(*)(constVarList::BufEntry&,constVarList::BufEntry&)>>(VarList::BufEntry*, __gnu_cxx::__ops::_Val_comp_iter<bool(*)(constVarList::BufEntry&,constVarList::BufEntry&)>)'
   [D] 'function void write_message(FILE*, int, __va_list_tag*)'
 
-4 functions with incompatible sub-type changes:
+3 functions with incompatible sub-type changes:
 
   [C] 'method std::pair<std::_Rb_tree_iterator<AutoData>,bool>::pair<std::_Rb_tree_iterator<AutoData>,bool>(std::_Rb_tree_iterator<AutoData>&&, bool&&)' has some sub-type changes:
     'method std::pair<std::_Rb_tree_iterator<AutoData>,bool>::pair<std::_Rb_tree_iterator<AutoData>,bool>(std::_Rb_tree_iterator<AutoData>&&, bool&&) {_ZNSt4pairISt17_Rb_tree_iteratorI8AutoDataEbEC2IS2_bLb1EEEOT_OT0_, _ZNSt4pairISt17_Rb_tree_iteratorI8AutoDataEbEC1IS2_bLb1EEEOT_OT0_}' now becomes 'method void std::pair<std::_Rb_tree_iterator<AutoData>,bool>::pair<std::_Rb_tree_iterator<AutoData>,bool,1>(std::_Rb_tree_iterator<AutoData>&, bool&) {_ZNSt4pairISt17_Rb_tree_iteratorI8AutoDataEbEC2IS2_bLb1EEEOT_OT0_, _ZNSt4pairISt17_Rb_tree_iteratorI8AutoDataEbEC1IS2_bLb1EEEOT_OT0_}'
@@ -104,13 +104,6 @@ Variable symbols changes summary: 0 Removed, 0 Added variable symbol not referen
     parameter 2 of type 'std::_Rb_tree_iterator<AutoData>&&' changed:
       rvalue reference type 'std::_Rb_tree_iterator<AutoData>&& became an lvalue reference type: 'std::_Rb_tree_iterator<AutoData>&'
 
-  [C] 'method std::pair<std::_Rb_tree_iterator<PtrData>,bool>::pair<std::_Rb_tree_iterator<PtrData>,bool>(std::_Rb_tree_iterator<PtrData>&&, bool&&)' has some sub-type changes:
-    'method std::pair<std::_Rb_tree_iterator<PtrData>,bool>::pair<std::_Rb_tree_iterator<PtrData>,bool>(std::_Rb_tree_iterator<PtrData>&&, bool&&) {_ZNSt4pairISt17_Rb_tree_iteratorI7PtrDataEbEC2IS2_bLb1EEEOT_OT0_, _ZNSt4pairISt17_Rb_tree_iteratorI7PtrDataEbEC1IS2_bLb1EEEOT_OT0_}' now becomes 'method void std::pair<std::_Rb_tree_iterator<PtrData>,bool>::pair<std::_Rb_tree_iterator<PtrData>,bool,1>(std::_Rb_tree_iterator<PtrData>&, bool&) {_ZNSt4pairISt17_Rb_tree_iteratorI7PtrDataEbEC2IS2_bLb1EEEOT_OT0_, _ZNSt4pairISt17_Rb_tree_iteratorI7PtrDataEbEC1IS2_bLb1EEEOT_OT0_}'
-    parameter 1 of type 'std::_Rb_tree_iterator<PtrData>&&' changed:
-      rvalue reference type 'std::_Rb_tree_iterator<PtrData>&& became an lvalue reference type: 'std::_Rb_tree_iterator<PtrData>&'
-    parameter 2 of type 'bool&&' changed:
-      rvalue reference type 'bool&& became an lvalue reference type: 'bool&'
-
   [C] 'method std::pair<std::_Rb_tree_iterator<PtrData>,std::_Rb_tree_iterator<PtrData>>::pair<std::_Rb_tree_iterator<PtrData>,std::_Rb_tree_iterator<PtrData>>(std::_Rb_tree_iterator<PtrData>&&, std::_Rb_tree_iterator<PtrData>&&)' has some sub-type changes:
     'method std::pair<std::_Rb_tree_iterator<PtrData>,std::_Rb_tree_iterator<PtrData>>::pair<std::_Rb_tree_iterator<PtrData>,std::_Rb_tree_iterator<PtrData>>(std::_Rb_tree_iterator<PtrData>&&, std::_Rb_tree_iterator<PtrData>&&) {_ZNSt4pairISt17_Rb_tree_iteratorI7PtrDataES2_EC2IS2_S2_Lb1EEEOT_OT0_, _ZNSt4pairISt17_Rb_tree_iteratorI7PtrDataES2_EC1IS2_S2_Lb1EEEOT_OT0_}' now becomes 'method void std::pair<std::_Rb_tree_iterator<PtrData>,std::_Rb_tree_iterator<PtrData>>::pair<std::_Rb_tree_iterator<PtrData>,std::_Rb_tree_iterator<PtrData>,1>(std::_Rb_tree_iterator<PtrData>&, std::_Rb_tree_iterator<PtrData>&) {_ZNSt4pairISt17_Rb_tree_iteratorI7PtrDataES2_EC2IS2_S2_Lb1EEEOT_OT0_, _ZNSt4pairISt17_Rb_tree_iteratorI7PtrDataES2_EC1IS2_S2_Lb1EEEOT_OT0_}'
     parameter 1 of type 'std::_Rb_tree_iterator<PtrData>&&' changed:
@@ -118,7 +111,7 @@ Variable symbols changes summary: 0 Removed, 0 Added variable symbol not referen
     parameter 2 of type 'std::_Rb_tree_iterator<PtrData>&&' changed:
       rvalue reference type 'std::_Rb_tree_iterator<PtrData>&& became an lvalue reference type: 'std::_Rb_tree_iterator<PtrData>&'
 
-15 functions with some indirect sub-type change:
+13 functions with some indirect sub-type change:
 
   [C] 'method void Engine::fini_process(bool)' has some indirect sub-type changes:
     implicit parameter 0 of type 'Engine*' has sub-type changes:
@@ -367,13 +360,6 @@ Variable symbols changes summary: 0 Removed, 0 Added variable symbol not referen
     parameter 2 of type 'AutoData&&' changed:
       rvalue reference type 'AutoData&& became an lvalue reference type: 'AutoData&'
 
-  [C] 'method void __gnu_cxx::new_allocator<std::_Rb_tree_node<PtrData>>::construct<PtrData,PtrData>(PtrData*, PtrData&&)' has some indirect sub-type changes:
-    Please note that the symbol of this function is _ZN9__gnu_cxx13new_allocatorISt13_Rb_tree_nodeI7PtrDataEE9constructIS2_JS2_EEEvPT_DpOT0_
-     and it aliases symbol: _ZN9__gnu_cxx13new_allocatorISt13_Rb_tree_nodeI7PtrDataEE9constructIS2_IS2_EEEvPT_DpOT0_
-    method void __gnu_cxx::new_allocator<std::_Rb_tree_node<PtrData>>::construct<PtrData,PtrData>(PtrData*, PtrData&) is not declared inline anymore
-    parameter 2 of type 'PtrData&&' changed:
-      rvalue reference type 'PtrData&& became an lvalue reference type: 'PtrData&'
-
   [C] 'method void __gnu_cxx::new_allocator<std::_Rb_tree_node<std::pair<voidconst*const,OffloadDescriptor*>>>::construct<std::pair<voidconst*const,OffloadDescriptor*>,conststd::piecewise_construct_t&,std::tuple<voidconst*const&>,std::tuple<>>(std::pair<voidconst*const,OffloadDescriptor*>*, const std::piecewise_construct_t&, std::tuple<voidconst*const&>&&, std::tuple<>&&)' has some indirect sub-type changes:
     Please note that the symbol of this function is _ZN9__gnu_cxx13new_allocatorISt13_Rb_tree_nodeISt4pairIKPKvP17OffloadDescriptorEEE9constructIS8_JRKSt21piecewise_construct_tSt5tupleIJRS5_EESF_IJEEEEEvPT_DpOT0_
      and it aliases symbol: _ZN9__gnu_cxx13new_allocatorISt13_Rb_tree_nodeISt4pairIKPKvP17OffloadDescriptorEEE9constructIS8_IRKSt21piecewise_construct_tSt5tupleIIRS5_EESF_IIEEEEEvPT_DpOT0_
@@ -417,11 +403,6 @@ Variable symbols changes summary: 0 Removed, 0 Added variable symbol not referen
     method std::pair<std::_Rb_tree_const_iterator<AutoData>,bool> std::set<AutoData,std::less<AutoData>,std::allocator<AutoData>>::insert(std::set<AutoData,std::less<AutoData>,std::allocator<AutoData>>::value_type&) is not declared inline anymore
     parameter 1 of type 'std::set<AutoData,std::less<AutoData>,std::allocator<AutoData>>::value_type&&' changed:
       rvalue reference type 'std::set<AutoData,std::less<AutoData>,std::allocator<AutoData>>::value_type&& became an lvalue reference type: 'std::set<AutoData,std::less<AutoData>,std::allocator<AutoData>>::value_type&'
-
-  [C] 'method std::pair<std::_Rb_tree_const_iterator<PtrData>,bool> std::set<PtrData,std::less<PtrData>,std::allocator<PtrData>>::insert(std::set<PtrData,std::less<PtrData>,std::allocator<PtrData>>::value_type&&)' has some indirect sub-type changes:
-    method std::pair<std::_Rb_tree_const_iterator<PtrData>,bool> std::set<PtrData,std::less<PtrData>,std::allocator<PtrData>>::insert(std::set<PtrData,std::less<PtrData>,std::allocator<PtrData>>::value_type&) is not declared inline anymore
-    parameter 1 of type 'std::set<PtrData,std::less<PtrData>,std::allocator<PtrData>>::value_type&&' changed:
-      rvalue reference type 'std::set<PtrData,std::less<PtrData>,std::allocator<PtrData>>::value_type&& became an lvalue reference type: 'std::set<PtrData,std::less<PtrData>,std::allocator<PtrData>>::value_type&'
 
 47 Removed variables:
 

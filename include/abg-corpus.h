@@ -8,6 +8,7 @@
 #ifndef __ABG_CORPUS_H__
 #define __ABG_CORPUS_H__
 
+#include <map>
 #include <abg-ir.h>
 
 namespace abigail
@@ -15,6 +16,75 @@ namespace abigail
 
 namespace ir
 {
+
+/// Hashing functor for canonicalized decl types.
+template<typename DeclType>
+struct c11d_decl_hasher
+{
+  /// Hashing operator for decls that have canonicalized decl
+  /// types.
+  ///
+  /// The hash is the pointer value of the canonical type of the type
+  /// of the decl.
+  ///
+  /// @param f the decl to canonicalize.
+  ///
+  /// @return the pointer value of the canonical type of the type of
+  /// the decl.
+  size_t
+  operator()(const DeclType* f) const
+  {
+    if (!f || !f->get_type())
+      return 0;
+    return reinterpret_cast<size_t>(get_exemplar_type(f->get_type()));
+  }
+};//end struct c11d_decl_hasher
+
+/// Functor to compare decls in hash maps or sets of decls
+/// with canonicalized types.
+template<typename DeclType>
+struct c11d_decl_eq
+{
+  /// Comparison operator for decls with canonicalized types.
+  ///
+  /// @param f the first decl to consider.
+  ///
+  /// @param s the second decl to consider.
+  ///
+  /// @return true iff @p f equals @p s.
+  bool
+  operator()(const DeclType* f, const DeclType* s) const
+  {
+    if (f && s)
+      return *f == *s;
+    return f == s;
+  }
+}; //end struct c11d_decl_eq
+
+/// A set of hashed function decls.  The hash value is the canonical
+/// type of the function.  Note that the function types must have been
+/// canonicalized prior to be added to this set.
+typedef unordered_set<const function_decl*,
+		      c11d_decl_hasher<function_decl>,
+		      c11d_decl_eq<function_decl>> functions_set_type;
+
+/// A set of hashed var decls.  The hash value is the canonical type
+/// of the var.  Note that the var types must have been canonicalized
+/// prior to be added to this set.
+typedef unordered_set<const var_decl*,
+		      c11d_decl_hasher<var_decl>,
+		      c11d_decl_eq<var_decl>> vars_set_type;
+
+/// A map that associates an interned string with a set of hashed
+/// function decls.
+typedef unordered_map<interned_string,
+		      functions_set_type,
+		      hash_interned_string> istring_functions_set_map_type;
+
+/// An ordered map that associates an interned string with a set of
+/// hashed function decls.
+typedef std::map<interned_string,
+		 functions_set_type> istring_functions_set_omap_type;
 
 /// This is the abstraction of a set of translation units (themselves
 /// seen as bundles of unitary abi artefacts like types and decls)
@@ -224,10 +294,10 @@ public:
   virtual const functions&
   get_functions() const;
 
-  virtual const std::unordered_set<function_decl*>*
+  virtual const std::unordered_set<const function_decl*>*
   lookup_functions(const interned_string& id) const;
 
-  virtual const std::unordered_set<function_decl*>*
+  virtual const std::unordered_set<const function_decl*>*
   lookup_functions(const char* id) const;
 
   virtual const std::unordered_set<var_decl_sptr>*
@@ -360,7 +430,7 @@ public:
   functions&
   exported_functions();
 
-  std::unordered_set<function_decl*>*
+  std::unordered_set<const function_decl*>*
   fn_id_maps_to_several_fns(const function_decl*);
 
   const variables&
@@ -370,7 +440,7 @@ public:
   exported_variables();
 
   bool
-  maybe_add_fn_to_exported_fns(function_decl*);
+  maybe_add_fn_to_exported_fns(function_decl*, bool do_update = false);
 
   bool
   maybe_add_var_to_exported_vars(const var_decl_sptr&);
@@ -446,10 +516,10 @@ public:
   bool
   operator==(const corpus_group&) const;
 
-  virtual const std::unordered_set<function_decl*>*
+  virtual const std::unordered_set<const function_decl*>*
   lookup_functions(const interned_string& id) const;
 
-  virtual const std::unordered_set<function_decl*>*
+  virtual const std::unordered_set<const function_decl*>*
   lookup_functions(const char* id) const;
 
   virtual const std::unordered_set<var_decl_sptr>*

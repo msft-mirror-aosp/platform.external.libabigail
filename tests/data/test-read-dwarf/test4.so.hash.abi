@@ -13,11 +13,12 @@
     <pointer-type-def type-id='9b45d938' size-in-bits='64' hash='c44743f354f6a443' id='80f4b756'/>
     <qualified-type-def type-id='80f4b756' restrict='yes' hash='b7d5472019e79b5f' id='9d26089a'/>
     <type-decl name='unsigned int' size-in-bits='32' hash='e66b43f97c38e87a' id='f0981eeb'/>
-    <function-decl name='cpy' filepath='/home/byby/oracle/src/libabigail/tests/data/test-read-common/test4.c' line='4' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='cpy' hash='16fe079a43daee87' id='6236f2b1'>
+    <function-decl name='cpy' type-id='6236f2b1' filepath='/home/byby/oracle/src/libabigail/tests/data/test-read-common/test4.c' line='4' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='cpy'/>
+    <function-type size-in-bits='64' hash='16fe079a43daee87' id='6236f2b1'>
       <parameter type-id='266fe297' filepath='/home/byby/oracle/src/libabigail/tests/data/test-read-common/test4.c' line='4' column='1'/>
       <parameter type-id='9d26089a' filepath='/home/byby/oracle/src/libabigail/tests/data/test-read-common/test4.c' line='4' column='1'/>
       <parameter type-id='f0981eeb' filepath='/home/byby/oracle/src/libabigail/tests/data/test-read-common/test4.c' line='4' column='1'/>
       <return type-id='26a90f95'/>
-    </function-decl>
+    </function-type>
   </abi-instr>
 </abi-corpus>

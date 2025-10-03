@@ -53,15 +53,17 @@
     <var-decl name='test_pointer' type-id='26a90f95' mangled-name='test_pointer' visibility='default' elf-symbol-id='test_pointer'/>
     <var-decl name='test_const' type-id='0fb3b55d' mangled-name='test_const' visibility='default' elf-symbol-id='test_const'/>
     <var-decl name='test_float' type-id='a6c45d85' mangled-name='test_float' visibility='default' elf-symbol-id='test_float'/>
-    <function-decl name='foo_1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='foo_1' hash='86766259792c2f3c' id='8d9db416'>
-      <parameter type-id='fd01f598'/>
-      <return type-id='95e97e5e'/>
-    </function-decl>
-    <function-decl name='main' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='main' hash='388da3fa973fde78' id='b39d85cf'>
-      <return type-id='95e97e5e'/>
-    </function-decl>
+    <function-decl name='foo_1' type-id='8d9db416' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='foo_1'/>
+    <function-decl name='main' type-id='b39d85cf' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='main'/>
     <var-decl name='test_array' type-id='b7bd1749' mangled-name='test_array' visibility='default' elf-symbol-id='test_array'/>
     <var-decl name='test_restrict' type-id='6942f6a4' mangled-name='test_restrict' visibility='default' elf-symbol-id='test_restrict'/>
     <var-decl name='test_volatile' type-id='e024ff18' mangled-name='test_volatile' visibility='default' elf-symbol-id='test_volatile'/>
+    <function-type size-in-bits='64' hash='86766259792c2f3c' id='8d9db416'>
+      <parameter type-id='fd01f598'/>
+      <return type-id='95e97e5e'/>
+    </function-type>
+    <function-type size-in-bits='64' hash='388da3fa973fde78' id='b39d85cf'>
+      <return type-id='95e97e5e'/>
+    </function-type>
   </abi-instr>
 </abi-corpus>

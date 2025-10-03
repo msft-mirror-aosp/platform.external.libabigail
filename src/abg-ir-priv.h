@@ -161,7 +161,7 @@ struct translation_unit::priv
   location_manager				loc_mgr_;
   mutable global_scope_sptr			global_scope_;
   mutable vector<type_base_sptr>		synthesized_types_;
-  vector<function_type_sptr>			live_fn_types_;
+  type_sptr_set_type				live_fn_types_;
   type_maps					types_;
 
 
@@ -1192,6 +1192,19 @@ struct type_topo_comp
     if (s1 != s2)
       return s1 < s2;
 
+    // Typs with smaller hash and canonical type index values come
+    // first.
+    if (hash_t fh = peek_hash_value(*f))
+      if (hash_t sh = peek_hash_value(*s))
+	{
+	  if (*fh != *sh)
+	    return *fh < *sh;
+	  size_t f_cti = get_canonical_type_index(*f);
+	  size_t s_cti = get_canonical_type_index(*s);
+	  if (f_cti != s_cti)
+	    return f_cti< s_cti;
+	}
+
     if (is_typedef(f) && is_typedef(s))
       {
 	s1 = is_typedef(f)->get_underlying_type()->get_cached_pretty_representation(false);
@@ -1779,6 +1792,7 @@ struct function_type::priv
   parameters parms_;
   type_base_wptr return_type_;
   interned_string cached_name_;
+  interned_string temp_cached_name_;
   interned_string internal_cached_name_;
   interned_string temp_internal_cached_name_;
   bool is_pretty_printing_ = false;

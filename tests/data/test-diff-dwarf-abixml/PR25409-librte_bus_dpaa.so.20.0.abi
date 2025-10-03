@@ -1,4 +1,4 @@
-<abi-corpus version='2.5' path='tests/data/test-diff-dwarf-abixml/PR25409-librte_bus_dpaa.so.20.0' soname='librte_bus_dpaa.so.20.0'>
+<abi-corpus version='2.5' soname='librte_bus_dpaa.so.20.0'>
   <elf-needed>
     <dependency name='libm.so.6'/>
     <dependency name='libdl.so.2'/>
@@ -340,124 +340,101 @@
     <type-decl name='unnamed-enum-underlying-type-32' size-in-bits='32' alignment-in-bits='32' is-anonymous='yes' hash='5181a58e665b3619' id='type-id-15'/>
     <type-decl name='unsigned char' size-in-bits='8' hash='6ebac62b3366db68' id='type-id-29'/>
     <type-decl name='unsigned long int' size-in-bits='64' hash='8fdc5eea2983a729#2' id='type-id-27'/>
-    <function-decl name='fman_if_set_mcast_filter_table' filepath='../../dpdk/drivers/bus/dpaa/base/fman/fman_hw.c' line='36' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='fman_if_set_mcast_filter_table@@DPDK_20.0' hash='c42c06c9d4768f53' id='type-id-35'>
-      <parameter type-id='type-id-17' name='p' filepath='../../dpdk/drivers/bus/dpaa/base/fman/fman_hw.c' line='36' column='1'/>
-      <return type-id='type-id-36'/>
-    </function-decl>
-    <function-decl name='fman_if_reset_mcast_filter_table' filepath='../../dpdk/drivers/bus/dpaa/base/fman/fman_hw.c' line='48' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='fman_if_reset_mcast_filter_table@@DPDK_20.0' hash='c42c06c9d4768f53' id='type-id-35'>
-      <parameter type-id='type-id-17' name='p' filepath='../../dpdk/drivers/bus/dpaa/base/fman/fman_hw.c' line='36' column='1'/>
-      <return type-id='type-id-36'/>
-    </function-decl>
-    <function-decl name='fman_if_clear_mac_addr' filepath='../../dpdk/drivers/bus/dpaa/base/fman/fman_hw.c' line='128' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='fman_if_clear_mac_addr@@DPDK_20.0' hash='c59194d8423695f4' id='type-id-37'>
-      <parameter type-id='type-id-17' name='p' filepath='../../dpdk/drivers/bus/dpaa/base/fman/fman_hw.c' line='128' column='1'/>
-      <parameter type-id='type-id-22' name='addr_num' filepath='../../dpdk/drivers/bus/dpaa/base/fman/fman_hw.c' line='128' column='1'/>
-      <return type-id='type-id-36'/>
-    </function-decl>
-    <function-decl name='fman_if_add_mac_addr' filepath='../../dpdk/drivers/bus/dpaa/base/fman/fman_hw.c' line='149' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='fman_if_add_mac_addr@@DPDK_20.0' hash='9245f97b2a78517a' id='type-id-38'>
-      <parameter type-id='type-id-17' name='p' filepath='../../dpdk/drivers/bus/dpaa/base/fman/fman_hw.c' line='149' column='1'/>
-      <parameter type-id='type-id-33' name='eth' filepath='../../dpdk/drivers/bus/dpaa/base/fman/fman_hw.c' line='149' column='1'/>
-      <parameter type-id='type-id-22' name='addr_num' filepath='../../dpdk/drivers/bus/dpaa/base/fman/fman_hw.c' line='149' column='1'/>
-      <return type-id='type-id-1'/>
-    </function-decl>
-    <function-decl name='fman_if_stats_get' filepath='../../dpdk/drivers/bus/dpaa/base/fman/fman_hw.c' line='216' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='fman_if_stats_get@@DPDK_20.0' hash='86d645b67314fb8a' id='type-id-39'>
-      <parameter type-id='type-id-17' name='p' filepath='../../dpdk/drivers/bus/dpaa/base/fman/fman_hw.c' line='216' column='1'/>
-      <parameter type-id='type-id-21' name='stats' filepath='../../dpdk/drivers/bus/dpaa/base/fman/fman_hw.c' line='216' column='1'/>
-      <return type-id='type-id-36'/>
-    </function-decl>
-    <function-decl name='fman_if_stats_get_all' filepath='../../dpdk/drivers/bus/dpaa/base/fman/fman_hw.c' line='239' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='fman_if_stats_get_all@@DPDK_20.0' hash='484df4d451b070a5' id='type-id-40'>
-      <parameter type-id='type-id-17' name='p' filepath='../../dpdk/drivers/bus/dpaa/base/fman/fman_hw.c' line='239' column='1'/>
-      <parameter type-id='type-id-31' name='value' filepath='../../dpdk/drivers/bus/dpaa/base/fman/fman_hw.c' line='239' column='1'/>
-      <parameter type-id='type-id-1' name='n' filepath='../../dpdk/drivers/bus/dpaa/base/fman/fman_hw.c' line='239' column='1'/>
-      <return type-id='type-id-36'/>
-    </function-decl>
-    <function-decl name='fman_if_stats_reset' filepath='../../dpdk/drivers/bus/dpaa/base/fman/fman_hw.c' line='254' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='fman_if_stats_reset@@DPDK_20.0' hash='c42c06c9d4768f53' id='type-id-35'>
-      <parameter type-id='type-id-17' name='p' filepath='../../dpdk/drivers/bus/dpaa/base/fman/fman_hw.c' line='36' column='1'/>
-      <return type-id='type-id-36'/>
-    </function-decl>
-    <function-decl name='fman_if_promiscuous_enable' filepath='../../dpdk/drivers/bus/dpaa/base/fman/fman_hw.c' line='271' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='fman_if_promiscuous_enable@@DPDK_20.0' hash='c42c06c9d4768f53' id='type-id-35'>
-      <parameter type-id='type-id-17' name='p' filepath='../../dpdk/drivers/bus/dpaa/base/fman/fman_hw.c' line='36' column='1'/>
-      <return type-id='type-id-36'/>
-    </function-decl>
-    <function-decl name='fman_if_promiscuous_disable' filepath='../../dpdk/drivers/bus/dpaa/base/fman/fman_hw.c' line='284' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='fman_if_promiscuous_disable@@DPDK_20.0' hash='c42c06c9d4768f53' id='type-id-35'>
-      <parameter type-id='type-id-17' name='p' filepath='../../dpdk/drivers/bus/dpaa/base/fman/fman_hw.c' line='36' column='1'/>
-      <return type-id='type-id-36'/>
-    </function-decl>
-    <function-decl name='fman_if_enable_rx' filepath='../../dpdk/drivers/bus/dpaa/base/fman/fman_hw.c' line='297' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='fman_if_enable_rx@@DPDK_20.0' hash='c42c06c9d4768f53' id='type-id-35'>
-      <parameter type-id='type-id-17' name='p' filepath='../../dpdk/drivers/bus/dpaa/base/fman/fman_hw.c' line='36' column='1'/>
-      <return type-id='type-id-36'/>
-    </function-decl>
-    <function-decl name='fman_if_disable_rx' filepath='../../dpdk/drivers/bus/dpaa/base/fman/fman_hw.c' line='308' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='fman_if_disable_rx@@DPDK_20.0' hash='c42c06c9d4768f53' id='type-id-35'>
-      <parameter type-id='type-id-17' name='p' filepath='../../dpdk/drivers/bus/dpaa/base/fman/fman_hw.c' line='36' column='1'/>
-      <return type-id='type-id-36'/>
-    </function-decl>
-    <function-decl name='fman_if_loopback_enable' filepath='../../dpdk/drivers/bus/dpaa/base/fman/fman_hw.c' line='319' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='fman_if_loopback_enable@@DPDK_20.0' hash='c42c06c9d4768f53' id='type-id-35'>
-      <parameter type-id='type-id-17' name='p' filepath='../../dpdk/drivers/bus/dpaa/base/fman/fman_hw.c' line='36' column='1'/>
-      <return type-id='type-id-36'/>
-    </function-decl>
-    <function-decl name='fman_if_loopback_disable' filepath='../../dpdk/drivers/bus/dpaa/base/fman/fman_hw.c' line='338' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='fman_if_loopback_disable@@DPDK_20.0' hash='c42c06c9d4768f53' id='type-id-35'>
-      <parameter type-id='type-id-17' name='p' filepath='../../dpdk/drivers/bus/dpaa/base/fman/fman_hw.c' line='36' column='1'/>
-      <return type-id='type-id-36'/>
-    </function-decl>
-    <function-decl name='fman_if_set_bp' filepath='../../dpdk/drivers/bus/dpaa/base/fman/fman_hw.c' line='356' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='fman_if_set_bp@@DPDK_20.0' hash='25a291232b351d23' id='type-id-41'>
-      <parameter type-id='type-id-17' name='fm_if' filepath='../../dpdk/drivers/bus/dpaa/base/fman/fman_hw.c' line='356' column='1'/>
-      <parameter type-id='type-id-4' name='num' filepath='../../dpdk/drivers/bus/dpaa/base/fman/fman_hw.c' line='356' column='1'/>
-      <parameter type-id='type-id-1' name='bpid' filepath='../../dpdk/drivers/bus/dpaa/base/fman/fman_hw.c' line='357' column='1'/>
-      <parameter type-id='type-id-42' name='bufsize' filepath='../../dpdk/drivers/bus/dpaa/base/fman/fman_hw.c' line='357' column='1'/>
-      <return type-id='type-id-36'/>
-    </function-decl>
-    <function-decl name='fman_if_get_fc_threshold' filepath='../../dpdk/drivers/bus/dpaa/base/fman/fman_hw.c' line='377' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='fman_if_get_fc_threshold@@DPDK_20.0' hash='37cd355ea449343b' id='type-id-43'>
+    <function-decl name='fman_if_set_mcast_filter_table' type-id='type-id-35' filepath='../../dpdk/drivers/bus/dpaa/base/fman/fman_hw.c' line='36' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='fman_if_set_mcast_filter_table@@DPDK_20.0'/>
+    <function-decl name='fman_if_reset_mcast_filter_table' type-id='type-id-35' filepath='../../dpdk/drivers/bus/dpaa/base/fman/fman_hw.c' line='48' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='fman_if_reset_mcast_filter_table@@DPDK_20.0'/>
+    <function-decl name='fman_if_clear_mac_addr' type-id='type-id-36' filepath='../../dpdk/drivers/bus/dpaa/base/fman/fman_hw.c' line='128' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='fman_if_clear_mac_addr@@DPDK_20.0'/>
+    <function-decl name='fman_if_add_mac_addr' type-id='type-id-37' filepath='../../dpdk/drivers/bus/dpaa/base/fman/fman_hw.c' line='149' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='fman_if_add_mac_addr@@DPDK_20.0'/>
+    <function-decl name='fman_if_stats_get' type-id='type-id-38' filepath='../../dpdk/drivers/bus/dpaa/base/fman/fman_hw.c' line='216' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='fman_if_stats_get@@DPDK_20.0'/>
+    <function-decl name='fman_if_stats_get_all' type-id='type-id-39' filepath='../../dpdk/drivers/bus/dpaa/base/fman/fman_hw.c' line='239' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='fman_if_stats_get_all@@DPDK_20.0'/>
+    <function-decl name='fman_if_stats_reset' type-id='type-id-35' filepath='../../dpdk/drivers/bus/dpaa/base/fman/fman_hw.c' line='254' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='fman_if_stats_reset@@DPDK_20.0'/>
+    <function-decl name='fman_if_promiscuous_enable' type-id='type-id-35' filepath='../../dpdk/drivers/bus/dpaa/base/fman/fman_hw.c' line='271' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='fman_if_promiscuous_enable@@DPDK_20.0'/>
+    <function-decl name='fman_if_promiscuous_disable' type-id='type-id-35' filepath='../../dpdk/drivers/bus/dpaa/base/fman/fman_hw.c' line='284' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='fman_if_promiscuous_disable@@DPDK_20.0'/>
+    <function-decl name='fman_if_enable_rx' type-id='type-id-35' filepath='../../dpdk/drivers/bus/dpaa/base/fman/fman_hw.c' line='297' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='fman_if_enable_rx@@DPDK_20.0'/>
+    <function-decl name='fman_if_disable_rx' type-id='type-id-35' filepath='../../dpdk/drivers/bus/dpaa/base/fman/fman_hw.c' line='308' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='fman_if_disable_rx@@DPDK_20.0'/>
+    <function-decl name='fman_if_loopback_enable' type-id='type-id-35' filepath='../../dpdk/drivers/bus/dpaa/base/fman/fman_hw.c' line='319' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='fman_if_loopback_enable@@DPDK_20.0'/>
+    <function-decl name='fman_if_loopback_disable' type-id='type-id-35' filepath='../../dpdk/drivers/bus/dpaa/base/fman/fman_hw.c' line='338' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='fman_if_loopback_disable@@DPDK_20.0'/>
+    <function-decl name='fman_if_set_bp' type-id='type-id-40' filepath='../../dpdk/drivers/bus/dpaa/base/fman/fman_hw.c' line='356' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='fman_if_set_bp@@DPDK_20.0'/>
+    <function-decl name='fman_if_get_fc_threshold' type-id='type-id-41' filepath='../../dpdk/drivers/bus/dpaa/base/fman/fman_hw.c' line='377' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='fman_if_get_fc_threshold@@DPDK_20.0'/>
+    <function-decl name='fman_if_set_fc_threshold' type-id='type-id-42' filepath='../../dpdk/drivers/bus/dpaa/base/fman/fman_hw.c' line='389' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='fman_if_set_fc_threshold@@DPDK_20.0'/>
+    <function-decl name='fman_if_get_fc_quanta' type-id='type-id-41' filepath='../../dpdk/drivers/bus/dpaa/base/fman/fman_hw.c' line='404' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='fman_if_get_fc_quanta@@DPDK_20.0'/>
+    <function-decl name='fman_if_set_fc_quanta' type-id='type-id-43' filepath='../../dpdk/drivers/bus/dpaa/base/fman/fman_hw.c' line='414' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='fman_if_set_fc_quanta@@DPDK_20.0'/>
+    <function-decl name='fman_if_get_fdoff' type-id='type-id-41' filepath='../../dpdk/drivers/bus/dpaa/base/fman/fman_hw.c' line='426' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='fman_if_get_fdoff@@DPDK_20.0'/>
+    <function-decl name='fman_if_set_ic_params' type-id='type-id-44' filepath='../../dpdk/drivers/bus/dpaa/base/fman/fman_hw.c' line='477' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='fman_if_set_ic_params@@DPDK_20.0'/>
+    <function-decl name='fman_if_set_fdoff' type-id='type-id-45' filepath='../../dpdk/drivers/bus/dpaa/base/fman/fman_hw.c' line='500' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='fman_if_set_fdoff@@DPDK_20.0'/>
+    <function-decl name='fman_if_set_maxfrm' type-id='type-id-46' filepath='../../dpdk/drivers/bus/dpaa/base/fman/fman_hw.c' line='517' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='fman_if_set_maxfrm@@DPDK_20.0'/>
+    <function-decl name='fman_if_get_sg_enable' type-id='type-id-41' filepath='../../dpdk/drivers/bus/dpaa/base/fman/fman_hw.c' line='550' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='fman_if_get_sg_enable@@DPDK_20.0'/>
+    <function-decl name='fman_if_set_sg' type-id='type-id-47' filepath='../../dpdk/drivers/bus/dpaa/base/fman/fman_hw.c' line='564' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='fman_if_set_sg@@DPDK_20.0'/>
+    <function-decl name='fman_if_discard_rx_errors' type-id='type-id-35' filepath='../../dpdk/drivers/bus/dpaa/base/fman/fman_hw.c' line='597' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='fman_if_discard_rx_errors@@DPDK_20.0'/>
+    <type-decl name='void' id='type-id-48'/>
+    <function-type size-in-bits='64' hash='37cd355ea449343b' id='type-id-41'>
       <parameter type-id='type-id-17' name='fm_if' filepath='../../dpdk/drivers/bus/dpaa/base/fman/fman_hw.c' line='377' column='1'/>
       <return type-id='type-id-1'/>
-    </function-decl>
-    <function-decl name='fman_if_set_fc_threshold' filepath='../../dpdk/drivers/bus/dpaa/base/fman/fman_hw.c' line='389' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='fman_if_set_fc_threshold@@DPDK_20.0' hash='a421011071e54061' id='type-id-44'>
+    </function-type>
+    <function-type size-in-bits='64' hash='471560d47d2424ff' id='type-id-44'>
+      <parameter type-id='type-id-17' name='fm_if' filepath='../../dpdk/drivers/bus/dpaa/base/fman/fman_hw.c' line='477' column='1'/>
+      <parameter type-id='type-id-13' name='icp' filepath='../../dpdk/drivers/bus/dpaa/base/fman/fman_hw.c' line='478' column='1'/>
+      <return type-id='type-id-1'/>
+    </function-type>
+    <function-type size-in-bits='64' hash='14d1c6ef0e5b9404' id='type-id-43'>
+      <parameter type-id='type-id-17' name='fm_if' filepath='../../dpdk/drivers/bus/dpaa/base/fman/fman_hw.c' line='414' column='1'/>
+      <parameter type-id='type-id-7' name='pause_quanta' filepath='../../dpdk/drivers/bus/dpaa/base/fman/fman_hw.c' line='414' column='1'/>
+      <return type-id='type-id-1'/>
+    </function-type>
+    <function-type size-in-bits='64' hash='a421011071e54061' id='type-id-42'>
       <parameter type-id='type-id-17' name='fm_if' filepath='../../dpdk/drivers/bus/dpaa/base/fman/fman_hw.c' line='389' column='1'/>
       <parameter type-id='type-id-9' name='high_water' filepath='../../dpdk/drivers/bus/dpaa/base/fman/fman_hw.c' line='389' column='1'/>
       <parameter type-id='type-id-9' name='low_water' filepath='../../dpdk/drivers/bus/dpaa/base/fman/fman_hw.c' line='390' column='1'/>
       <parameter type-id='type-id-9' name='bpid' filepath='../../dpdk/drivers/bus/dpaa/base/fman/fman_hw.c' line='390' column='1'/>
       <return type-id='type-id-1'/>
-    </function-decl>
-    <function-decl name='fman_if_get_fc_quanta' filepath='../../dpdk/drivers/bus/dpaa/base/fman/fman_hw.c' line='404' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='fman_if_get_fc_quanta@@DPDK_20.0' hash='37cd355ea449343b' id='type-id-43'>
-      <parameter type-id='type-id-17' name='fm_if' filepath='../../dpdk/drivers/bus/dpaa/base/fman/fman_hw.c' line='377' column='1'/>
+    </function-type>
+    <function-type size-in-bits='64' hash='9245f97b2a78517a' id='type-id-37'>
+      <parameter type-id='type-id-17' name='p' filepath='../../dpdk/drivers/bus/dpaa/base/fman/fman_hw.c' line='149' column='1'/>
+      <parameter type-id='type-id-33' name='eth' filepath='../../dpdk/drivers/bus/dpaa/base/fman/fman_hw.c' line='149' column='1'/>
+      <parameter type-id='type-id-22' name='addr_num' filepath='../../dpdk/drivers/bus/dpaa/base/fman/fman_hw.c' line='149' column='1'/>
       <return type-id='type-id-1'/>
-    </function-decl>
-    <function-decl name='fman_if_set_fc_quanta' filepath='../../dpdk/drivers/bus/dpaa/base/fman/fman_hw.c' line='414' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='fman_if_set_fc_quanta@@DPDK_20.0' hash='14d1c6ef0e5b9404' id='type-id-45'>
-      <parameter type-id='type-id-17' name='fm_if' filepath='../../dpdk/drivers/bus/dpaa/base/fman/fman_hw.c' line='414' column='1'/>
-      <parameter type-id='type-id-7' name='pause_quanta' filepath='../../dpdk/drivers/bus/dpaa/base/fman/fman_hw.c' line='414' column='1'/>
-      <return type-id='type-id-1'/>
-    </function-decl>
-    <function-decl name='fman_if_get_fdoff' filepath='../../dpdk/drivers/bus/dpaa/base/fman/fman_hw.c' line='426' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='fman_if_get_fdoff@@DPDK_20.0' hash='37cd355ea449343b' id='type-id-43'>
-      <parameter type-id='type-id-17' name='fm_if' filepath='../../dpdk/drivers/bus/dpaa/base/fman/fman_hw.c' line='377' column='1'/>
-      <return type-id='type-id-1'/>
-    </function-decl>
-    <function-decl name='fman_if_set_ic_params' filepath='../../dpdk/drivers/bus/dpaa/base/fman/fman_hw.c' line='477' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='fman_if_set_ic_params@@DPDK_20.0' hash='471560d47d2424ff' id='type-id-46'>
-      <parameter type-id='type-id-17' name='fm_if' filepath='../../dpdk/drivers/bus/dpaa/base/fman/fman_hw.c' line='477' column='1'/>
-      <parameter type-id='type-id-13' name='icp' filepath='../../dpdk/drivers/bus/dpaa/base/fman/fman_hw.c' line='478' column='1'/>
-      <return type-id='type-id-1'/>
-    </function-decl>
-    <function-decl name='fman_if_set_fdoff' filepath='../../dpdk/drivers/bus/dpaa/base/fman/fman_hw.c' line='500' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='fman_if_set_fdoff@@DPDK_20.0' hash='f3589c69e9de72b8' id='type-id-47'>
-      <parameter type-id='type-id-17' name='fm_if' filepath='../../dpdk/drivers/bus/dpaa/base/fman/fman_hw.c' line='500' column='1'/>
-      <parameter type-id='type-id-8' name='fd_offset' filepath='../../dpdk/drivers/bus/dpaa/base/fman/fman_hw.c' line='500' column='1'/>
-      <return type-id='type-id-36'/>
-    </function-decl>
-    <function-decl name='fman_if_set_maxfrm' filepath='../../dpdk/drivers/bus/dpaa/base/fman/fman_hw.c' line='517' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='fman_if_set_maxfrm@@DPDK_20.0' hash='f0c14be7d6e159ed' id='type-id-48'>
-      <parameter type-id='type-id-17' name='fm_if' filepath='../../dpdk/drivers/bus/dpaa/base/fman/fman_hw.c' line='517' column='1'/>
-      <parameter type-id='type-id-6' name='max_frm' filepath='../../dpdk/drivers/bus/dpaa/base/fman/fman_hw.c' line='517' column='1'/>
-      <return type-id='type-id-36'/>
-    </function-decl>
-    <function-decl name='fman_if_get_sg_enable' filepath='../../dpdk/drivers/bus/dpaa/base/fman/fman_hw.c' line='550' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='fman_if_get_sg_enable@@DPDK_20.0' hash='37cd355ea449343b' id='type-id-43'>
-      <parameter type-id='type-id-17' name='fm_if' filepath='../../dpdk/drivers/bus/dpaa/base/fman/fman_hw.c' line='377' column='1'/>
-      <return type-id='type-id-1'/>
-    </function-decl>
-    <function-decl name='fman_if_set_sg' filepath='../../dpdk/drivers/bus/dpaa/base/fman/fman_hw.c' line='564' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='fman_if_set_sg@@DPDK_20.0' hash='34cdc430f6472809' id='type-id-49'>
+    </function-type>
+    <function-type size-in-bits='64' hash='c42c06c9d4768f53' id='type-id-35'>
+      <parameter type-id='type-id-17' name='p' filepath='../../dpdk/drivers/bus/dpaa/base/fman/fman_hw.c' line='36' column='1'/>
+      <return type-id='type-id-48'/>
+    </function-type>
+    <function-type size-in-bits='64' hash='34cdc430f6472809' id='type-id-47'>
       <parameter type-id='type-id-17' name='fm_if' filepath='../../dpdk/drivers/bus/dpaa/base/fman/fman_hw.c' line='564' column='1'/>
       <parameter type-id='type-id-1' name='enable' filepath='../../dpdk/drivers/bus/dpaa/base/fman/fman_hw.c' line='564' column='1'/>
-      <return type-id='type-id-36'/>
-    </function-decl>
-    <function-decl name='fman_if_discard_rx_errors' filepath='../../dpdk/drivers/bus/dpaa/base/fman/fman_hw.c' line='597' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='fman_if_discard_rx_errors@@DPDK_20.0' hash='c42c06c9d4768f53' id='type-id-35'>
-      <parameter type-id='type-id-17' name='p' filepath='../../dpdk/drivers/bus/dpaa/base/fman/fman_hw.c' line='36' column='1'/>
-      <return type-id='type-id-36'/>
-    </function-decl>
-    <type-decl name='void' id='type-id-36'/>
+      <return type-id='type-id-48'/>
+    </function-type>
+    <function-type size-in-bits='64' hash='86d645b67314fb8a' id='type-id-38'>
+      <parameter type-id='type-id-17' name='p' filepath='../../dpdk/drivers/bus/dpaa/base/fman/fman_hw.c' line='216' column='1'/>
+      <parameter type-id='type-id-21' name='stats' filepath='../../dpdk/drivers/bus/dpaa/base/fman/fman_hw.c' line='216' column='1'/>
+      <return type-id='type-id-48'/>
+    </function-type>
+    <function-type size-in-bits='64' hash='f0c14be7d6e159ed' id='type-id-46'>
+      <parameter type-id='type-id-17' name='fm_if' filepath='../../dpdk/drivers/bus/dpaa/base/fman/fman_hw.c' line='517' column='1'/>
+      <parameter type-id='type-id-6' name='max_frm' filepath='../../dpdk/drivers/bus/dpaa/base/fman/fman_hw.c' line='517' column='1'/>
+      <return type-id='type-id-48'/>
+    </function-type>
+    <function-type size-in-bits='64' hash='f3589c69e9de72b8' id='type-id-45'>
+      <parameter type-id='type-id-17' name='fm_if' filepath='../../dpdk/drivers/bus/dpaa/base/fman/fman_hw.c' line='500' column='1'/>
+      <parameter type-id='type-id-8' name='fd_offset' filepath='../../dpdk/drivers/bus/dpaa/base/fman/fman_hw.c' line='500' column='1'/>
+      <return type-id='type-id-48'/>
+    </function-type>
+    <function-type size-in-bits='64' hash='484df4d451b070a5' id='type-id-39'>
+      <parameter type-id='type-id-17' name='p' filepath='../../dpdk/drivers/bus/dpaa/base/fman/fman_hw.c' line='239' column='1'/>
+      <parameter type-id='type-id-31' name='value' filepath='../../dpdk/drivers/bus/dpaa/base/fman/fman_hw.c' line='239' column='1'/>
+      <parameter type-id='type-id-1' name='n' filepath='../../dpdk/drivers/bus/dpaa/base/fman/fman_hw.c' line='239' column='1'/>
+      <return type-id='type-id-48'/>
+    </function-type>
+    <function-type size-in-bits='64' hash='c59194d8423695f4' id='type-id-36'>
+      <parameter type-id='type-id-17' name='p' filepath='../../dpdk/drivers/bus/dpaa/base/fman/fman_hw.c' line='128' column='1'/>
+      <parameter type-id='type-id-22' name='addr_num' filepath='../../dpdk/drivers/bus/dpaa/base/fman/fman_hw.c' line='128' column='1'/>
+      <return type-id='type-id-48'/>
+    </function-type>
+    <function-type size-in-bits='64' hash='25a291232b351d23' id='type-id-40'>
+      <parameter type-id='type-id-17' name='fm_if' filepath='../../dpdk/drivers/bus/dpaa/base/fman/fman_hw.c' line='356' column='1'/>
+      <parameter type-id='type-id-4' name='num' filepath='../../dpdk/drivers/bus/dpaa/base/fman/fman_hw.c' line='356' column='1'/>
+      <parameter type-id='type-id-1' name='bpid' filepath='../../dpdk/drivers/bus/dpaa/base/fman/fman_hw.c' line='357' column='1'/>
+      <parameter type-id='type-id-49' name='bufsize' filepath='../../dpdk/drivers/bus/dpaa/base/fman/fman_hw.c' line='357' column='1'/>
+      <return type-id='type-id-48'/>
+    </function-type>
   </abi-instr>
   <abi-instr address-size='64' path='../../dpdk/drivers/bus/dpaa/base/fman/netcfg_layer.c' comp-dir-path='/home/dmarchan/v19.11/build-clang-shared' language='LANG_C99'>
     <array-type-def dimensions='1' type-id='type-id-50' size-in-bits='unknown' hash='8cece53366ab2258' id='type-id-51'>
@@ -483,13 +460,15 @@
         <var-decl name='port_cfg' type-id='type-id-51' visibility='default' filepath='../../dpdk/drivers/bus/dpaa/include/netcfg.h' line='27' column='1'/>
       </data-member>
     </class-decl>
-    <function-decl name='netcfg_acquire' filepath='../../dpdk/drivers/bus/dpaa/base/fman/netcfg_layer.c' line='75' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='netcfg_acquire@@DPDK_20.0' hash='0f76e9ef7e8734c3' id='type-id-55'>
+    <function-decl name='netcfg_acquire' type-id='type-id-55' filepath='../../dpdk/drivers/bus/dpaa/base/fman/netcfg_layer.c' line='75' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='netcfg_acquire@@DPDK_20.0'/>
+    <function-decl name='netcfg_release' type-id='type-id-56' filepath='../../dpdk/drivers/bus/dpaa/base/fman/netcfg_layer.c' line='152' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='netcfg_release@@DPDK_20.0'/>
+    <function-type size-in-bits='64' hash='0f76e9ef7e8734c3' id='type-id-55'>
       <return type-id='type-id-54'/>
-    </function-decl>
-    <function-decl name='netcfg_release' filepath='../../dpdk/drivers/bus/dpaa/base/fman/netcfg_layer.c' line='152' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='netcfg_release@@DPDK_20.0' hash='0f76e9ef7e8734c3' id='type-id-56'>
+    </function-type>
+    <function-type size-in-bits='64' hash='0f76e9ef7e8734c3' id='type-id-56'>
       <parameter type-id='type-id-54' name='cfg_ptr' filepath='../../dpdk/drivers/bus/dpaa/base/fman/netcfg_layer.c' line='152' column='1'/>
-      <return type-id='type-id-36'/>
-    </function-decl>
+      <return type-id='type-id-48'/>
+    </function-type>
   </abi-instr>
   <abi-instr address-size='64' path='../../dpdk/drivers/bus/dpaa/base/qbman/bman.c' comp-dir-path='/home/dmarchan/v19.11/build-clang-shared' language='LANG_C99'>
     <pointer-type-def type-id='type-id-57' size-in-bits='64' hash='a7b51545ffc5f65f' id='type-id-58'/>
@@ -819,69 +798,73 @@
     <array-type-def dimensions='1' type-id='type-id-86' hash='e8c118f45bafe58a' id='type-id-101'>
       <subrange length='2' lower-bound='0' upper-bound='1' type-id='type-id-10' size-in-bits='64' is-anonymous='yes' hash='95f31efc53154467' id='type-id-112'/>
     </array-type-def>
-    <function-decl name='bman_new_pool' filepath='../../dpdk/drivers/bus/dpaa/base/qbman/bman.c' line='183' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='bman_new_pool@@DPDK_20.0' hash='cf701b83fa740187' id='type-id-118'>
+    <function-decl name='bman_new_pool' type-id='type-id-118' filepath='../../dpdk/drivers/bus/dpaa/base/qbman/bman.c' line='183' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='bman_new_pool@@DPDK_20.0'/>
+    <function-decl name='bman_free_pool' type-id='type-id-119' filepath='../../dpdk/drivers/bus/dpaa/base/qbman/bman.c' line='227' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='bman_free_pool@@DPDK_20.0'/>
+    <function-decl name='bman_get_params' type-id='type-id-120' filepath='../../dpdk/drivers/bus/dpaa/base/qbman/bman.c' line='236' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='bman_get_params@@DPDK_20.0'/>
+    <function-decl name='bman_release' type-id='type-id-121' filepath='../../dpdk/drivers/bus/dpaa/base/qbman/bman.c' line='250' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='bman_release@@DPDK_20.0'/>
+    <function-decl name='bman_acquire' type-id='type-id-122' filepath='../../dpdk/drivers/bus/dpaa/base/qbman/bman.c' line='292' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='bman_acquire@@DPDK_20.0'/>
+    <function-decl name='bman_query_free_buffers' type-id='type-id-123' filepath='../../dpdk/drivers/bus/dpaa/base/qbman/bman.c' line='343' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='bman_query_free_buffers@@DPDK_20.0'/>
+    <pointer-type-def type-id='type-id-48' id='type-id-86'/>
+    <function-type size-in-bits='64' hash='cf701b83fa740187' id='type-id-118'>
       <parameter type-id='type-id-84' name='params' filepath='../../dpdk/drivers/bus/dpaa/base/qbman/bman.c' line='183' column='1'/>
       <return type-id='type-id-70'/>
-    </function-decl>
-    <function-decl name='bman_free_pool' filepath='../../dpdk/drivers/bus/dpaa/base/qbman/bman.c' line='227' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='bman_free_pool@@DPDK_20.0' hash='f045fd7d75802928' id='type-id-119'>
-      <parameter type-id='type-id-70' name='pool' filepath='../../dpdk/drivers/bus/dpaa/base/qbman/bman.c' line='227' column='1'/>
-      <return type-id='type-id-36'/>
-    </function-decl>
-    <function-decl name='bman_get_params' filepath='../../dpdk/drivers/bus/dpaa/base/qbman/bman.c' line='236' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='bman_get_params@@DPDK_20.0' hash='6f9a53676f2c2283' id='type-id-120'>
+    </function-type>
+    <function-type size-in-bits='64' hash='6f9a53676f2c2283' id='type-id-120'>
       <parameter type-id='type-id-81' name='pool' filepath='../../dpdk/drivers/bus/dpaa/base/qbman/bman.c' line='236' column='1'/>
       <return type-id='type-id-84'/>
-    </function-decl>
-    <function-decl name='bman_release' filepath='../../dpdk/drivers/bus/dpaa/base/qbman/bman.c' line='250' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='bman_release@@DPDK_20.0' hash='bb8cdd3c00711d1b' id='type-id-121'>
-      <parameter type-id='type-id-70' name='pool' filepath='../../dpdk/drivers/bus/dpaa/base/qbman/bman.c' line='250' column='1'/>
-      <parameter type-id='type-id-76' name='bufs' filepath='../../dpdk/drivers/bus/dpaa/base/qbman/bman.c' line='250' column='1'/>
-      <parameter type-id='type-id-89' name='num' filepath='../../dpdk/drivers/bus/dpaa/base/qbman/bman.c' line='250' column='1'/>
-      <parameter type-id='type-id-9' name='flags' filepath='../../dpdk/drivers/bus/dpaa/base/qbman/bman.c' line='251' column='1'/>
-      <return type-id='type-id-1'/>
-    </function-decl>
-    <function-decl name='bman_acquire' filepath='../../dpdk/drivers/bus/dpaa/base/qbman/bman.c' line='292' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='bman_acquire@@DPDK_20.0' hash='3f2d484a051b7c0f' id='type-id-122'>
+    </function-type>
+    <function-type size-in-bits='64' hash='3f2d484a051b7c0f' id='type-id-122'>
       <parameter type-id='type-id-70' name='pool' filepath='../../dpdk/drivers/bus/dpaa/base/qbman/bman.c' line='292' column='1'/>
       <parameter type-id='type-id-58' name='bufs' filepath='../../dpdk/drivers/bus/dpaa/base/qbman/bman.c' line='292' column='1'/>
       <parameter type-id='type-id-89' name='num' filepath='../../dpdk/drivers/bus/dpaa/base/qbman/bman.c' line='292' column='1'/>
       <parameter type-id='type-id-9' name='flags' filepath='../../dpdk/drivers/bus/dpaa/base/qbman/bman.c' line='293' column='1'/>
       <return type-id='type-id-1'/>
-    </function-decl>
-    <function-decl name='bman_query_free_buffers' filepath='../../dpdk/drivers/bus/dpaa/base/qbman/bman.c' line='343' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='bman_query_free_buffers@@DPDK_20.0' hash='c8a541c0f942a282' id='type-id-123'>
+    </function-type>
+    <function-type size-in-bits='64' hash='bb8cdd3c00711d1b' id='type-id-121'>
+      <parameter type-id='type-id-70' name='pool' filepath='../../dpdk/drivers/bus/dpaa/base/qbman/bman.c' line='250' column='1'/>
+      <parameter type-id='type-id-76' name='bufs' filepath='../../dpdk/drivers/bus/dpaa/base/qbman/bman.c' line='250' column='1'/>
+      <parameter type-id='type-id-89' name='num' filepath='../../dpdk/drivers/bus/dpaa/base/qbman/bman.c' line='250' column='1'/>
+      <parameter type-id='type-id-9' name='flags' filepath='../../dpdk/drivers/bus/dpaa/base/qbman/bman.c' line='251' column='1'/>
+      <return type-id='type-id-1'/>
+    </function-type>
+    <function-type size-in-bits='64' hash='c8a541c0f942a282' id='type-id-123'>
       <parameter type-id='type-id-70' name='pool' filepath='../../dpdk/drivers/bus/dpaa/base/qbman/bman.c' line='343' column='1'/>
       <return type-id='type-id-9'/>
-    </function-decl>
-    <pointer-type-def type-id='type-id-36' id='type-id-86'/>
+    </function-type>
+    <function-type size-in-bits='64' hash='f045fd7d75802928' id='type-id-119'>
+      <parameter type-id='type-id-70' name='pool' filepath='../../dpdk/drivers/bus/dpaa/base/qbman/bman.c' line='227' column='1'/>
+      <return type-id='type-id-48'/>
+    </function-type>
   </abi-instr>
   <abi-instr address-size='64' path='../../dpdk/drivers/bus/dpaa/base/qbman/bman_driver.c' comp-dir-path='/home/dmarchan/v19.11/build-clang-shared' language='LANG_C99'>
-    <function-decl name='bman_thread_irq' filepath='../../dpdk/drivers/bus/dpaa/base/qbman/bman_driver.c' line='130' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='bman_thread_irq@@DPDK_20.0' hash='7f32ffea222edbe7' id='type-id-124'>
-      <return type-id='type-id-36'/>
-    </function-decl>
+    <function-decl name='bman_thread_irq' type-id='type-id-124' filepath='../../dpdk/drivers/bus/dpaa/base/qbman/bman_driver.c' line='130' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='bman_thread_irq@@DPDK_20.0'/>
+    <function-type size-in-bits='64' hash='7f32ffea222edbe7' id='type-id-124'>
+      <return type-id='type-id-48'/>
+    </function-type>
   </abi-instr>
   <abi-instr address-size='64' path='../../dpdk/drivers/bus/dpaa/base/qbman/dpaa_alloc.c' comp-dir-path='/home/dmarchan/v19.11/build-clang-shared' language='LANG_C99'>
     <pointer-type-def type-id='type-id-9' size-in-bits='64' hash='d91ded9019e1e29d' id='type-id-125'/>
-    <function-decl name='qman_reserve_fqid_range' filepath='../../dpdk/drivers/bus/dpaa/base/qbman/dpaa_alloc.c' line='38' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='qman_reserve_fqid_range@@DPDK_20.0' hash='54152ac49ee16d47' id='type-id-126'>
+    <function-decl name='qman_reserve_fqid_range' type-id='type-id-126' filepath='../../dpdk/drivers/bus/dpaa/base/qbman/dpaa_alloc.c' line='38' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='qman_reserve_fqid_range@@DPDK_20.0'/>
+    <function-decl name='qman_alloc_pool_range' type-id='type-id-127' filepath='../../dpdk/drivers/bus/dpaa/base/qbman/dpaa_alloc.c' line='43' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='qman_alloc_pool_range@@DPDK_20.0'/>
+    <function-decl name='qman_alloc_cgrid_range' type-id='type-id-127' filepath='../../dpdk/drivers/bus/dpaa/base/qbman/dpaa_alloc.c' line='58' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='qman_alloc_cgrid_range@@DPDK_20.0'/>
+    <function-decl name='qman_release_cgrid_range' type-id='type-id-128' filepath='../../dpdk/drivers/bus/dpaa/base/qbman/dpaa_alloc.c' line='63' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='qman_release_cgrid_range@@DPDK_20.0'/>
+    <function-type size-in-bits='64' hash='a8ae9649485ef7a1' id='type-id-127'>
+      <parameter type-id='type-id-125' name='result' filepath='../../dpdk/drivers/bus/dpaa/base/qbman/dpaa_alloc.c' line='43' column='1'/>
+      <parameter type-id='type-id-9' name='count' filepath='../../dpdk/drivers/bus/dpaa/base/qbman/dpaa_alloc.c' line='43' column='1'/>
+      <parameter type-id='type-id-9' name='align' filepath='../../dpdk/drivers/bus/dpaa/base/qbman/dpaa_alloc.c' line='43' column='1'/>
+      <parameter type-id='type-id-1' name='partial' filepath='../../dpdk/drivers/bus/dpaa/base/qbman/dpaa_alloc.c' line='43' column='1'/>
+      <return type-id='type-id-1'/>
+    </function-type>
+    <function-type size-in-bits='64' hash='54152ac49ee16d47' id='type-id-126'>
       <parameter type-id='type-id-9' name='fqid' filepath='../../dpdk/drivers/bus/dpaa/base/qbman/dpaa_alloc.c' line='38' column='1'/>
       <parameter type-id='type-id-4' name='count' filepath='../../dpdk/drivers/bus/dpaa/base/qbman/dpaa_alloc.c' line='38' column='1'/>
       <return type-id='type-id-1'/>
-    </function-decl>
-    <function-decl name='qman_alloc_pool_range' filepath='../../dpdk/drivers/bus/dpaa/base/qbman/dpaa_alloc.c' line='43' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='qman_alloc_pool_range@@DPDK_20.0' hash='a8ae9649485ef7a1' id='type-id-127'>
-      <parameter type-id='type-id-125' name='result' filepath='../../dpdk/drivers/bus/dpaa/base/qbman/dpaa_alloc.c' line='43' column='1'/>
-      <parameter type-id='type-id-9' name='count' filepath='../../dpdk/drivers/bus/dpaa/base/qbman/dpaa_alloc.c' line='43' column='1'/>
-      <parameter type-id='type-id-9' name='align' filepath='../../dpdk/drivers/bus/dpaa/base/qbman/dpaa_alloc.c' line='43' column='1'/>
-      <parameter type-id='type-id-1' name='partial' filepath='../../dpdk/drivers/bus/dpaa/base/qbman/dpaa_alloc.c' line='43' column='1'/>
-      <return type-id='type-id-1'/>
-    </function-decl>
-    <function-decl name='qman_alloc_cgrid_range' filepath='../../dpdk/drivers/bus/dpaa/base/qbman/dpaa_alloc.c' line='58' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='qman_alloc_cgrid_range@@DPDK_20.0' hash='a8ae9649485ef7a1' id='type-id-127'>
-      <parameter type-id='type-id-125' name='result' filepath='../../dpdk/drivers/bus/dpaa/base/qbman/dpaa_alloc.c' line='43' column='1'/>
-      <parameter type-id='type-id-9' name='count' filepath='../../dpdk/drivers/bus/dpaa/base/qbman/dpaa_alloc.c' line='43' column='1'/>
-      <parameter type-id='type-id-9' name='align' filepath='../../dpdk/drivers/bus/dpaa/base/qbman/dpaa_alloc.c' line='43' column='1'/>
-      <parameter type-id='type-id-1' name='partial' filepath='../../dpdk/drivers/bus/dpaa/base/qbman/dpaa_alloc.c' line='43' column='1'/>
-      <return type-id='type-id-1'/>
-    </function-decl>
-    <function-decl name='qman_release_cgrid_range' filepath='../../dpdk/drivers/bus/dpaa/base/qbman/dpaa_alloc.c' line='63' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='qman_release_cgrid_range@@DPDK_20.0' hash='0389e499374a3f97' id='type-id-128'>
+    </function-type>
+    <function-type size-in-bits='64' hash='0389e499374a3f97' id='type-id-128'>
       <parameter type-id='type-id-9' name='cgrid' filepath='../../dpdk/drivers/bus/dpaa/base/qbman/dpaa_alloc.c' line='63' column='1'/>
       <parameter type-id='type-id-9' name='count' filepath='../../dpdk/drivers/bus/dpaa/base/qbman/dpaa_alloc.c' line='63' column='1'/>
-      <return type-id='type-id-36'/>
-    </function-decl>
+      <return type-id='type-id-48'/>
+    </function-type>
   </abi-instr>
   <abi-instr address-size='64' path='../../dpdk/drivers/bus/dpaa/base/qbman/qman.c' comp-dir-path='/home/dmarchan/v19.11/build-clang-shared' language='LANG_C99'>
     <array-type-def dimensions='1' type-id='type-id-73' size-in-bits='2040' hash='6938404ed37b847e' id='type-id-129'>
@@ -2036,7 +2019,7 @@
         <var-decl name='' type-id='type-id-299' visibility='default' filepath='../../dpdk/lib/librte_mempool/rte_mempool.h' line='190' column='1'/>
       </data-member>
       <data-member access='public' layout-offset-in-bits='256'>
-        <var-decl name='len' type-id='type-id-42' visibility='default' filepath='../../dpdk/lib/librte_mempool/rte_mempool.h' line='194' column='1'/>
+        <var-decl name='len' type-id='type-id-49' visibility='default' filepath='../../dpdk/lib/librte_mempool/rte_mempool.h' line='194' column='1'/>
       </data-member>
       <data-member access='public' layout-offset-in-bits='320'>
         <var-decl name='free_cb' type-id='type-id-197' visibility='default' filepath='../../dpdk/lib/librte_mempool/rte_mempool.h' line='195' column='1'/>
@@ -2083,7 +2066,7 @@
         <var-decl name='' type-id='type-id-303' visibility='default' filepath='../../dpdk/lib/librte_eal/common/include/rte_memzone.h' line='60' column='1'/>
       </data-member>
       <data-member access='public' layout-offset-in-bits='384'>
-        <var-decl name='len' type-id='type-id-42' visibility='default' filepath='../../dpdk/lib/librte_eal/common/include/rte_memzone.h' line='64' column='1'/>
+        <var-decl name='len' type-id='type-id-49' visibility='default' filepath='../../dpdk/lib/librte_eal/common/include/rte_memzone.h' line='64' column='1'/>
       </data-member>
       <data-member access='public' layout-offset-in-bits='448'>
         <var-decl name='hugepage_sz' type-id='type-id-24' visibility='default' filepath='../../dpdk/lib/librte_eal/common/include/rte_memzone.h' line='66' column='1'/>
@@ -2484,7 +2467,7 @@
     <typedef-decl name='rte_mbuf_extbuf_free_callback_t' type-id='type-id-351' size-in-bits='64' filepath='../../dpdk/lib/librte_mbuf/rte_mbuf_core.h' line='684' column='1' hash='fd7a63c0c6c822c4' id='type-id-291'/>
     <typedef-decl name='rte_mempool_memchunk_free_cb_t' type-id='type-id-352' size-in-bits='64' filepath='../../dpdk/lib/librte_mempool/rte_mempool.h' line='176' column='1' hash='3b629a67caf8a83d' id='type-id-196'/>
     <typedef-decl name='rte_spinlock_t' type-id='type-id-304' size-in-bits='32' filepath='../../dpdk/lib/librte_eal/common/include/generic/rte_spinlock.h' line='32' column='1' hash='d5791b810cc05873' id='type-id-271'/>
-    <typedef-decl name='size_t' type-id='type-id-27' size-in-bits='64' filepath='/usr/include/glob.h' line='29' column='1' hash='8fdc5eea2983a729' id='type-id-42'/>
+    <typedef-decl name='size_t' type-id='type-id-27' size-in-bits='64' filepath='/usr/include/glob.h' line='29' column='1' hash='8fdc5eea2983a729' id='type-id-49'/>
     <array-type-def dimensions='1' type-id='type-id-9' size-in-bits='256' hash='e7a85e2d7cca09b1' id='type-id-211'>
       <subrange length='8' lower-bound='0' upper-bound='7' type-id='type-id-10' size-in-bits='64' is-anonymous='yes' hash='6e87a8ff484907ad' id='type-id-60'/>
     </array-type-def>
@@ -2911,155 +2894,120 @@
     <qualified-type-def type-id='type-id-27' volatile='yes' hash='35100b0f5f737016' id='type-id-270'/>
     <pointer-type-def type-id='type-id-371' size-in-bits='64' id='type-id-269'/>
     <class-decl name='dpaa_bp_info' is-struct='yes' visibility='default' is-declaration-only='yes' id='type-id-371'/>
-    <function-decl name='qman_set_fq_lookup_table' filepath='../../dpdk/drivers/bus/dpaa/base/qbman/qman.c' line='172' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='qman_set_fq_lookup_table@@DPDK_20.0' hash='33cabb503c62c709' id='type-id-372'>
-      <parameter type-id='type-id-272' name='fq_table' filepath='../../dpdk/drivers/bus/dpaa/base/qbman/qman.c' line='172' column='1'/>
-      <return type-id='type-id-36'/>
-    </function-decl>
-    <function-decl name='qman_irqsource_add' filepath='../../dpdk/drivers/bus/dpaa/base/qbman/qman.c' line='1050' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='qman_irqsource_add@@DPDK_20.0' hash='6668baab5275d4c5' id='type-id-373'>
-      <parameter type-id='type-id-9' name='bits' filepath='../../dpdk/drivers/bus/dpaa/base/qbman/qman.c' line='1050' column='1'/>
+    <function-decl name='qman_set_fq_lookup_table' type-id='type-id-372' filepath='../../dpdk/drivers/bus/dpaa/base/qbman/qman.c' line='172' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='qman_set_fq_lookup_table@@DPDK_20.0'/>
+    <function-decl name='qman_irqsource_add' type-id='type-id-373' filepath='../../dpdk/drivers/bus/dpaa/base/qbman/qman.c' line='1050' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='qman_irqsource_add@@DPDK_20.0'/>
+    <function-decl name='qman_fq_portal_irqsource_add' type-id='type-id-374' filepath='../../dpdk/drivers/bus/dpaa/base/qbman/qman.c' line='1067' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='qman_fq_portal_irqsource_add@@DPDK_20.0'/>
+    <function-decl name='qman_irqsource_remove' type-id='type-id-373' filepath='../../dpdk/drivers/bus/dpaa/base/qbman/qman.c' line='1082' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='qman_irqsource_remove@@DPDK_20.0'/>
+    <function-decl name='qman_fq_portal_irqsource_remove' type-id='type-id-374' filepath='../../dpdk/drivers/bus/dpaa/base/qbman/qman.c' line='1108' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='qman_fq_portal_irqsource_remove@@DPDK_20.0'/>
+    <function-decl name='qman_portal_poll_rx' type-id='type-id-375' filepath='../../dpdk/drivers/bus/dpaa/base/qbman/qman.c' line='1144' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='qman_portal_poll_rx@@DPDK_20.0'/>
+    <function-decl name='qman_clear_irq' type-id='type-id-124' filepath='../../dpdk/drivers/bus/dpaa/base/qbman/qman.c' line='1207' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='qman_clear_irq@@DPDK_20.0'/>
+    <function-decl name='qman_portal_dequeue' type-id='type-id-376' filepath='../../dpdk/drivers/bus/dpaa/base/qbman/qman.c' line='1215' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='qman_portal_dequeue@@DPDK_20.0'/>
+    <function-decl name='qman_dequeue' type-id='type-id-377' filepath='../../dpdk/drivers/bus/dpaa/base/qbman/qman.c' line='1282' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='qman_dequeue@@DPDK_20.0'/>
+    <function-decl name='qman_dqrr_consume' type-id='type-id-378' filepath='../../dpdk/drivers/bus/dpaa/base/qbman/qman.c' line='1318' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='qman_dqrr_consume@@DPDK_20.0'/>
+    <function-decl name='qman_poll_dqrr' type-id='type-id-379' filepath='../../dpdk/drivers/bus/dpaa/base/qbman/qman.c' line='1330' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='qman_poll_dqrr@@DPDK_20.0'/>
+    <function-decl name='qman_static_dequeue_add' type-id='type-id-380' filepath='../../dpdk/drivers/bus/dpaa/base/qbman/qman.c' line='1375' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='qman_static_dequeue_add@@DPDK_20.0'/>
+    <function-decl name='qman_dca_index' type-id='type-id-381' filepath='../../dpdk/drivers/bus/dpaa/base/qbman/qman.c' line='1406' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='qman_dca_index@@DPDK_20.0'/>
+    <function-decl name='qman_create_fq' type-id='type-id-382' filepath='../../dpdk/drivers/bus/dpaa/base/qbman/qman.c' line='1435' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='qman_create_fq@@DPDK_20.0'/>
+    <function-decl name='qman_fq_fqid' type-id='type-id-383' filepath='../../dpdk/drivers/bus/dpaa/base/qbman/qman.c' line='1546' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='qman_fq_fqid@@DPDK_20.0'/>
+    <function-decl name='qman_fq_state' type-id='type-id-384' filepath='../../dpdk/drivers/bus/dpaa/base/qbman/qman.c' line='1551' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='qman_fq_state@@DPDK_20.0'/>
+    <function-decl name='qman_init_fq' type-id='type-id-385' filepath='../../dpdk/drivers/bus/dpaa/base/qbman/qman.c' line='1559' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='qman_init_fq@@DPDK_20.0'/>
+    <function-decl name='qman_retire_fq' type-id='type-id-386' filepath='../../dpdk/drivers/bus/dpaa/base/qbman/qman.c' line='1697' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='qman_retire_fq@@DPDK_20.0'/>
+    <function-decl name='qman_oos_fq' type-id='type-id-387' filepath='../../dpdk/drivers/bus/dpaa/base/qbman/qman.c' line='1787' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='qman_oos_fq@@DPDK_20.0'/>
+    <function-decl name='qman_query_fq_np' type-id='type-id-388' filepath='../../dpdk/drivers/bus/dpaa/base/qbman/qman.c' line='1918' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='qman_query_fq_np@@DPDK_20.0'/>
+    <function-decl name='qman_query_fq_frm_cnt' type-id='type-id-386' filepath='../../dpdk/drivers/bus/dpaa/base/qbman/qman.c' line='1960' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='qman_query_fq_frm_cnt@@DPDK_20.0'/>
+    <function-decl name='qman_set_vdq' type-id='type-id-389' filepath='../../dpdk/drivers/bus/dpaa/base/qbman/qman.c' line='2102' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='qman_set_vdq@@DPDK_20.0'/>
+    <function-decl name='qman_volatile_dequeue' type-id='type-id-390' filepath='../../dpdk/drivers/bus/dpaa/base/qbman/qman.c' line='2139' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='qman_volatile_dequeue@@DPDK_20.0'/>
+    <function-decl name='qman_enqueue' type-id='type-id-391' filepath='../../dpdk/drivers/bus/dpaa/base/qbman/qman.c' line='2246' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='qman_enqueue@@DPDK_20.0'/>
+    <function-decl name='qman_enqueue_multi' type-id='type-id-392' filepath='../../dpdk/drivers/bus/dpaa/base/qbman/qman.c' line='2261' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='qman_enqueue_multi@@DPDK_20.0'/>
+    <function-decl name='qman_enqueue_multi_fq' type-id='type-id-393' filepath='../../dpdk/drivers/bus/dpaa/base/qbman/qman.c' line='2332' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='qman_enqueue_multi_fq@@DPDK_20.0'/>
+    <function-decl name='qman_modify_cgr' type-id='type-id-394' filepath='../../dpdk/drivers/bus/dpaa/base/qbman/qman.c' line='2433' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='qman_modify_cgr@@DPDK_20.0'/>
+    <function-decl name='qman_create_cgr' type-id='type-id-394' filepath='../../dpdk/drivers/bus/dpaa/base/qbman/qman.c' line='2473' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='qman_create_cgr@@DPDK_20.0'/>
+    <function-decl name='qman_delete_cgr' type-id='type-id-395' filepath='../../dpdk/drivers/bus/dpaa/base/qbman/qman.c' line='2587' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='qman_delete_cgr@@DPDK_20.0'/>
+    <function-type size-in-bits='64' hash='6e6ca24262b3a157' id='type-id-395'>
+      <parameter type-id='type-id-175' name='cgr' filepath='../../dpdk/drivers/bus/dpaa/base/qbman/qman.c' line='2587' column='1'/>
       <return type-id='type-id-1'/>
-    </function-decl>
-    <function-decl name='qman_fq_portal_irqsource_add' filepath='../../dpdk/drivers/bus/dpaa/base/qbman/qman.c' line='1067' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='qman_fq_portal_irqsource_add@@DPDK_20.0' hash='2e91327941793ee7' id='type-id-374'>
-      <parameter type-id='type-id-183' name='p' filepath='../../dpdk/drivers/bus/dpaa/base/qbman/qman.c' line='1067' column='1'/>
-      <parameter type-id='type-id-9' name='bits' filepath='../../dpdk/drivers/bus/dpaa/base/qbman/qman.c' line='1067' column='1'/>
+    </function-type>
+    <function-type size-in-bits='64' hash='b613232aed5d8b0f' id='type-id-394'>
+      <parameter type-id='type-id-175' name='cgr' filepath='../../dpdk/drivers/bus/dpaa/base/qbman/qman.c' line='2433' column='1'/>
+      <parameter type-id='type-id-9' name='flags' filepath='../../dpdk/drivers/bus/dpaa/base/qbman/qman.c' line='2433' column='1'/>
+      <parameter type-id='type-id-165' name='opts' filepath='../../dpdk/drivers/bus/dpaa/base/qbman/qman.c' line='2434' column='1'/>
       <return type-id='type-id-1'/>
-    </function-decl>
-    <function-decl name='qman_irqsource_remove' filepath='../../dpdk/drivers/bus/dpaa/base/qbman/qman.c' line='1082' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='qman_irqsource_remove@@DPDK_20.0' hash='6668baab5275d4c5' id='type-id-373'>
-      <parameter type-id='type-id-9' name='bits' filepath='../../dpdk/drivers/bus/dpaa/base/qbman/qman.c' line='1050' column='1'/>
-      <return type-id='type-id-1'/>
-    </function-decl>
-    <function-decl name='qman_fq_portal_irqsource_remove' filepath='../../dpdk/drivers/bus/dpaa/base/qbman/qman.c' line='1108' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='qman_fq_portal_irqsource_remove@@DPDK_20.0' hash='2e91327941793ee7' id='type-id-374'>
-      <parameter type-id='type-id-183' name='p' filepath='../../dpdk/drivers/bus/dpaa/base/qbman/qman.c' line='1067' column='1'/>
-      <parameter type-id='type-id-9' name='bits' filepath='../../dpdk/drivers/bus/dpaa/base/qbman/qman.c' line='1067' column='1'/>
-      <return type-id='type-id-1'/>
-    </function-decl>
-    <function-decl name='qman_portal_poll_rx' filepath='../../dpdk/drivers/bus/dpaa/base/qbman/qman.c' line='1144' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='qman_portal_poll_rx@@DPDK_20.0' hash='8712f04a7b4de49e' id='type-id-375'>
-      <parameter type-id='type-id-4' name='poll_limit' filepath='../../dpdk/drivers/bus/dpaa/base/qbman/qman.c' line='1144' column='1'/>
-      <parameter type-id='type-id-272' name='bufs' filepath='../../dpdk/drivers/bus/dpaa/base/qbman/qman.c' line='1145' column='1'/>
-      <parameter type-id='type-id-183' name='p' filepath='../../dpdk/drivers/bus/dpaa/base/qbman/qman.c' line='1146' column='1'/>
-      <return type-id='type-id-4'/>
-    </function-decl>
-    <function-decl name='qman_clear_irq' filepath='../../dpdk/drivers/bus/dpaa/base/qbman/qman.c' line='1207' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='qman_clear_irq@@DPDK_20.0' hash='7f32ffea222edbe7' id='type-id-124'>
-      <return type-id='type-id-36'/>
-    </function-decl>
-    <function-decl name='qman_portal_dequeue' filepath='../../dpdk/drivers/bus/dpaa/base/qbman/qman.c' line='1215' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='qman_portal_dequeue@@DPDK_20.0' hash='a51baa2335f6a7aa' id='type-id-376'>
-      <parameter type-id='type-id-187' name='ev' filepath='../../dpdk/drivers/bus/dpaa/base/qbman/qman.c' line='1215' column='1'/>
-      <parameter type-id='type-id-4' name='poll_limit' filepath='../../dpdk/drivers/bus/dpaa/base/qbman/qman.c' line='1215' column='1'/>
-      <parameter type-id='type-id-272' name='bufs' filepath='../../dpdk/drivers/bus/dpaa/base/qbman/qman.c' line='1216' column='1'/>
-      <return type-id='type-id-9'/>
-    </function-decl>
-    <function-decl name='qman_dequeue' filepath='../../dpdk/drivers/bus/dpaa/base/qbman/qman.c' line='1282' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='qman_dequeue@@DPDK_20.0' hash='f0cd429343b26bd8' id='type-id-377'>
-      <parameter type-id='type-id-179' name='fq' filepath='../../dpdk/drivers/bus/dpaa/base/qbman/qman.c' line='1282' column='1'/>
-      <return type-id='type-id-155'/>
-    </function-decl>
-    <function-decl name='qman_dqrr_consume' filepath='../../dpdk/drivers/bus/dpaa/base/qbman/qman.c' line='1318' column='1' visibility='default' binding='global' size-in-bits='64' hash='f4d6d0093f44c3e7' id='type-id-378'>
-      <parameter type-id='type-id-179' name='fq' filepath='../../dpdk/drivers/bus/dpaa/base/qbman/qman.c' line='1318' column='1'/>
-      <parameter type-id='type-id-155' name='dq' filepath='../../dpdk/drivers/bus/dpaa/base/qbman/qman.c' line='1319' column='1'/>
-      <return type-id='type-id-36'/>
-    </function-decl>
-    <function-decl name='qman_poll_dqrr' filepath='../../dpdk/drivers/bus/dpaa/base/qbman/qman.c' line='1330' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='qman_poll_dqrr@@DPDK_20.0' hash='6668baab5275d4c5' id='type-id-379'>
-      <parameter type-id='type-id-4' name='limit' filepath='../../dpdk/drivers/bus/dpaa/base/qbman/qman.c' line='1330' column='1'/>
-      <return type-id='type-id-1'/>
-    </function-decl>
-    <function-decl name='qman_static_dequeue_add' filepath='../../dpdk/drivers/bus/dpaa/base/qbman/qman.c' line='1375' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='qman_static_dequeue_add@@DPDK_20.0' hash='e5396c0ae3263cdd' id='type-id-380'>
-      <parameter type-id='type-id-9' name='pools' filepath='../../dpdk/drivers/bus/dpaa/base/qbman/qman.c' line='1375' column='1'/>
-      <parameter type-id='type-id-183' name='qp' filepath='../../dpdk/drivers/bus/dpaa/base/qbman/qman.c' line='1375' column='1'/>
-      <return type-id='type-id-36'/>
-    </function-decl>
-    <function-decl name='qman_dca_index' filepath='../../dpdk/drivers/bus/dpaa/base/qbman/qman.c' line='1406' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='qman_dca_index@@DPDK_20.0' hash='958caec14f108579' id='type-id-381'>
-      <parameter type-id='type-id-89' name='index' filepath='../../dpdk/drivers/bus/dpaa/base/qbman/qman.c' line='1406' column='1'/>
-      <parameter type-id='type-id-1' name='park_request' filepath='../../dpdk/drivers/bus/dpaa/base/qbman/qman.c' line='1406' column='1'/>
-      <return type-id='type-id-36'/>
-    </function-decl>
-    <function-decl name='qman_create_fq' filepath='../../dpdk/drivers/bus/dpaa/base/qbman/qman.c' line='1435' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='qman_create_fq@@DPDK_20.0' hash='5d5d0066e053a151' id='type-id-382'>
-      <parameter type-id='type-id-9' name='fqid' filepath='../../dpdk/drivers/bus/dpaa/base/qbman/qman.c' line='1435' column='1'/>
-      <parameter type-id='type-id-9' name='flags' filepath='../../dpdk/drivers/bus/dpaa/base/qbman/qman.c' line='1435' column='1'/>
-      <parameter type-id='type-id-179' name='fq' filepath='../../dpdk/drivers/bus/dpaa/base/qbman/qman.c' line='1435' column='1'/>
-      <return type-id='type-id-1'/>
-    </function-decl>
-    <function-decl name='qman_fq_fqid' filepath='../../dpdk/drivers/bus/dpaa/base/qbman/qman.c' line='1546' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='qman_fq_fqid@@DPDK_20.0' hash='16614d0d7fb2b15a' id='type-id-383'>
-      <parameter type-id='type-id-179' name='fq' filepath='../../dpdk/drivers/bus/dpaa/base/qbman/qman.c' line='1546' column='1'/>
-      <return type-id='type-id-9'/>
-    </function-decl>
-    <function-decl name='qman_fq_state' filepath='../../dpdk/drivers/bus/dpaa/base/qbman/qman.c' line='1551' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='qman_fq_state@@DPDK_20.0' hash='5cf93ae34e1eee7f' id='type-id-384'>
-      <parameter type-id='type-id-179' name='fq' filepath='../../dpdk/drivers/bus/dpaa/base/qbman/qman.c' line='1551' column='1'/>
-      <parameter type-id='type-id-181' name='state' filepath='../../dpdk/drivers/bus/dpaa/base/qbman/qman.c' line='1551' column='1'/>
-      <parameter type-id='type-id-125' name='flags' filepath='../../dpdk/drivers/bus/dpaa/base/qbman/qman.c' line='1551' column='1'/>
-      <return type-id='type-id-36'/>
-    </function-decl>
-    <function-decl name='qman_init_fq' filepath='../../dpdk/drivers/bus/dpaa/base/qbman/qman.c' line='1559' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='qman_init_fq@@DPDK_20.0' hash='0988d212b37458ca' id='type-id-385'>
-      <parameter type-id='type-id-179' name='fq' filepath='../../dpdk/drivers/bus/dpaa/base/qbman/qman.c' line='1559' column='1'/>
-      <parameter type-id='type-id-9' name='flags' filepath='../../dpdk/drivers/bus/dpaa/base/qbman/qman.c' line='1559' column='1'/>
-      <parameter type-id='type-id-167' name='opts' filepath='../../dpdk/drivers/bus/dpaa/base/qbman/qman.c' line='1559' column='1'/>
-      <return type-id='type-id-1'/>
-    </function-decl>
-    <function-decl name='qman_retire_fq' filepath='../../dpdk/drivers/bus/dpaa/base/qbman/qman.c' line='1697' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='qman_retire_fq@@DPDK_20.0' hash='8f182ec2fde61c68' id='type-id-386'>
-      <parameter type-id='type-id-179' name='fq' filepath='../../dpdk/drivers/bus/dpaa/base/qbman/qman.c' line='1697' column='1'/>
-      <parameter type-id='type-id-125' name='flags' filepath='../../dpdk/drivers/bus/dpaa/base/qbman/qman.c' line='1697' column='1'/>
-      <return type-id='type-id-1'/>
-    </function-decl>
-    <function-decl name='qman_oos_fq' filepath='../../dpdk/drivers/bus/dpaa/base/qbman/qman.c' line='1787' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='qman_oos_fq@@DPDK_20.0' hash='bc419d8858cf558a' id='type-id-387'>
+    </function-type>
+    <function-type size-in-bits='64' hash='bc419d8858cf558a' id='type-id-387'>
       <parameter type-id='type-id-179' name='fq' filepath='../../dpdk/drivers/bus/dpaa/base/qbman/qman.c' line='1787' column='1'/>
       <return type-id='type-id-1'/>
-    </function-decl>
-    <function-decl name='qman_query_fq_np' filepath='../../dpdk/drivers/bus/dpaa/base/qbman/qman.c' line='1918' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='qman_query_fq_np@@DPDK_20.0' hash='c6098396806ed826' id='type-id-388'>
-      <parameter type-id='type-id-179' name='fq' filepath='../../dpdk/drivers/bus/dpaa/base/qbman/qman.c' line='1918' column='1'/>
-      <parameter type-id='type-id-169' name='np' filepath='../../dpdk/drivers/bus/dpaa/base/qbman/qman.c' line='1918' column='1'/>
-      <return type-id='type-id-1'/>
-    </function-decl>
-    <function-decl name='qman_query_fq_frm_cnt' filepath='../../dpdk/drivers/bus/dpaa/base/qbman/qman.c' line='1960' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='qman_query_fq_frm_cnt@@DPDK_20.0' hash='8f182ec2fde61c68' id='type-id-386'>
-      <parameter type-id='type-id-179' name='fq' filepath='../../dpdk/drivers/bus/dpaa/base/qbman/qman.c' line='1697' column='1'/>
-      <parameter type-id='type-id-125' name='flags' filepath='../../dpdk/drivers/bus/dpaa/base/qbman/qman.c' line='1697' column='1'/>
-      <return type-id='type-id-1'/>
-    </function-decl>
-    <function-decl name='qman_set_vdq' filepath='../../dpdk/drivers/bus/dpaa/base/qbman/qman.c' line='2102' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='qman_set_vdq@@DPDK_20.0' hash='949a903fe5c755e4' id='type-id-389'>
-      <parameter type-id='type-id-179' name='fq' filepath='../../dpdk/drivers/bus/dpaa/base/qbman/qman.c' line='2102' column='1'/>
-      <parameter type-id='type-id-7' name='num' filepath='../../dpdk/drivers/bus/dpaa/base/qbman/qman.c' line='2102' column='1'/>
-      <parameter type-id='type-id-8' name='vdqcr_flags' filepath='../../dpdk/drivers/bus/dpaa/base/qbman/qman.c' line='2102' column='1'/>
-      <return type-id='type-id-1'/>
-    </function-decl>
-    <function-decl name='qman_volatile_dequeue' filepath='../../dpdk/drivers/bus/dpaa/base/qbman/qman.c' line='2139' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='qman_volatile_dequeue@@DPDK_20.0' hash='bfc53771118c0da6' id='type-id-390'>
-      <parameter type-id='type-id-179' name='fq' filepath='../../dpdk/drivers/bus/dpaa/base/qbman/qman.c' line='2139' column='1'/>
-      <parameter type-id='type-id-9' name='flags' filepath='../../dpdk/drivers/bus/dpaa/base/qbman/qman.c' line='2139' column='1'/>
-      <parameter type-id='type-id-9' name='vdqcr' filepath='../../dpdk/drivers/bus/dpaa/base/qbman/qman.c' line='2140' column='1'/>
-      <return type-id='type-id-1'/>
-    </function-decl>
-    <function-decl name='qman_enqueue' filepath='../../dpdk/drivers/bus/dpaa/base/qbman/qman.c' line='2246' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='qman_enqueue@@DPDK_20.0' hash='dffd4df0301286bb' id='type-id-391'>
-      <parameter type-id='type-id-179' name='fq' filepath='../../dpdk/drivers/bus/dpaa/base/qbman/qman.c' line='2246' column='1'/>
-      <parameter type-id='type-id-139' name='fd' filepath='../../dpdk/drivers/bus/dpaa/base/qbman/qman.c' line='2246' column='1'/>
-      <parameter type-id='type-id-9' name='flags' filepath='../../dpdk/drivers/bus/dpaa/base/qbman/qman.c' line='2246' column='1'/>
-      <return type-id='type-id-1'/>
-    </function-decl>
-    <function-decl name='qman_enqueue_multi' filepath='../../dpdk/drivers/bus/dpaa/base/qbman/qman.c' line='2261' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='qman_enqueue_multi@@DPDK_20.0' hash='f797ae628f03978a' id='type-id-392'>
-      <parameter type-id='type-id-179' name='fq' filepath='../../dpdk/drivers/bus/dpaa/base/qbman/qman.c' line='2261' column='1'/>
-      <parameter type-id='type-id-139' name='fd' filepath='../../dpdk/drivers/bus/dpaa/base/qbman/qman.c' line='2262' column='1'/>
-      <parameter type-id='type-id-125' name='flags' filepath='../../dpdk/drivers/bus/dpaa/base/qbman/qman.c' line='2262' column='1'/>
-      <parameter type-id='type-id-1' name='frames_to_send' filepath='../../dpdk/drivers/bus/dpaa/base/qbman/qman.c' line='2263' column='1'/>
-      <return type-id='type-id-1'/>
-    </function-decl>
-    <function-decl name='qman_enqueue_multi_fq' filepath='../../dpdk/drivers/bus/dpaa/base/qbman/qman.c' line='2332' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='qman_enqueue_multi_fq@@DPDK_20.0' hash='9e154845c4ae6582' id='type-id-393'>
+    </function-type>
+    <function-type size-in-bits='64' hash='9e154845c4ae6582' id='type-id-393'>
       <parameter type-id='type-id-180' name='fq' filepath='../../dpdk/drivers/bus/dpaa/base/qbman/qman.c' line='2332' column='1'/>
       <parameter type-id='type-id-139' name='fd' filepath='../../dpdk/drivers/bus/dpaa/base/qbman/qman.c' line='2332' column='1'/>
       <parameter type-id='type-id-125' name='flags' filepath='../../dpdk/drivers/bus/dpaa/base/qbman/qman.c' line='2333' column='1'/>
       <parameter type-id='type-id-1' name='frames_to_send' filepath='../../dpdk/drivers/bus/dpaa/base/qbman/qman.c' line='2333' column='1'/>
       <return type-id='type-id-1'/>
-    </function-decl>
-    <function-decl name='qman_modify_cgr' filepath='../../dpdk/drivers/bus/dpaa/base/qbman/qman.c' line='2433' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='qman_modify_cgr@@DPDK_20.0' hash='b613232aed5d8b0f' id='type-id-394'>
-      <parameter type-id='type-id-175' name='cgr' filepath='../../dpdk/drivers/bus/dpaa/base/qbman/qman.c' line='2433' column='1'/>
-      <parameter type-id='type-id-9' name='flags' filepath='../../dpdk/drivers/bus/dpaa/base/qbman/qman.c' line='2433' column='1'/>
-      <parameter type-id='type-id-165' name='opts' filepath='../../dpdk/drivers/bus/dpaa/base/qbman/qman.c' line='2434' column='1'/>
+    </function-type>
+    <function-type size-in-bits='64' hash='dffd4df0301286bb' id='type-id-391'>
+      <parameter type-id='type-id-179' name='fq' filepath='../../dpdk/drivers/bus/dpaa/base/qbman/qman.c' line='2246' column='1'/>
+      <parameter type-id='type-id-139' name='fd' filepath='../../dpdk/drivers/bus/dpaa/base/qbman/qman.c' line='2246' column='1'/>
+      <parameter type-id='type-id-9' name='flags' filepath='../../dpdk/drivers/bus/dpaa/base/qbman/qman.c' line='2246' column='1'/>
       <return type-id='type-id-1'/>
-    </function-decl>
-    <function-decl name='qman_create_cgr' filepath='../../dpdk/drivers/bus/dpaa/base/qbman/qman.c' line='2473' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='qman_create_cgr@@DPDK_20.0' hash='b613232aed5d8b0f' id='type-id-394'>
-      <parameter type-id='type-id-175' name='cgr' filepath='../../dpdk/drivers/bus/dpaa/base/qbman/qman.c' line='2433' column='1'/>
-      <parameter type-id='type-id-9' name='flags' filepath='../../dpdk/drivers/bus/dpaa/base/qbman/qman.c' line='2433' column='1'/>
-      <parameter type-id='type-id-165' name='opts' filepath='../../dpdk/drivers/bus/dpaa/base/qbman/qman.c' line='2434' column='1'/>
+    </function-type>
+    <function-type size-in-bits='64' hash='f797ae628f03978a' id='type-id-392'>
+      <parameter type-id='type-id-179' name='fq' filepath='../../dpdk/drivers/bus/dpaa/base/qbman/qman.c' line='2261' column='1'/>
+      <parameter type-id='type-id-139' name='fd' filepath='../../dpdk/drivers/bus/dpaa/base/qbman/qman.c' line='2262' column='1'/>
+      <parameter type-id='type-id-125' name='flags' filepath='../../dpdk/drivers/bus/dpaa/base/qbman/qman.c' line='2262' column='1'/>
+      <parameter type-id='type-id-1' name='frames_to_send' filepath='../../dpdk/drivers/bus/dpaa/base/qbman/qman.c' line='2263' column='1'/>
       <return type-id='type-id-1'/>
-    </function-decl>
-    <function-decl name='qman_delete_cgr' filepath='../../dpdk/drivers/bus/dpaa/base/qbman/qman.c' line='2587' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='qman_delete_cgr@@DPDK_20.0' hash='6e6ca24262b3a157' id='type-id-395'>
-      <parameter type-id='type-id-175' name='cgr' filepath='../../dpdk/drivers/bus/dpaa/base/qbman/qman.c' line='2587' column='1'/>
+    </function-type>
+    <function-type size-in-bits='64' hash='c6098396806ed826' id='type-id-388'>
+      <parameter type-id='type-id-179' name='fq' filepath='../../dpdk/drivers/bus/dpaa/base/qbman/qman.c' line='1918' column='1'/>
+      <parameter type-id='type-id-169' name='np' filepath='../../dpdk/drivers/bus/dpaa/base/qbman/qman.c' line='1918' column='1'/>
       <return type-id='type-id-1'/>
-    </function-decl>
+    </function-type>
+    <function-type size-in-bits='64' hash='949a903fe5c755e4' id='type-id-389'>
+      <parameter type-id='type-id-179' name='fq' filepath='../../dpdk/drivers/bus/dpaa/base/qbman/qman.c' line='2102' column='1'/>
+      <parameter type-id='type-id-7' name='num' filepath='../../dpdk/drivers/bus/dpaa/base/qbman/qman.c' line='2102' column='1'/>
+      <parameter type-id='type-id-8' name='vdqcr_flags' filepath='../../dpdk/drivers/bus/dpaa/base/qbman/qman.c' line='2102' column='1'/>
+      <return type-id='type-id-1'/>
+    </function-type>
+    <function-type size-in-bits='64' hash='8f182ec2fde61c68' id='type-id-386'>
+      <parameter type-id='type-id-179' name='fq' filepath='../../dpdk/drivers/bus/dpaa/base/qbman/qman.c' line='1697' column='1'/>
+      <parameter type-id='type-id-125' name='flags' filepath='../../dpdk/drivers/bus/dpaa/base/qbman/qman.c' line='1697' column='1'/>
+      <return type-id='type-id-1'/>
+    </function-type>
+    <function-type size-in-bits='64' hash='0988d212b37458ca' id='type-id-385'>
+      <parameter type-id='type-id-179' name='fq' filepath='../../dpdk/drivers/bus/dpaa/base/qbman/qman.c' line='1559' column='1'/>
+      <parameter type-id='type-id-9' name='flags' filepath='../../dpdk/drivers/bus/dpaa/base/qbman/qman.c' line='1559' column='1'/>
+      <parameter type-id='type-id-167' name='opts' filepath='../../dpdk/drivers/bus/dpaa/base/qbman/qman.c' line='1559' column='1'/>
+      <return type-id='type-id-1'/>
+    </function-type>
+    <function-type size-in-bits='64' hash='bfc53771118c0da6' id='type-id-390'>
+      <parameter type-id='type-id-179' name='fq' filepath='../../dpdk/drivers/bus/dpaa/base/qbman/qman.c' line='2139' column='1'/>
+      <parameter type-id='type-id-9' name='flags' filepath='../../dpdk/drivers/bus/dpaa/base/qbman/qman.c' line='2139' column='1'/>
+      <parameter type-id='type-id-9' name='vdqcr' filepath='../../dpdk/drivers/bus/dpaa/base/qbman/qman.c' line='2140' column='1'/>
+      <return type-id='type-id-1'/>
+    </function-type>
+    <function-type size-in-bits='64' hash='2e91327941793ee7' id='type-id-374'>
+      <parameter type-id='type-id-183' name='p' filepath='../../dpdk/drivers/bus/dpaa/base/qbman/qman.c' line='1067' column='1'/>
+      <parameter type-id='type-id-9' name='bits' filepath='../../dpdk/drivers/bus/dpaa/base/qbman/qman.c' line='1067' column='1'/>
+      <return type-id='type-id-1'/>
+    </function-type>
+    <function-type size-in-bits='64' hash='6668baab5275d4c5' id='type-id-373'>
+      <parameter type-id='type-id-9' name='bits' filepath='../../dpdk/drivers/bus/dpaa/base/qbman/qman.c' line='1050' column='1'/>
+      <return type-id='type-id-1'/>
+    </function-type>
+    <function-type size-in-bits='64' hash='5d5d0066e053a151' id='type-id-382'>
+      <parameter type-id='type-id-9' name='fqid' filepath='../../dpdk/drivers/bus/dpaa/base/qbman/qman.c' line='1435' column='1'/>
+      <parameter type-id='type-id-9' name='flags' filepath='../../dpdk/drivers/bus/dpaa/base/qbman/qman.c' line='1435' column='1'/>
+      <parameter type-id='type-id-179' name='fq' filepath='../../dpdk/drivers/bus/dpaa/base/qbman/qman.c' line='1435' column='1'/>
+      <return type-id='type-id-1'/>
+    </function-type>
+    <function-type size-in-bits='64' hash='6668baab5275d4c5' id='type-id-379'>
+      <parameter type-id='type-id-4' name='limit' filepath='../../dpdk/drivers/bus/dpaa/base/qbman/qman.c' line='1330' column='1'/>
+      <return type-id='type-id-1'/>
+    </function-type>
+    <function-type size-in-bits='64' hash='f0cd429343b26bd8' id='type-id-377'>
+      <parameter type-id='type-id-179' name='fq' filepath='../../dpdk/drivers/bus/dpaa/base/qbman/qman.c' line='1282' column='1'/>
+      <return type-id='type-id-155'/>
+    </function-type>
     <function-type size-in-bits='64' hash='2dc9bc00d2ff5a99' id='type-id-170'>
       <parameter type-id='type-id-183'/>
       <parameter type-id='type-id-179'/>
@@ -3074,64 +3022,106 @@
       <parameter type-id='type-id-272'/>
       <return type-id='type-id-153'/>
     </function-type>
+    <function-type size-in-bits='64' hash='16614d0d7fb2b15a' id='type-id-383'>
+      <parameter type-id='type-id-179' name='fq' filepath='../../dpdk/drivers/bus/dpaa/base/qbman/qman.c' line='1546' column='1'/>
+      <return type-id='type-id-9'/>
+    </function-type>
+    <function-type size-in-bits='64' hash='a51baa2335f6a7aa' id='type-id-376'>
+      <parameter type-id='type-id-187' name='ev' filepath='../../dpdk/drivers/bus/dpaa/base/qbman/qman.c' line='1215' column='1'/>
+      <parameter type-id='type-id-4' name='poll_limit' filepath='../../dpdk/drivers/bus/dpaa/base/qbman/qman.c' line='1215' column='1'/>
+      <parameter type-id='type-id-272' name='bufs' filepath='../../dpdk/drivers/bus/dpaa/base/qbman/qman.c' line='1216' column='1'/>
+      <return type-id='type-id-9'/>
+    </function-type>
+    <function-type size-in-bits='64' hash='8712f04a7b4de49e' id='type-id-375'>
+      <parameter type-id='type-id-4' name='poll_limit' filepath='../../dpdk/drivers/bus/dpaa/base/qbman/qman.c' line='1144' column='1'/>
+      <parameter type-id='type-id-272' name='bufs' filepath='../../dpdk/drivers/bus/dpaa/base/qbman/qman.c' line='1145' column='1'/>
+      <parameter type-id='type-id-183' name='p' filepath='../../dpdk/drivers/bus/dpaa/base/qbman/qman.c' line='1146' column='1'/>
+      <return type-id='type-id-4'/>
+    </function-type>
     <function-type size-in-bits='64' hash='82eeffbc33198e4f' id='type-id-364'>
       <parameter type-id='type-id-155'/>
       <parameter type-id='type-id-272'/>
-      <return type-id='type-id-36'/>
+      <return type-id='type-id-48'/>
     </function-type>
     <function-type size-in-bits='64' hash='d10d8b16a81eb468' id='type-id-365'>
       <parameter type-id='type-id-180'/>
       <parameter type-id='type-id-156'/>
       <parameter type-id='type-id-272'/>
       <parameter type-id='type-id-1'/>
-      <return type-id='type-id-36'/>
+      <return type-id='type-id-48'/>
+    </function-type>
+    <function-type size-in-bits='64' hash='f4d6d0093f44c3e7' id='type-id-378'>
+      <parameter type-id='type-id-179' name='fq' filepath='../../dpdk/drivers/bus/dpaa/base/qbman/qman.c' line='1318' column='1'/>
+      <parameter type-id='type-id-155' name='dq' filepath='../../dpdk/drivers/bus/dpaa/base/qbman/qman.c' line='1319' column='1'/>
+      <return type-id='type-id-48'/>
+    </function-type>
+    <function-type size-in-bits='64' hash='5cf93ae34e1eee7f' id='type-id-384'>
+      <parameter type-id='type-id-179' name='fq' filepath='../../dpdk/drivers/bus/dpaa/base/qbman/qman.c' line='1551' column='1'/>
+      <parameter type-id='type-id-181' name='state' filepath='../../dpdk/drivers/bus/dpaa/base/qbman/qman.c' line='1551' column='1'/>
+      <parameter type-id='type-id-125' name='flags' filepath='../../dpdk/drivers/bus/dpaa/base/qbman/qman.c' line='1551' column='1'/>
+      <return type-id='type-id-48'/>
     </function-type>
     <function-type size-in-bits='64' hash='1d5e304a4799d98d' id='type-id-366'>
       <parameter type-id='type-id-183'/>
       <parameter type-id='type-id-142'/>
-      <return type-id='type-id-36'/>
+      <return type-id='type-id-48'/>
     </function-type>
     <function-type size-in-bits='64' hash='b26a0b90eda5ae4e' id='type-id-367'>
       <parameter type-id='type-id-183'/>
       <parameter type-id='type-id-175'/>
       <parameter type-id='type-id-1'/>
-      <return type-id='type-id-36'/>
+      <return type-id='type-id-48'/>
     </function-type>
     <function-type size-in-bits='64' hash='9e7faafe1eeb1dc2' id='type-id-368'>
       <parameter type-id='type-id-183'/>
       <parameter type-id='type-id-179'/>
       <parameter type-id='type-id-142'/>
-      <return type-id='type-id-36'/>
+      <return type-id='type-id-48'/>
     </function-type>
     <function-type size-in-bits='64' hash='3b629a67caf8a83d' id='type-id-352'>
       <parameter type-id='type-id-199'/>
       <parameter type-id='type-id-86'/>
-      <return type-id='type-id-36'/>
+      <return type-id='type-id-48'/>
+    </function-type>
+    <function-type size-in-bits='64' hash='e5396c0ae3263cdd' id='type-id-380'>
+      <parameter type-id='type-id-9' name='pools' filepath='../../dpdk/drivers/bus/dpaa/base/qbman/qman.c' line='1375' column='1'/>
+      <parameter type-id='type-id-183' name='qp' filepath='../../dpdk/drivers/bus/dpaa/base/qbman/qman.c' line='1375' column='1'/>
+      <return type-id='type-id-48'/>
+    </function-type>
+    <function-type size-in-bits='64' hash='958caec14f108579' id='type-id-381'>
+      <parameter type-id='type-id-89' name='index' filepath='../../dpdk/drivers/bus/dpaa/base/qbman/qman.c' line='1406' column='1'/>
+      <parameter type-id='type-id-1' name='park_request' filepath='../../dpdk/drivers/bus/dpaa/base/qbman/qman.c' line='1406' column='1'/>
+      <return type-id='type-id-48'/>
+    </function-type>
+    <function-type size-in-bits='64' hash='33cabb503c62c709' id='type-id-372'>
+      <parameter type-id='type-id-272' name='fq_table' filepath='../../dpdk/drivers/bus/dpaa/base/qbman/qman.c' line='172' column='1'/>
+      <return type-id='type-id-48'/>
     </function-type>
     <function-type size-in-bits='64' hash='7f32ffea222edbe7' id='type-id-369'>
       <parameter type-id='type-id-86'/>
       <parameter type-id='type-id-86'/>
-      <return type-id='type-id-36'/>
+      <return type-id='type-id-48'/>
     </function-type>
   </abi-instr>
   <abi-instr address-size='64' path='../../dpdk/drivers/bus/dpaa/base/qbman/qman_driver.c' comp-dir-path='/home/dmarchan/v19.11/build-clang-shared' language='LANG_C99'>
     <pointer-type-def type-id='type-id-1' size-in-bits='64' hash='3fd83b2c14ae2f2f' id='type-id-396'/>
     <var-decl name='qm_channel_pool1' type-id='type-id-7' mangled-name='qm_channel_pool1' visibility='default' filepath='../../dpdk/drivers/bus/dpaa/base/qbman/qman_driver.c' line='18' column='1' elf-symbol-id='qm_channel_pool1@@DPDK_20.0'/>
     <var-decl name='qm_channel_caam' type-id='type-id-7' mangled-name='qm_channel_caam' visibility='default' filepath='../../dpdk/drivers/bus/dpaa/base/qbman/qman_driver.c' line='19' column='1' elf-symbol-id='qm_channel_caam@@DPDK_20.0'/>
-    <function-decl name='qman_thread_fd' filepath='../../dpdk/drivers/bus/dpaa/base/qbman/qman_driver.c' line='94' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='qman_thread_fd@@DPDK_20.0' hash='388da3fa973fde78' id='type-id-397'>
+    <function-decl name='qman_thread_fd' type-id='type-id-397' filepath='../../dpdk/drivers/bus/dpaa/base/qbman/qman_driver.c' line='94' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='qman_thread_fd@@DPDK_20.0'/>
+    <function-decl name='qman_thread_irq' type-id='type-id-124' filepath='../../dpdk/drivers/bus/dpaa/base/qbman/qman_driver.c' line='112' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='qman_thread_irq@@DPDK_20.0'/>
+    <function-decl name='qman_fq_portal_thread_irq' type-id='type-id-398' filepath='../../dpdk/drivers/bus/dpaa/base/qbman/qman_driver.c' line='124' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='qman_fq_portal_thread_irq@@DPDK_20.0'/>
+    <function-decl name='fsl_qman_fq_portal_create' type-id='type-id-399' filepath='../../dpdk/drivers/bus/dpaa/base/qbman/qman_driver.c' line='129' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='fsl_qman_fq_portal_create@@DPDK_20.0'/>
+    <function-type size-in-bits='64' hash='388da3fa973fde78' id='type-id-397'>
       <return type-id='type-id-1'/>
-    </function-decl>
-    <function-decl name='qman_thread_irq' filepath='../../dpdk/drivers/bus/dpaa/base/qbman/qman_driver.c' line='112' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='qman_thread_irq@@DPDK_20.0' hash='7f32ffea222edbe7' id='type-id-124'>
-      <return type-id='type-id-36'/>
-    </function-decl>
-    <function-decl name='qman_fq_portal_thread_irq' filepath='../../dpdk/drivers/bus/dpaa/base/qbman/qman_driver.c' line='124' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='qman_fq_portal_thread_irq@@DPDK_20.0' hash='9cbb5e8c356094c8' id='type-id-398'>
-      <parameter type-id='type-id-183' name='qp' filepath='../../dpdk/drivers/bus/dpaa/base/qbman/qman_driver.c' line='124' column='1'/>
-      <return type-id='type-id-36'/>
-    </function-decl>
-    <function-decl name='fsl_qman_fq_portal_create' filepath='../../dpdk/drivers/bus/dpaa/base/qbman/qman_driver.c' line='129' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='fsl_qman_fq_portal_create@@DPDK_20.0' hash='7829d91773994a1e' id='type-id-399'>
+    </function-type>
+    <function-type size-in-bits='64' hash='7829d91773994a1e' id='type-id-399'>
       <parameter type-id='type-id-396' name='fd' filepath='../../dpdk/drivers/bus/dpaa/base/qbman/qman_driver.c' line='129' column='1'/>
       <return type-id='type-id-183'/>
-    </function-decl>
+    </function-type>
+    <function-type size-in-bits='64' hash='9cbb5e8c356094c8' id='type-id-398'>
+      <parameter type-id='type-id-183' name='qp' filepath='../../dpdk/drivers/bus/dpaa/base/qbman/qman_driver.c' line='124' column='1'/>
+      <return type-id='type-id-48'/>
+    </function-type>
   </abi-instr>
   <abi-instr address-size='64' path='../../dpdk/drivers/bus/dpaa/dpaa_bus.c' comp-dir-path='/home/dmarchan/v19.11/build-clang-shared' language='LANG_C99'>
     <type-decl name='bool' size-in-bits='8' hash='5ba96bb22f4237fb' id='type-id-400'/>
@@ -5261,31 +5251,11 @@
     <var-decl name='dpaa_svr_family' type-id='type-id-4' mangled-name='dpaa_svr_family' visibility='default' filepath='../../dpdk/drivers/bus/dpaa/dpaa_bus.c' line='56' column='1' elf-symbol-id='dpaa_svr_family@@DPDK_20.0'/>
     <var-decl name='per_lcore_dpaa_io' type-id='type-id-400' mangled-name='per_lcore_dpaa_io' visibility='default' filepath='../../dpdk/drivers/bus/dpaa/dpaa_bus.c' line='60' column='1' elf-symbol-id='per_lcore_dpaa_io@@DPDK_20.0'/>
     <var-decl name='per_lcore_held_bufs' type-id='type-id-652' mangled-name='per_lcore_held_bufs' visibility='default' filepath='../../dpdk/drivers/bus/dpaa/dpaa_bus.c' line='61' column='1' elf-symbol-id='per_lcore_held_bufs@@DPDK_20.0'/>
-    <function-decl name='rte_dpaa_portal_init' filepath='../../dpdk/drivers/bus/dpaa/dpaa_bus.c' line='251' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='rte_dpaa_portal_init@@DPDK_20.0' hash='388da3fa973fde78' id='type-id-565'>
-      <parameter type-id='type-id-86' name='arg' filepath='../../dpdk/drivers/bus/dpaa/dpaa_bus.c' line='251' column='1'/>
-      <return type-id='type-id-1'/>
-    </function-decl>
-    <function-decl name='rte_dpaa_portal_fq_init' filepath='../../dpdk/drivers/bus/dpaa/dpaa_bus.c' line='320' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='rte_dpaa_portal_fq_init@@DPDK_20.0' hash='bc419d8858cf558a' id='type-id-861'>
-      <parameter type-id='type-id-86' name='arg' filepath='../../dpdk/drivers/bus/dpaa/dpaa_bus.c' line='320' column='1'/>
-      <parameter type-id='type-id-179' name='fq' filepath='../../dpdk/drivers/bus/dpaa/dpaa_bus.c' line='320' column='1'/>
-      <return type-id='type-id-1'/>
-    </function-decl>
-    <function-decl name='rte_dpaa_portal_fq_close' filepath='../../dpdk/drivers/bus/dpaa/dpaa_bus.c' line='347' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='rte_dpaa_portal_fq_close@@DPDK_20.0' hash='bc419d8858cf558a' id='type-id-387'>
-      <parameter type-id='type-id-179' name='fq' filepath='../../dpdk/drivers/bus/dpaa/base/qbman/qman.c' line='1787' column='1'/>
-      <return type-id='type-id-1'/>
-    </function-decl>
-    <function-decl name='dpaa_portal_finish' filepath='../../dpdk/drivers/bus/dpaa/dpaa_bus.c' line='353' column='1' visibility='default' binding='global' size-in-bits='64' hash='7f32ffea222edbe7' id='type-id-854'>
-      <parameter type-id='type-id-86' name='arg' filepath='../../dpdk/drivers/bus/dpaa/dpaa_bus.c' line='353' column='1'/>
-      <return type-id='type-id-36'/>
-    </function-decl>
-    <function-decl name='rte_dpaa_driver_register' filepath='../../dpdk/drivers/bus/dpaa/dpaa_bus.c' line='466' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='rte_dpaa_driver_register@@DPDK_20.0' hash='6756dbb8974a55a3' id='type-id-862'>
-      <parameter type-id='type-id-593' name='driver' filepath='../../dpdk/drivers/bus/dpaa/dpaa_bus.c' line='466' column='1'/>
-      <return type-id='type-id-36'/>
-    </function-decl>
-    <function-decl name='rte_dpaa_driver_unregister' filepath='../../dpdk/drivers/bus/dpaa/dpaa_bus.c' line='479' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='rte_dpaa_driver_unregister@@DPDK_20.0' hash='6756dbb8974a55a3' id='type-id-862'>
-      <parameter type-id='type-id-593' name='driver' filepath='../../dpdk/drivers/bus/dpaa/dpaa_bus.c' line='466' column='1'/>
-      <return type-id='type-id-36'/>
-    </function-decl>
+    <function-decl name='rte_dpaa_portal_init' type-id='type-id-565' filepath='../../dpdk/drivers/bus/dpaa/dpaa_bus.c' line='251' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='rte_dpaa_portal_init@@DPDK_20.0'/>
+    <function-decl name='rte_dpaa_portal_fq_init' type-id='type-id-861' filepath='../../dpdk/drivers/bus/dpaa/dpaa_bus.c' line='320' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='rte_dpaa_portal_fq_init@@DPDK_20.0'/>
+    <function-decl name='rte_dpaa_portal_fq_close' type-id='type-id-387' filepath='../../dpdk/drivers/bus/dpaa/dpaa_bus.c' line='347' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='rte_dpaa_portal_fq_close@@DPDK_20.0'/>
+    <function-decl name='rte_dpaa_driver_register' type-id='type-id-862' filepath='../../dpdk/drivers/bus/dpaa/dpaa_bus.c' line='466' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='rte_dpaa_driver_register@@DPDK_20.0'/>
+    <function-decl name='rte_dpaa_driver_unregister' type-id='type-id-862' filepath='../../dpdk/drivers/bus/dpaa/dpaa_bus.c' line='479' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='rte_dpaa_driver_unregister@@DPDK_20.0'/>
     <function-type size-in-bits='64' hash='211e4a91b1db68b9' id='type-id-437'>
       <parameter type-id='type-id-604'/>
       <return type-id='type-id-436'/>
@@ -5308,7 +5278,7 @@
       <parameter type-id='type-id-583'/>
       <parameter type-id='type-id-86'/>
       <parameter type-id='type-id-24'/>
-      <parameter type-id='type-id-42'/>
+      <parameter type-id='type-id-49'/>
       <return type-id='type-id-1'/>
     </function-type>
     <function-type size-in-bits='64' hash='589ace96e4bc6584' id='type-id-470'>
@@ -5327,7 +5297,7 @@
     <function-type size-in-bits='64' hash='941f31fd1fe957ad' id='type-id-476'>
       <parameter type-id='type-id-604'/>
       <parameter type-id='type-id-401'/>
-      <parameter type-id='type-id-42'/>
+      <parameter type-id='type-id-49'/>
       <return type-id='type-id-1'/>
     </function-type>
     <function-type size-in-bits='64' hash='88d0a106b96749da' id='type-id-478'>
@@ -5578,6 +5548,15 @@
       <parameter type-id='type-id-86'/>
       <return type-id='type-id-1'/>
     </function-type>
+    <function-type size-in-bits='64' hash='388da3fa973fde78' id='type-id-565'>
+      <parameter type-id='type-id-86' name='arg' filepath='../../dpdk/drivers/bus/dpaa/dpaa_bus.c' line='251' column='1'/>
+      <return type-id='type-id-1'/>
+    </function-type>
+    <function-type size-in-bits='64' hash='bc419d8858cf558a' id='type-id-861'>
+      <parameter type-id='type-id-86' name='arg' filepath='../../dpdk/drivers/bus/dpaa/dpaa_bus.c' line='320' column='1'/>
+      <parameter type-id='type-id-179' name='fq' filepath='../../dpdk/drivers/bus/dpaa/dpaa_bus.c' line='320' column='1'/>
+      <return type-id='type-id-1'/>
+    </function-type>
     <function-type size-in-bits='64' hash='eaefd76559d626dc' id='type-id-567'>
       <parameter type-id='type-id-86'/>
       <parameter type-id='type-id-6'/>
@@ -5628,34 +5607,42 @@
     <function-type size-in-bits='64' hash='388da3fa973fde78' id='type-id-848'>
       <parameter type-id='type-id-1'/>
       <parameter type-id='type-id-86'/>
-      <return type-id='type-id-36'/>
+      <return type-id='type-id-48'/>
+    </function-type>
+    <function-type size-in-bits='64' hash='6756dbb8974a55a3' id='type-id-862'>
+      <parameter type-id='type-id-593' name='driver' filepath='../../dpdk/drivers/bus/dpaa/dpaa_bus.c' line='466' column='1'/>
+      <return type-id='type-id-48'/>
     </function-type>
     <function-type size-in-bits='64' hash='a08953d72058c2dd' id='type-id-849'>
       <parameter type-id='type-id-604'/>
-      <return type-id='type-id-36'/>
+      <return type-id='type-id-48'/>
     </function-type>
     <function-type size-in-bits='64' hash='00dc66cf1c5b4aee' id='type-id-850'>
       <parameter type-id='type-id-604'/>
       <parameter type-id='type-id-6'/>
       <parameter type-id='type-id-1'/>
-      <return type-id='type-id-36'/>
+      <return type-id='type-id-48'/>
     </function-type>
     <function-type size-in-bits='64' hash='37480fa92652d270' id='type-id-851'>
       <parameter type-id='type-id-604'/>
       <parameter type-id='type-id-6'/>
       <parameter type-id='type-id-633'/>
-      <return type-id='type-id-36'/>
+      <return type-id='type-id-48'/>
     </function-type>
     <function-type size-in-bits='64' hash='8ceddab38e141753' id='type-id-852'>
       <parameter type-id='type-id-604'/>
       <parameter type-id='type-id-6'/>
       <parameter type-id='type-id-638'/>
-      <return type-id='type-id-36'/>
+      <return type-id='type-id-48'/>
     </function-type>
     <function-type size-in-bits='64' hash='f4b192d1b0a893b4' id='type-id-853'>
       <parameter type-id='type-id-604'/>
       <parameter type-id='type-id-8'/>
-      <return type-id='type-id-36'/>
+      <return type-id='type-id-48'/>
+    </function-type>
+    <function-type size-in-bits='64' hash='7f32ffea222edbe7' id='type-id-854'>
+      <parameter type-id='type-id-86'/>
+      <return type-id='type-id-48'/>
     </function-type>
     <function-type size-in-bits='64' hash='4f03e0265df3c58e' id='type-id-855'>
       <parameter type-id='type-id-86'/>

@@ -139,27 +139,24 @@
         <typedef-decl name='other' type-id='type-id-25' filepath='/usr/include/c++/4.8.2/bits/allocator.h' line='105' column='1' id='type-id-50'/>
       </member-type>
     </class-decl>
-    <function-decl name='emit' mangled-name='_Z4emitRSs' filepath='/home/dodji/git/libabigail/PR20369/tests/data/test-read-dwarf/test23-first-tu.cc' line='12' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_Z4emitRSs' hash='30d2a15b0509d529' id='type-id-63'>
-      <parameter type-id='type-id-23' filepath='/home/dodji/git/libabigail/PR20369/tests/data/test-read-dwarf/test23-first-tu.cc' line='12' column='1'/>
-      <return type-id='type-id-64'/>
-    </function-decl>
+    <function-decl name='emit' type-id='type-id-63' mangled-name='_Z4emitRSs' filepath='/home/dodji/git/libabigail/PR20369/tests/data/test-read-dwarf/test23-first-tu.cc' line='12' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_Z4emitRSs'/>
     <namespace-decl name='__gnu_cxx'>
-      <class-decl name='__numeric_traits_integer&lt;char&gt;' is-struct='yes' visibility='default' is-declaration-only='yes' id='type-id-65'/>
-      <class-decl name='__numeric_traits_integer&lt;int&gt;' is-struct='yes' visibility='default' is-declaration-only='yes' id='type-id-66'/>
-      <class-decl name='__numeric_traits_integer&lt;longint&gt;' is-struct='yes' visibility='default' is-declaration-only='yes' id='type-id-67'/>
-      <class-decl name='__numeric_traits_integer&lt;longunsignedint&gt;' is-struct='yes' visibility='default' is-declaration-only='yes' id='type-id-68'/>
-      <class-decl name='__numeric_traits_integer&lt;shortint&gt;' is-struct='yes' visibility='default' is-declaration-only='yes' id='type-id-69'/>
+      <class-decl name='__numeric_traits_integer&lt;char&gt;' is-struct='yes' visibility='default' is-declaration-only='yes' id='type-id-64'/>
+      <class-decl name='__numeric_traits_integer&lt;int&gt;' is-struct='yes' visibility='default' is-declaration-only='yes' id='type-id-65'/>
+      <class-decl name='__numeric_traits_integer&lt;longint&gt;' is-struct='yes' visibility='default' is-declaration-only='yes' id='type-id-66'/>
+      <class-decl name='__numeric_traits_integer&lt;longunsignedint&gt;' is-struct='yes' visibility='default' is-declaration-only='yes' id='type-id-67'/>
+      <class-decl name='__numeric_traits_integer&lt;shortint&gt;' is-struct='yes' visibility='default' is-declaration-only='yes' id='type-id-68'/>
     </namespace-decl>
-    <type-decl name='void' id='type-id-64'/>
+    <type-decl name='void' id='type-id-69'/>
+    <function-type size-in-bits='64' hash='30d2a15b0509d529' id='type-id-63'>
+      <parameter type-id='type-id-23' filepath='/home/dodji/git/libabigail/PR20369/tests/data/test-read-dwarf/test23-first-tu.cc' line='12' column='1'/>
+      <return type-id='type-id-69'/>
+    </function-type>
   </abi-instr>
   <abi-instr address-size='64' path='test23-second-tu.cc' comp-dir-path='/home/dodji/git/libabigail/PR20369/tests/data/test-read-dwarf' language='LANG_C_plus_plus'>
     <namespace-decl name='std'>
     </namespace-decl>
-    <function-decl name='emit' mangled-name='_Z4emitRSsS_' filepath='/home/dodji/git/libabigail/PR20369/tests/data/test-read-dwarf/test23-second-tu.cc' line='13' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_Z4emitRSsS_' hash='83677aee76849862' id='type-id-70'>
-      <parameter type-id='type-id-23' filepath='/home/dodji/git/libabigail/PR20369/tests/data/test-read-dwarf/test23-second-tu.cc' line='13' column='1'/>
-      <parameter type-id='type-id-23' filepath='/home/dodji/git/libabigail/PR20369/tests/data/test-read-dwarf/test23-second-tu.cc' line='13' column='1'/>
-      <return type-id='type-id-64'/>
-    </function-decl>
+    <function-decl name='emit' type-id='type-id-70' mangled-name='_Z4emitRSsS_' filepath='/home/dodji/git/libabigail/PR20369/tests/data/test-read-dwarf/test23-second-tu.cc' line='13' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_Z4emitRSsS_'/>
     <namespace-decl name='__gnu_cxx'>
       <class-decl name='__numeric_traits_integer&lt;char&gt;' is-struct='yes' visibility='default' is-declaration-only='yes' id='type-id-71'/>
       <class-decl name='__numeric_traits_integer&lt;int&gt;' is-struct='yes' visibility='default' is-declaration-only='yes' id='type-id-72'/>
@@ -167,5 +164,10 @@
       <class-decl name='__numeric_traits_integer&lt;longunsignedint&gt;' is-struct='yes' visibility='default' is-declaration-only='yes' id='type-id-74'/>
       <class-decl name='__numeric_traits_integer&lt;shortint&gt;' is-struct='yes' visibility='default' is-declaration-only='yes' id='type-id-75'/>
     </namespace-decl>
+    <function-type size-in-bits='64' hash='83677aee76849862' id='type-id-70'>
+      <parameter type-id='type-id-23' filepath='/home/dodji/git/libabigail/PR20369/tests/data/test-read-dwarf/test23-second-tu.cc' line='13' column='1'/>
+      <parameter type-id='type-id-23' filepath='/home/dodji/git/libabigail/PR20369/tests/data/test-read-dwarf/test23-second-tu.cc' line='13' column='1'/>
+      <return type-id='type-id-69'/>
+    </function-type>
   </abi-instr>
 </abi-corpus>

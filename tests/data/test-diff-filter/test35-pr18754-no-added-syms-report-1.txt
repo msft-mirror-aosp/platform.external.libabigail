@@ -1,4 +1,4 @@
-Functions changes summary: 82 Removed, 19 Changed (93 filtered out), 0 Added (938 filtered out) functions
+Functions changes summary: 82 Removed, 16 Changed (76 filtered out), 0 Added (968 filtered out) functions
 Variables changes summary: 0 Removed (47 filtered out), 1 Changed, 0 Added (11 filtered out) variables
 Function symbols changes summary: 7 Removed, 0 Added (76 filtered out) function symbols not referenced by debug info
 Variable symbols changes summary: 0 Removed, 0 Added variable symbol not referenced by debug info
@@ -88,7 +88,7 @@ Variable symbols changes summary: 0 Removed, 0 Added variable symbol not referen
   [D] 'function void std::__unguarded_linear_insert<VarList::BufEntry*,__gnu_cxx::__ops::_Val_comp_iter<bool(*)(constVarList::BufEntry&,constVarList::BufEntry&)>>(VarList::BufEntry*, __gnu_cxx::__ops::_Val_comp_iter<bool(*)(constVarList::BufEntry&,constVarList::BufEntry&)>)'
   [D] 'function void write_message(FILE*, int, __va_list_tag*)'
 
-4 functions with incompatible sub-type changes:
+3 functions with incompatible sub-type changes:
 
   [C] 'method std::pair<std::_Rb_tree_iterator<AutoData>,bool>::pair<std::_Rb_tree_iterator<AutoData>,bool>(std::_Rb_tree_iterator<AutoData>&&, bool&&)' has some sub-type changes:
     'method std::pair<std::_Rb_tree_iterator<AutoData>,bool>::pair<std::_Rb_tree_iterator<AutoData>,bool>(std::_Rb_tree_iterator<AutoData>&&, bool&&) {_ZNSt4pairISt17_Rb_tree_iteratorI8AutoDataEbEC2IS2_bLb1EEEOT_OT0_, _ZNSt4pairISt17_Rb_tree_iteratorI8AutoDataEbEC1IS2_bLb1EEEOT_OT0_}' now becomes 'method void std::pair<std::_Rb_tree_iterator<AutoData>,bool>::pair<std::_Rb_tree_iterator<AutoData>,bool,1>(std::_Rb_tree_iterator<AutoData>&, bool&) {_ZNSt4pairISt17_Rb_tree_iteratorI8AutoDataEbEC2IS2_bLb1EEEOT_OT0_, _ZNSt4pairISt17_Rb_tree_iteratorI8AutoDataEbEC1IS2_bLb1EEEOT_OT0_}'
@@ -103,13 +103,6 @@ Variable symbols changes summary: 0 Removed, 0 Added variable symbol not referen
       rvalue reference type 'std::_Rb_tree_iterator<AutoData>&& became an lvalue reference type: 'std::_Rb_tree_iterator<AutoData>&'
     parameter 2 of type 'std::_Rb_tree_iterator<AutoData>&&' changed:
       rvalue reference type 'std::_Rb_tree_iterator<AutoData>&& became an lvalue reference type: 'std::_Rb_tree_iterator<AutoData>&'
-
-  [C] 'method std::pair<std::_Rb_tree_iterator<PtrData>,bool>::pair<std::_Rb_tree_iterator<PtrData>,bool>(std::_Rb_tree_iterator<PtrData>&&, bool&&)' has some sub-type changes:
-    'method std::pair<std::_Rb_tree_iterator<PtrData>,bool>::pair<std::_Rb_tree_iterator<PtrData>,bool>(std::_Rb_tree_iterator<PtrData>&&, bool&&) {_ZNSt4pairISt17_Rb_tree_iteratorI7PtrDataEbEC2IS2_bLb1EEEOT_OT0_, _ZNSt4pairISt17_Rb_tree_iteratorI7PtrDataEbEC1IS2_bLb1EEEOT_OT0_}' now becomes 'method void std::pair<std::_Rb_tree_iterator<PtrData>,bool>::pair<std::_Rb_tree_iterator<PtrData>,bool,1>(std::_Rb_tree_iterator<PtrData>&, bool&) {_ZNSt4pairISt17_Rb_tree_iteratorI7PtrDataEbEC2IS2_bLb1EEEOT_OT0_, _ZNSt4pairISt17_Rb_tree_iteratorI7PtrDataEbEC1IS2_bLb1EEEOT_OT0_}'
-    parameter 1 of type 'std::_Rb_tree_iterator<PtrData>&&' changed:
-      rvalue reference type 'std::_Rb_tree_iterator<PtrData>&& became an lvalue reference type: 'std::_Rb_tree_iterator<PtrData>&'
-    parameter 2 of type 'bool&&' changed:
-      rvalue reference type 'bool&& became an lvalue reference type: 'bool&'
 
   [C] 'method std::pair<std::_Rb_tree_iterator<PtrData>,std::_Rb_tree_iterator<PtrData>>::pair<std::_Rb_tree_iterator<PtrData>,std::_Rb_tree_iterator<PtrData>>(std::_Rb_tree_iterator<PtrData>&&, std::_Rb_tree_iterator<PtrData>&&)' has some sub-type changes:
     'method std::pair<std::_Rb_tree_iterator<PtrData>,std::_Rb_tree_iterator<PtrData>>::pair<std::_Rb_tree_iterator<PtrData>,std::_Rb_tree_iterator<PtrData>>(std::_Rb_tree_iterator<PtrData>&&, std::_Rb_tree_iterator<PtrData>&&) {_ZNSt4pairISt17_Rb_tree_iteratorI7PtrDataES2_EC2IS2_S2_Lb1EEEOT_OT0_, _ZNSt4pairISt17_Rb_tree_iteratorI7PtrDataES2_EC1IS2_S2_Lb1EEEOT_OT0_}' now becomes 'method void std::pair<std::_Rb_tree_iterator<PtrData>,std::_Rb_tree_iterator<PtrData>>::pair<std::_Rb_tree_iterator<PtrData>,std::_Rb_tree_iterator<PtrData>,1>(std::_Rb_tree_iterator<PtrData>&, std::_Rb_tree_iterator<PtrData>&) {_ZNSt4pairISt17_Rb_tree_iteratorI7PtrDataES2_EC2IS2_S2_Lb1EEEOT_OT0_, _ZNSt4pairISt17_Rb_tree_iteratorI7PtrDataES2_EC1IS2_S2_Lb1EEEOT_OT0_}'

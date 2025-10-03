@@ -2542,10 +2542,10 @@ public:
   bool
   architecture_changed() const;
 
-  const string_function_ptr_map&
+  const istring_functions_set_omap_type&
   deleted_functions() const;
 
-  const string_function_ptr_map&
+  const istring_functions_set_map_type&
   added_functions();
 
   const string_function_decl_diff_sptr_map&

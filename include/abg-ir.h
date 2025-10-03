@@ -130,6 +130,42 @@ void
 sort_types(const canonical_type_sptr_set_type& types,
 	   vector<type_base_sptr>& result);
 
+/// A hashing functor for @ref type_base_sptr that doesn't do any deep
+/// type comparison but rather just compares pointer values.
+struct shallow_type_hasher
+{
+  /// The hashing operator of a type_base_sptr.
+  ///
+  /// @param t the type_base_sptr to consider.
+  ///
+  /// @return the pointer value of @p t.
+  uint64_t
+  operator()(const type_base_sptr& t) const
+  {return reinterpret_cast<uint64_t>(t.get());}
+};// end struct shallow_type_hasher
+
+/// An equality functor for @ref type_base_sptr that only compares
+/// their pointer values and does not do any deep type comparison.
+struct shallow_type_eq
+{
+  /// The equality operator.
+  ///
+  /// @param l the left hand-side operand of the equality.
+  ///
+  /// @param r the right-hand-side operand of the equality.
+  ///
+  /// @return true iff the pointer value of @p l equals the one of @p
+  /// r.
+  bool
+  operator()(const type_base_sptr& l, const type_base_sptr& r) const
+  {return l.get() == r.get();}
+};// end struct shallow_type_eq
+
+/// Convenience typedef for a set of @ref type_base_sptr
+typedef unordered_set<type_base_sptr,
+		      shallow_type_hasher,
+		      shallow_type_eq> type_sptr_set_type;
+
 /// This is an abstraction of the set of resources necessary to manage
 /// several aspects of the internal representations of the Abigail
 /// library.
@@ -817,7 +853,7 @@ public:
   type_maps&
   get_types();
 
-  const vector<function_type_sptr>&
+  const type_sptr_set_type&
   get_live_fn_types() const;
 
   location_manager&

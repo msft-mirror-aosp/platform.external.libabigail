@@ -122,10 +122,10 @@ corpus::exported_decls_builder::exported_functions()
 ///
 /// @return the set of functions designated by the ELF symbol of @p
 /// fn, or nullptr if the function ID maps to just @p fn.
-std::unordered_set<function_decl*>*
+std::unordered_set<const function_decl*>*
 corpus::exported_decls_builder::fn_id_maps_to_several_fns(const function_decl* fn)
 {
-  std::unordered_set<function_decl*> *fns_for_id =
+  std::unordered_set<const function_decl*> *fns_for_id =
     priv_->fn_id_is_in_id_fns_map(fn);
   if (fns_for_id && fns_for_id->size() > 1)
     return fns_for_id;
@@ -157,10 +157,16 @@ corpus::exported_decls_builder::exported_variables()
 ///
 /// @param fn the function to add the set of exported functions.
 ///
+/// @param do_update if true, add the function to the set of exported
+/// functions even if one already exists there.  Otherwise, if a
+/// function's ID is already recorded as being exported, do not add @p
+/// fn.
+///
 /// @return true iff the function was added to the set of exported
 /// functions.
 bool
-corpus::exported_decls_builder::maybe_add_fn_to_exported_fns(function_decl* fn)
+corpus::exported_decls_builder::maybe_add_fn_to_exported_fns(function_decl* fn,
+							     bool do_update)
 {
   if (!fn->get_is_in_public_symbol_table())
     return false;
@@ -168,14 +174,14 @@ corpus::exported_decls_builder::maybe_add_fn_to_exported_fns(function_decl* fn)
   const string& fn_id = priv_->get_id(*fn);
   ABG_ASSERT(!fn_id.empty());
 
-  if (priv_->fn_is_in_id_fns_map(fn))
+  if (!do_update && priv_->fn_is_in_id_fns_map(fn))
     return false;
 
   if (priv_->keep_wrt_id_of_fns_to_keep(fn)
       && priv_->keep_wrt_regex_of_fns_to_suppress(fn)
       && priv_->keep_wrt_regex_of_fns_to_keep(fn))
     {
-      priv_->add_fn_to_exported(fn);
+      priv_->add_fn_to_exported(fn, do_update);
       return true;
     }
   return false;
@@ -261,6 +267,33 @@ struct func_comp
     if (second_name.empty())
       second_name = second->get_name();
     ABG_ASSERT(!second_name.empty());
+
+    if (first_name != second_name)
+      return first_name < second_name;
+
+    // If the functions are member functions, sort them using the hash
+    // value and canonical index of their class.
+    if (is_member_function(first) && is_member_function(second))
+      {
+	class_or_union* first_scope =
+	  is_class_or_union_type(first->get_scope());
+	class_or_union* second_scope =
+	  is_class_or_union_type(second->get_scope());
+	type_base* fc = first_scope->get_naked_canonical_type();
+	type_base* sc = second_scope->get_naked_canonical_type();
+	if (fc && sc)
+	    {
+	      hash_t fh = peek_hash_value(*fc);
+	      hash_t sh = peek_hash_value(*sc);
+	      if (fh && sh && *fh != *sh)
+		return *fh < *sh;
+
+	      size_t f_cti = get_canonical_type_index(fc);
+	      size_t s_cti = get_canonical_type_index(sc);
+	      if (f_cti != s_cti)
+		return f_cti < s_cti;
+	    }
+      }
 
     return first_name < second_name;
   }
@@ -663,7 +696,7 @@ corpus::priv::get_public_types_pretty_representations()
 ///
 /// @return the set of functions which ID is @p id, or nil if no
 /// function with that ID was found.
-std::unordered_set<function_decl*>*
+const std::unordered_set<const function_decl*>*
 corpus::priv::lookup_functions(const interned_string& id)
 {
   exported_decls_builder_sptr &b = exported_decls_builder;
@@ -675,6 +708,46 @@ corpus::priv::lookup_functions(const interned_string& id)
       return &i->second;
     }
   return nullptr;
+}
+
+/// Remove redundant functions from the "fns" vector.
+void
+corpus::priv::remove_redundant_functions()
+{
+  // This set cannot contain two identical function, by construction.
+  functions_set_type fns_set;
+
+  // Perform the de-duplication by filing fns_set with the content of
+  // fns.
+  for (auto& f : fns)
+    fns_set.insert(f);
+
+  // Clear the original non-deduplicated functions vector.
+  fns.clear();
+
+  // Fill fns back with the de-duplicated set of functions.
+  for (auto& f : fns_set)
+    fns.push_back(f);
+
+  // Do something similar for the set of functions associated to each
+  // function ID.
+  exported_decls_builder_sptr &b = exported_decls_builder;
+  if (b)
+    for (auto& entry : b->priv_->id_fns_map_)
+      {
+	functions_set_type f_set;
+	if (entry.second.size() > 1)
+	  {
+	    for (auto& fn : entry.second)
+	      f_set.insert(fn);
+
+	    for (auto& fn : f_set)
+	      {
+		auto it = fns_set.find(fn);
+		entry.second.insert(*it);
+	      }
+	  }
+      }
 }
 
 /// Destructor of the @ref corpus::priv type.
@@ -1395,11 +1468,11 @@ corpus::get_functions() const
 ///
 /// @return the set of functions which ID is @p id, or nil if no
 /// function with that ID was found.
-const std::unordered_set<function_decl*>*
+const std::unordered_set<const function_decl*>*
 corpus::lookup_functions(const interned_string& id) const
 {return priv_->lookup_functions(id);}
 
-const std::unordered_set<function_decl*>*
+const std::unordered_set<const function_decl*>*
 corpus::lookup_functions(const char* id) const
 {
   if (!id)
@@ -1443,11 +1516,20 @@ corpus::lookup_variables(const char* id) const
 
 /// Sort the set of functions exported by this corpus.
 ///
-/// Normally, you shouldn't be calling this as the code that creates
-/// the corpus for you should do it for you too.
+/// This function removes redundant functions from the vector of
+/// functions that make up the ABI entry points and then sort the
+/// resulting de-duplicated vector of functions.
+///
+/// Normally, unless you are writting a front-end that creates an ABI
+/// @ref corpus, you shouldn't be calling this because the code that
+/// creates the corpus for should do it for you.  In any case, this
+/// function should be called after the types carried by the
+/// environment of the corpus are canonicalized.
 void
 corpus::sort_functions()
 {
+  priv_->remove_redundant_functions();
+
   func_comp fc;
   std::sort(priv_->fns.begin(), priv_->fns.end(), fc);
 
@@ -2285,7 +2367,7 @@ corpus_group::recording_types_reachable_from_public_interface_supported()
 ///
 /// @return the set of functions which ID is @p id, or nil if no
 /// function with that ID was found.
-const std::unordered_set<function_decl*>*
+const std::unordered_set<const function_decl*>*
 corpus_group::lookup_functions(const interned_string& id) const
 {
   for (auto& corp :get_corpora())
@@ -2313,7 +2395,7 @@ corpus_group::lookup_functions(const interned_string& id) const
 ///
 /// @return the set of functions which ID is @p id, or nil if no
 /// function with that ID was found.
-const std::unordered_set<function_decl*>*
+const std::unordered_set<const function_decl*>*
 corpus_group::lookup_functions(const char* id) const
 {
   for (auto& corp :get_corpora())

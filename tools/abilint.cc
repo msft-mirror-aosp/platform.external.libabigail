@@ -28,6 +28,7 @@
 #include "abg-ir.h"
 #include "abg-corpus.h"
 #include "abg-reader.h"
+#include "abg-comparison.h"
 #include "abg-dwarf-reader.h"
 #ifdef WITH_CTF
 #include "abg-ctf-reader.h"
@@ -44,10 +45,19 @@ using std::ofstream;
 using std::vector;
 using std::unordered_set;
 using std::unique_ptr;
+using abigail::ir::environment;
+using abigail::comparison::corpus_diff;
+using abigail::comparison::corpus_diff_sptr;
+using abigail::comparison::diff;
+using abigail::comparison::diff_sptr;
+using abigail::comparison::diff_context;
+using abigail::comparison::diff_context_sptr;
 using abigail::tools_utils::emit_prefix;
 using abigail::tools_utils::check_file;
 using abigail::tools_utils::file_type;
 using abigail::tools_utils::guess_file_type;
+using abigail::tools_utils::temp_file;
+using abigail::tools_utils::temp_file_sptr;
 using abigail::suppr::suppression_sptr;
 using abigail::suppr::suppressions_type;
 using abigail::suppr::read_suppressions;
@@ -62,6 +72,7 @@ using abigail::abixml::read_translation_unit_from_istream;
 using abigail::abixml::read_corpus_from_abixml;
 using abigail::abixml::read_corpus_from_abixml_file;
 using abigail::abixml::read_corpus_group_from_input;
+using abigail::abixml::create_reader;
 #ifdef WITH_SHOW_TYPE_USE_IN_ABILINT
 using abigail::abixml::get_types_from_type_id;
 using abigail::abixml::get_artifact_used_by_relation_map;
@@ -73,12 +84,15 @@ using abigail::xml_writer::create_write_context;
 using abigail::xml_writer::write_corpus;
 using abigail::xml_writer::write_corpus_to_archive;
 
+using namespace abigail;
+
 struct options
 {
   string			file_path;
   bool				read_from_stdin;
   bool				read_tu;
   bool				diff;
+  bool				abidiff;
   bool				noout;
   bool				annotate;
   bool				do_log;
@@ -97,6 +111,7 @@ struct options
     : read_from_stdin(false),
       read_tu(false),
       diff(false),
+      abidiff(false),
       noout(false),
       annotate(false),
       do_log(false)
@@ -531,6 +546,23 @@ set_suppressions(abigail::fe_iface& reader, const options& opts)
   reader.add_suppressions(supprs);
 }
 
+/// Initialize the context use for driving ABI comparison.
+///
+/// @param ctxt the context to initialize.
+static void
+set_diff_context(diff_context_sptr& ctxt)
+{
+  ctxt->default_output_stream(&cerr);
+  ctxt->error_output_stream(&cerr);
+  // Filter out changes that are not meaningful from an ABI
+  // standpoint, from the diff output.
+  ctxt->switch_categories_off
+    (abigail::comparison::ACCESS_CHANGE_CATEGORY
+     | abigail::comparison::COMPATIBLE_TYPE_CHANGE_CATEGORY
+     | abigail::comparison::HARMLESS_DECL_NAME_CHANGE_CATEGORY);
+}
+
+
 /// Set the options of the reader.
 ///
 /// @param reader the reader to consider.
@@ -551,6 +583,7 @@ enum option_key
 #endif
   OPT_DEBUG_INFO_DIR,
   OPT_DIFF,
+  OPT_ABIDIFF,
   OPT_HD,
   OPT_HF,
   OPT_NOOUT,
@@ -565,6 +598,10 @@ enum option_key
 
 static const struct argp_option argp_options[] =
 {
+  { "abidiff", OPT_ABIDIFF, 0, 0,
+    "perform an ABI diff between the memory model of the input and "
+    "the memory model of the file saved to disk and read back "
+    "into memory", 0 },
   { "annotate", OPT_ANNOTATE, 0, 0,
     "annotate the ABI artifacts emitted in the output", 0 },
 #ifdef WITH_CTF
@@ -625,6 +662,10 @@ parse_opt(int key, char* arg, struct argp_state* state)
 
     case OPT_DIFF:
       opts.diff = true;
+      break;
+
+    case OPT_ABIDIFF:
+      opts.abidiff = true;
       break;
 
     case OPT_HD:
@@ -740,6 +781,277 @@ parse_command_line(int argc, char* argv[], options& opts)
   return true;
 }
 
+/// Given a corpus (or a corpus group), write it as ABIXML, read it
+/// back into another corpus and compare the resulting two corpora.
+///
+/// The result of the comparison should be the empty set.
+///
+/// @param write_ctxt the write context to use for writing the corpus
+/// to ABIXML.
+///
+/// @param corp the input corpus (or corpus group) to serialize to
+/// ABIXML.
+///
+/// @param env the environment used for computing.
+/// @param opts the options passed to the main program.
+///
+/// @param argv the vector of arguments of the main program.
+///
+/// @return 0 if the self comparison did yield the empty set, 1
+/// otherwise.  If the comparison does (wronly) yield a result, that
+/// result if emitted on std::cerr.
+static int
+perform_self_comparison(const corpus_sptr& corp,
+			const translation_unit_sptr& tu,
+			environment& env, char* argv[])
+{
+  // Save the abi in abixml format in a temporary file, read
+  // it back, and compare the ABI of what we've read back
+  // against the ABI of the input ELF file.
+  temp_file_sptr tmp_file = temp_file::create();
+  const write_context_sptr& write_ctxt = create_write_context(env, tmp_file->get_stream());
+
+  abigail::ir::corpus_group_sptr corp_group = is_corpus_group(corp);
+
+  if (corp_group)
+    write_corpus_group(*write_ctxt, corp_group, 0);
+  else if (corp)
+    write_corpus(*write_ctxt, corp, 0);
+  else if (tu)
+    write_translation_unit(*write_ctxt, *tu, 0);
+
+  tmp_file->get_stream().flush();
+
+  abigail::fe_iface_sptr rdr = create_reader(tmp_file->get_path(), env);
+
+  abigail::fe_iface::status sts;
+  corpus_sptr corp2;
+  corpus_group_sptr corp_group2;
+  translation_unit_sptr tu2;
+
+  if (corp_group)
+    corp_group2 = abixml::read_corpus_group_from_input(*rdr);
+  else if (corp)
+    corp2 = rdr->read_corpus(sts);
+  else if (tu)
+    {
+      	abigail::fe_iface_sptr rdr2 =
+	  abigail::abixml::create_reader(tmp_file->get_path(), env);
+      tu2 = abigail::abixml::read_translation_unit(*rdr2);
+    }
+
+  if (!corp2 && !corp_group2 && !tu2)
+    {
+      emit_prefix(argv[0], cerr)
+	<< "Could not read temporary XML representation of "
+	"ABIXML file back\n";
+      return 1;
+    }
+
+  diff_context_sptr ctxt(new diff_context);
+  set_diff_context(ctxt);
+
+  diff_sptr diff;
+  corpus_diff_sptr corpus_diff;
+
+  if (corp_group2)
+    corpus_diff = compute_diff(corp_group, corp_group2, ctxt);
+  else if (corp2)
+    corpus_diff = compute_diff(corp, corp2, ctxt);
+  else if (tu2)
+    diff = compute_diff(tu, tu2, ctxt);
+
+  bool has_error = corpus_diff ? corpus_diff->has_changes() : diff->has_changes();
+  if (has_error)
+    {
+      corpus_diff ? corpus_diff->report(cerr) : diff->report(cerr);
+      return 1;
+    }
+  return 0;
+}
+
+static int
+load_corpus_and_write_abixml(char* argv[],
+			     environment& env,
+			     options& opts)
+{
+  abigail::translation_unit_sptr tu;
+  abigail::corpus_sptr corp;
+  abigail::corpus_group_sptr group;
+  abigail::fe_iface::status s = abigail::fe_iface::STATUS_OK;
+  string di_root_path;
+  file_type type = guess_file_type(opts.file_path);
+  abigail::fe_iface_sptr rdr;
+
+  switch (type)
+    {
+    case abigail::tools_utils::FILE_TYPE_UNKNOWN:
+      emit_prefix(argv[0], cerr)
+	<< "Unknown file type given in input: " << opts.file_path
+	<< "\n";
+      return 1;
+    case abigail::tools_utils::FILE_TYPE_NATIVE_BI:
+      {
+	rdr = abigail::abixml::create_reader(opts.file_path,
+					     env);
+	set_reader_options(*rdr, opts);
+	tu = abigail::abixml::read_translation_unit(*rdr);
+      }
+      break;
+    case abigail::tools_utils::FILE_TYPE_ELF:
+    case abigail::tools_utils::FILE_TYPE_AR:
+      {
+	di_root_path = opts.di_root_path;
+	vector<string> di_roots;
+	di_roots.push_back(di_root_path);
+	abigail::elf_based_reader_sptr rdr;
+#ifdef WITH_CTF
+	if (opts.use_ctf)
+	  rdr =
+	    abigail::ctf::create_reader(opts.file_path,
+					di_roots, env);
+	else
+#endif
+	  rdr =
+	    abigail::dwarf::create_reader(opts.file_path,
+					  di_roots, env,
+					  /*load_all_types=*/false);
+	set_reader_options(*rdr, opts);
+	corp = rdr->read_corpus(s);
+      }
+      break;
+    case abigail::tools_utils::FILE_TYPE_XML_CORPUS:
+      {
+	rdr = abigail::abixml::create_reader(opts.file_path, env);
+	assert(rdr);
+	set_reader_options(*rdr, opts);
+	corp = rdr->read_corpus(s);
+	break;
+      }
+    case abigail::tools_utils::FILE_TYPE_XML_CORPUS_GROUP:
+      {
+	rdr = abigail::abixml::create_reader(opts.file_path, env);
+	assert(rdr);
+	set_reader_options(*rdr, opts);
+	group = read_corpus_group_from_input(*rdr);
+      }
+      break;
+    case abigail::tools_utils::FILE_TYPE_RPM:
+    case abigail::tools_utils::FILE_TYPE_SRPM:
+    case abigail::tools_utils::FILE_TYPE_DEB:
+    case abigail::tools_utils::FILE_TYPE_DIR:
+    case abigail::tools_utils::FILE_TYPE_TAR:
+    case abigail::tools_utils::FILE_TYPE_XZ:
+      break;
+    }
+
+  if (!tu && !corp && !group)
+    {
+      emit_prefix(argv[0], cerr)
+	<< "failed to read " << opts.file_path << "\n";
+      if (!(s & abigail::fe_iface::STATUS_OK))
+	{
+	  if (s & abigail::fe_iface::STATUS_DEBUG_INFO_NOT_FOUND)
+	    {
+	      cerr << "could not find the debug info";
+	      if(di_root_path.empty())
+		emit_prefix(argv[0], cerr)
+		  << " Maybe you should consider using the "
+		  "--debug-info-dir1 option to tell me about the "
+		  "root directory of the debuginfo? "
+		  "(e.g, --debug-info-dir1 /usr/lib/debug)\n";
+	      else
+		emit_prefix(argv[0], cerr)
+		  << "Maybe the root path to the debug "
+		  "information is wrong?\n";
+	    }
+	  if (s & abigail::fe_iface::STATUS_NO_SYMBOLS_FOUND)
+	    emit_prefix(argv[0], cerr)
+	      << "could not find the ELF symbols in the file "
+	      << opts.file_path
+	      << "\n";
+	}
+      return 1;
+    }
+
+  using abigail::tools_utils::temp_file;
+  using abigail::tools_utils::temp_file_sptr;
+
+  temp_file_sptr tmp_file = temp_file::create();
+  if (!tmp_file)
+    {
+      emit_prefix(argv[0], cerr) << "failed to create temporary file\n";
+      return 1;
+    }
+
+  std::ostream& of = opts.diff ? tmp_file->get_stream() : cout;
+  const write_context_sptr ctxt = create_write_context(env, of);
+
+  bool is_ok = true;
+
+  if (tu)
+    {
+      if (!opts.noout)
+	{
+	  set_annotate(*ctxt, opts.annotate);
+	  if (opts.abidiff)
+	    return perform_self_comparison(nullptr, tu, env, argv);
+	  is_ok = write_translation_unit(*ctxt, *tu, 0);
+	}
+    }
+  else
+    {
+      if (type == abigail::tools_utils::FILE_TYPE_XML_CORPUS
+	  || type == abigail::tools_utils::FILE_TYPE_XML_CORPUS_GROUP
+	  || type == abigail::tools_utils::FILE_TYPE_ELF)
+	{
+	  if (!opts.noout)
+	    {
+	      if (opts.abidiff)
+		return perform_self_comparison(corp, nullptr, env, argv);
+
+	      set_annotate(*ctxt, opts.annotate);
+	      if (corp)
+		is_ok = write_corpus(*ctxt, corp, 0);
+	      else if (group)
+		is_ok = write_corpus_group(*ctxt, group, 0);
+	    }
+	}
+    }
+
+  if (!is_ok)
+    {
+      string output =
+	(type == abigail::tools_utils::FILE_TYPE_NATIVE_BI)
+	? "translation unit"
+	: "ABI corpus";
+      emit_prefix(argv[0], cerr)
+	<< "failed to write the translation unit "
+	<< opts.file_path << " back\n";
+    }
+
+  if (is_ok
+      && opts.diff
+      && ((type == abigail::tools_utils::FILE_TYPE_XML_CORPUS)
+	  ||type == abigail::tools_utils::FILE_TYPE_XML_CORPUS_GROUP
+	  || type == abigail::tools_utils::FILE_TYPE_NATIVE_BI))
+    {
+      string cmd = "diff -u " + opts.file_path + " " + tmp_file->get_path();
+      if (system(cmd.c_str()))
+	is_ok = false;
+    }
+
+#ifdef WITH_SHOW_TYPE_USE_IN_ABILINT
+  if (is_ok
+      && !opts.type_id_to_show.empty())
+    {
+      ABG_ASSERT(rdr);
+      show_how_type_is_used(*rdr, opts.type_id_to_show);
+    }
+#endif
+  return is_ok ? 0 : 1;  
+}
+
 /// Reads a bi (binary instrumentation) file, saves it back to a
 /// temporary file and run a diff on the two versions.
 int
@@ -804,179 +1116,7 @@ main(int argc, char* argv[])
 	}
     }
   else if (!opts.file_path.empty())
-    {
-      if (!check_file(opts.file_path, cerr, argv[0]))
-	return 1;
-      abigail::translation_unit_sptr tu;
-      abigail::corpus_sptr corp;
-      abigail::corpus_group_sptr group;
-      abigail::fe_iface::status s = abigail::fe_iface::STATUS_OK;
-      string di_root_path;
-      file_type type = guess_file_type(opts.file_path);
-      abigail::fe_iface_sptr rdr;
-
-      switch (type)
-	{
-	case abigail::tools_utils::FILE_TYPE_UNKNOWN:
-	  emit_prefix(argv[0], cerr)
-	    << "Unknown file type given in input: " << opts.file_path
-	    << "\n";
-	  return 1;
-	case abigail::tools_utils::FILE_TYPE_NATIVE_BI:
-	  {
-	    rdr = abigail::abixml::create_reader(opts.file_path,
-						 env);
-	    set_reader_options(*rdr, opts);
-	    tu = abigail::abixml::read_translation_unit(*rdr);
-	  }
-	  break;
-	case abigail::tools_utils::FILE_TYPE_ELF:
-	case abigail::tools_utils::FILE_TYPE_AR:
-	  {
-	    di_root_path = opts.di_root_path;
-	    vector<string> di_roots;
-	    di_roots.push_back(di_root_path);
-#ifdef WITH_CTF
-            if (opts.use_ctf)
-	      rdr =
-		abigail::ctf::create_reader(opts.file_path,
-					    di_roots, env);
-            else
-#endif
-	      rdr =
-		abigail::dwarf::create_reader(opts.file_path,
-					      di_roots, env,
-					      /*load_all_types=*/false);
-	    set_reader_options(*rdr, opts);
-	    corp = rdr->read_corpus(s);
-	  }
-	  break;
-	case abigail::tools_utils::FILE_TYPE_XML_CORPUS:
-	  {
-	    rdr = abigail::abixml::create_reader(opts.file_path, env);
-	    assert(rdr);
-	    set_reader_options(*rdr, opts);
-	    corp = rdr->read_corpus(s);
-	    break;
-	  }
-	case abigail::tools_utils::FILE_TYPE_XML_CORPUS_GROUP:
-	  {
-	    rdr = abigail::abixml::create_reader(opts.file_path, env);
-	    assert(rdr);
-	    set_reader_options(*rdr, opts);
-	    group = read_corpus_group_from_input(*rdr);
-	  }
-	  break;
-	case abigail::tools_utils::FILE_TYPE_RPM:
-	case abigail::tools_utils::FILE_TYPE_SRPM:
-	case abigail::tools_utils::FILE_TYPE_DEB:
-	case abigail::tools_utils::FILE_TYPE_DIR:
-	case abigail::tools_utils::FILE_TYPE_TAR:
-	case abigail::tools_utils::FILE_TYPE_XZ:
-	  break;
-	}
-
-      if (!tu && !corp && !group)
-	{
-	  emit_prefix(argv[0], cerr)
-	    << "failed to read " << opts.file_path << "\n";
-	  if (!(s & abigail::fe_iface::STATUS_OK))
-	    {
-	      if (s & abigail::fe_iface::STATUS_DEBUG_INFO_NOT_FOUND)
-		{
-		  cerr << "could not find the debug info";
-		  if(di_root_path.empty())
-		    emit_prefix(argv[0], cerr)
-		      << " Maybe you should consider using the "
-		      "--debug-info-dir1 option to tell me about the "
-		      "root directory of the debuginfo? "
-		      "(e.g, --debug-info-dir1 /usr/lib/debug)\n";
-		  else
-		    emit_prefix(argv[0], cerr)
-		      << "Maybe the root path to the debug "
-		      "information is wrong?\n";
-		}
-	      if (s & abigail::fe_iface::STATUS_NO_SYMBOLS_FOUND)
-		emit_prefix(argv[0], cerr)
-		  << "could not find the ELF symbols in the file "
-		  << opts.file_path
-		  << "\n";
-	    }
-	  return 1;
-	}
-
-      using abigail::tools_utils::temp_file;
-      using abigail::tools_utils::temp_file_sptr;
-
-      temp_file_sptr tmp_file = temp_file::create();
-      if (!tmp_file)
-	{
-	  emit_prefix(argv[0], cerr) << "failed to create temporary file\n";
-	  return 1;
-	}
-
-      std::ostream& of = opts.diff ? tmp_file->get_stream() : cout;
-      const write_context_sptr ctxt = create_write_context(env, of);
-
-      bool is_ok = true;
-
-      if (tu)
-	{
-	  if (!opts.noout)
-	    {
-	      set_annotate(*ctxt, opts.annotate);
-	      is_ok = write_translation_unit(*ctxt, *tu, 0);
-	    }
-	}
-      else
-	{
-	  if (type == abigail::tools_utils::FILE_TYPE_XML_CORPUS
-	      || type == abigail::tools_utils::FILE_TYPE_XML_CORPUS_GROUP
-	      || type == abigail::tools_utils::FILE_TYPE_ELF)
-	    {
-	      if (!opts.noout)
-		{
-		  set_annotate(*ctxt, opts.annotate);
-		  if (corp)
-		    is_ok = write_corpus(*ctxt, corp, 0);
-		  else if (group)
-		    is_ok = write_corpus_group(*ctxt, group, 0);
-		}
-	    }
-	}
-
-      if (!is_ok)
-	{
-	  string output =
-	    (type == abigail::tools_utils::FILE_TYPE_NATIVE_BI)
-	    ? "translation unit"
-	    : "ABI corpus";
-	  emit_prefix(argv[0], cerr)
-	    << "failed to write the translation unit "
-	    << opts.file_path << " back\n";
-	}
-
-      if (is_ok
-	  && opts.diff
-	  && ((type == abigail::tools_utils::FILE_TYPE_XML_CORPUS)
-	      ||type == abigail::tools_utils::FILE_TYPE_XML_CORPUS_GROUP
-	      || type == abigail::tools_utils::FILE_TYPE_NATIVE_BI))
-	{
-	  string cmd = "diff -u " + opts.file_path + " " + tmp_file->get_path();
-	  if (system(cmd.c_str()))
-	    is_ok = false;
-	}
-
-#ifdef WITH_SHOW_TYPE_USE_IN_ABILINT
-      if (is_ok
-	  && !opts.type_id_to_show.empty())
-	{
-	  ABG_ASSERT(rdr);
-	  show_how_type_is_used(*rdr, opts.type_id_to_show);
-	}
-#endif
-      return is_ok ? 0 : 1;
-    }
+    return load_corpus_and_write_abixml(argv, env, opts);
 
   return 1;
 }
