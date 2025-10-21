@@ -2182,11 +2182,29 @@
     <class-decl name='vtkGarbageCollector' is-struct='yes' visibility='default' is-declaration-only='yes' id='type-id-530'/>
     <class-decl name='vtkMultiBlockDataSet' is-struct='yes' visibility='default' is-declaration-only='yes' id='type-id-531'/>
     <pointer-type-def type-id='type-id-23' id='type-id-31'/>
+    <pointer-type-def type-id='type-id-529' size-in-bits='64' id='type-id-532'/>
+    <qualified-type-def type-id='type-id-532' const='yes' id='type-id-533'/>
+    <reference-type-def kind='lvalue' type-id='type-id-445' size-in-bits='64' id='type-id-534'/>
     <pointer-type-def type-id='type-id-445' size-in-bits='64' id='type-id-52'/>
     <pointer-type-def type-id='type-id-446' size-in-bits='64' id='type-id-41'/>
+    <pointer-type-def type-id='type-id-447' size-in-bits='64' id='type-id-535'/>
+    <qualified-type-def type-id='type-id-535' const='yes' id='type-id-536'/>
+    <reference-type-def kind='lvalue' type-id='type-id-448' size-in-bits='64' id='type-id-537'/>
     <pointer-type-def type-id='type-id-448' size-in-bits='64' id='type-id-53'/>
-    <pointer-type-def type-id='type-id-531' size-in-bits='64' id='type-id-532'/>
+    <pointer-type-def type-id='type-id-449' size-in-bits='64' id='type-id-538'/>
+    <pointer-type-def type-id='type-id-450' size-in-bits='64' id='type-id-539'/>
+    <qualified-type-def type-id='type-id-539' const='yes' id='type-id-540'/>
+    <pointer-type-def type-id='type-id-530' size-in-bits='64' id='type-id-541'/>
+    <reference-type-def kind='lvalue' type-id='type-id-451' size-in-bits='64' id='type-id-542'/>
+    <pointer-type-def type-id='type-id-451' size-in-bits='64' id='type-id-543'/>
+    <reference-type-def kind='lvalue' type-id='type-id-452' size-in-bits='64' id='type-id-544'/>
+    <pointer-type-def type-id='type-id-452' size-in-bits='64' id='type-id-545'/>
+    <pointer-type-def type-id='type-id-453' size-in-bits='64' id='type-id-546'/>
+    <pointer-type-def type-id='type-id-531' size-in-bits='64' id='type-id-547'/>
     <pointer-type-def type-id='type-id-455' size-in-bits='64' id='type-id-74'/>
+    <qualified-type-def type-id='type-id-74' const='yes' id='type-id-548'/>
+    <pointer-type-def type-id='type-id-457' size-in-bits='64' id='type-id-549'/>
+    <pointer-type-def type-id='type-id-458' size-in-bits='64' id='type-id-550'/>
     <namespace-decl name='__gnu_cxx'>
       <class-decl name='__normal_iterator&lt;unsignedchar*,std::vector&lt;unsignedchar,std::allocator&lt;unsignedchar&gt;&gt;&gt;' visibility='default' size-in-bits='64' filepath='/usr/lib/gcc/x86_64-redhat-linux/4.4.7/../../../../include/c++/4.4.7/bits/stl_iterator.h' line='669' column='1' hash='4e758e0db54fc135' id='type-id-1'>
         <data-member access='protected' layout-offset-in-bits='0'>
@@ -2196,35 +2214,17 @@
       <class-decl name='new_allocator&lt;char&gt;' visibility='default' size-in-bits='8' filepath='/usr/lib/gcc/x86_64-redhat-linux/4.4.7/../../../../include/c++/4.4.7/ext/new_allocator.h' line='52' column='1' hash='084a85392ac35fed' id='type-id-5'/>
       <class-decl name='new_allocator&lt;longlongint&gt;' visibility='default' size-in-bits='8' filepath='/usr/lib/gcc/x86_64-redhat-linux/4.4.7/../../../../include/c++/4.4.7/ext/new_allocator.h' line='52' column='1' hash='81c42bba532ed708' id='type-id-7'/>
       <class-decl name='new_allocator&lt;unsignedchar&gt;' visibility='default' size-in-bits='8' filepath='/usr/lib/gcc/x86_64-redhat-linux/4.4.7/../../../../include/c++/4.4.7/ext/new_allocator.h' line='52' column='1' hash='a43f7a6abaf8dc72' id='type-id-10'/>
-      <class-decl name='__normal_iterator&lt;char*,std::basic_string&lt;char,std::char_traits&lt;char&gt;,std::allocator&lt;char&gt;&gt;&gt;' visibility='default' is-declaration-only='yes' id='type-id-533'/>
-      <class-decl name='__normal_iterator&lt;constchar*,std::basic_string&lt;char,std::char_traits&lt;char&gt;,std::allocator&lt;char&gt;&gt;&gt;' visibility='default' is-declaration-only='yes' id='type-id-534'/>
-      <class-decl name='__normal_iterator&lt;constlonglongint*,std::vector&lt;longlongint,std::allocator&lt;longlongint&gt;&gt;&gt;' visibility='default' is-declaration-only='yes' id='type-id-535'/>
-      <class-decl name='__normal_iterator&lt;constunsignedchar*,std::vector&lt;unsignedchar,std::allocator&lt;unsignedchar&gt;&gt;&gt;' visibility='default' size-in-bits='64' filepath='/usr/lib/gcc/x86_64-redhat-linux/4.4.7/../../../../include/c++/4.4.7/bits/stl_iterator.h' line='669' column='1' hash='2def6222ffd1d945' id='type-id-536'>
+      <class-decl name='__normal_iterator&lt;char*,std::basic_string&lt;char,std::char_traits&lt;char&gt;,std::allocator&lt;char&gt;&gt;&gt;' visibility='default' is-declaration-only='yes' id='type-id-551'/>
+      <class-decl name='__normal_iterator&lt;constchar*,std::basic_string&lt;char,std::char_traits&lt;char&gt;,std::allocator&lt;char&gt;&gt;&gt;' visibility='default' is-declaration-only='yes' id='type-id-552'/>
+      <class-decl name='__normal_iterator&lt;constlonglongint*,std::vector&lt;longlongint,std::allocator&lt;longlongint&gt;&gt;&gt;' visibility='default' is-declaration-only='yes' id='type-id-553'/>
+      <class-decl name='__normal_iterator&lt;constunsignedchar*,std::vector&lt;unsignedchar,std::allocator&lt;unsignedchar&gt;&gt;&gt;' visibility='default' size-in-bits='64' filepath='/usr/lib/gcc/x86_64-redhat-linux/4.4.7/../../../../include/c++/4.4.7/bits/stl_iterator.h' line='669' column='1' hash='2def6222ffd1d945' id='type-id-554'>
         <data-member access='protected' layout-offset-in-bits='0'>
           <var-decl name='_M_current' type-id='type-id-141' visibility='default' filepath='/usr/lib/gcc/x86_64-redhat-linux/4.4.7/../../../../include/c++/4.4.7/bits/stl_iterator.h' line='671' column='1'/>
         </data-member>
       </class-decl>
-      <class-decl name='__normal_iterator&lt;longlongint*,std::vector&lt;longlongint,std::allocator&lt;longlongint&gt;&gt;&gt;' visibility='default' is-declaration-only='yes' id='type-id-537'/>
+      <class-decl name='__normal_iterator&lt;longlongint*,std::vector&lt;longlongint,std::allocator&lt;longlongint&gt;&gt;&gt;' visibility='default' is-declaration-only='yes' id='type-id-555'/>
     </namespace-decl>
     <type-decl name='void' id='type-id-23'/>
-    <pointer-type-def type-id='type-id-529' size-in-bits='64' id='type-id-538'/>
-    <qualified-type-def type-id='type-id-538' const='yes' id='type-id-539'/>
-    <reference-type-def kind='lvalue' type-id='type-id-445' size-in-bits='64' id='type-id-540'/>
-    <pointer-type-def type-id='type-id-447' size-in-bits='64' id='type-id-541'/>
-    <qualified-type-def type-id='type-id-541' const='yes' id='type-id-542'/>
-    <reference-type-def kind='lvalue' type-id='type-id-448' size-in-bits='64' id='type-id-543'/>
-    <pointer-type-def type-id='type-id-449' size-in-bits='64' id='type-id-544'/>
-    <pointer-type-def type-id='type-id-450' size-in-bits='64' id='type-id-545'/>
-    <qualified-type-def type-id='type-id-545' const='yes' id='type-id-546'/>
-    <pointer-type-def type-id='type-id-530' size-in-bits='64' id='type-id-547'/>
-    <reference-type-def kind='lvalue' type-id='type-id-451' size-in-bits='64' id='type-id-548'/>
-    <pointer-type-def type-id='type-id-451' size-in-bits='64' id='type-id-549'/>
-    <reference-type-def kind='lvalue' type-id='type-id-452' size-in-bits='64' id='type-id-550'/>
-    <pointer-type-def type-id='type-id-452' size-in-bits='64' id='type-id-551'/>
-    <pointer-type-def type-id='type-id-453' size-in-bits='64' id='type-id-552'/>
-    <qualified-type-def type-id='type-id-74' const='yes' id='type-id-553'/>
-    <pointer-type-def type-id='type-id-457' size-in-bits='64' id='type-id-554'/>
-    <pointer-type-def type-id='type-id-458' size-in-bits='64' id='type-id-555'/>
     <function-type size-in-bits='64' hash='7f32ffea222edbe7' id='type-id-409'>
       <parameter type-id='type-id-526'/>
       <return type-id='type-id-526'/>
@@ -4817,12 +4817,12 @@
     </function-type>
   </abi-instr>
   <abi-instr address-size='64' path='/tmp/legendre/spack-stage/spack-stage-R_crTC/VTK-6.1.0/Parallel/Core/vtkMultiProcessStream.cxx' comp-dir-path='/tmp/legendre/spack-stage/spack-stage-R_crTC/VTK-6.1.0/spack-build/Parallel/Core' language='LANG_C_plus_plus'>
-    <reference-type-def kind='lvalue' type-id='type-id-536' size-in-bits='64' hash='b57eecda9c602d56' id='type-id-1502'/>
-    <pointer-type-def type-id='type-id-536' size-in-bits='64' hash='48916c03fd87c99c' id='type-id-1503'/>
+    <reference-type-def kind='lvalue' type-id='type-id-554' size-in-bits='64' hash='b57eecda9c602d56' id='type-id-1502'/>
+    <pointer-type-def type-id='type-id-554' size-in-bits='64' hash='48916c03fd87c99c' id='type-id-1503'/>
     <qualified-type-def type-id='type-id-1503' const='yes' hash='b82329695f5100cb' id='type-id-1504'/>
     <pointer-type-def type-id='type-id-1505' size-in-bits='64' hash='8ebbfdade5a966f0' id='type-id-1506'/>
     <qualified-type-def type-id='type-id-1506' const='yes' hash='cd757dd1ea5bfa8a' id='type-id-1507'/>
-    <qualified-type-def type-id='type-id-536' const='yes' hash='d3819a028a503185' id='type-id-1508'/>
+    <qualified-type-def type-id='type-id-554' const='yes' hash='d3819a028a503185' id='type-id-1508'/>
     <reference-type-def kind='lvalue' type-id='type-id-1508' size-in-bits='64' hash='af152bed639169a9' id='type-id-1509'/>
     <pointer-type-def type-id='type-id-1508' size-in-bits='64' hash='2841fe9d61c2f5a6' id='type-id-1510'/>
     <qualified-type-def type-id='type-id-1510' const='yes' hash='c3e0e109c19db7f6' id='type-id-1511'/>

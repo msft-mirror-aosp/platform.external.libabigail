@@ -13179,6 +13179,7 @@
         <enumerator name='EventTypeRUnlock' value='6'/>
       </enum-decl>
     </namespace-decl>
+    <pointer-type-def type-id='type-id-41' id='type-id-5'/>
     <function-decl name='__tsan_atomic8_load' filepath='../../.././libsanitizer/tsan/tsan_interface_atomic.cc' line='393' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='__tsan_atomic8_load' hash='3e8be2858145d0d7' id='type-id-1425'>
       <parameter type-id='type-id-1400' filepath='../../.././libsanitizer/tsan/tsan_interface_atomic.cc' line='393' column='1'/>
       <parameter type-id='type-id-1335' filepath='../../.././libsanitizer/tsan/tsan_interface_atomic.cc' line='393' column='1'/>
@@ -13572,7 +13573,6 @@
       <parameter type-id='type-id-1335' filepath='../../.././libsanitizer/tsan/tsan_interface_atomic.cc' line='671' column='1'/>
       <return type-id='type-id-41'/>
     </function-decl>
-    <pointer-type-def type-id='type-id-41' id='type-id-5'/>
     <namespace-decl name='__sanitizer'>
       <class-decl name='SizeClassAllocator32&lt;0,140737488355328,16,__sanitizer::SizeClassMap&lt;17,64,14&gt;,24,__sanitizer::TwoLevelByteMap&lt;2048,4096,__sanitizer::NoOpMapUnmapCallback&gt;,__sanitizer::NoOpMapUnmapCallback&gt;' visibility='default' size-in-bits='158272' filepath='../../.././libsanitizer/sanitizer_common/sanitizer_allocator.h' line='677' column='1' hash='50dc5c41257f985b' id='type-id-184'>
         <member-type access='private'>

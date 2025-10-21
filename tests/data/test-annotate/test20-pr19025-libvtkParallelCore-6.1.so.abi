@@ -3720,16 +3720,48 @@
     <class-decl name='vtkMultiBlockDataSet' is-struct='yes' visibility='default' is-declaration-only='yes' id='type-id-531'/>
     <!-- void* -->
     <pointer-type-def type-id='type-id-23' id='type-id-31'/>
+    <!-- vtkAbstractArray* -->
+    <pointer-type-def type-id='type-id-529' size-in-bits='64' id='type-id-532'/>
+    <!-- vtkAbstractArray* const -->
+    <qualified-type-def type-id='type-id-532' const='yes' id='type-id-533'/>
+    <reference-type-def kind='lvalue' type-id='type-id-445' size-in-bits='64' id='type-id-534'/>
     <!-- vtkCharArray* -->
     <pointer-type-def type-id='type-id-445' size-in-bits='64' id='type-id-52'/>
     <!-- vtkDataArray* -->
     <pointer-type-def type-id='type-id-446' size-in-bits='64' id='type-id-41'/>
+    <!-- vtkDataArrayTemplate<char>* -->
+    <pointer-type-def type-id='type-id-447' size-in-bits='64' id='type-id-535'/>
+    <!-- vtkDataArrayTemplate<char>* const -->
+    <qualified-type-def type-id='type-id-535' const='yes' id='type-id-536'/>
+    <reference-type-def kind='lvalue' type-id='type-id-448' size-in-bits='64' id='type-id-537'/>
     <!-- vtkDataObject* -->
     <pointer-type-def type-id='type-id-448' size-in-bits='64' id='type-id-53'/>
+    <!-- vtkDataSet* -->
+    <pointer-type-def type-id='type-id-449' size-in-bits='64' id='type-id-538'/>
+    <!-- vtkDataWriter* -->
+    <pointer-type-def type-id='type-id-450' size-in-bits='64' id='type-id-539'/>
+    <!-- vtkDataWriter* const -->
+    <qualified-type-def type-id='type-id-539' const='yes' id='type-id-540'/>
+    <!-- vtkGarbageCollector* -->
+    <pointer-type-def type-id='type-id-530' size-in-bits='64' id='type-id-541'/>
+    <reference-type-def kind='lvalue' type-id='type-id-451' size-in-bits='64' id='type-id-542'/>
+    <!-- vtkGenericDataObjectReader* -->
+    <pointer-type-def type-id='type-id-451' size-in-bits='64' id='type-id-543'/>
+    <reference-type-def kind='lvalue' type-id='type-id-452' size-in-bits='64' id='type-id-544'/>
+    <!-- vtkGenericDataObjectWriter* -->
+    <pointer-type-def type-id='type-id-452' size-in-bits='64' id='type-id-545'/>
+    <!-- vtkImageData* -->
+    <pointer-type-def type-id='type-id-453' size-in-bits='64' id='type-id-546'/>
     <!-- vtkMultiBlockDataSet* -->
-    <pointer-type-def type-id='type-id-531' size-in-bits='64' id='type-id-532'/>
+    <pointer-type-def type-id='type-id-531' size-in-bits='64' id='type-id-547'/>
     <!-- vtkObjectBase* -->
     <pointer-type-def type-id='type-id-455' size-in-bits='64' id='type-id-74'/>
+    <!-- vtkObjectBase* const -->
+    <qualified-type-def type-id='type-id-74' const='yes' id='type-id-548'/>
+    <!-- vtkRectilinearGrid* -->
+    <pointer-type-def type-id='type-id-457' size-in-bits='64' id='type-id-549'/>
+    <!-- vtkStructuredGrid* -->
+    <pointer-type-def type-id='type-id-458' size-in-bits='64' id='type-id-550'/>
     <!-- namespace __gnu_cxx -->
     <namespace-decl name='__gnu_cxx'>
       <!-- class __gnu_cxx::__normal_iterator<unsignedchar*,std::vector<unsignedchar,std::allocator<unsignedchar>>> -->
@@ -3746,55 +3778,23 @@
       <!-- class __gnu_cxx::new_allocator<unsignedchar> -->
       <class-decl name='new_allocator&lt;unsignedchar&gt;' visibility='default' size-in-bits='8' filepath='/usr/lib/gcc/x86_64-redhat-linux/4.4.7/../../../../include/c++/4.4.7/ext/new_allocator.h' line='52' column='1' hash='a43f7a6abaf8dc72' id='type-id-10'/>
       <!-- class __gnu_cxx::__normal_iterator<char*,std::basic_string<char,std::char_traits<char>,std::allocator<char>>> -->
-      <class-decl name='__normal_iterator&lt;char*,std::basic_string&lt;char,std::char_traits&lt;char&gt;,std::allocator&lt;char&gt;&gt;&gt;' visibility='default' is-declaration-only='yes' id='type-id-533'/>
+      <class-decl name='__normal_iterator&lt;char*,std::basic_string&lt;char,std::char_traits&lt;char&gt;,std::allocator&lt;char&gt;&gt;&gt;' visibility='default' is-declaration-only='yes' id='type-id-551'/>
       <!-- class __gnu_cxx::__normal_iterator<constchar*,std::basic_string<char,std::char_traits<char>,std::allocator<char>>> -->
-      <class-decl name='__normal_iterator&lt;constchar*,std::basic_string&lt;char,std::char_traits&lt;char&gt;,std::allocator&lt;char&gt;&gt;&gt;' visibility='default' is-declaration-only='yes' id='type-id-534'/>
+      <class-decl name='__normal_iterator&lt;constchar*,std::basic_string&lt;char,std::char_traits&lt;char&gt;,std::allocator&lt;char&gt;&gt;&gt;' visibility='default' is-declaration-only='yes' id='type-id-552'/>
       <!-- class __gnu_cxx::__normal_iterator<constlonglongint*,std::vector<longlongint,std::allocator<longlongint>>> -->
-      <class-decl name='__normal_iterator&lt;constlonglongint*,std::vector&lt;longlongint,std::allocator&lt;longlongint&gt;&gt;&gt;' visibility='default' is-declaration-only='yes' id='type-id-535'/>
+      <class-decl name='__normal_iterator&lt;constlonglongint*,std::vector&lt;longlongint,std::allocator&lt;longlongint&gt;&gt;&gt;' visibility='default' is-declaration-only='yes' id='type-id-553'/>
       <!-- class __gnu_cxx::__normal_iterator<constunsignedchar*,std::vector<unsignedchar,std::allocator<unsignedchar>>> -->
-      <class-decl name='__normal_iterator&lt;constunsignedchar*,std::vector&lt;unsignedchar,std::allocator&lt;unsignedchar&gt;&gt;&gt;' visibility='default' size-in-bits='64' filepath='/usr/lib/gcc/x86_64-redhat-linux/4.4.7/../../../../include/c++/4.4.7/bits/stl_iterator.h' line='669' column='1' hash='2def6222ffd1d945' id='type-id-536'>
+      <class-decl name='__normal_iterator&lt;constunsignedchar*,std::vector&lt;unsignedchar,std::allocator&lt;unsignedchar&gt;&gt;&gt;' visibility='default' size-in-bits='64' filepath='/usr/lib/gcc/x86_64-redhat-linux/4.4.7/../../../../include/c++/4.4.7/bits/stl_iterator.h' line='669' column='1' hash='2def6222ffd1d945' id='type-id-554'>
         <data-member access='protected' layout-offset-in-bits='0'>
           <!-- const unsigned char* __gnu_cxx::__normal_iterator<constunsignedchar*,std::vector<unsignedchar,std::allocator<unsignedchar>>>::_M_current -->
           <var-decl name='_M_current' type-id='type-id-141' visibility='default' filepath='/usr/lib/gcc/x86_64-redhat-linux/4.4.7/../../../../include/c++/4.4.7/bits/stl_iterator.h' line='671' column='1'/>
         </data-member>
       </class-decl>
       <!-- class __gnu_cxx::__normal_iterator<longlongint*,std::vector<longlongint,std::allocator<longlongint>>> -->
-      <class-decl name='__normal_iterator&lt;longlongint*,std::vector&lt;longlongint,std::allocator&lt;longlongint&gt;&gt;&gt;' visibility='default' is-declaration-only='yes' id='type-id-537'/>
+      <class-decl name='__normal_iterator&lt;longlongint*,std::vector&lt;longlongint,std::allocator&lt;longlongint&gt;&gt;&gt;' visibility='default' is-declaration-only='yes' id='type-id-555'/>
     </namespace-decl>
     <!-- void -->
     <type-decl name='void' id='type-id-23'/>
-    <!-- vtkAbstractArray* -->
-    <pointer-type-def type-id='type-id-529' size-in-bits='64' id='type-id-538'/>
-    <!-- vtkAbstractArray* const -->
-    <qualified-type-def type-id='type-id-538' const='yes' id='type-id-539'/>
-    <reference-type-def kind='lvalue' type-id='type-id-445' size-in-bits='64' id='type-id-540'/>
-    <!-- vtkDataArrayTemplate<char>* -->
-    <pointer-type-def type-id='type-id-447' size-in-bits='64' id='type-id-541'/>
-    <!-- vtkDataArrayTemplate<char>* const -->
-    <qualified-type-def type-id='type-id-541' const='yes' id='type-id-542'/>
-    <reference-type-def kind='lvalue' type-id='type-id-448' size-in-bits='64' id='type-id-543'/>
-    <!-- vtkDataSet* -->
-    <pointer-type-def type-id='type-id-449' size-in-bits='64' id='type-id-544'/>
-    <!-- vtkDataWriter* -->
-    <pointer-type-def type-id='type-id-450' size-in-bits='64' id='type-id-545'/>
-    <!-- vtkDataWriter* const -->
-    <qualified-type-def type-id='type-id-545' const='yes' id='type-id-546'/>
-    <!-- vtkGarbageCollector* -->
-    <pointer-type-def type-id='type-id-530' size-in-bits='64' id='type-id-547'/>
-    <reference-type-def kind='lvalue' type-id='type-id-451' size-in-bits='64' id='type-id-548'/>
-    <!-- vtkGenericDataObjectReader* -->
-    <pointer-type-def type-id='type-id-451' size-in-bits='64' id='type-id-549'/>
-    <reference-type-def kind='lvalue' type-id='type-id-452' size-in-bits='64' id='type-id-550'/>
-    <!-- vtkGenericDataObjectWriter* -->
-    <pointer-type-def type-id='type-id-452' size-in-bits='64' id='type-id-551'/>
-    <!-- vtkImageData* -->
-    <pointer-type-def type-id='type-id-453' size-in-bits='64' id='type-id-552'/>
-    <!-- vtkObjectBase* const -->
-    <qualified-type-def type-id='type-id-74' const='yes' id='type-id-553'/>
-    <!-- vtkRectilinearGrid* -->
-    <pointer-type-def type-id='type-id-457' size-in-bits='64' id='type-id-554'/>
-    <!-- vtkStructuredGrid* -->
-    <pointer-type-def type-id='type-id-458' size-in-bits='64' id='type-id-555'/>
     <!-- std::basic_ostream<char,std::char_traits<char>>& (std::basic_ostream<char,std::char_traits<char>>&) -->
     <function-type size-in-bits='64' hash='7f32ffea222edbe7' id='type-id-409'>
       <!-- parameter of type 'std::basic_ostream<char,std::char_traits<char>>&' -->
@@ -8065,9 +8065,9 @@
   </abi-instr>
   <abi-instr address-size='64' path='/tmp/legendre/spack-stage/spack-stage-R_crTC/VTK-6.1.0/Parallel/Core/vtkMultiProcessStream.cxx' comp-dir-path='/tmp/legendre/spack-stage/spack-stage-R_crTC/VTK-6.1.0/spack-build/Parallel/Core' language='LANG_C_plus_plus'>
     <!-- __gnu_cxx::__normal_iterator<constunsignedchar*,std::vector<unsignedchar,std::allocator<unsignedchar>>>& -->
-    <reference-type-def kind='lvalue' type-id='type-id-536' size-in-bits='64' hash='b57eecda9c602d56' id='type-id-1502'/>
+    <reference-type-def kind='lvalue' type-id='type-id-554' size-in-bits='64' hash='b57eecda9c602d56' id='type-id-1502'/>
     <!-- __gnu_cxx::__normal_iterator<constunsignedchar*,std::vector<unsignedchar,std::allocator<unsignedchar>>>* -->
-    <pointer-type-def type-id='type-id-536' size-in-bits='64' hash='48916c03fd87c99c' id='type-id-1503'/>
+    <pointer-type-def type-id='type-id-554' size-in-bits='64' hash='48916c03fd87c99c' id='type-id-1503'/>
     <!-- __gnu_cxx::__normal_iterator<constunsignedchar*,std::vector<unsignedchar,std::allocator<unsignedchar>>>* const -->
     <qualified-type-def type-id='type-id-1503' const='yes' hash='b82329695f5100cb' id='type-id-1504'/>
     <!-- __gnu_cxx::new_allocator<unsignedchar*>* -->
@@ -8075,7 +8075,7 @@
     <!-- __gnu_cxx::new_allocator<unsignedchar*>* const -->
     <qualified-type-def type-id='type-id-1506' const='yes' hash='cd757dd1ea5bfa8a' id='type-id-1507'/>
     <!-- const __gnu_cxx::__normal_iterator<constunsignedchar*,std::vector<unsignedchar,std::allocator<unsignedchar>>> -->
-    <qualified-type-def type-id='type-id-536' const='yes' hash='d3819a028a503185' id='type-id-1508'/>
+    <qualified-type-def type-id='type-id-554' const='yes' hash='d3819a028a503185' id='type-id-1508'/>
     <!-- const __gnu_cxx::__normal_iterator<constunsignedchar*,std::vector<unsignedchar,std::allocator<unsignedchar>>>& -->
     <reference-type-def kind='lvalue' type-id='type-id-1508' size-in-bits='64' hash='af152bed639169a9' id='type-id-1509'/>
     <!-- const __gnu_cxx::__normal_iterator<constunsignedchar*,std::vector<unsignedchar,std::allocator<unsignedchar>>>* -->

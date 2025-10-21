@@ -6924,25 +6924,26 @@
         </data-member>
       </class-decl>
     </namespace-decl>
+    <type-decl name='variadic parameter type' id='type-id-878'/>
     <namespace-decl name='__gnu_cxx'>
       <class-decl name='new_allocator&lt;std::_Sp_counted_ptr_inplace&lt;std::__future_base::_State_base,std::allocator&lt;std::__future_base::_State_base&gt;,(__gnu_cxx::_Lock_policy)2&gt;&gt;' is-struct='yes' visibility='default' size-in-bits='8' filepath='/tmp/legendre/spack-stage/spack-stage-wfh0ig/gcc-4.7.4/x86_64-unknown-linux-gnu/libstdc++-v3/include/ext/new_allocator.h' line='54' column='1' hash='8a150d3d3763c857' id='type-id-623'>
         <member-type access='public'>
-          <typedef-decl name='const_pointer' type-id='type-id-656' size-in-bits='64' filepath='/tmp/legendre/spack-stage/spack-stage-wfh0ig/gcc-4.7.4/x86_64-unknown-linux-gnu/libstdc++-v3/include/ext/new_allocator.h' line='60' column='1' hash='31c2e1883a26bab6' id='type-id-878'/>
+          <typedef-decl name='const_pointer' type-id='type-id-656' size-in-bits='64' filepath='/tmp/legendre/spack-stage/spack-stage-wfh0ig/gcc-4.7.4/x86_64-unknown-linux-gnu/libstdc++-v3/include/ext/new_allocator.h' line='60' column='1' hash='31c2e1883a26bab6' id='type-id-879'/>
         </member-type>
         <member-type access='public'>
-          <typedef-decl name='const_reference' type-id='type-id-655' size-in-bits='64' filepath='/tmp/legendre/spack-stage/spack-stage-wfh0ig/gcc-4.7.4/x86_64-unknown-linux-gnu/libstdc++-v3/include/ext/new_allocator.h' line='62' column='1' hash='cc2a87fa9e9a3b12' id='type-id-879'/>
+          <typedef-decl name='const_reference' type-id='type-id-655' size-in-bits='64' filepath='/tmp/legendre/spack-stage/spack-stage-wfh0ig/gcc-4.7.4/x86_64-unknown-linux-gnu/libstdc++-v3/include/ext/new_allocator.h' line='62' column='1' hash='cc2a87fa9e9a3b12' id='type-id-880'/>
         </member-type>
         <member-type access='public'>
-          <typedef-decl name='pointer' type-id='type-id-726' size-in-bits='64' filepath='/tmp/legendre/spack-stage/spack-stage-wfh0ig/gcc-4.7.4/x86_64-unknown-linux-gnu/libstdc++-v3/include/ext/new_allocator.h' line='59' column='1' hash='41d2c67db154eb9e' id='type-id-880'/>
+          <typedef-decl name='pointer' type-id='type-id-726' size-in-bits='64' filepath='/tmp/legendre/spack-stage/spack-stage-wfh0ig/gcc-4.7.4/x86_64-unknown-linux-gnu/libstdc++-v3/include/ext/new_allocator.h' line='59' column='1' hash='41d2c67db154eb9e' id='type-id-881'/>
         </member-type>
         <member-type access='public'>
-          <typedef-decl name='reference' type-id='type-id-725' size-in-bits='64' filepath='/tmp/legendre/spack-stage/spack-stage-wfh0ig/gcc-4.7.4/x86_64-unknown-linux-gnu/libstdc++-v3/include/ext/new_allocator.h' line='61' column='1' hash='f2f8e276f9050f4a' id='type-id-881'/>
+          <typedef-decl name='reference' type-id='type-id-725' size-in-bits='64' filepath='/tmp/legendre/spack-stage/spack-stage-wfh0ig/gcc-4.7.4/x86_64-unknown-linux-gnu/libstdc++-v3/include/ext/new_allocator.h' line='61' column='1' hash='f2f8e276f9050f4a' id='type-id-882'/>
         </member-type>
         <member-type access='public'>
-          <typedef-decl name='size_type' type-id='type-id-126' size-in-bits='64' filepath='/tmp/legendre/spack-stage/spack-stage-wfh0ig/gcc-4.7.4/x86_64-unknown-linux-gnu/libstdc++-v3/include/ext/new_allocator.h' line='57' column='1' hash='8fdc5eea2983a729' id='type-id-882'/>
+          <typedef-decl name='size_type' type-id='type-id-126' size-in-bits='64' filepath='/tmp/legendre/spack-stage/spack-stage-wfh0ig/gcc-4.7.4/x86_64-unknown-linux-gnu/libstdc++-v3/include/ext/new_allocator.h' line='57' column='1' hash='8fdc5eea2983a729' id='type-id-883'/>
         </member-type>
         <member-function access='public'>
-          <function-decl name='destroy&lt;std::_Sp_counted_ptr_inplace&lt;std::__future_base::_State_base,std::allocator&lt;std::__future_base::_State_base&gt;,(__gnu_cxx::_Lock_policy)2&gt;&gt;' filepath='/tmp/legendre/spack-stage/spack-stage-wfh0ig/gcc-4.7.4/x86_64-unknown-linux-gnu/libstdc++-v3/include/ext/new_allocator.h' line='114' column='1' declared-inline='yes' visibility='default' binding='global' size-in-bits='64' hash='caa707fc716d138a' id='type-id-883'>
+          <function-decl name='destroy&lt;std::_Sp_counted_ptr_inplace&lt;std::__future_base::_State_base,std::allocator&lt;std::__future_base::_State_base&gt;,(__gnu_cxx::_Lock_policy)2&gt;&gt;' filepath='/tmp/legendre/spack-stage/spack-stage-wfh0ig/gcc-4.7.4/x86_64-unknown-linux-gnu/libstdc++-v3/include/ext/new_allocator.h' line='114' column='1' declared-inline='yes' visibility='default' binding='global' size-in-bits='64' hash='caa707fc716d138a' id='type-id-884'>
             <parameter type-id='type-id-624' is-artificial='yes'/>
             <parameter type-id='type-id-726'/>
             <return type-id='type-id-6'/>
@@ -6951,22 +6952,22 @@
       </class-decl>
       <class-decl name='new_allocator&lt;std::__future_base::_State_base&gt;' is-struct='yes' visibility='default' size-in-bits='8' filepath='/tmp/legendre/spack-stage/spack-stage-wfh0ig/gcc-4.7.4/x86_64-unknown-linux-gnu/libstdc++-v3/include/ext/new_allocator.h' line='54' column='1' hash='545b661717b19507' id='type-id-626'>
         <member-type access='public'>
-          <typedef-decl name='const_pointer' type-id='type-id-672' size-in-bits='64' filepath='/tmp/legendre/spack-stage/spack-stage-wfh0ig/gcc-4.7.4/x86_64-unknown-linux-gnu/libstdc++-v3/include/ext/new_allocator.h' line='60' column='1' hash='2e941d25e2628bf3' id='type-id-884'/>
+          <typedef-decl name='const_pointer' type-id='type-id-672' size-in-bits='64' filepath='/tmp/legendre/spack-stage/spack-stage-wfh0ig/gcc-4.7.4/x86_64-unknown-linux-gnu/libstdc++-v3/include/ext/new_allocator.h' line='60' column='1' hash='2e941d25e2628bf3' id='type-id-885'/>
         </member-type>
         <member-type access='public'>
-          <typedef-decl name='const_reference' type-id='type-id-671' size-in-bits='64' filepath='/tmp/legendre/spack-stage/spack-stage-wfh0ig/gcc-4.7.4/x86_64-unknown-linux-gnu/libstdc++-v3/include/ext/new_allocator.h' line='62' column='1' hash='8e90a42a8385f63e' id='type-id-885'/>
+          <typedef-decl name='const_reference' type-id='type-id-671' size-in-bits='64' filepath='/tmp/legendre/spack-stage/spack-stage-wfh0ig/gcc-4.7.4/x86_64-unknown-linux-gnu/libstdc++-v3/include/ext/new_allocator.h' line='62' column='1' hash='8e90a42a8385f63e' id='type-id-886'/>
         </member-type>
         <member-type access='public'>
-          <typedef-decl name='pointer' type-id='type-id-743' size-in-bits='64' filepath='/tmp/legendre/spack-stage/spack-stage-wfh0ig/gcc-4.7.4/x86_64-unknown-linux-gnu/libstdc++-v3/include/ext/new_allocator.h' line='59' column='1' hash='949fbccf79967e45' id='type-id-886'/>
+          <typedef-decl name='pointer' type-id='type-id-743' size-in-bits='64' filepath='/tmp/legendre/spack-stage/spack-stage-wfh0ig/gcc-4.7.4/x86_64-unknown-linux-gnu/libstdc++-v3/include/ext/new_allocator.h' line='59' column='1' hash='949fbccf79967e45' id='type-id-887'/>
         </member-type>
         <member-type access='public'>
-          <typedef-decl name='reference' type-id='type-id-742' size-in-bits='64' filepath='/tmp/legendre/spack-stage/spack-stage-wfh0ig/gcc-4.7.4/x86_64-unknown-linux-gnu/libstdc++-v3/include/ext/new_allocator.h' line='61' column='1' hash='f9b599497cdd15ab' id='type-id-887'/>
+          <typedef-decl name='reference' type-id='type-id-742' size-in-bits='64' filepath='/tmp/legendre/spack-stage/spack-stage-wfh0ig/gcc-4.7.4/x86_64-unknown-linux-gnu/libstdc++-v3/include/ext/new_allocator.h' line='61' column='1' hash='f9b599497cdd15ab' id='type-id-888'/>
         </member-type>
         <member-type access='public'>
-          <typedef-decl name='size_type' type-id='type-id-126' size-in-bits='64' filepath='/tmp/legendre/spack-stage/spack-stage-wfh0ig/gcc-4.7.4/x86_64-unknown-linux-gnu/libstdc++-v3/include/ext/new_allocator.h' line='57' column='1' hash='8fdc5eea2983a729' id='type-id-888'/>
+          <typedef-decl name='size_type' type-id='type-id-126' size-in-bits='64' filepath='/tmp/legendre/spack-stage/spack-stage-wfh0ig/gcc-4.7.4/x86_64-unknown-linux-gnu/libstdc++-v3/include/ext/new_allocator.h' line='57' column='1' hash='8fdc5eea2983a729' id='type-id-889'/>
         </member-type>
         <member-function access='public'>
-          <function-decl name='destroy&lt;std::__future_base::_State_base&gt;' filepath='/tmp/legendre/spack-stage/spack-stage-wfh0ig/gcc-4.7.4/x86_64-unknown-linux-gnu/libstdc++-v3/include/ext/new_allocator.h' line='114' column='1' declared-inline='yes' visibility='default' binding='global' size-in-bits='64' hash='47e8f46c099241f1' id='type-id-889'>
+          <function-decl name='destroy&lt;std::__future_base::_State_base&gt;' filepath='/tmp/legendre/spack-stage/spack-stage-wfh0ig/gcc-4.7.4/x86_64-unknown-linux-gnu/libstdc++-v3/include/ext/new_allocator.h' line='114' column='1' declared-inline='yes' visibility='default' binding='global' size-in-bits='64' hash='47e8f46c099241f1' id='type-id-890'>
             <parameter type-id='type-id-627' is-artificial='yes'/>
             <parameter type-id='type-id-743'/>
             <return type-id='type-id-6'/>
@@ -6977,9 +6978,8 @@
       <var-decl name='defer_lock' type-id='type-id-870' mangled-name='_ZSt10defer_lock' visibility='default' filepath='../../.././libstdc++-v3/src/c++11/compatibility-thread-c++0x.cc' line='66' column='1' elf-symbol-id='_ZSt10defer_lock@@GLIBCXX_3.4.11'/>
       <var-decl name='try_to_lock' type-id='type-id-877' mangled-name='_ZSt11try_to_lock' visibility='default' filepath='../../.././libstdc++-v3/src/c++11/compatibility-thread-c++0x.cc' line='67' column='1' elf-symbol-id='_ZSt11try_to_lock@@GLIBCXX_3.4.11'/>
       <var-decl name='adopt_lock' type-id='type-id-374' mangled-name='_ZSt10adopt_lock' visibility='default' filepath='../../.././libstdc++-v3/src/c++11/compatibility-thread-c++0x.cc' line='68' column='1' elf-symbol-id='_ZSt10adopt_lock@@GLIBCXX_3.4.11'/>
-      <class-decl name='__numeric_traits_integer&lt;longint&gt;' is-struct='yes' visibility='default' size-in-bits='8' filepath='/tmp/legendre/spack-stage/spack-stage-wfh0ig/gcc-4.7.4/x86_64-unknown-linux-gnu/libstdc++-v3/include/ext/numeric_traits.h' line='55' column='1' hash='b83b6d736c3d7a3d' id='type-id-890'/>
+      <class-decl name='__numeric_traits_integer&lt;longint&gt;' is-struct='yes' visibility='default' size-in-bits='8' filepath='/tmp/legendre/spack-stage/spack-stage-wfh0ig/gcc-4.7.4/x86_64-unknown-linux-gnu/libstdc++-v3/include/ext/numeric_traits.h' line='55' column='1' hash='b83b6d736c3d7a3d' id='type-id-891'/>
     </namespace-decl>
-    <type-decl name='variadic parameter type' id='type-id-891'/>
   </abi-instr>
   <abi-instr address-size='64' path='../../.././libstdc++-v3/src/c++98/compatibility-debug_list-2.cc' comp-dir-path='/tmp/legendre/spack-stage/spack-stage-wfh0ig/gcc-4.7.4/x86_64-unknown-linux-gnu/libstdc++-v3/src' language='LANG_C_plus_plus'>
     <namespace-decl name='std'>

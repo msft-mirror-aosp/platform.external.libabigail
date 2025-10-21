@@ -178,16 +178,6 @@ build_translation_unit_and_add_to_ir(reader&		rdr,
 				     char		address_size);
 
 static void
-maybe_propagate_canonical_type(const reader& rdr,
-			       const Dwarf_Die* l,
-			       const Dwarf_Die* r);
-
-static void
-propagate_canonical_type(const reader& rdr,
-			 const Dwarf_Die* l,
-			 const Dwarf_Die* r);
-
-static void
 maybe_set_member_type_access_specifier(decl_base_sptr member_type_declaration,
 				       Dwarf_Die* die);
 
@@ -308,9 +298,6 @@ static bool
 die_is_in_cplus_plus(const Dwarf_Die *die);
 
 static bool
-die_is_in_c_or_cplusplus(const Dwarf_Die *die);
-
-static bool
 die_is_anonymous(const Dwarf_Die* die);
 
 static bool
@@ -346,9 +333,6 @@ static bool
 die_has_size_attribute(const Dwarf_Die *die);
 
 static bool
-die_has_no_child(const Dwarf_Die *die);
-
-static bool
 die_is_namespace(const Dwarf_Die* die);
 
 static bool
@@ -361,25 +345,13 @@ static bool
 die_is_pointer_type(const Dwarf_Die* die);
 
 static bool
-pointer_or_qual_die_of_anonymous_class_type(const Dwarf_Die* die);
-
-static bool
 die_is_reference_type(const Dwarf_Die* die);
-
-static bool
-die_is_pointer_array_or_reference_type(const Dwarf_Die* die);
 
 static bool
 die_is_pointer_or_reference_type(const Dwarf_Die* die);
 
 static bool
-die_is_pointer_reference_or_typedef_type(const Dwarf_Die* die);
-
-static bool
 die_is_class_type(const Dwarf_Die* die);
-
-static bool
-die_is_qualified_type(const Dwarf_Die* die);
 
 static bool
 die_has_object_pointer(const Dwarf_Die* die,
@@ -412,9 +384,6 @@ die_this_pointer_is_const(Dwarf_Die* die);
 
 static bool
 die_object_pointer_is_for_const_method(Dwarf_Die* die);
-
-static bool
-is_type_die_to_be_canonicalized(const Dwarf_Die *die);
 
 static bool
 die_is_at_class_scope(const reader& rdr,
@@ -450,12 +419,6 @@ static bool
 die_member_offset(const reader& rdr,
 		  const Dwarf_Die* die,
 		  int64_t& offset);
-
-static bool
-form_is_DW_FORM_strx(unsigned form);
-
-static bool
-form_is_DW_FORM_line_strp(unsigned form);
 
 static bool
 die_address_attribute(Dwarf_Die* die, unsigned attr_name, Dwarf_Addr& result);
@@ -516,9 +479,7 @@ die_qualified_name(const reader& rdr,
 		   unordered_set<void*>& guard);
 
 static string
-die_qualified_name(const reader& rdr,
-		   const Dwarf_Die* die,
-		   void* where);
+die_qualified_name(const reader& rdr, const Dwarf_Die* die, void* where);
 
 static string
 die_type_name(const reader& rdr, const Dwarf_Die* die,
@@ -651,16 +612,6 @@ build_subranges_from_array_type_die(const reader&			rdr,
 				    void*				where,
 				    bool				associate_type_to_die = true);
 
-static comparison_result
-compare_dies(const reader& rdr,
-	     const Dwarf_Die *l, const Dwarf_Die *r,
-	     bool update_canonical_dies_on_the_fly);
-
-static bool
-compare_dies_during_canonicalization(reader& rdr,
-				     const Dwarf_Die *l, const Dwarf_Die *r,
-				     bool update_canonical_dies_on_the_fly);
-
 static bool
 get_member_child_die(const Dwarf_Die *die, Dwarf_Die *child);
 
@@ -718,22 +669,6 @@ die_is_in_cplus_plus(const Dwarf_Die *die)
   if (!get_die_language(die, l))
     return false;
   return is_cplus_plus_language(l);
-}
-
-/// Test if a given DIE originates from a program written either in
-/// C or C++.
-///
-/// @param die the DIE to consider.
-///
-/// @return true iff @p die originates from a program written either in
-/// C or C++.
-static bool
-die_is_in_c_or_cplusplus(const Dwarf_Die *die)
-{
-  translation_unit::language l = translation_unit::LANG_UNKNOWN;
-  if (!get_die_language(die, l))
-    return false;
-  return (is_cplus_plus_language(l) || is_c_language(l));
 }
 
 /// Compare a symbol name against another name, possibly demangling
@@ -1819,43 +1754,17 @@ public:
   unsigned short		dwarf_version_;
   Dwarf_Die*			cur_tu_die_;
   mutable dwarf_expr_eval_context	dwarf_expr_eval_context_;
-  // A set of maps (one per kind of die source) that associates a decl
-  // string representation with the DIEs (addresses) representing that
-  // decl.
-  mutable istring_dwarf_addrs_map_type decl_die_repr_die_addrs_maps_;
-  // A set of maps (one per kind of die source) that associates a type
-  // string representation with the DIEs (addresses) representing that
-  // type.
-  mutable istring_dwarf_addrs_map_type type_die_repr_die_addrs_maps_;
   mutable die_istring_map_type die_qualified_name_maps_;
   mutable die_istring_map_type die_pretty_repr_maps_;
   mutable die_istring_map_type die_pretty_type_repr_maps_;
-  // A set of maps (one per kind of die source) that associates the
-  // offset of a decl die to its corresponding decl artifact.
+  // A map that associates the address of a decl die to its
+  // corresponding decl artifact.
   mutable die_artefact_map_type decl_die_artefact_maps_;
-  // A set of maps (one per kind of die source) that associates the
-  // offset of a type die to its corresponding type artifact.
+  // A map that associates the address of a type die to its
+  // corresponding type artifact.
   mutable die_artefact_map_type type_die_artefact_maps_;
-  /// A map that associates the addr of a type DIE to the addr of its
-  /// canonical DIE.
-  mutable addr_addr_map_type canonical_type_die_addrs_;
-  /// A map that associates the addr of a decl DIE to the addr of its
-  /// canonical DIE.
-  mutable addr_addr_map_type canonical_decl_die_addrs_;
-
-  /// A map that associates a pair of DIE addresses to the result of the
-  /// comparison of that pair.
-  mutable std::unordered_map<dwarf_addr_pair_type,
-			     abigail::ir::comparison_result,
-			     dwarf_addr_pair_hash> die_comparison_results_;
-  // The set of types pair that have been canonical-type-propagated.
-  mutable dwarf_addr_pair_set_type propagated_types_;
   die_class_or_union_map_type	die_wip_classes_map_;
-  die_class_or_union_map_type	alternate_die_wip_classes_map_;
-  die_class_or_union_map_type	type_unit_die_wip_classes_map_;
   die_function_type_map_type	die_wip_function_types_map_;
-  die_function_type_map_type	alternate_die_wip_function_types_map_;
-  die_function_type_map_type	type_unit_die_wip_function_types_map_;
   die_function_decl_map_type	die_function_with_no_symbol_map_;
   vector<type_base_sptr>	types_to_canonicalize_;
   string_classes_or_unions_map	decl_only_classes_map_;
@@ -1869,14 +1778,6 @@ public:
   // points
   tu_die_imported_unit_points_map_type tu_die_imported_unit_points_map_;
   list<var_decl_sptr>		var_decls_to_add_;
-#ifdef WITH_DEBUG_TYPE_CANONICALIZATION
-  bool				debug_die_canonicalization_is_on_;
-  bool				use_canonical_die_comparison_;
-#endif
-  mutable size_t		compare_count_;
-  mutable size_t		canonical_propagated_count_;
-  mutable size_t		cancelled_propagation_count_;
-  mutable optional<bool>	leverage_dwarf_factorization_;
   mutable stats		stats_;
 
 protected:
@@ -1950,21 +1851,13 @@ public:
   {
     dwarf_version_ = 0;
     cur_tu_die_ =  0;
-    decl_die_repr_die_addrs_maps_.clear();
-    type_die_repr_die_addrs_maps_.clear();
     die_qualified_name_maps_.clear();
     die_pretty_repr_maps_.clear();
     die_pretty_type_repr_maps_.clear();
     decl_die_artefact_maps_.clear();
     type_die_artefact_maps_.clear();
-    canonical_type_die_addrs_.clear();
-    canonical_decl_die_addrs_.clear();
     die_wip_classes_map_.clear();
-    alternate_die_wip_classes_map_.clear();
-    type_unit_die_wip_classes_map_.clear();
     die_wip_function_types_map_.clear();
-    alternate_die_wip_function_types_map_.clear();
-    type_unit_die_wip_function_types_map_.clear();
     die_function_with_no_symbol_map_.clear();
     types_to_canonicalize_.clear();
     decl_only_classes_map_.clear();
@@ -1979,14 +1872,6 @@ public:
     clear_per_corpus_data();
     options().load_in_linux_kernel_mode = linux_kernel_mode;
     options().load_all_types = load_all_types;
-#ifdef WITH_DEBUG_TYPE_CANONICALIZATION
-    debug_die_canonicalization_is_on_ =
-      env().debug_die_canonicalization_is_on();
-    use_canonical_die_comparison_ = true;
-#endif
-    compare_count_ = 0;
-    canonical_propagated_count_ = 0;
-    cancelled_propagation_count_ = 0;
     load_in_linux_kernel_mode(linux_kernel_mode);
     clear_stats();
   }
@@ -2230,13 +2115,7 @@ public:
 	       << t
 	       << "\n";
 
-	  cerr << "DWARF Reader: Number of aggregate types compared: "
-	       << compare_count_ << "\n"
-	       << "Number of canonical types propagated: "
-	       << canonical_propagated_count_ << "\n"
-	       << "Number of cancelled propagated canonical types:"
-	       << cancelled_propagation_count_ << "\n"
-	       << "Number of suppressed functions: "
+	  cerr << "DWARF Reader: Number of suppressed functions: "
 	       << stats_.number_of_suppressed_functions << "\n"
 	       << "Number of allowed functions: "
 	       << stats_.number_of_allowed_functions << "\n"
@@ -2564,39 +2443,6 @@ public:
   dwarf_expr_eval_ctxt() const
   {return dwarf_expr_eval_context_;}
 
-  /// Getter of the maps set that associates a representation of a
-  /// decl DIE to a vector of addresses of DIEs having that
-  /// representation.
-  ///
-  /// @return the maps set that associates a representation of a decl
-  /// DIE to a vector of addresses of DIEs having that representation.
-  const istring_dwarf_addrs_map_type& decl_die_repr_die_addrs_maps() const
-  {return decl_die_repr_die_addrs_maps_;}
-
-  /// Getter of the maps set that associates a representation of a
-  /// decl DIE to a vector of addresses of DIEs having that representation.
-  ///
-  /// @return the maps set that associates a representation of a decl
-  /// DIE to a vector of addresses of DIEs having that representation.
-  istring_dwarf_addrs_map_type& decl_die_repr_die_addrs_maps()
-  {return decl_die_repr_die_addrs_maps_;}
-
-  /// Getter of the maps set that associate a representation of a type
-  /// DIE to a vector of addresss of DIEs having that representation.
-  ///
-  /// @return the maps set that associate a representation of a type
-  /// DIE to a vector of addresses of DIEs having that representation.
-  const istring_dwarf_addrs_map_type& type_die_repr_die_addrs_maps() const
-  {return type_die_repr_die_addrs_maps_;}
-
-  /// Getter of the maps set that associate a representation of a type
-  /// DIE to a vector of addresses of DIEs having that representation.
-  ///
-  /// @return the maps set that associate a representation of a type
-  /// DIE to a vector of addresses of DIEs having that representation.
-  istring_dwarf_addrs_map_type& type_die_repr_die_addrs_maps()
-  {return type_die_repr_die_addrs_maps_;}
-
   /// Retrieve the a DIE that corresponds to a DIE address.
   ///
   /// @param die_addr the address of the DIE to consider.
@@ -2616,251 +2462,6 @@ public:
     return !! dwarf_die_addr_die(debug_info, const_cast<void*>(die_addr), &die);
   }
 
-  /// Compute (find) the canonical DIE of a given DIE.
-  ///
-  /// @param die the DIE to consider.
-  ///
-  /// @param canonical_dies the vector in which the canonical dies ar
-  /// stored.  The index of each element is the offset of the DIE we
-  /// want the canonical DIE for.  And the value of the element at
-  /// that index is the canonical DIE address we are looking for.
-  ///
-  /// @param canonical_die_offset out parameter.  This is set to the
-  /// resulting canonical DIE that was computed.
-  ///
-  /// @param die_as_type if yes, it means @p die has to be considered
-  /// as a type.
-  void
-  compute_canonical_die(const Dwarf_Die&	die,
-			addr_addr_map_type&	canonical_dies,
-			Dwarf_Die&		canonical_die,
-			bool			die_as_type) const
-  {
-    // The map that associates the string representation of 'die'
-    // with a vector of addresses of potentially equivalent DIEs.
-    istring_dwarf_addrs_map_type& map =
-      die_as_type
-      ? const_cast<reader*>(this)->type_die_repr_die_addrs_maps()
-      : const_cast<reader*>(this)->decl_die_repr_die_addrs_maps();
-
-    // The variable repr is the the string representation of 'die'.
-    //
-    // Even if die_as_type is true -- which means that 'die' is said
-    // to be considered as a type -- we always consider a
-    // DW_TAG_subprogram DIE as a decl here, as far as its string
-    // representation is concerned.
-    interned_string name =
-      (die_as_type)
-      ? get_die_pretty_type_representation(&die, /*where=*/0)
-      : get_die_pretty_representation(&die, /*where=*/0);
-
-    istring_dwarf_addrs_map_type::iterator i = map.find(name);
-    if (i == map.end())
-      {
-	dwarf_addrs_type addrs;
-	addrs.push_back(die.addr);
-	map[name] = addrs;
-	set_canonical_die_addr(canonical_dies, die.addr, die.addr);
-	ABG_ASSERT(get_die_from_addr(die.addr, canonical_die));
-	return;
-      }
-
-    Dwarf_Die potential_canonical_die;
-    void* canonical_die_addr = nullptr;
-    for (const auto& cur_die_addr : i->second)
-      {
-	get_die_from_addr(cur_die_addr, potential_canonical_die);
-	if (compare_dies(*this, &die, &potential_canonical_die,
-			 /*update_canonical_dies_on_the_fly=*/false))
-	  {
-	    canonical_die_addr = cur_die_addr;
-	    set_canonical_die_addr(canonical_dies, die.addr,
-				   canonical_die_addr);
-	    ABG_ASSERT(get_die_from_addr(canonical_die_addr, canonical_die));
-	    return;
-	  }
-      }
-
-    canonical_die_addr = die.addr;
-    i->second.push_back(die.addr);
-    set_canonical_die_addr(canonical_dies, die.addr, die.addr);
-    ABG_ASSERT(get_die_from_addr(canonical_die_addr, canonical_die));
-  }
-
-  /// Getter of the canonical DIE of a given DIE.
-  ///
-  /// @param die the DIE to consider.
-  ///
-  /// @param canonical_die output parameter.  Is set to the resulting
-  /// canonical die, if this function returns true.
-  ///
-  /// @param where the address of the logical DIE we are supposed to
-  /// be calling this function from.  If set to zero this means this
-  /// is to be ignored.
-  ///
-  /// @param die_as_type if set to yes, it means @p die is to be
-  /// considered as a type DIE.
-  ///
-  /// @return true iff a canonical DIE was found for @p die.
-  bool
-  get_canonical_die(const Dwarf_Die	*die,
-		    Dwarf_Die		&canonical_die,
-		    void*		where,
-		    bool		die_as_type)
-  {
-    addr_addr_map_type &canonical_dies =
-      die_as_type
-      ? const_cast<reader*>(this)->canonical_type_die_addrs_
-      : const_cast<reader*>(this)->canonical_decl_die_addrs_;
-
-    if (void* canonical_die_addr = get_canonical_die_addr(canonical_dies,
-							  die->addr))
-      {
-	ABG_ASSERT(get_die_from_addr(canonical_die_addr, canonical_die));
-	return true;
-      }
-
-    // The map that associates the string representation of 'die'
-    // with a vector of addrs of potentially equivalent DIEs.
-    istring_dwarf_addrs_map_type& map =
-      die_as_type
-      ? const_cast<reader*>(this)->type_die_repr_die_addrs_maps()
-      : const_cast<reader*>(this)->decl_die_repr_die_addrs_maps();
-
-    // The variable repr is the the string representation of 'die'.
-    //
-    // Even if die_as_type is true -- which means that 'die' is said
-    // to be considered as a type -- we always consider a
-    // DW_TAG_subprogram DIE as a decl here, as far as its string
-    // representation is concerned.
-    interned_string name =
-      (die_as_type /*&& dwarf_tag(die) != DW_TAG_subprogram*/)
-      ? get_die_pretty_type_representation(die, where)
-      : get_die_pretty_representation(die, where);
-
-    istring_dwarf_addrs_map_type::iterator i = map.find(name);
-    if (i == map.end())
-      return false;
-
-    for (const auto& cur_die_addr : i->second)
-      {
-	ABG_ASSERT(get_die_from_addr(cur_die_addr, canonical_die));
-	// compare die and canonical_die.
-	if (compare_dies_during_canonicalization(const_cast<reader&>(*this),
-						 die, &canonical_die,
-						 /*update_canonical_dies_on_the_fly=*/true))
-	  {
-	    set_canonical_die_addr(canonical_dies,
-				   die->addr,
-				   cur_die_addr);
-	    return true;
-	  }
-      }
-
-    return false;
-  }
-
-  /// Retrieve the canonical DIE of a given DIE.
-  ///
-  /// The canonical DIE is a DIE that is structurally equivalent to
-  /// this one.
-  ///
-  /// Note that this function caches the canonical DIE that was
-  /// computed.  Subsequent invocations of this function on the same
-  /// DIE return the same cached DIE.
-  ///
-  /// @param die the DIE to get a canonical type for.
-  ///
-  /// @param canonical_die the resulting canonical DIE.
-  ///
-  /// @param where the address of the logical DIE we are supposed to
-  /// be calling this function from.  If set to zero this means this
-  /// is to be ignored.
-  ///
-  /// @param die_as_type if true, consider DIE is a type.
-  ///
-  /// @return true if an *existing* canonical DIE was found.
-  /// Otherwise, @p die is considered as being a canonical DIE for
-  /// itself. @p canonical_die is thus set to the canonical die in
-  /// either cases.
-  bool
-  get_or_compute_canonical_die(const Dwarf_Die* die,
-			       Dwarf_Die&	canonical_die,
-			       void*		where,
-			       bool		die_as_type) const
-  {
-    addr_addr_map_type &canonical_dies =
-      die_as_type
-      ? const_cast<reader*>(this)->canonical_type_die_addrs_
-      : const_cast<reader*>(this)->canonical_decl_die_addrs_;
-
-    if (void* canonical_die_addr
-	= get_canonical_die_addr(canonical_dies, die->addr))
-      {
-	ABG_ASSERT(get_die_from_addr(canonical_die_addr, canonical_die));
-	return true;
-      }
-
-    if (!is_type_die_to_be_canonicalized(die))
-      return false;
-
-    // The map that associates the string representation of 'die'
-    // with a vector of addrs of potentially equivalent DIEs.
-    istring_dwarf_addrs_map_type& map =
-      die_as_type
-      ? const_cast<reader*>(this)->type_die_repr_die_addrs_maps()
-      : const_cast<reader*>(this)->decl_die_repr_die_addrs_maps();
-
-    // The variable repr is the the string representation of 'die'.
-    //
-    // Even if die_as_type is true -- which means that 'die' is said
-    // to be considered as a type -- we always consider a
-    // DW_TAG_subprogram DIE as a decl here, as far as its string
-    // representation is concerned.
-    interned_string name =
-      (die_as_type)
-      ? get_die_pretty_type_representation(die, where)
-      : get_die_pretty_representation(die, where);
-
-    istring_dwarf_addrs_map_type::iterator i = map.find(name);
-    if (i == map.end())
-      {
-	dwarf_addrs_type addrs;
-	addrs.push_back(die->addr);
-	map[name] = addrs;
-	ABG_ASSERT(get_die_from_addr(die->addr, canonical_die));
-	set_canonical_die_addr(canonical_dies, die->addr, die->addr);
-	return false;
-      }
-
-    // walk i->second without any iterator (using a while loop rather
-    // than a for loop) because compare_dies might add new content to
-    // the end of the i->second vector during the walking.
-    dwarf_addrs_type::size_type n = 0, s = i->second.size();
-    while (n < s)
-      {
-	void* die_addr = i->second[n];
-	ABG_ASSERT(get_die_from_addr(die_addr, canonical_die));
-	// compare die and canonical_die.
-	if (compare_dies_during_canonicalization(const_cast<reader&>(*this),
-						 die, &canonical_die,
-						 /*update_canonical_dies_on_the_fly=*/true))
-	  {
-	    set_canonical_die_addr(canonical_dies, die->addr, die_addr);
-	    return true;
-	  }
-	++n;
-      }
-
-    // We didn't find a canonical DIE for 'die'.  So let's consider
-    // that it is its own canonical DIE.
-    ABG_ASSERT(get_die_from_addr(die->addr, canonical_die));
-    i->second.push_back(die->addr);
-    set_canonical_die_addr(canonical_dies, die->addr, die->addr);
-
-    return false;
-  }
-
 public:
 
   /// Add an entry to the relevant die->decl map.
@@ -2868,38 +2469,12 @@ public:
   /// @param die the DIE to add the the map.
   ///
   /// @param decl the decl to consider.
-  ///
-  /// @param where_addr where in the DIE stream we logically are.
-  ///
-  /// @param do_associate_by_repr if true then this function
-  /// associates the representation string of @p die with the
-  /// declaration @p decl, in a corpus-wide manner.  That is, in the
-  /// entire current corpus, there is going to be just one declaration
-  /// associated with a DIE of the string representation of @p die.
-  ///
-  /// @param do_associate_by_repr_per_tu if true, then this function
-  /// associates the representation string of @p die with the
-  /// declaration @p decl in a translation unit wide manner.  That is,
-  /// in the entire current translation unit, there is going to be
-  /// just one declaration associated with a DIE of the string
-  /// representation of @p die.
   void
-  associate_die_to_decl(Dwarf_Die*	die,
-			decl_base_sptr	decl,
-			void*		where_addr,
-			bool		do_associate_by_repr = false)
+  associate_die_to_decl(Dwarf_Die* die, decl_base_sptr decl)
   {
     die_artefact_map_type& m = decl_die_artefact_maps();
 
     void* die_addr = die->addr;
-    if (do_associate_by_repr)
-      {
-	Dwarf_Die equiv_die;
-	if (!get_or_compute_canonical_die(die, equiv_die, where_addr,
-					  /*die_as_type=*/false))
-	  return;
-	die_addr = equiv_die.addr;
-      }
 
     m[die_addr] = decl;
   }
@@ -3205,10 +2780,6 @@ public:
   type_or_decl_base_sptr
   lookup_artifact_from_die(const Dwarf_Die *die, bool die_as_type = false) const
   {
-    Dwarf_Die equiv_die;
-    if (!get_or_compute_canonical_die(die, equiv_die, /*where=*/0, die_as_type))
-      return type_or_decl_base_sptr();
-
     const die_artefact_map_type& m =
       die_as_type ? type_die_artefact_maps() : decl_die_artefact_maps();
 
@@ -3360,111 +2931,6 @@ public:
     canonical_dies[die_addr] =canonical_die_addr;
   }
 
-  /// Set the canonical DIE address of a given DIE.
-  ///
-  ///
-  /// @param die_offset the offset of the DIE to set the canonical DIE
-  /// for.
-  ///
-  /// @param source the source of the DIE denoted by @p die_offset.
-  ///
-  /// @param canonical_die_offset the canonical DIE address to
-  /// associate to @p die_offset.
-  ///
-  /// @param die_as_type if true, it means that @p die_offset has to
-  /// be considered as a type.
-  void
-  set_canonical_die_addr(void* die_addr,
-			 void* canonical_die_addr,
-			 bool die_as_type) const
-  {
-    addr_addr_map_type &canonical_dies =
-      die_as_type
-      ? const_cast<reader*>(this)->canonical_type_die_addrs_
-      : const_cast<reader*>(this)->canonical_decl_die_addrs_;
-
-    set_canonical_die_addr(canonical_dies, die_addr, canonical_die_addr);
-  }
-
-  /// Set the canonical DIE address of a given DIE.
-  ///
-  ///
-  /// @param die the DIE to set the canonical DIE for.
-  ///
-  /// @param canonical_die_offset the canonical DIE address to
-  /// associate to @p die_offset.
-  ///
-  /// @param die_as_type if true, it means that @p die has to be
-  /// considered as a type.
-  void
-  set_canonical_die_addr(const Dwarf_Die *die,
-			 void* canonical_die_addr,
-			 bool die_as_type) const
-  {
-    set_canonical_die_addr(die->addr, canonical_die_addr, die_as_type);
-  }
-
-  /// Get the canonical DIE address of a given DIE.
-  ///
-  /// @param canonical_dies the vector that contains canonical DIES.
-  ///
-  /// @param die_offset the offset of the DIE to consider.
-  ///
-  /// @return the canonical of the DIE denoted by @p die_offset, or
-  /// zero if no canonical DIE was found.
-  void*
-  get_canonical_die_addr(addr_addr_map_type &canonical_dies,
-			 void* die_addr) const
-  {
-    addr_addr_map_type::const_iterator it = canonical_dies.find(die_addr);
-    if (it == canonical_dies.end())
-      return 0;
-    return it->second;
-  }
-
-  /// Get the canonical DIE address of a given DIE.
-  ///
-  /// @param die_offset the offset of the DIE to consider.
-  ///
-  /// @param die_as_type if true, it means that @p is to be considered
-  /// as a type DIE.
-  ///
-  /// @return the canonical of the DIE denoted by @p die_offset, or
-  /// zero if no canonical DIE was found.
-  void*
-  get_canonical_die_addr(void* die_addr, bool die_as_type) const
-  {
-    addr_addr_map_type &canonical_dies =
-      die_as_type
-      ? const_cast<reader*>(this)->canonical_type_die_addrs_
-      : const_cast<reader*>(this)->canonical_decl_die_addrs_;
-
-    return get_canonical_die_addr(canonical_dies, die_addr);
-  }
-
-  /// Erase the canonical type of a given DIE.
-  ///
-  /// @param die_offset the offset of the DIE to consider.
-  ///
-  /// @param source the source of the canonical type.
-  ///
-  /// @param die_as_type if true, it means that @p is to be considered
-  /// as a type DIE.
-  ///
-  /// @return the canonical of the DIE denoted by @p die_offset, or
-  /// zero if no canonical DIE was found and erased..
-  bool
-  erase_canonical_die_addr(void* die_addr, bool die_as_type) const
-  {
-    addr_addr_map_type &canonical_dies =
-      die_as_type
-      ? const_cast<reader*>(this)->canonical_type_die_addrs_
-      : const_cast<reader*>(this)->canonical_decl_die_addrs_;
-
-    return canonical_dies.erase(die_addr);
-  }
-
-
   /// Associate a DIE (representing a type) to the type that it
   /// represents.
   ///
@@ -3474,20 +2940,13 @@ public:
   ///
   /// @param where_offset where in the DIE stream we logically are.
   void
-  associate_die_to_type(const Dwarf_Die	*die,
-			type_base_sptr	type,
-			void*		where)
+  associate_die_to_type(const Dwarf_Die* die, const type_base_sptr& type)
   {
-    if (!type)
-      return;
-
-    Dwarf_Die equiv_die;
-    if (!get_or_compute_canonical_die(die, equiv_die, where,
-				      /*die_as_type=*/true))
+    if (!type || !die)
       return;
 
     die_artefact_map_type& m = type_die_artefact_maps();
-    m[equiv_die.addr] = type;
+    m[die->addr] = type;
   }
 
   /// Lookup the type associated to a given DIE.
@@ -4983,30 +4442,6 @@ public:
   load_undefined_interfaces() const
   {return options().load_undefined_interfaces;}
 
-  /// Test if it's allowed to assume that the DWARF debug info has
-  /// been factorized (for instance, with the DWZ tool) so that if two
-  /// type DIEs originating from the .gnu_debugaltlink section have
-  /// different addresss, they represent different types.
-  ///
-  /// @return true iff we can assume that the DWARF debug info has
-  /// been factorized.
-  bool
-  leverage_dwarf_factorization() const
-  {
-    if (!leverage_dwarf_factorization_.has_value())
-      {
-	if (options().leverage_dwarf_factorization
-	    && elf_helpers::find_section_by_name(elf_handle(),
-						 ".gnu_debugaltlink"))
-	  leverage_dwarf_factorization_ = true;
-	else
-	  leverage_dwarf_factorization_ = false;
-      }
-    ABG_ASSERT(leverage_dwarf_factorization_.has_value());
-
-    return *leverage_dwarf_factorization_;
-  }
-
   /// Getter of the "show_stats" flag.
   ///
   /// This flag tells if we should emit statistics about various
@@ -5264,356 +4699,6 @@ public:
   }
 };// end class reader.
 
-/// The type of the aggregates being compared during a DIE comparison.
-///
-/// This encapsulates the stack of aggregates being compared at any
-/// single point.
-///
-/// This is useful to detect "comparison cycles" and thus avoid the
-/// resulting infinite loops.
-///
-/// This is also useful for implementing a very important optimization
-/// that takes place during the canonicalization
-struct addr_pairs_stack_type
-{
-  // The DWARF DWARF reader that is useful for so many things.
-  const reader& rdr_;
-  // The set of types that are being compared.  This is to speed up
-  // searches.
-  dwarf_addr_pair_set_type set_;
-  // The stack of  types that are being compared.  The top of the
-  // stack is the back of the vector.
-  dwarf_addr_pairs_type vect_;
-  // A map that associates a redundant type pair to the vector of
-  // types that depends on it.
-  dwarf_addr_pairs_map_type redundant_types_;
-  // A map that associates a dependant type to the vector of redundant
-  // types it depends on.
-  dwarf_addr_pairs_map_type dependant_types_;
-
-  addr_pairs_stack_type(const reader& rdr)
-    : rdr_ (rdr)
-  {}
-
-  /// Add a pair of types being compared to the stack of aggregates
-  /// being compared.
-  ///
-  /// @param p the pair of addresses of the type DIEs to consider.
-  void
-  add(const dwarf_addr_pair_type& p)
-  {
-    set_.insert(p);
-    vect_.push_back(p);
-  }
-
-  /// Erase a pair of types being compared from the stack of
-  /// aggregates being compared.
-  ///
-  /// @param p the pair of addresses of the type DIEs to consider.
-  ///
-  /// @return true iff @p was found and erased from the stack.
-  bool
-  erase(const dwarf_addr_pair_type& p)
-  {
-    if (set_.erase(p))
-      {
-	dwarf_addr_pairs_type::iterator i;
-
-	for (i = vect_.begin();i < vect_.end(); ++i)
-	  if (*i == p)
-	    break;
-
-	if (i != vect_.end())
-	  vect_.erase(i);
-
-	return true;
-      }
-
-    return false;
-  }
-
-  /// Test if a pair of type DIEs is part of the stack of type DIEs
-  /// being compared.
-  ///
-  /// @param p the pair of addresses of the type DIEs to consider.
-  ///
-  /// @return true iff @p was found in the stack of types being
-  /// compared.
-  bool
-  contains(const dwarf_addr_pair_type &p) const
-  {
-    if (set_.find(p) == set_.end())
-      return false;
-    return true;
-  }
-
-  /// Get the set of comparison pair that depends on a given
-  /// comparison pair.
-  ///
-  /// A comparison pair T{t1,t2} depends on a comparison pair P{p1,p2}
-  /// if p1 is a subtype of t1 and p2 is a subtype of t2.  In other
-  /// words, the pair T appears in the comparison stack BEFORE the
-  /// pair P.
-  ///
-  /// So, this function returns the vector of comparison pairs that
-  /// appear in the comparison stack AFTER a given comparison pair.
-  ///
-  /// @param p the comparison pair to consider.
-  ///
-  /// @param pairs out parameter.  This is filled with the comparison
-  /// pairs that depend on @p, iff the function returns true.
-  ///
-  /// @return true iff comparison pairs depending on @p have been
-  /// found and collected in @pairs.
-  bool
-  get_pairs_that_depend_on(const dwarf_addr_pair_type& p,
-			   dwarf_addr_pairs_type& pairs) const
-  {
-    bool result = false;
-    if (!contains(p))
-      return result;
-
-    // First, get an iterator on the position of 'p'.
-    dwarf_addr_pairs_type::const_iterator i;
-    for (i = vect_.begin(); i != vect_.end(); ++i)
-      if (*i == p)
-	break;
-
-    if (i == vect_.end())
-      return result;
-
-    // Then, harvest all the comparison pairs that come after the
-    // position of 'p'.
-    for (++i; i != vect_.end(); ++i)
-      {
-	pairs.push_back(*i);
-	result = true;
-      }
-
-    return result;
-  }
-
-  /// Record the fact that a set of comparison pairs depends on a
-  /// given comparison pair.
-  ///
-  /// Set a map that associates each dependant comparison pair to the
-  /// pair it depends on.
-  ///
-  /// @param p the comparison pair that the set depends on.
-  ///
-  /// @param dependant_types the set of types that depends on @p.
-  void
-  record_dependant_types(const dwarf_addr_pair_type& p,
-			 const dwarf_addr_pairs_type& dependant_types)
-  {
-    for (auto type_pair : dependant_types)
-      dependant_types_[type_pair].push_back(p);
-  }
-
-  /// Record a comparison pair as being redundant.
-  ///
-  ///
-  /// @param p the comparison pair to record as redundant.
-  void
-  record_redundant_type_die_pair(const dwarf_addr_pair_type& p)
-  {
-    dwarf_addr_pairs_type dependant_types;
-    get_pairs_that_depend_on(p, dependant_types);
-
-    // First, record the relationship "p -> [pairs that depend on p]".
-    auto it = redundant_types_.find(p);
-    if (it == redundant_types_.end())
-      {
-	auto entry = std::make_pair(p, dependant_types);
-	redundant_types_.insert(entry);
-      }
-    else
-      it->second.insert(it->second.end(),
-			dependant_types.begin(),
-			dependant_types.end());
-
-    // For each dependant type pair, record the association:
-    // dependant_pair --> [vect of redundant types]
-    record_dependant_types(p, dependant_types);
-  }
-
-  /// Test if a given pair has been detected as redundant.
-  ///
-  /// @param p the pair of DIEs to consider.
-  ///
-  /// @return iff @p is redundant.
-  bool
-  is_redundant(const dwarf_addr_pair_type& p)
-  {
-    auto i = redundant_types_.find(p);
-    if (i != redundant_types_.end())
-      return true;
-    return false;
-  }
-
-  /// Test if a given pair is dependant on at least a redundant type.
-  ///
-  /// @param p the pair to consider.
-  ///
-  /// @return true iff @p depends on a redundant type.
-  bool
-  depends_on_redundant_types(const dwarf_addr_pair_type& p)
-  {
-    auto i = dependant_types_.find(p);
-    if (i == dependant_types_.end())
-      return false;
-    return true;
-  }
-
-  /// Remove a redundant pair from the system.
-  ///
-  /// This needs updating the system to also remove the dependant
-  /// types that depend on the redundant pair (if they depend only on
-  /// that redundant pair).
-  ///
-  /// @param p the pair to consider.
-  ///
-  /// @param erase_canonical_die_addr if true then erase the cached
-  /// comparison results for the redundant pair and its dependant
-  /// types.
-  void
-  erase_redundant_type_pair_entry(const dwarf_addr_pair_type& p,
-				  bool erase_cached_results = false)
-  {
-    // First, update the dependant types that depend on the redundant
-    // type pair
-    auto redundant_type = redundant_types_.find(p);
-    if (redundant_type != redundant_types_.end())
-      {
-	for (auto dependant_type : redundant_type->second)
-	  {
-	    // Each dependant_type depends on the redundant type 'p',
-	    // among others.
-	    auto dependant_types_it = dependant_types_.find(dependant_type);
-	    ABG_ASSERT(dependant_types_it != dependant_types_.end());
-	    // Erase the redundant type 'p' from the redundant types
-	    // that dependant_type depends on.
-	    {
-	      auto i = dependant_types_it->second.begin();
-	      for (; i!= dependant_types_it->second.end();++i)
-		if (*i == p)
-		  break;
-	      if (i != dependant_types_it->second.end())
-		dependant_types_it->second.erase(i);
-	    }
-	    // If the dependant type itself doesn't depend on ANY
-	    // redundant type anymore, then remove the depend type
-	    // from the map of the dependant types.
-	    if (dependant_types_it->second.empty())
-	      {
-		if (erase_cached_results)
-		  rdr_.die_comparison_results_.erase(dependant_type);
-		dependant_types_.erase(dependant_types_it);
-	      }
-	  }
-      }
-    if (erase_cached_results)
-      rdr_.die_comparison_results_.erase(p);
-    redundant_types_.erase(p);
-  }
-
-  /// If a comparison pair has been detected as redundant, stop
-  /// tracking it as well as its dependant pairs.  That will
-  /// essentially make it impossible to reset/cancel the canonical
-  /// propagated types for those depdant pairs, but will also save
-  /// ressources.
-  ///
-  /// @param p the comparison pair to consider.
-  void
-  confirm_canonical_propagated_type(const dwarf_addr_pair_type& p)
-  {erase_redundant_type_pair_entry(p, /*erase_cached_results=*/true);}
-
-  /// Walk the types that depend on a comparison pair and cancel their
-  /// canonical-propagate-type, that means remove their canonical
-  /// types and mark them as not being canonically-propagated.  Also,
-  /// erase their cached comparison results that was likely set to
-  /// COMPARISON_RESULT_UNKNOWN.
-  ///
-  /// @param p the pair to consider.
-  void
-  cancel_canonical_propagated_type(const dwarf_addr_pair_type& p)
-  {
-    dwarf_addr_pair_set_type dependant_types;
-    get_dependant_types(p, dependant_types, /*transitive_closure=*/true);
-    for (auto dependant_type : dependant_types)
-      {
-	// If this dependant type was canonical-type-propagated then
-	// erase that canonical type.
-	if (rdr_.propagated_types_.find(dependant_type)
-	    != rdr_.propagated_types_.end())
-	  {
-	    rdr_.erase_canonical_die_addr(dependant_type.first,
-					  /*die_as_type=*/true);
-	    rdr_.propagated_types_.erase(dependant_type);
-	    rdr_.cancelled_propagation_count_++;
-	  }
-	// Update the cached result.  We know the comparison result
-	// must now be different.
-	auto comp_result_it = rdr_.die_comparison_results_.find(dependant_type);
-	if (comp_result_it != rdr_.die_comparison_results_.end())
-	  comp_result_it->second= COMPARISON_RESULT_DIFFERENT;
-      }
-
-    // Update the cached result of the root type to cancel too.
-    auto comp_result_it = rdr_.die_comparison_results_.find(p);
-    if (comp_result_it != rdr_.die_comparison_results_.end())
-      {
-	// At this point, the result of p is either
-	// COMPARISON_RESULT_UNKNOWN (if we cache comparison
-	// results of that kind) or COMPARISON_RESULT_DIFFERENT.
-	// Make sure it's the cached result is now
-	// COMPARISON_RESULT_DIFFERENT.
-	if (comp_result_it->second == COMPARISON_RESULT_UNKNOWN)
-	  comp_result_it->second= COMPARISON_RESULT_DIFFERENT;
-	ABG_ASSERT(comp_result_it->second == COMPARISON_RESULT_DIFFERENT);
-      }
-
-    if (rdr_.propagated_types_.find(p) != rdr_.propagated_types_.end())
-      {
-	rdr_.erase_canonical_die_addr(p.first, /*die_as_type=*/true);
-	rdr_.propagated_types_.erase(p);
-	rdr_.cancelled_propagation_count_++;
-      }
-  }
-
-  /// Get the set of comparison pairs that depend on a given pair.
-  ///
-  /// @param p the pair to consider.
-  ///
-  /// @param result this is set to the pairs that depend on @p, iff
-  /// the function returned true.
-  ///
-  /// @param transitive_closure if set to true, the transitive closure
-  /// of the @result is set to it.
-  ///
-  /// @return true iff @result could be filled with the dependant
-  /// types.
-  bool
-  get_dependant_types(const dwarf_addr_pair_type& p,
-		      dwarf_addr_pair_set_type& result,
-		      bool transitive_closure = false)
-  {
-    auto i = redundant_types_.find(p);
-    if (i != redundant_types_.end())
-      {
-	for (auto dependant_type : i->second)
-	  if (result.find(dependant_type) == result.end())
-	    {
-	      result.insert(dependant_type);
-	      if (transitive_closure)
-		get_dependant_types(p, result, /*transitive_closure=*/true);
-	    }
-	return true;
-      }
-    return false;
-  }
-}; // end struct addr_pairs_stack_type
-
 static type_or_decl_base_sptr
 build_ir_node_from_die(reader&		rdr,
 		       Dwarf_Die*	die,
@@ -5773,30 +4858,6 @@ die_string_attribute(const Dwarf_Die* die, unsigned attr_name)
   return str ? str : "";
 }
 
-/// Get the value of an attribute that is supposed to be a string, or
-/// an empty string if the attribute could not be found.
-///
-/// @param die the DIE to get the attribute value from.
-///
-/// @param attr_name the attribute name.  Must come from dwarf.h and
-/// be an enumerator representing an attribute like, e.g, DW_AT_name.
-///
-/// @return the char* representing the value of the attribute, or an
-/// empty string if no string attribute could be found.
-static const char*
-die_char_str_attribute(const Dwarf_Die* die, unsigned attr_name)
-{
-  if (!die)
-    return nullptr;
-
-  Dwarf_Attribute attr;
-  if (!dwarf_attr_integrate(const_cast<Dwarf_Die*>(die), attr_name, &attr))
-    return nullptr;
-
-  const char* str = dwarf_formstring(&attr);
-  return str;
-}
-
 /// Get the value of an attribute that is supposed to be an unsigned
 /// constant.
 ///
@@ -5899,56 +4960,6 @@ die_constant_attribute(const Dwarf_Die *die,
       value.set_signed(l);
     }
   return true;
-}
-
-/// Test if a given DWARF form is DW_FORM_strx{1,4}.
-///
-/// Unfortunaly, the DW_FORM_strx{1,4} are enumerators of an untagged
-/// enum in dwarf.h so we have to use an unsigned int for the form,
-/// grrr.
-///
-/// @param form the form to consider.
-///
-/// @return true iff @p form is DW_FORM_strx{1,4}.
-static bool
-form_is_DW_FORM_strx(unsigned form)
-{
-  if (form)
-    {
-#if defined HAVE_DW_FORM_strx1		\
-  && defined HAVE_DW_FORM_strx2	\
-  && defined HAVE_DW_FORM_strx3	\
-  && defined HAVE_DW_FORM_strx4
-      if (form == DW_FORM_strx1
-	  || form == DW_FORM_strx2
-	  || form == DW_FORM_strx3
-	  ||form == DW_FORM_strx4)
-	return true;
-#endif
-    }
-  return false;
-}
-
-/// Test if a given DWARF form is DW_FORM_line_strp.
-///
-/// Unfortunaly, the DW_FORM_line_strp is an enumerator of an untagged
-/// enum in dwarf.h so we have to use an unsigned int for the form,
-/// grrr.
-///
-/// @param form the form to consider.
-///
-/// @return true iff @p form is DW_FORM_line_strp.
-static bool
-form_is_DW_FORM_line_strp(unsigned form)
-{
-  if (form)
-    {
-#if defined HAVE_DW_FORM_line_strp
-      if (form == DW_FORM_line_strp)
-	return true;
-#endif
-    }
-  return false;
 }
 
 /// Get the value of a DIE attribute; that value is meant to be a
@@ -6572,34 +5583,6 @@ die_has_size_attribute(const Dwarf_Die *die)
   return false;
 }
 
-/// Test that a DIE has no child DIE.
-///
-/// @param die the DIE to consider.
-///
-/// @return true iff @p die has no child DIE.
-static bool
-die_has_no_child(const Dwarf_Die *die)
-{
-  if (!die)
-    return true;
-
-  Dwarf_Die child;
-  if (dwarf_child(const_cast<Dwarf_Die*>(die), &child) == 0)
-    return false;
-  return true;
-}
-
-/// Test whether a given DIE represents a declaration-only DIE.
-///
-/// That is, if the DIE has the DW_AT_declaration flag set.
-///
-/// @param die the DIE to consider.
-//
-/// @return true if a DW_AT_declaration is present, false otherwise.
-static bool
-die_is_declaration_only(const Dwarf_Die* die)
-{return die_is_declaration_only(const_cast<Dwarf_Die*>(die));}
-
 /// Tests whether a given DIE is artificial.
 ///
 /// @param die the test to test for.
@@ -6654,186 +5637,6 @@ is_type_tag(unsigned tag)
 
     default:
       result = false;
-      break;
-    }
-
-  return result;
-}
-
-/// Test if a given DIE is a type whose canonical type is to be
-/// propagated during DIE canonicalization
-///
-/// This is a sub-routine of compare_dies.
-///
-/// @param tag the tag of the DIE to consider.
-///
-/// @return true iff the DIE of tag @p tag is can see its canonical
-/// type be propagated during the type comparison that happens during
-/// DIE canonicalization.
-static bool
-is_canon_type_to_be_propagated_tag(unsigned tag)
-{
-  bool result = false;
-
-  switch (tag)
-    {
-    case DW_TAG_class_type:
-    case DW_TAG_structure_type:
-    case DW_TAG_union_type:
-    case DW_TAG_subroutine_type:
-    case DW_TAG_subprogram:
-      result = true;
-      break;
-
-    default:
-      result = false;
-      break;
-    }
-
-  return result;
-}
-
-/// Test if a given kind of DIE ought to have its comparison result
-/// cached by compare_dies, so that subsequent invocations of
-/// compare_dies can be faster.
-///
-/// @param tag the tag of the DIE to consider.
-///
-/// @return true iff DIEs of the tag @p tag ought to have its
-/// comparison results cached.
-static bool
-type_comparison_result_to_be_cached(unsigned tag)
-{
-  bool r = false;
-  switch (tag)
-    {
-    case DW_TAG_class_type:
-    case DW_TAG_structure_type:
-    case DW_TAG_union_type:
-    case DW_TAG_subroutine_type:
-    case DW_TAG_subprogram:
-      r = true;
-      break;
-
-    default:
-      r = false;
-      break;
-    }
-  return r;
-}
-
-/// Cache the result of comparing to type DIEs.
-///
-/// @param rdr the context to consider.
-///
-/// @param tag the tag of the DIEs to consider.
-///
-/// @param p the addresses of the pair of DIEs being compared.
-///
-/// @param result the comparison result to be cached.
-static bool
-maybe_cache_type_comparison_result(const reader& rdr,
-				   int tag,
-				   const dwarf_addr_pair_type& p,
-				   comparison_result result)
-{
-  if (!type_comparison_result_to_be_cached(tag)
-      || (result != COMPARISON_RESULT_EQUAL
-	  && result != COMPARISON_RESULT_DIFFERENT))
-    return false;
-
-  rdr.die_comparison_results_[p] = result;
-
-  return true;
-
-}
-
-/// Get the cached result of the comparison of a pair of DIEs.
-///
-/// @param rdr the context to consider.
-///
-/// @param tag the tag of the pair of DIEs to consider.
-///
-/// @param p the addresses of the pair of DIEs to consider.
-///
-/// @param result out parameter set to the cached result of the
-/// comparison of @p p if it has been found.
-///
-/// @return true iff a cached result for the comparisonof @p has been
-/// found and set into @p result.
-static bool
-get_cached_type_comparison_result(const reader& rdr,
-				  const dwarf_addr_pair_type& p,
-				  comparison_result& result)
-{
-  auto i = rdr.die_comparison_results_.find(p);
-  if (i != rdr.die_comparison_results_.end())
-    {
-      result = i->second;
-      return true;
-    }
-  return false;
-}
-
-/// Get the cached result of the comparison of a pair of DIEs, if the
-/// kind of DIEs ought to have its comparison results cached.
-///
-/// @param rdr the context to consider.
-///
-/// @param tag the tag of the pair of DIEs to consider.
-///
-/// @param p the addresses of the pair of DIEs to consider.
-///
-/// @param result out parameter set to the cached result of the
-/// comparison of @p p if it has been found.
-///
-/// @return true iff a cached result for the comparisonof @p has been
-/// found and set into @p result.
-static bool
-maybe_get_cached_type_comparison_result(const reader& rdr,
-					int tag,
-					const dwarf_addr_pair_type& p,
-					comparison_result& result)
-{
-  if (type_comparison_result_to_be_cached(tag))
-    {
-      // Types of this kind might have their comparison result cached
-      // when they are not canonicalized.  So let's see if we have a
-      // cached comparison result.
-      if (get_cached_type_comparison_result(rdr, p, result))
-	return true;
-    }
-  return false;
-}
-
-/// Test if a given DIE is to be canonicalized.
-///
-/// @param die the DIE to consider.
-///
-/// @return true iff @p die is to be canonicalized.
-static bool
-is_type_die_to_be_canonicalized(const Dwarf_Die *die)
-{
-  bool result = false;
-  int tag = dwarf_tag(const_cast<Dwarf_Die*>(die));
-
-  if (!is_type_tag(tag))
-    return false;
-
-  switch (tag)
-    {
-    case DW_TAG_class_type:
-    case DW_TAG_structure_type:
-    case DW_TAG_union_type:
-      result = !die_is_declaration_only(die);
-      break;
-
-    case DW_TAG_subroutine_type:
-    case DW_TAG_subprogram:
-    case DW_TAG_array_type:
-      result = true;
-
-    default:
       break;
     }
 
@@ -6953,32 +5756,6 @@ die_is_pointer_type(const Dwarf_Die* die)
   return false;
 }
 
-/// Test if a DIE is for a pointer, reference or qualified type to
-/// anonymous class or struct.
-///
-/// @param die the DIE to consider.
-///
-/// @return true iff @p is for a pointer, reference or qualified type
-/// to anonymous class or struct.
-static bool
-pointer_or_qual_die_of_anonymous_class_type(const Dwarf_Die* die)
-{
-  if (!die_is_pointer_array_or_reference_type(die)
-      && !die_is_qualified_type(die))
-    return false;
-
-  Dwarf_Die underlying_type_die;
-  if (!die_die_attribute(die, DW_AT_type, underlying_type_die))
-    return false;
-
-  if (!die_is_class_type(&underlying_type_die))
-    return false;
-
-  string name = die_name(&underlying_type_die);
-
-  return name.empty();
-}
-
 /// Test if a DIE represents a reference type.
 ///
 /// @param die the die to consider.
@@ -6997,35 +5774,6 @@ die_is_reference_type(const Dwarf_Die* die)
   return false;
 }
 
-/// Test if a DIE represents an array type.
-///
-/// @param die the die to consider.
-///
-/// @return true iff @p die represents an array type.
-static bool
-die_is_array_type(const Dwarf_Die* die)
-{
-  if (!die)
-    return false;
-
-  int tag = dwarf_tag(const_cast<Dwarf_Die*>(die));
-  if (tag == DW_TAG_array_type)
-    return true;
-
-  return false;
-}
-
-/// Test if a DIE represents a pointer, reference or array type.
-///
-/// @param die the die to consider.
-///
-/// @return true iff @p die represents a pointer or reference type.
-static bool
-die_is_pointer_array_or_reference_type(const Dwarf_Die* die)
-{return (die_is_pointer_type(die)
-	 || die_is_reference_type(die)
-	 || die_is_array_type(die));}
-
 /// Test if a DIE represents a pointer or a reference type.
 ///
 /// @param die the die to consider.
@@ -7034,17 +5782,6 @@ die_is_pointer_array_or_reference_type(const Dwarf_Die* die)
 static bool
 die_is_pointer_or_reference_type(const Dwarf_Die* die)
 {return (die_is_pointer_type(die) || die_is_reference_type(die));}
-
-/// Test if a DIE represents a pointer, a reference or a typedef type.
-///
-/// @param die the die to consider.
-///
-/// @return true iff @p die represents a pointer, a reference or a
-/// typedef type.
-static bool
-die_is_pointer_reference_or_typedef_type(const Dwarf_Die* die)
-{return (die_is_pointer_array_or_reference_type(die)
-	 || dwarf_tag(const_cast<Dwarf_Die*>(die)) == DW_TAG_typedef);}
 
 /// Test if a DIE represents a class type.
 ///
@@ -7060,23 +5797,6 @@ die_is_class_type(const Dwarf_Die* die)
     return true;
 
   return false;
-}
-
-/// Test if a DIE is for a qualified type.
-///
-/// @param die the DIE to consider.
-///
-/// @return true iff @p die is for a qualified type.
-static bool
-die_is_qualified_type(const Dwarf_Die* die)
-{
-  int tag = dwarf_tag(const_cast<Dwarf_Die*>(die));
-    if (tag == DW_TAG_const_type
-	|| tag == DW_TAG_volatile_type
-	|| tag == DW_TAG_restrict_type)
-      return true;
-
-    return false;
 }
 
 /// Test if a DIE for a function pointer or member function has an
@@ -7521,45 +6241,6 @@ die_peel_typedef(Dwarf_Die *die, Dwarf_Die& peeled_die)
 
 }
 
-/// Return the leaf DIE under a pointer, a reference or a typedef DIE.
-///
-/// @param die the DIE to consider.
-///
-/// @param peeled_die the resulting peeled (or leaf) DIE.  This is set
-/// iff the function returned true.
-///
-/// @return true iff the function could peel @p die.
-static bool
-die_peel_pointer_and_typedef(const Dwarf_Die *die, Dwarf_Die& peeled_die)
-{
-  if (!die)
-    return false;
-
-  int tag = dwarf_tag(const_cast<Dwarf_Die*>(die));
-
-  if (tag == DW_TAG_pointer_type
-      || tag == DW_TAG_reference_type
-      || tag == DW_TAG_rvalue_reference_type
-      || tag == DW_TAG_typedef)
-    {
-      if (!die_die_attribute(die, DW_AT_type, peeled_die))
-	return false;
-    }
-  else
-    return false;
-
-  while (tag == DW_TAG_pointer_type
-	 || tag == DW_TAG_reference_type
-	 || tag == DW_TAG_rvalue_reference_type
-	 || tag == DW_TAG_typedef)
-    {
-      if (!die_die_attribute(&peeled_die, DW_AT_type, peeled_die))
-	break;
-      tag = dwarf_tag(&peeled_die);
-    }
-  return true;
-}
-
 /// Test if a DIE for a function type represents a method type.
 ///
 /// @param rdr the DWARF reader.
@@ -7679,151 +6360,6 @@ die_is_declared_inline(Dwarf_Die* die)
     return false;
   return (inline_value == DW_INL_declared_inlined
 	  || inline_value == DW_INL_declared_not_inlined);
-}
-
-/// Compare two DWARF strings using the most accurate (and slowest)
-/// method possible.
-///
-/// @param l the DIE that carries the first string to consider, as an
-/// attribute value.
-///
-/// @param attr_name the name of the attribute which value is the
-/// string to compare.
-///
-/// @return true iff the string carried by @p l equals the one carried
-/// by @p r.
-static bool
-slowly_compare_strings(const Dwarf_Die *l,
-		       const Dwarf_Die *r,
-		       unsigned attr_name)
-{
-  const char *l_str = die_char_str_attribute(l, attr_name),
-    *r_str = die_char_str_attribute(r, attr_name);
-  if (!l_str && !r_str)
-    return true;
-  return l_str && r_str && !strcmp(l_str, r_str);
-}
-
-/// This function is a fast routine (optimization) to compare the
-/// values of two string attributes of two DIEs.
-///
-/// @param l the first DIE to consider.
-///
-/// @param r the second DIE to consider.
-///
-/// @param attr_name the name of the attribute to compare, on the two
-/// DIEs above.
-///
-/// @param result out parameter.  This is set to the result of the
-/// comparison.  If the value of attribute @p attr_name on DIE @p l
-/// equals the value of attribute @p attr_name on DIE @p r, then the
-/// the argument of this parameter is set to true.  Otherwise, it's
-/// set to false.  Note that the argument of this parameter is set iff
-/// the function returned true.
-///
-/// @return true iff the comparison could be performed.  There are
-/// cases in which the comparison cannot be performed.  For instance,
-/// if one of the DIEs does not have the attribute @p attr_name.  In
-/// any case, if this function returns true, then the parameter @p
-/// result is set to the result of the comparison.
-static bool
-compare_dies_string_attribute_value(const Dwarf_Die *l, const Dwarf_Die *r,
-				    unsigned attr_name,
-				    bool &result)
-{
-  Dwarf_Attribute l_attr, r_attr;
-  if (!dwarf_attr_integrate(const_cast<Dwarf_Die*>(l), attr_name, &l_attr)
-      || !dwarf_attr_integrate(const_cast<Dwarf_Die*>(r), attr_name, &r_attr))
-    return false;
-
-  ABG_ASSERT(l_attr.form == DW_FORM_strp
-	     || l_attr.form == DW_FORM_string
-	     || l_attr.form == DW_FORM_GNU_strp_alt
-	     || form_is_DW_FORM_strx(l_attr.form)
-	     || form_is_DW_FORM_line_strp(l_attr.form));
-
-  ABG_ASSERT(r_attr.form == DW_FORM_strp
-	     || r_attr.form == DW_FORM_string
-	     || r_attr.form == DW_FORM_GNU_strp_alt
-	     || form_is_DW_FORM_strx(r_attr.form)
-	     || form_is_DW_FORM_line_strp(r_attr.form));
-
-  if ((l_attr.form == DW_FORM_strp
-       && r_attr.form == DW_FORM_strp)
-      || (l_attr.form == DW_FORM_GNU_strp_alt
-	  && r_attr.form == DW_FORM_GNU_strp_alt)
-      || (form_is_DW_FORM_strx(l_attr.form)
-	  && form_is_DW_FORM_strx(r_attr.form))
-      || (form_is_DW_FORM_line_strp(l_attr.form)
-	  && form_is_DW_FORM_line_strp(r_attr.form)))
-    {
-      // So these string attributes are actually pointers into a
-      // string table.  The string table is most likely de-duplicated
-      // so comparing the *values* of the pointers should be enough.
-      //
-      // This is the fast path.
-      if (l_attr.valp == r_attr.valp)
-	{
-#if WITH_DEBUG_TYPE_CANONICALIZATION
-	  ABG_ASSERT(slowly_compare_strings(l, r, attr_name));
-#endif
-	  result = true;
-	  return true;
-	}
-    }
-
-  // If we reached this point it means we couldn't use the fast path
-  // because the string atttributes are strings that are "inline" in
-  // the debug info section.  Let's just compare them the slow and
-  // obvious way.
-  result = slowly_compare_strings(l, r, attr_name);
-  return true;
-}
-
-/// Compare the file path of the compilation units (aka CUs)
-/// associated to two DIEs.
-///
-/// If the DIEs are for pointers or typedefs, this function also
-/// compares the file paths of the CUs of the leaf DIEs (underlying
-/// DIEs of the pointer or the typedef).
-///
-/// @param l the first type DIE to consider.
-///
-/// @param r the second type DIE to consider.
-///
-/// @return true iff the file paths of the DIEs of the two types are
-/// equal.
-static bool
-compare_dies_cu_decl_file(const Dwarf_Die* l, const Dwarf_Die *r, bool &result)
-{
-  Dwarf_Die l_cu, r_cu;
-  if (!dwarf_diecu(const_cast<Dwarf_Die*>(l), &l_cu, 0, 0)
-      ||!dwarf_diecu(const_cast<Dwarf_Die*>(r), &r_cu, 0, 0))
-    return false;
-
-  bool compared =
-    compare_dies_string_attribute_value(&l_cu, &r_cu,
-					DW_AT_name,
-					result);
-  if (compared && result)
-    {
-      Dwarf_Die peeled_l, peeled_r;
-      if (die_is_pointer_reference_or_typedef_type(l)
-	  && die_is_pointer_reference_or_typedef_type(r)
-	  && die_peel_pointer_and_typedef(l, peeled_l)
-	  && die_peel_pointer_and_typedef(r, peeled_r))
-	{
-	  if (!dwarf_diecu(&peeled_l, &l_cu, 0, 0)
-	      ||!dwarf_diecu(&peeled_r, &r_cu, 0, 0))
-	    return false;
-	  compared =
-	    compare_dies_string_attribute_value(&l_cu, &r_cu,
-						DW_AT_name,
-						result);
-	}
-    }
-
-  return  compared;
 }
 
 // -----------------------------------
@@ -9450,320 +7986,6 @@ die_qualified_type_name(const reader& rdr,
   return repr;
 }
 
-/// Compute the name of a type represented by a DIE.
-///
-/// @param rdr the reader to use.
-///
-/// @param die the type DIE to consider.
-///
-/// @param qualified_name if true then compute a qualified name.
-///
-/// @param where_offset where in the are logically are in the DIE
-/// stream.
-///
-/// @param guard the set of DIE addresses of the stack of DIEs involved
-/// in the construction of the name of the type.  This set is used to
-/// detect (and avoid) cycles in the stack of DIEs that is going to be
-/// walked to compute the type name.
-///
-/// @return a copy of the string representing the type represented by
-/// @p die.
-static string
-die_type_name(const reader&	rdr,
-	      const Dwarf_Die*	die,
-	      bool		qualified_name,
-	      void*		where_addr,
-	      unordered_set<void*>& guard)
-{
-  if (!die)
-    return "";
-
-  int tag = dwarf_tag (const_cast<Dwarf_Die*>(die));
-  if (tag == DW_TAG_compile_unit
-      || tag == DW_TAG_partial_unit
-      || tag == DW_TAG_type_unit)
-    return "";
-
-  string name = die_name(die);
-
-  Dwarf_Die scope_die;
-  if (!get_scope_die(rdr, die, where_addr, scope_die))
-    return "";
-
-  bool colon_colon = die_is_type(die) || die_is_namespace(die);
-  string separator = colon_colon ? "::" : ".";
-
-  string repr;
-
-  switch (tag)
-    {
-    case DW_TAG_unspecified_type:
-      break;
-
-    case DW_TAG_base_type:
-      {
-	abigail::ir::real_type int_type;
-	if (parse_real_type(name, int_type))
-	  repr = int_type;
-	else
-	  repr = name;
-      }
-      break;
-
-    case DW_TAG_typedef:
-      ABG_ASSERT(!name.empty());
-      // fall through
-
-    case DW_TAG_enumeration_type:
-    case DW_TAG_structure_type:
-    case DW_TAG_class_type:
-    case DW_TAG_union_type:
-      {
-	if (die_is_anonymous(die))
-	  repr = die_class_or_enum_flat_representation(rdr, die, /*indent=*/"",
-						       /*one_line=*/true,
-						       /*qualed_name=*/false,
-						       where_addr,
-						       guard);
-	else
-	  {
-	    string parent_name;
-	    if (qualified_name)
-	      {
-		if (!is_anonymous_type_die(&scope_die))
-		  parent_name = die_qualified_name(rdr, &scope_die,
-						   where_addr, guard);
-	      }
-	    repr = parent_name.empty() ? name : parent_name + separator + name;
-	  }
-      }
-      break;
-
-    case DW_TAG_const_type:
-    case DW_TAG_volatile_type:
-    case DW_TAG_restrict_type:
-      {
-	Dwarf_Die underlying_type_die;
-	bool has_underlying_type_die =
-	  die_die_attribute(die, DW_AT_type, underlying_type_die);
-
-	if (has_underlying_type_die && die_is_unspecified(&underlying_type_die))
-	  break;
-
-	if (tag == DW_TAG_const_type)
-	  {
-	    if (has_underlying_type_die
-		&& die_is_reference_type(&underlying_type_die))
-	      // A reference is always const.  So, to lower false
-	      // positive reports in diff computations, we consider a
-	      // const reference just as a reference.  But we need to
-	      // keep the qualified-ness of the type.  So we introduce
-	      // a 'no-op' qualifier here.  Please remember that this
-	      // has to be kept in sync with what is done in
-	      // get_name_of_qualified_type.  So if you change this
-	      // here, you have to change that code there too.
-	      repr = "";
-	    else if (!has_underlying_type_die
-		     || die_is_void_type(&underlying_type_die))
-	      {
-		repr = "void";
-		break;
-	      }
-	    else
-	      repr = "const";
-	  }
-	else if (tag == DW_TAG_volatile_type)
-	  repr = "volatile";
-	else if (tag == DW_TAG_restrict_type)
-	  repr = "restrict";
-	else
-	  ABG_ASSERT_NOT_REACHED;
-
-	string underlying_type_repr;
-	if (has_underlying_type_die)
-	  underlying_type_repr =
-	    die_type_name(rdr, &underlying_type_die,
-			  qualified_name, where_addr,
-			  guard);
-	else
-	  underlying_type_repr = "void";
-
-	if (underlying_type_repr.empty())
-	  repr.clear();
-	else
-	  {
-	    if (has_underlying_type_die)
-	      {
-		Dwarf_Die peeled;
-		die_peel_qualified(&underlying_type_die, peeled);
-		if (die_is_pointer_or_reference_type(&peeled))
-		  repr = underlying_type_repr + " " + repr;
-		else
-		  repr += " " + underlying_type_repr;
-	      }
-	    else
-	      repr += " " + underlying_type_repr;
-	  }
-      }
-      break;
-
-    case DW_TAG_pointer_type:
-    case DW_TAG_reference_type:
-    case DW_TAG_rvalue_reference_type:
-      {
-	Dwarf_Die pointed_to_type_die;
-	if (!die_die_attribute(die, DW_AT_type, pointed_to_type_die))
-	  {
-	    if (tag == DW_TAG_pointer_type)
-	      repr = "void*";
-	    break;
-	  }
-
-	if (die_is_unspecified(&pointed_to_type_die))
-	  break;
-
-	string pointed_type_repr =
-	  die_type_name(rdr, &pointed_to_type_die,
-			qualified_name, where_addr,
-			guard);
-
-	repr = pointed_type_repr;
-	if (repr.empty())
-	  break;
-
-	if (tag == DW_TAG_pointer_type)
-	  repr += "*";
-	else if (tag == DW_TAG_reference_type)
-	  repr += "&";
-	else if (tag == DW_TAG_rvalue_reference_type)
-	  repr += "&&";
-	else
-	  ABG_ASSERT_NOT_REACHED;
-      }
-      break;
-
-    case DW_TAG_subrange_type:
-      {
-	// In Ada, this one can be generated on its own, that is, not
-	// as a sub-type of an array.  So we need to support it on its
-	// own.  Note that when it's emitted as the sub-type of an
-	// array like in C and C++, this is handled differently, for
-	// now.  But we try to make this usable by other languages
-	// that are not Ada, even if we modelled it after Ada.
-
-	// So we build a subrange type for the sole purpose of using
-	// the ::as_string() method of that type.  So we don't add
-	// that type to the current type tree being built.
-	array_type_def::subrange_sptr s =
-	  build_subrange_type(const_cast<reader&>(rdr),
-			      die, where_addr,
-			      /*associate_die_to_type=*/false);
-	repr += s->as_string();
-	break;
-      }
-
-    case DW_TAG_array_type:
-      {
-	Dwarf_Die element_type_die;
-	if (!die_die_attribute(die, DW_AT_type, element_type_die))
-	  break;
-	string element_type_name =
-	  die_type_name(rdr, &element_type_die,
-			qualified_name, where_addr,
-			guard);
-	if (element_type_name.empty())
-	  break;
-
-	array_type_def::subranges_type subranges;
-	build_subranges_from_array_type_die(const_cast<reader&>(rdr),
-					    die, subranges, where_addr,
-					    /*associate_type_to_die=*/false);
-
-	repr = element_type_name;
-	repr += array_type_def::subrange_type::vector_as_string(subranges);
-      }
-      break;
-
-    case DW_TAG_subroutine_type:
-    case DW_TAG_subprogram:
-      {
-	string return_type_name;
-	string class_name;
-	vector<string> parm_names;
-	bool is_const = false;
-	bool is_static = false;
-	bool is_method_type = false;
-	die_return_and_parm_names_from_fn_type_die(rdr, die, where_addr,
-						   /*pretty_print=*/true,
-						   qualified_name,
-						   is_method_type,
-						   return_type_name,
-						   class_name,
-						   parm_names, is_const,
-						   is_static, guard);
-	if (return_type_name.empty())
-	  return_type_name = "void";
-
-	repr = return_type_name;
-
-	if (is_method_type)
-	  {
-	    // This is a method, so print the class name.
-	    repr += " (" + class_name + "::*)";
-	  }
-
-	// Now parameters.
-	repr += " (";
-	for (vector<string>::const_iterator i = parm_names.begin();
-	     i != parm_names.end();
-	     ++i)
-	  {
-	    if (i != parm_names.begin())
-	      repr += ", ";
-	    repr += *i;
-	  }
-	repr += ")";
-
-      }
-      break;
-
-    case DW_TAG_string_type:
-    case DW_TAG_ptr_to_member_type:
-    case DW_TAG_set_type:
-    case DW_TAG_file_type:
-    case DW_TAG_packed_type:
-    case DW_TAG_thrown_type:
-    case DW_TAG_interface_type:
-    case DW_TAG_shared_type:
-      break;
-    }
-
-  return repr;
-}
-
-/// Compute the name of a type represented by a DIE.
-///
-/// @param rdr the reader to use.
-///
-/// @param die the type DIE to consider.
-///
-/// @param qualified_name if true then compute a qualified name.
-///
-/// @param where_offset where in the are logically are in the DIE
-/// stream.
-///
-/// @return a copy of the string representing the type represented by
-/// @p die.
-static string
-die_type_name(const reader&	rdr,
-	      const Dwarf_Die*	die,
-	      bool		qualified_name,
-	      void*		where_addr)
-{
-  unordered_set<void*> guard;
-  return die_type_name(rdr, die, qualified_name, where_addr, guard);
-}
-
 /// Compute the qualified name of a decl represented by a given DIE.
 ///
 /// For instance, for a DIE of tag DW_TAG_subprogram this function
@@ -9950,7 +8172,6 @@ die_qualified_type_name_empty(const reader& rdr,
   qualified_name = qname;
   return false;
 }
-
 /// Given the DIE that represents a function type, compute the names
 /// of the following properties the function's type:
 ///
@@ -10562,6 +8783,320 @@ die_class_or_enum_flat_representation(const reader&	rdr,
 					       where_addr, guard);
 }
 
+/// Compute the name of a type represented by a DIE.
+///
+/// @param rdr the reader to use.
+///
+/// @param die the type DIE to consider.
+///
+/// @param qualified_name if true then compute a qualified name.
+///
+/// @param where_offset where in the are logically are in the DIE
+/// stream.
+///
+/// @param guard the set of DIE addresses of the stack of DIEs involved
+/// in the construction of the name of the type.  This set is used to
+/// detect (and avoid) cycles in the stack of DIEs that is going to be
+/// walked to compute the type name.
+///
+/// @return a copy of the string representing the type represented by
+/// @p die.
+static string
+die_type_name(const reader&	rdr,
+	      const Dwarf_Die*	die,
+	      bool		qualified_name,
+	      void*		where_addr,
+	      unordered_set<void*>& guard)
+{
+  if (!die)
+    return "";
+
+  int tag = dwarf_tag (const_cast<Dwarf_Die*>(die));
+  if (tag == DW_TAG_compile_unit
+      || tag == DW_TAG_partial_unit
+      || tag == DW_TAG_type_unit)
+    return "";
+
+  string name = die_name(die);
+
+  Dwarf_Die scope_die;
+  if (!get_scope_die(rdr, die, where_addr, scope_die))
+    return "";
+
+  bool colon_colon = die_is_type(die) || die_is_namespace(die);
+  string separator = colon_colon ? "::" : ".";
+
+  string repr;
+
+  switch (tag)
+    {
+    case DW_TAG_unspecified_type:
+      break;
+
+    case DW_TAG_base_type:
+      {
+	abigail::ir::real_type int_type;
+	if (parse_real_type(name, int_type))
+	  repr = int_type;
+	else
+	  repr = name;
+      }
+      break;
+
+    case DW_TAG_typedef:
+      ABG_ASSERT(!name.empty());
+      // fall through
+
+    case DW_TAG_enumeration_type:
+    case DW_TAG_structure_type:
+    case DW_TAG_class_type:
+    case DW_TAG_union_type:
+      {
+	if (die_is_anonymous(die))
+	  repr = die_class_or_enum_flat_representation(rdr, die, /*indent=*/"",
+						       /*one_line=*/true,
+						       /*qualed_name=*/false,
+						       where_addr,
+						       guard);
+	else
+	  {
+	    string parent_name;
+	    if (qualified_name)
+	      {
+		if (!is_anonymous_type_die(&scope_die))
+		  parent_name = die_qualified_name(rdr, &scope_die,
+						   where_addr, guard);
+	      }
+	    repr = parent_name.empty() ? name : parent_name + separator + name;
+	  }
+      }
+      break;
+
+    case DW_TAG_const_type:
+    case DW_TAG_volatile_type:
+    case DW_TAG_restrict_type:
+      {
+	Dwarf_Die underlying_type_die;
+	bool has_underlying_type_die =
+	  die_die_attribute(die, DW_AT_type, underlying_type_die);
+
+	if (has_underlying_type_die && die_is_unspecified(&underlying_type_die))
+	  break;
+
+	if (tag == DW_TAG_const_type)
+	  {
+	    if (has_underlying_type_die
+		&& die_is_reference_type(&underlying_type_die))
+	      // A reference is always const.  So, to lower false
+	      // positive reports in diff computations, we consider a
+	      // const reference just as a reference.  But we need to
+	      // keep the qualified-ness of the type.  So we introduce
+	      // a 'no-op' qualifier here.  Please remember that this
+	      // has to be kept in sync with what is done in
+	      // get_name_of_qualified_type.  So if you change this
+	      // here, you have to change that code there too.
+	      repr = "";
+	    else if (!has_underlying_type_die
+		     || die_is_void_type(&underlying_type_die))
+	      {
+		repr = "void";
+		break;
+	      }
+	    else
+	      repr = "const";
+	  }
+	else if (tag == DW_TAG_volatile_type)
+	  repr = "volatile";
+	else if (tag == DW_TAG_restrict_type)
+	  repr = "restrict";
+	else
+	  ABG_ASSERT_NOT_REACHED;
+
+	string underlying_type_repr;
+	if (has_underlying_type_die)
+	  underlying_type_repr =
+	    die_type_name(rdr, &underlying_type_die,
+			  qualified_name, where_addr,
+			  guard);
+	else
+	  underlying_type_repr = "void";
+
+	if (underlying_type_repr.empty())
+	  repr.clear();
+	else
+	  {
+	    if (has_underlying_type_die)
+	      {
+		Dwarf_Die peeled;
+		die_peel_qualified(&underlying_type_die, peeled);
+		if (die_is_pointer_or_reference_type(&peeled))
+		  repr = underlying_type_repr + " " + repr;
+		else
+		  repr += " " + underlying_type_repr;
+	      }
+	    else
+	      repr += " " + underlying_type_repr;
+	  }
+      }
+      break;
+
+    case DW_TAG_pointer_type:
+    case DW_TAG_reference_type:
+    case DW_TAG_rvalue_reference_type:
+      {
+	Dwarf_Die pointed_to_type_die;
+	if (!die_die_attribute(die, DW_AT_type, pointed_to_type_die))
+	  {
+	    if (tag == DW_TAG_pointer_type)
+	      repr = "void*";
+	    break;
+	  }
+
+	if (die_is_unspecified(&pointed_to_type_die))
+	  break;
+
+	string pointed_type_repr =
+	  die_type_name(rdr, &pointed_to_type_die,
+			qualified_name, where_addr,
+			guard);
+
+	repr = pointed_type_repr;
+	if (repr.empty())
+	  break;
+
+	if (tag == DW_TAG_pointer_type)
+	  repr += "*";
+	else if (tag == DW_TAG_reference_type)
+	  repr += "&";
+	else if (tag == DW_TAG_rvalue_reference_type)
+	  repr += "&&";
+	else
+	  ABG_ASSERT_NOT_REACHED;
+      }
+      break;
+
+    case DW_TAG_subrange_type:
+      {
+	// In Ada, this one can be generated on its own, that is, not
+	// as a sub-type of an array.  So we need to support it on its
+	// own.  Note that when it's emitted as the sub-type of an
+	// array like in C and C++, this is handled differently, for
+	// now.  But we try to make this usable by other languages
+	// that are not Ada, even if we modelled it after Ada.
+
+	// So we build a subrange type for the sole purpose of using
+	// the ::as_string() method of that type.  So we don't add
+	// that type to the current type tree being built.
+	array_type_def::subrange_sptr s =
+	  build_subrange_type(const_cast<reader&>(rdr),
+			      die, where_addr,
+			      /*associate_die_to_type=*/false);
+	repr += s->as_string();
+	break;
+      }
+
+    case DW_TAG_array_type:
+      {
+	Dwarf_Die element_type_die;
+	if (!die_die_attribute(die, DW_AT_type, element_type_die))
+	  break;
+	string element_type_name =
+	  die_type_name(rdr, &element_type_die,
+			qualified_name, where_addr,
+			guard);
+	if (element_type_name.empty())
+	  break;
+
+	array_type_def::subranges_type subranges;
+	build_subranges_from_array_type_die(const_cast<reader&>(rdr),
+					    die, subranges, where_addr,
+					    /*associate_type_to_die=*/false);
+
+	repr = element_type_name;
+	repr += array_type_def::subrange_type::vector_as_string(subranges);
+      }
+      break;
+
+    case DW_TAG_subroutine_type:
+    case DW_TAG_subprogram:
+      {
+	string return_type_name;
+	string class_name;
+	vector<string> parm_names;
+	bool is_const = false;
+	bool is_static = false;
+	bool is_method_type = false;
+	die_return_and_parm_names_from_fn_type_die(rdr, die, where_addr,
+						   /*pretty_print=*/true,
+						   qualified_name,
+						   is_method_type,
+						   return_type_name,
+						   class_name,
+						   parm_names, is_const,
+						   is_static, guard);
+	if (return_type_name.empty())
+	  return_type_name = "void";
+
+	repr = return_type_name;
+
+	if (is_method_type)
+	  {
+	    // This is a method, so print the class name.
+	    repr += " (" + class_name + "::*)";
+	  }
+
+	// Now parameters.
+	repr += " (";
+	for (vector<string>::const_iterator i = parm_names.begin();
+	     i != parm_names.end();
+	     ++i)
+	  {
+	    if (i != parm_names.begin())
+	      repr += ", ";
+	    repr += *i;
+	  }
+	repr += ")";
+
+      }
+      break;
+
+    case DW_TAG_string_type:
+    case DW_TAG_ptr_to_member_type:
+    case DW_TAG_set_type:
+    case DW_TAG_file_type:
+    case DW_TAG_packed_type:
+    case DW_TAG_thrown_type:
+    case DW_TAG_interface_type:
+    case DW_TAG_shared_type:
+      break;
+    }
+
+  return repr;
+}
+
+/// Compute the name of a type represented by a DIE.
+///
+/// @param rdr the reader to use.
+///
+/// @param die the type DIE to consider.
+///
+/// @param qualified_name if true then compute a qualified name.
+///
+/// @param where_offset where in the are logically are in the DIE
+/// stream.
+///
+/// @return a copy of the string representing the type represented by
+/// @p die.
+static string
+die_type_name(const reader&	rdr,
+	      const Dwarf_Die*	die,
+	      bool		qualified_name,
+	      void*		where_addr)
+{
+  unordered_set<void*> guard;
+  return die_type_name(rdr, die, qualified_name, where_addr, guard);
+}
+
 /// Return a pretty string representation of a type, for internal purposes.
 ///
 /// By internal purpose, we mean things like key-ing types for lookup
@@ -10856,388 +9391,6 @@ die_pretty_print(reader& rdr, const Dwarf_Die* die, void* where_addr,
 // </die pretty printer>
 // -----------------------------------
 
-
-// ----------------------------------
-// <die comparison engine>
-// ---------------------------------
-
-/// Compares two decls DIEs
-///
-/// This works only for DIEs emitted by the C language.
-///
-/// This implementation doesn't yet support namespaces.
-///
-/// This is a subroutine of compare_dies.
-///
-/// @return true iff @p l equals @p r.
-static bool
-compare_as_decl_dies(const Dwarf_Die *l, const Dwarf_Die *r)
-{
-  ABG_ASSERT(l && r);
-
-  int l_tag = dwarf_tag(const_cast<Dwarf_Die*>(l));
-  int r_tag = dwarf_tag(const_cast<Dwarf_Die*>(r));
-  if (l_tag != r_tag)
-    return false;
-
-  bool result = false;
-
-  if (l_tag == DW_TAG_subprogram || l_tag == DW_TAG_variable)
-    {
-      // Fast path for functions and global variables.
-      if (compare_dies_string_attribute_value(l, r, DW_AT_linkage_name,
-					      result)
-	  || compare_dies_string_attribute_value(l, r, DW_AT_MIPS_linkage_name,
-						 result))
-	{
-	  if (!result)
-	    return false;
-	}
-
-      if (compare_dies_string_attribute_value(l, r, DW_AT_name,
-					      result))
-	{
-	  if (!result)
-	    return false;
-	}
-      return true;
-    }
-
-  // Fast path for types.
-  if (compare_dies_string_attribute_value(l, r, DW_AT_name,
-					  result))
-    return result;
-  return true;
-}
-
-/// Test if at least one of two ODR-relevant DIEs is decl-only.
-///
-/// @param rdr the DWARF reader to consider.
-///
-/// @param l the first type DIE to consider.
-///
-/// @param r the second type DIE to consider.
-///
-/// @return true iff either @p l or @p r is decl-only and both are
-/// ODR-relevant.
-static bool
-at_least_one_decl_only_among_odr_relevant_dies(const reader &rdr,
-					       const Dwarf_Die *l,
-					       const Dwarf_Die *r)
-{
-  if (!(rdr.odr_is_relevant(l) && rdr.odr_is_relevant(r)))
-    return false;
-
-  if ((die_is_declaration_only(l) && die_has_no_child(l))
-      || (die_is_declaration_only(r) && die_has_no_child(r)))
-    return true;
-  return false;
-}
-
-/// Compares two type DIEs
-///
-/// This is a subroutine of compare_dies.
-///
-/// Note that this function doesn't look at the name of the DIEs.
-/// Naming is taken into account by the function compare_as_decl_dies.
-///
-/// If the two DIEs are from a translation unit that is subject to the
-/// ONE Definition Rule, then the function considers that if one DIE
-/// is a declaration, then it's equivalent to the second.  In that
-/// case, the sizes of the two DIEs are not compared.  This is so that
-/// a declaration of a type compares equal to the definition of the
-/// type.
-///
-/// @param rdr the DWARF reader to consider.
-///
-/// @param l the left operand of the comparison operator.
-///
-/// @param r the right operand of the comparison operator.
-///
-/// @return true iff @p l equals @p r.
-static bool
-compare_as_type_dies(const reader& rdr,
-		     const Dwarf_Die *l,
-		     const Dwarf_Die *r)
-{
-  ABG_ASSERT(l && r);
-  ABG_ASSERT(die_is_type(l));
-  ABG_ASSERT(die_is_type(r));
-
-  if (dwarf_tag(const_cast<Dwarf_Die*>(l)) == DW_TAG_string_type
-      && dwarf_tag(const_cast<Dwarf_Die*>(r)) == DW_TAG_string_type
-      && (dwarf_dieoffset(const_cast<Dwarf_Die*>(l))
-	  != dwarf_dieoffset(const_cast<Dwarf_Die*>(r))))
-    // For now, we cannot compare DW_TAG_string_type because of its
-    // string_length attribute that is a location descriptor that is
-    // not necessarily a constant.  So it's super hard to evaluate it
-    // in a libabigail context.  So for now, we just say that all
-    // DW_TAG_string_type DIEs are different, by default.
-    return false;
-
-  if (at_least_one_decl_only_among_odr_relevant_dies(rdr, l, r))
-    // A declaration of a type compares equal to the definition of the
-    // type.
-    return true;
-
-  uint64_t l_size = 0, r_size = 0;
-  die_size_in_bits(l, l_size);
-  die_size_in_bits(r, r_size);
-
-  return l_size == r_size;
-}
-
-/// Compare two DIEs as decls (looking as their names etc) and as
-/// types (looking at their size etc).
-///
-/// @param rdr the DWARF reader to consider.
-///
-/// @param l the first DIE to consider.
-///
-/// @param r the second DIE to consider.
-///
-/// @return TRUE iff @p l equals @p r as far as naming and size is
-/// concerned.
-static bool
-compare_as_decl_and_type_dies(const reader &rdr,
-			      const Dwarf_Die *l,
-			      const Dwarf_Die *r)
-{
-  if (!compare_as_decl_dies(l, r)
-      || !compare_as_type_dies(rdr, l, r))
-    return false;
-
-  return true;
-}
-
-/// Test if two DIEs representing function declarations have the same
-/// linkage name, and thus are considered equal if they are C or C++,
-/// because the two DIEs represent functions in the same binary.
-///
-/// If the DIEs don't have a linkage name, the function compares their
-/// name.  But in that case, the caller of the function must know that
-/// in C++ for instance, that doesn't imply that the two functions are
-/// equal.
-///
-/// @param l the first function DIE to consider.
-///
-/// @param r the second function DIE to consider.
-///
-/// @return true iff the function represented by @p l have the same
-/// linkage name as the function represented by @p r.
-static bool
-fn_die_equal_by_linkage_name(const Dwarf_Die *l,
-			     const Dwarf_Die *r)
-{
-  if (!!l != !!r)
-    return false;
-
-  if (!l)
-    return false;
-
-  int tag = dwarf_tag(const_cast<Dwarf_Die*>(l));
-  ABG_ASSERT(tag == DW_TAG_subprogram);
-  tag = dwarf_tag(const_cast<Dwarf_Die*>(r));
-  ABG_ASSERT(tag == DW_TAG_subprogram);
-
-  string lname = die_name(l), rname = die_name(r);
-  string llinkage_name = die_linkage_name(l),
-    rlinkage_name = die_linkage_name(r);
-
-  if (die_is_in_c_or_cplusplus(l)
-      && die_is_in_c_or_cplusplus(r))
-    {
-      if (!llinkage_name.empty() && !rlinkage_name.empty())
-	return llinkage_name == rlinkage_name;
-      else if (!!llinkage_name.empty() != !!rlinkage_name.empty())
-	return false;
-      else
-	return lname == rname;
-    }
-
-  return (!llinkage_name.empty()
-	  && !rlinkage_name.empty()
-	  && llinkage_name == rlinkage_name);
-}
-
-/// Compare two DIEs in the context of DIE canonicalization.
-///
-/// If DIE canonicalization is on, the function compares the DIEs
-/// canonically and structurally.  The two types of comparison should
-/// be equal, of course.
-///
-/// @param rdr the DWARF reader.
-///
-/// @param l_offset the offset of the first canonical DIE to compare.
-///
-/// @param r_offset the offset of the second canonical DIE to compare.
-///
-/// @param l_die_source the source of the DIE denoted by the offset @p
-/// l_offset.
-///
-/// @param r_die_source the source of the DIE denoted by the offset @p
-/// r_offset.
-///
-/// @param l_has_canonical_die_offset output parameter.  Is set to
-/// true if @p l_offset has a canonical DIE.
-///
-/// @param r_has_canonical_die_offset output parameter.  Is set to
-/// true if @p r_offset has a canonical DIE.
-///
-/// @param l_canonical_die_offset output parameter.  If @p
-/// l_has_canonical_die_offset is set to true, then this parameter is
-/// set to the offset of the canonical DIE of the DIE designated by @p
-/// l_offset.
-static bool
-try_canonical_die_comparison(const reader& rdr,
-			     void* l_addr, void* r_addr,
-			     bool& l_has_canonical_die_addr,
-			     bool& r_has_canonical_die_addr,
-			     void* & l_canonical_die_addr,
-			     void* & r_canonical_die_addr,
-			     bool& result)
-{
-#ifdef WITH_DEBUG_TYPE_CANONICALIZATION
-  if (rdr.debug_die_canonicalization_is_on_
-      && !rdr.use_canonical_die_comparison_)
-    return false;
-#endif
-
-
-  l_has_canonical_die_addr =
-    (l_canonical_die_addr =
-     rdr.get_canonical_die_addr(l_addr, /*die_as_type=*/true));
-
-  r_has_canonical_die_addr =
-    (r_canonical_die_addr =
-     rdr.get_canonical_die_addr(r_addr, /*die_as_type=*/true));
-
-  if (l_has_canonical_die_addr && r_has_canonical_die_addr)
-    {
-      result = (l_canonical_die_addr == r_canonical_die_addr);
-      return true;
-    }
-
-  return false;
-}
-
-#ifdef WITH_DEBUG_TYPE_CANONICALIZATION
-/// This function is called whenever a DIE comparison fails.
-///
-/// This function is intended for debugging purposes.  The idea is for
-/// hackers to set a breakpoint on this function so that they can
-/// discover why exactly the comparison failed.  They then can execute
-/// the program from compare_dies_during_canonicalization, for
-/// instance.
-///
-/// @param @l the left-hand side of the DIE comparison.
-///
-/// @param @r the right-hand side of the DIE comparison.
-static void
-notify_die_comparison_failed(const Dwarf_Die* /*l*/, const Dwarf_Die* /*r*/)
-{
-}
-
-#define NOTIFY_DIE_COMPARISON_FAILED(l, r) \
-  notify_die_comparison_failed(l, r)
-#else
-#define NOTIFY_DIE_COMPARISON_FAILED(l, r)
-#endif
-
-/// A macro used to return from DIE comparison routines.
-///
-/// If the return value is false, the macro invokes the
-/// notify_die_comparison_failed signalling function before returning.
-/// That way, hackers willing to learn more about why the comparison
-/// routine returned "false" can just set a breakpoint on
-/// notify_die_comparison_failed and execute the program from
-/// compare_dies_during_canonicalization, for instance.
-///
-/// @param value the value to return from the DIE comparison routines.
-#define ABG_RETURN(value)						\
-  do									\
-    {									\
-      if ((value) == COMPARISON_RESULT_DIFFERENT)			\
-	{								\
-	  NOTIFY_DIE_COMPARISON_FAILED(l, r);				\
-	}								\
-      return return_comparison_result(l, r, dies_being_compared,	\
-				      value, aggregates_being_compared, \
-				      update_canonical_dies_on_the_fly); \
-    }									\
-  while(false)
-
-/// A macro used to return the "false" boolean from DIE comparison
-/// routines.
-///
-/// As the return value is false, the macro invokes the
-/// notify_die_comparison_failed signalling function before returning.
-///
-/// @param value the value to return from the DIE comparison routines.
-#define ABG_RETURN_FALSE						\
-  do									\
-    {									\
-      NOTIFY_DIE_COMPARISON_FAILED(l, r);				\
-      return return_comparison_result(l, r, dies_being_compared,	\
-				      COMPARISON_RESULT_DIFFERENT,	\
-				      aggregates_being_compared,	\
-				      update_canonical_dies_on_the_fly); \
-    } while(false)
-
-/// A macro to set the 'result' variable to 'false'.
-///
-/// The macro invokes the notify_die_comparison_failed function so
-/// that the hacker can set a debugging breakpoint on
-/// notify_die_comparison_failed to know where a DIE comparison failed
-/// during compare_dies_during_canonicalization for instance.
-///
-/// @param result the 'result' variable to set.
-///
-/// @param l the first DIE of the comparison operation.
-///
-/// @param r the second DIE of the comparison operation.
-#define SET_RESULT_TO_FALSE(result, l , r)		   \
-  do							   \
-    {							   \
-      result = COMPARISON_RESULT_DIFFERENT;		   \
-      NOTIFY_DIE_COMPARISON_FAILED(l, r);		   \
-    } while(false)
-
-/// A macro to set the 'result' variable to a given value.
-///
-/// If the value equals to COMPARISON_RESULT_DIFFERENT, then the macro
-/// invokes the notify_die_comparison_failed function so that the
-/// hacker can set a debugging breakpoint on
-/// notify_die_comparison_failed to know where a DIE comparison failed
-/// during compare_dies_during_canonicalization for instance.
-///
-/// @param result the 'result' variable to set.
-///
-/// @param l the first DIE of the comparison operation.
-///
-/// @param r the second DIE of the comparison operation.
-#define SET_RESULT_TO(result, value, l , r)			   \
-  do								   \
-    {								   \
-      result = (value);					   \
-      if (result == COMPARISON_RESULT_DIFFERENT)		   \
-	{							   \
-	  NOTIFY_DIE_COMPARISON_FAILED(l, r);			   \
-	}							   \
-    } while(false)
-
-#define RETURN_IF_COMPARISON_CYCLE_DETECTED	    \
-  do						    \
-    {						    \
-      if (aggregates_being_compared.contains(dies_being_compared))	\
-	{								\
-	  result = COMPARISON_RESULT_CYCLE_DETECTED;			\
-	  aggregates_being_compared.record_redundant_type_die_pair(dies_being_compared); \
-	  ABG_RETURN(result);						\
-	}								\
-    }									\
-  while(false)
-
 /// Get the next member sibling of a given class or union member DIE.
 ///
 /// @param die the DIE to consider.
@@ -11305,966 +9458,6 @@ get_member_child_die(const Dwarf_Die *die, Dwarf_Die *child)
 
   return found_child;
 }
-
-/// This is a sub-routine of return_comparison_result.
-///
-/// Propagate the canonical type of a the right-hand-side DIE to the
-/// lef-hand-side DIE.  This is a optimization that is done when the
-/// two DIEs compare equal.
-///
-/// If the right-hand-side DIE is not canonicalized, the function
-/// performs its canonicalization.
-///
-/// This optimization is performed only if
-/// is_canon_type_to_be_propagated_tag returns true.
-///
-/// @param rdr the current context to consider.
-///
-/// @param l the left-hand-side DIE of the comparison.  It's going to
-/// receive the canonical type of the other DIE.
-///
-/// @param r the right-hand-side DIE of the comparison.  Its canonical
-/// type is propagated to @p l.
-static void
-maybe_propagate_canonical_type(const reader& rdr,
-			       const Dwarf_Die* l,
-			       const Dwarf_Die* r)
-{
-  int l_tag = dwarf_tag(const_cast<Dwarf_Die*>(l)),
-    r_tag = dwarf_tag(const_cast<Dwarf_Die*>(r));
-
-  if (l_tag != r_tag)
-    return;
-
-  if (is_canon_type_to_be_propagated_tag(l_tag))
-    propagate_canonical_type(rdr, l, r);
-}
-
-/// Propagate the canonical type of a the right-hand-side DIE to the
-/// left-hand-side DIE.  This is a optimization that is done when the
-/// two DIEs compare equal.
-///
-/// If the right-hand-side DIE is not canonicalized, the function
-/// performs its canonicalization.
-///
-/// @param rdr the current context to consider.
-///
-/// @param l the left-hand-side DIE of the comparison.  It's going to
-/// receive the canonical type of the other DIE.
-///
-/// @param r the right-hand-side DIE of the comparison.  Its canonical
-/// type is propagated to @p l.
-static void
-propagate_canonical_type(const reader& rdr,
-			 const Dwarf_Die* l, const Dwarf_Die* r)
-{
-  ABG_ASSERT(l && r);
-
-  void* l_addr = l->addr;
-  void* r_addr = r->addr;
-  bool l_has_canonical_die_addr = false;
-  bool r_has_canonical_die_addr= false;
-  void* l_canonical_die_addr = nullptr;
-  void* r_canonical_die_addr = nullptr;
-
-  l_has_canonical_die_addr =
-    (l_canonical_die_addr =
-     rdr.get_canonical_die_addr(l_addr, /*die_as_type=*/true));
-
-  r_has_canonical_die_addr =
-    (r_canonical_die_addr =
-     rdr.get_canonical_die_addr(r_addr, /*die_as_type=*/true));
-
-
-  if (!l_has_canonical_die_addr && r_has_canonical_die_addr)
-    {
-      ABG_ASSERT(r_canonical_die_addr);
-      rdr.set_canonical_die_addr(l, r_canonical_die_addr,
-				 /*die_as_type=*/true);
-      rdr.propagated_types_.insert(std::make_pair(l_addr ,r_addr));
-      rdr.canonical_propagated_count_++;
-    }
-}
-
-/// This function does the book keeping of comparison pairs necessary
-/// to handle
-///
-///     * the detection of cycles during the comparison of aggregate
-///       types, in conjuction with the macro
-///       RETURN_IF_COMPARISON_CYCLE_DETECTED
-///
-///     * the handling of the canonical type propagation optimisation
-///       to speed-up type canonicalization.
-///
-///
-/// Note that this function is essentially a sub-routine of
-/// compare_dies.
-///
-/// @param l the left-hand-side DIE being compared.
-///
-/// @param r the right-hand-side DIE being compared.
-///
-/// @param cur_dies the pair of die addresses of l and r.  This is
-/// redundant as it can been computed from @p l and @p r.  However,
-/// getting it as an argument is an optimization to avoid computing it
-/// over and over again, given how often this function is invoked from
-/// compare_dies.
-///
-/// @param return the result of comparing @p l against @p r.
-///
-/// @param comparison_stack the stack of pair of type DIEs being
-/// compared.
-///
-/// @param do_propagate_canonical_type if true then the function
-/// performs canonical DIEs propagation, meaning that if @p l equals
-/// @p r and if @p r has a canonical type, then the canonical type of
-/// @p l is set to the canonical type of @p r.
-static comparison_result
-return_comparison_result(const Dwarf_Die* l, const Dwarf_Die* r,
-			 const dwarf_addr_pair_type& cur_dies,
-			 comparison_result result,
-			 addr_pairs_stack_type& comparison_stack,
-			 bool do_propagate_canonical_type = true)
-{
-  int l_tag = dwarf_tag(const_cast<Dwarf_Die*>(l));
-
-  if (result == COMPARISON_RESULT_EQUAL)
-    {
-      // The result comparing the two types is "true", basically.  So
-      // let's propagate the canonical type of r onto l, so that we
-      // don't need to compute the canonical type of r.
-      if (do_propagate_canonical_type)
-	{
-	  // Propagate canonical type.
-	  maybe_propagate_canonical_type(comparison_stack.rdr_, l, r);
-
-	  // TODO: do we need to confirm any tentative canonical
-	  // propagation?
-	}
-    }
-  else if (result == COMPARISON_RESULT_CYCLE_DETECTED)
-    {
-      // So upon detection of the comparison cycle, compare_dies
-      // returned early with the comparison result
-      // COMPARISON_RESULT_CYCLE_DETECTED, signalling us that we must
-      // carry on with the comparison of all the OTHER sub-types of
-      // the redundant type.  If they all compare equal, then it means
-      // the redundant type pair compared equal.  Otherwise, it
-      // compared different.
-      //ABG_ASSERT(comparison_stack.contains(l_offset, r_offset));
-      // Let's fall through to let the end of this function set the
-      // result to COMPARISON_RESULT_UNKNOWN;
-    }
-  else if (result == COMPARISON_RESULT_UNKNOWN)
-    {
-      // Here is an introductory comment describing what we are going
-      // to do in this case where the result of the comparison of the
-      // current pair of type is not "false", basically.
-      //
-      // This means that we don't yet know what the result of
-      // comparing these two types is, because one of the sub-types of
-      // the types being compared is "redundant", meaning it appears
-      // more than once in the comparison stack, so if we were to
-      // naively try to carry on with the comparison member-wise, we'd
-      // end up with an endless loop, a.k.a "comparison cycle".
-      //
-      // If the current type pair is redundant then:
-      //
-      //   * This is a redundant type that has just been fully
-      //     compared.  In that case, all the types that depend on
-      //     this redundant type and that have been tentatively
-      //     canonical-type-propagated must see their canonical types
-      //     "confirmed". This means that this type is going to be
-      //     considered as not being redundant anymore, meaning all
-      //     the types that depend on it must be updated as not being
-      //     dependant on it anymore, and the type itsef must be
-      //     removed from the map of redundant types.
-      //
-      //     After the type's canonical-type-propagation is confirmed,
-      //     the result of its comparison must also be changed into
-      //     COMPARISON_RESULT_EQUAL.
-      //
-      // After that, If the current type depends on a redundant type,
-      // then propagate its canonical type AND track it as having its
-      // type being canonical-type-propagated.
-      //
-      // If the current type is not redundant however, then it must be
-      // dependant on a redundant type.  If it's not dependant on a
-      // redundant type, then it must be of those types which
-      // comparisons are not tracked for cycle, probably because they
-      // are not aggregates.  Otherwise, ABORT to understand why.  I
-      // believe this should not happen.  In any case, after that
-      // safety check is passed, we just need to return at this point.
-
-      if (comparison_stack.is_redundant(cur_dies)
-	  && comparison_stack.vect_.back() == cur_dies)
-	{
-	  // We are in the case described above of a redundant type
-	  // that has been fully compared.
-	  maybe_propagate_canonical_type(comparison_stack.rdr_, l, r);
-	  comparison_stack.confirm_canonical_propagated_type(cur_dies);
-
-	  result = COMPARISON_RESULT_EQUAL;
-	}
-      else if (is_canon_type_to_be_propagated_tag(l_tag)
-	       && comparison_stack.vect_.back() == cur_dies)
-	{
-	  // The current type is not redundant.  So, as described in
-	  // the introductory comment above, it must be dependant on a
-	  // redundant type.
-	  ABG_ASSERT(comparison_stack.depends_on_redundant_types(cur_dies));
-	  maybe_propagate_canonical_type(comparison_stack.rdr_, l, r);
-	  // Then pass through.
-	}
-    }
-  else if (result == COMPARISON_RESULT_DIFFERENT)
-    {
-      // Here is an introductory comment describing what we are going
-      // to do in this case where the result of the comparison of the
-      // current pair of type is "false", basically.
-      //
-      // If the type pair {l,r} is redundant then cancel the
-      // canonical-type-propagation of all the dependant pairs that
-      // depends on this redundant {l, r}.  This means walk the types
-      // that depends on {l, r} and cancel their
-      // canonical-propagate-type, that means remove their canonical
-      // types and mark them as not being canonically-propagated.
-      // Also, erase their cached comparison results that was likely
-      // set to COMPARISON_RESULT_UNKNOWN.
-      //
-      // Also, update the cached result for this pair, that was likely
-      // to be COMPARISON_RESULT_UNKNOWN.
-      if (comparison_stack.is_redundant(cur_dies)
-	  && comparison_stack.vect_.back() == cur_dies)
-	comparison_stack.cancel_canonical_propagated_type(cur_dies);
-    }
-  else
-    {
-      // We should never reach here.
-      ABG_ASSERT_NOT_REACHED;
-    }
-
-  if (result == COMPARISON_RESULT_CYCLE_DETECTED)
-    result = COMPARISON_RESULT_UNKNOWN;
-  else if (is_canon_type_to_be_propagated_tag(l_tag)
-	   && !comparison_stack.vect_.empty()
-	   && comparison_stack.vect_.back() == cur_dies)
-    //Finally pop the pair types being compared from comparison_stack
-    //iff {l,r} is on the top of the stack.  If it's not, then it means
-    //we are looking at a type that was detected as a being redundant
-    //and thus hasn't been pushed to the stack yet gain.
-    comparison_stack.erase(cur_dies);
-
-  maybe_cache_type_comparison_result(comparison_stack.rdr_,
-				     l_tag, cur_dies, result);
-
-  return result;
-}
-
-/// Compare two DIEs emitted by a C compiler.
-///
-/// @param rdr the DWARF reader used to load the DWARF information.
-///
-/// @param l the left-hand-side argument of this comparison operator.
-///
-/// @param r the righ-hand-side argument of this comparison operator.
-///
-/// @param aggregates_being_compared this holds the names of the set
-/// of aggregates being compared.  It's used by the comparison
-/// function to avoid recursing infinitely when faced with types
-/// referencing themselves through pointers or references.  By
-/// default, just pass an empty instance of @ref istring_set_type to
-/// it.
-///
-/// @param update_canonical_dies_on_the_fly if true, when two
-/// sub-types compare equal (during the comparison of @p l and @p r)
-/// update their canonical type.  That way, two types of the same name
-/// are structurally compared to each other only once.  So the
-/// non-linear structural comparison of two types of the same name
-/// only happen once.
-///
-/// @return COMPARISON_RESULT_EQUAL iff @p l equals @p r.
-static comparison_result
-compare_dies(const reader& rdr,
-	     const Dwarf_Die *l, const Dwarf_Die *r,
-	     addr_pairs_stack_type& aggregates_being_compared,
-	     bool update_canonical_dies_on_the_fly)
-{
-  ABG_ASSERT(l);
-  ABG_ASSERT(r);
-
-  dwarf_addr_pair_type dies_being_compared(l->addr, r->addr);
-
-  int l_tag = dwarf_tag(const_cast<Dwarf_Die*>(l)),
-    r_tag = dwarf_tag(const_cast<Dwarf_Die*>(r));
-
-  if (l_tag != r_tag)
-    ABG_RETURN_FALSE;
-
-  if (l->addr == r->addr)
-    return COMPARISON_RESULT_EQUAL;
-
-  if (rdr.leverage_dwarf_factorization()
-      && rdr.get_die_source(l) == ALT_DEBUG_INFO_DIE_SOURCE
-      && rdr.get_die_source(r) == ALT_DEBUG_INFO_DIE_SOURCE)
-    if (l->addr != r->addr)
-      return COMPARISON_RESULT_DIFFERENT;
-
-  comparison_result result = COMPARISON_RESULT_EQUAL;
-  if (maybe_get_cached_type_comparison_result(rdr, l_tag,
-					      dies_being_compared,
-					      result))
-    return result;
-
-  void *l_canonical_die_addr = nullptr, *r_canonical_die_addr = nullptr;
-  bool l_has_canonical_die_addr = false, r_has_canonical_die_addr = false;
-
-  // If 'l' and 'r' already have canonical DIEs, then just compare the
-  // addresses of their canonical DIEs.
-  if (is_type_die_to_be_canonicalized(l) && is_type_die_to_be_canonicalized(r))
-    {
-      bool canonical_compare_result = false;
-      if (try_canonical_die_comparison(rdr, l->addr, r->addr,
-				       l_has_canonical_die_addr,
-				       r_has_canonical_die_addr,
-				       l_canonical_die_addr,
-				       r_canonical_die_addr,
-				       canonical_compare_result))
-	{
-	  comparison_result result;
-	  SET_RESULT_TO(result,
-			(canonical_compare_result
-			 ? COMPARISON_RESULT_EQUAL
-			 : COMPARISON_RESULT_DIFFERENT),
-			l, r);
-	  return result;
-	}
-    }
-
-  switch (l_tag)
-    {
-    case DW_TAG_base_type:
-    case DW_TAG_string_type:
-    case DW_TAG_unspecified_type:
-      if (!compare_as_decl_and_type_dies(rdr, l, r))
-	SET_RESULT_TO_FALSE(result, l, r);
-      break;
-
-    case DW_TAG_typedef:
-    case DW_TAG_pointer_type:
-    case DW_TAG_reference_type:
-    case DW_TAG_rvalue_reference_type:
-    case DW_TAG_const_type:
-    case DW_TAG_volatile_type:
-    case DW_TAG_restrict_type:
-      {
-	if (!compare_as_type_dies(rdr, l, r))
-	  {
-	    SET_RESULT_TO_FALSE(result, l, r);
-	    break;
-	  }
-
-	bool from_the_same_tu = false;
-	if (!pointer_or_qual_die_of_anonymous_class_type(l)
-	    && compare_dies_cu_decl_file(l, r, from_the_same_tu)
-	    && from_the_same_tu)
-	  {
-	    // These two typedefs, pointer, reference, or qualified
-	    // types have the same name and are defined in the same TU.
-	    // They thus ought to be the same.
-	    //
-	    // Note that pointers, reference or qualified types to
-	    // anonymous types are not taking into account here because
-	    // those always need to be structurally compared.
-	    SET_RESULT_TO_FALSE(result, l, r);
-	    break;
-	  }
-      }
-
-      {
-	// No fancy optimization in this case.  We need to
-	// structurally compare the two DIEs.
-	Dwarf_Die lu_type_die, ru_type_die;
-	bool lu_is_void, ru_is_void;
-
-	lu_is_void = !die_die_attribute(l, DW_AT_type, lu_type_die);
-	ru_is_void = !die_die_attribute(r, DW_AT_type, ru_type_die);
-
-	if (lu_is_void && ru_is_void)
-	  result = COMPARISON_RESULT_EQUAL;
-	else if (lu_is_void != ru_is_void)
-	  SET_RESULT_TO_FALSE(result, l, r);
-	else
-	  result = compare_dies(rdr, &lu_type_die, &ru_type_die,
-				aggregates_being_compared,
-				update_canonical_dies_on_the_fly);
-      }
-      break;
-
-    case DW_TAG_enumeration_type:
-      if (!compare_as_decl_and_type_dies(rdr, l, r))
-	SET_RESULT_TO_FALSE(result, l, r);
-      else
-	{
-	  // Walk the enumerators.
-	  Dwarf_Die l_enumtor, r_enumtor;
-	  bool found_l_enumtor = true, found_r_enumtor = true;
-
-	  if (!at_least_one_decl_only_among_odr_relevant_dies(rdr, l, r))
-	    for (found_l_enumtor = dwarf_child(const_cast<Dwarf_Die*>(l),
-					       &l_enumtor) == 0,
-		   found_r_enumtor = dwarf_child(const_cast<Dwarf_Die*>(r),
-						 &r_enumtor) == 0;
-		 found_l_enumtor && found_r_enumtor;
-		 found_l_enumtor = dwarf_siblingof(&l_enumtor, &l_enumtor) == 0,
-		   found_r_enumtor = dwarf_siblingof(&r_enumtor, &r_enumtor) == 0)
-	      {
-		int l_tag = dwarf_tag(&l_enumtor), r_tag = dwarf_tag(&r_enumtor);
-		if ( l_tag != r_tag)
-		  {
-		    SET_RESULT_TO_FALSE(result, l, r);
-		    break;
-		  }
-
-		if (l_tag != DW_TAG_enumerator)
-		  continue;
-
-		uint64_t l_val = 0, r_val = 0;
-		die_unsigned_constant_attribute(&l_enumtor,
-						DW_AT_const_value,
-						l_val);
-		die_unsigned_constant_attribute(&r_enumtor,
-						DW_AT_const_value,
-						r_val);
-		if (l_val != r_val)
-		  {
-		    SET_RESULT_TO_FALSE(result, l, r);
-		    break;
-		  }
-	      }
-	  if (found_l_enumtor != found_r_enumtor )
-	    SET_RESULT_TO_FALSE(result, l, r);
-	}
-      break;
-
-    case DW_TAG_structure_type:
-    case DW_TAG_union_type:
-    case DW_TAG_class_type:
-      {
-	RETURN_IF_COMPARISON_CYCLE_DETECTED;
-
-	rdr.compare_count_++;
-
-	if (!compare_as_decl_and_type_dies(rdr, l, r))
-	  SET_RESULT_TO_FALSE(result, l, r);
-	else if (rdr.options().assume_odr_for_cplusplus
-		 && rdr.odr_is_relevant(l)
-		 && rdr.odr_is_relevant(r)
-		 && !die_is_anonymous(l)
-		 && !die_is_anonymous(r))
-	  result = COMPARISON_RESULT_EQUAL;
-	else
-	  {
-	    aggregates_being_compared.add(dies_being_compared);
-
-	    Dwarf_Die l_member, r_member;
-	    bool found_l_member = true, found_r_member = true;
-
-	    if (!at_least_one_decl_only_among_odr_relevant_dies(rdr, l, r))
-	      for (found_l_member = get_member_child_die(l, &l_member),
-		     found_r_member = get_member_child_die(r, &r_member);
-		   found_l_member && found_r_member;
-		   found_l_member = get_next_member_sibling_die(&l_member,
-								&l_member),
-		     found_r_member = get_next_member_sibling_die(&r_member,
-								  &r_member))
-		{
-		  int l_tag = dwarf_tag(&l_member),
-		    r_tag = dwarf_tag(&r_member);
-
-		  if (l_tag != r_tag)
-		    {
-		      SET_RESULT_TO_FALSE(result, l, r);
-		      break;
-		    }
-
-		  ABG_ASSERT(l_tag == DW_TAG_member
-			     || l_tag == DW_TAG_variable
-			     || l_tag == DW_TAG_inheritance
-			     || l_tag == DW_TAG_subprogram);
-
-		  comparison_result local_result =
-		    compare_dies(rdr, &l_member, &r_member,
-				 aggregates_being_compared,
-				 update_canonical_dies_on_the_fly);
-
-		  if (local_result == COMPARISON_RESULT_UNKNOWN)
-		    // Note that if the result of comparing any
-		    // sub-type is COMPARISON_RESULT_EQUAL, just
-		    // because we have at least one sub-type's
-		    // comparison being COMPARISON_RESULT_UNKNOWN
-		    // means that the comparison of this type will
-		    // return COMPARISON_RESULT_UNKNOWN to show
-		    // callers that this type (and all the types that
-		    // depend on it) depends on a redundant type
-		    result = local_result;
-
-		  if (local_result == COMPARISON_RESULT_DIFFERENT)
-		    {
-		      SET_RESULT_TO_FALSE(result, l, r);
-		      break;
-		    }
-		}
-	    if (found_l_member != found_r_member)
-	      {
-		SET_RESULT_TO_FALSE(result, l, r);
-		break;
-	      }
-	  }
-      }
-      break;
-
-    case DW_TAG_array_type:
-      {
-	RETURN_IF_COMPARISON_CYCLE_DETECTED;
-
-	aggregates_being_compared.add(dies_being_compared);
-
-	rdr.compare_count_++;
-
-	Dwarf_Die l_child, r_child;
-	bool found_l_child, found_r_child;
-	for (found_l_child = dwarf_child(const_cast<Dwarf_Die*>(l),
-					 &l_child) == 0,
-	       found_r_child = dwarf_child(const_cast<Dwarf_Die*>(r),
-					   &r_child) == 0;
-	     found_l_child && found_r_child;
-	     found_l_child = dwarf_siblingof(&l_child, &l_child) == 0,
-	       found_r_child = dwarf_siblingof(&r_child, &r_child) == 0)
-	  {
-	    int l_child_tag = dwarf_tag(&l_child),
-	      r_child_tag = dwarf_tag(&r_child);
-	    if (l_child_tag == DW_TAG_subrange_type
-		|| r_child_tag == DW_TAG_subrange_type)
-	      {
-		result = compare_dies(rdr, &l_child, &r_child,
-				      aggregates_being_compared,
-				      update_canonical_dies_on_the_fly);
-		if (!result)
-		  {
-		    SET_RESULT_TO_FALSE(result, l, r);
-		    break;
-		  }
-	      }
-	  }
-	if (found_l_child != found_r_child)
-	  SET_RESULT_TO_FALSE(result, l, r);
-	// Compare the types of the elements of the array.
-	Dwarf_Die ltype_die, rtype_die;
-	bool found_ltype = die_die_attribute(l, DW_AT_type, ltype_die);
-	bool found_rtype = die_die_attribute(r, DW_AT_type, rtype_die);
-	ABG_ASSERT(found_ltype && found_rtype);
-
-	result = compare_dies(rdr, &ltype_die, &rtype_die,
-			      aggregates_being_compared,
-			      update_canonical_dies_on_the_fly);
-	  if (!result)
-	    ABG_RETURN_FALSE;
-      }
-      break;
-
-    case DW_TAG_subrange_type:
-      {
-	uint64_t l_lower_bound = 0, r_lower_bound = 0,
-	  l_upper_bound = 0, r_upper_bound = 0;
-	bool l_lower_bound_set = false, r_lower_bound_set = false,
-	  l_upper_bound_set = false, r_upper_bound_set = false;
-
-	l_lower_bound_set =
-	  die_unsigned_constant_attribute(l, DW_AT_lower_bound, l_lower_bound);
-	r_lower_bound_set =
-	  die_unsigned_constant_attribute(r, DW_AT_lower_bound, r_lower_bound);
-
-	if (!die_unsigned_constant_attribute(l, DW_AT_upper_bound,
-					     l_upper_bound))
-	  {
-	    uint64_t l_count = 0;
-	    if (die_unsigned_constant_attribute(l, DW_AT_count, l_count))
-	      {
-		l_upper_bound = l_lower_bound + l_count;
-		l_upper_bound_set = true;
-		if (l_upper_bound)
-		  --l_upper_bound;
-	      }
-	  }
-	else
-	  l_upper_bound_set = true;
-
-	if (!die_unsigned_constant_attribute(r, DW_AT_upper_bound,
-					     r_upper_bound))
-	  {
-	    uint64_t r_count = 0;
-	    if (die_unsigned_constant_attribute(l, DW_AT_count, r_count))
-	      {
-		r_upper_bound = r_lower_bound + r_count;
-		r_upper_bound_set = true;
-		if (r_upper_bound)
-		  --r_upper_bound;
-	      }
-	  }
-	else
-	  r_upper_bound_set = true;
-
-	if ((l_lower_bound_set != r_lower_bound_set)
-	    || (l_upper_bound_set != r_upper_bound_set)
-	    || (l_lower_bound != r_lower_bound)
-	    || (l_upper_bound != r_upper_bound))
-	  SET_RESULT_TO_FALSE(result, l, r);
-      }
-      break;
-
-    case DW_TAG_subroutine_type:
-    case DW_TAG_subprogram:
-      {
-	RETURN_IF_COMPARISON_CYCLE_DETECTED;
-
-	aggregates_being_compared.add(dies_being_compared);
-
-	rdr.compare_count_++;
-
-	if (l_tag == DW_TAG_subprogram
-	    && !fn_die_equal_by_linkage_name(l, r))
-	  {
-	    SET_RESULT_TO_FALSE(result, l, r);
-	    break;
-	  }
-	else if (l_tag == DW_TAG_subprogram
-		 && die_is_in_c(l) && die_is_in_c(r))
-	  {
-	    result = COMPARISON_RESULT_EQUAL;
-	    break;
-	  }
-	else if (!die_is_in_c(l) && !die_is_in_c(r))
-	  {
-	    // In C, we cannot have two different functions with the
-	    // same linkage name in a given binary.  But here we are
-	    // looking at DIEs that don't originate from C.  So we
-	    // need to compare return types and parameter types.
-	    Dwarf_Die l_return_type, r_return_type;
-	    bool l_return_type_is_void = !die_die_attribute(l, DW_AT_type,
-							    l_return_type);
-	    bool r_return_type_is_void = !die_die_attribute(r, DW_AT_type,
-							    r_return_type);
-	    if (l_return_type_is_void != r_return_type_is_void
-		|| (!l_return_type_is_void
-		    && !compare_dies(rdr,
-				     &l_return_type, &r_return_type,
-				     aggregates_being_compared,
-				     update_canonical_dies_on_the_fly)))
-	      SET_RESULT_TO_FALSE(result, l, r);
-	    else
-	      {
-		Dwarf_Die l_child, r_child;
-		bool found_l_child, found_r_child;
-		for (found_l_child = dwarf_child(const_cast<Dwarf_Die*>(l),
-						 &l_child) == 0,
-		       found_r_child = dwarf_child(const_cast<Dwarf_Die*>(r),
-						   &r_child) == 0;
-		     found_l_child && found_r_child;
-		     found_l_child = dwarf_siblingof(&l_child,
-						     &l_child) == 0,
-		       found_r_child = dwarf_siblingof(&r_child,
-						       &r_child)==0)
-		  {
-		    int l_child_tag = dwarf_tag(&l_child);
-		    int r_child_tag = dwarf_tag(&r_child);
-		    comparison_result local_result =
-		      COMPARISON_RESULT_EQUAL;
-		    if (l_child_tag != r_child_tag)
-		      local_result = COMPARISON_RESULT_DIFFERENT;
-		    if (l_child_tag == DW_TAG_formal_parameter)
-		      local_result =
-			compare_dies(rdr, &l_child, &r_child,
-				     aggregates_being_compared,
-				     update_canonical_dies_on_the_fly);
-		    if (local_result == COMPARISON_RESULT_DIFFERENT)
-		      {
-			result = local_result;
-			SET_RESULT_TO_FALSE(result, l, r);
-			break;
-		      }
-		    if (local_result == COMPARISON_RESULT_UNKNOWN)
-		      // Note that if the result of comparing any
-		      // sub-type is COMPARISON_RESULT_EQUAL, just
-		      // because we have at least one sub-type's
-		      // comparison being COMPARISON_RESULT_UNKNOWN
-		      // means that the comparison of this type will
-		      // return COMPARISON_RESULT_UNKNOWN to show
-		      // callers that this type (and all the types
-		      // that depend on it) depends on a redundant
-		      // type and so, can't be
-		      // canonical-type-propagated.
-		      result = local_result;
-		  }
-		if (found_l_child != found_r_child)
-		  {
-		    SET_RESULT_TO_FALSE(result, l, r);
-		    break;
-		  }
-	      }
-	  }
-      }
-      break;
-
-    case DW_TAG_formal_parameter:
-      {
-	Dwarf_Die l_type, r_type;
-	bool l_type_is_void = !die_die_attribute(l, DW_AT_type, l_type);
-	bool r_type_is_void = !die_die_attribute(r, DW_AT_type, r_type);
-	if (l_type_is_void != r_type_is_void)
-	  SET_RESULT_TO_FALSE(result, l, r);
-	else if (!l_type_is_void)
-	  {
-	    comparison_result local_result =
-	      compare_dies(rdr, &l_type, &r_type,
-			   aggregates_being_compared,
-			   update_canonical_dies_on_the_fly);
-	    SET_RESULT_TO(result, local_result, l, r);
-	  }
-      }
-      break;
-
-    case DW_TAG_variable:
-    case DW_TAG_member:
-      if (compare_as_decl_dies(l, r))
-	{
-	  // Compare the offsets of the data members
-	  if (l_tag == DW_TAG_member)
-	    {
-	      int64_t l_offset_in_bits = 0, r_offset_in_bits = 0;
-	      die_member_offset(rdr, l, l_offset_in_bits);
-	      die_member_offset(rdr, r, r_offset_in_bits);
-	      if (l_offset_in_bits != r_offset_in_bits)
-		SET_RESULT_TO_FALSE(result, l, r);
-	    }
-	  if (result)
-	    {
-	      // Compare the types of the data members or variables.
-	      Dwarf_Die l_type, r_type;
-	      ABG_ASSERT(die_die_attribute(l, DW_AT_type, l_type));
-	      ABG_ASSERT(die_die_attribute(r, DW_AT_type, r_type));
-	      comparison_result local_result =
-		compare_dies(rdr, &l_type, &r_type,
-			     aggregates_being_compared,
-			     update_canonical_dies_on_the_fly);
-	      SET_RESULT_TO(result, local_result, l, r);
-	    }
-	}
-      else
-	SET_RESULT_TO_FALSE(result, l, r);
-      break;
-
-    case DW_TAG_inheritance:
-      {
-	Dwarf_Die l_type, r_type;
-	ABG_ASSERT(die_die_attribute(l, DW_AT_type, l_type));
-	ABG_ASSERT(die_die_attribute(r, DW_AT_type, r_type));
-	result = compare_dies(rdr, &l_type, &r_type,
-			       aggregates_being_compared,
-			       update_canonical_dies_on_the_fly);
-	if (!result)
-	  ABG_RETURN(COMPARISON_RESULT_DIFFERENT);
-
-	uint64_t l_a = 0, r_a = 0;
-	die_unsigned_constant_attribute(l, DW_AT_accessibility, l_a);
-	die_unsigned_constant_attribute(r, DW_AT_accessibility, r_a);
-	if (l_a != r_a)
-	  ABG_RETURN(COMPARISON_RESULT_DIFFERENT);
-
-	die_unsigned_constant_attribute(l, DW_AT_virtuality, l_a);
-	die_unsigned_constant_attribute(r, DW_AT_virtuality, r_a);
-	if (l_a != r_a)
-	  ABG_RETURN(COMPARISON_RESULT_DIFFERENT);
-
-	int64_t l_offset_in_bits = 0, r_offset_in_bits = 0;
-	die_member_offset(rdr, l, l_offset_in_bits);
-	die_member_offset(rdr, r, r_offset_in_bits);
-	if (l_offset_in_bits != r_offset_in_bits)
-	  ABG_RETURN(COMPARISON_RESULT_DIFFERENT);
-      }
-      break;
-
-    case DW_TAG_ptr_to_member_type:
-      {
-	bool comp_result = false;
-	if (compare_dies_string_attribute_value(l, r, DW_AT_name, comp_result))
-	  if (!comp_result)
-	    ABG_RETURN(COMPARISON_RESULT_DIFFERENT);
-
-	Dwarf_Die l_type, r_type;
-	ABG_ASSERT(die_die_attribute(l, DW_AT_type, l_type));
-	ABG_ASSERT(die_die_attribute(r, DW_AT_type, r_type));
-	result = compare_dies(rdr, &l_type, &r_type,
-			      aggregates_being_compared,
-			      update_canonical_dies_on_the_fly);
-	if (!result)
-	  ABG_RETURN(result);
-
-	ABG_ASSERT(die_die_attribute(l, DW_AT_containing_type, l_type));
-	ABG_ASSERT(die_die_attribute(r, DW_AT_containing_type, r_type));
-	result = compare_dies(rdr, &l_type, &r_type,
-			      aggregates_being_compared,
-			      update_canonical_dies_on_the_fly);
-	if (!result)
-	  ABG_RETURN(result);
-      }
-      break;
-
-    case DW_TAG_enumerator:
-    case DW_TAG_packed_type:
-    case DW_TAG_set_type:
-    case DW_TAG_file_type:
-    case DW_TAG_thrown_type:
-    case DW_TAG_interface_type:
-    case DW_TAG_shared_type:
-    case DW_TAG_compile_unit:
-    case DW_TAG_namespace:
-    case DW_TAG_module:
-    case DW_TAG_constant:
-    case DW_TAG_partial_unit:
-    case DW_TAG_imported_unit:
-    case DW_TAG_dwarf_procedure:
-    case DW_TAG_imported_declaration:
-    case DW_TAG_entry_point:
-    case DW_TAG_label:
-    case DW_TAG_lexical_block:
-    case DW_TAG_unspecified_parameters:
-    case DW_TAG_variant:
-    case DW_TAG_common_block:
-    case DW_TAG_common_inclusion:
-    case DW_TAG_inlined_subroutine:
-    case DW_TAG_with_stmt:
-    case DW_TAG_access_declaration:
-    case DW_TAG_catch_block:
-    case DW_TAG_friend:
-    case DW_TAG_namelist:
-    case DW_TAG_namelist_item:
-    case DW_TAG_template_type_parameter:
-    case DW_TAG_template_value_parameter:
-    case DW_TAG_try_block:
-    case DW_TAG_variant_part:
-    case DW_TAG_imported_module:
-    case DW_TAG_condition:
-    case DW_TAG_type_unit:
-    case DW_TAG_template_alias:
-    case DW_TAG_lo_user:
-    case DW_TAG_MIPS_loop:
-    case DW_TAG_format_label:
-    case DW_TAG_function_template:
-    case DW_TAG_class_template:
-    case DW_TAG_GNU_BINCL:
-    case DW_TAG_GNU_EINCL:
-    case DW_TAG_GNU_template_template_param:
-    case DW_TAG_GNU_template_parameter_pack:
-    case DW_TAG_GNU_formal_parameter_pack:
-    case DW_TAG_GNU_call_site:
-    case DW_TAG_GNU_call_site_parameter:
-    case DW_TAG_hi_user:
-#ifdef WITH_DEBUG_TYPE_CANONICALIZATION
-      if (rdr.debug_die_canonicalization_is_on_)
-	ABG_ASSERT_NOT_REACHED;
-#endif
-      ABG_ASSERT_NOT_REACHED;
-      break;
-    }
-
-  ABG_RETURN(result);
-}
-
-/// Compare two DIEs emitted by a C compiler.
-///
-/// @param rdr the DWARF reader used to load the DWARF information.
-///
-/// @param l the left-hand-side argument of this comparison operator.
-///
-/// @param r the righ-hand-side argument of this comparison operator.
-///
-/// @param update_canonical_dies_on_the_fly if yes, then this function
-/// updates the canonical DIEs of sub-type DIEs of 'l' and 'r', while
-/// comparing l and r.  This helps in making so that sub-type DIEs of
-/// 'l' and 'r' are compared structurally only once.  This is how we
-/// turn this exponential comparison problem into a problem that is a
-/// closer to a linear one.
-///
-/// @return COMPARISON_RESULT_EQUAL iff @p l equals @p r.
-static comparison_result
-compare_dies(const reader& rdr,
-	     const Dwarf_Die *l,
-	     const Dwarf_Die *r,
-	     bool update_canonical_dies_on_the_fly)
-{
-  addr_pairs_stack_type aggregates_being_compared(rdr);
-  return compare_dies(rdr, l, r, aggregates_being_compared,
-		      update_canonical_dies_on_the_fly);
-}
-
-/// Compare two DIEs for the purpose of canonicalization.
-///
-/// This is a sub-routine of reader::get_canonical_die.
-///
-/// When DIE canonicalization debugging is on, this function performs
-/// both structural and canonical comparison.  It expects that both
-/// comparison yield the same result.
-///
-/// @param rdr the DWARF reader.
-///
-/// @param l the left-hand-side comparison operand DIE.
-///
-/// @param r the right-hand-side comparison operand DIE.
-///
-/// @param update_canonical_dies_on_the_fly if true, then some
-/// aggregate DIEs will see their canonical types propagated.
-///
-/// @return true iff @p l equals @p r.
-static bool
-compare_dies_during_canonicalization(reader& rdr,
-				     const Dwarf_Die *l,
-				     const Dwarf_Die *r,
-				     bool update_canonical_dies_on_the_fly)
-{
-#ifdef WITH_DEBUG_TYPE_CANONICALIZATION
-  if (rdr.debug_die_canonicalization_is_on_)
-    {
-      bool canonical_equality = false, structural_equality = false;
-      rdr.use_canonical_die_comparison_ = false;
-      structural_equality = compare_dies(rdr, l, r,
-					 /*update_canonical_dies_on_the_fly=*/false);
-      rdr.use_canonical_die_comparison_ = true;
-      canonical_equality = compare_dies(rdr, l, r,
-					update_canonical_dies_on_the_fly);
-      if (canonical_equality != structural_equality)
-	{
-	  std::cerr << "structural & canonical equality different for DIEs: "
-		    << std::hex
-		    << "l: " << dwarf_dieoffset(const_cast<Dwarf_Die*>(l))
-		    << ", r: " << dwarf_dieoffset(const_cast<Dwarf_Die*>(r))
-		    << std::dec
-		    << ", repr: '"
-		    << rdr.get_die_pretty_type_representation(l, 0)
-		    << "'"
-		    << std::endl;
-	  ABG_ASSERT_NOT_REACHED;
-	}
-      return structural_equality;
-    }
-#endif
-  return compare_dies(rdr, l, r,
-		      update_canonical_dies_on_the_fly);
-}
-
-// ----------------------------------
-// </die comparison engine>
-// ---------------------------------
 
 /// Get the point where a DW_AT_import DIE is used to import a given
 /// (unit) DIE, between two DIEs.
@@ -13233,7 +10426,7 @@ build_namespace_decl_and_add_to_ir(reader&	rdr,
 
   result.reset(new namespace_decl(rdr.env(), name, loc));
   add_decl_to_scope(result, scope.get());
-  rdr.associate_die_to_decl(die, result, where_addr);
+  rdr.associate_die_to_decl(die, result);
 
   Dwarf_Die child;
   if (dwarf_child(die, &child) != 0)
@@ -13265,7 +10458,7 @@ build_namespace_decl_and_add_to_ir(reader&	rdr,
 ///
 /// @return the resulting decl_base_sptr.
 static type_decl_sptr
-build_type_decl(reader& rdr, Dwarf_Die* die, void* where_addr)
+build_type_decl(reader& rdr, Dwarf_Die* die)
 {
   type_decl_sptr result;
 
@@ -13313,7 +10506,7 @@ build_type_decl(reader& rdr, Dwarf_Die* die, void* where_addr)
   if (!result)
     result.reset(new type_decl(rdr.env(), type_name, bit_size,
 			       /*alignment=*/0, loc, linkage_name));
-  rdr.associate_die_to_type(die, result, where_addr);
+  rdr.associate_die_to_type(die, result);
   return result;
 }
 
@@ -13365,7 +10558,6 @@ build_enum_underlying_type(reader& rdr,
 static enum_type_decl_sptr
 build_enum_type(reader&	rdr,
 		Dwarf_Die*	die,
-		void*		where_addr,
 		bool		is_declaration_only)
 {
   enum_type_decl_sptr result;
@@ -13419,7 +10611,7 @@ build_enum_type(reader&	rdr,
 
       if (result)
 	{
-	  rdr.associate_die_to_type(die, result, where_addr);
+	  rdr.associate_die_to_type(die, result);
 	  return result;
 	}
     }
@@ -13466,7 +10658,7 @@ build_enum_type(reader&	rdr,
   result->set_is_anonymous(is_anonymous);
   result->set_is_declaration_only(is_declaration_only);
   result->set_is_artificial(is_artificial);
-  rdr.associate_die_to_type(die, result, where_addr);
+  rdr.associate_die_to_type(die, result);
 
   return result;
 }
@@ -13832,7 +11024,7 @@ add_or_update_class_type(reader&	 rdr,
 		  || (!result->get_is_declaration_only()
 		      && is_declaration_only)))
 	    {
-	      rdr.associate_die_to_type(die, result, where);
+	      rdr.associate_die_to_type(die, result);
 	      return result;
 	    }
 	  else
@@ -13914,7 +11106,7 @@ add_or_update_class_type(reader&	 rdr,
 
   result->set_is_artificial(is_artificial);
 
-  rdr.associate_die_to_type(die, result, where);
+  rdr.associate_die_to_type(die, result);
 
   if (!has_child)
     // TODO: set the access specifier for the declaration-only class
@@ -14110,8 +11302,7 @@ add_or_update_class_type(reader&	 rdr,
 	      result->add_data_member(dm, access, is_laid_out,
 				      is_static, offset_in_bits);
 	      ABG_ASSERT(has_scope(dm));
-	      rdr.associate_die_to_decl(&child, dm, where,
-					/*associate_by_repr=*/false);
+	      rdr.associate_die_to_decl(&child, dm);
 	    }
 	  // Handle member functions;
 	  else if (tag == DW_TAG_subprogram)
@@ -14121,8 +11312,7 @@ add_or_update_class_type(reader&	 rdr,
 					      called_from_public_decl,
 					      where);
 	      if (function_decl_sptr f = is_function_decl(r))
-		rdr.associate_die_to_decl(&child, f, where,
-					  /*associate_by_repr=*/true);
+		rdr.associate_die_to_decl(&child, f);
 	    }
 	  // Handle member types
 	  else if (die_is_type(&child))
@@ -14147,9 +11337,7 @@ add_or_update_class_type(reader&	 rdr,
 							  where);
 		  if (type_base_sptr member_t =
 		      result->find_member_type(anonymous_type_name))
-		    rdr.associate_die_to_decl(&child, is_decl(member_t),
-					      where,
-					      /*Associate_by_repr=*/false);
+		    rdr.associate_die_to_decl(&child, is_decl(member_t));
 		  else
 		    {
 		      type_base_sptr t =
@@ -14271,7 +11459,7 @@ add_or_update_union_type(reader&		rdr,
 
 	  if (result)
 	    {
-	      rdr.associate_die_to_type(die, result, where_addr);
+	      rdr.associate_die_to_type(die, result);
 	      return result;
 	    }
 	}
@@ -14315,7 +11503,7 @@ add_or_update_union_type(reader&		rdr,
 
   result->set_is_artificial(is_artificial);
 
-  rdr.associate_die_to_type(die, result, where_addr);
+  rdr.associate_die_to_type(die, result);
 
   Dwarf_Die child;
   bool has_child = (dwarf_child(die, &child) == 0);
@@ -14383,8 +11571,7 @@ add_or_update_union_type(reader&		rdr,
 				      /*is_static=*/false,
 				      offset_in_bits);
 	      ABG_ASSERT(has_scope(dm));
-	      rdr.associate_die_to_decl(&child, dm, where_addr,
-					 /*associate_by_repr=*/false);
+	      rdr.associate_die_to_decl(&child, dm);
 	    }
 	  // Handle member functions;
 	  else if (tag == DW_TAG_subprogram)
@@ -14403,8 +11590,7 @@ add_or_update_union_type(reader&		rdr,
 	      if (!rdr.is_wip_function_type_die(&child))
 		finish_member_function_reading(&child, f, result, rdr);
 
-	      rdr.associate_die_to_decl(&child, f, where_addr,
-					 /*associate_by_repr=*/false);
+	      rdr.associate_die_to_decl(&child, f);
 	    }
 	  // Handle member types
 	  else if (die_is_type(&child))
@@ -14413,9 +11599,7 @@ add_or_update_union_type(reader&		rdr,
 					       /*qualified_name=*/false,
 					       where_addr);
 	      if (type_base_sptr member_t = result->find_member_type(type_name))
-		rdr.associate_die_to_decl(&child, is_decl(member_t),
-					  where_addr,
-					  /*associate_by_repr=*/false);
+		rdr.associate_die_to_decl(&child, is_decl(member_t));
 	      else
 		decl_base_sptr td =
 		  is_decl(build_ir_node_from_die(rdr, &child, result.get(),
@@ -14496,7 +11680,7 @@ build_qualified_type(reader&	rdr,
   if (type_base_sptr t = rdr.lookup_type_from_die(die))
     {
       result = t;
-      rdr.associate_die_to_type(die, result, where_addr);
+      rdr.associate_die_to_type(die, result);
       return result;
     }
 
@@ -14516,7 +11700,7 @@ build_qualified_type(reader&	rdr,
   if (!result)
     result.reset(new qualified_type_def(utype, qual, location()));
 
-  rdr.associate_die_to_type(die, result, where_addr);
+  rdr.associate_die_to_type(die, result);
 
   return result;
 }
@@ -14738,7 +11922,7 @@ build_pointer_type_def(reader&	rdr,
   if (is_void_pointer_type(result))
     result = is_pointer_type(build_ir_node_for_void_pointer_type(rdr));
 
-  rdr.associate_die_to_type(die, result, where_addr);
+  rdr.associate_die_to_type(die, result);
   return result;
 }
 
@@ -14817,7 +12001,7 @@ build_reference_type(reader&	rdr,
   if (corpus_sptr corp = rdr.corpus())
     if (reference_type_def_sptr t = lookup_reference_type(*result, *corp))
       result = t;
-  rdr.associate_die_to_type(die, result, where_addr);
+  rdr.associate_die_to_type(die, result);
   return result;
 }
 
@@ -14892,7 +12076,7 @@ build_ptr_to_mbr_type(reader&		rdr,
 				   /*alignment=*/0,
 				   location()));
 
-  rdr.associate_die_to_type(die, result, where_addr);
+  rdr.associate_die_to_type(die, result);
   return result;
 }
 
@@ -14960,7 +12144,7 @@ build_function_type(reader&			rdr,
       if (function_type_sptr fn_type =
 	  is_function_type(rdr.lookup_type_artifact_from_die(die)))
 	{
-	  rdr.associate_die_to_type(die, fn_type, where_addr);
+	  rdr.associate_die_to_type(die, fn_type);
 	  return fn_type;
 	}
     }
@@ -15016,7 +12200,7 @@ build_function_type(reader&			rdr,
 				 /*alignment=*/0)
 	       : new function_type(rdr.env(), tu->get_address_size(),
 				   /*alignment=*/0));
-  rdr.associate_die_to_type(die, result, where_addr);
+  rdr.associate_die_to_type(die, result);
   rdr.die_wip_function_types_map()[die->addr] = result;
 
   type_base_sptr return_type;
@@ -15331,7 +12515,7 @@ build_subrange_type(reader&		rdr,
 			     - result->get_lower_bound() + 1)));
 
   if (associate_type_to_die)
-    rdr.associate_die_to_type(die, result, where);
+    rdr.associate_die_to_type(die, result);
 
   return result;
 }
@@ -15453,7 +12637,7 @@ build_array_type(reader&	rdr,
   build_subranges_from_array_type_die(rdr, die, subranges, where_addr);
 
   result.reset(new array_type_def(type, subranges, location()));
-  rdr.associate_die_to_type(die, result, where_addr);
+  rdr.associate_die_to_type(die, result);
   return result;
 }
 
@@ -15529,7 +12713,7 @@ build_typedef_type(reader&	rdr,
 	}
     }
 
-  rdr.associate_die_to_type(die, result, where_addr);
+  rdr.associate_die_to_type(die, result);
 
   return result;
 }
@@ -15872,9 +13056,8 @@ build_or_get_fn_decl_if_not_suppressed(reader&			rdr,
       if ((fn = is_function_decl(rdr.lookup_artifact_from_die(fn_die))))
 	{
 	  fn = maybe_finish_function_decl_reading(rdr, fn_die, where_addr, fn);
-	  rdr.associate_die_to_decl(fn_die, fn, where_addr,
-				    /*do_associate_by_repr=*/true);
-	  rdr.associate_die_to_type(fn_die, fn->get_type(), where_addr);
+	  rdr.associate_die_to_decl(fn_die, fn);
+	  rdr.associate_die_to_type(fn_die, fn->get_type());
 	  return fn;
 	}
     }
@@ -16071,8 +13254,7 @@ type_is_suppressed(const reader& rdr,
 static type_or_decl_base_sptr
 get_opaque_version_of_type(reader	&rdr,
 			   scope_decl	*scope,
-			   Dwarf_Die	*type_die,
-			   void*	where_addr)
+			   Dwarf_Die	*type_die)
 {
   type_or_decl_base_sptr result;
 
@@ -16119,7 +13301,7 @@ get_opaque_version_of_type(reader	&rdr,
 	  klass->set_is_declaration_only(true);
 	  klass->set_is_artificial(die_is_artificial(type_die));
 	  add_decl_to_scope(klass, scope);
-	  rdr.associate_die_to_type(type_die, klass, where_addr);
+	  rdr.associate_die_to_type(type_die, klass);
 	  rdr.maybe_schedule_declaration_only_class_for_resolution(klass);
 	  result = klass;
 	}
@@ -16257,7 +13439,7 @@ build_function_decl(reader&		rdr,
       // function_decl.  If that is the case, return it.
       if ((result = is_function_decl(rdr.lookup_decl_from_die_addr(die->addr))))
 	{
-	  rdr.associate_die_to_type(die, result->get_type(), where_addr);
+	  rdr.associate_die_to_type(die, result->get_type());
 	  return result;
 	}
 
@@ -16315,7 +13497,7 @@ build_function_decl(reader&		rdr,
 	}
     }
 
-  rdr.associate_die_to_type(die, result->get_type(), where_addr);
+  rdr.associate_die_to_type(die, result->get_type());
 
   return result;
 }
@@ -16506,7 +13688,7 @@ build_ir_node_from_die(reader&		rdr,
     {
       // Type DIEs we support.
     case DW_TAG_base_type:
-      if (type_decl_sptr t = build_type_decl(rdr, die, where_addr))
+      if (type_decl_sptr t = build_type_decl(rdr, die))
 	{
 	  result =
 	    add_decl_to_scope(t, rdr.cur_transl_unit()->get_global_scope());
@@ -16597,7 +13779,7 @@ build_ir_node_from_die(reader&		rdr,
 	    // Associate the die to type ty again because 'ty'might be
 	    // different from 'q', because 'ty' is 'q' possibly
 	    // stripped from some redundant type qualifier.
-	    rdr.associate_die_to_type(die, ty, where_addr);
+	    rdr.associate_die_to_type(die, ty);
 	    result =
 	      add_decl_to_scope(d, rdr.cur_transl_unit()->get_global_scope());
 	    maybe_canonicalize_type(is_type(result), rdr);
@@ -16618,13 +13800,12 @@ build_ir_node_from_die(reader&		rdr,
 	    // non-suppressed instances are opaque versions of the
 	    // suppressed private type.  Lets return one of these opaque
 	    // types then.
-	    result = get_opaque_version_of_type(rdr, scope, die, where_addr);
+	    result = get_opaque_version_of_type(rdr, scope, die);
 	    maybe_canonicalize_type(is_type(result), rdr);
 	  }
 	else if (!type_suppressed)
 	  {
-	    enum_type_decl_sptr e = build_enum_type(rdr, die, where_addr,
-						    is_declaration_only);
+	    enum_type_decl_sptr e = build_enum_type(rdr, die, is_declaration_only);
 	    result = add_decl_to_scope(e, scope);
 	    if (result)
 	      {
@@ -16650,7 +13831,7 @@ build_ir_node_from_die(reader&		rdr,
 	    // non-suppressed instances are opaque versions of the
 	    // suppressed private type.  Lets return one of these opaque
 	    // types then.
-	    result = get_opaque_version_of_type(rdr, scope, die, where_addr);
+	    result = get_opaque_version_of_type(rdr, scope, die);
 	    maybe_canonicalize_type(is_type(result), rdr);
 	  }
 	else if (!type_suppressed)
@@ -16871,8 +14052,7 @@ build_ir_node_from_die(reader&		rdr,
 	    else
 	      rdr.var_decls_to_re_add_to_tree().push_back(v);
 	    rdr.add_var_to_exported_or_undefined_decls(v);
-	    rdr.associate_die_to_decl(die, v, where_addr,
-				      /*associate_by_repr=*/false);
+	    rdr.associate_die_to_decl(die, v);
 	    result = v;
 	  }
       }
@@ -16989,8 +14169,7 @@ build_ir_node_from_die(reader&		rdr,
 	      // symbols are added to the set of functions exported by
 	      // the current ABI corpus.
 	      rdr.add_fn_to_exported_or_undefined_decls(fn.get());
-	    rdr.associate_die_to_decl(die, fn, where_addr,
-				      /*associate_by_repr=*/false);
+	    rdr.associate_die_to_decl(die, fn);
 	    maybe_canonicalize_type(fn->get_type(), rdr);
 	  }
 
@@ -17058,8 +14237,7 @@ build_ir_node_from_die(reader&		rdr,
     }
 
   if (result && tag != DW_TAG_subroutine_type)
-    rdr.associate_die_to_decl(die, is_decl(result), where_addr,
-			       /*associate_by_repr=*/false);
+    rdr.associate_die_to_decl(die, is_decl(result));
 
   if (result)
     if (rdr.load_all_types())
