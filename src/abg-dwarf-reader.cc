@@ -382,9 +382,6 @@ static bool
 die_is_qualified_type(const Dwarf_Die* die);
 
 static bool
-die_is_function_type(const Dwarf_Die *die);
-
-static bool
 die_has_object_pointer(const Dwarf_Die* die,
 		       Dwarf_Die& object_pointer);
 
@@ -1845,9 +1842,7 @@ public:
   /// A map that associates the addr of a decl DIE to the addr of its
   /// canonical DIE.
   mutable addr_addr_map_type canonical_decl_die_addrs_;
-  /// A map that associates a function type representations to
-  /// function types, inside a translation unit.
-  mutable istring_fn_type_map_type per_tu_repr_to_fn_type_maps_;
+
   /// A map that associates a pair of DIE addresses to the result of the
   /// comparison of that pair.
   mutable std::unordered_map<dwarf_addr_pair_type,
@@ -2371,7 +2366,6 @@ public:
     while (!scope_stack().empty())
       scope_stack().pop();
     var_decls_to_re_add_to_tree().clear();
-    per_tu_repr_to_fn_type_maps().clear();
   }
 
   /// Clear the data that is relevant for the current corpus being
@@ -3348,72 +3342,6 @@ public:
   const die_artefact_map_type&
   type_die_artefact_maps() const
   {return type_die_artefact_maps_;}
-
-  /// Getter of the maps that associates function type representations
-  /// to function types, inside a translation unit.
-  ///
-  /// @return the maps that associates function type representations
-  /// to function types, inside a translation unit.
-  istring_fn_type_map_type&
-  per_tu_repr_to_fn_type_maps()
-  {return per_tu_repr_to_fn_type_maps_;}
-
-  /// Getter of the maps that associates function type representations
-  /// to function types, inside a translation unit.
-  ///
-  /// @return the maps that associates function type representations
-  /// to function types, inside a translation unit.
-  const istring_fn_type_map_type&
-  per_tu_repr_to_fn_type_maps() const
-  {return per_tu_repr_to_fn_type_maps_;}
-
-  /// Associate the representation of a function type DIE to a given
-  /// function type, inside the current translation unit.
-  ///
-  /// @param die the DIE to associate to the function type, using its
-  /// representation.
-  ///
-  /// @param fn_type the function type to associate to @p die.
-  void
-  associate_die_repr_to_fn_type_per_tu(const Dwarf_Die *die,
-				       const function_type_sptr &fn_type)
-  {
-    if (!die_is_function_type(die))
-      return;
-
-    interned_string repr =
-      get_die_pretty_type_representation(die, /*where=*/0);
-    ABG_ASSERT(!repr.empty());
-
-    per_tu_repr_to_fn_type_maps()[repr]= fn_type;
-  }
-
-  /// Lookup the function type associated to a given function type
-  /// DIE, in the current translation unit.
-  ///
-  /// @param die the DIE of function type to consider.
-  ///
-  /// @return the @ref function_type_sptr associated to @p die, or nil
-  /// of no function_type is associated to @p die.
-  function_type_sptr
-  lookup_fn_type_from_die_repr_per_tu(const Dwarf_Die *die)
-  {
-    if (!die_is_function_type(die))
-      return function_type_sptr();
-
-    interned_string repr = die_name(die).empty() ?
-      get_die_pretty_type_representation(die, /*where=*/0)
-      : get_die_pretty_representation(die, /*where=*/0);
-    ABG_ASSERT(!repr.empty());
-
-    istring_fn_type_map_type::const_iterator i =
-      per_tu_repr_to_fn_type_maps().find(repr);
-
-    if (i == per_tu_repr_to_fn_type_maps().end())
-      return function_type_sptr();
-
-    return i->second;
-  }
 
   /// Set the canonical DIE address of a given DIE.
   ///
@@ -7149,21 +7077,6 @@ die_is_qualified_type(const Dwarf_Die* die)
       return true;
 
     return false;
-}
-
-/// Test if a DIE is for a function type.
-///
-/// @param die the DIE to consider.
-///
-/// @return true iff @p die is for a function type.
-static bool
-die_is_function_type(const Dwarf_Die *die)
-{
-  int tag = dwarf_tag(const_cast<Dwarf_Die*>(die));
-  if (tag == DW_TAG_subprogram || tag == DW_TAG_subroutine_type)
-    return true;
-
-  return false;
 }
 
 /// Test if a DIE for a function pointer or member function has an
@@ -15034,17 +14947,6 @@ build_function_type(reader&			rdr,
   translation_unit_sptr tu = rdr.cur_transl_unit();
   ABG_ASSERT(tu);
 
-  /// If, inside the current translation unit, we've already seen a
-  /// function type with the same text representation, then reuse that
-  /// one instead.
-  if (type_base_sptr t = rdr.lookup_fn_type_from_die_repr_per_tu(die))
-    {
-      result = is_function_type(t);
-      ABG_ASSERT(result);
-      rdr.associate_die_to_type(die, result, where_addr);
-      return result;
-    }
-
   bool odr_is_relevant = rdr.odr_is_relevant(die);
   if (odr_is_relevant)
     {
@@ -15220,8 +15122,6 @@ build_function_type(reader&			rdr,
   tu->bind_function_type_life_time(result);
 
   result->set_is_artificial(true);
-
-  rdr.associate_die_repr_to_fn_type_per_tu(die, result);
 
   {
     die_function_type_map_type::const_iterator i =

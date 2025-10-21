@@ -6371,7 +6371,7 @@
     <array-type-def dimensions='1' type-id='type-id-101' size-in-bits='896' hash='0e8733040184a9e2' id='type-id-788'>
       <subrange length='112' lower-bound='0' upper-bound='111' type-id='type-id-283' size-in-bits='64' is-anonymous='yes' hash='1694f6bc64e5d859' id='type-id-789'/>
     </array-type-def>
-    <pointer-type-def type-id='type-id-790' size-in-bits='64' hash='fd7a63c0c6c822c4' id='type-id-783'/>
+    <pointer-type-def type-id='type-id-790' size-in-bits='64' hash='fd7a63c0c6c822c4#3' id='type-id-783'/>
     <pointer-type-def type-id='type-id-308' size-in-bits='64' id='type-id-791'/>
     <namespace-decl name='std'>
       <class-decl name='_Mem_fn&lt;void(std::thread::*)()&gt;' visibility='default' size-in-bits='128' filepath='/tmp/legendre/spack-stage/spack-stage-wfh0ig/gcc-4.7.4/x86_64-unknown-linux-gnu/libstdc++-v3/include/functional' line='525' column='1' hash='bc947ff0347d56c5' id='type-id-644'>
@@ -6562,24 +6562,24 @@
           <var-decl name='_M_id' type-id='type-id-777' visibility='default' filepath='/tmp/legendre/spack-stage/spack-stage-wfh0ig/gcc-4.7.4/x86_64-unknown-linux-gnu/libstdc++-v3/include/thread' line='119' column='1'/>
         </data-member>
         <member-function access='private'>
-          <function-decl name='join' mangled-name='_ZNSt6thread4joinEv' filepath='../../../.././libstdc++-v3/src/c++11/thread.cc' line='92' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZNSt6thread4joinEv@@GLIBCXX_3.4.11' hash='7f32ffea222edbe7' id='type-id-813'>
+          <function-decl name='join' mangled-name='_ZNSt6thread4joinEv' filepath='../../../.././libstdc++-v3/src/c++11/thread.cc' line='92' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZNSt6thread4joinEv@@GLIBCXX_3.4.11' hash='7f32ffea222edbe7' id='type-id-790'>
             <parameter type-id='type-id-772' is-artificial='yes'/>
             <return type-id='type-id-6'/>
           </function-decl>
         </member-function>
         <member-function access='private'>
-          <function-decl name='detach' mangled-name='_ZNSt6thread6detachEv' filepath='../../../.././libstdc++-v3/src/c++11/thread.cc' line='106' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZNSt6thread6detachEv@@GLIBCXX_3.4.11' hash='7f32ffea222edbe7' id='type-id-813'>
+          <function-decl name='detach' mangled-name='_ZNSt6thread6detachEv' filepath='../../../.././libstdc++-v3/src/c++11/thread.cc' line='106' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZNSt6thread6detachEv@@GLIBCXX_3.4.11' hash='7f32ffea222edbe7' id='type-id-790'>
             <parameter type-id='type-id-772' is-artificial='yes'/>
             <return type-id='type-id-6'/>
           </function-decl>
         </member-function>
         <member-function access='private' static='yes'>
-          <function-decl name='hardware_concurrency' mangled-name='_ZNSt6thread20hardware_concurrencyEv' filepath='../../../.././libstdc++-v3/src/c++11/thread.cc' line='136' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZNSt6thread20hardware_concurrencyEv@@GLIBCXX_3.4.17' hash='2bb88322482ae81c' id='type-id-814'>
+          <function-decl name='hardware_concurrency' mangled-name='_ZNSt6thread20hardware_concurrencyEv' filepath='../../../.././libstdc++-v3/src/c++11/thread.cc' line='136' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZNSt6thread20hardware_concurrencyEv@@GLIBCXX_3.4.17' hash='2bb88322482ae81c' id='type-id-813'>
             <return type-id='type-id-49'/>
           </function-decl>
         </member-function>
         <member-function access='private'>
-          <function-decl name='_M_start_thread' mangled-name='_ZNSt6thread15_M_start_threadESt10shared_ptrINS_10_Impl_baseEE' filepath='../../../.././libstdc++-v3/src/c++11/thread.cc' line='120' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZNSt6thread15_M_start_threadESt10shared_ptrINS_10_Impl_baseEE@@GLIBCXX_3.4.11' hash='2d9f5a5e955cb085' id='type-id-790'>
+          <function-decl name='_M_start_thread' mangled-name='_ZNSt6thread15_M_start_threadESt10shared_ptrINS_10_Impl_baseEE' filepath='../../../.././libstdc++-v3/src/c++11/thread.cc' line='120' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZNSt6thread15_M_start_threadESt10shared_ptrINS_10_Impl_baseEE@@GLIBCXX_3.4.11' hash='2d9f5a5e955cb085' id='type-id-814'>
             <parameter type-id='type-id-772' is-artificial='yes'/>
             <parameter type-id='type-id-810' filepath='../../../.././libstdc++-v3/src/c++11/thread.cc' line='120' column='1'/>
             <return type-id='type-id-6'/>
