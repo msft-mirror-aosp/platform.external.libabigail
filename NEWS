@@ -1,3 +1,42 @@
+2.9
+===
+Claudiu Zissulescu (1):
+      abicompat: Add the ability to process abi corpus groups
+
+Dodji Seketeli (25):
+      configure: Bump version number to 2.9
+      Bug 33192 - Crash of "abidw --follow-dependencies <binary>"
+      Fix compilation with Clang
+      ir: Avoid crashing canonicalizing anonymous types with member fns
+      Bug 28642 - vtable offset position seems wrong
+      dwarf-reader: Fix indentation
+      gen-changelog: Add default description for missing ChangeLog entries
+      gen-changelog: Fix comments & cleanups
+      Website: Update for 2.8 release
+      ctf-reader: Fix thinko in reader::initialize
+      Bug 33279 - elf-reader: Fix a file descriptor leak
+      elf-reader: Use -1 as a sentinel value for file descriptors
+      tools-utils: Fix a memory leak in find_file_under_dir
+      big-tests: Update big-tests to commit 54686ed675463e4e846d0d8a9bc8766abf2c517b
+      dwarf-reader,ir: Cleanup signatures of copy_member_function
+      dwarf-reader: Fix reader::merge_member_functions_of_classes
+      dwarf-reader: Merge static data members among classes of the same name
+      dwarf-reader: Avoid adding declarations-only global vars to IR
+      libxml-utils: Pass paramater to xml_char_sptr_to_string by reference
+      ctf-reader: Fix memory leak in lookup_symbol_in_ctf_archive
+      abi{diff,dw}: Fix memory leak
+      tests/Makefile.am: Filter out more binaries when using valgrind --trace-children
+      symtab-reader: Speedup lookup_undefined_{function,variable}_symbol
+      symtab-reader: Fix comments of the undefined symbols data members
+      configure: Bump soname b/c of ABI-incompatible changes
+
+Frank Ch. Eigler (2):
+      PR33278: abidb: fix -Zextension mode
+      abidb --submit: add "--no-corpus-path" to abidw invocation
+
+Orion Poplawski (1):
+      Bug 33264 - Add --ignore-soname to abipkgdiff
+
 2.8
 ===
 Dodji Seketeli (30):

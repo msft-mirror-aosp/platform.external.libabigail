@@ -1,3 +1,325 @@
+2025-11-06  Dodji Seketeli <dodji@redhat.com>
+
+	configure: Bump soname b/c of ABI-incompatible changes
+	* configure.ac: Several changes, notably in include/abg-ir.h to
+	make function_decl be a scope, are ABI-incompatible.  Thus, bump
+	the SONAME here.
+
+2025-10-05  Dodji Seketeli <dodji@redhat.com>
+
+	symtab-reader: Fix comments of the undefined symbols data members
+	* src/abg-symtab-reader.h (symtab::{undefined_fn_symbols_,
+	undefined_var_symbols_}): Fix comments.
+
+2025-10-03  Dodji Seketeli <dodji@redhat.com>
+
+	symtab-reader: Speedup lookup_undefined_{function,variable}_symbol
+	* src/abg-symtab-reader.h (symtab::undefined_{fn,var}_symbols_):
+	Add new data members.
+	* src/abg-symtab-reader.cc (symtab::load_): Populate the newly
+	introduced symtab::undefined_{fn,var}_symbols_ with undefined
+	function and variable symbols.
+
+2025-08-25  Orion Poplawski <orion@nwra.com>
+
+	Bug 33264 - Add --ignore-soname to abipkgdiff
+	* doc/manuals/abipkgdiff.rst: Document the new option
+	--ignore-soname.
+	* tools/abipkgdiff.cc (options::options): Initialize ...
+	(options::ignore_soname): ... the new data member.
+	(parse_command_line): Parse the new --ignore-soname options ...
+	(display_usage): ... and document it.
+	(set_diff_context_from_opts): Set ctxt->show_soname_change
+	accordingly.
+	(package::convert_path_to_relative): Do not resolve symbolic links
+	to their target.
+	(compare_task::maybe_emit_pretty_error_message_to_output): Add
+	path of the binary for which no ABI change was detected.
+	(create_maps_of_package_set_content): If the user asked to ignore
+	SONAMEs, then take the same path as if the current shared library
+	has no SONAME.  However, no not resolve symlink paths to their
+	target in that mode.
+	* tests/data/test-diff-pkg/PR33264/simdjson-3.12.3-2.el10.x86_64--simdjson-3.13.0-1.el10.x86_64-report-{1,2}.txt:
+	Add new reference test output.
+	* tests/data/test-diff-pkg/PR33264/simdjson-3.12.3/simdjson-3.12.3-2.el10.x86_64.rpm:
+	New binary test input.
+	* tests/data/test-diff-pkg/PR33264/simdjson-3.12.3/simdjson-debuginfo-3.12.3-2.el10.x86_64.rpm:
+	Likewise.
+	* tests/data/test-diff-pkg/PR33264/simdjson-3.12.3/simdjson-devel-3.12.3-2.el10.x86_64.rpm:
+	Likewise.
+	* tests/data/test-diff-pkg/PR33264/simdjson-3.13.0/simdjson-3.13.0-1.el10.x86_64.rpm:
+	Likewise.
+	* tests/data/test-diff-pkg/PR33264/simdjson-3.13.0/simdjson-debuginfo-3.13.0-1.el10.x86_64.rpm:
+	Likewise.
+	* tests/data/test-diff-pkg/PR33264/simdjson-3.13.0/simdjson-devel-3.13.0-1.el10.x86_64.rpm:
+	Likewise.
+	* tests/data/test-diff-pkg/test-dbus-glib-0.80-3.fc12.x86_64-report-0.txt:
+	Adjust
+	* tests/data/test-fedabipkgdiff/vte291-0.39.1-1.fc22.x86_64--vte291-0.39.90-1.fc22.x86_64-report-0.txt:
+	Adjust.
+	* tests/data/Makefile.am: Add the new test material to source
+	distribution.
+	* tests/test-diff-pkg.cc (in_out_specs): Add the new tests inputs
+	to this test harness.
+
+2025-09-24  Dodji Seketeli <dodji@redhat.com>
+
+	tests/Makefile.am: Filter out more binaries when using valgrind --trace-children
+	* tests/Makefile.am: Add /usr/bin/sed,/usr/bin/diff,/usr/bin/ls to
+	the argument of the --trace-children-skip option.
+
+2025-09-24  Dodji Seketeli <dodji@redhat.com>
+
+	abi{diff,dw}: Fix memory leak
+	* tools/abidiff.cc (parse_command_line): Use make_path_absolute
+	instead of make_path_absolute_to_be_freed.
+	* tools/abidw.cc (parse_command_line): Likewise.
+	* include/abg-tools-utils.h (make_path_absolute_to_be_freed):
+	Remove ...
+	* src/abg-tools-utils.cc (make_path_absolute_to_be_freed): ... the
+	Definition of this function.
+
+2025-09-23  Dodji Seketeli <dodji@redhat.com>
+
+	ctf-reader: Fix memory leak in lookup_symbol_in_ctf_archive
+	* tests/data/test-diff-pkg-ctf/test-rpm-report-1.txt: Adjust.
+	* tests/data/test-diff-pkg-ctf/test-rpm-report-2.txt: Likewise.
+
+2025-09-23  Dodji Seketeli <dodji@redhat.com>
+
+	libxml-utils: Pass paramater to xml_char_sptr_to_string by reference
+	* include/abg-libxml-utils.h (xml_char_sptr_to_string): Pass the
+	xml_char_sptr parameter by ...
+	* src/abg-libxml-utils.cc (xml_char_sptr_to_string):
+	... reference.
+
+2025-09-05  Frank Ch. Eigler <fche@redhat.com>
+
+	abidb --submit: add "--no-corpus-path" to abidw invocation
+	* tools/abidb: add "--no-corpus-path" to abidw invocation
+
+2025-09-05  Dodji Seketeli <dodji@redhat.com>
+
+	dwarf-reader: Avoid adding declarations-only global vars to IR
+	* src/abg-dwarf-reader.cc (build_ir_node_from_die): When looking
+	at the DIE for a variable, create an IR for it if it has an ELF
+	symbol.
+	* tests/data/test-annotate/libtest23.so.abi: Adjust.
+	* tests/data/test-annotate/libtest24-drop-fns-2.so.abi: Likewise.
+	* tests/data/test-annotate/libtest24-drop-fns.so.abi: Likewise.
+	* tests/data/test-read-dwarf/libtest23.so.abi: Likewise.
+	* tests/data/test-read-dwarf/libtest24-drop-fns-2.so.abi:
+	Likewise.
+	* tests/data/test-read-dwarf/libtest24-drop-fns.so.abi: Likewise.
+	* tests/data/test-read-dwarf/test10-pr18818-gcc.so.abi: Likewise.
+	* tests/data/test-read-dwarf/test11-pr18828.so.abi: Likewise.
+	* tests/data/test-read-dwarf/test16-pr18904.so.abi: Likewise.
+	* tests/data/test-read-dwarf/test22-pr19097-libstdc++.so.6.0.17.so.abi:
+	Likewise.
+
+2025-09-05  Dodji Seketeli <dodji@redhat.com>
+
+	dwarf-reader: Merge static data members among classes of the same name
+	* include/abg-ir.h (copy_member_variable): Declare ...
+	* src/abg-ir.cc (copy_member_variable): ... new functions.
+	(maybe_adjust_canonical_type): Add an assert for
+	data members discrepancies among classes of the same name and same
+	corpus.
+	* src/abg-dwarf-reader.cc (reader::{copy_missing_member_variables,
+	merge_member_variables_of_classes}): Define new member functions.
+	(reader::merge_member_functions_and_variables_in_classes_of_same_names):
+	Renamed reader::merge_member_functions_in_classes_of_same_names
+	into this.  Do not perform the merging on anonymous classes.
+	Perform merging of data members as well as merging of member
+	functions.
+	(reader::read_debug_info_into_corpus): Adjust to
+	merge_member_functions_in_classes_of_same_names into
+	merge_member_functions_and_variables_in_classes_of_same_names.
+	* tests/data/test-annotate/test19-pr19023-libtcmalloc_and_profiler.so.abi:
+	Adjust.
+	* tests/data/test-read-dwarf/test19-pr19023-libtcmalloc_and_profiler.so.abi:
+	Likewise.
+	* tests/data/test-read-dwarf/test22-pr19097-libstdc++.so.6.0.17.so.abi:
+	Likewise.
+
+2025-09-05  Dodji Seketeli <dodji@redhat.com>
+
+	dwarf-reader: Fix reader::merge_member_functions_of_classes
+	* src/abg-dwarf-reader.cc
+	(reader::merge_member_functions_of_classes): Avoid merging member
+	functions across classes of different names.
+
+2025-09-05  Dodji Seketeli <dodji@redhat.com>
+
+	dwarf-reader,ir: Cleanup signatures of copy_member_function
+	* include/abg-ir.h (copy_member_function): Make the destination
+	class not be a const reference.
+	* src/abg-ir.cc (copy_member_function): Likewise.
+	* src/abg-dwarf-reader.cc (copy_missing_member_functions):
+	Likewise.
+
+2025-09-02  Dodji Seketeli <dodji@redhat.com>
+
+	big-tests: Update big-tests to commit 54686ed675463e4e846d0d8a9bc8766abf2c517b
+	* big-tests: Update to commit
+	54686ed675463e4e846d0d8a9bc8766abf2c517b of repository
+	https://sourceware.org/git/libabigail-tests.git.
+
+2025-08-07  Claudiu Zissulescu <claudiu.zissulescu-ianculescu@oracle.com>
+
+	abicompat: Add the ability to process abi corpus groups
+	* include/abg-corpus.h (corpus::lookup_{function,variable}s):
+	Make these member functions virtual.
+	(corpus_group::{lookup_{function,variable}s): Add new overloads.
+	* src/abg-corpus.cc (corpus_group::{lookup_{function,variable}s):
+	Define new virtual overloads that walk over each corpus, invokes
+	corpus::lookup_{functions,variables} on them and return the first
+	one that is non-nil.
+	* tests/data/test-abicompat/libtest11-fn-changed.xml: New test input.
+	* tests/data/test-abicompat/test11-fn-changed-app.xml: Likewise.
+	* tests/data/test-abicompat/test11-fn-changed.txt: Likewise.
+	* tests/test-abicompat.cc (in_out_specs): Add the new test
+	material above to this test harness.
+	* tools/abicompat.cc (read_corpus): Support
+	abigail::tools_utils::FILE_TYPE_XML_CORPUS_GROUP kind of input file.
+
+2025-08-22  Dodji Seketeli <dodji@redhat.com>
+
+	tools-utils: Fix a memory leak in find_file_under_dir
+	* src/abg-tools-utils.cc (find_file_under_dir): Do not forget to
+	fts_close the file_hierarchy that was previously fts_open-ed.
+
+2025-08-22  Dodji Seketeli <dodji@redhat.com>
+
+	elf-reader: Use -1 as a sentinel value for file descriptors
+	* src/abg-elf-reader.cc (reader::priv::alt_{ctd,dwarf}_fd):
+	Initialize to -1 instead of 0.
+	(reader::priv::{initialize, clear_alt_dwarf_debug_info_data,
+	clear_alt_ctf_debug_info_data}): Likewise.
+
+2025-08-22  Dodji Seketeli <dodji@redhat.com>
+
+	Bug 33279 - elf-reader: Fix a file descriptor leak
+	* src/abg-elf-reader.cc (reader::priv::locate_alt_ctf_debug_info):
+	Do not leak the file descriptor initially stored in
+	reader::priv::alt_ctf_fd.
+
+2025-08-22  Dodji Seketeli <dodji@redhat.com>
+
+	ctf-reader: Fix thinko in reader::initialize
+	* src/abg-ctf-reader.cc (ctf::reader::initialize): Fix thinko.
+
+2025-07-04  Dodji Seketeli <dodji@redhat.com>
+
+	Website: Update for 2.8 release
+	* doc/website/mainpage.txt: Update for 2.8 release
+
+2025-08-21  Dodji Seketeli <dodji@redhat.com>
+
+	gen-changelog: Fix comments & cleanups
+	* gen-changelog.py (process_commit): Fix comments & cleanups.
+
+2025-08-21  Dodji Seketeli <dodji@redhat.com>
+
+	gen-changelog: Add default description for missing ChangeLog entries
+	* gen-changelog.py (process_commit): Add a default entry made of
+	the content of the subject title.
+
+2025-08-21  Dodji Seketeli <dodji@redhat.com>
+
+	dwarf-reader: Fix indentation
+	* src/abg-dwarf-reader.cc (build_function_decl): Fix indentation.
+
+2025-08-19  Dodji Seketeli <dodji@redhat.com>
+
+	Bug 28642 - vtable offset position seems wrong
+	* src/abg-dwarf-reader.cc (die_virtual_function_index): Initialize
+	the default value of the vtable index of the function to 0.
+	* tests/data/test-abidiff-exit/PR33055/PR33055-report-2.txt:
+	Adjust.
+	* tests/data/test-annotate/test14-pr18893.so.abi: Likewise.
+	* tests/data/test-annotate/test18-pr19037-libvtkRenderingLIC-6.1.so.abi:
+	Likewise.
+	* tests/data/test-annotate/test19-pr19023-libtcmalloc_and_profiler.so.abi:
+	Likewise.
+	* tests/data/test-annotate/test20-pr19025-libvtkParallelCore-6.1.so.abi:
+	Likewise.
+	* tests/data/test-diff-dwarf-abixml/test0-pr19026-libvtkIOSQL-6.1.so.1.abi:
+	Likewise.
+	* tests/data/test-diff-dwarf/test29-vtable-changes-report-0.txt:
+	Likewise.
+	* tests/data/test-diff-dwarf/test30-vtable-changes-report-0.txt:
+	Likewise.
+	* tests/data/test-diff-dwarf/test31-vtable-changes-report-0.txt:
+	Likewise.
+	* tests/data/test-diff-dwarf/test41-PR20476-hidden-report-0.txt:
+	Likewise.
+	* tests/data/test-read-dwarf/test10-pr18818-gcc.so.abi: Likewise.
+	* tests/data/test-read-dwarf/test11-pr18828.so.abi: Likewise.
+	* tests/data/test-read-dwarf/test14-pr18893.so.abi: Likewise.
+	* tests/data/test-read-dwarf/test18-pr19037-libvtkRenderingLIC-6.1.so.abi:
+	Likewise.
+	* tests/data/test-read-dwarf/test19-pr19023-libtcmalloc_and_profiler.so.abi:
+	Likewise.
+	* tests/data/test-read-dwarf/test20-pr19025-libvtkParallelCore-6.1.so.abi:
+	Likewise.
+	* tests/data/test-read-dwarf/test22-pr19097-libstdc++.so.6.0.17.so.abi:
+	Likewise.
+
+2025-08-19  Dodji Seketeli <dodji@redhat.com>
+
+	ir: Avoid crashing canonicalizing anonymous types with member fns
+	* src/abg-ir.cc (maybe_adjust_canonical_type): Don't bother
+	detecting discrepancies between member functions of the
+	canonicalized class and member functions of the canonical class
+	for anonymous classes.
+
+2025-08-19  Dodji Seketeli <dodji@redhat.com>
+
+	Fix compilation with Clang
+	* include/abg-comparison.h (class type_diff_base): Remove private
+	default constructor.  Rather, declare it as a deleted default
+	constructor.
+	(class ptr_to_mbr_diff): The default contructor is deleted, not
+	defaulted.
+	* src/abg-dwarf-reader.cc (get_die_qualified_name): Remove unused
+	function.
+	(die_enum_flat_representation): Add missing parenthesis around
+	"?:" expression coming after the << operator.
+	* src/abg-ir.cc (collect_non_anonymous_data_members): Fix unused
+	variable.
+	* src/abg-suppression.cc (is_negated_suppression): Fix expression
+	that might not be evaluated.
+	* src/abg-tools-utils.cc (ANONYMOUS_SUBRANGE_INTERNAL_NAME_LEN):
+	Remove useless static variable.
+
+2025-08-14  Frank Ch. Eigler <fche@redhat.com>
+
+	PR33278: abidb: fix -Zextension mode
+	* tools/abidb: fix -Zextension mode
+
+2025-07-28  Dodji Seketeli <dodji@redhat.com>
+
+	Bug 33192 - Crash of "abidw --follow-dependencies <binary>"
+	* tools/abidw.cc (load_corpus_and_write_abixml): Make sure that
+	corp_group is non-NULL before de-referencing it.
+	* tests/data/test-read-dwarf/test0.deps.abi: New reference test
+	output.
+	* tests/data/Makefile.am: Add it to source distribution.
+	* tests/test-read-dwarf.cc (in_out_specs): Add a new test entry
+	that invokes abidw --follow-dependencies on the existing
+	tests/data/test-read-dwarf/test0
+
+2025-07-04  Dodji Seketeli <dodji@redhat.com>
+
+	configure: Bump version number to 2.9
+	* configure.ac: Bump version number to 2.9
+
+2025-07-04  Dodji Seketeli <dodji@redhat.com>
+
+	ChangeLog: Update for 2.8 release
+	* ChangeLog: Update automatically by using gen-changelog.py.
+
 2025-07-04  Dodji Seketeli <dodji@redhat.com>
 
 	NEWS: Update for 2.8 release
@@ -1341,7 +1663,7 @@
 2025-02-06  Dodji Seketeli <dodji@redhat.com>
 
 	big-tests: Update to latest commit 2afebc4
-	* big-tests:
+	* big-tests: Update to latest commit 2afebc4
 
 2025-01-30  Dodji Seketeli <dodji@redhat.com>
 
@@ -2118,7 +2440,7 @@
 2024-09-30  Dodji Seketeli <dodji@redhat.com>
 
 	big-tests: Update to latest version of libabigail-tests.git
-	* big-tests:
+	* big-tests: Update to latest version of libabigail-tests.git
 
 2024-09-27  Dodji Seketeli <dodji@redhat.com>
 
@@ -4835,7 +5157,7 @@
 2024-04-22  Dodji Seketeli <dodji@redhat.com>
 
 	configure.ac: Update version to 2.6
-	* configure.ac:
+	* configure.ac: Update version to 2.6
 
 2024-04-18  Dodji Seketeli <dodji@redhat.com>
 
@@ -4855,7 +5177,7 @@
 2024-04-18  Dodji Seketeli <dodji@redhat.com>
 
 	doc/website/mainpage.txt: Update for 2.5 release
-	* doc/website/mainpage.txt:
+	* doc/website/mainpage.txt: Update for 2.5 release
 
 2024-04-17  Dodji Seketeli <dodji@redhat.com>
 
@@ -5098,7 +5420,7 @@
 2024-03-22  Frank Ch. Eigler <fche@redhat.com>
 
 	abidb: drop the TODO items from the python script
-	* tools/abidb:
+	* tools/abidb: drop the TODO items from the python script
 
 2023-12-05  Frank Ch. Eigler <fche@redhat.com>
 
@@ -11270,7 +11592,7 @@
 2022-10-16  Xiaole He <hexiaole@kylinos.cn>
 
 	abg-reader: optimize if construction
-	* src/abg-reader.cc:
+	* src/abg-reader.cc: optimize if construction
 
 2022-10-16  Xiaole He <hexiaole@kylinos.cn>
 
@@ -11364,7 +11686,7 @@
 2022-10-02  Dodji Seketeli <dodji@redhat.com>
 
 	Update website for 2.1 release.
-	* doc/website/mainpage.txt:
+	* doc/website/mainpage.txt: Update website for 2.1 release.
 
 2022-09-26  Dodji Seketeli <dodji@redhat.com>
 
@@ -13936,7 +14258,7 @@
 2022-01-14  David Cantrell <dcantrell@redhat.com>
 
 	Include <libgen.h> in tools/abisym.cc for basename(3)
-	* tools/abisym.cc:
+	* tools/abisym.cc: Include <libgen.h> in tools/abisym.cc for basename(3)
 
 2022-01-13  Giuliano Procida <gprocida@google.com>
 
@@ -15776,12 +16098,12 @@
 2021-06-10  Dodji Seketeli <dodji@redhat.com>
 
 	Revert "Fix trivial typo when printing version string"
-	* tools/abicompat.cc:
+	* tools/abicompat.cc: Revert "Fix trivial typo when printing version string"
 
 2021-06-09  Ben Woodard via Libabigail <libabigail@sourceware.org>
 
 	Fix trivial typo when printing version string
-	* tools/abicompat.cc:
+	* tools/abicompat.cc: Fix trivial typo when printing version string
 
 2021-06-10  Dodji Seketeli <dodji@redhat.com>
 
@@ -17110,14 +17432,14 @@
 2021-03-08  Dodji Seketeli <dodji@redhat.com>
 
 	Revert "Fix declaratons of conditionally defined functions"
-	* include/abg-reader.h:
-	* tools/abilint.cc:
+	* include/abg-reader.h: Revert "Fix declaratons of conditionally defined functions"
+	* tools/abilint.cc: Revert "Fix declaratons of conditionally defined functions"
 
 2021-03-02  Ben Woodard via Libabigail <libabigail@sourceware.org>
 
 	Fix declaratons of conditionally defined functions
-	* include/abg-reader.h:
-	* tools/abilint.cc:
+	* include/abg-reader.h: Fix declaratons of conditionally defined functions
+	* tools/abilint.cc: Fix declaratons of conditionally defined functions
 
 2021-03-08  Dodji Seketeli <dodji@redhat.com>
 
@@ -22736,7 +23058,7 @@
 2020-01-29  Giuliano Procida <gprocida@google.com>
 
 	Fix typo in COMPILING.
-	* COMPILING:
+	* COMPILING: Fix typo in COMPILING.
 
 2020-01-29  Giuliano Procida <gprocida@google.com>
 
@@ -25188,7 +25510,7 @@
 2019-02-20  Dodji Seketeli <dodji@redhat.com>
 
 	Do not build DIE -> parent map just because we see an asm TU
-	* src/abg-dwarf-reader.cc:
+	* src/abg-dwarf-reader.cc: Do not build DIE -> parent map just because we see an asm TU
 
 2019-02-19  Dodji Seketeli <dodji@redhat.com>
 
@@ -25465,35 +25787,35 @@
 2019-01-09  Dodji Seketeli <dodji@redhat.com>
 
 	Bug 23044 - Assertions with side effects
-	* configure.ac:
-	* include/abg-diff-utils.h:
-	* include/abg-fwd.h:
-	* src/abg-comp-filter.cc:
-	* src/abg-comparison-priv.h:
-	* src/abg-comparison.cc:
-	* src/abg-corpus-priv.h:
-	* src/abg-corpus.cc:
-	* src/abg-default-reporter.cc:
-	* src/abg-diff-utils.cc:
-	* src/abg-dwarf-reader.cc:
-	* src/abg-hash.cc:
-	* src/abg-ini.cc:
-	* src/abg-ir.cc:
-	* src/abg-leaf-reporter.cc:
-	* src/abg-reader.cc:
-	* src/abg-reporter-priv.cc:
-	* src/abg-suppression.cc:
-	* src/abg-tools-utils.cc:
-	* src/abg-workers.cc:
-	* src/abg-writer.cc:
-	* tests/test-diff-filter.cc:
-	* tests/test-diff-pkg.cc:
-	* tests/test-read-dwarf.cc:
-	* tests/test-read-write.cc:
-	* tests/test-types-stability.cc:
-	* tools/abicompat.cc:
-	* tools/abidw.cc:
-	* tools/abipkgdiff.cc:
+	* configure.ac: Bug 23044 - Assertions with side effects
+	* include/abg-diff-utils.h: Bug 23044 - Assertions with side effects
+	* include/abg-fwd.h: Bug 23044 - Assertions with side effects
+	* src/abg-comp-filter.cc: Bug 23044 - Assertions with side effects
+	* src/abg-comparison-priv.h: Bug 23044 - Assertions with side effects
+	* src/abg-comparison.cc: Bug 23044 - Assertions with side effects
+	* src/abg-corpus-priv.h: Bug 23044 - Assertions with side effects
+	* src/abg-corpus.cc: Bug 23044 - Assertions with side effects
+	* src/abg-default-reporter.cc: Bug 23044 - Assertions with side effects
+	* src/abg-diff-utils.cc: Bug 23044 - Assertions with side effects
+	* src/abg-dwarf-reader.cc: Bug 23044 - Assertions with side effects
+	* src/abg-hash.cc: Bug 23044 - Assertions with side effects
+	* src/abg-ini.cc: Bug 23044 - Assertions with side effects
+	* src/abg-ir.cc: Bug 23044 - Assertions with side effects
+	* src/abg-leaf-reporter.cc: Bug 23044 - Assertions with side effects
+	* src/abg-reader.cc: Bug 23044 - Assertions with side effects
+	* src/abg-reporter-priv.cc: Bug 23044 - Assertions with side effects
+	* src/abg-suppression.cc: Bug 23044 - Assertions with side effects
+	* src/abg-tools-utils.cc: Bug 23044 - Assertions with side effects
+	* src/abg-workers.cc: Bug 23044 - Assertions with side effects
+	* src/abg-writer.cc: Bug 23044 - Assertions with side effects
+	* tests/test-diff-filter.cc: Bug 23044 - Assertions with side effects
+	* tests/test-diff-pkg.cc: Bug 23044 - Assertions with side effects
+	* tests/test-read-dwarf.cc: Bug 23044 - Assertions with side effects
+	* tests/test-read-write.cc: Bug 23044 - Assertions with side effects
+	* tests/test-types-stability.cc: Bug 23044 - Assertions with side effects
+	* tools/abicompat.cc: Bug 23044 - Assertions with side effects
+	* tools/abidw.cc: Bug 23044 - Assertions with side effects
+	* tools/abipkgdiff.cc: Bug 23044 - Assertions with side effects
 
 2019-01-07  Dodji Seketeli <dodji@redhat.com>
 
@@ -28166,7 +28488,7 @@
 2017-09-27  Dodji Seketeli <dodji@redhat.com>
 
 	Bug 22190 - crash in read_context::get_or_compute_canonical_die
-	* src/abg-dwarf-reader.cc:
+	* src/abg-dwarf-reader.cc: get_or_compute_canonical_die
 
 2017-09-27  Dodji Seketeli <dodji@redhat.com>
 
@@ -31871,7 +32193,7 @@
 2016-11-24  Dodji Seketeli <dodji@redhat.com>
 
 	Bump version number to 1.0.rc7
-	* configure.ac:
+	* configure.ac: Bump version number to 1.0.rc7
 
 2016-11-24  Dodji Seketeli <dodji@redhat.com>
 
@@ -32835,12 +33157,12 @@
 2016-08-24  Dodji Seketeli <dodji@redhat.com>
 
 	Bug 20420 - Wrong ODR-based type comparison optimization on qualified type
-	* src/abg-ir.cc:
+	* src/abg-ir.cc: Bug 20420 - Wrong ODR-based type comparison optimization on qualified type
 
 2016-08-23  Dodji Seketeli <dodji@redhat.com>
 
 	Don't walk diff trees indefinitely when applying suppressions
-	* src/abg-comparison.cc:
+	* src/abg-comparison.cc: Don't walk diff trees indefinitely when applying suppressions
 
 2016-07-27  Dodji Seketeli <dodji@redhat.com>
 
@@ -35871,8 +36193,8 @@
 2016-01-04  Dodji Seketeli <dodji@redhat.com>
 
 	Avoid adding the same base class twice
-	* src/abg-dwarf-reader.cc:
-	* src/abg-reader.cc:
+	* src/abg-dwarf-reader.cc: Avoid adding the same base class twice
+	* src/abg-reader.cc: Avoid adding the same base class twice
 
 2016-01-04  Dodji Seketeli <dodji@redhat.com>
 
@@ -46085,7 +46407,7 @@
 2014-09-10  Dodji Seketeli <dodji@redhat.com>
 
 	Compare class names when comparing methods
-	* src/abg-ir.cc:
+	* src/abg-ir.cc: Compare class names when comparing methods
 
 2014-09-10  Dodji Seketeli <dodji@redhat.com>
 
@@ -53122,18 +53444,18 @@
 2013-07-01  Benjamin Kosnik <bkoz@redhat.com>
 
 	Regenerate build/configure.
-	* aclocal.m4:
-	* configure:
+	* aclocal.m4: Regenerate build/configure.
+	* configure: Regenerate build/configure.
 
 2013-06-06  Benjamin Kosnik <bkoz@redhat.com>
 
 	Regenerate configure files.
-	* Makefile.in:
-	* aclocal.m4:
-	* configure:
-	* doc/Makefile.in:
-	* src/Makefile.in:
-	* tests/Makefile.in:
+	* Makefile.in: Regenerate configure files.
+	* aclocal.m4: Regenerate configure files.
+	* configure: Regenerate configure files.
+	* doc/Makefile.in: Regenerate configure files.
+	* src/Makefile.in: Regenerate configure files.
+	* tests/Makefile.in: Regenerate configure files.
 
 2013-05-28  Benjamin Kosnik <bkoz@redhat.com>
 
@@ -54557,27 +54879,27 @@
 2013-02-28  Dodji Seketeli <dodji@seketeli.org>
 
 	Initial AUTHORS and README
-	* AUTHORS:
-	* README:
+	* AUTHORS: Initial AUTHORS and README
+	* README: Initial AUTHORS and README
 
 2013-02-28  Dodji Seketeli <dodji@seketeli.org>
 
 	Leave license stuff for later
-	* COPYING:
+	* COPYING: Leave license stuff for later
 
 2013-02-28  Dodji Seketeli <dodji@seketeli.org>
 
 	Initial import Abigail
-	* AUTHORS:
-	* COPYING:
-	* ChangeLog:
-	* INSTALL:
-	* Makefile.am:
-	* NEWS:
-	* README:
-	* config.h.in:
-	* configure.ac:
-	* src/Makefile.am:
-	* src/abg-ir.cc:
-	* src/abg-ir.h:
+	* AUTHORS: Initial import Abigail
+	* COPYING: Initial import Abigail
+	* ChangeLog: Initial import Abigail
+	* INSTALL: Initial import Abigail
+	* Makefile.am: Initial import Abigail
+	* NEWS: Initial import Abigail
+	* README: Initial import Abigail
+	* config.h.in: Initial import Abigail
+	* configure.ac: Initial import Abigail
+	* src/Makefile.am: Initial import Abigail
+	* src/abg-ir.cc: Initial import Abigail
+	* src/abg-ir.h: Initial import Abigail
 
