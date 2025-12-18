@@ -20,7 +20,8 @@
 
 #endif
 
-namespace abg_compat {
+namespace abg_compat
+{
 
 #if __cplusplus >= 201703L
 
@@ -111,7 +112,59 @@ operator!=(const optional<T>& lhs, const optional<U>& rhs)
   return !(lhs == rhs);
 }
 
-#endif
+#endif // __cplusplus >= 201703L
+
+#if __cplusplus >= 202002L
+
+using std::views::reverse;
+
+#else
+
+namespace views
+{
+
+/// This is a wrapper class for an iterable container.  It's aim is to
+/// allow the iteration in an order that is the reverse of the default
+/// order of the underlying iterable container.
+template <typename T>
+struct reverse_wrapper
+{
+  T& iterable_;
+
+  /// @return a 'begin' iterator which is actually the std::rbegin()
+  /// iterator of the underlying container.
+  auto begin() const
+  {return std::rbegin(iterable_);}
+
+  /// @return a 'end' iterator which is actually the std::rend()
+  /// iterator of the underlying container.
+  auto end() const
+  {return std::rend(iterable_);}
+}; // end struct reverse_wrapper
+
+
+/// Return the @ref reverse_wrapper container associated with a given
+/// container.
+///
+/// This is to be used as below to iterate over a container in the
+/// reverse order:
+///
+///   for (auto& item : reverse(container))
+///     do_something(item);
+///
+/// @param iterable the container to consider
+///
+/// @return the reverse_wrapper<T> associated to the container T.
+template <typename T>
+reverse_wrapper<T>
+reverse(T& iterable)
+{
+  return {iterable};
+}
+}// end namespace views
+
+#endif // __cplusplus >= 202002L
+
 }
 
 #endif  // __ABG_CXX_COMPAT_H

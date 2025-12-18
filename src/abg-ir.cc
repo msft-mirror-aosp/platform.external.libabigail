@@ -68,6 +68,7 @@ using std::vector;
 using std::unordered_map;
 using std::dynamic_pointer_cast;
 using std::static_pointer_cast;
+using namespace abg_compat::views;
 
 /// Convenience typedef for a map of string -> string*.
 typedef unordered_map<string, string*> pool_map_type;
@@ -15882,8 +15883,11 @@ candidate_matches_a_canonical_type_hash(const vector<type_base_sptr>&	cncls,
 	    if (compare_canonical_type_against_candidate(*c, type))
 	      return c;
 
-      // Let's do the same things, but just consideing hash values.
-      for (const auto& c : cncls)
+      // Let's do the same things, but just considering hash values.
+      for (const auto& c : reverse(cncls))
+	// We walk the canonical types in the reverse order to comply
+	// with what we are doing in
+	// type_base::get_canonical_type_for.
 	if (peek_hash_value(type) == peek_hash_value(*c))
 	  // We found a potential canonical type which hash matches the
 	  // stashed hash of the candidate type.  Let's compare them to
