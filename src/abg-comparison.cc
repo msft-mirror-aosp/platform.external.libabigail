@@ -9982,7 +9982,6 @@ corpus_diff::priv::compare_fns_vars_and_ensure_lookup_tables_populated()
 	  add_function_to_added_functions(fn);
       }
 
-
     // Remaining entries in first_fns_map are deleted functions.
     for (const auto& entry : first_fns_map)
       add_function_to_deleted_functions(entry.second);
@@ -10383,6 +10382,74 @@ corpus_diff::priv::compare_fns_vars_and_ensure_lookup_tables_populated()
 	deleted_unreachable_types_.erase(entry.first);
     }
   }
+}
+
+/// This is a sub-routine of ensure_lookup_tables_populated.
+///
+/// When there are several /different/ functions with the same linkage
+/// name that are marked as deleted and several different functions
+/// with that very same linkage name that are marked as added, then
+/// this function tries to construct pairs of deleted/added function
+/// with the same function ID (function pretty representation and
+/// linkage name).  With each pair, a diff is computed and added to
+/// the changed_fns_map_ data member.
+///
+/// If at least of pair of deleted/added function is matched then the
+/// function returns true.  Matched functions are removed from the
+/// deleted_fns/added_fns sets.
+///
+/// @param deleted_fns the set of functions (with the same linkage
+/// name) that are considered deleted.
+///
+/// @param added_fns the set of functions with the same linkage name
+/// as in @p deleted_fns that are considered added.
+///
+/// @return true iff at least of pair of deleted/added function is
+/// matched.  Note that matched functions are removed from deleted_fns
+/// and added_fns.
+bool
+corpus_diff::priv::try_build_diffs_from_deleted_and_added_fns
+(functions_set_type& deleted_fns, functions_set_type& added_fns)
+{
+  bool built_some_diffs = false;
+
+  //1 try to see if we can make comparison pairs by looking at
+  //function IDs
+  vector<const function_decl*> deleted_fns_to_delete;
+  vector<const function_decl*> added_fns_to_delete;
+  for (auto& deleted_fn : deleted_fns)
+    {
+      for (auto& added_fn : added_fns)
+	{
+	  interned_string f_fn_id = deleted_fn->get_id();
+	  interned_string s_fn_id = added_fn->get_id();
+	  if (f_fn_id == s_fn_id)
+	    {
+	      deleted_fns_to_delete.push_back(deleted_fn);
+	      added_fns_to_delete.push_back(added_fn);
+	      function_decl_sptr f(const_cast<function_decl*>(deleted_fn),
+				   noop_deleter());
+	      function_decl_sptr s(const_cast<function_decl*>(added_fn),
+				   noop_deleter());
+	      function_decl_diff_sptr d = compute_diff(f, s, get_context());
+	      changed_fns_map_[f_fn_id] = d;
+	      built_some_diffs = true;
+	    }
+	}
+    }
+
+
+  // 2/ TODO: try to see if we can comparison pairs by looking another
+  // kind of key.
+
+
+  // Erase the functions used to build diff nodes from the input.
+  for (auto& f : deleted_fns_to_delete)
+    deleted_fns.erase(f);
+  for (auto& f : added_fns_to_delete)
+    added_fns.erase(f);
+
+  return built_some_diffs;
 }
 
 /// Test if a change reports about a given @ref function_decl that is

@@ -15877,11 +15877,27 @@ candidate_matches_a_canonical_type_hash(const vector<type_base_sptr>&	cncls,
       for (const auto& c : cncls)
 	if (peek_hash_value(type) == peek_hash_value(*c))
 	  if (get_canonical_type_index(type) == get_canonical_type_index(*c))
-	    // We found a potential canonical type which hash matches the
-	    // stashed hash of the candidate type.  Let's compare them to
-	    // see if they match.
-	    if (compare_canonical_type_against_candidate(*c, type))
-	      return c;
+	    {
+	      // We found a potential canonical type which hash matches the
+	      // stashed hash of the candidate type.  Let's compare them to
+	      // see if they match.
+	      if (compare_canonical_type_against_candidate(*c, type))
+		return c;
+#ifdef WITH_DEBUG_SELF_COMPARISON
+	      else
+		{
+		  if (type.get_environment().self_comparison_debug_is_on())
+		    {
+		      std::cerr << "error: wrong canonical type comparison result despite types "
+				<< "having the same hash value: "
+				<< "type:" << std::hex << &type
+				<< ", canonical type candidate:" << std::hex << c
+				<< "hash value: " << std::hex << *peek_hash_value(type)
+				<< std::endl;
+		    }
+		}
+#endif
+	    }
 
       // Let's do the same things, but just considering hash values.
       for (const auto& c : reverse(cncls))

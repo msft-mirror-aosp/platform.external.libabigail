@@ -1150,6 +1150,10 @@ struct corpus_diff::priv
   void
   add_function_to_added_functions(const function_decl* fn);
 
+  bool
+  try_build_diffs_from_deleted_and_added_fns(functions_set_type& deleted_fns,
+					     functions_set_type& added_fns);
+
   void
   apply_supprs_to_added_removed_fns_vars_unreachable_types();
 
