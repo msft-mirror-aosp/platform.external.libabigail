@@ -1,39 +1,41 @@
-<abi-corpus version='2.5'>
+<abi-corpus version='3.0' tracking-non-reachable-types='yes'>
   <elf-function-symbols>
     <elf-symbol name='fun' type='func-type' binding='global-binding' visibility='default-visibility' is-defined='yes'/>
   </elf-function-symbols>
-  <abi-instr address-size='64' path='tests/data/test-read-common/test-PR26568-1.c' comp-dir-path='/home/byby/oracle/src/libabigail-upstream' language='LANG_C11'>
-    <pointer-type-def type-id='type-id-1' size-in-bits='64' hash='df2c7743181ac90a' id='type-id-2'/>
-    <type-decl name='int' size-in-bits='32' hash='09d17c08f594edc7' id='type-id-3'/>
-    <type-decl name='long int' size-in-bits='64' hash='b119fe0931d2ee10#2' id='type-id-4'/>
-    <class-decl name='A' is-struct='yes' visibility='default' size-in-bits='64' filepath='tests/data/test-read-common/test-PR26568-1.c' line='4' column='1' hash='85bacc5cfd89b532' id='type-id-1'>
+  <abi-types>
+    <pointer-type-def type-id='type-id-1' size-in-bits='64' hash='58fcfd48a7141a2c' id='type-id-2'/>
+    <function-type size-in-bits='64' hash='ee5223cc01161063' id='type-id-3'>
+      <parameter type-id='type-id-2'/>
+      <return type-id='type-id-4'/>
+    </function-type>
+    <type-decl name='int' size-in-bits='32' hash='09d17c08f594edc7' id='type-id-5'/>
+    <type-decl name='long int' size-in-bits='64' hash='8aa1e1a2ab2c2d3e' id='type-id-6'/>
+    <class-decl name='A' is-struct='yes' visibility='default' size-in-bits='64' hash='a5926ae1cc9c8bdd' id='type-id-1'>
       <data-member access='public' layout-offset-in-bits='0'>
-        <var-decl name='' type-id='type-id-5' visibility='default'/>
-      </data-member>
-    </class-decl>
-    <class-decl name='__anonymous_struct__' is-struct='yes' visibility='default' size-in-bits='32' is-anonymous='yes' filepath='tests/data/test-read-common/test-PR26568-1.c' line='6' column='1' hash='90b12ea823f31926' id='type-id-6'>
-      <data-member access='public' layout-offset-in-bits='0'>
-        <var-decl name='x' type-id='type-id-3' visibility='default' filepath='tests/data/test-read-common/test-PR26568-1.c' line='7' column='1'/>
-      </data-member>
-    </class-decl>
-    <class-decl name='__anonymous_struct__' is-struct='yes' visibility='default' size-in-bits='64' is-anonymous='yes' filepath='tests/data/test-read-common/test-PR26568-1.c' line='9' column='1' hash='7005b6e65f15bc13#2' id='type-id-7'>
-      <data-member access='public' layout-offset-in-bits='0'>
-        <var-decl name='y' type-id='type-id-4' visibility='default' filepath='tests/data/test-read-common/test-PR26568-1.c' line='10' column='1'/>
-      </data-member>
-    </class-decl>
-    <union-decl name='__anonymous_union__' visibility='default' size-in-bits='64' is-anonymous='yes' filepath='tests/data/test-read-common/test-PR26568-1.c' line='5' column='1' hash='987c4f2d3d1e5b28' id='type-id-5'>
-      <data-member access='public'>
-        <var-decl name='' type-id='type-id-6' visibility='default'/>
-      </data-member>
-      <data-member access='public'>
         <var-decl name='' type-id='type-id-7' visibility='default'/>
       </data-member>
+    </class-decl>
+    <class-decl name='__anonymous_struct__' is-struct='yes' visibility='default' size-in-bits='32' is-anonymous='yes' hash='e0c8465b17ff606a' id='type-id-8'>
+      <data-member access='public' layout-offset-in-bits='0'>
+        <var-decl name='x' type-id='type-id-5' visibility='default'/>
+      </data-member>
+    </class-decl>
+    <class-decl name='__anonymous_struct__' is-struct='yes' visibility='default' size-in-bits='64' is-anonymous='yes' hash='441cdc3fbeb99e28' id='type-id-9'>
+      <data-member access='public' layout-offset-in-bits='0'>
+        <var-decl name='y' type-id='type-id-6' visibility='default'/>
+      </data-member>
+    </class-decl>
+    <union-decl name='__anonymous_union__' visibility='default' size-in-bits='64' is-anonymous='yes' hash='04250dc2eec3c2ff' id='type-id-7'>
+      <data-member access='public'>
+        <var-decl name='' type-id='type-id-8' visibility='default'/>
+      </data-member>
+      <data-member access='public'>
+        <var-decl name='' type-id='type-id-9' visibility='default'/>
+      </data-member>
     </union-decl>
-    <function-decl name='fun' type-id='type-id-8' filepath='tests/data/test-read-common/test-PR26568-1.c' line='15' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='fun'/>
-    <type-decl name='void' id='type-id-9'/>
-    <function-type size-in-bits='64' hash='b972cd108ad3614f' id='type-id-8'>
-      <parameter type-id='type-id-2' filepath='tests/data/test-read-common/test-PR26568-1.c' line='15' column='1'/>
-      <return type-id='type-id-9'/>
-    </function-type>
+    <type-decl name='void' hash='8dcbc64750c3d4e3' id='type-id-4'/>
+  </abi-types>
+  <abi-instr address-size='64' path='tests/data/test-read-common/test-PR26568-1.c' comp-dir-path='/home/byby/oracle/src/libabigail-upstream' language='LANG_C11'>
+      <function-decl name='fun' type-id='type-id-3' mangled-name='fun' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='fun'/>
   </abi-instr>
 </abi-corpus>

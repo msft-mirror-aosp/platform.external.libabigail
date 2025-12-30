@@ -25,19 +25,29 @@ namespace filtering
 {
 
 bool
-has_harmless_name_change(const decl_base_sptr& f,
-			 const decl_base_sptr& s,
-			 const diff_context_sptr& ctxt);
-
-bool union_diff_has_harmless_changes(const diff *d);
+is_harmful_name_change(const decl_base_sptr& f,
+		       const decl_base_sptr& s,
+		       const diff_context_sptr& ctxt);
 
 bool
-has_harmful_name_change(const decl_base_sptr& f,
+is_harmless_name_change(const decl_base_sptr& f,
 			const decl_base_sptr& s,
 			const diff_context_sptr& ctxt);
 
 bool
-has_harmful_name_change(const diff* dif);
+union_diff_is_harmless_change(const diff *d);
+
+bool
+union_diff_is_harmless_change(const union_decl_sptr l,
+			      const union_decl_sptr r);
+
+bool
+is_harmful_name_change(const decl_base_sptr& f,
+			const decl_base_sptr& s,
+			const diff_context_sptr& ctxt);
+
+bool
+is_harmful_name_change(const diff* dif);
 
 bool
 has_virtual_mem_fn_change(const function_decl_diff* diff);

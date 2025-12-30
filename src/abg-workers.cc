@@ -13,10 +13,13 @@
 
 #include <assert.h>
 #include <unistd.h>
-#include <pthread.h>
 #include <queue>
 #include <vector>
 #include <iostream>
+#include <atomic>
+#include <thread>
+#include <mutex>
+#include <condition_variable>
 
 #include "abg-fwd.h"
 #include "abg-internal.h"
@@ -33,6 +36,12 @@ namespace abigail
 
 namespace workers
 {
+
+using std::mutex;
+using std::unique_lock;
+using std::lock_guard;
+using std::condition_variable;
+using std::vector;
 
 /// @defgroup thread_pool Worker Threads
 /// @{
@@ -73,7 +82,7 @@ namespace workers
 /// the underlying processor.
 size_t
 get_number_of_threads()
-{return sysconf(_SC_NPROCESSORS_ONLN);}
+{return std::thread::hardware_concurrency();}
 
 /// The abstraction of a worker thread.
 ///
@@ -81,10 +90,9 @@ get_number_of_threads()
 /// interface type of this worker thread design pattern.
 struct worker
 {
-  pthread_t tid;
+  std::shared_ptr<std::thread> thread;
 
   worker()
-    : tid()
   {}
 
   static queue::priv*
@@ -98,31 +106,29 @@ struct worker
 /// The private data structure of the task queue.
 struct queue::priv
 {
-  // A boolean to say if the user wants to shutdown the worker
-  // threads. guarded by tasks_todo_mutex.
-  // TODO: once we have std::atomic<bool>, use it and reconsider the
-  // synchronization around its reads and writes
-  bool				bring_workers_down;
+  // An atomic boolean to say if the user wants to shutdown the worker
+  // threads.
+  std::atomic<bool>		bring_workers_down;
   // The number of worker threads.
-  size_t			num_workers;
+  size_t			num_workers = 0;
   // A mutex that protects the todo tasks queue from being accessed in
   // read/write by two threads at the same time.
-  pthread_mutex_t		tasks_todo_mutex;
+  mutex			tasks_todo_mutex;
   // The queue condition variable.  This condition is used to make the
   // worker threads sleep until a new task is added to the queue of
   // todo tasks.  Whenever a new task is added to that queue, a signal
   // is sent to all a thread sleeping on this condition variable.
-  pthread_cond_t		tasks_todo_cond;
+  condition_variable		tasks_todo_cond;
   // A mutex that protects the done tasks queue from being accessed in
   // read/write by two threads at the same time.
-  pthread_mutex_t		tasks_done_mutex;
-  // A condition to be signalled whenever there is a task done. That is being
-  // used to wait for tasks completed when bringing the workers down.
-  pthread_cond_t		tasks_done_cond;
+  mutex			tasks_done_mutex;
+  // The queue of staged tasks;
+  std::queue<task_sptr>	tasks_staged;
+  mutex			tasks_staged_mutex;
   // The todo task queue itself.
   std::queue<task_sptr>	tasks_todo;
   // The done task queue itself.
-  std::vector<task_sptr>	tasks_done;
+  vector<task_sptr>		tasks_done;
   // This functor is invoked to notify the user of this queue that a
   // task has been completed and has been added to the done tasks
   // vector.  We call it a notifier.  This notifier is the default
@@ -134,7 +140,7 @@ struct queue::priv
   // default one.
   task_done_notify&		notify;
   // A vector of the worker threads.
-  std::vector<worker>		workers;
+  vector<std::shared_ptr<worker>>workers;
 
   /// A constructor of @ref queue::priv.
   ///
@@ -146,14 +152,20 @@ struct queue::priv
   /// added that task to the vector of the done tasks.
   priv(size_t nb_workers = get_number_of_threads(),
 	      task_done_notify& n = default_notify)
-    : bring_workers_down(),
+    : bring_workers_down(false),
       num_workers(nb_workers),
-      tasks_todo_mutex(),
-      tasks_todo_cond(),
-      tasks_done_mutex(),
-      tasks_done_cond(),
       notify(n)
   {create_workers();}
+
+  /// Test without data race if the tasks TODO queue is empty.
+  ///
+  /// @return true iff the tasks TODO queue is empty.
+  bool
+  tasks_todo_queue_is_empty()
+  {
+    lock_guard<mutex> lock(tasks_todo_mutex);
+    return tasks_todo.empty();
+  }
 
   /// Create the worker threads pool and have all threads sit idle,
   /// waiting for a task to be added to the todo queue.
@@ -162,11 +174,9 @@ struct queue::priv
   {
     for (unsigned i = 0; i < num_workers; ++i)
       {
-	worker w;
-	ABG_ASSERT(pthread_create(&w.tid,
-			      /*attr=*/0,
-			      (void*(*)(void*))&worker::wait_to_execute_a_task,
-			      this) == 0);
+	std::shared_ptr<worker> w(new worker);
+	w->thread.reset(new std::thread(&worker::wait_to_execute_a_task,
+					this));
 	workers.push_back(w);
       }
   }
@@ -188,10 +198,17 @@ struct queue::priv
     if (workers.empty() || !t)
       return false;
 
-    pthread_mutex_lock(&tasks_todo_mutex);
-    tasks_todo.push(t);
-    pthread_mutex_unlock(&tasks_todo_mutex);
-    pthread_cond_signal(&tasks_todo_cond);
+    {
+      unique_lock<mutex> lock(tasks_todo_mutex);
+      if (bring_workers_down)
+	// We were asked to bring the workers down so we shouldn't be
+	// scheduling a new task.
+	return false;
+
+      tasks_todo.push(t);
+      tasks_todo_cond.notify_one();
+    }
+
     return true;
   }
 
@@ -209,6 +226,39 @@ struct queue::priv
     for (tasks_type::const_iterator t = tasks.begin(); t != tasks.end(); ++t)
       is_ok &= schedule_task(*t);
     return is_ok;
+  }
+
+  /// Stages a task to be scheduled later.
+  ///
+  /// Unlike @ref schedule_task(), this function does *NOT* starts the
+  /// execution of the task.
+  ///
+  /// The staged task is put into a FIFO queue until @ref
+  /// schedule_staged_tasks() later schedules them all for execution.
+  ///
+  /// @param task the task to stage.
+  ///
+  /// @return true iff the task could be scheduled.
+  bool
+  stage_task(const task_sptr& task)
+  {
+    unique_lock<mutex> lock(tasks_staged_mutex);
+    tasks_staged.push(task);
+    return true;
+  }
+
+  /// Schedule the tasks that have been previously staged by
+  /// stage_task().
+  void
+  schedule_staged_tasks()
+  {
+    unique_lock<mutex> lock(tasks_staged_mutex);
+    while (!tasks_staged.empty())
+      {
+	task_sptr t = tasks_staged.front();
+	tasks_staged.pop();
+	schedule_task(t);
+      }
   }
 
   /// Signal all the threads (of the pool) which are suspended and
@@ -231,22 +281,18 @@ struct queue::priv
     if (workers.empty())
       return;
 
-    // Wait for the todo list to be empty to make sure all tasks got picked up
-    pthread_mutex_lock(&tasks_todo_mutex);
-    while (!tasks_todo.empty())
-      pthread_cond_wait(&tasks_done_cond, &tasks_todo_mutex);
+    // Signal the workers that we want them down, wake them all up,
+    // let them finish their final task before termination and let
+    // them terminate.
+    {
+      unique_lock<mutex> lock(tasks_todo_mutex);
+      bring_workers_down = true;
+      tasks_todo_cond.notify_all();
+    }
 
-    bring_workers_down = true;
-    pthread_mutex_unlock(&tasks_todo_mutex);
+    for (auto& worker : workers)
+      worker->thread->join();
 
-    // Now that the task queue is empty, drain the workers by waking them up,
-    // letting them finish their final task before termination.
-    ABG_ASSERT(pthread_cond_broadcast(&tasks_todo_cond) == 0);
-
-    for (std::vector<worker>::const_iterator i = workers.begin();
-	 i != workers.end();
-	 ++i)
-      ABG_ASSERT(pthread_join(i->tid, /*thread_return=*/0) == 0);
     workers.clear();
   }
 
@@ -327,6 +373,27 @@ bool
 queue::schedule_tasks(const tasks_type& tasks)
 {return p_->schedule_tasks(tasks);}
 
+/// Stages a task to be scheduled later.
+///
+/// Unlike @ref schedule_task(), this function does *NOT* starts the
+/// execution of the task.
+///
+/// The staged task is put into a FIFO queue until @ref
+/// schedule_staged_tasks() later schedules them all for execution.
+///
+/// @param task the task to stage.
+///
+/// @return true iff the task could be scheduled.
+bool
+queue::stage_task(const task_sptr& task)
+{return p_->stage_task(task);}
+
+/// Schedule the tasks that have been previously staged by
+/// stage_task().
+void
+queue::schedule_staged_tasks()
+{p_->schedule_staged_tasks();}
+
 /// Suspends the current thread until all worker threads finish
 /// performing the tasks they are executing.
 ///
@@ -343,7 +410,7 @@ queue::wait_for_workers_to_complete()
 /// Getter of the vector of tasks that got performed.
 ///
 /// @return the vector of tasks that got performed.
-std::vector<task_sptr>&
+vector<task_sptr>&
 queue::get_completed_tasks() const
 {return p_->tasks_done;}
 
@@ -368,7 +435,7 @@ queue::task_done_notify::operator()(const task_sptr&/*task_done*/)
 /// FIFO manner), execute it, and put the executed task into the set
 /// of done tasks.
 ///
-/// @param t the private data of the "task queue" type to consider.
+/// @param p the private data of the "task queue" type to consider.
 ///
 /// @param return the same private data of the task queue type we got
 /// in argument.
@@ -377,21 +444,23 @@ worker::wait_to_execute_a_task(queue::priv* p)
 {
   while (true)
     {
-      pthread_mutex_lock(&p->tasks_todo_mutex);
-      // If there is no more tasks to perform and the queue is not to
-      // be brought down then wait (sleep) for new tasks to come up.
-      while (p->tasks_todo.empty() && !p->bring_workers_down)
-	pthread_cond_wait(&p->tasks_todo_cond, &p->tasks_todo_mutex);
-
-      // We were woken up.  So maybe there are tasks to perform?  If
-      // so, get a task from the queue ...
       task_sptr t;
-      if (!p->tasks_todo.empty())
-	{
-	  t = p->tasks_todo.front();
-	  p->tasks_todo.pop();
-	}
-      pthread_mutex_unlock(&p->tasks_todo_mutex);
+      {
+	unique_lock<mutex> lock(p->tasks_todo_mutex);
+
+	// If there is no more tasks to perform and the queue is not to
+	// be brought down then wait (sleep) for new tasks to come up.
+	while (p->tasks_todo.empty() && !p->bring_workers_down)
+	  p->tasks_todo_cond.wait(lock);
+
+	// We were woken up.  So maybe there are tasks to perform?  If
+	// so, get a task from the queue ...
+	if (!p->tasks_todo.empty())
+	  {
+	    t = p->tasks_todo.front();
+	    p->tasks_todo.pop();
+	  }
+      }
 
       // If we've got a task to perform then perform it and when it's
       // done then add to the set of tasks that are done.
@@ -407,19 +476,15 @@ worker::wait_to_execute_a_task(queue::priv* p)
 	  // notifier during the notification is running sequentially,
 	  // not in parallel with any other task that was just done
 	  // and that is notifying its listeners.
-	  pthread_mutex_lock(&p->tasks_done_mutex);
-	  p->tasks_done.push_back(t);
-	  p->notify(t);
-	  pthread_mutex_unlock(&p->tasks_done_mutex);
-	  pthread_cond_signal(&p->tasks_done_cond);
+	  {
+	    lock_guard<mutex> lock(p->tasks_done_mutex);
+	    p->tasks_done.push_back(t);
+	    p->notify(t);
+	  }
 	}
 
       // ensure we access bring_workers_down always guarded
-      bool drop_out = false;
-      pthread_mutex_lock(&p->tasks_todo_mutex);
-      drop_out = p->bring_workers_down;
-      pthread_mutex_unlock(&p->tasks_todo_mutex);
-      if (drop_out)
+      if (p->bring_workers_down && p->tasks_todo_queue_is_empty())
 	break;
     }
 

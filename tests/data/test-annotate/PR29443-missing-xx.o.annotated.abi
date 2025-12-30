@@ -1,32 +1,34 @@
-<abi-corpus version='2.5'>
+<abi-corpus version='3.0' tracking-non-reachable-types='yes'>
   <elf-variable-symbols>
     <!-- signed char -->
     <elf-symbol name='a' size='4' type='object-type' binding='global-binding' visibility='default-visibility' is-defined='yes'/>
     <!-- xx -->
     <elf-symbol name='xx' size='4' type='object-type' binding='global-binding' visibility='default-visibility' is-defined='yes'/>
   </elf-variable-symbols>
-  <abi-instr address-size='64' path='PR29443-missing-xx.cc' comp-dir-path='/home/dodji/git/libabigail/fixes/tests/data/test-read-dwarf' language='LANG_C_plus_plus_14'>
-    <!-- int -->
-    <type-decl name='int' size-in-bits='32' hash='09d17c08f594edc7' id='type-id-1'/>
+  <abi-types>
     <!-- struct A -->
-    <class-decl name='A' is-struct='yes' visibility='default' size-in-bits='32' filepath='/home/dodji/git/libabigail/fixes/tests/data/test-read-dwarf/PR29443-missing-xx.cc' line='1' column='1' hash='c8d1c1c97d0501aa' id='type-id-2'>
-      <member-type access='public'>
-        <!-- struct {int xx;} -->
-        <class-decl name='__anonymous_struct__' is-struct='yes' visibility='default' size-in-bits='32' is-anonymous='yes' filepath='/home/dodji/git/libabigail/fixes/tests/data/test-read-dwarf/PR29443-missing-xx.cc' line='2' column='1' hash='550168da8e125843' id='type-id-3'>
+    <class-decl name='A' is-struct='yes' visibility='default' size-in-bits='32' hash='a49e2d9de39299f0' id='type-id-1'>
+      <member-type access='private'>
+        <!-- A::struct {int xx;} -->
+        <class-decl name='__anonymous_struct__' is-struct='yes' visibility='default' size-in-bits='32' is-anonymous='yes' hash='6e95ce5e96cb4d6b' id='type-id-2'>
           <data-member access='public' layout-offset-in-bits='0'>
             <!-- int xx -->
-            <var-decl name='xx' type-id='type-id-1' visibility='default' filepath='/home/dodji/git/libabigail/fixes/tests/data/test-read-dwarf/PR29443-missing-xx.cc' line='3' column='1'/>
+            <var-decl name='xx' type-id='type-id-3' visibility='default'/>
           </data-member>
         </class-decl>
       </member-type>
       <data-member access='public' layout-offset-in-bits='0'>
         <!-- struct {int xx;} -->
-        <var-decl name='' type-id='type-id-3' visibility='default'/>
+        <var-decl name='' type-id='type-id-2' visibility='default'/>
       </data-member>
     </class-decl>
+    <!-- int -->
+    <type-decl name='int' size-in-bits='32' hash='09d17c08f594edc7' id='type-id-3'/>
+  </abi-types>
+  <abi-instr address-size='64' path='PR29443-missing-xx.cc' comp-dir-path='/home/dodji/git/libabigail/fixes/tests/data/test-read-dwarf' language='LANG_C_plus_plus_14'>
     <!-- A a -->
-    <var-decl name='a' type-id='type-id-2' mangled-name='a' visibility='default' filepath='/home/dodji/git/libabigail/fixes/tests/data/test-read-dwarf/PR29443-missing-xx.cc' line='7' column='1' elf-symbol-id='a'/>
+    <var-decl name='a' type-id='type-id-1' mangled-name='a' visibility='default' elf-symbol-id='a'/>
     <!-- int xx -->
-    <var-decl name='xx' type-id='type-id-1' mangled-name='xx' visibility='default' filepath='/home/dodji/git/libabigail/fixes/tests/data/test-read-dwarf/PR29443-missing-xx.cc' line='13' column='1' elf-symbol-id='xx'/>
+    <var-decl name='xx' type-id='type-id-3' mangled-name='xx' visibility='default' elf-symbol-id='xx'/>
   </abi-instr>
 </abi-corpus>

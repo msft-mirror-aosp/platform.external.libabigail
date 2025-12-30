@@ -1,4 +1,4 @@
-<abi-corpus version='2.5'>
+<abi-corpus version='3.0' tracking-non-reachable-types='yes'>
   <elf-needed>
     <dependency name='libc.so.6'/>
   </elf-needed>
@@ -14,75 +14,77 @@
   <elf-variable-symbols>
     <elf-symbol name='_IO_stdin_used' size='4' type='object-type' binding='global-binding' visibility='default-visibility' is-defined='yes'/>
   </elf-variable-symbols>
-  <abi-instr address-size='64' path='PR26261-main.c' comp-dir-path='/home/byby/oracle/src/libabigail-upstream/tests/data/test-read-common/PR26261' language='LANG_C11'>
-    <pointer-type-def type-id='type-id-1' size-in-bits='64' hash='e533f42d1dd4942c' id='type-id-2'/>
-    <pointer-type-def type-id='type-id-2' size-in-bits='64' hash='a93039fe023ed77b' id='type-id-3'/>
-    <function-decl name='wrapped_call' type-id='type-id-4' filepath='/home/byby/oracle/src/libabigail-upstream/tests/data/test-read-common/PR26261/PR26261-main.c' line='18' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='wrapped_call'/>
-    <function-decl name='main' type-id='type-id-5' filepath='/home/byby/oracle/src/libabigail-upstream/tests/data/test-read-common/PR26261/PR26261-main.c' line='27' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='main'/>
-    <function-type size-in-bits='64' hash='98c8271a447e5c5c' id='type-id-5'>
-      <parameter type-id='type-id-6' filepath='/home/byby/oracle/src/libabigail-upstream/tests/data/test-read-common/PR26261/PR26261-main.c' line='27' column='1'/>
-      <parameter type-id='type-id-3' filepath='/home/byby/oracle/src/libabigail-upstream/tests/data/test-read-common/PR26261/PR26261-main.c' line='27' column='1'/>
-      <return type-id='type-id-6'/>
+  <abi-types>
+    <pointer-type-def type-id='type-id-1' size-in-bits='64' hash='f239d86f37a76a88' id='type-id-2'/>
+    <pointer-type-def type-id='type-id-3' size-in-bits='64' hash='dcfa2795360cbbc7' id='type-id-4'/>
+    <type-decl name='char' size-in-bits='8' hash='65b2d157027b431a' id='type-id-5'/>
+    <pointer-type-def type-id='type-id-5' size-in-bits='64' hash='cdcd419d6a95ce45' id='type-id-6'/>
+    <pointer-type-def type-id='type-id-6' size-in-bits='64' hash='65078e72b2c34f86' id='type-id-7'/>
+    <function-type size-in-bits='64' hash='9e71cc3df66bcd05' id='type-id-8'>
+      <parameter type-id='type-id-9'/>
+      <parameter type-id='type-id-7'/>
+      <return type-id='type-id-9'/>
     </function-type>
-    <function-type size-in-bits='64' hash='0e33b279590cf548' id='type-id-4'>
-      <parameter type-id='type-id-7' filepath='/home/byby/oracle/src/libabigail-upstream/tests/data/test-read-common/PR26261/PR26261-main.c' line='18' column='1'/>
-      <parameter type-id='type-id-6' filepath='/home/byby/oracle/src/libabigail-upstream/tests/data/test-read-common/PR26261/PR26261-main.c' line='19' column='1'/>
-      <parameter type-id='type-id-6' filepath='/home/byby/oracle/src/libabigail-upstream/tests/data/test-read-common/PR26261/PR26261-main.c' line='20' column='1'/>
-      <return type-id='type-id-8'/>
+    <function-type size-in-bits='64' hash='dc48f3d0293f0e81' id='type-id-10'>
+      <parameter type-id='type-id-2'/>
+      <return type-id='type-id-11'/>
     </function-type>
-    <function-type size-in-bits='64' hash='d628501fd2223339' id='type-id-9'>
-      <parameter type-id='type-id-6'/>
-      <parameter type-id='type-id-6'/>
-      <return type-id='type-id-8'/>
+    <function-type size-in-bits='64' hash='fef404fa27d449c7' id='type-id-12'>
+      <parameter type-id='type-id-4'/>
+      <return type-id='type-id-11'/>
     </function-type>
-  </abi-instr>
-  <abi-instr address-size='64' path='PR26261-obja.c' comp-dir-path='/home/byby/oracle/src/libabigail-upstream/tests/data/test-read-common/PR26261' language='LANG_C11'>
-    <pointer-type-def type-id='type-id-10' size-in-bits='64' hash='e72864188a40ee23' id='type-id-11'/>
-    <type-decl name='int' size-in-bits='32' hash='09d17c08f594edc7' id='type-id-6'/>
-    <class-decl name='SA' is-struct='yes' visibility='default' size-in-bits='192' filepath='/home/byby/oracle/src/libabigail-upstream/tests/data/test-read-common/PR26261/PR26261-obja.h' line='5' column='1' hash='9b990afb5c849f55' id='type-id-10'>
+    <function-type size-in-bits='64' hash='8fa965688e1dd30d' id='type-id-13'>
+      <parameter type-id='type-id-9'/>
+      <parameter type-id='type-id-9'/>
+      <return type-id='type-id-11'/>
+    </function-type>
+    <function-type size-in-bits='64' hash='093854cc171e3590' id='type-id-14'>
+      <parameter type-id='type-id-9'/>
+      <parameter type-id='type-id-9'/>
+      <parameter type-id='type-id-5'/>
+      <return type-id='type-id-11'/>
+    </function-type>
+    <function-type size-in-bits='64' hash='6ed90abee9f019a7' id='type-id-15'>
+      <parameter type-id='type-id-16'/>
+      <parameter type-id='type-id-9'/>
+      <parameter type-id='type-id-9'/>
+      <return type-id='type-id-11'/>
+    </function-type>
+    <type-decl name='int' size-in-bits='32' hash='09d17c08f594edc7' id='type-id-9'/>
+    <class-decl name='SA' is-struct='yes' visibility='default' size-in-bits='192' hash='8e654932a641da96' id='type-id-1'>
       <data-member access='public' layout-offset-in-bits='0'>
-        <var-decl name='m1' type-id='type-id-6' visibility='default' filepath='/home/byby/oracle/src/libabigail-upstream/tests/data/test-read-common/PR26261/PR26261-obja.h' line='7' column='1'/>
+        <var-decl name='m1' type-id='type-id-9' visibility='default'/>
       </data-member>
       <data-member access='public' layout-offset-in-bits='64'>
-        <var-decl name='m2' type-id='type-id-12' visibility='default' filepath='/home/byby/oracle/src/libabigail-upstream/tests/data/test-read-common/PR26261/PR26261-obja.h' line='8' column='1'/>
+        <var-decl name='m2' type-id='type-id-17' visibility='default'/>
       </data-member>
       <data-member access='public' layout-offset-in-bits='128'>
-        <var-decl name='m3' type-id='type-id-13' visibility='default' filepath='/home/byby/oracle/src/libabigail-upstream/tests/data/test-read-common/PR26261/PR26261-obja.h' line='9' column='1'/>
+        <var-decl name='m3' type-id='type-id-18' visibility='default'/>
       </data-member>
     </class-decl>
-    <typedef-decl name='fn_ptr_type_a2_t' type-id='type-id-7' size-in-bits='64' filepath='/home/byby/oracle/src/libabigail-upstream/tests/data/test-read-common/PR26261/PR26261-obja.h' line='3' column='1' hash='fd7a63c0c6c822c4' id='type-id-13'/>
-    <typedef-decl name='fn_ptr_type_a_t' type-id='type-id-7' size-in-bits='64' filepath='/home/byby/oracle/src/libabigail-upstream/tests/data/test-read-common/PR26261/PR26261-obja.h' line='1' column='1' hash='fd7a63c0c6c822c4' id='type-id-12'/>
-    <pointer-type-def type-id='type-id-9' size-in-bits='64' hash='fd7a63c0c6c822c4' id='type-id-7'/>
-    <function-decl name='fun_obja' type-id='type-id-14' filepath='/home/byby/oracle/src/libabigail-upstream/tests/data/test-read-common/PR26261/PR26261-obja.c' line='4' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='fun_obja'/>
-    <type-decl name='void' id='type-id-8'/>
-    <function-type size-in-bits='64' hash='2f4710ba7d22eb0d' id='type-id-14'>
-      <parameter type-id='type-id-11' filepath='/home/byby/oracle/src/libabigail-upstream/tests/data/test-read-common/PR26261/PR26261-obja.c' line='4' column='1'/>
-      <return type-id='type-id-8'/>
-    </function-type>
-  </abi-instr>
-  <abi-instr address-size='64' path='PR26261-objb.c' comp-dir-path='/home/byby/oracle/src/libabigail-upstream/tests/data/test-read-common/PR26261' language='LANG_C11'>
-    <pointer-type-def type-id='type-id-15' size-in-bits='64' hash='1c528604c7619d6a' id='type-id-16'/>
-    <type-decl name='char' size-in-bits='8' hash='65b2d157027b431a' id='type-id-1'/>
-    <class-decl name='SB' is-struct='yes' visibility='default' size-in-bits='128' filepath='/home/byby/oracle/src/libabigail-upstream/tests/data/test-read-common/PR26261/PR26261-objb.h' line='3' column='1' hash='e15b1c974b379d2b' id='type-id-15'>
+    <class-decl name='SB' is-struct='yes' visibility='default' size-in-bits='128' hash='306297b340e4bd85' id='type-id-3'>
       <data-member access='public' layout-offset-in-bits='0'>
-        <var-decl name='m1' type-id='type-id-6' visibility='default' filepath='/home/byby/oracle/src/libabigail-upstream/tests/data/test-read-common/PR26261/PR26261-objb.h' line='5' column='1'/>
+        <var-decl name='m1' type-id='type-id-9' visibility='default'/>
       </data-member>
       <data-member access='public' layout-offset-in-bits='64'>
-        <var-decl name='m2' type-id='type-id-17' visibility='default' filepath='/home/byby/oracle/src/libabigail-upstream/tests/data/test-read-common/PR26261/PR26261-objb.h' line='6' column='1'/>
+        <var-decl name='m2' type-id='type-id-19' visibility='default'/>
       </data-member>
     </class-decl>
-    <typedef-decl name='fn_ptr_type_b_t' type-id='type-id-18' size-in-bits='64' filepath='/home/byby/oracle/src/libabigail-upstream/tests/data/test-read-common/PR26261/PR26261-objb.h' line='1' column='1' hash='fd7a63c0c6c822c4' id='type-id-17'/>
-    <pointer-type-def type-id='type-id-19' size-in-bits='64' hash='fd7a63c0c6c822c4' id='type-id-18'/>
-    <function-decl name='fun_objb' type-id='type-id-20' filepath='/home/byby/oracle/src/libabigail-upstream/tests/data/test-read-common/PR26261/PR26261-objb.c' line='4' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='fun_objb'/>
-    <function-type size-in-bits='64' hash='8409dc71edf4c40d' id='type-id-20'>
-      <parameter type-id='type-id-16' filepath='/home/byby/oracle/src/libabigail-upstream/tests/data/test-read-common/PR26261/PR26261-objb.c' line='4' column='1'/>
-      <return type-id='type-id-8'/>
-    </function-type>
-    <function-type size-in-bits='64' hash='2f64d1bea23cdc9f' id='type-id-19'>
-      <parameter type-id='type-id-6'/>
-      <parameter type-id='type-id-6'/>
-      <parameter type-id='type-id-1'/>
-      <return type-id='type-id-8'/>
-    </function-type>
+    <typedef-decl name='fn_ptr_type_a2_t' type-id='type-id-16' size-in-bits='64' hash='09f5b705cb357d34' id='type-id-18'/>
+    <typedef-decl name='fn_ptr_type_a_t' type-id='type-id-16' size-in-bits='64' hash='09f5b705cb357d34' id='type-id-17'/>
+    <typedef-decl name='fn_ptr_type_b_t' type-id='type-id-20' size-in-bits='64' hash='1bb6663767c06ae0' id='type-id-19'/>
+    <type-decl name='void' hash='8dcbc64750c3d4e3' id='type-id-11'/>
+    <pointer-type-def type-id='type-id-13' size-in-bits='64' hash='09f5b705cb357d34' id='type-id-16'/>
+    <pointer-type-def type-id='type-id-14' size-in-bits='64' hash='1bb6663767c06ae0' id='type-id-20'/>
+  </abi-types>
+  <abi-instr address-size='64' path='PR26261-main.c' comp-dir-path='/home/byby/oracle/src/libabigail-upstream/tests/data/test-read-common/PR26261' language='LANG_C11'>
+      <function-decl name='main' type-id='type-id-8' mangled-name='main' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='main'/>
+      <function-decl name='wrapped_call' type-id='type-id-15' mangled-name='wrapped_call' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='wrapped_call'/>
+  </abi-instr>
+  <abi-instr address-size='64' path='PR26261-obja.c' comp-dir-path='/home/byby/oracle/src/libabigail-upstream/tests/data/test-read-common/PR26261' language='LANG_C11'>
+      <function-decl name='fun_obja' type-id='type-id-10' mangled-name='fun_obja' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='fun_obja'/>
+  </abi-instr>
+  <abi-instr address-size='64' path='PR26261-objb.c' comp-dir-path='/home/byby/oracle/src/libabigail-upstream/tests/data/test-read-common/PR26261' language='LANG_C11'>
+      <function-decl name='fun_objb' type-id='type-id-12' mangled-name='fun_objb' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='fun_objb'/>
   </abi-instr>
 </abi-corpus>

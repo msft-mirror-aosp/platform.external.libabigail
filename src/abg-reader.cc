@@ -107,6 +107,9 @@ read_symbol_db_from_input(reader&			rdr,
 static translation_unit_sptr
 read_translation_unit_from_input(fe_iface& rdr);
 
+static xmlNodePtr
+go_to_abi_types_node_from_input(fe_iface& rdr);
+
 static decl_base_sptr
 build_ir_node_for_void_type(reader& rdr);
 
@@ -123,6 +126,15 @@ resolve_symbol_aliases(string_elf_symbols_map_sptr&	fn_syms,
 		       string_strings_map_type&	non_resolved_var_sym_aliases);
 static bool
 read_type_hash_and_cti(xmlNodePtr, uint64_t& hash, uint64_t& cti);
+
+static bool
+read_artifact_native_offset(xmlNodePtr, uint64_t& offset);
+
+static offset_t
+read_artifact_native_offset(xmlNodePtr node, type_or_decl_base_sptr artifact);
+
+static void
+read_common_type_info(reader& rdr, xmlNodePtr node, type_base_sptr type);
 
 static bool
 node_is_member_function(xmlNodePtr node,
@@ -176,7 +188,9 @@ public:
   xml_node_decl_base_sptr_map				m_xml_node_decl_map;
   xml::reader_sptr					m_reader;
   xmlNodePtr						m_corp_node;
+  xmlNodePtr						m_abi_types_node;
   deque<shared_ptr<decl_base> >			m_decls_stack;
+  translation_unit*					m_translation_unit;
   bool							m_tracking_non_reachable_types;
   bool							m_drop_undefined_syms;
   bool							m_drop_hash_value;
@@ -193,10 +207,14 @@ public:
     : fe_iface("", env),
       m_reader(reader),
       m_corp_node(),
+      m_abi_types_node(),
+      m_translation_unit(),
       m_tracking_non_reachable_types(),
       m_drop_undefined_syms(),
       m_drop_hash_value()
   {
+    // By default, all types found in the ABIXML file are loaded so no
+    // need to set it up here.
   }
 
   /// The initializer of the reader.
@@ -309,6 +327,14 @@ public:
   set_corpus_node(xmlNodePtr node)
   {m_corp_node = node;}
 
+  xmlNodePtr
+  get_abi_types_node() const
+  {return m_abi_types_node;}
+
+  void
+  set_abi_types_node(xmlNodePtr node)
+  {m_abi_types_node = node;}
+
   const string_xml_node_map&
   get_id_xml_node_map() const
   {return m_id_xml_node_map;}
@@ -388,7 +414,7 @@ public:
   scope_decl_sptr
   get_scope_for_node(xmlNodePtr node);
 
-  scope_decl*
+  scope_decl_sptr
   get_scope_ptr_for_node(xmlNodePtr node);
 
   // This is defined later, after build_type() is declared, because it
@@ -480,14 +506,14 @@ public:
   }
 
   /// Return the current lexical scope.
-  scope_decl*
+  scope_decl_sptr
   get_cur_scope() const
   {
     shared_ptr<decl_base> cur_decl = get_cur_decl();
 
     if (dynamic_cast<scope_decl*>(cur_decl.get()))
       // The current decl is a scope_decl, so it's our lexical scope.
-      return dynamic_pointer_cast<scope_decl>(cur_decl).get();
+      return dynamic_pointer_cast<scope_decl>(cur_decl);
     else if (cur_decl)
       // The current decl is not a scope_decl, so our lexical scope is
       // the scope of this decl.
@@ -505,22 +531,14 @@ public:
     return m_decls_stack.back();
   }
 
+  void
+  set_translation_unit(translation_unit* tu)
+  {m_translation_unit = tu;}
+
   translation_unit*
   get_translation_unit()
   {
-    const global_scope* global = 0;
-    for (deque<shared_ptr<decl_base> >::reverse_iterator i =
-	   m_decls_stack.rbegin();
-	 i != m_decls_stack.rend();
-	 ++i)
-      if (decl_base_sptr d = *i)
-	if ((global = get_global_scope(d)))
-	  break;
-
-    if (global)
-      return global->get_translation_unit();
-
-    return 0;
+    return m_translation_unit;
   }
 
   /// Test if a given type is from the current translation unit.
@@ -795,7 +813,7 @@ public:
   void
   push_decl_to_scope(const decl_base_sptr& decl, xmlNodePtr node)
   {
-    scope_decl* scope = nullptr;
+    scope_decl_sptr scope = nullptr;
     scope = get_scope_ptr_for_node(node);
     return push_decl_to_scope(decl, scope);
   }
@@ -807,7 +825,7 @@ public:
   /// @param decl the newly created declaration.
   void
   push_decl_to_scope(const decl_base_sptr& decl,
-		     scope_decl* scope)
+		     scope_decl_sptr scope)
   {
     ABG_ASSERT(decl);
     if (scope)
@@ -835,7 +853,7 @@ public:
   bool
   push_and_key_type_decl(const type_base_sptr& t,
 			 const string& id,
-			 scope_decl* scope)
+			 scope_decl_sptr scope)
   {
     decl_base_sptr decl = get_type_declaration(t);
     ABG_ASSERT(decl);
@@ -867,7 +885,7 @@ public:
     if (!read_type_id_string(node, id))
       return false;
 
-    scope_decl* scope = nullptr;
+    scope_decl_sptr scope;
     if (add_to_current_scope && !is_unique_type(t))
       scope = get_scope_ptr_for_node(node);
     return push_and_key_type_decl(t, id, scope);
@@ -909,13 +927,6 @@ public:
 	  return true;
 
     return false;
-  }
-
-  /// Clear all the data that must absolutely be cleared at the end of
-  /// the parsing of a translation unit.
-  void
-  clear_per_translation_unit_data()
-  {
   }
 
 #ifdef WITH_DEBUG_SELF_COMPARISON
@@ -1016,12 +1027,7 @@ public:
 	cn_timer.start();
       }
 
-
-    ir::hash_and_canonicalize_types(m_types_to_canonicalize.begin(),
-				    m_types_to_canonicalize.end(),
-				    [](const vector<type_base_sptr>::const_iterator& i)
-				    {return *i;},
-				    do_log());
+    ir::perform_type_canonicalization(m_types_to_canonicalize, do_log());
 
     if (do_log())
       {
@@ -1236,6 +1242,16 @@ public:
 	  corp.set_soname(reinterpret_cast<char*>(soname_str.get()));
       }
 
+    if (options().load_all_types)
+      get_environment().load_all_types(true);
+    else
+      get_environment().load_all_types(false);
+
+    if (options().load_undefined_interfaces)
+      get_environment().analyze_exported_interfaces_only(false);
+    else
+      get_environment().analyze_exported_interfaces_only(true);
+
     // If the corpus element node has children nodes, make
     // get_corpus_node() returns the first child element node of
     // the corpus element that *needs* to be processed.
@@ -1319,6 +1335,10 @@ public:
 	t.start();
       }
 
+    // Get the abi-types node
+
+    m_abi_types_node = go_to_abi_types_node_from_input(*this);
+
     // Read the translation units.
     while (read_translation_unit_from_input(*this))
       ;
@@ -1334,13 +1354,10 @@ public:
     if (tracking_non_reachable_types())
       {
 	bool is_tracking_non_reachable_types = false;
+	// For now, this is not used.
 	read_tracking_non_reachable_types(node, is_tracking_non_reachable_types);
-
-	ABG_ASSERT
-	  (corp.recording_types_reachable_from_public_interface_supported()
-	   == is_tracking_non_reachable_types);
+	tracking_non_reachable_types(is_tracking_non_reachable_types);
       }
-
 
     if (do_log())
       {
@@ -1395,6 +1412,12 @@ public:
 
     corpus()->sort_functions();
     corpus()->sort_variables();
+    if (options().load_all_types)
+      // If we were instructed to load all types, then we need to
+      // detect which types are reachable or not.  Otherwise, by
+      // default, all types are considered reachable.  This makes the
+      // loading faster.
+      corpus()->mark_non_reachable_types();
 
     if (do_log())
       {
@@ -1505,6 +1528,7 @@ static bool	read_static(xmlNodePtr, bool&);
 static bool	read_offset_in_bits(xmlNodePtr, size_t&);
 static bool	read_cdtor_const(xmlNodePtr, bool&, bool&, bool&);
 static bool	read_is_virtual(xmlNodePtr, bool&);
+static bool	read_vtable_offset(xmlNodePtr, ssize_t&);
 static bool	read_is_struct(xmlNodePtr, bool&);
 static bool	read_is_anonymous(xmlNodePtr, bool&);
 static bool	read_elf_symbol_type(xmlNodePtr, elf_symbol::type&);
@@ -1762,6 +1786,11 @@ reader::get_scope_for_node(xmlNodePtr node, access_specifier& access)
 	    get_or_read_and_add_translation_unit(*this, parent);
 	  return tu->get_global_scope();
 	}
+      else if (xmlStrEqual(parent->name, BAD_CAST("abi-types")))
+	{
+	  translation_unit *tu = get_translation_unit();
+	  return tu->get_global_scope();
+	}
 
       access_specifier a = no_access;
       scope_decl_sptr parent_scope = get_scope_for_node(parent, a);
@@ -1822,12 +1851,12 @@ reader::get_scope_for_node(xmlNodePtr node)
 ///
 /// @return the IR node representing the scope of the IR node for the
 /// XML node given in argument.
-scope_decl*
+scope_decl_sptr
 reader::get_scope_ptr_for_node(xmlNodePtr node)
 {
   scope_decl_sptr scope = get_scope_for_node(node);
   if (scope)
-    return scope.get();
+    return scope;
   return nullptr;
 }
 
@@ -1968,6 +1997,16 @@ read_translation_unit(fe_iface& iface, translation_unit& tu, xmlNodePtr node)
       || !rdr.corpus())
     walk_xml_node_to_map_type_ids(rdr, node);
 
+  if (rdr.get_abi_types_node())
+    {
+      for (xmlNodePtr n = xmlFirstElementChild(rdr.get_abi_types_node());
+	   n;
+	   n = xmlNextElementSibling(n))
+	  handle_element_node(rdr, n, /*add_decl_to_scope=*/true);
+
+      rdr.set_abi_types_node(nullptr);
+    }
+
   for (xmlNodePtr n = xmlFirstElementChild(node);
        n;
        n = xmlNextElementSibling(n))
@@ -1978,8 +2017,6 @@ read_translation_unit(fe_iface& iface, translation_unit& tu, xmlNodePtr node)
   xml::reader_sptr reader = rdr.get_libxml_reader();
   if (!reader)
     return false;
-
-  rdr.clear_per_translation_unit_data();
 
   return true;
 }
@@ -2018,11 +2055,37 @@ get_or_read_and_add_translation_unit(reader& rdr, xmlNodePtr node)
   tu.reset(new translation_unit(rdr.get_environment(), tu_path));
   if (corp && !corp->is_empty())
     corp->add(tu);
+  rdr.set_translation_unit(tu.get());
 
   if (read_translation_unit(rdr, *tu, node))
     return tu;
 
   return translation_unit_sptr();
+}
+
+/// Get the XML Node for the "abi-types" element.
+///
+/// @param iface the reader interface to use.
+///
+/// @return the resulting XML node, or nullptr if none was found.
+static xmlNodePtr
+go_to_abi_types_node_from_input(fe_iface& iface)
+{
+  abixml::reader& rdr = dynamic_cast<abixml::reader&>(iface);
+
+  xmlNodePtr node = nullptr;
+
+  for (xmlNodePtr n = rdr.get_corpus_node();
+       n;
+       n = xmlNextElementSibling(n))
+    {
+      if (!xmlStrEqual(n->name, BAD_CAST("abi-types")))
+	continue;
+      node = n;
+      break;
+    }
+
+  return node;
 }
 
 /// Parse the input XML document containing a translation_unit,
@@ -2069,7 +2132,7 @@ read_translation_unit_from_input(fe_iface& iface)
 	   n = xmlNextElementSibling(n))
 	{
 	  if (!xmlStrEqual(n->name, BAD_CAST("abi-instr")))
-	    return nil;
+	    continue;
 	  node = n;
 	  break;
 	}
@@ -2546,10 +2609,58 @@ read_corpus_group_from_input(fe_iface& iface)
 /// This is non-null iff the parsing resulted in a valid corpus group.
 corpus_group_sptr
 read_corpus_group_from_abixml(std::istream* in,
-			      environment&  env)
+			      environment&  env,
+			      const fe_iface::options_type& opts)
 {
-  fe_iface_sptr rdr = create_reader(in, env);
+  fe_iface_sptr rdr = create_reader(in, env, opts);
   return read_corpus_group_from_input(*rdr);
+}
+
+/// De-serialize an ABI corpus group from an input XML document which
+/// root node is 'abi-corpus-group'.
+///
+/// @param in the input stream to read the XML document from.
+///
+/// @param env the environment to use.  Note that the life time of
+/// this environment must be greater than the lifetime of the
+/// resulting corpus as the corpus uses resources that are allocated
+/// in the environment.
+///
+/// @return the resulting corpus group de-serialized from the parsing.
+/// This is non-null iff the parsing resulted in a valid corpus group.
+corpus_group_sptr
+read_corpus_group_from_abixml(std::istream* in, environment& env)
+{
+  abigail::fe_iface::options_type options(env);
+  return read_corpus_group_from_abixml(in, env, options);
+}
+
+/// De-serialize an ABI corpus group from an XML document file which
+/// root node is 'abi-corpus-group'.
+///
+/// @param path the path to the input file to read the XML document
+/// from.
+///
+/// @param env the environment to use.  Note that the life time of
+/// this environment must be greater than the lifetime of the
+/// resulting corpus as the corpus uses resources that are allocated
+/// in the environment.
+///
+/// @param opts the options to be used by the abigail::fe_iface used
+/// to read the @ref corpus_group.  The options object needs to be
+/// created by the caller code.
+///
+/// @return the resulting corpus group de-serialized from the parsing.
+/// This is non-null if the parsing successfully resulted in a corpus
+/// group.
+corpus_group_sptr
+read_corpus_group_from_abixml_file(const string& path,
+				   environment&  env,
+				   const fe_iface::options_type& opts)
+{
+  fe_iface_sptr rdr = create_reader(path, env, opts);
+  corpus_group_sptr group = read_corpus_group_from_input(*rdr);
+  return group;
 }
 
 /// De-serialize an ABI corpus group from an XML document file which
@@ -2567,12 +2678,37 @@ read_corpus_group_from_abixml(std::istream* in,
 /// This is non-null if the parsing successfully resulted in a corpus
 /// group.
 corpus_group_sptr
-read_corpus_group_from_abixml_file(const string& path,
-				   environment&  env)
+read_corpus_group_from_abixml_file(const string& path, environment& env)
 {
-    fe_iface_sptr rdr = create_reader(path, env);
-    corpus_group_sptr group = read_corpus_group_from_input(*rdr);
-    return group;
+  const fe_iface::options_type opts(env);
+  return read_corpus_group_from_abixml_file(path, env, opts);
+}
+
+/// Parse an ABI instrumentation file (in XML format) at a given path.
+///
+/// @param input_file a path to the file containing the xml document
+/// to parse.
+///
+/// @param env the environment to use.
+///
+/// @param opts the options used by the @ref abigail::fe_iface used to
+/// read the translation unit's ABIXML.  The options object needs to
+/// be created by the caller code.
+///
+/// @return the translation unit resulting from the parsing upon
+/// successful completion, or nil.
+translation_unit_sptr
+read_translation_unit_from_file(const string&	input_file,
+				environment&	env,
+				const fe_iface::options_type& opts)
+{
+  reader rdr(xml::new_reader_from_file(input_file), env);
+  rdr.options() = opts;
+  translation_unit_sptr tu = read_translation_unit_from_input(rdr);
+  env.canonicalization_is_done(false);
+  rdr.perform_type_canonicalization();
+  env.canonicalization_is_done(true);
+  return tu;
 }
 
 /// Parse an ABI instrumentation file (in XML format) at a given path.
@@ -2585,15 +2721,11 @@ read_corpus_group_from_abixml_file(const string& path,
 /// @return the translation unit resulting from the parsing upon
 /// successful completion, or nil.
 translation_unit_sptr
-read_translation_unit_from_file(const string&	input_file,
-				environment&	env)
+read_translation_unit_from_file(const std::string&	file_path,
+				environment&		env)
 {
-  reader rdr(xml::new_reader_from_file(input_file), env);
-  translation_unit_sptr tu = read_translation_unit_from_input(rdr);
-  env.canonicalization_is_done(false);
-  rdr.perform_type_canonicalization();
-  env.canonicalization_is_done(true);
-  return tu;
+  fe_iface::options_type o(env);
+  return read_translation_unit_from_file(file_path, env, o);
 }
 
 /// Parse an ABI instrumentation file (in XML format) from an
@@ -2604,13 +2736,19 @@ read_translation_unit_from_file(const string&	input_file,
 ///
 /// @param env the environment to use.
 ///
+/// @param opts the options used by the @ref abigail::fe_iface used to
+/// read the translation unit's ABIXML.  The options object needs to
+/// be created by the caller code.
+///
 /// @return the translation unit resulting from the parsing upon
 /// successful completion, or nil.
 translation_unit_sptr
 read_translation_unit_from_buffer(const string&	buffer,
-				  environment&	env)
+				  environment&	env,
+				  const fe_iface::options_type& opts)
 {
   reader rdr(xml::new_reader_from_buffer(buffer), env);
+  rdr.options() = opts;
   translation_unit_sptr tu = read_translation_unit_from_input(rdr);
   env.canonicalization_is_done(false);
   rdr.perform_type_canonicalization();
@@ -2687,9 +2825,8 @@ handle_element_node(reader& rdr, xmlNodePtr node,
 	  corpus_sptr abi = rdr.corpus();
 	  ABG_ASSERT(abi);
 	  bool is_non_reachable_type = false;
+	  // For now, this is not used.
 	  read_is_non_reachable_type(node, is_non_reachable_type);
-	  if (!is_non_reachable_type)
-	    abi->record_type_as_reachable_from_public_interfaces(*t);
 	}
     }
 
@@ -2739,13 +2876,13 @@ read_location(const reader&	rdr,
 ///
 ///@param rdr the current parsing context
 ///
+///@param node the XML node to read the location from.
+///
 ///@param loc the resulting location.
 ///
 /// @return true upon sucessful parsing, false otherwise.
 static bool
-read_artificial_location(const reader& rdr,
-			 xmlNodePtr node,
-			 location& loc)
+read_artificial_location(const reader& rdr, xmlNodePtr node, location& loc)
 {
   if (!node)
     return false;
@@ -2753,7 +2890,11 @@ read_artificial_location(const reader& rdr,
    string file_path;
    size_t line = 0, column = 0;
 
-   line = node->line;
+   line = xmlGetLineNo(node);
+
+   if (line == (size_t) -1)
+     // We could not get the line number.
+     return false;
 
    if (node->doc)
        file_path = reinterpret_cast<const char*>(node->doc->URL);
@@ -2762,7 +2903,8 @@ read_artificial_location(const reader& rdr,
    loc =
      c.get_translation_unit()->get_loc_mgr().create_new_location(file_path,
 								 line, column);
-   loc.set_is_artificial(true);
+   loc.set_artificial(line);
+
    return true;
 }
 
@@ -3166,6 +3308,27 @@ read_is_virtual(xmlNodePtr node, bool& is_virtual)
   return false;
 }
 
+/// Read the "vtable-offset" attribute of the current XML node.
+///
+/// @param node the XML node to read the attribute from.
+///
+/// @param vtable_offset output parameter. Set to the value of the
+/// "vtable-offset" attribute iff the function returns true.
+///
+/// @return true if the "vtable-offset" attribute was found and its
+/// value was read successfully, false otherwise.
+static bool
+read_vtable_offset(xmlNodePtr node, ssize_t& vtable_offset)
+{
+  if (xml_char_sptr s =
+      XML_NODE_GET_ATTRIBUTE(node, "vtable-offset"))
+    {
+      vtable_offset = atoi(CHAR_STR(s));
+      return true;
+    }
+  return false;
+}
+
 /// Read the 'is-struct' attribute.
 ///
 /// @param node the xml node to read the attribute from.
@@ -3393,9 +3556,72 @@ read_type_hash_and_cti(xmlNodePtr node, uint64_t& hash, uint64_t& cti)
 	  return true;
 	}
     }
+
   return false;
 }
 
+/// Read the native offset from a given artifact XML Node.
+///
+/// @param node the artifact node to consider.
+///
+/// @param offset output parameter.  The resulting offset read iff the
+/// function returns true.
+static bool
+read_artifact_native_offset(xmlNodePtr node, uint64_t& offset)
+{
+  if (xml_char_sptr s = XML_NODE_GET_ATTRIBUTE(node, "native-offset"))
+    {
+      string str = CHAR_STR(s);
+      char *endptr = nullptr;
+      uint64_t off = strtoull(str.c_str(), &endptr, 16);
+      if (*endptr == '\0')
+	{
+	  offset = off;
+	  return true;
+	}
+    }
+  return false;
+}
+
+/// Read the native offset from a given XML Node and set it to a given
+/// artifact.
+///
+/// @param node the artifact node to consider.
+///
+/// @param artifact the artifact to set the read offset to.
+///
+/// @return offset_t return the read offset.
+static offset_t
+read_artifact_native_offset(xmlNodePtr node, type_or_decl_base_sptr artifact)
+{
+  uint64_t o = 0;
+  if (read_artifact_native_offset(node, o))
+    {
+      artifact->set_native_offset(o);
+      return artifact->get_native_offset();
+    }
+  return offset_t();
+}
+
+/// Read the common type information from the XML element node
+/// representing an artifact.
+///
+/// @param rdr the ABIXML reader to use.
+///
+/// @param node the XML node read from.
+///
+/// @param type the type artifact to stick the information read from
+/// @p node to.
+static void
+read_common_type_info(reader& rdr, xmlNodePtr node, type_base_sptr type)
+{
+  if (!node || !type)
+    return;
+
+  rdr.read_hash_and_stash(node, type);
+  read_artifact_native_offset(node, type);
+  maybe_set_artificial_location(rdr, node, type);
+}
 #ifdef WITH_DEBUG_SELF_COMPARISON
 /// Associate a type-id string with the type that was constructed from
 /// it.
@@ -4054,7 +4280,7 @@ build_function_decl(reader&		rdr,
       // At this point fn_type *must* be non-nil.
       ABG_ASSERT(fn_type);
       fn_type->set_is_artificial(true);
-      rdr.read_hash_and_stash(node, fn_type);
+      read_common_type_info(rdr, node, fn_type);
     }
 
   function_decl_sptr fn_decl(as_method_decl
@@ -4070,7 +4296,7 @@ build_function_decl(reader&		rdr,
   if (add_to_current_scope)
     {
       if (as_method_decl)
-	rdr.push_decl_to_scope(fn_decl, as_method_decl.get());
+	rdr.push_decl_to_scope(fn_decl, as_method_decl);
       else
 	rdr.push_decl_to_scope(fn_decl, node);
     }
@@ -4163,13 +4389,16 @@ build_member_function_decl(reader&		rdr,
 	{
 	  method_decl_sptr m = is_method_decl(f);
 	  ABG_ASSERT(m);
-	  set_member_access_specifier(m, access);
-	  set_member_is_static(m, is_static);
-	  if (is_virtual)
-	    set_member_function_virtuality(m, is_virtual, vtable_offset);
-	  set_member_function_is_ctor(m, is_ctor);
-	  set_member_function_is_dtor(m, is_dtor);
-	  set_member_function_is_const(m, is_const);
+	  if (add_to_current_scope)
+	    {
+	      set_member_access_specifier(m, access);
+	      set_member_is_static(m, is_static);
+	      if (is_virtual)
+		set_member_function_virtuality(m, is_virtual, vtable_offset);
+	      set_member_function_is_ctor(m, is_ctor);
+	      set_member_function_is_dtor(m, is_dtor);
+	      set_member_function_is_const(m, is_const);
+	    }
 	  rdr.map_xml_node_to_decl(p, m);
 	  result = m;
 	  break;
@@ -4247,7 +4476,7 @@ function_is_suppressed(const reader& rdr, xmlNodePtr node)
   if (xml_char_sptr s = XML_NODE_GET_ATTRIBUTE(node, "mangled-name"))
     flinkage_name = xml::unescape_xml_string(CHAR_STR(s));
 
-  scope_decl* scope = rdr.get_cur_scope();
+  auto scope = rdr.get_cur_scope();
 
   string qualified_name = build_qualified_name(scope, fname);
 
@@ -4275,7 +4504,7 @@ type_is_suppressed(const reader& rdr, xmlNodePtr node)
   location type_location;
   read_location(rdr, node, type_location);
 
-  scope_decl* scope = rdr.get_cur_scope();
+  auto scope = rdr.get_cur_scope();
 
   string qualified_name = build_qualified_name(scope, type_name);
 
@@ -4327,7 +4556,7 @@ variable_is_suppressed(const reader& rdr, xmlNodePtr node)
   if (xml_char_sptr s = XML_NODE_GET_ATTRIBUTE(node, "mangled-name"))
     linkage_name = xml::unescape_xml_string(CHAR_STR(s));
 
-  scope_decl* scope = rdr.get_cur_scope();
+  auto scope = rdr.get_cur_scope();
 
   string qualified_name = build_qualified_name(scope, name);
 
@@ -4346,7 +4575,7 @@ variable_is_suppressed(const reader& rdr, xmlNodePtr node)
 /// @return true iff the variable @p v is suppressed.
 static bool
 variable_is_suppressed(const reader& rdr,
-		       const scope_decl* scope,
+		       const scope_decl_sptr scope,
 		       const var_decl& v)
 {
   string qualified_name = build_qualified_name(scope, v.get_name());
@@ -4567,11 +4796,11 @@ build_type_decl(reader&		rdr,
   else
     decl.reset(new type_decl(env, name, size_in_bits,
 			     alignment_in_bits, loc));
-  maybe_set_artificial_location(rdr, node, decl);
+
   decl->set_is_anonymous(is_anonymous);
   decl->set_is_declaration_only(is_decl_only);
-  // Read the stash from the XML node and stash it into the IR node.
-  rdr.read_hash_and_stash(node, decl);
+
+  read_common_type_info(rdr, node, is_type(decl));
 
   if (rdr.push_and_key_type_decl(decl, node, add_to_current_scope))
     {
@@ -4667,12 +4896,12 @@ build_qualified_type_decl(reader&	rdr,
   else
     {
       decl.reset(new qualified_type_def(underlying_type, cv, loc));
-      maybe_set_artificial_location(rdr, node, decl);
+
       rdr.push_and_key_type_decl(decl, node, add_to_current_scope);
       RECORD_ARTIFACT_AS_USED_BY(rdr, underlying_type, decl);
     }
-  // Read the stash from the XML node and stash it into the IR node.
-  rdr.read_hash_and_stash(node, decl);
+
+  read_common_type_info(rdr, node, decl);
 
   rdr.map_xml_node_to_decl(node, decl);
 
@@ -4756,13 +4985,10 @@ build_pointer_type_def(reader&	rdr,
 				 alignment_in_bits,
 				 loc));
 
-  maybe_set_artificial_location(rdr, node, t);
-
   rdr.push_and_key_type_decl(t, node, add_to_current_scope);
   rdr.map_xml_node_to_decl(node, t);
 
-  // Read the stash from the XML node and stash it into the IR node.
-  rdr.read_hash_and_stash(node, t);
+  read_common_type_info(rdr, node, t);
 
   RECORD_ARTIFACT_AS_USED_BY(rdr, pointed_to_type, t);
   return t;
@@ -4849,12 +5075,11 @@ build_reference_type_def(reader&		rdr,
   reference_type_def_sptr t(new reference_type_def(pointed_to_type,
 						   is_lvalue, size_in_bits,
 						   alignment_in_bits, loc));
-  maybe_set_artificial_location(rdr, node, t);
+
   ABG_ASSERT(rdr.push_and_key_type_decl(t, node, add_to_current_scope));
   rdr.map_xml_node_to_decl(node, t);
 
-  // Read the stash from the XML node and stash it into the IR node.
-  rdr.read_hash_and_stash(node, t);
+  read_common_type_info(rdr, node, t);
 
   RECORD_ARTIFACT_AS_USED_BY(rdr, pointed_to_type, t);
 
@@ -4950,8 +5175,7 @@ build_ptr_to_mbr_type(reader&		rdr,
 				   size_in_bits, alignment_in_bits,
 				   loc));
 
-  // Read the stash from the XML node and stash it into the IR node.
-  rdr.read_hash_and_stash(node, result);
+  read_common_type_info(rdr, node, result);
 
   if (rdr.push_and_key_type_decl(result, node, add_to_current_scope))
     rdr.map_xml_node_to_decl(node, result);
@@ -5055,10 +5279,9 @@ build_function_type(reader&			rdr,
 			     : new function_type(return_type,
 						 parms, size, align));
 
-  // Read the stash from the XML node and stash it into the IR node.
-  rdr.read_hash_and_stash(node, fn_type);
+  read_common_type_info(rdr, node, fn_type);
 
-  rdr.get_translation_unit()->bind_function_type_life_time(fn_type);
+  bind_function_type_life_time(fn_type, rdr.get_translation_unit());
   if (!id.empty())
     {
       MAYBE_MAP_TYPE_WITH_TYPE_ID(fn_type, node);
@@ -5102,6 +5325,8 @@ build_function_type(reader&			rdr,
       fn_type->set_return_type(return_type);
 
   fn_type->set_parameters(parms);
+
+  read_common_type_info(rdr, node, fn_type);
 
   return fn_type;
 }
@@ -5257,13 +5482,12 @@ build_subrange_type(reader&		rdr,
     (new array_type_def::subrange_type(rdr.get_environment(),
 				       name, min_bound, max_bound,
 				       underlying_type, loc));
-  maybe_set_artificial_location(rdr, node, p);
+
   p->is_non_finite(is_non_finite);
   if (size_in_bits)
   p->set_size_in_bits(size_in_bits);
 
-  // Read the stash from the XML node and stash it into the IR node.
-  rdr.read_hash_and_stash(node, p);
+  read_common_type_info(rdr, node, p);
 
   if (rdr.push_and_key_type_decl(p, node, add_to_current_scope))
     rdr.map_xml_node_to_decl(node, p);
@@ -5383,10 +5607,8 @@ build_array_type_def(reader&	rdr,
     }
 
   array_type_def_sptr ar_type(new array_type_def(type, subranges, loc));
-  // Read the stash from the XML node and stash it into the IR node.
-  rdr.read_hash_and_stash(node, ar_type);
+  read_common_type_info(rdr, node, ar_type);
 
-  maybe_set_artificial_location(rdr, node, ar_type);
   if (rdr.push_and_key_type_decl(ar_type, node, add_to_current_scope))
     rdr.map_xml_node_to_decl(node, ar_type);
   RECORD_ARTIFACT_AS_USED_BY(rdr, type, ar_type);
@@ -5492,6 +5714,12 @@ build_enum_type_decl(reader&	rdr,
   if (xml_char_sptr s = XML_NODE_GET_ATTRIBUTE(node, "name"))
     name = xml::unescape_xml_string(CHAR_STR(s));
 
+  bool is_anonymous = false;
+  read_is_anonymous(node, is_anonymous);
+
+  if (is_anonymous && !name.empty())
+    name = tools_utils::get_anonymous_enum_internal_name_prefix();
+
   string linkage_name;
   if (xml_char_sptr s = XML_NODE_GET_ATTRIBUTE(node, "linkage-name"))
     linkage_name = xml::unescape_xml_string(CHAR_STR(s));
@@ -5501,9 +5729,6 @@ build_enum_type_decl(reader&	rdr,
 
   bool is_decl_only = false;
   read_is_declaration_only(node, is_decl_only);
-
-  bool is_anonymous = false;
-  read_is_anonymous(node, is_anonymous);
 
   bool is_artificial = false;
   read_is_artificial(node, is_artificial);
@@ -5573,12 +5798,12 @@ build_enum_type_decl(reader&	rdr,
   enum_type_decl_sptr t(new enum_type_decl(name, loc,
 					   underlying_type,
 					   enums, linkage_name));
-  maybe_set_artificial_location(rdr, node, t);
+
   t->set_is_anonymous(is_anonymous);
   t->set_is_artificial(is_artificial);
   t->set_is_declaration_only(is_decl_only);
-  // Read the stash from the XML node and stash it into the IR node.
-  rdr.read_hash_and_stash(node, t);
+
+  read_common_type_info(rdr, node, t);
 
   if (rdr.push_and_key_type_decl(t, node, add_to_current_scope))
     {
@@ -5656,10 +5881,7 @@ build_typedef_decl(reader&		rdr,
   rdr.push_and_key_type_decl(typedef_type, node, add_to_current_scope);
   rdr.map_xml_node_to_decl(node, typedef_type);
 
-  maybe_set_artificial_location(rdr, node, typedef_type);
-
-  // Read the hash from the XML node and stash it into the IR node.
-  rdr.read_hash_and_stash(node, typedef_type);
+  read_common_type_info(rdr, node, typedef_type);
 
   RECORD_ARTIFACT_AS_USED_BY(rdr, underlying_type, typedef_type);
 
@@ -5744,6 +5966,12 @@ build_class_decl(reader&		rdr,
   if (xml_char_sptr s = XML_NODE_GET_ATTRIBUTE(node, "name"))
     name = xml::unescape_xml_string(CHAR_STR(s));
 
+  bool is_anonymous = false;
+  read_is_anonymous(node, is_anonymous);
+
+  if (is_anonymous && !name.empty())
+    name = tools_utils::get_anonymous_struct_internal_name_prefix();
+
   size_t size_in_bits = 0, alignment_in_bits = 0;
   read_size_and_alignment(node, size_in_bits, alignment_in_bits);
 
@@ -5772,9 +6000,6 @@ build_class_decl(reader&		rdr,
 
   bool is_struct = false;
   read_is_struct(node, is_struct);
-
-  bool is_anonymous = false;
-  read_is_anonymous(node, is_anonymous);
 
   ABG_ASSERT(!id.empty());
 
@@ -5842,15 +6067,12 @@ build_class_decl(reader&		rdr,
 	}
       else
 	decl.reset(new class_decl(env, name, size_in_bits, alignment_in_bits,
-				  is_struct, loc, vis, bases, mbrs,
-				  data_mbrs, mbr_functions, is_anonymous));
+				  is_struct, loc, vis, is_anonymous));
     }
 
-  maybe_set_artificial_location(rdr, node, decl);
   decl->set_is_artificial(is_artificial);
 
-  // Read the stash from the XML node and stash it into the IR node.
-  rdr.read_hash_and_stash(node, decl);
+  read_common_type_info(rdr, node, decl);
 
   string def_id;
   bool is_def_of_decl = false;
@@ -5957,10 +6179,7 @@ build_class_decl(reader&		rdr,
 	}
       else if (xmlStrEqual(n->name, BAD_CAST("member-type")))
 	{
-	  access_specifier access =
-	    is_struct
-	    ? public_access
-	    : private_access;
+	  access_specifier access = no_access;
 	  read_access(n, access);
 
 	  rdr.map_xml_node_to_decl(n, decl);
@@ -5973,17 +6192,13 @@ build_class_decl(reader&		rdr,
 	      string member_type_name;
 	      read_name(p, member_type_name);
 	      type_base_sptr t;
-	      if (!member_type_name.empty())
-		t = decl->find_member_type(member_type_name);
-	      if (t)
-		continue;
 
 	      if ((t = build_type(rdr, p, /*add_to_current_scope=*/true)))
 		{
 		  decl_base_sptr td = get_type_declaration(t);
 		  ABG_ASSERT(td);
 		  if (!td->get_scope())
-		    decl->add_member_type(t);
+		    add_member_type(decl, t);
 		  set_member_access_specifier(td, access);
 		  rdr.schedule_type_for_canonicalization(t);
 		  xml_char_sptr i= XML_NODE_GET_ATTRIBUTE(p, "id");
@@ -6032,12 +6247,12 @@ build_class_decl(reader&		rdr,
 		      continue;
 		    }
 
-		  if (!variable_is_suppressed(rdr, decl.get(), *v))
+		  if (!variable_is_suppressed(rdr, decl, *v))
 		    {
-		      decl->add_data_member(v, access,
-					    is_laid_out,
-					    is_static,
-					    offset_in_bits);
+		      add_data_member(decl, v, access,
+				      is_laid_out,
+				      is_static,
+				      offset_in_bits);
 		      if (is_static)
 			rdr.add_var_to_exported_or_undefined_decls(v);
 		      // Now let's record the fact that the data
@@ -6060,9 +6275,45 @@ build_class_decl(reader&		rdr,
 	    }
 	}
       else if (xmlStrEqual(n->name, BAD_CAST("member-function")))
-	build_member_function_decl(rdr, n, decl,
-				   add_to_current_scope,
-				   /*add_to_exported_decls=*/true);
+	{
+	  bool is_constructor = false;
+	  bool is_destructor = false;
+	  bool is_const = false;
+	  bool is_static = false;
+	  ssize_t vtable_offset = -1;
+	  bool is_virtual = false;
+	  access_specifier access = no_access;
+
+	  read_cdtor_const(n, is_constructor, is_destructor, is_const);
+	  if (read_vtable_offset(n, vtable_offset))
+	    is_virtual = true;
+	  read_access(n, access);
+	  read_static(n, is_static);
+
+	  method_decl_sptr method =
+	    build_member_function_decl(rdr, n, decl,
+				       /*add_to_current_scope=*/false,
+				       /*add_to_exported_decls=*/false);
+	  if (method)
+	    {
+	      string linkage_name = method->get_linkage_name();
+	      if (decl->find_member_function(linkage_name))
+		// We are in updating mode and the current version of
+		// this class already has this member function, so we
+		// are not going to add it again.  So we need to discard
+		// the member function we have built (and that was
+		// pushed to the current stack of decls built) and move
+		// on.
+		continue;
+
+	      add_member_function(decl, method, access,
+				  is_virtual, vtable_offset,
+				  is_static, is_constructor,
+				  is_destructor, is_const);
+	      rdr.add_fn_to_exported_or_undefined_decls(method.get(),
+							/*do_update=*/true);
+	    }
+	}
       else if (xmlStrEqual(n->name, BAD_CAST("member-template")))
 	{
 	  rdr.map_xml_node_to_decl(n, decl);
@@ -6083,25 +6334,23 @@ build_class_decl(reader&		rdr,
 	       p;
 	       p = xmlNextElementSibling(p))
 	    {
-	      if (shared_ptr<function_tdecl> f =
+	      if (function_tdecl_sptr f =
 		  build_function_tdecl(rdr, p,
-				       /*add_to_current_scope=*/true))
+				       /*add_to_current_scope=*/false))
 		{
-		  shared_ptr<member_function_template> m
+		  member_function_template_sptr m
 		    (new member_function_template(f, access, is_static,
 						  is_ctor, is_const));
-		  ABG_ASSERT(f->get_scope());
-		  decl->add_member_function_template(m);
+		  add_member_function_template(decl, m);
 		}
-	      else if (shared_ptr<class_tdecl> c =
+	      else if (class_tdecl_sptr c =
 		       build_class_tdecl(rdr, p,
-					 /*add_to_current_scope=*/true))
+					 /*add_to_current_scope=*/false))
 		{
 		  member_class_template_sptr m(new member_class_template(c,
 									 access,
 									 is_static));
-		  ABG_ASSERT(c->get_scope());
-		  decl->add_member_class_template(m);
+		  add_member_class_template(decl, m);
 		}
 	    }
 	}
@@ -6145,6 +6394,12 @@ build_union_decl(reader& rdr,
   if (xml_char_sptr s = XML_NODE_GET_ATTRIBUTE(node, "name"))
     name = xml::unescape_xml_string(CHAR_STR(s));
 
+  bool is_anonymous = false;
+  read_is_anonymous(node, is_anonymous);
+
+  if (is_anonymous && !name.empty())
+    name = tools_utils::get_anonymous_union_internal_name_prefix();
+
   size_t size_in_bits = 0, alignment_in_bits = 0;
   read_size_and_alignment(node, size_in_bits, alignment_in_bits);
 
@@ -6169,9 +6424,6 @@ build_union_decl(reader& rdr,
 
   bool is_decl_only = false;
   read_is_declaration_only(node, is_decl_only);
-
-  bool is_anonymous = false;
-  read_is_anonymous(node, is_anonymous);
 
   ABG_ASSERT(!id.empty());
   union_decl_sptr previous_definition, previous_declaration;
@@ -6223,18 +6475,12 @@ build_union_decl(reader& rdr,
       if (is_decl_only)
 	decl.reset(new union_decl(env, name));
       else
-	decl.reset(new union_decl(env, name,
-				  size_in_bits,
-				  loc, vis, mbrs,
-				  data_mbrs,
-				  mbr_functions,
-				  is_anonymous));
+	decl.reset(new union_decl(env, name, size_in_bits,
+				  loc, vis, is_anonymous));
     }
 
-  // Read the stash from the XML node and stash it into the IR node.
-  rdr.read_hash_and_stash(node, decl);
+  read_common_type_info(rdr, node, decl);
 
-  maybe_set_artificial_location(rdr, node, decl);
   decl->set_is_artificial(is_artificial);
 
   string def_id;
@@ -6306,7 +6552,7 @@ build_union_decl(reader& rdr,
     {
       if (xmlStrEqual(n->name, BAD_CAST("member-type")))
 	{
-	  access_specifier access = private_access;
+	  access_specifier access = no_access;
 	  read_access(n, access);
 
 	  rdr.map_xml_node_to_decl(n, decl);
@@ -6327,7 +6573,7 @@ build_union_decl(reader& rdr,
 		  decl_base_sptr td = get_type_declaration(t);
 		  ABG_ASSERT(td);
 		  if (!td->get_scope())
-		    decl->add_member_type(t);
+		    add_member_type(decl, t);
 		  set_member_access_specifier(td, access);
 		  rdr.schedule_type_for_canonicalization(t);
 
@@ -6369,12 +6615,12 @@ build_union_decl(reader& rdr,
 		      continue;
 		    }
 		  if (!is_static
-		      || !variable_is_suppressed(rdr, decl.get(), *v))
+		      || !variable_is_suppressed(rdr, decl, *v))
 		    {
-		      decl->add_data_member(v, access,
-					    is_laid_out,
-					    is_static,
-					    offset_in_bits);
+		      add_data_member(decl, v, access,
+				      is_laid_out,
+				      is_static,
+				      offset_in_bits);
 		      // Now let's record the fact that the data
 		      // member uses its type and that the union being
 		      // built uses the data member.
@@ -6423,7 +6669,7 @@ build_union_decl(reader& rdr,
 		    (new member_function_template(f, access, is_static,
 						  is_ctor, is_const));
 		  ABG_ASSERT(f->get_scope());
-		  decl->add_member_function_template(m);
+		  add_member_function_template(decl, m);
 		}
 	      else if (class_tdecl_sptr c =
 		       build_class_tdecl(rdr, p,
@@ -6433,7 +6679,7 @@ build_union_decl(reader& rdr,
 									 access,
 									 is_static));
 		  ABG_ASSERT(c->get_scope());
-		  decl->add_member_class_template(m);
+		  add_member_class_template(decl, m);
 		}
 	    }
 	}
@@ -6508,7 +6754,7 @@ build_function_tdecl(reader& rdr,
 	       build_function_decl_if_not_suppressed(rdr, n, class_decl_sptr(),
 						     /*add_to_current_scope=*/true,
 						     /*add_to_exported_decls=*/true))
-	fn_tmpl_decl->set_pattern(f);
+	set_pattern(fn_tmpl_decl, f);
     }
 
   rdr.key_fn_tmpl_decl(fn_tmpl_decl, id);
@@ -6575,9 +6821,8 @@ build_class_tdecl(reader&		rdr,
 	       build_class_decl_if_not_suppressed(rdr, n,
 						  add_to_current_scope))
 	{
-	  if (c->get_scope())
-	    rdr.schedule_type_for_canonicalization(c);
-	  class_tmpl->set_pattern(c);
+	  rdr.schedule_type_for_canonicalization(c);
+	  set_pattern(class_tmpl, c);
 	}
     }
 
@@ -6890,8 +7135,6 @@ build_type(reader&		rdr,
       ABG_ASSERT(abi);
       bool is_non_reachable_type = false;
       read_is_non_reachable_type(node, is_non_reachable_type);
-      if (!is_non_reachable_type)
-	abi->record_type_as_reachable_from_public_interfaces(*t);
     }
 
   MAYBE_MAP_TYPE_WITH_TYPE_ID(t, node);
@@ -7167,14 +7410,37 @@ handle_class_tdecl(reader&	rdr,
 ///
 /// @param env the environment to use.
 ///
+/// @param opts the options used by the @ref abigail::fe_iface used to
+/// read the translation unit's ABIXML.  The options object needs to
+/// be created by the caller code.
+///
+/// @return the translation unit resulting from the parsing upon
+/// successful completion, or nil.
+translation_unit_sptr
+read_translation_unit_from_istream(istream* in, environment& env,
+				   const fe_iface::options_type& opts)
+{
+  reader read_rdr(xml::new_reader_from_istream(in), env);
+  read_rdr.options() = opts;
+  return read_translation_unit_from_input(read_rdr);
+}
+
+/// De-serialize a translation unit from an ABI Instrumentation xml
+/// file coming from an input stream.
+///
+/// @param in a pointer to the input stream.
+///
+/// @param env the environment to use.
+///
 /// @return the translation unit resulting from the parsing upon
 /// successful completion, or nil.
 translation_unit_sptr
 read_translation_unit_from_istream(istream* in, environment& env)
 {
-  reader read_rdr(xml::new_reader_from_istream(in), env);
-  return read_translation_unit_from_input(read_rdr);
+  fe_iface::options_type opts(env);
+  return read_translation_unit_from_istream(in, env, opts);
 }
+
 template<typename T>
 struct array_deleter
 {
@@ -7192,12 +7458,19 @@ struct array_deleter
 ///
 /// @param env the environment to use.
 ///
+/// @param opts the options to initialize the newly created and
+/// returned instance of @ref abigail::fe_iface.  The options object
+/// needs to be created by the caller code.
+///
 /// @return the created context.
 fe_iface_sptr
-create_reader(const string& path, environment& env)
+create_reader(const string& path, environment& env,
+	      const fe_iface::options_type &opts)
 {
   reader_sptr result(new reader(xml::new_reader_from_file(path),
 				env));
+  result->options() = opts;
+
   corpus_sptr corp = result->corpus();
   corp->set_origin(corpus::NATIVE_XML_ORIGIN);
 #ifdef WITH_DEBUG_SELF_COMPARISON
@@ -7205,6 +7478,49 @@ create_reader(const string& path, environment& env)
     env.set_self_comparison_debug_input(result->corpus());
 #endif
   result->set_path(path);
+  return result;
+}
+
+/// Create an xml_reader::reader to read a native XML ABI file.
+///
+/// @param path the path to the native XML file to read.
+///
+/// @param env the environment to use.
+///
+/// @return the created context.
+abigail::fe_iface_sptr
+create_reader(const string& path, environment& env)
+{
+  fe_iface::options_type o(env);
+  return create_reader(path, env, o);
+}
+
+/// Create an xml_reader::reader to read a native XML ABI from
+/// an input stream..
+///
+/// @param in the input stream that contains the native XML file to read.
+///
+/// @param env the environment to use.
+///
+/// @param opts the options to initialize the newly created and
+/// returned instance of @ref abigail::fe_iface.  The options object
+/// needs to be created by the caller code.
+///
+/// @return the created context.
+fe_iface_sptr
+create_reader(std::istream* in, environment& env,
+	      const fe_iface::options_type &opts)
+{
+  reader_sptr result(new reader(xml::new_reader_from_istream(in),
+				env));
+  result->options() = opts;
+
+  corpus_sptr corp = result->corpus();
+  corp->set_origin(corpus::NATIVE_XML_ORIGIN);
+#ifdef WITH_DEBUG_SELF_COMPARISON
+  if (env.self_comparison_debug_is_on())
+    env.set_self_comparison_debug_input(result->corpus());
+#endif
   return result;
 }
 
@@ -7219,15 +7535,33 @@ create_reader(const string& path, environment& env)
 fe_iface_sptr
 create_reader(std::istream* in, environment& env)
 {
-  reader_sptr result(new reader(xml::new_reader_from_istream(in),
-				env));
-  corpus_sptr corp = result->corpus();
-  corp->set_origin(corpus::NATIVE_XML_ORIGIN);
-#ifdef WITH_DEBUG_SELF_COMPARISON
-  if (env.self_comparison_debug_is_on())
-    env.set_self_comparison_debug_input(result->corpus());
-#endif
-  return result;
+  fe_iface::options_type o(env);
+  return create_reader(in, env, o);
+}
+
+/// De-serialize an ABI corpus from an input XML document which root
+/// node is 'abi-corpus'.
+///
+/// @param in the input stream to read the XML document from.
+///
+/// @param env the environment to use.  Note that the life time of
+/// this environment must be greater than the lifetime of the
+/// resulting corpus as the corpus uses resources that are allocated
+/// in the environment.
+///
+/// @param opts the options used to read the input ABIXML.  The
+/// options object needs to be created by the caller code.
+///
+/// @return the resulting corpus de-serialized from the parsing.  This
+/// is non-null iff the parsing resulted in a valid corpus.
+corpus_sptr
+read_corpus_from_abixml(std::istream* in,
+			environment& env,
+			const fe_iface::options_type &opts)
+{
+  fe_iface_sptr rdr = create_reader(in, env, opts);
+  fe_iface::status sts;
+  return rdr->read_corpus(sts);
 }
 
 /// De-serialize an ABI corpus from an input XML document which root
@@ -7243,12 +7577,37 @@ create_reader(std::istream* in, environment& env)
 /// @return the resulting corpus de-serialized from the parsing.  This
 /// is non-null iff the parsing resulted in a valid corpus.
 corpus_sptr
-read_corpus_from_abixml(std::istream* in,
-			environment& env)
+read_corpus_from_abixml(std::istream* in, environment& env)
 {
-  fe_iface_sptr rdr = create_reader(in, env);
+  const fe_iface::options_type o(env);
+  return read_corpus_from_abixml(in, env, o);
+}
+
+/// De-serialize an ABI corpus from an XML document file which root
+/// node is 'abi-corpus'.
+///
+/// @param path the path to the input file to read the XML document
+/// from.
+///
+/// @param env the environment to use.  Note that the life time of
+/// this environment must be greater than the lifetime of the
+/// resulting corpus as the corpus uses resources that are allocated
+/// in the environment.
+///
+/// @param opts the options used to read the input ABIXML.  The
+/// options object needs to be created by the caller code.
+///
+/// @return the resulting corpus de-serialized from the parsing.  This
+/// is non-null if the parsing successfully resulted in a corpus.
+corpus_sptr
+read_corpus_from_abixml_file(const string& path,
+			     environment& env,
+			     const fe_iface::options_type &opts)
+{
+  fe_iface_sptr rdr = create_reader(path, env, opts);
   fe_iface::status sts;
-  return rdr->read_corpus(sts);
+  corpus_sptr corp = rdr->read_corpus(sts);
+  return corp;
 }
 
 /// De-serialize an ABI corpus from an XML document file which root
@@ -7265,15 +7624,11 @@ read_corpus_from_abixml(std::istream* in,
 /// @return the resulting corpus de-serialized from the parsing.  This
 /// is non-null if the parsing successfully resulted in a corpus.
 corpus_sptr
-read_corpus_from_abixml_file(const string& path,
-			     environment& env)
+read_corpus_from_abixml_file(const string& path, environment& env)
 {
-  fe_iface_sptr rdr = create_reader(path, env);
-  fe_iface::status sts;
-  corpus_sptr corp = rdr->read_corpus(sts);
-  return corp;
+  const fe_iface::options_type o(env);
+  return read_corpus_from_abixml_file(path, env, o);
 }
-
 }//end namespace xml_reader
 
 #ifdef WITH_DEBUG_SELF_COMPARISON
@@ -7327,7 +7682,10 @@ load_canonical_type_ids(fe_iface& iface, const string &file_path)
   // So let's parse it!
 
   if (xmlStrcmp(node->name, (xmlChar*) "abixml-types-check"))
-    return false;
+    {
+      xmlFreeDoc(doc);
+      return false;
+    }
 
   for (node = xmlFirstElementChild(node);
        node;
@@ -7359,6 +7717,7 @@ load_canonical_type_ids(fe_iface& iface, const string &file_path)
 	    rdr.get_environment().get_type_id_canonical_type_map()[id] = v;
 	}
     }
+  xmlFreeDoc(doc);
   return true;
 }
 #endif

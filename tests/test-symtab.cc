@@ -49,10 +49,13 @@ read_corpus(const std::string&		    path,
 
   environment env;
   const std::vector<string> debug_info_root_paths;
+  abigail::fe_iface::options_type o(env);
+  o.load_all_types = true;
+  o.load_in_linux_kernel_mode = true;
+
   abigail::elf_based_reader_sptr rdr =
     dwarf::create_reader(absolute_path, debug_info_root_paths,
-			 env, /* load_all_type = */ true,
-			 /* linux_kernel_mode = */ true);
+			 env, o);
 
   if (!whitelist_paths.empty())
     {

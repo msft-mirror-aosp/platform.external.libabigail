@@ -267,6 +267,9 @@ class scope_decl;
 /// Convenience typedef for a shared pointer on a @ref scope_decl.
 typedef shared_ptr<scope_decl> scope_decl_sptr;
 
+/// Convenience typedef for a weak pointer on a @ref scope_decl.
+typedef weak_ptr<scope_decl> scope_decl_wptr;
+
 class function_decl;
 
 /// Convenience typedef for a shared pointer on a @ref function_decl
@@ -347,19 +350,19 @@ typedef vector<member_class_template_sptr> member_class_templates;
 typedef shared_ptr<type_composition> type_composition_sptr;
 
 decl_base_sptr
-add_decl_to_scope(decl_base_sptr, scope_decl*);
+add_decl_to_scope(decl_base_sptr, scope_decl_sptr);
 
-decl_base_sptr
-add_decl_to_scope(decl_base_sptr, const scope_decl_sptr&);
-
-const global_scope*
-get_global_scope(const decl_base&);
-
-const global_scope*
-get_global_scope(const decl_base*);
-
-const global_scope*
+const global_scope_sptr
 get_global_scope(const decl_base_sptr);
+
+scope_decl_sptr
+get_scope_of_type(type_base& type);
+
+scope_decl_sptr
+get_scope_of_type(type_base* type);
+
+scope_decl_sptr
+get_scope_of_type(type_base_sptr type);
 
 translation_unit*
 get_translation_unit(const type_or_decl_base&);
@@ -388,29 +391,29 @@ is_at_global_scope(const decl_base_sptr);
 bool
 is_at_global_scope(const decl_base*);
 
-class_or_union*
+class_or_union_sptr
 is_at_class_scope(const decl_base_sptr);
 
-class_or_union*
+class_or_union_sptr
 is_at_class_scope(const decl_base*);
 
-class_or_union*
+class_or_union_sptr
 is_at_class_scope(const decl_base&);
 
-function_decl*
+function_decl_sptr
 is_at_function_scope(const decl_base& decl);
 
-function_decl*
+function_decl_sptr
 is_at_function_scope(const decl_base* decl);
 
-function_decl*
+function_decl_sptr
 is_at_function_scope(const decl_base_sptr& decl);
 
 bool
-is_at_template_scope(const decl_base_sptr);
+is_at_template_scope(decl_base_sptr);
 
 bool
-is_template_parameter(const decl_base_sptr);
+is_template_parameter(decl_base_sptr);
 
 function_decl*
 is_function_decl(const type_or_decl_base*);
@@ -440,13 +443,16 @@ type_base*
 is_type(const type_or_decl_base*);
 
 type_base_sptr
-is_type(const type_or_decl_base_sptr& tod);
+is_type(const type_or_decl_base_sptr tod);
 
 bool
 is_anonymous_type(const type_base*);
 
 bool
 is_anonymous_type(const type_base_sptr&);
+
+bool
+is_naming_typedef(const typedef_decl_sptr);
 
 bool
 is_npaf_type(const type_base_sptr&);
@@ -692,7 +698,7 @@ var_decl_sptr
 is_var_decl(const type_or_decl_base_sptr&);
 
 namespace_decl_sptr
-is_namespace(const decl_base_sptr&);
+is_namespace(const type_or_decl_base_sptr& d);
 
 namespace_decl*
 is_namespace(const decl_base*);
@@ -704,13 +710,7 @@ bool
 is_template_decl(const decl_base_sptr);
 
 bool
-is_function_template_pattern(const decl_base_sptr);
-
-
-decl_base_sptr
-insert_decl_into_scope(decl_base_sptr,
-		       vector<decl_base_sptr >::iterator,
-		       scope_decl*);
+is_function_template_pattern(decl_base_sptr);
 
 decl_base_sptr
 insert_decl_into_scope(decl_base_sptr,
@@ -737,6 +737,9 @@ is_scope_decl(const decl_base*);
 
 scope_decl_sptr
 is_scope_decl(const type_or_decl_base_sptr&);
+
+bool
+is_member_type(const type_base*);
 
 bool
 is_member_type(const type_base_sptr&);
@@ -776,12 +779,6 @@ is_data_member(const var_decl*);
 
 var_decl_sptr
 is_data_member(const type_or_decl_base_sptr&);
-
-bool
-is_data_member(const var_decl_sptr);
-
-var_decl_sptr
-is_data_member(const decl_base_sptr&);
 
 var_decl*
 is_data_member(const decl_base *);
@@ -904,6 +901,9 @@ get_data_member_offset(const decl_base_sptr);
 uint64_t
 get_absolute_data_member_offset(const var_decl&);
 
+uint64_t
+get_absolute_data_member_offset(const var_decl_sptr);
+
 bool
 get_next_data_member_offset(const class_or_union*,
 			    const var_decl_sptr&,
@@ -989,10 +989,6 @@ get_member_function_is_virtual(const function_decl_sptr&);
 bool
 get_member_function_is_virtual(const function_decl*);
 
-void
-set_member_function_virtuality(function_decl&, bool, ssize_t);
-void
-set_member_function_virtuality(function_decl*, bool, ssize_t);
 void
 set_member_function_virtuality(const function_decl_sptr&, bool, ssize_t);
 
@@ -1081,16 +1077,16 @@ location
 get_location(const decl_base_sptr& decl);
 
 string
-build_qualified_name(const scope_decl* scope, const string& name);
+build_qualified_name(const scope_decl_sptr scope, const string& name);
 
 string
-build_qualified_name(const scope_decl* scope,
+build_qualified_name(const scope_decl_sptr scope,
 		     const type_base_sptr& type);
 
-scope_decl*
+scope_decl_sptr
 get_type_scope(type_base*);
 
-scope_decl*
+scope_decl_sptr
 get_type_scope(const type_base_sptr&);
 
 interned_string
@@ -1131,9 +1127,6 @@ get_function_type_name(const function_type&, bool internal = false);
 
 interned_string
 get_function_symbol_id(const function_decl *fn);
-
-interned_string
-get_function_symbol_id_if_unique(const function_decl *fn);
 
 interned_string
 get_method_type_name(const method_type_sptr&, bool internal = false);
@@ -1198,7 +1191,7 @@ get_class_or_union_flat_representation(const class_or_union* cou,
 				       bool qualified_name = true);
 
 string
-get_class_or_union_flat_representation(const class_or_union_sptr& cou,
+get_class_or_union_flat_representation(const class_or_union_sptr cou,
 				       const string& indent,
 				       bool one_line,
 				       bool internal,
@@ -1219,7 +1212,7 @@ get_enum_flat_representation(const enum_type_decl* enum_type,
 			     bool qualified_names);
 
 string
-get_enum_flat_representation(const enum_type_decl_sptr& enum_type,
+get_enum_flat_representation(const enum_type_decl_sptr enum_type,
 			     const string& indent,
 			     bool one_line,
 			     bool qualified_names);
@@ -1285,17 +1278,8 @@ bool
 types_are_compatible(const decl_base_sptr,
 		     const decl_base_sptr);
 
-const scope_decl*
-get_top_most_scope_under(const decl_base*,
-			 const scope_decl*);
-
-const scope_decl*
-get_top_most_scope_under(const decl_base_sptr,
-			 const scope_decl*);
-
-const scope_decl*
-get_top_most_scope_under(const decl_base_sptr,
-			 const scope_decl_sptr);
+scope_decl_sptr
+get_top_most_scope_under(decl_base_sptr, scope_decl_sptr);
 
 void
 fqn_to_components(const std::string&,
@@ -1346,6 +1330,9 @@ lookup_class_type(const interned_string&, const corpus&);
 const type_base_wptrs_type*
 lookup_class_types(const interned_string&, const corpus&);
 
+const type_base_wptrs_type *
+lookup_class_types(const char* qualified_name, const corpus& corp);
+
 const type_base_wptrs_type*
 lookup_union_types(const interned_string&, const corpus&);
 
@@ -1368,6 +1355,9 @@ lookup_class_type_per_location(const string&, const corpus&);
 
 class_decl_sptr
 lookup_class_type(const string&, const corpus&);
+
+class_decl_sptr
+lookup_class_type(char*, const corpus&);
 
 class_decl_sptr
 lookup_class_type_through_scopes(const std::list<string>&,
@@ -1409,6 +1399,9 @@ lookup_enum_types(const interned_string&, const corpus&);
 const type_base_wptrs_type*
 lookup_enum_types(const string&, const corpus&);
 
+const type_base_wptrs_type*
+lookup_enum_types(char* qualified_name, const corpus& corp);
+
 enum_type_decl_sptr
 lookup_enum_type_per_location(const interned_string&, const corpus&);
 
@@ -1421,6 +1414,12 @@ lookup_typedef_type(const typedef_decl&, const translation_unit&);
 typedef_decl_sptr
 lookup_typedef_type(const typedef_decl&, const corpus&);
 
+const type_base_wptrs_type*
+lookup_typedef_types(const string&, const corpus&);
+
+const type_base_wptrs_type*
+lookup_typedef_types(char*, const corpus&);
+
 typedef_decl_sptr
 lookup_typedef_type(const interned_string& type_name,
 		    const translation_unit& tu);
@@ -1430,6 +1429,9 @@ lookup_typedef_type(const string& type_name, const translation_unit& tu);
 
 typedef_decl_sptr
 lookup_typedef_type(const interned_string&, const corpus&);
+
+typedef_decl_sptr
+lookup_typedef_type(char*, const corpus&);
 
 typedef_decl_sptr
 lookup_typedef_type_per_location(const interned_string&, const corpus &);
@@ -1547,6 +1549,12 @@ type_base_sptr
 lookup_type(const interned_string&, const corpus&);
 
 type_base_sptr
+lookup_type(const string&, const corpus&);
+
+type_base_sptr
+lookup_type(char*, const corpus&);
+
+type_base_sptr
 lookup_type_per_location(const interned_string&, const corpus&);
 
 type_base_sptr
@@ -1587,13 +1595,11 @@ const type_base_sptr
 lookup_type_in_scope(const std::list<string>&,
 		     const scope_decl_sptr&);
 
-const decl_base_sptr
-lookup_var_decl_in_scope(const string&,
-			 const scope_decl_sptr&);
+decl_base_sptr
+lookup_var_decl_in_scope(const string&, scope_decl_sptr);
 
-const decl_base_sptr
-lookup_var_decl_in_scope(const std::list<string>&,
-			 const scope_decl_sptr&);
+decl_base_sptr
+lookup_var_decl_in_scope(const std::list<string>&, scope_decl_sptr);
 
 string
 demangle_cplus_mangled_name(const string&);
@@ -1604,7 +1610,7 @@ type_or_void(const type_base_sptr, const environment&);
 type_base_sptr
 canonicalize(type_base_sptr type, bool do_log= false, bool show_stats= false);
 
-void
+type_base_sptr
 hash_and_canonicalize_type(type_base_sptr t);
 
 type_base*
@@ -1647,11 +1653,11 @@ is_unique_type(const type_base_sptr&);
 bool
 is_unique_type(const type_base*);
 
-type_base*
-get_exemplar_type(const type_base* type);
+type_base_sptr
+get_exemplar_type(type_base_sptr type);
 
 type_base*
-get_exemplar_type(const type_base_sptr& type);
+get_exemplar_type(const type_base* type);
 
 bool
 function_decl_is_less_than(const function_decl&f, const function_decl &s);
@@ -1696,11 +1702,24 @@ integral_type_has_harmless_name_change(const type_base_sptr& f,
 
 void
 copy_missing_member_functions(class_or_union_sptr& dest_class,
-			      const class_or_union_sptr& src_class);
+			      const class_or_union_sptr& src_class,
+			      bool copy_virtual_functions);
 
 void
 copy_missing_member_variables(class_or_union_sptr& dest_class,
 			      const class_or_union_sptr& src_class);
+
+typedef_decl_sptr
+copy_missing_naming_typedef(decl_base_sptr type,
+			    const decl_base_sptr named_type);
+
+void
+bind_function_type_life_time(const function_type_sptr& fn_type,
+			     translation_unit* tu);
+
+void
+bind_function_type_life_time(const function_type_sptr& fn_type,
+			     translation_unit_sptr tu);
 } // end namespace ir
 
 using namespace abigail::ir;

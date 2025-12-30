@@ -786,6 +786,20 @@ static InOutSpec in_out_specs[] =
     "output/test-diff-pkg/libgm2-14.2.1-1.fc40.x86_64-self-check-report.txt"
   },
   {
+    "data/test-diff-pkg/libstdc++-14.2.1-1.fc40.x86_64.rpm",
+    "data/test-diff-pkg/libstdc++-14.2.1-1.fc40.x86_64.rpm",
+    "",
+    "",
+    "data/test-diff-pkg/libstdc++-debuginfo-14.2.1-1.fc40.x86_64.rpm, "
+    "data/test-diff-pkg/gcc-debuginfo-14.2.1-1.fc40.x86_64.rpm",
+    "data/test-diff-pkg/libstdc++-debuginfo-14.2.1-1.fc40.x86_64.rpm, "
+    "data/test-diff-pkg/gcc-debuginfo-14.2.1-1.fc40.x86_64.rpm" ,
+    "",
+    "",
+    "data/test-diff-pkg/libstdc++-14.2.1-1.fc40.x86_64-report-1.txt",
+    "output/test-diff-pkg/libstdc++-14.2.1-1.fc40.x86_64-report-1.txt"
+  },
+  {
     "data/test-diff-pkg/infinipath-psm-3.3-26_g604758e_open.6.fc36.5.x86_64.rpm",
     "data/test-diff-pkg/infinipath-psm-3.3-26_g604758e_open.6.fc36.5.x86_64.rpm",
     "--self-check",
@@ -1186,6 +1200,7 @@ struct test_task : public abigail::workers::task
 {
   InOutSpec spec;
   bool is_ok;
+  string test_cmd;
   string diff_cmd;
   string error_message;
 
@@ -1314,6 +1329,8 @@ struct test_task : public abigail::workers::task
       abipkgdiff + " " + first_in_package_path + " " + second_in_package_path;
     cmd += " > " + out_abi_diff_report_path + " 2>&1";
 
+    test_cmd = cmd;
+
     bool abipkgdiff_ok = true;
     int code = system(cmd.c_str());
     if (!WIFEXITED(code))
@@ -1377,9 +1394,11 @@ main()
       if (!t->is_ok)
 	{
 	  is_ok = false;
+	  cerr << "Test command failed: '" << t->test_cmd << "'\n";
 	  if (!t->diff_cmd.empty())
 	    if (system(t->diff_cmd.c_str()) == -1)
-	      cerr << "execution of '" << t->diff_cmd << "' failed\n";
+	      cerr << "The subsequent diff command failed too: '"
+		   << t->diff_cmd << "' failed\n";
 	  if (!t->error_message.empty())
 	    cerr << t->error_message << '\n';
 	}

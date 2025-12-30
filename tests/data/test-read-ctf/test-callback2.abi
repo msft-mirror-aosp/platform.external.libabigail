@@ -1,20 +1,22 @@
-<abi-corpus version='2.5' path='data/test-read-ctf/test-callback2.o'>
+<abi-corpus version='3.0' path='data/test-read-ctf/test-callback2.o' tracking-non-reachable-types='yes'>
   <elf-variable-symbols>
     <elf-symbol name='s0' size='8' type='object-type' binding='global-binding' visibility='default-visibility' is-defined='yes'/>
   </elf-variable-symbols>
-  <abi-instr address-size='64' language='LANG_C'>
-    <type-decl name='int' size-in-bits='32' hash='09d17c08f594edc7' id='type-id-1'/>
-    <pointer-type-def type-id='type-id-2' size-in-bits='64' alignment-in-bits='64' hash='d125197fd9fb707c' id='type-id-3'/>
-    <pointer-type-def type-id='type-id-4' size-in-bits='64' alignment-in-bits='64' hash='1fc99a9deae4103b' id='type-id-5'/>
-    <class-decl name='s0' is-struct='yes' visibility='default' size-in-bits='64' hash='0a1f4a7e01012f7e' id='type-id-4'>
+  <abi-types>
+    <function-type size-in-bits='64' hash='758d4feb712d8eff' id='type-id-1'>
+      <parameter type-id='type-id-2'/>
+      <return type-id='type-id-3'/>
+    </function-type>
+    <type-decl name='int' size-in-bits='32' hash='09d17c08f594edc7' id='type-id-3'/>
+    <pointer-type-def type-id='type-id-1' size-in-bits='64' alignment-in-bits='64' hash='b4d017e4fd52d8f4' id='type-id-4'/>
+    <pointer-type-def type-id='type-id-5' size-in-bits='64' alignment-in-bits='64' hash='cac8c1cc6dba9864' id='type-id-2'/>
+    <class-decl name='s0' is-struct='yes' visibility='default' size-in-bits='64' hash='a00e6348de14b917' id='type-id-5'>
       <data-member access='public' layout-offset-in-bits='0'>
-        <var-decl name='mem_fun' type-id='type-id-3' visibility='default'/>
+        <var-decl name='mem_fun' type-id='type-id-4' visibility='default'/>
       </data-member>
     </class-decl>
-    <var-decl name='s0' type-id='type-id-5' mangled-name='s0' visibility='default' elf-symbol-id='s0'/>
-    <function-type size-in-bits='64' hash='891e2e923e575a21' id='type-id-2'>
-      <parameter type-id='type-id-5'/>
-      <return type-id='type-id-1'/>
-    </function-type>
+  </abi-types>
+  <abi-instr address-size='64' language='LANG_C'>
+    <var-decl name='s0' type-id='type-id-2' mangled-name='s0' visibility='default' elf-symbol-id='s0'/>
   </abi-instr>
 </abi-corpus>

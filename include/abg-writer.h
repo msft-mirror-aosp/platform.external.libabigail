@@ -72,6 +72,15 @@ set_write_parameter_names(write_context& ctxt, bool flag);
 void
 set_type_id_style(write_context& ctxt, type_id_style_kind style);
 
+void
+set_write_native_offsets(write_context& ctxt, bool flag);
+
+void
+set_write_member_hashes(write_context& ctxt, bool flag);
+
+void
+set_write_non_reachable_types(write_context& ctxt, bool flag);
+
 /// A convenience generic function to set common options (usually used
 /// by Libabigail tools) from a generic options carrying-object, into
 /// a given @ref write_context.
@@ -96,6 +105,9 @@ set_common_options(write_context& ctxt, const OPTS& opts)
   set_short_locs(ctxt, opts.short_locs);
   set_write_default_sizes(ctxt, opts.default_sizes);
   set_type_id_style(ctxt, opts.type_id_style);
+  set_write_native_offsets(ctxt, opts.emit_native_offsets);
+  set_write_member_hashes(ctxt, opts.emit_member_hashes);
+  set_write_non_reachable_types(ctxt, opts.load_all_types);
 }
 
 void
@@ -104,8 +116,7 @@ set_ostream(write_context& ctxt, ostream& os);
 bool
 write_translation_unit(write_context&	       ctxt,
 		       const translation_unit& tu,
-		       const unsigned	       indent,
-		       bool		       last = true);
+		       const unsigned	       indent);
 
 bool
 write_corpus_to_archive(const corpus& corp,

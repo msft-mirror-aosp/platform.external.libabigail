@@ -1,4 +1,4 @@
-Functions changes summary: 1 Removed, 2 Changed, 1 Added functions
+Functions changes summary: 1 Removed, 3 Changed (3 filtered out), 1 Added functions
 Variables changes summary: 0 Removed, 0 Changed, 0 Added variable
 
 1 Removed function:
@@ -11,13 +11,30 @@ Variables changes summary: 0 Removed, 0 Changed, 0 Added variable
   [C] 'method virtual int non_defined_class::virtual_func0()' at test30-priv-lib-v0.h:14:1 has some sub-type changes:
     the vtable offset of method virtual int non_defined_class::virtual_func0() changed from 3 to 4
       note that this is an ABI incompatible change to the vtable of class non_defined_class
+    implicit parameter 0 of type 'non_defined_class*' has sub-type changes:
+      in pointed to type 'class non_defined_class':
+        type size hasn't changed
+        1 member function deletion:
+          'method virtual int non_defined_class::virtual_func_to_be_removed()' at test30-priv-lib-v0.h:11:1, virtual at voffset 0/3    {_ZN17non_defined_class26virtual_func_to_be_removedEv}
+        1 member function insertion:
+          'method virtual int non_defined_class::virtual_func_inserted()' at test30-priv-lib-v1.h:13:1, virtual at voffset 2/4    {_ZN17non_defined_class21virtual_func_insertedEv}
+        1 member function change:
+          'method virtual int non_defined_class::virtual_func0()' has some sub-type changes:
+            the vtable offset of method virtual int non_defined_class::virtual_func0() changed from 3 to 4
+              note that this is an ABI incompatible change to the vtable of class non_defined_class
+            implicit parameter 0 of type 'non_defined_class*' has sub-type changes:
+              pointed to type 'class non_defined_class' changed, as being reported
 
 1 Added function:
 
   [A] 'method virtual int non_defined_class::virtual_func_inserted()'    {_ZN17non_defined_class21virtual_func_insertedEv}
     note that this adds a new entry to the vtable of class non_defined_class
 
-1 function with some indirect sub-type change:
+2 functions with some indirect sub-type change:
+
+  [C] 'method non_defined_class::non_defined_class()' at test30-priv-lib-v0.h:12:1 has some indirect sub-type changes:
+    implicit parameter 0 of type 'non_defined_class*' has sub-type changes:
+      pointed to type 'class non_defined_class' changed, as reported earlier
 
   [C] 'function int public_function(S*)' at test30-pub-lib-v0.cc:21:1 has some indirect sub-type changes:
     parameter 1 of type 'S*' has sub-type changes:
@@ -29,4 +46,5 @@ Variables changes summary: 0 Removed, 0 Changed, 0 Added variable
               type size changed from 64 to 128 (in bits)
               1 data member insertion:
                 'int member1', at offset 64 (in bits) at test30-pub-lib-v1.cc:18:1
+              no data member change (1 filtered);
 

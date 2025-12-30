@@ -348,10 +348,7 @@ class reader : public elf_based_reader
 	cn_timer.start();
       }
 
-    ir::hash_and_canonicalize_types(types_to_canonicalize_.begin(),
-				    types_to_canonicalize_.end(),
-				    [](const vector<type_base_sptr>::const_iterator& i)
-				    {return *i;}, do_log(), show_stats());
+    ir::perform_type_canonicalization(types_to_canonicalize_, do_log());
 
     if (do_log())
       {
@@ -402,16 +399,9 @@ protected:
   /// @param debug_info_root_paths the paths where to look for
   /// seperate debug info.
   ///
-  /// @param load_all_types if true, then load all the types described
-  /// in the binary, rather than loading only the types reachable from
-  /// the exported decls.
-  ///
-  /// @param linux_kernel_mode
   void
-  initialize(const string&		elf_path,
-	     const vector<string>&	debug_info_root_paths,
-	     bool			load_all_types,
-	     bool			linux_kernel_mode)
+  initialize(const string&			elf_path,
+	     const vector<string>&		debug_info_root_paths)
   {
     if (split_btf_handle_)
       {
@@ -428,8 +418,6 @@ protected:
     cur_tu_.reset();
     elf_based_reader::initialize(elf_path, debug_info_root_paths);
     corpus_path(elf_path);
-    options().load_all_types = load_all_types;
-    options().load_in_linux_kernel_mode = linux_kernel_mode;
   }
 
   /// Constructor of the btf::reader type.
@@ -441,23 +429,20 @@ protected:
   ///
   /// @param environment the environment of the current front-end.
   ///
-  /// @param load_all_types if true load all the types described by
-  /// the BTF debug info, as opposed to loading only the types
-  /// reachable from the decls that are defined and exported.
-  ///
-  /// @param linux_kernel_mode if true, then consider the binary being
-  /// analyzed as a linux kernel binary.
-  reader(const string&		elf_path,
-	 const vector<string>&	debug_info_root_paths,
-	 environment&		environment,
-	 bool			load_all_types,
-	 bool			linux_kernel_mode)
+  /// @param options the options to set to this reader, which is an
+  /// instance of @ref fe_iface. The fe_iface::options_type object
+  /// needs to be created by the caller code.
+  reader(const string&			elf_path,
+	 const vector<string>&		debug_info_root_paths,
+	 environment&			environment,
+	 const fe_iface::options_type&	opts)
+
     : elf_based_reader(elf_path,
 		       debug_info_root_paths,
 		       environment)
   {
-    initialize(elf_path, debug_info_root_paths,
-	       load_all_types, linux_kernel_mode);
+    options() = opts;
+    initialize(elf_path, debug_info_root_paths);
   }
 
 public:
@@ -471,21 +456,17 @@ public:
   ///
   /// @param environment the environment of the current front-end.
   ///
-  /// @param load_all_types if true load all the types described by
-  /// the BTF debug info, as opposed to loading only the types
-  /// reachable from the decls that are defined and exported.
-  ///
-  /// @param linux_kernel_mode if true, then consider the binary being
-  /// analyzed as a linux kernel binary.
+  /// @param options the options to set to the new returned instance
+  /// of @ref fe_iface. The option object needs to be created by the
+  /// caller code.
   static btf::reader_sptr
-  create(const string&		elf_path,
-	 const vector<string>&	debug_info_root_paths,
-	 environment&		environment,
-	 bool			load_all_types,
-	 bool			linux_kernel_mode)
+  create(const string&			elf_path,
+	 const vector<string>&		debug_info_root_paths,
+	 environment&			environment,
+	 const fe_iface::options_type&	options)
   {
-    reader_sptr result(new reader(elf_path, debug_info_root_paths, environment,
-				  load_all_types, linux_kernel_mode));
+    reader_sptr result(new reader(elf_path, debug_info_root_paths,
+				  environment, options));
     return result;
   }
 
@@ -626,6 +607,7 @@ public:
     canonicalize_types();
     corpus()->sort_functions();
     corpus()->sort_variables();
+    corpus()->mark_non_reachable_types();
     return corpus();
   }
 
@@ -1149,11 +1131,11 @@ public:
 	      ? BTF_MEMBER_BIT_OFFSET(m->offset)
 	      : m->offset;
 
-	    result->add_data_member(data_member,
-				    public_access,
-				    /*is_laid_out=*/true,
-				    /*is_static=*/false,
-				    offset_in_bits);
+	    add_data_member(result, data_member,
+			    public_access,
+			    /*is_laid_out=*/true,
+			    /*is_static=*/false,
+			    offset_in_bits);
 	  }
       }
     return result;
@@ -1318,26 +1300,52 @@ public:
 /// reader the context uses resources that are allocated in the
 /// environment.
 ///
-/// @param load_all_types if set to false only the types that are
-/// reachable from publicly exported declarations (of functions and
-/// variables) are read.  If set to true then all types found in the
-/// debug information are loaded.
+/// @param options the options to set to the returned instance of @ref
+/// fe_iface. The option object needs to be created by the caller
+/// code.
 ///
-/// @param linux_kernel_mode if set to true, then consider the special
-/// linux kernel symbol tables when determining if a symbol is
-/// exported or not.
+///@return a smart pointer to the resulting btf::reader.
+elf_based_reader_sptr
+create_reader(const std::string&	elf_path,
+	      const vector<string>&	debug_info_root_paths,
+	      environment&		env,
+	      const fe_iface::options_type& options)
+{
+  reader_sptr rdr = reader::create(elf_path, debug_info_root_paths,
+				   env, options);
+  return rdr;
+}
+
+/// Create and return a BTF reader (or front-end) which is an instance
+/// of @ref btf::reader.
+///
+/// @param elf_path the path to the path to the elf file the reader is
+/// to be used for.
+///
+/// @param debug_info_root_paths a vector to the paths to the
+/// directories under which the debug info is to be found for @p
+/// elf_path.  Pass an empty vector if th debug info is not in a split
+/// file.
+///
+/// @param environment the environment used by the current context.
+/// This environment contains resources needed by the BTF reader and
+/// by the types and declarations that are to be created later.  Note
+/// that ABI artifacts that are to be compared all need to be created
+/// within the same environment.
+///
+/// Please also note that the life time of this environment object
+/// must be greater than the life time of the resulting @ref
+/// reader the context uses resources that are allocated in the
+/// environment.
 ///
 /// @return a smart pointer to the resulting btf::reader.
 elf_based_reader_sptr
 create_reader(const std::string&	elf_path,
 	      const vector<string>&	debug_info_root_paths,
-	      environment&		env,
-	      bool			load_all_types,
-	      bool			linux_kernel_mode)
+	      environment&		env)
 {
-  reader_sptr rdr = reader::create(elf_path, debug_info_root_paths, env,
-				   load_all_types, linux_kernel_mode);
-  return rdr;
+  abigail::fe_iface::options_type opts(env);
+  return create_reader(elf_path, debug_info_root_paths, env, opts);
 }
 
 } // end namespace btf

@@ -3299,6 +3299,7 @@ load_vmlinux_corpus(elf_based_reader_sptr rdr,
      << vmlinux << "' ...\n" << std::flush;
 
   // Read the vmlinux corpus and add it to the group.
+  rdr->options().load_in_linux_kernel_mode = true;
   t.start();
   rdr->read_and_add_corpus_to_group(*group, status);
   t.stop();
@@ -3325,9 +3326,7 @@ load_vmlinux_corpus(elf_based_reader_sptr rdr,
          << "/" << total_nb_modules
          << ") ...\n" << std::flush;
 
-      rdr->initialize(*m, di_roots,
-                      /*read_all_types=*/false,
-                      /*linux_kernel_mode=*/true);
+      rdr->initialize(*m, di_roots);
 
       load_generate_apply_suppressions(*rdr, suppr_paths,
                                        kabi_wl_paths, supprs);
@@ -3388,18 +3387,23 @@ load_vmlinux_corpus(elf_based_reader_sptr rdr,
 ///
 /// @param env the environment to create the corpus_group in.
 ///
+/// @param options the options to be used by the @abigail::fe_iface
+/// reader to construct the ABI corpus.  The options object needs to
+/// be created by the caller code.
+///
 /// @param requested_fe_kind the kind of front-end requested by the
 /// user.
 corpus_group_sptr
-build_corpus_group_from_kernel_dist_under(const string&	root,
-					  const string		debug_info_root,
-					  const string&	vmlinux_path,
-					  vector<string>&	suppr_paths,
-					  vector<string>&	kabi_wl_paths,
-					  suppressions_type&	supprs,
-					  bool			verbose,
-					  environment&		env,
-					  corpus::origin	requested_fe_kind)
+build_corpus_group_from_kernel_dist_under(const string&		root,
+					  const string			debug_info_root,
+					  const string&		vmlinux_path,
+					  vector<string>&		suppr_paths,
+					  vector<string>&		kabi_wl_paths,
+					  suppressions_type&		supprs,
+					  bool				verbose,
+					  environment&			env,
+					  const fe_iface::options_type& options,
+					  corpus::origin		requested_fe_kind)
 {
   string vmlinux = vmlinux_path;
   corpus_group_sptr group;
@@ -3443,8 +3447,7 @@ build_corpus_group_from_kernel_dist_under(const string&	root,
                                      di_roots,
                                      env,
 				     requested_fe_kind,
-                                     /*read_all_types=*/false,
-                                     /*linux_kernel_mode=*/true);
+				     options);
       ABG_ASSERT(reader);
       load_vmlinux_corpus(reader, group, vmlinux,
                           modules, root, di_roots,
@@ -3453,6 +3456,62 @@ build_corpus_group_from_kernel_dist_under(const string&	root,
     }
 
   return group;
+}
+
+/// Walk a given directory and build an instance of @ref corpus_group
+/// from the vmlinux kernel binary and the linux kernel modules found
+/// under that directory and under its sub-directories, recursively.
+///
+/// The main corpus of the @ref corpus_group is made of the vmlinux
+/// binary.  The other corpora are made of the linux kernel binaries.
+///
+/// @param root the path of the directory under which the kernel
+/// kernel modules are to be found.  The vmlinux can also be found
+/// somewhere under that directory, but if it's not in there, its path
+/// can be set to the @p vmlinux_path parameter.
+///
+/// @param debug_info_root the directory under which debug info is to
+/// be found for binaries under director @p root.
+///
+/// @param vmlinux_path the path to the vmlinux binary, if that binary
+/// is not under the @p root directory.  If this is empty, then it
+/// means the vmlinux binary is to be found under the @p root
+/// directory.
+///
+/// @param suppr_paths the paths to the suppression specifications to
+/// apply while loading the binaries.
+///
+/// @param kabi_wl_path the paths to the kabi whitelist files to take
+/// into account while loading the binaries.
+///
+/// @param supprs the suppressions resulting from parsing the
+/// suppression specifications at @p suppr_paths.  This is set by this
+/// function.
+///
+/// @param verbose true if the function has to emit some verbose
+/// messages.
+///
+/// @param env the environment to create the corpus_group in.
+///
+/// @param requested_fe_kind the kind of front-end requested by the
+/// user.
+corpus_group_sptr
+build_corpus_group_from_kernel_dist_under(const string&	root,
+					  const string		debug_info_root,
+					  const string&	vmlinux_path,
+					  vector<string>&	suppr_paths,
+					  vector<string>&	kabi_wl_paths,
+					  suppressions_type&	supprs,
+					  bool			verbose,
+					  environment&		env,
+					  corpus::origin	requested_fe_kind)
+{
+  fe_iface::options_type o(env);
+  return build_corpus_group_from_kernel_dist_under(root, debug_info_root,
+						   vmlinux_path, suppr_paths,
+						   kabi_wl_paths, supprs,
+						   verbose, env, o,
+						   requested_fe_kind);
 }
 
 /// Create the best elf based reader (or front-end), given an ELF
@@ -3484,9 +3543,9 @@ build_corpus_group_from_kernel_dist_under(const string&	root,
 /// be requested, using the "--ctf" command line option on some tools
 /// using the library.
 ///
-/// @param show_all_types option to be passed to elf based readers.
-///
-/// @param linux_kernel_mode option to bed passed to elf based readers,
+/// @param options the options to set to the newly created instance of
+/// @ref fe_iface. The options object needs to be created by the
+/// caller code.
 ///
 /// @return the ELF based Reader that is better adapted for the binary
 /// designated by @p elf_file_path.
@@ -3495,8 +3554,7 @@ create_best_elf_based_reader(const string& elf_file_path,
 			     const vector<string>& debug_info_root_paths,
 			     environment& env,
 			     corpus::origin requested_fe_kind,
-			     bool show_all_types,
-			     bool linux_kernel_mode)
+			     const abigail::fe_iface::options_type& options)
 {
   elf_based_reader_sptr result;
   if (guess_file_type(elf_file_path) != FILE_TYPE_ELF)
@@ -3506,15 +3564,16 @@ create_best_elf_based_reader(const string& elf_file_path,
     {
 #ifdef WITH_CTF
       if (file_has_ctf_debug_info(elf_file_path, debug_info_root_paths))
-	result = ctf::create_reader(elf_file_path, debug_info_root_paths, env);
+	result = ctf::create_reader(elf_file_path, debug_info_root_paths,
+				    env, options);
 #endif
     }
   else if (requested_fe_kind & corpus::BTF_ORIGIN)
     {
 #ifdef WITH_BTF
       if (file_has_btf_debug_info(elf_file_path, debug_info_root_paths))
-	result = btf::create_reader(elf_file_path, debug_info_root_paths, env,
-				    show_all_types, linux_kernel_mode);
+	result = btf::create_reader(elf_file_path, debug_info_root_paths,
+				    env, options);
 #endif
     }
   else
@@ -3525,7 +3584,8 @@ create_best_elf_based_reader(const string& elf_file_path,
 	  && file_has_ctf_debug_info(elf_file_path, debug_info_root_paths))
 	// The file has CTF debug info and no DWARF, let's use the CTF
 	// front end even if it wasn't formally requested by the user.
-	result = ctf::create_reader(elf_file_path, debug_info_root_paths, env);
+	result = ctf::create_reader(elf_file_path, debug_info_root_paths,
+				    env, options);
 #endif
 
 #ifdef WITH_BTF
@@ -3533,8 +3593,8 @@ create_best_elf_based_reader(const string& elf_file_path,
 	  && file_has_btf_debug_info(elf_file_path, debug_info_root_paths))
 	// The file has BTF debug info and no BTF, let's use the BTF
 	// front-end even if it wasn't formally requested by the user.
-	result = btf::create_reader(elf_file_path, debug_info_root_paths, env,
-				    show_all_types, linux_kernel_mode);
+	result = btf::create_reader(elf_file_path, debug_info_root_paths,
+				    env, options);
 #endif
     }
 
@@ -3545,12 +3605,53 @@ create_best_elf_based_reader(const string& elf_file_path,
       // DWARF debug info present.
       result = dwarf::create_reader(elf_file_path,
 				    debug_info_root_paths,
-				    env,
-				    show_all_types,
-				    linux_kernel_mode);
+				    env, options);
     }
 
   return result;
+}
+
+
+/// Create the best elf based reader (or front-end), given an ELF
+/// file.
+///
+/// This function looks into the ELF file; depending on the kind of
+/// debug info it contains and on the request of the user, the "best"
+/// front-end is created.
+///
+/// If the user requested the use of the CTF front-end, then, if the
+/// file contains CTF debug info, the CTF front-end is created,
+/// assuming libabigail is built with CTF support.
+///
+/// If the binary ONLY has CTF debug info, then CTF front-end is
+/// created, even if the user hasn't explicitly requested the creation
+/// of the CTF front-end.
+///
+/// Otherwise, by default, the DWARF front-end is created.
+///
+/// @param elf_file_path a path to the ELF file to consider
+///
+/// @param debug_info_root_paths a vector of the paths where to look
+/// for debug info, if applicable.
+///
+/// @param env the environment to use for the front-end.
+///
+/// @param requested_fe_kind the kind of front-end specifically
+/// requested by the user. At the moment, only the CTF front-end can
+/// be requested, using the "--ctf" command line option on some tools
+/// using the library.
+///
+/// @return the ELF based Reader that is better adapted for the binary
+/// designated by @p elf_file_path.
+elf_based_reader_sptr
+create_best_elf_based_reader(const string& elf_file_path,
+			     const vector<string>& debug_info_root_paths,
+			     environment& env,
+			     corpus::origin requested_debug_info_kind)
+{
+  abigail::fe_iface::options_type o(env);
+  return create_best_elf_based_reader(elf_file_path, debug_info_root_paths,
+				      env, requested_debug_info_kind, o);
 }
 
 /// ---------------------------------------------------

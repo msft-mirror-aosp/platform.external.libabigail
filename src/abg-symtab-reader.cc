@@ -32,6 +32,8 @@ namespace abigail
 namespace symtab_reader
 {
 
+using std::lock_guard;
+
 /// symtab_filter implementations
 
 /// Determine whether a symbol is matching the filter criteria of this filter
@@ -86,6 +88,7 @@ const elf_symbols&
 symtab::lookup_symbol(const std::string& name) const
 {
   static const elf_symbols empty_result;
+  lock_guard<mutex> lock(map_mutex_);
   const auto it = name_symbol_map_.find(name);
   if (it != name_symbol_map_.end())
       return it->second;
@@ -97,10 +100,11 @@ symtab::lookup_symbol(const std::string& name) const
 /// @param symbol_addr the starting address of the symbol
 ///
 /// @return a symbol if found, else an empty sptr
-const elf_symbol_sptr&
+const elf_symbol_sptr
 symtab::lookup_symbol(GElf_Addr symbol_addr) const
 {
   static const elf_symbol_sptr empty_result;
+  lock_guard<mutex> lock(map_mutex_);
   const auto addr_it = addr_symbol_map_.find(symbol_addr);
   if (addr_it != addr_symbol_map_.end())
     return addr_it->second;
@@ -541,11 +545,15 @@ symtab::load_(Elf*	       elf_handle,
 	 (GELF_ST_VISIBILITY(sym->st_other)));
 
       // add to the name->symbol lookup
-      name_symbol_map_[name].push_back(symbol_sptr);
+      {
+	lock_guard<mutex> lock(map_mutex_);
+	name_symbol_map_[name].push_back(symbol_sptr);
+      }
 
       // add to the addr->symbol lookup
       if (symbol_sptr->is_common_symbol())
 	{
+	  lock_guard<mutex> lock(map_mutex_);
 	  const auto it = name_symbol_map_.find(name);
 	  ABG_ASSERT(it != name_symbol_map_.end());
 	  const elf_symbols& common_sym_instances = it->second;
@@ -595,41 +603,44 @@ symtab::load_(Elf*	       elf_handle,
 
   is_kernel_binary_ = elf_helpers::is_linux_kernel(elf_handle);
 
-  // Now apply the ksymtab_exported attribute to the symbols we collected.
-  for (const auto& symbol : exported_kernel_symbols)
-    {
-      const auto r = name_symbol_map_.find(symbol);
-      if (r == name_symbol_map_.end())
-	continue;
+  // Now apply the ksymtab_exported attribute to the symbols we
+  // collected.
+  {
+    lock_guard<mutex> lock(map_mutex_);
+    for (const auto& symbol : exported_kernel_symbols)
+      {
+	const auto r = name_symbol_map_.find(symbol);
+	if (r == name_symbol_map_.end())
+	  continue;
 
-      for (const auto& elf_symbol : r->second)
+	for (const auto& elf_symbol : r->second)
 	  if (elf_symbol->is_public())
 	    elf_symbol->set_is_in_ksymtab(true);
-      has_ksymtab_entries_ = true;
-    }
+	has_ksymtab_entries_ = true;
+      }
 
-  // Now add the CRC values
-  for (const auto& crc_entry : crc_values)
-    {
-      const auto r = name_symbol_map_.find(crc_entry.first);
-      if (r == name_symbol_map_.end())
-	continue;
+    // Now add the CRC values
+    for (const auto& crc_entry : crc_values)
+      {
+	const auto r = name_symbol_map_.find(crc_entry.first);
+	if (r == name_symbol_map_.end())
+	  continue;
 
-      for (const auto& symbol : r->second)
-	symbol->set_crc(crc_entry.second);
-    }
+	for (const auto& symbol : r->second)
+	  symbol->set_crc(crc_entry.second);
+      }
 
-  // Now add the namespaces
-  for (const auto& namespace_entry : namespaces)
-    {
-      const auto r = name_symbol_map_.find(namespace_entry.first);
-      if (r == name_symbol_map_.end())
-	continue;
+    // Now add the namespaces
+    for (const auto& namespace_entry : namespaces)
+      {
+	const auto r = name_symbol_map_.find(namespace_entry.first);
+	if (r == name_symbol_map_.end())
+	  continue;
 
-      for (const auto& symbol : r->second)
-	symbol->set_namespace(namespace_entry.second);
-    }
-
+	for (const auto& symbol : r->second)
+	  symbol->set_namespace(namespace_entry.second);
+      }
+  }
   // sort the symbols for deterministic output
   std::sort(symbols_.begin(), symbols_.end(), symbol_sort);
 
@@ -652,6 +663,7 @@ symtab::load_(string_elf_symbols_map_sptr function_symbol_map,
 	     string_elf_symbols_map_sptr variables_symbol_map)
 
 {
+  lock_guard<mutex> lock(map_mutex_);
   if (function_symbol_map)
     for (const auto& symbol_map_entry : *function_symbol_map)
       {
@@ -716,7 +728,10 @@ symtab::update_main_symbol(GElf_Addr addr, const std::string& name)
 
   // also update the default symbol we return when looked up by address
   if (new_main)
-    addr_symbol_map_[addr] = new_main;
+    {
+      lock_guard<mutex> lock(map_mutex_);
+      addr_symbol_map_[addr] = new_main;
+    }
 }
 
 /// Various adjustments and bookkeeping may be needed to provide a correct
@@ -761,6 +776,7 @@ symtab::setup_symbol_lookup_tables(Elf* elf_handle,
 
   if (symbol_sptr->is_defined())
     {
+      lock_guard<mutex> lock(map_mutex_);
       const auto result =
 	addr_symbol_map_.emplace(symbol_value, symbol_sptr);
       if (!result.second)
@@ -822,6 +838,7 @@ symtab::update_function_entry_address_symbol_map(
     elf_helpers::lookup_ppc64_elf_fn_entry_point_address(elf_handle,
 							 fn_desc_addr);
 
+  lock_guard<mutex> lock(map_mutex_);
   const std::pair<addr_symbol_map_type::const_iterator, bool>& result =
     entry_addr_symbol_map_.emplace(fn_entry_point_addr, symbol_sptr);
 
@@ -942,6 +959,7 @@ symtab::add_alternative_address_lookups(Elf* elf_handle)
 void
 symtab::collect_undefined_fns_and_vars_linkage_names()
 {
+  lock_guard<mutex> lock(big_mutex_);
   if (!cached_undefined_symbol_names_)
     {
       {

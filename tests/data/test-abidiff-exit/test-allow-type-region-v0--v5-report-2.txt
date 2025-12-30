@@ -9,14 +9,5 @@ Variables changes summary: 0 Removed, 0 Changed, 0 Added variable
         type size changed from 224 to 256 (in bits)
         1 data member insertion:
           'int incorrectly_inserted', at offset 224 (in bits) at test-allow-type-region-v5.c:10:1
-        3 data member changes:
-          type of 'unsigned int rh_kabi_reserved1' changed:
-            type size hasn't changed
-          and name of 'C0::rh_kabi_reserved1' changed to 'C0::correctly_inserted1' at test-allow-type-region-v5.c:5:1
-          type of 'unsigned int rh_kabi_reserved3' changed:
-            type size hasn't changed
-          and name of 'C0::rh_kabi_reserved3' changed to 'C0::correctly_inserted2' at test-allow-type-region-v5.c:7:1
-          type of 'unsigned int rh_kabi_reserved4' changed:
-            type size hasn't changed
-          and name of 'C0::rh_kabi_reserved4' changed to 'C0::correctly_inserted3' at test-allow-type-region-v5.c:8:1
+        no data member changes (3 filtered);
 

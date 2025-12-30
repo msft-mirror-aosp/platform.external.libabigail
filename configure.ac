@@ -11,8 +11,8 @@ dnl
 
 dnl Libabigail version number is handled here with the major and minor
 dnl version numbers.
-m4_define([version_major],   [2])
-m4_define([version_minor],   [11])
+m4_define([version_major],   [3])
+m4_define([version_minor],   [0])
 
 dnl Below are the numbers to handle libabigail.so's versionning
 dnl following the libtool's versionning scheme to handle shared
@@ -34,7 +34,7 @@ dnl    then increment LIBABIGAIL_SO_AGE.
 dnl 
 dnl 4. If any interfaces have been removed or changed since the last
 dnl     public release, then set LIBABIGAIL_SO_AGE to 0.
-m4_define([libabigail_so_current],  [9])
+m4_define([libabigail_so_current],  [10])
 m4_define([libabigail_so_revision], [0])
 m4_define([libabigail_so_age],      [0])
 
@@ -88,12 +88,12 @@ dnl The major version number of the abixml version should be changed
 dnl only if a new version of libabigail cannot read an old version of
 dnl abixml.  This should be very rare and should be avoided as much as
 dnl possible.
-ABIXML_VERSION_MAJOR=2
+ABIXML_VERSION_MAJOR=3
 dnl The minor version number of the abixml version should be changed
 dnl each time and old version of libabigail can't handle a new version
 dnl of abixml.  Note however that when the major version number is
 dnl changed, the minor version number should be set to zero.
-ABIXML_VERSION_MINOR=5
+ABIXML_VERSION_MINOR=0
 LIBABIGAIL_SO_CURRENT=libabigail_so_current
 LIBABIGAIL_SO_REVISION=libabigail_so_revision
 LIBABIGAIL_SO_AGE=libabigail_so_age
@@ -1035,6 +1035,7 @@ fi
 
 dnl Set a few Automake conditionals
 
+AM_CONDITIONAL([ENABLE_THREAD_SANITIZER],[test "x$ENABLE_TSAN" = "xyes"])
 AM_CONDITIONAL([CTF_READER],[test "x$ENABLE_CTF" = "xyes"])
 AM_CONDITIONAL([BTF_READER],[test "x$ENABLE_BTF" = "xyes"])
 
@@ -1652,6 +1653,8 @@ AC_CONFIG_FILES([tests/runtestcanonicalizetypes.sh],
 		[chmod +x tests/runtestcanonicalizetypes.sh])
 		AC_CONFIG_FILES([tests/runtestslowselfcompare.sh],
 		[chmod +x tests/runtestslowselfcompare.sh])
+AC_CONFIG_FILES([tests/trun.sh],
+		[chmod +x tests/trun.sh])
 AC_CONFIG_FILES([tests/mockfedabipkgdiff],
 		[chmod +x tests/mockfedabipkgdiff])
 AC_CONFIG_FILES([tests/runtestfedabipkgdiff.py],

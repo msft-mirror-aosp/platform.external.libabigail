@@ -31,6 +31,12 @@ namespace ctf
 elf_based_reader_sptr
 create_reader(const std::string& elf_path,
 	      const vector<string>& debug_info_root_paths,
+	      environment& env,
+	      const fe_iface::options_type& options);
+
+elf_based_reader_sptr
+create_reader(const std::string& elf_path,
+	      const vector<string>& debug_info_root_paths,
 	      environment& env);
 
 void

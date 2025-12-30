@@ -319,12 +319,41 @@ public:
     if (ctxt->get_allowed_category() == EVERYTHING_CATEGORY)
       return false;
 
-    // If this node is on the path of a node that *must* be reported,
-    // then do not filter it.
+    // If this node has been selected by a negative suppression
+    // specification or has its descendant which has been selected
+    // that way, then that node *must* be reported; then do not filter
+    // it out.
     if (category & (HAS_DESCENDANT_WITH_ALLOWED_CHANGE_CATEGORY
-		    | HAS_PARENT_WITH_ALLOWED_CHANGE_CATEGORY
 		    | HAS_ALLOWED_CHANGE_CATEGORY))
       return false;
+
+    if (category & HAS_PARENT_WITH_ALLOWED_CHANGE_CATEGORY)
+      {
+	// A parent node has a negative suppression that likely
+	// indirectly suppresses this node while unconditionnaly
+	// keeping that parent node with the
+	// HAS_ALLOWED_CHANGE_CATEGORY bit set.
+	//
+	// If the category bit-field provided has a change category
+	// that is not "allowed" to be shown (i.e, a change category
+	// to be suppressed), then consider the category bit-field as
+	// being suppressed.
+	//
+	// But before doing that, let's not look at the
+	// SUPPRESSED_CATEGORY for this node as it's most likely been
+	// implied by the HAS_ALLOWED_CHANGE_CATEGORY bit.  Let's not
+	// consider the REDUNDANT_CATEGORY either.  And obviously,
+	// let's remove the HAS_PARENT_WITH_ALLOWED_CHANGE_CATEGORY
+	// bit, which has triggered all this business to begin with.
+	category &= ~SUPPRESSED_CATEGORY;
+	category &= ~REDUNDANT_CATEGORY;
+	category &= ~HAS_PARENT_WITH_ALLOWED_CHANGE_CATEGORY;
+
+	// And now, let's see if category contains a *_CATEGORY bit
+	// that is not allowed to be shown ...
+	if (!(category & ctxt->get_allowed_category()))
+	  return true;
+      }
 
   /// We don't want to display nodes suppressed by a user-provided
   /// suppression specification or by a "private type" suppression
@@ -1206,7 +1235,14 @@ struct corpus_diff::priv
   changed_unreachable_types_sorted() const;
 
   void
-  apply_filters_and_compute_diff_stats(corpus_diff::diff_stats&);
+  maybe_perform_change_categorization();
+
+  void
+  maybe_perform_redundant_node_categorization();
+
+  void
+  apply_filters_and_compute_diff_stats(corpus_diff*,
+				       corpus_diff::diff_stats&);
 
   void
   emit_diff_stats(const diff_stats&	stats,
@@ -1215,6 +1251,9 @@ struct corpus_diff::priv
 
   void
   categorize_redundant_changed_sub_nodes();
+
+  void
+  apply_suppressions(corpus_diff* d);
 
   void
   clear_redundancy_categorization();

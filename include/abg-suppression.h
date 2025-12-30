@@ -76,7 +76,7 @@ public:
   void
   set_is_artificial(bool);
 
-  const string
+  const string&
   get_label() const;
 
   void
@@ -354,7 +354,7 @@ public:
 
   bool
   suppresses_type(const type_base_sptr& type,
-		  const scope_decl* type_scope) const;
+		  const scope_decl_sptr type_scope) const;
 }; // end type_suppression
 
 type_suppression_sptr

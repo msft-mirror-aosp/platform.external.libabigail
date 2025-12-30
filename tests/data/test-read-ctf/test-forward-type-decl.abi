@@ -1,12 +1,12 @@
-<abi-corpus version='2.5' path='data/test-read-ctf/test-forward-type-decl.o'>
+<abi-corpus version='3.0' path='data/test-read-ctf/test-forward-type-decl.o' tracking-non-reachable-types='yes'>
   <elf-variable-symbols>
     <elf-symbol name='addr' size='8' type='object-type' binding='global-binding' visibility='default-visibility' is-defined='yes'/>
   </elf-variable-symbols>
-  <abi-instr address-size='64' language='LANG_C'>
-    <pointer-type-def type-id='type-id-1' size-in-bits='64' alignment-in-bits='64' hash='e1ed50ba2e782870' id='type-id-2'/>
-    <pointer-type-def type-id='type-id-3' size-in-bits='64' alignment-in-bits='64' hash='576040d64bde8658' id='type-id-4'/>
-    <pointer-type-def type-id='type-id-5' size-in-bits='64' alignment-in-bits='64' hash='3fd8b3e70eda1667' id='type-id-6'/>
-    <class-decl name='address_space' is-struct='yes' visibility='default' size-in-bits='128' hash='e91d249e0e5def7c' id='type-id-1'>
+  <abi-types>
+    <pointer-type-def type-id='type-id-1' size-in-bits='64' alignment-in-bits='64' hash='b0c2a6edd1336b48' id='type-id-2'/>
+    <pointer-type-def type-id='type-id-3' size-in-bits='64' alignment-in-bits='64' hash='b8d36745c550f3e1' id='type-id-4'/>
+    <pointer-type-def type-id='type-id-5' size-in-bits='64' alignment-in-bits='64' hash='bf8b7b83fba427f6' id='type-id-6'/>
+    <class-decl name='address_space' is-struct='yes' visibility='default' size-in-bits='128' hash='7588d519c27bf833' id='type-id-1'>
       <data-member access='public' layout-offset-in-bits='0'>
         <var-decl name='rb_root' type-id='type-id-6' visibility='default'/>
       </data-member>
@@ -14,16 +14,18 @@
         <var-decl name='page' type-id='type-id-4' visibility='default'/>
       </data-member>
     </class-decl>
-    <class-decl name='page' is-struct='yes' visibility='default' size-in-bits='64' hash='f6c46b3dc4adca9c' id='type-id-3'>
+    <class-decl name='page' is-struct='yes' visibility='default' size-in-bits='64' hash='88e9187387289baf' id='type-id-3'>
       <data-member access='public' layout-offset-in-bits='0'>
         <var-decl name='mapping' type-id='type-id-2' visibility='default'/>
       </data-member>
     </class-decl>
-    <class-decl name='rb_node' is-struct='yes' visibility='default' size-in-bits='64' hash='15a628b4c05ae35b' id='type-id-5'>
+    <class-decl name='rb_node' is-struct='yes' visibility='default' size-in-bits='64' hash='9929e4093a990eb0' id='type-id-5'>
       <data-member access='public' layout-offset-in-bits='0'>
         <var-decl name='rb_left' type-id='type-id-6' visibility='default'/>
       </data-member>
     </class-decl>
+  </abi-types>
+  <abi-instr address-size='64' language='LANG_C'>
     <var-decl name='addr' type-id='type-id-2' mangled-name='addr' visibility='default' elf-symbol-id='addr'/>
   </abi-instr>
 </abi-corpus>

@@ -78,21 +78,6 @@ elf_based_reader::initialize(const std::string& elf_path,
   priv_->initialize();
 }
 
-/// (re)Initialize the resources used by the current reader.
-///
-/// This invokes fe_iface::initialize as wel as the virtual pure
-/// elf_based_reader::initialize() interface.
-///
-/// @param corpus_path path to the corpus to be built.
-void
-elf_based_reader::initialize(const std::string& corpus_path)
-{
-  fe_iface::initialize(corpus_path);
-  vector<string> v;
-  initialize(corpus_path, v, /*load_all_type=*/false,
-	     /*linux_kernel_mode=*/false);
-}
-
 /// Read an ABI corpus and add it to a given corpus group.
 ///
 /// @param group the corpus group to consider.  The new corpus is

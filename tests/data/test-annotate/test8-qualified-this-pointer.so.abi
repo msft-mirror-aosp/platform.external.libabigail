@@ -1,4 +1,4 @@
-<abi-corpus version='2.5'>
+<abi-corpus version='3.0' tracking-non-reachable-types='yes'>
   <elf-needed>
     <dependency name='libstdc++.so.6'/>
     <dependency name='libm.so.6'/>
@@ -13,36 +13,30 @@
     <!-- _init -->
     <elf-symbol name='_init' type='func-type' binding='global-binding' visibility='default-visibility' is-defined='yes'/>
   </elf-function-symbols>
-  <abi-instr address-size='64' path='test8-qualified-this-pointer.cc' comp-dir-path='/home/dodji/git/libabigail/master/tests/data/test-read-dwarf' language='LANG_C_plus_plus'>
-    <!-- S* -->
-    <pointer-type-def type-id='type-id-1' size-in-bits='64' hash='266209beb41f21aa' id='type-id-2'/>
+  <abi-types>
     <!-- const S -->
-    <qualified-type-def type-id='type-id-1' const='yes' hash='3b4935b1c09f4d24' id='type-id-3'/>
+    <qualified-type-def type-id='type-id-1' const='yes' hash='6f6949ee48b4ba5e' id='type-id-2'/>
     <!-- const S* -->
-    <pointer-type-def type-id='type-id-3' size-in-bits='64' hash='548b7da6f9ec2163' id='type-id-4'/>
-    <!-- const S* const -->
-    <qualified-type-def type-id='type-id-4' const='yes' hash='bbb1738512647812' id='type-id-5'/>
+    <pointer-type-def type-id='type-id-2' size-in-bits='64' hash='13704968483edc48' id='type-id-3'/>
     <!-- int -->
-    <type-decl name='int' size-in-bits='32' hash='09d17c08f594edc7' id='type-id-6'/>
+    <type-decl name='int' size-in-bits='32' hash='09d17c08f594edc7' id='type-id-4'/>
+    <!-- int (S::*) () -->
+    <function-type method-class-id='type-id-1' const='yes' size-in-bits='64' hash='de1d1267e996f729' id='type-id-5'>
+      <!-- implicit parameter of type 'const S*' -->
+      <parameter type-id='type-id-3' is-artificial='yes'/>
+      <!-- int -->
+      <return type-id='type-id-4'/>
+    </function-type>
     <!-- struct S -->
-    <class-decl name='S' is-struct='yes' visibility='default' size-in-bits='32' filepath='/home/dodji/git/libabigail/master/tests/data/test-read-dwarf/test8-qualified-this-pointer.cc' line='1' column='1' hash='2ba53379bb3d81ab' id='type-id-1'>
+    <class-decl name='S' is-struct='yes' visibility='default' size-in-bits='32' hash='4b9435452e9b3af9' id='type-id-1'>
       <data-member access='public' layout-offset-in-bits='0'>
         <!-- int S::i -->
-        <var-decl name='i' type-id='type-id-6' visibility='default' filepath='/home/dodji/git/libabigail/master/tests/data/test-read-dwarf/test8-qualified-this-pointer.cc' line='3' column='1'/>
+        <var-decl name='i' type-id='type-id-4' visibility='default'/>
       </data-member>
       <member-function access='public' const='yes'>
         <!-- int S::foo() -->
-        <function-decl name='foo' type-id='type-id-7' mangled-name='_ZNK1S3fooEv' filepath='/home/dodji/git/libabigail/master/tests/data/test-read-dwarf/test8-qualified-this-pointer.cc' line='14' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZNK1S3fooEv'/>
+        <function-decl name='foo' type-id='type-id-5' mangled-name='_ZNK1S3fooEv' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZNK1S3fooEv'/>
       </member-function>
     </class-decl>
-    <!-- void -->
-    <type-decl name='void' id='type-id-8'/>
-    <!-- int (S::*) () -->
-    <function-type method-class-id='type-id-1' const='yes' size-in-bits='64' hash='388da3fa973fde78' id='type-id-7'>
-      <!-- implicit parameter of type 'const S*' -->
-      <parameter type-id='type-id-4' is-artificial='yes'/>
-      <!-- int -->
-      <return type-id='type-id-6'/>
-    </function-type>
-  </abi-instr>
+  </abi-types>
 </abi-corpus>

@@ -49,6 +49,7 @@ struct test_task : public abigail::workers::task
 {
   bool is_ok;
   InOutSpec spec;
+  string initial_command;
   string error_message;
   string out_abi_base;
   string in_elf_base;
@@ -147,7 +148,7 @@ struct test_task : public abigail::workers::task
   serialize_corpus(const string& out_abi_path,
                    corpus_sptr corp);
   bool
-  run_abidw(const string& extargs = "");
+  run_abi_self_comparison(const string& extargs = "");
 
   bool
   run_diff();

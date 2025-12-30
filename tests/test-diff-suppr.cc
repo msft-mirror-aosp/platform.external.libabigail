@@ -1178,7 +1178,7 @@ InOutSpec in_out_specs[] =
   },
   {
     "data/test-diff-suppr/libtest23-alias-filter-v0.so",
-    "data/test-diff-suppr/libtest23-alias-filter-v1.so ",
+    "data/test-diff-suppr/libtest23-alias-filter-v1.so",
     "",
     "",
     "",
@@ -1188,7 +1188,7 @@ InOutSpec in_out_specs[] =
   },
   {
     "data/test-diff-suppr/libtest23-alias-filter-v0.so",
-    "data/test-diff-suppr/libtest23-alias-filter-v1.so ",
+    "data/test-diff-suppr/libtest23-alias-filter-v1.so",
     "",
     "",
     "data/test-diff-suppr/test23-alias-filter-0.suppr",

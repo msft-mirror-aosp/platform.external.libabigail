@@ -1,4 +1,4 @@
-<abi-corpus version='2.0' architecture='elf-amd-x86_64' soname='test48-soname-abixml-v0'>
+<abi-corpus version='3.0' path='tests/data/test-diff-suppr/libtest48-soname-abixml-v0.so' architecture='elf-amd-x86_64' soname='test48-soname-abixml-v0' tracking-non-reachable-types='yes'>
   <elf-needed>
     <dependency name='libc.so.6'/>
   </elf-needed>
@@ -7,18 +7,21 @@
     <elf-symbol name='_init' type='func-type' binding='global-binding' visibility='default-visibility' is-defined='yes'/>
     <elf-symbol name='foo' type='func-type' binding='global-binding' visibility='default-visibility' is-defined='yes'/>
   </elf-function-symbols>
-  <abi-instr address-size='64' path='test48-soname-abixml-v0.c' comp-dir-path='/home/dodji/git/libabigail/suppress-file-abixml/tests/data/test-diff-suppr' language='LANG_C99'>
-    <type-decl name='int' size-in-bits='32' id='type-id-1'/>
-    <type-decl name='void' id='type-id-2'/>
-    <class-decl name='S' size-in-bits='32' is-struct='yes' visibility='default' filepath='/home/dodji/git/libabigail/suppress-file-abixml/tests/data/test-diff-suppr/test48-soname-abixml-v0.c' line='1' column='1' id='type-id-3'>
+  <abi-types>
+    <pointer-type-def type-id='type-id-1' size-in-bits='64' hash='c7fad2d8d09eda21' id='type-id-2'/>
+    <function-type size-in-bits='64' hash='946140b9a3257b1d' id='type-id-3'>
+      <parameter type-id='type-id-2'/>
+      <return type-id='type-id-4'/>
+    </function-type>
+    <type-decl name='int' size-in-bits='32' hash='09d17c08f594edc7' id='type-id-5'/>
+    <class-decl name='S' is-struct='yes' visibility='default' size-in-bits='32' hash='2dfab331af744ad5' id='type-id-1'>
       <data-member access='public' layout-offset-in-bits='0'>
-        <var-decl name='m0' type-id='type-id-1' visibility='default' filepath='/home/dodji/git/libabigail/suppress-file-abixml/tests/data/test-diff-suppr/test48-soname-abixml-v0.c' line='3' column='1'/>
+        <var-decl name='m0' type-id='type-id-5' visibility='default'/>
       </data-member>
     </class-decl>
-    <pointer-type-def type-id='type-id-3' size-in-bits='64' id='type-id-4'/>
-    <function-decl name='foo' mangled-name='foo' filepath='/home/dodji/git/libabigail/suppress-file-abixml/tests/data/test-diff-suppr/test48-soname-abixml-v0.c' line='7' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='foo'>
-      <parameter type-id='type-id-4' name='a' filepath='/home/dodji/git/libabigail/suppress-file-abixml/tests/data/test-diff-suppr/test48-soname-abixml-v0.c' line='7' column='1'/>
-      <return type-id='type-id-2'/>
-    </function-decl>
+    <type-decl name='void' hash='8dcbc64750c3d4e3' id='type-id-4'/>
+  </abi-types>
+  <abi-instr address-size='64' path='test48-soname-abixml-v0.c' comp-dir-path='/home/dodji/git/libabigail/suppress-file-abixml/tests/data/test-diff-suppr' language='LANG_C99'>
+      <function-decl name='foo' type-id='type-id-3' mangled-name='foo' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='foo'/>
   </abi-instr>
 </abi-corpus>

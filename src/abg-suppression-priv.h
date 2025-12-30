@@ -13,6 +13,9 @@
 #ifndef __ABG_SUPPRESSION_PRIV_H__
 #define __ABG_SUPPRESSION_PRIV_H__
 
+#include <atomic>
+#include <mutex>
+
 #include "abg-fwd.h"
 #include "abg-regex.h"
 #include "abg-sptr-utils.h"
@@ -24,13 +27,18 @@ namespace abigail
 namespace suppr
 {
 
+using std::mutex;
+using std::lock_guard;
+using std::atomic;
+
 // <suppression_base stuff>
 
 /// The private data of @ref suppression_base.
 class suppression_base::priv
 {
-  bool					is_artificial_;
-  bool					drops_artifact_;
+  mutex				mutex_;
+  std::atomic<bool>			is_artificial_;
+  std::atomic<bool>			drops_artifact_;
   string				label_;
   string				file_name_regex_str_;
   mutable regex::regex_t_sptr		file_name_regex_;
@@ -241,6 +249,7 @@ struct function_suppression::priv
 {
   friend class function_suppression;
 
+  std::recursive_mutex			mutex_;
   change_kind				change_kind_;
   string				name_;
   string				name_regex_str_;
@@ -259,7 +268,7 @@ struct function_suppression::priv
   string				symbol_version_;
   string				symbol_version_regex_str_;
   mutable regex::regex_t_sptr		symbol_version_regex_;
-  bool					allow_other_aliases_;
+  std::atomic<bool>			allow_other_aliases_;
 
   priv():
     change_kind_(ALL_CHANGE_KIND),
@@ -561,16 +570,17 @@ struct variable_suppression::priv
 /// The private data for @ref type_suppression.
 class type_suppression::priv
 {
+  mutable std::mutex			mutex_;
   string				type_name_regex_str_;
   mutable regex::regex_t_sptr		type_name_regex_;
   string				type_name_;
   string				type_name_not_regex_str_;
   mutable regex::regex_t_sptr		type_name_not_regex_;
-  bool					consider_type_kind_;
+  std::atomic<bool>			consider_type_kind_;
   type_suppression::type_kind		type_kind_;
-  bool					consider_reach_kind_;
-  type_suppression::reach_kind		reach_kind_;
-  bool					has_size_change_;
+  std::atomic<bool>			consider_reach_kind_;
+  std::atomic<type_suppression::reach_kind>		reach_kind_;
+  std::atomic<bool>			has_size_change_;
   // The data members a class needs to have to match this suppression
   // specification.  These might be selected by a regular expression.
   string_set_type			potential_data_members_;
@@ -588,7 +598,7 @@ class type_suppression::priv
   mutable vector<regex::regex_t_sptr>	changed_enumerators_regexp_;
   // Whether the "has_strict_flexible_array_data_member_conversion"
   // property was set.
-  bool					has_strict_fam_conv_;
+  std::atomic<bool>			has_strict_fam_conv_;
 
   priv();
 
@@ -620,6 +630,7 @@ public:
   const regex::regex_t_sptr
   get_type_name_regex() const
   {
+    lock_guard<mutex> lock(mutex_);
     if (!type_name_regex_ && !type_name_regex_str_.empty())
       type_name_regex_ = regex::compile(type_name_regex_str_);
     return type_name_regex_;
@@ -630,7 +641,10 @@ public:
   /// @param r the new type_name_regex object.
   void
   set_type_name_regex(regex::regex_t_sptr r)
-  {type_name_regex_ = r;}
+  {
+    lock_guard<mutex> lock(mutex_);
+    type_name_regex_ = r;
+  }
 
   /// Get the regular expression object associated to the
   /// 'type_name_not_regex' property of @ref type_suppression.
@@ -643,6 +657,7 @@ public:
   const regex::regex_t_sptr
   get_type_name_not_regex() const
   {
+    lock_guard<mutex> lock(mutex_);
     if (!type_name_not_regex_ && !type_name_not_regex_str_.empty())
       type_name_not_regex_ = regex::compile(type_name_not_regex_str_);
     return type_name_not_regex_;
@@ -653,7 +668,10 @@ public:
   /// @param r the new type_name_not_regex object.
   void
   set_type_name_not_regex(regex::regex_t_sptr r)
-  {type_name_not_regex_ = r;}
+  {
+    lock_guard<mutex> lock(mutex_);
+    type_name_not_regex_ = r;
+  }
 
   /// Getter for the string that denotes the 'type_name_not_regex'
   /// property.
@@ -662,7 +680,10 @@ public:
   /// 'type_name_not_regex' property.
   const string&
   get_type_name_not_regex_str() const
-  {return type_name_not_regex_str_;}
+  {
+    lock_guard<mutex> lock(mutex_);
+    return type_name_not_regex_str_;
+  }
 
   /// Setter for the string that denotes the 'type_name_not_regex'
   /// property.
@@ -671,7 +692,10 @@ public:
   /// 'type_name_not_regex' property.
   void
   set_type_name_not_regex_str(const string regex_str)
-  {type_name_not_regex_str_ = regex_str;}
+  {
+    lock_guard<mutex> lock(mutex_);
+    type_name_not_regex_str_ = regex_str;
+  }
 
   /// Getter for the source_location_to_keep_regex object.
   ///
@@ -679,6 +703,7 @@ public:
   const regex::regex_t_sptr
   get_source_location_to_keep_regex() const
   {
+    lock_guard<mutex> lock(mutex_);
     if (!source_location_to_keep_regex_
 	&& !source_location_to_keep_regex_str_.empty())
       source_location_to_keep_regex_ =
@@ -691,7 +716,10 @@ public:
   /// @param r the new regex object.
   void
   set_source_location_to_keep_regex(regex::regex_t_sptr r)
-  {source_location_to_keep_regex_ = r;}
+  {
+    lock_guard<mutex> lock(mutex_);
+    source_location_to_keep_regex_ = r;
+  }
 
   /// Getter for the "potential_data_member_names_regex" object.
   ///
@@ -702,6 +730,7 @@ public:
   const regex::regex_t_sptr
   get_potential_data_member_names_regex() const
   {
+    lock_guard<mutex> lock(mutex_);
     if (!potential_data_members_regex_
 	&& !potential_data_members_regex_str_.empty())
       {
@@ -719,7 +748,10 @@ public:
   /// @param r the new "potential_data_member_names_regex" object.
   void
   set_potential_data_member_names_regex(regex::regex_t_sptr &r)
-  {potential_data_members_regex_ = r;}
+  {
+    lock_guard<mutex> lock(mutex_);
+    potential_data_members_regex_ = r;
+  }
 
   friend class type_suppression;
 }; // class type_suppression::priv
@@ -730,7 +762,7 @@ suppression_matches_type_name(const suppr::type_suppression&	s,
 
 bool
 suppression_matches_type_name(const suppr::type_suppression&	s,
-			      const scope_decl*		scope,
+			      scope_decl_sptr			scope,
 			      const type_base_sptr&		type);
 
 bool

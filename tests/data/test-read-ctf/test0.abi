@@ -1,4 +1,4 @@
-<abi-corpus version='2.5' path='data/test-read-ctf/test0'>
+<abi-corpus version='3.0' path='data/test-read-ctf/test0' tracking-non-reachable-types='yes'>
   <elf-needed>
     <dependency name='libc.so.6'/>
   </elf-needed>
@@ -19,51 +19,54 @@
     <elf-symbol name='test_restrict' size='8' type='object-type' binding='global-binding' visibility='default-visibility' is-defined='yes'/>
     <elf-symbol name='test_volatile' size='2' type='object-type' binding='global-binding' visibility='default-visibility' is-defined='yes'/>
   </elf-variable-symbols>
-  <abi-instr address-size='64' language='LANG_C'>
-    <pointer-type-def type-id='type-id-1' size-in-bits='64' alignment-in-bits='64' hash='cf7a55801d29a217' id='type-id-2'/>
-    <type-decl name='char' size-in-bits='8' hash='65b2d157027b431a' id='type-id-3'/>
-    <pointer-type-def type-id='type-id-3' size-in-bits='64' alignment-in-bits='64' hash='f0d67b75f875f482' id='type-id-4'/>
-    <qualified-type-def type-id='type-id-1' const='yes' hash='3b4935b1c09f4d24' id='type-id-5'/>
-    <type-decl name='float' size-in-bits='32' hash='d7ec3bf03d3c5690' id='type-id-6'/>
-    <type-decl name='int' size-in-bits='32' hash='09d17c08f594edc7' id='type-id-7'/>
-    <array-type-def dimensions='1' type-id='type-id-7' size-in-bits='320' hash='53439463b33ac425' id='type-id-8'>
-      <subrange length='10' lower-bound='0' upper-bound='9' type-id='type-id-9' size-in-bits='64' is-anonymous='yes' hash='4e72a2f569b234f4' id='type-id-10'/>
+  <abi-types>
+    <subrange length='10' lower-bound='0' upper-bound='9' type-id='type-id-1' size-in-bits='64' is-anonymous='yes' hash='4e72a2f569b234f4' id='type-id-2'/>
+    <pointer-type-def type-id='type-id-3' size-in-bits='64' alignment-in-bits='64' hash='feb0fbe2b9baf0ed' id='type-id-4'/>
+    <type-decl name='char' size-in-bits='8' hash='65b2d157027b431a' id='type-id-5'/>
+    <pointer-type-def type-id='type-id-5' size-in-bits='64' alignment-in-bits='64' hash='859ac74900ec4328' id='type-id-6'/>
+    <qualified-type-def type-id='type-id-3' const='yes' hash='6f6949ee48b4ba5e' id='type-id-7'/>
+    <type-decl name='float' size-in-bits='32' hash='d7ec3bf03d3c5690' id='type-id-8'/>
+    <function-type size-in-bits='64' hash='2b6349b619baa5b7' id='type-id-9'>
+      <parameter type-id='type-id-4'/>
+      <return type-id='type-id-10'/>
+    </function-type>
+    <function-type size-in-bits='64' hash='674662ad261e59a7' id='type-id-11'>
+      <return type-id='type-id-10'/>
+    </function-type>
+    <type-decl name='int' size-in-bits='32' hash='09d17c08f594edc7' id='type-id-10'/>
+    <array-type-def dimensions='1' type-id='type-id-10' size-in-bits='320' hash='f856d4951eba1486' id='type-id-12'>
+      <subrange length='10' lower-bound='0' upper-bound='9' type-id='type-id-1' size-in-bits='64' is-anonymous='yes' hash='4e72a2f569b234f4' id='type-id-2'/>
     </array-type-def>
-    <type-decl name='long int' size-in-bits='64' hash='b119fe0931d2ee10#2' id='type-id-11'/>
-    <pointer-type-def type-id='type-id-11' size-in-bits='64' alignment-in-bits='64' hash='82f326d6967f2e04' id='type-id-12'/>
-    <qualified-type-def type-id='type-id-12' restrict='yes' hash='4e0fd84bc8b9cc90' id='type-id-13'/>
-    <type-decl name='short int' size-in-bits='16' hash='6c2352eccdcd3eea#3' id='type-id-14'/>
-    <class-decl name='S' is-struct='yes' visibility='default' size-in-bits='32' hash='a4c223d61db61e02' id='type-id-1'>
+    <type-decl name='long int' size-in-bits='64' hash='8aa1e1a2ab2c2d3e' id='type-id-13'/>
+    <pointer-type-def type-id='type-id-13' size-in-bits='64' alignment-in-bits='64' hash='fed4503a274a5984' id='type-id-14'/>
+    <qualified-type-def type-id='type-id-14' restrict='yes' hash='2cc42be5ba3c3fde' id='type-id-15'/>
+    <type-decl name='short int' size-in-bits='16' hash='2e5e87528799cdbb' id='type-id-16'/>
+    <class-decl name='S' is-struct='yes' visibility='default' size-in-bits='32' hash='2dfab331af744ad5' id='type-id-3'>
       <data-member access='public' layout-offset-in-bits='0'>
-        <var-decl name='m0' type-id='type-id-7' visibility='default'/>
+        <var-decl name='m0' type-id='type-id-10' visibility='default'/>
       </data-member>
     </class-decl>
-    <class-decl name='' is-struct='yes' visibility='default' size-in-bits='32' is-anonymous='yes' hash='3ad57db1e8e9a992' id='type-id-15'>
+    <class-decl name='' is-struct='yes' visibility='default' size-in-bits='32' is-anonymous='yes' hash='6e98a4b64a5ada57' id='type-id-17'>
       <data-member access='public' layout-offset-in-bits='0'>
-        <var-decl name='status0' type-id='type-id-16' visibility='default'/>
+        <var-decl name='status0' type-id='type-id-18' visibility='default'/>
       </data-member>
       <data-member access='public' layout-offset-in-bits='1'>
-        <var-decl name='status1' type-id='type-id-16' visibility='default'/>
+        <var-decl name='status1' type-id='type-id-18' visibility='default'/>
       </data-member>
     </class-decl>
-    <type-decl name='unsigned int' size-in-bits='32' hash='e66b43f97c38e87a' id='type-id-16'/>
-    <type-decl name='unsigned long int' size-in-bits='64' hash='8fdc5eea2983a729#2' id='type-id-9'/>
-    <qualified-type-def type-id='type-id-14' volatile='yes' hash='42972cef4fee86bd' id='type-id-17'/>
-    <var-decl name='status' type-id='type-id-15' mangled-name='status' visibility='default' elf-symbol-id='status'/>
-    <var-decl name='test_pointer' type-id='type-id-4' mangled-name='test_pointer' visibility='default' elf-symbol-id='test_pointer'/>
-    <var-decl name='test_const' type-id='type-id-5' mangled-name='test_const' visibility='default' elf-symbol-id='test_const'/>
-    <var-decl name='test_float' type-id='type-id-6' mangled-name='test_float' visibility='default' elf-symbol-id='test_float'/>
-    <function-decl name='foo_1' type-id='type-id-18' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='foo_1'/>
-    <function-decl name='main' type-id='type-id-19' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='main'/>
-    <var-decl name='test_array' type-id='type-id-8' mangled-name='test_array' visibility='default' elf-symbol-id='test_array'/>
-    <var-decl name='test_restrict' type-id='type-id-13' mangled-name='test_restrict' visibility='default' elf-symbol-id='test_restrict'/>
-    <var-decl name='test_volatile' type-id='type-id-17' mangled-name='test_volatile' visibility='default' elf-symbol-id='test_volatile'/>
-    <function-type size-in-bits='64' hash='86766259792c2f3c' id='type-id-18'>
-      <parameter type-id='type-id-2'/>
-      <return type-id='type-id-7'/>
-    </function-type>
-    <function-type size-in-bits='64' hash='388da3fa973fde78' id='type-id-19'>
-      <return type-id='type-id-7'/>
-    </function-type>
+    <type-decl name='unsigned int' size-in-bits='32' hash='e66b43f97c38e87a' id='type-id-18'/>
+    <type-decl name='unsigned long int' size-in-bits='64' hash='da551c1631705dfe' id='type-id-1'/>
+    <qualified-type-def type-id='type-id-16' volatile='yes' hash='f93b1cbd246d3adc' id='type-id-19'/>
+  </abi-types>
+  <abi-instr address-size='64' language='LANG_C'>
+    <var-decl name='status' type-id='type-id-17' mangled-name='status' visibility='default' elf-symbol-id='status'/>
+    <var-decl name='test_pointer' type-id='type-id-6' mangled-name='test_pointer' visibility='default' elf-symbol-id='test_pointer'/>
+    <var-decl name='test_const' type-id='type-id-7' mangled-name='test_const' visibility='default' elf-symbol-id='test_const'/>
+    <var-decl name='test_float' type-id='type-id-8' mangled-name='test_float' visibility='default' elf-symbol-id='test_float'/>
+      <function-decl name='foo_1' type-id='type-id-9' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='foo_1'/>
+      <function-decl name='main' type-id='type-id-11' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='main'/>
+    <var-decl name='test_array' type-id='type-id-12' mangled-name='test_array' visibility='default' elf-symbol-id='test_array'/>
+    <var-decl name='test_restrict' type-id='type-id-15' mangled-name='test_restrict' visibility='default' elf-symbol-id='test_restrict'/>
+    <var-decl name='test_volatile' type-id='type-id-19' mangled-name='test_volatile' visibility='default' elf-symbol-id='test_volatile'/>
   </abi-instr>
 </abi-corpus>

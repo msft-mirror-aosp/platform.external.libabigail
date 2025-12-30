@@ -24,7 +24,8 @@ NEWS README LICENSE.txt license-change-2020.txt \
 COMPILING COMMIT-LOG-GUIDELINES VISIBILITY SECURITY \
 ChangeLog gen-changelog.py	\
 $(headers) $(m4data_DATA) 	\
-libabigail.pc.in
+libabigail.pc.in		\
+tsan-suppression.txt
 
 # automake already tells which subdir is being entered.
 # Don't make make repeat.

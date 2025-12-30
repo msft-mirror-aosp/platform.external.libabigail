@@ -911,10 +911,14 @@ set_diff_context_from_opts(diff_context_sptr ctxt,
   ctxt->show_unreachable_types(opts.show_all_types);
   ctxt->show_impacted_interfaces(opts.show_impacted_interfaces);
 
-  if (!opts.show_harmless_changes)
-      ctxt->switch_categories_off(get_default_harmless_categories_bitmap());
+  if (opts.show_harmless_changes)
+    ctxt->switch_categories_on(get_default_harmless_categories_bitmap());
+  else
+    ctxt->switch_categories_off(get_default_harmless_categories_bitmap());
 
-  if (!opts.show_harmful_changes)
+  if (opts.show_harmful_changes)
+    ctxt->switch_categories_on(get_default_harmful_categories_bitmap());
+  else
     ctxt->switch_categories_off(get_default_harmful_categories_bitmap());
 
   suppressions_type supprs;
@@ -965,14 +969,20 @@ set_diff_context_from_opts(diff_context_sptr ctxt,
 ///
 /// @param opts the command line options.
 static void
-set_generic_options(abigail::elf_based_reader& rdr, options& opts)
+set_generic_options(abigail::fe_iface::options_type& o, options& opts)
 {
-  rdr.options().show_stats = opts.show_stats;
-  rdr.options().do_log = opts.do_log;
-  rdr.options().leverage_dwarf_factorization =
+  o.load_in_linux_kernel_mode = opts.linux_kernel_mode;
+  // The below is the same default as abidw.  It's important to keep,
+  // e.g, abidw --abidiff working the same as saving abidw to a file
+  // and comparing the binary against the resulting ABIXML using
+  // abidiff.
+  o.load_undefined_interfaces = false;
+  o.load_all_types = opts.show_all_types;
+  o.show_stats = opts.show_stats;
+  o.do_log = opts.do_log;
+  o.leverage_dwarf_factorization =
     opts.leverage_dwarf_factorization;
-  rdr.options().assume_odr_for_cplusplus =
-    opts.assume_odr_for_cplusplus;
+  o.assume_odr_for_cplusplus = opts.assume_odr_for_cplusplus;
 }
 
 /// Set suppression specifications to the @p read_context used to load
@@ -1047,21 +1057,6 @@ set_suppressions(abigail::fe_iface& reader, const options& opts)
   supprs.insert(supprs.end(), wl_suppr.begin(), wl_suppr.end());
 
   reader.add_suppressions(supprs);
-}
-
-/// Configure the abigail::xml_reacher::read_context based on the
-/// relevant command-line options.
-///
-/// @param ctxt the read context to configure.
-///
-/// @param opts the command-line options to configure @p ctxt from.
-static void
-set_native_xml_reader_options(abigail::fe_iface& rdr,
-			      const options& opts)
-{
-  abixml::consider_types_not_reachable_from_public_interfaces(rdr, opts.show_all_types);
-  rdr.options().do_log = opts.do_log;
-
 }
 
 /// Set the regex patterns describing the functions to drop from the
@@ -1360,6 +1355,8 @@ main(int argc, char* argv[])
       corpus_sptr c1, c2;
       corpus_group_sptr g1, g2;
       bool files_suppressed = false;
+      fe_iface::options_type abi_reader_options(env);
+      set_generic_options(abi_reader_options, opts);
 
       diff_context_sptr ctxt(new diff_context);
       set_diff_context_from_opts(ctxt, opts);
@@ -1381,8 +1378,7 @@ main(int argc, char* argv[])
 	  return abigail::tools_utils::ABIDIFF_ERROR;
 	  break;
 	case abigail::tools_utils::FILE_TYPE_NATIVE_BI:
-	  t1 = abixml::read_translation_unit_from_file(opts.file1,
-								       env);
+	  t1 = abixml::read_translation_unit_from_file(opts.file1, env);
 	  break;
 	case abigail::tools_utils::FILE_TYPE_ELF: // fall through
 	case abigail::tools_utils::FILE_TYPE_AR:
@@ -1400,10 +1396,9 @@ main(int argc, char* argv[])
 	      create_best_elf_based_reader(opts.file1,
 					   opts.di_root_paths1,
 					   env, requested_fe_kind,
-					   opts.show_all_types,
-					   opts.linux_kernel_mode);
-            ABG_ASSERT(rdr);
-	    set_generic_options(*rdr, opts);
+					   abi_reader_options);
+
+	    ABG_ASSERT(rdr);
 	    set_suppressions(*rdr, opts);
 	    c1 = rdr->read_corpus(c1_status);
 
@@ -1433,10 +1428,10 @@ main(int argc, char* argv[])
 	case abigail::tools_utils::FILE_TYPE_XML_CORPUS:
 	  {
 	    abigail::fe_iface_sptr rdr =
-	      abixml::create_reader(opts.file1, env);
+	      abixml::create_reader(opts.file1, env, abi_reader_options);
 	    assert(rdr);
 	    set_suppressions(*rdr, opts);
-	    set_native_xml_reader_options(*rdr, opts);
+
 	    c1 = rdr->read_corpus(c1_status);
 	    if (!c1)
 	      return handle_error(c1_status, /*ctxt=*/0, argv[0], opts);
@@ -1445,10 +1440,10 @@ main(int argc, char* argv[])
 	case abigail::tools_utils::FILE_TYPE_XML_CORPUS_GROUP:
 	  {
 	    abigail::fe_iface_sptr rdr =
-	      abixml::create_reader(opts.file1, env);
+	      abixml::create_reader(opts.file1, env, abi_reader_options);
 	    assert(rdr);
 	    set_suppressions(*rdr, opts);
-	    set_native_xml_reader_options(*rdr, opts);
+
 	    g1 = abixml::read_corpus_group_from_input(*rdr);
 	    if (!g1)
 	      return handle_error(c1_status, /*ctxt=*/0,
@@ -1472,8 +1467,7 @@ main(int argc, char* argv[])
 	  return abigail::tools_utils::ABIDIFF_ERROR;
 	  break;
 	case abigail::tools_utils::FILE_TYPE_NATIVE_BI:
-	  t2 = abixml::read_translation_unit_from_file(opts.file2,
-								       env);
+	  t2 = abixml::read_translation_unit_from_file(opts.file2, env);
 	  break;
 	case abigail::tools_utils::FILE_TYPE_ELF: // Fall through
 	case abigail::tools_utils::FILE_TYPE_AR:
@@ -1491,13 +1485,9 @@ main(int argc, char* argv[])
 	      create_best_elf_based_reader(opts.file2,
 					   opts.di_root_paths2,
 					   env, requested_fe_kind,
-					   opts.show_all_types,
-					   opts.linux_kernel_mode);
+					   abi_reader_options);
             ABG_ASSERT(rdr);
-
-	    set_generic_options(*rdr, opts);
 	    set_suppressions(*rdr, opts);
-
 	    c2 = rdr->read_corpus(c2_status);
 
 	    if (!c2
@@ -1524,10 +1514,11 @@ main(int argc, char* argv[])
 	  break;
 	case abigail::tools_utils::FILE_TYPE_XML_CORPUS:
 	  {
-	    abigail::fe_iface_sptr rdr = abixml::create_reader(opts.file2, env);
+	    abigail::fe_iface_sptr rdr = abixml::create_reader(opts.file2, env,
+							       abi_reader_options);
 	    assert(rdr);
 	    set_suppressions(*rdr, opts);
-	    set_native_xml_reader_options(*rdr, opts);
+
 	    c2 = rdr->read_corpus(c2_status);
 	    if (!c2)
 	      return handle_error(c2_status, /*ctxt=*/0, argv[0], opts);
@@ -1536,10 +1527,11 @@ main(int argc, char* argv[])
 	  break;
 	case abigail::tools_utils::FILE_TYPE_XML_CORPUS_GROUP:
 	  {
-	    abigail::fe_iface_sptr rdr = abixml::create_reader(opts.file2, env);
+	    abigail::fe_iface_sptr rdr = abixml::create_reader(opts.file2, env,
+							       abi_reader_options);
 	    assert(rdr);
 	    set_suppressions(*rdr, opts);
-	    set_native_xml_reader_options(*rdr, opts);
+
 	    g2 = abixml::read_corpus_group_from_input(*rdr);
 	    if (!g2)
 	      return handle_error(c2_status, /*ctxt=*/0, argv[0], opts);
@@ -1651,15 +1643,17 @@ main(int argc, char* argv[])
 
 	  const auto g1_version = g1->get_format_major_version_number();
 	  const auto g2_version = g2->get_format_major_version_number();
-	  if (g1_version != g2_version)
-	    {
-	      emit_incompatible_format_version_error_message(opts.file1,
-							     g1_version,
-							     opts.file2,
-							     g2_version,
-							     argv[0]);
-	      return abigail::tools_utils::ABIDIFF_ERROR;
-	    }
+	  if (g1->get_main_corpus()->get_origin() == abigail::ir::corpus::NATIVE_XML_ORIGIN
+	      && g2->get_main_corpus()->get_origin() == abigail::ir::corpus::NATIVE_XML_ORIGIN)
+	    if (g1_version != g2_version)
+	      {
+		emit_incompatible_format_version_error_message(opts.file1,
+							       g1_version,
+							       opts.file2,
+							       g2_version,
+							       argv[0]);
+		return abigail::tools_utils::ABIDIFF_ERROR;
+	      }
 
 	  adjust_diff_context_for_kmidiff(*ctxt);
 	  tools_utils::timer t;
@@ -1770,16 +1764,17 @@ main(int argc, char* argv[])
 	    }
 	  const auto c1_version = c1->get_format_major_version_number();
 	  const auto c2_version = c2->get_format_major_version_number();
-	  if (c1_version != c2_version)
-	    {
-	      emit_incompatible_format_version_error_message(opts.file1,
-							     c1_version,
-							     opts.file2,
-							     c2_version,
-							     argv[0]);
-	      return abigail::tools_utils::ABIDIFF_ERROR;
-	    }
-
+	  if (c1->get_origin() == abigail::ir::corpus::NATIVE_XML_ORIGIN
+	      && c2->get_origin() == abigail::ir::corpus::NATIVE_XML_ORIGIN)
+	    if (c1_version != c2_version)
+	      {
+		emit_incompatible_format_version_error_message(opts.file1,
+							       c1_version,
+							       opts.file2,
+							       c2_version,
+							       argv[0]);
+		return abigail::tools_utils::ABIDIFF_ERROR;
+	      }
 	  set_corpus_keep_drop_regex_patterns(opts, c1);
 	  set_corpus_keep_drop_regex_patterns(opts, c2);
 

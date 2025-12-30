@@ -70,8 +70,13 @@ protected:
     bool		do_log				= false;
     bool		leverage_dwarf_factorization	= true;
     bool		assume_odr_for_cplusplus	= true;
-    options_type(environment&);
+    // If you add any new data member here, you need to update the
+    // function fe_iface::options_type::operator=() in
+    // abg-fe-iface.cc.
 
+    options_type() = delete;
+    options_type(environment&);
+    options_type& operator=(const options_type&);
   };// font_end_iface::options_type
 
   fe_iface(const std::string& corpus_path, environment& e);
@@ -98,6 +103,9 @@ protected:
 
   void
   dt_soname(const string&);
+
+  environment&
+  get_environment() const;
 
   bool
   load_in_linux_kernel_mode() const;

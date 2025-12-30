@@ -1,143 +1,145 @@
-<abi-corpus version='2.5'>
+<abi-corpus version='3.0' tracking-non-reachable-types='yes'>
   <elf-function-symbols>
     <!-- foo(S&) -->
     <elf-symbol name='_Z3fooR1S' type='func-type' binding='global-binding' visibility='default-visibility' is-defined='yes'/>
   </elf-function-symbols>
-  <abi-instr address-size='64' path='test-anonymous-members-0.cc' comp-dir-path='/home/dodji/git/libabigail/fixes/tests/data/test-annotate' language='LANG_C_plus_plus'>
+  <abi-types>
     <!-- S& -->
-    <reference-type-def kind='lvalue' type-id='type-id-1' size-in-bits='64' hash='34ff9cd22276388f' id='type-id-2'/>
-    <!-- char -->
-    <type-decl name='char' size-in-bits='8' hash='65b2d157027b431a' id='type-id-3'/>
-    <!-- double -->
-    <type-decl name='double' size-in-bits='64' hash='e9e9b320886d9aa6' id='type-id-4'/>
-    <!-- int -->
-    <type-decl name='int' size-in-bits='32' hash='09d17c08f594edc7' id='type-id-5'/>
+    <reference-type-def kind='lvalue' type-id='type-id-1' size-in-bits='64' hash='c4d1c4452860d49d' id='type-id-2'/>
     <!-- struct S -->
-    <class-decl name='S' is-struct='yes' visibility='default' size-in-bits='256' filepath='/home/dodji/git/libabigail/fixes/tests/data/test-annotate/test-anonymous-members-0.cc' line='1' column='1' hash='b6747365503993a5' id='type-id-1'>
-      <member-type access='public'>
-        <!-- enum {five=0, six=1, } -->
-        <enum-decl name='__anonymous_enum__' size-in-bits='32' alignment-in-bits='32' is-anonymous='yes' filepath='/home/dodji/git/libabigail/fixes/tests/data/test-annotate/test-anonymous-members-0.cc' line='22' column='1' hash='a96fdce40a3319a9' id='type-id-6'>
-          <underlying-type type-id='type-id-7'/>
+    <class-decl name='S' is-struct='yes' visibility='default' size-in-bits='256' hash='1ac720bd48106730' id='type-id-1'>
+      <member-type access='private'>
+        <!-- S::struct {char bar;} -->
+        <class-decl name='__anonymous_struct__' is-struct='yes' visibility='default' size-in-bits='8' is-anonymous='yes' hash='192d4a64b2231ec0' id='type-id-3'>
+          <data-member access='public' layout-offset-in-bits='0'>
+            <!-- char bar -->
+            <var-decl name='bar' type-id='type-id-4' visibility='default'/>
+          </data-member>
+        </class-decl>
+      </member-type>
+      <member-type access='private'>
+        <!-- S::struct {char baz;} -->
+        <class-decl name='__anonymous_struct__' is-struct='yes' visibility='default' size-in-bits='8' is-anonymous='yes' hash='499af1c1cf1ad47a' id='type-id-5'>
+          <data-member access='public' layout-offset-in-bits='0'>
+            <!-- char baz -->
+            <var-decl name='baz' type-id='type-id-4' visibility='default'/>
+          </data-member>
+        </class-decl>
+      </member-type>
+      <member-type access='private'>
+        <!-- S::struct {int m;} -->
+        <class-decl name='__anonymous_struct__' is-struct='yes' visibility='default' size-in-bits='32' is-anonymous='yes' hash='e69b45f759aedecf' id='type-id-6'>
+          <data-member access='public' layout-offset-in-bits='0'>
+            <!-- int m -->
+            <var-decl name='m' type-id='type-id-7' visibility='default'/>
+          </data-member>
+        </class-decl>
+      </member-type>
+      <member-type access='private'>
+        <!-- enum S::{five=0, six=1, } -->
+        <enum-decl name='__anonymous_enum__' size-in-bits='32' alignment-in-bits='32' is-anonymous='yes' hash='c9cc989e6703ccb6' id='type-id-8'>
+          <underlying-type type-id='type-id-9'/>
           <enumerator name='five' value='0'/>
           <enumerator name='six' value='1'/>
         </enum-decl>
       </member-type>
-      <member-type access='public'>
-        <!-- enum {four=1, three=0, } -->
-        <enum-decl name='__anonymous_enum__' size-in-bits='32' alignment-in-bits='32' is-anonymous='yes' filepath='/home/dodji/git/libabigail/fixes/tests/data/test-annotate/test-anonymous-members-0.cc' line='20' column='1' hash='4b6d9b476dddeccc#2' id='type-id-8'>
-          <underlying-type type-id='type-id-7'/>
+      <member-type access='private'>
+        <!-- enum S::{four=1, three=0, } -->
+        <enum-decl name='__anonymous_enum__' size-in-bits='32' alignment-in-bits='32' is-anonymous='yes' hash='04eb7473e1c86e19' id='type-id-10'>
+          <underlying-type type-id='type-id-9'/>
           <enumerator name='three' value='0'/>
           <enumerator name='four' value='1'/>
         </enum-decl>
       </member-type>
-      <member-type access='public'>
-        <!-- enum {one=0, two=1, } -->
-        <enum-decl name='__anonymous_enum__' size-in-bits='32' alignment-in-bits='32' is-anonymous='yes' filepath='/home/dodji/git/libabigail/fixes/tests/data/test-annotate/test-anonymous-members-0.cc' line='18' column='1' hash='1d3ce7359dc9c4d9#3' id='type-id-9'>
-          <underlying-type type-id='type-id-7'/>
+      <member-type access='private'>
+        <!-- enum S::{one=0, two=1, } -->
+        <enum-decl name='__anonymous_enum__' size-in-bits='32' alignment-in-bits='32' is-anonymous='yes' hash='54923ee2b218621d' id='type-id-11'>
+          <underlying-type type-id='type-id-9'/>
           <enumerator name='one' value='0'/>
           <enumerator name='two' value='1'/>
         </enum-decl>
       </member-type>
-      <member-type access='public'>
-        <!-- struct {char bar;} -->
-        <class-decl name='__anonymous_struct__' is-struct='yes' visibility='default' size-in-bits='8' is-anonymous='yes' filepath='/home/dodji/git/libabigail/fixes/tests/data/test-annotate/test-anonymous-members-0.cc' line='9' column='1' hash='32c5487d1a45a7a3' id='type-id-10'>
-          <data-member access='public' layout-offset-in-bits='0'>
-            <!-- char bar -->
-            <var-decl name='bar' type-id='type-id-3' visibility='default' filepath='/home/dodji/git/libabigail/fixes/tests/data/test-annotate/test-anonymous-members-0.cc' line='10' column='1'/>
-          </data-member>
-        </class-decl>
-      </member-type>
-      <member-type access='public'>
-        <!-- struct {char baz;} -->
-        <class-decl name='__anonymous_struct__' is-struct='yes' visibility='default' size-in-bits='8' is-anonymous='yes' filepath='/home/dodji/git/libabigail/fixes/tests/data/test-annotate/test-anonymous-members-0.cc' line='14' column='1' hash='8614882c925bd550#2' id='type-id-11'>
-          <data-member access='public' layout-offset-in-bits='0'>
-            <!-- char baz -->
-            <var-decl name='baz' type-id='type-id-3' visibility='default' filepath='/home/dodji/git/libabigail/fixes/tests/data/test-annotate/test-anonymous-members-0.cc' line='15' column='1'/>
-          </data-member>
-        </class-decl>
-      </member-type>
-      <member-type access='public'>
-        <!-- struct {int m;} -->
-        <class-decl name='__anonymous_struct__' is-struct='yes' visibility='default' size-in-bits='32' is-anonymous='yes' filepath='/home/dodji/git/libabigail/fixes/tests/data/test-annotate/test-anonymous-members-0.cc' line='4' column='1' hash='022a346eef5d7a52#3' id='type-id-12'>
-          <data-member access='public' layout-offset-in-bits='0'>
-            <!-- int m -->
-            <var-decl name='m' type-id='type-id-5' visibility='default' filepath='/home/dodji/git/libabigail/fixes/tests/data/test-annotate/test-anonymous-members-0.cc' line='5' column='1'/>
-          </data-member>
-        </class-decl>
-      </member-type>
-      <member-type access='public'>
+      <member-type access='private'>
         <!-- union {int a; char b;} -->
-        <union-decl name='__anonymous_union__' visibility='default' size-in-bits='32' is-anonymous='yes' filepath='/home/dodji/git/libabigail/fixes/tests/data/test-annotate/test-anonymous-members-0.cc' line='24' column='1' hash='cabb3bc726bf86cf' id='type-id-13'>
+        <union-decl name='__anonymous_union__' visibility='default' size-in-bits='32' is-anonymous='yes' hash='5b6ea53e67cfeec3' id='type-id-12'>
           <data-member access='public'>
             <!-- int a -->
-            <var-decl name='a' type-id='type-id-5' visibility='default' filepath='/home/dodji/git/libabigail/fixes/tests/data/test-annotate/test-anonymous-members-0.cc' line='24' column='1'/>
+            <var-decl name='a' type-id='type-id-7' visibility='default'/>
           </data-member>
           <data-member access='public'>
             <!-- char b -->
-            <var-decl name='b' type-id='type-id-3' visibility='default' filepath='/home/dodji/git/libabigail/fixes/tests/data/test-annotate/test-anonymous-members-0.cc' line='24' column='1'/>
+            <var-decl name='b' type-id='type-id-4' visibility='default'/>
           </data-member>
         </union-decl>
       </member-type>
-      <member-type access='public'>
+      <member-type access='private'>
         <!-- union {unsigned int c; double d;} -->
-        <union-decl name='__anonymous_union__' visibility='default' size-in-bits='64' is-anonymous='yes' filepath='/home/dodji/git/libabigail/fixes/tests/data/test-annotate/test-anonymous-members-0.cc' line='26' column='1' hash='cb3043246de7cfce#2' id='type-id-14'>
+        <union-decl name='__anonymous_union__' visibility='default' size-in-bits='64' is-anonymous='yes' hash='a5ca3b1214f47165' id='type-id-13'>
           <data-member access='public'>
             <!-- unsigned int c -->
-            <var-decl name='c' type-id='type-id-15' visibility='default' filepath='/home/dodji/git/libabigail/fixes/tests/data/test-annotate/test-anonymous-members-0.cc' line='26' column='1'/>
+            <var-decl name='c' type-id='type-id-14' visibility='default'/>
           </data-member>
           <data-member access='public'>
             <!-- double d -->
-            <var-decl name='d' type-id='type-id-4' visibility='default' filepath='/home/dodji/git/libabigail/fixes/tests/data/test-annotate/test-anonymous-members-0.cc' line='26' column='1'/>
+            <var-decl name='d' type-id='type-id-15' visibility='default'/>
           </data-member>
         </union-decl>
       </member-type>
       <data-member access='public' layout-offset-in-bits='0'>
         <!-- struct {int m;} -->
-        <var-decl name='' type-id='type-id-12' visibility='default'/>
+        <var-decl name='' type-id='type-id-6' visibility='default'/>
       </data-member>
       <data-member access='public' layout-offset-in-bits='32'>
         <!-- struct {char bar;} -->
-        <var-decl name='' type-id='type-id-10' visibility='default'/>
+        <var-decl name='' type-id='type-id-3' visibility='default'/>
       </data-member>
       <data-member access='public' layout-offset-in-bits='40'>
         <!-- struct {char baz;} -->
-        <var-decl name='' type-id='type-id-11' visibility='default'/>
+        <var-decl name='' type-id='type-id-5' visibility='default'/>
       </data-member>
       <data-member access='public' layout-offset-in-bits='64'>
         <!-- S::__anonymous_enum__ S::e1 -->
-        <var-decl name='e1' type-id='type-id-9' visibility='default' filepath='/home/dodji/git/libabigail/fixes/tests/data/test-annotate/test-anonymous-members-0.cc' line='18' column='1'/>
+        <var-decl name='e1' type-id='type-id-11' visibility='default'/>
       </data-member>
       <data-member access='public' layout-offset-in-bits='96'>
         <!-- S::__anonymous_enum__ S::e2 -->
-        <var-decl name='e2' type-id='type-id-8' visibility='default' filepath='/home/dodji/git/libabigail/fixes/tests/data/test-annotate/test-anonymous-members-0.cc' line='20' column='1'/>
+        <var-decl name='e2' type-id='type-id-10' visibility='default'/>
       </data-member>
       <data-member access='public' layout-offset-in-bits='128'>
         <!-- S::__anonymous_enum__ S::e3 -->
-        <var-decl name='e3' type-id='type-id-6' visibility='default' filepath='/home/dodji/git/libabigail/fixes/tests/data/test-annotate/test-anonymous-members-0.cc' line='22' column='1'/>
+        <var-decl name='e3' type-id='type-id-8' visibility='default'/>
       </data-member>
       <data-member access='public' layout-offset-in-bits='160'>
         <!-- union {int a; char b;} -->
-        <var-decl name='' type-id='type-id-13' visibility='default'/>
+        <var-decl name='' type-id='type-id-12' visibility='default'/>
       </data-member>
       <data-member access='public' layout-offset-in-bits='192'>
         <!-- union {unsigned int c; double d;} -->
-        <var-decl name='' type-id='type-id-14' visibility='default'/>
+        <var-decl name='' type-id='type-id-13' visibility='default'/>
       </data-member>
     </class-decl>
-    <!-- unnamed&#45;enum&#45;underlying&#45;type&#45;32 -->
-    <type-decl name='unnamed-enum-underlying-type-32' size-in-bits='32' alignment-in-bits='32' is-anonymous='yes' hash='5181a58e665b3619' id='type-id-7'/>
-    <!-- unsigned int -->
-    <type-decl name='unsigned int' size-in-bits='32' hash='e66b43f97c38e87a' id='type-id-15'/>
-    <!-- void foo(S&) -->
-    <function-decl name='foo' type-id='type-id-16' mangled-name='_Z3fooR1S' filepath='/home/dodji/git/libabigail/fixes/tests/data/test-annotate/test-anonymous-members-0.cc' line='30' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_Z3fooR1S'/>
-    <!-- void -->
-    <type-decl name='void' id='type-id-17'/>
+    <!-- char -->
+    <type-decl name='char' size-in-bits='8' hash='65b2d157027b431a' id='type-id-4'/>
+    <!-- double -->
+    <type-decl name='double' size-in-bits='64' hash='e9e9b320886d9aa6' id='type-id-15'/>
     <!-- void (S&) -->
-    <function-type size-in-bits='64' hash='496d27d0376df047' id='type-id-16'>
+    <function-type size-in-bits='64' hash='d8785c68e803928b' id='type-id-16'>
       <!-- parameter of type 'S&' -->
       <parameter type-id='type-id-2'/>
       <!-- void -->
       <return type-id='type-id-17'/>
     </function-type>
+    <!-- int -->
+    <type-decl name='int' size-in-bits='32' hash='09d17c08f594edc7' id='type-id-7'/>
+    <!-- unnamed&#45;enum&#45;underlying&#45;type&#45;32 -->
+    <type-decl name='unnamed-enum-underlying-type-32' size-in-bits='32' alignment-in-bits='32' is-anonymous='yes' hash='c6ed5e1365fd2b09' id='type-id-9'/>
+    <!-- unsigned int -->
+    <type-decl name='unsigned int' size-in-bits='32' hash='e66b43f97c38e87a' id='type-id-14'/>
+    <!-- void -->
+    <type-decl name='void' hash='8dcbc64750c3d4e3' id='type-id-17'/>
+  </abi-types>
+  <abi-instr address-size='64' path='test-anonymous-members-0.cc' comp-dir-path='/home/dodji/git/libabigail/fixes/tests/data/test-annotate' language='LANG_C_plus_plus'>
+      <!-- void foo(S&) -->
+      <function-decl name='foo' type-id='type-id-16' mangled-name='_Z3fooR1S' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_Z3fooR1S'/>
   </abi-instr>
 </abi-corpus>

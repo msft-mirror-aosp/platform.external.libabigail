@@ -41,160 +41,49 @@ using std::ostream;
 /// same size as a pointer to a string.
 class interned_string
 {
-  std::string* raw_;
-
-  /// Constructor.
-  ///
-  /// @param raw the pointer to string that this interned_string
-  /// wraps.
-  interned_string(string* raw)
-    : raw_(raw)
-  {}
+  interned_string(string* raw);
 
 public:
+  struct priv;
+  std::unique_ptr<priv> priv_;
 
-  /// Default constructor.
-  ///
-  /// Constructs an empty pointer to string.
-  interned_string()
-    : raw_()
-  {}
+  interned_string();
 
-  /// Copy constructor.
-  ///
-  /// @param o the other instance to copy from.
-  interned_string(const interned_string& o)
-  {raw_ = o.raw_;}
+  ~interned_string();
 
-  /// Assignment operator.
-  ///
-  /// @param o the other instance to assign to the current one.
+  interned_string(const interned_string& o);
+
   interned_string&
-  operator=(const interned_string& o)
-  {
-    raw_ = o.raw_;
-    return *this;
-  }
+  operator=(const interned_string& o);
 
-  /// Clear the string.
   void
-  clear()
-  {raw_ = 0;}
+  clear();
 
-  /// Test if the current instance of @ref interned_string is empty.
-  ///
-  /// @return true iff the currentisntance of @ref interned_string is
-  /// empty.
   bool
-  empty() const
-  {return !raw_;}
+  empty() const;
 
-  /// Return the underlying pointer to std::string that this
-  /// interned_string wraps.
-  ///
-  /// @return a pointer to the underlying std::string, or 0 if this
-  /// interned_string is empty.
   const string*
-  raw() const
-  {return raw_;}
+  raw() const;
 
-  /// Compare the current instance of @ref interned_string against
-  /// another instance of @ref interned_string.
-  ///
-  /// Note that this comparison is done in O(1), because it compares
-  /// the pointer values of the two underlying pointers to std::string
-  /// held by each instances of @ref interned_string.
-  ///
-  /// @param o the other @ref interned_string to compare against.
-  ///
-  /// @return true iff the current instance equals @p o.
   bool
-  operator==(const interned_string& o) const
-  {return raw_ == o.raw_;}
+  operator==(const interned_string& o) const;
 
-  /// Inequality operator.
-  ///
-  /// @param o the other @ref interned_string to compare the current
-  /// instance against.
-  ///
-  /// @return true iff the current instance is different from the @p
-  /// o.
   bool
-  operator!=(const interned_string& o) const
-  {return !operator==(o);}
+  operator!=(const interned_string& o) const;
 
-  /// Compare the current instance of @ref interned_string against
-  /// an instance of std::string.
-  ///
-  /// Note that this comparison is done in O(N), N being the size (in
-  /// number of characters) of the strings being compared.
-  ///
-  /// @param o the instance of std::string to compare against.
-  ///
-  /// @return true iff the current instance equals @p o.
   bool
-  operator==(const string& o) const
-  {
-    if (raw_)
-      return *raw_ == o;
-    return o.empty();
-  }
+  operator==(const string& o) const;
 
-  /// Inequality operator.
-  ///
-  /// Takes the current instance of @ref interned_string and an
-  /// instance of std::string.
-  ///
-  /// @param o the instance of std::string to compare the current
-  /// instance of @ref interned_string against.
-  ///
-  /// @return true if the current instance of @ref interned_string is
-  /// different from @p o.
   bool
-  operator!=(const string& o) const
-  {return ! operator==(o);}
+  operator!=(const string& o) const;
 
-  /// "Less than" operator.
-  ///
-  /// Lexicographically compares the current instance of @ref
-  /// interned_string against another instance.
-  ///
-  /// @param o the other instance of @ref interned_string to compare
-  /// against.
-  ///
-  /// @return true iff the current instance of interned_string is
-  /// lexicographycally less than the string @p o.
   bool
-  operator<(const interned_string& o) const
-  {return static_cast<string>(*this) < static_cast<std::string>(o);}
+  operator<(const interned_string& o) const;
 
-  /// Conversion operator to string.
-  ///
-  /// @return the underlying string this instance refers too.
-  operator string() const
-  {
-    if (!raw_)
-      return "";
-    return *raw_;
-  }
+  operator string() const;
 
   friend class interned_string_pool;
 }; // end class interned_string
-
-bool
-operator==(const string& l, const interned_string& r);
-
-bool
-operator!=(const string& l, const interned_string& r);
-
-ostream&
-operator<<(ostream& o, const interned_string& s);
-
-string
-operator+(const interned_string& s1,const string& s2);
-
-string
-operator+(const string& s1, const interned_string& s2);
 
 /// A functor to hash instances of @ref interned_string.
 struct hash_interned_string
@@ -217,6 +106,9 @@ struct hash_interned_string
   }
 }; // end struct hash_interned_string
 
+/// Convenience typedef for a set of @ref interned_string
+typedef unordered_set<interned_string,
+		      hash_interned_string> interned_string_set_type;
 
 /// The interned string pool.
 ///
@@ -226,14 +118,16 @@ struct hash_interned_string
 class interned_string_pool
 {
   struct priv;
-  std::unique_ptr<priv> priv_;
 
 public:
-
+  std::unique_ptr<priv> priv_;
   interned_string_pool();
 
   interned_string
   create_string(const std::string&);
+
+  interned_string
+  create_string() const;
 
   bool
   has_string(const char* s) const;
@@ -244,9 +138,20 @@ public:
   ~interned_string_pool();
 }; // end class interned_string_pool
 
-/// Convenience typedef for a set of @ref interned_string
-typedef unordered_set<interned_string,
-		      hash_interned_string> interned_string_set_type;
+bool
+operator==(const string& l, const interned_string& r);
+
+bool
+operator!=(const string& l, const interned_string& r);
+
+ostream&
+operator<<(ostream& o, const interned_string& s);
+
+string
+operator+(const interned_string& s1,const string& s2);
+
+string
+operator+(const string& s1, const interned_string& s2);
 
 } // end namespace abigail
 

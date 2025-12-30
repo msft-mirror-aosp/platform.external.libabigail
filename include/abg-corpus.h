@@ -36,7 +36,7 @@ struct c11d_decl_hasher
   {
     if (!f || !f->get_type())
       return 0;
-    return reinterpret_cast<size_t>(get_exemplar_type(f->get_type()));
+    return reinterpret_cast<size_t>(get_exemplar_type(f->get_type().get()));
   }
 };//end struct c11d_decl_hasher
 
@@ -175,17 +175,25 @@ public:
   const type_maps&
   get_type_per_loc_map() const;
 
+  void mark_non_reachable_types();
+
   virtual bool
   recording_types_reachable_from_public_interface_supported();
 
-  void
+  bool
   record_type_as_reachable_from_public_interfaces(const type_base&);
+
+  void
+  remove_type_from_reachable_types(const type_base&);
 
   bool
   type_is_reachable_from_public_interfaces(const type_base&) const;
 
-  const vector<type_base_wptr>&
+  const canonical_type_ptr_set_type&
   get_types_not_reachable_from_public_interfaces() const;
+
+  const type_base_ptrs_type&
+  get_sorted_types_not_reachable_from_public_interfaces() const;
 
   const corpus_group*
   get_group() const;
@@ -282,6 +290,9 @@ public:
   lookup_function_symbol(const elf_symbol& symbol) const;
 
   const elf_symbol_sptr
+  lookup_function_symbol(const elf_symbol_sptr& symbol) const;
+
+  const elf_symbol_sptr
   lookup_variable_symbol(const string& n) const;
 
   const elf_symbol_sptr
@@ -299,6 +310,9 @@ public:
 
   virtual const std::unordered_set<const function_decl*>*
   lookup_functions(const char* id) const;
+
+  virtual const std::unordered_set<const function_decl*>*
+  lookup_functions(const string& id) const;
 
   virtual const std::unordered_set<var_decl_sptr>*
   lookup_variables(const interned_string& id) const;
@@ -321,6 +335,9 @@ public:
   const functions&
   get_sorted_undefined_functions() const;
 
+  void
+  add_undefined_function(const function_decl*);
+
   const variables_set&
   get_undefined_variables() const;
 
@@ -329,6 +346,9 @@ public:
 
   const variables&
   get_sorted_undefined_variables() const;
+
+  void
+  add_undefined_variable(const var_decl_sptr&);
 
   void
   sort_variables();
@@ -427,17 +447,11 @@ public:
   const functions&
   exported_functions() const;
 
-  functions&
-  exported_functions();
-
   std::unordered_set<const function_decl*>*
   fn_id_maps_to_several_fns(const function_decl*);
 
   const variables&
   exported_variables() const;
-
-  variables&
-  exported_variables();
 
   bool
   maybe_add_fn_to_exported_fns(function_decl*, bool do_update = false);
@@ -507,12 +521,6 @@ public:
   virtual const elf_symbols&
   get_unreferenced_variable_symbols() const;
 
-  unordered_set<interned_string, hash_interned_string>*
-  get_public_types_pretty_representations();
-
-  virtual bool
-  recording_types_reachable_from_public_interface_supported();
-
   bool
   operator==(const corpus_group&) const;
 
@@ -531,6 +539,14 @@ public:
 
 corpus_group_sptr
 is_corpus_group(const corpus_sptr&);
+
+bool
+type_is_reachable_from_public_interfaces(const type_base&);
+
+void
+dumptypes(const vector<type_base_wptr>& types,
+	  const char* output_file, const corpus&,
+	  bool emit_location = false);
 }// end namespace ir
 }//end namespace abigail
 #endif //__ABG_CORPUS_H__

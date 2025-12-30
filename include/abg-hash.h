@@ -20,45 +20,34 @@ namespace hashing
 {
 
 /// Enumeration of the different hashing states of an IR node being
-/// hashed.
+/// hashed.  This is a bitfield.
 enum hashing_state
 {
   /// No hashing has been done/started.
+  ///
+  /// Or if any hashing has started, it's been completed.
+  ///
+  /// Note that when type_or_decl_base::set_hash_value is invoked on
+  /// an IR node in this state, the hash value is saved onto the IR
+  /// node.
   HASHING_NOT_DONE_STATE = 0,
 
   /// Hashing started but is not yet finished.
-  ///
-  /// Note that when a type_or_decl_base::priv::set_hash_value is
-  /// invoked on an artifact which has this state, then the hash value
-  /// is set/saved onto the artifact.
-  HASHING_STARTED_STATE,
+  HASHING_STARTED_STATE = 1,
 
-  /// A cycle has been detected in the graph on the current node node.
+  /// A cycle has been detected in the graph on the current node.
   ///
   /// This means the hashing has started on the current IR node and
   /// while hashing its children nodes, this very same IR node is
   /// visited again to be hashed.  This is a cycle and it needs to be
   /// broken otherwise the hashing continues forever.
-  ///
-  /// Note that when a type_or_decl_base::priv::set_hash_value is
-  /// invoked on an artifact which has this state, then the hash value
-  /// is set/saved onto the artifact.
-  HASHING_CYCLED_TYPE_STATE,
+  HASHING_CYCLED_TYPE_STATE = 1 << 1,
 
-  /// Hashing a sub-type while hashing another type.
-  ///
-  /// When a type_or_decl_base::hash_value() is invoked on an artifact
-  /// which has this state, it means the hash value that is computed
-  /// must NOT be set/saved onto the
-  /// artifact. type_or_decl_base::priv::set_hash_value is where this
-  /// is enforced.
-  HASHING_SUBTYPE_STATE,
-
-  /// Hashing of given IR node started and is now done.  If an ABI
-  /// artifact is in this state, then it must have an hash value
-  /// available and should be get by peek_hash_value or
-  /// type_or_decl_base::hash_value().
-  HASHING_FINISHED_STATE,
+  /// Hashing of the given IR node started, is done and a hash value
+  /// has been stored onto the node.  IOW, If an ABI artifact is in
+  /// this state, then it must have an hash value available and should
+  /// be get by peek_hash_value or type_or_decl_base::hash_value().
+  HASHING_FINISHED_STATE = 1 << 2,
 };
 
 bool
@@ -85,6 +74,10 @@ get_hashing_state(const ir::type_or_decl_base& tod);
 void
 set_hashing_state(const ir::type_or_decl_base& tod,
 		  hashing::hashing_state s);
+
+void
+add_to_hashing_state(const ir::type_or_decl_base& tod,
+		     hashing::hashing_state s);
 
 bool
 is_recursive_artefact(const type_or_decl_base& t);

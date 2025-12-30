@@ -550,7 +550,7 @@ represent(const var_diff_sptr	&diff,
 
   if (!filtering::has_anonymous_data_member_change(diff) && o_name != n_name)
     {
-      if (filtering::has_harmless_name_change(o, n, ctxt)
+      if (filtering::is_harmless_name_change(o, n, ctxt)
 	  && !(ctxt->get_allowed_category()
 	       & HARMLESS_DECL_NAME_CHANGE_CATEGORY))
 	;
@@ -982,7 +982,7 @@ void
 report_name_size_and_alignment_changes(decl_base_sptr		first,
 				       decl_base_sptr		second,
 				       diff_context_sptr	ctxt,
-				       ostream&			out,
+				       ostream&		out,
 				       const string&		indent)
 {
   string fn = first->get_qualified_name(),
@@ -992,7 +992,7 @@ report_name_size_and_alignment_changes(decl_base_sptr		first,
       && fn != sn)
     {
       if (!(ctxt->get_allowed_category() & HARMLESS_DECL_NAME_CHANGE_CATEGORY)
-	  && filtering::has_harmless_name_change(first, second, ctxt))
+	  && filtering::is_harmless_name_change(first, second, ctxt))
 	// This is a harmless name change.  but then
 	// HARMLESS_DECL_NAME_CHANGE_CATEGORY doesn't seem allowed.
 	;
@@ -1149,7 +1149,8 @@ emit_changed_fn_report(const diff_context_sptr& ctxt,
 	out << " indirect";
       out << " sub-type changes:\n";
 
-      if ((fn->get_symbol()->has_aliases()
+      if ((fn->get_symbol()
+	   && fn->get_symbol()->has_aliases()
 	   && !(is_member_function(fn)
 		&& get_member_function_is_ctor(fn))
 	   && !(is_member_function(fn)

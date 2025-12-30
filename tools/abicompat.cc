@@ -83,6 +83,7 @@ using abigail::comparison::corpus_diff_sptr;
 using abigail::comparison::function_type_diff_sptr;
 using abigail::comparison::compute_diff;
 using abigail::comparison::get_default_harmless_categories_bitmap;
+using abigail::comparison::get_default_harmful_categories_bitmap;
 using abigail::comparison::apply_filters_and_categorize_diff_node_tree;
 using abigail::suppr::suppression_sptr;
 using abigail::suppr::suppressions_type;
@@ -235,6 +236,7 @@ create_diff_context(const options& opts)
   // Intentional logic flip of ignore_soname
   ctxt->show_soname_change(!opts.ignore_soname);
   ctxt->switch_categories_off(get_default_harmless_categories_bitmap());
+  ctxt->switch_categories_on(get_default_harmful_categories_bitmap());
 
   // Load suppression specifications, if there are any.
   suppressions_type supprs;
@@ -693,6 +695,10 @@ read_corpus(options			opts,
   abigail::tools_utils::file_type type =
     abigail::tools_utils::guess_file_type(path);
   abigail::fe_iface_sptr rdr;
+  abigail::fe_iface::options_type o(env);
+
+  o.load_all_types = opts.weak_mode;
+  o.load_undefined_interfaces = true;
 
   switch (type)
     {
@@ -712,17 +718,17 @@ read_corpus(options			opts,
 	  requested_fe_kind = corpus::BTF_ORIGIN;
 #endif
 
-	rdr = create_best_elf_based_reader(path, di_roots, env, requested_fe_kind,
-					   /*load_all_types=*/opts.weak_mode);
+	rdr = create_best_elf_based_reader (path, di_roots, env,
+					    requested_fe_kind, o);
 	ABG_ASSERT(rdr);
-	rdr->options().load_undefined_interfaces = true;
+
 	retval = rdr->read_corpus(status);
       }
       break;
     case abigail::tools_utils::FILE_TYPE_XML_CORPUS:
     case abigail::tools_utils::FILE_TYPE_XML_CORPUS_GROUP:
       {
-	rdr = abixml::create_reader(path, env);
+	rdr = abixml::create_reader(path, env, o);
 	assert(rdr);
 	retval =
 	  (type == abigail::tools_utils::FILE_TYPE_XML_CORPUS_GROUP)

@@ -1,24 +1,26 @@
-<abi-corpus version='2.5' path='data/test-read-common/test4.so'>
+<abi-corpus version='3.0' path='data/test-read-common/test4.so' tracking-non-reachable-types='yes'>
   <elf-needed>
     <dependency name='libc.so.6'/>
   </elf-needed>
   <elf-function-symbols>
     <elf-symbol name='cpy' type='func-type' binding='global-binding' visibility='default-visibility' is-defined='yes'/>
   </elf-function-symbols>
-  <abi-instr address-size='64' language='LANG_C'>
+  <abi-types>
     <type-decl name='char' size-in-bits='8' hash='65b2d157027b431a' id='a84c031d'/>
-    <pointer-type-def type-id='a84c031d' size-in-bits='64' alignment-in-bits='64' hash='f0d67b75f875f482' id='26a90f95'/>
-    <qualified-type-def type-id='26a90f95' restrict='yes' hash='4cec2445d0cb0ccb' id='266fe297'/>
-    <qualified-type-def type-id='a84c031d' const='yes' hash='3e50fd33f9bb78d9' id='9b45d938'/>
-    <pointer-type-def type-id='9b45d938' size-in-bits='64' alignment-in-bits='64' hash='9bf427260cf2e703' id='80f4b756'/>
-    <qualified-type-def type-id='80f4b756' restrict='yes' hash='cd8a5982cb898d92' id='9d26089a'/>
-    <type-decl name='unsigned int' size-in-bits='32' hash='e66b43f97c38e87a' id='f0981eeb'/>
-    <function-decl name='cpy' type-id='6236f2b1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='cpy'/>
-    <function-type size-in-bits='64' hash='e385bd2f4794e8a6' id='6236f2b1'>
+    <pointer-type-def type-id='a84c031d' size-in-bits='64' alignment-in-bits='64' hash='859ac74900ec4328' id='26a90f95'/>
+    <qualified-type-def type-id='26a90f95' restrict='yes' hash='c9b1d32c73ee36ea' id='266fe297'/>
+    <qualified-type-def type-id='a84c031d' const='yes' hash='45ae2830e476ce98' id='9b45d938'/>
+    <pointer-type-def type-id='9b45d938' size-in-bits='64' alignment-in-bits='64' hash='0bd3c2370859b04e' id='80f4b756'/>
+    <qualified-type-def type-id='80f4b756' restrict='yes' hash='e0a3f5999f5ebed4' id='9d26089a'/>
+    <function-type size-in-bits='64' hash='8ef83f6db89ae5db' id='6236f2b1'>
       <parameter type-id='266fe297'/>
       <parameter type-id='9d26089a'/>
       <parameter type-id='f0981eeb'/>
       <return type-id='26a90f95'/>
     </function-type>
+    <type-decl name='unsigned int' size-in-bits='32' hash='e66b43f97c38e87a' id='f0981eeb'/>
+  </abi-types>
+  <abi-instr address-size='64' language='LANG_C'>
+      <function-decl name='cpy' type-id='6236f2b1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='cpy'/>
   </abi-instr>
 </abi-corpus>

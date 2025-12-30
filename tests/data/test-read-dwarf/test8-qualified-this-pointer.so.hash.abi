@@ -1,4 +1,4 @@
-<abi-corpus version='2.5'>
+<abi-corpus version='3.0' tracking-non-reachable-types='yes'>
   <elf-needed>
     <dependency name='libstdc++.so.6'/>
     <dependency name='libm.so.6'/>
@@ -10,24 +10,21 @@
     <elf-symbol name='_fini' type='func-type' binding='global-binding' visibility='default-visibility' is-defined='yes'/>
     <elf-symbol name='_init' type='func-type' binding='global-binding' visibility='default-visibility' is-defined='yes'/>
   </elf-function-symbols>
-  <abi-instr address-size='64' path='test8-qualified-this-pointer.cc' comp-dir-path='/home/dodji/git/libabigail/master/tests/data/test-read-dwarf' language='LANG_C_plus_plus'>
-    <pointer-type-def type-id='50d9a3fa' size-in-bits='64' hash='266209beb41f21aa' id='fd01f598'/>
-    <qualified-type-def type-id='50d9a3fa' const='yes' hash='3b4935b1c09f4d24' id='0fb3b55d'/>
-    <pointer-type-def type-id='0fb3b55d' size-in-bits='64' hash='548b7da6f9ec2163' id='2ee6aa55'/>
-    <qualified-type-def type-id='2ee6aa55' const='yes' hash='bbb1738512647812' id='89b9ceca'/>
+  <abi-types>
+    <qualified-type-def type-id='50d9a3fa' const='yes' hash='6f6949ee48b4ba5e' id='0fb3b55d'/>
+    <pointer-type-def type-id='0fb3b55d' size-in-bits='64' hash='13704968483edc48' id='2ee6aa55'/>
     <type-decl name='int' size-in-bits='32' hash='09d17c08f594edc7' id='95e97e5e'/>
-    <class-decl name='S' is-struct='yes' visibility='default' size-in-bits='32' filepath='/home/dodji/git/libabigail/master/tests/data/test-read-dwarf/test8-qualified-this-pointer.cc' line='1' column='1' hash='2ba53379bb3d81ab' id='50d9a3fa'>
-      <data-member access='public' layout-offset-in-bits='0'>
-        <var-decl name='i' type-id='95e97e5e' visibility='default' filepath='/home/dodji/git/libabigail/master/tests/data/test-read-dwarf/test8-qualified-this-pointer.cc' line='3' column='1'/>
-      </data-member>
-      <member-function access='public' const='yes'>
-        <function-decl name='foo' type-id='4cd38d1e' mangled-name='_ZNK1S3fooEv' filepath='/home/dodji/git/libabigail/master/tests/data/test-read-dwarf/test8-qualified-this-pointer.cc' line='14' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZNK1S3fooEv'/>
-      </member-function>
-    </class-decl>
-    <type-decl name='void' id='48b5725f'/>
-    <function-type method-class-id='50d9a3fa' const='yes' size-in-bits='64' hash='388da3fa973fde78' id='4cd38d1e'>
+    <function-type method-class-id='50d9a3fa' const='yes' size-in-bits='64' hash='de1d1267e996f729' id='4cd38d1e'>
       <parameter type-id='2ee6aa55' is-artificial='yes'/>
       <return type-id='95e97e5e'/>
     </function-type>
-  </abi-instr>
+    <class-decl name='S' is-struct='yes' visibility='default' size-in-bits='32' hash='4b9435452e9b3af9' id='50d9a3fa'>
+      <data-member access='public' layout-offset-in-bits='0'>
+        <var-decl name='i' type-id='95e97e5e' visibility='default'/>
+      </data-member>
+      <member-function access='public' const='yes'>
+        <function-decl name='foo' type-id='4cd38d1e' mangled-name='_ZNK1S3fooEv' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZNK1S3fooEv'/>
+      </member-function>
+    </class-decl>
+  </abi-types>
 </abi-corpus>

@@ -4,6 +4,7 @@ Variables changes summary: 0 Removed, 0 Changed (1 filtered out), 0 Added variab
 1 function with incompatible sub-type changes:
 
   [C] 'function void fn0(const foo_type*)' has some sub-type changes:
+    'function void fn0(const foo_type*) {fn0}' now becomes 'function int fn0(foo_type*, int) {fn0}'
     return type changed:
       type name changed from 'void' to 'int'
       type size changed from 0 to 32 (in bits)

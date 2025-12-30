@@ -8,7 +8,6 @@
 /// @file read ELF binaries containing DWARF, save them in XML corpus
 /// files and diff the corpus files against reference XML corpus
 /// files.
-
 #include <cstdlib>
 #include <fstream>
 #include <iostream>
@@ -712,18 +711,20 @@ test_task_dwarf::perform()
 
   string cmd = abidw + " --no-parameter-names --no-architecture --no-load-undefined-interfaces"
     + " --type-id-style " + type_id_style
-    + " --no-corpus-path "
+    + " --no-corpus-path --no-show-locs "
     + drop_private_types + suppr_specs + options + " " + in_elf_path
     +" > " + out_abi_path;
 
+  initial_command = cmd;
   if (system(cmd.c_str()))
     {
+      is_ok = false;
       error_message = string("abidw failed:\n")
 	+ "command was: '" + cmd + "'\n";
       return;
     }
 
-  if (!(is_ok = run_abidw()))
+  if (!(is_ok = run_abi_self_comparison()))
     return;
 
   if (!(is_ok = run_diff()))

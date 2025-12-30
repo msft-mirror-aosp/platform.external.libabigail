@@ -92,7 +92,7 @@ test_task::serialize_corpus(const string& out_abi_path,
 /// `error_message` shows the full path of the input file object and
 /// the full output path for the abixml file.
 bool
-test_task::run_abidw(const string& extargs)
+test_task::run_abi_self_comparison(const string& extargs)
 {
   string abidw = string(get_build_dir()) + "/tools/abidw";
   string drop_private_types;
@@ -104,11 +104,12 @@ test_task::run_abidw(const string& extargs)
       " --drop-private-types";
   string cmd = abidw + " " + spec_options + drop_private_types +
     " --abidiff " + extargs + in_elf_path;
+
   if (system(cmd.c_str()))
     {
       error_message = string("self comparison with abidw failed:\n")
 	+ "command was: '" + cmd + "'\n";
-      std::cerr << error_message;
+      std::cerr << error_message << std::endl;
       return false;
     }
 

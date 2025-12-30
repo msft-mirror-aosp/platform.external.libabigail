@@ -14,6 +14,7 @@
 ABG_BEGIN_EXPORT_DECLARATIONS
 
 #include "abg-corpus.h"
+#include "abg-corpus-priv.h"
 #include "abg-fe-iface.h"
 
 ABG_END_EXPORT_DECLARATIONS
@@ -56,6 +57,28 @@ struct fe_iface::priv
 fe_iface::options_type::options_type(environment& e)
   : env(e)
 {
+}
+
+/// Assignment operator for @ref fe_iface::options_type.
+///
+/// @param o the new instance of @ref fe_iface::options_type to set to
+/// the current one.
+///
+/// @return a reference of this instance of @ref
+/// fe_iface::options_type that has been set to the new instance @p o.
+fe_iface::options_type&
+fe_iface::options_type::operator=(const fe_iface::options_type& o)
+{
+  load_in_linux_kernel_mode = o.load_in_linux_kernel_mode;
+  load_all_types = o.load_all_types;
+  load_undefined_interfaces = o.load_undefined_interfaces;
+  drop_undefined_syms = o.drop_undefined_syms;
+  show_stats = o.show_stats;
+  do_log = o.show_stats;
+  leverage_dwarf_factorization = o.leverage_dwarf_factorization;
+  assume_odr_for_cplusplus = o.assume_odr_for_cplusplus;
+
+  return *this;
 }
 
 /// Constructor of the type @ref fe_iface.
@@ -130,6 +153,15 @@ void
 fe_iface::dt_soname(const string& soname)
 {priv_->dt_soname = soname;}
 
+/// Getter for the @ref environment used by the current instance of
+/// @ref fe_iface.
+///
+/// @return the environment used by the current instance of @ref
+/// fe_iface.
+environment&
+fe_iface::get_environment() const
+{return options().env;}
+
 /// Test if the input binary is to be considered as a Linux Kernel
 /// binary.
 ///
@@ -202,10 +234,8 @@ corpus_sptr
 fe_iface::corpus()
 {
   if (!priv_->corpus)
-    {
       priv_->corpus = std::make_shared<ir::corpus>(options().env,
 						   corpus_path());
-    }
   return priv_->corpus;
 }
 
@@ -326,10 +356,10 @@ fe_iface::add_fn_to_exported_or_undefined_decls(const function_decl* fn,
       added = b->maybe_add_fn_to_exported_fns(const_cast<function_decl*>(fn),
 					      do_update);
 
-  if (fn && !added)
+  if (fn && !added && options().load_undefined_interfaces)
     {
       if (!fn->get_symbol() || !fn->get_symbol()->is_defined())
-	corpus()->get_undefined_functions().insert(fn);
+	corpus()->add_undefined_function(fn);
     }
 }
 
@@ -352,10 +382,10 @@ fe_iface::add_var_to_exported_or_undefined_decls(const var_decl_sptr& var)
 	corpus()->get_exported_decls_builder().get())
       added = b->maybe_add_var_to_exported_vars(var);
 
-  if (var && !added)
+  if (var && !added && options().load_undefined_interfaces)
     {
       if (!var->get_symbol() || !var->get_symbol()->is_defined())
-	corpus()->get_undefined_variables().insert(var);
+	corpus()->add_undefined_variable(var);
     }
 }
 

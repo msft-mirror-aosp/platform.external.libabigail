@@ -47,23 +47,32 @@ leaf_reporter::diff_has_net_changes(const corpus_diff *d) const
   const corpus_diff::diff_stats& stats = const_cast<corpus_diff*>(d)->
     apply_filters_and_suppressions_before_reporting();
 
+  diff_context_sptr ctxt = d->context();
+
   // Logic here should match emit_diff_stats.
   return (d->architecture_changed()
 	  || d->soname_changed()
 	  || stats.net_num_func_removed()
 	  || stats.net_num_leaf_type_changes()
 	  || stats.net_num_leaf_func_changes()
-	  || stats.net_num_func_added()
+	  || (ctxt->show_added_fns()
+	      && stats.net_num_func_added())
 	  || stats.net_num_vars_removed()
 	  || stats.net_num_leaf_var_changes()
-	  || stats.net_num_vars_added()
-	  || stats.net_num_removed_unreachable_types()
-	  || stats.net_num_changed_unreachable_types()
-	  || stats.net_num_added_unreachable_types()
+	  || (ctxt->show_added_vars()
+	      && stats.net_num_vars_added())
+	  || (ctxt->show_unreachable_types()
+	      && stats.net_num_removed_unreachable_types())
+	  || (ctxt->show_unreachable_types()
+	      && stats.net_num_changed_unreachable_types())
+	  || (ctxt->show_unreachable_types()
+	      && stats.net_num_added_unreachable_types())
 	  || stats.net_num_removed_func_syms()
-	  || stats.net_num_added_func_syms()
+	  || (ctxt->show_added_fns()
+	      && stats.net_num_added_func_syms())
 	  || stats.net_num_removed_var_syms()
-	  || stats.net_num_added_var_syms());
+	  || (ctxt->show_added_vars()
+	      && stats.net_num_added_var_syms()));
 }
 
 /// Report the changes carried by the diffs contained in an instance

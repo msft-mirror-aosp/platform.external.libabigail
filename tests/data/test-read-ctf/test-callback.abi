@@ -1,21 +1,23 @@
-<abi-corpus version='2.5' path='data/test-read-ctf/test-callback.o'>
+<abi-corpus version='3.0' path='data/test-read-ctf/test-callback.o' tracking-non-reachable-types='yes'>
   <elf-function-symbols>
     <elf-symbol name='assign' type='func-type' binding='global-binding' visibility='default-visibility' is-defined='yes'/>
     <elf-symbol name='f2' type='func-type' binding='global-binding' visibility='default-visibility' is-defined='yes'/>
   </elf-function-symbols>
-  <abi-instr address-size='64' language='LANG_C'>
-    <type-decl name='int' size-in-bits='32' hash='09d17c08f594edc7' id='type-id-1'/>
-    <type-decl name='long int' size-in-bits='64' hash='b119fe0931d2ee10#2' id='type-id-2'/>
-    <function-decl name='assign' type-id='type-id-3' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='assign'/>
-    <function-decl name='f2' type-id='type-id-4' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='f2'/>
-    <type-decl name='void' id='type-id-5'/>
-    <function-type size-in-bits='64' hash='c62f1f6f1aa640e5' id='type-id-4'>
-      <parameter type-id='type-id-1'/>
+  <abi-types>
+    <function-type size-in-bits='64' hash='16d32f887cc60b91' id='type-id-1'>
       <parameter type-id='type-id-2'/>
-      <return type-id='type-id-5'/>
+      <parameter type-id='type-id-3'/>
+      <return type-id='type-id-4'/>
     </function-type>
-    <function-type size-in-bits='64' hash='7f32ffea222edbe7' id='type-id-3'>
-      <return type-id='type-id-5'/>
+    <function-type size-in-bits='64' hash='a2bf7572e9861bb4' id='type-id-5'>
+      <return type-id='type-id-4'/>
     </function-type>
+    <type-decl name='int' size-in-bits='32' hash='09d17c08f594edc7' id='type-id-2'/>
+    <type-decl name='long int' size-in-bits='64' hash='8aa1e1a2ab2c2d3e' id='type-id-3'/>
+    <type-decl name='void' hash='8dcbc64750c3d4e3' id='type-id-4'/>
+  </abi-types>
+  <abi-instr address-size='64' language='LANG_C'>
+      <function-decl name='assign' type-id='type-id-5' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='assign'/>
+      <function-decl name='f2' type-id='type-id-1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='f2'/>
   </abi-instr>
 </abi-corpus>

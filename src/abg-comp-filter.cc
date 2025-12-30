@@ -48,9 +48,9 @@ static bool
 has_harmful_enum_change(const diff* diff);
 
 static bool
-has_harmless_enum_change(const type_base_sptr& f,
-			 const type_base_sptr& s,
-			 const diff_context_sptr& ctxt);
+is_harmless_enum_change(const type_base_sptr& f,
+			const type_base_sptr& s,
+			const diff_context_sptr& ctxt);
 
 static bool
 type_size_changed_with_impact(const type_base* f,
@@ -59,6 +59,12 @@ type_size_changed_with_impact(const type_base* f,
 static bool
 type_size_changed_with_impact(const decl_base* f,
 			      const decl_base* s);
+
+static bool
+is_void_ptr_to_ptr(const type_base* f, const type_base* s);
+
+static bool
+is_void_ptr_to_ptr(const type_base_sptr f, const type_base_sptr s);
 
 using std::dynamic_pointer_cast;
 
@@ -268,21 +274,6 @@ type_has_offset_changes(const type_base* f, const type_base* s)
   return type_has_offset_changes(first, second);
 }
 
-/// Detect if a type has offset changes.
-///
-/// The type must be either a class or a union.  This function returns
-/// true iff the type has a data member which has an offset change.
-///
-/// @param f the first version of the type to consider.
-///
-/// @param s the second version of the type to consider.
-///
-/// @return true iff the type has a data member which has an offset
-/// change.
-static bool
-type_has_offset_changes(const decl_base_sptr f, const decl_base_sptr s)
-{return type_has_offset_changes(is_type(f), is_type(s));}
-
 /// Test if a given type diff node carries a type size change.
 ///
 /// @param diff the diff tree node to test.
@@ -324,8 +315,10 @@ has_type_size_change(const diff* diff)
 /// @return true if the type size changed and if that change did
 /// impact the containing scope, false otherwise.
 static bool
-type_size_changed_with_impact(const type_base* f, const type_base *s,
-			      const scope_decl* fs, const scope_decl* ss)
+type_size_changed_with_impact(const type_base* f,
+			      const type_base *s,
+			      scope_decl_sptr fs,
+			      scope_decl_sptr ss)
 {
   bool result = false;
   if (type_size_changed(f, s))
@@ -333,7 +326,8 @@ type_size_changed_with_impact(const type_base* f, const type_base *s,
       if (is_type(ss))
 	// The scope is itself a type.  Let's see if that type scope
 	// itself has a type size with an impact to its scope.
-	result = type_size_changed_with_impact (is_type(fs), is_type(ss));
+	result = type_size_changed_with_impact (is_type(fs).get(),
+						is_type(ss).get());
       else
 	{// The scope is not a type.  So let's look at things in a
 	 // more subtle way.
@@ -380,8 +374,8 @@ type_size_changed_with_impact(const type_base* f, const type_base *s)
   if (!first_type || !second_type)
     return false;
 
-  scope_decl* fs = first_type->get_scope();
-  scope_decl* ss = second_type->get_scope();
+  auto fs = first_type->get_scope();
+  auto ss = second_type->get_scope();
 
   return type_size_changed_with_impact(f, s, fs, ss);
 }
@@ -417,8 +411,8 @@ type_size_changed_with_impact(const decl_base* f, const decl_base *s)
   if (!f_var || !s_var)
     return false;
 
-  scope_decl* fs = f->get_scope();
-  scope_decl* ss = s->get_scope();
+  auto fs = f->get_scope();
+  auto ss = s->get_scope();
 
   const type_base* first_type = f_var->get_type().get();
   const type_base* second_type = s_var->get_type().get();
@@ -516,7 +510,7 @@ find_data_member_at_offset(const string_decl_base_sptr_map& data_members,
 }
 
 /// Test if a set of data members contains at least one data member
-/// that has an offset change.
+/// that has an offset or size change.
 ///
 /// @param f_data_members the first version of data members to
 /// consider.
@@ -525,7 +519,7 @@ find_data_member_at_offset(const string_decl_base_sptr_map& data_members,
 /// consider.
 ///
 /// @return true iff there is at least one data member which has an
-/// offset change between the first version of data members and the
+/// offset or size change between the first version of data members and the
 /// second version.
 static bool
 has_offset_changes(const string_decl_base_sptr_map& f_data_members,
@@ -554,6 +548,23 @@ has_offset_changes(const string_decl_base_sptr_map& f_data_members,
       unsigned s_offset = get_absolute_data_member_offset(s_member);
       if (f_offset != s_offset)
 	return true;
+
+      /// If the size of the type of the data member changed then
+      /// that's considered as a size change ...
+      if (auto t1 = f_member->get_type())
+	if (auto t2 = s_member->get_type())
+	  {
+	    t1 = peel_qualified_or_typedef_type(t1);
+	    t2 = peel_qualified_or_typedef_type(t2);
+	    if (t1->get_size_in_bits() != t2->get_size_in_bits())
+	      {
+		if (is_void_ptr_to_ptr(t1, t2) || is_void_ptr_to_ptr(t2, t1))
+		  // ... unless we are looking at a void pointer to
+		  // pointer change.
+		  return false;
+		return true;
+	      }
+	  }
     }
   return false;
 }
@@ -927,10 +938,10 @@ static bool
 decl_name_changed(const diff *d)
 {return decl_name_changed(d->first_subject(), d->second_subject());}
 
-/// Test if two decls represents a harmless name change.
+/// Test if two decls represent a harmless name change.
 ///
-/// For now, a harmless name change is considered only for a typedef,
-/// enum or a data member.
+/// A harmless name change is a name change that is not harmful.  So
+/// this function uses is_harmful_name_change.
 ///
 /// @param f the first decl to consider in the comparison.
 ///
@@ -941,51 +952,59 @@ decl_name_changed(const diff *d)
 ///
 /// @return true iff decl @p s represents a harmless change over @p f.
 bool
-has_harmless_name_change(const decl_base_sptr& f,
-			 const decl_base_sptr& s,
-			 const diff_context_sptr& ctxt)
+is_harmless_name_change(const decl_base_sptr& f,
+			const decl_base_sptr& s,
+			const diff_context_sptr& ctxt)
+{return decl_name_changed(f, s) && !is_harmful_name_change(f, s, ctxt);}
+
+/// Test if a decl-with-type (either a function, a variable or a
+/// parameter) has a harmful name change.
+///
+/// This function template considers that a harmful name change is one
+/// that is accompanied with the fact that the type of the decl
+/// carries a non-compatible change.
+///
+/// @tparam FnVarOrParm a function_decl, var_decl or
+/// function_decl::parameter type.
+///
+/// @param first_decl the first decl to consider.
+///
+/// @param second_decl the second decl to consider.
+///
+/// @return true iff the @p first_decl and @p second_decl represent a
+/// harmful name change.
+template <class FnVarOrParm>
+bool
+decl_with_type_has_harmful_name_change(FnVarOrParm		first_decl,
+				       FnVarOrParm		second_decl,
+				       const diff_context_sptr& ctxt)
 {
-  // So, a harmless name change is either ...
-  return (decl_name_changed(f, s)
-	  && (// ... an anonymous decl name changed into another
-	      // anonymous decl name ...
-	      (f->get_is_anonymous() && s->get_is_anonymous())
-	      ||
-	      // ... an anonymous decl name changed harmlessly into
-	      // another anonymous decl name ...
-	      ((f->get_is_anonymous_or_has_anonymous_parent()
-		&& s->get_is_anonymous_or_has_anonymous_parent())
-	       && tools_utils::decl_names_equal(f->get_qualified_name(),
-						s->get_qualified_name()))
-	      // ... Types are compatible (equal modulo a typedef or
-	      // cv quals) ...
-	      || (is_type(f)
-		  && is_type(s)
-		  && types_are_compatible(is_type(f), is_type(s)))
-	      // ... a harmless enum change ...
-	      || has_harmless_enum_change(is_type(f), is_type(s), ctxt)
-	      // ... a type replaced by a compatible anonymous union
-	      // or struct ...
-	      || (is_type(f) && is_type(s)
-		  && is_type_to_compatible_anonymous_type_change(is_type(f),
-								 is_type(s)))
-	      // ... a data member replaced by a compatible anonymous
-	      // data member ...
-	      || (is_data_member(f) && is_data_member(s)
-		  && is_data_member_to_compatible_anonymous_dm_change(is_decl(f),
-								      is_decl(s)))
-	      // ... or a data member name change, without having its
-	      // type changed ...
-	      || (is_data_member(f)
-		  && is_data_member(s)
-		  && (is_var_decl(f)->get_type()
-		      == is_var_decl(s)->get_type()))));
+  if (!decl_name_changed(first_decl, second_decl))
+    return false;
+
+  if (var_decl_sptr f = is_data_member(first_decl))
+    if (var_decl_sptr s = is_data_member(second_decl))
+      if (is_data_member_to_compatible_anonymous_dm_change(f,s))
+	return false;
+
+  type_base_sptr t1 = first_decl->get_type();
+  type_base_sptr t2 = second_decl->get_type();
+
+  if (types_are_compatible(t1, t2))
+    return false;
+
+  if (decl_base_sptr d1 = is_decl(t1))
+    if (decl_base_sptr d2 = is_decl(t2))
+      if (!is_harmful_name_change(d1, d2, ctxt))
+	return false;
+
+  return true;
 }
 
 /// Test if two decls represent a harmful name change.
 ///
-/// A harmful name change is a name change that is not harmless, so
-/// this function uses the function has_harmless_name_change.
+/// A harmful name change is either a change to a decl or a change to
+/// a type which induces an ABI incompatibility.
 ///
 /// @param f the first decl to consider in the comparison.
 ///
@@ -996,15 +1015,76 @@ has_harmless_name_change(const decl_base_sptr& f,
 /// @return true iff decl @p s represents a harmful name change over
 /// @p f.
 bool
-has_harmful_name_change(const decl_base_sptr& f,
-			const decl_base_sptr& s,
-			const diff_context_sptr& ctxt)
-{return decl_name_changed(f, s) && ! has_harmless_name_change(f, s, ctxt);}
+is_harmful_name_change(const decl_base_sptr& f,
+		       const decl_base_sptr& s,
+		       const diff_context_sptr& ctxt)
+{
+  if (!decl_name_changed(f, s))
+    return false;
+
+  if (type_base_sptr t1 = is_type(look_through_decl_only(f)))
+    if (type_base_sptr t2 = is_type(look_through_decl_only(s)))
+      {
+	if (types_are_compatible(t1, t2)
+	    || is_harmless_enum_change(t1, t2, ctxt)
+	    || is_type_to_compatible_anonymous_type_change(t1,t2))
+	  // Two compatible types or two enum types with harmless
+	  // changes or a type that gets embedded in an anonymous type
+	  // don't create an ABI-incompatible change even if the names
+	  // of the types are different.
+	  return false;
+
+	if (union_decl_sptr u1 = is_union_type(t1))
+	  if (union_decl_sptr u2 = is_union_type(t2))
+	    if (union_diff_is_harmless_change(u1, u2))
+	      // Two unions that have only harmless changes (i.e, that
+	      // don't incur any offset or size change) don't
+	      // represent harmful name changes.
+	      return false;
+      }
+
+  if (var_decl_sptr v1 = is_var_decl(f))
+    if (var_decl_sptr v2 = is_var_decl(s))
+      if (!decl_with_type_has_harmful_name_change(v1, v2, ctxt))
+	// Two vars that have different names with non-incompatible types.
+	// Their name change don't incur any ABI-incompatible change.
+	return false;
+
+  if (function_decl_sptr v1 = is_function_decl(f))
+    if (function_decl_sptr v2 = is_function_decl(s))
+      if (!decl_with_type_has_harmful_name_change(v1, v2, ctxt))
+	// Likewise, two functions that have different names with
+	// non-incompatible types.  Their name change don't incur any
+	// ABI-incompatible change.
+	return false;
+
+  if (function_decl::parameter_sptr v1 = is_function_parameter(f))
+    if (function_decl::parameter_sptr v2 = is_function_parameter(s))
+      if (!decl_with_type_has_harmful_name_change(v1, v2, ctxt))
+	// Two function parameters that have different names with
+	// non-incompatible types.  Their name change don't incur any
+	// ABI-incompatible change.
+	return false;
+
+  if (f->get_is_declaration_only() != s->get_is_declaration_only())
+    if ((f->get_is_declaration_only()
+	 && is_type(f)
+	 && is_type(f)->get_size_in_bits() == 0)
+	||
+	(s->get_is_declaration_only()
+	 && is_type(s)
+	 && is_type(s)->get_size_in_bits() == 0))
+      // A decl-only to non-decl change is not an ABI-incompatible
+      // change.
+      return false;
+
+  return true;
+}
 
 /// Test if a diff node represents a harmful name change.
 ///
 /// A harmful name change is a name change that is not harmless, so
-/// this function uses the function has_harmless_name_change.
+/// this function uses the function is_harmless_name_change.
 ///
 /// @param f the first decl to consider in the comparison.
 ///
@@ -1013,12 +1093,12 @@ has_harmful_name_change(const decl_base_sptr& f,
 /// @return true iff decl @p s represents a harmful name change over
 /// @p f.
 bool
-has_harmful_name_change(const diff* dif)
+is_harmful_name_change(const diff* dif)
 {
   decl_base_sptr f = is_decl(dif->first_subject()),
     s = is_decl(dif->second_subject());
 
-  return has_harmful_name_change(f, s, dif->context());
+  return is_harmful_name_change(f, s, dif->context());
 }
 
 /// Test if a class_diff node has non-static members added or removed,
@@ -2018,17 +2098,23 @@ has_harmless_enum_to_int_change(const diff* diff)
 ///
 /// @return true iff {t1, t2} represents a harmless enum change.
 static bool
-has_harmless_enum_change(const type_base_sptr& t1,
-			 const type_base_sptr& t2,
-			 const diff_context_sptr& ctxt)
+is_harmless_enum_change(const type_base_sptr& t1,
+			const type_base_sptr& t2,
+			const diff_context_sptr& ctxt)
 {
   type_base_sptr f = peel_typedef_type(t1);
   type_base_sptr s = peel_typedef_type(t2);
   enum_type_decl_sptr e1 = is_enum_type(f);
   enum_type_decl_sptr e2 = is_enum_type(s);
 
+  e1 = look_through_decl_only_enum(e1);
+  e2 = look_through_decl_only_enum(e2);
+
   if (!e1 || !e2)
     return false;
+
+  if (enum_equals_modulo_name(*e1, *e2, nullptr))
+    return true;
 
   enum_diff_sptr dyf = compute_diff(e1, e2, ctxt);
   if (((has_enumerator_insertion(dyf.get()) || has_enumerator_change(dyf.get()))
@@ -2055,7 +2141,7 @@ has_harmless_enum_change(const type_base_sptr& t1,
 ///
 /// @return true iff {t1, t2} represents a harmless enum change.
 static bool
-has_harmless_enum_change(const diff* d)
+is_harmless_enum_change(const diff* d)
 {
   if (!d)
     return false;
@@ -2070,7 +2156,7 @@ has_harmless_enum_change(const diff* d)
   if (!f || !s)
     return false;
 
-  return has_harmless_enum_change(f, s, d->context());
+  return is_harmless_enum_change(f, s, d->context());
 }
 
 /// Test if an @ref fn_parm_diff node has a top cv qualifier change on
@@ -2166,6 +2252,9 @@ type_diff_has_typedef_cv_qual_change_only(const type_base_sptr& f,
 {
   type_base_sptr a = f;
   type_base_sptr b = s;
+
+  if (a && b && *a == *b)
+    return false;
 
   a = peel_qualified_or_typedef_type(a);
   b = peel_qualified_or_typedef_type(b);
@@ -2604,6 +2693,18 @@ is_void_ptr_to_ptr(const type_base* f, const type_base* s)
   return false;
 }
 
+/// Test if a type change is a "void pointer to pointer" change.
+///
+/// @param f the first version of the type.
+///
+/// @param s the second version of the type.
+///
+/// @return true iff the type change is a "void pointer to pointer"
+/// change.
+static bool
+is_void_ptr_to_ptr(const type_base_sptr f, const type_base_sptr s)
+{return is_void_ptr_to_ptr(f.get(), s.get());}
+
 /// Test if a pair of types represents a "void-to-non-void" change.
 ///
 /// The test looks through potential typedefs.
@@ -2753,14 +2854,40 @@ has_benign_array_of_unknown_size_change(const diff* dif)
 /// @return true iff @p d is a diff node which has changes that don't
 /// impact its size.
 bool
-union_diff_has_harmless_changes(const diff *d)
+union_diff_is_harmless_change(const diff *d)
 {
-  if (is_union_diff(d)
-      && d->has_changes()
-      && !has_type_size_change(d))
+  const union_diff* union_diff = is_union_diff(d);
+  if (!union_diff)
+    return false;
+
+  union_decl_sptr f = union_diff->first_union_decl();
+  union_decl_sptr s = union_diff->second_union_decl();
+
+  if (union_diff_is_harmless_change(f, s))
     return true;
 
   return false;
+}
+
+/// Test if two union types represent a change that does not impact
+/// its size or the size of its members.  That is a harmless change.
+///
+/// @param l the first (left-most) union type to consider.
+///
+/// @param r the second (right-most) union type to consider.
+///
+/// @return true iff we are looking at a change that is harmless.
+bool
+union_diff_is_harmless_change(const union_decl_sptr l,
+			      const union_decl_sptr r)
+{
+  if (l && r && *l == *r)
+    return false;
+
+  if (type_has_offset_changes(l, r) || type_size_changed(l, r))
+    return false;
+
+  return true;
 }
 
 /// Test if a diff node carries a change that is categorized as
@@ -2792,7 +2919,7 @@ has_harmful_change(const diff* d)
   if (!has_class_decl_only_def_change(d)
       && !has_enum_decl_only_def_change(d)
       && (has_type_size_change_with_impact(d)
-	  || type_has_offset_changes(f, s)
+	  || type_has_offset_changes(is_type(f), is_type(s))
 	  || data_member_offset_changed(f, s)
 	  || non_static_data_member_type_size_changed_with_impact(f, s)
 	  || non_static_data_member_added_or_removed_with_impact(d)
@@ -2814,7 +2941,7 @@ has_harmful_change(const diff* d)
   if (is_non_compatible_distinct_change(d))
     category |= NON_COMPATIBLE_DISTINCT_CHANGE_CATEGORY;
 
-  if (has_harmful_name_change(d))
+  if (is_harmful_name_change(d))
     category |= NON_COMPATIBLE_NAME_CHANGE_CATEGORY;
 
   return category;
@@ -2860,11 +2987,11 @@ categorize_harmless_diff_node(diff *d, bool pre)
       if (is_compatible_change(f, s))
 	category |= COMPATIBLE_TYPE_CHANGE_CATEGORY;
 
-      if (has_harmless_name_change(f, s, d->context())
+      if (is_harmless_name_change(f, s, d->context())
 	  || class_diff_has_harmless_odr_violation_change(d))
 	category |= HARMLESS_DECL_NAME_CHANGE_CATEGORY;
 
-      if (union_diff_has_harmless_changes(d)
+      if (union_diff_is_harmless_change(d)
 	  || class_diff_has_only_harmless_changes(d))
 	category |= HARMLESS_UNION_OR_CLASS_CHANGE_CATEGORY;
 
@@ -2878,7 +3005,7 @@ categorize_harmless_diff_node(diff *d, bool pre)
       if (has_data_member_replaced_by_anon_dm(d))
 	category |= HARMLESS_DATA_MEMBER_CHANGE_CATEGORY;
 
-      if (has_harmless_enum_change(d))
+      if (is_harmless_enum_change(d))
 	category |= HARMLESS_ENUM_CHANGE_CATEGORY;
 
       if (function_name_changed_but_not_symbol(d))

@@ -1,56 +1,64 @@
-<abi-corpus version='2.5' path='data/test-read-ctf/test9.o'>
+<abi-corpus version='3.0' path='data/test-read-ctf/test9.o' tracking-non-reachable-types='yes'>
   <elf-function-symbols>
     <elf-symbol name='foo' type='func-type' binding='global-binding' visibility='default-visibility' is-defined='yes'/>
   </elf-function-symbols>
-  <abi-instr address-size='64' language='LANG_C'>
-    <pointer-type-def type-id='type-id-1' size-in-bits='64' alignment-in-bits='64' hash='cf7a55801d29a217' id='type-id-2'/>
-    <type-decl name='char' size-in-bits='8' hash='65b2d157027b431a' id='type-id-3'/>
-    <pointer-type-def type-id='type-id-3' size-in-bits='64' alignment-in-bits='64' hash='f0d67b75f875f482' id='type-id-4'/>
-    <array-type-def dimensions='1' type-id='type-id-4' size-in-bits='448' alignment-in-bits='64' hash='292e5bd8ae46876b' id='type-id-5'>
-      <subrange length='7' lower-bound='0' upper-bound='6' type-id='type-id-6' size-in-bits='64' is-anonymous='yes' hash='58190901bcecd086' id='type-id-7'/>
+  <abi-types>
+    <subrange length='10' lower-bound='0' upper-bound='9' type-id='type-id-1' size-in-bits='64' is-anonymous='yes' hash='4e72a2f569b234f4' id='type-id-2'/>
+    <subrange length='1' lower-bound='0' upper-bound='0' type-id='type-id-1' size-in-bits='64' is-anonymous='yes' hash='eba0a2b392137dcb' id='type-id-3'/>
+    <subrange length='3' lower-bound='0' upper-bound='2' type-id='type-id-1' size-in-bits='64' is-anonymous='yes' hash='30d99d19f0f4b2ea' id='type-id-4'/>
+    <subrange length='4' lower-bound='0' upper-bound='3' type-id='type-id-1' size-in-bits='64' is-anonymous='yes' hash='cee611f4a73e486c' id='type-id-5'/>
+    <subrange length='5' lower-bound='0' upper-bound='4' type-id='type-id-1' size-in-bits='64' is-anonymous='yes' hash='5aa5cef1e1be46c9' id='type-id-6'/>
+    <subrange length='7' lower-bound='0' upper-bound='6' type-id='type-id-1' size-in-bits='64' is-anonymous='yes' hash='58190901bcecd086' id='type-id-7'/>
+    <pointer-type-def type-id='type-id-8' size-in-bits='64' alignment-in-bits='64' hash='feb0fbe2b9baf0ed' id='type-id-9'/>
+    <type-decl name='char' size-in-bits='8' hash='65b2d157027b431a' id='type-id-10'/>
+    <pointer-type-def type-id='type-id-10' size-in-bits='64' alignment-in-bits='64' hash='859ac74900ec4328' id='type-id-11'/>
+    <array-type-def dimensions='1' type-id='type-id-11' size-in-bits='448' alignment-in-bits='64' hash='d0a3901606015d02' id='type-id-12'>
+      <subrange length='7' lower-bound='0' upper-bound='6' type-id='type-id-1' size-in-bits='64' is-anonymous='yes' hash='58190901bcecd086' id='type-id-7'/>
     </array-type-def>
-    <array-type-def dimensions='1' type-id='type-id-3' size-in-bits='8' hash='f7aed1c6cc6e7b3c' id='type-id-8'>
-      <subrange length='1' lower-bound='0' upper-bound='0' type-id='type-id-6' size-in-bits='64' is-anonymous='yes' hash='eba0a2b392137dcb' id='type-id-9'/>
+    <array-type-def dimensions='1' type-id='type-id-10' size-in-bits='8' hash='26f2499d5fa52471' id='type-id-13'>
+      <subrange length='1' lower-bound='0' upper-bound='0' type-id='type-id-1' size-in-bits='64' is-anonymous='yes' hash='eba0a2b392137dcb' id='type-id-3'/>
     </array-type-def>
-    <type-decl name='double' size-in-bits='64' hash='e9e9b320886d9aa6' id='type-id-10'/>
-    <array-type-def dimensions='2' type-id='type-id-10' size-in-bits='960' hash='31002392392dd18a' id='type-id-11'>
-      <subrange length='5' lower-bound='0' upper-bound='4' type-id='type-id-6' size-in-bits='64' is-anonymous='yes' hash='5aa5cef1e1be46c9' id='type-id-12'/>
-      <subrange length='3' lower-bound='0' upper-bound='2' type-id='type-id-6' size-in-bits='64' is-anonymous='yes' hash='30d99d19f0f4b2ea' id='type-id-13'/>
+    <type-decl name='double' size-in-bits='64' hash='e9e9b320886d9aa6' id='type-id-14'/>
+    <array-type-def dimensions='2' type-id='type-id-14' size-in-bits='960' hash='163723665089c7ad' id='type-id-15'>
+      <subrange length='5' lower-bound='0' upper-bound='4' type-id='type-id-1' size-in-bits='64' is-anonymous='yes' hash='5aa5cef1e1be46c9' id='type-id-6'/>
+      <subrange length='3' lower-bound='0' upper-bound='2' type-id='type-id-1' size-in-bits='64' is-anonymous='yes' hash='30d99d19f0f4b2ea' id='type-id-4'/>
     </array-type-def>
-    <type-decl name='int' size-in-bits='32' hash='09d17c08f594edc7' id='type-id-14'/>
-    <pointer-type-def type-id='type-id-14' size-in-bits='64' alignment-in-bits='64' hash='aad126a40a94b3f9' id='type-id-15'/>
-    <pointer-type-def type-id='type-id-16' size-in-bits='64' alignment-in-bits='64' hash='0254be522ee5aff8' id='type-id-17'/>
-    <array-type-def dimensions='1' type-id='type-id-17' size-in-bits='640' alignment-in-bits='64' hash='0f6d1ae2b6c7c870' id='type-id-18'>
-      <subrange length='10' lower-bound='0' upper-bound='9' type-id='type-id-6' size-in-bits='64' is-anonymous='yes' hash='4e72a2f569b234f4' id='type-id-19'/>
+    <function-type size-in-bits='64' hash='2b6349b619baa5b7' id='type-id-16'>
+      <parameter type-id='type-id-9'/>
+      <return type-id='type-id-17'/>
+    </function-type>
+    <type-decl name='int' size-in-bits='32' hash='09d17c08f594edc7' id='type-id-17'/>
+    <pointer-type-def type-id='type-id-17' size-in-bits='64' alignment-in-bits='64' hash='fed4503a274a5984' id='type-id-18'/>
+    <pointer-type-def type-id='type-id-19' size-in-bits='64' alignment-in-bits='64' hash='c5ee15b5401dba6d' id='type-id-20'/>
+    <array-type-def dimensions='1' type-id='type-id-20' size-in-bits='640' alignment-in-bits='64' hash='f4e16601ed466299' id='type-id-21'>
+      <subrange length='10' lower-bound='0' upper-bound='9' type-id='type-id-1' size-in-bits='64' is-anonymous='yes' hash='4e72a2f569b234f4' id='type-id-2'/>
     </array-type-def>
-    <array-type-def dimensions='1' type-id='type-id-15' size-in-bits='256' alignment-in-bits='64' hash='1110cbfa45721608' id='type-id-16'>
-      <subrange length='4' lower-bound='0' upper-bound='3' type-id='type-id-6' size-in-bits='64' is-anonymous='yes' hash='cee611f4a73e486c' id='type-id-20'/>
+    <array-type-def dimensions='1' type-id='type-id-18' size-in-bits='256' alignment-in-bits='64' hash='53170156c36b91cc' id='type-id-19'>
+      <subrange length='4' lower-bound='0' upper-bound='3' type-id='type-id-1' size-in-bits='64' is-anonymous='yes' hash='cee611f4a73e486c' id='type-id-5'/>
     </array-type-def>
-    <array-type-def dimensions='1' type-id='type-id-14' size-in-bits='160' hash='f6adbc622c614e05' id='type-id-21'>
-      <subrange length='5' lower-bound='0' upper-bound='4' type-id='type-id-6' size-in-bits='64' is-anonymous='yes' hash='5aa5cef1e1be46c9' id='type-id-12'/>
+    <array-type-def dimensions='1' type-id='type-id-17' size-in-bits='160' hash='e1a54f164d2b8f96' id='type-id-22'>
+      <subrange length='5' lower-bound='0' upper-bound='4' type-id='type-id-1' size-in-bits='64' is-anonymous='yes' hash='5aa5cef1e1be46c9' id='type-id-6'/>
     </array-type-def>
-    <class-decl name='S' is-struct='yes' visibility='default' size-in-bits='2304' hash='3ef90a0e84a54ee2' id='type-id-1'>
+    <class-decl name='S' is-struct='yes' visibility='default' size-in-bits='2304' hash='fe0f183a57ab2219' id='type-id-8'>
       <data-member access='public' layout-offset-in-bits='0'>
-        <var-decl name='a' type-id='type-id-21' visibility='default'/>
+        <var-decl name='a' type-id='type-id-22' visibility='default'/>
       </data-member>
       <data-member access='public' layout-offset-in-bits='192'>
-        <var-decl name='b' type-id='type-id-5' visibility='default'/>
+        <var-decl name='b' type-id='type-id-12' visibility='default'/>
       </data-member>
       <data-member access='public' layout-offset-in-bits='640'>
-        <var-decl name='c' type-id='type-id-11' visibility='default'/>
+        <var-decl name='c' type-id='type-id-15' visibility='default'/>
       </data-member>
       <data-member access='public' layout-offset-in-bits='1600'>
-        <var-decl name='d' type-id='type-id-18' visibility='default'/>
+        <var-decl name='d' type-id='type-id-21' visibility='default'/>
       </data-member>
       <data-member access='public' layout-offset-in-bits='2240'>
-        <var-decl name='e' type-id='type-id-8' visibility='default'/>
+        <var-decl name='e' type-id='type-id-13' visibility='default'/>
       </data-member>
     </class-decl>
-    <type-decl name='unsigned long int' size-in-bits='64' hash='8fdc5eea2983a729' id='type-id-6'/>
-    <function-decl name='foo' type-id='type-id-22' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='foo'/>
-    <function-type size-in-bits='64' hash='86766259792c2f3c' id='type-id-22'>
-      <parameter type-id='type-id-2'/>
-      <return type-id='type-id-14'/>
-    </function-type>
+    <type-decl name='unsigned long int' size-in-bits='64' hash='da551c1631705dfe' id='type-id-1'/>
+  </abi-types>
+  <abi-instr address-size='64' language='LANG_C'>
+      <function-decl name='foo' type-id='type-id-16' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='foo'/>
   </abi-instr>
 </abi-corpus>

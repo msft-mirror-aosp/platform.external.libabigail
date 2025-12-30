@@ -386,15 +386,18 @@ main()
 
       environment env;
       std::vector<string> di_roots;
+      abigail::fe_iface::options_type o(env);
+      o.load_all_types = false;
+
       abigail::corpus_sptr corp0 =
 	dwarf::read_corpus_from_elf(in_elfv0_path,
 				    /*debug_info_root_path=*/di_roots,
-				    env, /*load_all_types=*/false, status);
+				    env, o, status);
 
       abigail::corpus_sptr corp1 =
 	dwarf::read_corpus_from_elf(in_elfv1_path,
 				    /*debug_info_root_path=*/di_roots,
-				    env, /*load_all_types=*/false, status);
+				    env, o, status);
 
       if (!corp0)
 	{

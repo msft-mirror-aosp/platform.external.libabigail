@@ -37,22 +37,31 @@ default_reporter::diff_has_net_changes(const corpus_diff *d) const
   const corpus_diff::diff_stats& stats = const_cast<corpus_diff*>(d)->
     apply_filters_and_suppressions_before_reporting();
 
+  diff_context_sptr ctxt = d->context();
+
   // Logic here should match emit_diff_stats.
   return (d->architecture_changed()
 	  || d->soname_changed()
 	  || stats.net_num_func_removed()
 	  || stats.net_num_func_changed()
-	  || stats.net_num_func_added()
+	  || (stats.net_num_func_added()
+	      && ctxt->show_added_fns())
 	  || stats.net_num_vars_removed()
 	  || stats.net_num_vars_changed()
-	  || stats.net_num_vars_added()
-	  || stats.net_num_removed_unreachable_types()
-	  || stats.net_num_changed_unreachable_types()
-	  || stats.net_num_added_unreachable_types()
+	  || (stats.net_num_vars_added()
+	      && ctxt->show_added_vars())
+	  || (stats.net_num_removed_unreachable_types()
+	      && ctxt->show_unreachable_types())
+	  || (stats.net_num_changed_unreachable_types()
+	      && ctxt->show_unreachable_types())
+	  || (stats.net_num_added_unreachable_types()
+	      && ctxt->show_unreachable_types())
 	  || stats.net_num_removed_func_syms()
-	  || stats.net_num_added_func_syms()
+	  || (stats.net_num_added_func_syms()
+	      && ctxt->show_added_fns())
 	  || stats.net_num_removed_var_syms()
-	  || stats.net_num_added_var_syms());
+	  || (stats.net_num_added_var_syms()
+	      && ctxt->show_added_vars()));
 }
 
 /// Ouputs a report of the differences between of the two type_decl
@@ -274,7 +283,7 @@ default_reporter::report_non_type_typedef_changes(const typedef_diff &d,
 
   maybe_report_diff_for_member(f, s, d.context(), out, indent);
 
-  if ((filtering::has_harmless_name_change(f, s, d.context())
+  if ((filtering::is_harmless_name_change(f, s, d.context())
        && ((d.context()->get_allowed_category()
 	    & HARMLESS_DECL_NAME_CHANGE_CATEGORY)
 	   || d.context()->show_leaf_changes_only()))
@@ -788,15 +797,9 @@ default_reporter::report(const function_type_diff& d, ostream& out,
     }
 
   // Report about the parameter types that have changed sub-types.
-  for (vector<fn_parm_diff_sptr>::const_iterator i =
-	 d.priv_->sorted_subtype_changed_parms_.begin();
-       i != d.priv_->sorted_subtype_changed_parms_.end();
-       ++i)
-    {
-      diff_sptr dif = *i;
-      if (dif && dif->to_be_reported())
-	dif->report(out, indent);
-    }
+  for (auto dif : d.priv_->sorted_subtype_changed_parms_)
+    if (dif && dif->to_be_reported())
+      dif->report(out, indent);
 
   if (!d.is_filtered_out_without_looking_at_allowed_changes())
     report_local_function_type_changes(d, out, indent);
@@ -1588,7 +1591,7 @@ default_reporter::report(const union_diff& d, ostream& out,
   d.class_or_union_diff::report(out, indent);
 
   if (d.context()->get_allowed_category() & HARMLESS_UNION_OR_CLASS_CHANGE_CATEGORY
-      && filtering::union_diff_has_harmless_changes(&d))
+      && filtering::union_diff_is_harmless_change(&d))
     {
       // The user wants to see harmless changes and the union diff we
       // are looking at does carry some harmless changes.  Let's show
@@ -1641,8 +1644,8 @@ default_reporter::report(const distinct_diff& d, ostream& out,
   report_loc_info(s, *d.context(), out);
   out << "\n";
 
-  type_base_sptr fs = strip_typedef(is_type(f)),
-    ss = strip_typedef(is_type(s));
+  type_base_sptr fs = peel_typedef_type(is_type(f)),
+    ss = peel_typedef_type(is_type(s));
 
   report_size_and_alignment_changes(f, s, d.context(), out, indent);
 }
@@ -1718,9 +1721,7 @@ default_reporter::report(const function_decl_diff& d, ostream& out,
 		<< linkage_names1 << "' to '" << linkage_names2 << "'\n";
 	}
 
-      if (qn1 != qn2
-	  && d.type_diff()
-	  && d.type_diff()->to_be_reported())
+      if (d.type_diff() && d.type_diff()->to_be_reported())
 	{
 	  // So the function has sub-type changes that are to be
 	  // reported.  Let's see if the function name changed too; if it
@@ -1728,9 +1729,10 @@ default_reporter::report(const function_decl_diff& d, ostream& out,
 	  // sub-type changes.
 	  string frep1 = d.first_function_decl()->get_pretty_representation(),
 	    frep2 = d.second_function_decl()->get_pretty_representation();
-	  out << indent << "'" << frep1 << " {" << linkage_names1<< "}"
-	      << "' now becomes '"
-	      << frep2 << " {" << linkage_names2 << "}" << "'\n";
+	  if (frep1 != frep2 || linkage_names1 != linkage_names2)
+	    out << indent << "'" << frep1 << " {" << linkage_names1<< "}"
+		<< "' now becomes '"
+		<< frep2 << " {" << linkage_names2 << "}" << "'\n";
 	}
 
       maybe_report_diff_for_symbol(ff->get_symbol(),

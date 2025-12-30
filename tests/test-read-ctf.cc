@@ -486,7 +486,7 @@ test_task_ctf::perform()
   if (!(is_ok = serialize_corpus(out_abi_path, corp)))
        return;
 
-  if (!(is_ok = run_abidw()))
+  if (!(is_ok = run_abi_self_comparison()))
     return;
 
   if (!(is_ok = run_diff()))

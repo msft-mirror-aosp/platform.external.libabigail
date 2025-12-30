@@ -1,32 +1,34 @@
-<abi-corpus version='2.5' path='data/test-read-ctf/test1.so'>
+<abi-corpus version='3.0' path='data/test-read-ctf/test1.so' tracking-non-reachable-types='yes'>
   <elf-needed>
     <dependency name='libc.so.6'/>
   </elf-needed>
   <elf-function-symbols>
     <elf-symbol name='fn' type='func-type' binding='global-binding' visibility='default-visibility' is-defined='yes'/>
   </elf-function-symbols>
-  <abi-instr address-size='64' language='LANG_C'>
-    <enum-decl name='opaque_enum' linkage-name='opaque_enum' size-in-bits='32' alignment-in-bits='32' hash='8052a48aba79331b' id='type-id-1'>
+  <abi-types>
+    <enum-decl name='opaque_enum' linkage-name='opaque_enum' size-in-bits='32' alignment-in-bits='32' hash='af7b80265d14c58b' id='type-id-1'>
       <underlying-type type-id='type-id-2'/>
       <enumerator name='e0' value='0'/>
       <enumerator name='e1' value='1'/>
     </enum-decl>
-    <pointer-type-def type-id='type-id-3' size-in-bits='64' alignment-in-bits='64' hash='7e09fd30fc6f7f14' id='type-id-4'/>
-    <pointer-type-def type-id='type-id-5' size-in-bits='64' alignment-in-bits='64' hash='3417842a41c6a5f9' id='type-id-6'/>
-    <class-decl name='opaque_struct' is-struct='yes' visibility='default' size-in-bits='32' hash='76b8be93c7b2042b' id='type-id-7'>
+    <function-type size-in-bits='64' hash='b351a07f3987e3be' id='type-id-3'>
+      <parameter type-id='type-id-4'/>
+      <parameter type-id='type-id-5'/>
+      <return type-id='type-id-6'/>
+    </function-type>
+    <pointer-type-def type-id='type-id-7' size-in-bits='64' alignment-in-bits='64' hash='72d4bb7b64e6fd0f' id='type-id-5'/>
+    <pointer-type-def type-id='type-id-8' size-in-bits='64' alignment-in-bits='64' hash='1edd03aa349fc701' id='type-id-4'/>
+    <class-decl name='opaque_struct' is-struct='yes' visibility='default' size-in-bits='32' hash='65331940033894e6' id='type-id-9'>
       <data-member access='public' layout-offset-in-bits='0'>
-        <var-decl name='m0' type-id='type-id-3' visibility='default'/>
+        <var-decl name='m0' type-id='type-id-7' visibility='default'/>
       </data-member>
     </class-decl>
-    <typedef-decl name='opaque_enum' type-id='type-id-1' size-in-bits='32' alignment-in-bits='32' hash='8052a48aba79331b' id='type-id-3'/>
-    <typedef-decl name='opaque_struct' type-id='type-id-7' size-in-bits='32' hash='76b8be93c7b2042b' id='type-id-5'/>
-    <type-decl name='unnamed-enum-underlying-type-32' size-in-bits='32' alignment-in-bits='32' is-anonymous='yes' hash='5181a58e665b3619' id='type-id-2'/>
-    <function-decl name='fn' type-id='type-id-8' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='fn'/>
-    <type-decl name='void' id='type-id-9'/>
-    <function-type size-in-bits='64' hash='b76bf6d98c10cd0d' id='type-id-8'>
-      <parameter type-id='type-id-6'/>
-      <parameter type-id='type-id-4'/>
-      <return type-id='type-id-9'/>
-    </function-type>
+    <typedef-decl name='opaque_enum' type-id='type-id-1' size-in-bits='32' alignment-in-bits='32' hash='af7b80265d14c58b' id='type-id-7'/>
+    <typedef-decl name='opaque_struct' type-id='type-id-9' size-in-bits='32' hash='65331940033894e6' id='type-id-8'/>
+    <type-decl name='unnamed-enum-underlying-type-32' size-in-bits='32' alignment-in-bits='32' is-anonymous='yes' hash='c6ed5e1365fd2b09' id='type-id-2'/>
+    <type-decl name='void' hash='8dcbc64750c3d4e3' id='type-id-6'/>
+  </abi-types>
+  <abi-instr address-size='64' language='LANG_C'>
+      <function-decl name='fn' type-id='type-id-3' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='fn'/>
   </abi-instr>
 </abi-corpus>

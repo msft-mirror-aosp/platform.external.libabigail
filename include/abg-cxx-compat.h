@@ -13,10 +13,14 @@
 #if __cplusplus >= 201703L
 
 #include <optional>
+#include <tuple>
+#include <utility>
 
 #else
 
 #include <stdexcept> // for throwing std::runtime_error("bad_optional_access")
+#include <tuple>
+#include <utility>
 
 #endif
 
@@ -26,6 +30,7 @@ namespace abg_compat
 #if __cplusplus >= 201703L
 
 using std::optional;
+using std::tuple;
 
 #else
 
@@ -91,6 +96,12 @@ public:
     return *this;
   }
 
+  void
+  reset()
+  {
+    has_value_ = false;
+  }
+
   explicit operator bool() const noexcept { return has_value(); }
 };
 
@@ -112,12 +123,33 @@ operator!=(const optional<T>& lhs, const optional<U>& rhs)
   return !(lhs == rhs);
 }
 
+// </std::optional>
+
+// <std::apply>
+
+template <typename F, typename Tuple, std::size_t... I>
+constexpr decltype(auto)
+apply_impl(F&& f, Tuple&& t, std::index_sequence<I...>)
+{
+  return std::forward<F>(f)(std::get<I>(std::forward<Tuple>(t))...);
+}
+
+template <typename F, typename Tuple>
+constexpr decltype(auto)
+apply(F&& f, Tuple&& t)
+{
+  constexpr std::size_t tuple_size =
+    std::tuple_size<std::remove_reference_t<Tuple>>::value;
+    return apply_impl(std::forward<F>(f),
+		      std::forward<Tuple>(t),
+		      std::make_index_sequence<tuple_size>{});
+}
+// <std::apply/>
+
 #endif // __cplusplus >= 201703L
 
 #if __cplusplus >= 202002L
-
 using std::views::reverse;
-
 #else
 
 namespace views

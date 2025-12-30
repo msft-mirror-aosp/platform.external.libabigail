@@ -1,0 +1,12 @@
+# false positive  lock-order-inversion report
+# probably due to the fact that thread sanitizer doesn't support
+# recursive mutexes
+# deadlock:^abigail::ir::add_decl_to_scope
+# deadlock:^abigail::dwarf::reader::associate_die_to_decl
+# deadlock:^abigail::ir::class_decl::traverse
+# deadlock:^abigail::ir::elf_symbol::get_name
+# deadlock:^abigail::ir::scope_decl::add_member_decl
+# deadlock:^abigail::ir::get_class_or_union_flat_representation
+# deadlock:^abigail::abixml::build_class_decl_if_not_suppressed
+# deadlock:^build_class_decl_if_not_suppressed
+

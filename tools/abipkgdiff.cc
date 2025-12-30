@@ -266,7 +266,8 @@ public:
       leverage_dwarf_factorization(true),
       assume_odr_for_cplusplus(true),
       self_check(),
-      ignore_soname()
+      ignore_soname(),
+      exported_interfaces_only(true)
 #ifdef WITH_CTF
       ,
       use_ctf()
@@ -1327,6 +1328,24 @@ set_diff_context_from_opts(diff_context_sptr ctxt,
   ctxt->add_suppressions(supprs);
 }
 
+/// Set a bunch of tunable buttons on the ELF-based reader's option
+/// object from the command-line options.
+///
+/// @param rdr the option object of the reader to tune.
+///
+/// @param opts the command line options.
+static void
+set_generic_options(abigail::fe_iface::options_type& o, const options& opts)
+{
+  o.load_all_types = opts.show_all_types;
+  o.leverage_dwarf_factorization =
+    opts.leverage_dwarf_factorization;
+  o.assume_odr_for_cplusplus =
+    opts.assume_odr_for_cplusplus;
+  o.do_log = opts.verbose;
+  o.load_undefined_interfaces = !*opts.exported_interfaces_only;
+}
+
 /// Set a bunch of tunable buttons on the ELF-based reader from the
 /// command-line options.
 ///
@@ -1338,12 +1357,15 @@ set_generic_options(abigail::elf_based_reader& rdr, const options& opts)
 {
   if (!opts.kabi_suppressions.empty())
     rdr.add_suppressions(opts.kabi_suppressions);
+  set_generic_options(rdr.options(), opts);
+}
 
-  rdr.options().leverage_dwarf_factorization =
-    opts.leverage_dwarf_factorization;
-  rdr.options().assume_odr_for_cplusplus =
-    opts.assume_odr_for_cplusplus;
-  rdr.options().do_log = opts.verbose;
+static void
+set_generic_options(abigail::xml_writer::write_context& c, const options& opts)
+{
+  set_write_undefined_symbols(c, !*opts.exported_interfaces_only);
+  set_write_non_reachable_types(c, opts.show_all_types);
+  set_annotate(c, true);
 }
 
 /// Emit an error message on standard error about alternate debug info
@@ -1510,6 +1532,7 @@ compare(const elf_file&		elf1,
       << " ...\n";
 
   abigail::elf_based_reader_sptr reader;
+
   corpus_sptr corpus1;
   {
     corpus::origin requested_fe_kind = corpus::DWARF_ORIGIN;
@@ -1524,8 +1547,7 @@ compare(const elf_file&		elf1,
     abigail::elf_based_reader_sptr reader =
       create_best_elf_based_reader(elf1.path,
 				   di_dirs1,
-				   env, requested_fe_kind,
-				   opts.show_all_types);
+				   env, requested_fe_kind);
     ABG_ASSERT(reader);
 
     reader->add_suppressions(supprs);
@@ -1611,14 +1633,13 @@ compare(const elf_file&		elf1,
 #endif
 
     abigail::elf_based_reader_sptr reader =
-      create_best_elf_based_reader(elf2.path,
-				   di_dirs2,
-				   env, requested_fe_kind,
-				   opts.show_all_types);
+      create_best_elf_based_reader(elf2.path, di_dirs2,
+				   env, requested_fe_kind);
     ABG_ASSERT(reader);
 
     reader->add_suppressions(priv_types_supprs2);
     set_generic_options(*reader, opts);
+
 
     corpus2 = reader->read_corpus(c2_status);
 
@@ -1765,6 +1786,9 @@ compare_to_self(const elf_file&		elf,
 
   corpus_sptr corp;
   abigail::elf_based_reader_sptr reader;
+  fe_iface::options_type o(env);
+  set_generic_options(o, opts);
+
   {
     corpus::origin requested_fe_kind = corpus::DWARF_ORIGIN;
 #ifdef WITH_CTF
@@ -1775,11 +1799,10 @@ compare_to_self(const elf_file&		elf,
     if (opts.use_btf)
       requested_fe_kind = corpus::BTF_ORIGIN;
 #endif
+
     abigail::elf_based_reader_sptr reader =
-      create_best_elf_based_reader(elf.path,
-				   di_dirs,
-				   env, requested_fe_kind,
-				   opts.show_all_types);
+      create_best_elf_based_reader(elf.path, di_dirs,
+				   env, requested_fe_kind, o);
     ABG_ASSERT(reader);
 
     reader->add_suppressions(supprs);
@@ -1835,6 +1858,7 @@ compare_to_self(const elf_file&		elf,
     {
       const abigail::xml_writer::write_context_sptr c =
 	abigail::xml_writer::create_write_context(env, of);
+      set_generic_options(*c, opts);
 
       if (opts.verbose)
 	emit_prefix("abipkgdiff", cerr)
@@ -1863,7 +1887,7 @@ compare_to_self(const elf_file&		elf,
     }
 
     {
-      abigail::fe_iface_sptr rdr = abixml::create_reader(abi_file_path, env);
+      abigail::fe_iface_sptr rdr = abixml::create_reader(abi_file_path, env, o);
       if (!rdr)
 	{
 	  if (opts.verbose)
@@ -2404,10 +2428,6 @@ public:
     abigail::fe_iface::status detailed_status =
       abigail::fe_iface::STATUS_UNKNOWN;
 
-    if (args->opts.exported_interfaces_only.has_value())
-      env.analyze_exported_interfaces_only
-	(*args->opts.exported_interfaces_only);
-
     status |= compare(args->elf1, args->debug_dir1, args->private_types_suppr1,
 		      args->elf2, args->debug_dir2, args->private_types_suppr2,
 		      args->opts, env, diff, ctxt, out, &detailed_status);
@@ -2438,10 +2458,6 @@ public:
     abigail::ir::environment env;
     diff_context_sptr ctxt;
     corpus_diff_sptr diff;
-
-    if (args->opts.exported_interfaces_only.has_value())
-      env.analyze_exported_interfaces_only
-	(*args->opts.exported_interfaces_only);
 
     abigail::fe_iface::status detailed_status =
       abigail::fe_iface::STATUS_UNKNOWN;

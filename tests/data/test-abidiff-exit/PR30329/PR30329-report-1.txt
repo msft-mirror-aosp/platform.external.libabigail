@@ -26,13 +26,12 @@ Variables changes summary: 0 Removed, 0 Changed, 0 Added variable
                             type of 'Vdbe* pVdbe' changed:
                               in pointed to type 'struct Vdbe' at sqlite3.c:22731:1:
                                 type size hasn't changed
-                                3 data member changes (11 filtered):
+                                2 data member changes (12 filtered):
                                   type of 'Vdbe* pPrev' changed:
                                     in pointed to type 'typedef Vdbe':
                                       entity changed from 'typedef Vdbe' to 'Vdbe*'
                                       type size changed from 2432 to 64 (in bits)
                                   and name of 'Vdbe::pPrev' changed to 'Vdbe::ppVPrev' at sqlite3.c:22733:1
-                                  name of 'Vdbe::pNext' changed to 'Vdbe::pVNext' at sqlite3.c:22733:1
                                   type of 'Parse* pParse' changed:
                                     in pointed to type 'typedef Parse' at sqlite3.c:14707:1:
                                       underlying type 'struct Parse' at sqlite3.c:18897:1 changed:

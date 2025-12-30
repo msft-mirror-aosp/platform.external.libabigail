@@ -1,24 +1,26 @@
-<abi-corpus version='2.5'>
+<abi-corpus version='3.0' tracking-non-reachable-types='yes'>
   <elf-needed>
     <dependency name='libc.so.6'/>
   </elf-needed>
   <elf-function-symbols>
     <elf-symbol name='cpy' type='func-type' binding='global-binding' visibility='default-visibility' is-defined='yes'/>
   </elf-function-symbols>
-  <abi-instr address-size='64' path='test4.c' comp-dir-path='/home/byby/oracle/src/libabigail/tests/data/test-read-common' language='LANG_C99'>
+  <abi-types>
     <type-decl name='char' size-in-bits='8' hash='65b2d157027b431a' id='a84c031d'/>
-    <pointer-type-def type-id='a84c031d' size-in-bits='64' hash='e533f42d1dd4942c' id='26a90f95'/>
-    <qualified-type-def type-id='26a90f95' restrict='yes' hash='566dfacc48804f50' id='266fe297'/>
-    <qualified-type-def type-id='a84c031d' const='yes' hash='3e50fd33f9bb78d9' id='9b45d938'/>
-    <pointer-type-def type-id='9b45d938' size-in-bits='64' hash='c44743f354f6a443' id='80f4b756'/>
-    <qualified-type-def type-id='80f4b756' restrict='yes' hash='b7d5472019e79b5f' id='9d26089a'/>
-    <type-decl name='unsigned int' size-in-bits='32' hash='e66b43f97c38e87a' id='f0981eeb'/>
-    <function-decl name='cpy' type-id='6236f2b1' filepath='/home/byby/oracle/src/libabigail/tests/data/test-read-common/test4.c' line='4' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='cpy'/>
-    <function-type size-in-bits='64' hash='16fe079a43daee87' id='6236f2b1'>
-      <parameter type-id='266fe297' filepath='/home/byby/oracle/src/libabigail/tests/data/test-read-common/test4.c' line='4' column='1'/>
-      <parameter type-id='9d26089a' filepath='/home/byby/oracle/src/libabigail/tests/data/test-read-common/test4.c' line='4' column='1'/>
-      <parameter type-id='f0981eeb' filepath='/home/byby/oracle/src/libabigail/tests/data/test-read-common/test4.c' line='4' column='1'/>
+    <pointer-type-def type-id='a84c031d' size-in-bits='64' hash='cdcd419d6a95ce45' id='26a90f95'/>
+    <qualified-type-def type-id='26a90f95' restrict='yes' hash='24ec0eb421062565' id='266fe297'/>
+    <qualified-type-def type-id='a84c031d' const='yes' hash='45ae2830e476ce98' id='9b45d938'/>
+    <pointer-type-def type-id='9b45d938' size-in-bits='64' hash='83a5509e2ae27d75' id='80f4b756'/>
+    <qualified-type-def type-id='80f4b756' restrict='yes' hash='68971957e3b42d3f' id='9d26089a'/>
+    <function-type size-in-bits='64' hash='024b70aef929199a' id='6236f2b1'>
+      <parameter type-id='266fe297'/>
+      <parameter type-id='9d26089a'/>
+      <parameter type-id='f0981eeb'/>
       <return type-id='26a90f95'/>
     </function-type>
+    <type-decl name='unsigned int' size-in-bits='32' hash='e66b43f97c38e87a' id='f0981eeb'/>
+  </abi-types>
+  <abi-instr address-size='64' path='test4.c' comp-dir-path='/home/byby/oracle/src/libabigail/tests/data/test-read-common' language='LANG_C99'>
+      <function-decl name='cpy' type-id='6236f2b1' mangled-name='cpy' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='cpy'/>
   </abi-instr>
 </abi-corpus>

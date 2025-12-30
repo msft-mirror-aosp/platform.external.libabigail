@@ -15,7 +15,8 @@
 #include <unordered_map>
 #include <set>
 #include <memory>
-
+#include <fstream>
+#include <sstream>
 #include "abg-internal.h"
 
 // <headers defining libabigail's API go under here>
@@ -102,15 +103,6 @@ const corpus::functions&
 corpus::exported_decls_builder::exported_functions() const
 {return priv_->fns_;}
 
-/// Getter for the reference to the vector of exported functions.
-/// This vector is shared with with the @ref corpus.  It's where the
-/// set of exported function is ultimately stored.
-///
-/// @return a reference to the vector of exported functions.
-corpus::functions&
-corpus::exported_decls_builder::exported_functions()
-{return priv_->fns_;}
-
 /// Test if a given function ID maps to several functions in the same corpus.
 ///
 /// The magic of ELF symbol aliases makes it possible for an ELF
@@ -142,15 +134,6 @@ const corpus::variables&
 corpus::exported_decls_builder::exported_variables() const
 {return priv_->vars_;}
 
-/// Getter for the reference to the vector of exported variables.
-/// This vector is shared with with the @ref corpus.  It's where the
-/// set of exported variable is ultimately stored.
-///
-/// @return a reference to the vector of exported variables.
-corpus::variables&
-corpus::exported_decls_builder::exported_variables()
-{return priv_->vars_;}
-
 /// Consider at all the tunables that control wether a function should
 /// be added to the set of exported function and if it fits in, add
 /// the function to that set.
@@ -174,16 +157,18 @@ corpus::exported_decls_builder::maybe_add_fn_to_exported_fns(function_decl* fn,
   const string& fn_id = priv_->get_id(*fn);
   ABG_ASSERT(!fn_id.empty());
 
-  if (!do_update && priv_->fn_is_in_id_fns_map(fn))
+  if (!do_update && priv_->fn_id_is_in_id_fns_map(fn))
     return false;
 
-  if (priv_->keep_wrt_id_of_fns_to_keep(fn)
-      && priv_->keep_wrt_regex_of_fns_to_suppress(fn)
-      && priv_->keep_wrt_regex_of_fns_to_keep(fn))
-    {
-      priv_->add_fn_to_exported(fn, do_update);
-      return true;
-    }
+  {
+    if (priv_->keep_wrt_id_of_fns_to_keep(fn)
+	&& priv_->keep_wrt_regex_of_fns_to_suppress(fn)
+	&& priv_->keep_wrt_regex_of_fns_to_keep(fn))
+      {
+	priv_->add_fn_to_exported(fn, do_update);
+	return true;
+      }
+  }
   return false;
 }
 
@@ -207,13 +192,15 @@ corpus::exported_decls_builder::maybe_add_var_to_exported_vars(const var_decl_sp
   if (priv_->var_is_in_id_vars_map(var))
     return false;
 
-  if (priv_->keep_wrt_id_of_vars_to_keep(var)
-      && priv_->keep_wrt_regex_of_vars_to_suppress(var)
-      && priv_->keep_wrt_regex_of_vars_to_keep(var))
-    {
-      priv_->add_var_to_exported(var);
-      return true;
-    }
+  {
+    if (priv_->keep_wrt_id_of_vars_to_keep(var)
+	&& priv_->keep_wrt_regex_of_vars_to_suppress(var)
+	&& priv_->keep_wrt_regex_of_vars_to_keep(var))
+      {
+	priv_->add_var_to_exported(var);
+	return true;
+      }
+  }
   return false;
 }
 
@@ -275,12 +262,16 @@ struct func_comp
     // value and canonical index of their class.
     if (is_member_function(first) && is_member_function(second))
       {
-	class_or_union* first_scope =
+	class_or_union_sptr first_scope =
 	  is_class_or_union_type(first->get_scope());
-	class_or_union* second_scope =
+	class_or_union_sptr second_scope =
 	  is_class_or_union_type(second->get_scope());
-	type_base* fc = first_scope->get_naked_canonical_type();
-	type_base* sc = second_scope->get_naked_canonical_type();
+	type_base* fc = first_scope
+	  ? first_scope->get_naked_canonical_type()
+	  : nullptr;
+	type_base* sc = second_scope
+	  ? second_scope->get_naked_canonical_type()
+	  : nullptr;
 	if (fc && sc)
 	    {
 	      hash_t fh = peek_hash_value(*fc);
@@ -415,7 +406,10 @@ corpus::priv::get_fun_symbol_map() const
     {
       fun_symbol_map = string_elf_symbols_map_type();
       for (const auto& symbol : get_sorted_fun_symbols())
-	(*fun_symbol_map)[symbol->get_name()].push_back(symbol);
+	{
+	  (*fun_symbol_map)[symbol->get_name()].push_back(symbol);
+	  (*fun_symbol_map)[symbol->get_id_string()].push_back(symbol);
+	}
     }
   return *fun_symbol_map;
 }
@@ -460,7 +454,10 @@ corpus::priv::get_undefined_fun_symbol_map() const
     {
       undefined_fun_symbol_map = string_elf_symbols_map_type();
       for (const auto& symbol : get_sorted_undefined_fun_symbols())
-	(*undefined_fun_symbol_map)[symbol->get_name()].push_back(symbol);
+	{
+	  (*undefined_fun_symbol_map)[symbol->get_name()].push_back(symbol);
+	  (*undefined_fun_symbol_map)[symbol->get_id_string()].push_back(symbol);
+	}
     }
   return *undefined_fun_symbol_map;
 }
@@ -665,23 +662,6 @@ corpus::priv::get_unreferenced_variable_symbols() const
 }
 
 
-/// Getter of the set of pretty representation of types that are
-/// reachable from public interfaces (global functions and variables).
-///
-/// @return the set of pretty representation of types that are
-/// reachable from public interfaces (global functions and variables).
-unordered_set<interned_string, hash_interned_string>*
-corpus::priv::get_public_types_pretty_representations()
-{
-  if (group)
-    return group->get_public_types_pretty_representations();
-
-  if (pub_type_pretty_reprs_ == 0)
-    pub_type_pretty_reprs_ =
-	new unordered_set<interned_string, hash_interned_string>;
-  return pub_type_pretty_reprs_;
-}
-
 /// Lookup the function which has a given function ID.
 ///
 /// Note that there can have been several functions with the same ID.
@@ -710,6 +690,59 @@ corpus::priv::lookup_functions(const interned_string& id)
   return nullptr;
 }
 
+/// Get the member function variant that belongs to the canonical type
+/// of the containing type.
+///
+/// If the function we are looking at has no containing type, then
+/// return the same function.
+///
+/// @param fn the function to consider.
+///
+/// @return the canonical function for @p fn.
+static const function_decl*
+get_canonical_function(const function_decl *fn)
+{
+  if (!fn)
+    return nullptr;
+
+  const function_decl* canonical_function = fn;
+  class_or_union_sptr scope = nullptr, canonical_scope = nullptr;
+  scope = is_class_or_union_type(fn->get_scope());
+
+  if (scope)
+    {
+      scope = look_through_decl_only_class(scope);
+      canonical_scope = is_class_or_union_type(scope->get_canonical_type());
+
+      if (// When the canonicalized type and the canonical type are
+	  // from the same ABI corpus, no problem, do the thing for
+	  // all functions.  The set of member functions of the
+	  // canonical type represents the union of the member
+	  // functions of all it canonicalized peer types.  So the
+	  // member function that is on the canonical type is the
+	  // "right one" that is going to be serialized into ABIXML in
+	  // the end.
+	  (canonical_scope && canonical_scope->get_corpus() == scope->get_corpus())
+	  // But when the two types come from different ABI corpora,
+	  // then, only consider virtual member functions because
+	  // these are the only one that we know are equivalent
+	  // because they are taken into account during the c14n
+	  // process.  Non-virtual members are not taken into account
+	  // by the c14n so they might be different.
+	  || get_member_function_is_virtual(is_method_decl(fn)))
+	{
+	  interned_string ln = fn->get_linkage_name();
+	  ABG_ASSERT(!ln.empty());
+	  canonical_function =
+	    canonical_scope->find_member_function(ln);
+	  if (!canonical_function)
+	    canonical_function = fn;
+	}
+    }
+
+  return canonical_function;
+}
+
 /// Remove redundant functions from the "fns" vector.
 void
 corpus::priv::remove_redundant_functions()
@@ -717,10 +750,11 @@ corpus::priv::remove_redundant_functions()
   // This set cannot contain two identical function, by construction.
   functions_set_type fns_set;
 
+  lock_guard<recursive_mutex> lock(get_mutex());
   // Perform the de-duplication by filing fns_set with the content of
   // fns.
   for (auto& f : fns)
-    fns_set.insert(f);
+    fns_set.insert(get_canonical_function(f));
 
   // Clear the original non-deduplicated functions vector.
   fns.clear();
@@ -739,21 +773,56 @@ corpus::priv::remove_redundant_functions()
 	if (entry.second.size() > 1)
 	  {
 	    for (auto& fn : entry.second)
-	      f_set.insert(fn);
+	      {
+		// Replace each one of the member functions associated
+		// with the linkage_name entry.first with the matching
+		// member function of the canonical class of its
+		// containing class.  That should reduce the number of
+		// functions in entry.second to just one, if there is
+		// no ODR violation.
+		auto canonical_function = get_canonical_function(fn);
+		f_set.insert(canonical_function);
+	      }
 
+	    entry.second.clear();
 	    for (auto& fn : f_set)
 	      {
 		auto it = fns_set.find(fn);
-		entry.second.insert(*it);
+		if (it != fns_set.end())
+		  entry.second.insert(*it);
 	      }
 	  }
       }
 }
 
+/// Set the "compute-non-reachable-types' property of the corpus.
+/// When it's set to true, then the debug info reader loads all
+/// non-reachable types from the binary.
+///
+/// @param f the new value of the property.
+void
+corpus::priv::set_compute_non_reachable_types(bool f)
+{do_compute_non_reachable_types_ = f;}
+
+/// Get the "compute-non-reachable-types' property of the corpus.
+/// When it's set to true, then the debug info reader loads all
+/// non-reachable types from the binary.
+///
+/// @return f the new value of the property.
+bool
+corpus::priv::get_compute_non_reachable_types() const
+{return do_compute_non_reachable_types_.load();}
+
+/// Getter of the recursive mutex of this corpus.
+///
+/// @return the recursive mutex associated to this corpus.
+recursive_mutex&
+corpus::priv::get_mutex()
+{return mutex_;}
+
 /// Destructor of the @ref corpus::priv type.
 corpus::priv::~priv()
 {
-  delete pub_type_pretty_reprs_;
 }
 
 /// Constructor of the @ref corpus type.
@@ -800,6 +869,8 @@ corpus::do_log(bool f)
 void
 corpus::add(const translation_unit_sptr& tu)
 {
+  lock_guard<recursive_mutex> lock(priv_->get_mutex());
+
   ABG_ASSERT(priv_->members.insert(tu).second);
 
   // Update the path -> translation_unit map.
@@ -807,6 +878,9 @@ corpus::add(const translation_unit_sptr& tu)
     priv_->path_tu_map.find(tu->get_absolute_path());
   ABG_ASSERT(i == priv_->path_tu_map.end());
   priv_->path_tu_map[tu->get_absolute_path()] = tu;
+  i = priv_->path_tu_map.find(tu->get_path());
+  if (i == priv_->path_tu_map.end())
+    priv_->path_tu_map[tu->get_path()] = tu;
 
   tu->set_corpus(this);
 }
@@ -827,6 +901,7 @@ corpus::get_translation_units() const
 const translation_unit_sptr
 corpus::find_translation_unit(const string &path) const
 {
+  lock_guard<recursive_mutex> lock(priv_->get_mutex());
   string_tu_map_type::const_iterator i =
     priv_->path_tu_map.find(path);
 
@@ -841,7 +916,10 @@ corpus::find_translation_unit(const string &path) const
 /// representation of this object is not modified.
 void
 corpus::drop_translation_units()
-{priv_->members.clear();}
+{
+  lock_guard<recursive_mutex> lock(priv_->get_mutex());
+  priv_->members.clear();
+}
 
 /// Get the maps that associate a name to a certain kind of type.
 ///
@@ -880,20 +958,33 @@ corpus::get_type_per_loc_map() const
 bool
 corpus::recording_types_reachable_from_public_interface_supported()
 {
-  return (priv_->get_public_types_pretty_representations()
-	  && !priv_->get_public_types_pretty_representations()->empty());
+  lock_guard<recursive_mutex> lock(priv_->get_mutex());
+  return !priv_->reachable_types_from_pub_ifaces_.empty();
 }
 
 /// Record a type as being reachable from public interfaces (global
 /// functions and variables).
 ///
 /// @param t the type to record as reachable.
-void
+bool
 corpus::record_type_as_reachable_from_public_interfaces(const type_base& t)
 {
-  string repr = get_pretty_representation(&t, /*internal=*/false);
-  interned_string s = t.get_environment().intern(repr);
-  priv_->get_public_types_pretty_representations()->insert(s);
+  type_base* e = get_exemplar_type(&t);
+  if (type_is_reachable_from_public_interfaces(*e))
+    return false;
+  {
+    lock_guard<recursive_mutex> lock(priv_->get_mutex());
+    priv_->reachable_types_from_pub_ifaces_.insert(e);
+  }
+  return true;
+}
+
+void
+corpus::remove_type_from_reachable_types(const type_base& t)
+{
+  lock_guard<recursive_mutex> lock(priv_->get_mutex());
+  type_base* examplar = get_exemplar_type(&t);
+  priv_->reachable_types_from_pub_ifaces_.erase(examplar);
 }
 
 /// Test if a type is reachable from public interfaces (global
@@ -909,11 +1000,48 @@ corpus::record_type_as_reachable_from_public_interfaces(const type_base& t)
 bool
 corpus::type_is_reachable_from_public_interfaces(const type_base& t) const
 {
-  string repr = get_pretty_representation(&t, /*internal=*/false);
-  interned_string s = t.get_environment().intern(repr);
+  if (!priv_->get_compute_non_reachable_types())
+    return true;
 
-  return (priv_->get_public_types_pretty_representations()->find(s)
-	  !=  priv_->get_public_types_pretty_representations()->end());
+  lock_guard<recursive_mutex> lock(priv_->get_mutex());
+  type_base* examplar = get_exemplar_type(&t);
+  auto it = priv_->reachable_types_from_pub_ifaces_.find(examplar);
+  if (it == priv_->reachable_types_from_pub_ifaces_.end())
+    return false;
+  return true;
+}
+
+/// Test if a given type is reachable from public interfaces of either
+/// the ABI corpus it belongs to, or if necessary,from the public
+/// interfaces of the main corpus of the corpus_group the type belongs
+/// to.
+///
+/// @param t the type to consider.
+///
+/// @return true iff @p t is reachable from public interface of
+bool
+type_is_reachable_from_public_interfaces(const type_base& t)
+{
+  const corpus* abi = t.get_corpus();
+  if (!abi)
+    // If there is no ABI corpus associated, then all types are deemed
+    // reachable.
+    return true;
+
+  if (!abi->priv_->get_compute_non_reachable_types())
+    return true;
+
+  bool result = abi->type_is_reachable_from_public_interfaces(t);
+
+  // If we couldn't determine reachability from the ABI of the type,
+  // then, if the type belongs to an ABI corpus that is part of a
+  // corpus_group, check reachability from the group.
+  if (!result)
+    if (const corpus_group* group = abi->get_group())
+      if (group->type_is_reachable_from_public_interfaces(t))
+	result = true;
+
+  return result;
 }
 
 /// Getter of a sorted vector of the types that are *NOT* reachable
@@ -926,24 +1054,251 @@ corpus::type_is_reachable_from_public_interfaces(const type_base& t) const
 ///
 /// @return a reference to a vector of sorted types NON reachable from
 /// public interfaces.
-const vector<type_base_wptr>&
+const canonical_type_ptr_set_type&
 corpus::get_types_not_reachable_from_public_interfaces() const
 {
-  if (priv_->types_not_reachable_from_pub_ifaces_.empty())
+  if (!priv_->get_compute_non_reachable_types())
+    return priv_->non_reachable_types_from_pub_ifaces_;
+
+  lock_guard<recursive_mutex> lock(priv_->get_mutex());
+  if (priv_->non_reachable_types_from_pub_ifaces_.empty())
     {
       const type_maps& types = get_types();
-      for (vector<type_base_wptr>::const_iterator it =
-	     types.get_types_sorted_by_name().begin();
-	   it != types.get_types_sorted_by_name().end();
-	   ++it)
+      for (auto& type_wptr : types.get_types_sorted())
 	{
-	  type_base_sptr t(*it);
-	  if (!type_is_reachable_from_public_interfaces(*t))
-	    priv_->types_not_reachable_from_pub_ifaces_.push_back(t);
+	  type_base_sptr t(type_wptr);
+	  if (auto clazz = is_class_or_union_type(t))
+	    t = look_through_decl_only_class(clazz);
+	  type_base_sptr examplar_type = get_exemplar_type(t);
+	  if (!type_is_reachable_from_public_interfaces(*examplar_type))
+	    priv_->non_reachable_types_from_pub_ifaces_.insert(examplar_type.get());
 	}
     }
 
-  return priv_->types_not_reachable_from_pub_ifaces_;
+  return priv_->non_reachable_types_from_pub_ifaces_;
+}
+
+const type_base_ptrs_type&
+corpus::get_sorted_types_not_reachable_from_public_interfaces() const
+{
+  lock_guard<recursive_mutex> lock(priv_->get_mutex());
+  if (priv_->sorted_non_reachable_types_from_pub_ifaces_.empty())
+    {
+      for (auto& type : get_types_not_reachable_from_public_interfaces())
+	priv_->sorted_non_reachable_types_from_pub_ifaces_.push_back(type);
+
+      type_topo_comp comp;
+      sort(priv_->sorted_non_reachable_types_from_pub_ifaces_.begin(),
+	   priv_->sorted_non_reachable_types_from_pub_ifaces_.end(),
+	   comp);
+    }
+  return priv_->sorted_non_reachable_types_from_pub_ifaces_;
+}
+
+/// A pass that markes the types that are reachable from the ABI
+/// interfaces.
+class reachable_types_marker : public abigail::ir::ir_node_visitor
+{
+  corpus& corpus_;
+
+public:
+
+  reachable_types_marker() = delete;
+
+  reachable_types_marker(corpus& abi)
+    : corpus_(abi)
+  {
+    allow_visiting_already_visited_type_node(false);
+  }
+
+  /// This is a sub-routine of
+  /// corpus::record_type_as_reachable_from_public_interfaces.
+  ///
+  /// This function walks the sub-types of a given type which has been
+  /// marked as being reachable from a public interface and marks the
+  /// sub-types as reachable as well.
+  ///
+  /// @param type the which to consider sub-types for.
+  ///
+  /// @param rec_types the types that have been explored so far.  This
+  /// is to detect cycles and avoid endless loops.
+  void
+  maybe_record_subtypes_as_reachable(type_base* type,
+				     std::unordered_set<type_base*>& rec_types)
+  {
+    if (!type)
+      return;
+
+    auto examplar_type = get_exemplar_type(type);
+    ABG_ASSERT(examplar_type);
+
+    if (rec_types.find(examplar_type) != rec_types.end())
+      return;
+
+    rec_types.insert(examplar_type);
+
+    auto abi = examplar_type->get_corpus();
+    ABG_ASSERT(abi);
+
+    if (auto d = is_decl(examplar_type))
+      {
+	if (auto n = d->get_naming_typedef())
+	  abi->record_type_as_reachable_from_public_interfaces(*n);
+      }
+
+    if (auto d = is_enum_type(examplar_type))
+      {
+	if (auto u = d->get_underlying_type())
+	  abi->record_type_as_reachable_from_public_interfaces(*u);
+      }
+    else if (auto typdef = is_typedef(examplar_type))
+      {
+	if (auto u = typdef->get_underlying_type())
+	  if (abi->record_type_as_reachable_from_public_interfaces(*u))
+	    maybe_record_subtypes_as_reachable(u.get(), rec_types);
+      }
+    else if (auto ptr = is_pointer_type(examplar_type))
+      {
+	if (auto p = ptr->get_pointed_to_type())
+	  if (abi->record_type_as_reachable_from_public_interfaces(*p))
+	    maybe_record_subtypes_as_reachable(p.get(), rec_types);
+      }
+    else if (auto ref = is_reference_type(examplar_type))
+      {
+	if (auto p = ref->get_pointed_to_type())
+	  if (abi->record_type_as_reachable_from_public_interfaces(*p))
+	    maybe_record_subtypes_as_reachable(p.get(), rec_types);
+      }
+    else if (auto q = is_qualified_type(examplar_type))
+      {
+	if (auto u = q->get_underlying_type())
+	  if (abi->record_type_as_reachable_from_public_interfaces(*u))
+	    maybe_record_subtypes_as_reachable(u.get(), rec_types);
+      }
+    else if (auto a = is_array_type(examplar_type))
+      {
+	if (auto e = a->get_element_type())
+	  if (abi->record_type_as_reachable_from_public_interfaces(*e))
+	    maybe_record_subtypes_as_reachable(e.get(), rec_types);
+
+	for (auto s : a->get_subranges())
+	  if (abi->record_type_as_reachable_from_public_interfaces(*s))
+	    maybe_record_subtypes_as_reachable(s.get(), rec_types);
+      }
+    else if (auto fn_type = is_function_type(examplar_type))
+      {
+	if (auto t = fn_type->get_return_type())
+	  if (abi->record_type_as_reachable_from_public_interfaces(*t))
+	    maybe_record_subtypes_as_reachable(t.get(), rec_types);
+
+	for (auto parm : fn_type->get_parameters())
+	  if (auto t = parm->get_type())
+	    if (abi->record_type_as_reachable_from_public_interfaces(*t))
+	      maybe_record_subtypes_as_reachable(t.get(), rec_types);
+      }
+    else if (auto cou = is_class_or_union_type(examplar_type))
+      {
+	for (auto dm : cou->get_data_members())
+	  if (auto t = dm->get_type())
+	    if (abi->record_type_as_reachable_from_public_interfaces(*t))
+	      maybe_record_subtypes_as_reachable(t.get(), rec_types);
+
+	for (auto mf : cou->get_member_functions())
+	  if (auto t = mf->get_type())
+	    if (abi->record_type_as_reachable_from_public_interfaces(*t))
+	      maybe_record_subtypes_as_reachable(t.get(), rec_types);
+
+	for (auto t : cou->get_sorted_member_types())
+	  if (abi->record_type_as_reachable_from_public_interfaces(*t))
+	    maybe_record_subtypes_as_reachable(t.get(), rec_types);
+
+	if (auto klass = is_class_type(cou))
+	  {
+	    for (auto b : klass->get_base_specifiers())
+	      if (auto bc = b->get_base_class())
+		if (abi->record_type_as_reachable_from_public_interfaces(*bc))
+		  maybe_record_subtypes_as_reachable(bc.get(), rec_types);
+
+	    for (auto f : klass->get_virtual_mem_fns())
+	      if (auto t = f->get_type())
+		if (abi->record_type_as_reachable_from_public_interfaces(*t))
+		  maybe_record_subtypes_as_reachable(t.get(), rec_types);
+	  }
+      }
+
+    rec_types.erase(examplar_type);
+  }
+
+  /// The visitor code of the pass.
+  ///
+  /// @param type the type to mark as reachable.
+  ///
+  /// @return true, always.
+  virtual bool
+  visit_begin(type_base* type)
+  {
+    if (corpus_.record_type_as_reachable_from_public_interfaces(*type))
+      {
+	std::unordered_set<type_base*> rec_types;
+	maybe_record_subtypes_as_reachable(type, rec_types);
+      }
+    return true;
+  }
+};// end class non_reachable_type_is_marker
+
+void
+corpus::mark_non_reachable_types()
+{
+  priv_->set_compute_non_reachable_types(true);
+
+  reachable_types_marker walker(*this);
+
+  for (auto function : get_functions())
+    if (function)
+      {
+	const_cast<function_decl*>(function)->traverse(walker);
+	if (auto type = is_type(function->get_scope()))
+	  {
+	    type = type->get_canonical_type();
+	    type->traverse(walker);
+	  }
+      }
+
+  for (auto variable : get_variables())
+    if (variable)
+      {
+	variable->traverse(walker);
+	if (auto type = is_type(variable->get_scope()))
+	  {
+	    type = type->get_canonical_type();
+	    type->traverse(walker);
+	  }
+      }
+
+  if (!get_environment().analyze_exported_interfaces_only())
+    {
+      for (auto function : get_undefined_functions())
+	if (function)
+	  {
+	    const_cast<function_decl*>(function)->traverse(walker);
+	    if (auto type = is_type(function->get_scope()))
+	      {
+		type = type->get_canonical_type();
+		type->traverse(walker);
+	      }
+	  }
+
+      for (auto variable : get_undefined_variables())
+	if (variable)
+	  {
+	    variable->traverse(walker);
+	    if (auto type = is_type(variable->get_scope()))
+	      {
+		type = type->get_canonical_type();
+		type->traverse(walker);
+	      }
+	  }
+    }
 }
 
 /// Get the maps that associate a location string to a certain kind of
@@ -980,7 +1335,10 @@ corpus::get_group()
 /// @param g the new group.
 void
 corpus::set_group(corpus_group* g)
-{priv_->group = g;}
+{
+  lock_guard<recursive_mutex> lock(priv_->get_mutex());
+  priv_->group = g;
+}
 
 /// Initialize the abixml serialization format version number of the
 /// corpus.
@@ -1008,7 +1366,10 @@ corpus::get_origin() const
 /// @param o the new origin for the corpus.
 void
 corpus::set_origin(origin o)
-{priv_->origin_ = o;}
+{
+  lock_guard<recursive_mutex> lock(priv_->get_mutex());
+  priv_->origin_ = o;
+}
 
 /// Getter of the major version number of the abixml serialization
 /// format.
@@ -1024,7 +1385,10 @@ corpus::get_format_major_version_number() const
 /// @param maj the new major version numberof the abixml format.
 void
 corpus::set_format_major_version_number(const string& maj)
-{priv_->format_major_version_number_ = maj;}
+{
+  lock_guard<recursive_mutex> lock(priv_->get_mutex());
+  priv_->format_major_version_number_ = maj;
+}
 
 /// Getter of the minor version number of the abixml serialization
 /// format.
@@ -1042,7 +1406,10 @@ corpus::get_format_minor_version_number() const
 /// serialization format.
 void
 corpus::set_format_minor_version_number(const string& min)
-{priv_->format_minor_version_number_ = min;}
+{
+  lock_guard<recursive_mutex> lock(priv_->get_mutex());
+  priv_->format_minor_version_number_ = min;
+}
 
 /// Get the file path associated to the corpus file.
 ///
@@ -1066,7 +1433,10 @@ corpus::get_path() const
 /// @param path the new file path to assciate to the current corpus.
 void
 corpus::set_path(const string& path)
-{priv_->path = path;}
+{
+  lock_guard<recursive_mutex> lock(priv_->get_mutex());
+  priv_->path = path;
+}
 
 /// Getter of the needed property of the corpus.
 ///
@@ -1089,7 +1459,10 @@ corpus::get_needed() const
 /// corpus.
 void
 corpus::set_needed(const vector<string>& needed)
-{priv_->needed = needed;}
+{
+  lock_guard<recursive_mutex> lock(priv_->get_mutex());
+  priv_->needed = needed;
+}
 
 /// Getter for the soname property of the corpus.
 ///
@@ -1111,7 +1484,10 @@ corpus::get_soname()
 /// @param soname the new soname property of the corpus.
 void
 corpus::set_soname(const string& soname)
-{priv_->soname = soname;}
+{
+  lock_guard<recursive_mutex> lock(priv_->get_mutex());
+  priv_->soname = soname;
+}
 
 /// Getter for the architecture name of the corpus.
 ///
@@ -1133,7 +1509,10 @@ corpus::get_architecture_name() const
 /// @param arch the architecture name string.
 void
 corpus::set_architecture_name(const string& arch)
-{priv_->architecture_name = arch;}
+{
+  lock_guard<recursive_mutex> lock(priv_->get_mutex());
+  priv_->architecture_name = arch;
+}
 
 /// Tests if the corpus is empty from an ABI surface perspective. I.e. if all
 /// of these criteria are true:
@@ -1147,6 +1526,7 @@ corpus::set_architecture_name(const string& arch)
 bool
 corpus::is_empty() const
 {
+  lock_guard<recursive_mutex> lock(priv_->get_mutex());
   bool members_empty = true;
   for (translation_units::const_iterator i = priv_->members.begin(),
 					 e = priv_->members.end();
@@ -1192,7 +1572,10 @@ corpus::operator==(const corpus& other) const
 /// @param symtab a shared pointer to the new symtab object
 void
 corpus::set_symtab(symtab_reader::symtab_sptr symtab)
-{priv_->symtab_ = symtab;}
+{
+  lock_guard<recursive_mutex> lock(priv_->get_mutex());
+  priv_->symtab_ = symtab;
+}
 
 /// Getter for the symtab object.
 ///
@@ -1378,6 +1761,21 @@ const elf_symbol_sptr
 corpus::lookup_function_symbol(const elf_symbol& symbol) const
 {return lookup_function_symbol(symbol.get_name(), symbol.get_version());}
 
+/// Look in the function symbols map for a symbol with the same name
+/// and version as a given symbol.
+///
+/// @param symbol the symbol to look for.
+///
+/// return the symbol with the same name and version as @p symbol.
+const elf_symbol_sptr
+corpus::lookup_function_symbol(const elf_symbol_sptr& symbol) const
+{
+  if (!symbol)
+    return nullptr;
+  return lookup_function_symbol(*symbol);
+}
+
+
 /// Look in the variable symbols map for a symbol with a given name.
 ///
 /// @param n the name of the symbol to look for.
@@ -1472,12 +1870,47 @@ const std::unordered_set<const function_decl*>*
 corpus::lookup_functions(const interned_string& id) const
 {return priv_->lookup_functions(id);}
 
+/// Lookup the function which has a given function ID.
+///
+/// Note that there can have been several functions with the same ID.
+/// This is because debug info can declare the same function in
+/// several different translation units.  Normally, all these function
+/// should be equal.  But still, this function returns all these
+/// functions.
+///
+/// @param id the ID of the function to lookup.  This ID must be
+/// either the result of invoking function::get_id() of
+/// elf_symbol::get_id_string().
+///
+/// @return the set of functions which ID is @p id, or nil if no
+/// function with that ID was found.
 const std::unordered_set<const function_decl*>*
 corpus::lookup_functions(const char* id) const
 {
   if (!id)
     return nullptr;
 
+  interned_string string_id = priv_->env.intern(id);
+  return lookup_functions(string_id);
+}
+
+/// Lookup the function which has a given function ID.
+///
+/// Note that there can have been several functions with the same ID.
+/// This is because debug info can declare the same function in
+/// several different translation units.  Normally, all these function
+/// should be equal.  But still, this function returns all these
+/// functions.
+///
+/// @param id the ID of the function to lookup.  This ID must be
+/// either the result of invoking function::get_id() of
+/// elf_symbol::get_id_string().
+///
+/// @return the set of functions which ID is @p id, or nil if no
+/// function with that ID was found.
+const std::unordered_set<const function_decl*>*
+corpus::lookup_functions(const string& id) const
+{
   interned_string string_id = priv_->env.intern(id);
   return lookup_functions(string_id);
 }
@@ -1531,15 +1964,19 @@ corpus::sort_functions()
   priv_->remove_redundant_functions();
 
   func_comp fc;
-  std::sort(priv_->fns.begin(), priv_->fns.end(), fc);
 
-  priv_->sorted_undefined_fns.clear();
+  lock_guard<recursive_mutex> lock(priv_->get_mutex());
+  {
+    std::sort(priv_->fns.begin(), priv_->fns.end(), fc);
 
-  for (auto& f : priv_->undefined_fns)
-    priv_->sorted_undefined_fns.push_back(f);
+    priv_->sorted_undefined_fns.clear();
 
-  std::sort(priv_->sorted_undefined_fns.begin(),
-	    priv_->sorted_undefined_fns.end(), fc);
+    for (auto& f : priv_->undefined_fns)
+      priv_->sorted_undefined_fns.push_back(f);
+
+    std::sort(priv_->sorted_undefined_fns.begin(),
+	      priv_->sorted_undefined_fns.end(), fc);
+  }
 }
 
 /// Return the public decl table of the global variables of the
@@ -1568,6 +2005,8 @@ corpus::get_variables() const
 void
 corpus::sort_variables()
 {
+  lock_guard<recursive_mutex> lock(priv_->get_mutex());
+
   var_comp vc;
   std::sort(priv_->vars.begin(), priv_->vars.end(), vc);
 
@@ -1613,6 +2052,16 @@ corpus::get_sorted_undefined_functions() const
   return priv_->sorted_undefined_fns;
 }
 
+void
+corpus::add_undefined_function(const function_decl* fn)
+{
+  if (fn)
+    {
+      lock_guard<mutex> lock(priv_->undefined_fns_mutex_);
+      get_undefined_functions().insert(fn);
+    }
+}
+
 /// Getter of the undefined variables of the corpus.
 ///
 /// @return a set of @ref var_decl* representing the variables that
@@ -1645,6 +2094,15 @@ corpus::get_sorted_undefined_variables() const
   return priv_->sorted_undefined_vars;
 }
 
+void
+corpus::add_undefined_variable(const var_decl_sptr& var)
+{
+  if (var)
+    {
+      lock_guard<mutex> lock(priv_->undefined_vars_mutex_);
+      get_undefined_variables().insert(var);
+    }
+}
 /// Getter of the set of function symbols that are not referenced by
 /// any function exported by the current corpus.
 ///
@@ -1793,6 +2251,7 @@ corpus::get_sym_ids_of_vars_to_keep() const
 void
 corpus::maybe_drop_some_exported_decls()
 {
+  lock_guard<recursive_mutex> lock(priv_->get_mutex());
   string sym_name, sym_version;
 
   functions fns_to_keep;
@@ -1830,18 +2289,21 @@ corpus::maybe_drop_some_exported_decls()
 corpus::exported_decls_builder_sptr
 corpus::get_exported_decls_builder() const
 {
-  if (!priv_->exported_decls_builder)
-    {
-      priv_->exported_decls_builder.reset
-	(new exported_decls_builder(priv_->fns,
-				    priv_->vars,
-				    priv_->regex_patterns_fns_to_suppress,
-				    priv_->regex_patterns_vars_to_suppress,
-				    priv_->regex_patterns_fns_to_keep,
-				    priv_->regex_patterns_vars_to_keep,
-				    priv_->sym_id_fns_to_keep,
-				    priv_->sym_id_vars_to_keep));
-    }
+  {
+    lock_guard<mutex> lock(priv_->exported_decls_builder_mutex);
+    if (!priv_->exported_decls_builder)
+      {
+	priv_->exported_decls_builder.reset
+	  (new exported_decls_builder(priv_->fns,
+				      priv_->vars,
+				      priv_->regex_patterns_fns_to_suppress,
+				      priv_->regex_patterns_vars_to_suppress,
+				      priv_->regex_patterns_fns_to_keep,
+				      priv_->regex_patterns_vars_to_keep,
+				      priv_->sym_id_fns_to_keep,
+				      priv_->sym_id_vars_to_keep));
+      }
+  }
   return priv_->exported_decls_builder;
 }
 
@@ -1908,6 +2370,7 @@ operator&=(corpus::origin &l, corpus::origin r)
 /// Type of the private data of @ref corpus_group
 struct corpus_group::priv
 {
+  recursive_mutex		mutex;
   std::set<string>		corpora_paths;
   corpora_type			corpora;
   istring_function_decl_ptr_map_type fns_map;
@@ -1938,8 +2401,10 @@ struct corpus_group::priv
   void
   add_unref_fun_symbols(const elf_symbols& syms)
   {
-    for (elf_symbols::const_iterator e =
-	   syms.begin(); e != syms.end(); ++e)
+    lock_guard<recursive_mutex> lock(get_mutex());
+    for (elf_symbols::const_iterator e = syms.begin();
+	 e != syms.end();
+	 ++e)
       {
 	string sym_id = (*e)->get_id_string();
 	unordered_map<string, elf_symbol_sptr>::const_iterator j =
@@ -1960,8 +2425,10 @@ struct corpus_group::priv
   void
   add_unref_var_symbols(const elf_symbols& syms)
   {
-    for (elf_symbols::const_iterator e =
-	   syms.begin(); e != syms.end(); ++e)
+    lock_guard<recursive_mutex> lock(get_mutex());
+    for (elf_symbols::const_iterator e = syms.begin();
+	 e != syms.end();
+	 ++e)
       {
 	string sym_id = (*e)->get_id_string();
 	unordered_map<string, elf_symbol_sptr>::const_iterator j =
@@ -1974,6 +2441,10 @@ struct corpus_group::priv
       }
     unrefed_var_symbols_built = true;
   }
+
+  recursive_mutex&
+  get_mutex()
+  {return mutex;}
 }; // end corpus_group::priv
 
 /// Constructor of the @ref corpus_group type.
@@ -2002,27 +2473,34 @@ corpus_group::add_corpus(const corpus_sptr& corp)
       && has_corpus(corp->get_path()))
     return;
 
-  // Ensure the new architecture name matches the current one.
-  string cur_arch = get_architecture_name(),
-    corp_arch = corp->get_architecture_name();
-  if (cur_arch.empty())
-    set_architecture_name(corp_arch);
-  else if (cur_arch != corp_arch)
-    {
-      std::cerr << "corpus '" << corp->get_path() << "'"
-		<< " has architecture '" << corp_arch << "'"
-		<< " but expected '" << cur_arch << "'\n";
-      ABG_ASSERT_NOT_REACHED;
-    }
+  lock_guard<recursive_mutex> lock(priv_->get_mutex());
+  {
+    // Ensure the new architecture name matches the current one.
+    string cur_arch = get_architecture_name(),
+      corp_arch = corp->get_architecture_name();
+    if (cur_arch.empty())
+      set_architecture_name(corp_arch);
+    else if (cur_arch != corp_arch)
+      {
+	std::cerr << "corpus '" << corp->get_path() << "'"
+		  << " has architecture '" << corp_arch << "'"
+		  << " but expected '" << cur_arch << "'\n";
+	ABG_ASSERT_NOT_REACHED;
+      }
 
-  priv_->corpora.push_back(corp);
-  corp->set_group(this);
-  priv_->corpora_paths.insert(corp->get_path());
+    priv_->corpora.push_back(corp);
+    corp->set_group(this);
+    priv_->corpora_paths.insert(corp->get_path());
+  }
 
   /// Add the unreferenced function and variable symbols of this
   /// corpus to the unreferenced symbols of the current corpus group.
   priv_->add_unref_fun_symbols(get_unreferenced_function_symbols());
   priv_->add_unref_var_symbols(get_unreferenced_variable_symbols());
+
+  // Copy the reachable types from the added corpus to the group.
+  for (auto& t : corp->priv_->reachable_types_from_pub_ifaces_)
+    record_type_as_reachable_from_public_interfaces(*t);
 }
 
 /// Test if a corpus of a given path has been added to the group.
@@ -2085,28 +2563,31 @@ const corpus::functions&
 corpus_group::get_functions() const
 {
   if (priv_->fns.empty())
-    for (corpora_type::const_iterator i = get_corpora().begin();
-	 i != get_corpora().end();
-	 ++i)
-      {
-	corpus_sptr c = *i;
-	for (corpus::functions::const_iterator f = c->get_functions().begin();
-	     f != c->get_functions().end();
-	     ++f)
-	  {
-	    interned_string fid = (*f)->get_id();
-	    istring_function_decl_ptr_map_type::const_iterator j =
-	      priv_->fns_map.find(fid);
+    {
+      lock_guard<recursive_mutex> lock(priv_->get_mutex());
+      for (corpora_type::const_iterator i = get_corpora().begin();
+	   i != get_corpora().end();
+	   ++i)
+	{
+	  corpus_sptr c = *i;
+	  for (corpus::functions::const_iterator f = c->get_functions().begin();
+	       f != c->get_functions().end();
+	       ++f)
+	    {
+	      interned_string fid = (*f)->get_id();
+	      istring_function_decl_ptr_map_type::const_iterator j =
+		priv_->fns_map.find(fid);
 
-	    if (j != priv_->fns_map.end())
-	      // Don't cache the same function twice ...
-	      continue;
+	      if (j != priv_->fns_map.end())
+		// Don't cache the same function twice ...
+		continue;
 
-	    priv_->fns_map[fid] = *f;
-	    // really cache the function now.
-	    priv_->fns.push_back(*f);
-	  }
-      }
+	      priv_->fns_map[fid] = *f;
+	      // really cache the function now.
+	      priv_->fns.push_back(*f);
+	    }
+	}
+    }
 
   return priv_->fns;
 }
@@ -2123,28 +2604,31 @@ const corpus::variables&
 corpus_group::get_variables() const
 {
   if (priv_->vars.empty())
-    for (corpora_type::const_iterator i = get_corpora().begin();
-	 i != get_corpora().end();
-	 ++i)
-      {
-	corpus_sptr c = *i;
-	for (corpus::variables::const_iterator v = c->get_variables().begin();
-	     v != c->get_variables().end();
-	     ++v)
-	  {
-	    interned_string vid = (*v)->get_id();
-	    istring_var_decl_ptr_map_type::const_iterator j =
-	      priv_->vars_map.find(vid);
+    {
+      lock_guard<recursive_mutex> lock(priv_->get_mutex());
+      for (corpora_type::const_iterator i = get_corpora().begin();
+	   i != get_corpora().end();
+	   ++i)
+	{
+	  corpus_sptr c = *i;
+	  for (corpus::variables::const_iterator v = c->get_variables().begin();
+	       v != c->get_variables().end();
+	       ++v)
+	    {
+	      interned_string vid = (*v)->get_id();
+	      istring_var_decl_ptr_map_type::const_iterator j =
+		priv_->vars_map.find(vid);
 
-	    if (j != priv_->vars_map.end())
-	      // Don't cache the same variable twice ...
-	      continue;
+	      if (j != priv_->vars_map.end())
+		// Don't cache the same variable twice ...
+		continue;
 
-	    priv_->vars_map[vid] = *v;
-	    // Really cache the variable now.
-	    priv_->vars.push_back(*v);
-	  }
-      }
+	      priv_->vars_map[vid] = *v;
+	      // Really cache the variable now.
+	      priv_->vars.push_back(*v);
+	    }
+	}
+    }
 
   return priv_->vars;
 }
@@ -2157,12 +2641,14 @@ const string_elf_symbols_map_type&
 corpus_group::get_var_symbol_map() const
 {
   if (priv_->var_symbol_map.empty())
-    for (corpora_type::const_iterator i = get_corpora().begin();
-	 i != get_corpora().end();
-	 ++i)
-      priv_->var_symbol_map.insert((*i)->get_var_symbol_map().begin(),
+    {
+      lock_guard<recursive_mutex> lock(priv_->get_mutex());
+      for (corpora_type::const_iterator i = get_corpora().begin();
+	   i != get_corpora().end();
+	   ++i)
+	priv_->var_symbol_map.insert((*i)->get_var_symbol_map().begin(),
 				     (*i)->get_var_symbol_map().end());
-
+    }
   return priv_->var_symbol_map;
 }
 
@@ -2174,11 +2660,14 @@ const string_elf_symbols_map_type&
 corpus_group::get_fun_symbol_map() const
 {
   if (priv_->fun_symbol_map.empty())
-    for (corpora_type::const_iterator i = get_corpora().begin();
-	 i != get_corpora().end();
-	 ++i)
-      priv_->fun_symbol_map.insert((*i)->get_fun_symbol_map().begin(),
-				   (*i)->get_fun_symbol_map().end());
+    {
+      lock_guard<recursive_mutex> lock(priv_->get_mutex());
+      for (corpora_type::const_iterator i = get_corpora().begin();
+	   i != get_corpora().end();
+	   ++i)
+	priv_->fun_symbol_map.insert((*i)->get_fun_symbol_map().begin(),
+				     (*i)->get_fun_symbol_map().end());
+    }
 
   return priv_->fun_symbol_map;
 }
@@ -2193,6 +2682,7 @@ corpus_group::get_sorted_fun_symbols() const
   if (priv_->sorted_fun_symbols.empty()
       && !get_fun_symbol_map().empty())
     {
+      lock_guard<recursive_mutex> lock(priv_->get_mutex());
       for (corpora_type::const_iterator i = get_corpora().begin();
 	   i != get_corpora().end();
 	   ++i)
@@ -2225,6 +2715,7 @@ corpus_group::get_sorted_var_symbols() const
   if (priv_->sorted_var_symbols.empty()
       && !get_var_symbol_map().empty())
     {
+      lock_guard<recursive_mutex> lock(priv_->get_mutex());
       for (corpora_type::const_iterator i = get_corpora().begin();
 	   i != get_corpora().end();
 	   ++i)
@@ -2264,6 +2755,7 @@ corpus_group::get_unreferenced_function_symbols() const
   if (!priv_->unrefed_fun_symbols_built)
     if (priv_->unrefed_fun_symbols.empty())
       {
+	lock_guard<recursive_mutex> lock(priv_->get_mutex());
 	for (corpora_type::const_iterator i = get_corpora().begin();
 	     i != get_corpora().end();
 	     ++i)
@@ -2307,6 +2799,7 @@ corpus_group::get_unreferenced_variable_symbols() const
   if (!priv_->unrefed_var_symbols_built)
     if (priv_->unrefed_var_symbols.empty())
       {
+	lock_guard<recursive_mutex> lock(priv_->get_mutex());
 	for (corpora_type::const_iterator i = get_corpora().begin();
 	     i != get_corpora().end();
 	     ++i)
@@ -2332,22 +2825,6 @@ corpus_group::get_unreferenced_variable_symbols() const
 
   return priv_->unrefed_var_symbols;
 }
-
-/// Getter of a pointer to the set of types reachable from public
-/// interfaces of a given corpus group.
-unordered_set<interned_string, hash_interned_string>*
-corpus_group::get_public_types_pretty_representations()
-{return &priv_->pub_type_pretty_reprs_;}
-
-/// Test if the recording of reachable types (and thus, indirectly,
-/// the recording of non-reachable types) is activated for the
-/// current @ref corpus_group.
-///
-/// @return true iff the recording of reachable types is activated for
-/// the current @ref corpus_group.
-bool
-corpus_group::recording_types_reachable_from_public_interface_supported()
-{return !get_public_types_pretty_representations()->empty();}
 
 /// Lookup the function which has a given function ID.
 ///
@@ -2456,6 +2933,39 @@ is_corpus_group(const corpus_sptr& corpus)
 {return std::dynamic_pointer_cast<corpus_group>(corpus);}
 
 // </corpus_group stuff>
+
+void
+dumptypes(const vector<type_base_wptr>& types,
+	  const char* output_file,
+	  const corpus& abi,
+	  bool emit_location)
+{
+  if (!output_file)
+    return;
+
+  std::ofstream of(output_file);
+  if (of.fail() ||!of.is_open())
+    return;
+
+  string repr;
+  for (auto& t : types)
+    {
+      type_base_sptr type(t.lock().get(), sptr_utils::noop_deleter());
+      repr = type->get_pretty_representation();
+      std::ostringstream os;
+      os << "'" << repr << "'";
+      if (emit_location)
+	if (decl_base_sptr decl = get_type_declaration(type))
+	  os << ":" << decl->get_location().expand();
+      os << " // ";
+      if (abi.type_is_reachable_from_public_interfaces(*type))
+	os << " r";
+      else
+	os << " nr";
+      of << os.str() << "\n";
+    }
+  of.close();
+}
 
 }// end namespace ir
 }// end namespace abigail

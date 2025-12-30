@@ -113,6 +113,7 @@ struct options
   bool			corpus_group_for_linux;
   bool			show_stats;
   bool			noout;
+  bool			nullout;
   bool			follow_dependencies;
   bool			list_dependencies;
 #ifdef WITH_CTF
@@ -131,6 +132,7 @@ struct options
   bool			debug_die_canonicalization;
 #endif
   bool			annotate;
+  bool			emit_member_hashes;
   bool			do_log;
   bool			drop_private_types;
   bool			force_early_suppression;
@@ -138,6 +140,7 @@ struct options
   bool			assume_odr_for_cplusplus;
   bool			leverage_dwarf_factorization;
   optional<bool>	exported_interfaces_only;
+  bool			emit_native_offsets;
   type_id_style_kind	type_id_style;
 #ifdef WITH_DEBUG_SELF_COMPARISON
   string		type_id_file_path;
@@ -152,15 +155,16 @@ struct options
       write_corpus_path(true),
       write_comp_dir(true),
       write_elf_needed(true),
-      write_parameter_names(true),
+      write_parameter_names(false),
       short_locs(false),
       default_sizes(true),
       load_all_types(),
-      load_undefined_interfaces(true),
+      load_undefined_interfaces(false),
       linux_kernel_mode(true),
       corpus_group_for_linux(false),
       show_stats(),
       noout(),
+      nullout(),
       follow_dependencies(),
       list_dependencies(),
 #ifdef WITH_CTF
@@ -169,7 +173,7 @@ struct options
 #ifdef WITH_BTF
       use_btf(false),
 #endif
-      show_locs(true),
+      show_locs(false),
       abidiff(),
 #ifdef WITH_DEBUG_SELF_COMPARISON
       debug_abidiff(),
@@ -179,12 +183,14 @@ struct options
       debug_die_canonicalization(),
 #endif
       annotate(),
+      emit_member_hashes(),
       do_log(),
       drop_private_types(false),
       force_early_suppression(false),
       drop_undefined_syms(false),
       assume_odr_for_cplusplus(true),
       leverage_dwarf_factorization(true),
+      emit_native_offsets(false),
       type_id_style(SEQUENCE_TYPE_ID_STYLE)
   {}
 
@@ -305,20 +311,22 @@ set_suppressions(abigail::elf_based_reader& rdr, options& opts)
 /// Set a bunch of tunable buttons on the ELF-based reader from the
 /// command-line options.
 ///
-/// @param rdr the reader to tune.
+/// @param o the options of the reader to tune.
 ///
 /// @param opts the command line options.
 static void
-set_generic_options(abigail::fe_iface& rdr, options& opts)
+set_generic_options(abigail::fe_iface::options_type& o, options& opts)
 {
-  rdr.options().drop_undefined_syms = opts.drop_undefined_syms;
-  rdr.options().show_stats = opts.show_stats;
-  rdr.options().do_log = opts.do_log;
-  rdr.options().leverage_dwarf_factorization =
+  o.load_in_linux_kernel_mode = opts.linux_kernel_mode;
+  o.load_all_types = opts.load_all_types;
+  o.drop_undefined_syms = opts.drop_undefined_syms;
+  o.show_stats = opts.show_stats;
+  o.do_log = opts.do_log;
+  o.leverage_dwarf_factorization =
     opts.leverage_dwarf_factorization;
-  rdr.options().assume_odr_for_cplusplus =
+  o.assume_odr_for_cplusplus =
     opts.assume_odr_for_cplusplus;
-  rdr.options().load_undefined_interfaces = opts.load_undefined_interfaces;
+  o.load_undefined_interfaces = opts.load_undefined_interfaces;
 }
 
 /// Given a corpus (or a corpus group), write it as ABIXML, read it
@@ -357,6 +365,8 @@ perform_self_comparison(const write_context_sptr& write_ctxt,
   temp_file_sptr tmp_file = temp_file::create();
   set_ostream(*write_ctxt, tmp_file->get_stream());
   corpus_group_sptr corp_group = is_corpus_group(corp);
+  abigail::fe_iface::options_type o(env);
+  set_generic_options(o, opts);
 
   if (opts.do_log)
     {
@@ -388,8 +398,7 @@ perform_self_comparison(const write_context_sptr& write_ctxt,
       write_canonical_type_ids(*write_ctxt, opts.type_id_file_path);
     }
 #endif
-  fe_iface_sptr rdr = abixml::create_reader(tmp_file->get_path(), env);
-  set_generic_options(*rdr, opts);
+  fe_iface_sptr rdr = abixml::create_reader(tmp_file->get_path(), env, o);
 
 #ifdef WITH_DEBUG_SELF_COMPARISON
   if (opts.debug_abidiff
@@ -549,19 +558,19 @@ load_corpus_and_write_abixml(char* argv[],
     requested_fe_kind = corpus::BTF_ORIGIN;
 #endif
 
+  abigail::fe_iface::options_type o(env);
+  // Tune a bunch of "buttons".
+  set_generic_options(o, opts);
+
   // First of all, create a reader to read the ABI from the file
   // specfied in opts ...
   abigail::elf_based_reader_sptr reader =
     create_best_elf_based_reader(opts.in_file_path,
 				 opts.di_root_paths,
-				 env, requested_fe_kind,
-				 opts.load_all_types,
-				 opts.linux_kernel_mode);
+				 env, requested_fe_kind, o);
   ABG_ASSERT(reader);
 
-  // ... then tune a bunch of "buttons" on the newly created reader
-  // ...
-  set_generic_options(*reader, opts);
+
   set_suppressions(*reader, opts);
 
   // If the user asked us to check if we found the "alternate debug
@@ -589,7 +598,7 @@ load_corpus_and_write_abixml(char* argv[],
 	}
     }
 
-  // ... ff we are asked to only analyze exported interfaces (to stay
+  // ... if we are asked to only analyze exported interfaces (to stay
   // concise), then take that into account ...
   if (opts.exported_interfaces_only.has_value())
     env.analyze_exported_interfaces_only(*opts.exported_interfaces_only);
@@ -734,16 +743,36 @@ load_corpus_and_write_abixml(char* argv[],
 				   env, t, opts, argv);
 
   if (opts.noout)
-    return 0;
-
-  if (!opts.out_file_path.empty())
     {
-      ofstream of(opts.out_file_path.c_str(), std::ios_base::trunc);
+      if (corp)
+	corp->get_types_not_reachable_from_public_interfaces();
+
+      return 0;
+    }
+
+  if (!opts.out_file_path.empty()
+      || opts.nullout)
+    {
+      ofstream of;
+      if (!opts.out_file_path.empty())
+	of.open(opts.out_file_path.c_str(), std::ios_base::trunc);
+      else if (opts.nullout)
+	of.open("/dev/null");
+      else
+	ABG_ASSERT_NOT_REACHED;
+
       if (!of.is_open())
         {
+	  std::ostringstream o;
+	  o << "could not open output file '";
+	  if (!opts.out_file_path.empty())
+	    o << opts.out_file_path;
+	  else
+	    o << "/dev/null";
+	  o << "'\n";
+
           emit_prefix(argv[0], cerr)
-            << "could not open output file '"
-            << opts.out_file_path << "'\n";
+            << o.str();
           return 1;
         }
       set_ostream(*write_ctxt, of);
@@ -808,6 +837,9 @@ load_kernel_corpus_group_and_write_abixml(char* argv[],
 
   timer t, global_timer;
   suppressions_type supprs;
+  abigail::fe_iface::options_type o(env);
+
+  set_generic_options(o, opts);
 
   if (opts.exported_interfaces_only.has_value())
     env.analyze_exported_interfaces_only(*opts.exported_interfaces_only);
@@ -833,7 +865,7 @@ load_kernel_corpus_group_and_write_abixml(char* argv[],
 					      opts.suppression_paths,
 					      opts.kabi_whitelist_paths,
 					      supprs, opts.do_log, env,
-					      requested_fe_kind);
+					      o, requested_fe_kind);
   t.stop();
 
   if (opts.do_log)
@@ -916,6 +948,8 @@ enum option_key
   OPT_DEBUG_INFO_DIR = 'd',
   OPT_DROP_PRIVATE_TYPES = OPT_DEBUG_TC + 1,
   OPT_DROP_UNDEFINED_SYMS,
+  OPT_EMIT_MEMBER_HASHES,
+  OPT_EMIT_NATIVE_OFFSETS,
   OPT_EXPORTED_INTERFACES_ONLY,
   OPT_FAIL_NO_DEBUG_INFO,
   OPT_FDEPS,
@@ -938,8 +972,11 @@ enum option_key
   OPT_NO_SHOW_LOCS,
   OPT_NO_WRITE_DEFAULT_SIZES,
   OPT_NOOUT,
+  OPT_NULLOUT,
   OPT_OUT_FILE = 'o',
-  OPT_SHORT_LOCS = OPT_NOOUT + 1,
+  OPT_PARAMETER_NAMES = OPT_NULLOUT + 1,
+  OPT_SHORT_LOCS,
+  OPT_SHOW_LOCS,
   OPT_SHOW_STATS,
   OPT_SUPPR,
   OPT_TYPE_ID_STYLE,
@@ -991,6 +1028,10 @@ static const struct argp_option argp_options[] =
     "drop private types from internal representation", 0 },
   { "drop-undefined-syms", OPT_DROP_UNDEFINED_SYMS, 0, 0,
     "drop undefined symbols from representation", 0 },
+  { "emit-member-hashes", OPT_EMIT_MEMBER_HASHES, 0, 0,
+    "emit hashes of data & virtual function member types", 0 },
+  { "emit-native-offsets", OPT_EMIT_NATIVE_OFFSETS, 0, 0,
+    "emit the native offsets for debug information entries of types", 0 },
   { "exported-interfaces-only", OPT_EXPORTED_INTERFACES_ONLY, 0, 0,
     "analyze exported interfaces only", 0 },
   { "fail-no-debug-info", OPT_FAIL_NO_DEBUG_INFO, 0, 0,
@@ -1042,10 +1083,13 @@ static const struct argp_option argp_options[] =
     "the translation unit", 0 },
   { "noout", OPT_NOOUT, 0, 0,
     "do not emit anything after reading the binary", 0 },
+  { "nullout", OPT_NULLOUT, 0, 0, "emit the ABIXML output to /dev/null", 0 },
   { "out-file", OPT_OUT_FILE, "PATH", 0,
     "write the output to 'file-path'", 0 },
+  { "parameter-names", OPT_PARAMETER_NAMES, 0, 0, "show names of function parameters", 0 },
   { "short-locs", OPT_SHORT_LOCS, 0, 0,
     "only print filenames rather than paths", 0 },
+  { "show-locs", OPT_SHOW_LOCS, 0, 0, "show location information", 0 },
   { "stats", OPT_SHOW_STATS, 0, 0,
     "show statistics about various internal stuff", 0 },
   { "suppressions", OPT_SUPPR, "PATH", 0,
@@ -1156,6 +1200,14 @@ parse_opt(int key, char* arg, struct argp_state* state)
       opts.drop_undefined_syms = true;
       break;
 
+    case OPT_EMIT_MEMBER_HASHES:
+      opts.emit_member_hashes = true;
+      break;
+
+    case OPT_EMIT_NATIVE_OFFSETS:
+      opts.emit_native_offsets = true;
+      break;
+
     case OPT_EXPORTED_INTERFACES_ONLY:
       opts.exported_interfaces_only = true;
       break;
@@ -1246,14 +1298,26 @@ parse_opt(int key, char* arg, struct argp_state* state)
       opts.noout = true;
       break;
 
+    case OPT_NULLOUT:
+      opts.nullout = true;
+      break;
+
     case OPT_OUT_FILE:
       if (!opts.out_file_path.empty())
 	argp_usage(state);
       opts.out_file_path = argument;
       break;
 
+    case OPT_PARAMETER_NAMES:
+      opts.write_parameter_names = true;
+      break;
+
     case OPT_SHORT_LOCS:
       opts.short_locs = true;
+      break;
+
+    case OPT_SHOW_LOCS:
+      opts.show_locs = true;
       break;
 
     case OPT_SHOW_STATS:

@@ -1,4 +1,4 @@
-<abi-corpus version='2.5' soname='libaaudio.so'>
+<abi-corpus version='3.0' soname='libaaudio.so' tracking-non-reachable-types='yes'>
   <elf-needed>
     <dependency name='libaaudio_internal.so'/>
     <dependency name='libaudioclient.so'/>
@@ -77,475 +77,295 @@
     <elf-symbol name='AAudio_setMMapPolicy' version='LIBAAUDIO' is-default-version='yes' type='func-type' binding='global-binding' visibility='default-visibility' is-defined='yes'/>
     <elf-symbol name='__cfi_check' type='func-type' binding='global-binding' visibility='default-visibility' is-defined='yes'/>
   </elf-function-symbols>
-  <abi-instr address-size='64' path='frameworks/av/media/libaaudio/src/core/AAudioAudio.cpp' language='LANG_C_plus_plus_14'>
-    <pointer-type-def type-id='39628053' size-in-bits='64' hash='fd7a63c0c6c822c4' id='40a93d56'/>
-    <pointer-type-def type-id='2e552d01' size-in-bits='64' hash='d80b0ff3ed4527c3' id='6de3cf18'/>
-    <reference-type-def kind='lvalue' type-id='f74dc428' size-in-bits='64' hash='ddd7b68e46c3c294' id='bb997e32'/>
-    <reference-type-def kind='rvalue' type-id='f74dc428' size-in-bits='64' hash='c2221885422c8153' id='66a1797c'/>
-    <pointer-type-def type-id='f74dc428' size-in-bits='64' hash='df52b92f55eb147c' id='bf99847e'/>
-    <reference-type-def kind='lvalue' type-id='862099c6' size-in-bits='64' hash='2fa7fddc00137064' id='fe3112c8'/>
-    <reference-type-def kind='rvalue' type-id='862099c6' size-in-bits='64' hash='5da62cf4ea0b61e7' id='1540ccaa'/>
-    <pointer-type-def type-id='862099c6' size-in-bits='64' hash='03f9ec29e998f971' id='fa310c7c'/>
+  <abi-types>
+    <pointer-type-def type-id='f41d1deb' size-in-bits='64' hash='16416c7a065cfdc7' id='b2a1b704'/>
+    <pointer-type-def type-id='b2a1b704' size-in-bits='64' hash='03371bae2bf70851' id='62935d6a'/>
+    <pointer-type-def type-id='122f757a' size-in-bits='64' hash='70f0a5140edebad3' id='c56f4379'/>
+    <pointer-type-def type-id='c56f4379' size-in-bits='64' hash='cbe3e9feee7efda3' id='2126fba9'/>
+    <pointer-type-def type-id='39628053' size-in-bits='64' hash='f172b1d37c0d0902' id='40a93d56'/>
+    <pointer-type-def type-id='2e552d01' size-in-bits='64' hash='3c5a1b675a0ccbcf' id='6de3cf18'/>
     <type-decl name='bool' size-in-bits='8' hash='5ba96bb22f4237fb' id='c894953d'/>
     <type-decl name='char' size-in-bits='8' hash='65b2d157027b431a' id='a84c031d'/>
-    <qualified-type-def type-id='f74dc428' const='yes' hash='0f249414d2e2fd9e' id='fd5524d9'/>
-    <reference-type-def kind='lvalue' type-id='fd5524d9' size-in-bits='64' hash='6e23beafe58a769a' id='cc093d6d'/>
-    <pointer-type-def type-id='fd5524d9' size-in-bits='64' hash='4a9457e6c0ea007d' id='c0092a89'/>
-    <qualified-type-def type-id='862099c6' const='yes' hash='385a18565e9801a6' id='3d881ff3'/>
-    <reference-type-def kind='lvalue' type-id='3d881ff3' size-in-bits='64' hash='c944997b1ffe4427' id='b24a1c4f'/>
-    <pointer-type-def type-id='3d881ff3' size-in-bits='64' hash='2d1f80398a97b9b0' id='b64a229b'/>
-    <qualified-type-def type-id='a84c031d' const='yes' hash='3e50fd33f9bb78d9' id='9b45d938'/>
-    <pointer-type-def type-id='9b45d938' size-in-bits='64' hash='c44743f354f6a443' id='80f4b756'/>
-    <enum-decl name='audio_format_t' naming-typedef-id='aff86d3f' size-in-bits='32' alignment-in-bits='32' filepath='system/media/audio/include/system/audio-hal-enums.h' line='610' column='1' hash='1414d8332206f058' id='ff439793'>
-      <underlying-type type-id='9cac1fee'/>
-      <enumerator name='AUDIO_FORMAT_DEFAULT' value='0'/>
-      <enumerator name='AUDIO_FORMAT_PCM_16_BIT' value='1'/>
-      <enumerator name='AUDIO_FORMAT_PCM_8_BIT' value='2'/>
-      <enumerator name='AUDIO_FORMAT_PCM_32_BIT' value='3'/>
-      <enumerator name='AUDIO_FORMAT_PCM_8_24_BIT' value='4'/>
-      <enumerator name='AUDIO_FORMAT_PCM_FLOAT' value='5'/>
-      <enumerator name='AUDIO_FORMAT_PCM_24_BIT_PACKED' value='6'/>
-      <enumerator name='AUDIO_FORMAT_MP3' value='16777216'/>
-      <enumerator name='AUDIO_FORMAT_AMR_NB' value='33554432'/>
-      <enumerator name='AUDIO_FORMAT_AMR_WB' value='50331648'/>
-      <enumerator name='AUDIO_FORMAT_AAC' value='67108864'/>
-      <enumerator name='AUDIO_FORMAT_AAC_MAIN' value='67108865'/>
-      <enumerator name='AUDIO_FORMAT_AAC_LC' value='67108866'/>
-      <enumerator name='AUDIO_FORMAT_AAC_SSR' value='67108868'/>
-      <enumerator name='AUDIO_FORMAT_AAC_LTP' value='67108872'/>
-      <enumerator name='AUDIO_FORMAT_AAC_HE_V1' value='67108880'/>
-      <enumerator name='AUDIO_FORMAT_AAC_SCALABLE' value='67108896'/>
-      <enumerator name='AUDIO_FORMAT_AAC_ERLC' value='67108928'/>
-      <enumerator name='AUDIO_FORMAT_AAC_LD' value='67108992'/>
-      <enumerator name='AUDIO_FORMAT_AAC_HE_V2' value='67109120'/>
-      <enumerator name='AUDIO_FORMAT_AAC_ELD' value='67109376'/>
-      <enumerator name='AUDIO_FORMAT_AAC_XHE' value='67109632'/>
-      <enumerator name='AUDIO_FORMAT_HE_AAC_V1' value='83886080'/>
-      <enumerator name='AUDIO_FORMAT_HE_AAC_V2' value='100663296'/>
-      <enumerator name='AUDIO_FORMAT_VORBIS' value='117440512'/>
-      <enumerator name='AUDIO_FORMAT_OPUS' value='134217728'/>
-      <enumerator name='AUDIO_FORMAT_AC3' value='150994944'/>
-      <enumerator name='AUDIO_FORMAT_E_AC3' value='167772160'/>
-      <enumerator name='AUDIO_FORMAT_E_AC3_JOC' value='167772161'/>
-      <enumerator name='AUDIO_FORMAT_DTS' value='184549376'/>
-      <enumerator name='AUDIO_FORMAT_DTS_HD' value='201326592'/>
-      <enumerator name='AUDIO_FORMAT_IEC61937' value='218103808'/>
-      <enumerator name='AUDIO_FORMAT_DOLBY_TRUEHD' value='234881024'/>
-      <enumerator name='AUDIO_FORMAT_EVRC' value='268435456'/>
-      <enumerator name='AUDIO_FORMAT_EVRCB' value='285212672'/>
-      <enumerator name='AUDIO_FORMAT_EVRCWB' value='301989888'/>
-      <enumerator name='AUDIO_FORMAT_EVRCNW' value='318767104'/>
-      <enumerator name='AUDIO_FORMAT_AAC_ADIF' value='335544320'/>
-      <enumerator name='AUDIO_FORMAT_WMA' value='352321536'/>
-      <enumerator name='AUDIO_FORMAT_WMA_PRO' value='369098752'/>
-      <enumerator name='AUDIO_FORMAT_AMR_WB_PLUS' value='385875968'/>
-      <enumerator name='AUDIO_FORMAT_MP2' value='402653184'/>
-      <enumerator name='AUDIO_FORMAT_QCELP' value='419430400'/>
-      <enumerator name='AUDIO_FORMAT_DSD' value='436207616'/>
-      <enumerator name='AUDIO_FORMAT_FLAC' value='452984832'/>
-      <enumerator name='AUDIO_FORMAT_ALAC' value='469762048'/>
-      <enumerator name='AUDIO_FORMAT_APE' value='486539264'/>
-      <enumerator name='AUDIO_FORMAT_AAC_ADTS' value='503316480'/>
-      <enumerator name='AUDIO_FORMAT_AAC_ADTS_MAIN' value='503316481'/>
-      <enumerator name='AUDIO_FORMAT_AAC_ADTS_LC' value='503316482'/>
-      <enumerator name='AUDIO_FORMAT_AAC_ADTS_SSR' value='503316484'/>
-      <enumerator name='AUDIO_FORMAT_AAC_ADTS_LTP' value='503316488'/>
-      <enumerator name='AUDIO_FORMAT_AAC_ADTS_HE_V1' value='503316496'/>
-      <enumerator name='AUDIO_FORMAT_AAC_ADTS_SCALABLE' value='503316512'/>
-      <enumerator name='AUDIO_FORMAT_AAC_ADTS_ERLC' value='503316544'/>
-      <enumerator name='AUDIO_FORMAT_AAC_ADTS_LD' value='503316608'/>
-      <enumerator name='AUDIO_FORMAT_AAC_ADTS_HE_V2' value='503316736'/>
-      <enumerator name='AUDIO_FORMAT_AAC_ADTS_ELD' value='503316992'/>
-      <enumerator name='AUDIO_FORMAT_AAC_ADTS_XHE' value='503317248'/>
-      <enumerator name='AUDIO_FORMAT_SBC' value='520093696'/>
-      <enumerator name='AUDIO_FORMAT_APTX' value='536870912'/>
-      <enumerator name='AUDIO_FORMAT_APTX_HD' value='553648128'/>
-      <enumerator name='AUDIO_FORMAT_AC4' value='570425344'/>
-      <enumerator name='AUDIO_FORMAT_LDAC' value='587202560'/>
-      <enumerator name='AUDIO_FORMAT_MAT' value='603979776'/>
-      <enumerator name='AUDIO_FORMAT_MAT_1_0' value='603979777'/>
-      <enumerator name='AUDIO_FORMAT_MAT_2_0' value='603979778'/>
-      <enumerator name='AUDIO_FORMAT_MAT_2_1' value='603979779'/>
-      <enumerator name='AUDIO_FORMAT_AAC_LATM' value='620756992'/>
-      <enumerator name='AUDIO_FORMAT_AAC_LATM_LC' value='620756994'/>
-      <enumerator name='AUDIO_FORMAT_AAC_LATM_HE_V1' value='620757008'/>
-      <enumerator name='AUDIO_FORMAT_AAC_LATM_HE_V2' value='620757248'/>
-      <enumerator name='AUDIO_FORMAT_CELT' value='637534208'/>
-      <enumerator name='AUDIO_FORMAT_APTX_ADAPTIVE' value='654311424'/>
-      <enumerator name='AUDIO_FORMAT_LHDC' value='671088640'/>
-      <enumerator name='AUDIO_FORMAT_LHDC_LL' value='687865856'/>
-      <enumerator name='AUDIO_FORMAT_APTX_TWSP' value='704643072'/>
-      <enumerator name='AUDIO_FORMAT_LC3' value='721420288'/>
-      <enumerator name='AUDIO_FORMAT_MPEGH' value='738197504'/>
-      <enumerator name='AUDIO_FORMAT_MPEGH_BL_L3' value='738197523'/>
-      <enumerator name='AUDIO_FORMAT_MPEGH_BL_L4' value='738197524'/>
-      <enumerator name='AUDIO_FORMAT_MPEGH_LC_L3' value='738197539'/>
-      <enumerator name='AUDIO_FORMAT_MPEGH_LC_L4' value='738197540'/>
-      <enumerator name='AUDIO_FORMAT_IEC60958' value='754974720'/>
-      <enumerator name='AUDIO_FORMAT_DTS_UHD' value='771751936'/>
-      <enumerator name='AUDIO_FORMAT_DRA' value='788529152'/>
-      <enumerator name='AUDIO_FORMAT_INVALID' value='4294967295'/>
-      <enumerator name='AUDIO_FORMAT_PCM' value='0'/>
-    </enum-decl>
-    <type-decl name='int' size-in-bits='32' hash='09d17c08f594edc7' id='95e97e5e'/>
-    <pointer-type-def type-id='9da381c4' size-in-bits='64' hash='e24def43c7e4b3b5' id='cb785ebf'/>
-    <type-decl name='long int' size-in-bits='64' hash='b119fe0931d2ee10#2' id='95e97e5f'/>
-    <typedef-decl name='AAudioStream_dataCallback' type-id='40a93d56' size-in-bits='64' filepath='frameworks/av/media/libaaudio/include/aaudio/AAudio.h' line='880' column='1' hash='fd7a63c0c6c822c4' id='edb6186f'/>
-    <typedef-decl name='AAudioStream_errorCallback' type-id='86b497aa' size-in-bits='64' filepath='frameworks/av/media/libaaudio/include/aaudio/AAudio.h' line='966' column='1' hash='fd7a63c0c6c822c4' id='2e91990d'/>
-    <typedef-decl name='__clockid_t' type-id='7eb128d4' size-in-bits='32' filepath='bionic/libc/include/sys/types.h' line='56' column='1' hash='09d17c08f594edc7' id='08f9a87a'/>
-    <typedef-decl name='__int32_t' type-id='95e97e5e' size-in-bits='32' filepath='bionic/libc/include/stdint.h' line='40' column='1' hash='09d17c08f594edc7' id='33f57a65'/>
-    <typedef-decl name='__int64_t' type-id='95e97e5f' size-in-bits='64' filepath='bionic/libc/include/stdint.h' line='43' column='1' hash='b119fe0931d2ee10' id='0c9942d2'/>
-    <typedef-decl name='__kernel_clockid_t' type-id='95e97e5e' size-in-bits='32' filepath='bionic/libc/kernel/uapi/asm-generic/posix_types.h' line='82' column='1' hash='09d17c08f594edc7' id='7eb128d4'/>
-    <typedef-decl name='__uint32_t' type-id='f0981eeb' size-in-bits='32' filepath='bionic/libc/include/stdint.h' line='41' column='1' hash='e66b43f97c38e87a' id='62f1140c'/>
-    <typedef-decl name='aaudio_allowed_capture_policy_t' type-id='3ff5601b' size-in-bits='32' filepath='frameworks/av/media/libaaudio/include/aaudio/AAudio.h' line='457' column='1' hash='09d17c08f594edc7' id='abe3e34b'/>
-    <typedef-decl name='aaudio_content_type_t' type-id='3ff5601b' size-in-bits='32' filepath='frameworks/av/media/libaaudio/include/aaudio/AAudio.h' line='368' column='1' hash='09d17c08f594edc7' id='2df7abd1'/>
-    <typedef-decl name='aaudio_data_callback_result_t' type-id='3ff5601b' size-in-bits='32' filepath='frameworks/av/media/libaaudio/include/aaudio/AAudio.h' line='832' column='1' hash='09d17c08f594edc7' id='ae10ac8d'/>
-    <typedef-decl name='aaudio_direction_t' type-id='3ff5601b' size-in-bits='32' filepath='frameworks/av/media/libaaudio/include/aaudio/AAudio.h' line='60' column='1' hash='09d17c08f594edc7' id='a5156fbe'/>
-    <typedef-decl name='aaudio_format_t' type-id='3ff5601b' size-in-bits='32' filepath='frameworks/av/media/libaaudio/include/aaudio/AAudio.h' line='82' column='1' hash='09d17c08f594edc7' id='f21c6374'/>
-    <typedef-decl name='aaudio_input_preset_t' type-id='3ff5601b' size-in-bits='32' filepath='frameworks/av/media/libaaudio/include/aaudio/AAudio.h' line='415' column='1' hash='09d17c08f594edc7' id='a4168325'/>
-    <typedef-decl name='aaudio_performance_mode_t' type-id='3ff5601b' size-in-bits='32' filepath='frameworks/av/media/libaaudio/include/aaudio/AAudio.h' line='230' column='1' hash='09d17c08f594edc7' id='6757629b'/>
-    <typedef-decl name='aaudio_policy_t' type-id='3ff5601b' size-in-bits='32' filepath='frameworks/av/media/libaaudio/include/aaudio/AAudioTesting.h' line='50' column='1' hash='09d17c08f594edc7' id='d062bfb5'/>
-    <typedef-decl name='aaudio_result_t' type-id='3ff5601b' size-in-bits='32' filepath='frameworks/av/media/libaaudio/include/aaudio/AAudio.h' line='173' column='1' hash='09d17c08f594edc7' id='da775bc6'/>
-    <typedef-decl name='aaudio_session_id_t' type-id='3ff5601b' size-in-bits='32' filepath='frameworks/av/media/libaaudio/include/aaudio/AAudio.h' line='485' column='1' hash='09d17c08f594edc7' id='4d6761d3'/>
-    <typedef-decl name='aaudio_sharing_mode_t' type-id='3ff5601b' size-in-bits='32' filepath='frameworks/av/media/libaaudio/include/aaudio/AAudio.h' line='208' column='1' hash='09d17c08f594edc7' id='da67c8b9'/>
-    <typedef-decl name='aaudio_stream_state_t' type-id='3ff5601b' size-in-bits='32' filepath='frameworks/av/media/libaaudio/include/aaudio/AAudio.h' line='192' column='1' hash='09d17c08f594edc7' id='2e552d01'/>
-    <typedef-decl name='aaudio_usage_t' type-id='3ff5601b' size-in-bits='32' filepath='frameworks/av/media/libaaudio/include/aaudio/AAudio.h' line='330' column='1' hash='09d17c08f594edc7' id='8ee4dca8'/>
-    <typedef-decl name='audio_format_t' type-id='ff439793' size-in-bits='32' alignment-in-bits='32' filepath='system/media/audio/include/system/audio-hal-enums.h' line='616' column='1' hash='1414d8332206f058' id='aff86d3f'/>
-    <typedef-decl name='clockid_t' type-id='08f9a87a' size-in-bits='32' filepath='bionic/libc/include/sys/types.h' line='57' column='1' hash='09d17c08f594edc7' id='a1c3b834'/>
-    <typedef-decl name='int32_t' type-id='33f57a65' size-in-bits='32' filepath='bionic/libc/include/stdint.h' line='64' column='1' hash='09d17c08f594edc7' id='3ff5601b'/>
-    <typedef-decl name='int64_t' type-id='0c9942d2' size-in-bits='64' filepath='bionic/libc/include/stdint.h' line='67' column='1' hash='b119fe0931d2ee10' id='9da381c4'/>
-    <typedef-decl name='uint32_t' type-id='62f1140c' size-in-bits='32' filepath='bionic/libc/include/stdint.h' line='65' column='1' hash='e66b43f97c38e87a' id='8f92235e'/>
-    <type-decl name='unnamed-enum-underlying-type-32' size-in-bits='32' alignment-in-bits='32' is-anonymous='yes' hash='5181a58e665b3619' id='9cac1fee'/>
-    <type-decl name='unsigned int' size-in-bits='32' hash='e66b43f97c38e87a' id='f0981eeb'/>
-    <pointer-type-def type-id='340319e3' size-in-bits='64' hash='fd7a63c0c6c822c4' id='86b497aa'/>
-    <pointer-type-def type-id='f41d1deb' size-in-bits='64' id='b2a1b704'/>
-    <pointer-type-def type-id='b2a1b704' size-in-bits='64' id='62935d6a'/>
-    <pointer-type-def type-id='122f757a' size-in-bits='64' id='c56f4379'/>
-    <pointer-type-def type-id='c56f4379' size-in-bits='64' id='2126fba9'/>
-    <pointer-type-def type-id='84aa4341' size-in-bits='64' id='3e1b4f89'/>
-    <reference-type-def kind='lvalue' type-id='e5af4ed4' size-in-bits='64' id='b8bea77e'/>
-    <pointer-type-def type-id='e5af4ed4' size-in-bits='64' id='b4bea132'/>
-    <reference-type-def kind='lvalue' type-id='5f3aabfe' size-in-bits='64' id='7f0043f0'/>
-    <pointer-type-def type-id='5f3aabfe' size-in-bits='64' id='8b0056d4'/>
-    <pointer-type-def type-id='c1fdb0b3' size-in-bits='64' id='b01a1663'/>
-    <qualified-type-def type-id='e5af4ed4' const='yes' id='a56b5b8f'/>
-    <pointer-type-def type-id='a56b5b8f' size-in-bits='64' id='0d0144bf'/>
-    <namespace-decl name='aaudio'>
-      <typedef-decl name='aaudio_stream_id_t' type-id='8f92235e' size-in-bits='32' filepath='frameworks/av/media/libaaudio/src/core/AudioStream.h' line='41' column='1' hash='e66b43f97c38e87a' id='a5eeae98'/>
-      <class-decl name='AAudioStreamParameters' visibility='default' is-declaration-only='yes' id='84aa4341'/>
-      <class-decl name='AudioStream' visibility='default' is-declaration-only='yes' id='e5af4ed4'>
-        <member-type access='private'>
-          <class-decl name='MyPlayerBase' visibility='default' is-declaration-only='yes' id='5f3aabfe'/>
-        </member-type>
-        <member-function access='public'>
-          <function-decl name='registerPlayerBase' type-id='2af3defb' mangled-name='_ZN6aaudio11AudioStream18registerPlayerBaseEv' filepath='frameworks/av/media/libaaudio/src/core/AudioStream.h' line='390' column='1' visibility='default' binding='global' size-in-bits='64'/>
-        </member-function>
-      </class-decl>
-      <class-decl name='AudioStreamBuilder' visibility='default' is-declaration-only='yes' id='c1fdb0b3'/>
-      <function-decl name='AudioGlobal_getMMapPolicy' type-id='b39d85cf' mangled-name='_ZN6aaudio25AudioGlobal_getMMapPolicyEv' filepath='frameworks/av/media/libaaudio/src/core/AudioGlobal.h' line='25' column='1' visibility='default' binding='global' size-in-bits='64'/>
-      <function-decl name='AudioGlobal_setMMapPolicy' type-id='9b634486' mangled-name='_ZN6aaudio25AudioGlobal_setMMapPolicyEi' filepath='frameworks/av/media/libaaudio/src/core/AudioGlobal.h' line='26' column='1' visibility='default' binding='global' size-in-bits='64'/>
-      <function-decl name='AudioGlobal_convertResultToText' type-id='cacf0f16' mangled-name='_ZN6aaudio31AudioGlobal_convertResultToTextEi' filepath='frameworks/av/media/libaaudio/src/core/AudioGlobal.h' line='31' column='1' visibility='default' binding='global' size-in-bits='64'/>
-      <function-decl name='AudioGlobal_convertStreamStateToText' type-id='cacf0f16' mangled-name='_ZN6aaudio36AudioGlobal_convertStreamStateToTextEi' filepath='frameworks/av/media/libaaudio/src/core/AudioGlobal.h' line='33' column='1' visibility='default' binding='global' size-in-bits='64'/>
-    </namespace-decl>
-    <namespace-decl name='android'>
-      <class-decl name='sp&lt;aaudio::AudioStream::MyPlayerBase&gt;' visibility='default' size-in-bits='64' filepath='system/core/libutils/include/utils/StrongPointer.h' line='31' column='1' hash='7590c5a196963844' id='f74dc428'>
-        <data-member access='private' layout-offset-in-bits='0'>
-          <var-decl name='m_ptr' type-id='8b0056d4' visibility='default' filepath='system/core/libutils/include/utils/StrongPointer.h' line='124' column='1'/>
-        </data-member>
-      </class-decl>
-      <class-decl name='sp&lt;aaudio::AudioStream&gt;' visibility='default' size-in-bits='64' filepath='system/core/libutils/include/utils/StrongPointer.h' line='31' column='1' hash='e059811285780e21' id='862099c6'>
-        <data-member access='private' layout-offset-in-bits='0'>
-          <var-decl name='m_ptr' type-id='b4bea132' visibility='default' filepath='system/core/libutils/include/utils/StrongPointer.h' line='124' column='1'/>
-        </data-member>
-        <member-function access='private' static='yes'>
-          <function-decl name='check_not_on_stack' type-id='4b34d24f' mangled-name='_ZN7android2spIN6aaudio11AudioStreamEE18check_not_on_stackEPKv' filepath='system/core/libutils/include/utils/StrongPointer.h' line='204' column='1' visibility='default' binding='global' size-in-bits='64'/>
-        </member-function>
-      </class-decl>
-      <function-decl name='sp_report_stack_pointer' type-id='30a82da4' mangled-name='_ZN7android23sp_report_stack_pointerEv' filepath='system/core/libutils/include/utils/StrongPointer.h' line='188' column='1' visibility='default' binding='global' size-in-bits='64'/>
-    </namespace-decl>
-    <class-decl name='AAudioStreamBuilderStruct' is-struct='yes' visibility='default' is-declaration-only='yes' id='813682d4'/>
-    <class-decl name='AAudioStreamStruct' is-struct='yes' visibility='default' is-declaration-only='yes' id='119dbfcb'/>
-    <function-decl name='abort' type-id='30a82da4' filepath='bionic/libc/include/stdlib.h' line='44' column='1' visibility='default' binding='global' size-in-bits='64'/>
-    <typedef-decl name='AAudioStream' type-id='119dbfcb' filepath='frameworks/av/media/libaaudio/include/aaudio/AAudio.h' line='487' column='1' id='f41d1deb'/>
-    <typedef-decl name='AAudioStreamBuilder' type-id='813682d4' filepath='frameworks/av/media/libaaudio/include/aaudio/AAudio.h' line='488' column='1' id='122f757a'/>
-    <function-decl name='AAudio_convertResultToText' type-id='4fa0e7af' filepath='frameworks/av/media/libaaudio/src/core/AAudioAudio.cpp' line='48' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='AAudio_convertResultToText@@LIBAAUDIO'/>
-    <function-decl name='AAudio_convertStreamStateToText' type-id='7844e99a' filepath='frameworks/av/media/libaaudio/src/core/AAudioAudio.cpp' line='52' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='AAudio_convertStreamStateToText@@LIBAAUDIO'/>
-    <function-decl name='AAudio_createStreamBuilder' type-id='025d9210' filepath='frameworks/av/media/libaaudio/src/core/AAudioAudio.cpp' line='66' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='AAudio_createStreamBuilder@@LIBAAUDIO'/>
-    <function-decl name='AAudioStreamBuilder_setPerformanceMode' type-id='b5dba2d5' filepath='frameworks/av/media/libaaudio/src/core/AAudioAudio.cpp' line='76' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='AAudioStreamBuilder_setPerformanceMode@@LIBAAUDIO'/>
-    <function-decl name='AAudioStreamBuilder_setDeviceId' type-id='6bfc3b15' filepath='frameworks/av/media/libaaudio/src/core/AAudioAudio.cpp' line='83' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='AAudioStreamBuilder_setDeviceId@@LIBAAUDIO'/>
-    <function-decl name='AAudioStreamBuilder_setSampleRate' type-id='6bfc3b15' filepath='frameworks/av/media/libaaudio/src/core/AAudioAudio.cpp' line='90' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='AAudioStreamBuilder_setSampleRate@@LIBAAUDIO'/>
-    <function-decl name='AAudioStreamBuilder_setChannelCount' type-id='6bfc3b15' filepath='frameworks/av/media/libaaudio/src/core/AAudioAudio.cpp' line='97' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='AAudioStreamBuilder_setChannelCount@@LIBAAUDIO'/>
-    <function-decl name='AAudioStreamBuilder_setSamplesPerFrame' type-id='6bfc3b15' filepath='frameworks/av/media/libaaudio/src/core/AAudioAudio.cpp' line='103' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='AAudioStreamBuilder_setSamplesPerFrame@@LIBAAUDIO'/>
-    <function-decl name='AAudioStreamBuilder_setDirection' type-id='b3904c18' filepath='frameworks/av/media/libaaudio/src/core/AAudioAudio.cpp' line='110' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='AAudioStreamBuilder_setDirection@@LIBAAUDIO'/>
-    <function-decl name='AAudioStreamBuilder_setFormat' type-id='0de9e2d0' filepath='frameworks/av/media/libaaudio/src/core/AAudioAudio.cpp' line='117' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='AAudioStreamBuilder_setFormat@@LIBAAUDIO'/>
-    <function-decl name='AAudioStreamBuilder_setSharingMode' type-id='86af8127' filepath='frameworks/av/media/libaaudio/src/core/AAudioAudio.cpp' line='126' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='AAudioStreamBuilder_setSharingMode@@LIBAAUDIO'/>
-    <function-decl name='AAudioStreamBuilder_setUsage' type-id='3080d0ce' filepath='frameworks/av/media/libaaudio/src/core/AAudioAudio.cpp' line='133' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='AAudioStreamBuilder_setUsage@@LIBAAUDIO'/>
-    <function-decl name='AAudioStreamBuilder_setContentType' type-id='5faf412f' filepath='frameworks/av/media/libaaudio/src/core/AAudioAudio.cpp' line='139' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='AAudioStreamBuilder_setContentType@@LIBAAUDIO'/>
-    <function-decl name='AAudioStreamBuilder_setInputPreset' type-id='76fb531b' filepath='frameworks/av/media/libaaudio/src/core/AAudioAudio.cpp' line='145' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='AAudioStreamBuilder_setInputPreset@@LIBAAUDIO'/>
-    <function-decl name='AAudioStreamBuilder_setPrivacySensitive' type-id='97acc1a2' filepath='frameworks/av/media/libaaudio/src/core/AAudioAudio.cpp' line='151' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='AAudioStreamBuilder_setPrivacySensitive@@LIBAAUDIO'/>
-    <function-decl name='AAudioStreamBuilder_setBufferCapacityInFrames' type-id='6bfc3b15' filepath='frameworks/av/media/libaaudio/src/core/AAudioAudio.cpp' line='157' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='AAudioStreamBuilder_setBufferCapacityInFrames@@LIBAAUDIO'/>
-    <function-decl name='AAudioStreamBuilder_setAllowedCapturePolicy' type-id='14054cbd' filepath='frameworks/av/media/libaaudio/src/core/AAudioAudio.cpp' line='164' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='AAudioStreamBuilder_setAllowedCapturePolicy@@LIBAAUDIO'/>
-    <function-decl name='AAudioStreamBuilder_setSessionId' type-id='adb87d85' filepath='frameworks/av/media/libaaudio/src/core/AAudioAudio.cpp' line='170' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='AAudioStreamBuilder_setSessionId@@LIBAAUDIO'/>
-    <function-decl name='AAudioStreamBuilder_setDataCallback' type-id='038fe169' filepath='frameworks/av/media/libaaudio/src/core/AAudioAudio.cpp' line='177' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='AAudioStreamBuilder_setDataCallback@@LIBAAUDIO'/>
-    <function-decl name='AAudioStreamBuilder_setErrorCallback' type-id='497305c5' filepath='frameworks/av/media/libaaudio/src/core/AAudioAudio.cpp' line='186' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='AAudioStreamBuilder_setErrorCallback@@LIBAAUDIO'/>
-    <function-decl name='AAudioStreamBuilder_setFramesPerDataCallback' type-id='6bfc3b15' filepath='frameworks/av/media/libaaudio/src/core/AAudioAudio.cpp' line='195' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='AAudioStreamBuilder_setFramesPerDataCallback@@LIBAAUDIO'/>
-    <function-decl name='AAudioStreamBuilder_openStream' type-id='9302c071' filepath='frameworks/av/media/libaaudio/src/core/AAudioAudio.cpp' line='202' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='AAudioStreamBuilder_openStream@@LIBAAUDIO'/>
-    <function-decl name='AAudioStreamBuilder_delete' type-id='9833aae0' filepath='frameworks/av/media/libaaudio/src/core/AAudioAudio.cpp' line='223' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='AAudioStreamBuilder_delete@@LIBAAUDIO'/>
-    <function-decl name='AAudioStream_release' type-id='29c5d527' filepath='frameworks/av/media/libaaudio/src/core/AAudioAudio.cpp' line='233' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='AAudioStream_release@@LIBAAUDIO'/>
-    <function-decl name='AAudioStream_close' type-id='29c5d527' filepath='frameworks/av/media/libaaudio/src/core/AAudioAudio.cpp' line='252' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='AAudioStream_close@@LIBAAUDIO'/>
-    <function-decl name='AAudioStream_requestStart' type-id='29c5d527' filepath='frameworks/av/media/libaaudio/src/core/AAudioAudio.cpp' line='274' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='AAudioStream_requestStart@@LIBAAUDIO'/>
-    <function-decl name='AAudioStream_requestPause' type-id='29c5d527' filepath='frameworks/av/media/libaaudio/src/core/AAudioAudio.cpp' line='284' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='AAudioStream_requestPause@@LIBAAUDIO'/>
-    <function-decl name='AAudioStream_requestFlush' type-id='29c5d527' filepath='frameworks/av/media/libaaudio/src/core/AAudioAudio.cpp' line='291' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='AAudioStream_requestFlush@@LIBAAUDIO'/>
-    <function-decl name='AAudioStream_requestStop' type-id='29c5d527' filepath='frameworks/av/media/libaaudio/src/core/AAudioAudio.cpp' line='298' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='AAudioStream_requestStop@@LIBAAUDIO'/>
-    <function-decl name='AAudioStream_waitForStateChange' type-id='e79a2433' filepath='frameworks/av/media/libaaudio/src/core/AAudioAudio.cpp' line='305' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='AAudioStream_waitForStateChange@@LIBAAUDIO'/>
-    <function-decl name='AAudioStream_read' type-id='c5bafc48' filepath='frameworks/av/media/libaaudio/src/core/AAudioAudio.cpp' line='319' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='AAudioStream_read@@LIBAAUDIO'/>
-    <function-decl name='AAudioStream_write' type-id='c5bafc48' filepath='frameworks/av/media/libaaudio/src/core/AAudioAudio.cpp' line='339' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='AAudioStream_write@@LIBAAUDIO'/>
-    <function-decl name='AAudioStream_getSampleRate' type-id='1c3bc242' filepath='frameworks/av/media/libaaudio/src/core/AAudioAudio.cpp' line='370' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='AAudioStream_getSampleRate@@LIBAAUDIO'/>
-    <function-decl name='AAudioStream_getChannelCount' type-id='1c3bc242' filepath='frameworks/av/media/libaaudio/src/core/AAudioAudio.cpp' line='376' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='AAudioStream_getChannelCount@@LIBAAUDIO'/>
-    <function-decl name='AAudioStream_getSamplesPerFrame' type-id='1c3bc242' filepath='frameworks/av/media/libaaudio/src/core/AAudioAudio.cpp' line='382' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='AAudioStream_getSamplesPerFrame@@LIBAAUDIO'/>
-    <function-decl name='AAudioStream_getState' type-id='6baae3b0' filepath='frameworks/av/media/libaaudio/src/core/AAudioAudio.cpp' line='387' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='AAudioStream_getState@@LIBAAUDIO'/>
-    <function-decl name='AAudioStream_getFormat' type-id='c9a385dd' filepath='frameworks/av/media/libaaudio/src/core/AAudioAudio.cpp' line='393' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='AAudioStream_getFormat@@LIBAAUDIO'/>
-    <function-decl name='AAudioStream_setBufferSizeInFrames' type-id='a54089b2' filepath='frameworks/av/media/libaaudio/src/core/AAudioAudio.cpp' line='401' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='AAudioStream_setBufferSizeInFrames@@LIBAAUDIO'/>
-    <function-decl name='AAudioStream_getBufferSizeInFrames' type-id='1c3bc242' filepath='frameworks/av/media/libaaudio/src/core/AAudioAudio.cpp' line='408' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='AAudioStream_getBufferSizeInFrames@@LIBAAUDIO'/>
-    <function-decl name='AAudioStream_getDirection' type-id='311ef59d' filepath='frameworks/av/media/libaaudio/src/core/AAudioAudio.cpp' line='414' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='AAudioStream_getDirection@@LIBAAUDIO'/>
-    <function-decl name='AAudioStream_getFramesPerBurst' type-id='1c3bc242' filepath='frameworks/av/media/libaaudio/src/core/AAudioAudio.cpp' line='420' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='AAudioStream_getFramesPerBurst@@LIBAAUDIO'/>
-    <function-decl name='AAudioStream_getFramesPerDataCallback' type-id='1c3bc242' filepath='frameworks/av/media/libaaudio/src/core/AAudioAudio.cpp' line='426' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='AAudioStream_getFramesPerDataCallback@@LIBAAUDIO'/>
-    <function-decl name='AAudioStream_getBufferCapacityInFrames' type-id='1c3bc242' filepath='frameworks/av/media/libaaudio/src/core/AAudioAudio.cpp' line='432' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='AAudioStream_getBufferCapacityInFrames@@LIBAAUDIO'/>
-    <function-decl name='AAudioStream_getXRunCount' type-id='1c3bc242' filepath='frameworks/av/media/libaaudio/src/core/AAudioAudio.cpp' line='438' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='AAudioStream_getXRunCount@@LIBAAUDIO'/>
-    <function-decl name='AAudioStream_getPerformanceMode' type-id='7f1f06f6' filepath='frameworks/av/media/libaaudio/src/core/AAudioAudio.cpp' line='444' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='AAudioStream_getPerformanceMode@@LIBAAUDIO'/>
-    <function-decl name='AAudioStream_getDeviceId' type-id='1c3bc242' filepath='frameworks/av/media/libaaudio/src/core/AAudioAudio.cpp' line='450' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='AAudioStream_getDeviceId@@LIBAAUDIO'/>
-    <function-decl name='AAudioStream_getSharingMode' type-id='07489bcc' filepath='frameworks/av/media/libaaudio/src/core/AAudioAudio.cpp' line='456' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='AAudioStream_getSharingMode@@LIBAAUDIO'/>
-    <function-decl name='AAudioStream_getUsage' type-id='4c921d5f' filepath='frameworks/av/media/libaaudio/src/core/AAudioAudio.cpp' line='462' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='AAudioStream_getUsage@@LIBAAUDIO'/>
-    <function-decl name='AAudioStream_getContentType' type-id='d327ba38' filepath='frameworks/av/media/libaaudio/src/core/AAudioAudio.cpp' line='468' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='AAudioStream_getContentType@@LIBAAUDIO'/>
-    <function-decl name='AAudioStream_getInputPreset' type-id='6f9238b0' filepath='frameworks/av/media/libaaudio/src/core/AAudioAudio.cpp' line='474' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='AAudioStream_getInputPreset@@LIBAAUDIO'/>
-    <function-decl name='AAudioStream_getAllowedCapturePolicy' type-id='334c2146' filepath='frameworks/av/media/libaaudio/src/core/AAudioAudio.cpp' line='480' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='AAudioStream_getAllowedCapturePolicy@@LIBAAUDIO'/>
-    <function-decl name='AAudioStream_getSessionId' type-id='1c3bc242' filepath='frameworks/av/media/libaaudio/src/core/AAudioAudio.cpp' line='487' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='AAudioStream_getSessionId@@LIBAAUDIO'/>
-    <function-decl name='AAudioStream_getFramesWritten' type-id='05fa4e1d' filepath='frameworks/av/media/libaaudio/src/core/AAudioAudio.cpp' line='493' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='AAudioStream_getFramesWritten@@LIBAAUDIO'/>
-    <function-decl name='AAudioStream_getFramesRead' type-id='05fa4e1d' filepath='frameworks/av/media/libaaudio/src/core/AAudioAudio.cpp' line='499' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='AAudioStream_getFramesRead@@LIBAAUDIO'/>
-    <function-decl name='AAudioStream_getTimestamp' type-id='9ba6a58f' filepath='frameworks/av/media/libaaudio/src/core/AAudioAudio.cpp' line='505' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='AAudioStream_getTimestamp@@LIBAAUDIO'/>
-    <function-decl name='AAudio_getMMapPolicy' type-id='17a28a17' filepath='frameworks/av/media/libaaudio/src/core/AAudioAudio.cpp' line='522' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='AAudio_getMMapPolicy@@LIBAAUDIO'/>
-    <function-decl name='AAudio_setMMapPolicy' type-id='1305800d' filepath='frameworks/av/media/libaaudio/src/core/AAudioAudio.cpp' line='526' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='AAudio_setMMapPolicy@@LIBAAUDIO'/>
-    <function-decl name='AAudioStream_isMMapUsed' type-id='163ed73b' filepath='frameworks/av/media/libaaudio/src/core/AAudioAudio.cpp' line='530' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='AAudioStream_isMMapUsed@@LIBAAUDIO'/>
-    <function-decl name='AAudioStream_isPrivacySensitive' type-id='163ed73b' filepath='frameworks/av/media/libaaudio/src/core/AAudioAudio.cpp' line='536' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='AAudioStream_isPrivacySensitive@@LIBAAUDIO'/>
-    <function-decl name='AAudioConvert_aaudioToAndroidDataFormat' type-id='41e62b3a' mangled-name='_Z39AAudioConvert_aaudioToAndroidDataFormati' filepath='frameworks/av/media/libaaudio/src/utility/AAudioUtilities.h' line='61' column='1' visibility='default' binding='global' size-in-bits='64'/>
-    <function-decl name='AAudioConvert_androidToAAudioDataFormat' type-id='ca9d312c' mangled-name='_Z39AAudioConvert_androidToAAudioDataFormat14audio_format_t' filepath='frameworks/av/media/libaaudio/src/utility/AAudioUtilities.h' line='63' column='1' visibility='default' binding='global' size-in-bits='64'/>
-    <type-decl name='void' id='48b5725f'/>
-    <pointer-type-def type-id='48b5725f' id='eaa32e2f'/>
-    <function-type size-in-bits='64' hash='388da3fa973fde78' id='334c2146'>
-      <parameter type-id='b2a1b704' filepath='frameworks/av/media/libaaudio/src/core/AAudioAudio.cpp' line='481' column='1'/>
+    <qualified-type-def type-id='a84c031d' const='yes' hash='45ae2830e476ce98' id='9b45d938'/>
+    <pointer-type-def type-id='9b45d938' size-in-bits='64' hash='83a5509e2ae27d75' id='80f4b756'/>
+    <function-type size-in-bits='64' hash='70e068b59f21d49a' id='334c2146'>
+      <parameter type-id='b2a1b704'/>
       <return type-id='abe3e34b'/>
     </function-type>
-    <function-type size-in-bits='64' hash='388da3fa973fde78' id='d327ba38'>
-      <parameter type-id='b2a1b704' filepath='frameworks/av/media/libaaudio/src/core/AAudioAudio.cpp' line='468' column='1'/>
+    <function-type size-in-bits='64' hash='8714dbadf5fee4cf' id='d327ba38'>
+      <parameter type-id='b2a1b704'/>
       <return type-id='2df7abd1'/>
     </function-type>
-    <function-type size-in-bits='64' hash='d628501fd2223339' id='39628053'>
+    <function-type size-in-bits='64' hash='7e33e9b60f8f1224' id='39628053'>
       <parameter type-id='b2a1b704'/>
       <parameter type-id='eaa32e2f'/>
       <parameter type-id='eaa32e2f'/>
       <parameter type-id='3ff5601b'/>
       <return type-id='ae10ac8d'/>
     </function-type>
-    <function-type size-in-bits='64' hash='388da3fa973fde78' id='311ef59d'>
-      <parameter type-id='b2a1b704' filepath='frameworks/av/media/libaaudio/src/core/AAudioAudio.cpp' line='414' column='1'/>
+    <function-type size-in-bits='64' hash='c59037df458399bd' id='311ef59d'>
+      <parameter type-id='b2a1b704'/>
       <return type-id='a5156fbe'/>
     </function-type>
-    <function-type size-in-bits='64' hash='388da3fa973fde78' id='c9a385dd'>
-      <parameter type-id='b2a1b704' filepath='frameworks/av/media/libaaudio/src/core/AAudioAudio.cpp' line='393' column='1'/>
+    <function-type size-in-bits='64' hash='3d66a1555fefc99a' id='c9a385dd'>
+      <parameter type-id='b2a1b704'/>
       <return type-id='f21c6374'/>
     </function-type>
-    <function-type size-in-bits='64' hash='388da3fa973fde78' id='6f9238b0'>
-      <parameter type-id='b2a1b704' filepath='frameworks/av/media/libaaudio/src/core/AAudioAudio.cpp' line='474' column='1'/>
+    <function-type size-in-bits='64' hash='726e7820b912ec80' id='6f9238b0'>
+      <parameter type-id='b2a1b704'/>
       <return type-id='a4168325'/>
     </function-type>
-    <function-type size-in-bits='64' hash='388da3fa973fde78' id='7f1f06f6'>
-      <parameter type-id='b2a1b704' filepath='frameworks/av/media/libaaudio/src/core/AAudioAudio.cpp' line='444' column='1'/>
+    <function-type size-in-bits='64' hash='95cf03a613eeae39' id='7f1f06f6'>
+      <parameter type-id='b2a1b704'/>
       <return type-id='6757629b'/>
     </function-type>
-    <function-type size-in-bits='64' hash='388da3fa973fde78' id='17a28a17'>
+    <function-type size-in-bits='64' hash='3934927c78d03de3' id='17a28a17'>
       <return type-id='d062bfb5'/>
     </function-type>
-    <function-type size-in-bits='64' hash='388da3fa973fde78' id='29c5d527'>
-      <parameter type-id='b2a1b704' filepath='frameworks/av/media/libaaudio/src/core/AAudioAudio.cpp' line='233' column='1'/>
+    <function-type size-in-bits='64' hash='aea61191e88ca9bc' id='29c5d527'>
+      <parameter type-id='b2a1b704'/>
       <return type-id='da775bc6'/>
     </function-type>
-    <function-type size-in-bits='64' hash='ec36dbfec7991b72' id='e79a2433'>
-      <parameter type-id='b2a1b704' filepath='frameworks/av/media/libaaudio/src/core/AAudioAudio.cpp' line='305' column='1'/>
-      <parameter type-id='2e552d01' filepath='frameworks/av/media/libaaudio/src/core/AAudioAudio.cpp' line='306' column='1'/>
-      <parameter type-id='6de3cf18' filepath='frameworks/av/media/libaaudio/src/core/AAudioAudio.cpp' line='307' column='1'/>
-      <parameter type-id='9da381c4' filepath='frameworks/av/media/libaaudio/src/core/AAudioAudio.cpp' line='308' column='1'/>
+    <function-type size-in-bits='64' hash='ca8b3eccc590f322' id='e79a2433'>
+      <parameter type-id='b2a1b704'/>
+      <parameter type-id='2e552d01'/>
+      <parameter type-id='6de3cf18'/>
+      <parameter type-id='9da381c4'/>
       <return type-id='da775bc6'/>
     </function-type>
-    <function-type size-in-bits='64' hash='aa10e75a6121e438' id='9ba6a58f'>
-      <parameter type-id='b2a1b704' filepath='frameworks/av/media/libaaudio/src/core/AAudioAudio.cpp' line='505' column='1'/>
-      <parameter type-id='a1c3b834' filepath='frameworks/av/media/libaaudio/src/core/AAudioAudio.cpp' line='506' column='1'/>
-      <parameter type-id='cb785ebf' filepath='frameworks/av/media/libaaudio/src/core/AAudioAudio.cpp' line='507' column='1'/>
-      <parameter type-id='cb785ebf' filepath='frameworks/av/media/libaaudio/src/core/AAudioAudio.cpp' line='508' column='1'/>
+    <function-type size-in-bits='64' hash='8bad5cc28419565e' id='9ba6a58f'>
+      <parameter type-id='b2a1b704'/>
+      <parameter type-id='a1c3b834'/>
+      <parameter type-id='cb785ebf'/>
+      <parameter type-id='cb785ebf'/>
       <return type-id='da775bc6'/>
     </function-type>
-    <function-type size-in-bits='64' hash='d628501fd2223339' id='a54089b2'>
-      <parameter type-id='b2a1b704' filepath='frameworks/av/media/libaaudio/src/core/AAudioAudio.cpp' line='401' column='1'/>
-      <parameter type-id='3ff5601b' filepath='frameworks/av/media/libaaudio/src/core/AAudioAudio.cpp' line='402' column='1'/>
+    <function-type size-in-bits='64' hash='752442da80da814f' id='a54089b2'>
+      <parameter type-id='b2a1b704'/>
+      <parameter type-id='3ff5601b'/>
       <return type-id='da775bc6'/>
     </function-type>
-    <function-type size-in-bits='64' hash='d0e3d68beb2b6d4f' id='c5bafc48'>
-      <parameter type-id='b2a1b704' filepath='frameworks/av/media/libaaudio/src/core/AAudioAudio.cpp' line='319' column='1'/>
-      <parameter type-id='eaa32e2f' filepath='frameworks/av/media/libaaudio/src/core/AAudioAudio.cpp' line='320' column='1'/>
-      <parameter type-id='3ff5601b' filepath='frameworks/av/media/libaaudio/src/core/AAudioAudio.cpp' line='321' column='1'/>
-      <parameter type-id='9da381c4' filepath='frameworks/av/media/libaaudio/src/core/AAudioAudio.cpp' line='322' column='1'/>
+    <function-type size-in-bits='64' hash='7ff679aa2f243d7d' id='c5bafc48'>
+      <parameter type-id='b2a1b704'/>
+      <parameter type-id='eaa32e2f'/>
+      <parameter type-id='3ff5601b'/>
+      <parameter type-id='9da381c4'/>
       <return type-id='da775bc6'/>
     </function-type>
-    <function-type size-in-bits='64' hash='388da3fa973fde78' id='9833aae0'>
-      <parameter type-id='c56f4379' filepath='frameworks/av/media/libaaudio/src/core/AAudioAudio.cpp' line='223' column='1'/>
+    <function-type size-in-bits='64' hash='4c6e687559a50396' id='9833aae0'>
+      <parameter type-id='c56f4379'/>
       <return type-id='da775bc6'/>
     </function-type>
-    <function-type size-in-bits='64' hash='388da3fa973fde78' id='025d9210'>
-      <parameter type-id='2126fba9' filepath='frameworks/av/media/libaaudio/src/core/AAudioAudio.cpp' line='66' column='1'/>
+    <function-type size-in-bits='64' hash='b4494afa14ff974a' id='025d9210'>
+      <parameter type-id='2126fba9'/>
       <return type-id='da775bc6'/>
     </function-type>
-    <function-type size-in-bits='64' hash='388da3fa973fde78' id='9302c071'>
-      <parameter type-id='c56f4379' filepath='frameworks/av/media/libaaudio/src/core/AAudioAudio.cpp' line='202' column='1'/>
-      <parameter type-id='62935d6a' filepath='frameworks/av/media/libaaudio/src/core/AAudioAudio.cpp' line='203' column='1'/>
+    <function-type size-in-bits='64' hash='18a8b8f71630176c' id='9302c071'>
+      <parameter type-id='c56f4379'/>
+      <parameter type-id='62935d6a'/>
       <return type-id='da775bc6'/>
     </function-type>
-    <function-type size-in-bits='64' hash='d628501fd2223339' id='1305800d'>
-      <parameter type-id='d062bfb5' filepath='frameworks/av/media/libaaudio/src/core/AAudioAudio.cpp' line='526' column='1'/>
+    <function-type size-in-bits='64' hash='c66a7374730cb949' id='1305800d'>
+      <parameter type-id='d062bfb5'/>
       <return type-id='da775bc6'/>
     </function-type>
-    <function-type size-in-bits='64' hash='388da3fa973fde78' id='07489bcc'>
-      <parameter type-id='b2a1b704' filepath='frameworks/av/media/libaaudio/src/core/AAudioAudio.cpp' line='456' column='1'/>
+    <function-type size-in-bits='64' hash='42f9e8ac80acd156' id='07489bcc'>
+      <parameter type-id='b2a1b704'/>
       <return type-id='da67c8b9'/>
     </function-type>
-    <function-type size-in-bits='64' hash='388da3fa973fde78' id='6baae3b0'>
-      <parameter type-id='b2a1b704' filepath='frameworks/av/media/libaaudio/src/core/AAudioAudio.cpp' line='387' column='1'/>
+    <function-type size-in-bits='64' hash='6bf4c006006c170c' id='6baae3b0'>
+      <parameter type-id='b2a1b704'/>
       <return type-id='2e552d01'/>
     </function-type>
-    <function-type size-in-bits='64' hash='388da3fa973fde78' id='4c921d5f'>
-      <parameter type-id='b2a1b704' filepath='frameworks/av/media/libaaudio/src/core/AAudioAudio.cpp' line='462' column='1'/>
+    <function-type size-in-bits='64' hash='7a35865049f97c6a' id='4c921d5f'>
+      <parameter type-id='b2a1b704'/>
       <return type-id='8ee4dca8'/>
     </function-type>
-    <function-type size-in-bits='64' hash='a16096bfc556d1a0' id='41e62b3a'>
-      <parameter type-id='95e97e5e'/>
-      <return type-id='ff439793'/>
-    </function-type>
-    <function-type size-in-bits='64' hash='c7c710e908194b91' id='163ed73b'>
-      <parameter type-id='b2a1b704' filepath='frameworks/av/media/libaaudio/src/core/AAudioAudio.cpp' line='530' column='1'/>
+    <function-type size-in-bits='64' hash='efd9545dc4761455' id='163ed73b'>
+      <parameter type-id='b2a1b704'/>
       <return type-id='c894953d'/>
     </function-type>
-    <function-type size-in-bits='64' hash='7cffa03161e7e042' id='4fa0e7af'>
-      <parameter type-id='da775bc6' filepath='frameworks/av/media/libaaudio/src/core/AAudioAudio.cpp' line='48' column='1'/>
+    <function-type size-in-bits='64' hash='dce16457f8019bd3' id='4fa0e7af'>
+      <parameter type-id='da775bc6'/>
       <return type-id='80f4b756'/>
     </function-type>
-    <function-type size-in-bits='64' hash='7cffa03161e7e042' id='7844e99a'>
-      <parameter type-id='2e552d01' filepath='frameworks/av/media/libaaudio/src/core/AAudioAudio.cpp' line='52' column='1'/>
+    <function-type size-in-bits='64' hash='24c546d123c0decf' id='7844e99a'>
+      <parameter type-id='2e552d01'/>
       <return type-id='80f4b756'/>
     </function-type>
-    <function-type size-in-bits='64' hash='7cffa03161e7e042' id='cacf0f16'>
-      <parameter type-id='95e97e5e'/>
-      <return type-id='80f4b756'/>
-    </function-type>
-    <function-type size-in-bits='64' hash='4eaad5cab3d8f27f' id='ca9d312c'>
-      <parameter type-id='ff439793'/>
-      <return type-id='95e97e5e'/>
-    </function-type>
-    <function-type size-in-bits='64' hash='d628501fd2223339' id='9b634486'>
-      <parameter type-id='95e97e5e'/>
-      <return type-id='95e97e5e'/>
-    </function-type>
-    <function-type size-in-bits='64' hash='388da3fa973fde78' id='b39d85cf'>
-      <return type-id='95e97e5e'/>
-    </function-type>
-    <function-type size-in-bits='64' hash='388da3fa973fde78' id='1c3bc242'>
-      <parameter type-id='b2a1b704' filepath='frameworks/av/media/libaaudio/src/core/AAudioAudio.cpp' line='370' column='1'/>
+    <function-type size-in-bits='64' hash='dfcb32731fb445d1' id='1c3bc242'>
+      <parameter type-id='b2a1b704'/>
       <return type-id='3ff5601b'/>
     </function-type>
-    <function-type size-in-bits='64' hash='52c0efb08d2aa513' id='05fa4e1d'>
-      <parameter type-id='b2a1b704' filepath='frameworks/av/media/libaaudio/src/core/AAudioAudio.cpp' line='493' column='1'/>
+    <function-type size-in-bits='64' hash='59f88b94a7be75a8' id='05fa4e1d'>
+      <parameter type-id='b2a1b704'/>
       <return type-id='9da381c4'/>
     </function-type>
-    <function-type size-in-bits='64' hash='388da3fa973fde78' id='340319e3'>
+    <function-type size-in-bits='64' hash='b46431265f409773' id='340319e3'>
       <parameter type-id='b2a1b704'/>
       <parameter type-id='eaa32e2f'/>
       <parameter type-id='da775bc6'/>
       <return type-id='48b5725f'/>
     </function-type>
-    <function-type size-in-bits='64' hash='5695f5ce05a4c55f' id='038fe169'>
-      <parameter type-id='c56f4379' filepath='frameworks/av/media/libaaudio/src/core/AAudioAudio.cpp' line='177' column='1'/>
-      <parameter type-id='edb6186f' filepath='frameworks/av/media/libaaudio/src/core/AAudioAudio.cpp' line='178' column='1'/>
-      <parameter type-id='eaa32e2f' filepath='frameworks/av/media/libaaudio/src/core/AAudioAudio.cpp' line='179' column='1'/>
+    <function-type size-in-bits='64' hash='0eb770a9e9dc47d8' id='038fe169'>
+      <parameter type-id='c56f4379'/>
+      <parameter type-id='edb6186f'/>
+      <parameter type-id='eaa32e2f'/>
       <return type-id='48b5725f'/>
     </function-type>
-    <function-type size-in-bits='64' hash='5695f5ce05a4c55f' id='497305c5'>
-      <parameter type-id='c56f4379' filepath='frameworks/av/media/libaaudio/src/core/AAudioAudio.cpp' line='186' column='1'/>
-      <parameter type-id='2e91990d' filepath='frameworks/av/media/libaaudio/src/core/AAudioAudio.cpp' line='187' column='1'/>
-      <parameter type-id='eaa32e2f' filepath='frameworks/av/media/libaaudio/src/core/AAudioAudio.cpp' line='188' column='1'/>
+    <function-type size-in-bits='64' hash='a8b021ca0114af12' id='497305c5'>
+      <parameter type-id='c56f4379'/>
+      <parameter type-id='2e91990d'/>
+      <parameter type-id='eaa32e2f'/>
       <return type-id='48b5725f'/>
     </function-type>
-    <function-type size-in-bits='64' hash='388da3fa973fde78' id='14054cbd'>
-      <parameter type-id='c56f4379' filepath='frameworks/av/media/libaaudio/src/core/AAudioAudio.cpp' line='165' column='1'/>
-      <parameter type-id='abe3e34b' filepath='frameworks/av/media/libaaudio/src/core/AAudioAudio.cpp' line='165' column='1'/>
+    <function-type size-in-bits='64' hash='7cb50e9d0c119a22' id='14054cbd'>
+      <parameter type-id='c56f4379'/>
+      <parameter type-id='abe3e34b'/>
       <return type-id='48b5725f'/>
     </function-type>
-    <function-type size-in-bits='64' hash='388da3fa973fde78' id='5faf412f'>
-      <parameter type-id='c56f4379' filepath='frameworks/av/media/libaaudio/src/core/AAudioAudio.cpp' line='139' column='1'/>
-      <parameter type-id='2df7abd1' filepath='frameworks/av/media/libaaudio/src/core/AAudioAudio.cpp' line='140' column='1'/>
+    <function-type size-in-bits='64' hash='ec64d3fc219ca69f' id='5faf412f'>
+      <parameter type-id='c56f4379'/>
+      <parameter type-id='2df7abd1'/>
       <return type-id='48b5725f'/>
     </function-type>
-    <function-type size-in-bits='64' hash='388da3fa973fde78' id='b3904c18'>
-      <parameter type-id='c56f4379' filepath='frameworks/av/media/libaaudio/src/core/AAudioAudio.cpp' line='110' column='1'/>
-      <parameter type-id='a5156fbe' filepath='frameworks/av/media/libaaudio/src/core/AAudioAudio.cpp' line='111' column='1'/>
+    <function-type size-in-bits='64' hash='70e61ccdbedac388' id='b3904c18'>
+      <parameter type-id='c56f4379'/>
+      <parameter type-id='a5156fbe'/>
       <return type-id='48b5725f'/>
     </function-type>
-    <function-type size-in-bits='64' hash='388da3fa973fde78' id='0de9e2d0'>
-      <parameter type-id='c56f4379' filepath='frameworks/av/media/libaaudio/src/core/AAudioAudio.cpp' line='117' column='1'/>
-      <parameter type-id='f21c6374' filepath='frameworks/av/media/libaaudio/src/core/AAudioAudio.cpp' line='118' column='1'/>
+    <function-type size-in-bits='64' hash='0ab0065d8c09d0b5' id='0de9e2d0'>
+      <parameter type-id='c56f4379'/>
+      <parameter type-id='f21c6374'/>
       <return type-id='48b5725f'/>
     </function-type>
-    <function-type size-in-bits='64' hash='388da3fa973fde78' id='76fb531b'>
-      <parameter type-id='c56f4379' filepath='frameworks/av/media/libaaudio/src/core/AAudioAudio.cpp' line='145' column='1'/>
-      <parameter type-id='a4168325' filepath='frameworks/av/media/libaaudio/src/core/AAudioAudio.cpp' line='146' column='1'/>
+    <function-type size-in-bits='64' hash='2e99d62643cf733c' id='76fb531b'>
+      <parameter type-id='c56f4379'/>
+      <parameter type-id='a4168325'/>
       <return type-id='48b5725f'/>
     </function-type>
-    <function-type size-in-bits='64' hash='388da3fa973fde78' id='b5dba2d5'>
-      <parameter type-id='c56f4379' filepath='frameworks/av/media/libaaudio/src/core/AAudioAudio.cpp' line='76' column='1'/>
-      <parameter type-id='6757629b' filepath='frameworks/av/media/libaaudio/src/core/AAudioAudio.cpp' line='77' column='1'/>
+    <function-type size-in-bits='64' hash='f344fa714daa802f' id='b5dba2d5'>
+      <parameter type-id='c56f4379'/>
+      <parameter type-id='6757629b'/>
       <return type-id='48b5725f'/>
     </function-type>
-    <function-type size-in-bits='64' hash='388da3fa973fde78' id='adb87d85'>
-      <parameter type-id='c56f4379' filepath='frameworks/av/media/libaaudio/src/core/AAudioAudio.cpp' line='170' column='1'/>
-      <parameter type-id='4d6761d3' filepath='frameworks/av/media/libaaudio/src/core/AAudioAudio.cpp' line='171' column='1'/>
+    <function-type size-in-bits='64' hash='8ac84c32244b497c' id='adb87d85'>
+      <parameter type-id='c56f4379'/>
+      <parameter type-id='4d6761d3'/>
       <return type-id='48b5725f'/>
     </function-type>
-    <function-type size-in-bits='64' hash='388da3fa973fde78' id='86af8127'>
-      <parameter type-id='c56f4379' filepath='frameworks/av/media/libaaudio/src/core/AAudioAudio.cpp' line='126' column='1'/>
-      <parameter type-id='da67c8b9' filepath='frameworks/av/media/libaaudio/src/core/AAudioAudio.cpp' line='127' column='1'/>
+    <function-type size-in-bits='64' hash='9b457497802fec0c' id='86af8127'>
+      <parameter type-id='c56f4379'/>
+      <parameter type-id='da67c8b9'/>
       <return type-id='48b5725f'/>
     </function-type>
-    <function-type size-in-bits='64' hash='388da3fa973fde78' id='3080d0ce'>
-      <parameter type-id='c56f4379' filepath='frameworks/av/media/libaaudio/src/core/AAudioAudio.cpp' line='133' column='1'/>
-      <parameter type-id='8ee4dca8' filepath='frameworks/av/media/libaaudio/src/core/AAudioAudio.cpp' line='134' column='1'/>
+    <function-type size-in-bits='64' hash='f8fe526061d9f4a0' id='3080d0ce'>
+      <parameter type-id='c56f4379'/>
+      <parameter type-id='8ee4dca8'/>
       <return type-id='48b5725f'/>
     </function-type>
-    <function-type size-in-bits='64' hash='c7c710e908194b91' id='97acc1a2'>
-      <parameter type-id='c56f4379' filepath='frameworks/av/media/libaaudio/src/core/AAudioAudio.cpp' line='151' column='1'/>
-      <parameter type-id='c894953d' filepath='frameworks/av/media/libaaudio/src/core/AAudioAudio.cpp' line='152' column='1'/>
+    <function-type size-in-bits='64' hash='e4e74031d93901e6' id='97acc1a2'>
+      <parameter type-id='c56f4379'/>
+      <parameter type-id='c894953d'/>
       <return type-id='48b5725f'/>
     </function-type>
-    <function-type size-in-bits='64' hash='388da3fa973fde78' id='6bfc3b15'>
-      <parameter type-id='c56f4379' filepath='frameworks/av/media/libaaudio/src/core/AAudioAudio.cpp' line='83' column='1'/>
-      <parameter type-id='3ff5601b' filepath='frameworks/av/media/libaaudio/src/core/AAudioAudio.cpp' line='84' column='1'/>
+    <function-type size-in-bits='64' hash='968baa64dca5dfe5' id='6bfc3b15'>
+      <parameter type-id='c56f4379'/>
+      <parameter type-id='3ff5601b'/>
       <return type-id='48b5725f'/>
     </function-type>
-    <function-type size-in-bits='64' hash='7f32ffea222edbe7' id='30a82da4'>
-      <return type-id='48b5725f'/>
-    </function-type>
-    <function-type method-class-id='e5af4ed4' size-in-bits='64' hash='7f32ffea222edbe7' id='2af3defb'>
-      <parameter type-id='b4bea132' is-artificial='yes'/>
-      <return type-id='48b5725f'/>
-    </function-type>
-    <function-type method-class-id='862099c6' size-in-bits='64' hash='7f32ffea222edbe7' id='4b34d24f'>
-      <parameter type-id='eaa32e2f' filepath='system/core/libutils/include/utils/StrongPointer.h' line='123' column='1'/>
-      <return type-id='48b5725f'/>
-    </function-type>
+    <type-decl name='int' size-in-bits='32' hash='09d17c08f594edc7' id='95e97e5e'/>
+    <pointer-type-def type-id='9da381c4' size-in-bits='64' hash='dd52c01115fe3642' id='cb785ebf'/>
+    <type-decl name='long int' size-in-bits='64' hash='8aa1e1a2ab2c2d3e' id='95e97e5f'/>
+    <class-decl name='AAudioStreamBuilderStruct' is-struct='yes' visibility='default' is-declaration-only='yes' hash='3f1c532eff98a408' id='813682d4'/>
+    <class-decl name='AAudioStreamStruct' is-struct='yes' visibility='default' is-declaration-only='yes' hash='5d1ed653ff43d7d2' id='119dbfcb'/>
+    <typedef-decl name='AAudioStream' type-id='119dbfcb' hash='5d1ed653ff43d7d2' id='f41d1deb'/>
+    <typedef-decl name='AAudioStreamBuilder' type-id='813682d4' hash='3f1c532eff98a408' id='122f757a'/>
+    <typedef-decl name='AAudioStream_dataCallback' type-id='40a93d56' size-in-bits='64' hash='f172b1d37c0d0902' id='edb6186f'/>
+    <typedef-decl name='AAudioStream_errorCallback' type-id='86b497aa' size-in-bits='64' hash='b89320ea1f7cf2fd' id='2e91990d'/>
+    <typedef-decl name='__clockid_t' type-id='7eb128d4' size-in-bits='32' hash='09d17c08f594edc7' id='08f9a87a'/>
+    <typedef-decl name='__int32_t' type-id='95e97e5e' size-in-bits='32' hash='09d17c08f594edc7' id='33f57a65'/>
+    <typedef-decl name='__int64_t' type-id='95e97e5f' size-in-bits='64' hash='8aa1e1a2ab2c2d3e' id='0c9942d2'/>
+    <typedef-decl name='__kernel_clockid_t' type-id='95e97e5e' size-in-bits='32' hash='09d17c08f594edc7' id='7eb128d4'/>
+    <typedef-decl name='aaudio_allowed_capture_policy_t' type-id='3ff5601b' size-in-bits='32' hash='09d17c08f594edc7' id='abe3e34b'/>
+    <typedef-decl name='aaudio_content_type_t' type-id='3ff5601b' size-in-bits='32' hash='09d17c08f594edc7' id='2df7abd1'/>
+    <typedef-decl name='aaudio_data_callback_result_t' type-id='3ff5601b' size-in-bits='32' hash='09d17c08f594edc7' id='ae10ac8d'/>
+    <typedef-decl name='aaudio_direction_t' type-id='3ff5601b' size-in-bits='32' hash='09d17c08f594edc7' id='a5156fbe'/>
+    <typedef-decl name='aaudio_format_t' type-id='3ff5601b' size-in-bits='32' hash='09d17c08f594edc7' id='f21c6374'/>
+    <typedef-decl name='aaudio_input_preset_t' type-id='3ff5601b' size-in-bits='32' hash='09d17c08f594edc7' id='a4168325'/>
+    <typedef-decl name='aaudio_performance_mode_t' type-id='3ff5601b' size-in-bits='32' hash='09d17c08f594edc7' id='6757629b'/>
+    <typedef-decl name='aaudio_policy_t' type-id='3ff5601b' size-in-bits='32' hash='09d17c08f594edc7' id='d062bfb5'/>
+    <typedef-decl name='aaudio_result_t' type-id='3ff5601b' size-in-bits='32' hash='09d17c08f594edc7' id='da775bc6'/>
+    <typedef-decl name='aaudio_session_id_t' type-id='3ff5601b' size-in-bits='32' hash='09d17c08f594edc7' id='4d6761d3'/>
+    <typedef-decl name='aaudio_sharing_mode_t' type-id='3ff5601b' size-in-bits='32' hash='09d17c08f594edc7' id='da67c8b9'/>
+    <typedef-decl name='aaudio_stream_state_t' type-id='3ff5601b' size-in-bits='32' hash='09d17c08f594edc7' id='2e552d01'/>
+    <typedef-decl name='aaudio_usage_t' type-id='3ff5601b' size-in-bits='32' hash='09d17c08f594edc7' id='8ee4dca8'/>
+    <typedef-decl name='clockid_t' type-id='08f9a87a' size-in-bits='32' hash='09d17c08f594edc7' id='a1c3b834'/>
+    <typedef-decl name='int32_t' type-id='33f57a65' size-in-bits='32' hash='09d17c08f594edc7' id='3ff5601b'/>
+    <typedef-decl name='int64_t' type-id='0c9942d2' size-in-bits='64' hash='8aa1e1a2ab2c2d3e' id='9da381c4'/>
+    <type-decl name='void' hash='8dcbc64750c3d4e3' id='48b5725f'/>
+    <pointer-type-def type-id='340319e3' size-in-bits='64' hash='b89320ea1f7cf2fd' id='86b497aa'/>
+    <pointer-type-def type-id='48b5725f' hash='19e246ce75ee6a42' id='eaa32e2f'/>
+  </abi-types>
+  <abi-instr address-size='64' path='frameworks/av/media/libaaudio/src/core/AAudioAudio.cpp' language='LANG_C_plus_plus_14'>
+      <function-decl name='AAudioStream_getAllowedCapturePolicy' type-id='334c2146' mangled-name='AAudioStream_getAllowedCapturePolicy' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='AAudioStream_getAllowedCapturePolicy@@LIBAAUDIO'/>
+      <function-decl name='AAudioStream_getContentType' type-id='d327ba38' mangled-name='AAudioStream_getContentType' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='AAudioStream_getContentType@@LIBAAUDIO'/>
+      <function-decl name='AAudioStream_getDirection' type-id='311ef59d' mangled-name='AAudioStream_getDirection' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='AAudioStream_getDirection@@LIBAAUDIO'/>
+      <function-decl name='AAudioStream_getFormat' type-id='c9a385dd' mangled-name='AAudioStream_getFormat' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='AAudioStream_getFormat@@LIBAAUDIO'/>
+      <function-decl name='AAudioStream_getInputPreset' type-id='6f9238b0' mangled-name='AAudioStream_getInputPreset' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='AAudioStream_getInputPreset@@LIBAAUDIO'/>
+      <function-decl name='AAudioStream_getPerformanceMode' type-id='7f1f06f6' mangled-name='AAudioStream_getPerformanceMode' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='AAudioStream_getPerformanceMode@@LIBAAUDIO'/>
+      <function-decl name='AAudio_getMMapPolicy' type-id='17a28a17' mangled-name='AAudio_getMMapPolicy' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='AAudio_getMMapPolicy@@LIBAAUDIO'/>
+      <function-decl name='AAudioStreamBuilder_delete' type-id='9833aae0' mangled-name='AAudioStreamBuilder_delete' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='AAudioStreamBuilder_delete@@LIBAAUDIO'/>
+      <function-decl name='AAudioStreamBuilder_openStream' type-id='9302c071' mangled-name='AAudioStreamBuilder_openStream' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='AAudioStreamBuilder_openStream@@LIBAAUDIO'/>
+      <function-decl name='AAudioStream_close' type-id='29c5d527' mangled-name='AAudioStream_close' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='AAudioStream_close@@LIBAAUDIO'/>
+      <function-decl name='AAudioStream_getTimestamp' type-id='9ba6a58f' mangled-name='AAudioStream_getTimestamp' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='AAudioStream_getTimestamp@@LIBAAUDIO'/>
+      <function-decl name='AAudioStream_read' type-id='c5bafc48' mangled-name='AAudioStream_read' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='AAudioStream_read@@LIBAAUDIO'/>
+      <function-decl name='AAudioStream_release' type-id='29c5d527' mangled-name='AAudioStream_release' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='AAudioStream_release@@LIBAAUDIO'/>
+      <function-decl name='AAudioStream_requestFlush' type-id='29c5d527' mangled-name='AAudioStream_requestFlush' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='AAudioStream_requestFlush@@LIBAAUDIO'/>
+      <function-decl name='AAudioStream_requestPause' type-id='29c5d527' mangled-name='AAudioStream_requestPause' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='AAudioStream_requestPause@@LIBAAUDIO'/>
+      <function-decl name='AAudioStream_requestStart' type-id='29c5d527' mangled-name='AAudioStream_requestStart' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='AAudioStream_requestStart@@LIBAAUDIO'/>
+      <function-decl name='AAudioStream_requestStop' type-id='29c5d527' mangled-name='AAudioStream_requestStop' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='AAudioStream_requestStop@@LIBAAUDIO'/>
+      <function-decl name='AAudioStream_setBufferSizeInFrames' type-id='a54089b2' mangled-name='AAudioStream_setBufferSizeInFrames' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='AAudioStream_setBufferSizeInFrames@@LIBAAUDIO'/>
+      <function-decl name='AAudioStream_waitForStateChange' type-id='e79a2433' mangled-name='AAudioStream_waitForStateChange' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='AAudioStream_waitForStateChange@@LIBAAUDIO'/>
+      <function-decl name='AAudioStream_write' type-id='c5bafc48' mangled-name='AAudioStream_write' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='AAudioStream_write@@LIBAAUDIO'/>
+      <function-decl name='AAudio_createStreamBuilder' type-id='025d9210' mangled-name='AAudio_createStreamBuilder' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='AAudio_createStreamBuilder@@LIBAAUDIO'/>
+      <function-decl name='AAudio_setMMapPolicy' type-id='1305800d' mangled-name='AAudio_setMMapPolicy' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='AAudio_setMMapPolicy@@LIBAAUDIO'/>
+      <function-decl name='AAudioStream_getSharingMode' type-id='07489bcc' mangled-name='AAudioStream_getSharingMode' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='AAudioStream_getSharingMode@@LIBAAUDIO'/>
+      <function-decl name='AAudioStream_getState' type-id='6baae3b0' mangled-name='AAudioStream_getState' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='AAudioStream_getState@@LIBAAUDIO'/>
+      <function-decl name='AAudioStream_getUsage' type-id='4c921d5f' mangled-name='AAudioStream_getUsage' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='AAudioStream_getUsage@@LIBAAUDIO'/>
+      <function-decl name='AAudioStream_isMMapUsed' type-id='163ed73b' mangled-name='AAudioStream_isMMapUsed' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='AAudioStream_isMMapUsed@@LIBAAUDIO'/>
+      <function-decl name='AAudioStream_isPrivacySensitive' type-id='163ed73b' mangled-name='AAudioStream_isPrivacySensitive' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='AAudioStream_isPrivacySensitive@@LIBAAUDIO'/>
+      <function-decl name='AAudio_convertResultToText' type-id='4fa0e7af' mangled-name='AAudio_convertResultToText' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='AAudio_convertResultToText@@LIBAAUDIO'/>
+      <function-decl name='AAudio_convertStreamStateToText' type-id='7844e99a' mangled-name='AAudio_convertStreamStateToText' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='AAudio_convertStreamStateToText@@LIBAAUDIO'/>
+      <function-decl name='AAudioStream_getBufferCapacityInFrames' type-id='1c3bc242' mangled-name='AAudioStream_getBufferCapacityInFrames' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='AAudioStream_getBufferCapacityInFrames@@LIBAAUDIO'/>
+      <function-decl name='AAudioStream_getBufferSizeInFrames' type-id='1c3bc242' mangled-name='AAudioStream_getBufferSizeInFrames' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='AAudioStream_getBufferSizeInFrames@@LIBAAUDIO'/>
+      <function-decl name='AAudioStream_getChannelCount' type-id='1c3bc242' mangled-name='AAudioStream_getChannelCount' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='AAudioStream_getChannelCount@@LIBAAUDIO'/>
+      <function-decl name='AAudioStream_getDeviceId' type-id='1c3bc242' mangled-name='AAudioStream_getDeviceId' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='AAudioStream_getDeviceId@@LIBAAUDIO'/>
+      <function-decl name='AAudioStream_getFramesPerBurst' type-id='1c3bc242' mangled-name='AAudioStream_getFramesPerBurst' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='AAudioStream_getFramesPerBurst@@LIBAAUDIO'/>
+      <function-decl name='AAudioStream_getFramesPerDataCallback' type-id='1c3bc242' mangled-name='AAudioStream_getFramesPerDataCallback' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='AAudioStream_getFramesPerDataCallback@@LIBAAUDIO'/>
+      <function-decl name='AAudioStream_getSampleRate' type-id='1c3bc242' mangled-name='AAudioStream_getSampleRate' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='AAudioStream_getSampleRate@@LIBAAUDIO'/>
+      <function-decl name='AAudioStream_getSamplesPerFrame' type-id='1c3bc242' mangled-name='AAudioStream_getSamplesPerFrame' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='AAudioStream_getSamplesPerFrame@@LIBAAUDIO'/>
+      <function-decl name='AAudioStream_getSessionId' type-id='1c3bc242' mangled-name='AAudioStream_getSessionId' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='AAudioStream_getSessionId@@LIBAAUDIO'/>
+      <function-decl name='AAudioStream_getXRunCount' type-id='1c3bc242' mangled-name='AAudioStream_getXRunCount' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='AAudioStream_getXRunCount@@LIBAAUDIO'/>
+      <function-decl name='AAudioStream_getFramesRead' type-id='05fa4e1d' mangled-name='AAudioStream_getFramesRead' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='AAudioStream_getFramesRead@@LIBAAUDIO'/>
+      <function-decl name='AAudioStream_getFramesWritten' type-id='05fa4e1d' mangled-name='AAudioStream_getFramesWritten' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='AAudioStream_getFramesWritten@@LIBAAUDIO'/>
+      <function-decl name='AAudioStreamBuilder_setAllowedCapturePolicy' type-id='14054cbd' mangled-name='AAudioStreamBuilder_setAllowedCapturePolicy' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='AAudioStreamBuilder_setAllowedCapturePolicy@@LIBAAUDIO'/>
+      <function-decl name='AAudioStreamBuilder_setBufferCapacityInFrames' type-id='6bfc3b15' mangled-name='AAudioStreamBuilder_setBufferCapacityInFrames' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='AAudioStreamBuilder_setBufferCapacityInFrames@@LIBAAUDIO'/>
+      <function-decl name='AAudioStreamBuilder_setChannelCount' type-id='6bfc3b15' mangled-name='AAudioStreamBuilder_setChannelCount' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='AAudioStreamBuilder_setChannelCount@@LIBAAUDIO'/>
+      <function-decl name='AAudioStreamBuilder_setContentType' type-id='5faf412f' mangled-name='AAudioStreamBuilder_setContentType' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='AAudioStreamBuilder_setContentType@@LIBAAUDIO'/>
+      <function-decl name='AAudioStreamBuilder_setDataCallback' type-id='038fe169' mangled-name='AAudioStreamBuilder_setDataCallback' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='AAudioStreamBuilder_setDataCallback@@LIBAAUDIO'/>
+      <function-decl name='AAudioStreamBuilder_setDeviceId' type-id='6bfc3b15' mangled-name='AAudioStreamBuilder_setDeviceId' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='AAudioStreamBuilder_setDeviceId@@LIBAAUDIO'/>
+      <function-decl name='AAudioStreamBuilder_setDirection' type-id='b3904c18' mangled-name='AAudioStreamBuilder_setDirection' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='AAudioStreamBuilder_setDirection@@LIBAAUDIO'/>
+      <function-decl name='AAudioStreamBuilder_setErrorCallback' type-id='497305c5' mangled-name='AAudioStreamBuilder_setErrorCallback' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='AAudioStreamBuilder_setErrorCallback@@LIBAAUDIO'/>
+      <function-decl name='AAudioStreamBuilder_setFormat' type-id='0de9e2d0' mangled-name='AAudioStreamBuilder_setFormat' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='AAudioStreamBuilder_setFormat@@LIBAAUDIO'/>
+      <function-decl name='AAudioStreamBuilder_setFramesPerDataCallback' type-id='6bfc3b15' mangled-name='AAudioStreamBuilder_setFramesPerDataCallback' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='AAudioStreamBuilder_setFramesPerDataCallback@@LIBAAUDIO'/>
+      <function-decl name='AAudioStreamBuilder_setInputPreset' type-id='76fb531b' mangled-name='AAudioStreamBuilder_setInputPreset' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='AAudioStreamBuilder_setInputPreset@@LIBAAUDIO'/>
+      <function-decl name='AAudioStreamBuilder_setPerformanceMode' type-id='b5dba2d5' mangled-name='AAudioStreamBuilder_setPerformanceMode' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='AAudioStreamBuilder_setPerformanceMode@@LIBAAUDIO'/>
+      <function-decl name='AAudioStreamBuilder_setPrivacySensitive' type-id='97acc1a2' mangled-name='AAudioStreamBuilder_setPrivacySensitive' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='AAudioStreamBuilder_setPrivacySensitive@@LIBAAUDIO'/>
+      <function-decl name='AAudioStreamBuilder_setSampleRate' type-id='6bfc3b15' mangled-name='AAudioStreamBuilder_setSampleRate' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='AAudioStreamBuilder_setSampleRate@@LIBAAUDIO'/>
+      <function-decl name='AAudioStreamBuilder_setSamplesPerFrame' type-id='6bfc3b15' mangled-name='AAudioStreamBuilder_setSamplesPerFrame' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='AAudioStreamBuilder_setSamplesPerFrame@@LIBAAUDIO'/>
+      <function-decl name='AAudioStreamBuilder_setSessionId' type-id='adb87d85' mangled-name='AAudioStreamBuilder_setSessionId' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='AAudioStreamBuilder_setSessionId@@LIBAAUDIO'/>
+      <function-decl name='AAudioStreamBuilder_setSharingMode' type-id='86af8127' mangled-name='AAudioStreamBuilder_setSharingMode' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='AAudioStreamBuilder_setSharingMode@@LIBAAUDIO'/>
+      <function-decl name='AAudioStreamBuilder_setUsage' type-id='3080d0ce' mangled-name='AAudioStreamBuilder_setUsage' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='AAudioStreamBuilder_setUsage@@LIBAAUDIO'/>
   </abi-instr>
 </abi-corpus>

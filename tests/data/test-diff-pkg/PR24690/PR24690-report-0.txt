@@ -1,7 +1,7 @@
 ================ changes of 'libflatpak.so.0.10204.0'===============
   Functions changes summary: 0 Removed, 0 Changed (10 filtered out), 16 Added functions
   Variables changes summary: 0 Removed, 0 Changed, 0 Added variable
-  Unreachable types summary: 3 removed (2 filtered out), 1 changed (13 filtered out), 6 added (5 filtered out) types
+  Unreachable types summary: 7 removed (9 filtered out), 2 changed (26 filtered out), 7 added (5 filtered out) types
 
   16 Added functions:
 
@@ -22,13 +22,26 @@
     [A] 'function void flatpak_remote_set_icon(FlatpakRemote*, const char*)'    {flatpak_remote_set_icon}
     [A] 'function gboolean flatpak_transaction_add_rebase(FlatpakTransaction*, const char*, const char*, const char**, const char**, GError**)'    {flatpak_transaction_add_rebase}
 
-  3 removed types unreachable from any public interface:
+  7 removed types unreachable from any public interface:
 
-    [D] 'struct _GUnixFDList' at gunixfdlist.h:58:1
-    [D] 'typedef GUnixFDList' at giotypes.h:549:1
-    [D] 'typedef GUnixFDListPrivate' at gunixfdlist.h:41:1
+    [D] 'const _ExtendedGDBusArgInfo'
+    [D] 'const _ExtendedGDBusInterfaceInfo'
+    [D] 'const _ExtendedGDBusMethodInfo'
+    [D] 'enum {OSTREE_REPO_COMMIT_FILTER_ALLOW=0, OSTREE_REPO_COMMIT_FILTER_SKIP=1, }' at ostree-repo.h:634:1
+    [D] 'enum {OSTREE_REPO_COMMIT_MODIFIER_FLAGS_CANONICAL_PERMISSIONS=4, OSTREE_REPO_COMMIT_MODIFIER_FLAGS_CONSUME=16, OSTREE_REPO_COMMIT_MODIFIER_FLAGS_DEVINO_CANONICAL=32, OSTREE_REPO_COMMIT_MODIFIER_FLAGS_ERROR_ON_UNLABELED=8, OSTREE_REPO_COMMIT_MODIFIER_FLAGS_GENERATE_SIZES=2, OSTREE_REPO_COMMIT_MODIFIER_FLAGS_NONE=0, OSTREE_REPO_COMMIT_MODIFIER_FLAGS_SKIP_XATTRS=1, }' at ostree-repo.h:663:1
+    [D] 'typedef OstreeRepoCommitFilterResult' at ostree-repo.h:637:1
+    [D] 'typedef OstreeRepoCommitModifier' at ostree-repo.h:678:1
 
-  1 changed type unreachable from any public interface:
+  2 changed types unreachable from any public interface:
+
+    [C] 'enum {ADD_NEW_REMOTE=6, CHOOSE_REMOTE_FOR_REF=3, END_OF_LIFED=4, LAST_SIGNAL=7, NEW_OPERATION=0, OPERATION_DONE=1, OPERATION_ERROR=2, READY=5, }' changed:
+      type size hasn't changed
+      1 enumerator insertion:
+        'END_OF_LIFED_WITH_REBASE' value '5'
+      3 enumerator changes:
+        'READY' from value '5' to '6' at flatpak-transaction.c:166:1
+        'ADD_NEW_REMOTE' from value '6' to '7' at flatpak-transaction.c:166:1
+        'LAST_SIGNAL' from value '7' to '8' at flatpak-transaction.c:166:1
 
     [C] 'struct _FlatpakTransactionClass' changed:
       type size changed from 2176 to 2240 (in bits)
@@ -40,13 +53,14 @@
         'gboolean (* run)(FlatpakTransaction*, GCancellable*, GError**)' offset changed from 1536 to 1600 (in bits) (by +64 bits)
         'gpointer padding[9]' offset changed from 1600 to 1664 (in bits) (by +64 bits)
 
-  6 added types unreachable from any public interface:
+  7 added types unreachable from any public interface:
 
-    [A] 'enum FlatpakQueryFlags' at flatpak-installation.h:135:1
-    [A] 'enum OstreeRepoResolveRevExtFlags' at ostree-repo.h:470:1
-    [A] 'struct gpgme_data_cbs' at gpgme-64.h:1139:1
-    [A] 'typedef FlatpakTransactionOperation' at flatpak-transaction.h:89:1
+    [A] 'enum {G_SUBPROCESS_FLAGS_INHERIT_FDS=128, G_SUBPROCESS_FLAGS_NONE=0, G_SUBPROCESS_FLAGS_STDERR_MERGE=64, G_SUBPROCESS_FLAGS_STDERR_PIPE=16, G_SUBPROCESS_FLAGS_STDERR_SILENCE=32, G_SUBPROCESS_FLAGS_STDIN_INHERIT=2, G_SUBPROCESS_FLAGS_STDIN_PIPE=1, G_SUBPROCESS_FLAGS_STDOUT_PIPE=4, G_SUBPROCESS_FLAGS_STDOUT_SILENCE=8, }' at gioenums.h:1866:1
+    [A] 'enum {OSTREE_REPO_RESOLVE_REV_EXT_LOCAL_ONLY=1, OSTREE_REPO_RESOLVE_REV_EXT_NONE=0, }' at ostree-repo.h:470:1
+    [A] 'typedef DConfReadFlags' at dconf-enums.h:40:1
+    [A] 'typedef GRegex' at gregex.h:413:1
     [A] 'typedef GSubprocess' at giotypes.h:642:1
+    [A] 'typedef GSubprocessLauncher' at giotypes.h:650:1
     [A] 'typedef OstreeRepoResolveRevExtFlags' at ostree-repo.h:473:1
 
 ================ end of changes of 'libflatpak.so.0.10204.0'===============

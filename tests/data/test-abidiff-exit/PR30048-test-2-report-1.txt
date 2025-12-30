@@ -4,31 +4,37 @@ Variables changes summary: 0 Removed, 0 Changed, 0 Added variable
 6 functions with incompatible sub-type changes:
 
   [C] 'function int(*N(void))[7]' at PR30048-test-2-v0.cc:62:1 has some sub-type changes:
+    'function int(*N(void))[7] {_Z1Nv}' now becomes 'function int N(void) {_Z1Nv}'
     return type changed:
       entity changed from 'int(*)[7]' to 'int'
       type size changed from 64 to 32 (in bits)
 
   [C] 'function int* O(void)' at PR30048-test-2-v0.cc:64:1 has some sub-type changes:
+    'function int* O(void) {_Z1Ov}' now becomes 'function int O(void) {_Z1Ov}'
     return type changed:
       entity changed from 'int*' to 'int'
       type size changed from 64 to 32 (in bits)
 
   [C] 'function int (*P(void))(void)' at PR30048-test-2-v0.cc:67:1 has some sub-type changes:
+    'function int (*P(void))(void) {_Z1Pv}' now becomes 'function int P(void) {_Z1Pv}'
     return type changed:
       entity changed from 'int (*)(void)' to 'int'
       type size changed from 64 to 32 (in bits)
 
   [C] 'function volatile int(*n(void))[7]' at PR30048-test-2-v0.cc:72:1 has some sub-type changes:
+    'function volatile int(*n(void))[7] {_Z1nv}' now becomes 'function int n(void) {_Z1nv}'
     return type changed:
       entity changed from 'volatile int(*)[7]' to 'int'
       type size changed from 64 to 32 (in bits)
 
   [C] 'function volatile int* o(void)' at PR30048-test-2-v0.cc:74:1 has some sub-type changes:
+    'function volatile int* o(void) {_Z1ov}' now becomes 'function int o(void) {_Z1ov}'
     return type changed:
       entity changed from 'volatile int*' to 'int'
       type size changed from 64 to 32 (in bits)
 
   [C] 'function int (*p(void))(void)' at PR30048-test-2-v0.cc:77:1 has some sub-type changes:
+    'function int (*p(void))(void) {_Z1pv}' now becomes 'function int p(void) {_Z1pv}'
     return type changed:
       entity changed from 'int (*)(void)' to 'int'
       type size changed from 64 to 32 (in bits)

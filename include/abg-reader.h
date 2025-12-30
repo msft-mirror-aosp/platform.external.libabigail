@@ -29,11 +29,23 @@ using namespace abigail::ir;
 
 translation_unit_sptr
 read_translation_unit_from_file(const std::string&	file_path,
+				environment&		env,
+				const fe_iface::options_type& opts);
+
+translation_unit_sptr
+read_translation_unit_from_file(const std::string&	file_path,
 				environment&		env);
+
 
 translation_unit_sptr
 read_translation_unit_from_buffer(const std::string&	file_path,
-				  environment&		env);
+				  environment&		env,
+				  const fe_iface::options_type& opts);
+
+translation_unit_sptr
+read_translation_unit_from_istream(std::istream*	in,
+				   environment&	env,
+				   const fe_iface::options_type& opts);
 
 translation_unit_sptr
 read_translation_unit_from_istream(std::istream*	in,
@@ -42,15 +54,35 @@ read_translation_unit_from_istream(std::istream*	in,
 translation_unit_sptr
 read_translation_unit(fe_iface&);
 
- abigail::fe_iface_sptr
-create_reader(const string& path, environment& env);
+abigail::fe_iface_sptr
+create_reader(const string& path,
+	      environment& env,
+	      const fe_iface::options_type &opts);
+
+abigail::fe_iface_sptr
+create_reader(const string& path,
+	      environment& env);
+
+fe_iface_sptr
+create_reader(std::istream* in, environment& env,
+	      const fe_iface::options_type &opts);
 
 fe_iface_sptr
 create_reader(std::istream* in, environment& env);
 
 corpus_sptr
 read_corpus_from_abixml(std::istream* in,
+			environment&  env,
+			const fe_iface::options_type &opts);
+
+corpus_sptr
+read_corpus_from_abixml(std::istream* in,
 			environment&  env);
+
+corpus_sptr
+read_corpus_from_abixml_file(const string& path,
+			     environment&  env,
+			     const fe_iface::options_type &opts);
 
 corpus_sptr
 read_corpus_from_abixml_file(const string& path,
@@ -61,7 +93,17 @@ read_corpus_group_from_input(fe_iface& ctxt);
 
 corpus_group_sptr
 read_corpus_group_from_abixml(std::istream* in,
+			      environment&  env,
+			      const fe_iface::options_type &opts);
+
+corpus_group_sptr
+read_corpus_group_from_abixml(std::istream* in,
 			      environment&  env);
+
+corpus_group_sptr
+read_corpus_group_from_abixml_file(const string& path,
+				   environment&  env,
+				   const fe_iface::options_type &opts);
 
 corpus_group_sptr
 read_corpus_group_from_abixml_file(const string& path,

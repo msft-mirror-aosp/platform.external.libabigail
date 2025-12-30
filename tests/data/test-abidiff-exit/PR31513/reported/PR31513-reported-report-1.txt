@@ -1,4 +1,4 @@
-Functions changes summary: 16 Removed, 0 Changed (22 filtered out), 20 Added functions
+Functions changes summary: 16 Removed, 0 Changed (22 filtered out), 21 Added functions
 Variables changes summary: 0 Removed, 0 Changed, 0 Added variable
 Function symbols changes summary: 2 Removed, 2 Added function symbols not referenced by debug info
 Variable symbols changes summary: 0 Removed, 0 Added variable symbol not referenced by debug info
@@ -20,9 +20,9 @@ Variable symbols changes summary: 0 Removed, 0 Added variable symbol not referen
   [D] 'method std::move_iterator<char*>::iterator_type std::move_iterator<char*>::base() const'    {_ZNKSt13move_iteratorIPcE4baseEv}
   [D] 'method void std::move_iterator<char*>::move_iterator(std::move_iterator<char*>::iterator_type)'    {_ZNSt13move_iteratorIPcEC2ES0_, aliases _ZNSt13move_iteratorIPcEC1ES0_}
   [D] 'function char* std::uninitialized_copy<std::move_iterator<char*>,char*>(std::move_iterator<char*>, std::move_iterator<char*>, char*)'    {_ZSt18uninitialized_copyISt13move_iteratorIPcES1_ET0_T_S4_S3_}
-  [D] 'method void std::vector<char,std::allocator<char>>::emplace_back<char>(char&&)'    {_ZNSt6vectorIcSaIcEE12emplace_backIJcEEEvDpOT_}
+  [D] 'method void std::vector<char,std::allocator<char>>::emplace_back<char>()'    {_ZNSt6vectorIcSaIcEE12emplace_backIJcEEEvDpOT_}
 
-20 Added functions:
+21 Added functions:
 
   [A] 'function bool __gnu_cxx::__is_null_pointer<charconst>(const char*)'    {_ZN9__gnu_cxx17__is_null_pointerIKcEEbPT_}
   [A] 'method __gnu_cxx::__normal_iterator<char*,std::vector<char,std::allocator<char>>>::reference __gnu_cxx::__normal_iterator<char*,std::vector<char,std::allocator<char>>>::operator*() const'    {_ZNK9__gnu_cxx17__normal_iteratorIPcSt6vectorIcSaIcEEEdeEv}
@@ -31,6 +31,7 @@ Variable symbols changes summary: 0 Removed, 0 Added variable symbol not referen
   [A] 'method std::size_t __gnu_cxx::char_traits<char>::length(const __gnu_cxx::char_traits<char>::char_type*)'    {_ZN9__gnu_cxx11char_traitsIcE6lengthEPKc}
   [A] 'method __gnu_cxx::new_allocator<char>::size_type __gnu_cxx::new_allocator<char>::_M_max_size() const'    {_ZNK9__gnu_cxx13new_allocatorIcE11_M_max_sizeEv}
   [A] 'method std::_Vector_base<char,std::allocator<char>>::_Vector_impl_data::_Vector_impl_data()'    {_ZNSt12_Vector_baseIcSaIcEE17_Vector_impl_dataC2Ev, aliases _ZNSt12_Vector_baseIcSaIcEE17_Vector_impl_dataC1Ev}
+  [A] 'method void std::__cxx11::basic_string<char,std::char_traits<char>,std::allocator<char>>::_M_construct<charconst*>(const char*, const char*, std::forward_iterator_tag)'    {_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE12_M_constructIPKcEEvT_S8_St20forward_iterator_tag}
   [A] 'method void std::__cxx11::basic_string<char,std::char_traits<char>,std::allocator<char>>::basic_string<>(const char*, const std::allocator<char>&)'    {_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEC2IS3_EEPKcRKS3_, aliases _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEC1IS3_EEPKcRKS3_}
   [A] 'function std::iterator_traits<charconst*>::difference_type std::__distance<charconst*>(const char*, const char*, std::random_access_iterator_tag)'    {_ZSt10__distanceIPKcENSt15iterator_traitsIT_E15difference_typeES3_S3_St26random_access_iterator_tag}
   [A] 'function std::iterator_traits<charconst*>::iterator_category std::__iterator_category<charconst*>(const char* const&)'    {_ZSt19__iterator_categoryIPKcENSt15iterator_traitsIT_E17iterator_categoryERKS3_}
@@ -43,7 +44,7 @@ Variable symbols changes summary: 0 Removed, 0 Added variable symbol not referen
   [A] 'method std::vector<char,std::allocator<char>>::size_type std::vector<char,std::allocator<char>>::_S_max_size(const std::vector<char,std::allocator<char>>::_Tp_alloc_type&)'    {_ZNSt6vectorIcSaIcEE11_S_max_sizeERKS0_}
   [A] 'method std::vector<char,std::allocator<char>>::pointer std::vector<char,std::allocator<char>>::_S_relocate(std::vector<char,std::allocator<char>>::pointer, std::vector<char,std::allocator<char>>::pointer, std::vector<char,std::allocator<char>>::pointer, std::vector<char,std::allocator<char>>::_Tp_alloc_type&)'    {_ZNSt6vectorIcSaIcEE11_S_relocateEPcS2_S2_RS0_}
   [A] 'method std::vector<char,std::allocator<char>>::reference std::vector<char,std::allocator<char>>::back()'    {_ZNSt6vectorIcSaIcEE4backEv}
-  [A] 'method std::vector<char,std::allocator<char>>::reference std::vector<char,std::allocator<char>>::emplace_back<char>(char&&)'    {_ZNSt6vectorIcSaIcEE12emplace_backIJcEEERcDpOT_}
+  [A] 'method std::vector<char,std::allocator<char>>::reference std::vector<char,std::allocator<char>>::emplace_back<char>()'    {_ZNSt6vectorIcSaIcEE12emplace_backIJcEEERcDpOT_}
 
 2 Removed function symbols not referenced by debug info:
 

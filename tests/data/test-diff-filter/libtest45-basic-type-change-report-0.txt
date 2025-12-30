@@ -4,6 +4,7 @@ Variables changes summary: 0 Removed, 0 Changed, 0 Added variable
 4 functions with incompatible sub-type changes:
 
   [C] 'function int& foo0(S0&)' at test45-basic-type-change-v0.cc:25:1 has some sub-type changes:
+    'function int& foo0(S0&) {_Z4foo0R2S0}' now becomes 'function char& foo0(S0&) {_Z4foo0R2S0}'
     return type changed:
       in referenced type 'int':
         type name changed from 'int' to 'char'
@@ -18,6 +19,7 @@ Variables changes summary: 0 Removed, 0 Changed, 0 Added variable
               type size changed from 32 to 8 (in bits)
 
   [C] 'function int* foo1(S1&)' at test45-basic-type-change-v0.cc:29:1 has some sub-type changes:
+    'function int* foo1(S1&) {_Z4foo1R2S1}' now becomes 'function char* foo1(S1&) {_Z4foo1R2S1}'
     return type changed:
       in pointed to type 'int':
         type name changed from 'int' to 'char'
@@ -32,6 +34,7 @@ Variables changes summary: 0 Removed, 0 Changed, 0 Added variable
               type size changed from 32 to 8 (in bits)
 
   [C] 'function const int foo2(S2&)' at test45-basic-type-change-v0.cc:33:1 has some sub-type changes:
+    'function const int foo2(S2&) {_Z4foo2R2S2}' now becomes 'function const char foo2(S2&) {_Z4foo2R2S2}'
     return type changed:
       'const int' changed to 'const char'
     parameter 1 of type 'S2&' has sub-type changes:
@@ -44,6 +47,7 @@ Variables changes summary: 0 Removed, 0 Changed, 0 Added variable
               type size changed from 32 to 8 (in bits)
 
   [C] 'function int foo3(S2&)' at test45-basic-type-change-v0.cc:37:1 has some sub-type changes:
+    'function int foo3(S2&) {_Z4foo3R2S2}' now becomes 'function char foo3(S2&) {_Z4foo3R2S2}'
     return type changed:
       type name changed from 'int' to 'char'
       type size changed from 32 to 8 (in bits)

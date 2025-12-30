@@ -95,6 +95,7 @@ struct options
   bool				abidiff;
   bool				noout;
   bool				annotate;
+  bool				load_all_types;
   bool				do_log;
 #ifdef WITH_CTF
   bool				use_ctf;
@@ -114,6 +115,7 @@ struct options
       abidiff(false),
       noout(false),
       annotate(false),
+      load_all_types(false),
       do_log(false)
 #ifdef WITH_CTF
     ,
@@ -572,6 +574,7 @@ static void
 set_reader_options(abigail::fe_iface& reader, const options& opts)
 {
   set_suppressions(reader, opts);
+  reader.options().load_all_types = opts.load_all_types;
   reader.options().do_log = opts.do_log;
 }
 
@@ -586,6 +589,7 @@ enum option_key
   OPT_ABIDIFF,
   OPT_HD,
   OPT_HF,
+  OPT_LOAD_ALL_TYPES,
   OPT_NOOUT,
 #ifdef WITH_SHOW_TYPE_USE_IN_ABILINT
   OPT_SHOW_TYPE_USE,
@@ -618,6 +622,8 @@ static const struct argp_option argp_options[] =
   { "hd", OPT_HD, "PATH", OPTION_ALIAS, 0, 0 },
   { "header-file", OPT_HF, "PATH", 0,
     "the path to one header of the elf file", 0 },
+  { "load-all-types", OPT_LOAD_ALL_TYPES, 0, 0,
+    "read all types including those not reachable from exported declarations", 0 },
   { "hf", OPT_HF, "PATH", OPTION_ALIAS, 0, 0 },
   { "noout", OPT_NOOUT, 0, 0,
     "do not display anything on stdout", 0 },
@@ -674,6 +680,10 @@ parse_opt(int key, char* arg, struct argp_state* state)
 
     case OPT_HF:
       opts.header_files.push_back(argument);
+      break;
+
+    case OPT_LOAD_ALL_TYPES:
+      opts.load_all_types = true;
       break;
 
     case OPT_NOOUT:
@@ -835,7 +845,7 @@ perform_self_comparison(const corpus_sptr& corp,
     corp2 = rdr->read_corpus(sts);
   else if (tu)
     {
-      	abigail::fe_iface_sptr rdr2 =
+      abigail::fe_iface_sptr rdr2 =
 	  abigail::abixml::create_reader(tmp_file->get_path(), env);
       tu2 = abigail::abixml::read_translation_unit(*rdr2);
     }
@@ -892,8 +902,7 @@ load_corpus_and_write_abixml(char* argv[],
       return 1;
     case abigail::tools_utils::FILE_TYPE_NATIVE_BI:
       {
-	rdr = abigail::abixml::create_reader(opts.file_path,
-					     env);
+	rdr = abigail::abixml::create_reader(opts.file_path, env);
 	set_reader_options(*rdr, opts);
 	tu = abigail::abixml::read_translation_unit(*rdr);
       }
@@ -914,8 +923,7 @@ load_corpus_and_write_abixml(char* argv[],
 #endif
 	  rdr =
 	    abigail::dwarf::create_reader(opts.file_path,
-					  di_roots, env,
-					  /*load_all_types=*/false);
+					  di_roots, env);
 	set_reader_options(*rdr, opts);
 	corp = rdr->read_corpus(s);
       }
@@ -1019,6 +1027,8 @@ load_corpus_and_write_abixml(char* argv[],
 	}
     }
 
+  of.flush();
+
   if (!is_ok)
     {
       string output =
@@ -1049,7 +1059,7 @@ load_corpus_and_write_abixml(char* argv[],
       show_how_type_is_used(*rdr, opts.type_id_to_show);
     }
 #endif
-  return is_ok ? 0 : 1;  
+  return is_ok ? 0 : 1;
 }
 
 /// Reads a bi (binary instrumentation) file, saves it back to a

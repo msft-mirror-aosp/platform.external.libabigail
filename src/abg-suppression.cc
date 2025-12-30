@@ -119,7 +119,7 @@ suppression_base::suppression_base(const string& label,
 /// adding the matched ABI artifact to the internal representation.
 bool
 suppression_base::get_drops_artifact_from_ir() const
-{return priv_->drops_artifact_;}
+{return priv_->drops_artifact_.load();}
 
 /// Set the flag that says whether the current suppression
 /// specification is to avoid adding the matched ABI artifact to the
@@ -141,7 +141,7 @@ suppression_base::set_drops_artifact_from_ir(bool f)
 /// @return TRUE iff the suppression specification is artificial.
 bool
 suppression_base::get_is_artificial() const
-{return priv_->is_artificial_;}
+{return priv_->is_artificial_.load();}
 
 /// Set a flag saying if the suppression specification is artificial
 /// or not.
@@ -156,16 +156,22 @@ suppression_base::set_is_artificial(bool f)
 /// Getter for the label associated to this suppression specification.
 ///
 /// @return the label.
-const string
+const string&
 suppression_base::get_label() const
-{return priv_->label_;}
+{
+  lock_guard<mutex> lock(priv_->mutex_);
+  return priv_->label_;
+}
 
 /// Setter for the label associated to this suppression specification.
 ///
 /// @param label the new label.
 void
 suppression_base::set_label(const string& label)
-{priv_->label_ = label;}
+{
+  lock_guard<mutex> lock(priv_->mutex_);
+  priv_->label_ = label;
+}
 
 /// Setter for the "file_name_regex" property of the current instance
 /// of @ref suppression_base.
@@ -177,7 +183,10 @@ suppression_base::set_label(const string& label)
 /// @param regexp the new regular expression string.
 void
 suppression_base::set_file_name_regex_str(const string& regexp)
-{priv_->file_name_regex_str_ = regexp;}
+{
+  lock_guard<mutex> lock(priv_->mutex_);
+  priv_->file_name_regex_str_ = regexp;
+}
 
 /// Getter for the "file_name_regex" property of the current instance
 /// of @ref suppression_base.
@@ -189,7 +198,10 @@ suppression_base::set_file_name_regex_str(const string& regexp)
 /// @return the regular expression string.
 const string&
 suppression_base::get_file_name_regex_str() const
-{return priv_->file_name_regex_str_;}
+{
+  lock_guard<mutex> lock(priv_->mutex_);
+  return priv_->file_name_regex_str_;
+}
 
 /// Setter for the "file_name_not_regex" property of the current
 /// instance of @ref suppression_base.
@@ -202,7 +214,10 @@ suppression_base::get_file_name_regex_str() const
 /// @param regexp the new regular expression string.
 void
 suppression_base::set_file_name_not_regex_str(const string& regexp)
-{priv_->file_name_not_regex_str_ = regexp;}
+{
+  lock_guard<mutex> lock(priv_->mutex_);
+  priv_->file_name_not_regex_str_ = regexp;
+}
 
 /// Getter for the "file_name_not_regex" property of the current
 /// instance of @ref suppression_base.
@@ -215,7 +230,10 @@ suppression_base::set_file_name_not_regex_str(const string& regexp)
 /// @return the regular expression string.
 const string&
 suppression_base::get_file_name_not_regex_str() const
-{return priv_->file_name_not_regex_str_;}
+{
+  lock_guard<mutex> lock(priv_->mutex_);
+  return priv_->file_name_not_regex_str_;
+}
 
 /// Test if the current suppression has a property related to file
 /// name.
@@ -239,7 +257,10 @@ suppression_base::has_file_name_related_property() const
 /// @param regexp the new regular expression string.
 void
 suppression_base::set_soname_regex_str(const string& regexp)
-{priv_->soname_regex_str_ = regexp;}
+{
+  lock_guard<mutex> lock(priv_->mutex_);
+  priv_->soname_regex_str_ = regexp;
+}
 
 /// Getter of the "soname_regex_str property of the current instance
 /// of @ref suppression_base.
@@ -251,7 +272,10 @@ suppression_base::set_soname_regex_str(const string& regexp)
 /// @return the regular expression string.
 const string&
 suppression_base::get_soname_regex_str() const
-{return priv_->soname_regex_str_;}
+{
+  lock_guard<mutex> lock(priv_->mutex_);
+  return priv_->soname_regex_str_;
+}
 
 /// Setter of the "soname_not_regex_str property of the current
 /// instance of @ref suppression_base.
@@ -277,7 +301,10 @@ suppression_base::set_soname_not_regex_str(const string& regexp)
 /// @return the regular expression string.
 const string&
 suppression_base::get_soname_not_regex_str() const
-{return priv_->soname_not_regex_str_;}
+{
+  lock_guard<mutex> lock(priv_->mutex_);
+  return priv_->soname_not_regex_str_;
+}
 
 /// Test if the current suppression has a property related to SONAMEs.
 ///
@@ -526,7 +553,10 @@ type_suppression::~type_suppression()
 /// @param name_regex_str the new regular expression to set.
 void
 type_suppression::set_type_name_regex_str(const string& name_regex_str)
-{priv_->type_name_regex_str_ = name_regex_str;}
+{
+  lock_guard<mutex> lock(priv_->mutex_);
+  priv_->type_name_regex_str_ = name_regex_str;
+}
 
 /// Getter for the "type_name_regex" property of the type suppression
 /// specification.
@@ -537,7 +567,10 @@ type_suppression::set_type_name_regex_str(const string& name_regex_str)
 /// @return the regular expression string.
 const string&
 type_suppression::get_type_name_regex_str() const
-{return priv_->type_name_regex_str_;}
+{
+  lock_guard<mutex> lock(priv_->mutex_);
+  return priv_->type_name_regex_str_;
+}
 
 /// Setter for the "type_name_not_regex_str" property of the type
 /// suppression specification.
@@ -567,7 +600,10 @@ type_suppression::get_type_name_not_regex_str() const
 /// @param name the new type name.
 void
 type_suppression::set_type_name(const string& name)
-{priv_->type_name_ = name;}
+{
+  lock_guard<mutex> lock(priv_->mutex_);
+  priv_->type_name_ = name;
+}
 
 /// Getter for the name of the type about which diff reports should be
 /// suppressed.
@@ -575,7 +611,10 @@ type_suppression::set_type_name(const string& name)
 /// @param return the type name.
 const string&
 type_suppression::get_type_name() const
-{return priv_->type_name_;}
+{
+  lock_guard<mutex> lock(priv_->mutex_);
+  return priv_->type_name_;
+}
 
 /// Getter of the property that says whether to consider the kind of
 /// type this suppression is about.
@@ -583,7 +622,7 @@ type_suppression::get_type_name() const
 /// @return the boolean value of the property.
 bool
 type_suppression::get_consider_type_kind() const
-{return priv_->consider_type_kind_;}
+{return priv_->consider_type_kind_.load();}
 
 /// Setter of the property that says whether to consider the kind of
 /// type this suppression is about.
@@ -622,7 +661,7 @@ type_suppression::get_type_kind() const
 /// suggests to consider how the matching diff node is reached.
 bool
 type_suppression::get_consider_reach_kind() const
-{return priv_->consider_reach_kind_;}
+{return priv_->consider_reach_kind_.load();}
 
 /// Set a flag saying if the current type suppression specification
 /// suggests to consider how the matching diff node is reached.
@@ -641,7 +680,7 @@ type_suppression::set_consider_reach_kind(bool f)
 /// specification is to be reached.
 type_suppression::reach_kind
 type_suppression::get_reach_kind() const
-{return priv_->reach_kind_;}
+{return priv_->reach_kind_.load();}
 
 /// Setter of the way the diff node matching the current suppression
 /// specification is to be reached.
@@ -657,7 +696,7 @@ type_suppression::set_reach_kind(reach_kind k)
 /// @return the value of the "has_size_change" property.
 bool
 type_suppression::get_has_size_change() const
-{return priv_->has_size_change_;}
+{return priv_->has_size_change_.load();}
 
 /// Setter of the "has_size_change" property.
 ///
@@ -672,7 +711,10 @@ type_suppression::set_has_size_change(bool flag)
 /// suppression.
 const unordered_set<string>&
 type_suppression::get_potential_data_member_names() const
-{return priv_->potential_data_members_;}
+{
+  lock_guard<mutex> lock(priv_->mutex_);
+  return priv_->potential_data_members_;
+}
 
 /// Setter of the "potential_data_member_names" property.
 ///
@@ -681,7 +723,10 @@ type_suppression::get_potential_data_member_names() const
 void
 type_suppression::set_potential_data_member_names
 (const string_set_type& s) const
-{priv_->potential_data_members_ = s;}
+{
+  lock_guard<mutex> lock(priv_->mutex_);
+  priv_->potential_data_members_ = s;
+}
 
 /// Getter of the "potential_data_member_names_regex" string.
 ///
@@ -696,7 +741,10 @@ type_suppression::get_potential_data_member_names_regex_str() const
 void
 type_suppression::set_potential_data_member_names_regex_str
 (const string& d) const
-{priv_->potential_data_members_regex_str_ = d;}
+{
+  lock_guard<mutex> lock(priv_->mutex_);
+  priv_->potential_data_members_regex_str_ = d;
+}
 
 /// Setter for the vector of data member insertion ranges that
 /// specifies where a data member is inserted as far as this
@@ -705,7 +753,10 @@ type_suppression::set_potential_data_member_names_regex_str
 /// @param r the new insertion range vector.
 void
 type_suppression::set_data_member_insertion_ranges(const insertion_ranges& r)
-{priv_->insertion_ranges_ = r;}
+{
+  lock_guard<mutex> lock(priv_->mutex_);
+  priv_->insertion_ranges_ = r;
+}
 
 /// Getter for the vector of data member insertion range that
 /// specifiers where a data member is inserted as far as this
@@ -714,7 +765,9 @@ type_suppression::set_data_member_insertion_ranges(const insertion_ranges& r)
 /// @return the vector of insertion ranges.
 const type_suppression::insertion_ranges&
 type_suppression::get_data_member_insertion_ranges() const
-{return priv_->insertion_ranges_;}
+{
+  return priv_->insertion_ranges_;
+}
 
 /// Getter for the vector of data member insertion range that
 /// specifiers where a data member is inserted as far as this
@@ -723,7 +776,9 @@ type_suppression::get_data_member_insertion_ranges() const
 /// @return the vector of insertion ranges.
 type_suppression::insertion_ranges&
 type_suppression::get_data_member_insertion_ranges()
-{return priv_->insertion_ranges_;}
+{
+  return priv_->insertion_ranges_;
+}
 
 /// Getter for the array of source location paths of types that should
 /// *NOT* be suppressed.
@@ -732,7 +787,9 @@ type_suppression::get_data_member_insertion_ranges()
 /// supressed.
 const unordered_set<string>&
 type_suppression::get_source_locations_to_keep() const
-{return priv_->source_locations_to_keep_;}
+{
+  return priv_->source_locations_to_keep_;
+}
 
 /// Getter for the array of source location paths of types that should
 /// *NOT* be suppressed.
@@ -750,7 +807,10 @@ type_suppression::get_source_locations_to_keep()
 void
 type_suppression::set_source_locations_to_keep
 (const unordered_set<string>& l)
-{priv_->source_locations_to_keep_ = l;}
+{
+  lock_guard<mutex> lock(priv_->mutex_);
+  priv_->source_locations_to_keep_ = l;
+}
 
 /// Getter of the regular expression string that designates the source
 /// location paths of types that should not be suppressed.
@@ -766,7 +826,10 @@ type_suppression::get_source_location_to_keep_regex_str() const
 /// @param r the new regular expression.
 void
 type_suppression::set_source_location_to_keep_regex_str(const string& r)
-{priv_->source_location_to_keep_regex_str_ = r;}
+{
+  lock_guard<mutex> lock(priv_->mutex_);
+  priv_->source_location_to_keep_regex_str_ = r;
+}
 
 /// Getter of the vector of the changed enumerators that are supposed
 /// to be suppressed.  Note that this will be "valid" only if the type
@@ -786,7 +849,10 @@ type_suppression::get_changed_enumerator_names() const
 /// to be suppressed.
 void
 type_suppression::set_changed_enumerator_names(const vector<string>& n)
-{priv_->changed_enumerator_names_ = n;}
+{
+  lock_guard<mutex> lock(priv_->mutex_);
+  priv_->changed_enumerator_names_ = n;
+}
 
 /// Getter of the vector of the regular expression strings for changed
 /// enumerators that are supposed to be suppressed. Note that this
@@ -808,14 +874,17 @@ type_suppression::get_changed_enumerators_regexp() const
 /// supposed to match enumertor names to be suppressed.
 void
 type_suppression::set_changed_enumerators_regexp(const vector<regex::regex_t_sptr>& n)
-{priv_->changed_enumerators_regexp_ = n;}
+{
+  lock_guard<mutex> lock(priv_->mutex_);
+  priv_->changed_enumerators_regexp_ = n;
+}
 
 /// Getter of the "has_string_fam_conversion" property.
 ///
 /// @return the value of the "has_string_fam_conversion" property.
 bool
 type_suppression::has_strict_fam_conversion () const
-{return priv_->has_strict_fam_conv_;}
+{return priv_->has_strict_fam_conv_.load();}
 
 /// Setter of the "has_string_fam_conversion" property.
 ///
@@ -863,6 +932,24 @@ type_suppression::suppresses_diff(const diff* diff) const
 		return true;
 	    }
 	}
+      else if (const distinct_diff* d = is_distinct_diff(diff))
+	{
+	  type_base_sptr ft, st;
+	  ft = is_type(d->first_subject());
+	  st = is_type(d->second_subject());
+	  ABG_ASSERT(ft && st);
+
+	  if (!is_opaque_type_suppr_spec(*this))
+	    {
+	      ft = peel_typedef_type(ft);
+	      st = peel_typedef_type(st);
+	    }
+
+	  if (suppresses_type(ft, d->context())
+	      || suppresses_type(st, d->context()))
+	    return true;
+	}
+
       return false;
     }
 
@@ -1265,7 +1352,7 @@ suppression_matches_type_name(const type_suppression&	s,
 /// @p type_scope.
 bool
 suppression_matches_type_name(const suppr::type_suppression&	s,
-			      const scope_decl*		type_scope,
+			      scope_decl_sptr			type_scope,
 			      const type_base_sptr&		type)
 {
   string type_name = build_qualified_name(type_scope, type);
@@ -1419,7 +1506,7 @@ type_suppression::suppresses_type(const type_base_sptr& type) const
 /// type from scope @p type_scope.
 bool
 type_suppression::suppresses_type(const type_base_sptr& type,
-				  const scope_decl* type_scope) const
+				  const scope_decl_sptr type_scope) const
 {
   if (!suppression_matches_type_no_name(*this, type))
     return false;

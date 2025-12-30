@@ -242,10 +242,7 @@ public:
       types_to_canonicalize.push_back(t);
     additional_types_to_canonicalize.clear();
 
-    ir::hash_and_canonicalize_types(types_to_canonicalize.begin(),
-				    types_to_canonicalize.end(),
-				    [](vector<type_base_sptr>::iterator& i)
-				    {return *i;});
+    ir::perform_type_canonicalization(types_to_canonicalize);
   }
 
   /// Constructor.
@@ -305,19 +302,14 @@ public:
   /// @param debug_info_root_paths a vector of paths to use to look
   /// for debug info that is split out into a separate file.
   ///
-  /// @param load_all_types currently not used.
-  ///
-  /// @param linux_kernel_mode currently not used.
-  ///
+  /// @param opts the options to set to this instance of @ref
+  /// fe_iface. The option object needs to be created by the caller
+  /// code.
   void
   initialize(const string&		elf_path,
-             const vector<string>&	debug_info_root_paths,
-             bool			load_all_types = false,
-             bool			linux_kernel_mode = false)
+	     const vector<string>&	debug_info_root_paths)
   {
     reset();
-    options().load_all_types = load_all_types;
-    options().load_in_linux_kernel_mode = linux_kernel_mode;
     elf_based_reader::initialize(elf_path, debug_info_root_paths);
   }
 
@@ -764,6 +756,7 @@ public:
 	canonicalize_all_types();
 	corpus()->sort_functions();
 	corpus()->sort_variables();
+	corpus()->mark_non_reachable_types();
       }
 
     env().canonicalization_is_done(true);
@@ -1115,11 +1108,11 @@ process_ctf_sou_members(reader *rdr,
                                                   member_type,
                                                   location(),
                                                   member_name));
-      sou->add_data_member(data_member_decl,
-                           public_access,
-                           true /* is_laid_out */,
-                           false /* is_static */,
-                           is_union_type(sou) ? 0 : membinfo.ctm_offset);
+      add_data_member(sou, data_member_decl,
+		      public_access,
+		      true /* is_laid_out */,
+		      false /* is_static */,
+		      is_union_type(sou) ? 0 : membinfo.ctm_offset);
     }
   if (ctf_errno(ctf_dictionary) != ECTF_NEXT_END)
     fprintf(stderr, "ERROR from ctf_member_next\n");
@@ -1748,14 +1741,20 @@ fill_ctf_section(const Elf_Scn *elf_section, ctf_sect_t *ctf_section)
 /// info.
 ///
 /// @param env a libabigail IR environment.
+///
+/// @param options the options to set to the newly created instance of
+/// @ref fe_iface. The option object needs to be created by the caller
+/// code.
 elf_based_reader_sptr
-create_reader(const std::string& elf_path,
-	      const vector<string>& debug_info_root_paths,
-	      environment& env)
+create_reader(const std::string&		elf_path,
+	      const vector<string>&		debug_info_root_paths,
+	      environment&			env,
+	      const fe_iface::options_type&	options)
 {
   reader_sptr result(new reader(elf_path,
 				debug_info_root_paths,
 				env));
+  result->options() = options;
 
 #ifdef WITH_DEBUG_SELF_COMPARISON
     if (env.self_comparison_debug_is_on())
@@ -1763,6 +1762,24 @@ create_reader(const std::string& elf_path,
 #endif
 
   return result;
+}
+
+/// Create and return a new read context to process CTF information
+/// from a given ELF file.
+///
+/// @param elf_path the patch of some ELF file.
+///
+/// @param debug_info_root_paths the paths to where to find the debug
+/// info.
+///
+/// @param env a libabigail IR environment.
+elf_based_reader_sptr
+create_reader(const std::string& elf_path,
+	      const vector<string>& debug_info_root_paths,
+	      environment& env)
+{
+  fe_iface::options_type options(env);
+  return create_reader(elf_path, debug_info_root_paths, env, options);
 }
 
 /// Re-initialize a reader so that it can re-used to read

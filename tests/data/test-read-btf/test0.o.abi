@@ -1,87 +1,91 @@
-<abi-corpus version='2.5' path='data/test-read-btf/test0.o'>
+<abi-corpus version='3.0' path='data/test-read-btf/test0.o' tracking-non-reachable-types='yes'>
   <elf-function-symbols>
     <elf-symbol name='fn0' type='func-type' binding='global-binding' visibility='default-visibility' is-defined='yes'/>
   </elf-function-symbols>
   <elf-variable-symbols>
     <elf-symbol name='foos' size='160' type='object-type' binding='global-binding' visibility='default-visibility' is-defined='yes'/>
   </elf-variable-symbols>
-  <abi-instr address-size='64'>
-    <pointer-type-def type-id='type-id-1' size-in-bits='64' hash='31917a81113de789' id='type-id-2'/>
-    <pointer-type-def type-id='type-id-3' size-in-bits='64' hash='2d82e53a384bb075' id='type-id-4'/>
-    <type-decl name='char' size-in-bits='8' hash='65b2d157027b431a' id='type-id-5'/>
-    <qualified-type-def type-id='type-id-6' const='yes' hash='5a11f4ebfe2722ef' id='type-id-7'/>
-    <pointer-type-def type-id='type-id-7' size-in-bits='64' hash='21f0355d5e02d234' id='type-id-8'/>
-    <qualified-type-def type-id='type-id-9' const='yes' hash='8cef8df4b6728924' id='type-id-10'/>
-    <pointer-type-def type-id='type-id-10' size-in-bits='64' hash='15e84cc8db4ed19c' id='type-id-11'/>
-    <qualified-type-def type-id='type-id-12' const='yes' hash='b7d9663fcb0223e0' id='type-id-13'/>
-    <qualified-type-def type-id='type-id-14' const='yes' hash='645f4d0d44563fc6' id='type-id-15'/>
-    <enum-decl name='ANOTHER_ENUM_TYPE' linkage-name='ANOTHER_ENUM_TYPE' size-in-bits='32' alignment-in-bits='32' hash='c56d62994e44ba04' id='type-id-16'>
-      <underlying-type type-id='type-id-17'/>
+  <abi-types>
+    <subrange length='10' lower-bound='0' upper-bound='9' size-in-bits='64' is-anonymous='yes' hash='4e72a2f569b234f4' id='type-id-1'/>
+    <subrange length='2' lower-bound='0' upper-bound='1' size-in-bits='64' is-anonymous='yes' hash='95f31efc53154467' id='type-id-2'/>
+    <pointer-type-def type-id='type-id-3' size-in-bits='64' hash='cf3e4ea946c3abc6' id='type-id-4'/>
+    <pointer-type-def type-id='type-id-5' size-in-bits='64' hash='0fb662e33efeffd6' id='type-id-6'/>
+    <type-decl name='char' size-in-bits='8' hash='65b2d157027b431a' id='type-id-7'/>
+    <qualified-type-def type-id='type-id-8' const='yes' hash='aef9b1c99ffc9939' id='type-id-9'/>
+    <pointer-type-def type-id='type-id-9' size-in-bits='64' hash='6ee753950857d209' id='type-id-10'/>
+    <qualified-type-def type-id='type-id-11' const='yes' hash='429c6f27cc2685d8' id='type-id-12'/>
+    <pointer-type-def type-id='type-id-12' size-in-bits='64' hash='5e782202144ebe2a' id='type-id-13'/>
+    <qualified-type-def type-id='type-id-14' const='yes' hash='be35d0ff34488dc7' id='type-id-15'/>
+    <qualified-type-def type-id='type-id-16' const='yes' hash='1341ea448978b3ff' id='type-id-17'/>
+    <enum-decl name='ANOTHER_ENUM_TYPE' linkage-name='ANOTHER_ENUM_TYPE' size-in-bits='32' alignment-in-bits='32' hash='96f3a85f895c3ce4' id='type-id-18'>
+      <underlying-type type-id='type-id-19'/>
       <enumerator name='E0_ANOTHER_ENUM_TYPE' value='0'/>
       <enumerator name='E1_ANOTHER_ENUM_TYPE' value='1'/>
     </enum-decl>
-    <enum-decl name='ENUM_TYPE' linkage-name='ENUM_TYPE' size-in-bits='32' alignment-in-bits='32' hash='5a2a9045ac9ab7ed' id='type-id-18'>
-      <underlying-type type-id='type-id-19'/>
+    <enum-decl name='ENUM_TYPE' linkage-name='ENUM_TYPE' size-in-bits='32' alignment-in-bits='32' hash='e0bc2acdad1cf2ee' id='type-id-20'>
+      <underlying-type type-id='type-id-21'/>
       <enumerator name='E0_ENUM_TYPE' value='0'/>
       <enumerator name='E1_ENUM_TYPE' value='1'/>
     </enum-decl>
-    <type-decl name='enum-ANOTHER_ENUM_TYPE-underlying-type-32' size-in-bits='32' alignment-in-bits='32' hash='ab5c1f9ada22c3df' id='type-id-17'/>
-    <type-decl name='enum-ENUM_TYPE-underlying-type-32' size-in-bits='32' alignment-in-bits='32' hash='6cbc147c2987ee6a' id='type-id-19'/>
-    <type-decl name='float' size-in-bits='32' hash='d7ec3bf03d3c5690' id='type-id-20'/>
-    <array-type-def dimensions='1' type-id='type-id-20' size-in-bits='320' hash='c38b8e1bf4899e1f' id='type-id-21'>
-      <subrange length='10' lower-bound='0' upper-bound='9' size-in-bits='64' is-anonymous='yes' hash='4e72a2f569b234f4' id='type-id-22'/>
+    <type-decl name='enum-ANOTHER_ENUM_TYPE-underlying-type-32' size-in-bits='32' alignment-in-bits='32' hash='ab5c1f9ada22c3df' id='type-id-19'/>
+    <type-decl name='enum-ENUM_TYPE-underlying-type-32' size-in-bits='32' alignment-in-bits='32' hash='6cbc147c2987ee6a' id='type-id-21'/>
+    <type-decl name='float' size-in-bits='32' hash='d7ec3bf03d3c5690' id='type-id-22'/>
+    <array-type-def dimensions='1' type-id='type-id-22' size-in-bits='320' hash='72aa4cc0109c7410' id='type-id-23'>
+      <subrange length='10' lower-bound='0' upper-bound='9' size-in-bits='64' is-anonymous='yes' hash='4e72a2f569b234f4' id='type-id-1'/>
     </array-type-def>
-    <array-type-def dimensions='1' type-id='type-id-23' size-in-bits='1280' hash='0fd13a2c85a5e58e' id='type-id-24'>
-      <subrange length='2' lower-bound='0' upper-bound='1' size-in-bits='64' is-anonymous='yes' hash='95f31efc53154467' id='type-id-25'/>
+    <array-type-def dimensions='1' type-id='type-id-24' size-in-bits='1280' hash='e444d237f780d818' id='type-id-25'>
+      <subrange length='2' lower-bound='0' upper-bound='1' size-in-bits='64' is-anonymous='yes' hash='95f31efc53154467' id='type-id-2'/>
     </array-type-def>
-    <type-decl name='int' size-in-bits='32' hash='09d17c08f594edc7' id='type-id-9'/>
-    <class-decl name='foo_type' is-struct='yes' visibility='default' size-in-bits='640' hash='91814acdbe3dd44d' id='type-id-23'>
+    <function-type size-in-bits='64' hash='d05017504aa019e2' id='type-id-26'>
+      <parameter type-id='type-id-10' name='p'/>
+      <return type-id='type-id-27'/>
+    </function-type>
+    <type-decl name='int' size-in-bits='32' hash='09d17c08f594edc7' id='type-id-11'/>
+    <class-decl name='foo_type' is-struct='yes' visibility='default' size-in-bits='640' hash='46092c70c317ad54' id='type-id-24'>
       <data-member access='public' layout-offset-in-bits='0'>
-        <var-decl name='m0' type-id='type-id-11' visibility='default'/>
+        <var-decl name='m0' type-id='type-id-13' visibility='default'/>
       </data-member>
       <data-member access='public' layout-offset-in-bits='64'>
-        <var-decl name='m1' type-id='type-id-26' visibility='default'/>
+        <var-decl name='m1' type-id='type-id-28' visibility='default'/>
       </data-member>
       <data-member access='public' layout-offset-in-bits='128'>
-        <var-decl name='m2' type-id='type-id-27' visibility='default'/>
+        <var-decl name='m2' type-id='type-id-29' visibility='default'/>
       </data-member>
       <data-member access='public' layout-offset-in-bits='192'>
-        <var-decl name='m3' type-id='type-id-28' visibility='default'/>
+        <var-decl name='m3' type-id='type-id-30' visibility='default'/>
       </data-member>
       <data-member access='public' layout-offset-in-bits='256'>
-        <var-decl name='m4' type-id='type-id-21' visibility='default'/>
+        <var-decl name='m4' type-id='type-id-23' visibility='default'/>
       </data-member>
       <data-member access='public' layout-offset-in-bits='576'>
-        <var-decl name='m5' type-id='type-id-29' visibility='default'/>
+        <var-decl name='m5' type-id='type-id-31' visibility='default'/>
       </data-member>
     </class-decl>
-    <typedef-decl name='ANOTHER_ENUM_TYPE' type-id='type-id-16' size-in-bits='32' alignment-in-bits='32' hash='c56d62994e44ba04' id='type-id-1'/>
-    <typedef-decl name='ENUM_TYPE' type-id='type-id-18' size-in-bits='32' alignment-in-bits='32' hash='5a2a9045ac9ab7ed' id='type-id-3'/>
-    <typedef-decl name='foo_type' type-id='type-id-23' size-in-bits='640' hash='91814acdbe3dd44d' id='type-id-6'/>
-    <typedef-decl name='u_type' type-id='type-id-30' size-in-bits='64' hash='0308c584ff22f778' id='type-id-12'/>
-    <union-decl name='u_type' visibility='default' size-in-bits='64' hash='0308c584ff22f778' id='type-id-30'>
+    <typedef-decl name='ANOTHER_ENUM_TYPE' type-id='type-id-18' size-in-bits='32' alignment-in-bits='32' hash='96f3a85f895c3ce4' id='type-id-3'/>
+    <typedef-decl name='ENUM_TYPE' type-id='type-id-20' size-in-bits='32' alignment-in-bits='32' hash='e0bc2acdad1cf2ee' id='type-id-5'/>
+    <typedef-decl name='foo_type' type-id='type-id-24' size-in-bits='640' hash='46092c70c317ad54' id='type-id-8'/>
+    <typedef-decl name='u_type' type-id='type-id-32' size-in-bits='64' hash='b480ab4c7d270d5b' id='type-id-14'/>
+    <union-decl name='u_type' visibility='default' size-in-bits='64' hash='b480ab4c7d270d5b' id='type-id-32'>
       <data-member access='public'>
-        <var-decl name='m0' type-id='type-id-4' visibility='default'/>
+        <var-decl name='m0' type-id='type-id-6' visibility='default'/>
       </data-member>
       <data-member access='public'>
-        <var-decl name='m1' type-id='type-id-2' visibility='default'/>
+        <var-decl name='m1' type-id='type-id-4' visibility='default'/>
       </data-member>
     </union-decl>
-    <type-decl name='unsigned char' size-in-bits='8' hash='6ebac62b3366db68' id='type-id-14'/>
-    <type-decl name='unsigned int' size-in-bits='32' hash='e66b43f97c38e87a' id='type-id-31'/>
-    <pointer-type-def type-id='type-id-31' size-in-bits='64' hash='232fa04f890c2a5a' id='type-id-27'/>
-    <qualified-type-def type-id='type-id-5' volatile='yes' hash='310596f89de9b019' id='type-id-32'/>
-    <pointer-type-def type-id='type-id-32' size-in-bits='64' hash='82544e803ea05f77' id='type-id-26'/>
-    <qualified-type-def type-id='type-id-13' volatile='yes' hash='c6681e219b8ee5e5' id='type-id-33'/>
-    <pointer-type-def type-id='type-id-33' size-in-bits='64' hash='cce0c342da3cc9cb' id='type-id-29'/>
-    <qualified-type-def type-id='type-id-15' volatile='yes' hash='4323a933d6d5b8ee' id='type-id-34'/>
-    <pointer-type-def type-id='type-id-34' size-in-bits='64' hash='fea7cd23d606c9a5' id='type-id-28'/>
-    <var-decl name='foos' type-id='type-id-24' mangled-name='foos' visibility='default' elf-symbol-id='foos'/>
-    <function-decl name='fn0' type-id='type-id-35' mangled-name='fn0' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='fn0'/>
-    <type-decl name='void' id='type-id-36'/>
-    <function-type size-in-bits='64' hash='0dcec1c3e8967b0f' id='type-id-35'>
-      <parameter type-id='type-id-8' name='p'/>
-      <return type-id='type-id-36'/>
-    </function-type>
+    <type-decl name='unsigned char' size-in-bits='8' hash='6ebac62b3366db68' id='type-id-16'/>
+    <type-decl name='unsigned int' size-in-bits='32' hash='e66b43f97c38e87a' id='type-id-33'/>
+    <pointer-type-def type-id='type-id-33' size-in-bits='64' hash='bf1f3a522fae2fbf' id='type-id-29'/>
+    <type-decl name='void' hash='8dcbc64750c3d4e3' id='type-id-27'/>
+    <qualified-type-def type-id='type-id-7' volatile='yes' hash='86900e46f267abf2' id='type-id-34'/>
+    <pointer-type-def type-id='type-id-34' size-in-bits='64' hash='8fe9ba12d563e8bd' id='type-id-28'/>
+    <qualified-type-def type-id='type-id-15' volatile='yes' hash='38ad287c92a821bb' id='type-id-35'/>
+    <pointer-type-def type-id='type-id-35' size-in-bits='64' hash='1678e0a66d526f91' id='type-id-31'/>
+    <qualified-type-def type-id='type-id-17' volatile='yes' hash='7bfaedd65d31cbe8' id='type-id-36'/>
+    <pointer-type-def type-id='type-id-36' size-in-bits='64' hash='91b08dbde4b802e3' id='type-id-30'/>
+  </abi-types>
+  <abi-instr address-size='64'>
+    <var-decl name='foos' type-id='type-id-25' mangled-name='foos' visibility='default' elf-symbol-id='foos'/>
+      <function-decl name='fn0' type-id='type-id-26' mangled-name='fn0' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='fn0'/>
   </abi-instr>
 </abi-corpus>

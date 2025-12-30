@@ -141,7 +141,7 @@ test_task_btf::perform()
   if (!(is_ok = serialize_corpus(out_abi_path, corp)))
        return;
 
-  if (!(is_ok = run_abidw("--btf ")))
+  if (!(is_ok = run_abi_self_comparison("--btf ")))
     return;
 
   if (!(is_ok = run_diff()))

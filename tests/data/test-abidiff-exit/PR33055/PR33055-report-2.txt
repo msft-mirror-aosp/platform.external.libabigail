@@ -1,47 +1,21 @@
-Functions changes summary: 0 Removed, 3 Changed, 1 Added functions
+Functions changes summary: 0 Removed, 1 Changed (2 filtered out), 1 Added functions
 Variables changes summary: 0 Removed, 0 Changed, 0 Added variable
 
 1 Added function:
 
   [A] 'method void PublicImplementation::someNewMethod()'    {_ZN20PublicImplementation13someNewMethodEv}
 
-3 functions with some indirect sub-type change:
+1 function with some indirect sub-type change:
 
   [C] 'method PublicImplementation::PublicImplementation()' at file.cpp:28:1 has some indirect sub-type changes:
     implicit parameter 0 of type 'PublicImplementation*' has sub-type changes:
       in pointed to type 'class PublicImplementation' at file.cpp:13:1:
         type size hasn't changed
-        3 member function changes:
-          'method virtual PublicImplementation::~PublicImplementation()' of linkage name: '_ZN20PublicImplementationD0Ev' has some sub-type changes:
-            implicit parameter 0 of type 'PublicImplementation*' has sub-type changes:
-              pointed to type 'class PublicImplementation' changed, as being reported
-          'method virtual PublicImplementation::~PublicImplementation()' of linkage name: '_ZN20PublicImplementationD2Ev' has some sub-type changes:
-            implicit parameter 0 of type 'PublicImplementation*' has sub-type changes:
-              pointed to type 'class PublicImplementation' changed, as being reported
-          'method virtual PublicImplementation::~PublicImplementation()' of linkage name: '_ZN20PublicImplementationD4Ev' has some sub-type changes:
-            implicit parameter 0 of type 'PublicImplementation*' has sub-type changes:
-              pointed to type 'class PublicImplementation' changed, as being reported
         1 data member change:
           type of 'Interface* _pImpl' changed:
             in pointed to type 'class Interface' at file.cpp:1:1:
               type size hasn't changed
               1 member function insertion:
                 'method virtual void Interface::someNewMethod()' at file.cpp:9:1, virtual at voffset 3/3
-              2 member function changes:
-                'method virtual Interface::~Interface()' of linkage name: '_ZN9InterfaceD4Ev' has some sub-type changes:
-                  implicit parameter 0 of type 'Interface*' has sub-type changes:
-                    pointed to type 'class Interface' changed, as being reported
-                'method virtual Interface* Interface::clone()' has some sub-type changes:
-                  return type changed:
-                    pointed to type 'class Interface' changed, as being reported
-                  implicit parameter 0 of type 'Interface*' has sub-type changes:
-                    pointed to type 'class Interface' changed, as being reported
-
-  [C] 'method virtual PublicImplementation::~PublicImplementation()' at file.cpp:29:1 has some indirect sub-type changes:
-    implicit parameter 0 of type 'PublicImplementation*' has sub-type changes:
-      pointed to type 'class PublicImplementation' changed at file.cpp:13:1, as reported earlier
-
-  [C] 'method virtual PublicImplementation::~PublicImplementation()' at file.cpp:29:1 has some indirect sub-type changes:
-    implicit parameter 0 of type 'PublicImplementation*' has sub-type changes:
-      pointed to type 'class PublicImplementation' changed at file.cpp:13:1, as reported earlier
+              no member function change (1 filtered);
 

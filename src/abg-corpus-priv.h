@@ -14,6 +14,9 @@
 #ifndef __ABG_CORPUS_PRIV_H__
 #define __ABG_CORPUS_PRIV_H__
 
+#include <mutex>
+#include <atomic>
+
 #include "abg-internal.h"
 #include "abg-ir.h"
 #include "abg-regex.h"
@@ -30,6 +33,10 @@ namespace sptr_utils
 
 namespace ir
 {
+
+using std::mutex;
+using std::recursive_mutex;
+using std::lock_guard;
 
 using regex::regex_t_sptr;
 
@@ -78,6 +85,7 @@ class corpus::exported_decls_builder::priv
 
   priv();
 
+  recursive_mutex	mutex_;
   functions&		fns_;
   variables&		vars_;
   // A map that associates a function ID (function symbol and its
@@ -100,6 +108,7 @@ class corpus::exported_decls_builder::priv
   regex_t_sptrs_type	compiled_vars_keep_regexps_;
   strings_type&	sym_id_of_fns_to_keep_;
   strings_type&	sym_id_of_vars_to_keep_;
+  recursive_mutex	maps_mutex_;
 
 public:
 
@@ -268,7 +277,7 @@ public:
   ///
   /// @return a reference to a string representing the function ID.
   interned_string
-  get_id(const function_decl& fn)
+  get_id(const function_decl& fn) const
   {return fn.get_id();}
 
   /// Returns an ID for a given variable.
@@ -277,7 +286,7 @@ public:
   ///
   /// @return a reference to a string representing the variable ID.
   interned_string
-  get_id(const var_decl& var)
+  get_id(const var_decl& var) const
   {return var.get_id();}
 
   /// Test if a given function ID is in the id-functions map.
@@ -292,6 +301,7 @@ public:
   std::unordered_set<const function_decl*>*
   fn_id_is_in_id_fns_map(const interned_string& fn_id)
   {
+    lock_guard<recursive_mutex> lock(maps_mutex_);
     istr_fn_ptr_set_map_type& m = id_fns_map();
     auto i = m.find(fn_id);
     if (i == m.end())
@@ -389,6 +399,7 @@ public:
   fn_is_in_id_fns_map(function_decl* fn)
   {
     std::unordered_set<const function_decl*>* fns = fn_id_is_in_id_fns_map(fn);
+    lock_guard<recursive_mutex> lock(maps_mutex_);
     if (fns && fn_is_in_fns(fn, *fns))
       return true;
     return false;
@@ -408,10 +419,17 @@ public:
     if (!fn)
       return;
 
-    std::unordered_set<const function_decl*>* fns = fn_id_is_in_id_fns_map(fn_id);
-    if (!fns)
-      fns = &(id_fns_map()[fn_id] = std::unordered_set<const function_decl*>());
-    fns->insert(fn);
+    std::unordered_set<const function_decl*>* fns =
+      fn_id_is_in_id_fns_map(fn_id);
+
+    {
+      lock_guard<recursive_mutex> lock(maps_mutex_);
+      if (!fns)
+	fns = &(id_fns_map()[fn_id] =
+		std::unordered_set<const function_decl*>());
+
+      fns->insert(fn);
+    }
   }
 
   /// Add a given function to the map of functions that are present in
@@ -429,9 +447,11 @@ public:
     interned_string fn_id;
     do
       {
-	fn_id = fn->get_id(sym);
+	fn_id = fn->get_id();
 	add_fn_to_id_fns_map(fn, fn_id);
 	fn_id = fn->get_environment().intern(sym->get_id_string());
+	add_fn_to_id_fns_map(fn, fn_id);
+	fn_id = get_function_symbol_id(fn);
 	add_fn_to_id_fns_map(fn, fn_id);
 	sym = sym->get_next_alias();
       }
@@ -449,6 +469,7 @@ public:
   std::unordered_set<var_decl_sptr>*
   var_id_is_in_id_vars_map(const interned_string& var_id)
   {
+    lock_guard<recursive_mutex> lock(maps_mutex_);
     istr_var_ptr_set_map_type& m = id_vars_map();
     auto i = m.find(var_id);
     if (i != m.end())
@@ -512,6 +533,7 @@ public:
     if (!var)
       return false;
 
+    lock_guard<recursive_mutex> lock(maps_mutex_);
     interned_string var_id = var->get_id();
     const std::unordered_set<var_decl_sptr>* vars =
       var_id_is_in_id_vars_map(var_id);
@@ -530,6 +552,7 @@ public:
     if (!var)
       return;
 
+    lock_guard<recursive_mutex> lock(maps_mutex_);
     // First associate the var id to the variable.
     interned_string var_id = var->get_id();
     std::unordered_set<var_decl_sptr>* vars = var_id_is_in_id_vars_map(var_id);
@@ -572,7 +595,11 @@ public:
   {
     if (do_update || !fn_is_in_id_fns_map(fn))
       {
-	fns_.push_back(fn);
+	{
+	  lock_guard<recursive_mutex> lock(mutex_);
+	  if (!fn_is_in_id_fns_map(fn))
+	    fns_.push_back(fn);
+	}
 	add_fn_to_id_fns_map(fn);
       }
   }
@@ -583,6 +610,7 @@ public:
   void
   add_var_to_exported(const var_decl_sptr& var)
   {
+    lock_guard<recursive_mutex> lock(maps_mutex_);
     if (!var_is_in_id_vars_map(var))
       {
 	vars_.push_back(var);
@@ -824,16 +852,46 @@ public:
   }
 }; // end struct corpus::exported_decls_builder::priv
 
+/// Hashing and equality functor for a set of type_base* that are all
+/// canonicalized.  The hash value is the value of the canonical
+/// pointer type and the equality is pointer equality.
+struct canonicalized_type_base_hasher_and_equality_functor
+{
+  size_t
+  operator()(const type_base_sptr& t) const
+  {
+    return reinterpret_cast<size_t>(t->get_naked_canonical_type());
+  }
+
+  size_t
+  operator()(const type_base* t) const
+  {
+    return reinterpret_cast<size_t>(t->get_naked_canonical_type());
+  }
+
+  bool
+  operator()(const type_base_sptr& l, const type_base_sptr& r) const
+  {
+    return l->get_naked_canonical_type() == r->get_naked_canonical_type();
+  }
+}; // end stuct canonical_type_base_hash
+
+typedef unordered_set<type_base_sptr,
+		      canonicalized_type_base_hasher_and_equality_functor,
+		      canonicalized_type_base_hasher_and_equality_functor>
+canonicalized_types_set_type;
 
 /// The private data of the @ref corpus type.
 struct corpus::priv
 {
+  recursive_mutex				mutex_;
   mutable unordered_map<string, type_base_sptr> canonical_types_;
   string					format_major_version_number_;
   string					format_minor_version_number_;
   const environment&				env;
   corpus_group*				group;
   corpus::exported_decls_builder_sptr		exported_decls_builder;
+  mutex					exported_decls_builder_mutex;
   corpus::origin				origin_;
   vector<string>				regex_patterns_fns_to_suppress;
   vector<string>				regex_patterns_vars_to_suppress;
@@ -851,9 +909,13 @@ struct corpus::priv
   vector<var_decl_sptr>			vars;
   functions_set				undefined_fns;
   functions					sorted_undefined_fns;
+  mutex					undefined_fns_mutex_;
   variables_set				undefined_vars;
   variables					sorted_undefined_vars;
+  mutex					undefined_vars_mutex_;
   symtab_reader::symtab_sptr			symtab_;
+  mutable global_scope_sptr			global_scope_;
+  recursive_mutex				global_scope_mutex_;
   // The type maps contained in this data member are populated if the
   // corpus follows the One Definition Rule and thus if there is only
   // one copy of a type with a given name, per corpus. Otherwise, if
@@ -867,9 +929,13 @@ struct corpus::priv
   // the type maps of each translation unit.
   type_maps					types_;
   type_maps					type_per_loc_map_;
-  mutable vector<type_base_wptr>		types_not_reachable_from_pub_ifaces_;
-  unordered_set<interned_string, hash_interned_string> *pub_type_pretty_reprs_;
-  bool 					do_log;
+  std::atomic<bool>				do_compute_non_reachable_types_;
+  mutable type_base_ptrs_type			sorted_non_reachable_types_from_pub_ifaces_;
+  canonical_type_ptr_set_type			reachable_types_from_pub_ifaces_;
+  canonical_type_ptr_set_type			non_reachable_types_from_pub_ifaces_;
+  // The map to keep function types alive.
+  type_sptr_set_type				live_fn_types_;
+  bool						do_log;
 
 private:
   priv();
@@ -892,7 +958,7 @@ public:
       group(),
       origin_(ARTIFICIAL_ORIGIN),
       path(p),
-      pub_type_pretty_reprs_(),
+      do_compute_non_reachable_types_(),
       do_log()
   {}
 
@@ -941,51 +1007,17 @@ public:
   void
   remove_redundant_functions();
 
+  void
+  set_compute_non_reachable_types(bool f);
+
+  bool
+  get_compute_non_reachable_types() const;
+
+  recursive_mutex&
+  get_mutex();
+
   ~priv();
 }; // end struct corpus::priv
-
-void
-maybe_update_scope_lookup_map(const scope_decl_sptr& member_scope);
-
-void
-maybe_update_scope_lookup_map(const decl_base_sptr& member_scope);
-
-void
-maybe_update_types_lookup_map(const type_decl_sptr& basic_type);
-
-void
-maybe_update_types_lookup_map(const class_decl_sptr& class_type);
-
-void
-maybe_update_types_lookup_map(const union_decl_sptr& union_type);
-
-void
-maybe_update_types_lookup_map(const enum_type_decl_sptr& enum_type);
-
-void
-maybe_update_types_lookup_map(const typedef_decl_sptr& typedef_type);
-
-void
-maybe_update_types_lookup_map(const qualified_type_def_sptr& qualified_type);
-
-void
-maybe_update_types_lookup_map(const pointer_type_def_sptr& pointer_type);
-
-void
-maybe_update_types_lookup_map(const reference_type_def_sptr& reference_type);
-
-void
-maybe_update_types_lookup_map(const array_type_def_sptr& array_type);
-
-void
-maybe_update_types_lookup_map(scope_decl *scope,
-			      const function_type_sptr& function_type);
-
-void
-maybe_update_types_lookup_map(const decl_base_sptr& decl);
-
-void
-maybe_update_types_lookup_map(const type_base_sptr& type);
 
 }// end namespace ir
 

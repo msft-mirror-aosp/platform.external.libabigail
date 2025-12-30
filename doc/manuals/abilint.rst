@@ -89,6 +89,11 @@ Options
 
     Display a short help message and exits.
 
+  * ``--load-all-types``
+
+    Analyze all the types coming from the ABIXML input, including
+    those that are not reachable from exported declarations.
+
 
   * ``--noout``
 

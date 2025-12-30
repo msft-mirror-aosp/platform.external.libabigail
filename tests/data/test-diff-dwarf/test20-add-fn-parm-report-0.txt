@@ -4,5 +4,6 @@ Variables changes summary: 0 Removed, 0 Changed, 0 Added variable
 1 function with incompatible sub-type changes:
 
   [C] 'function int add(int, int)' has some sub-type changes:
+    'function int add(int, int) {add}' now becomes 'function int add(int, int, int) {add}'
     parameter 3 of type 'int' was added
 

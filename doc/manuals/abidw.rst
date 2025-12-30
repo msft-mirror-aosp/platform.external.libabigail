@@ -211,6 +211,17 @@ Options
     representation build by Libabigail to represent the ABI and will
     not end up in the abi XML file.
 
+  * ``--emit-member-hashes``
+
+    Emit hashes for data members and virtual member functions in the
+    ABIXML file.
+
+
+  * ``--emit-native-offsets``
+
+    Emit the offsets of the debug information entries which ABI
+    artifacts originate from.  This is useful for debug purposes.
+
 
   * ``--exported-interfaces-only``
 
@@ -458,6 +469,10 @@ Options
     1.8 will not set the default size and will interpret types without
     a size-in-bits attribute as zero sized.
 
+  * ``--nullout``
+
+    Emit the ABIXML output to /dev/null.
+
 
   * ``--out-file | -o`` <*file-path*>
 
@@ -465,6 +480,14 @@ Options
     *path-to-elf-file* into the file *file-path*, rather than emitting
     it to its standard output.
 
+
+  * ``--parameter-names``
+
+    Emit function parameters names in the ABIXML output.
+
+  * ``--show-locs``
+
+    Show location information of ABI artifacts in the ABIXML output.
 
   * ``--stats``
 

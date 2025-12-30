@@ -290,57 +290,104 @@ set_hashing_state(const type_or_decl_base& tod,
     tod.priv_->set_hashing_state(s);
 }
 
-/// Test if an artifact is recursive.
+/// Add a state to the hashing state of a given IR node.
 ///
-/// For now, a recursive artifact is a type that contains a sub-type
-/// that refers to itself.
+/// @param tod the type of decl IR node to set the hashing state for.
 ///
-/// @param t the artifact to consider.
-///
-/// @return truf iff @p t is recursive.
-bool
-is_recursive_artefact(const type_or_decl_base& t)
-{
-  bool result = false;
-  const type_or_decl_base* tp = &t;
-  if (decl_base* d = is_decl(tp))
-    {
-      d = look_through_decl_only(d);
-      result = d->type_or_decl_base::priv_->is_recursive_artefact();
-    }
-  else
-    result = t.type_or_decl_base::priv_->is_recursive_artefact();
-
-  return result;
-}
-
-/// Set the property that flags an artifact as recursive.
-///
-/// For now, a recursive artifact is a type that contains a sub-type
-/// that refers to itself.
-///
-/// @param t the artifact to consider.
-///
-/// @param f the new value of the flag.  If true, then the artefact @p
-/// t is considered recursive.
+/// @param s the new state to add to the hashing state of the node.
 void
-is_recursive_artefact(const type_or_decl_base& t, bool f)
+add_to_hashing_state(const ir::type_or_decl_base& tod,
+		     hashing::hashing_state s)
 {
-  const type_or_decl_base* tp = &t;
-  if (decl_base* d = is_decl(tp))
-    {
-      d = look_through_decl_only(d);
-      d->type_or_decl_base::priv_->is_recursive_artefact(f);
-    }
-  else
-    t.priv_->is_recursive_artefact(f);
+  hashing::hashing_state h = get_hashing_state(tod);
+
+  h = static_cast<hashing::hashing_state>(h | s);
+  hashing::set_hashing_state(tod, h);
+
 }
+
+/// Remove a state to the hashing state of a given IR node.
+///
+/// @param tod the type of decl IR node to set the hashing state for.
+///
+/// @param s the new state to add to the hashing state of the node.
+void
+remove_from_hashing_state(const ir::type_or_decl_base& tod,
+			  hashing::hashing_state s)
+{
+  hashing::hashing_state h = get_hashing_state(tod);
+
+  h = static_cast<hashing::hashing_state>(h & ~s);
+  hashing::set_hashing_state(tod, h);
+}
+
 }//end namespace hashing
 
 using std::list;
 using std::vector;
 
 using namespace abigail::ir;
+
+namespace ir
+{
+
+/// Compute (or get) the hash of a sub-type of the type for which we
+/// are currently computing the hash.  It does so by preventing
+/// infinite loops.
+///
+/// The function detects if the sub-type is currently already being
+/// walked for hash computation; if it's the case then it returns an
+/// empty hash to prevent infinite looping.  Otherwise it computes the
+/// hash of the sub-type.
+///
+/// @param t the sub-type node to consider.
+///
+/// @return the resulting hash.  It can be empty to prevent infinite
+/// looping.
+///
+hash_t
+get_subtype_hash(const type_or_decl_base* t)
+{
+  if (!t)
+    return hash_t();
+
+  if (hashing::get_hashing_state(*t) == hashing::HASHING_FINISHED_STATE)
+    return peek_hash_value(*t);
+  else if (hashing::get_hashing_state(*t) & hashing::HASHING_CYCLED_TYPE_STATE)
+    return hash_t();
+  else if (hashing::get_hashing_state(*t) & hashing::HASHING_STARTED_STATE)
+    {
+      hashing::add_to_hashing_state(*t, hashing::HASHING_CYCLED_TYPE_STATE);
+      return hash_t();
+    }
+
+  hash_t v = t->hash_value();
+  hashing::remove_from_hashing_state(*t, hashing::HASHING_CYCLED_TYPE_STATE);
+
+  return v;
+}
+
+/// Compute (or get) the hash of a sub-type of the type for which we
+/// are currently computing the hash.  It does so by preventing
+/// infinite loops.
+///
+/// The function detects if the sub-type is currently already being
+/// walked for hash computation; if it's the case then it returns an
+/// empty hash to prevent infinite looping.  Otherwise it computes the
+/// hash of the sub-type.
+///
+/// @param t the sub-type node to consider.
+///
+/// @return the resulting hash.  It can be empty to prevent infinite
+/// looping.
+///
+hash_t
+get_subtype_hash(type_or_decl_base_sptr t)
+{
+  return get_subtype_hash(t.get());
+}
+
+}// end namespace ir
 
 // See forward declarations in abg-ir.h.
 
@@ -349,35 +396,135 @@ using namespace abigail::ir;
 #define MAYBE_RETURN_EARLY_FROM_HASHING_TO_AVOID_CYCLES(type)		\
   do									\
     {									\
-      if (hashing::get_hashing_state(type) == hashing::HASHING_STARTED_STATE \
-	  || hashing::get_hashing_state(type) == hashing::HASHING_SUBTYPE_STATE) \
-	{								\
-	  hashing::set_hashing_state(t, hashing::HASHING_CYCLED_TYPE_STATE); \
-	  hashing::is_recursive_artefact(type, true);			\
-	  return hash_t();						\
-	}								\
-      else if (hashing::get_hashing_state(type) == hashing::HASHING_CYCLED_TYPE_STATE) \
-	return hash_t();						\
-      else if (hashing::get_hashing_state(type) == hashing::HASHING_FINISHED_STATE) \
-	return peek_hash_value(type);					\
-    }									\
-  while(false)
-
-#define MAYBE_FLAG_TYPE_AS_RECURSIVE(type, underlying, h)		\
-  do									\
-    {									\
-      if (!h || hashing::is_recursive_artefact(*underlying))		\
-	hashing::is_recursive_artefact(type, true);			\
-    }									\
-  while(false)
-
-#define MAYBE_RETURN_EARLY_IF_HASH_EXISTS(type)			\
-  do									\
-    {									\
       if (hashing::get_hashing_state(type) == hashing::HASHING_FINISHED_STATE) \
 	return peek_hash_value(type);					\
+      else if (hashing::get_hashing_state(type) & hashing::HASHING_CYCLED_TYPE_STATE) \
+	return hash_t();						\
     }									\
   while(false)
+
+#if 0
+/// This is for debugging purposes.
+///
+/// It emits the hash value of an artifact, if its DWARF offset is
+/// among a set of given DWARF offset numbers.
+///
+/// @param artifact the artifact to consider.
+///
+/// @param native_offsets the set of DWARF offsets the artifact should
+/// have to for its hash value to be emitted.
+///
+/// @param artifact_number this is an arbitrary number provided by the
+/// caller to identify the artifact in the output.
+///
+/// @param h the hash value of the artifact to emit.
+void
+debug_hash_value(const type_or_decl_base& artifact,
+		 std::unordered_set<uint32_t> native_offsets,
+		 int artifact_number,
+		 hash_t h)
+{
+  if (offset_t o = artifact.get_native_offset())
+    if (native_offsets.find(*o) != native_offsets.end())
+      {
+	std::cerr << "hash of '"
+		  << artifact.get_pretty_representation()
+		  << "'/"
+		  << artifact_number
+		  << " at offset "
+		  << std::hex
+		  << *o
+		  << std::dec
+		  << " is '"
+		  << std::hex
+		  << *h
+		  << std::dec
+		  << std::endl;
+	  }
+}
+#endif
+
+/// Hash a type as a basic type having a name and size attributes.
+///
+/// This hashing takes into account the name of the type as as its
+/// size.  The name taken into account is the same name that is taken
+/// into account by the type canonicalization process in
+/// type_base::get_canonical_type_for.
+///
+/// @param t the type to hash.
+///
+/// @return the hash value.
+static hash_t
+hash_as_basic_type(const abigail::ir::type_base& t)
+{
+  type_base::hash hash_as_type;
+  decl_base::hash hash_as_decl;
+  qualified_type_def::hash hash_as_qualified;
+
+  hash_t h = hash_as_type(t);
+  if (auto q = is_qualified_type(&t))
+    h = hashing::combine_hashes(h, hash_as_qualified(*q));
+  else if (auto d = is_decl(&t))
+    h = hashing::combine_hashes(h, hash_as_decl(*d));
+
+  return h;
+}
+
+/// Hash a type as a basic type having a name and size attributes.
+///
+/// This hashing takes into account the name of the type as as its
+/// size.  The name taken into account is the same name that is taken
+/// into account by the type canonicalization process in
+/// type_base::get_canonical_type_for.
+///
+/// @param t the type to hash.
+///
+/// @return the hash value.
+static hash_t
+hash_as_basic_type(const type_base_sptr t)
+{
+  if (!t)
+    return hash_t();
+  return hash_as_basic_type(*t);
+}
+
+/// Depending on the kind of the type, hash it as a pointer, a
+/// reference or a typedef.
+///
+/// @param t the type to hash.
+///
+/// @return the hash value.
+static hash_t
+hash_as_ptr_ref_or_typedef_type(const type_base_sptr& t)
+{
+  reference_type_def::hash hash_reference;
+  pointer_type_def::hash hash_pointer;
+  typedef_decl::hash hash_typedef;
+  hash_t h;
+
+  if (auto p = is_pointer_type(t))
+    h = hash_pointer(*p);
+  else if (auto r = is_reference_type(t))
+    h = hash_reference(*r);
+  else if (auto ty = is_typedef(t))
+    h = hash_typedef(*ty);
+
+  return h;
+}
+
+/// Hash a given type as a basic type, then depending on its type,
+/// hash it further as a pointer, reference, or typedef type.
+///
+/// @param t the type to consider.
+///
+/// @return the resulting hash value.
+static hash_t
+hash_as_basic_then_ptr_ref_or_typedef_type(const type_base_sptr& t)
+{
+  hash_t h = hash_as_basic_type(t);
+  h = hashing::combine_hashes(h, hash_as_ptr_ref_or_typedef_type(t));
+  return h;
+}
 
 /// The hashing functor for using instances of @ref type_or_decl_base
 /// as values in a hash map or set.
@@ -423,17 +570,16 @@ decl_base::hash::operator()(const decl_base& d) const
 {
   hash_t v = 0;
 
-  if (!d.get_is_anonymous())
-    {
-      interned_string ln = d.get_name();
-      v = hashing::hash((string) ln);
-    }
+  string repr;
+
+  // Make sure the representation doesn't make the difference between
+  // a struct and a class so that we have the same hash for both.
+  repr = d.get_cached_pretty_representation(/*internal=*/true);
+
+  v = hashing::hash(repr);
 
   if (is_member_decl(d))
-    {
-      v = hashing::combine_hashes(v,hashing::hash(get_member_access_specifier(d)));
-      v = hashing::combine_hashes(v, hashing::hash(get_member_is_static(d)));
-    }
+    v = hashing::combine_hashes(v, hashing::hash(get_member_is_static(d)));
 
   return v;
 }
@@ -459,12 +605,12 @@ decl_base::hash::operator()(const decl_base* d) const
 hash_t
 type_decl::hash::operator()(const type_decl& t) const
 {
-  MAYBE_RETURN_EARLY_IF_HASH_EXISTS(t);
+  MAYBE_RETURN_EARLY_FROM_HASHING_TO_AVOID_CYCLES(t);
 
   decl_base::hash decl_hash;
   type_base::hash type_hash;
 
-  hashing::set_hashing_state(t, hashing::HASHING_STARTED_STATE);
+  hashing::add_to_hashing_state(t, hashing::HASHING_STARTED_STATE);
 
   hash_t v = decl_hash(t);
   v = hashing::combine_hashes(v, type_hash(t));
@@ -497,26 +643,16 @@ type_decl::hash::operator()(const type_decl* t) const
 hash_t
 typedef_decl::hash::operator()(const typedef_decl& t) const
 {
-  MAYBE_RETURN_EARLY_IF_HASH_EXISTS(t);
+  MAYBE_RETURN_EARLY_FROM_HASHING_TO_AVOID_CYCLES(t);
 
-  hashing::set_hashing_state(t, hashing::HASHING_STARTED_STATE);
+  hashing::add_to_hashing_state(t, hashing::HASHING_STARTED_STATE);
 
-  // The hash value of a typedef is the same as the hash value of its
-  // underlying type.
-  type_base_sptr u = look_through_decl_only_type(t.get_underlying_type());
-  hash_t v = peek_hash_value(*u);
-  if (!v)
-    {
-      hashing::hashing_state s = hashing::get_hashing_state(*u);
-      hashing::set_hashing_state(*u, hashing::HASHING_SUBTYPE_STATE);
-      v = u->hash_value();
-      hashing::set_hashing_state(*u, s);
-      MAYBE_FLAG_TYPE_AS_RECURSIVE(t, u, v);
-    }
+  auto u = peel_typedef_type(&t);
+  hash_t h = get_subtype_hash(u);
 
   hashing::set_hashing_state(t, hashing::HASHING_NOT_DONE_STATE);
 
-  return v;
+  return h;
 }
 
 /// Hashing function for a @ref typedef_decl IR node.
@@ -540,22 +676,19 @@ typedef_decl::hash::operator()(const typedef_decl* t) const
 hash_t
 qualified_type_def::hash::operator()(const qualified_type_def& t) const
 {
-  MAYBE_RETURN_EARLY_IF_HASH_EXISTS(t);
+  MAYBE_RETURN_EARLY_FROM_HASHING_TO_AVOID_CYCLES(t);
 
   type_base::hash type_hash;
   decl_base::hash decl_hash;
 
-  hashing::set_hashing_state(t, hashing::HASHING_STARTED_STATE);
+  hashing::add_to_hashing_state(t, hashing::HASHING_STARTED_STATE);
 
+  hash_t v = type_hash(t);
+  v = hashing::combine_hashes(v, hashing::hash(t.get_cv_quals()));
   type_base_sptr u = look_through_decl_only_type(t.get_underlying_type());
-  hashing::hashing_state s = hashing::get_hashing_state(*u);
-  hashing::set_hashing_state(*u, hashing::HASHING_SUBTYPE_STATE);
-  hash_t v = u->hash_value();
-  hashing::set_hashing_state(*u, s);
-  MAYBE_FLAG_TYPE_AS_RECURSIVE(t, u, v);
-  v = hashing::combine_hashes(v, type_hash(t));
-  v = hashing::combine_hashes(v, decl_hash(t));
-  v = hashing::combine_hashes(v, t.get_cv_quals());
+  v = hashing::combine_hashes(v, hash_as_basic_then_ptr_ref_or_typedef_type(u));
+  if (auto d = is_decl(u))
+    v = hashing::combine_hashes(v, decl_hash(*d));
 
   hashing::set_hashing_state(t, hashing::HASHING_NOT_DONE_STATE);
 
@@ -575,6 +708,7 @@ qualified_type_def::hash::operator()(const qualified_type_def* t) const
   return operator()(*t);
 }
 
+
 /// Hashing function for a @ref pointer_type_def IR node.
 ///
 /// @param t the @ref pointer_type_def IR node to hash.
@@ -583,21 +717,20 @@ qualified_type_def::hash::operator()(const qualified_type_def* t) const
 hash_t
 pointer_type_def::hash::operator()(const pointer_type_def& t) const
 {
-  MAYBE_RETURN_EARLY_IF_HASH_EXISTS(t);
+  MAYBE_RETURN_EARLY_FROM_HASHING_TO_AVOID_CYCLES(t);
 
   type_base::hash type_base_hash;
   decl_base::hash decl_hash;
 
-  hashing::set_hashing_state(t, hashing::HASHING_STARTED_STATE);
+  hashing::add_to_hashing_state(t, hashing::HASHING_STARTED_STATE);
 
-  type_base_sptr u = look_through_decl_only_type(t.get_pointed_to_type());
-  hashing::hashing_state s = hashing::get_hashing_state(*u);
-  hashing::set_hashing_state(*u, hashing::HASHING_SUBTYPE_STATE);
-  hash_t v = u->hash_value();
-  hashing::set_hashing_state(*u, s);
-  MAYBE_FLAG_TYPE_AS_RECURSIVE(t, u, v);
-  v = hashing::combine_hashes(v, type_base_hash(t));
+  hash_t v = type_base_hash(t);
   v = hashing::combine_hashes(v, decl_hash(t));
+  type_base_sptr u = look_through_decl_only_type(t.get_pointed_to_type());
+  hashing::combine_hashes(v, type_base_hash(t));
+  if (auto d = is_decl(u))
+    v = hashing::combine_hashes(v, decl_hash(*d));
+
 
   hashing::set_hashing_state(t, hashing::HASHING_NOT_DONE_STATE);
 
@@ -625,22 +758,14 @@ pointer_type_def::hash::operator()(const pointer_type_def* t) const
 hash_t
 reference_type_def::hash::operator()(const reference_type_def& t) const
 {
-  MAYBE_RETURN_EARLY_IF_HASH_EXISTS(t);
+  MAYBE_RETURN_EARLY_FROM_HASHING_TO_AVOID_CYCLES(t);
 
-  type_base::hash hash_type_base;
-  decl_base::hash hash_decl;
+  hashing::add_to_hashing_state(t, hashing::HASHING_STARTED_STATE);
 
-  hashing::set_hashing_state(t, hashing::HASHING_STARTED_STATE);
-
-  type_base_sptr u = look_through_decl_only_type(t.get_pointed_to_type());
-  hashing::hashing_state s = hashing::get_hashing_state(*u);
-  hashing::set_hashing_state(*u, hashing::HASHING_SUBTYPE_STATE);
-  hash_t v = u->hash_value();
-  hashing::set_hashing_state(*u, s);
-  MAYBE_FLAG_TYPE_AS_RECURSIVE(t, u, v);
-  v = hashing::combine_hashes(v, hash_type_base(t));
-  v = hashing::combine_hashes(v, hash_decl(t));
+  hash_t v = hash_as_basic_type(t);
   v = hashing::combine_hashes(v, hashing::hash(t.is_lvalue()));
+  type_base_sptr u = t.get_pointed_to_type();
+  v = hashing::combine_hashes(v, hash_as_basic_type(u));
 
   hashing::set_hashing_state(t, hashing::HASHING_NOT_DONE_STATE);
 
@@ -668,7 +793,7 @@ reference_type_def::hash::operator()(const reference_type_def* t) const
 hash_t
 array_type_def::subrange_type::hash::operator()(const array_type_def::subrange_type& t) const
 {
-  hashing::set_hashing_state(t, hashing::HASHING_STARTED_STATE);
+  hashing::add_to_hashing_state(t, hashing::HASHING_STARTED_STATE);
 
   hash_t v = hashing::hash(t.get_lower_bound());
   v = hashing::combine_hashes(v, hashing::hash(t.get_upper_bound()));
@@ -700,12 +825,12 @@ array_type_def::subrange_type::hash::operator()(const array_type_def::subrange_t
 hash_t
 array_type_def::hash::operator()(const array_type_def& t) const
 {
-  MAYBE_RETURN_EARLY_IF_HASH_EXISTS(t);
+  MAYBE_RETURN_EARLY_FROM_HASHING_TO_AVOID_CYCLES(t);
 
   type_base::hash hash_as_type_base;
   decl_base::hash hash_as_decl_base;
 
-  hashing::set_hashing_state(t, hashing::HASHING_STARTED_STATE);
+  hashing::add_to_hashing_state(t, hashing::HASHING_STARTED_STATE);
 
   hash_t v = hash_as_type_base(t), h = 0;
   v = hashing::combine_hashes(v, hash_as_decl_base(t));
@@ -715,21 +840,19 @@ array_type_def::hash::operator()(const array_type_def& t) const
        i != t.get_subranges().end();
        ++i)
     {
-      hashing::hashing_state s = hashing::get_hashing_state(**i);
-      hashing::set_hashing_state(**i, hashing::HASHING_SUBTYPE_STATE);
-      h = (*i)->hash_value();
-      hashing::set_hashing_state(**i, s);
-      MAYBE_FLAG_TYPE_AS_RECURSIVE(t, *i, h);
+      auto type = *i;
+      h = hash_as_type_base(*type);
       v = hashing::combine_hashes(v, h);
+      v = hashing::combine_hashes(v, hash_as_decl_base(*type));
     }
 
   type_base_sptr e = t.get_element_type();
-  hashing::hashing_state s = hashing::get_hashing_state(*e);
-  hashing::set_hashing_state(*e, hashing::HASHING_SUBTYPE_STATE);
-  h = e->hash_value();
-  hashing::set_hashing_state(*e, s);
-  MAYBE_FLAG_TYPE_AS_RECURSIVE(t, e, h);
-  v = hashing::combine_hashes(v, h);
+
+  if (auto d = is_decl(e))
+    {
+      v = hashing::combine_hashes(v, hash_as_decl_base(*d));
+      v = hashing::combine_hashes(v, hash_as_type_base(*e));
+    }
 
   hashing::set_hashing_state(t, hashing::HASHING_NOT_DONE_STATE);
 
@@ -762,24 +885,18 @@ ptr_to_mbr_type::hash::operator() (const ptr_to_mbr_type& t) const
   type_base::hash hash_as_type_base;
   decl_base::hash hash_as_decl_base;
 
-  hashing::set_hashing_state(t, hashing::HASHING_STARTED_STATE);
+  hashing::add_to_hashing_state(t, hashing::HASHING_STARTED_STATE);
 
   hash_t v = hash_as_type_base(t);
   v = hashing::combine_hashes(v, hash_as_decl_base(t));
   type_base_sptr e = t.get_member_type();
-  hashing::hashing_state s = hashing::get_hashing_state(*e);
-  hashing::set_hashing_state(*e, hashing::HASHING_SUBTYPE_STATE);
-  hash_t h = e->hash_value();
-  hashing::set_hashing_state(*e, s);
-  MAYBE_FLAG_TYPE_AS_RECURSIVE(t, e, h);
+
+  hash_t h = hash_as_basic_then_ptr_ref_or_typedef_type(e);
   v = hashing::combine_hashes(v, h);
 
   e = t.get_containing_type();
-  s = hashing::get_hashing_state(*e);
-  hashing::set_hashing_state(*e, hashing::HASHING_SUBTYPE_STATE);
-  h = e->hash_value();
-  hashing::set_hashing_state(*e, s);
-  MAYBE_FLAG_TYPE_AS_RECURSIVE(t, t.get_containing_type(), h);
+
+  h = hash_as_basic_then_ptr_ref_or_typedef_type(e);
   v = hashing::combine_hashes(v, h);
 
   hashing::set_hashing_state(t, hashing::HASHING_NOT_DONE_STATE);
@@ -817,33 +934,27 @@ ptr_to_mbr_type::hash::operator() (const ptr_to_mbr_type_sptr& t) const
 hash_t
 enum_type_decl::hash::operator()(const enum_type_decl& t) const
 {
-  MAYBE_RETURN_EARLY_IF_HASH_EXISTS(t);
+  MAYBE_RETURN_EARLY_FROM_HASHING_TO_AVOID_CYCLES(t);
 
-    if (t.get_is_declaration_only() && t.get_definition_of_declaration())
+  if (t.get_is_declaration_only() && t.get_definition_of_declaration())
     {
       enum_type_decl_sptr e = is_enum_type(t.get_definition_of_declaration());
-      hashing::hashing_state s = hashing::get_hashing_state(*e);
-      hashing::set_hashing_state(*e, hashing::HASHING_SUBTYPE_STATE);
-      hash_t v = e->hash_value();
-      hashing::set_hashing_state(*e, s);
-      MAYBE_FLAG_TYPE_AS_RECURSIVE(t, e, v);
+
+      hash_t v = hash_as_basic_then_ptr_ref_or_typedef_type(e);
       return v;
     }
 
   decl_base::hash hash_as_decl;
   type_base::hash hash_as_type;
 
-  hashing::set_hashing_state(t, hashing::HASHING_STARTED_STATE);
+  hashing::add_to_hashing_state(t, hashing::HASHING_STARTED_STATE);
 
   hash_t v = hash_as_type(t);
   v = hashing::combine_hashes(v, hash_as_decl(t));
 
   type_base_sptr u = t.get_underlying_type();
-  hashing::hashing_state s = hashing::get_hashing_state(*u);
-  hashing::set_hashing_state(*u, hashing::HASHING_SUBTYPE_STATE);
-  hash_t h = u->hash_value();
-  hashing::set_hashing_state(*u, s);
-  MAYBE_FLAG_TYPE_AS_RECURSIVE(t, u, h);
+
+  hash_t h = hash_as_basic_then_ptr_ref_or_typedef_type(u);
   v = hashing::combine_hashes(v, h);
 
   for (enum_type_decl::enumerators::const_iterator i =
@@ -883,35 +994,23 @@ function_type::hash::operator()(const function_type& t) const
 {
   MAYBE_RETURN_EARLY_FROM_HASHING_TO_AVOID_CYCLES(t);
 
-  type_base::hash hash_as_type_base;
+  add_to_hashing_state(t, hashing::HASHING_STARTED_STATE);
 
-  set_hashing_state(t, hashing::HASHING_STARTED_STATE);
-
-  hash_t v = hash_as_type_base(t), h = 0;
+  hash_t h = hash_as_basic_type(t);
   type_base_sptr r = t.get_return_type();
-  hashing::hashing_state s = hashing::get_hashing_state(*r);
-  hashing::set_hashing_state(*r, hashing::HASHING_SUBTYPE_STATE);
-  h = r->hash_value();
-  hashing::set_hashing_state(*r, s);
-  MAYBE_FLAG_TYPE_AS_RECURSIVE(t, r, h);
-  v = hashing::combine_hashes(v, h);
 
-  for (auto parm = t.get_first_parm();
-       parm != t.get_parameters().end();
-       ++parm)
+  h = hashing::combine_hashes(h, hash_as_basic_type(r));
+
+  for (auto parm : t.get_parameters())
     {
-      type_base_sptr parm_type = (*parm)->get_type();
-      hashing::hashing_state s = hashing::get_hashing_state(*parm_type);
-      hashing::set_hashing_state(*parm_type, hashing::HASHING_SUBTYPE_STATE);
-      h = parm_type->hash_value();
-      hashing::set_hashing_state(*parm_type, s);
-      MAYBE_FLAG_TYPE_AS_RECURSIVE(t, parm_type, h);
-      v = hashing::combine_hashes(v, h);
+      type_base_sptr type = parm->get_type();
+      h = hashing::combine_hashes
+	(h, hash_as_basic_then_ptr_ref_or_typedef_type(type));
     }
 
   hashing::set_hashing_state(t, hashing::HASHING_NOT_DONE_STATE);
 
-  return v;
+  return h;
 }
 
 /// Hashing function for a pointer to @ref function_type.
@@ -946,31 +1045,28 @@ method_type::hash::operator()(const method_type& t) const
 {
   MAYBE_RETURN_EARLY_FROM_HASHING_TO_AVOID_CYCLES(t);
 
-  type_base::hash hash_as_type_base;
+  add_to_hashing_state(t, hashing::HASHING_STARTED_STATE);
 
-  set_hashing_state(t, hashing::HASHING_STARTED_STATE);
-
-  hash_t v = hash_as_type_base(t), h = 0;
+  hash_t v = hash_as_basic_type(t);
   type_base_sptr r = t.get_return_type();
-  hashing::hashing_state s = hashing::get_hashing_state(*r);
-  hashing::set_hashing_state(*r, hashing::HASHING_SUBTYPE_STATE);
-  h = r->hash_value();
-  hashing::set_hashing_state(*r, s);
-  MAYBE_FLAG_TYPE_AS_RECURSIVE(t, t.get_return_type(), h);
-  v = hashing::combine_hashes(v, h);
+  v = hashing::combine_hashes(v, hash_as_basic_then_ptr_ref_or_typedef_type(r));
 
-  for (auto i = t.get_first_non_implicit_parm();
-       i != t.get_parameters().end();
-       ++i)
+  bool c = t.get_is_const();
+  v = hashing::combine_hashes(v, hashing::hash(c));
+
+  // We are not hashing the class type.  Rather, we are hashing it
+  // indirectly by hashing the first parameter which should be the
+  // implicit "this" pointer for types of non-static method.
+  //
+  // Doing this allows not taking into account the class type for
+  // method_type of static methods, while taking it into account for
+  // non-static methods.
+
+  for (auto parm : t.get_parameters())
     {
-      function_decl::parameter_sptr parm = *i;
       type_base_sptr ty = parm->get_type();
-      hashing::hashing_state s = hashing::get_hashing_state(*ty);
-      hashing::set_hashing_state(*ty, hashing::HASHING_SUBTYPE_STATE);
-      h = ty->hash_value();
-      hashing::set_hashing_state(*ty, s);
-      MAYBE_FLAG_TYPE_AS_RECURSIVE(t, ty, h);
-      v = hashing::combine_hashes(v, h);
+      v = hashing::combine_hashes
+	(v, hash_as_basic_then_ptr_ref_or_typedef_type(ty));
     }
 
   hashing::set_hashing_state(t, hashing::HASHING_NOT_DONE_STATE);
@@ -1017,7 +1113,7 @@ class_decl::base_spec::hash::operator()(const base_spec& t) const
 {
   MAYBE_RETURN_EARLY_FROM_HASHING_TO_AVOID_CYCLES(t);
 
-  set_hashing_state(t, hashing::HASHING_STARTED_STATE);
+  add_to_hashing_state(t, hashing::HASHING_STARTED_STATE);
 
   member_base::hash hash_member;
 
@@ -1025,11 +1121,8 @@ class_decl::base_spec::hash::operator()(const base_spec& t) const
   v = hashing::combine_hashes(v, hashing::hash(t.get_offset_in_bits()));
   v = hashing::combine_hashes(v, hashing::hash(t.get_is_virtual()));
   type_base_sptr b = t.get_base_class();
-  hashing::hashing_state s = hashing::get_hashing_state(*b);
-  hashing::set_hashing_state(*b, hashing::HASHING_SUBTYPE_STATE);
-  h = b->hash_value();
-  hashing::set_hashing_state(*b, s);
-  MAYBE_FLAG_TYPE_AS_RECURSIVE(t, t.get_base_class(), h);
+
+  h = hash_as_basic_then_ptr_ref_or_typedef_type(b);
   v = hashing::combine_hashes(v, h);
 
   hashing::set_hashing_state(t, hashing::HASHING_NOT_DONE_STATE);
@@ -1063,12 +1156,8 @@ class_or_union::hash::operator()(const class_or_union& t) const
 
   if (t.get_is_declaration_only() && t.get_definition_of_declaration())
     {
-      class_or_union_sptr cou = is_class_or_union_type(t.get_definition_of_declaration());
-      hashing::hashing_state s = hashing::get_hashing_state(*cou);
-      hashing::set_hashing_state(*cou, hashing::HASHING_SUBTYPE_STATE);
-      hash_t v = cou->hash_value();
-      hashing::set_hashing_state(*cou, s);
-      MAYBE_FLAG_TYPE_AS_RECURSIVE(t, t.get_definition_of_declaration(), v);
+      class_or_union_sptr cou = is_class_or_union_type(look_through_decl_only_class(t));
+      hash_t v = operator()(*cou);
       return v;
     }
 
@@ -1085,11 +1174,7 @@ class_or_union::hash::operator()(const class_or_union& t) const
        ++d)
     {
       ty = (*d)->get_type();
-      hashing::hashing_state s = hashing::get_hashing_state(*ty);
-      hashing::set_hashing_state(*ty, hashing::HASHING_SUBTYPE_STATE);
-      hash_t h = ty->hash_value();
-      hashing::set_hashing_state(*ty, s);
-      MAYBE_FLAG_TYPE_AS_RECURSIVE(t, ty, h);
+      hash_t h = hash_as_basic_type(ty);
       v = hashing::combine_hashes(v, h);
       v = hashing::combine_hashes(v, hashing::hash((*d)->get_name()));
     }
@@ -1121,35 +1206,26 @@ class_decl::hash::operator()(const class_decl& t) const
 
   if (t.get_is_declaration_only() && t.get_definition_of_declaration())
     {
-      class_decl_sptr c = is_class_type(t.get_definition_of_declaration());
-      hashing::hashing_state s = hashing::get_hashing_state(*c);
-      hashing::set_hashing_state(*c, hashing::HASHING_SUBTYPE_STATE);
-      hash_t v = c->hash_value();
-      hashing::set_hashing_state(*c, s);
-      MAYBE_FLAG_TYPE_AS_RECURSIVE(t, c, v);
+      class_decl_sptr c = is_class_type(look_through_decl_only_class(t));
+      hash_t v = operator()(*c);
+      hashing::set_hashing_state(t, hashing::HASHING_NOT_DONE_STATE);
       return v;
     }
 
-  set_hashing_state(t, hashing::HASHING_STARTED_STATE);
+  add_to_hashing_state(t, hashing::HASHING_STARTED_STATE);
 
   class_or_union::hash hash_as_class_or_union;
 
   hash_t v = hash_as_class_or_union(t);
 
+  hash_t h;
   // Hash bases.
-  for (auto b = t.get_base_specifiers().begin();
-       b != t.get_base_specifiers().end();
-       ++b)
+  for (auto b : t.get_base_specifiers())
     {
-      hashing::hashing_state s = hashing::get_hashing_state(**b);
-      hashing::set_hashing_state(**b, hashing::HASHING_SUBTYPE_STATE);
-      hash_t h = (*b)->hash_value();
-      hashing::set_hashing_state(**b, s);
-      MAYBE_FLAG_TYPE_AS_RECURSIVE(t, *b, h);
+      h = hash_as_basic_then_ptr_ref_or_typedef_type(b->get_base_class());
       v = hashing::combine_hashes(v, h);
     }
 
-#if 0
   // Do not hash (virtual) member functions because in C++ at least,
   // due to the function cloning used to implement destructors (and
   // maybe other functions in the future) comparing two sets of
@@ -1169,20 +1245,30 @@ class_decl::hash::operator()(const class_decl& t) const
   //
   //       fedabipkgdiff --self-compare --from fc37 gcc-gnat
 
+  // TODO BIS: OK, actually, now that the DWARF reader improved enough
+  // to better represent the virtual member functions, we can try
+  // again to naively hash them.  Please find below how it would work.
+  //
   // Hash virtual member functions.
 
   // TODO: hash the linkage names of the virtual member functions too.
   const_cast<class_decl&>(t).sort_virtual_mem_fns();
   for (const auto& method : t.get_virtual_mem_fns())
     {
+      // Do not hash virtual destructors as these can be in different
+      // numbers in two classes and yet the two classes can be
+      // equivalent.
+      if (get_member_function_is_dtor(method))
+	continue;
+
+      string linkage_name = method->get_linkage_name();
+      ABG_ASSERT(!linkage_name.empty());
+      h = hashing::hash(linkage_name);
+      v = hashing::combine_hashes(v, h);
       ssize_t voffset = get_member_function_vtable_offset(method);
-      v = hashing::combine_hashes(v, hashing::hash(voffset));
-      method_type_sptr method_type = method->get_type();
-      hash_t h = do_hash_value(method_type);
-      MAYBE_FLAG_TYPE_AS_RECURSIVE(t, method_type, h);
+      h = hashing::hash(voffset);
       v = hashing::combine_hashes(v, h);
     }
-#endif
 
   hashing::set_hashing_state(t, hashing::HASHING_NOT_DONE_STATE);
 
@@ -1214,15 +1300,12 @@ union_decl::hash::operator()(const union_decl& t) const
   if (t.get_is_declaration_only() && t.get_definition_of_declaration())
     {
       union_decl_sptr u = is_union_type(t.get_definition_of_declaration());
-      hashing::hashing_state s = hashing::get_hashing_state(*u);
-      hashing::set_hashing_state(*u, hashing::HASHING_SUBTYPE_STATE);
-      hash_t v = u->hash_value();
-      hashing::set_hashing_state(*u, s);
-      MAYBE_FLAG_TYPE_AS_RECURSIVE(t, u, v);
+      hash_t v = operator()(*u);
+      hashing::set_hashing_state(t, hashing::HASHING_NOT_DONE_STATE);
       return v;
     }
 
-  set_hashing_state(t, hashing::HASHING_STARTED_STATE);
+  add_to_hashing_state(t, hashing::HASHING_STARTED_STATE);
 
   class_or_union::hash hash_as_class_or_union;
 

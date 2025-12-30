@@ -1,36 +1,39 @@
-<abi-corpus version='2.5' path='data/test-read-ctf/test-array-of-pointers.o'>
+<abi-corpus version='3.0' path='data/test-read-ctf/test-array-of-pointers.o' tracking-non-reachable-types='yes'>
   <elf-variable-symbols>
     <elf-symbol name='t' size='8' type='object-type' binding='global-binding' visibility='default-visibility' is-defined='yes'/>
   </elf-variable-symbols>
-  <abi-instr address-size='64' language='LANG_C'>
-    <pointer-type-def type-id='type-id-1' size-in-bits='64' alignment-in-bits='64' hash='e75c25739071b850' id='type-id-2'/>
-    <pointer-type-def type-id='type-id-3' size-in-bits='64' alignment-in-bits='64' hash='3e753db2e0070e80' id='type-id-4'/>
-    <pointer-type-def type-id='type-id-5' size-in-bits='64' alignment-in-bits='64' hash='8aa7c4fe41557537' id='type-id-6'/>
-    <array-type-def dimensions='1' type-id='type-id-6' size-in-bits='256' alignment-in-bits='64' hash='71ebb549cb9243e4' id='type-id-7'>
-      <subrange length='4' lower-bound='0' upper-bound='3' type-id='type-id-8' size-in-bits='64' is-anonymous='yes' hash='cee611f4a73e486c' id='type-id-9'/>
+  <abi-types>
+    <subrange length='4' lower-bound='0' upper-bound='3' type-id='type-id-1' size-in-bits='64' is-anonymous='yes' hash='cee611f4a73e486c' id='type-id-2'/>
+    <pointer-type-def type-id='type-id-3' size-in-bits='64' alignment-in-bits='64' hash='e5a6d6d43618f8b5' id='type-id-4'/>
+    <pointer-type-def type-id='type-id-5' size-in-bits='64' alignment-in-bits='64' hash='81b6ff1af2461640' id='type-id-6'/>
+    <pointer-type-def type-id='type-id-7' size-in-bits='64' alignment-in-bits='64' hash='f33163de1f5aa841' id='type-id-8'/>
+    <array-type-def dimensions='1' type-id='type-id-8' size-in-bits='256' alignment-in-bits='64' hash='68c26647d5927d31' id='type-id-9'>
+      <subrange length='4' lower-bound='0' upper-bound='3' type-id='type-id-1' size-in-bits='64' is-anonymous='yes' hash='cee611f4a73e486c' id='type-id-2'/>
     </array-type-def>
-    <class-decl name='cgroup' is-struct='yes' visibility='default' size-in-bits='256' hash='eca535aab616c33a' id='type-id-1'>
+    <class-decl name='cgroup' is-struct='yes' visibility='default' size-in-bits='256' hash='e79c7ee9f92aadfc' id='type-id-3'>
       <data-member access='public' layout-offset-in-bits='0'>
-        <var-decl name='s1' type-id='type-id-7' visibility='default'/>
+        <var-decl name='s1' type-id='type-id-9' visibility='default'/>
       </data-member>
     </class-decl>
-    <class-decl name='css_set' is-struct='yes' visibility='default' size-in-bits='256' hash='e518d7a694d5971f' id='type-id-3'>
+    <class-decl name='css_set' is-struct='yes' visibility='default' size-in-bits='256' hash='0c6889b4bf0a6225' id='type-id-5'>
       <data-member access='public' layout-offset-in-bits='0'>
-        <var-decl name='s0' type-id='type-id-7' visibility='default'/>
+        <var-decl name='s0' type-id='type-id-9' visibility='default'/>
       </data-member>
     </class-decl>
-    <class-decl name='state' is-struct='yes' visibility='default' size-in-bits='64' hash='bc5e697ca9dc80bc' id='type-id-5'>
+    <class-decl name='state' is-struct='yes' visibility='default' size-in-bits='64' hash='4de1002d4ce922fb' id='type-id-7'>
       <data-member access='public' layout-offset-in-bits='0'>
-        <var-decl name='cg' type-id='type-id-2' visibility='default'/>
+        <var-decl name='cg' type-id='type-id-4' visibility='default'/>
       </data-member>
     </class-decl>
-    <class-decl name='task' is-struct='yes' visibility='default' size-in-bits='64' hash='0eadab8570f942be' id='type-id-10'>
+    <class-decl name='task' is-struct='yes' visibility='default' size-in-bits='64' hash='785a9d0e7685403a' id='type-id-10'>
       <data-member access='public' layout-offset-in-bits='0'>
-        <var-decl name='s' type-id='type-id-4' visibility='default'/>
+        <var-decl name='s' type-id='type-id-6' visibility='default'/>
       </data-member>
     </class-decl>
-    <pointer-type-def type-id='type-id-10' size-in-bits='64' alignment-in-bits='64' hash='15b7df6cd00c2850' id='type-id-11'/>
-    <type-decl name='unsigned long int' size-in-bits='64' hash='8fdc5eea2983a729' id='type-id-8'/>
+    <pointer-type-def type-id='type-id-10' size-in-bits='64' alignment-in-bits='64' hash='6babbe33a36945e8' id='type-id-11'/>
+    <type-decl name='unsigned long int' size-in-bits='64' hash='da551c1631705dfe' id='type-id-1'/>
+  </abi-types>
+  <abi-instr address-size='64' language='LANG_C'>
     <var-decl name='t' type-id='type-id-11' mangled-name='t' visibility='default' elf-symbol-id='t'/>
   </abi-instr>
 </abi-corpus>

@@ -16,8 +16,11 @@
 #ifndef __ABG_WORKERS_H__
 #define __ABG_WORKERS_H__
 
+#include <functional>
 #include <memory>
 #include <vector>
+
+#include "abg-cxx-compat.h"
 
 using std::shared_ptr;
 
@@ -49,6 +52,82 @@ public:
 }; // end class task.
 
 typedef shared_ptr<task> task_sptr;
+
+/// The template of a task to be performed.
+///
+/// The function to be performed by the task, its return type and its
+/// list of parameters are parameters of the template.
+///
+/// @tparam Fn the function to be executed by the instantiation.
+///
+/// @tparam RetType the return type of the @p function type @p Fn.
+///
+/// @tparam Args the set of arugments of function @p Fn.
+template<typename Fn, typename RetType, typename... Args>
+class simple_task : public task
+{
+  std::function<RetType(Args...)> fn_;
+  RetType ret_val_;
+  std::tuple<Args...> args_;
+
+  simple_task() = delete;
+
+public:
+
+  simple_task(Fn&& fn, Args... args)
+    : fn_(fn), args_(args...)
+  {
+  }
+
+  RetType
+  get_return_value()
+  {
+    return ret_val_;
+  }
+
+  virtual void
+  perform()
+  {
+   ret_val_ = abg_compat::apply(fn_, args_);
+  }
+}; // end class simple_task.
+
+/// This is a specialization of the @ref simple_task class template
+/// for which the function to be performed returns a void type.
+///
+/// It represents the template of a task to be performed.
+///
+/// The function to be performed by the task with a void return type
+/// and its list of parameters are parameters of the template.
+///
+/// @tparam Fn the function to be executed by the instantiation.
+///
+/// @tparam Args the set of arugments of function @p Fn.
+template<typename Fn, typename... Args>
+class simple_task<Fn, void, Args...> : public task
+{
+  std::function<void(Args...)> fn_;
+  std::tuple<Args...> args_;
+
+  simple_task() = delete;
+
+public:
+
+  simple_task(Fn&& fn, Args... args)
+    : fn_(fn), args_(args...)
+  {
+  }
+
+  virtual void
+  perform()
+  {
+   abg_compat::apply(fn_, args_);
+  }
+}; // end class simple_task.
+
+/// A type alias for shared_ptr<simple_task<Fn, RetType, Args...>>.
+template<typename Fn, typename RetType, typename... Args>
+using simple_task_sptr = shared_ptr<simple_task<Fn, RetType, Args...>>;
 
 /// This represents a queue of tasks to be performed.
 ///
@@ -84,6 +163,8 @@ public:
   size_t get_size() const;
   bool schedule_task(const task_sptr&);
   bool schedule_tasks(const tasks_type&);
+  bool stage_task(const task_sptr&);
+  void schedule_staged_tasks();
   void wait_for_workers_to_complete();
   tasks_type& get_completed_tasks() const;
   ~queue();

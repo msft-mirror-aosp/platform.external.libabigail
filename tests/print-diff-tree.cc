@@ -105,7 +105,6 @@ main(int argc, char* argv[])
       environment env;
       vector<string> di_roots;
       c1 = dwarf::read_corpus_from_elf(opts.elf1, di_roots, env,
-				       /*load_all_types=*/false,
 				       c1_status);
       if (c1_status != fe_iface::STATUS_OK)
 	{
@@ -114,7 +113,6 @@ main(int argc, char* argv[])
 	}
 
       c2 = dwarf::read_corpus_from_elf(opts.elf2, di_roots, env,
-				       /*load_all_types=*/false,
 				       c2_status);
       if (c2_status != fe_iface::STATUS_OK)
 	{

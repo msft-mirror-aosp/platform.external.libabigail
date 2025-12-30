@@ -1,22 +1,24 @@
-<abi-corpus version='2.5' path='data/test-read-common/PR27700/test-PR27700.o'>
+<abi-corpus version='3.0' path='data/test-read-common/PR27700/test-PR27700.o' tracking-non-reachable-types='yes'>
   <elf-function-symbols>
     <elf-symbol name='foo' type='func-type' binding='global-binding' visibility='default-visibility' is-defined='yes'/>
   </elf-function-symbols>
-  <abi-instr address-size='64' language='LANG_C'>
-    <enum-decl name='foo' linkage-name='foo' size-in-bits='32' alignment-in-bits='32' hash='5d0836555e174b34' id='022218d8'>
+  <abi-types>
+    <enum-decl name='foo' linkage-name='foo' size-in-bits='32' alignment-in-bits='32' hash='805c56af13f2dde1' id='022218d8'>
       <underlying-type type-id='9cac1fee'/>
       <enumerator name='foo_e0' value='0'/>
       <enumerator name='foo_e1' value='1'/>
       <enumerator name='foo_e2' value='2'/>
       <enumerator name='foo_e3' value='3'/>
     </enum-decl>
-    <pointer-type-def type-id='022218d8' size-in-bits='64' alignment-in-bits='64' hash='1aad9801f0aa61c1' id='8750e847'/>
-    <type-decl name='unnamed-enum-underlying-type-32' size-in-bits='32' alignment-in-bits='32' is-anonymous='yes' hash='5181a58e665b3619' id='9cac1fee'/>
-    <function-decl name='foo' type-id='aa68cd3c' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='foo'/>
-    <type-decl name='void' id='48b5725f'/>
-    <function-type size-in-bits='64' hash='06eba7e6e9970616' id='aa68cd3c'>
+    <pointer-type-def type-id='022218d8' size-in-bits='64' alignment-in-bits='64' hash='b64abd4aa09cef75' id='8750e847'/>
+    <function-type size-in-bits='64' hash='a85d19e453316a4a' id='aa68cd3c'>
       <parameter type-id='8750e847'/>
       <return type-id='48b5725f'/>
     </function-type>
+    <type-decl name='unnamed-enum-underlying-type-32' size-in-bits='32' alignment-in-bits='32' is-anonymous='yes' hash='c6ed5e1365fd2b09' id='9cac1fee'/>
+    <type-decl name='void' hash='8dcbc64750c3d4e3' id='48b5725f'/>
+  </abi-types>
+  <abi-instr address-size='64' language='LANG_C'>
+      <function-decl name='foo' type-id='aa68cd3c' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='foo'/>
   </abi-instr>
 </abi-corpus>

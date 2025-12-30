@@ -24,17 +24,70 @@ Invocation
 Options
 =======
 
+  * ``--app-debug-info-dir | --appd`` <path-to-app-debug-info-directory>
+
+    Set the path to the directory under which the debug information of
+    the application is supposed to be laid out.  This is useful for
+    application binaries for which the debug info is in a separate set
+    of files.
+
+
+  * ``--btf``
+
+    When comparing binaries, extract ABI information from BTF debug
+    information, if present.
+
+
+  * ``--ctf``
+
+    When comparing binaries, extract ABI information from CTF debug
+    information, if present.
+
+
+  * ``--fail-no-debug-info``
+
+    If no debug info was found, then this option makes the program to
+    fail.  Otherwise, without this option, the program will attempt to
+    compare properties of the binaries that are not related to debug
+    info, like pure ELF properties.
+
+
   * ``--help``
 
     Display a short help about the command and exit.
 
-  * `--version | -v`
 
-    Display the version of the program and exit.
+  * ``--ignore-soname``
+
+    Ignore differences in the SONAME when doing a comparison
+
+
+  * ``--lib-debug-info-dir1 | --libd1`` <path-to-lib1-debug-info>
+
+    Set the path to the directory under which the debug information of
+    the first version of the shared library is supposed to be laid
+    out.  This is useful for shared library binaries for which the
+    debug info is in a separate set of files.
+
+
+  * ``--lib-debug-info-dir2 | --libd2`` <path-to-lib1-debug-info>
+
+    Set the path to the directory under which the debug information of
+    the second version of the shared library is supposed to be laid
+    out.  This is useful for shared library binaries for which the
+    debug info is in a separate set of files.
+
 
   * ``--list-undefined-symbols | -u``
 
     Display the list of undefined symbols of the application and exit.
+
+
+  * ``--no-show-locs``
+
+   Do not show information about where in the *second shared library*
+   the respective type was changed.
+
 
   * ``--show-base-names | -b``
 
@@ -44,26 +97,6 @@ Options
     scripts that wants to compare names of the application and
     libraries independently of what their directory names are.
 
-  * ``--app-debug-info-dir | --appd`` <path-to-app-debug-info-directory>
-
-    Set the path to the directory under which the debug information of
-    the application is supposed to be laid out.  This is useful for
-    application binaries for which the debug info is in a separate set
-    of files.
-
-  * ``--lib-debug-info-dir1 | --libd1`` <path-to-lib1-debug-info>
-
-    Set the path to the directory under which the debug information of
-    the first version of the shared library is supposed to be laid
-    out.  This is useful for shared library binaries for which the
-    debug info is in a separate set of files.
-
-  * ``--lib-debug-info-dir2 | --libd2`` <path-to-lib1-debug-info>
-
-    Set the path to the directory under which the debug information of
-    the second version of the shared library is supposed to be laid
-    out.  This is useful for shared library binaries for which the
-    debug info is in a separate set of files.
 
   * ``--suppressions | --suppr`` <*path-to-suppressions*>
 
@@ -72,31 +105,11 @@ Options
     appear multiple times on the command line; all the suppression
     specification files are then taken into account.
 
-  * ``--no-show-locs``
 
-   Do not show information about where in the *second shared library*
-   the respective type was changed.
+  * `--version | -v`
 
-  * ``--btf``
+    Display the version of the program and exit.
 
-    When comparing binaries, extract ABI information from BTF debug
-    information, if present.
-
-  * ``--ctf``
-
-    When comparing binaries, extract ABI information from CTF debug
-    information, if present.
-
-  * ``--fail-no-debug-info``
-
-    If no debug info was found, then this option makes the program to
-    fail.  Otherwise, without this option, the program will attempt to
-    compare properties of the binaries that are not related to debug
-    info, like pure ELF properties.
-
-  * ``--ignore-soname``
-
-    Ignore differences in the SONAME when doing a comparison
 
   * ``--weak-mode``
 

@@ -7,7 +7,7 @@ Variables changes summary: 0 Removed, 0 Changed, 0 Added variable
     parameter 1 of type 'S*' has sub-type changes:
       in pointed to type 'struct S' at qualifier-typedef-array-v1.c:10:1:
         type size hasn't changed
-        12 data member changes:
+        9 data member changes (3 filtered):
           type of 'A c_a' changed:
             entity changed from 'typedef A' to compatible type 'void* const[7]'
           type of 'A v_a' changed:
@@ -30,12 +30,6 @@ Variables changes summary: 0 Removed, 0 Changed, 0 Added variable
             entity changed from 'typedef C' to compatible type 'void* const volatile[7]'
           type of 'C r_c' changed:
             entity changed from 'typedef C' to compatible type 'void* restrict const[7]'
-          type of 'D v_d' changed:
-            entity changed from 'typedef D' to compatible type 'void* const volatile[7]'
-          type of 'D r_d' changed:
-            entity changed from 'typedef D' to compatible type 'void* restrict const[7]'
           type of 'E r_e' changed:
             entity changed from 'typedef E' to compatible type 'void* restrict const volatile[7]'
-          type of 'F r_f' changed:
-            entity changed from 'typedef F' to compatible type 'void* restrict const volatile[7]'
 

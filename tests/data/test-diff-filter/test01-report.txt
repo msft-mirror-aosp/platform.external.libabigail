@@ -1,11 +1,11 @@
-Functions changes summary: 0 Removed, 3 Changed, 1 Added functions
+Functions changes summary: 0 Removed, 2 Changed (1 filtered out), 1 Added functions
 Variables changes summary: 0 Removed, 0 Changed, 0 Added variable
 
 1 Added function:
 
   [A] 'method int S0::get_member0() const'
 
-3 functions with some indirect sub-type change:
+2 functions with some indirect sub-type change:
 
   [C] 'method void B0S0::member0() const' has some indirect sub-type changes:
     implicit parameter 0 of type 'const B0S0*' has sub-type changes:
@@ -28,8 +28,4 @@ Variables changes summary: 0 Removed, 0 Changed, 0 Added variable
               details were reported earlier
           1 data member change:
             'int m0' offset changed from 64 to 96 (in bits) (by +32 bits), access changed from 'private' to 'protected'
-
-  [C] 'function void foo(S0&, S1*)' has some indirect sub-type changes:
-    parameter 1 of type 'S0&' has sub-type changes:
-      referenced type 'class S0' changed, as reported earlier
 

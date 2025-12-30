@@ -1,15 +1,16 @@
-<abi-corpus version='2.5' path='data/test-read-ctf/test-ambiguous-struct-A.o'>
+<abi-corpus version='3.0' path='data/test-read-ctf/test-ambiguous-struct-A.o' tracking-non-reachable-types='yes'>
   <elf-variable-symbols>
     <elf-symbol name='foo' size='8' type='object-type' binding='global-binding' visibility='default-visibility' is-defined='yes'/>
   </elf-variable-symbols>
-  <abi-instr address-size='64' language='LANG_C'>
-    <pointer-type-def type-id='3ed987a4' size-in-bits='64' alignment-in-bits='64' hash='f722f813fa194fef' id='84d5ac12'/>
-    <array-type-def dimensions='1' type-id='3ed987a4' size-in-bits='12800' hash='f259fa9914ab7e3d' id='e022be37'>
+  <abi-types>
+    <subrange length='50' lower-bound='0' upper-bound='49' type-id='f0981eeb' size-in-bits='64' is-anonymous='yes' hash='5e09f3767fc90e0b' id='3c1860ce'/>
+    <pointer-type-def type-id='3ed987a4' size-in-bits='64' alignment-in-bits='64' hash='0ffe84d43605c64a' id='84d5ac12'/>
+    <array-type-def dimensions='1' type-id='3ed987a4' size-in-bits='12800' hash='f5d87ff209a33ea6' id='e022be37'>
       <subrange length='50' lower-bound='0' upper-bound='49' type-id='f0981eeb' size-in-bits='64' is-anonymous='yes' hash='5e09f3767fc90e0b' id='3c1860ce'/>
     </array-type-def>
-    <pointer-type-def type-id='1c12b755' size-in-bits='64' alignment-in-bits='64' hash='4115b6fe43a19d46' id='55cd64e8'/>
-    <type-decl name='long int' size-in-bits='64' hash='b119fe0931d2ee10' id='95e97e5e'/>
-    <class-decl name='A' is-struct='yes' visibility='default' size-in-bits='256' hash='fb089dcb87c35cc0' id='3ed987a4'>
+    <pointer-type-def type-id='1c12b755' size-in-bits='64' alignment-in-bits='64' hash='3daa9261c8ec571f' id='55cd64e8'/>
+    <type-decl name='long int' size-in-bits='64' hash='8aa1e1a2ab2c2d3e' id='95e97e5e'/>
+    <class-decl name='A' is-struct='yes' visibility='default' size-in-bits='256' hash='3761386d1b1b9e84' id='3ed987a4'>
       <data-member access='public' layout-offset-in-bits='0'>
         <var-decl name='b' type-id='41d98c5d' visibility='default'/>
       </data-member>
@@ -23,13 +24,15 @@
         <var-decl name='b2' type-id='41d98c5d' visibility='default'/>
       </data-member>
     </class-decl>
-    <class-decl name='B' is-struct='yes' visibility='default' size-in-bits='64' hash='231ada02c5607e0e' id='41d98c5d'>
+    <class-decl name='B' is-struct='yes' visibility='default' size-in-bits='64' hash='81ffe6d0b9f62bdb' id='41d98c5d'>
       <data-member access='public' layout-offset-in-bits='0'>
         <var-decl name='a' type-id='84d5ac12' visibility='default'/>
       </data-member>
     </class-decl>
-    <typedef-decl name='a_array' type-id='e022be37' size-in-bits='12800' hash='f259fa9914ab7e3d' id='1c12b755'/>
-    <type-decl name='unsigned long int' size-in-bits='64' hash='8fdc5eea2983a729' id='f0981eeb'/>
+    <typedef-decl name='a_array' type-id='e022be37' size-in-bits='12800' hash='f5d87ff209a33ea6' id='1c12b755'/>
+    <type-decl name='unsigned long int' size-in-bits='64' hash='da551c1631705dfe' id='f0981eeb'/>
+  </abi-types>
+  <abi-instr address-size='64' language='LANG_C'>
     <var-decl name='foo' type-id='55cd64e8' mangled-name='foo' visibility='default' elf-symbol-id='foo'/>
   </abi-instr>
 </abi-corpus>

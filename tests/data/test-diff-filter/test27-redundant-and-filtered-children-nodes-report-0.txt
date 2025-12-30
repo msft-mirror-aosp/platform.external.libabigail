@@ -4,6 +4,7 @@ Variables changes summary: 0 Removed, 0 Changed, 0 Added variable
 1 function with some indirect sub-type change:
 
   [C] 'function S0* bar(S1*, S2*)' has some indirect sub-type changes:
+    'function S0* bar(S1*, S2*) {_Z3barP2S1P2S2}' now becomes 'function S0* bar(S1Renamed*, S2Renamed*) {_Z3barP2S1P2S2}'
     return type changed:
       in pointed to type 'struct S0':
         type size changed from 32 to 64 (in bits)

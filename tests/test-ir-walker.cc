@@ -161,9 +161,7 @@ main(int argc, char **argv)
   abigail::corpus_sptr c;
   abigail::fe_iface::status status = abigail::fe_iface::STATUS_OK;
   std::vector<string> di_roots;
-  if (!(c = dwarf::read_corpus_from_elf(file_name, di_roots, env,
-					/*load_all_type=*/false,
-					status)))
+  if (!(c = dwarf::read_corpus_from_elf(file_name, di_roots, env, status)))
     {
       cerr << "failed to read " << file_name << "\n";
       return 1;

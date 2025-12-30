@@ -1,97 +1,113 @@
-<abi-corpus version='2.5'>
+<abi-corpus version='3.0' tracking-non-reachable-types='yes'>
   <elf-function-symbols>
     <!-- foo(S&) -->
     <elf-symbol name='_Z3fooR1S' type='func-type' binding='global-binding' visibility='default-visibility' is-defined='yes'/>
   </elf-function-symbols>
-  <abi-instr address-size='64' path='test7.cc' comp-dir-path='/home/ooprala/rh/u/libabigail/tests/data/test-read-dwarf' language='LANG_C_plus_plus'>
+  <abi-types>
+    <!-- <anonymous range>[10] -->
+    <subrange length='10' lower-bound='0' upper-bound='9' type-id='type-id-1' size-in-bits='64' is-anonymous='yes' hash='4e72a2f569b234f4' id='type-id-2'/>
+    <!-- <anonymous range>[1] -->
+    <subrange length='1' lower-bound='0' upper-bound='0' type-id='type-id-1' size-in-bits='64' is-anonymous='yes' hash='eba0a2b392137dcb' id='type-id-3'/>
+    <!-- <anonymous range>[3] -->
+    <subrange length='3' lower-bound='0' upper-bound='2' type-id='type-id-1' size-in-bits='64' is-anonymous='yes' hash='30d99d19f0f4b2ea' id='type-id-4'/>
+    <!-- <anonymous range>[4] -->
+    <subrange length='4' lower-bound='0' upper-bound='3' type-id='type-id-1' size-in-bits='64' is-anonymous='yes' hash='cee611f4a73e486c' id='type-id-5'/>
+    <!-- <anonymous range>[5] -->
+    <subrange length='5' lower-bound='0' upper-bound='4' type-id='type-id-1' size-in-bits='64' is-anonymous='yes' hash='5aa5cef1e1be46c9' id='type-id-6'/>
+    <!-- <anonymous range>[7] -->
+    <subrange length='7' lower-bound='0' upper-bound='6' type-id='type-id-1' size-in-bits='64' is-anonymous='yes' hash='58190901bcecd086' id='type-id-7'/>
+    <!-- <anonymous range>[] -->
+    <subrange length='unknown' lower-bound='0' upper-bound='-1' type-id='type-id-1' size-in-bits='64' is-anonymous='yes' hash='679a37cd46fc8bdb' id='type-id-8'/>
     <!-- S& -->
-    <reference-type-def kind='lvalue' type-id='type-id-1' size-in-bits='64' hash='34ff9cd22276388f' id='type-id-2'/>
+    <reference-type-def kind='lvalue' type-id='type-id-9' size-in-bits='64' hash='af64ba26b152f286' id='type-id-10'/>
     <!-- char -->
-    <type-decl name='char' size-in-bits='8' hash='65b2d157027b431a' id='type-id-3'/>
+    <type-decl name='char' size-in-bits='8' hash='65b2d157027b431a' id='type-id-11'/>
     <!-- char* -->
-    <pointer-type-def type-id='type-id-3' size-in-bits='64' hash='e533f42d1dd4942c' id='type-id-4'/>
+    <pointer-type-def type-id='type-id-11' size-in-bits='64' hash='cdcd419d6a95ce45' id='type-id-12'/>
     <!-- char*[7] -->
-    <array-type-def dimensions='1' type-id='type-id-4' size-in-bits='448' hash='74e3ad5d436eff71' id='type-id-5'>
+    <array-type-def dimensions='1' type-id='type-id-12' size-in-bits='448' hash='3586b8e8b6978032' id='type-id-13'>
       <!-- <anonymous range>[7] -->
-      <subrange length='7' lower-bound='0' upper-bound='6' type-id='type-id-6' size-in-bits='64' is-anonymous='yes' hash='58190901bcecd086' id='type-id-7'/>
+      <subrange length='7' lower-bound='0' upper-bound='6' type-id='type-id-1' size-in-bits='64' is-anonymous='yes' hash='58190901bcecd086' id='type-id-7'/>
     </array-type-def>
     <!-- char[1] -->
-    <array-type-def dimensions='1' type-id='type-id-3' size-in-bits='8' hash='f7aed1c6cc6e7b3c' id='type-id-8'>
+    <array-type-def dimensions='1' type-id='type-id-11' size-in-bits='8' hash='26f2499d5fa52471' id='type-id-14'>
       <!-- <anonymous range>[1] -->
-      <subrange length='1' lower-bound='0' upper-bound='0' type-id='type-id-6' size-in-bits='64' is-anonymous='yes' hash='eba0a2b392137dcb' id='type-id-9'/>
+      <subrange length='1' lower-bound='0' upper-bound='0' type-id='type-id-1' size-in-bits='64' is-anonymous='yes' hash='eba0a2b392137dcb' id='type-id-3'/>
     </array-type-def>
     <!-- char[] -->
-    <array-type-def dimensions='1' type-id='type-id-3' size-in-bits='unknown' hash='a72b7e8bce2feef6' id='type-id-10'>
+    <array-type-def dimensions='1' type-id='type-id-11' size-in-bits='unknown' hash='c943a238f0b3d211' id='type-id-15'>
       <!-- <anonymous range>[] -->
-      <subrange length='unknown' lower-bound='0' upper-bound='-1' type-id='type-id-6' size-in-bits='64' is-anonymous='yes' hash='679a37cd46fc8bdb' id='type-id-11'/>
+      <subrange length='unknown' lower-bound='0' upper-bound='-1' type-id='type-id-1' size-in-bits='64' is-anonymous='yes' hash='679a37cd46fc8bdb' id='type-id-8'/>
     </array-type-def>
     <!-- double -->
-    <type-decl name='double' size-in-bits='64' hash='e9e9b320886d9aa6' id='type-id-12'/>
+    <type-decl name='double' size-in-bits='64' hash='e9e9b320886d9aa6' id='type-id-16'/>
     <!-- double[5][3] -->
-    <array-type-def dimensions='2' type-id='type-id-12' size-in-bits='960' hash='31002392392dd18a' id='type-id-13'>
+    <array-type-def dimensions='2' type-id='type-id-16' size-in-bits='960' hash='163723665089c7ad' id='type-id-17'>
       <!-- <anonymous range>[5] -->
-      <subrange length='5' lower-bound='0' upper-bound='4' type-id='type-id-6' size-in-bits='64' is-anonymous='yes' hash='5aa5cef1e1be46c9' id='type-id-14'/>
+      <subrange length='5' lower-bound='0' upper-bound='4' type-id='type-id-1' size-in-bits='64' is-anonymous='yes' hash='5aa5cef1e1be46c9' id='type-id-6'/>
       <!-- <anonymous range>[3] -->
-      <subrange length='3' lower-bound='0' upper-bound='2' type-id='type-id-6' size-in-bits='64' is-anonymous='yes' hash='30d99d19f0f4b2ea' id='type-id-15'/>
+      <subrange length='3' lower-bound='0' upper-bound='2' type-id='type-id-1' size-in-bits='64' is-anonymous='yes' hash='30d99d19f0f4b2ea' id='type-id-4'/>
     </array-type-def>
+    <!-- int (S&) -->
+    <function-type size-in-bits='64' hash='d47da5ed6a5c462b' id='type-id-18'>
+      <!-- parameter of type 'S&' -->
+      <parameter type-id='type-id-10'/>
+      <!-- int -->
+      <return type-id='type-id-19'/>
+    </function-type>
     <!-- int -->
-    <type-decl name='int' size-in-bits='32' hash='09d17c08f594edc7' id='type-id-16'/>
+    <type-decl name='int' size-in-bits='32' hash='09d17c08f594edc7' id='type-id-19'/>
     <!-- int* -->
-    <pointer-type-def type-id='type-id-16' size-in-bits='64' hash='3fd83b2c14ae2f2f' id='type-id-17'/>
+    <pointer-type-def type-id='type-id-19' size-in-bits='64' hash='d546a866961a5bb9' id='type-id-20'/>
     <!-- int*(*)[4] -->
-    <pointer-type-def type-id='type-id-18' size-in-bits='64' hash='0cfca0e281fb0a5c' id='type-id-19'/>
+    <pointer-type-def type-id='type-id-21' size-in-bits='64' hash='1ca15d0c248aecdd' id='type-id-22'/>
     <!-- int*(*[10])[4] -->
-    <array-type-def dimensions='1' type-id='type-id-19' size-in-bits='640' hash='449e4bcdccdee504' id='type-id-20'>
+    <array-type-def dimensions='1' type-id='type-id-22' size-in-bits='640' hash='9a46023a2dc13a71' id='type-id-23'>
       <!-- <anonymous range>[10] -->
-      <subrange length='10' lower-bound='0' upper-bound='9' type-id='type-id-6' size-in-bits='64' is-anonymous='yes' hash='4e72a2f569b234f4' id='type-id-21'/>
+      <subrange length='10' lower-bound='0' upper-bound='9' type-id='type-id-1' size-in-bits='64' is-anonymous='yes' hash='4e72a2f569b234f4' id='type-id-2'/>
     </array-type-def>
     <!-- int*[4] -->
-    <array-type-def dimensions='1' type-id='type-id-17' size-in-bits='256' hash='08492ad20c45bd9d' id='type-id-18'>
+    <array-type-def dimensions='1' type-id='type-id-20' size-in-bits='256' hash='2805ba940c28dba0' id='type-id-21'>
       <!-- <anonymous range>[4] -->
-      <subrange length='4' lower-bound='0' upper-bound='3' type-id='type-id-6' size-in-bits='64' is-anonymous='yes' hash='cee611f4a73e486c' id='type-id-22'/>
+      <subrange length='4' lower-bound='0' upper-bound='3' type-id='type-id-1' size-in-bits='64' is-anonymous='yes' hash='cee611f4a73e486c' id='type-id-5'/>
     </array-type-def>
     <!-- int[5] -->
-    <array-type-def dimensions='1' type-id='type-id-16' size-in-bits='160' hash='f6adbc622c614e05' id='type-id-23'>
+    <array-type-def dimensions='1' type-id='type-id-19' size-in-bits='160' hash='e1a54f164d2b8f96' id='type-id-24'>
       <!-- <anonymous range>[5] -->
-      <subrange length='5' lower-bound='0' upper-bound='4' type-id='type-id-6' size-in-bits='64' is-anonymous='yes' hash='5aa5cef1e1be46c9' id='type-id-14'/>
+      <subrange length='5' lower-bound='0' upper-bound='4' type-id='type-id-1' size-in-bits='64' is-anonymous='yes' hash='5aa5cef1e1be46c9' id='type-id-6'/>
     </array-type-def>
     <!-- sizetype -->
-    <type-decl name='sizetype' size-in-bits='64' hash='3e84f1a1648448f5' id='type-id-6'/>
+    <type-decl name='sizetype' size-in-bits='64' hash='3e84f1a1648448f5' id='type-id-1'/>
     <!-- struct S -->
-    <class-decl name='S' is-struct='yes' visibility='default' size-in-bits='2304' filepath='/home/ooprala/rh/u/libabigail/tests/data/test-read-dwarf/test7.cc' line='1' column='1' hash='49c8d3c1c92861d5' id='type-id-1'>
+    <class-decl name='S' is-struct='yes' visibility='default' size-in-bits='2304' hash='86eb9ae1bc343440' id='type-id-9'>
       <data-member access='public' layout-offset-in-bits='0'>
         <!-- int S::a[5] -->
-        <var-decl name='a' type-id='type-id-23' visibility='default' filepath='/home/ooprala/rh/u/libabigail/tests/data/test-read-dwarf/test7.cc' line='3' column='1'/>
+        <var-decl name='a' type-id='type-id-24' visibility='default'/>
       </data-member>
       <data-member access='public' layout-offset-in-bits='192'>
         <!-- char* S::b[7] -->
-        <var-decl name='b' type-id='type-id-5' visibility='default' filepath='/home/ooprala/rh/u/libabigail/tests/data/test-read-dwarf/test7.cc' line='4' column='1'/>
+        <var-decl name='b' type-id='type-id-13' visibility='default'/>
       </data-member>
       <data-member access='public' layout-offset-in-bits='640'>
         <!-- double S::c[5][3] -->
-        <var-decl name='c' type-id='type-id-13' visibility='default' filepath='/home/ooprala/rh/u/libabigail/tests/data/test-read-dwarf/test7.cc' line='5' column='1'/>
+        <var-decl name='c' type-id='type-id-17' visibility='default'/>
       </data-member>
       <data-member access='public' layout-offset-in-bits='1600'>
         <!-- int*(* S::d[10])[4] -->
-        <var-decl name='d' type-id='type-id-20' visibility='default' filepath='/home/ooprala/rh/u/libabigail/tests/data/test-read-dwarf/test7.cc' line='6' column='1'/>
+        <var-decl name='d' type-id='type-id-23' visibility='default'/>
       </data-member>
       <data-member access='public' layout-offset-in-bits='2240'>
         <!-- char S::e[1] -->
-        <var-decl name='e' type-id='type-id-8' visibility='default' filepath='/home/ooprala/rh/u/libabigail/tests/data/test-read-dwarf/test7.cc' line='7' column='1'/>
+        <var-decl name='e' type-id='type-id-14' visibility='default'/>
       </data-member>
       <data-member access='public' layout-offset-in-bits='2248'>
         <!-- char S::f[] -->
-        <var-decl name='f' type-id='type-id-10' visibility='default' filepath='/home/ooprala/rh/u/libabigail/tests/data/test-read-dwarf/test7.cc' line='8' column='1'/>
+        <var-decl name='f' type-id='type-id-15' visibility='default'/>
       </data-member>
     </class-decl>
-    <!-- int foo(S&) -->
-    <function-decl name='foo' type-id='type-id-24' mangled-name='_Z3fooR1S' filepath='/home/ooprala/rh/u/libabigail/tests/data/test-read-dwarf/test7.cc' line='11' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_Z3fooR1S'/>
-    <!-- int (S&) -->
-    <function-type size-in-bits='64' hash='c4ba3a67b022926a' id='type-id-24'>
-      <!-- parameter of type 'S&' -->
-      <parameter type-id='type-id-2'/>
-      <!-- int -->
-      <return type-id='type-id-16'/>
-    </function-type>
+  </abi-types>
+  <abi-instr address-size='64' path='test7.cc' comp-dir-path='/home/ooprala/rh/u/libabigail/tests/data/test-read-dwarf' language='LANG_C_plus_plus'>
+      <!-- int foo(S&) -->
+      <function-decl name='foo' type-id='type-id-18' mangled-name='_Z3fooR1S' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_Z3fooR1S'/>
   </abi-instr>
 </abi-corpus>

@@ -1,8 +1,9 @@
-<abi-corpus version='2.5' soname='test3.so.1'>
+<abi-corpus version='3.0' soname='test3.so.1'>
   <elf-needed>
     <dependency name='libc.so.6'/>
   </elf-needed>
   <elf-function-symbols>
     <elf-symbol name='foo' type='func-type' binding='weak-binding' visibility='default-visibility' is-defined='yes'/>
   </elf-function-symbols>
+  <abi-types/>
 </abi-corpus>

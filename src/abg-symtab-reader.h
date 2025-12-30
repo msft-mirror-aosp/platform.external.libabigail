@@ -19,6 +19,7 @@
 #include <memory>
 #include <unordered_map>
 #include <vector>
+#include <mutex>
 
 #include "abg-cxx-compat.h"  // for abg_compat::optional
 #include "abg-ir.h"
@@ -27,6 +28,8 @@ namespace abigail
 {
 namespace symtab_reader
 {
+
+using std::mutex;
 
 /// The symtab filter is the object passed to the symtab object in order to
 /// iterate over the symbols in the symtab while applying filters.
@@ -239,7 +242,7 @@ public:
   const elf_symbols&
   lookup_symbol(const std::string& name) const;
 
-  const elf_symbol_sptr&
+  const elf_symbol_sptr
   lookup_symbol(GElf_Addr symbol_addr) const;
 
   const elf_symbol_sptr
@@ -282,6 +285,8 @@ private:
   /// Default constructor. Private to enforce creation by factory methods.
   symtab();
 
+  mutable mutex big_mutex_;
+
   /// The vector of symbols we discovered.
   elf_symbols symbols_;
 
@@ -314,6 +319,8 @@ private:
 
   /// Lookup map function entry address -> symbol
   addr_symbol_map_type entry_addr_symbol_map_;
+
+  mutable mutex map_mutex_;
 
   /// Set of undefined function symbol names
   std::unordered_set<std::string> undefined_function_linkage_names_;

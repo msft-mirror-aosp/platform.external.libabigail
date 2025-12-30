@@ -8,6 +8,7 @@ Variables changes summary: 0 Removed, 0 Changed, 0 Added variable
 1 function with incompatible sub-type changes:
 
   [C] 'function double (*fn1(void))(int)' has some sub-type changes:
+    'function double (*fn1(void))(int) {_Z3fn1v}' now becomes 'function int (*fn1(void))(int) {_Z3fn1v}'
     return type changed:
       in pointed to type 'function type double (int)':
         return type changed:
@@ -31,14 +32,10 @@ Variables changes summary: 0 Removed, 0 Changed, 0 Added variable
   [C] 'function void foo(S)' has some indirect sub-type changes:
     parameter 1 of type 'class S' has sub-type changes:
       type size hasn't changed
-      3 data member changes:
+      2 data member changes (1 filtered):
         type of 'int (* fnptr0)(void)' changed:
           in pointed to type 'function type int (void)':
             parameter 1 of type 'double' was added
-        type of 'int (* fnptr1)(void)' changed:
-          in pointed to type 'function type int (void)':
-            entity changed from 'function type int (void)' to 'void'
-            type size changed from 64 to 0 (in bits)
         type of 'int (* fnptr2)(void)' changed:
           entity changed from 'int (*)(void)' to 'int'
           type size changed from 64 to 32 (in bits)

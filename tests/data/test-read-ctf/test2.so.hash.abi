@@ -1,4 +1,4 @@
-<abi-corpus version='2.5' path='data/test-read-ctf/test2.so'>
+<abi-corpus version='3.0' path='data/test-read-ctf/test2.so' tracking-non-reachable-types='yes'>
   <elf-needed>
     <dependency name='libc.so.6'/>
   </elf-needed>
@@ -6,33 +6,35 @@
     <elf-symbol name='bar' type='func-type' binding='global-binding' visibility='default-visibility' is-defined='yes'/>
     <elf-symbol name='foo' type='func-type' binding='global-binding' visibility='default-visibility' is-defined='yes'/>
   </elf-function-symbols>
-  <abi-instr address-size='64' language='LANG_C'>
-    <pointer-type-def type-id='109cd6fe' size-in-bits='64' alignment-in-bits='64' hash='cc84d31555531d2e' id='842ea234'/>
-    <pointer-type-def type-id='119cd891' size-in-bits='64' alignment-in-bits='64' hash='06498fc6c83dc31d' id='5e30a4f9'/>
-    <qualified-type-def type-id='48b5725f' const='yes' hash='6b7986a41d50055e' id='8581546e'/>
-    <class-decl name='S0' is-struct='yes' visibility='default' size-in-bits='64' hash='85cf584d5344491e' id='109cd6fe'>
+  <abi-types>
+    <pointer-type-def type-id='109cd6fe' size-in-bits='64' alignment-in-bits='64' hash='2376cb7cbe064930' id='842ea234'/>
+    <pointer-type-def type-id='119cd891' size-in-bits='64' alignment-in-bits='64' hash='17a8a51d60b50dd9' id='5e30a4f9'/>
+    <qualified-type-def type-id='48b5725f' const='yes' hash='14aba0fcd1d2ec46' id='8581546e'/>
+    <pointer-type-def type-id='8581546e' size-in-bits='64' alignment-in-bits='64' hash='ed570d19e7968454' id='6e97a70c'/>
+    <function-type size-in-bits='64' hash='170f1b8ac5ba3bb6' id='6450859d'>
+      <parameter type-id='842ea234'/>
+      <return type-id='48b5725f'/>
+    </function-type>
+    <function-type size-in-bits='64' hash='27b8ca824f6b5af3' id='492db0de'>
+      <parameter type-id='5e30a4f9'/>
+      <return type-id='48b5725f'/>
+    </function-type>
+    <class-decl name='S0' is-struct='yes' visibility='default' size-in-bits='64' hash='c63cf3d5ab1bb9d3' id='109cd6fe'>
       <data-member access='public' layout-offset-in-bits='0'>
         <var-decl name='m0' type-id='eaa32e2f' visibility='default'/>
       </data-member>
     </class-decl>
-    <class-decl name='S1' is-struct='yes' visibility='default' size-in-bits='64' hash='420424655433a82b' id='119cd891'>
+    <class-decl name='S1' is-struct='yes' visibility='default' size-in-bits='64' hash='41a01bba1c5fb0d3' id='119cd891'>
       <data-member access='public' layout-offset-in-bits='0'>
         <var-decl name='m0' type-id='8a34a235' visibility='default'/>
       </data-member>
     </class-decl>
-    <pointer-type-def type-id='8581546e' size-in-bits='64' alignment-in-bits='64' id='6e97a70c'/>
-    <function-decl name='bar' type-id='492db0de' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='bar'/>
-    <function-decl name='foo' type-id='6450859d' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='foo'/>
-    <typedef-decl name='POINTER' type-id='6e97a70c' size-in-bits='64' alignment-in-bits='64' id='8a34a235'/>
-    <type-decl name='void' id='48b5725f'/>
-    <pointer-type-def type-id='48b5725f' id='eaa32e2f'/>
-    <function-type size-in-bits='64' hash='c5821292ef88ca9c' id='6450859d'>
-      <parameter type-id='842ea234'/>
-      <return type-id='48b5725f'/>
-    </function-type>
-    <function-type size-in-bits='64' hash='fa0338db5155d271' id='492db0de'>
-      <parameter type-id='5e30a4f9'/>
-      <return type-id='48b5725f'/>
-    </function-type>
+    <typedef-decl name='POINTER' type-id='6e97a70c' size-in-bits='64' alignment-in-bits='64' hash='ed570d19e7968454' id='8a34a235'/>
+    <type-decl name='void' hash='8dcbc64750c3d4e3' id='48b5725f'/>
+    <pointer-type-def type-id='48b5725f' hash='19e246ce75ee6a42' id='eaa32e2f'/>
+  </abi-types>
+  <abi-instr address-size='64' language='LANG_C'>
+      <function-decl name='bar' type-id='492db0de' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='bar'/>
+      <function-decl name='foo' type-id='6450859d' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='foo'/>
   </abi-instr>
 </abi-corpus>

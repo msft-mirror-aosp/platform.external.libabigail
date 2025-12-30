@@ -444,7 +444,7 @@ enum diff_category
   /// HAS_ALLOWED_CHANGE_CATEGORY category.  Nodes in this category
   /// must be reported, even if they are also in the
   /// SUPPRESSED_CATEGORY or PRIVATE_TYPE_CATEGORY categories.
-  HAS_PARENT_WITH_ALLOWED_CHANGE_CATEGORY = 1 << 26,
+  HAS_PARENT_WITH_ALLOWED_CHANGE_CATEGORY = 1 << 27,
 
   /// A special enumerator that is the logical 'or' all the
   /// enumerators above.
@@ -1889,10 +1889,11 @@ class class_diff : public class_or_union_diff
   lookup_tables_empty(void) const;
 
   void
-  ensure_lookup_tables_populated(void) const;
+  ensure_lookup_tables_populated(const vector<method_decl_sptr>& f_virt_methods,
+				 const vector<method_decl_sptr>& s_virt_methods) const;
 
   void
-   allocate_priv_data();
+  allocate_priv_data();
 
 protected:
   class_diff(class_decl_sptr first_scope,

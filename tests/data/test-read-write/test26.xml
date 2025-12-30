@@ -1,35 +1,37 @@
-<abi-corpus version='2.5' path='libtest-v0.so'>
+<abi-corpus version='3.0' path='libtest-v0.so'>
   <elf-function-symbols>
     <elf-symbol name='_fini' type='func-type' binding='global-binding' visibility='default-visibility' is-defined='yes'/>
     <elf-symbol name='_init' type='func-type' binding='global-binding' visibility='default-visibility' is-defined='yes'/>
     <elf-symbol name='foo' type='func-type' binding='global-binding' visibility='default-visibility' is-defined='yes'/>
   </elf-function-symbols>
-  <abi-instr address-size='64' path='test-v0.c'>
-    <type-decl name='int' size-in-bits='32' alignment-in-bits='32' hash='bfcd65309358f362' id='type-id-1'/>
-    <class-decl name='public_type' is-struct='yes' visibility='default' size-in-bits='64' filepath='/home/dodji/tests/test-interfaces-v0.h' line='2' column='1' hash='f526c96c3a3ba897' id='type-id-2'>
-      <data-member access='public' layout-offset-in-bits='0'>
-        <var-decl name='priv_' type-id='type-id-3' visibility='default' filepath='/home/dodji/tests/test-interfaces-v0.h' line='4' column='1'/>
-      </data-member>
-    </class-decl>
-    <class-decl name='private_data' is-struct='yes' visibility='default' size-in-bits='32' filepath='/home/dodji/tests/test-v0.c' line='3' column='1' hash='33a590872c45ab69' id='type-id-4'>
-      <data-member access='public' layout-offset-in-bits='0'>
-        <var-decl name='private_data0' type-id='type-id-1' visibility='default' filepath='/home/dodji/tests/test-v0.c' line='5' column='1'/>
-      </data-member>
-    </class-decl>
-    <class-decl name='another_public_type' is-struct='yes' visibility='default' size-in-bits='32' filepath='/home/dodji/tests/test-interfaces-v0.h' line='7' column='1' hash='cf8f45bc660530bb' id='type-id-5'>
-      <data-member access='public' layout-offset-in-bits='0'>
-        <var-decl name='i' type-id='type-id-1' visibility='default' filepath='/home/dodji/tests/test-interfaces-v0.h' line='9' column='1'/>
-      </data-member>
-    </class-decl>
-    <pointer-type-def type-id='type-id-5' size-in-bits='64' alignment-in-bits='64' hash='3f52301932d4a293' id='type-id-6'/>
-    <pointer-type-def type-id='type-id-4' size-in-bits='64' alignment-in-bits='64' hash='c3f8c3e74880ebe2' id='type-id-3'/>
-    <pointer-type-def type-id='type-id-2' size-in-bits='64' alignment-in-bits='64' hash='736812f876e54472' id='type-id-7'/>
-    <function-decl name='foo' type-id='type-id-8' mangled-name='foo' filepath='/home/dodji/tests/test-v0.c' line='9' column='1' visibility='default' binding='global' size-in-bits='64' alignment-in-bits='64' elf-symbol-id='foo'/>
-    <type-decl name='void' id='type-id-9'/>
-    <function-type size-in-bits='64' alignment-in-bits='64' hash='03afb02ea17ddca0' id='type-id-8'>
-      <parameter type-id='type-id-7' name='p' filepath='/home/dodji/tests/test-v0.c' line='9' column='1'/>
-      <parameter type-id='type-id-6' name='t' filepath='/home/dodji/tests/test-v0.c' line='10' column='1'/>
-      <return type-id='type-id-9'/>
+  <abi-types>
+    <pointer-type-def type-id='type-id-1' size-in-bits='64' alignment-in-bits='64' hash='6f71959cdde08d17' id='type-id-2'/>
+    <function-type size-in-bits='64' alignment-in-bits='64' hash='99ca9f8a46453f78' id='type-id-3'>
+      <parameter type-id='type-id-4' name='p' filepath='/home/dodji/tests/test-v0.c' line='9' column='1'/>
+      <parameter type-id='type-id-2' name='t' filepath='/home/dodji/tests/test-v0.c' line='10' column='1'/>
+      <return type-id='type-id-5'/>
     </function-type>
+    <class-decl name='public_type' is-struct='yes' visibility='default' size-in-bits='64' filepath='/home/dodji/tests/test-interfaces-v0.h' line='2' column='1' hash='2b4f3542c21e95bd' id='type-id-6'>
+      <data-member access='public' layout-offset-in-bits='0'>
+        <var-decl name='priv_' type-id='type-id-7' visibility='default' filepath='/home/dodji/tests/test-interfaces-v0.h' line='4' column='1'/>
+      </data-member>
+    </class-decl>
+    <class-decl name='private_data' is-struct='yes' visibility='default' size-in-bits='32' filepath='/home/dodji/tests/test-v0.c' line='3' column='1' hash='8d8aeb43c8ed6174' id='type-id-8'>
+      <data-member access='public' layout-offset-in-bits='0'>
+        <var-decl name='private_data0' type-id='type-id-9' visibility='default' filepath='/home/dodji/tests/test-v0.c' line='5' column='1'/>
+      </data-member>
+    </class-decl>
+    <class-decl name='another_public_type' is-struct='yes' visibility='default' size-in-bits='32' filepath='/home/dodji/tests/test-interfaces-v0.h' line='7' column='1' hash='ba5b544dbcce69d1' id='type-id-1'>
+      <data-member access='public' layout-offset-in-bits='0'>
+        <var-decl name='i' type-id='type-id-9' visibility='default' filepath='/home/dodji/tests/test-interfaces-v0.h' line='9' column='1'/>
+      </data-member>
+    </class-decl>
+    <type-decl name='int' size-in-bits='32' alignment-in-bits='32' hash='bfcd65309358f362' id='type-id-9'/>
+    <pointer-type-def type-id='type-id-8' size-in-bits='64' alignment-in-bits='64' hash='8d0aa3f193e23639' id='type-id-7'/>
+    <pointer-type-def type-id='type-id-6' size-in-bits='64' alignment-in-bits='64' hash='68ac50381665a624' id='type-id-4'/>
+    <type-decl name='void' hash='8dcbc64750c3d4e3' id='type-id-5'/>
+  </abi-types>
+  <abi-instr address-size='64' path='test-v0.c'>
+      <function-decl name='foo' type-id='type-id-3' mangled-name='foo' filepath='/home/dodji/tests/test-v0.c' line='9' column='1' visibility='default' binding='global' size-in-bits='64' alignment-in-bits='64' elf-symbol-id='foo'/>
   </abi-instr>
 </abi-corpus>

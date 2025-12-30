@@ -5,6 +5,8 @@
 
 /// @file
 
+#include <atomic>
+
 #include "abg-internal.h"
 // <headers defining libabigail's API go under here>
 ABG_BEGIN_EXPORT_DECLARATIONS
@@ -23,7 +25,7 @@ namespace ir
 /// Private data type of the @ref traversable_base type.
 struct traversable_base::priv
 {
-  bool visiting_;
+  std::atomic<bool> visiting_;
 
   priv(bool visiting = false)
     : visiting_(visiting)
@@ -59,7 +61,7 @@ traversable_base::visiting() const
 /// @param f the new value of the "visiting" flag.
 void
 traversable_base::visiting(bool f)
-{priv_->visiting_ = f;}
+{priv_->visiting_.store(f);}
 
 }// end namaspace ir
 }// end namespace abigail

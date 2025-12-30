@@ -2531,6 +2531,9 @@ test-diff-pkg/PR33264/simdjson-3.12.3/simdjson-devel-3.12.3-2.el10.x86_64.rpm \
 test-diff-pkg/PR33264/simdjson-3.13.0/simdjson-3.13.0-1.el10.x86_64.rpm \
 test-diff-pkg/PR33264/simdjson-3.13.0/simdjson-debuginfo-3.13.0-1.el10.x86_64.rpm \
 test-diff-pkg/PR33264/simdjson-3.13.0/simdjson-devel-3.13.0-1.el10.x86_64.rpm \
+test-diff-pkg/libstdc++-14.2.1-1.fc40.x86_64-report-1.txt			\
+test-diff-pkg/libstdc++-14.2.1-1.fc40.x86_64.rpm				\
+test-diff-pkg/libstdc++-debuginfo-14.2.1-1.fc40.x86_64.rpm			\
 \
 test-diff-pkg-ctf/tarpkg-0-dir1.tar \
 test-diff-pkg-ctf/dirpkg-0-report-0.txt \

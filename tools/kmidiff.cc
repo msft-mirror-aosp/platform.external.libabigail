@@ -381,6 +381,25 @@ set_diff_context(diff_context_sptr ctxt, const options& opts)
     ctxt->add_suppressions(opts.diff_time_supprs);
 }
 
+/// Set the options of the @abigail::fe_iface reader from the command
+/// line provided options.
+///
+/// @param opts the ABI reader front-end interface options to set.
+///
+/// @param opts the command line provided options.
+static void
+set_fe_iface_options(abigail::fe_iface::options_type& opts,
+		     const options o)
+{
+  opts.load_in_linux_kernel_mode = true;
+  opts.load_all_types =
+    o.exported_interfaces_only.has_value()
+    ? !o.exported_interfaces_only
+    : false;
+
+  opts.do_log = o.verbose;
+}
+
 /// Print information about the kernel (and modules) binaries found
 /// under a given directory.
 ///
@@ -434,6 +453,9 @@ main(int argc, char* argv[])
   corpus_group_sptr group1, group2;
   string debug_info_root_dir;
   corpus::origin requested_fe_kind = corpus::DWARF_ORIGIN;
+  abigail::fe_iface::options_type abi_reader_options(env);
+  set_fe_iface_options(abi_reader_options, opts);
+
 #ifdef WITH_CTF
   if (opts.use_ctf)
     requested_fe_kind = corpus::CTF_ORIGIN;
@@ -460,13 +482,14 @@ main(int argc, char* argv[])
 						      opts.kabi_whitelist_paths,
 						      opts.read_time_supprs,
 						      opts.verbose, env,
+						      abi_reader_options,
 						      requested_fe_kind);
 	  print_kernel_dist_binary_paths_under(opts.kernel_dist_root1, opts);
 	}
       else if (ftype == FILE_TYPE_XML_CORPUS_GROUP)
 	group1 =
 	  abixml::read_corpus_group_from_abixml_file(opts.kernel_dist_root1,
-						     env);
+						     env, abi_reader_options);
 
     }
 
@@ -486,13 +509,14 @@ main(int argc, char* argv[])
 						      opts.kabi_whitelist_paths,
 						      opts.read_time_supprs,
 						      opts.verbose, env,
+						      abi_reader_options,
 						      requested_fe_kind);
 	  print_kernel_dist_binary_paths_under(opts.kernel_dist_root2, opts);
 	}
       else if (ftype == FILE_TYPE_XML_CORPUS_GROUP)
 	group2 =
 	  abixml::read_corpus_group_from_abixml_file(opts.kernel_dist_root2,
-						     env);
+						     env, abi_reader_options);
     }
 
   abidiff_status status = abigail::tools_utils::ABIDIFF_OK;

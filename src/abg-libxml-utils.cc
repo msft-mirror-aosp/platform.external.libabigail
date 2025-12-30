@@ -187,6 +187,7 @@ new_reader_from_file(const std::string& path)
 {
   reader_sptr p =
     build_sptr(xmlNewTextReaderFilename (path.c_str()));
+  xmlTextReaderSetParserProp(p.get(), XML_PARSE_BIG_LINES, true);
 
   return p;
 }
@@ -203,6 +204,7 @@ new_reader_from_buffer(const std::string& buffer)
     build_sptr(xmlReaderForMemory(buffer.c_str(),
 				  buffer.length(),
 				  "", 0, 0));
+  xmlTextReaderSetParserProp(p.get(), XML_PARSE_BIG_LINES, true);
   return p;
 }
 
@@ -253,6 +255,8 @@ new_reader_from_istream(std::istream* in)
     build_sptr(xmlReaderForIO(&xml_istream_input_read,
 			      &xml_istream_input_close,
 			      in, "", 0, 0));
+  xmlTextReaderSetParserProp(p.get(), XML_PARSE_BIG_LINES, true);
+
   return p;
 }
 

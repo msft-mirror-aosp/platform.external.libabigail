@@ -16,6 +16,9 @@
 #include <algorithm>
 #include <iostream>
 #include <string>
+#include <mutex>
+#include <atomic>
+#include <memory>
 
 #include "abg-hash.h"
 #include "abg-corpus.h"
@@ -27,9 +30,14 @@ namespace abigail
 namespace ir
 {
 
+using std::mutex;
+using std::lock_guard;
+using std::recursive_mutex;
+using std::atomic;
 using std::string;
 using std::unordered_set;
 using abg_compat::optional;
+using std::dynamic_pointer_cast;
 
 /// The result of structural comparison of type ABI artifacts.
 enum comparison_result
@@ -150,19 +158,22 @@ parse_real_type(const string& type_name,
 /// Private type to hold private members of @ref translation_unit
 struct translation_unit::priv
 {
+  recursive_mutex				mutex_;
   const environment&				env_;
   corpus*					corp;
   bool						is_constructed_;
   char						address_size_;
   language					language_;
-  std::string					path_;
+  string					path_;
   std::string					comp_dir_path_;
   std::string					abs_path_;
   location_manager				loc_mgr_;
   mutable global_scope_sptr			global_scope_;
   mutable vector<type_base_sptr>		synthesized_types_;
   type_sptr_set_type				live_fn_types_;
+  mutex					live_fn_types_mutex_;
   type_maps					types_;
+  recursive_mutex				types_mutex_;
 
 
   priv(const environment& env)
@@ -179,6 +190,10 @@ struct translation_unit::priv
   type_maps&
   get_types()
   {return types_;}
+
+  recursive_mutex&
+  get_mutex()
+  {return mutex_;}
 }; // end translation_unit::priv
 
 // <type_or_decl_base stuff>
@@ -186,28 +201,29 @@ struct translation_unit::priv
 /// The private data of @ref type_or_decl_base.
 struct type_or_decl_base::priv
 {
+  mutable recursive_mutex	mutex_;
   // This holds the kind of dynamic type of particular instance.
   // Yes, this is part of the implementation of a "poor man" runtime
   // type identification.  We are doing this because profiling shows
   // that using dynamic_cast in some places is really to slow and is
   // constituting a hotspot.  This poor man's implementation made
   // things be much faster.
-  enum type_or_decl_kind	kind_;
+  atomic<enum type_or_decl_kind> kind_;
   // This holds the runtime type instance pointer of particular
   // instance.  In other words, this is the "this pointer" of the
   // dynamic type of a particular instance.
-  void*			rtti_;
+  atomic<void*>		rtti_;
   // This holds a pointer to either the type_base sub-object (if the
   // current instance is a type) or the decl_base sub-object (if the
   // current instance is a decl).  This is used by the is_decl() and
   // is_type() functions, which also show up during profiling as
   // hotspots, due to their use of dynamic_cast.
-  void*			type_or_decl_ptr_;
-  mutable hashing::hashing_state hashing_state_;
-  bool				is_recursive_artefact_;
+  atomic<void*>		type_or_decl_ptr_;
+  mutable atomic<hashing::hashing_state> hashing_state_;
   hash_t			hash_value_;
   const environment&		env_;
-  translation_unit*		translation_unit_;
+  atomic<translation_unit*>	translation_unit_;
+  atomic<corpus*>		corpus_;
   // The location of an artifact as seen from its input by the
   // artifact reader.  This might be different from the source
   // location advertised by the original emitter of the artifact
@@ -216,9 +232,15 @@ struct type_or_decl_base::priv
   // Flags if the current ABI artifact is artificial (i.e, *NOT*
   // generated from the initial source code, but rather either
   // artificially by the compiler or by libabigail itself).
-  bool				is_artificial_;
+  atomic<bool>				is_artificial_;
 
-  const type_or_decl_base*  original_artefact_;
+  atomic<offset_t>		native_offset_;
+
+  atomic<const type_or_decl_base*> original_artefact_;
+
+  interned_string	internal_cached_repr_;
+  interned_string	cached_repr_;
+  interned_string	id_;
 
   /// Constructor of the type_or_decl_base::priv private type.
   ///
@@ -229,14 +251,15 @@ struct type_or_decl_base::priv
   priv(const environment& e,
        enum type_or_decl_kind k = ABSTRACT_TYPE_OR_DECL)
     : kind_(k),
-      rtti_(),
-      type_or_decl_ptr_(),
+      rtti_(nullptr),
+      type_or_decl_ptr_(nullptr),
       hashing_state_(hashing::HASHING_NOT_DONE_STATE),
-      is_recursive_artefact_(),
       env_(e),
-      translation_unit_(),
-      is_artificial_(),
-      original_artefact_()
+      translation_unit_(nullptr),
+      corpus_(nullptr),
+      is_artificial_(false),
+      native_offset_(0),
+      original_artefact_(nullptr)
   {}
 
   /// Getter of the kind of the IR node.
@@ -251,7 +274,7 @@ struct type_or_decl_base::priv
   /// @param k the new IR node kind.
   void
   kind (enum type_or_decl_kind k)
-  {kind_ |= k;}
+  {kind_ = kind_.load() | k;}
 
   /// Getter the hashing state of the current IR node.
   ///
@@ -259,22 +282,6 @@ struct type_or_decl_base::priv
   hashing::hashing_state
   get_hashing_state() const
   {return hashing_state_;}
-
-  /// Getter of the property which flags the current artefact as being
-  /// recursive or not.
-  ///
-  /// @return true iff the current artefact it recursive.
-  bool
-  is_recursive_artefact() const
-  {return is_recursive_artefact_;}
-
-  /// Setter of the property which flags the current artefact as being
-  /// recursive or not.
-  ///
-  /// @param f the new value of the property.
-  void
-  is_recursive_artefact(bool f)
-  {is_recursive_artefact_ = f;}
 
   /// Setter of the hashing state of the current IR node.
   ///
@@ -294,15 +301,14 @@ struct type_or_decl_base::priv
   void
   set_hash_value(hash_t h)
   {
+    std::lock_guard<recursive_mutex> lock(mutex_);
     hashing::hashing_state s = get_hashing_state();
 
     ABG_ASSERT(s == hashing::HASHING_NOT_DONE_STATE
-	       || s == hashing::HASHING_CYCLED_TYPE_STATE
-	       || s == hashing::HASHING_FINISHED_STATE
-	       || s == hashing::HASHING_SUBTYPE_STATE);
-    if (h.has_value()
-	&& (s == hashing::HASHING_NOT_DONE_STATE
-	    || s == hashing::HASHING_CYCLED_TYPE_STATE))
+	       || s & hashing::HASHING_CYCLED_TYPE_STATE
+	       || s == hashing::HASHING_FINISHED_STATE);
+
+    if (h.has_value() && (s == hashing::HASHING_NOT_DONE_STATE))
       {
 	hash_value_ = h;
 	set_hashing_state(hashing::HASHING_FINISHED_STATE);
@@ -321,9 +327,40 @@ struct type_or_decl_base::priv
   {
     if (h.has_value())
     {
-      hash_value_ = h;
+      {
+	std::lock_guard<recursive_mutex> lock(mutex_);
+	hash_value_ = h;
+      }
       set_hashing_state(hashing::HASHING_FINISHED_STATE);
     }
+  }
+
+  /// This is to be called right before type canonicalization happens.
+  ///
+  /// Currently, this clears the cache of the type representation,
+  /// which is useful to speed up various type comparisons that happen
+  /// during type canonicalization.
+  ///
+  /// The reason why the cache needs to be cleared is that what is
+  /// cached likely reflects a state where the type was not yet
+  /// complete, i.e, it was only partially constructed.  For instance,
+  /// maybe a function type didn't yet have all its parameters, or
+  /// maybe a typedef type didn't have its underlying type set yet.
+  ///
+  /// At the point of the invocation of this function however, we are
+  /// sure that the type is completely constructed.  So let's clear
+  /// the previously cached pretty string representation so that a new
+  /// one can be constructed, cached, and reused.
+  void
+  get_ready_for_canonicalization()
+  {
+    std::lock_guard<recursive_mutex> lock(mutex_);
+    // Right before type canonicalization, let's clear the cache of
+    // pretty representation so that it can represent the current
+    // final state of the type.
+    internal_cached_repr_.clear();
+    cached_repr_.clear();
+    id_.clear();
   }
 }; // end struct type_or_decl_base::priv
 
@@ -475,8 +512,6 @@ struct type_base::priv
   // canonical_type above implies creating a shared_ptr, and that has
   // been measured to be slow for some performance hot spots.
   type_base*		naked_canonical_type;
-  interned_string	internal_cached_repr_;
-  interned_string	cached_repr_;
 
   priv()
     : size_in_bits(),
@@ -494,32 +529,6 @@ struct type_base::priv
       canonical_type(c),
       naked_canonical_type(c.get())
   {}
-
-  /// This is to be called right before type canonicalization happens.
-  ///
-  /// Currently, this clears the cache of the type representation,
-  /// which is useful to speed up various type comparisons that happen
-  /// during type canonicalization.
-  ///
-  /// The reason why the cache needs to be cleared is that what is
-  /// cached likely reflects a state where the type was not yet
-  /// complete, i.e, it was only partially constructed.  For instance,
-  /// maybe a function type didn't yet have all its parameters, or
-  /// maybe a typedef type didn't have its underlying type set yet.
-  /// 
-  /// At the point of the invocation of this function however, we are
-  /// sure that the type is completely constructed.  So let's clear
-  /// the previously cached pretty string representation so that a new
-  /// one can be constructed, cached, and reused.
-  void
-  get_ready_for_canonicalization()
-  {
-    // Right before type canonicalization, let's clear the cache of
-    // pretty representation so that it can represent the current
-    // final state of the type.
-    internal_cached_repr_.clear();
-    cached_repr_.clear();
-  }
 }; // end struct type_base::priv
 
 bool
@@ -568,25 +577,18 @@ struct environment::priv
   canonical_types_map_type		canonical_types_;
   mutable vector<type_base_sptr>	sorted_canonical_types_;
   type_base_sptr			void_type_;
+  mutex				void_type_mutex_;
   type_base_sptr			void_pointer_type_;
+  mutex				void_pointer_type_mutex_;
   type_base_sptr			variadic_marker_type_;
-  // The set of pairs of class types being currently compared.  It's
-  // used to avoid endless loops while recursively comparing types.
-  // This should be empty when none of the 'equal' overloads are
-  // currently being invoked.
-  class_set_type			left_classes_being_compared_;
-  class_set_type			right_classes_being_compared_;
-  // The set of pairs of function types being currently compared.  It's used
-  // to avoid endless loops while recursively comparing types.  This
-  // should be empty when none of the 'equal' overloads are currently
-  // being invoked.
-  fn_set_type				left_fn_types_being_compared_;
-  fn_set_type				right_fn_types_being_compared_;
+  mutex				variadic_marker_type_mutex_;
+
   // This is a cache for the result of comparing two sub-types (of
   // either class or function types) that are designated by their
   // memory address in the IR.
-  type_comparison_result_type		type_comparison_results_cache_;
-  vector<type_base_sptr>		extra_live_types_;
+  thread_local static type_comparison_result_type type_comparison_results_cache_;
+  canonical_type_sptr_set_type		extra_live_types_;
+  mutex				extra_live_types_mutex_;
   interned_string_pool			string_pool_;
   // The two vectors below represent the stack of left and right
   // operands of the current type comparison operation that is
@@ -624,8 +626,8 @@ struct environment::priv
   //  -------- -------------
   // | T_R | R_OP0 | R_OP1 | <-- this goes into right_type_comp_operands_;
   //
-  vector<const type_base*>		left_type_comp_operands_;
-  vector<const type_base*>		right_type_comp_operands_;
+  thread_local static vector<const type_base*>	left_type_comp_operands_;
+  thread_local static vector<const type_base*>	right_type_comp_operands_;
 
 #ifdef WITH_DEBUG_SELF_COMPARISON
   // This is used for debugging purposes.
@@ -654,6 +656,7 @@ struct environment::priv
   bool					allow_type_comparison_results_caching_;
   bool					do_log_;
   optional<bool>			analyze_exported_interfaces_only_;
+  optional<bool>			load_all_types_;
 #ifdef WITH_DEBUG_SELF_COMPARISON
   bool					self_comparison_debug_on_;
 #endif
@@ -1007,7 +1010,8 @@ struct environment::priv
 
 bool
 compare_using_locations(const decl_base *f,
-			const decl_base *s);
+			const decl_base *s,
+			bool& comp_result);
 
 /// A functor to sort decls somewhat topologically.  That is, types
 /// are sorted in a way that makes the ones that are defined "first"
@@ -1058,14 +1062,6 @@ struct decl_topo_comp
     if (!f)
       return false;
 
-    // Unique types that are artificially created in the environment
-    // don't have locations.  They ought to be compared on the basis
-    // of their pretty representation before we start looking at IR
-    // nodes' locations down the road.
-    if (is_unique_type(is_type(f)) || is_unique_type(is_type(s)))
-      return (f->get_cached_pretty_representation(/*internal=*/false)
-	      < s->get_cached_pretty_representation(/*internal=*/false));
-
     // If both decls come from an abixml file, keep the order they
     // have from that abixml file.
     if (has_artificial_or_natural_location(f)
@@ -1073,30 +1069,46 @@ struct decl_topo_comp
 	&& (((!f->get_corpus() && !s->get_corpus())
 	     || (f->get_corpus() && f->get_corpus()->get_origin() == corpus::NATIVE_XML_ORIGIN
 		 && s->get_corpus() && s->get_corpus()->get_origin() == corpus::NATIVE_XML_ORIGIN))))
-      return compare_using_locations(f, s);
-
-    // If a decl has artificial location, then use that one over the
-    // natural one.
-    location fl = get_artificial_or_natural_location(f);
-    location sl = get_artificial_or_natural_location(s);
-
-    if (fl.get_value() && sl.get_value())
-      return compare_using_locations(f, s);
-    else if (!!fl != !!sl)
-      // So one of the decls doesn't have location data.
-      // The first decl is less than the second if it's the one not
-      // having location data.
-      return !fl && sl;
+      {
+	bool result = false;
+	if (compare_using_locations(f, s, result))
+	  return result;
+      }
 
     // We reach this point if location data is useless.
-    if (f->get_is_anonymous()
-	&& s->get_is_anonymous()
-	&& (f->get_cached_pretty_representation(/*internal=*/false)
-	    == s->get_cached_pretty_representation(/*internal=*/false)))
-      return f->get_name() < s->get_name();
 
-    return (f->get_cached_pretty_representation(/*internal=*/false)
-	    < s->get_cached_pretty_representation(/*internal=*/false));
+    string s1 = f->get_cached_pretty_representation(/*internal=*/false);
+    string s2 = s->get_cached_pretty_representation(/*internal=*/false);
+    if (s1 != s2)
+      return s1 < s2;
+
+    if ((is_function_decl(f) && is_function_decl(s))
+	|| (is_var_decl(f) && is_var_decl(f)))
+      {
+	if (is_function_decl(f) && is_function_decl(s))
+	  {
+	    s1 = is_function_decl(f)->get_id();
+	    s2 = is_function_decl(s)->get_id();
+	  }
+	else
+	  {
+	    s1 = is_var_decl(f)->get_id();
+	    s2 = is_var_decl(s)->get_id();
+	  }
+
+	if (s1 != s2)
+	  return s1 < s2;
+      }
+
+    if (f->get_translation_unit() && s->get_translation_unit())
+      {
+	s1 = f->get_translation_unit()->get_absolute_path();
+	s2 = s->get_translation_unit()->get_absolute_path();
+	if (s1 != s2)
+	  return s1 < s2;
+      }
+
+    return (s1 < s2);
   }
 
   /// The "Less Than" comparison operator of this functor.
@@ -1159,6 +1171,13 @@ struct type_topo_comp
 	     const type_base_sptr &s)
   {return operator()(f.get(), s.get());}
 
+  bool
+  operator()(const type_base_wptr& f, const type_base_wptr& s)
+  {
+    type_base_sptr first(f), second(s);
+    return operator()(first, second);
+  }
+
   /// The "Less Than" comparison operator of this functor.
   ///
   /// @param f the first type to be considered for the comparison.
@@ -1175,8 +1194,7 @@ struct type_topo_comp
 
     // If both decls come from an abixml file, keep the order they
     // have from that abixml file.
-    if (is_decl(f) && is_decl(s)
-	&& has_artificial_or_natural_location(f)
+    if (has_artificial_or_natural_location(f)
 	&& has_artificial_or_natural_location(s)
 	&& ((!f->get_corpus() && !s->get_corpus())
 	    || (f->get_corpus()
@@ -1184,44 +1202,64 @@ struct type_topo_comp
 		&& s->get_corpus()
 		&& (s->get_corpus()->get_origin()
 		    == corpus::NATIVE_XML_ORIGIN))))
-      return compare_using_locations(is_decl(f), is_decl(s));
+      {
+	bool result = false;
+	if (compare_using_locations(is_decl(f), is_decl(s), result))
+	  return result;
+      }
 
-    interned_string s1 = f->get_cached_pretty_representation(false);
-    interned_string s2 = s->get_cached_pretty_representation(false);
+    interned_string s1 = f->get_cached_pretty_representation(/*internal=*/false);
+    interned_string s2 = s->get_cached_pretty_representation(/*internal=*/false);
 
     if (s1 != s2)
       return s1 < s2;
 
-    // Typs with smaller hash and canonical type index values come
-    // first.
-    if (hash_t fh = peek_hash_value(*f))
-      if (hash_t sh = peek_hash_value(*s))
-	{
-	  if (*fh != *sh)
-	    return *fh < *sh;
-	  size_t f_cti = get_canonical_type_index(*f);
-	  size_t s_cti = get_canonical_type_index(*s);
-	  if (f_cti != s_cti)
-	    return f_cti< s_cti;
-	}
-
     if (is_typedef(f) && is_typedef(s))
       {
-	s1 = is_typedef(f)->get_underlying_type()->get_cached_pretty_representation(false);
-	s2 = is_typedef(s)->get_underlying_type()->get_cached_pretty_representation(false);
+	s1 = is_typedef(f)->get_underlying_type()->get_cached_pretty_representation(true);
+	s2 = is_typedef(s)->get_underlying_type()->get_cached_pretty_representation(true);
 
 	if (s1 != s2)
 	  return s1 < s2;
       }
 
-    type_base *peeled_f = peel_typedef_pointer_or_reference_type(f, true);
-    type_base *peeled_s = peel_typedef_pointer_or_reference_type(s, true);
+    type_base *peeled_f = peel_typedef_pointer_or_reference_type(f, /*peel_qual_type=*/true);
+    type_base *peeled_s = peel_typedef_pointer_or_reference_type(s, /*peel_qual_type=*/true);
 
-    s1 = peeled_f->get_cached_pretty_representation(false);
-    s2 = peeled_s->get_cached_pretty_representation(false);
+    s1 = peeled_f->get_cached_pretty_representation(true);
+    s2 = peeled_s->get_cached_pretty_representation(true);
 
     if (s1 != s2)
       return s1 < s2;
+
+    if (class_or_union* f_c = is_class_or_union_type(peeled_f))
+      if (class_or_union* s_c = is_class_or_union_type(peeled_s))
+	{
+	  f_c = is_class_or_union_type(look_through_decl_only_class(f_c));
+	  s_c = is_class_or_union_type(look_through_decl_only_class(s_c));
+
+	  if (f_c->get_member_types().size()
+	      != s_c->get_member_types().size())
+	    return (f_c->get_member_types().size()
+		    > s_c->get_member_types().size());
+
+	  if (f_c->get_data_members().size()
+	      != s_c->get_data_members().size())
+	    return (f_c->get_data_members().size()
+		    < s_c->get_data_members().size());
+
+	  if (class_decl* f_klass = is_class_type(f_c))
+	    if (class_decl* s_klass = is_class_type(s_c))
+	      {
+		  if (f_klass->get_virtual_mem_fns().size()
+		      != s_klass->get_virtual_mem_fns().size())
+		    return (f_klass->get_virtual_mem_fns().size()
+			    > s_klass->get_virtual_mem_fns().size());
+
+		  if (f_klass->is_struct() != s_klass->is_struct())
+		    return !f_klass->is_struct();
+	      }
+	}
 
     if (method_type* m_f = is_method_type(peeled_f))
       if (method_type* m_s = is_method_type(peeled_s))
@@ -1237,6 +1275,23 @@ struct type_topo_comp
 	  return m_f->get_is_for_static_method() < m_s->get_is_for_static_method();
       }
 
+    // If all pretty representions are equal, sort by
+    // hash value and canonical type index.
+    hash_t h_f = peek_hash_value(*f);
+    hash_t h_s = peek_hash_value(*s);
+    if (h_f && h_s && *h_f != *h_s)
+      return *h_f < *h_s;
+
+    size_t cti_f = get_canonical_type_index(*f);
+    size_t cti_s = get_canonical_type_index(*s);
+    if (cti_f != cti_s)
+      return cti_f < cti_s;
+
+    if (f->get_native_offset()
+	&& s->get_native_offset()
+	&& *f->get_native_offset() != *s->get_native_offset())
+      return *f->get_native_offset() < *s->get_native_offset();
+
     decl_base *fd = is_decl(f);
     decl_base *sd = is_decl(s);
 
@@ -1249,20 +1304,12 @@ struct type_topo_comp
       {
 	string s1 = f->get_translation_unit()->get_absolute_path();
 	string s2 = s->get_translation_unit()->get_absolute_path();
-	return s1 < s2;
+	if (s1 != s2)
+	  return s1 < s2;
       }
 
-    // If all pretty representions are equal, sort by
-    // hash value and canonical type index.
-    hash_t h_f = peek_hash_value(*f);
-    hash_t h_s = peek_hash_value(*s);
-    if (h_f && h_s && *h_f != *h_s)
-      return *h_f < *h_s;
-
-    size_t cti_f = get_canonical_type_index(*f);
-    size_t cti_s = get_canonical_type_index(*s);
-    if (cti_f != cti_s)
-      return cti_f < cti_s;
+    if (is_function_type(f) && is_function_type(s))
+      return false;
 
     // If the two types have no decls, how come we could not sort them
     // until now? Let's investigate.
@@ -1387,6 +1434,13 @@ struct sort_for_hash_functor
   {
     return operator()(f.get(), s.get());
   }
+
+  bool
+  operator()(const type_base_wptr& f, const type_base_wptr& s)
+  {
+    type_base_sptr first(f), second(s);
+    return operator()(first, second);
+  }
 };//end struct sort_for_hash_functor
 
 /// Sort types before hashing (and then canonicalizing) them.
@@ -1396,6 +1450,8 @@ struct sort_for_hash_functor
 ///
 /// @param end an iterator pointing to the end of the sequence of
 /// types to sort.
+///
+/// @tparm IteratorType the iterator type to use for @p begin @p end.
 template <typename IteratorType>
 void
 sort_types_for_hash_computing_and_c14n(IteratorType begin,
@@ -1407,6 +1463,25 @@ sort_types_for_hash_computing_and_c14n(IteratorType begin,
 
 void
 sort_types_for_hash_computing_and_c14n(vector<type_base_sptr>& types);
+
+void
+move_member_type_to_canonicalized_scope(decl_base_sptr member_type);
+
+/// Move a sequence of types from their current scope to the scope of
+/// their canonical type.
+///
+/// @param member_types the sequence of member types to move.
+///
+/// @tparm SequenceType the type of the sequence of @p member_types.
+template<typename SequenceType>
+void
+move_member_types_to_canonicalized_scope(const SequenceType& member_types)
+{
+  for (auto member_type : member_types)
+    if (is_member_type(member_type))
+      if (decl_base_sptr decl_of_type = get_type_declaration(member_type))
+	move_member_type_to_canonicalized_scope(decl_of_type);
+}
 
 /// Compute the canonical type for all the IR types of the system.
 ///
@@ -1424,55 +1499,42 @@ sort_types_for_hash_computing_and_c14n(vector<type_base_sptr>& types);
 /// types must be canonicalized, and this function detects violations
 /// of that assertion.
 ///
-/// @tparam input_iterator the type of the input iterator of the @p
-/// beging and @p end.
+/// @tparam SequenceType the type of the input sequence of types to
+/// canonicalize.
 ///
-/// @tparam deref_lambda a lambda function which takes in parameter
-/// the input iterator of type @p input_iterator and dereferences it
-/// to return the type to canonicalize.
+/// @param types the input sequence of types to canonicalize.
 ///
-/// @param begin an iterator pointing to the first type of the set of types
-/// to canonicalize.
-///
-/// @param end an iterator pointing past-the-end (after the last type) of
-/// the set of types to canonicalize.
-///
-/// @param deref a lambda function that knows how to dereference the
-/// iterator @p begin to return the type to canonicalize.
-template<typename input_iterator,
-	 typename deref_lambda>
+/// @do_log if true, then log the progress of what the function is
+/// doing.
+template<typename SequenceType>
 void
-canonicalize_types(const input_iterator& begin,
-		   const input_iterator& end,
-		   deref_lambda deref,
-		   bool do_log = false,
-		   bool show_stats = false)
+canonicalize_types(const SequenceType	&types,
+		   bool		do_log = false)
 {
-  if (begin == end)
+  if (types.empty())
     return;
 
-  auto first_iter = begin;
-  auto first = deref(first_iter);
+  auto first = types.front();
   environment& env = const_cast<environment&>(first->get_environment());
 
   env.canonicalization_started(true);
 
-  int i;
-  input_iterator t;
-  // First, let's compute the canonical type of this type.
   tools_utils::timer tmr;
   if (do_log)
     {
-      std::cerr << "Canonicalizing types ...\n";
+      std::cerr << "Canonicalizing " << types.size() << " types ...\n";
       tmr.start();
     }
 
-  for (t = begin,i = 0; t != end; ++t, ++i)
+  int i = 0;
+  for (auto type : types)
     {
-      if (do_log && show_stats)
-	std::cerr << "#" << std::dec << i << " ";
-
-      canonicalize(deref(t));
+      if (do_log)
+	{
+	  std::cerr << "#" << std::dec << i << " ";
+	  ++i;
+	}
+      canonicalize(type);
     }
 
   env.canonicalization_is_done(true);
@@ -1483,6 +1545,8 @@ canonicalize_types(const input_iterator& begin,
       std::cerr << "Canonicalizing of types DONE in: " << tmr << "\n\n";
       tmr.start();
     }
+
+  move_member_types_to_canonicalized_scope(types);
 }
 
 /// Hash and canonicalize a sequence of types.
@@ -1492,49 +1556,60 @@ canonicalize_types(const input_iterator& begin,
 ///
 /// Operations must be done in that order to get predictable results.
 ///
-/// @param begin an iterator pointing to the first element of the
-/// sequence of types to hash and canonicalize.
+/// @tparm SequenceType the type of the sequence of types to hash &
+/// canonicalize.
 ///
-/// @param begin an iterator pointing past-the-end of the sequence of
-/// types to hash and canonicalize.
+/// @param types the sequence of types to to hash and canonicalize.
 ///
-/// @param deref this is a lambda that is used to dereference the
-/// types contained in the sequence referenced by iterators @p begin
-/// and @p end.
-template <typename IteratorType,
-	  typename deref_lambda>
+/// @param do_log if true, then this functions emits logs about its
+/// progression.
+template <typename SequenceType>
 void
-hash_and_canonicalize_types(IteratorType	begin,
-			    IteratorType	end,
-			    deref_lambda	deref,
-			    bool do_log = false,
-			    bool show_stats = false)
+hash_and_canonicalize_types(SequenceType	&types,
+			    bool		do_log = false)
 {
   tools_utils::timer tmr;
   if (do_log)
     {
-      std::cerr << "sorting types before canonicalization ... \n";
+      std::cerr << "sorting types before hashing ... \n";
       tmr.start();
     }
 
-  for (IteratorType t = begin; t != end; ++t)
-    if (deref(t))
-      deref(t)->priv_->get_ready_for_canonicalization();
+  for (auto type : types)
+    if (type)
+      {
+	type_or_decl_base_sptr artifact = type;
+	artifact->priv_->get_ready_for_canonicalization();
+      }
 
-  sort_types_for_hash_computing_and_c14n(begin, end);
+  sort_types_for_hash_computing_and_c14n(types.begin(), types.end());
 
   if (do_log)
     {
       tmr.stop();
-      std::cerr << "sorted types for c14n in: " << tmr << "\n\n";
+      std::cerr << "sorted types for hashing in: " << tmr << "\n\n";
 
       std::cerr << "hashing types before c14n ...\n";
       tmr.start();
     }
 
-  for (IteratorType t = begin; t != end; ++t)
-    if (!peek_hash_value(*deref(t)))
-      (*t)->hash_value();
+  int i = 0;
+  for (auto type : types)
+    {
+      if (do_log)
+	{
+	  std::cerr << i << "/" << types.size()
+		    << ":" << type->get_pretty_representation()
+		    << ": ";
+	}
+
+      if (!peek_hash_value(*type))
+	type->hash_value();
+
+      if (do_log)
+	std::cerr << std::hex << *peek_hash_value(*type) << std::dec << std::endl;
+      ++i;
+    }
 
   if (do_log)
     {
@@ -1542,7 +1617,21 @@ hash_and_canonicalize_types(IteratorType	begin,
       std::cerr << "hashed types in: " << tmr << "\n\n";
     }
 
-  canonicalize_types(begin, end, deref, do_log, show_stats);
+  if (do_log)
+    {
+      std::cerr << "sorting types before canonicalizing ... \n";
+      tmr.start();
+    }
+
+  sort_types_for_hash_computing_and_c14n(types.begin(), types.end());
+
+  if (do_log)
+    {
+      tmr.stop();
+      std::cerr << "sorted types for c14n in: " << tmr << "\n\n";
+    }
+
+  canonicalize_types(types, do_log);
 }
 
 /// Sort and canonicalize a sequence of types.
@@ -1573,32 +1662,142 @@ sort_and_canonicalize_types(IteratorType	begin,
   canonicalize_types(begin, end, deref);
 }
 
+/// Lookup a type (with a given name) in a map that associates a type
+/// name to a type.  If there are several types with a given name,
+/// then try to return the first one that is not decl-only.
+/// Otherwise, return the last of such types, that is, the last one
+/// that got registered.
+///
+/// @tparam TypeKind the type of the type this function is supposed to
+/// return.
+///
+/// @param type_name the name of the type to lookup.
+///
+/// @param type_map the map in which to look.
+///
+/// @return a shared_ptr to the type found.  If no type was found or
+/// if the type found was not of type @p TypeKind then the function
+/// returns nil.
+template <class TypeKind>
+static shared_ptr<TypeKind>
+lookup_type_in_map(const interned_string& type_name,
+		   const istring_type_base_wptrs_map_type& type_map)
+{
+  istring_type_base_wptrs_map_type::const_iterator i = type_map.find(type_name);
+  if (i != type_map.end())
+    {
+      // Walk the types that have the name "type_name" and return the
+      // first one that is not declaration-only ...
+      for (auto j : i->second)
+	{
+	  type_base_sptr t(j);
+	  decl_base_sptr d = is_decl(t);
+	  if (d && !d->get_is_declaration_only())
+	    return std::dynamic_pointer_cast<TypeKind>(type_base_sptr(j));
+	}
+      // ... or return the last type with the name "type_name" that
+      // was recorded.  It's likely to be declaration-only if we
+      // reached this point.
+      return dynamic_pointer_cast<TypeKind>(type_base_sptr(i->second.back()));
+    }
+  return shared_ptr<TypeKind>();
+}
+
+template <typename TypeArtifact, typename TUOrCorpus>
+shared_ptr<TypeArtifact>
+lookup_type(const shared_ptr<TypeArtifact>& t, const TUOrCorpus& toc)
+{
+  shared_ptr<TypeArtifact> result;
+  interned_string type_name = get_type_name(t);
+  {
+    lock_guard<mutex> lock(toc.priv_->mutex_);
+    if (const auto& m = toc.priv_->get_types().get_type_map(typeid(*t)))
+      result = lookup_type_in_map<TypeArtifact>(type_name, *m);
+  }
+  return result;
+}
+
+template <typename TypeArtifact, typename TUOrCorpus>
+shared_ptr<TypeArtifact>
+lookup_type(const TypeArtifact& t, const TUOrCorpus& toc)
+{
+  shared_ptr<TypeArtifact> result;
+  interned_string type_name = get_type_name(t);
+  {
+    lock_guard<recursive_mutex> lock(toc.priv_->types_mutex_);
+    if (const auto& m = toc.priv_->get_types().get_type_map(typeid(t)))
+      result = lookup_type_in_map<TypeArtifact>(type_name, *m);
+  }
+  return result;
+}
+
+template <typename TypeArtifact, typename TUOrCorpus>
+shared_ptr<TypeArtifact>
+lookup_type(const interned_string& type_name, const TUOrCorpus& toc)
+{
+  shared_ptr<TypeArtifact> result;
+  {
+    std::lock_guard<std::recursive_mutex> lock(toc.priv_->types_mutex_);
+    if (auto m = toc.priv_->get_types().get_type_map(typeid(TypeArtifact)))
+      result = lookup_type_in_map<TypeArtifact>(type_name, *m);
+  }
+  return result;
+}
+
+template <typename TypeArtifact, typename TUOrCorpus>
+shared_ptr<TypeArtifact>
+lookup_type(const string& n, const TUOrCorpus& toc)
+{
+  shared_ptr<TypeArtifact> result;
+  interned_string type_name = toc.get_environment().intern(n);
+  {
+    std::lock_guard<recursive_mutex> lock(toc.priv_->get_mutex());
+    if (auto m = toc.priv_->get_types().get_type_map(typeid(TypeArtifact)))
+      result = lookup_type_in_map<TypeArtifact>(type_name, *m);
+  }
+  return result;
+}
+
+
 // <class_or_union::priv definitions>
 struct class_or_union::priv
 {
-  typedef_decl_wptr		naming_typedef_;
-  data_members			data_members_;
-  data_members			static_data_members_;
-  data_members			non_static_data_members_;
-  member_functions		member_functions_;
+  typedef_decl_wptr			naming_typedef_;
+  data_members				data_members_;
+  data_members				static_data_members_;
+  data_members				non_static_data_members_;
+  member_functions			member_functions_;
+  recursive_mutex			member_functions_mutex_;
+  bool					member_functions_sorted_;
   // A map that associates a linkage name to a member function.
-  string_mem_fn_sptr_map_type	mem_fns_map_;
+  string_mem_fn_sptr_map_type		mem_fns_map_;
   // A map that associates function signature strings to member
   // function.
-  string_mem_fn_ptr_map_type	signature_2_mem_fn_map_;
-  member_function_templates	member_function_templates_;
-  member_class_templates	member_class_templates_;
-  bool				is_printing_flat_representation_ = false;
+  string_mem_fn_ptr_map_type		signature_2_mem_fn_map_;
+  member_function_templates		member_function_templates_;
+  member_class_templates		member_class_templates_;
+  atomic<bool>				is_printing_flat_representation_;
   // The set of classes which layouts are currently being compared
   // against this one.  This is to avoid endless loops.
-  unordered_set<type_base*>	comparing_class_layouts_;
+  unordered_set<type_base*>		comparing_class_layouts_;
+  // The set of pairs of class types being currently compared.  It's
+  // used to avoid endless loops while recursively comparing types.
+  // This should be empty when none of the 'equal' overloads are
+  // currently being invoked.  These are stored in thread local
+  // storage to allow for concurrent class comparisons.
+  thread_local static class_set_type	left_classes_being_compared_;
+  thread_local static class_set_type	right_classes_being_compared_;
+
   priv()
+    : is_printing_flat_representation_(false)
   {}
 
   priv(class_or_union::data_members& data_mbrs,
        class_or_union::member_functions& mbr_fns)
     : data_members_(data_mbrs),
-      member_functions_(mbr_fns)
+      member_functions_(mbr_fns),
+      member_functions_sorted_(false),
+      is_printing_flat_representation_(false)
   {
     for (const auto& data_member: data_members_)
       if (get_member_is_static(data_member))
@@ -1625,10 +1824,8 @@ struct class_or_union::priv
   mark_as_being_compared(const class_or_union& first,
 			 const class_or_union& second) const
   {
-    const environment& env = first.get_environment();
-
-    env.priv_->left_classes_being_compared_.insert(&first);
-    env.priv_->right_classes_being_compared_.insert(&second);
+    left_classes_being_compared_.insert(&first);
+    right_classes_being_compared_.insert(&second);
   }
 
   /// Mark a pair of classes or unions as being currently compared
@@ -1687,10 +1884,8 @@ struct class_or_union::priv
   unmark_as_being_compared(const class_or_union& first,
 			   const class_or_union& second) const
   {
-    const environment& env = first.get_environment();
-
-    env.priv_->left_classes_being_compared_.erase(&first);
-    env.priv_->right_classes_being_compared_.erase(&second);
+    left_classes_being_compared_.erase(&first);
+    right_classes_being_compared_.erase(&second);
   }
 
   /// If a pair of class_or_union has been previously marked as
@@ -1728,12 +1923,10 @@ struct class_or_union::priv
   comparison_started(const class_or_union& first,
 		     const class_or_union& second) const
   {
-    const environment& env = first.get_environment();
-
-    return (env.priv_->left_classes_being_compared_.count(&first)
-	    || env.priv_->right_classes_being_compared_.count(&second)
-	    || env.priv_->right_classes_being_compared_.count(&first)
-	    || env.priv_->left_classes_being_compared_.count(&second));
+    return (left_classes_being_compared_.count(&first)
+	    || right_classes_being_compared_.count(&second)
+	    || left_classes_being_compared_.count(&second)
+	    || right_classes_being_compared_.count(&first));
   }
 
   /// Test if a pair of class_or_union is being currently compared.
@@ -1761,7 +1954,9 @@ struct class_or_union::priv
   /// cycles in the graph and avoid endless loops.
   void
   set_printing_flat_representation()
-  {is_printing_flat_representation_ = true;}
+  {
+    is_printing_flat_representation_ = true;
+  }
 
   /// Set the 'is_printing_flat_representation_' boolean to false.
   ///
@@ -1771,7 +1966,9 @@ struct class_or_union::priv
   /// cycles in the graph and avoid endless loops.
   void
   unset_printing_flat_representation()
-  {is_printing_flat_representation_ = false;}
+  {
+    is_printing_flat_representation_ = false;
+  }
 
   /// Getter of the 'is_printing_flat_representation_' boolean.
   ///
@@ -1784,6 +1981,30 @@ struct class_or_union::priv
   {return is_printing_flat_representation_;}
 }; // end struct class_or_union::priv
 
+/// The private data for the class_decl type.
+struct class_decl::priv
+{
+  base_specs					bases_;
+  unordered_map<string, base_spec_sptr>	bases_map_;
+  member_functions				virtual_mem_fns_;
+  virtual_mem_fn_map_type			virtual_mem_fns_map_;
+  atomic<bool>					is_struct_;
+
+  priv()
+    : is_struct_(false)
+  {}
+
+  priv(bool is_struct, class_decl::base_specs& bases)
+    : bases_(bases),
+      is_struct_(is_struct)
+  {
+  }
+
+  priv(bool is_struct)
+    : is_struct_(is_struct)
+  {}
+};// end struct class_decl::priv
+
 // <function_type::priv definitions>
 
 /// The type of the private data of the @ref function_type type.
@@ -1795,18 +2016,29 @@ struct function_type::priv
   interned_string temp_cached_name_;
   interned_string internal_cached_name_;
   interned_string temp_internal_cached_name_;
-  bool is_pretty_printing_ = false;
+  atomic<bool> is_pretty_printing_;
+  // The set of pairs of function types being currently compared.  It's used
+  // to avoid endless loops while recursively comparing types.  This
+  // should be empty when none of the 'equal' overloads are currently
+  // being invoked.  These are stored in thread local storage to allow
+  // for concurrent class comparisons.
+  thread_local static fn_set_type	left_fn_types_being_compared_;
+  thread_local static fn_set_type	right_fn_types_being_compared_;
+
   priv()
+    : is_pretty_printing_(false)
   {}
 
   priv(const parameters&	parms,
        type_base_sptr		return_type)
     : parms_(parms),
-      return_type_(return_type)
+      return_type_(return_type),
+      is_pretty_printing_(false)
   {}
 
   priv(type_base_sptr return_type)
-    : return_type_(return_type)
+    : return_type_(return_type),
+      is_pretty_printing_(false)
   {}
 
   /// Mark a given pair of @ref function_type as being compared.
@@ -1820,10 +2052,8 @@ struct function_type::priv
   mark_as_being_compared(const function_type& first,
 			 const function_type& second) const
   {
-    const environment& env = first.get_environment();
-
-    env.priv_->left_fn_types_being_compared_.insert(&first);
-    env.priv_->right_fn_types_being_compared_.insert(&second);
+    left_fn_types_being_compared_.insert(&first);
+    right_fn_types_being_compared_.insert(&second);
   }
 
   /// Mark a given pair of @ref function_type as being compared.
@@ -1837,10 +2067,8 @@ struct function_type::priv
   unmark_as_being_compared(const function_type& first,
 			   const function_type& second) const
   {
-    const environment& env = first.get_environment();
-
-    env.priv_->left_fn_types_being_compared_.erase(&first);
-    env.priv_->right_fn_types_being_compared_.erase(&second);
+    left_fn_types_being_compared_.erase(&first);
+    right_fn_types_being_compared_.erase(&second);
   }
 
   /// Tests if a @ref function_type is currently being compared.
@@ -1852,11 +2080,9 @@ struct function_type::priv
   comparison_started(const function_type& first,
 		     const function_type& second) const
   {
-    const environment& env = first.get_environment();
-
-    return (env.priv_->left_fn_types_being_compared_.count(&first)
+    return (left_fn_types_being_compared_.count(&first)
 	    ||
-	    env.priv_->right_fn_types_being_compared_.count(&second));
+	    right_fn_types_being_compared_.count(&second));
   }
 
   /// Set the 'is_pretty_printing_' boolean to true.
@@ -1897,6 +2123,13 @@ get_canonical_type_index(const type_base& t);
 
 bool
 type_originates_from_corpus(type_base_sptr t, corpus_sptr& c);
+
+void
+maybe_update_types_lookup_map(const decl_base_sptr decl);
+
+void
+bind_function_type_life_time(const function_type_sptr& fn_type,
+			     translation_unit_sptr tu);
 
 } // end namespace ir
 

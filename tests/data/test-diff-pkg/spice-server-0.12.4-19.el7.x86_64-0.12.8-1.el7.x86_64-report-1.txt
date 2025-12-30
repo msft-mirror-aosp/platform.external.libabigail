@@ -1,5 +1,5 @@
 ================ changes of 'libspice-server.so.1.8.0'===============
-  Functions changes summary: 1 Removed, 2 Changed (77 filtered out), 8 Added functions
+  Functions changes summary: 1 Removed, 0 Changed (77 filtered out), 8 Added functions
   Variables changes summary: 0 Removed, 0 Changed, 0 Added variable
 
   1 Removed function:
@@ -16,12 +16,6 @@
     [A] 'function uint32_t spice_server_get_best_record_rate(SpiceRecordInstance*)'    {spice_server_get_best_record_rate@@SPICE_SERVER_0.12.5}
     [A] 'function void spice_server_set_playback_rate(SpicePlaybackInstance*, uint32_t)'    {spice_server_set_playback_rate@@SPICE_SERVER_0.12.5}
     [A] 'function void spice_server_set_record_rate(SpiceRecordInstance*, uint32_t)'    {spice_server_set_record_rate@@SPICE_SERVER_0.12.5}
-
-  2 functions with some indirect sub-type change:
-
-    [C] 'function spice_image_compression_t spice_server_get_image_compression(SpiceServer*)' at reds.c:4294:1 has some indirect sub-type changes:
-
-    [C] 'function int spice_server_set_image_compression(SpiceServer*, spice_image_compression_t)' at reds.c:4286:1 has some indirect sub-type changes:
 
 ================ end of changes of 'libspice-server.so.1.8.0'===============
 

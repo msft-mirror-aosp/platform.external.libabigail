@@ -384,6 +384,18 @@ build_corpus_group_from_kernel_dist_under(const string&	root,
 					  suppr::suppressions_type&	supprs,
 					  bool				verbose,
 					  environment&			env,
+					  const fe_iface::options_type& options,
+					  corpus::origin		requested_fe_kind = corpus::DWARF_ORIGIN);
+
+corpus_group_sptr
+build_corpus_group_from_kernel_dist_under(const string&	root,
+					  const string		debug_info_root,
+					  const string&	vmlinux_path,
+					  vector<string>&	suppr_paths,
+					  vector<string>&	kabi_wl_paths,
+					  suppr::suppressions_type&	supprs,
+					  bool			verbose,
+					  environment&		env,
 					  corpus::origin	requested_fe_kind = corpus::DWARF_ORIGIN);
 
 elf_based_reader_sptr
@@ -391,8 +403,13 @@ create_best_elf_based_reader(const string& elf_file_path,
 			     const vector<string>& debug_info_root_paths,
 			     environment& env,
 			     corpus::origin requested_debug_info_kind,
-			     bool show_all_types,
-			     bool linux_kernel_mode = false);
+			     const abigail::fe_iface::options_type& options);
+
+elf_based_reader_sptr
+create_best_elf_based_reader(const string& elf_file_path,
+			     const vector<string>& debug_info_root_paths,
+			     environment& env,
+			     corpus::origin requested_debug_info_kind);
 
 /// This is a custom std::streambuf that knows how to decompress an
 /// input stream that was compressed using xz.

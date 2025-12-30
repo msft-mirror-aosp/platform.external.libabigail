@@ -1,11 +1,11 @@
-<abi-corpus version='2.5' path='data/test-read-ctf/test-ambiguous-struct-B.o'>
+<abi-corpus version='3.0' path='data/test-read-ctf/test-ambiguous-struct-B.o' tracking-non-reachable-types='yes'>
   <elf-variable-symbols>
     <elf-symbol name='a' size='24' type='object-type' binding='global-binding' visibility='default-visibility' is-defined='yes'/>
   </elf-variable-symbols>
-  <abi-instr address-size='64' language='LANG_C'>
-    <pointer-type-def type-id='3ed987a4' size-in-bits='64' alignment-in-bits='64' hash='f722f813fa194fef' id='84d5ac12'/>
+  <abi-types>
+    <pointer-type-def type-id='3ed987a4' size-in-bits='64' alignment-in-bits='64' hash='0ffe84d43605c64a' id='84d5ac12'/>
     <type-decl name='int' size-in-bits='32' hash='09d17c08f594edc7' id='95e97e5e'/>
-    <class-decl name='A' is-struct='yes' visibility='default' size-in-bits='192' hash='fee7ab600ae91885' id='3ed987a4'>
+    <class-decl name='A' is-struct='yes' visibility='default' size-in-bits='192' hash='75803cc156212f26' id='3ed987a4'>
       <data-member access='public' layout-offset-in-bits='0'>
         <var-decl name='b' type-id='41d98c5d' visibility='default'/>
       </data-member>
@@ -16,11 +16,13 @@
         <var-decl name='b2' type-id='41d98c5d' visibility='default'/>
       </data-member>
     </class-decl>
-    <class-decl name='B' is-struct='yes' visibility='default' size-in-bits='64' hash='231ada02c5607e0e' id='41d98c5d'>
+    <class-decl name='B' is-struct='yes' visibility='default' size-in-bits='64' hash='81ffe6d0b9f62bdb' id='41d98c5d'>
       <data-member access='public' layout-offset-in-bits='0'>
         <var-decl name='a' type-id='84d5ac12' visibility='default'/>
       </data-member>
     </class-decl>
+  </abi-types>
+  <abi-instr address-size='64' language='LANG_C'>
     <var-decl name='a' type-id='3ed987a4' mangled-name='a' visibility='default' elf-symbol-id='a'/>
   </abi-instr>
 </abi-corpus>

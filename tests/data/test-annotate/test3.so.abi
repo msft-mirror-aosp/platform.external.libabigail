@@ -1,4 +1,4 @@
-<abi-corpus version='2.5' soname='test3.so.1'>
+<abi-corpus version='3.0' soname='test3.so.1' tracking-non-reachable-types='yes'>
   <elf-needed>
     <dependency name='libc.so.6'/>
   </elf-needed>
@@ -16,15 +16,17 @@
     <!-- foo__ -->
     <elf-symbol name='foo__' type='func-type' binding='weak-binding' visibility='default-visibility' is-defined='yes'/>
   </elf-function-symbols>
-  <abi-instr address-size='64' path='test3.c' comp-dir-path='/home/byby/oracle/src/libabigail/tests/data/test-read-common' language='LANG_C89'>
-    <!-- void __foo() -->
-    <function-decl name='__foo' type-id='type-id-1' filepath='/home/byby/oracle/src/libabigail/tests/data/test-read-common/test3.c' line='23' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='__foo'/>
-    <!-- void -->
-    <type-decl name='void' id='type-id-2'/>
+  <abi-types>
     <!-- void (void) -->
-    <function-type size-in-bits='64' hash='7f32ffea222edbe7' id='type-id-1'>
+    <function-type size-in-bits='64' hash='a2bf7572e9861bb4' id='type-id-1'>
       <!-- void -->
       <return type-id='type-id-2'/>
     </function-type>
+    <!-- void -->
+    <type-decl name='void' hash='8dcbc64750c3d4e3' id='type-id-2'/>
+  </abi-types>
+  <abi-instr address-size='64' path='test3.c' comp-dir-path='/home/byby/oracle/src/libabigail/tests/data/test-read-common' language='LANG_C89'>
+      <!-- void __foo() -->
+      <function-decl name='__foo' type-id='type-id-1' mangled-name='__foo' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='__foo'/>
   </abi-instr>
 </abi-corpus>

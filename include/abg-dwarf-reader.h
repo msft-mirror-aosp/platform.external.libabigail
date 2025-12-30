@@ -30,25 +30,34 @@ namespace dwarf
 using namespace abigail::ir;
 
 elf_based_reader_sptr
-create_reader(const std::string&	elf_path,
-	      const vector<string>& debug_info_root_paths,
-	      environment&	environment,
-	      bool		read_all_types = false,
-	      bool		linux_kernel_mode = false);
+create_reader(const std::string&			elf_path,
+	      const vector<string>&			debug_info_root_paths,
+	      environment&				environment,
+	      const abigail::fe_iface::options_type&	options);
+
+elf_based_reader_sptr
+create_reader(const std::string&			elf_path,
+	      const vector<string>&			debug_info_root_paths,
+	      environment&				environment);
 
 void
-reset_reader(elf_based_reader&		rdr,
-	     const std::string&		elf_path,
-	     const vector<string>&	debug_info_root_paths,
-	     bool			read_all_types = false,
-	     bool			linux_kernel_mode = false);
+reset_reader(elf_based_reader&				rdr,
+	     const std::string&			elf_path,
+	     const vector<string>&			debug_info_root_paths,
+	     const abigail::fe_iface::options_type&	options);
 
 corpus_sptr
-read_corpus_from_elf(const std::string&	elf_path,
-		     const vector<string>&	debug_info_root_paths,
-		     environment&		environment,
-		     bool			load_all_types,
-		     fe_iface::status&		status);
+read_corpus_from_elf(const std::string&			elf_path,
+		     const vector<string>&			debug_info_root_paths,
+		     environment&				environment,
+		     const abigail::fe_iface::options_type&	options,
+		     fe_iface::status&				status);
+
+corpus_sptr
+read_corpus_from_elf(const std::string&			elf_path,
+		     const vector<string>&			debug_info_root_paths,
+		     environment&				environment,
+		     fe_iface::status&				status);
 
 bool
 lookup_symbol_from_elf(const environment&		env,

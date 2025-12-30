@@ -1,4 +1,4 @@
-<abi-corpus version='2.5'>
+<abi-corpus version='3.0' tracking-non-reachable-types='yes'>
   <elf-needed>
     <dependency name='libstdc++.so.6'/>
     <dependency name='libm.so.6'/>
@@ -22,56 +22,62 @@
     <elf-symbol name='_IO_stdin_used' size='4' type='object-type' binding='global-binding' visibility='default-visibility' is-defined='yes'/>
     <elf-symbol name='global' size='4' type='object-type' binding='global-binding' visibility='default-visibility' is-defined='yes'/>
   </elf-variable-symbols>
-  <abi-instr address-size='64' path='test0.cc' comp-dir-path='/home/dodji/git/libabigail/dwarf/tests/data/test-read-dwarf' language='LANG_C_plus_plus'>
+  <abi-types>
     <type-decl name='char' size-in-bits='8' hash='65b2d157027b431a' id='a84c031d'/>
-    <pointer-type-def type-id='a84c031d' size-in-bits='64' hash='e533f42d1dd4942c' id='26a90f95'/>
-    <type-decl name='int' size-in-bits='32' hash='09d17c08f594edc7' id='95e97e5e'/>
-    <reference-type-def kind='lvalue' type-id='95e97e5e' size-in-bits='64' hash='5d95c516a5fa5466' id='769216e8'/>
-    <type-decl name='long int' size-in-bits='64' hash='b119fe0931d2ee10#2' id='95e97e5f'/>
-    <type-decl name='long long int' size-in-bits='64' hash='5ae7f9eec1fc43d6#3' id='95e97e60'/>
-    <reference-type-def kind='lvalue' type-id='383eb5fc' size-in-bits='64' hash='d8d189a223d2b3fb' id='b176607d'/>
-    <type-decl name='unnamed-enum-underlying-type-32' size-in-bits='32' alignment-in-bits='32' is-anonymous='yes' hash='5181a58e665b3619' id='9cac1fee'/>
-    <var-decl name='global' type-id='95e97e5e' mangled-name='global' visibility='default' filepath='/home/dodji/git/libabigail/dwarf/tests/data/test-read-dwarf/test0.cc' line='3' column='1' elf-symbol-id='global'/>
+    <pointer-type-def type-id='a84c031d' size-in-bits='64' hash='cdcd419d6a95ce45' id='26a90f95'/>
     <namespace-decl name='ns0'>
-      <enum-decl name='E' size-in-bits='32' alignment-in-bits='32' filepath='/home/dodji/git/libabigail/dwarf/tests/data/test-read-dwarf/test0.cc' line='19' column='1' hash='dcfd5a6e1791e13a' id='383eb5fc'>
+      <enum-decl name='E' size-in-bits='32' alignment-in-bits='32' hash='4ec6556b1fed303c' id='383eb5fc'>
         <underlying-type type-id='9cac1fee'/>
         <enumerator name='e0' value='0'/>
         <enumerator name='e1' value='1'/>
       </enum-decl>
-      <typedef-decl name='long_long' type-id='95e97e60' size-in-bits='64' filepath='/home/dodji/git/libabigail/dwarf/tests/data/test-read-dwarf/test0.cc' line='25' column='1' hash='5ae7f9eec1fc43d6' id='0eabcaca'/>
-      <function-decl name='bar' type-id='f68a1d25' mangled-name='_ZN3ns03barEiz' filepath='/home/dodji/git/libabigail/dwarf/tests/data/test-read-dwarf/test0.cc' line='12' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZN3ns03barEiz'/>
-      <function-decl name='baz' type-id='f09f7f5d' mangled-name='_ZN3ns03bazERi' filepath='/home/dodji/git/libabigail/dwarf/tests/data/test-read-dwarf/test0.cc' line='16' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZN3ns03bazERi'/>
-      <function-decl name='bar2' type-id='ea2428ce' mangled-name='_ZN3ns04bar2ERNS_1EE' filepath='/home/dodji/git/libabigail/dwarf/tests/data/test-read-dwarf/test0.cc' line='22' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZN3ns04bar2ERNS_1EE'/>
-      <function-decl name='baz2' type-id='df090026' mangled-name='_ZN3ns04baz2ERi' filepath='/home/dodji/git/libabigail/dwarf/tests/data/test-read-dwarf/test0.cc' line='28' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZN3ns04baz2ERi'/>
-      <function-decl name='foo' type-id='9e9709c0' mangled-name='_ZN3ns03fooEPcl' filepath='/home/dodji/git/libabigail/dwarf/tests/data/test-read-dwarf/test0.cc' line='45' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZN3ns03fooEPcl'/>
     </namespace-decl>
-    <function-decl name='main' type-id='b39d85cf' filepath='/home/dodji/git/libabigail/dwarf/tests/data/test-read-dwarf/test0.cc' line='49' column='1' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='main'/>
-    <type-decl name='variadic parameter type' id='2c1145c5'/>
-    <type-decl name='void' id='48b5725f'/>
-    <function-type size-in-bits='64' hash='388da3fa973fde78' id='b39d85cf'>
+    <function-type size-in-bits='64' hash='674662ad261e59a7' id='b39d85cf'>
       <return type-id='95e97e5e'/>
     </function-type>
-    <function-type size-in-bits='64' hash='3b4a00f2cef71048' id='9e9709c0'>
+    <function-type size-in-bits='64' hash='b2630b04a68cfe73' id='9e9709c0'>
       <parameter type-id='26a90f95'/>
       <parameter type-id='95e97e5f'/>
       <return type-id='95e97e5f'/>
     </function-type>
-    <function-type size-in-bits='64' hash='da172ae1923a8466' id='df090026'>
+    <function-type size-in-bits='64' hash='a2c47ffeef794230' id='7ad12c71'>
       <parameter type-id='769216e8'/>
       <return type-id='0eabcaca'/>
     </function-type>
-    <function-type size-in-bits='64' hash='0e5b30a2f67d8249' id='f09f7f5d'>
+    <function-type size-in-bits='64' hash='e0aa87ef7e944865' id='f09f7f5d'>
       <parameter type-id='769216e8'/>
       <return type-id='48b5725f'/>
     </function-type>
-    <function-type size-in-bits='64' hash='388da3fa973fde78' id='f68a1d25'>
+    <function-type size-in-bits='64' hash='ad3ca2eb87275bcc' id='f68a1d25'>
       <parameter type-id='95e97e5e'/>
       <parameter is-variadic='yes'/>
       <return type-id='48b5725f'/>
     </function-type>
-    <function-type size-in-bits='64' hash='1480a50c3620ae2b' id='ea2428ce'>
+    <function-type size-in-bits='64' hash='de452460347b3a34' id='ea2428ce'>
       <parameter type-id='b176607d'/>
       <return type-id='48b5725f'/>
     </function-type>
+    <type-decl name='int' size-in-bits='32' hash='09d17c08f594edc7' id='95e97e5e'/>
+    <reference-type-def kind='lvalue' type-id='95e97e5e' size-in-bits='64' hash='b172ab30d9562e0d' id='769216e8'/>
+    <type-decl name='long int' size-in-bits='64' hash='8aa1e1a2ab2c2d3e' id='95e97e5f'/>
+    <type-decl name='long long int' size-in-bits='64' hash='8aa1e1a2ab2c2d3e#1' id='95e97e60'/>
+    <reference-type-def kind='lvalue' type-id='383eb5fc' size-in-bits='64' hash='d7ff1309a4c9e48b' id='b176607d'/>
+    <namespace-decl name='ns0'>
+      <typedef-decl name='long_long' type-id='95e97e60' size-in-bits='64' hash='8aa1e1a2ab2c2d3e' id='0eabcaca'/>
+    </namespace-decl>
+    <type-decl name='unnamed-enum-underlying-type-32' size-in-bits='32' alignment-in-bits='32' is-anonymous='yes' hash='c6ed5e1365fd2b09' id='9cac1fee'/>
+    <type-decl name='variadic parameter type' hash='71b2481760aa01a8' id='2c1145c5'/>
+    <type-decl name='void' hash='8dcbc64750c3d4e3' id='48b5725f'/>
+  </abi-types>
+  <abi-instr address-size='64' path='test0.cc' comp-dir-path='/home/dodji/git/libabigail/dwarf/tests/data/test-read-dwarf' language='LANG_C_plus_plus'>
+      <function-decl name='main' type-id='b39d85cf' mangled-name='main' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='main'/>
+    <var-decl name='global' type-id='95e97e5e' mangled-name='global' visibility='default' elf-symbol-id='global'/>
+    <namespace-decl name='ns0'>
+        <function-decl name='foo' type-id='9e9709c0' mangled-name='_ZN3ns03fooEPcl' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZN3ns03fooEPcl'/>
+        <function-decl name='baz2' type-id='7ad12c71' mangled-name='_ZN3ns04baz2ERi' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZN3ns04baz2ERi'/>
+        <function-decl name='bar' type-id='f68a1d25' mangled-name='_ZN3ns03barEiz' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZN3ns03barEiz'/>
+        <function-decl name='bar2' type-id='ea2428ce' mangled-name='_ZN3ns04bar2ERNS_1EE' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZN3ns04bar2ERNS_1EE'/>
+        <function-decl name='baz' type-id='f09f7f5d' mangled-name='_ZN3ns03bazERi' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZN3ns03bazERi'/>
+    </namespace-decl>
   </abi-instr>
 </abi-corpus>

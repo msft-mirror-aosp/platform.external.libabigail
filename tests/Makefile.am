@@ -26,12 +26,13 @@ TESTS=				\
 $(RUN_TEST_SLOW_SELF_COMPARE)   \
 runtestaltdwarf			\
 runtestdiffsuppr		\
+runtestdifffilter		\
 runtesttypesstability		\
 runtestdiffpkg			\
-runtestannotate			\
-runtestdifffilter		\
 runtestreaddwarf	        \
+runtestannotate			\
 runtestcanonicalizetypes.sh     \
+runtestabidiffexit		\
 $(ABIDB_TESTS)
 
 if CTF_READER
@@ -46,7 +47,6 @@ endif
 TESTS+=				\
 runtestabicompat		\
 runtestabidiff			\
-runtestabidiffexit		\
 runtestcorediff			\
 runtestcxxcompat		\
 runtestdiffdwarf		\
@@ -69,7 +69,12 @@ else
 TESTS += runtestdefaultsupprs.py
 endif
 
+if ENABLE_THREAD_SANITIZER
+LOG_COMPILER = ${abs_top_builddir}/tests/trun.sh
+endif
+
 EXTRA_DIST = \
+trun.sh.in \
 runtestcanonicalizetypes.sh.in \
 runtestfedabipkgdiff.py.in \
 runtestslowselfcompare.sh.in \

@@ -18,6 +18,7 @@
 #include "abg-comparison-priv.h"
 #include "abg-reporter-priv.h"
 #include "abg-tools-utils.h"
+#include "abg-ir-priv.h"
 
 namespace abigail
 {
@@ -1034,6 +1035,10 @@ diff_traversable_base::traverse(diff_node_visitor&)
 diff_context::diff_context()
   : priv_(new diff_context::priv)
 {
+
+  // By default, only the changes categorized as harmful are emitted.
+  set_allowed_category(get_default_harmful_categories_bitmap());
+
   // Setup all the diff output filters we have.
   filtering::filter_base_sptr f;
 
@@ -1917,7 +1922,14 @@ diff_context::show_redundant_changes() const
 /// @param f the flag to set.
 void
 diff_context::show_redundant_changes(bool f)
-{priv_->show_redundant_changes_ = f;}
+{
+  priv_->show_redundant_changes_ = f;
+
+  if (priv_->show_redundant_changes_)
+    switch_categories_on(REDUNDANT_CATEGORY);
+  else
+    switch_categories_off(REDUNDANT_CATEGORY);
+}
 
 /// Getter for the flag that indicates if symbols not referenced by
 /// any debug info are to be compared and reported about.
@@ -5219,7 +5231,7 @@ size_t
 class_or_union_diff::priv::count_filtered_inserted_mem_fns
 (const diff_context_sptr& ctxt)
 {
-    size_t count = 0;
+  size_t count = 0;
   diff_category allowed_category = ctxt->get_allowed_category();
 
   for (string_member_function_sptr_map::const_iterator i =
@@ -5382,9 +5394,6 @@ class_or_union_diff::ensure_lookup_tables_populated(void) const
 	var_decl_sptr data_member =
 	  is_var_decl(first_class_or_union()->get_non_static_data_members()[i]);
 	string name = data_member->get_anon_dm_reliable_name();
-
-	ABG_ASSERT(priv_->deleted_data_members_.find(name)
-		   == priv_->deleted_data_members_.end());
 	priv_->deleted_data_members_[name] = data_member;
       }
 
@@ -6098,8 +6107,19 @@ find_virtual_dtor_in_map(const string_member_function_sptr_map& map)
 
 /// If the lookup tables are not yet built, walk the differences and
 /// fill them.
+///
+/// Please note that the virtual destructors are not taken into
+/// account when comparing the classes.  The set of virtual methods
+/// used for the comparison is passed to this method.
+///
+/// @param f_virt_methods the set of virtual methods of the first
+/// class of the diff that were used for the comparison.
+///
+/// @param s_virt_methods the set of virtual methods of the second
+/// class of the diff that were used for the comparison.
 void
-class_diff::ensure_lookup_tables_populated(void) const
+class_diff::ensure_lookup_tables_populated(const vector<method_decl_sptr>& f_virt_methods,
+					   const vector<method_decl_sptr>& s_virt_methods) const
 {
   class_or_union_diff::ensure_lookup_tables_populated();
 
@@ -6214,8 +6234,7 @@ class_diff::ensure_lookup_tables_populated(void) const
 	 ++it)
       {
 	unsigned i = it->index();
-	method_decl_sptr mem_fn =
-	  first_class_decl()->get_virtual_mem_fns()[i];
+	method_decl_sptr mem_fn = f_virt_methods[i];
 	string name = mem_fn->get_symbol()
 	  ? mem_fn->get_symbol()->get_name()
 	  : mem_fn->get_linkage_name();
@@ -6239,8 +6258,7 @@ class_diff::ensure_lookup_tables_populated(void) const
 	  {
 	    unsigned i = *iit;
 
-	    method_decl_sptr mem_fn =
-	      second_class_decl()->get_virtual_mem_fns()[i];
+	    method_decl_sptr mem_fn = s_virt_methods[i];
 	    string name = mem_fn->get_symbol()
 	      ? mem_fn->get_symbol()->get_name()
 	      : mem_fn->get_linkage_name();
@@ -6703,11 +6721,47 @@ compute_diff(const class_decl_sptr	first,
 	       s->get_non_static_data_members().end(),
 	       changes->data_members_changes());
 
-  // Compare virtual member functions
-  compute_diff(f->get_virtual_mem_fns().begin(),
-	       f->get_virtual_mem_fns().end(),
-	       s->get_virtual_mem_fns().begin(),
-	       s->get_virtual_mem_fns().end(),
+  // Compare virtual member functions, but skip virtual destructors.
+  //
+  // We skip virtual destructors because DWARF doesn't necessarily
+  // emit them in all TUs, for a given class.
+  //
+  // All the virtual destructors are collected in the canonical
+  // classes (by maybe_adjust_canonical_type), yes, but then when
+  // naively comparing a class coming from DWARF and its canonical
+  // type, we might get spurious errors due to the fact that the
+  // canonical type might have virtual dtors not found on the
+  // particular type.
+  //
+  // Note that we do something similar in the equal overload for
+  // class_decl.
+  // 
+  // If the dtor is part of ABI, however, it's going to be taken into
+  // account when comparing the interfaces of an ABI corpus.  So we
+  // are not loosing any information by not comparing these virtual
+  // dtors here.
+
+  vector<method_decl_sptr> first_virt_mems;
+  vector<method_decl_sptr> second_virt_mems;
+  first_virt_mems.reserve(f->get_virtual_mem_fns().size());
+  second_virt_mems.reserve(s->get_virtual_mem_fns().size());
+
+  for (auto virt_method : f->get_virtual_mem_fns())
+    {
+      if (get_member_function_is_dtor(virt_method))
+	continue;
+      first_virt_mems.push_back(virt_method);
+    }
+
+    for (auto virt_method : s->get_virtual_mem_fns())
+      {
+	if (get_member_function_is_dtor(virt_method))
+	  continue;
+	second_virt_mems.push_back(virt_method);
+      }
+
+  compute_diff(first_virt_mems.begin(), first_virt_mems.end(),
+	       second_virt_mems.begin(), second_virt_mems.end(),
 	       changes->member_fns_changes());
 
   // Compare member function templates
@@ -6726,7 +6780,7 @@ compute_diff(const class_decl_sptr	first,
 	       changes->member_class_tmpls_changes());
 #endif
 
-  changes->ensure_lookup_tables_populated();
+  changes->ensure_lookup_tables_populated(first_virt_mems, second_virt_mems);
 
   return changes;
 }
@@ -9911,7 +9965,7 @@ corpus_diff::priv::add_function_to_deleted_functions(const function_decl* fn)
   if (!fn)
     return;
 
-  interned_string id = get_function_symbol_id_if_unique(fn);
+  interned_string id = get_function_symbol_id(fn);
   auto it = deleted_fns_.find(id);
   if (it == deleted_fns_.end())
     it = deleted_fns_.emplace(id, functions_set_type()).first;
@@ -9929,7 +9983,7 @@ corpus_diff::priv::add_function_to_added_functions(const function_decl* fn)
   if (!fn)
     return;
 
-  interned_string id = get_function_symbol_id_if_unique(fn);
+  interned_string id = get_function_symbol_id(fn);
   auto it = added_fns_.find(id);
   if (it == added_fns_.end())
     it = added_fns_.emplace(id, functions_set_type()).first;
@@ -9949,37 +10003,86 @@ corpus_diff::priv::compare_fns_vars_and_ensure_lookup_tables_populated()
   // Use hash-based set difference to classify functions as
   // added/deleted/changed, avoiding the quadratic Myers diff.
   {
-    // Build a map of function ID -> function_decl* for each corpus.
+    // Build an ancillary map of function symbol ID -> function_decl*
+    // for the first corpus.  It ultimately collects functions found
+    // in the first corpus and not present in the second.
     unordered_map<string, const function_decl*> first_fns_map;
     first_fns_map.reserve(first_->get_functions().size());
     for (const auto* fn : first_->get_functions())
       {
-	string n = get_function_symbol_id_if_unique(fn);
+	string n = get_function_symbol_id(fn);
 	ABG_ASSERT(!n.empty());
 	first_fns_map[n] = fn;
       }
 
     for (const auto* fn : second_->get_functions())
       {
-	string n = get_function_symbol_id_if_unique(fn);
+	string n = get_function_symbol_id(fn);
 	ABG_ASSERT(!n.empty());
-	auto j = first_fns_map.find(n);
-	if (j != first_fns_map.end())
+
+	const unordered_set<const function_decl*>* found = nullptr;
+	// This variable should be set to true to mean that one
+	// instance of the function was present in the first_ corpus,
+	// one instance of it is still present in the second_ corpus
+	// and the two instances of the function are different.
+	// That's a function /change/ (not an addition, not a removal,
+	// a real change).
+	//
+	// Let's initialize it to true, and then try to detect cases
+	// where the function got either added, removed, or hasn't
+	// changed at all.
+	bool fn_has_changed = true;
+	if ((found = first_->lookup_functions(n)))
 	  {
-	    // Function exists in both corpora -- check if changed.
-	    if (*j->second != *fn)
+	    for (auto first_fn : *found)
 	      {
-		function_decl_sptr f(const_cast<function_decl*>(j->second),
-				     noop_deleter());
-		function_decl_sptr s(const_cast<function_decl*>(fn),
-				     noop_deleter());
-		function_decl_diff_sptr d = compute_diff(f, s, ctxt);
-		changed_fns_map_[j->first] = d;
+		if (*first_fn == *fn)
+		  {
+		    fn_has_changed = false;
+		    break;
+		  }
 	      }
-	    first_fns_map.erase(j);
 	  }
 	else
-	  add_function_to_added_functions(fn);
+	  fn_has_changed = false;
+
+	if (fn_has_changed)
+	  {
+	    // "found" is a vector of functions (from the first ABI
+	    // corpus) which all have the same ID.  These functions
+	    // are also /all/ different from the function having the
+	    // same ID and found in the second ABI corpus.  Let's
+	    // compare the first function from "found" against the one
+	    // in the second ABI corpus.  Once the user fixes the
+	    // sub-type differences described by the function-diff
+	    // below, he'll be able to re-run the comparison and see
+	    // if there are other function changes like this.
+	    vector<const function_decl*> sorted_fns;
+	    sorted_fns.reserve(found->size());
+	    for (auto f : *found)
+	      sorted_fns.push_back(f);
+	    abigail::ir::decl_topo_comp comp;
+	    std::sort(sorted_fns.begin(), sorted_fns.end(), comp);
+
+	    const function_decl* first_fn = *sorted_fns.begin();
+
+	    // Function exists in both corpora and has changed.
+	    ABG_ASSERT(*first_fn != *fn);
+	    function_decl_sptr f(const_cast<function_decl*>(first_fn),
+				 noop_deleter());
+	    function_decl_sptr s(const_cast<function_decl*>(fn),
+				 noop_deleter());
+	    function_decl_diff_sptr d = compute_diff(f, s, ctxt);
+	    changed_fns_map_[n] = d;
+	    first_fns_map.erase(n);
+	  }
+	else
+	  {
+	    if (found)
+	      first_fns_map.erase(n);
+	    else
+	      add_function_to_added_functions(fn);
+	  }
       }
 
     // Remaining entries in first_fns_map are deleted functions.
@@ -10003,11 +10106,27 @@ corpus_diff::priv::compare_fns_vars_and_ensure_lookup_tables_populated()
 	// the entry for removal then.
 	bool do_delete = entry.second.empty();
 	for (auto fn : entry.second)
-	  if (second_->lookup_function_symbol(*fn->get_symbol()))
-	    {
-	      do_delete = true;
-	      break;
-	    }
+	  {
+	    if (!fn->get_symbol()
+		&& !(is_member_function(fn)
+		     && get_member_function_is_virtual(fn)))
+	      {
+		// A non-virtual function with an empty symbol.
+		// Delete it from the set of deleted functions.
+		do_delete = true;
+		break;
+	      }
+
+	    if (second_->lookup_function_symbol(get_function_symbol_id(fn)))
+	      {
+		// The function is still present in the second ABI
+		// corpus.  So there is no way it's been deleted,
+		// obviously.  So deleted from the set of deleted
+		// functions.
+		do_delete = true;
+		break;
+	      }
+	  }
 
 	if (do_delete)
 	  to_delete.push_back(entry.first);
@@ -10022,11 +10141,21 @@ corpus_diff::priv::compare_fns_vars_and_ensure_lookup_tables_populated()
       {
 	bool do_delete = entry.second.empty();
 	for (auto f : entry.second)
-	  if (first_->lookup_function_symbol(*f->get_symbol()))
-	    {
-	      do_delete = true;
-	      break;
-	    }
+	  {
+	    if (!f->get_symbol()
+		&& !(is_member_function(f)
+		     && get_member_function_is_virtual(f)))
+	      {
+		do_delete = true;
+		break;
+	      }
+
+	    if (first_->lookup_function_symbol(*f->get_symbol()))
+	      {
+		do_delete = true;
+		break;
+	      }
+	  }
 
 	if (do_delete)
 	  to_delete.push_back(entry.first);
@@ -10155,90 +10284,77 @@ corpus_diff::priv::compare_fns_vars_and_ensure_lookup_tables_populated()
       added_vars_.erase(*i);
   }
 
-  // Handle the unreachable_types_edit_script_
+  // Handle the unreachable types
   {
-    edit_script& e = unreachable_types_edit_script_;
-
-    // Populate the map of deleted unreachable types from the
-    // deletions of the edit script.
-    for (vector<deletion>::const_iterator it = e.deletions().begin();
-	 it != e.deletions().end();
-	 ++it)
+    // First build the set of non-reachable types from public
+    // interfaces here
+    unordered_map<string, type_base*> first_non_reachable_types;
+    for (auto type : first_->get_sorted_types_not_reachable_from_public_interfaces())
       {
-	unsigned i = it->index();
-	type_base_sptr t
-	  (first_->get_types_not_reachable_from_public_interfaces()[i]);
+	if (auto d = is_class_or_union_type(type))
+	  {
+	    d = look_through_decl_only_class(d);
+	    if (d->get_is_declaration_only())
+	      continue;
+	    type = is_type(d);
+	  }
 
-	if (!is_user_defined_type(t))
+	if (!is_user_defined_type(type))
 	  continue;
-
+	ABG_ASSERT(type);
 	string repr =
-	  abigail::ir::get_pretty_representation(t, /*internal=*/false);
-	deleted_unreachable_types_[repr] = t;
+	  type->get_cached_pretty_representation(/*internal=*/false);
+	first_non_reachable_types[repr] = type;
       }
 
-    // Populate the map of added and change unreachable types from the
-    // insertions of the edit script.
-    for (vector<insertion>::const_iterator it = e.insertions().begin();
-	 it != e.insertions().end();
-	 ++it)
+    for (auto type : second_->get_sorted_types_not_reachable_from_public_interfaces())
       {
-	for (vector<unsigned>::const_iterator iit =
-	       it->inserted_indexes().begin();
-	     iit != it->inserted_indexes().end();
-	     ++iit)
+	if (auto d = is_class_or_union_type(type))
 	  {
-	    unsigned i = *iit;
-	    type_base_sptr t
-	      (second_->get_types_not_reachable_from_public_interfaces()[i]);
-
-	    if (!is_user_defined_type(t))
+	    d = look_through_decl_only_class(d);
+	    if (d->get_is_declaration_only())
 	      continue;
-
-	    string repr =
-	      abigail::ir::get_pretty_representation(t, /*internal=*/false);
-
-	    // Let's see if the inserted type we are looking at was
-	    // reported as deleted as well.
-	    //
-	    // If it's been deleted and a different version of it has
-	    // now been added, it means it's been *changed*.  In that
-	    // case we'll compute the diff of that change and store it
-	    // in the map of changed unreachable types.
-	    //
-	    // Otherwise, it means the type's been added so we'll add
-	    // it to the set of added unreachable types.
-
-	    string_type_base_sptr_map::const_iterator j =
-	      deleted_unreachable_types_.find(repr);
-	    if (j != deleted_unreachable_types_.end())
-	      {
-		// So there was another type of the same pretty
-		// representation which was reported as deleted.
-		// Let's see if they are different or not ...
-		decl_base_sptr old_type = is_decl(j->second);
-		decl_base_sptr new_type = is_decl(t);
-		if (old_type != new_type)
-		  {
-		    // The previously added type is different from this
-		    // one that is added.  That means the initial type
-		    // was changed.  Let's compute its diff and store it
-		    // as a changed type.
-		    diff_sptr d = compute_diff(old_type, new_type, ctxt);
-		    ABG_ASSERT(d->has_changes());
-		    changed_unreachable_types_[repr]= d;
-		  }
-
-		// In any case, the type was both deleted and added,
-		// so we cannot have it marked as being deleted.  So
-		// let's remove it from the deleted types.
-		deleted_unreachable_types_.erase(j);
-	      }
-	    else
-	      // The type wasn't previously reported as deleted, so
-	      // it's really added.
-	      added_unreachable_types_[repr] = t;
+	    type = is_type(d);
 	  }
+
+	if (!is_user_defined_type(type))
+	  continue;
+	string repr =
+	  type->get_cached_pretty_representation(/*internal=*/false);
+	auto it = first_non_reachable_types.find(repr);
+	if (it == first_non_reachable_types.end())
+	  {
+	    if (!lookup_type(repr, *first_))
+	      {
+		type_base_sptr t(type, noop_deleter());
+		added_unreachable_types_[repr] = t;
+	      }
+	  }
+	else
+	  {
+	    type_base_sptr first(it->second, noop_deleter());
+	    type_base_sptr second(type, noop_deleter());
+
+	    if (*first != *second)
+	      {
+		diff_sptr d = compute_diff(first, second, ctxt);
+		ABG_ASSERT(d->has_changes());
+		changed_unreachable_types_[repr]= d;
+	      }
+	    first_non_reachable_types.erase(it);
+	  }
+      }
+
+    // At this point, types that remain in first_non_reachable_types
+    // can be considered deleted.
+    for (auto e : first_non_reachable_types)
+      {
+	type_base_sptr type(e.second, noop_deleter());
+	string repr =
+	  type->get_cached_pretty_representation(/*internal=*/false);
+
+	if (!lookup_type(repr, *second_))
+	  deleted_unreachable_types_[repr] = type;
       }
 
     // Handle anonymous enums that got changed.  An anonymous enum is
@@ -10259,7 +10375,7 @@ corpus_diff::priv::compare_fns_vars_and_ensure_lookup_tables_populated()
 	       && is_enum_type(entry.second)->get_is_anonymous())
 	      || (is_class_or_union_type(entry.second)
 		  && is_class_or_union_type(entry.second)->get_is_anonymous()))
-	  deleted_anon_types.insert(entry.second);
+	    deleted_anon_types.insert(entry.second);
 	}
 
 
@@ -10666,7 +10782,7 @@ corpus_diff::priv::deleted_function_is_suppressed(const function_decl* fn) const
   if (!fn)
     return false;
 
-  string n = get_function_symbol_id_if_unique(fn);
+  string n = get_function_symbol_id(fn);
   string_function_ptr_map::const_iterator i =
     suppressed_deleted_fns_.find(n);
 
@@ -10730,7 +10846,7 @@ corpus_diff::priv::added_function_is_suppressed(const function_decl* fn) const
   if (!fn)
     return false;
 
-  string n = get_function_symbol_id_if_unique(fn);
+  string n = get_function_symbol_id(fn);
   string_function_ptr_map::const_iterator i =
     suppressed_added_fns_.find(n);
 
@@ -10963,12 +11079,24 @@ corpus_diff::priv::count_unreachable_types(size_t &num_added,
   num_filtered_added = suppressed_added_unreachable_types_.size();
   num_filtered_deleted = suppressed_deleted_unreachable_types_.size();
 
-  for (vector<diff_sptr>::const_iterator i =
-	 changed_unreachable_types_sorted().begin();
-       i != changed_unreachable_types_sorted().end();
-       ++i)
-    if (!(*i)->to_be_reported())
-      ++num_filtered_changed;
+  std::map<string, type_base*> counted_changed_non_reachable_types;
+  string repr;
+  type_base_sptr t;
+
+  for (auto d : changed_unreachable_types_sorted())
+    {
+      t = is_type(d->first_subject());
+      repr = t->get_pretty_representation();
+      if (counted_changed_non_reachable_types.find(repr)
+	  != counted_changed_non_reachable_types.end())
+	continue;
+
+      if (d->is_filtered_out())
+	{
+	  ++num_filtered_changed;
+	  counted_changed_non_reachable_types[repr] = t.get();
+	}
+    }
 }
 
 /// Get the map of diff nodes representing changed unreachable types.
@@ -10999,35 +11127,11 @@ if (changed_unreachable_types_sorted_.empty())
  return changed_unreachable_types_sorted_;
 }
 
-/// Compute the diff stats.
-///
-/// To know the number of functions that got filtered out, this
-/// function applies the categorizing filters to the diff sub-trees of
-/// each function changes diff, prior to calculating the stats.
-///
-/// @param num_removed the number of removed functions.
-///
-/// @param num_added the number of added functions.
-///
-/// @param num_changed the number of changed functions.
-///
-/// @param num_filtered_out the number of changed functions that are
-/// got filtered out from the report
+/// Apply the diff change categorization filters to the current ABI
+/// corpus.  As a result, the diff node are all categorized.
 void
-corpus_diff::priv::apply_filters_and_compute_diff_stats(diff_stats& stat)
+corpus_diff::priv::maybe_perform_change_categorization()
 {
-  stat.num_func_removed(deleted_fns_.size());
-  stat.num_removed_func_filtered_out(suppressed_deleted_fns_.size());
-  stat.num_func_added(added_fns_.size());
-  stat.num_added_func_filtered_out(suppressed_added_fns_.size());
-  stat.num_func_changed(changed_fns_map_.size());
-
-  stat.num_vars_removed(deleted_vars_.size());
-  stat.num_removed_vars_filtered_out(suppressed_deleted_vars_.size());
-  stat.num_vars_added(added_vars_.size());
-  stat.num_added_vars_filtered_out(suppressed_added_vars_.size());
-  stat.num_vars_changed(changed_vars_map_.size());
-
   diff_context_sptr ctxt = get_context();
 
   tools_utils::timer t;
@@ -11035,12 +11139,13 @@ corpus_diff::priv::apply_filters_and_compute_diff_stats(diff_stats& stat)
     {
       if (get_context()->do_log())
 	{
-	  std::cerr << "in apply_filters_and_compute_diff_stats:"
+	  std::cerr << "in corpus_diff::priv::maybe_perform_change_categorization:"
 		    << "applying filters to "
 		    << changed_fns_.size()
 		    << " changed fns ...\n";
 	  t.start();
 	}
+
       // Walk the changed function diff nodes to apply the categorization
       // filters.
       diff_sptr diff;
@@ -11056,10 +11161,10 @@ corpus_diff::priv::apply_filters_and_compute_diff_stats(diff_stats& stat)
       if (get_context()->do_log())
 	{
 	  t.stop();
-	  std::cerr << "in apply_filters_and_compute_diff_stats:"
+	  std::cerr << "in corpus_diff::priv::perform_change_categorization():"
 		    << "filters to changed fn applied!:" << t << "\n";
 
-	  std::cerr << "in apply_filters_and_compute_diff_stats:"
+	  std::cerr << "in corpus_diff::priv::perform_change_categorization:"
 		    << "applying filters to "
 		    << sorted_changed_vars_.size()
 		    << " changed vars ...\n";
@@ -11079,10 +11184,10 @@ corpus_diff::priv::apply_filters_and_compute_diff_stats(diff_stats& stat)
       if (get_context()->do_log())
 	{
 	  t.stop();
-	  std::cerr << "in apply_filters_and_compute_diff_stats:"
+	  std::cerr << "in corpus_diff::priv::perform_change_categorization:"
 		    << "filters to changed vars applied!:" << t << "\n";
 
-	  std::cerr << "in apply_filters_and_compute_diff_stats:"
+	  std::cerr << "in corpus_diff::priv::perform_change_categorization:"
 		    << "applying filters to unreachable types ...\n";
 	  t.start();
 	}
@@ -11091,14 +11196,25 @@ corpus_diff::priv::apply_filters_and_compute_diff_stats(diff_stats& stat)
       // filters
       for (auto& diff : changed_unreachable_types_sorted())
 	ctxt->maybe_apply_filters(diff);
+    }
+}
 
+/// If diff_context::perform_change_categorization() is true, then
+/// perform the redundancy categorization of the diff nodes of the
+/// current ABI corpus.
+void
+corpus_diff::priv::maybe_perform_redundant_node_categorization()
+{
+  diff_context_sptr ctxt = get_context();
+  tools_utils::timer t;
+  if (ctxt->perform_change_categorization())
+    {
       if (get_context()->do_log())
 	{
-	  t.stop();
-	  std::cerr << "in apply_filters_and_compute_diff_stats:"
+	  std::cerr << "in corpus_diff::priv::perform_redundant_node_categorization:"
 		    << "filters to unreachable types applied!:" << t << "\n";
 
-	  std::cerr << "in apply_filters_and_compute_diff_stats:"
+	  std::cerr << "in corpus_diff::priv::perform_redundant_node_categorization:"
 		    << "categorizing redundant changed sub nodes ...\n";
 	  t.start();
 	}
@@ -11108,14 +11224,53 @@ corpus_diff::priv::apply_filters_and_compute_diff_stats(diff_stats& stat)
       if (get_context()->do_log())
 	{
 	  t.stop();
-	  std::cerr << "in apply_filters_and_compute_diff_stats:"
+	  std::cerr << "in corpus_diff::priv::perform_redundant_node_categorization:"
 		    << "redundant changed sub nodes categorized!:" << t << "\n";
 
-	  std::cerr << "in apply_filters_and_compute_diff_stats:"
+	  std::cerr << "in corpus_diff::priv::perform_redundant_node_categorization:"
 		    << "count changed fns ...\n";
 	  t.start();
 	}
     }
+}
+
+/// Compute the diff stats.
+///
+/// To know the number of functions that got filtered out, this
+/// function applies the categorizing filters to the diff sub-trees of
+/// each function changes diff, prior to calculating the stats.
+///
+/// @param num_removed the number of removed functions.
+///
+/// @param num_added the number of added functions.
+///
+/// @param num_changed the number of changed functions.
+///
+/// @param num_filtered_out the number of changed functions that are
+/// got filtered out from the report
+void
+corpus_diff::priv::apply_filters_and_compute_diff_stats(corpus_diff* d,
+							diff_stats& stat)
+{
+  apply_suppressions(d);
+  maybe_perform_change_categorization();
+  maybe_perform_redundant_node_categorization();
+
+  get_context()->perform_change_categorization(false);
+
+  stat.num_func_removed(deleted_fns_.size());
+  stat.num_removed_func_filtered_out(suppressed_deleted_fns_.size());
+  stat.num_func_added(added_fns_.size());
+  stat.num_added_func_filtered_out(suppressed_added_fns_.size());
+  stat.num_func_changed(changed_fns_map_.size());
+
+  stat.num_vars_removed(deleted_vars_.size());
+  stat.num_removed_vars_filtered_out(suppressed_deleted_vars_.size());
+  stat.num_vars_added(added_vars_.size());
+  stat.num_added_vars_filtered_out(suppressed_added_vars_.size());
+  stat.num_vars_changed(changed_vars_map_.size());
+
+  diff_context_sptr ctxt = get_context();
 
   // Walk the changed function diff nodes to count the number of
   // filtered-out functions and the number of functions with virtual
@@ -11195,9 +11350,9 @@ corpus_diff::priv::apply_filters_and_compute_diff_stats(diff_stats& stat)
 	}
     }
 
+  tools_utils::timer t;
   if (get_context()->do_log())
     {
-      t.stop();
       std::cerr << "in apply_filters_and_compute_diff_stats:"
 		<< "changed fn counted!:" << t << "\n";
 
@@ -11616,7 +11771,6 @@ corpus_diff::priv::emit_diff_stats(const diff_stats&	s,
 	}
     }
 }
-
 /// Walk the changed functions and variables diff nodes to categorize
 /// redundant nodes.
 void
@@ -11653,6 +11807,7 @@ corpus_diff::priv::categorize_redundant_changed_sub_nodes()
       categorize_redundancy(diff);
     }
 }
+
 
 /// Walk the changed functions and variables diff nodes and clear the
 /// redundancy categorization they might carry.
@@ -12099,21 +12254,32 @@ corpus_diff::get_pretty_representation() const
 bool
 corpus_diff::has_changes() const
 {
+  diff_context_sptr ctxt = context();
+
   return (soname_changed()
 	  || architecture_changed()
 	  || !(priv_->deleted_fns_.empty()
-	       && priv_->added_fns_.empty()
+	       && (priv_->added_fns_.empty()
+		   || !ctxt->show_added_fns())
 	       && priv_->changed_fns_map_.empty()
 	       && priv_->deleted_vars_.empty()
-	       && priv_->added_vars_.empty()
+	       && (priv_->added_vars_.empty()
+		   || !ctxt->show_added_vars())
 	       && priv_->changed_vars_map_.empty()
-	       && priv_->added_unrefed_fn_syms_.empty()
-	       && priv_->deleted_unrefed_fn_syms_.empty()
-	       && priv_->added_unrefed_var_syms_.empty()
-	       && priv_->deleted_unrefed_var_syms_.empty()
-	       && priv_->deleted_unreachable_types_.empty()
-	       && priv_->added_unreachable_types_.empty()
-	       && priv_->changed_unreachable_types_.empty()));
+	       && (priv_->added_unrefed_fn_syms_.empty()
+		   || !ctxt->show_added_symbols_unreferenced_by_debug_info())
+	       && (priv_->deleted_unrefed_fn_syms_.empty()
+		   || !ctxt->show_symbols_unreferenced_by_debug_info())
+	       && (priv_->added_unrefed_var_syms_.empty()
+		   || !ctxt->show_added_symbols_unreferenced_by_debug_info())
+	       && (priv_->deleted_unrefed_var_syms_.empty()
+		   || !ctxt->show_symbols_unreferenced_by_debug_info())
+	       && (priv_->deleted_unreachable_types_.empty()
+		   || !ctxt->show_unreachable_types())
+	       && (priv_->added_unreachable_types_.empty()
+		   || !ctxt->show_unreachable_types())
+	       && (priv_->changed_unreachable_types_.empty()
+		   || !ctxt->show_unreachable_types())));
 }
 
 /// Test if the current instance of @ref corpus_diff carries changes
@@ -12143,6 +12309,8 @@ corpus_diff::has_incompatible_changes() const
   const diff_stats& stats = const_cast<corpus_diff*>(this)->
     apply_filters_and_suppressions_before_reporting();
 
+  diff_context_sptr ctxt = context();
+
   bool has_incompatible_changes  =
     (soname_changed()
      || architecture_changed()
@@ -12156,16 +12324,20 @@ corpus_diff::has_incompatible_changes() const
      || stats.net_num_vars_removed() != 0
      || (stats.num_var_with_incompatible_changes()
 	 && stats.net_num_vars_changed() != 0)
-     || stats.net_num_removed_func_syms() != 0
-     || stats.net_num_removed_var_syms() != 0
-     || stats.net_num_removed_unreachable_types() != 0);
+     || (stats.net_num_removed_func_syms() != 0
+	 && ctxt->show_symbols_unreferenced_by_debug_info())
+     || (stats.net_num_removed_var_syms() != 0
+	 && ctxt->show_symbols_unreferenced_by_debug_info())
+     || (stats.net_num_removed_unreachable_types() != 0
+	 && ctxt->show_unreachable_types()));
 
   // If stats.net_num_changed_unreachable_types() != 0 then walk the
   // corpus_diff::priv::changed_unreachable_types_, and see if there
   // is one that is harmful by bitwise and-ing their category with
   // abigail::comparison::get_default_harmful_categories_bitmap().
   if (!has_incompatible_changes
-      && stats.net_num_changed_unreachable_types())
+      && stats.net_num_changed_unreachable_types()
+      && ctxt->show_unreachable_types())
     {
       // The changed unreachable types can carry harmful changes.
       // Let's figure if they actually do.
@@ -12217,9 +12389,10 @@ bool
 corpus_diff::has_net_changes() const
 {return  context()->get_reporter()->diff_has_net_changes(this);}
 
-/// Apply the different filters that are registered to be applied to
-/// the diff tree; that includes the categorization filters.  Also,
-/// apply the suppression interpretation filters.
+/// Mark leaf nodes and apply the different filters that are
+/// registered to be applied to the diff tree; that includes the
+/// categorization filters.  Also, apply the suppression
+/// interpretation filters.
 ///
 /// After the filters are applied, this function calculates some
 /// statistics about the changes carried by the current instance of
@@ -12244,19 +12417,6 @@ corpus_diff::apply_filters_and_suppressions_before_reporting()
     return *priv_->diff_stats_;
 
   tools_utils::timer t;
-  if (do_log())
-    {
-      std::cerr << "Applying suppressions ...\n";
-      t.start();
-    }
-
-  apply_suppressions(this);
-
-  if (do_log())
-    {
-      t.stop();
-      std::cerr << "suppressions applied!:" << t << "\n";
-    }
 
   priv_->diff_stats_.reset(new diff_stats(context()));
 
@@ -12276,7 +12436,7 @@ corpus_diff::apply_filters_and_suppressions_before_reporting()
       t.start();
     }
 
-  priv_->apply_filters_and_compute_diff_stats(*priv_->diff_stats_);
+  priv_->apply_filters_and_compute_diff_stats(this, *priv_->diff_stats_);
 
   if (do_log())
     {
@@ -12612,9 +12772,6 @@ compute_diff(const corpus_sptr	f,
 	     const corpus_sptr	s,
 	     diff_context_sptr	ctxt)
 {
-  typedef diff_utils::deep_ptr_eq_functor eq_type;
-  typedef vector<type_base_wptr>::const_iterator type_base_wptr_it_type;
-
   ABG_ASSERT(f && s);
 
   if (!ctxt)
@@ -12632,8 +12789,8 @@ compute_diff(const corpus_sptr	f,
   r->priv_->architectures_equal_ =
     f->get_architecture_name() == s->get_architecture_name();
 
-  // Note: the diff of functions, variables, and unreferenced symbols
-  // is computed by
+  // Note: the diff of functions, variables, unreferenced symbols and
+  // unreachable types is computed by
   // compare_fns_vars_and_ensure_lookup_tables_populated() below using
   // hash-based set difference, which avoids the quadratic behavior of
   // Myers diff when most entries differ between large corpora.
@@ -12661,16 +12818,6 @@ compute_diff(const corpus_sptr	f,
      r->priv_->added_unrefed_var_syms_,
      [](const auto& c, auto&&... args)
      {return c->lookup_variable_symbol(std::forward<decltype(args)>(args)...);});
-
-    if (ctxt->show_unreachable_types())
-      // Compute the diff of types not reachable from public functions
-      // or global variables that are exported.
-      diff_utils::compute_diff<type_base_wptr_it_type, eq_type>
-	(f->get_types_not_reachable_from_public_interfaces().begin(),
-	 f->get_types_not_reachable_from_public_interfaces().end(),
-	 s->get_types_not_reachable_from_public_interfaces().begin(),
-	 s->get_types_not_reachable_from_public_interfaces().end(),
-	 r->priv_->unreachable_types_edit_script_);
 
   r->priv_->compare_fns_vars_and_ensure_lookup_tables_populated();
 
@@ -12706,6 +12853,7 @@ compute_diff(const corpus_group_sptr&	f,
 // <corpus_group stuff>
 
 // </corpus_group stuff>
+
 // <diff_node_visitor stuff>
 
 /// The private data of the @diff_node_visitor type.
@@ -13019,10 +13167,15 @@ struct category_propagation_visitor : public diff_node_visitor
     // the first time, then update its canonical node's category too.
     bool update_canonical = !already_visited && canonical;
 
-    for (vector<diff*>::const_iterator i = d->children_nodes().begin();
-	 i != d->children_nodes().end();
-	 ++i)
+    for (auto node : d->children_nodes())
       {
+	if (node->get_category() & (SUPPRESSED_CATEGORY|PRIVATE_TYPE_CATEGORY))
+	  // Do not propagate categories from a suppressed child node.
+	  // Note that the suppression application pass (via
+	  // corpus_diff::priv::apply_suppressions) must have been
+	  // done prior to this pass.
+	  continue;
+
 	// If we are visiting the class of equivalence of 'd' for the
 	// first time, then let's look at the children of 'd' and
 	// propagate their categories to 'd'.
@@ -13030,9 +13183,9 @@ struct category_propagation_visitor : public diff_node_visitor
 	// If the class of equivalence of 'd' has already been
 	// visited, then let's look at the canonical diff nodes of the
 	// children of 'd' and propagate their categories to 'd'.
-	diff* diff = already_visited
-	  ? (*i)->get_canonical_diff()
-	  : *i;
+	diff* diff = (already_visited
+		      ? node->get_canonical_diff()
+		      : node);
 
 	ABG_ASSERT(diff);
 
@@ -13048,7 +13201,7 @@ struct category_propagation_visitor : public diff_node_visitor
 	// Also, if a (class) type has got a harmful name change, do not
 	// propagate harmless name changes coming from its sub-types
 	// (i.e, data members) to the class itself.
-	if (filtering::has_harmful_name_change(d))
+	if (filtering::is_harmful_name_change(d))
 	  c &= ~HARMLESS_DECL_NAME_CHANGE_CATEGORY;
 
 	d->add_to_category(c);
@@ -13085,7 +13238,7 @@ struct category_propagation_visitor : public diff_node_visitor
 	c &= (~NON_COMPATIBLE_NAME_CHANGE_CATEGORY
 	      & ~NON_COMPATIBLE_DISTINCT_CHANGE_CATEGORY);
 	d->set_category(c);
-	if (is_pointer_diff(d) || is_reference_diff(d))
+	if (is_pointer_diff(d) || is_reference_diff(d) || is_typedef_diff(d))
 	  {
 	    // For pointers and references, changes to
 	    // pointed-to-types are considered local.  So, if some
@@ -13169,7 +13322,6 @@ propagate_categories(corpus_diff_sptr diff_tree)
 /// categorization.
 struct suppression_categorization_visitor : public diff_node_visitor
 {
-
   /// Before visiting the children of the diff node, check if the node
   /// is suppressed by a suppression specification.  If it is, mark
   /// the node as belonging to the SUPPRESSED_CATEGORY category.
@@ -13316,7 +13468,9 @@ struct suppression_categorization_visitor : public diff_node_visitor
 	    if (child->has_changes())
 	      {
 		has_non_empty_child = true;
-		if (child->get_class_of_equiv_category() & SUPPRESSED_CATEGORY)
+		if (child->get_class_of_equiv_category() & SUPPRESSED_CATEGORY
+		    || child->get_category() & SUPPRESSED_CATEGORY
+		    || child->get_category() & REDUNDANT_CATEGORY)
 		  has_suppressed_child = true;
 		else if (child->get_class_of_equiv_category()
 			 & PRIVATE_TYPE_CATEGORY)
@@ -13329,8 +13483,9 @@ struct suppression_categorization_visitor : public diff_node_visitor
 		if (child->get_class_of_equiv_category()
 		    & PRIVATE_TYPE_CATEGORY)
 		  has_private_child = true;
-		else if (child->get_class_of_equiv_category()
-			 & SUPPRESSED_CATEGORY)
+		else if (child->get_class_of_equiv_category() & SUPPRESSED_CATEGORY
+			 || child->get_category() & SUPPRESSED_CATEGORY
+			 || child->get_category() & REDUNDANT_CATEGORY)
 		  // Propagation of the SUPPRESSED_CATEGORY has been
 		  // handled above already.
 		  ;
@@ -13436,6 +13591,32 @@ struct suppression_categorization_visitor : public diff_node_visitor
       }
   }
 }; //end struct suppression_categorization_visitor
+
+/// Apply suppression specifications to a sub-tree of corpus_diff*.
+///
+/// @param d the corpus_diff sub-tree to apply the suppression
+/// specifications to.
+void
+corpus_diff::priv::apply_suppressions(corpus_diff* d)
+{
+  if (!get_context() || get_context()->suppressions().empty())
+    return;
+
+  // First, visit the children trees of changed constructs:
+  // changed functions, variables, as well as sub-types of these,
+  // and apply suppression specifications to these ...
+  suppression_categorization_visitor v;
+  get_context()->forget_visited_diffs();
+  bool s = get_context()->visiting_a_node_twice_is_forbidden();
+  get_context()->forbid_visiting_a_node_twice(true);
+  d->traverse(v);
+  get_context()->forbid_visiting_a_node_twice(s);
+
+  // ... then also visit the set of added and removed functions,
+  // variables, symbols, and types not reachable from global
+  // functions and variables.
+  apply_supprs_to_added_removed_fns_vars_unreachable_types();
+}
 
 /// Walk a given diff-sub tree and appply the suppressions carried by
 /// the context.  If the suppression applies to a given node than
@@ -13781,7 +13962,7 @@ struct redundancy_marking_visitor : public diff_node_visitor
 			& REDUNDANT_CATEGORY))
 		// If the *same* diff node (not one that is merely
 		// equivalent to this one) has already been visited
-		// the do not mark it as beind redundant.  It's only
+		// then do not mark it as being redundant.  It's only
 		// the other nodes that are equivalent to this one
 		// that must be marked redundant.
 		&& d->context()->diff_has_been_visited(d) != d
@@ -13842,8 +14023,7 @@ struct redundancy_marking_visitor : public diff_node_visitor
 	// changes then it doesn't inherit redundancy from its
 	// children nodes.
 	if (!(d->get_category() & REDUNDANT_CATEGORY)
-	    && ((!d->has_local_changes_to_be_reported()
-		 || !is_harmful_category(d->get_local_category()))
+	    && (!(is_harmful_category(d->get_local_category()))
 		// By default, pointer, reference, array and qualified
 		// types consider that a local changes to their
 		// underlying type is always a local change for
@@ -14085,9 +14265,14 @@ apply_filters_and_categorize_diff_node_tree(diff_sptr& diff_tree)
   if (!ctxt->perform_change_categorization())
     return;
 
-  apply_suppressions(diff_tree);
+  // Suppression specifications must be applied after redundancy
+  // categorization because the suppression propagation code depends
+  // on redundancy categorization being set first.  And of course,
+  // redundancy categorization depends on the initial categorization.
+  // So that order matters.
   ctxt->maybe_apply_filters(diff_tree);
   categorize_redundancy(diff_tree);
+  apply_suppressions(diff_tree);
 }
 
 /// Apply the @ref diff tree filters that have been associated with
