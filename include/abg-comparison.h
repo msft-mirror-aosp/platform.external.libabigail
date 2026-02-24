@@ -2536,12 +2536,6 @@ public:
   void
   append_child_node(diff_sptr);
 
-  edit_script&
-  function_changes() const;
-
-  edit_script&
-  variable_changes() const;
-
   bool
   soname_changed() const;
 

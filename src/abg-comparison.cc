@@ -9899,67 +9899,53 @@ corpus_diff::priv::clear_lookup_tables()
 /// If the lookup tables are not yet built, walk the differences and
 /// fill the lookup tables.
 void
-corpus_diff::priv::ensure_lookup_tables_populated()
+corpus_diff::priv::compare_fns_vars_and_ensure_lookup_tables_populated()
 {
   if (!lookup_tables_empty())
     return;
 
   diff_context_sptr ctxt = get_context();
 
+  // Use hash-based set difference to classify functions as
+  // added/deleted/changed, avoiding the quadratic Myers diff.
   {
-    edit_script& e = fns_edit_script_;
-
-    for (vector<deletion>::const_iterator it = e.deletions().begin();
-	 it != e.deletions().end();
-	 ++it)
+    // Build a map of function ID -> function_decl* for each corpus.
+    unordered_map<string, const function_decl*> first_fns_map;
+    first_fns_map.reserve(first_->get_functions().size());
+    for (const auto* fn : first_->get_functions())
       {
-	unsigned i = it->index();
-	ABG_ASSERT(i < first_->get_functions().size());
-
-	const function_decl* deleted_fn = first_->get_functions()[i];
-	string n = get_function_id_or_pretty_representation(deleted_fn);
+	string n = get_function_id_or_pretty_representation(fn);
 	ABG_ASSERT(!n.empty());
-	// The below is commented out because there can be several
-	// functions with the same ID in the corpus.  So several
-	// functions with the same ID can be deleted.
-	// ABG_ASSERT(deleted_fns_.find(n) == deleted_fns_.end());
-	deleted_fns_[n] = deleted_fn;
+	first_fns_map[n] = fn;
       }
 
-    for (vector<insertion>::const_iterator it = e.insertions().begin();
-	 it != e.insertions().end();
-	 ++it)
+    for (const auto* fn : second_->get_functions())
       {
-	for (vector<unsigned>::const_iterator iit =
-	       it->inserted_indexes().begin();
-	     iit != it->inserted_indexes().end();
-	     ++iit)
+	string n = get_function_id_or_pretty_representation(fn);
+	ABG_ASSERT(!n.empty());
+	auto j = first_fns_map.find(n);
+	if (j != first_fns_map.end())
 	  {
-	    unsigned i = *iit;
-	    const function_decl* added_fn = second_->get_functions()[i];
-	    string n = get_function_id_or_pretty_representation(added_fn);
-	    ABG_ASSERT(!n.empty());
-	    // The below is commented out because there can be several
-	    // functions with the same ID in the corpus.  So several
-	    // functions with the same ID can be added.
-	    // ABG_ASSERT(added_fns_.find(n) == added_fns_.end());
-	    string_function_ptr_map::const_iterator j =
-	      deleted_fns_.find(n);
-	    if (j != deleted_fns_.end())
+	    // Function exists in both corpora -- check if changed.
+	    if (*j->second != *fn)
 	      {
 		function_decl_sptr f(const_cast<function_decl*>(j->second),
 				     noop_deleter());
-		function_decl_sptr s(const_cast<function_decl*>(added_fn),
+		function_decl_sptr s(const_cast<function_decl*>(fn),
 				     noop_deleter());
 		function_decl_diff_sptr d = compute_diff(f, s, ctxt);
-		if (*j->second != *added_fn)
-		  changed_fns_map_[j->first] = d;
-		deleted_fns_.erase(j);
+		changed_fns_map_[j->first] = d;
 	      }
-	    else
-	      added_fns_[n] = added_fn;
+	    first_fns_map.erase(j);
 	  }
+	else
+	  added_fns_[n] = fn;
       }
+
+    // Remaining entries in first_fns_map are deleted functions.
+    for (const auto& entry : first_fns_map)
+      deleted_fns_[entry.first] = entry.second;
+
     sort_string_function_decl_diff_sptr_map(changed_fns_map_, changed_fns_);
 
     // Now walk the allegedly deleted functions; check if their
@@ -10008,83 +9994,50 @@ corpus_diff::priv::ensure_lookup_tables_populated()
       added_fns_.erase(*i);
   }
 
+  // Use hash-based set difference to classify variables as
+  // added/deleted/changed, avoiding the quadratic Myers diff.
   {
-    edit_script& e = vars_edit_script_;
-
-    for (vector<deletion>::const_iterator it = e.deletions().begin();
-	 it != e.deletions().end();
-	 ++it)
+    // Build a map of variable ID -> var_decl_sptr for the first corpus.
+    unordered_map<string, var_decl_sptr> first_vars_map;
+    first_vars_map.reserve(first_->get_variables().size());
+    for (const auto& var : first_->get_variables())
       {
-	unsigned i = it->index();
-	ABG_ASSERT(i < first_->get_variables().size());
-
-	const var_decl_sptr deleted_var = first_->get_variables()[i];
-	string n = deleted_var->get_id();
+	string n = var->get_id();
 	ABG_ASSERT(!n.empty());
-	// The below is commented out because there can be several
-	// global variables with the same ID in the corpus.  So
-	// several global variables with the same ID can be deleted.
-	//
-	// In general these are static member variables.  There can be
-	// multiple instances of these (one per translation unit) that
-	// appear to be different, but they are put into a COMDAT
-	// section (with CLOOS ELF binding in modern toolchains) in
-	// the end.
-	//
-	// In that case, let's keep track of the first global variable
-	// removed and let's ignore the subsequent ones as they should
-	// all be "merged" into one by the linker.
-	//
-	// ABG_ASSERT(deleted_vars_.find(n) == deleted_vars_.end());
-	string_var_ptr_map::const_iterator j = deleted_vars_.find(n);
-	if (j != deleted_vars_.end())
-	  {
-	    ABG_ASSERT(is_member_decl(j->second)
-		       && get_member_is_static(j->second));
-	    continue;
-	  }
+	// Keep only the first instance of duplicate IDs (static
+	// member variables from multiple translation units).
+	if (first_vars_map.find(n) == first_vars_map.end())
+	  first_vars_map[n] = var;
 	else
-	  deleted_vars_[n] = deleted_var;
+	  ABG_ASSERT(is_member_decl(var) && get_member_is_static(var));
       }
 
-    for (vector<insertion>::const_iterator it = e.insertions().begin();
-	 it != e.insertions().end();
-	 ++it)
+    for (const auto& var : second_->get_variables())
       {
-	for (vector<unsigned>::const_iterator iit =
-	       it->inserted_indexes().begin();
-	     iit != it->inserted_indexes().end();
-	     ++iit)
+	string n = var->get_id();
+	ABG_ASSERT(!n.empty());
+	auto j = first_vars_map.find(n);
+	if (j != first_vars_map.end())
 	  {
-	    unsigned i = *iit;
-	    const var_decl_sptr added_var = second_->get_variables()[i];
-	    string n = added_var->get_id();
-	    ABG_ASSERT(!n.empty());
-	    {
-	      string_var_ptr_map::const_iterator k = added_vars_.find(n);
-	      if ( k != added_vars_.end())
-		{
-		  ABG_ASSERT(is_member_decl(k->second)
-			     && get_member_is_static(k->second));
-		  continue;
-		}
-	    }
-	    string_var_ptr_map::const_iterator j =
-	      deleted_vars_.find(n);
-	    if (j != deleted_vars_.end())
+	    // Variable exists in both corpora -- check if changed.
+	    if (*j->second != *var)
 	      {
-		if (*j->second != *added_var)
-		  {
-		    var_decl_sptr f = j->second;
-		    var_decl_sptr s = added_var;
-		    changed_vars_map_[n] = compute_diff(f, s, ctxt);
-		  }
-		deleted_vars_.erase(j);
+		var_decl_sptr f = j->second;
+		var_decl_sptr s = var;
+		changed_vars_map_[n] = compute_diff(f, s, ctxt);
 	      }
-	    else
-	      added_vars_[n] = added_var;
+	    first_vars_map.erase(j);
 	  }
+	else if (added_vars_.find(n) == added_vars_.end())
+	  added_vars_[n] = var;
+	else
+	  ABG_ASSERT(is_member_decl(var) && get_member_is_static(var));
       }
+
+    // Remaining entries in first_vars_map are deleted variables.
+    for (const auto& entry : first_vars_map)
+      deleted_vars_[entry.first] = entry.second;
+
     sort_string_var_diff_sptr_map(changed_vars_map_,
 				  sorted_changed_vars_);
 
@@ -10130,128 +10083,6 @@ corpus_diff::priv::ensure_lookup_tables_populated()
 	 i != to_delete.end();
 	 ++i)
       added_vars_.erase(*i);
-  }
-
-  // Massage the edit script for added/removed function symbols that
-  // were not referenced by any debug info and turn them into maps of
-  // {symbol_name, symbol}.
-  {
-    edit_script& e = unrefed_fn_syms_edit_script_;
-    for (vector<deletion>::const_iterator it = e.deletions().begin();
-	 it != e.deletions().end();
-	 ++it)
-      {
-	unsigned i = it->index();
-	ABG_ASSERT(i < first_->get_unreferenced_function_symbols().size());
-	elf_symbol_sptr deleted_sym =
-	  first_->get_unreferenced_function_symbols()[i];
-	if (!second_->lookup_function_symbol(*deleted_sym))
-	  deleted_unrefed_fn_syms_[deleted_sym->get_id_string()] = deleted_sym;
-      }
-
-    for (vector<insertion>::const_iterator it = e.insertions().begin();
-	 it != e.insertions().end();
-	 ++it)
-      {
-	for (vector<unsigned>::const_iterator iit =
-	       it->inserted_indexes().begin();
-	     iit != it->inserted_indexes().end();
-	     ++iit)
-	  {
-	    unsigned i = *iit;
-	    ABG_ASSERT(i < second_->get_unreferenced_function_symbols().size());
-	    elf_symbol_sptr added_sym =
-	      second_->get_unreferenced_function_symbols()[i];
-	    if ((deleted_unrefed_fn_syms_.find(added_sym->get_id_string())
-		 == deleted_unrefed_fn_syms_.end()))
-	      {
-		if (!first_->lookup_function_symbol(*added_sym))
-		  {
-		    bool do_add = true;
-		    if (! added_sym->get_version().is_empty()
-			&& added_sym->get_version().is_default())
-		      {
-			// So added_seem has a default version.  If
-			// the former corpus had a symbol with the
-			// same name as added_sym but with *no*
-			// version, then added_sym shouldn't be
-			// considered as a newly added symbol.
-			elf_symbol::version empty_version;
-			if (first_->lookup_function_symbol(added_sym->get_name(),
-							   empty_version))
-			  do_add = false;
-		      }
-
-		    if (do_add)
-		      added_unrefed_fn_syms_[added_sym->get_id_string()] =
-			added_sym;
-		  }
-	      }
-	    else
-	      deleted_unrefed_fn_syms_.erase(added_sym->get_id_string());
-	  }
-      }
-  }
-
-  // Massage the edit script for added/removed variable symbols that
-  // were not referenced by any debug info and turn them into maps of
-  // {symbol_name, symbol}.
-  {
-    edit_script& e = unrefed_var_syms_edit_script_;
-    for (vector<deletion>::const_iterator it = e.deletions().begin();
-	 it != e.deletions().end();
-	 ++it)
-      {
-	unsigned i = it->index();
-	ABG_ASSERT(i < first_->get_unreferenced_variable_symbols().size());
-	elf_symbol_sptr deleted_sym =
-	  first_->get_unreferenced_variable_symbols()[i];
-	if (!second_->lookup_variable_symbol(*deleted_sym))
-	  deleted_unrefed_var_syms_[deleted_sym->get_id_string()] = deleted_sym;
-      }
-
-    for (vector<insertion>::const_iterator it = e.insertions().begin();
-	 it != e.insertions().end();
-	 ++it)
-      {
-	for (vector<unsigned>::const_iterator iit =
-	       it->inserted_indexes().begin();
-	     iit != it->inserted_indexes().end();
-	     ++iit)
-	  {
-	    unsigned i = *iit;
-	    ABG_ASSERT(i < second_->get_unreferenced_variable_symbols().size());
-	    elf_symbol_sptr added_sym =
-	      second_->get_unreferenced_variable_symbols()[i];
-	    if (deleted_unrefed_var_syms_.find(added_sym->get_id_string())
-		== deleted_unrefed_var_syms_.end())
-	      {
-		if (!first_->lookup_variable_symbol(*added_sym))
-		  {
-		    bool do_add = true;
-		    if (! added_sym->get_version().is_empty()
-			&& added_sym->get_version().is_default())
-		      {
-			// So added_seem has a default version.  If
-			// the former corpus had a symbol with the
-			// same name as added_sym but with *no*
-			// version, then added_sym shouldn't be
-			// considered as a newly added symbol.
-			elf_symbol::version empty_version;
-			if (first_->lookup_variable_symbol(added_sym->get_name(),
-							   empty_version))
-			  do_add = false;
-		      }
-
-		    if (do_add)
-		      added_unrefed_var_syms_[added_sym->get_id_string()] =
-			added_sym;
-		  }
-	      }
-	    else
-	      deleted_unrefed_var_syms_.erase(added_sym->get_id_string());
-	  }
-      }
   }
 
   // Handle the unreachable_types_edit_script_
@@ -11879,18 +11710,6 @@ corpus_diff::append_child_node(diff_sptr d)
     }
 }
 
-/// @return the bare edit script of the functions changed as recorded
-/// by the diff.
-edit_script&
-corpus_diff::function_changes() const
-{return priv_->fns_edit_script_;}
-
-/// @return the bare edit script of the variables changed as recorded
-/// by the diff.
-edit_script&
-corpus_diff::variable_changes() const
-{return priv_->vars_edit_script_;}
-
 /// Test if the soname of the underlying corpus has changed.
 ///
 /// @return true iff the soname has changed.
@@ -12560,6 +12379,87 @@ corpus_diff::traverse(diff_node_visitor& v)
   return true;
 }
 
+/// Use a hash-based set difference to compute added/deleted
+/// unreferenced symbols between two corpora.  This replaces the
+/// previous Myers diff approach which was O(N*D) and became quadratic
+/// when most symbols differ.  The downstream consumer only needs
+/// unordered maps keyed by symbol id_string, so ordering is not
+/// required.
+///
+/// @param first the first corpus.
+///
+/// @param second the second corpus.
+///
+/// @param first_syms unreferenced symbols from the first corpus.
+///
+/// @param second_syms unreferenced symbols from the second corpus.
+///
+/// @param deleted_syms output map of deleted symbols (in first but
+/// not second), keyed by id_string.
+///
+/// @param added_syms output map of added symbols (in second but not
+/// first), keyed by id_string.
+///
+/// @param lookup_in_corpus a function that looks up whether a symbol
+/// exists in a given corpus.
+template<typename lookup_fn>
+static void
+compute_unreferenced_symbol_set_diff(const corpus_sptr&	first,
+				     const corpus_sptr&	second,
+				     const elf_symbols&	first_syms,
+				     const elf_symbols&	second_syms,
+				     string_elf_symbol_map&	deleted_syms,
+				     string_elf_symbol_map&	added_syms,
+				     lookup_fn			lookup_in_corpus)
+{
+  // Build a map of id_string -> symbol for each side.
+  unordered_map<string, elf_symbol_sptr> first_map, second_map;
+  first_map.reserve(first_syms.size());
+  second_map.reserve(second_syms.size());
+
+  for (const auto& sym : first_syms)
+    first_map[sym->get_id_string()] = sym;
+
+  for (const auto& sym : second_syms)
+    second_map[sym->get_id_string()] = sym;
+
+  // Symbols in first but not in second are candidate deletions.
+  for (const auto& entry : first_map)
+    {
+      if (second_map.find(entry.first) == second_map.end())
+	{
+	  if (!lookup_in_corpus(second, *entry.second))
+	    deleted_syms[entry.first] = entry.second;
+	}
+    }
+
+  // Symbols in second but not in first are candidate additions.
+  for (const auto& entry : second_map)
+    {
+      if (first_map.find(entry.first) != first_map.end())
+	continue;
+
+      if (!lookup_in_corpus(first, *entry.second))
+	{
+	  bool do_add = true;
+	  if (!entry.second->get_version().is_empty()
+	      && entry.second->get_version().is_default())
+	    {
+	      // added_sym has a default version.  If the former
+	      // corpus had a symbol with the same name but with
+	      // *no* version, then it shouldn't be considered as
+	      // newly added.
+	      elf_symbol::version empty_version;
+	      if (lookup_in_corpus(first, entry.second->get_name(),
+				   empty_version))
+		do_add = false;
+	    }
+	  if (do_add)
+	    added_syms[entry.first] = entry.second;
+	}
+    }
+}
+
 /// Compute the diff between two instances of @ref corpus.
 ///
 /// Note that the two corpora must have been created in the same @ref
@@ -12577,9 +12477,6 @@ compute_diff(const corpus_sptr	f,
 	     const corpus_sptr	s,
 	     diff_context_sptr	ctxt)
 {
-  typedef corpus::functions::const_iterator fns_it_type;
-  typedef corpus::variables::const_iterator vars_it_type;
-  typedef elf_symbols::const_iterator symbols_it_type;
   typedef diff_utils::deep_ptr_eq_functor eq_type;
   typedef vector<type_base_wptr>::const_iterator type_base_wptr_it_type;
 
@@ -12600,36 +12497,35 @@ compute_diff(const corpus_sptr	f,
   r->priv_->architectures_equal_ =
     f->get_architecture_name() == s->get_architecture_name();
 
-  // Compute the diff of publicly defined and exported functions
-  diff_utils::compute_diff<fns_it_type, eq_type>(f->get_functions().begin(),
-						 f->get_functions().end(),
-						 s->get_functions().begin(),
-						 s->get_functions().end(),
-						 r->priv_->fns_edit_script_);
-
-  // Compute the diff of publicly defined and exported variables.
-  diff_utils::compute_diff<vars_it_type, eq_type>
-    (f->get_variables().begin(), f->get_variables().end(),
-     s->get_variables().begin(), s->get_variables().end(),
-     r->priv_->vars_edit_script_);
+  // Note: the diff of functions, variables, and unreferenced symbols
+  // is computed by
+  // compare_fns_vars_and_ensure_lookup_tables_populated() below using
+  // hash-based set difference, which avoids the quadratic behavior of
+  // Myers diff when most entries differ between large corpora.
 
   // Compute the diff of function elf symbols not referenced by debug
-  // info.
-  diff_utils::compute_diff<symbols_it_type, eq_type>
-    (f->get_unreferenced_function_symbols().begin(),
-     f->get_unreferenced_function_symbols().end(),
-     s->get_unreferenced_function_symbols().begin(),
-     s->get_unreferenced_function_symbols().end(),
-     r->priv_->unrefed_fn_syms_edit_script_);
+  // info.  Use hash-based set difference instead of Myers diff to
+  // avoid quadratic behavior when most symbols differ.
+  compute_unreferenced_symbol_set_diff
+    (f, s,
+     f->get_unreferenced_function_symbols(),
+     s->get_unreferenced_function_symbols(),
+     r->priv_->deleted_unrefed_fn_syms_,
+     r->priv_->added_unrefed_fn_syms_,
+     [](const auto& c, auto&&... args)
+     {return c->lookup_function_symbol(std::forward<decltype(args)>(args)...);});
 
   // Compute the diff of variable elf symbols not referenced by debug
-  // info.
-    diff_utils::compute_diff<symbols_it_type, eq_type>
-    (f->get_unreferenced_variable_symbols().begin(),
-     f->get_unreferenced_variable_symbols().end(),
-     s->get_unreferenced_variable_symbols().begin(),
-     s->get_unreferenced_variable_symbols().end(),
-     r->priv_->unrefed_var_syms_edit_script_);
+  // info.  Use hash-based set difference instead of Myers diff to
+  // avoid quadratic behavior when most symbols differ.
+  compute_unreferenced_symbol_set_diff
+    (f, s,
+     f->get_unreferenced_variable_symbols(),
+     s->get_unreferenced_variable_symbols(),
+     r->priv_->deleted_unrefed_var_syms_,
+     r->priv_->added_unrefed_var_syms_,
+     [](const auto& c, auto&&... args)
+     {return c->lookup_variable_symbol(std::forward<decltype(args)>(args)...);});
 
     if (ctxt->show_unreachable_types())
       // Compute the diff of types not reachable from public functions
@@ -12641,7 +12537,7 @@ compute_diff(const corpus_sptr	f,
 	 s->get_types_not_reachable_from_public_interfaces().end(),
 	 r->priv_->unreachable_types_edit_script_);
 
-  r->priv_->ensure_lookup_tables_populated();
+  r->priv_->compare_fns_vars_and_ensure_lookup_tables_populated();
 
   return r;
 }

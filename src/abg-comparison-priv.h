@@ -1073,10 +1073,6 @@ struct corpus_diff::priv
   corpus_diff::diff_stats_sptr		diff_stats_;
   bool					sonames_equal_;
   bool					architectures_equal_;
-  edit_script				fns_edit_script_;
-  edit_script				vars_edit_script_;
-  edit_script				unrefed_fn_syms_edit_script_;
-  edit_script				unrefed_var_syms_edit_script_;
   string_function_ptr_map		deleted_fns_;
   string_function_ptr_map		suppressed_deleted_fns_;
   string_function_ptr_map		added_fns_;
@@ -1145,7 +1141,7 @@ struct corpus_diff::priv
   clear_lookup_tables();
 
   void
-  ensure_lookup_tables_populated();
+  compare_fns_vars_and_ensure_lookup_tables_populated();
 
   void
   apply_supprs_to_added_removed_fns_vars_unreachable_types();
