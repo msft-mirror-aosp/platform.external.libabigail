@@ -2877,9 +2877,15 @@ compute_aliases_for_elf_symbol(const elf_symbol& sym,
     for (; a && !a->is_main_symbol(); a = a->get_next_alias())
       aliases.push_back(a);
   else
-    for (string_elf_symbols_map_type::const_iterator i = symtab.begin();
-	 i != symtab.end();
-	 ++i)
+    {
+      // No pre-linked alias chain (e.g. symbols loaded from abixml).
+      // Look up by name in the symtab (O(1) hash lookup) instead of
+      // scanning the entire table (which was O(N) per call).
+      string_elf_symbols_map_type::const_iterator i =
+	symtab.find(sym.get_name());
+      if (i == symtab.end())
+	return;
+
       for (elf_symbols::const_iterator j = i->second.begin();
 	   j != i->second.end();
 	   ++j)
@@ -2896,6 +2902,7 @@ compute_aliases_for_elf_symbol(const elf_symbol& sym,
 	      if (*s == sym)
 		aliases.push_back(*j);
 	}
+    }
 }
 
 /// Test if two symbols alias.
