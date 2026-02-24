@@ -1669,6 +1669,21 @@ InOutSpec in_out_specs[] =
     "data/test-abidiff-exit/PR33055/PR33055-report-2.txt",
     "output/test-abidiff-exit/PR33055/PR33055-report-2.txt"
   },
+  {
+    "data/test-abidiff-exit/test-many-unreferenced-syms-v0.abi",
+    "data/test-abidiff-exit/test-many-unreferenced-syms-v1.abi",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "--no-default-suppression",
+    abigail::tools_utils::ABIDIFF_ABI_CHANGE,
+    "data/test-abidiff-exit/test-many-unreferenced-syms-report.txt",
+    "output/test-abidiff-exit/test-many-unreferenced-syms-report.txt"
+  },
 #ifdef WITH_BTF
   {
     "data/test-abidiff-exit/btf/test0-v0.o",

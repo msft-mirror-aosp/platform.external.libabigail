@@ -518,6 +518,9 @@ test-abidiff-exit/PR33055/PR33055-report-2.txt \
 test-abidiff-exit/PR33055/file.cpp \
 test-abidiff-exit/PR33055/new-lib.so \
 test-abidiff-exit/PR33055/old-lib.so \
+test-abidiff-exit/test-many-unreferenced-syms-v0.abi \
+test-abidiff-exit/test-many-unreferenced-syms-v1.abi \
+test-abidiff-exit/test-many-unreferenced-syms-report.txt \
 \
 test-diff-dwarf/test0-v0.cc		\
 test-diff-dwarf/test0-v0.o			\
