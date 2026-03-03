@@ -14,7 +14,7 @@ endif
 
 ABIDB_TESTS =
 if ENABLE_ABIDB
-ABIDB_TESTS += runtestabidb1.sh runtestabidb2.sh
+ABIDB_TESTS += runtestabidb1.sh runtestabidb2.sh runtestabidb3.sh
 endif
 
 
@@ -229,6 +229,9 @@ runtestabidb1.sh$(EXEEXT):
 
 runtestabidb2_sh_SOURCES =
 runtestabidb2.sh$(EXEEXT):
+
+runtestabidb3_sh_SOURCES =
+runtestabidb3.sh$(EXEEXT):
 
 
 AM_CPPFLAGS=-I${abs_top_srcdir}/include -I${abs_top_srcdir}/src \

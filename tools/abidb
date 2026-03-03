@@ -179,6 +179,9 @@ def main() -> list[str]:
                         default='abicompat')
     parser.add_argument('--abidw',type=str,help='the path to the abidw program to use',
                         default='abidw')
+    parser.add_argument('--allow-no-debug-info',
+                        help='do not fail if the binary has no debug info',
+                        action='store_true')
 
     global args
     args = parser.parse_args()
@@ -309,6 +312,7 @@ def main() -> list[str]:
                     continue
 
                 cmdline = ["timeout", str(args.timeout), args.abidw,
+                           "--fail-no-debug-info" if args.allow_no_debug_info == False else '',
                            "--no-corpus-path", # skip path='/tmp/foobar' attribute in <abi-corpus> element
                            # option? "--load-all-types"
                            pn]

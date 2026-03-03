@@ -238,6 +238,15 @@ Options
     `Linux Kernel`_.  Otherwise, it's turned off by default.
 
 
+  * ``--fail-no-debug-info``
+
+    If the program could not find the debug info for the input binary,
+    then it exits with a non-zero error code.  Without this option,
+    the program emits the ABI information about ELF symbols, in the
+    absence of the debug info.  In that case, type information is
+    omitted.
+
+
   * ``--follow-dependencies``
 
     For each dependency of the input binary of ``abidw``, if it is

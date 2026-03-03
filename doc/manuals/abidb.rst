@@ -67,6 +67,14 @@ Common Options
 Submit Options
 ==============
 
+  * ``--allow-no-debug-info``
+
+    By default, the program fails to submit a binary if its associated
+    debug info could not be found.  With this option however if no
+    debug info was found, then the ABI information submitted for the
+    binary only comes from ELF symbols; the type information is
+    omitted.
+
   * ``--archive | -Z .EXT[=CMD]``
 
     Designate PATH names with a ``.EXT`` suffix to be treated as

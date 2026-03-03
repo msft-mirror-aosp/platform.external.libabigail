@@ -98,6 +98,7 @@ struct options
   suppressions_type	kabi_whitelist_supprs;
   bool			display_version;
   bool			display_abixml_version;
+  bool			fail_no_debug_info;
   bool			check_alt_debug_info_path;
   bool			show_base_name_alt_debug_info_path;
   bool			write_architecture;
@@ -146,6 +147,7 @@ struct options
   options()
     : display_version(),
       display_abixml_version(),
+      fail_no_debug_info(),
       check_alt_debug_info_path(),
       show_base_name_alt_debug_info_path(),
       write_architecture(true),
@@ -291,6 +293,8 @@ parse_command_line(int argc, char* argv[], options& opts)
       else if (!strcmp(argv[i], "--abixml-version")
 	       || !strcmp(argv[i], "-v"))
 	opts.display_abixml_version = true;
+      else if (!strcmp(argv[i], "--fail-no-debug-info"))
+	opts.fail_no_debug_info = true;
       else if (!strcmp(argv[i], "--debug-info-dir")
 	       || !strcmp(argv[i], "-d"))
 	{
@@ -855,7 +859,7 @@ load_corpus_and_write_abixml(char* argv[],
       << "reset reader ELF in: " << t << "\n";
 
   // If we couldn't create a corpus, emit some (hopefully) useful
-  // diagnostics and return and error.
+  // diagnostics and return an error.
   if (!corp)
     {
       if (s == fe_iface::STATUS_DEBUG_INFO_NOT_FOUND)
@@ -905,6 +909,22 @@ load_corpus_and_write_abixml(char* argv[],
 	    "additional needed debug info\n";
 	}
 
+      return 1;
+    }
+
+  if (opts.fail_no_debug_info
+      && s & fe_iface::STATUS_DEBUG_INFO_NOT_FOUND)
+    {
+      emit_prefix(argv[0], cerr)
+	<< "Could not read debug info from "
+	<< opts.in_file_path << "\n";
+
+      emit_prefix(argv[0], cerr)
+	<< "You might want to either recompile the binary with "
+	"debug info support or supply the root directory where "
+	"to search debug info from, using the "
+	"--debug-info-dir option "
+	"(e.g --debug-info-dir /usr/lib/debug)\n";
       return 1;
     }
 

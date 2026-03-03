@@ -42,7 +42,8 @@ do
     debuginfod-find debuginfo "$targetbin" || continue # skip if debuginfo not available or file does not exist
     for solib in `ldd "$targetbin" | grep -F '=>' | awk '{print $3}'`;
     do
-        $ABIDB --loglevel=debug --git $gitdir --submit "$solib"
+	debuginfod-find debuginfo "$solib" || continue # skip if debuginfo not available or file does not exist
+        $ABIDB --loglevel=debug --allow-no-debug-info --git $gitdir --submit "$solib"
     done
     $ABIDB --loglevel=debug --git $gitdir --check "$targetbin"
 done

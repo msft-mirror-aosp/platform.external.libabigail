@@ -1651,6 +1651,8 @@ AC_CONFIG_FILES([tests/runtestabidb1.sh],
 		[chmod +x tests/runtestabidb1.sh])
 AC_CONFIG_FILES([tests/runtestabidb2.sh],
 		[chmod +x tests/runtestabidb2.sh])
+AC_CONFIG_FILES([tests/runtestabidb3.sh],
+		[chmod +x tests/runtestabidb3.sh])
 
 AC_OUTPUT
 
