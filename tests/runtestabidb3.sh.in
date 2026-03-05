@@ -31,7 +31,7 @@ function clean_env
     echo cleaning "$gitdir"
     # comment rm -rf out to preserve the evidence
     rm -rf "$gitdir"
-    rm -f $odatadir/libabidb2.so $odatadir/abidb2client
+    rm -f $odatadir/libtestnodebuginfo.so
 }
 
 git init $gitdir
