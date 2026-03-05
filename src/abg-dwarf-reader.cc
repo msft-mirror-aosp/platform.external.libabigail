@@ -5395,23 +5395,23 @@ public:
     if (elf_header->e_type == ET_DYN || elf_header->e_type == ET_EXEC)
       {
 	Dwarf_Addr dwarf_elf_load_address = 0, elf_load_address = 0;
-	ABG_ASSERT(get_binary_load_address(dwarf_elf_handle(),
-					   dwarf_elf_load_address));
-	ABG_ASSERT(get_binary_load_address(elf_handle(),
-					   elf_load_address));
-	if (dwarf_is_splitted()
-	    && (dwarf_elf_load_address != elf_load_address))
-	  // This means that in theory the DWARF and the executable are
-	  // not loaded at the same address.  And addr is meaningful
-	  // only in the context of the DWARF.
-	  //
-	  // So let's transform addr into an offset relative to where
-	  // the DWARF is loaded, and let's add that relative offset
-	  // to the load address of the executable.  That way, addr
-	  // becomes meaningful in the context of the executable and
-	  // can thus be used to compare against the address of
-	  // symbols of the executable, for instance.
-	  addr = addr - dwarf_elf_load_address + elf_load_address;
+	if (get_binary_load_address(dwarf_elf_handle(),
+				    dwarf_elf_load_address)
+	    && get_binary_load_address(elf_handle(),
+				       elf_load_address))
+	  if (dwarf_is_splitted()
+	      && (dwarf_elf_load_address != elf_load_address))
+	    // This means that in theory the DWARF and the executable are
+	    // not loaded at the same address.  And addr is meaningful
+	    // only in the context of the DWARF.
+	    //
+	    // So let's transform addr into an offset relative to where
+	    // the DWARF is loaded, and let's add that relative offset
+	    // to the load address of the executable.  That way, addr
+	    // becomes meaningful in the context of the executable and
+	    // can thus be used to compare against the address of
+	    // symbols of the executable, for instance.
+	    addr = addr - dwarf_elf_load_address + elf_load_address;
       }
 
     return addr;

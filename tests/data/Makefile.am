@@ -905,6 +905,9 @@ test-read-dwarf/PR33090/impl2.so \
 test-read-dwarf/PR33090/impl2.so.abi \
 test-read-dwarf/PR33090/interface.h \
 test-read-dwarf/PR33090/private.suppr \
+test-read-dwarf/PR33876/libctf.so.2 \
+test-read-dwarf/PR33876/libctf.so.2.abi \
+test-read-dwarf/PR33876/libctf.so.2.debug \
 \
 test-read-ctf/test0		\
 test-read-ctf/test0.abi		\

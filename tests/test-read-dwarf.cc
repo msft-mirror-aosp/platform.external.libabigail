@@ -627,6 +627,15 @@ static InOutSpec in_out_specs[] =
     NULL,
 #endif
   },
+  {
+    "data/test-read-dwarf/PR33876/libctf.so.2",
+    "",
+    "",
+    SEQUENCE_TYPE_ID_STYLE,
+    "data/test-read-dwarf/PR33876/libctf.so.2.abi",
+    "output/test-read-dwarf/PR33876/libctf.so.2.abi",
+    "",
+  },
 
   // This should be the last entry.
   {NULL, NULL, NULL, SEQUENCE_TYPE_ID_STYLE, NULL, NULL, NULL}
