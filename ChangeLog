@@ -1,3 +1,123 @@
+2026-04-30  Dodji Seketeli <dodji@redhat.com>
+
+	NEWS: Update for 2.10 release
+	* NEWS: Update for 2.10 release
+
+2026-03-05  Dodji Seketeli <dodji@redhat.com>
+
+	Bug 33876 - Fix assert on split debug info with no program headers
+	* src/abg-dwarf-reader.cc
+	(reader::maybe_adjust_address_for_exec_or_dyn): Do not assert that
+	get_binary_load_address should always return true.
+	* tests/data/test-read-dwarf/PR33876/libctf.so.2: New binary input.
+	* tests/data/test-read-dwarf/PR33876/libctf.so.2.abi: New output reference.
+	* tests/data/test-read-dwarf/PR33876/libctf.so.2.debug: New binary input.
+	* tests/data/Makefile.am: Add the new test inputs above to source
+	distribution.
+	* tests/test-read-dwarf.cc (in_out_specs): Add the test inputs to
+	this harness.
+
+2026-03-05  Dodji Seketeli <dodji@redhat.com>
+
+	tests/runtestabidb3.sh.in: Fix test data cleaning
+	* tests/runtestabidb3.sh.in: (clean_env): Remove
+	$odatadir/libtestnodebuginfo.so, not a random library resulting
+	from a wrong copy and paste.
+
+2026-03-03  Dodji Seketeli <dodji@redhat.com>
+
+	Bug 33787 - Make abidb fail on debuginfo-less submitted binary
+	* configure.ac: Generate the tests/runtestabidb3.sh from
+	tests/runtestabidb3.sh.in.
+	* doc/manuals/abidb.rst: Add documentation for the new
+	--allow-no-debug-info option of abidb.
+	* doc/manuals/abidw.rst: Add documentation for the new
+	--fail-no-debug-info option of abidw.
+	* tests/Makefile.am: Add runtestabidb3.sh to the set of abidb
+	tests.
+	* tests/data/test-abidb/test-no-debug-info.cc: New test input for
+	abidb.
+	* tests/runtestabidb1.sh.in: Update to try harder to install debug
+	info for some binaries.  But then, use the new
+	--allow-no-debug-info option of abidb.
+	* tests/runtestabidb3.sh.in: New test program pattern.
+	* tools/abidb: Add the new --allow-no-debug-info option.  Use the
+	new --fail-no-debug-info for the abidw program.
+	* tools/abidw.cc (options::fail_no_debug_info): Add new data
+	member.
+	(options::options): Initialize the new fail_no_debug_info data
+	member.
+	(parse_command_line): Parse the --fail-no-debug-info option.
+	(load_corpus_and_write_abixml): Fix a typo.  If
+	--fail-no-debug-info is provided and no debug info was found, then
+	error out.
+
+2026-02-24  Chris Burr <christopher.burr@cern.ch>
+
+	tests: Add perf regression test for symbol diff
+	* tests/generate-perf-test-data.py: New script to generate
+	the synthetic abixml test data.
+	* tests/data/test-abidiff-exit/test-many-unreferenced-syms-v0.abi:
+	New test input (10 symbols).
+	* tests/data/test-abidiff-exit/test-many-unreferenced-syms-v1.abi:
+	New test input (20000 symbols).
+	* tests/data/test-abidiff-exit/test-many-unreferenced-syms-report.txt:
+	New reference output.
+	* tests/test-abidiff-exit.cc (in_out_specs): Add entry for
+	the new test.
+	* tests/data/Makefile.am: Register new test data files.
+
+2026-02-24  Chris Burr <christopher.burr@cern.ch>
+
+	comparison: Speedup corpus diff computation
+	* include/abg-comparison.h (corpus_diff::function_changes)
+	(corpus_diff::variable_changes): Remove unused methods.
+	* src/abg-comparison-priv.h
+	(corpus_diff::priv::fns_edit_script_)
+	(corpus_diff::priv::vars_edit_script_)
+	(corpus_diff::priv::unrefed_fn_syms_edit_script_)
+	(corpus_diff::priv::unrefed_var_syms_edit_script_): Remove unused
+	data members.
+	* src/abg-comparison.cc
+	(compute_unreferenced_symbol_set_diff): New static template
+	function.
+	(compute_diff): Remove Myers diff calls for functions, variables,
+	and unreferenced symbols.  Call
+	compute_unreferenced_symbol_set_difference for unreferenced
+	symbols.  Remove unused typedefs.
+	(corpus_diff::priv::compare_fns_vars_and_ensure_lookup_tables_populated):
+	Renamed corpus_diff::priv::ensure_lookup_tables_populated into
+	this.  Replace edit script processing for functions and variables
+	with hash-based set difference built from the corpora vectors
+	directly.  Remove dead edit script processing for unreferenced
+	symbols.
+	(corpus_diff::{function,variable}_changes): Remove unused methods.
+
+2026-02-24  Chris Burr <christopher.burr@cern.ch>
+
+	ir: Speedup compute_aliases_for_elf_symbol
+	* src/abg-ir.cc (compute_aliases_for_elf_symbol): In the
+	no-alias-chain fallback, look up sym.get_name() in the
+	symtab rather than iterating all entries.
+
+2026-02-24  Chris Burr <christopher.burr@cern.ch>
+
+	doc: Update CONTRIBUTING to reference C++14
+	* CONTRIBUTING: Update C++ standard references from
+	C++11 to C++14, and minimum compiler from GCC 4.8.x to
+	GCC 5.x.
+
+2025-11-11  Dodji Seketeli <dodji@redhat.com>
+
+	configure.ac: Bump version number to 2.10
+	* configure.ac: Bump version number to 2.10
+
+2025-11-11  Dodji Seketeli <dodji@redhat.com>
+
+	ChangeLog, News: Update for 2.9 release
+	* ChangeLog: Update for 2.9.
+	* NEWS: Likewise.
+
 2025-11-06  Dodji Seketeli <dodji@redhat.com>
 
 	configure: Bump soname b/c of ABI-incompatible changes

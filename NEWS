@@ -1,3 +1,16 @@
+2.10
+====
+Chris Burr (4):
+      doc: Update CONTRIBUTING to reference C++14
+      ir: Speedup compute_aliases_for_elf_symbol
+      comparison: Speedup corpus diff computation
+      tests: Add perf regression test for symbol diff
+
+Dodji Seketeli (3):
+      Bug 33787 - Make abidb fail on debuginfo-less submitted binary
+      tests/runtestabidb3.sh.in: Fix test data cleaning
+      Bug 33876 - Fix assert on split debug info with no program headers
+
 2.9
 ===
 Claudiu Zissulescu (1):
