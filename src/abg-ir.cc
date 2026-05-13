@@ -10603,7 +10603,7 @@ is_at_global_scope(const decl_base_sptr decl)
 /// @return true iff decl is at global scope.
 bool
 is_at_global_scope(const decl_base* decl)
-{return is_at_global_scope(*decl);}
+{return decl && is_at_global_scope(*decl);}
 
 /// Tests whether a given decl is at class scope.
 ///
@@ -10623,7 +10623,7 @@ class_or_union*
 is_at_class_scope(const decl_base* decl)
 {
   if (!decl)
-    return 0;
+    return nullptr;
 
   return is_at_class_scope(*decl);
 }
@@ -10637,6 +10637,9 @@ class_or_union*
 is_at_class_scope(const decl_base& decl)
 {
   scope_decl* scope = decl.get_scope();
+  if (!scope)
+    return nullptr;
+
   if (class_or_union* cl = is_class_type(scope))
     return cl;
   if (class_or_union* cl = is_union_type(scope))
