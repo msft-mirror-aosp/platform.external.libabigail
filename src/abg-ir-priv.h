@@ -22,6 +22,7 @@
 
 #include "abg-hash.h"
 #include "abg-corpus.h"
+#include "abg-workers.h"
 #include "abg-tools-utils.h"
 
 namespace abigail
@@ -38,6 +39,10 @@ using std::string;
 using std::unordered_set;
 using abg_compat::optional;
 using std::dynamic_pointer_cast;
+using abigail::workers::queue;
+using abigail::workers::task;
+using abigail::workers::task_sptr;
+using abigail::workers::get_number_of_available_threads;
 
 /// The result of structural comparison of type ABI artifacts.
 enum comparison_result

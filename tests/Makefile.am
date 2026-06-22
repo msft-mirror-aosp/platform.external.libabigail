@@ -17,9 +17,18 @@ if ENABLE_ABIDB
 ABIDB_TESTS += runtestabidb1.sh runtestabidb2.sh runtestabidb3.sh
 endif
 
-
-
 RUN_TEST_SLOW_SELF_COMPARE=runtestslowselfcompare.sh
+if ENABLE_LIBABIGAIL_MULTITHREADING
+# Tests runtestslowselfcompare.sh needs ENABLE_SLOW_TEST to be set to
+# 'yes' in order to really perform the self comparison test.  This is
+# a kill-switch to disable that test in environments where it would be
+# too slow to perfom.
+#
+# They also need LD_LIBRARY_PATH to be set to pick up the right
+# elfutils library, in case the --with-elfutils= configure option was
+# used.
+AM_TESTS_ENVIRONMENT = export ENABLE_SLOW_TEST=yes; export LD_LIBRARY_PATH=${eu_prefix}/lib;
+endif
 
 # rather expensive tests (keep in this order), > 1s runtime
 TESTS=				\
@@ -282,5 +291,4 @@ check-valgrind-helgrind-recursive:
 	$(MAKE) check-valgrind-helgrind VALGRIND_FLAGS="${RECURSIVE_VALGRIND_FLAGS}"
 
 check-self-compare:
-	$(MAKE) check TESTS=runtestslowselfcompare.sh ENABLE_SLOW_TEST=yes AM_TESTSUITE_SUMMARY_HEADER='  for runtestslowselfcompare.sh'
-
+	$(MAKE) check TESTS=runtestslowselfcompare.sh ENABLE_SLOW_TEST=yes TEST_SUITE_LOG=self-compare-test.log AM_TESTSUITE_SUMMARY_HEADER='  for runtestslowselfcompare.sh'

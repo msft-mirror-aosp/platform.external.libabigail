@@ -84,6 +84,23 @@ size_t
 get_number_of_threads()
 {return std::thread::hardware_concurrency();}
 
+/// @return The number of hardware threads of executions advertised by
+/// the underlying processor.  If libabigail has been configured
+/// without multithreading support, this returns 1.
+///
+/// @return the number of hardware threads of executions advertised by
+/// the underlying processor *if* libabigail has been configured with
+/// multithreading support.
+size_t
+get_number_of_available_threads()
+{
+  #ifdef HAVE_MULTITHREADING_SUPPORT
+  return get_number_of_threads();
+#else
+  return 1;
+#endif
+}
+
 /// The abstraction of a worker thread.
 ///
 /// This is an implementation detail of the @ref queue public

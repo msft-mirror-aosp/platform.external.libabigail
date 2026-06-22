@@ -35,6 +35,8 @@ namespace workers
 
 size_t get_number_of_threads();
 
+size_t get_number_of_available_threads();
+
 /// This represents a task to be performed.
 ///
 /// Each instance of this type represents a task that can be performed

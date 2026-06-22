@@ -2478,7 +2478,7 @@ public:
       // queue, and once the staging is done, the tasks are scheduled
       // for execution by worker threads.  The number of worker
       // threads is determined by the the variable nb_workers below.
-      int nb_workers = workers::get_number_of_threads();
+      int nb_workers = get_number_of_available_threads();
       workers::queue tu_ir_building_queue(nb_workers);
 
       Dwarf_Half dwarf_vers = 0;

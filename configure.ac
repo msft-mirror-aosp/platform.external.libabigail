@@ -1,7 +1,8 @@
 dnl SPDX-License-Identifier: Apache-2.0 WITH LLVM-exception
-
+dnl -*-autoconf-*-
+dnl
 dnl Process this file with autoconf to produce a configure script.
-dnl Configure input file for Libabigail.                     -*-autoconf-*-
+dnl Configure input file for Libabigail.                     
 dnl
 dnl Copyright (C) 2013-2025 Red Hat, Inc.
 dnl Author: Dodji Seketeli
@@ -243,6 +244,12 @@ AC_ARG_ENABLE(big-tests,
 	      ENABLE_BIG_TESTS=$enableval,
 	      ENABLE_BIG_TESTS=no)
 
+
+AC_ARG_ENABLE(multithreading,
+	      AS_HELP_STRING([--enable-multithreading=yes|no],
+			     [enable IR construction from DWARF in parallel]),
+	      ENABLE_MULTITHREADING=$enableval,
+	      ENABLE_MULTITHREADING=auto)
 
 ENABLE_INLINED_XXHASH=no
 AC_ARG_ENABLE(inlined-xxhash,
@@ -985,11 +992,59 @@ AX_VALGRIND_DFLT(sgcheck, off)
 
 AX_VALGRIND_CHECK
 
+
+ELFUTILS_HAS_THREAD_SAFETY=no
+if test x$ENABLE_MULTITHREADING != xno; then
+saved_CPPFLAGS="$CPPFLAGS"
+CPPFLAGS="-I${prefix}/include $CPPFLAGS"
+   AC_CHECK_HEADER([elfutils/version.h],
+		   [HAS_ELFUTILS_VERSION=yes],
+		   [AC_MSG_NOTICE([could not find elfutils/version.h])])
+   if test x$HAS_ELFUTILS_VERSION = xyes; then
+      AC_MSG_NOTICE([found elfutils/version.h.  Going to test for multithreading support])
+      AC_CHECK_DECL([_ELFUTILS_THREAD_SAFE],
+		    [ELFUTILS_HAS_THREAD_SAFETY=yes],
+		    [ELFUTILS_HAS_THREAD_SAFETY=no],
+		    [#include <elfutils/version.h>])
+   fi
+
+   if test x$ELFUTILS_HAS_THREAD_SAFETY = xyes; then
+      AC_MSG_NOTICE([elfutils/version.h does have thread-safety support! \o/])
+      FOUND_MULTITHREADING_ENABLED_ELFUTILS=yes
+   else
+      AC_MSG_NOTICE([I haven't detected thread-safety support in elfutils/version.h :-(])
+      FOUND_MULTITHREADING_ENABLED_ELFUTILS=no
+   fi
+CPPFLAGS="$saved_CPPFLAGS"
+fi
+
+if test x$FOUND_MULTITHREADING_ENABLED_ELFUTILS = xyes; then
+   if test x$ENABLE_MULTITHREADING != xno; then
+       ENABLE_MULTITHREADING=yes
+       AC_MSG_NOTICE([multithreading support enabled in libabigail])
+       AC_DEFINE([HAVE_ELFUTILS_THREAD_SAFETY], [1],
+		 [Define if elfutils defines _ELFUTILS_THREAD_SAFE])
+       AC_DEFINE([HAVE_MULTITHREADING_SUPPORT], [1],
+		 [Define if libabigail has multithreading support])
+       AC_SUBST(eu_prefix)
+   fi
+else
+   if test x$ENABLE_MULTITHREADING != xyes; then
+      ENABLE_MULTITHREADING=no
+      AC_MSG_NOTICE([multithreading support disabled in libabigail])
+   else
+      AC_MSG_ERROR([libabigail multithreading is impossible without thread-safe elfutils]);
+   fi
+fi
+
+MT_LIBS=-latomic
+
 dnl Set the list of libraries libabigail depends on
-DEPS_LIBS="$XML_LIBS $ELF_LIBS $DW_LIBS $CTF_LIBS $BPF_LIBS $LZMA_LIBS"
+DEPS_LIBS="$XML_LIBS $ELF_LIBS $DW_LIBS $CTF_LIBS $BPF_LIBS $LZMA_LIBS $MT_LIBS"
 if test x$ENABLE_INLINED_XXHASH = xno; then
   DEPS_LIBS="$DEPS_LIBS $XXHASH_LIBS"
 fi
+
 AC_SUBST(DEPS_LIBS)
 
 if test x$ABIGAIL_DEVEL != x; then
@@ -1038,6 +1093,7 @@ dnl Set a few Automake conditionals
 AM_CONDITIONAL([ENABLE_THREAD_SANITIZER],[test "x$ENABLE_TSAN" = "xyes"])
 AM_CONDITIONAL([CTF_READER],[test "x$ENABLE_CTF" = "xyes"])
 AM_CONDITIONAL([BTF_READER],[test "x$ENABLE_BTF" = "xyes"])
+AM_CONDITIONAL([ENABLE_LIBABIGAIL_MULTITHREADING],[test "x$ENABLE_MULTITHREADING" = "xyes"])
 
 dnl Set the level of C++ standard we use.
 CXXFLAGS="$CXXFLAGS -std=$CXX_STANDARD"
@@ -1698,7 +1754,8 @@ AC_MSG_NOTICE([
 
  OPTIONAL FEATURES:
     C++ standard level                             : ${CXX_STANDARD}
-    Enable inlined-only xxhash library		   : ${ENABLE_INLINED_XXHASH}
+    Enable multithreading support                  : ${ENABLE_MULTITHREADING}
+    Enable inlined-only xxhash library             : ${ENABLE_INLINED_XXHASH}
     Enable rpm support in abipkgdiff               : ${ENABLE_RPM}
     Enable rpm/zstd in abipkgdiff testing          : ${ENABLE_RPM_ZSTD}
     Enable abilint --show-type-use <type-id>       : ${ENABLE_SHOW_TYPE_USE_IN_ABILINT}
