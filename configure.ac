@@ -992,6 +992,31 @@ AX_VALGRIND_DFLT(sgcheck, off)
 
 AX_VALGRIND_CHECK
 
+AC_ARG_ENABLE(helgrind-track-destroy,
+	      AS_HELP_STRING([--enable-helgrind-track-destroy=yes|no|all],
+			     [have "make check-valgrind-helgrind" run helgrind with --track-destroy]),
+	      ENABLE_HELGRIND_TRACK_DESTROY=$enableval,
+	      ENABLE_HELGRIND_TRACK_DESTROY=no)
+
+if test x$ENABLE_HELGRIND_TRACK_DESTROY != xyes \
+	-a x$ENABLE_HELGRIND_TRACK_DESTROY != xno \
+	-a x$ENABLE_HELGRIND_TRACK_DESTROY != xall; then
+   AC_MSG_ERROR([bad value --enable-helgrind-track-destroy; use yes, no or all])
+fi
+
+HELGRIND_TRACK_DESTROY=
+if test x$ENABLE_HELGRIND_TRACK_DESTROY != xno; then
+   if test x$enable_valgrind_helgrind != xyes; then
+      AC_MSG_ERROR([--enable-helgrind-track-destroy needs helgrind; reconfigure with --enable-valgrind])
+   fi
+   if $VALGRIND --tool=helgrind --help 2>/dev/null | grep -qe "--track-destroy"; then
+      HELGRIND_TRACK_DESTROY="--track-destroy=$ENABLE_HELGRIND_TRACK_DESTROY"
+   else
+      AC_MSG_ERROR([helgrind does not support --track-destroy])
+   fi
+fi
+AC_SUBST(HELGRIND_TRACK_DESTROY)
+
 
 ELFUTILS_HAS_THREAD_SAFETY=no
 if test x$ENABLE_MULTITHREADING != xno; then
@@ -1771,6 +1796,7 @@ AC_MSG_NOTICE([
     Enable BTF front-end                           : ${ENABLE_BTF}
     Enable Big Libabigail tests                    : ${ENABLE_BIG_TESTS}
     Enable running tests under Valgrind            : ${enable_valgrind}
+    Enable helgrind --track-destroy                : ${ENABLE_HELGRIND_TRACK_DESTROY}
     Enable build with -fsanitize=address    	   : ${ENABLE_ASAN}
     Enable build with -fsanitize=memory    	   : ${ENABLE_MSAN}
     Enable build with -fsanitize=thread    	   : ${ENABLE_TSAN}
