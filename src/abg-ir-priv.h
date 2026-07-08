@@ -590,44 +590,6 @@ struct environment::priv
   canonical_type_sptr_set_type		extra_live_types_;
   mutex				extra_live_types_mutex_;
   interned_string_pool			string_pool_;
-  // The two vectors below represent the stack of left and right
-  // operands of the current type comparison operation that is
-  // happening during type canonicalization.
-  //
-  // Basically, that stack of operand looks like below.
-  //
-  // First, suppose we have a type T_L that has two sub-types as this:
-  //
-  //  T_L
-  //   |
-  //   +-- L_OP0
-  //   |
-  //   +-- L_OP1
-  //
-  // Now suppose that we have another type T_R that has two sub-types
-  // as this:
-  //
-  //  T_R
-  //   |
-  //   +-- R_OP0
-  //   |
-  //   +-- R_OP1
-  //
-  //   Now suppose that we compare T_L against T_R.  We are going to
-  //   have a stack of pair of types. Each pair of types represents
-  //   two (sub) types being compared against each other.
-  //
-  //   On the stack, we will thus first have the pair (T_L, T_R)
-  //   being compared.  Then, we will have the pair (L_OP0, R_OP0)
-  //   being compared, and then the pair (L_OP1, R_OP1) being
-  //   compared.  Like this:
-  //
-  // | T_L | L_OP0 | L_OP1 | <-- this goes into left_type_comp_operands_;
-  //  -------- -------------
-  // | T_R | R_OP0 | R_OP1 | <-- this goes into right_type_comp_operands_;
-  //
-  thread_local static vector<const type_base*>	left_type_comp_operands_;
-  thread_local static vector<const type_base*>	right_type_comp_operands_;
 
 #ifdef WITH_DEBUG_SELF_COMPARISON
   // This is used for debugging purposes.
@@ -789,51 +751,6 @@ struct environment::priv
   void
   clear_type_comparison_results_cache()
   {type_comparison_results_cache_.clear();}
-
-  /// Push a pair of operands on the stack of operands of the current
-  /// type comparison, during type canonicalization.
-  ///
-  /// For more information on this, please look at the description of
-  /// the right_type_comp_operands_ data member.
-  ///
-  /// @param left the left-hand-side comparison operand to push.
-  ///
-  /// @param right the right-hand-side comparison operand to push.
-  void
-  push_composite_type_comparison_operands(const type_base* left,
-					  const type_base* right)
-  {
-    ABG_ASSERT(left && right);
-
-    left_type_comp_operands_.push_back(left);
-    right_type_comp_operands_.push_back(right);
-  }
-
-  /// Pop a pair of operands from the stack of operands to the current
-  /// type comparison.
-  ///
-  /// For more information on this, please look at the description of
-  /// the right_type_comp_operands_ data member.
-  ///
-  /// @param left the left-hand-side comparison operand we expect to
-  /// pop from the top of the stack.  If this doesn't match the
-  /// operand found on the top of the stack, the function aborts.
-  ///
-  /// @param right the right-hand-side comparison operand we expect to
-  /// pop from the bottom of the stack. If this doesn't match the
-  /// operand found on the top of the stack, the function aborts.
-  void
-  pop_composite_type_comparison_operands(const type_base* left,
-					 const type_base* right)
-  {
-    const type_base *t = left_type_comp_operands_.back();
-    ABG_ASSERT(t == left);
-    t = right_type_comp_operands_.back();
-    ABG_ASSERT(t == right);
-
-    left_type_comp_operands_.pop_back();
-    right_type_comp_operands_.pop_back();
-  }
 
   /// Get the number of canonical types in the system.
   ///

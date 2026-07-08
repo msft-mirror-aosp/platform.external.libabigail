@@ -479,56 +479,9 @@ add_outer_pointer_to_ptr_to_mbr_type_expr(const type_base* p,
 					  const  string& input,
 					  bool qualified, bool internal);
 
-void
-push_composite_type_comparison_operands(const type_base& left,
-					const type_base& right);
-
-void
-pop_composite_type_comparison_operands(const type_base& left,
-				       const type_base& right);
-
-
 template <typename TypeArtifact>
 void
 maybe_update_types_lookup_map(const shared_ptr<TypeArtifact> type);
-
-/// Push a pair of operands on the stack of operands of the current
-/// type comparison, during type canonicalization.
-///
-/// For more information on this, please look at the description of
-/// the environment::priv::right_type_comp_operands_ data member.
-///
-/// @param left the left-hand-side comparison operand to push.
-///
-/// @param right the right-hand-side comparison operand to push.
-void
-push_composite_type_comparison_operands(const type_base& left,
-					const type_base& right)
-{
-  const environment& env = left.get_environment();
-  env.priv_->push_composite_type_comparison_operands(&left, &right);
-}
-
-/// Pop a pair of operands from the stack of operands to the current
-/// type comparison.
-///
-/// For more information on this, please look at the description of
-/// the environment::privright_type_comp_operands_ data member.
-///
-/// @param left the left-hand-side comparison operand we expect to
-/// pop from the top of the stack.  If this doesn't match the
-/// operand found on the top of the stack, the function aborts.
-///
-/// @param right the right-hand-side comparison operand we expect to
-/// pop from the bottom of the stack. If this doesn't match the
-/// operand found on the top of the stack, the function aborts.
-void
-pop_composite_type_comparison_operands(const type_base& left,
-				       const type_base& right)
-{
-  const environment& env = left.get_environment();
-  env.priv_->pop_composite_type_comparison_operands(&left, &right);
-}
 
 /// Getter of the canonical type index of a given type.
 ///
@@ -1417,7 +1370,6 @@ void
 mark_types_as_being_compared(T& l, T&r)
 {
   l.priv_->mark_as_being_compared(l, r);
-  push_composite_type_comparison_operands(l, r);
 }
 
 /// Mark a pair of @ref class_decl types as being compared.
@@ -1452,7 +1404,6 @@ void
 unmark_types_as_being_compared(T& l, T&r)
 {
   l.priv_->unmark_as_being_compared(l, r);
-  pop_composite_type_comparison_operands(l, r);
 }
 
 /// Mark a pair of @ref class_decl types as being not compared
@@ -1476,8 +1427,6 @@ unmark_types_as_being_compared(const class_decl& l, const class_decl &r)
 }
 
 thread_local type_comparison_result_type environment::priv::type_comparison_results_cache_;
-thread_local vector<const type_base*> environment::priv::left_type_comp_operands_;
-thread_local vector<const type_base*> environment::priv::right_type_comp_operands_;
 
 /// Return the result of the comparison of two (sub) types.
 ///
@@ -11105,52 +11054,6 @@ debug_equals(const type_or_decl_base *l, const type_or_decl_base *r)
     return true;
 
   return (*l == *r);
-}
-
-/// Emit a trace of a comparison operand stack.
-///
-/// @param vect the operand stack to emit the trace for.
-///
-/// @param o the output stream to emit the trace to.
-static void
-debug_comp_vec(const vector<const type_base*>& vect, std::ostringstream& o)
-{
-  for (auto t : vect)
-    {
-      o << "|" << t->get_pretty_representation()
-	<< "@" << std::hex << t << std::dec;
-    }
-  if (!vect.empty())
-    o << "|";
-}
-
-/// Construct a trace of the two comparison operand stacks.
-///
-/// @param the environment in which the comparison operand stacks are.
-///
-/// @return a string representing the trace.
-static string
-print_comp_stack()
-{
-  std::ostringstream o;
-  o << "left-operands: ";
-  debug_comp_vec(environment::priv::left_type_comp_operands_, o);
-  o << "\n" << "right-operands: ";
-  debug_comp_vec(environment::priv::right_type_comp_operands_, o);
-  o << "\n";
-  return o.str();
-}
-
-/// Emit a trace of the two comparison operands stack on the standard
-/// error stream.
-///
-/// @param env the environment the comparison operands stack belong
-/// to.
-void
-debug_comp_stack()
-{
-  std::cerr << print_comp_stack();
-  std::cerr << std::endl;
 }
 
 /// By looking at the language of the TU a given ABI artifact belongs
