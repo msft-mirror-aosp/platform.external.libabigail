@@ -16,6 +16,7 @@
 #include <algorithm>
 #include <iostream>
 #include <string>
+#include <sstream>
 #include <mutex>
 #include <atomic>
 #include <memory>
@@ -37,6 +38,7 @@ using std::recursive_mutex;
 using std::atomic;
 using std::string;
 using std::unordered_set;
+using std::ostringstream;
 using abg_compat::optional;
 using std::dynamic_pointer_cast;
 using abigail::workers::queue;
@@ -207,6 +209,7 @@ struct translation_unit::priv
 struct type_or_decl_base::priv
 {
   mutable recursive_mutex	mutex_;
+  mutable recursive_mutex	local_mutex_;
   // This holds the kind of dynamic type of particular instance.
   // Yes, this is part of the implementation of a "poor man" runtime
   // type identification.  We are doing this because profiling shows
@@ -369,8 +372,36 @@ struct type_or_decl_base::priv
   }
 }; // end struct type_or_decl_base::priv
 
+bool
+compare_canonical_type_against_candidate(const type_base_sptr& canonical_type,
+					 const type_base_sptr& candidate_type);
+
+bool
+compare_canonical_type_against_candidate(const type_base* canonical_type,
+					 const type_base* candidate_type);
+
+bool
+compute_canonical_type_index(const vector<type_base_sptr>&	adjacent_canonical_types,
+			     const type_base_sptr		canonical_type,
+			     int&				resulting_index);
+
+bool
+compare_canonical_type_against_candidate(const type_base& canonical_type,
+					 const type_base& candidate_type);
+
+void
+maybe_adjust_canonical_type(const type_base_sptr& canonical,
+			    const type_base_sptr& type);
+
+type_base_sptr
+candidate_matches_a_canonical_type_hash(const vector<type_base_sptr>&	cncls,
+					type_base&			type);
+
+bool
+type_originates_from_corpus(type_base_sptr t, corpus_sptr& c);
+
 /// Compute the hash value of an IR node and return it.
-/// 
+///
 /// Note that if the IR node is a non-canonicalizeable type, no hash
 /// value is computed and an empty hash is returned.  Also, if the IR
 /// node already has a hash value, then this function just returns it.
@@ -494,6 +525,14 @@ set_or_get_cached_hash_value(const T* artifact)
 
 // <type_base definitions>
 
+class homonym_type_group;
+
+/// A typedef for shared pointer of @ref homonym_type_group_sptr
+typedef shared_ptr<homonym_type_group> homonym_type_group_sptr;
+
+/// A typedef for weak pointer of @ref homonym_type_group_sptr
+typedef weak_ptr<homonym_type_group> homonym_type_group_wptr;
+
 size_t
 get_canonical_type_index(const type_base& t);
 
@@ -506,10 +545,13 @@ get_canonical_type_index(const type_base_sptr& t);
 /// Definition of the private data of @ref type_base.
 struct type_base::priv
 {
-  size_t		size_in_bits;
-  size_t		alignment_in_bits;
-  size_t		canonical_type_index;
-  type_base_wptr	canonical_type;
+  recursive_mutex		mutex;
+  size_t			size_in_bits;
+  size_t			alignment_in_bits;
+  size_t			canonical_type_index;
+  type_base_wptr		canonical_type;
+  homonym_type_group_wptr	group;
+
   // The data member below holds the canonical type that is managed by
   // the smart pointer referenced by the canonical_type data member
   // above.  We are storing this underlying (naked) pointer here, so
@@ -538,6 +580,21 @@ struct type_base::priv
 
 bool
 type_is_suitable_for_hash_computing(const type_base&);
+
+// <scope_decl definitions>
+struct scope_decl::priv
+{
+  declarations members_;
+  declarations sorted_members_;
+  type_base_sptrs_type member_types_;
+  type_base_sptrs_type sorted_member_types_;
+  scopes member_scopes_;
+  canonical_type_sptr_set_type canonical_types_;
+  type_base_sptrs_type sorted_canonical_types_;
+  bool clear_sorted_member_types_cache_ = false;
+}; // end struct scope_decl::priv
+
+// </scope_decl definitions>
 
 // <environment definitions>
 
@@ -575,10 +632,262 @@ typedef unordered_set<const function_type*> fn_set_type;
 typedef unordered_map<uint64_t_pair_type, bool,
 		      uint64_t_pair_hash> type_comparison_result_type;
 
+/// A set of types sharing the same pretty representation.
+///
+/// After canonicalization, the types that are in a given homonym type
+/// group are sorted into several classes of equivalence.  One class
+/// of equivalence is a set of types sharing the same canonical type.
+///
+/// For a given homonym types group, the classes of equivalence are
+/// thus represented by a vector of the different canonical types.
+///
+/// Read the README-type-canonicalization.txt file for more.
+class homonym_type_group
+{
+  // The pretty representation of the types of the group.
+  string			repr_;
+  canonical_type_sptr_set_type	types_set_;
+  // The types of the group.
+  vector<type_base_sptr>	types_;
+  // The canonical types of the types in types_.
+  vector<type_base_sptr>	canonical_types_;
+  canonical_type_sptr_set_type	canonical_types_set_;
+
+public:
+  homonym_type_group(const string& pretty_representation)
+    : repr_(pretty_representation)
+  {}
+
+  homonym_type_group(const homonym_type_group&) = delete;
+
+  const string&
+  get_name() const
+  {return repr_;}
+
+  vector<type_base_sptr>&
+  get_types()
+  {return types_;}
+
+  const vector<type_base_sptr>&
+  get_types() const
+  {return types_;}
+
+  const vector<type_base_sptr>&
+  get_canonical_types() const
+  {return canonical_types_;}
+
+  /// Get the canonical type for a given canonical type of the current
+  /// group.
+  ///
+  /// @param t the type to consider.
+  ///
+  /// @return the canonical type for t.
+  type_base_sptr
+  get_canonical_type_for(type_base_sptr t);
+
+  /// @brief Canonicalize all types in this homonym type group.
+  ///
+  /// Iterate over all types in the homonym type group and compute
+  /// their canonical type.  Types that are structurally equivalent
+  /// will share the same canonical type.
+  ///
+  /// @param do_log if true, log canonicalization activity to stderr.
+  ///
+  /// @param show_stats if true, show timing statistics for each type
+  /// canonicalization.
+  type_base_sptr
+  canonicalize(type_base_sptr t, bool do_log, bool show_stats)
+  {
+    if (!t)
+      return t;
+
+    if (t->get_canonical_type())
+      return t->get_canonical_type();
+
+    if (do_log && show_stats)
+      std::cerr << "Canonicalization of type '"
+		<< t->get_pretty_representation(true, true)
+		<< "/@#" << std::hex << t.get() << ": ";
+
+    tools_utils::timer tmr;
+
+    if (do_log && show_stats)
+      tmr.start();
+    type_base_sptr canonical = get_canonical_type_for(t);
+
+    if (do_log && show_stats)
+      tmr.stop();
+
+    if (do_log && show_stats)
+      std::cerr << tmr << "\n";
+
+    t->priv_->canonical_type = canonical;
+    if (canonical)
+      {
+	if (!t->priv_->canonical_type_index)
+	  t->priv_->canonical_type_index =
+	    canonical->priv_->canonical_type_index;
+	hash_t h1 = peek_hash_value(*t);
+	hash_t h2 = peek_hash_value(*canonical);
+	ABG_ASSERT(h1 == h2);
+      }
+    t->priv_->naked_canonical_type = canonical.get();
+
+    if (class_decl_sptr cl = is_class_type(t))
+      if (type_base_sptr d = is_type(cl->get_earlier_declaration()))
+	if ((canonical = d->get_canonical_type()))
+	  {
+	    d->priv_->canonical_type = canonical;
+	    d->priv_->naked_canonical_type = canonical.get();
+	  }
+
+    if (canonical)
+      {
+	if (decl_base_sptr d = is_decl_slow(canonical))
+	  {
+	    auto scope = d->get_scope();
+	    // Add the canonical type to the set of canonical types
+	    // belonging to its scope.
+	    if (scope)
+	      {
+		if (is_type(scope))
+		  // The scope in question is itself a type (e.g, a class
+		  // or union).  Let's call that type ST.  We want to add
+		  // 'canonical' to the set of canonical types belonging
+		  // to ST.
+		  if (type_base_sptr c = is_type(scope)->get_canonical_type())
+		    // We want to add 'canonical' to the set of
+		    // canonical types belonging to the canonical type
+		    // of ST.  That way, just looking at the canonical
+		    // type of ST is enough to get the types that belong
+		    // to the scope of the class of equivalence of ST.
+		    scope = is_scope_decl(is_decl(c));
+		scope->get_canonical_types().insert(canonical);
+		scope->priv_->sorted_canonical_types_.clear();
+	      }
+	    // else, if the type doesn't have a scope, it's not meant to be
+	    // emitted.  This can be the case for the result of the
+	    // function strip_typedef, for instance.
+	  }
+      }
+    return canonical;
+  }
+
+  void
+  clear_types()
+  {
+    types_set_.clear();
+    types_.clear();
+  }
+
+  friend void
+  add_type(type_base_sptr t, homonym_type_group_sptr group);
+
+  friend void
+  add_canonical_type(type_base_sptr t, homonym_type_group_sptr group);
+};// end class homonym_type_group
+
+/// A partition of types.
+///
+/// Each set of the partition is a group of homonym types, i.e, a
+/// group of types having the same pretty representation.
+///
+/// Types in each homonym type group can be canonicalized
+/// independantly from the types from other groups.
+class type_partition
+{
+  typedef unordered_map<string,
+			homonym_type_group_sptr>
+  groups_map_type;
+
+  recursive_mutex mutex;
+  vector<homonym_type_group_sptr> groups_;
+  groups_map_type groups_map_;
+
+public:
+
+  type_partition(const type_partition&) = delete;
+
+  type_partition() = default;
+
+  void
+  add_type_group(homonym_type_group_sptr type_group)
+  {
+    ABG_ASSERT(type_group);
+
+    string type_repr = type_group->get_name();
+    auto it = groups_map_.find(type_repr);
+
+    ABG_ASSERT(it == groups_map_.end());
+
+    lock_guard<recursive_mutex> lock(mutex);
+    groups_.push_back(type_group);
+    groups_map_[type_repr] = type_group;
+  }
+
+  homonym_type_group_sptr
+  get_type_group(const string& name)
+  {
+    lock_guard<recursive_mutex> lock(mutex);
+    auto it = groups_map_.find(name);
+    if (it != groups_map_.end())
+      return it->second;
+
+    return nullptr;
+  }
+
+  homonym_type_group_sptr
+  get_or_create_type_group(const string& name)
+  {
+    lock_guard<recursive_mutex> lock(mutex);
+    homonym_type_group_sptr group = get_type_group(name);
+    if (!group)
+      {
+	group.reset(new homonym_type_group(name));
+	add_type_group(group);
+      }
+
+    ABG_ASSERT(group);
+
+    return group;
+  }
+
+  homonym_type_group_sptr
+  get_or_create_type_group(type_base_sptr t)
+  {
+    if (!t)
+      return nullptr;
+
+    string n =t->get_cached_pretty_representation(/*internal=*/true);
+    return get_or_create_type_group(n);
+  }
+
+  const vector<homonym_type_group_sptr>&
+  get_groups() const
+  {return groups_;}
+
+  void
+  clear()
+  {
+    lock_guard<recursive_mutex> lock(mutex);
+    groups_.clear();
+    groups_map_.clear();
+  }
+
+  void
+  clear_types()
+  {
+    lock_guard<recursive_mutex> lock(mutex);
+    for (auto& group : groups_)
+      group->clear_types();
+  }
+}; // end class type_partition
+
 /// The private data of the @ref environment type.
 struct environment::priv
 {
   config				config_;
+  type_partition			types_partition_;
   canonical_types_map_type		canonical_types_;
   mutable vector<type_base_sptr>	sorted_canonical_types_;
   type_base_sptr			void_type_;
@@ -616,11 +925,9 @@ struct environment::priv
   // read from abixml and the type-id string it corresponds to.
   unordered_map<uintptr_t, string>	pointer_type_id_map_;
 #endif
-  bool					canonicalization_started_;
-  bool					canonicalization_is_done_;
   bool					decl_only_class_equals_definition_;
   bool					use_enum_binary_only_equality_;
-  bool					allow_type_comparison_results_caching_;
+  static thread_local bool		allow_type_comparison_results_caching_;
   bool					do_log_;
   optional<bool>			analyze_exported_interfaces_only_;
   optional<bool>			load_all_types_;
@@ -645,11 +952,8 @@ struct environment::priv
 #endif
 
   priv()
-    : canonicalization_started_(),
-      canonicalization_is_done_(),
-      decl_only_class_equals_definition_(false),
+    : decl_only_class_equals_definition_(false),
       use_enum_binary_only_equality_(true),
-      allow_type_comparison_results_caching_(false),
       do_log_(false)
 #ifdef WITH_DEBUG_SELF_COMPARISON
     ,
@@ -663,25 +967,11 @@ struct environment::priv
 #endif
   {}
 
-  /// Allow caching of the sub-types comparison results during the
-  /// invocation of the @ref equal overloads for class and function
-  /// types.
-  ///
-  /// @param f if true, allow type comparison result caching.
-  void
-  allow_type_comparison_results_caching(bool f)
-  {allow_type_comparison_results_caching_ = f;}
+  static void
+  allow_type_comparison_results_caching(bool f);
 
-  /// Check whether if caching of the sub-types comparison results during the
-  /// invocation of the @ref equal overloads for class and function
-  /// types is in effect.
-  ///
-  /// @return true iff caching of the sub-types comparison results
-  /// during the invocation of the @ref equal overloads for class and
-  /// function types is in effect.
-  bool
-  allow_type_comparison_results_caching() const
-  {return allow_type_comparison_results_caching_;}
+  static bool
+  allow_type_comparison_results_caching();
 
   void
   do_log(bool f)
@@ -752,10 +1042,31 @@ struct environment::priv
     return true;
   }
 
-  /// Clear the cache type comparison results.
+  static void
+  clear_type_comparison_results_cache();
+
+  /// Populate the canonical types map from the type partition.
+  ///
+  /// This function iterates over all homonym type groups in the type
+  /// partition and, for each group, replaces the corresponding entry
+  /// in the canonical types map with the canonical types collected
+  /// during the canonicalization of that group.
+  ///
+  /// This must be called after all types in the partition have been
+  /// canonicalized, so that the canonical types map accurately reflects
+  /// the result of the canonicalization process.
   void
-  clear_type_comparison_results_cache()
-  {type_comparison_results_cache_.clear();}
+  populate_canonical_types_map_from_partition()
+  {
+    for (auto group : types_partition_.get_groups())
+      {
+	string type_repr = group->get_name();
+	auto& canonical_types = canonical_types_[type_repr];
+	canonical_types.clear();
+	for (auto canonical_type : group->get_canonical_types())
+	  canonical_types.push_back(canonical_type);
+      }
+  }
 
   /// Get the number of canonical types in the system.
   ///
@@ -1160,6 +1471,12 @@ struct type_topo_comp
 	  f_c = is_class_or_union_type(look_through_decl_only_class(f_c));
 	  s_c = is_class_or_union_type(look_through_decl_only_class(s_c));
 
+	  if (f_c->get_is_anonymous() && s_c->get_is_anonymous())
+	    if (f_c->get_naming_typedefs().size()
+		!= s_c->get_naming_typedefs().size())
+	      return (f_c->get_naming_typedefs().size()
+		      > s_c->get_naming_typedefs().size());
+
 	  if (f_c->get_member_types().size()
 	      != s_c->get_member_types().size())
 	    return (f_c->get_member_types().size()
@@ -1350,7 +1667,7 @@ struct sort_for_hash_functor
   ///
   /// @param f the first operand to consider.
   ///
-  /// @param s the second operand to consider.  
+  /// @param s the second operand to consider.
   bool
   operator()(const type_base_sptr& f, const type_base_sptr& s)
   {
@@ -1364,6 +1681,15 @@ struct sort_for_hash_functor
     return operator()(first, second);
   }
 };//end struct sort_for_hash_functor
+
+type_base_sptr
+canonicalize(type_base_sptr type,
+	     homonym_type_group_sptr group,
+	     bool do_log= false,
+	     bool show_stats= false);
+
+type_base_sptr
+hash_and_canonicalize_type(type_base_sptr t);
 
 /// Sort types before hashing (and then canonicalizing) them.
 ///
@@ -1405,6 +1731,147 @@ move_member_types_to_canonicalized_scope(const SequenceType& member_types)
 	move_member_type_to_canonicalized_scope(decl_of_type);
 }
 
+/// Partition a sequence of types into homonym type groups.
+///
+/// Each type in the sequence is added to the homonym type group that
+/// corresponds to its pretty representation.  If no such group exists,
+/// it is created and added to the partition held by @p env.
+///
+/// @tparam SequenceType the type of the sequence of types to partition.
+/// It must be an iterable sequence of @ref type_base_sptr.
+///
+/// @param types the sequence of types to partition.
+template<typename SequenceType>
+void
+partition_types(SequenceType types)
+{
+  if (types.empty())
+    return;
+
+  auto first = types.front();
+  environment& env = const_cast<environment&>(first->get_environment());
+  homonym_type_group_sptr group;
+  interned_string type_repr;
+
+  env.priv_->types_partition_.clear_types();
+
+  for (auto type : types)
+    {
+      type_repr =
+	type->get_cached_pretty_representation(/*internal=*/true);
+      group = env.priv_->types_partition_.get_or_create_type_group(type_repr);
+      ABG_ASSERT(group);
+      add_type(type, group);
+    }
+}
+
+/// A task that adjusts canonicalized types after c14n has already
+/// happened, in its own thread.
+struct adjust_canonicalized_types_task : public abigail::workers::task
+{
+  type_base_sptr type;
+
+  adjust_canonicalized_types_task(type_base_sptr t)
+    : type(t)
+  {}
+
+  virtual void
+  perform()
+  {
+    type_base_sptr canonical_type = type->get_canonical_type();
+    ABG_ASSERT(canonical_type);
+    maybe_adjust_canonical_type(canonical_type, type);
+  }
+}; //end struct adjust_canonicalized_types_task
+
+/// Convenience typedef for a shared pointer to @ref
+/// adjust_canonicalized_types_task.
+typedef shared_ptr<adjust_canonicalized_types_task>
+adjust_canonicalized_types_task_sptr;
+
+/// Adjust types after they have been canonicalized.
+///
+/// @tparam SequenceType the type of the sequences of types to
+/// consider.
+///
+/// @param types the types to adjust.  These must be canonicalized.
+template<typename SequenceType>
+void
+adjust_canonicalized_types(SequenceType types)
+{
+  size_t num_workers =
+    std::min(get_number_of_available_threads(), types.size());
+  queue task_queue(num_workers);
+
+  type_base_sptr type, canonical_type;
+  for (auto& type : types)
+    {
+      adjust_canonicalized_types_task_sptr tsk
+	(new adjust_canonicalized_types_task(type));
+      ABG_ASSERT(task_queue.schedule_task(tsk));
+    }
+
+  // Wait for all worker threads to finish their job and wind down.
+  task_queue.wait_for_workers_to_complete();
+}
+
+/// A task that canonicalizes one homonym type group in its own
+/// thread.
+struct c14n_task : public abigail::workers::task
+{
+  homonym_type_group_sptr group;
+  bool is_ok = true;
+  bool do_log = false;
+  bool do_show_stats = false;
+  string error_message;
+  string log_message;
+
+  c14n_task(homonym_type_group_sptr g,
+	    bool log = false, bool show_stats = false)
+    : group(g),
+      do_log(log),
+      do_show_stats(show_stats)
+  {}
+
+  virtual void
+  perform()
+  {
+    tools_utils::timer tmr;
+    ostringstream o;
+
+    if (do_log)
+      {
+	o << "canonicalizing group: '" << group->get_name() << "'...\n";
+	tmr.start();
+      }
+
+    environment::priv::allow_type_comparison_results_caching(true);
+    for (auto type : group->get_types())
+      {
+	canonicalize(type, group, do_log, do_show_stats);
+	environment::priv::clear_type_comparison_results_cache();
+      }
+    environment::priv::allow_type_comparison_results_caching(false);
+
+    if (do_log)
+      {
+	tmr.stop();
+	o << "canonicalizing of group: '" << group->get_name()
+	  << "' DONE in"
+	  << tmr
+	  << "\n";
+	log_message = o.str();
+      }
+  }
+}; // end struct c14n_task;
+
+/// A convenience typedef for a shared pointer to @ref c14n_task
+typedef shared_ptr<c14n_task> c14n_task_sptr;
+
+void
+canonicalize_homonym_type_groups(const vector<homonym_type_group_sptr>& groups,
+				 bool do_log, bool show_stats);
+
 /// Compute the canonical type for all the IR types of the system.
 ///
 /// After invoking this function, the time it takes to compare two
@@ -1412,26 +1879,21 @@ move_member_types_to_canonicalized_scope(const SequenceType& member_types)
 /// their pointer value.  That is faster than performing a structural
 /// (A.K.A. member-wise) comparison.
 ///
-/// Note that this function performs some sanity checks after* the
-/// canonicalization process.  It ensures that at the end of the
-/// canonicalization process, all types have been canonicalized.  This
-/// is important because the canonicalization algorithm sometimes
-/// clears some canonical types after having speculatively set them
-/// for performance purposes.  At the end of the process however, all
-/// types must be canonicalized, and this function detects violations
-/// of that assertion.
-///
 /// @tparam SequenceType the type of the input sequence of types to
 /// canonicalize.
 ///
 /// @param types the input sequence of types to canonicalize.
 ///
-/// @do_log if true, then log the progress of what the function is
+/// @param do_log if true, then log the progress of what the function is
 /// doing.
+///
+/// @param show_stat if true, then log minutiae info about internal
+/// stuff like type caonicalization details.
 template<typename SequenceType>
 void
-canonicalize_types(const SequenceType	&types,
-		   bool		do_log = false)
+canonicalize_types(const SequenceType&	types,
+		   bool		do_log = false,
+		   bool		show_stats = false)
 {
   if (types.empty())
     return;
@@ -1439,36 +1901,65 @@ canonicalize_types(const SequenceType	&types,
   auto first = types.front();
   environment& env = const_cast<environment&>(first->get_environment());
 
-  env.canonicalization_started(true);
+  tools_utils::timer tmr, global_tmr;
 
-  tools_utils::timer tmr;
+  bool saved_decl_only_class_equals_definition =
+    env.decl_only_class_equals_definition();
+
+  // Compare types by considering that decl-only classes don't
+  // equal their definition.
+  env.decl_only_class_equals_definition(false);
+
   if (do_log)
     {
-      std::cerr << "Canonicalizing " << types.size() << " types ...\n";
+      std::cerr << "Partitioning " << types.size() << " types ...\n";
       tmr.start();
+      global_tmr.start();
     }
 
-  int i = 0;
-  for (auto type : types)
-    {
-      if (do_log)
-	{
-	  std::cerr << "#" << std::dec << i << " ";
-	  ++i;
-	}
-      canonicalize(type);
-    }
-
-  env.canonicalization_is_done(true);
+  partition_types(types);
 
   if (do_log)
     {
       tmr.stop();
-      std::cerr << "Canonicalizing of types DONE in: " << tmr << "\n\n";
+      std::cerr << "Partitioning of types DONE in: " << tmr << "\n\n";
+    }
+
+    if (do_log)
+      std::cerr << "Canonicalizing " << types.size() << " types ...\n";
+
+  canonicalize_homonym_type_groups(env.priv_->types_partition_.get_groups(),
+				   do_log, show_stats);
+
+  if (do_log)
+    {
+      std::cerr << "Populating canonical type map from partition ..." << "\n";
       tmr.start();
     }
 
-  move_member_types_to_canonicalized_scope(types);
+  adjust_canonicalized_types(types);
+
+  // This part however is done sequentially.
+  env.priv_->populate_canonical_types_map_from_partition();
+
+  if (do_log)
+    {
+      tmr.stop();
+      std::cerr << "Populating canonical type map "
+		<< "from partition DONE in " << tmr << "\n\n";
+    }
+
+  env.decl_only_class_equals_definition
+    (saved_decl_only_class_equals_definition);
+
+  if (do_log)
+    {
+      global_tmr.stop();
+      std::cerr
+	<< "Finished types sorting, hashing, canonicalizing & adjusting in: "
+	<< global_tmr
+	<< "\n";
+    }
 }
 
 /// Hash and canonicalize a sequence of types.
@@ -1488,12 +1979,14 @@ canonicalize_types(const SequenceType	&types,
 template <typename SequenceType>
 void
 hash_and_canonicalize_types(SequenceType	&types,
-			    bool		do_log = false)
+			    bool		do_log = false,
+			    bool		show_stats = false)
 {
   tools_utils::timer tmr;
+
   if (do_log)
     {
-      std::cerr << "sorting types before hashing ... \n";
+      std::cerr << "Preparing types before sorting  ... \n";
       tmr.start();
     }
 
@@ -1503,6 +1996,19 @@ hash_and_canonicalize_types(SequenceType	&types,
 	type_or_decl_base_sptr artifact = type;
 	artifact->priv_->get_ready_for_canonicalization();
       }
+
+
+  if (do_log)
+    {
+      tmr.stop();
+      std::cerr << "Preparing types before sorting DONE in " << tmr << " \n";
+    }
+
+  if (do_log)
+    {
+      std::cerr << "sorting types before hashing ... \n";
+      tmr.start();
+    }
 
   sort_types_for_hash_computing_and_c14n(types.begin(), types.end());
 
@@ -1515,23 +2021,9 @@ hash_and_canonicalize_types(SequenceType	&types,
       tmr.start();
     }
 
-  int i = 0;
   for (auto type : types)
-    {
-      if (do_log)
-	{
-	  std::cerr << i << "/" << types.size()
-		    << ":" << type->get_pretty_representation()
-		    << ": ";
-	}
-
-      if (!peek_hash_value(*type))
-	type->hash_value();
-
-      if (do_log)
-	std::cerr << std::hex << *peek_hash_value(*type) << std::dec << std::endl;
-      ++i;
-    }
+    if (!peek_hash_value(*type))
+      type->hash_value();
 
   if (do_log)
     {
@@ -1539,21 +2031,7 @@ hash_and_canonicalize_types(SequenceType	&types,
       std::cerr << "hashed types in: " << tmr << "\n\n";
     }
 
-  if (do_log)
-    {
-      std::cerr << "sorting types before canonicalizing ... \n";
-      tmr.start();
-    }
-
-  sort_types_for_hash_computing_and_c14n(types.begin(), types.end());
-
-  if (do_log)
-    {
-      tmr.stop();
-      std::cerr << "sorted types for c14n in: " << tmr << "\n\n";
-    }
-
-  canonicalize_types(types, do_log);
+  canonicalize_types(types, do_log, show_stats);
 }
 
 /// Sort and canonicalize a sequence of types.
@@ -1680,7 +2158,6 @@ lookup_type(const string& n, const TUOrCorpus& toc)
   return result;
 }
 
-
 // <class_or_union::priv definitions>
 struct class_or_union::priv
 {
@@ -1698,7 +2175,6 @@ struct class_or_union::priv
   string_mem_fn_ptr_map_type		signature_2_mem_fn_map_;
   member_function_templates		member_function_templates_;
   member_class_templates		member_class_templates_;
-  atomic<bool>				is_printing_flat_representation_;
   // The set of classes which layouts are currently being compared
   // against this one.  This is to avoid endless loops.
   unordered_set<type_base*>		comparing_class_layouts_;
@@ -1709,17 +2185,22 @@ struct class_or_union::priv
   // storage to allow for concurrent class comparisons.
   thread_local static class_set_type	left_classes_being_compared_;
   thread_local static class_set_type	right_classes_being_compared_;
+  // The set of classes which flat representation is currently being
+  // printed by get_class_or_union_flat_representation, in a given
+  // thread.  This is to avoid endless looping while emitting the flat
+  // representation.  This is stored in thread local storage to allow
+  // for concurrent printing of flat representation of classes or
+  // unions.
+  thread_local static class_set_type	classes_being_printed_;
 
   priv()
-    : is_printing_flat_representation_(false)
   {}
 
   priv(class_or_union::data_members& data_mbrs,
        class_or_union::member_functions& mbr_fns)
     : data_members_(data_mbrs),
       member_functions_(mbr_fns),
-      member_functions_sorted_(false),
-      is_printing_flat_representation_(false)
+      member_functions_sorted_(false)
   {
     for (const auto& data_member: data_members_)
       if (get_member_is_static(data_member))
@@ -1868,39 +2349,46 @@ struct class_or_union::priv
     return false;
   }
 
-  /// Set the 'is_printing_flat_representation_' boolean to true.
+  /// Mark a given instance of @ref class_or_union as being
+  /// flat-representation-printed.
   ///
-  /// That boolean marks the fact that the current @ref class_or_union
-  /// (and its sub-types graph) is being walked for the purpose of
-  /// printing its flat representation.  This is useful to detect
-  /// cycles in the graph and avoid endless loops.
-  void
-  set_printing_flat_representation()
+  /// This is to avoid endless looping in, e.g,
+  /// get_class_or_union_flat_representation.
+  ///
+  /// @param cou the instance of @ref class_or_union to consider.
+  static void
+  set_printing_flat_representation(const class_or_union* cou)
+  {classes_being_printed_.insert(cou);}
+
+  /// Un-mark a given instance of @ref class_or_union as being
+  /// flat-representation-printed.
+  ///
+  /// This is to avoid endless looping in, e.g,
+  /// get_class_or_union_flat_representation.
+  ///
+  /// @param cou the instance of @ref class_or_union to consider.
+  static void
+  unset_printing_flat_representation(const class_or_union* cou)
   {
-    is_printing_flat_representation_ = true;
+    classes_being_printed_.erase(cou);
   }
 
-  /// Set the 'is_printing_flat_representation_' boolean to false.
+  /// Test if a given instance of @ref class_or_union is being
+  /// flat-representation-printed.
   ///
-  /// That boolean marks the fact that the current @ref class_or_union
-  /// (and its sub-types graph) is being walked for the purpose of
-  /// printing its flat representation.  This is useful to detect
-  /// cycles in the graph and avoid endless loops.
-  void
-  unset_printing_flat_representation()
+  /// This is to avoid endless looping in e.g,
+  /// get_class_or_union_flat_representation.
+  ///
+  /// @param cou the instance of @ref class_or_union to consider.
+  ///
+  /// @return true iff @p cou is being flat-representation-printed.
+  static bool
+  is_printing_flat_representation(const class_or_union* cou)
   {
-    is_printing_flat_representation_ = false;
+    if (classes_being_printed_.find(cou) != classes_being_printed_.end())
+      return true;
+    return false;
   }
-
-  /// Getter of the 'is_printing_flat_representation_' boolean.
-  ///
-  /// That boolean marks the fact that the current @ref class_or_union
-  /// (and its sub-types graph) is being walked for the purpose of
-  /// printing its flat representation.  This is useful to detect
-  /// cycles in the graph and avoid endless loops.
-  bool
-  is_printing_flat_representation() const
-  {return is_printing_flat_representation_;}
 }; // end struct class_or_union::priv
 
 /// The private data for the class_decl type.
@@ -1938,7 +2426,6 @@ struct function_type::priv
   interned_string temp_cached_name_;
   interned_string internal_cached_name_;
   interned_string temp_internal_cached_name_;
-  atomic<bool> is_pretty_printing_;
   // The set of pairs of function types being currently compared.  It's used
   // to avoid endless loops while recursively comparing types.  This
   // should be empty when none of the 'equal' overloads are currently
@@ -1946,21 +2433,24 @@ struct function_type::priv
   // for concurrent class comparisons.
   thread_local static fn_set_type	left_fn_types_being_compared_;
   thread_local static fn_set_type	right_fn_types_being_compared_;
+  // The set of function types which pretty representation is
+  // currently being printed by // in a given thread.  This is to
+  // avoid endless looping while emitting the pretty representation.
+  // This is stored in thread local storage to allow for concurrent
+  // printing of pretty representations of function types.
+  thread_local static fn_set_type	fn_types_being_printed_;
 
   priv()
-    : is_pretty_printing_(false)
   {}
 
   priv(const parameters&	parms,
        type_base_sptr		return_type)
     : parms_(parms),
-      return_type_(return_type),
-      is_pretty_printing_(false)
+      return_type_(return_type)
   {}
 
   priv(type_base_sptr return_type)
-    : return_type_(return_type),
-      is_pretty_printing_(false)
+    : return_type_(return_type)
   {}
 
   /// Mark a given pair of @ref function_type as being compared.
@@ -2007,25 +2497,27 @@ struct function_type::priv
 	    right_fn_types_being_compared_.count(&second));
   }
 
-  /// Set the 'is_pretty_printing_' boolean to true.
+  /// Mark a given function pointer as being pretty-printed by
+  /// add_outer_pointer_to_fn_type_expr.
   ///
-  /// That boolean marks the fact that the current @ref function_type
-  /// (and its sub-types graph) is being walked for the purpose of
-  /// printing its flat representation.  This is useful to detect
-  /// cycles in the graph and avoid endless loops.
-  void
-  set_is_pretty_printing()
-  {is_pretty_printing_ = true;}
+  /// This is useful to detect cycles in the type graph and avoid endless
+  /// loops while pretty-printing a function type.
+  ///
+  /// @param fn_type the function type to consider.
+  static void
+  set_is_pretty_printing(function_type* fn_type)
+  {fn_types_being_printed_.insert(fn_type);}
 
-  /// Set the 'is_pretty_printing_' boolean to false.
+  /// Unmark a given function pointer as being pretty-printed by
+  /// add_outer_pointer_to_fn_type_expr.
   ///
-  /// That boolean marks the fact that the current @ref function_type
-  /// (and its sub-types graph) is being walked for the purpose of
-  /// printing its flat representation.  This is useful to detect
-  /// cycles in the graph and avoid endless loops.
-  void
-  unset_is_pretty_printing()
-  {is_pretty_printing_ = false;}
+  /// This is useful to detect cycles in the type graph and avoid endless
+  /// loops while pretty-printing a function type.
+  ///
+  /// @param fn_type the function type to consider.
+  static void
+  unset_is_pretty_printing(function_type* fn_type)
+  {fn_types_being_printed_.erase(fn_type);}
 
   /// Getter of the 'is_pretty_printing_' boolean.
   ///
@@ -2033,9 +2525,23 @@ struct function_type::priv
   /// (and its sub-types graph) is being walked for the purpose of
   /// printing its flat representation.  This is useful to detect
   /// cycles in the graph and avoid endless loops.
-  bool
-  is_pretty_printing() const
-  {return is_pretty_printing_;}
+
+  /// Test if a given function pointer is being pretty-printed by
+  /// add_outer_pointer_to_fn_type_expr.
+  ///
+  /// This is useful to detect cycles in the type graph and avoid
+  /// endless loops while pretty-printing a function type.
+  ///
+  /// @param fn_type the function type to consider.
+  ///
+  /// @return true iff @p fn_type is being pretty-printed.
+  static bool
+  is_pretty_printing(function_type* fn_type)
+  {
+    if (fn_types_being_printed_.find(fn_type) != fn_types_being_printed_.end())
+      return true;
+    return false;
+  }
 };// end struc function_type::priv
 
 // </function_type::priv definitions>

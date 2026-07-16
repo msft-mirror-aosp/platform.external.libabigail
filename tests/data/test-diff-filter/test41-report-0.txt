@@ -72,10 +72,10 @@ Variable symbols changes summary: 0 Removed, 0 Added variable symbol not referen
                               in pointed to type 'typedef std::tr1::_Hashtable<abigail::ir::type_base*,std::pair<abigail::ir::type_base*const,abigail::interned_string>,std::allocator<std::pair<abigail::ir::type_base*const,abigail::interned_string>>,std::_Select1st<std::pair<abigail::ir::type_base*const,abigail::interned_string>>,abigail::diff_utils::deep_ptr_eq_functor,abigail::xml_writer::type_hasher,std::tr1::__detail::_Mod_range_hashing,std::tr1::__detail::_Default_ranged_hash,std::tr1::__detail::_Prime_rehash_policy,false,false,true>::_Node' at hashtable.h:163:1:
                                 underlying type 'struct std::tr1::__detail::_Hash_node<std::pair<abigail::ir::type_base*const,abigail::interned_string>,false>' at hashtable_policy.h:80:1 changed:
                                   type size hasn't changed
-                                  1 data member changes (1 filtered):
+                                  1 data member change (1 filtered):
                                     type of 'std::pair<abigail::ir::type_base*const,abigail::interned_string> _M_v' changed:
                                       type size hasn't changed
-                                      1 data member changes (1 filtered):
+                                      1 data member change (1 filtered):
                                         type of 'type_base* const first' changed:
                                           in unqualified underlying type 'abigail::ir::type_base*':
                                             in pointed to type 'class abigail::ir::type_base':

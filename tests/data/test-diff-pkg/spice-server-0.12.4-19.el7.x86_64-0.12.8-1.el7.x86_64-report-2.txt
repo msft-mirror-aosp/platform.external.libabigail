@@ -238,7 +238,7 @@
         in pointed to type 'typedef SpiceServer' at spice-server.h:38:1:
           underlying type 'struct RedsState' at reds-private.h:127:1 changed:
             type size hasn't changed
-            1 data member changes (2 filtered):
+            1 data member change (2 filtered):
               type of 'MainChannel* main_channel' changed:
                 in pointed to type 'typedef MainChannel' at main_channel.h:48:1:
                   underlying type 'struct MainChannel' at main_channel.h:36:1 changed:

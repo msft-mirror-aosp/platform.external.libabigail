@@ -29,6 +29,7 @@
 #include "abg-ir-priv.h"
 #include "abg-symtab-reader.h"
 #include "abg-ir-priv.h"
+#include "abg-corpus-priv.h"
 
 // <headers defining libabigail's API go under here>
 ABG_BEGIN_EXPORT_DECLARATIONS
@@ -69,7 +70,7 @@ static bool	read_is_declaration_only(xmlNodePtr, bool&);
 static bool	read_is_artificial(xmlNodePtr, bool&);
 static bool	read_tracking_non_reachable_types(xmlNodePtr, bool&);
 static bool	read_is_non_reachable_type(xmlNodePtr, bool&);
-static bool	read_naming_typedef_id_string(xmlNodePtr, string&);
+static bool	read_naming_typedef_id_string(xmlNodePtr, vector<string>&);
 static bool	read_type_id_string(xmlNodePtr, string&);
 static bool	read_name(xmlNodePtr, string&);
 #ifdef WITH_DEBUG_SELF_COMPARISON
@@ -83,9 +84,11 @@ static bool	maybe_map_type_with_type_id(const type_base_sptr&,
 #else
 #define MAYBE_MAP_TYPE_WITH_TYPE_ID(type, xml_node)
 #endif
-static void	maybe_set_naming_typedef(reader& rdr,
-					 xmlNodePtr,
-					 const decl_base_sptr &);
+
+static void	maybe_set_naming_typedefs(reader& rdr,
+					  xmlNodePtr,
+					  const decl_base_sptr &);
+
 static int advance_cursor(reader& rdr);
 
 static void
@@ -1027,7 +1030,18 @@ public:
 	cn_timer.start();
       }
 
-    ir::perform_type_canonicalization(m_types_to_canonicalize, do_log());
+    vector<type_base_sptr> types;
+    types.reserve(m_types_to_canonicalize.size());
+
+    for (type_base_wptr wt : m_types_to_canonicalize)
+      {
+	type_base_sptr t = wt.lock();
+	if (t)
+	  types.push_back(t);
+      }
+
+    ir::perform_type_canonicalization(types, do_log());
+    corpus()->priv_->types_are_canonicalized(true);
 
     if (do_log())
       {
@@ -1325,8 +1339,6 @@ public:
 		  << "\n";
       }
 
-    get_environment().canonicalization_is_done(false);
-
     if (do_log())
       {
 	std::cerr << "ABIXML Reader: building IR "
@@ -1376,8 +1388,6 @@ public:
 		  << corpus()->get_path()
 		  << " in :" << t << "\n";
       }
-
-    get_environment().canonicalization_is_done(true);
 
     if (call_reader_next)
       {
@@ -2705,9 +2715,7 @@ read_translation_unit_from_file(const string&	input_file,
   reader rdr(xml::new_reader_from_file(input_file), env);
   rdr.options() = opts;
   translation_unit_sptr tu = read_translation_unit_from_input(rdr);
-  env.canonicalization_is_done(false);
   rdr.perform_type_canonicalization();
-  env.canonicalization_is_done(true);
   return tu;
 }
 
@@ -2750,9 +2758,7 @@ read_translation_unit_from_buffer(const string&	buffer,
   reader rdr(xml::new_reader_from_buffer(buffer), env);
   rdr.options() = opts;
   translation_unit_sptr tu = read_translation_unit_from_input(rdr);
-  env.canonicalization_is_done(false);
   rdr.perform_type_canonicalization();
-  env.canonicalization_is_done(true);
   return tu;
 }
 
@@ -2768,9 +2774,7 @@ read_translation_unit(fe_iface& iface)
 {
   abixml::reader& rdr = dynamic_cast<abixml::reader&>(iface);
   translation_unit_sptr tu = read_translation_unit_from_input(rdr);
-  rdr.options().env.canonicalization_is_done(false);
   rdr.perform_type_canonicalization();
-  rdr.options().env.canonicalization_is_done(true);
   return tu;
 }
 
@@ -3269,17 +3273,22 @@ read_is_non_reachable_type(xmlNodePtr node, bool& is_non_reachable_type)
 ///
 /// @param node the XML node to consider.
 ///
-/// @param naming_typedef_id output parameter.  It's set to the
+/// @param naming_typedef_ids output parameter.  It's set to the
 /// content of the "naming-typedef-id" property, if it's present.
 ///
 /// @return true iff the "naming-typedef-id" property exists and was
 /// read from @p node.
 static bool
-read_naming_typedef_id_string(xmlNodePtr node, string& naming_typedef_id)
+read_naming_typedef_id_string(xmlNodePtr node,
+			      vector<string>& naming_typedef_ids)
 {
   if (xml_char_sptr s = XML_NODE_GET_ATTRIBUTE(node, "naming-typedef-id"))
     {
-      naming_typedef_id = xml::unescape_xml_string(CHAR_STR(s));
+      string str = xml::unescape_xml_string(CHAR_STR(s));
+      vector<string> parts;
+      tools_utils::split_string(str, ",", parts);
+      for (auto s : parts)
+	naming_typedef_ids.push_back(s);
       return true;
     }
   return false;
@@ -3697,18 +3706,18 @@ maybe_map_type_with_type_id(const type_base_sptr& t,
 ///
 /// @param decl the decl to set the naming typedef to.
 static void
-maybe_set_naming_typedef(reader&		rdr,
+maybe_set_naming_typedefs(reader&		rdr,
 			 xmlNodePtr		node,
 			 const decl_base_sptr&	decl)
 {
-  string naming_typedef_id;
-  read_naming_typedef_id_string(node, naming_typedef_id);
-  if (!naming_typedef_id.empty())
+  vector<string> naming_typedef_ids;
+  read_naming_typedef_id_string(node, naming_typedef_ids);
+  for (auto naming_typedef_id : naming_typedef_ids)
     {
       typedef_decl_sptr naming_typedef =
 	is_typedef(rdr.build_or_get_type_decl(naming_typedef_id, true));
       ABG_ASSERT(naming_typedef);
-      decl->set_naming_typedef(naming_typedef);
+      decl->add_naming_typedef(naming_typedef);
     }
 }
 
@@ -4963,6 +4972,7 @@ build_pointer_type_def(reader&	rdr,
   type_base_sptr pointed_to_type =
     rdr.build_or_get_type_decl(type_id, true);
   ABG_ASSERT(pointed_to_type);
+  ABG_ASSERT(get_scope_of_type(pointed_to_type));
 
   if (type_base_sptr t = rdr.get_type_decl(id))
     {
@@ -5282,6 +5292,8 @@ build_function_type(reader&			rdr,
   read_common_type_info(rdr, node, fn_type);
 
   bind_function_type_life_time(fn_type, rdr.get_translation_unit());
+  fn_type->set_translation_unit(rdr.get_translation_unit());
+
   if (!id.empty())
     {
       MAYBE_MAP_TYPE_WITH_TYPE_ID(fn_type, node);
@@ -5807,7 +5819,7 @@ build_enum_type_decl(reader&	rdr,
 
   if (rdr.push_and_key_type_decl(t, node, add_to_current_scope))
     {
-      maybe_set_naming_typedef(rdr, node, t);
+      maybe_set_naming_typedefs(rdr, node, t);
       rdr.map_xml_node_to_decl(node, t);
       RECORD_ARTIFACT_AS_USED_BY(rdr, underlying_type, t);
       return t;
@@ -5884,6 +5896,12 @@ build_typedef_decl(reader&		rdr,
   read_common_type_info(rdr, node, typedef_type);
 
   RECORD_ARTIFACT_AS_USED_BY(rdr, underlying_type, typedef_type);
+
+  if (is_anonymous_type(underlying_type))
+    {
+      auto decl = is_decl(underlying_type);
+      decl->add_naming_typedef(typedef_type);
+    }
 
   return typedef_type;
 }
@@ -6135,7 +6153,7 @@ build_class_decl(reader&		rdr,
   rdr.key_type_decl(decl, id);
 
   // If this class has a naming typedef, get it and refer to it.
-  maybe_set_naming_typedef(rdr, node, decl);
+  maybe_set_naming_typedefs(rdr, node, decl);
 
   for (xmlNodePtr n = xmlFirstElementChild(node);
        n;
@@ -6544,7 +6562,7 @@ build_union_decl(reader& rdr,
   rdr.map_xml_node_to_decl(node, decl);
   rdr.key_type_decl(decl, id);
 
-  maybe_set_naming_typedef(rdr, node, decl);
+  maybe_set_naming_typedefs(rdr, node, decl);
 
   for (xmlNodePtr n = xmlFirstElementChild(node);
        !is_decl_only && n;

@@ -1063,7 +1063,6 @@ static void write_is_declaration_only(const decl_base_sptr&, ostream&);
 static void write_is_struct(const class_decl_sptr&, ostream&);
 static void write_is_anonymous(const decl_base_sptr&, ostream&);
 static void write_type_hash_and_cti(const type_base_sptr&, ostream&);
-static void write_naming_typedef(const decl_base_sptr&, write_context&);
 static bool write_decl(const decl_base_sptr&, write_context&, unsigned);
 static void write_artifact_in_scope(const type_or_decl_base_sptr&,
 				    write_context&, unsigned);
@@ -2165,28 +2164,6 @@ write_artifact_native_offset(write_context& ctxt,
       std::ostringstream os;
       os << std::hex << *offset;
       o << " native-offset='" << os.str() << "'";
-    }
-}
-
-/// Serialize the "naming-typedef-id" attribute, if the current
-/// instance of @ref class_decl has a naming typedef.
-///
-/// @param klass the @ref class_decl to consider.
-///
-/// @param ctxt the write context to use.
-static void
-write_naming_typedef(const decl_base_sptr& decl, write_context& ctxt)
-{
-  if (!decl)
-    return;
-
-  ostream &o = ctxt.get_ostream();
-
-  if (typedef_decl_sptr typedef_type = decl->get_naming_typedef())
-    {
-      string id = ctxt.get_id_for_type(typedef_type);
-      o << " naming-typedef-id='" << id << "'";
-      ctxt.record_type_as_referenced(typedef_type);
     }
 }
 
@@ -3772,7 +3749,6 @@ write_enum_type_decl(const enum_type_decl_sptr& d,
   do_indent(o, indent);
   o << "<enum-decl name='" << xml::escape_xml_string(decl->get_name()) << "'";
 
-  write_naming_typedef(decl, ctxt);
   write_is_artificial(decl, o);
 
   if (!decl->get_linkage_name().empty())
@@ -4490,16 +4466,11 @@ write_class_decl_opening_tag(const class_decl_sptr&	decl,
 
   do_indent_to_level(ctxt, indent, 0);
 
-  if (decl->get_name() == "__pthread_mutex_s")
-    string stop = "";
-
   o << "<class-decl name='" << xml::escape_xml_string(decl->get_name()) << "'";
 
   write_is_struct(decl, o);
 
   write_is_artificial(decl, o);
-
-  write_naming_typedef(decl, ctxt);
 
   write_visibility(decl, o);
 
@@ -4553,8 +4524,6 @@ write_union_decl_opening_tag(const union_decl_sptr&	decl,
   do_indent_to_level(ctxt, indent, 0);
 
   o << "<union-decl name='" << xml::escape_xml_string(decl->get_name()) << "'";
-
-  write_naming_typedef(decl, ctxt);
 
   write_visibility(decl, o);
 
@@ -5738,20 +5707,18 @@ write_type_record(xml_writer::write_context&	ctxt,
   //       <c>0x25f9ba8</c>
   //     </type>
 
-    type_base* canonical = type->get_naked_canonical_type();
-    string id ;
-  if (canonical)
-    {
-      id = ctxt.get_id_for_type (const_cast<type_base*>(type));
+  type_base_sptr canonical = type->get_canonical_type();
+  ABG_ASSERT(canonical);
+  string id ;
+  id = ctxt.get_id_for_type (const_cast<type_base*>(type));
 
-      o << "  <type>\n"
-	<< "    <id>" << id << "</id>\n"
-	<< "    <c>"
-	<< std::hex
-	<< reinterpret_cast<uintptr_t>(canonical)
-	<< "</c>\n"
-	<< "  </type>\n";
-    }
+  o << "  <type>\n"
+    << "    <id>" << id << "</id>\n"
+    << "    <c>"
+    << std::hex
+    << reinterpret_cast<uintptr_t>(canonical.get())
+    << "</c>\n"
+    << "  </type>\n";
 }
 
 /// Serialize the map that is stored at

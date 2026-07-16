@@ -248,18 +248,6 @@ public:
   get_variadic_parameter_type_name();
 
   bool
-  canonicalization_is_done() const;
-
-  void
-  canonicalization_is_done(bool);
-
-  bool
-  canonicalization_started() const;
-
-  void
-  canonicalization_started(bool);
-
-  bool
   decl_only_class_equals_definition() const;
 
   void
@@ -1373,7 +1361,8 @@ maybe_compare_as_member_decls(const decl_base& l,
 			      change_kind* k);
 
 bool
-equals(const decl_base&, const decl_base&, change_kind*);
+equals(const decl_base& l, const decl_base& r, change_kind*,
+       bool qualified_name = true, bool linkage_name = true);
 
 /// The base class of both types and declarations.
 class type_or_decl_base : public ir_traversable_base
@@ -1728,11 +1717,14 @@ public:
   bool
   get_is_anonymous_or_has_anonymous_parent() const;
 
-  typedef_decl_sptr
-  get_naming_typedef() const;
+  std::list<typedef_decl_sptr>&
+  get_naming_typedefs() const;
 
   void
-  set_naming_typedef(const typedef_decl_sptr&);
+  add_naming_typedef(const typedef_decl_sptr);
+
+  bool
+  has_naming_typedef(const typedef_decl_sptr);
 
   const interned_string&
   get_linkage_name() const;
@@ -1771,7 +1763,8 @@ public:
   set_is_declaration_only(bool f);
 
   friend bool
-  equals(const decl_base&, const decl_base&, change_kind*);
+  equals(const decl_base& l, const decl_base& r, change_kind*,
+	 bool qualified_name , bool linkage_name);
 
   friend bool
   equals(const var_decl&, const var_decl&, change_kind*);
@@ -2027,12 +2020,7 @@ private:
   // Forbid this.
   type_base();
 
-  static type_base_sptr
-  get_canonical_type_for(type_base_sptr);
-
 protected:
-  virtual void
-  on_canonical_type_set();
 
 public:
 
@@ -2042,8 +2030,6 @@ public:
 
   virtual hash_t
   hash_value() const;
-
-  friend type_base_sptr canonicalize(type_base_sptr, bool, bool);
 
   type_base_sptr
   get_canonical_type() const;
@@ -2073,6 +2059,9 @@ public:
 
   virtual size_t
   get_alignment_in_bits() const;
+
+  virtual void
+  on_canonical_type_set();
 };//end class type_base
 
 
@@ -2784,7 +2773,9 @@ equals(const array_type_def::subrange_type&,
        change_kind*);
 
 bool
-equals(const enum_type_decl&, const enum_type_decl&, change_kind*);
+equals(const enum_type_decl& l,
+       const enum_type_decl& r,
+       change_kind* k, bool name = true);
 
 bool
 enum_equals_modulo_name(const enum_type_decl& l,
@@ -3159,7 +3150,8 @@ public:
 }; // end class var_decl
 
 bool
-equals(const function_decl&, const function_decl&, change_kind*);
+equals(const function_decl& l, const function_decl& r, change_kind* k,
+       bool linkage_name = true, bool elf_symbol = true);
 
 /// Abstraction for a function declaration.
 class function_decl : public virtual scope_decl
@@ -4729,7 +4721,7 @@ struct function_decl::ptr_equal
 
 void
 perform_type_canonicalization(vector<type_base_sptr>& types,
-			      bool do_log = false);
+			      bool do_log = false, bool show_stats = false);
 
 /// The base class for the visitor type hierarchy used for traversing
 /// a translation unit.
@@ -4760,6 +4752,8 @@ public:
 
   void allow_visiting_already_visited_type_node(bool);
   bool allow_visiting_already_visited_type_node() const;
+  void allow_visiting_member_type_nodes(bool);
+  bool allow_visiting_member_type_nodes() const;
   void mark_type_node_as_visited(type_base *);
   void forget_visited_type_nodes();
   bool type_node_has_been_visited(type_base*) const;

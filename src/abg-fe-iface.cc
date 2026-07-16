@@ -74,7 +74,7 @@ fe_iface::options_type::operator=(const fe_iface::options_type& o)
   load_undefined_interfaces = o.load_undefined_interfaces;
   drop_undefined_syms = o.drop_undefined_syms;
   show_stats = o.show_stats;
-  do_log = o.show_stats;
+  do_log = o.do_log;
   leverage_dwarf_factorization = o.leverage_dwarf_factorization;
   assume_odr_for_cplusplus = o.assume_odr_for_cplusplus;
 

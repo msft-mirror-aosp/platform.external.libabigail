@@ -257,1078 +257,1046 @@
     </namespace-decl>
     <namespace-decl name='__gnu_cxx'>
       <class-decl name='__anonymous_struct__' visibility='default' is-anonymous='yes' is-declaration-only='yes' hash='d536b26f622384f3' id='type-id-8'>
-        <member-type access='private'>
-          <typedef-decl name='difference_type' type-id='type-id-10' size-in-bits='64' hash='8aa1e1a2ab2c2d3e' id='type-id-9'/>
-        </member-type>
-        <member-type access='private'>
-          <typedef-decl name='size_type' type-id='type-id-12' size-in-bits='64' hash='da551c1631705dfe' id='type-id-11'/>
-        </member-type>
-        <member-type access='private'>
-          <typedef-decl name='value_type' type-id='type-id-14' hash='373e98c998b99969' id='type-id-13'/>
-        </member-type>
       </class-decl>
     </namespace-decl>
-    <type-decl name='bool' size-in-bits='8' hash='5ba96bb22f4237fb' id='type-id-15'/>
-    <reference-type-def kind='rvalue' type-id='type-id-15' size-in-bits='64' hash='e108e01f8a23235a' id='type-id-16'/>
+    <type-decl name='bool' size-in-bits='8' hash='5ba96bb22f4237fb' id='type-id-9'/>
+    <reference-type-def kind='rvalue' type-id='type-id-9' size-in-bits='64' hash='e108e01f8a23235a' id='type-id-10'/>
     <namespace-decl name='boost'>
-      <class-decl name='__anonymous_struct__' visibility='default' is-anonymous='yes' is-declaration-only='yes' hash='1ab3cd23db6cff77' id='type-id-17'/>
+      <class-decl name='__anonymous_struct__' visibility='default' is-anonymous='yes' is-declaration-only='yes' hash='1ab3cd23db6cff77' id='type-id-11'/>
     </namespace-decl>
     <namespace-decl name='boost'>
       <namespace-decl name='detail'>
-        <class-decl name='__anonymous_struct__' visibility='default' is-anonymous='yes' is-declaration-only='yes' hash='7bfc59d42763dbaf' id='type-id-18'>
+        <class-decl name='__anonymous_struct__' visibility='default' is-anonymous='yes' is-declaration-only='yes' hash='7bfc59d42763dbaf' id='type-id-12'>
           <member-function access='public' vtable-offset='2'>
-            <function-decl name='dispose' type-id='type-id-19' mangled-name='_ZN5boost6detail17sp_counted_impl_pINS_10filesystem6detail11dir_itr_impEE7disposeEv' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZN5boost6detail17sp_counted_impl_pINS_10filesystem6detail11dir_itr_impEE7disposeEv'/>
+            <function-decl name='dispose' type-id='type-id-13' mangled-name='_ZN5boost6detail17sp_counted_impl_pINS_10filesystem6detail11dir_itr_impEE7disposeEv' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZN5boost6detail17sp_counted_impl_pINS_10filesystem6detail11dir_itr_impEE7disposeEv'/>
           </member-function>
           <member-function access='public' vtable-offset='4'>
-            <function-decl name='get_deleter' type-id='type-id-20' mangled-name='_ZN5boost6detail17sp_counted_impl_pINS_10filesystem6detail11dir_itr_impEE11get_deleterERKSt9type_info' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZN5boost6detail17sp_counted_impl_pINS_10filesystem6detail11dir_itr_impEE11get_deleterERKSt9type_info'/>
+            <function-decl name='get_deleter' type-id='type-id-14' mangled-name='_ZN5boost6detail17sp_counted_impl_pINS_10filesystem6detail11dir_itr_impEE11get_deleterERKSt9type_info' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZN5boost6detail17sp_counted_impl_pINS_10filesystem6detail11dir_itr_impEE11get_deleterERKSt9type_info'/>
           </member-function>
           <member-function access='public' vtable-offset='5'>
-            <function-decl name='get_untyped_deleter' type-id='type-id-21' mangled-name='_ZN5boost6detail17sp_counted_impl_pINS_10filesystem6detail11dir_itr_impEE19get_untyped_deleterEv' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZN5boost6detail17sp_counted_impl_pINS_10filesystem6detail11dir_itr_impEE19get_untyped_deleterEv'/>
+            <function-decl name='get_untyped_deleter' type-id='type-id-15' mangled-name='_ZN5boost6detail17sp_counted_impl_pINS_10filesystem6detail11dir_itr_impEE19get_untyped_deleterEv' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZN5boost6detail17sp_counted_impl_pINS_10filesystem6detail11dir_itr_impEE19get_untyped_deleterEv'/>
           </member-function>
         </class-decl>
       </namespace-decl>
     </namespace-decl>
     <namespace-decl name='boost'>
       <namespace-decl name='detail'>
-        <class-decl name='__anonymous_struct__' visibility='default' is-anonymous='yes' is-declaration-only='yes' hash='80e8430f0a4d3408' id='type-id-22'>
+        <class-decl name='__anonymous_struct__' visibility='default' is-anonymous='yes' is-declaration-only='yes' hash='80e8430f0a4d3408' id='type-id-16'>
           <member-function access='public' destructor='yes' vtable-offset='0'>
-            <function-decl name='~sp_counted_base' type-id='type-id-23' mangled-name='_ZN5boost6detail15sp_counted_baseD2Ev' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZN5boost6detail15sp_counted_baseD2Ev'/>
+            <function-decl name='~sp_counted_base' type-id='type-id-17' mangled-name='_ZN5boost6detail15sp_counted_baseD2Ev' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZN5boost6detail15sp_counted_baseD2Ev'/>
           </member-function>
           <member-function access='public' vtable-offset='3'>
-            <function-decl name='destroy' type-id='type-id-23' mangled-name='_ZN5boost6detail15sp_counted_base7destroyEv' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZN5boost6detail15sp_counted_base7destroyEv'/>
+            <function-decl name='destroy' type-id='type-id-17' mangled-name='_ZN5boost6detail15sp_counted_base7destroyEv' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZN5boost6detail15sp_counted_base7destroyEv'/>
           </member-function>
         </class-decl>
       </namespace-decl>
     </namespace-decl>
     <namespace-decl name='boost'>
       <namespace-decl name='detail'>
-        <class-decl name='__anonymous_struct__' visibility='default' is-anonymous='yes' is-declaration-only='yes' hash='5afc13bdc2af9a94' id='type-id-24'>
+        <class-decl name='__anonymous_struct__' visibility='default' is-anonymous='yes' is-declaration-only='yes' hash='5afc13bdc2af9a94' id='type-id-18'>
           <member-function access='public'>
-            <function-decl name='shared_count&lt;boost::filesystem::detail::dir_itr_imp&gt;' type-id='type-id-25' mangled-name='_ZN5boost6detail12shared_countC2INS_10filesystem6detail11dir_itr_impEEEPT_' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZN5boost6detail12shared_countC2INS_10filesystem6detail11dir_itr_impEEEPT_'/>
+            <function-decl name='shared_count&lt;boost::filesystem::detail::dir_itr_imp&gt;' type-id='type-id-19' mangled-name='_ZN5boost6detail12shared_countC2INS_10filesystem6detail11dir_itr_impEEEPT_' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZN5boost6detail12shared_countC2INS_10filesystem6detail11dir_itr_impEEEPT_'/>
           </member-function>
         </class-decl>
       </namespace-decl>
     </namespace-decl>
-    <pointer-type-def type-id='type-id-18' size-in-bits='64' hash='fb1ecf688ca63788' id='type-id-26'/>
-    <pointer-type-def type-id='type-id-22' size-in-bits='64' hash='fb1ecf688ca63788#1' id='type-id-27'/>
-    <pointer-type-def type-id='type-id-24' size-in-bits='64' hash='fb1ecf688ca63788#2' id='type-id-28'/>
+    <pointer-type-def type-id='type-id-12' size-in-bits='64' hash='fb1ecf688ca63788' id='type-id-20'/>
+    <pointer-type-def type-id='type-id-16' size-in-bits='64' hash='fb1ecf688ca63788#1' id='type-id-21'/>
+    <pointer-type-def type-id='type-id-18' size-in-bits='64' hash='fb1ecf688ca63788#2' id='type-id-22'/>
     <namespace-decl name='boost'>
       <namespace-decl name='filesystem'>
-        <class-decl name='__anonymous_struct__' naming-typedef-id='type-id-29' visibility='default' is-anonymous='yes' is-declaration-only='yes' hash='373e98c998b99969' id='type-id-30'>
+        <class-decl name='__anonymous_struct__' visibility='default' is-anonymous='yes' is-declaration-only='yes' hash='373e98c998b99969' id='type-id-23'>
           <member-function access='public'>
-            <function-decl name='directory_entry' type-id='type-id-31' mangled-name='_ZN5boost10filesystem15directory_entryC2ERKS1_' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZN5boost10filesystem15directory_entryC2ERKS1_'/>
+            <function-decl name='directory_entry' type-id='type-id-24' mangled-name='_ZN5boost10filesystem15directory_entryC2ERKS1_' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZN5boost10filesystem15directory_entryC2ERKS1_'/>
           </member-function>
           <member-function access='public'>
-            <function-decl name='directory_iterator' type-id='type-id-31' mangled-name='_ZN5boost10filesystem18directory_iteratorC2ERKNS0_4pathE' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZN5boost10filesystem18directory_iteratorC2ERKNS0_4pathE'/>
+            <function-decl name='directory_iterator' type-id='type-id-24' mangled-name='_ZN5boost10filesystem18directory_iteratorC2ERKNS0_4pathE' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZN5boost10filesystem18directory_iteratorC2ERKNS0_4pathE'/>
           </member-function>
         </class-decl>
       </namespace-decl>
     </namespace-decl>
-    <reference-type-def kind='rvalue' type-id='type-id-30' size-in-bits='64' hash='4c7cc0337e211bf0' id='type-id-32'/>
-    <pointer-type-def type-id='type-id-30' size-in-bits='64' hash='bb2e7780b812dbf0' id='type-id-33'/>
+    <reference-type-def kind='rvalue' type-id='type-id-23' size-in-bits='64' hash='4c7cc0337e211bf0' id='type-id-25'/>
+    <pointer-type-def type-id='type-id-23' size-in-bits='64' hash='bb2e7780b812dbf0' id='type-id-26'/>
     <namespace-decl name='boost'>
       <namespace-decl name='filesystem'>
         <namespace-decl name='detail'>
-          <class-decl name='__anonymous_struct__' is-struct='yes' visibility='default' is-anonymous='yes' is-declaration-only='yes' hash='a565d933d3dddb63' id='type-id-34'/>
+          <class-decl name='__anonymous_struct__' is-struct='yes' visibility='default' is-anonymous='yes' is-declaration-only='yes' hash='a565d933d3dddb63' id='type-id-27'/>
         </namespace-decl>
       </namespace-decl>
     </namespace-decl>
-    <pointer-type-def type-id='type-id-34' size-in-bits='64' hash='c61d3451f429d74b' id='type-id-35'/>
-    <type-decl name='char' size-in-bits='8' hash='65b2d157027b431a' id='type-id-36'/>
-    <pointer-type-def type-id='type-id-36' size-in-bits='64' hash='cdcd419d6a95ce45' id='type-id-37'/>
+    <pointer-type-def type-id='type-id-27' size-in-bits='64' hash='c61d3451f429d74b' id='type-id-28'/>
+    <type-decl name='char' size-in-bits='8' hash='65b2d157027b431a' id='type-id-29'/>
+    <pointer-type-def type-id='type-id-29' size-in-bits='64' hash='cdcd419d6a95ce45' id='type-id-30'/>
     <namespace-decl name='mongo'>
-      <class-decl name='Client' visibility='default' is-declaration-only='yes' hash='7a6018eb0eb115ad' id='type-id-38'/>
+      <class-decl name='Client' visibility='default' is-declaration-only='yes' hash='7a6018eb0eb115ad' id='type-id-31'/>
     </namespace-decl>
     <namespace-decl name='std'>
       <namespace-decl name='__cxx11'>
-        <class-decl name='basic_string&lt;char,std::char_traits&lt;char&gt;,std::allocator&lt;char&gt;&gt;' visibility='default' size-in-bits='256' hash='35ad60ae8262b955' id='type-id-39'>
-          <member-type access='private'>
-            <typedef-decl name='size_type' type-id='type-id-11' size-in-bits='64' hash='da551c1631705dfe' id='type-id-40'/>
-          </member-type>
+        <class-decl name='basic_string&lt;char,std::char_traits&lt;char&gt;,std::allocator&lt;char&gt;&gt;' visibility='default' size-in-bits='256' hash='35ad60ae8262b955' id='type-id-32'>
         </class-decl>
       </namespace-decl>
     </namespace-decl>
     <namespace-decl name='std'>
-      <class-decl name='type_info' visibility='default' is-declaration-only='yes' hash='838ebafa076aa8c5' id='type-id-41'/>
+      <class-decl name='type_info' visibility='default' is-declaration-only='yes' hash='838ebafa076aa8c5' id='type-id-33'/>
     </namespace-decl>
-    <qualified-type-def type-id='type-id-17' const='yes' hash='71b7d49754db0c28' id='type-id-42'/>
-    <reference-type-def kind='lvalue' type-id='type-id-42' size-in-bits='64' hash='4ce1870cc537080e' id='type-id-43'/>
-    <qualified-type-def type-id='type-id-44' const='yes' hash='96375fba09a1b14a' id='type-id-45'/>
-    <reference-type-def kind='lvalue' type-id='type-id-45' size-in-bits='64' hash='9dbeab06f0d81ae8' id='type-id-46'/>
-    <qualified-type-def type-id='type-id-30' const='yes' hash='d9f89c3d274b84f9' id='type-id-47'/>
-    <reference-type-def kind='lvalue' type-id='type-id-47' size-in-bits='64' hash='d728d2b8b58a255b' id='type-id-48'/>
-    <qualified-type-def type-id='type-id-36' const='yes' hash='45ae2830e476ce98' id='type-id-49'/>
-    <pointer-type-def type-id='type-id-49' size-in-bits='64' hash='83a5509e2ae27d75' id='type-id-50'/>
-    <array-type-def dimensions='1' type-id='type-id-49' size-in-bits='128' hash='aebfbfc771172dab' id='type-id-51'>
+    <qualified-type-def type-id='type-id-11' const='yes' hash='71b7d49754db0c28' id='type-id-34'/>
+    <reference-type-def kind='lvalue' type-id='type-id-34' size-in-bits='64' hash='4ce1870cc537080e' id='type-id-35'/>
+    <qualified-type-def type-id='type-id-36' const='yes' hash='96375fba09a1b14a' id='type-id-37'/>
+    <reference-type-def kind='lvalue' type-id='type-id-37' size-in-bits='64' hash='9dbeab06f0d81ae8' id='type-id-38'/>
+    <qualified-type-def type-id='type-id-23' const='yes' hash='d9f89c3d274b84f9' id='type-id-39'/>
+    <reference-type-def kind='lvalue' type-id='type-id-39' size-in-bits='64' hash='d728d2b8b58a255b' id='type-id-40'/>
+    <qualified-type-def type-id='type-id-29' const='yes' hash='45ae2830e476ce98' id='type-id-41'/>
+    <pointer-type-def type-id='type-id-41' size-in-bits='64' hash='83a5509e2ae27d75' id='type-id-42'/>
+    <array-type-def dimensions='1' type-id='type-id-41' size-in-bits='128' hash='aebfbfc771172dab' id='type-id-43'>
       <subrange length='16' lower-bound='0' upper-bound='15' type-id='type-id-1' size-in-bits='64' is-anonymous='yes' hash='6c35b1e999eba398' id='type-id-2'/>
     </array-type-def>
-    <array-type-def dimensions='1' type-id='type-id-49' size-in-bits='32' hash='a90aab45c4a43d87' id='type-id-52'>
+    <array-type-def dimensions='1' type-id='type-id-41' size-in-bits='32' hash='a90aab45c4a43d87' id='type-id-44'>
       <subrange length='4' lower-bound='0' upper-bound='3' type-id='type-id-1' size-in-bits='64' is-anonymous='yes' hash='cee611f4a73e486c' id='type-id-3'/>
     </array-type-def>
-    <array-type-def dimensions='1' type-id='type-id-49' size-in-bits='40' hash='baf1854dfbff6724' id='type-id-53'>
+    <array-type-def dimensions='1' type-id='type-id-41' size-in-bits='40' hash='baf1854dfbff6724' id='type-id-45'>
       <subrange length='5' lower-bound='0' upper-bound='4' type-id='type-id-1' size-in-bits='64' is-anonymous='yes' hash='5aa5cef1e1be46c9' id='type-id-4'/>
     </array-type-def>
-    <array-type-def dimensions='1' type-id='type-id-49' size-in-bits='48' hash='200b7c6a50980cc1' id='type-id-54'>
+    <array-type-def dimensions='1' type-id='type-id-41' size-in-bits='48' hash='200b7c6a50980cc1' id='type-id-46'>
       <subrange length='6' lower-bound='0' upper-bound='5' type-id='type-id-1' size-in-bits='64' is-anonymous='yes' hash='1c0e592c7ffbdbf5' id='type-id-5'/>
     </array-type-def>
-    <array-type-def dimensions='1' type-id='type-id-49' size-in-bits='64' hash='929972485f3ec73c' id='type-id-55'>
+    <array-type-def dimensions='1' type-id='type-id-41' size-in-bits='64' hash='929972485f3ec73c' id='type-id-47'>
       <subrange length='8' lower-bound='0' upper-bound='7' type-id='type-id-1' size-in-bits='64' is-anonymous='yes' hash='6e87a8ff484907ad' id='type-id-6'/>
     </array-type-def>
-    <qualified-type-def type-id='type-id-56' const='yes' hash='e4076634abaefa5b' id='type-id-57'/>
-    <qualified-type-def type-id='type-id-58' const='yes' hash='119286a292e75dce' id='type-id-59'/>
-    <pointer-type-def type-id='type-id-59' size-in-bits='64' hash='0ff524e850d755e3' id='type-id-60'/>
-    <qualified-type-def type-id='type-id-61' const='yes' hash='5c2553ac5f14245c' id='type-id-62'/>
-    <reference-type-def kind='lvalue' type-id='type-id-62' size-in-bits='64' hash='2671d1b6617ce828' id='type-id-63'/>
-    <pointer-type-def type-id='type-id-62' size-in-bits='64' hash='00611c56db4edca8' id='type-id-64'/>
-    <qualified-type-def type-id='type-id-39' const='yes' hash='d2831f65b5292088' id='type-id-65'/>
-    <reference-type-def kind='lvalue' type-id='type-id-65' size-in-bits='64' hash='116917976910aa54' id='type-id-66'/>
-    <qualified-type-def type-id='type-id-67' const='yes' hash='4686a19dc10975f2' id='type-id-68'/>
-    <reference-type-def kind='lvalue' type-id='type-id-68' size-in-bits='64' hash='42e9dcb11736a437' id='type-id-69'/>
-    <qualified-type-def type-id='type-id-41' const='yes' hash='f43ca094a5fe0d6e' id='type-id-70'/>
-    <reference-type-def kind='lvalue' type-id='type-id-70' size-in-bits='64' hash='738809dcc84b1d87' id='type-id-71'/>
+    <qualified-type-def type-id='type-id-48' const='yes' hash='e4076634abaefa5b' id='type-id-49'/>
+    <qualified-type-def type-id='type-id-50' const='yes' hash='119286a292e75dce' id='type-id-51'/>
+    <pointer-type-def type-id='type-id-51' size-in-bits='64' hash='0ff524e850d755e3' id='type-id-52'/>
+    <qualified-type-def type-id='type-id-53' const='yes' hash='5c2553ac5f14245c' id='type-id-54'/>
+    <reference-type-def kind='lvalue' type-id='type-id-54' size-in-bits='64' hash='2671d1b6617ce828' id='type-id-55'/>
+    <pointer-type-def type-id='type-id-54' size-in-bits='64' hash='00611c56db4edca8' id='type-id-56'/>
+    <qualified-type-def type-id='type-id-32' const='yes' hash='d2831f65b5292088' id='type-id-57'/>
+    <reference-type-def kind='lvalue' type-id='type-id-57' size-in-bits='64' hash='116917976910aa54' id='type-id-58'/>
+    <qualified-type-def type-id='type-id-59' const='yes' hash='4686a19dc10975f2' id='type-id-60'/>
+    <reference-type-def kind='lvalue' type-id='type-id-60' size-in-bits='64' hash='42e9dcb11736a437' id='type-id-61'/>
+    <qualified-type-def type-id='type-id-33' const='yes' hash='f43ca094a5fe0d6e' id='type-id-62'/>
+    <reference-type-def kind='lvalue' type-id='type-id-62' size-in-bits='64' hash='738809dcc84b1d87' id='type-id-63'/>
     <namespace-decl name='mongo'>
-      <enum-decl name='__anonymous_enum__' is-anonymous='yes' is-declaration-only='yes' hash='27f82c82590fd4ee' id='type-id-72'>
-        <underlying-type type-id='type-id-73'/>
+      <enum-decl name='__anonymous_enum__' is-anonymous='yes' is-declaration-only='yes' hash='27f82c82590fd4ee' id='type-id-64'>
+        <underlying-type type-id='type-id-65'/>
       </enum-decl>
     </namespace-decl>
-    <function-type size-in-bits='64' hash='8f74a1ec20270963' id='type-id-74'>
-      <parameter type-id='type-id-48'/>
+    <function-type size-in-bits='64' hash='8f74a1ec20270963' id='type-id-66'>
+      <parameter type-id='type-id-40'/>
+      <return type-id='type-id-23'/>
+    </function-type>
+    <function-type size-in-bits='64' hash='7511b07d3fb67c52' id='type-id-67'>
+      <parameter type-id='type-id-40'/>
+      <parameter type-id='type-id-40'/>
+      <return type-id='type-id-23'/>
+    </function-type>
+    <function-type size-in-bits='64' hash='fbf0bbd52590ca81' id='type-id-68'>
+      <parameter type-id='type-id-55'/>
+      <return type-id='type-id-53'/>
+    </function-type>
+    <function-type size-in-bits='64' hash='8c6785e9483255b9' id='type-id-69'>
+      <parameter type-id='type-id-55'/>
+      <parameter type-id='type-id-55'/>
+      <parameter type-id='type-id-70'/>
+      <return type-id='type-id-53'/>
+    </function-type>
+    <function-type size-in-bits='64' hash='973b71b3eb83a1a4' id='type-id-71'>
+      <parameter type-id='type-id-55'/>
+      <parameter type-id='type-id-61'/>
+      <return type-id='type-id-53'/>
+    </function-type>
+    <function-type size-in-bits='64' hash='2cdd23f5a829d0f3' id='type-id-72'>
+      <parameter type-id='type-id-55'/>
+      <parameter type-id='type-id-53'/>
+      <return type-id='type-id-53'/>
+    </function-type>
+    <function-type size-in-bits='64' hash='efff91b3349b97e1' id='type-id-73'>
+      <parameter type-id='type-id-55'/>
+      <parameter type-id='type-id-74'/>
+      <return type-id='type-id-53'/>
+    </function-type>
+    <function-type size-in-bits='64' hash='bb75caa570029762' id='type-id-75'>
+      <parameter type-id='type-id-53'/>
+      <parameter type-id='type-id-76'/>
+      <return type-id='type-id-53'/>
+    </function-type>
+    <function-type size-in-bits='64' hash='8fd1cad66a87c6ca' id='type-id-77'>
+      <parameter type-id='type-id-53'/>
+      <parameter type-id='type-id-53'/>
+      <return type-id='type-id-53'/>
+    </function-type>
+    <function-type size-in-bits='64' hash='e1e08bb50c27472b' id='type-id-78'>
+      <parameter type-id='type-id-42'/>
+      <parameter type-id='type-id-58'/>
+      <return type-id='type-id-32'/>
+    </function-type>
+    <function-type size-in-bits='64' hash='ca29dbd6542b1a2d' id='type-id-79'>
+      <parameter is-variadic='yes'/>
+      <return type-id='type-id-80'/>
+    </function-type>
+    <function-type size-in-bits='64' hash='7ad3339100a477c7' id='type-id-81'>
+      <parameter type-id='type-id-8'/>
+      <parameter type-id='type-id-7'/>
+      <return type-id='type-id-80'/>
+    </function-type>
+    <function-type size-in-bits='64' hash='e377ff338f3cfc6f' id='type-id-82'>
+      <parameter type-id='type-id-8'/>
+      <parameter type-id='type-id-8'/>
+      <parameter type-id='type-id-7'/>
+      <return type-id='type-id-80'/>
+    </function-type>
+    <function-type size-in-bits='64' hash='7d66cf3e014a3ea7' id='type-id-83'>
+      <parameter type-id='type-id-8'/>
+      <parameter type-id='type-id-8'/>
+      <parameter type-id='type-id-8'/>
+      <parameter type-id='type-id-8'/>
+      <parameter type-id='type-id-7'/>
+      <return type-id='type-id-80'/>
+    </function-type>
+    <function-type size-in-bits='64' hash='0c0c484bf3d5c45c' id='type-id-84'>
+      <parameter type-id='type-id-8'/>
+      <parameter type-id='type-id-8'/>
+      <parameter type-id='type-id-85'/>
+      <parameter type-id='type-id-7'/>
+      <return type-id='type-id-80'/>
+    </function-type>
+    <function-type size-in-bits='64' hash='14cbbe7fcdf0f249' id='type-id-86'>
+      <parameter type-id='type-id-8'/>
+      <parameter type-id='type-id-85'/>
+      <parameter type-id='type-id-85'/>
+      <parameter type-id='type-id-23'/>
+      <parameter type-id='type-id-7'/>
+      <return type-id='type-id-80'/>
+    </function-type>
+    <function-type size-in-bits='64' hash='9021b3d96eebcd47' id='type-id-87'>
+      <parameter type-id='type-id-61'/>
+      <parameter is-variadic='yes'/>
+      <return type-id='type-id-80'/>
+    </function-type>
+    <type-decl name='int' size-in-bits='32' hash='09d17c08f594edc7' id='type-id-88'/>
+    <type-decl name='long int' size-in-bits='64' hash='8aa1e1a2ab2c2d3e' id='type-id-85'/>
+    <type-decl name='long long int' size-in-bits='64' hash='8aa1e1a2ab2c2d3e#1' id='type-id-89'/>
+    <reference-type-def kind='rvalue' type-id='type-id-89' size-in-bits='64' hash='17403b8d654209cb' id='type-id-90'/>
+    <function-type method-class-id='type-id-53' size-in-bits='64' hash='091f65a92015ffbd' id='type-id-91'>
+      <parameter type-id='type-id-74' is-artificial='yes'/>
       <return type-id='type-id-30'/>
     </function-type>
-    <function-type size-in-bits='64' hash='7511b07d3fb67c52' id='type-id-75'>
-      <parameter type-id='type-id-48'/>
-      <parameter type-id='type-id-48'/>
-      <return type-id='type-id-30'/>
-    </function-type>
-    <function-type size-in-bits='64' hash='fbf0bbd52590ca81' id='type-id-76'>
-      <parameter type-id='type-id-63'/>
-      <return type-id='type-id-61'/>
-    </function-type>
-    <function-type size-in-bits='64' hash='8c6785e9483255b9' id='type-id-77'>
-      <parameter type-id='type-id-63'/>
-      <parameter type-id='type-id-63'/>
-      <parameter type-id='type-id-78'/>
-      <return type-id='type-id-61'/>
-    </function-type>
-    <function-type size-in-bits='64' hash='973b71b3eb83a1a4' id='type-id-79'>
-      <parameter type-id='type-id-63'/>
-      <parameter type-id='type-id-69'/>
-      <return type-id='type-id-61'/>
-    </function-type>
-    <function-type size-in-bits='64' hash='2cdd23f5a829d0f3' id='type-id-80'>
-      <parameter type-id='type-id-63'/>
-      <parameter type-id='type-id-61'/>
-      <return type-id='type-id-61'/>
-    </function-type>
-    <function-type size-in-bits='64' hash='efff91b3349b97e1' id='type-id-81'>
-      <parameter type-id='type-id-63'/>
-      <parameter type-id='type-id-82'/>
-      <return type-id='type-id-61'/>
-    </function-type>
-    <function-type size-in-bits='64' hash='bb75caa570029762' id='type-id-83'>
-      <parameter type-id='type-id-61'/>
-      <parameter type-id='type-id-84'/>
-      <return type-id='type-id-61'/>
-    </function-type>
-    <function-type size-in-bits='64' hash='8fd1cad66a87c6ca' id='type-id-85'>
-      <parameter type-id='type-id-61'/>
-      <parameter type-id='type-id-61'/>
-      <return type-id='type-id-61'/>
-    </function-type>
-    <function-type size-in-bits='64' hash='e1e08bb50c27472b' id='type-id-86'>
-      <parameter type-id='type-id-50'/>
-      <parameter type-id='type-id-66'/>
-      <return type-id='type-id-39'/>
-    </function-type>
-    <function-type size-in-bits='64' hash='ca29dbd6542b1a2d' id='type-id-87'>
-      <parameter is-variadic='yes'/>
-      <return type-id='type-id-88'/>
-    </function-type>
-    <function-type size-in-bits='64' hash='7ad3339100a477c7' id='type-id-89'>
-      <parameter type-id='type-id-8'/>
-      <parameter type-id='type-id-7'/>
-      <return type-id='type-id-88'/>
-    </function-type>
-    <function-type size-in-bits='64' hash='e377ff338f3cfc6f' id='type-id-90'>
-      <parameter type-id='type-id-8'/>
-      <parameter type-id='type-id-8'/>
-      <parameter type-id='type-id-7'/>
-      <return type-id='type-id-88'/>
-    </function-type>
-    <function-type size-in-bits='64' hash='7d66cf3e014a3ea7' id='type-id-91'>
-      <parameter type-id='type-id-8'/>
-      <parameter type-id='type-id-8'/>
-      <parameter type-id='type-id-8'/>
-      <parameter type-id='type-id-8'/>
-      <parameter type-id='type-id-7'/>
-      <return type-id='type-id-88'/>
-    </function-type>
-    <function-type size-in-bits='64' hash='0c0c484bf3d5c45c' id='type-id-92'>
-      <parameter type-id='type-id-8'/>
-      <parameter type-id='type-id-8'/>
-      <parameter type-id='type-id-93'/>
-      <parameter type-id='type-id-7'/>
-      <return type-id='type-id-88'/>
-    </function-type>
-    <function-type size-in-bits='64' hash='14cbbe7fcdf0f249' id='type-id-94'>
-      <parameter type-id='type-id-8'/>
-      <parameter type-id='type-id-93'/>
-      <parameter type-id='type-id-93'/>
-      <parameter type-id='type-id-30'/>
-      <parameter type-id='type-id-7'/>
-      <return type-id='type-id-88'/>
-    </function-type>
-    <function-type size-in-bits='64' hash='9021b3d96eebcd47' id='type-id-95'>
-      <parameter type-id='type-id-69'/>
-      <parameter is-variadic='yes'/>
-      <return type-id='type-id-88'/>
-    </function-type>
-    <type-decl name='int' size-in-bits='32' hash='09d17c08f594edc7' id='type-id-96'/>
-    <type-decl name='long int' size-in-bits='64' hash='8aa1e1a2ab2c2d3e' id='type-id-93'/>
-    <type-decl name='long long int' size-in-bits='64' hash='8aa1e1a2ab2c2d3e#1' id='type-id-97'/>
-    <reference-type-def kind='rvalue' type-id='type-id-97' size-in-bits='64' hash='17403b8d654209cb' id='type-id-98'/>
-    <function-type method-class-id='type-id-61' size-in-bits='64' hash='091f65a92015ffbd' id='type-id-99'>
-      <parameter type-id='type-id-82' is-artificial='yes'/>
-      <return type-id='type-id-37'/>
-    </function-type>
-    <function-type method-class-id='type-id-61' const='yes' size-in-bits='64' hash='5c7918a87b296749' id='type-id-100'>
-      <parameter type-id='type-id-64' is-artificial='yes'/>
-      <parameter type-id='type-id-72'/>
-      <return type-id='type-id-63'/>
-    </function-type>
-    <function-type method-class-id='type-id-61' const='yes' size-in-bits='64' hash='eeefe9b4f18fd98e' id='type-id-101'>
-      <parameter type-id='type-id-64' is-artificial='yes'/>
-      <return type-id='type-id-97'/>
-    </function-type>
-    <function-type method-class-id='type-id-61' size-in-bits='64' hash='ceffc2274feacb34' id='type-id-102'>
-      <parameter type-id='type-id-82' is-artificial='yes'/>
-      <parameter type-id='type-id-61'/>
-      <return type-id='type-id-103'/>
-    </function-type>
-    <function-type method-class-id='type-id-61' size-in-bits='64' hash='c6695b94423f7f1a' id='type-id-104'>
-      <parameter type-id='type-id-82' is-artificial='yes'/>
-      <return type-id='type-id-61'/>
-    </function-type>
-    <function-type method-class-id='type-id-61' size-in-bits='64' hash='1336b9505348306a' id='type-id-105'>
-      <parameter type-id='type-id-82' is-artificial='yes'/>
-      <parameter type-id='type-id-15'/>
-      <return type-id='type-id-61'/>
-    </function-type>
-    <function-type method-class-id='type-id-61' size-in-bits='64' hash='a571934df360972e' id='type-id-106'>
-      <parameter type-id='type-id-82' is-artificial='yes'/>
-      <parameter type-id='type-id-43'/>
-      <parameter type-id='type-id-61'/>
-      <return type-id='type-id-61'/>
-    </function-type>
-    <function-type method-class-id='type-id-61' size-in-bits='64' hash='d15e6debed04c222' id='type-id-107'>
-      <parameter type-id='type-id-82' is-artificial='yes'/>
-      <parameter type-id='type-id-48'/>
-      <return type-id='type-id-61'/>
-    </function-type>
-    <function-type method-class-id='type-id-61' size-in-bits='64' hash='b0c7fff8cd85969a' id='type-id-108'>
-      <parameter type-id='type-id-82' is-artificial='yes'/>
-      <parameter type-id='type-id-48'/>
-      <parameter type-id='type-id-61'/>
-      <return type-id='type-id-61'/>
-    </function-type>
-    <function-type method-class-id='type-id-61' size-in-bits='64' hash='28ad11b1f7d7efa4' id='type-id-109'>
-      <parameter type-id='type-id-82' is-artificial='yes'/>
-      <parameter type-id='type-id-63'/>
-      <parameter type-id='type-id-61'/>
-      <return type-id='type-id-61'/>
-    </function-type>
-    <function-type method-class-id='type-id-61' size-in-bits='64' hash='c935820f0935a341' id='type-id-110'>
-      <parameter type-id='type-id-82' is-artificial='yes'/>
-      <parameter type-id='type-id-63'/>
-      <return type-id='type-id-61'/>
-    </function-type>
-    <function-type method-class-id='type-id-61' size-in-bits='64' hash='1cd6a69dd42cc04b' id='type-id-111'>
+    <function-type method-class-id='type-id-53' const='yes' size-in-bits='64' hash='5c7918a87b296749' id='type-id-92'>
+      <parameter type-id='type-id-56' is-artificial='yes'/>
       <parameter type-id='type-id-64'/>
-      <parameter type-id='type-id-48'/>
-      <parameter type-id='type-id-82'/>
-      <parameter type-id='type-id-112'/>
-      <return type-id='type-id-61'/>
+      <return type-id='type-id-55'/>
     </function-type>
-    <function-type method-class-id='type-id-61' size-in-bits='64' hash='bfdf8c3b3d5b3d72' id='type-id-113'>
-      <parameter type-id='type-id-82' is-artificial='yes'/>
-      <parameter type-id='type-id-112'/>
-      <return type-id='type-id-61'/>
+    <function-type method-class-id='type-id-53' const='yes' size-in-bits='64' hash='eeefe9b4f18fd98e' id='type-id-93'>
+      <parameter type-id='type-id-56' is-artificial='yes'/>
+      <return type-id='type-id-89'/>
     </function-type>
-    <function-type method-class-id='type-id-61' size-in-bits='64' hash='70068f93dd28182c' id='type-id-114'>
-      <parameter type-id='type-id-82' is-artificial='yes'/>
-      <parameter type-id='type-id-112'/>
-      <parameter type-id='type-id-48'/>
-      <parameter type-id='type-id-69'/>
-      <return type-id='type-id-61'/>
+    <function-type method-class-id='type-id-53' size-in-bits='64' hash='ceffc2274feacb34' id='type-id-94'>
+      <parameter type-id='type-id-74' is-artificial='yes'/>
+      <parameter type-id='type-id-53'/>
+      <return type-id='type-id-95'/>
     </function-type>
-    <function-type method-class-id='type-id-61' size-in-bits='64' hash='44b1872af37d4002' id='type-id-115'>
-      <parameter type-id='type-id-82' is-artificial='yes'/>
-      <parameter type-id='type-id-112'/>
-      <parameter type-id='type-id-63'/>
-      <parameter type-id='type-id-61'/>
-      <return type-id='type-id-61'/>
+    <function-type method-class-id='type-id-53' size-in-bits='64' hash='c6695b94423f7f1a' id='type-id-96'>
+      <parameter type-id='type-id-74' is-artificial='yes'/>
+      <return type-id='type-id-53'/>
     </function-type>
-    <function-type method-class-id='type-id-61' size-in-bits='64' hash='826273f3c8db155a' id='type-id-116'>
-      <parameter type-id='type-id-82' is-artificial='yes'/>
-      <parameter type-id='type-id-61'/>
-      <return type-id='type-id-61'/>
+    <function-type method-class-id='type-id-53' size-in-bits='64' hash='1336b9505348306a' id='type-id-97'>
+      <parameter type-id='type-id-74' is-artificial='yes'/>
+      <parameter type-id='type-id-9'/>
+      <return type-id='type-id-53'/>
     </function-type>
-    <function-type method-class-id='type-id-61' size-in-bits='64' hash='da26ec3b35762981' id='type-id-117'>
-      <parameter type-id='type-id-82' is-artificial='yes'/>
-      <parameter type-id='type-id-61'/>
-      <parameter type-id='type-id-118'/>
-      <return type-id='type-id-61'/>
-    </function-type>
-    <function-type method-class-id='type-id-61' const='yes' size-in-bits='64' hash='8af6385281cb001b' id='type-id-119'>
-      <parameter type-id='type-id-64' is-artificial='yes'/>
-      <parameter type-id='type-id-120'/>
-      <return type-id='type-id-61'/>
-    </function-type>
-    <function-type method-class-id='type-id-121' size-in-bits='64' hash='8bccfc7dfb48e775' id='type-id-122'>
-      <parameter type-id='type-id-63'/>
-      <parameter type-id='type-id-37'/>
-      <parameter type-id='type-id-118'/>
-      <parameter type-id='type-id-123'/>
-      <parameter type-id='type-id-124'/>
-      <return type-id='type-id-61'/>
-    </function-type>
-    <function-type method-class-id='type-id-121' size-in-bits='64' hash='cb0250db05d2abea' id='type-id-125'>
-      <parameter type-id='type-id-82'/>
-      <parameter type-id='type-id-50'/>
-      <parameter type-id='type-id-118'/>
-      <parameter type-id='type-id-123'/>
-      <parameter type-id='type-id-124'/>
-      <return type-id='type-id-61'/>
-    </function-type>
-    <function-type method-class-id='type-id-61' size-in-bits='64' hash='798a13326dd5f81b' id='type-id-126'>
-      <parameter type-id='type-id-82' is-artificial='yes'/>
-      <parameter type-id='type-id-63'/>
-      <return type-id='type-id-127'/>
-    </function-type>
-    <function-type method-class-id='type-id-61' size-in-bits='64' hash='63df5e3d481ef454' id='type-id-128'>
-      <parameter type-id='type-id-82' is-artificial='yes'/>
-      <parameter type-id='type-id-96'/>
-      <parameter type-id='type-id-96'/>
-      <return type-id='type-id-127'/>
-    </function-type>
-    <function-type method-class-id='type-id-61' size-in-bits='64' hash='49cebc7285ca37d6' id='type-id-129'>
-      <parameter type-id='type-id-82' is-artificial='yes'/>
-      <parameter type-id='type-id-97'/>
-      <parameter type-id='type-id-96'/>
-      <return type-id='type-id-127'/>
-    </function-type>
-    <function-type method-class-id='type-id-61' size-in-bits='64' hash='9af697896821d42c' id='type-id-130'>
-      <parameter type-id='type-id-82' is-artificial='yes'/>
-      <parameter type-id='type-id-61'/>
-      <parameter type-id='type-id-15'/>
-      <return type-id='type-id-127'/>
-    </function-type>
-    <function-type method-class-id='type-id-61' size-in-bits='64' hash='311a1c5c7d3fdf1c' id='type-id-131'>
-      <parameter type-id='type-id-82' is-artificial='yes'/>
-      <parameter type-id='type-id-61'/>
-      <parameter type-id='type-id-50'/>
-      <parameter type-id='type-id-96'/>
-      <return type-id='type-id-127'/>
-    </function-type>
-    <function-type method-class-id='type-id-61' size-in-bits='64' hash='2a73a3ed3964bfdd' id='type-id-132'>
-      <parameter type-id='type-id-82' is-artificial='yes'/>
-      <parameter type-id='type-id-61'/>
-      <parameter type-id='type-id-96'/>
-      <return type-id='type-id-127'/>
-    </function-type>
-    <function-type method-class-id='type-id-61' size-in-bits='64' hash='7819eb0f1526dcbf' id='type-id-133'>
-      <parameter type-id='type-id-82' is-artificial='yes'/>
-      <parameter type-id='type-id-61'/>
-      <parameter type-id='type-id-96'/>
-      <parameter type-id='type-id-72'/>
-      <parameter type-id='type-id-134'/>
-      <return type-id='type-id-127'/>
-    </function-type>
-    <function-type method-class-id='type-id-61' size-in-bits='64' hash='2444107157d15599' id='type-id-135'>
-      <parameter type-id='type-id-82' is-artificial='yes'/>
-      <parameter type-id='type-id-61'/>
-      <parameter type-id='type-id-97'/>
-      <return type-id='type-id-127'/>
-    </function-type>
-    <function-type method-class-id='type-id-136' size-in-bits='64' hash='9d41c6a21b3949a2' id='type-id-137'>
-      <parameter type-id='type-id-138' is-artificial='yes'/>
-      <parameter type-id='type-id-63'/>
-      <return type-id='type-id-139'/>
-    </function-type>
-    <function-type method-class-id='type-id-61' size-in-bits='64' hash='757374cddf64b1a5' id='type-id-140'>
-      <parameter type-id='type-id-82' is-artificial='yes'/>
-      <return type-id='type-id-67'/>
-    </function-type>
-    <function-type method-class-id='type-id-61' size-in-bits='64' hash='9f270c331d9ebe6a' id='type-id-141'>
-      <parameter type-id='type-id-82' is-artificial='yes'/>
-      <parameter type-id='type-id-82'/>
-      <return type-id='type-id-67'/>
-    </function-type>
-    <function-type method-class-id='type-id-67' size-in-bits='64' hash='5cdae23911790379' id='type-id-142'>
-      <parameter type-id='type-id-78' is-artificial='yes'/>
-      <parameter type-id='type-id-69'/>
-      <return type-id='type-id-143'/>
-    </function-type>
-    <function-type method-class-id='type-id-22' size-in-bits='64' hash='b7d9938eba5f2d72' id='type-id-23'>
-      <parameter type-id='type-id-27' is-artificial='yes'/>
-      <return type-id='type-id-88'/>
-    </function-type>
-    <function-type method-class-id='type-id-18' size-in-bits='64' hash='b7d9938eba5f2d72#1' id='type-id-19'>
-      <parameter type-id='type-id-26' is-artificial='yes'/>
-      <return type-id='type-id-88'/>
-    </function-type>
-    <function-type method-class-id='type-id-24' size-in-bits='64' hash='2b6aa7e96c57d480' id='type-id-25'>
-      <parameter type-id='type-id-28' is-artificial='yes'/>
+    <function-type method-class-id='type-id-53' size-in-bits='64' hash='a571934df360972e' id='type-id-98'>
+      <parameter type-id='type-id-74' is-artificial='yes'/>
       <parameter type-id='type-id-35'/>
-      <return type-id='type-id-88'/>
+      <parameter type-id='type-id-53'/>
+      <return type-id='type-id-53'/>
     </function-type>
-    <function-type method-class-id='type-id-30' size-in-bits='64' hash='7cc0469cd40ce252' id='type-id-31'>
-      <parameter type-id='type-id-33' is-artificial='yes'/>
-      <parameter type-id='type-id-48'/>
-      <return type-id='type-id-88'/>
+    <function-type method-class-id='type-id-53' size-in-bits='64' hash='d15e6debed04c222' id='type-id-99'>
+      <parameter type-id='type-id-74' is-artificial='yes'/>
+      <parameter type-id='type-id-40'/>
+      <return type-id='type-id-53'/>
     </function-type>
-    <function-type method-class-id='type-id-61' size-in-bits='64' hash='eb99fd5a868aaf05' id='type-id-144'>
-      <parameter type-id='type-id-82' is-artificial='yes'/>
-      <return type-id='type-id-88'/>
+    <function-type method-class-id='type-id-53' size-in-bits='64' hash='b0c7fff8cd85969a' id='type-id-100'>
+      <parameter type-id='type-id-74' is-artificial='yes'/>
+      <parameter type-id='type-id-40'/>
+      <parameter type-id='type-id-53'/>
+      <return type-id='type-id-53'/>
     </function-type>
-    <function-type method-class-id='type-id-61' size-in-bits='64' hash='31992b693bc7a568' id='type-id-145'>
-      <parameter type-id='type-id-82' is-artificial='yes'/>
-      <parameter type-id='type-id-50'/>
-      <return type-id='type-id-88'/>
+    <function-type method-class-id='type-id-53' size-in-bits='64' hash='28ad11b1f7d7efa4' id='type-id-101'>
+      <parameter type-id='type-id-74' is-artificial='yes'/>
+      <parameter type-id='type-id-55'/>
+      <parameter type-id='type-id-53'/>
+      <return type-id='type-id-53'/>
     </function-type>
-    <function-type method-class-id='type-id-61' size-in-bits='64' hash='3f65a8f0f3687c99' id='type-id-146'>
-      <parameter type-id='type-id-82' is-artificial='yes'/>
-      <parameter type-id='type-id-63'/>
+    <function-type method-class-id='type-id-53' size-in-bits='64' hash='c935820f0935a341' id='type-id-102'>
+      <parameter type-id='type-id-74' is-artificial='yes'/>
+      <parameter type-id='type-id-55'/>
+      <return type-id='type-id-53'/>
+    </function-type>
+    <function-type method-class-id='type-id-53' size-in-bits='64' hash='1cd6a69dd42cc04b' id='type-id-103'>
+      <parameter type-id='type-id-56'/>
+      <parameter type-id='type-id-40'/>
+      <parameter type-id='type-id-74'/>
+      <parameter type-id='type-id-104'/>
+      <return type-id='type-id-53'/>
+    </function-type>
+    <function-type method-class-id='type-id-53' size-in-bits='64' hash='bfdf8c3b3d5b3d72' id='type-id-105'>
+      <parameter type-id='type-id-74' is-artificial='yes'/>
+      <parameter type-id='type-id-104'/>
+      <return type-id='type-id-53'/>
+    </function-type>
+    <function-type method-class-id='type-id-53' size-in-bits='64' hash='70068f93dd28182c' id='type-id-106'>
+      <parameter type-id='type-id-74' is-artificial='yes'/>
+      <parameter type-id='type-id-104'/>
+      <parameter type-id='type-id-40'/>
       <parameter type-id='type-id-61'/>
-      <return type-id='type-id-88'/>
+      <return type-id='type-id-53'/>
     </function-type>
-    <function-type method-class-id='type-id-61' size-in-bits='64' hash='3ae8b3ae72307f3d' id='type-id-147'>
-      <parameter type-id='type-id-82' is-artificial='yes'/>
+    <function-type method-class-id='type-id-53' size-in-bits='64' hash='44b1872af37d4002' id='type-id-107'>
+      <parameter type-id='type-id-74' is-artificial='yes'/>
+      <parameter type-id='type-id-104'/>
+      <parameter type-id='type-id-55'/>
+      <parameter type-id='type-id-53'/>
+      <return type-id='type-id-53'/>
+    </function-type>
+    <function-type method-class-id='type-id-53' size-in-bits='64' hash='826273f3c8db155a' id='type-id-108'>
+      <parameter type-id='type-id-74' is-artificial='yes'/>
+      <parameter type-id='type-id-53'/>
+      <return type-id='type-id-53'/>
+    </function-type>
+    <function-type method-class-id='type-id-53' size-in-bits='64' hash='da26ec3b35762981' id='type-id-109'>
+      <parameter type-id='type-id-74' is-artificial='yes'/>
+      <parameter type-id='type-id-53'/>
+      <parameter type-id='type-id-110'/>
+      <return type-id='type-id-53'/>
+    </function-type>
+    <function-type method-class-id='type-id-53' const='yes' size-in-bits='64' hash='8af6385281cb001b' id='type-id-111'>
+      <parameter type-id='type-id-56' is-artificial='yes'/>
+      <parameter type-id='type-id-112'/>
+      <return type-id='type-id-53'/>
+    </function-type>
+    <function-type method-class-id='type-id-113' size-in-bits='64' hash='8bccfc7dfb48e775' id='type-id-114'>
+      <parameter type-id='type-id-55'/>
+      <parameter type-id='type-id-30'/>
+      <parameter type-id='type-id-110'/>
+      <parameter type-id='type-id-115'/>
+      <parameter type-id='type-id-116'/>
+      <return type-id='type-id-53'/>
+    </function-type>
+    <function-type method-class-id='type-id-113' size-in-bits='64' hash='cb0250db05d2abea' id='type-id-117'>
+      <parameter type-id='type-id-74'/>
+      <parameter type-id='type-id-42'/>
+      <parameter type-id='type-id-110'/>
+      <parameter type-id='type-id-115'/>
+      <parameter type-id='type-id-116'/>
+      <return type-id='type-id-53'/>
+    </function-type>
+    <function-type method-class-id='type-id-53' size-in-bits='64' hash='798a13326dd5f81b' id='type-id-118'>
+      <parameter type-id='type-id-74' is-artificial='yes'/>
+      <parameter type-id='type-id-55'/>
+      <return type-id='type-id-119'/>
+    </function-type>
+    <function-type method-class-id='type-id-53' size-in-bits='64' hash='63df5e3d481ef454' id='type-id-120'>
+      <parameter type-id='type-id-74' is-artificial='yes'/>
+      <parameter type-id='type-id-88'/>
+      <parameter type-id='type-id-88'/>
+      <return type-id='type-id-119'/>
+    </function-type>
+    <function-type method-class-id='type-id-53' size-in-bits='64' hash='49cebc7285ca37d6' id='type-id-121'>
+      <parameter type-id='type-id-74' is-artificial='yes'/>
+      <parameter type-id='type-id-89'/>
+      <parameter type-id='type-id-88'/>
+      <return type-id='type-id-119'/>
+    </function-type>
+    <function-type method-class-id='type-id-53' size-in-bits='64' hash='9af697896821d42c' id='type-id-122'>
+      <parameter type-id='type-id-74' is-artificial='yes'/>
+      <parameter type-id='type-id-53'/>
+      <parameter type-id='type-id-9'/>
+      <return type-id='type-id-119'/>
+    </function-type>
+    <function-type method-class-id='type-id-53' size-in-bits='64' hash='311a1c5c7d3fdf1c' id='type-id-123'>
+      <parameter type-id='type-id-74' is-artificial='yes'/>
+      <parameter type-id='type-id-53'/>
+      <parameter type-id='type-id-42'/>
+      <parameter type-id='type-id-88'/>
+      <return type-id='type-id-119'/>
+    </function-type>
+    <function-type method-class-id='type-id-53' size-in-bits='64' hash='2a73a3ed3964bfdd' id='type-id-124'>
+      <parameter type-id='type-id-74' is-artificial='yes'/>
+      <parameter type-id='type-id-53'/>
+      <parameter type-id='type-id-88'/>
+      <return type-id='type-id-119'/>
+    </function-type>
+    <function-type method-class-id='type-id-53' size-in-bits='64' hash='7819eb0f1526dcbf' id='type-id-125'>
+      <parameter type-id='type-id-74' is-artificial='yes'/>
+      <parameter type-id='type-id-53'/>
+      <parameter type-id='type-id-88'/>
       <parameter type-id='type-id-64'/>
-      <return type-id='type-id-88'/>
+      <parameter type-id='type-id-126'/>
+      <return type-id='type-id-119'/>
     </function-type>
-    <function-type method-class-id='type-id-61' size-in-bits='64' hash='2efb9e4136e3b996' id='type-id-148'>
-      <parameter type-id='type-id-82' is-artificial='yes'/>
-      <parameter type-id='type-id-64'/>
-      <parameter type-id='type-id-48'/>
-      <parameter type-id='type-id-82'/>
-      <return type-id='type-id-88'/>
+    <function-type method-class-id='type-id-53' size-in-bits='64' hash='2444107157d15599' id='type-id-127'>
+      <parameter type-id='type-id-74' is-artificial='yes'/>
+      <parameter type-id='type-id-53'/>
+      <parameter type-id='type-id-89'/>
+      <return type-id='type-id-119'/>
     </function-type>
-    <function-type method-class-id='type-id-61' size-in-bits='64' hash='a9619623288fb9dd' id='type-id-149'>
-      <parameter type-id='type-id-82' is-artificial='yes'/>
-      <parameter type-id='type-id-96'/>
-      <return type-id='type-id-88'/>
+    <function-type method-class-id='type-id-128' size-in-bits='64' hash='9d41c6a21b3949a2' id='type-id-129'>
+      <parameter type-id='type-id-130' is-artificial='yes'/>
+      <parameter type-id='type-id-55'/>
+      <return type-id='type-id-131'/>
     </function-type>
-    <function-type method-class-id='type-id-61' size-in-bits='64' hash='38fdbd00c7781bf7' id='type-id-150'>
-      <parameter type-id='type-id-82' is-artificial='yes'/>
-      <parameter type-id='type-id-103'/>
-      <return type-id='type-id-88'/>
+    <function-type method-class-id='type-id-53' size-in-bits='64' hash='757374cddf64b1a5' id='type-id-132'>
+      <parameter type-id='type-id-74' is-artificial='yes'/>
+      <return type-id='type-id-59'/>
     </function-type>
-    <function-type method-class-id='type-id-61' size-in-bits='64' hash='01f14e82ca899b76' id='type-id-151'>
-      <parameter type-id='type-id-82' is-artificial='yes'/>
-      <parameter type-id='type-id-84'/>
-      <return type-id='type-id-88'/>
+    <function-type method-class-id='type-id-53' size-in-bits='64' hash='9f270c331d9ebe6a' id='type-id-133'>
+      <parameter type-id='type-id-74' is-artificial='yes'/>
+      <parameter type-id='type-id-74'/>
+      <return type-id='type-id-59'/>
     </function-type>
-    <function-type method-class-id='type-id-61' size-in-bits='64' hash='5e2a06b220c09dbb' id='type-id-152'>
-      <parameter type-id='type-id-82' is-artificial='yes'/>
-      <parameter type-id='type-id-118'/>
-      <return type-id='type-id-88'/>
+    <function-type method-class-id='type-id-59' size-in-bits='64' hash='5cdae23911790379' id='type-id-134'>
+      <parameter type-id='type-id-70' is-artificial='yes'/>
+      <parameter type-id='type-id-61'/>
+      <return type-id='type-id-135'/>
     </function-type>
-    <function-type method-class-id='type-id-61' size-in-bits='64' hash='b52d3317eb117e3b' id='type-id-153'>
-      <parameter type-id='type-id-82' is-artificial='yes'/>
-      <parameter type-id='type-id-143'/>
-      <return type-id='type-id-88'/>
+    <function-type method-class-id='type-id-16' size-in-bits='64' hash='b7d9938eba5f2d72' id='type-id-17'>
+      <parameter type-id='type-id-21' is-artificial='yes'/>
+      <return type-id='type-id-80'/>
     </function-type>
-    <function-type method-class-id='type-id-61' size-in-bits='64' hash='cd74f4b6bf692558' id='type-id-154'>
-      <parameter type-id='type-id-82' is-artificial='yes'/>
-      <parameter type-id='type-id-67'/>
-      <return type-id='type-id-88'/>
+    <function-type method-class-id='type-id-12' size-in-bits='64' hash='b7d9938eba5f2d72#1' id='type-id-13'>
+      <parameter type-id='type-id-20' is-artificial='yes'/>
+      <return type-id='type-id-80'/>
     </function-type>
-    <function-type method-class-id='type-id-61' size-in-bits='64' hash='ffe18ad036b77dd9' id='type-id-155'>
-      <parameter type-id='type-id-82' is-artificial='yes'/>
-      <parameter type-id='type-id-120'/>
-      <return type-id='type-id-88'/>
+    <function-type method-class-id='type-id-18' size-in-bits='64' hash='2b6aa7e96c57d480' id='type-id-19'>
+      <parameter type-id='type-id-22' is-artificial='yes'/>
+      <parameter type-id='type-id-28'/>
+      <return type-id='type-id-80'/>
     </function-type>
-    <function-type method-class-id='type-id-61' size-in-bits='64' hash='513e20440b4ed600' id='type-id-156'>
-      <parameter type-id='type-id-82' is-artificial='yes'/>
-      <parameter type-id='type-id-157'/>
-      <return type-id='type-id-88'/>
-    </function-type>
-    <function-type method-class-id='type-id-58' const='yes' size-in-bits='64' hash='105d8c6aac01ee38' id='type-id-158'>
-      <parameter type-id='type-id-60' is-artificial='yes'/>
-      <return type-id='type-id-88'/>
-    </function-type>
-    <function-type method-class-id='type-id-67' size-in-bits='64' hash='34be4b5fbc1dda5d' id='type-id-159'>
-      <parameter type-id='type-id-78' is-artificial='yes'/>
-      <return type-id='type-id-88'/>
-    </function-type>
-    <function-type method-class-id='type-id-160' size-in-bits='64' hash='34be4b5fbc1dda5d#1' id='type-id-161'>
-      <parameter type-id='type-id-162' is-artificial='yes'/>
-      <return type-id='type-id-88'/>
-    </function-type>
-    <function-type method-class-id='type-id-67' size-in-bits='64' hash='83af9e53c7a20006' id='type-id-163'>
-      <parameter type-id='type-id-78' is-artificial='yes'/>
-      <parameter type-id='type-id-16'/>
-      <return type-id='type-id-88'/>
-    </function-type>
-    <function-type method-class-id='type-id-67' size-in-bits='64' hash='30eb3696ba5b35fd' id='type-id-164'>
-      <parameter type-id='type-id-78' is-artificial='yes'/>
-      <parameter type-id='type-id-32'/>
-      <return type-id='type-id-88'/>
-    </function-type>
-    <function-type method-class-id='type-id-67' size-in-bits='64' hash='b8eceae882efa9b2' id='type-id-165'>
-      <parameter type-id='type-id-78' is-artificial='yes'/>
-      <parameter type-id='type-id-98'/>
-      <return type-id='type-id-88'/>
-    </function-type>
-    <function-type method-class-id='type-id-67' size-in-bits='64' hash='bfee6a5cfb607342' id='type-id-166'>
-      <parameter type-id='type-id-78' is-artificial='yes'/>
-      <parameter type-id='type-id-167'/>
-      <return type-id='type-id-88'/>
-    </function-type>
-    <function-type method-class-id='type-id-67' size-in-bits='64' hash='2147ef1a2149143a' id='type-id-168'>
-      <parameter type-id='type-id-78' is-artificial='yes'/>
-      <parameter type-id='type-id-127'/>
-      <return type-id='type-id-88'/>
-    </function-type>
-    <function-type method-class-id='type-id-67' size-in-bits='64' hash='9289df8537f15d31' id='type-id-169'>
-      <parameter type-id='type-id-78' is-artificial='yes'/>
-      <parameter type-id='type-id-170'/>
-      <return type-id='type-id-88'/>
-    </function-type>
-    <function-type method-class-id='type-id-67' size-in-bits='64' hash='115c44b130310307' id='type-id-171'>
-      <parameter type-id='type-id-78' is-artificial='yes'/>
-      <parameter type-id='type-id-172'/>
-      <return type-id='type-id-88'/>
-    </function-type>
-    <function-type method-class-id='type-id-67' size-in-bits='64' hash='4b5702f45783c369' id='type-id-173'>
-      <parameter type-id='type-id-78' is-artificial='yes'/>
-      <parameter type-id='type-id-174'/>
-      <return type-id='type-id-88'/>
-    </function-type>
-    <function-type method-class-id='type-id-175' size-in-bits='64' hash='10bc8ed877c06400' id='type-id-176'>
-      <parameter type-id='type-id-177' is-artificial='yes'/>
-      <return type-id='type-id-88'/>
-    </function-type>
-    <function-type method-class-id='type-id-178' size-in-bits='64' hash='10bc8ed877c06400#1' id='type-id-179'>
-      <parameter type-id='type-id-180' is-artificial='yes'/>
-      <return type-id='type-id-88'/>
-    </function-type>
-    <function-type method-class-id='type-id-18' size-in-bits='64' hash='42da2aee204175df' id='type-id-21'>
+    <function-type method-class-id='type-id-23' size-in-bits='64' hash='7cc0469cd40ce252' id='type-id-24'>
       <parameter type-id='type-id-26' is-artificial='yes'/>
-      <return type-id='type-id-134'/>
+      <parameter type-id='type-id-40'/>
+      <return type-id='type-id-80'/>
     </function-type>
-    <function-type method-class-id='type-id-18' size-in-bits='64' hash='71af1c09a34cb87a' id='type-id-20'>
-      <parameter type-id='type-id-26' is-artificial='yes'/>
-      <parameter type-id='type-id-46'/>
-      <return type-id='type-id-134'/>
+    <function-type method-class-id='type-id-53' size-in-bits='64' hash='eb99fd5a868aaf05' id='type-id-136'>
+      <parameter type-id='type-id-74' is-artificial='yes'/>
+      <return type-id='type-id-80'/>
     </function-type>
-    <function-type method-class-id='type-id-160' size-in-bits='64' hash='7dbe37910833919a' id='type-id-181'>
-      <parameter type-id='type-id-162' is-artificial='yes'/>
-      <parameter type-id='type-id-71'/>
-      <return type-id='type-id-134'/>
+    <function-type method-class-id='type-id-53' size-in-bits='64' hash='31992b693bc7a568' id='type-id-137'>
+      <parameter type-id='type-id-74' is-artificial='yes'/>
+      <parameter type-id='type-id-42'/>
+      <return type-id='type-id-80'/>
     </function-type>
-    <reference-type-def kind='lvalue' type-id='type-id-182' size-in-bits='64' hash='9cee77425782d868' id='type-id-103'/>
-    <pointer-type-def type-id='type-id-38' size-in-bits='64' hash='cf4f61ea75a1f228' id='type-id-112'/>
+    <function-type method-class-id='type-id-53' size-in-bits='64' hash='3f65a8f0f3687c99' id='type-id-138'>
+      <parameter type-id='type-id-74' is-artificial='yes'/>
+      <parameter type-id='type-id-55'/>
+      <parameter type-id='type-id-53'/>
+      <return type-id='type-id-80'/>
+    </function-type>
+    <function-type method-class-id='type-id-53' size-in-bits='64' hash='3ae8b3ae72307f3d' id='type-id-139'>
+      <parameter type-id='type-id-74' is-artificial='yes'/>
+      <parameter type-id='type-id-56'/>
+      <return type-id='type-id-80'/>
+    </function-type>
+    <function-type method-class-id='type-id-53' size-in-bits='64' hash='2efb9e4136e3b996' id='type-id-140'>
+      <parameter type-id='type-id-74' is-artificial='yes'/>
+      <parameter type-id='type-id-56'/>
+      <parameter type-id='type-id-40'/>
+      <parameter type-id='type-id-74'/>
+      <return type-id='type-id-80'/>
+    </function-type>
+    <function-type method-class-id='type-id-53' size-in-bits='64' hash='a9619623288fb9dd' id='type-id-141'>
+      <parameter type-id='type-id-74' is-artificial='yes'/>
+      <parameter type-id='type-id-88'/>
+      <return type-id='type-id-80'/>
+    </function-type>
+    <function-type method-class-id='type-id-53' size-in-bits='64' hash='38fdbd00c7781bf7' id='type-id-142'>
+      <parameter type-id='type-id-74' is-artificial='yes'/>
+      <parameter type-id='type-id-95'/>
+      <return type-id='type-id-80'/>
+    </function-type>
+    <function-type method-class-id='type-id-53' size-in-bits='64' hash='01f14e82ca899b76' id='type-id-143'>
+      <parameter type-id='type-id-74' is-artificial='yes'/>
+      <parameter type-id='type-id-76'/>
+      <return type-id='type-id-80'/>
+    </function-type>
+    <function-type method-class-id='type-id-53' size-in-bits='64' hash='5e2a06b220c09dbb' id='type-id-144'>
+      <parameter type-id='type-id-74' is-artificial='yes'/>
+      <parameter type-id='type-id-110'/>
+      <return type-id='type-id-80'/>
+    </function-type>
+    <function-type method-class-id='type-id-53' size-in-bits='64' hash='b52d3317eb117e3b' id='type-id-145'>
+      <parameter type-id='type-id-74' is-artificial='yes'/>
+      <parameter type-id='type-id-135'/>
+      <return type-id='type-id-80'/>
+    </function-type>
+    <function-type method-class-id='type-id-53' size-in-bits='64' hash='cd74f4b6bf692558' id='type-id-146'>
+      <parameter type-id='type-id-74' is-artificial='yes'/>
+      <parameter type-id='type-id-59'/>
+      <return type-id='type-id-80'/>
+    </function-type>
+    <function-type method-class-id='type-id-53' size-in-bits='64' hash='ffe18ad036b77dd9' id='type-id-147'>
+      <parameter type-id='type-id-74' is-artificial='yes'/>
+      <parameter type-id='type-id-112'/>
+      <return type-id='type-id-80'/>
+    </function-type>
+    <function-type method-class-id='type-id-53' size-in-bits='64' hash='513e20440b4ed600' id='type-id-148'>
+      <parameter type-id='type-id-74' is-artificial='yes'/>
+      <parameter type-id='type-id-149'/>
+      <return type-id='type-id-80'/>
+    </function-type>
+    <function-type method-class-id='type-id-50' const='yes' size-in-bits='64' hash='105d8c6aac01ee38' id='type-id-150'>
+      <parameter type-id='type-id-52' is-artificial='yes'/>
+      <return type-id='type-id-80'/>
+    </function-type>
+    <function-type method-class-id='type-id-151' size-in-bits='64' hash='34be4b5fbc1dda5d' id='type-id-152'>
+      <parameter type-id='type-id-153' is-artificial='yes'/>
+      <return type-id='type-id-80'/>
+    </function-type>
+    <function-type method-class-id='type-id-59' size-in-bits='64' hash='34be4b5fbc1dda5d#1' id='type-id-154'>
+      <parameter type-id='type-id-70' is-artificial='yes'/>
+      <return type-id='type-id-80'/>
+    </function-type>
+    <function-type method-class-id='type-id-59' size-in-bits='64' hash='83af9e53c7a20006' id='type-id-155'>
+      <parameter type-id='type-id-70' is-artificial='yes'/>
+      <parameter type-id='type-id-10'/>
+      <return type-id='type-id-80'/>
+    </function-type>
+    <function-type method-class-id='type-id-59' size-in-bits='64' hash='30eb3696ba5b35fd' id='type-id-156'>
+      <parameter type-id='type-id-70' is-artificial='yes'/>
+      <parameter type-id='type-id-25'/>
+      <return type-id='type-id-80'/>
+    </function-type>
+    <function-type method-class-id='type-id-59' size-in-bits='64' hash='b8eceae882efa9b2' id='type-id-157'>
+      <parameter type-id='type-id-70' is-artificial='yes'/>
+      <parameter type-id='type-id-90'/>
+      <return type-id='type-id-80'/>
+    </function-type>
+    <function-type method-class-id='type-id-59' size-in-bits='64' hash='bfee6a5cfb607342' id='type-id-158'>
+      <parameter type-id='type-id-70' is-artificial='yes'/>
+      <parameter type-id='type-id-159'/>
+      <return type-id='type-id-80'/>
+    </function-type>
+    <function-type method-class-id='type-id-59' size-in-bits='64' hash='2147ef1a2149143a' id='type-id-160'>
+      <parameter type-id='type-id-70' is-artificial='yes'/>
+      <parameter type-id='type-id-119'/>
+      <return type-id='type-id-80'/>
+    </function-type>
+    <function-type method-class-id='type-id-59' size-in-bits='64' hash='9289df8537f15d31' id='type-id-161'>
+      <parameter type-id='type-id-70' is-artificial='yes'/>
+      <parameter type-id='type-id-162'/>
+      <return type-id='type-id-80'/>
+    </function-type>
+    <function-type method-class-id='type-id-59' size-in-bits='64' hash='115c44b130310307' id='type-id-163'>
+      <parameter type-id='type-id-70' is-artificial='yes'/>
+      <parameter type-id='type-id-164'/>
+      <return type-id='type-id-80'/>
+    </function-type>
+    <function-type method-class-id='type-id-59' size-in-bits='64' hash='4b5702f45783c369' id='type-id-165'>
+      <parameter type-id='type-id-70' is-artificial='yes'/>
+      <parameter type-id='type-id-166'/>
+      <return type-id='type-id-80'/>
+    </function-type>
+    <function-type method-class-id='type-id-167' size-in-bits='64' hash='10bc8ed877c06400' id='type-id-168'>
+      <parameter type-id='type-id-169' is-artificial='yes'/>
+      <return type-id='type-id-80'/>
+    </function-type>
+    <function-type method-class-id='type-id-170' size-in-bits='64' hash='10bc8ed877c06400#1' id='type-id-171'>
+      <parameter type-id='type-id-172' is-artificial='yes'/>
+      <return type-id='type-id-80'/>
+    </function-type>
+    <function-type method-class-id='type-id-12' size-in-bits='64' hash='42da2aee204175df' id='type-id-15'>
+      <parameter type-id='type-id-20' is-artificial='yes'/>
+      <return type-id='type-id-126'/>
+    </function-type>
+    <function-type method-class-id='type-id-12' size-in-bits='64' hash='71af1c09a34cb87a' id='type-id-14'>
+      <parameter type-id='type-id-20' is-artificial='yes'/>
+      <parameter type-id='type-id-38'/>
+      <return type-id='type-id-126'/>
+    </function-type>
+    <function-type method-class-id='type-id-151' size-in-bits='64' hash='7dbe37910833919a' id='type-id-173'>
+      <parameter type-id='type-id-153' is-artificial='yes'/>
+      <parameter type-id='type-id-63'/>
+      <return type-id='type-id-126'/>
+    </function-type>
+    <reference-type-def kind='lvalue' type-id='type-id-174' size-in-bits='64' hash='9cee77425782d868' id='type-id-95'/>
+    <pointer-type-def type-id='type-id-31' size-in-bits='64' hash='cf4f61ea75a1f228' id='type-id-104'/>
     <namespace-decl name='mongo'>
-    <class-decl name='__anonymous_struct__' naming-typedef-id='type-id-182' visibility='default' is-anonymous='yes' is-declaration-only='yes' hash='6e16a8b45ba20efe' id='type-id-61'>
+    <class-decl name='__anonymous_struct__' visibility='default' is-anonymous='yes' is-declaration-only='yes' hash='6e16a8b45ba20efe' id='type-id-53'>
       <member-type access='private'>
-        <class-decl name='__anonymous_struct__' is-struct='yes' visibility='default' is-anonymous='yes' is-declaration-only='yes' hash='06a7e79e58e624d7' id='type-id-121'>
+        <class-decl name='__anonymous_struct__' is-struct='yes' visibility='default' is-anonymous='yes' is-declaration-only='yes' hash='06a7e79e58e624d7' id='type-id-113'>
           <member-function access='public' static='yes'>
-            <function-decl name='load' type-id='type-id-125' mangled-name='_ZN5mongo8DataType7HandlerINS_10FTDCVarIntEvE4loadEPS2_PKcmPml' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZN5mongo8DataType7HandlerINS_10FTDCVarIntEvE4loadEPS2_PKcmPml'/>
+            <function-decl name='load' type-id='type-id-117' mangled-name='_ZN5mongo8DataType7HandlerINS_10FTDCVarIntEvE4loadEPS2_PKcmPml' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZN5mongo8DataType7HandlerINS_10FTDCVarIntEvE4loadEPS2_PKcmPml'/>
           </member-function>
           <member-function access='public' static='yes'>
-            <function-decl name='store' type-id='type-id-122' mangled-name='_ZN5mongo8DataType7HandlerINS_10FTDCVarIntEvE5storeERKS2_PcmPml' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZN5mongo8DataType7HandlerINS_10FTDCVarIntEvE5storeERKS2_PcmPml'/>
+            <function-decl name='store' type-id='type-id-114' mangled-name='_ZN5mongo8DataType7HandlerINS_10FTDCVarIntEvE5storeERKS2_PcmPml' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZN5mongo8DataType7HandlerINS_10FTDCVarIntEvE5storeERKS2_PcmPml'/>
           </member-function>
           <member-function access='public' static='yes'>
-            <function-decl name='load' type-id='type-id-125' mangled-name='_ZN5mongo8DataType7HandlerINS_7BSONObjEvE4loadEPS2_PKcmPml' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZN5mongo8DataType7HandlerINS_7BSONObjEvE4loadEPS2_PKcmPml'/>
+            <function-decl name='load' type-id='type-id-117' mangled-name='_ZN5mongo8DataType7HandlerINS_7BSONObjEvE4loadEPS2_PKcmPml' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZN5mongo8DataType7HandlerINS_7BSONObjEvE4loadEPS2_PKcmPml'/>
           </member-function>
           <member-function access='public' static='yes'>
-            <function-decl name='load' type-id='type-id-125' mangled-name='_ZN5mongo8DataType7HandlerINS_9ValidatedINS_7BSONObjEEEvE4loadEPS4_PKcmPml' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZN5mongo8DataType7HandlerINS_9ValidatedINS_7BSONObjEEEvE4loadEPS4_PKcmPml'/>
+            <function-decl name='load' type-id='type-id-117' mangled-name='_ZN5mongo8DataType7HandlerINS_9ValidatedINS_7BSONObjEEEvE4loadEPS4_PKcmPml' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZN5mongo8DataType7HandlerINS_9ValidatedINS_7BSONObjEEEvE4loadEPS4_PKcmPml'/>
           </member-function>
         </class-decl>
       </member-type>
       <data-member access='public' static='yes'>
-        <var-decl name='kPeriodMillisDefault' type-id='type-id-57' mangled-name='_ZN5mongo10FTDCConfig20kPeriodMillisDefaultE' visibility='default' elf-symbol-id='_ZN5mongo10FTDCConfig20kPeriodMillisDefaultE'/>
+        <var-decl name='kPeriodMillisDefault' type-id='type-id-49' mangled-name='_ZN5mongo10FTDCConfig20kPeriodMillisDefaultE' visibility='default' elf-symbol-id='_ZN5mongo10FTDCConfig20kPeriodMillisDefaultE'/>
       </data-member>
       <member-function access='public'>
-        <function-decl name='StringData' type-id='type-id-145' mangled-name='_ZN5mongo10StringDataC2EPKc' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZN5mongo10StringDataC2EPKc'/>
+        <function-decl name='StringData' type-id='type-id-137' mangled-name='_ZN5mongo10StringDataC2EPKc' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZN5mongo10StringDataC2EPKc'/>
       </member-function>
       <member-function access='public'>
-        <function-decl name='writeAndAdvance&lt;mongo::FTDCVarInt&gt;' type-id='type-id-110' mangled-name='_ZN5mongo11DataBuilder15writeAndAdvanceINS_10FTDCVarIntEEENS_6StatusERKT_' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZN5mongo11DataBuilder15writeAndAdvanceINS_10FTDCVarIntEEENS_6StatusERKT_'/>
+        <function-decl name='writeAndAdvance&lt;mongo::FTDCVarInt&gt;' type-id='type-id-102' mangled-name='_ZN5mongo11DataBuilder15writeAndAdvanceINS_10FTDCVarIntEEENS_6StatusERKT_' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZN5mongo11DataBuilder15writeAndAdvanceINS_10FTDCVarIntEEENS_6StatusERKT_'/>
       </member-function>
       <member-function access='public'>
-        <function-decl name='resize' type-id='type-id-155' mangled-name='_ZN5mongo11DataBuilder6resizeEm' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZN5mongo11DataBuilder6resizeEm'/>
+        <function-decl name='resize' type-id='type-id-147' mangled-name='_ZN5mongo11DataBuilder6resizeEm' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZN5mongo11DataBuilder6resizeEm'/>
       </member-function>
       <member-function access='private'>
-        <function-decl name='grow_reallocate' type-id='type-id-149' mangled-name='_ZN5mongo11_BufBuilderINS_21SharedBufferAllocatorEE15grow_reallocateEi' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZN5mongo11_BufBuilderINS_21SharedBufferAllocatorEE15grow_reallocateEi'/>
+        <function-decl name='grow_reallocate' type-id='type-id-141' mangled-name='_ZN5mongo11_BufBuilderINS_21SharedBufferAllocatorEE15grow_reallocateEi' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZN5mongo11_BufBuilderINS_21SharedBufferAllocatorEE15grow_reallocateEi'/>
       </member-function>
       <member-function access='public'>
-        <function-decl name='_BufBuilder' type-id='type-id-149' mangled-name='_ZN5mongo11_BufBuilderINS_21SharedBufferAllocatorEEC2Ei' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZN5mongo11_BufBuilderINS_21SharedBufferAllocatorEEC2Ei'/>
+        <function-decl name='_BufBuilder' type-id='type-id-141' mangled-name='_ZN5mongo11_BufBuilderINS_21SharedBufferAllocatorEEC2Ei' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZN5mongo11_BufBuilderINS_21SharedBufferAllocatorEEC2Ei'/>
       </member-function>
       <member-function access='public'>
-        <function-decl name='subobjStart' type-id='type-id-102' mangled-name='_ZN5mongo14BSONObjBuilder11subobjStartENS_10StringDataE' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZN5mongo14BSONObjBuilder11subobjStartENS_10StringDataE'/>
+        <function-decl name='subobjStart' type-id='type-id-94' mangled-name='_ZN5mongo14BSONObjBuilder11subobjStartENS_10StringDataE' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZN5mongo14BSONObjBuilder11subobjStartENS_10StringDataE'/>
       </member-function>
       <member-function access='public'>
-        <function-decl name='appendObject' type-id='type-id-131' mangled-name='_ZN5mongo14BSONObjBuilder12appendObjectENS_10StringDataEPKci' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZN5mongo14BSONObjBuilder12appendObjectENS_10StringDataEPKci'/>
+        <function-decl name='appendObject' type-id='type-id-123' mangled-name='_ZN5mongo14BSONObjBuilder12appendObjectENS_10StringDataEPKci' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZN5mongo14BSONObjBuilder12appendObjectENS_10StringDataEPKci'/>
       </member-function>
       <member-function access='public'>
-        <function-decl name='appendBinData' type-id='type-id-133' mangled-name='_ZN5mongo14BSONObjBuilder13appendBinDataENS_10StringDataEiNS_11BinDataTypeEPKv' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZN5mongo14BSONObjBuilder13appendBinDataENS_10StringDataEiNS_11BinDataTypeEPKv'/>
+        <function-decl name='appendBinData' type-id='type-id-125' mangled-name='_ZN5mongo14BSONObjBuilder13appendBinDataENS_10StringDataEiNS_11BinDataTypeEPKv' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZN5mongo14BSONObjBuilder13appendBinDataENS_10StringDataEiNS_11BinDataTypeEPKv'/>
       </member-function>
       <member-function access='public'>
-        <function-decl name='subarrayStart' type-id='type-id-102' mangled-name='_ZN5mongo14BSONObjBuilder13subarrayStartENS_10StringDataE' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZN5mongo14BSONObjBuilder13subarrayStartENS_10StringDataE'/>
+        <function-decl name='subarrayStart' type-id='type-id-94' mangled-name='_ZN5mongo14BSONObjBuilder13subarrayStartENS_10StringDataE' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZN5mongo14BSONObjBuilder13subarrayStartENS_10StringDataE'/>
       </member-function>
       <member-function access='public'>
-        <function-decl name='obj' type-id='type-id-104' mangled-name='_ZN5mongo14BSONObjBuilder3objEv' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZN5mongo14BSONObjBuilder3objEv'>
-          <class-decl name='__anonymous_struct__' visibility='default' is-anonymous='yes' is-declaration-only='yes' hash='00bb9946817156ef' id='type-id-58'>
+        <function-decl name='obj' type-id='type-id-96' mangled-name='_ZN5mongo14BSONObjBuilder3objEv' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZN5mongo14BSONObjBuilder3objEv'>
+          <class-decl name='__anonymous_struct__' visibility='default' is-anonymous='yes' is-declaration-only='yes' hash='00bb9946817156ef' id='type-id-50'>
             <member-function access='public' const='yes'>
-              <function-decl name='operator()' type-id='type-id-158' mangled-name='_ZZN5mongo14BSONObjBuilder3objEvENKUlvE_clEv' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZZN5mongo14BSONObjBuilder3objEvENKUlvE_clEv'/>
+              <function-decl name='operator()' type-id='type-id-150' mangled-name='_ZZN5mongo14BSONObjBuilder3objEvENKUlvE_clEv' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZZN5mongo14BSONObjBuilder3objEvENKUlvE_clEv'/>
             </member-function>
           </class-decl>
         </function-decl>
       </member-function>
       <member-function access='private'>
-        <function-decl name='_done' type-id='type-id-99' mangled-name='_ZN5mongo14BSONObjBuilder5_doneEv' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZN5mongo14BSONObjBuilder5_doneEv'/>
+        <function-decl name='_done' type-id='type-id-91' mangled-name='_ZN5mongo14BSONObjBuilder5_doneEv' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZN5mongo14BSONObjBuilder5_doneEv'/>
       </member-function>
       <member-function access='public'>
-        <function-decl name='append' type-id='type-id-130' mangled-name='_ZN5mongo14BSONObjBuilder6appendENS_10StringDataEb' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZN5mongo14BSONObjBuilder6appendENS_10StringDataEb'/>
+        <function-decl name='append' type-id='type-id-122' mangled-name='_ZN5mongo14BSONObjBuilder6appendENS_10StringDataEb' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZN5mongo14BSONObjBuilder6appendENS_10StringDataEb'/>
       </member-function>
       <member-function access='public'>
-        <function-decl name='append' type-id='type-id-132' mangled-name='_ZN5mongo14BSONObjBuilder6appendENS_10StringDataEi' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZN5mongo14BSONObjBuilder6appendENS_10StringDataEi'/>
+        <function-decl name='append' type-id='type-id-124' mangled-name='_ZN5mongo14BSONObjBuilder6appendENS_10StringDataEi' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZN5mongo14BSONObjBuilder6appendENS_10StringDataEi'/>
       </member-function>
       <member-function access='public'>
-        <function-decl name='append' type-id='type-id-135' mangled-name='_ZN5mongo14BSONObjBuilder6appendENS_10StringDataEx' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZN5mongo14BSONObjBuilder6appendENS_10StringDataEx'/>
+        <function-decl name='append' type-id='type-id-127' mangled-name='_ZN5mongo14BSONObjBuilder6appendENS_10StringDataEx' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZN5mongo14BSONObjBuilder6appendENS_10StringDataEx'/>
       </member-function>
       <member-function access='public'>
-        <function-decl name='append' type-id='type-id-126' mangled-name='_ZN5mongo14BSONObjBuilder6appendERKNS_11BSONElementE' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZN5mongo14BSONObjBuilder6appendERKNS_11BSONElementE'/>
+        <function-decl name='append' type-id='type-id-118' mangled-name='_ZN5mongo14BSONObjBuilder6appendERKNS_11BSONElementE' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZN5mongo14BSONObjBuilder6appendERKNS_11BSONElementE'/>
       </member-function>
       <member-function access='public'>
-        <function-decl name='BSONObjBuilder' type-id='type-id-150' mangled-name='_ZN5mongo14BSONObjBuilderC2ERNS_11_BufBuilderINS_21SharedBufferAllocatorEEE' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZN5mongo14BSONObjBuilderC2ERNS_11_BufBuilderINS_21SharedBufferAllocatorEEE'/>
+        <function-decl name='BSONObjBuilder' type-id='type-id-142' mangled-name='_ZN5mongo14BSONObjBuilderC2ERNS_11_BufBuilderINS_21SharedBufferAllocatorEEE' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZN5mongo14BSONObjBuilderC2ERNS_11_BufBuilderINS_21SharedBufferAllocatorEEE'/>
       </member-function>
       <member-function access='public'>
-        <function-decl name='BSONObjBuilder' type-id='type-id-149' mangled-name='_ZN5mongo14BSONObjBuilderC2Ei' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZN5mongo14BSONObjBuilderC2Ei'/>
+        <function-decl name='BSONObjBuilder' type-id='type-id-141' mangled-name='_ZN5mongo14BSONObjBuilderC2Ei' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZN5mongo14BSONObjBuilderC2Ei'/>
       </member-function>
       <member-function access='public' destructor='yes'>
-        <function-decl name='~BSONObjBuilder' type-id='type-id-144' mangled-name='_ZN5mongo14BSONObjBuilderD2Ev' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZN5mongo14BSONObjBuilderD2Ev'/>
+        <function-decl name='~BSONObjBuilder' type-id='type-id-136' mangled-name='_ZN5mongo14BSONObjBuilderD2Ev' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZN5mongo14BSONObjBuilderD2Ev'/>
       </member-function>
       <member-function access='public'>
-        <function-decl name='getCompressedSamples' type-id='type-id-104' mangled-name='_ZN5mongo14FTDCCompressor20getCompressedSamplesEv' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZN5mongo14FTDCCompressor20getCompressedSamplesEv'/>
+        <function-decl name='getCompressedSamples' type-id='type-id-96' mangled-name='_ZN5mongo14FTDCCompressor20getCompressedSamplesEv' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZN5mongo14FTDCCompressor20getCompressedSamplesEv'/>
       </member-function>
       <member-function access='public'>
-        <function-decl name='reset' type-id='type-id-144' mangled-name='_ZN5mongo14FTDCCompressor5resetEv' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZN5mongo14FTDCCompressor5resetEv'/>
+        <function-decl name='reset' type-id='type-id-136' mangled-name='_ZN5mongo14FTDCCompressor5resetEv' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZN5mongo14FTDCCompressor5resetEv'/>
       </member-function>
       <member-function access='private'>
-        <function-decl name='_reset' type-id='type-id-146' mangled-name='_ZN5mongo14FTDCCompressor6_resetERKNS_7BSONObjENS_6Date_tE' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZN5mongo14FTDCCompressor6_resetERKNS_7BSONObjENS_6Date_tE'/>
+        <function-decl name='_reset' type-id='type-id-138' mangled-name='_ZN5mongo14FTDCCompressor6_resetERKNS_7BSONObjENS_6Date_tE' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZN5mongo14FTDCCompressor6_resetERKNS_7BSONObjENS_6Date_tE'/>
       </member-function>
       <member-function access='public'>
-        <function-decl name='addSample' type-id='type-id-109' mangled-name='_ZN5mongo14FTDCCompressor9addSampleERKNS_7BSONObjENS_6Date_tE' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZN5mongo14FTDCCompressor9addSampleERKNS_7BSONObjENS_6Date_tE'/>
+        <function-decl name='addSample' type-id='type-id-101' mangled-name='_ZN5mongo14FTDCCompressor9addSampleERKNS_7BSONObjENS_6Date_tE' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZN5mongo14FTDCCompressor9addSampleERKNS_7BSONObjENS_6Date_tE'/>
       </member-function>
       <member-function access='public'>
-        <function-decl name='FTDCCompressor' type-id='type-id-147' mangled-name='_ZN5mongo14FTDCCompressorC2EPKNS_10FTDCConfigE' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZN5mongo14FTDCCompressorC2EPKNS_10FTDCConfigE'/>
+        <function-decl name='FTDCCompressor' type-id='type-id-139' mangled-name='_ZN5mongo14FTDCCompressorC2EPKNS_10FTDCConfigE' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZN5mongo14FTDCCompressorC2EPKNS_10FTDCConfigE'/>
       </member-function>
       <member-function access='public'>
-        <function-decl name='setEnabled' type-id='type-id-105' mangled-name='_ZN5mongo14FTDCController10setEnabledEb' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZN5mongo14FTDCController10setEnabledEb'/>
+        <function-decl name='setEnabled' type-id='type-id-97' mangled-name='_ZN5mongo14FTDCController10setEnabledEb' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZN5mongo14FTDCController10setEnabledEb'/>
       </member-function>
       <member-function access='public'>
-        <function-decl name='setDirectory' type-id='type-id-107' mangled-name='_ZN5mongo14FTDCController12setDirectoryERKN5boost10filesystem4pathE' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZN5mongo14FTDCController12setDirectoryERKN5boost10filesystem4pathE'/>
+        <function-decl name='setDirectory' type-id='type-id-99' mangled-name='_ZN5mongo14FTDCController12setDirectoryERKN5boost10filesystem4pathE' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZN5mongo14FTDCController12setDirectoryERKN5boost10filesystem4pathE'/>
       </member-function>
       <member-function access='public'>
-        <function-decl name='setMaxFileSizeBytes' type-id='type-id-156' mangled-name='_ZN5mongo14FTDCController19setMaxFileSizeBytesEm' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZN5mongo14FTDCController19setMaxFileSizeBytesEm'/>
+        <function-decl name='setMaxFileSizeBytes' type-id='type-id-148' mangled-name='_ZN5mongo14FTDCController19setMaxFileSizeBytesEm' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZN5mongo14FTDCController19setMaxFileSizeBytesEm'/>
       </member-function>
       <member-function access='public'>
-        <function-decl name='addOnRotateCollector' type-id='type-id-154' mangled-name='_ZN5mongo14FTDCController20addOnRotateCollectorESt10unique_ptrINS_22FTDCCollectorInterfaceESt14default_deleteIS2_EE' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZN5mongo14FTDCController20addOnRotateCollectorESt10unique_ptrINS_22FTDCCollectorInterfaceESt14default_deleteIS2_EE'/>
+        <function-decl name='addOnRotateCollector' type-id='type-id-146' mangled-name='_ZN5mongo14FTDCController20addOnRotateCollectorESt10unique_ptrINS_22FTDCCollectorInterfaceESt14default_deleteIS2_EE' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZN5mongo14FTDCController20addOnRotateCollectorESt10unique_ptrINS_22FTDCCollectorInterfaceESt14default_deleteIS2_EE'/>
       </member-function>
       <member-function access='public'>
-        <function-decl name='addPeriodicCollector' type-id='type-id-154' mangled-name='_ZN5mongo14FTDCController20addPeriodicCollectorESt10unique_ptrINS_22FTDCCollectorInterfaceESt14default_deleteIS2_EE' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZN5mongo14FTDCController20addPeriodicCollectorESt10unique_ptrINS_22FTDCCollectorInterfaceESt14default_deleteIS2_EE'/>
+        <function-decl name='addPeriodicCollector' type-id='type-id-146' mangled-name='_ZN5mongo14FTDCController20addPeriodicCollectorESt10unique_ptrINS_22FTDCCollectorInterfaceESt14default_deleteIS2_EE' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZN5mongo14FTDCController20addPeriodicCollectorESt10unique_ptrINS_22FTDCCollectorInterfaceESt14default_deleteIS2_EE'/>
       </member-function>
       <member-function access='public'>
-        <function-decl name='setMaxDirectorySizeBytes' type-id='type-id-156' mangled-name='_ZN5mongo14FTDCController24setMaxDirectorySizeBytesEm' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZN5mongo14FTDCController24setMaxDirectorySizeBytesEm'/>
+        <function-decl name='setMaxDirectorySizeBytes' type-id='type-id-148' mangled-name='_ZN5mongo14FTDCController24setMaxDirectorySizeBytesEm' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZN5mongo14FTDCController24setMaxDirectorySizeBytesEm'/>
       </member-function>
       <member-function access='public'>
-        <function-decl name='getMostRecentPeriodicDocument' type-id='type-id-104' mangled-name='_ZN5mongo14FTDCController29getMostRecentPeriodicDocumentEv' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZN5mongo14FTDCController29getMostRecentPeriodicDocumentEv'/>
+        <function-decl name='getMostRecentPeriodicDocument' type-id='type-id-96' mangled-name='_ZN5mongo14FTDCController29getMostRecentPeriodicDocumentEv' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZN5mongo14FTDCController29getMostRecentPeriodicDocumentEv'/>
       </member-function>
       <member-function access='public'>
-        <function-decl name='setMaxSamplesPerArchiveMetricChunk' type-id='type-id-152' mangled-name='_ZN5mongo14FTDCController34setMaxSamplesPerArchiveMetricChunkEm' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZN5mongo14FTDCController34setMaxSamplesPerArchiveMetricChunkEm'/>
+        <function-decl name='setMaxSamplesPerArchiveMetricChunk' type-id='type-id-144' mangled-name='_ZN5mongo14FTDCController34setMaxSamplesPerArchiveMetricChunkEm' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZN5mongo14FTDCController34setMaxSamplesPerArchiveMetricChunkEm'/>
       </member-function>
       <member-function access='public'>
-        <function-decl name='setMaxSamplesPerInterimMetricChunk' type-id='type-id-152' mangled-name='_ZN5mongo14FTDCController34setMaxSamplesPerInterimMetricChunkEm' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZN5mongo14FTDCController34setMaxSamplesPerInterimMetricChunkEm'/>
+        <function-decl name='setMaxSamplesPerInterimMetricChunk' type-id='type-id-144' mangled-name='_ZN5mongo14FTDCController34setMaxSamplesPerInterimMetricChunkEm' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZN5mongo14FTDCController34setMaxSamplesPerInterimMetricChunkEm'/>
       </member-function>
       <member-function access='public'>
-        <function-decl name='stop' type-id='type-id-144' mangled-name='_ZN5mongo14FTDCController4stopEv' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZN5mongo14FTDCController4stopEv'/>
+        <function-decl name='stop' type-id='type-id-136' mangled-name='_ZN5mongo14FTDCController4stopEv' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZN5mongo14FTDCController4stopEv'/>
       </member-function>
       <member-function access='public'>
-        <function-decl name='start' type-id='type-id-144' mangled-name='_ZN5mongo14FTDCController5startEv' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZN5mongo14FTDCController5startEv'/>
+        <function-decl name='start' type-id='type-id-136' mangled-name='_ZN5mongo14FTDCController5startEv' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZN5mongo14FTDCController5startEv'/>
       </member-function>
       <member-function access='private'>
-        <function-decl name='doLoop' type-id='type-id-144' mangled-name='_ZN5mongo14FTDCController6doLoopEv' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZN5mongo14FTDCController6doLoopEv'/>
+        <function-decl name='doLoop' type-id='type-id-136' mangled-name='_ZN5mongo14FTDCController6doLoopEv' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZN5mongo14FTDCController6doLoopEv'/>
       </member-function>
       <member-function access='public'>
-        <function-decl name='setPeriod' type-id='type-id-151' mangled-name='_ZN5mongo14FTDCController9setPeriodENS_8DurationISt5ratioILl1ELl1000EEEE' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZN5mongo14FTDCController9setPeriodENS_8DurationISt5ratioILl1ELl1000EEEE'/>
+        <function-decl name='setPeriod' type-id='type-id-143' mangled-name='_ZN5mongo14FTDCController9setPeriodENS_8DurationISt5ratioILl1ELl1000EEEE' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZN5mongo14FTDCController9setPeriodENS_8DurationISt5ratioILl1ELl1000EEEE'/>
       </member-function>
       <member-function access='private'>
-        <function-decl name='readDocument' type-id='type-id-104' mangled-name='_ZN5mongo14FTDCFileReader12readDocumentEv' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZN5mongo14FTDCFileReader12readDocumentEv'/>
+        <function-decl name='readDocument' type-id='type-id-96' mangled-name='_ZN5mongo14FTDCFileReader12readDocumentEv' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZN5mongo14FTDCFileReader12readDocumentEv'/>
       </member-function>
       <member-function access='public'>
-        <function-decl name='next' type-id='type-id-140' mangled-name='_ZN5mongo14FTDCFileReader4nextEv' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZN5mongo14FTDCFileReader4nextEv'/>
+        <function-decl name='next' type-id='type-id-132' mangled-name='_ZN5mongo14FTDCFileReader4nextEv' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZN5mongo14FTDCFileReader4nextEv'/>
       </member-function>
       <member-function access='public'>
-        <function-decl name='open' type-id='type-id-107' mangled-name='_ZN5mongo14FTDCFileReader4openERKN5boost10filesystem4pathE' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZN5mongo14FTDCFileReader4openERKN5boost10filesystem4pathE'/>
+        <function-decl name='open' type-id='type-id-99' mangled-name='_ZN5mongo14FTDCFileReader4openERKN5boost10filesystem4pathE' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZN5mongo14FTDCFileReader4openERKN5boost10filesystem4pathE'/>
       </member-function>
       <member-function access='public'>
-        <function-decl name='hasNext' type-id='type-id-104' mangled-name='_ZN5mongo14FTDCFileReader7hasNextEv' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZN5mongo14FTDCFileReader7hasNextEv'/>
+        <function-decl name='hasNext' type-id='type-id-96' mangled-name='_ZN5mongo14FTDCFileReader7hasNextEv' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZN5mongo14FTDCFileReader7hasNextEv'/>
       </member-function>
       <member-function access='public'>
-        <function-decl name='FTDCFileReader' type-id='type-id-144' mangled-name='_ZN5mongo14FTDCFileReaderC2Ev' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZN5mongo14FTDCFileReaderC2Ev'/>
+        <function-decl name='FTDCFileReader' type-id='type-id-136' mangled-name='_ZN5mongo14FTDCFileReaderC2Ev' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZN5mongo14FTDCFileReaderC2Ev'/>
       </member-function>
       <member-function access='public' destructor='yes'>
-        <function-decl name='~FTDCFileReader' type-id='type-id-144' mangled-name='_ZN5mongo14FTDCFileReaderD2Ev' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZN5mongo14FTDCFileReaderD2Ev'/>
+        <function-decl name='~FTDCFileReader' type-id='type-id-136' mangled-name='_ZN5mongo14FTDCFileReaderD2Ev' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZN5mongo14FTDCFileReaderD2Ev'/>
       </member-function>
       <member-function access='public'>
-        <function-decl name='writeSample' type-id='type-id-109' mangled-name='_ZN5mongo14FTDCFileWriter11writeSampleERKNS_7BSONObjENS_6Date_tE' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZN5mongo14FTDCFileWriter11writeSampleERKNS_7BSONObjENS_6Date_tE'/>
+        <function-decl name='writeSample' type-id='type-id-101' mangled-name='_ZN5mongo14FTDCFileWriter11writeSampleERKNS_7BSONObjENS_6Date_tE' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZN5mongo14FTDCFileWriter11writeSampleERKNS_7BSONObjENS_6Date_tE'/>
       </member-function>
       <member-function access='public'>
-        <function-decl name='writeMetadata' type-id='type-id-109' mangled-name='_ZN5mongo14FTDCFileWriter13writeMetadataERKNS_7BSONObjENS_6Date_tE' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZN5mongo14FTDCFileWriter13writeMetadataERKNS_7BSONObjENS_6Date_tE'/>
+        <function-decl name='writeMetadata' type-id='type-id-101' mangled-name='_ZN5mongo14FTDCFileWriter13writeMetadataERKNS_7BSONObjENS_6Date_tE' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZN5mongo14FTDCFileWriter13writeMetadataERKNS_7BSONObjENS_6Date_tE'/>
       </member-function>
       <member-function access='private'>
-        <function-decl name='writeArchiveFileBuffer' type-id='type-id-116' mangled-name='_ZN5mongo14FTDCFileWriter22writeArchiveFileBufferENS_14ConstDataRangeE' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZN5mongo14FTDCFileWriter22writeArchiveFileBufferENS_14ConstDataRangeE'/>
+        <function-decl name='writeArchiveFileBuffer' type-id='type-id-108' mangled-name='_ZN5mongo14FTDCFileWriter22writeArchiveFileBufferENS_14ConstDataRangeE' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZN5mongo14FTDCFileWriter22writeArchiveFileBufferENS_14ConstDataRangeE'/>
       </member-function>
       <member-function access='private'>
-        <function-decl name='writeInterimFileBuffer' type-id='type-id-116' mangled-name='_ZN5mongo14FTDCFileWriter22writeInterimFileBufferENS_14ConstDataRangeE' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZN5mongo14FTDCFileWriter22writeInterimFileBufferENS_14ConstDataRangeE'/>
+        <function-decl name='writeInterimFileBuffer' type-id='type-id-108' mangled-name='_ZN5mongo14FTDCFileWriter22writeInterimFileBufferENS_14ConstDataRangeE' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZN5mongo14FTDCFileWriter22writeInterimFileBufferENS_14ConstDataRangeE'/>
       </member-function>
       <member-function access='public'>
-        <function-decl name='closeWithoutFlushForTest' type-id='type-id-144' mangled-name='_ZN5mongo14FTDCFileWriter24closeWithoutFlushForTestEv' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZN5mongo14FTDCFileWriter24closeWithoutFlushForTestEv'/>
+        <function-decl name='closeWithoutFlushForTest' type-id='type-id-136' mangled-name='_ZN5mongo14FTDCFileWriter24closeWithoutFlushForTestEv' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZN5mongo14FTDCFileWriter24closeWithoutFlushForTestEv'/>
       </member-function>
       <member-function access='public'>
-        <function-decl name='open' type-id='type-id-107' mangled-name='_ZN5mongo14FTDCFileWriter4openERKN5boost10filesystem4pathE' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZN5mongo14FTDCFileWriter4openERKN5boost10filesystem4pathE'/>
+        <function-decl name='open' type-id='type-id-99' mangled-name='_ZN5mongo14FTDCFileWriter4openERKN5boost10filesystem4pathE' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZN5mongo14FTDCFileWriter4openERKN5boost10filesystem4pathE'/>
       </member-function>
       <member-function access='public'>
-        <function-decl name='close' type-id='type-id-104' mangled-name='_ZN5mongo14FTDCFileWriter5closeEv' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZN5mongo14FTDCFileWriter5closeEv'/>
+        <function-decl name='close' type-id='type-id-96' mangled-name='_ZN5mongo14FTDCFileWriter5closeEv' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZN5mongo14FTDCFileWriter5closeEv'/>
       </member-function>
       <member-function access='private'>
-        <function-decl name='flush' type-id='type-id-106' mangled-name='_ZN5mongo14FTDCFileWriter5flushERKN5boost8optionalINS_14ConstDataRangeEEENS_6Date_tE' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZN5mongo14FTDCFileWriter5flushERKN5boost8optionalINS_14ConstDataRangeEEENS_6Date_tE'/>
+        <function-decl name='flush' type-id='type-id-98' mangled-name='_ZN5mongo14FTDCFileWriter5flushERKN5boost8optionalINS_14ConstDataRangeEEENS_6Date_tE' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZN5mongo14FTDCFileWriter5flushERKN5boost8optionalINS_14ConstDataRangeEEENS_6Date_tE'/>
       </member-function>
       <member-function access='public'>
-        <function-decl name='FTDCFileWriter' type-id='type-id-147' mangled-name='_ZN5mongo14FTDCFileWriterC2EPKNS_10FTDCConfigE' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZN5mongo14FTDCFileWriterC2EPKNS_10FTDCConfigE'/>
+        <function-decl name='FTDCFileWriter' type-id='type-id-139' mangled-name='_ZN5mongo14FTDCFileWriterC2EPKNS_10FTDCConfigE' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZN5mongo14FTDCFileWriterC2EPKNS_10FTDCConfigE'/>
       </member-function>
       <member-function access='public' destructor='yes'>
-        <function-decl name='~FTDCFileWriter' type-id='type-id-144' mangled-name='_ZN5mongo14FTDCFileWriterD2Ev' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZN5mongo14FTDCFileWriterD2Ev'/>
+        <function-decl name='~FTDCFileWriter' type-id='type-id-136' mangled-name='_ZN5mongo14FTDCFileWriterD2Ev' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZN5mongo14FTDCFileWriterD2Ev'/>
       </member-function>
       <member-function access='public'>
-        <function-decl name='uncompress' type-id='type-id-117' mangled-name='_ZN5mongo15BlockCompressor10uncompressENS_14ConstDataRangeEm' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZN5mongo15BlockCompressor10uncompressENS_14ConstDataRangeEm'/>
+        <function-decl name='uncompress' type-id='type-id-109' mangled-name='_ZN5mongo15BlockCompressor10uncompressENS_14ConstDataRangeEm' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZN5mongo15BlockCompressor10uncompressENS_14ConstDataRangeEm'/>
       </member-function>
       <member-function access='public'>
-        <function-decl name='compress' type-id='type-id-116' mangled-name='_ZN5mongo15BlockCompressor8compressENS_14ConstDataRangeE' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZN5mongo15BlockCompressor8compressENS_14ConstDataRangeE'/>
+        <function-decl name='compress' type-id='type-id-108' mangled-name='_ZN5mongo15BlockCompressor8compressENS_14ConstDataRangeE' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZN5mongo15BlockCompressor8compressENS_14ConstDataRangeE'/>
       </member-function>
       <member-function access='private'>
-        <function-decl name='scanDirectory' type-id='type-id-140' mangled-name='_ZN5mongo15FTDCFileManager13scanDirectoryEv' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZN5mongo15FTDCFileManager13scanDirectoryEv'/>
+        <function-decl name='scanDirectory' type-id='type-id-132' mangled-name='_ZN5mongo15FTDCFileManager13scanDirectoryEv' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZN5mongo15FTDCFileManager13scanDirectoryEv'/>
       </member-function>
       <member-function access='private'>
-        <function-decl name='trimDirectory' type-id='type-id-153' mangled-name='_ZN5mongo15FTDCFileManager13trimDirectoryERSt6vectorIN5boost10filesystem4pathESaIS4_EE' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZN5mongo15FTDCFileManager13trimDirectoryERSt6vectorIN5boost10filesystem4pathESaIS4_EE'/>
+        <function-decl name='trimDirectory' type-id='type-id-145' mangled-name='_ZN5mongo15FTDCFileManager13trimDirectoryERSt6vectorIN5boost10filesystem4pathESaIS4_EE' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZN5mongo15FTDCFileManager13trimDirectoryERSt6vectorIN5boost10filesystem4pathESaIS4_EE'/>
       </member-function>
       <member-function access='private'>
-        <function-decl name='openArchiveFile' type-id='type-id-114' mangled-name='_ZN5mongo15FTDCFileManager15openArchiveFileEPNS_6ClientERKN5boost10filesystem4pathERKSt6vectorISt5tupleIJNS_12FTDCBSONUtil8FTDCTypeENS_7BSONObjENS_6Date_tEEESaISE_EE' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZN5mongo15FTDCFileManager15openArchiveFileEPNS_6ClientERKN5boost10filesystem4pathERKSt6vectorISt5tupleIJNS_12FTDCBSONUtil8FTDCTypeENS_7BSONObjENS_6Date_tEEESaISE_EE'/>
+        <function-decl name='openArchiveFile' type-id='type-id-106' mangled-name='_ZN5mongo15FTDCFileManager15openArchiveFileEPNS_6ClientERKN5boost10filesystem4pathERKSt6vectorISt5tupleIJNS_12FTDCBSONUtil8FTDCTypeENS_7BSONObjENS_6Date_tEEESaISE_EE' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZN5mongo15FTDCFileManager15openArchiveFileEPNS_6ClientERKN5boost10filesystem4pathERKSt6vectorISt5tupleIJNS_12FTDCBSONUtil8FTDCTypeENS_7BSONObjENS_6Date_tEEESaISE_EE'/>
       </member-function>
       <member-function access='private'>
-        <function-decl name='recoverInterimFile' type-id='type-id-140' mangled-name='_ZN5mongo15FTDCFileManager18recoverInterimFileEv' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZN5mongo15FTDCFileManager18recoverInterimFileEv'/>
+        <function-decl name='recoverInterimFile' type-id='type-id-132' mangled-name='_ZN5mongo15FTDCFileManager18recoverInterimFileEv' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZN5mongo15FTDCFileManager18recoverInterimFileEv'/>
       </member-function>
       <member-function access='public'>
-        <function-decl name='generateArchiveFileName' type-id='type-id-108' mangled-name='_ZN5mongo15FTDCFileManager23generateArchiveFileNameERKN5boost10filesystem4pathENS_10StringDataE' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZN5mongo15FTDCFileManager23generateArchiveFileNameERKN5boost10filesystem4pathENS_10StringDataE'/>
+        <function-decl name='generateArchiveFileName' type-id='type-id-100' mangled-name='_ZN5mongo15FTDCFileManager23generateArchiveFileNameERKN5boost10filesystem4pathENS_10StringDataE' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZN5mongo15FTDCFileManager23generateArchiveFileNameERKN5boost10filesystem4pathENS_10StringDataE'/>
       </member-function>
       <member-function access='public'>
-        <function-decl name='writeSampleAndRotateIfNeeded' type-id='type-id-115' mangled-name='_ZN5mongo15FTDCFileManager28writeSampleAndRotateIfNeededEPNS_6ClientERKNS_7BSONObjENS_6Date_tE' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZN5mongo15FTDCFileManager28writeSampleAndRotateIfNeededEPNS_6ClientERKNS_7BSONObjENS_6Date_tE'/>
+        <function-decl name='writeSampleAndRotateIfNeeded' type-id='type-id-107' mangled-name='_ZN5mongo15FTDCFileManager28writeSampleAndRotateIfNeededEPNS_6ClientERKNS_7BSONObjENS_6Date_tE' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZN5mongo15FTDCFileManager28writeSampleAndRotateIfNeededEPNS_6ClientERKNS_7BSONObjENS_6Date_tE'/>
       </member-function>
       <member-function access='public'>
-        <function-decl name='close' type-id='type-id-104' mangled-name='_ZN5mongo15FTDCFileManager5closeEv' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZN5mongo15FTDCFileManager5closeEv'/>
+        <function-decl name='close' type-id='type-id-96' mangled-name='_ZN5mongo15FTDCFileManager5closeEv' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZN5mongo15FTDCFileManager5closeEv'/>
       </member-function>
       <member-function access='public' static='yes'>
-        <function-decl name='create' type-id='type-id-111' mangled-name='_ZN5mongo15FTDCFileManager6createEPKNS_10FTDCConfigERKN5boost10filesystem4pathEPNS_23FTDCCollectorCollectionEPNS_6ClientE' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZN5mongo15FTDCFileManager6createEPKNS_10FTDCConfigERKN5boost10filesystem4pathEPNS_23FTDCCollectorCollectionEPNS_6ClientE'/>
+        <function-decl name='create' type-id='type-id-103' mangled-name='_ZN5mongo15FTDCFileManager6createEPKNS_10FTDCConfigERKN5boost10filesystem4pathEPNS_23FTDCCollectorCollectionEPNS_6ClientE' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZN5mongo15FTDCFileManager6createEPKNS_10FTDCConfigERKN5boost10filesystem4pathEPNS_23FTDCCollectorCollectionEPNS_6ClientE'/>
       </member-function>
       <member-function access='public'>
-        <function-decl name='rotate' type-id='type-id-113' mangled-name='_ZN5mongo15FTDCFileManager6rotateEPNS_6ClientE' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZN5mongo15FTDCFileManager6rotateEPNS_6ClientE'/>
+        <function-decl name='rotate' type-id='type-id-105' mangled-name='_ZN5mongo15FTDCFileManager6rotateEPNS_6ClientE' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZN5mongo15FTDCFileManager6rotateEPNS_6ClientE'/>
       </member-function>
       <member-function access='private'>
-        <function-decl name='FTDCFileManager' type-id='type-id-148' mangled-name='_ZN5mongo15FTDCFileManagerC2EPKNS_10FTDCConfigERKN5boost10filesystem4pathEPNS_23FTDCCollectorCollectionE' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZN5mongo15FTDCFileManagerC2EPKNS_10FTDCConfigERKN5boost10filesystem4pathEPNS_23FTDCCollectorCollectionE'/>
+        <function-decl name='FTDCFileManager' type-id='type-id-140' mangled-name='_ZN5mongo15FTDCFileManagerC2EPKNS_10FTDCConfigERKN5boost10filesystem4pathEPNS_23FTDCCollectorCollectionE' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZN5mongo15FTDCFileManagerC2EPKNS_10FTDCConfigERKN5boost10filesystem4pathEPNS_23FTDCCollectorCollectionE'/>
       </member-function>
       <member-function access='public' destructor='yes'>
-        <function-decl name='~FTDCFileManager' type-id='type-id-144' mangled-name='_ZN5mongo15FTDCFileManagerD2Ev' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZN5mongo15FTDCFileManagerD2Ev'/>
+        <function-decl name='~FTDCFileManager' type-id='type-id-136' mangled-name='_ZN5mongo15FTDCFileManagerD2Ev' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZN5mongo15FTDCFileManagerD2Ev'/>
       </member-function>
       <member-function access='public'>
-        <function-decl name='uncompress' type-id='type-id-116' mangled-name='_ZN5mongo16FTDCDecompressor10uncompressENS_14ConstDataRangeE' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZN5mongo16FTDCDecompressor10uncompressENS_14ConstDataRangeE'/>
+        <function-decl name='uncompress' type-id='type-id-108' mangled-name='_ZN5mongo16FTDCDecompressor10uncompressENS_14ConstDataRangeE' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZN5mongo16FTDCDecompressor10uncompressENS_14ConstDataRangeE'/>
       </member-function>
       <member-function access='private'>
-        <function-decl name='appendIntegral&lt;int&gt;' type-id='type-id-128' mangled-name='_ZN5mongo17StringBuilderImplINS_21SharedBufferAllocatorEE14appendIntegralIiEERS2_T_i' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZN5mongo17StringBuilderImplINS_21SharedBufferAllocatorEE14appendIntegralIiEERS2_T_i'/>
+        <function-decl name='appendIntegral&lt;int&gt;' type-id='type-id-120' mangled-name='_ZN5mongo17StringBuilderImplINS_21SharedBufferAllocatorEE14appendIntegralIiEERS2_T_i' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZN5mongo17StringBuilderImplINS_21SharedBufferAllocatorEE14appendIntegralIiEERS2_T_i'/>
       </member-function>
       <member-function access='private'>
-        <function-decl name='appendIntegral&lt;longlong&gt;' type-id='type-id-129' mangled-name='_ZN5mongo17StringBuilderImplINS_21SharedBufferAllocatorEE14appendIntegralIxEERS2_T_i' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZN5mongo17StringBuilderImplINS_21SharedBufferAllocatorEE14appendIntegralIxEERS2_T_i'/>
+        <function-decl name='appendIntegral&lt;longlong&gt;' type-id='type-id-121' mangled-name='_ZN5mongo17StringBuilderImplINS_21SharedBufferAllocatorEE14appendIntegralIxEERS2_T_i' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZN5mongo17StringBuilderImplINS_21SharedBufferAllocatorEE14appendIntegralIxEERS2_T_i'/>
       </member-function>
       <member-function access='public'>
-        <function-decl name='readAndAdvance&lt;mongo::Validated&lt;mongo::BSONObj&gt;&gt;' type-id='type-id-104' mangled-name='_ZN5mongo20ConstDataRangeCursor14readAndAdvanceINS_9ValidatedINS_7BSONObjEEEEENS_10StatusWithIT_EEv' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZN5mongo20ConstDataRangeCursor14readAndAdvanceINS_9ValidatedINS_7BSONObjEEEEENS_10StatusWithIT_EEv'/>
+        <function-decl name='readAndAdvance&lt;mongo::Validated&lt;mongo::BSONObj&gt;&gt;' type-id='type-id-96' mangled-name='_ZN5mongo20ConstDataRangeCursor14readAndAdvanceINS_9ValidatedINS_7BSONObjEEEEENS_10StatusWithIT_EEv' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZN5mongo20ConstDataRangeCursor14readAndAdvanceINS_9ValidatedINS_7BSONObjEEEEENS_10StatusWithIT_EEv'/>
       </member-function>
       <member-function access='public'>
-        <function-decl name='add' type-id='type-id-154' mangled-name='_ZN5mongo23FTDCCollectorCollection3addESt10unique_ptrINS_22FTDCCollectorInterfaceESt14default_deleteIS2_EE' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZN5mongo23FTDCCollectorCollection3addESt10unique_ptrINS_22FTDCCollectorInterfaceESt14default_deleteIS2_EE'/>
+        <function-decl name='add' type-id='type-id-146' mangled-name='_ZN5mongo23FTDCCollectorCollection3addESt10unique_ptrINS_22FTDCCollectorInterfaceESt14default_deleteIS2_EE' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZN5mongo23FTDCCollectorCollection3addESt10unique_ptrINS_22FTDCCollectorInterfaceESt14default_deleteIS2_EE'/>
       </member-function>
       <member-function access='public'>
-        <function-decl name='collect' type-id='type-id-141' mangled-name='_ZN5mongo23FTDCCollectorCollection7collectEPNS_6ClientE' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZN5mongo23FTDCCollectorCollection7collectEPNS_6ClientE'/>
+        <function-decl name='collect' type-id='type-id-133' mangled-name='_ZN5mongo23FTDCCollectorCollection7collectEPNS_6ClientE' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZN5mongo23FTDCCollectorCollection7collectEPNS_6ClientE'/>
       </member-function>
       <member-function access='public' const='yes'>
-        <function-decl name='numberLong' type-id='type-id-101' mangled-name='_ZNK5mongo11BSONElement10numberLongEv' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZNK5mongo11BSONElement10numberLongEv'/>
+        <function-decl name='numberLong' type-id='type-id-93' mangled-name='_ZNK5mongo11BSONElement10numberLongEv' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZNK5mongo11BSONElement10numberLongEv'/>
       </member-function>
       <member-function access='private' const='yes'>
-        <function-decl name='chk' type-id='type-id-100' mangled-name='_ZNK5mongo11BSONElement3chkENS_8BSONTypeE' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZNK5mongo11BSONElement3chkENS_8BSONTypeE'/>
+        <function-decl name='chk' type-id='type-id-92' mangled-name='_ZNK5mongo11BSONElement3chkENS_8BSONTypeE' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZNK5mongo11BSONElement3chkENS_8BSONTypeE'/>
       </member-function>
       <member-function access='public' const='yes'>
-        <function-decl name='read&lt;mongo::Validated&lt;mongo::BSONObj&gt;&gt;' type-id='type-id-119' mangled-name='_ZNK5mongo14ConstDataRange4readINS_9ValidatedINS_7BSONObjEEEEENS_10StatusWithIT_EEm' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZNK5mongo14ConstDataRange4readINS_9ValidatedINS_7BSONObjEEEEENS_10StatusWithIT_EEm'/>
+        <function-decl name='read&lt;mongo::Validated&lt;mongo::BSONObj&gt;&gt;' type-id='type-id-111' mangled-name='_ZNK5mongo14ConstDataRange4readINS_9ValidatedINS_7BSONObjEEEEENS_10StatusWithIT_EEm' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZNK5mongo14ConstDataRange4readINS_9ValidatedINS_7BSONObjEEEEENS_10StatusWithIT_EEm'/>
       </member-function>
     </class-decl>
     </namespace-decl>
-    <reference-type-def kind='lvalue' type-id='type-id-61' size-in-bits='64' hash='c2f26b30b69594f6' id='type-id-127'/>
-    <reference-type-def kind='rvalue' type-id='type-id-61' size-in-bits='64' hash='ec8dd3880e105907' id='type-id-167'/>
-    <pointer-type-def type-id='type-id-61' size-in-bits='64' hash='a303839dd9b2a7ad' id='type-id-82'/>
+    <reference-type-def kind='lvalue' type-id='type-id-53' size-in-bits='64' hash='c2f26b30b69594f6' id='type-id-119'/>
+    <reference-type-def kind='rvalue' type-id='type-id-53' size-in-bits='64' hash='ec8dd3880e105907' id='type-id-159'/>
+    <pointer-type-def type-id='type-id-53' size-in-bits='64' hash='a303839dd9b2a7ad' id='type-id-74'/>
     <namespace-decl name='mongo'>
       <namespace-decl name='logger'>
-        <class-decl name='__anonymous_struct__' visibility='default' is-anonymous='yes' is-declaration-only='yes' hash='7aadd1801b08ed74' id='type-id-136'>
+        <class-decl name='__anonymous_struct__' visibility='default' is-anonymous='yes' is-declaration-only='yes' hash='7aadd1801b08ed74' id='type-id-128'>
           <member-function access='public'>
-            <function-decl name='operator&lt;&lt;&lt;mongo::Status&gt;' type-id='type-id-137' mangled-name='_ZN5mongo6logger16LogstreamBuilderlsINS_6StatusEEERS1_RKT_' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZN5mongo6logger16LogstreamBuilderlsINS_6StatusEEERS1_RKT_'/>
+            <function-decl name='operator&lt;&lt;&lt;mongo::Status&gt;' type-id='type-id-129' mangled-name='_ZN5mongo6logger16LogstreamBuilderlsINS_6StatusEEERS1_RKT_' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZN5mongo6logger16LogstreamBuilderlsINS_6StatusEEERS1_RKT_'/>
           </member-function>
         </class-decl>
       </namespace-decl>
     </namespace-decl>
-    <reference-type-def kind='lvalue' type-id='type-id-136' size-in-bits='64' hash='725ddc15c5f4f73c' id='type-id-139'/>
-    <pointer-type-def type-id='type-id-136' size-in-bits='64' hash='31c9ce6541635a72' id='type-id-138'/>
-    <pointer-type-def type-id='type-id-118' size-in-bits='64' hash='fce61c10660e5f2d' id='type-id-123'/>
+    <reference-type-def kind='lvalue' type-id='type-id-128' size-in-bits='64' hash='725ddc15c5f4f73c' id='type-id-131'/>
+    <pointer-type-def type-id='type-id-128' size-in-bits='64' hash='31c9ce6541635a72' id='type-id-130'/>
+    <pointer-type-def type-id='type-id-110' size-in-bits='64' hash='fce61c10660e5f2d' id='type-id-115'/>
     <type-decl name='sizetype' size-in-bits='64' hash='3e84f1a1648448f5' id='type-id-1'/>
     <namespace-decl name='std'>
-    <class-decl name='__anonymous_struct__' naming-typedef-id='type-id-183' visibility='default' is-anonymous='yes' is-declaration-only='yes' hash='9d622721b1cf0e3d' id='type-id-67'>
+    <class-decl name='__anonymous_struct__' visibility='default' is-anonymous='yes' is-declaration-only='yes' hash='9d622721b1cf0e3d' id='type-id-59'>
       <member-type access='private'>
-        <class-decl name='__anonymous_struct__' visibility='default' is-anonymous='yes' is-declaration-only='yes' hash='0d7b76410c44460e' id='type-id-175'>
+        <class-decl name='__anonymous_struct__' visibility='default' is-anonymous='yes' is-declaration-only='yes' hash='0d7b76410c44460e' id='type-id-170'>
           <member-function access='public' destructor='yes' vtable-offset='0'>
-            <function-decl name='~_Impl_base' type-id='type-id-176' mangled-name='_ZNSt6thread10_Impl_baseD0Ev' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZNSt6thread10_Impl_baseD0Ev'/>
+            <function-decl name='~_Impl_base' type-id='type-id-171' mangled-name='_ZNSt6thread10_Impl_baseD0Ev' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZNSt6thread10_Impl_baseD0Ev'/>
           </member-function>
           <member-function access='public' destructor='yes' vtable-offset='0'>
-            <function-decl name='~_Impl_base' type-id='type-id-176' mangled-name='_ZNSt6thread10_Impl_baseD2Ev' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZNSt6thread10_Impl_baseD2Ev'/>
+            <function-decl name='~_Impl_base' type-id='type-id-171' mangled-name='_ZNSt6thread10_Impl_baseD2Ev' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZNSt6thread10_Impl_baseD2Ev'/>
           </member-function>
         </class-decl>
       </member-type>
       <member-type access='private'>
-        <class-decl name='__anonymous_struct__' is-struct='yes' visibility='default' is-anonymous='yes' is-declaration-only='yes' hash='46ae8942c368c2e5' id='type-id-178'>
+        <class-decl name='__anonymous_struct__' is-struct='yes' visibility='default' is-anonymous='yes' is-declaration-only='yes' hash='46ae8942c368c2e5' id='type-id-167'>
           <member-function access='public' vtable-offset='2'>
-            <function-decl name='_M_run' type-id='type-id-179' mangled-name='_ZNSt6thread5_ImplISt12_Bind_simpleIFSt5_BindIFSt7_Mem_fnIMN5mongo14FTDCControllerEFvvEEPS5_EEvEEE6_M_runEv' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZNSt6thread5_ImplISt12_Bind_simpleIFSt5_BindIFSt7_Mem_fnIMN5mongo14FTDCControllerEFvvEEPS5_EEvEEE6_M_runEv'/>
+            <function-decl name='_M_run' type-id='type-id-168' mangled-name='_ZNSt6thread5_ImplISt12_Bind_simpleIFSt5_BindIFSt7_Mem_fnIMN5mongo14FTDCControllerEFvvEEPS5_EEvEEE6_M_runEv' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZNSt6thread5_ImplISt12_Bind_simpleIFSt5_BindIFSt7_Mem_fnIMN5mongo14FTDCControllerEFvvEEPS5_EEvEEE6_M_runEv'/>
           </member-function>
         </class-decl>
       </member-type>
       <member-type access='private'>
-        <typedef-decl name='__type' type-id='type-id-67' hash='9d622721b1cf0e3d' id='type-id-184'/>
+        <typedef-decl name='type' type-id='type-id-59' hash='9d622721b1cf0e3d' id='type-id-175'/>
       </member-type>
       <member-type access='private'>
-        <typedef-decl name='difference_type' type-id='type-id-9' size-in-bits='64' hash='8aa1e1a2ab2c2d3e' id='type-id-185'/>
-      </member-type>
-      <member-type access='private'>
-        <typedef-decl name='difference_type' type-id='type-id-124' size-in-bits='64' hash='8aa1e1a2ab2c2d3e#1' id='type-id-10'/>
-      </member-type>
-      <member-type access='private'>
-        <typedef-decl name='size_type' type-id='type-id-120' size-in-bits='64' hash='da551c1631705dfe' id='type-id-12'/>
-      </member-type>
-      <member-type access='private'>
-        <typedef-decl name='type' type-id='type-id-61' hash='6e16a8b45ba20efe' id='type-id-186'/>
-      </member-type>
-      <member-type access='private'>
-        <typedef-decl name='type' type-id='type-id-67' hash='9d622721b1cf0e3d' id='type-id-187'/>
-      </member-type>
-      <member-type access='private'>
-        <typedef-decl name='value_type' type-id='type-id-30' hash='373e98c998b99969' id='type-id-14'/>
-      </member-type>
-      <member-type access='private'>
-        <typedef-decl name='value_type' type-id='type-id-13' hash='373e98c998b99969#1' id='type-id-188'/>
+        <typedef-decl name='value_type' type-id='type-id-23' hash='373e98c998b99969' id='type-id-176'/>
       </member-type>
       <member-function access='public'>
-        <function-decl name='thread&lt;std::_Bind&lt;std::_Mem_fn&lt;void(mongo::FTDCController::*)()&gt;(mongo::FTDCController*)&gt;&gt;' type-id='type-id-171' mangled-name='_ZNSt6threadC2ISt5_BindIFSt7_Mem_fnIMN5mongo14FTDCControllerEFvvEEPS4_EEJEEEOT_DpOT0_' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZNSt6threadC2ISt5_BindIFSt7_Mem_fnIMN5mongo14FTDCControllerEFvvEEPS4_EEJEEEOT_DpOT0_'/>
+        <function-decl name='thread&lt;std::_Bind&lt;std::_Mem_fn&lt;void(mongo::FTDCController::*)()&gt;(mongo::FTDCController*)&gt;&gt;' type-id='type-id-163' mangled-name='_ZNSt6threadC2ISt5_BindIFSt7_Mem_fnIMN5mongo14FTDCControllerEFvvEEPS4_EEJEEEOT_DpOT0_' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZNSt6threadC2ISt5_BindIFSt7_Mem_fnIMN5mongo14FTDCControllerEFvvEEPS4_EEJEEEOT_DpOT0_'/>
       </member-function>
       <member-function access='protected'>
-        <function-decl name='_M_emplace_back_aux&lt;boost::filesystem::path&gt;' type-id='type-id-164' mangled-name='_ZNSt6vectorIN5boost10filesystem4pathESaIS2_EE19_M_emplace_back_auxIJS2_EEEvDpOT_' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZNSt6vectorIN5boost10filesystem4pathESaIS2_EE19_M_emplace_back_auxIJS2_EEEvDpOT_'/>
+        <function-decl name='_M_emplace_back_aux&lt;boost::filesystem::path&gt;' type-id='type-id-156' mangled-name='_ZNSt6vectorIN5boost10filesystem4pathESaIS2_EE19_M_emplace_back_auxIJS2_EEEvDpOT_' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZNSt6vectorIN5boost10filesystem4pathESaIS2_EE19_M_emplace_back_auxIJS2_EEEvDpOT_'/>
       </member-function>
       <member-function access='protected'>
-        <function-decl name='_M_emplace_back_aux&lt;mongo::BSONObj&amp;&gt;' type-id='type-id-168' mangled-name='_ZNSt6vectorIN5mongo7BSONObjESaIS1_EE19_M_emplace_back_auxIJRS1_EEEvDpOT_' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZNSt6vectorIN5mongo7BSONObjESaIS1_EE19_M_emplace_back_auxIJRS1_EEEvDpOT_'/>
+        <function-decl name='_M_emplace_back_aux&lt;mongo::BSONObj&amp;&gt;' type-id='type-id-160' mangled-name='_ZNSt6vectorIN5mongo7BSONObjESaIS1_EE19_M_emplace_back_auxIJRS1_EEEvDpOT_' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZNSt6vectorIN5mongo7BSONObjESaIS1_EE19_M_emplace_back_auxIJRS1_EEEvDpOT_'/>
       </member-function>
       <member-function access='protected'>
-        <function-decl name='_M_emplace_back_aux&lt;mongo::BSONObj&gt;' type-id='type-id-166' mangled-name='_ZNSt6vectorIN5mongo7BSONObjESaIS1_EE19_M_emplace_back_auxIJS1_EEEvDpOT_' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZNSt6vectorIN5mongo7BSONObjESaIS1_EE19_M_emplace_back_auxIJS1_EEEvDpOT_'/>
+        <function-decl name='_M_emplace_back_aux&lt;mongo::BSONObj&gt;' type-id='type-id-158' mangled-name='_ZNSt6vectorIN5mongo7BSONObjESaIS1_EE19_M_emplace_back_auxIJS1_EEEvDpOT_' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZNSt6vectorIN5mongo7BSONObjESaIS1_EE19_M_emplace_back_auxIJS1_EEEvDpOT_'/>
       </member-function>
       <member-function access='public'>
-        <function-decl name='reserve' type-id='type-id-169' mangled-name='_ZNSt6vectorIN5mongo7BSONObjESaIS1_EE7reserveEm' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZNSt6vectorIN5mongo7BSONObjESaIS1_EE7reserveEm'/>
+        <function-decl name='reserve' type-id='type-id-161' mangled-name='_ZNSt6vectorIN5mongo7BSONObjESaIS1_EE7reserveEm' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZNSt6vectorIN5mongo7BSONObjESaIS1_EE7reserveEm'/>
       </member-function>
       <member-function access='public' destructor='yes'>
-        <function-decl name='~vector' type-id='type-id-159' mangled-name='_ZNSt6vectorIN5mongo7BSONObjESaIS1_EED2Ev' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZNSt6vectorIN5mongo7BSONObjESaIS1_EED2Ev'/>
+        <function-decl name='~vector' type-id='type-id-154' mangled-name='_ZNSt6vectorIN5mongo7BSONObjESaIS1_EED2Ev' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZNSt6vectorIN5mongo7BSONObjESaIS1_EED2Ev'/>
       </member-function>
       <member-function access='public'>
-        <function-decl name='operator=' type-id='type-id-142' mangled-name='_ZNSt6vectorIN5mongo7BSONObjESaIS1_EEaSERKS3_' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZNSt6vectorIN5mongo7BSONObjESaIS1_EEaSERKS3_'/>
+        <function-decl name='operator=' type-id='type-id-134' mangled-name='_ZNSt6vectorIN5mongo7BSONObjESaIS1_EEaSERKS3_' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZNSt6vectorIN5mongo7BSONObjESaIS1_EEaSERKS3_'/>
       </member-function>
       <member-function access='protected'>
-        <function-decl name='_M_emplace_back_aux&lt;std::unique_ptr&lt;mongo::FTDCCollectorInterface,std::default_delete&lt;mongo::FTDCCollectorInterface&gt;&gt;&gt;' type-id='type-id-171' mangled-name='_ZNSt6vectorISt10unique_ptrIN5mongo22FTDCCollectorInterfaceESt14default_deleteIS2_EESaIS5_EE19_M_emplace_back_auxIJS5_EEEvDpOT_' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZNSt6vectorISt10unique_ptrIN5mongo22FTDCCollectorInterfaceESt14default_deleteIS2_EESaIS5_EE19_M_emplace_back_auxIJS5_EEEvDpOT_'/>
+        <function-decl name='_M_emplace_back_aux&lt;std::unique_ptr&lt;mongo::FTDCCollectorInterface,std::default_delete&lt;mongo::FTDCCollectorInterface&gt;&gt;&gt;' type-id='type-id-163' mangled-name='_ZNSt6vectorISt10unique_ptrIN5mongo22FTDCCollectorInterfaceESt14default_deleteIS2_EESaIS5_EE19_M_emplace_back_auxIJS5_EEEvDpOT_' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZNSt6vectorISt10unique_ptrIN5mongo22FTDCCollectorInterfaceESt14default_deleteIS2_EESaIS5_EE19_M_emplace_back_auxIJS5_EEEvDpOT_'/>
       </member-function>
       <member-function access='protected'>
-        <function-decl name='_M_emplace_back_aux&lt;std::tuple&lt;mongo::FTDCBSONUtil::FTDCType,mongo::BSONObj,mongo::Date_t&gt;&gt;' type-id='type-id-171' mangled-name='_ZNSt6vectorISt5tupleIJN5mongo12FTDCBSONUtil8FTDCTypeENS1_7BSONObjENS1_6Date_tEEESaIS6_EE19_M_emplace_back_auxIJS6_EEEvDpOT_' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZNSt6vectorISt5tupleIJN5mongo12FTDCBSONUtil8FTDCTypeENS1_7BSONObjENS1_6Date_tEEESaIS6_EE19_M_emplace_back_auxIJS6_EEEvDpOT_'/>
+        <function-decl name='_M_emplace_back_aux&lt;std::tuple&lt;mongo::FTDCBSONUtil::FTDCType,mongo::BSONObj,mongo::Date_t&gt;&gt;' type-id='type-id-163' mangled-name='_ZNSt6vectorISt5tupleIJN5mongo12FTDCBSONUtil8FTDCTypeENS1_7BSONObjENS1_6Date_tEEESaIS6_EE19_M_emplace_back_auxIJS6_EEEvDpOT_' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZNSt6vectorISt5tupleIJN5mongo12FTDCBSONUtil8FTDCTypeENS1_7BSONObjENS1_6Date_tEEESaIS6_EE19_M_emplace_back_auxIJS6_EEEvDpOT_'/>
       </member-function>
       <member-function access='protected'>
-        <function-decl name='_M_default_append' type-id='type-id-169' mangled-name='_ZNSt6vectorIcSaIcEE17_M_default_appendEm' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZNSt6vectorIcSaIcEE17_M_default_appendEm'/>
+        <function-decl name='_M_default_append' type-id='type-id-161' mangled-name='_ZNSt6vectorIcSaIcEE17_M_default_appendEm' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZNSt6vectorIcSaIcEE17_M_default_appendEm'/>
       </member-function>
       <member-function access='public' destructor='yes'>
-        <function-decl name='~vector' type-id='type-id-159' mangled-name='_ZNSt6vectorIcSaIcEED2Ev' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZNSt6vectorIcSaIcEED2Ev'/>
+        <function-decl name='~vector' type-id='type-id-154' mangled-name='_ZNSt6vectorIcSaIcEED2Ev' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZNSt6vectorIcSaIcEED2Ev'/>
       </member-function>
       <member-function access='protected'>
-        <function-decl name='_M_default_append' type-id='type-id-169' mangled-name='_ZNSt6vectorIhSaIhEE17_M_default_appendEm' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZNSt6vectorIhSaIhEE17_M_default_appendEm'/>
+        <function-decl name='_M_default_append' type-id='type-id-161' mangled-name='_ZNSt6vectorIhSaIhEE17_M_default_appendEm' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZNSt6vectorIhSaIhEE17_M_default_appendEm'/>
       </member-function>
       <member-function access='protected'>
-        <function-decl name='_M_default_append' type-id='type-id-169' mangled-name='_ZNSt6vectorImSaImEE17_M_default_appendEm' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZNSt6vectorImSaImEE17_M_default_appendEm'/>
+        <function-decl name='_M_default_append' type-id='type-id-161' mangled-name='_ZNSt6vectorImSaImEE17_M_default_appendEm' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZNSt6vectorImSaImEE17_M_default_appendEm'/>
       </member-function>
       <member-function access='protected'>
-        <function-decl name='_M_emplace_back_aux&lt;bool&gt;' type-id='type-id-163' mangled-name='_ZNSt6vectorImSaImEE19_M_emplace_back_auxIJbEEEvDpOT_' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZNSt6vectorImSaImEE19_M_emplace_back_auxIJbEEEvDpOT_'/>
+        <function-decl name='_M_emplace_back_aux&lt;bool&gt;' type-id='type-id-155' mangled-name='_ZNSt6vectorImSaImEE19_M_emplace_back_auxIJbEEEvDpOT_' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZNSt6vectorImSaImEE19_M_emplace_back_auxIJbEEEvDpOT_'/>
       </member-function>
       <member-function access='protected'>
-        <function-decl name='_M_emplace_back_aux&lt;unsignedint&gt;' type-id='type-id-173' mangled-name='_ZNSt6vectorImSaImEE19_M_emplace_back_auxIJjEEEvDpOT_' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZNSt6vectorImSaImEE19_M_emplace_back_auxIJjEEEvDpOT_'/>
+        <function-decl name='_M_emplace_back_aux&lt;unsignedint&gt;' type-id='type-id-165' mangled-name='_ZNSt6vectorImSaImEE19_M_emplace_back_auxIJjEEEvDpOT_' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZNSt6vectorImSaImEE19_M_emplace_back_auxIJjEEEvDpOT_'/>
       </member-function>
       <member-function access='protected'>
-        <function-decl name='_M_emplace_back_aux&lt;longlong&gt;' type-id='type-id-165' mangled-name='_ZNSt6vectorImSaImEE19_M_emplace_back_auxIJxEEEvDpOT_' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZNSt6vectorImSaImEE19_M_emplace_back_auxIJxEEEvDpOT_'/>
+        <function-decl name='_M_emplace_back_aux&lt;longlong&gt;' type-id='type-id-157' mangled-name='_ZNSt6vectorImSaImEE19_M_emplace_back_auxIJxEEEvDpOT_' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZNSt6vectorImSaImEE19_M_emplace_back_auxIJxEEEvDpOT_'/>
       </member-function>
     </class-decl>
     </namespace-decl>
-    <pointer-type-def type-id='type-id-175' size-in-bits='64' hash='bddc9332a75436a0' id='type-id-177'/>
-    <pointer-type-def type-id='type-id-178' size-in-bits='64' hash='bddc9332a75436a0#1' id='type-id-180'/>
+    <pointer-type-def type-id='type-id-170' size-in-bits='64' hash='bddc9332a75436a0' id='type-id-172'/>
+    <pointer-type-def type-id='type-id-167' size-in-bits='64' hash='bddc9332a75436a0#1' id='type-id-169'/>
     <namespace-decl name='std'>
-      <class-decl name='__anonymous_struct__' visibility='default' is-anonymous='yes' is-declaration-only='yes' hash='a68ce2f59d256c78' id='type-id-160'>
+      <class-decl name='__anonymous_struct__' visibility='default' is-anonymous='yes' is-declaration-only='yes' hash='a68ce2f59d256c78' id='type-id-151'>
         <member-function access='public' destructor='yes' vtable-offset='0'>
-          <function-decl name='~_Sp_counted_ptr_inplace' type-id='type-id-161' mangled-name='_ZNSt23_Sp_counted_ptr_inplaceINSt6thread5_ImplISt12_Bind_simpleIFSt5_BindIFSt7_Mem_fnIMN5mongo14FTDCControllerEFvvEEPS6_EEvEEEESaISF_ELN9__gnu_cxx12_Lock_policyE2EED0Ev' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZNSt23_Sp_counted_ptr_inplaceINSt6thread5_ImplISt12_Bind_simpleIFSt5_BindIFSt7_Mem_fnIMN5mongo14FTDCControllerEFvvEEPS6_EEvEEEESaISF_ELN9__gnu_cxx12_Lock_policyE2EED0Ev'/>
+          <function-decl name='~_Sp_counted_ptr_inplace' type-id='type-id-152' mangled-name='_ZNSt23_Sp_counted_ptr_inplaceINSt6thread5_ImplISt12_Bind_simpleIFSt5_BindIFSt7_Mem_fnIMN5mongo14FTDCControllerEFvvEEPS6_EEvEEEESaISF_ELN9__gnu_cxx12_Lock_policyE2EED0Ev' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZNSt23_Sp_counted_ptr_inplaceINSt6thread5_ImplISt12_Bind_simpleIFSt5_BindIFSt7_Mem_fnIMN5mongo14FTDCControllerEFvvEEPS6_EEvEEEESaISF_ELN9__gnu_cxx12_Lock_policyE2EED0Ev'/>
         </member-function>
         <member-function access='public' destructor='yes' vtable-offset='0'>
-          <function-decl name='~_Sp_counted_ptr_inplace' type-id='type-id-161' mangled-name='_ZNSt23_Sp_counted_ptr_inplaceINSt6thread5_ImplISt12_Bind_simpleIFSt5_BindIFSt7_Mem_fnIMN5mongo14FTDCControllerEFvvEEPS6_EEvEEEESaISF_ELN9__gnu_cxx12_Lock_policyE2EED2Ev' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZNSt23_Sp_counted_ptr_inplaceINSt6thread5_ImplISt12_Bind_simpleIFSt5_BindIFSt7_Mem_fnIMN5mongo14FTDCControllerEFvvEEPS6_EEvEEEESaISF_ELN9__gnu_cxx12_Lock_policyE2EED2Ev'/>
+          <function-decl name='~_Sp_counted_ptr_inplace' type-id='type-id-152' mangled-name='_ZNSt23_Sp_counted_ptr_inplaceINSt6thread5_ImplISt12_Bind_simpleIFSt5_BindIFSt7_Mem_fnIMN5mongo14FTDCControllerEFvvEEPS6_EEvEEEESaISF_ELN9__gnu_cxx12_Lock_policyE2EED2Ev' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZNSt23_Sp_counted_ptr_inplaceINSt6thread5_ImplISt12_Bind_simpleIFSt5_BindIFSt7_Mem_fnIMN5mongo14FTDCControllerEFvvEEPS6_EEvEEEESaISF_ELN9__gnu_cxx12_Lock_policyE2EED2Ev'/>
         </member-function>
         <member-function access='public' vtable-offset='2'>
-          <function-decl name='_M_dispose' type-id='type-id-161' mangled-name='_ZNSt23_Sp_counted_ptr_inplaceINSt6thread5_ImplISt12_Bind_simpleIFSt5_BindIFSt7_Mem_fnIMN5mongo14FTDCControllerEFvvEEPS6_EEvEEEESaISF_ELN9__gnu_cxx12_Lock_policyE2EE10_M_disposeEv' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZNSt23_Sp_counted_ptr_inplaceINSt6thread5_ImplISt12_Bind_simpleIFSt5_BindIFSt7_Mem_fnIMN5mongo14FTDCControllerEFvvEEPS6_EEvEEEESaISF_ELN9__gnu_cxx12_Lock_policyE2EE10_M_disposeEv'/>
+          <function-decl name='_M_dispose' type-id='type-id-152' mangled-name='_ZNSt23_Sp_counted_ptr_inplaceINSt6thread5_ImplISt12_Bind_simpleIFSt5_BindIFSt7_Mem_fnIMN5mongo14FTDCControllerEFvvEEPS6_EEvEEEESaISF_ELN9__gnu_cxx12_Lock_policyE2EE10_M_disposeEv' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZNSt23_Sp_counted_ptr_inplaceINSt6thread5_ImplISt12_Bind_simpleIFSt5_BindIFSt7_Mem_fnIMN5mongo14FTDCControllerEFvvEEPS6_EEvEEEESaISF_ELN9__gnu_cxx12_Lock_policyE2EE10_M_disposeEv'/>
         </member-function>
         <member-function access='public' vtable-offset='3'>
-          <function-decl name='_M_destroy' type-id='type-id-161' mangled-name='_ZNSt23_Sp_counted_ptr_inplaceINSt6thread5_ImplISt12_Bind_simpleIFSt5_BindIFSt7_Mem_fnIMN5mongo14FTDCControllerEFvvEEPS6_EEvEEEESaISF_ELN9__gnu_cxx12_Lock_policyE2EE10_M_destroyEv' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZNSt23_Sp_counted_ptr_inplaceINSt6thread5_ImplISt12_Bind_simpleIFSt5_BindIFSt7_Mem_fnIMN5mongo14FTDCControllerEFvvEEPS6_EEvEEEESaISF_ELN9__gnu_cxx12_Lock_policyE2EE10_M_destroyEv'/>
+          <function-decl name='_M_destroy' type-id='type-id-152' mangled-name='_ZNSt23_Sp_counted_ptr_inplaceINSt6thread5_ImplISt12_Bind_simpleIFSt5_BindIFSt7_Mem_fnIMN5mongo14FTDCControllerEFvvEEPS6_EEvEEEESaISF_ELN9__gnu_cxx12_Lock_policyE2EE10_M_destroyEv' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZNSt23_Sp_counted_ptr_inplaceINSt6thread5_ImplISt12_Bind_simpleIFSt5_BindIFSt7_Mem_fnIMN5mongo14FTDCControllerEFvvEEPS6_EEvEEEESaISF_ELN9__gnu_cxx12_Lock_policyE2EE10_M_destroyEv'/>
         </member-function>
         <member-function access='public' vtable-offset='4'>
-          <function-decl name='_M_get_deleter' type-id='type-id-181' mangled-name='_ZNSt23_Sp_counted_ptr_inplaceINSt6thread5_ImplISt12_Bind_simpleIFSt5_BindIFSt7_Mem_fnIMN5mongo14FTDCControllerEFvvEEPS6_EEvEEEESaISF_ELN9__gnu_cxx12_Lock_policyE2EE14_M_get_deleterERKSt9type_info' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZNSt23_Sp_counted_ptr_inplaceINSt6thread5_ImplISt12_Bind_simpleIFSt5_BindIFSt7_Mem_fnIMN5mongo14FTDCControllerEFvvEEPS6_EEvEEEESaISF_ELN9__gnu_cxx12_Lock_policyE2EE14_M_get_deleterERKSt9type_info'/>
+          <function-decl name='_M_get_deleter' type-id='type-id-173' mangled-name='_ZNSt23_Sp_counted_ptr_inplaceINSt6thread5_ImplISt12_Bind_simpleIFSt5_BindIFSt7_Mem_fnIMN5mongo14FTDCControllerEFvvEEPS6_EEvEEEESaISF_ELN9__gnu_cxx12_Lock_policyE2EE14_M_get_deleterERKSt9type_info' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZNSt23_Sp_counted_ptr_inplaceINSt6thread5_ImplISt12_Bind_simpleIFSt5_BindIFSt7_Mem_fnIMN5mongo14FTDCControllerEFvvEEPS6_EEvEEEESaISF_ELN9__gnu_cxx12_Lock_policyE2EE14_M_get_deleterERKSt9type_info'/>
         </member-function>
       </class-decl>
     </namespace-decl>
-    <reference-type-def kind='lvalue' type-id='type-id-67' size-in-bits='64' hash='db5fcb1bd81572a4' id='type-id-143'/>
-    <reference-type-def kind='rvalue' type-id='type-id-67' size-in-bits='64' hash='6220e0216d820002' id='type-id-172'/>
-    <pointer-type-def type-id='type-id-67' size-in-bits='64' hash='751f289040ec672d' id='type-id-78'/>
-    <pointer-type-def type-id='type-id-160' size-in-bits='64' hash='751f289040ec672d#1' id='type-id-162'/>
+    <reference-type-def kind='lvalue' type-id='type-id-59' size-in-bits='64' hash='db5fcb1bd81572a4' id='type-id-135'/>
+    <reference-type-def kind='rvalue' type-id='type-id-59' size-in-bits='64' hash='6220e0216d820002' id='type-id-164'/>
+    <pointer-type-def type-id='type-id-59' size-in-bits='64' hash='751f289040ec672d' id='type-id-70'/>
+    <pointer-type-def type-id='type-id-151' size-in-bits='64' hash='751f289040ec672d#1' id='type-id-153'/>
     <namespace-decl name='boost'>
       <namespace-decl name='core'>
-        <typedef-decl name='typeinfo' type-id='type-id-41' hash='838ebafa076aa8c5' id='type-id-189'/>
+        <typedef-decl name='typeinfo' type-id='type-id-33' hash='838ebafa076aa8c5' id='type-id-177'/>
       </namespace-decl>
     </namespace-decl>
     <namespace-decl name='boost'>
       <namespace-decl name='detail'>
-        <typedef-decl name='sp_typeinfo' type-id='type-id-189' hash='838ebafa076aa8c5' id='type-id-44'/>
+        <typedef-decl name='sp_typeinfo' type-id='type-id-177' hash='838ebafa076aa8c5' id='type-id-36'/>
       </namespace-decl>
     </namespace-decl>
-    <namespace-decl name='boost'>
-      <namespace-decl name='filesystem'>
-        <typedef-decl name='value_type' type-id='type-id-30' hash='373e98c998b99969' id='type-id-29'/>
-      </namespace-decl>
-    </namespace-decl>
-    <typedef-decl name='int64_t' type-id='type-id-93' size-in-bits='64' hash='8aa1e1a2ab2c2d3e' id='type-id-56'/>
+    <typedef-decl name='int64_t' type-id='type-id-85' size-in-bits='64' hash='8aa1e1a2ab2c2d3e' id='type-id-48'/>
     <namespace-decl name='mongo'>
-      <typedef-decl name='BufBuilder' type-id='type-id-61' hash='6e16a8b45ba20efe' id='type-id-182'/>
+      <typedef-decl name='BufBuilder' type-id='type-id-53' hash='6e16a8b45ba20efe' id='type-id-174'/>
     </namespace-decl>
     <namespace-decl name='mongo'>
-      <typedef-decl name='Milliseconds' type-id='type-id-61' hash='6e16a8b45ba20efe' id='type-id-84'/>
+      <typedef-decl name='Milliseconds' type-id='type-id-53' hash='6e16a8b45ba20efe' id='type-id-76'/>
     </namespace-decl>
-    <typedef-decl name='size_t' type-id='type-id-190' size-in-bits='64' hash='da551c1631705dfe' id='type-id-118'/>
-    <typedef-decl name='size_type' type-id='type-id-120' size-in-bits='64' hash='da551c1631705dfe' id='type-id-170'/>
+    <namespace-decl name='mongo'>
+      <typedef-decl name='type' type-id='type-id-53' hash='6e16a8b45ba20efe' id='type-id-178'/>
+    </namespace-decl>
+    <typedef-decl name='size_t' type-id='type-id-179' size-in-bits='64' hash='da551c1631705dfe' id='type-id-110'/>
+    <typedef-decl name='size_type' type-id='type-id-112' size-in-bits='64' hash='da551c1631705dfe' id='type-id-162'/>
     <namespace-decl name='std'>
-      <typedef-decl name='ptrdiff_t' type-id='type-id-93' size-in-bits='64' hash='8aa1e1a2ab2c2d3e' id='type-id-124'/>
+      <typedef-decl name='__type' type-id='type-id-59' hash='9d622721b1cf0e3d' id='type-id-180'/>
     </namespace-decl>
     <namespace-decl name='std'>
-      <typedef-decl name='size_t' type-id='type-id-190' size-in-bits='64' hash='da551c1631705dfe' id='type-id-120'/>
+      <typedef-decl name='ptrdiff_t' type-id='type-id-85' size-in-bits='64' hash='8aa1e1a2ab2c2d3e' id='type-id-116'/>
     </namespace-decl>
     <namespace-decl name='std'>
-      <typedef-decl name='type' type-id='type-id-67' hash='9d622721b1cf0e3d' id='type-id-183'/>
+      <typedef-decl name='size_t' type-id='type-id-179' size-in-bits='64' hash='da551c1631705dfe' id='type-id-112'/>
     </namespace-decl>
-    <typedef-decl name='uint64_t' type-id='type-id-190' size-in-bits='64' hash='da551c1631705dfe' id='type-id-157'/>
-    <type-decl name='unnamed-enum-underlying-type-0' is-anonymous='yes' is-declaration-only='yes' hash='b627860a8f6d44c2' id='type-id-73'/>
-    <type-decl name='unsigned int' size-in-bits='32' hash='e66b43f97c38e87a' id='type-id-191'/>
-    <reference-type-def kind='rvalue' type-id='type-id-191' size-in-bits='64' hash='39dbcb4fbf9934f0' id='type-id-174'/>
-    <type-decl name='unsigned long int' size-in-bits='64' hash='da551c1631705dfe' id='type-id-190'/>
-    <type-decl name='variadic parameter type' hash='71b2481760aa01a8' id='type-id-192'/>
-    <type-decl name='void' hash='8dcbc64750c3d4e3' id='type-id-88'/>
-    <pointer-type-def type-id='type-id-88' hash='19e246ce75ee6a42' id='type-id-134'/>
+    <typedef-decl name='uint64_t' type-id='type-id-179' size-in-bits='64' hash='da551c1631705dfe' id='type-id-149'/>
+    <type-decl name='unnamed-enum-underlying-type-0' is-anonymous='yes' is-declaration-only='yes' hash='b627860a8f6d44c2' id='type-id-65'/>
+    <type-decl name='unsigned int' size-in-bits='32' hash='e66b43f97c38e87a' id='type-id-181'/>
+    <reference-type-def kind='rvalue' type-id='type-id-181' size-in-bits='64' hash='39dbcb4fbf9934f0' id='type-id-166'/>
+    <type-decl name='unsigned long int' size-in-bits='64' hash='da551c1631705dfe' id='type-id-179'/>
+    <type-decl name='variadic parameter type' hash='71b2481760aa01a8' id='type-id-182'/>
+    <type-decl name='void' hash='8dcbc64750c3d4e3' id='type-id-80'/>
+    <pointer-type-def type-id='type-id-80' hash='19e246ce75ee6a42' id='type-id-126'/>
   </abi-types>
   <abi-instr address-size='64' path='src/mongo/db/ftdc/controller.cpp' comp-dir-path='/home/andrew/Documents/10gen/dev/src/mongodb' language='LANG_C_plus_plus'>
     <namespace-decl name='std'>
-        <function-decl name='__enable_shared_from_this_helper&lt;__gnu_cxx::_Lock_policy::_S_atomic&gt;' type-id='type-id-95' mangled-name='_ZSt32__enable_shared_from_this_helperILN9__gnu_cxx12_Lock_policyE2EEvRKSt14__shared_countIXT_EEz' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZSt32__enable_shared_from_this_helperILN9__gnu_cxx12_Lock_policyE2EEvRKSt14__shared_countIXT_EEz'/>
+        <function-decl name='__enable_shared_from_this_helper&lt;__gnu_cxx::_Lock_policy::_S_atomic&gt;' type-id='type-id-87' mangled-name='_ZSt32__enable_shared_from_this_helperILN9__gnu_cxx12_Lock_policyE2EEvRKSt14__shared_countIXT_EEz' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZSt32__enable_shared_from_this_helperILN9__gnu_cxx12_Lock_policyE2EEvRKSt14__shared_countIXT_EEz'/>
     </namespace-decl>
   </abi-instr>
   <abi-instr address-size='64' path='src/mongo/db/ftdc/file_manager.cpp' comp-dir-path='/home/andrew/Documents/10gen/dev/src/mongodb' language='LANG_C_plus_plus'>
     <namespace-decl name='boost'>
       <namespace-decl name='detail'>
-          <function-decl name='sp_enable_shared_from_this' type-id='type-id-87' mangled-name='_ZN5boost6detail26sp_enable_shared_from_thisEz' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZN5boost6detail26sp_enable_shared_from_thisEz'/>
+          <function-decl name='sp_enable_shared_from_this' type-id='type-id-79' mangled-name='_ZN5boost6detail26sp_enable_shared_from_thisEz' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZN5boost6detail26sp_enable_shared_from_thisEz'/>
       </namespace-decl>
       <namespace-decl name='filesystem'>
-          <function-decl name='operator/' type-id='type-id-75' mangled-name='_ZN5boost10filesystemdvERKNS0_4pathES3_' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZN5boost10filesystemdvERKNS0_4pathES3_'/>
+          <function-decl name='operator/' type-id='type-id-67' mangled-name='_ZN5boost10filesystemdvERKNS0_4pathES3_' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZN5boost10filesystemdvERKNS0_4pathES3_'/>
       </namespace-decl>
     </namespace-decl>
     <namespace-decl name='std'>
-        <function-decl name='__adjust_heap&lt;__gnu_cxx::__normal_iterator&lt;boost::filesystem::path*,std::vector&lt;boost::filesystem::path,std::allocator&lt;boost::filesystem::path&gt;&gt;&gt;,long,boost::filesystem::path,__gnu_cxx::__ops::_Iter_less_iter&gt;' type-id='type-id-94' mangled-name='_ZSt13__adjust_heapIN9__gnu_cxx17__normal_iteratorIPN5boost10filesystem4pathESt6vectorIS4_SaIS4_EEEElS4_NS0_5__ops15_Iter_less_iterEEvT_T0_SD_T1_T2_' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZSt13__adjust_heapIN9__gnu_cxx17__normal_iteratorIPN5boost10filesystem4pathESt6vectorIS4_SaIS4_EEEElS4_NS0_5__ops15_Iter_less_iterEEvT_T0_SD_T1_T2_'/>
-        <function-decl name='__insertion_sort&lt;__gnu_cxx::__normal_iterator&lt;boost::filesystem::path*,std::vector&lt;boost::filesystem::path,std::allocator&lt;boost::filesystem::path&gt;&gt;&gt;,__gnu_cxx::__ops::_Iter_less_iter&gt;' type-id='type-id-90' mangled-name='_ZSt16__insertion_sortIN9__gnu_cxx17__normal_iteratorIPN5boost10filesystem4pathESt6vectorIS4_SaIS4_EEEENS0_5__ops15_Iter_less_iterEEvT_SC_T0_' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZSt16__insertion_sortIN9__gnu_cxx17__normal_iteratorIPN5boost10filesystem4pathESt6vectorIS4_SaIS4_EEEENS0_5__ops15_Iter_less_iterEEvT_SC_T0_'/>
-        <function-decl name='__introsort_loop&lt;__gnu_cxx::__normal_iterator&lt;boost::filesystem::path*,std::vector&lt;boost::filesystem::path,std::allocator&lt;boost::filesystem::path&gt;&gt;&gt;,long,__gnu_cxx::__ops::_Iter_less_iter&gt;' type-id='type-id-92' mangled-name='_ZSt16__introsort_loopIN9__gnu_cxx17__normal_iteratorIPN5boost10filesystem4pathESt6vectorIS4_SaIS4_EEEElNS0_5__ops15_Iter_less_iterEEvT_SC_T0_T1_' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZSt16__introsort_loopIN9__gnu_cxx17__normal_iteratorIPN5boost10filesystem4pathESt6vectorIS4_SaIS4_EEEElNS0_5__ops15_Iter_less_iterEEvT_SC_T0_T1_'/>
-        <function-decl name='__make_heap&lt;__gnu_cxx::__normal_iterator&lt;boost::filesystem::path*,std::vector&lt;boost::filesystem::path,std::allocator&lt;boost::filesystem::path&gt;&gt;&gt;,__gnu_cxx::__ops::_Iter_less_iter&gt;' type-id='type-id-90' mangled-name='_ZSt11__make_heapIN9__gnu_cxx17__normal_iteratorIPN5boost10filesystem4pathESt6vectorIS4_SaIS4_EEEENS0_5__ops15_Iter_less_iterEEvT_SC_T0_' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZSt11__make_heapIN9__gnu_cxx17__normal_iteratorIPN5boost10filesystem4pathESt6vectorIS4_SaIS4_EEEENS0_5__ops15_Iter_less_iterEEvT_SC_T0_'/>
-        <function-decl name='__move_median_to_first&lt;__gnu_cxx::__normal_iterator&lt;boost::filesystem::path*,std::vector&lt;boost::filesystem::path,std::allocator&lt;boost::filesystem::path&gt;&gt;&gt;,__gnu_cxx::__ops::_Iter_less_iter&gt;' type-id='type-id-91' mangled-name='_ZSt22__move_median_to_firstIN9__gnu_cxx17__normal_iteratorIPN5boost10filesystem4pathESt6vectorIS4_SaIS4_EEEENS0_5__ops15_Iter_less_iterEEvT_SC_SC_SC_T0_' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZSt22__move_median_to_firstIN9__gnu_cxx17__normal_iteratorIPN5boost10filesystem4pathESt6vectorIS4_SaIS4_EEEENS0_5__ops15_Iter_less_iterEEvT_SC_SC_SC_T0_'/>
-        <function-decl name='__unguarded_linear_insert&lt;__gnu_cxx::__normal_iterator&lt;boost::filesystem::path*,std::vector&lt;boost::filesystem::path,std::allocator&lt;boost::filesystem::path&gt;&gt;&gt;,__gnu_cxx::__ops::_Val_less_iter&gt;' type-id='type-id-89' mangled-name='_ZSt25__unguarded_linear_insertIN9__gnu_cxx17__normal_iteratorIPN5boost10filesystem4pathESt6vectorIS4_SaIS4_EEEENS0_5__ops14_Val_less_iterEEvT_T0_' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZSt25__unguarded_linear_insertIN9__gnu_cxx17__normal_iteratorIPN5boost10filesystem4pathESt6vectorIS4_SaIS4_EEEENS0_5__ops14_Val_less_iterEEvT_T0_'/>
+        <function-decl name='__adjust_heap&lt;__gnu_cxx::__normal_iterator&lt;boost::filesystem::path*,std::vector&lt;boost::filesystem::path,std::allocator&lt;boost::filesystem::path&gt;&gt;&gt;,long,boost::filesystem::path,__gnu_cxx::__ops::_Iter_less_iter&gt;' type-id='type-id-86' mangled-name='_ZSt13__adjust_heapIN9__gnu_cxx17__normal_iteratorIPN5boost10filesystem4pathESt6vectorIS4_SaIS4_EEEElS4_NS0_5__ops15_Iter_less_iterEEvT_T0_SD_T1_T2_' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZSt13__adjust_heapIN9__gnu_cxx17__normal_iteratorIPN5boost10filesystem4pathESt6vectorIS4_SaIS4_EEEElS4_NS0_5__ops15_Iter_less_iterEEvT_T0_SD_T1_T2_'/>
+        <function-decl name='__insertion_sort&lt;__gnu_cxx::__normal_iterator&lt;boost::filesystem::path*,std::vector&lt;boost::filesystem::path,std::allocator&lt;boost::filesystem::path&gt;&gt;&gt;,__gnu_cxx::__ops::_Iter_less_iter&gt;' type-id='type-id-82' mangled-name='_ZSt16__insertion_sortIN9__gnu_cxx17__normal_iteratorIPN5boost10filesystem4pathESt6vectorIS4_SaIS4_EEEENS0_5__ops15_Iter_less_iterEEvT_SC_T0_' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZSt16__insertion_sortIN9__gnu_cxx17__normal_iteratorIPN5boost10filesystem4pathESt6vectorIS4_SaIS4_EEEENS0_5__ops15_Iter_less_iterEEvT_SC_T0_'/>
+        <function-decl name='__introsort_loop&lt;__gnu_cxx::__normal_iterator&lt;boost::filesystem::path*,std::vector&lt;boost::filesystem::path,std::allocator&lt;boost::filesystem::path&gt;&gt;&gt;,long,__gnu_cxx::__ops::_Iter_less_iter&gt;' type-id='type-id-84' mangled-name='_ZSt16__introsort_loopIN9__gnu_cxx17__normal_iteratorIPN5boost10filesystem4pathESt6vectorIS4_SaIS4_EEEElNS0_5__ops15_Iter_less_iterEEvT_SC_T0_T1_' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZSt16__introsort_loopIN9__gnu_cxx17__normal_iteratorIPN5boost10filesystem4pathESt6vectorIS4_SaIS4_EEEElNS0_5__ops15_Iter_less_iterEEvT_SC_T0_T1_'/>
+        <function-decl name='__make_heap&lt;__gnu_cxx::__normal_iterator&lt;boost::filesystem::path*,std::vector&lt;boost::filesystem::path,std::allocator&lt;boost::filesystem::path&gt;&gt;&gt;,__gnu_cxx::__ops::_Iter_less_iter&gt;' type-id='type-id-82' mangled-name='_ZSt11__make_heapIN9__gnu_cxx17__normal_iteratorIPN5boost10filesystem4pathESt6vectorIS4_SaIS4_EEEENS0_5__ops15_Iter_less_iterEEvT_SC_T0_' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZSt11__make_heapIN9__gnu_cxx17__normal_iteratorIPN5boost10filesystem4pathESt6vectorIS4_SaIS4_EEEENS0_5__ops15_Iter_less_iterEEvT_SC_T0_'/>
+        <function-decl name='__move_median_to_first&lt;__gnu_cxx::__normal_iterator&lt;boost::filesystem::path*,std::vector&lt;boost::filesystem::path,std::allocator&lt;boost::filesystem::path&gt;&gt;&gt;,__gnu_cxx::__ops::_Iter_less_iter&gt;' type-id='type-id-83' mangled-name='_ZSt22__move_median_to_firstIN9__gnu_cxx17__normal_iteratorIPN5boost10filesystem4pathESt6vectorIS4_SaIS4_EEEENS0_5__ops15_Iter_less_iterEEvT_SC_SC_SC_T0_' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZSt22__move_median_to_firstIN9__gnu_cxx17__normal_iteratorIPN5boost10filesystem4pathESt6vectorIS4_SaIS4_EEEENS0_5__ops15_Iter_less_iterEEvT_SC_SC_SC_T0_'/>
+        <function-decl name='__unguarded_linear_insert&lt;__gnu_cxx::__normal_iterator&lt;boost::filesystem::path*,std::vector&lt;boost::filesystem::path,std::allocator&lt;boost::filesystem::path&gt;&gt;&gt;,__gnu_cxx::__ops::_Val_less_iter&gt;' type-id='type-id-81' mangled-name='_ZSt25__unguarded_linear_insertIN9__gnu_cxx17__normal_iteratorIPN5boost10filesystem4pathESt6vectorIS4_SaIS4_EEEENS0_5__ops14_Val_less_iterEEvT_T0_' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZSt25__unguarded_linear_insertIN9__gnu_cxx17__normal_iteratorIPN5boost10filesystem4pathESt6vectorIS4_SaIS4_EEEENS0_5__ops14_Val_less_iterEEvT_T0_'/>
     </namespace-decl>
   </abi-instr>
   <abi-instr address-size='64' path='src/mongo/db/ftdc/file_reader.cpp' comp-dir-path='/home/andrew/Documents/10gen/dev/src/mongodb' language='LANG_C_plus_plus'>
     <namespace-decl name='std'>
-        <function-decl name='operator+&lt;char,std::char_traits&lt;char&gt;,std::allocator&lt;char&gt;&gt;' type-id='type-id-86' mangled-name='_ZStplIcSt11char_traitsIcESaIcEENSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_RKS8_' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZStplIcSt11char_traitsIcESaIcEENSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_RKS8_'/>
+        <function-decl name='operator+&lt;char,std::char_traits&lt;char&gt;,std::allocator&lt;char&gt;&gt;' type-id='type-id-78' mangled-name='_ZStplIcSt11char_traitsIcESaIcEENSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_RKS8_' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZStplIcSt11char_traitsIcESaIcEENSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_RKS8_'/>
     </namespace-decl>
   </abi-instr>
   <abi-instr address-size='64' path='src/mongo/db/ftdc/util.cpp' comp-dir-path='/home/andrew/Documents/10gen/dev/src/mongodb' language='LANG_C_plus_plus'>
     <namespace-decl name='mongo'>
       <namespace-decl name='mongo'>
-        <var-decl name='kFTDCArchiveFile' type-id='type-id-55' mangled-name='_ZN5mongo16kFTDCArchiveFileE' visibility='default' elf-symbol-id='_ZN5mongo16kFTDCArchiveFileE'/>
+        <var-decl name='kFTDCArchiveFile' type-id='type-id-47' mangled-name='_ZN5mongo16kFTDCArchiveFileE' visibility='default' elf-symbol-id='_ZN5mongo16kFTDCArchiveFileE'/>
       </namespace-decl>
       <namespace-decl name='mongo'>
-        <var-decl name='kFTDCCollectEndField' type-id='type-id-52' mangled-name='_ZN5mongo20kFTDCCollectEndFieldE' visibility='default' elf-symbol-id='_ZN5mongo20kFTDCCollectEndFieldE'/>
+        <var-decl name='kFTDCCollectEndField' type-id='type-id-44' mangled-name='_ZN5mongo20kFTDCCollectEndFieldE' visibility='default' elf-symbol-id='_ZN5mongo20kFTDCCollectEndFieldE'/>
       </namespace-decl>
       <namespace-decl name='mongo'>
-        <var-decl name='kFTDCCollectStartField' type-id='type-id-54' mangled-name='_ZN5mongo22kFTDCCollectStartFieldE' visibility='default' elf-symbol-id='_ZN5mongo22kFTDCCollectStartFieldE'/>
+        <var-decl name='kFTDCCollectStartField' type-id='type-id-46' mangled-name='_ZN5mongo22kFTDCCollectStartFieldE' visibility='default' elf-symbol-id='_ZN5mongo22kFTDCCollectStartFieldE'/>
       </namespace-decl>
       <namespace-decl name='mongo'>
-        <var-decl name='kFTDCDataField' type-id='type-id-53' mangled-name='_ZN5mongo14kFTDCDataFieldE' visibility='default' elf-symbol-id='_ZN5mongo14kFTDCDataFieldE'/>
+        <var-decl name='kFTDCDataField' type-id='type-id-45' mangled-name='_ZN5mongo14kFTDCDataFieldE' visibility='default' elf-symbol-id='_ZN5mongo14kFTDCDataFieldE'/>
       </namespace-decl>
       <namespace-decl name='mongo'>
-        <var-decl name='kFTDCDocField' type-id='type-id-52' mangled-name='_ZN5mongo13kFTDCDocFieldE' visibility='default' elf-symbol-id='_ZN5mongo13kFTDCDocFieldE'/>
+        <var-decl name='kFTDCDocField' type-id='type-id-44' mangled-name='_ZN5mongo13kFTDCDocFieldE' visibility='default' elf-symbol-id='_ZN5mongo13kFTDCDocFieldE'/>
       </namespace-decl>
       <namespace-decl name='mongo'>
-        <var-decl name='kFTDCDocsField' type-id='type-id-53' mangled-name='_ZN5mongo14kFTDCDocsFieldE' visibility='default' elf-symbol-id='_ZN5mongo14kFTDCDocsFieldE'/>
+        <var-decl name='kFTDCDocsField' type-id='type-id-45' mangled-name='_ZN5mongo14kFTDCDocsFieldE' visibility='default' elf-symbol-id='_ZN5mongo14kFTDCDocsFieldE'/>
       </namespace-decl>
       <namespace-decl name='mongo'>
-        <var-decl name='kFTDCIdField' type-id='type-id-52' mangled-name='_ZN5mongo12kFTDCIdFieldE' visibility='default' elf-symbol-id='_ZN5mongo12kFTDCIdFieldE'/>
+        <var-decl name='kFTDCIdField' type-id='type-id-44' mangled-name='_ZN5mongo12kFTDCIdFieldE' visibility='default' elf-symbol-id='_ZN5mongo12kFTDCIdFieldE'/>
       </namespace-decl>
       <namespace-decl name='mongo'>
-        <var-decl name='kFTDCInterimFile' type-id='type-id-51' mangled-name='_ZN5mongo16kFTDCInterimFileE' visibility='default' elf-symbol-id='_ZN5mongo16kFTDCInterimFileE'/>
+        <var-decl name='kFTDCInterimFile' type-id='type-id-43' mangled-name='_ZN5mongo16kFTDCInterimFileE' visibility='default' elf-symbol-id='_ZN5mongo16kFTDCInterimFileE'/>
       </namespace-decl>
       <namespace-decl name='mongo'>
-        <var-decl name='kFTDCTypeField' type-id='type-id-53' mangled-name='_ZN5mongo14kFTDCTypeFieldE' visibility='default' elf-symbol-id='_ZN5mongo14kFTDCTypeFieldE'/>
+        <var-decl name='kFTDCTypeField' type-id='type-id-45' mangled-name='_ZN5mongo14kFTDCTypeFieldE' visibility='default' elf-symbol-id='_ZN5mongo14kFTDCTypeFieldE'/>
       </namespace-decl>
       <namespace-decl name='FTDCBSONUtil'>
-          <function-decl name='constructDocumentFromMetrics' type-id='type-id-79' mangled-name='_ZN5mongo12FTDCBSONUtil28constructDocumentFromMetricsERKNS_7BSONObjERKSt6vectorImSaImEE' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZN5mongo12FTDCBSONUtil28constructDocumentFromMetricsERKNS_7BSONObjERKSt6vectorImSaImEE'/>
-          <function-decl name='createBSONMetadataDocument' type-id='type-id-80' mangled-name='_ZN5mongo12FTDCBSONUtil26createBSONMetadataDocumentERKNS_7BSONObjENS_6Date_tE' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZN5mongo12FTDCBSONUtil26createBSONMetadataDocumentERKNS_7BSONObjENS_6Date_tE'/>
-          <function-decl name='createBSONMetricChunkDocument' type-id='type-id-85' mangled-name='_ZN5mongo12FTDCBSONUtil29createBSONMetricChunkDocumentENS_14ConstDataRangeENS_6Date_tE' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZN5mongo12FTDCBSONUtil29createBSONMetricChunkDocumentENS_14ConstDataRangeENS_6Date_tE'/>
-          <function-decl name='extractMetricsFromDocument' type-id='type-id-77' mangled-name='_ZN5mongo12FTDCBSONUtil26extractMetricsFromDocumentERKNS_7BSONObjES3_PSt6vectorImSaImEE' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZN5mongo12FTDCBSONUtil26extractMetricsFromDocumentERKNS_7BSONObjES3_PSt6vectorImSaImEE'/>
-          <function-decl name='getBSONDocumentFromMetadataDoc' type-id='type-id-76' mangled-name='_ZN5mongo12FTDCBSONUtil30getBSONDocumentFromMetadataDocERKNS_7BSONObjE' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZN5mongo12FTDCBSONUtil30getBSONDocumentFromMetadataDocERKNS_7BSONObjE'/>
-          <function-decl name='getBSONDocumentId' type-id='type-id-76' mangled-name='_ZN5mongo12FTDCBSONUtil17getBSONDocumentIdERKNS_7BSONObjE' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZN5mongo12FTDCBSONUtil17getBSONDocumentIdERKNS_7BSONObjE'/>
-          <function-decl name='getBSONDocumentType' type-id='type-id-76' mangled-name='_ZN5mongo12FTDCBSONUtil19getBSONDocumentTypeERKNS_7BSONObjE' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZN5mongo12FTDCBSONUtil19getBSONDocumentTypeERKNS_7BSONObjE'/>
-          <function-decl name='getMetricsFromMetricDoc' type-id='type-id-81' mangled-name='_ZN5mongo12FTDCBSONUtil23getMetricsFromMetricDocERKNS_7BSONObjEPNS_16FTDCDecompressorE' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZN5mongo12FTDCBSONUtil23getMetricsFromMetricDocERKNS_7BSONObjEPNS_16FTDCDecompressorE'/>
+          <function-decl name='constructDocumentFromMetrics' type-id='type-id-71' mangled-name='_ZN5mongo12FTDCBSONUtil28constructDocumentFromMetricsERKNS_7BSONObjERKSt6vectorImSaImEE' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZN5mongo12FTDCBSONUtil28constructDocumentFromMetricsERKNS_7BSONObjERKSt6vectorImSaImEE'/>
+          <function-decl name='createBSONMetadataDocument' type-id='type-id-72' mangled-name='_ZN5mongo12FTDCBSONUtil26createBSONMetadataDocumentERKNS_7BSONObjENS_6Date_tE' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZN5mongo12FTDCBSONUtil26createBSONMetadataDocumentERKNS_7BSONObjENS_6Date_tE'/>
+          <function-decl name='createBSONMetricChunkDocument' type-id='type-id-77' mangled-name='_ZN5mongo12FTDCBSONUtil29createBSONMetricChunkDocumentENS_14ConstDataRangeENS_6Date_tE' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZN5mongo12FTDCBSONUtil29createBSONMetricChunkDocumentENS_14ConstDataRangeENS_6Date_tE'/>
+          <function-decl name='extractMetricsFromDocument' type-id='type-id-69' mangled-name='_ZN5mongo12FTDCBSONUtil26extractMetricsFromDocumentERKNS_7BSONObjES3_PSt6vectorImSaImEE' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZN5mongo12FTDCBSONUtil26extractMetricsFromDocumentERKNS_7BSONObjES3_PSt6vectorImSaImEE'/>
+          <function-decl name='getBSONDocumentFromMetadataDoc' type-id='type-id-68' mangled-name='_ZN5mongo12FTDCBSONUtil30getBSONDocumentFromMetadataDocERKNS_7BSONObjE' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZN5mongo12FTDCBSONUtil30getBSONDocumentFromMetadataDocERKNS_7BSONObjE'/>
+          <function-decl name='getBSONDocumentId' type-id='type-id-68' mangled-name='_ZN5mongo12FTDCBSONUtil17getBSONDocumentIdERKNS_7BSONObjE' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZN5mongo12FTDCBSONUtil17getBSONDocumentIdERKNS_7BSONObjE'/>
+          <function-decl name='getBSONDocumentType' type-id='type-id-68' mangled-name='_ZN5mongo12FTDCBSONUtil19getBSONDocumentTypeERKNS_7BSONObjE' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZN5mongo12FTDCBSONUtil19getBSONDocumentTypeERKNS_7BSONObjE'/>
+          <function-decl name='getMetricsFromMetricDoc' type-id='type-id-73' mangled-name='_ZN5mongo12FTDCBSONUtil23getMetricsFromMetricDocERKNS_7BSONObjEPNS_16FTDCDecompressorE' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZN5mongo12FTDCBSONUtil23getMetricsFromMetricDocERKNS_7BSONObjEPNS_16FTDCDecompressorE'/>
       </namespace-decl>
       <namespace-decl name='FTDCUtil'>
-          <function-decl name='getInterimFile' type-id='type-id-74' mangled-name='_ZN5mongo8FTDCUtil14getInterimFileERKN5boost10filesystem4pathE' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZN5mongo8FTDCUtil14getInterimFileERKN5boost10filesystem4pathE'/>
-          <function-decl name='getInterimTempFile' type-id='type-id-74' mangled-name='_ZN5mongo8FTDCUtil18getInterimTempFileERKN5boost10filesystem4pathE' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZN5mongo8FTDCUtil18getInterimTempFileERKN5boost10filesystem4pathE'/>
-          <function-decl name='getMongoSPath' type-id='type-id-74' mangled-name='_ZN5mongo8FTDCUtil13getMongoSPathERKN5boost10filesystem4pathE' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZN5mongo8FTDCUtil13getMongoSPathERKN5boost10filesystem4pathE'/>
-          <function-decl name='roundTime' type-id='type-id-83' mangled-name='_ZN5mongo8FTDCUtil9roundTimeENS_6Date_tENS_8DurationISt5ratioILl1ELl1000EEEE' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZN5mongo8FTDCUtil9roundTimeENS_6Date_tENS_8DurationISt5ratioILl1ELl1000EEEE'/>
+          <function-decl name='getInterimFile' type-id='type-id-66' mangled-name='_ZN5mongo8FTDCUtil14getInterimFileERKN5boost10filesystem4pathE' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZN5mongo8FTDCUtil14getInterimFileERKN5boost10filesystem4pathE'/>
+          <function-decl name='getInterimTempFile' type-id='type-id-66' mangled-name='_ZN5mongo8FTDCUtil18getInterimTempFileERKN5boost10filesystem4pathE' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZN5mongo8FTDCUtil18getInterimTempFileERKN5boost10filesystem4pathE'/>
+          <function-decl name='getMongoSPath' type-id='type-id-66' mangled-name='_ZN5mongo8FTDCUtil13getMongoSPathERKN5boost10filesystem4pathE' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZN5mongo8FTDCUtil13getMongoSPathERKN5boost10filesystem4pathE'/>
+          <function-decl name='roundTime' type-id='type-id-75' mangled-name='_ZN5mongo8FTDCUtil9roundTimeENS_6Date_tENS_8DurationISt5ratioILl1ELl1000EEEE' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZN5mongo8FTDCUtil9roundTimeENS_6Date_tENS_8DurationISt5ratioILl1ELl1000EEEE'/>
       </namespace-decl>
     </namespace-decl>
   </abi-instr>

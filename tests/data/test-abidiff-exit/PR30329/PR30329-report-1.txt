@@ -12,12 +12,12 @@ Variables changes summary: 0 Removed, 0 Changed, 0 Added variable
       in pointed to type 'typedef sqlite3_context' at sqlite3.c:4730:1:
         underlying type 'struct sqlite3_context' at sqlite3.c:22549:1 changed:
           type size hasn't changed
-          1 data member changes (4 filtered):
+          1 data member change (4 filtered):
             type of 'Mem* pOut' changed:
               in pointed to type 'typedef Mem' at sqlite3.c:15805:1:
                 underlying type 'struct sqlite3_value' at sqlite3.c:22387:1 changed:
                   type size hasn't changed
-                  1 data member changes (1 filtered):
+                  1 data member change (1 filtered):
                     type of 'sqlite3* db' changed:
                       in pointed to type 'typedef sqlite3' at sqlite3.c:578:1:
                         underlying type 'struct sqlite3' at sqlite3.c:16840:1 changed:
@@ -52,15 +52,15 @@ Variables changes summary: 0 Removed, 0 Changed, 0 Added variable
                                                           in pointed to type 'typedef Expr' at sqlite3.c:14690:1:
                                                             underlying type 'struct Expr' at sqlite3.c:18113:1 changed:
                                                               type size hasn't changed
-                                                              1 data member changes (4 filtered):
+                                                              1 data member change (4 filtered):
                                                                 type of 'union {ExprList* pList; Select* pSelect;} x' changed:
                                                                   type size hasn't changed
-                                                                  1 data member changes (1 filtered):
+                                                                  1 data member change (1 filtered):
                                                                     type of 'Select* pSelect' changed:
                                                                       in pointed to type 'typedef Select' at sqlite3.c:14715:1:
                                                                         underlying type 'struct Select' at sqlite3.c:18636:1 changed:
                                                                           type size hasn't changed
-                                                                          1 data member changes (11 filtered):
+                                                                          1 data member change (11 filtered):
                                                                             type of 'SrcList* pSrc' changed:
                                                                               in pointed to type 'typedef SrcList' at sqlite3.c:14719:1:
                                                                                 underlying type 'struct SrcList' at sqlite3.c:18462:1 changed:
@@ -70,7 +70,7 @@ Variables changes summary: 0 Removed, 0 Changed, 0 Added variable
                                                                                       array element type 'typedef SrcItem' changed:
                                                                                         underlying type 'struct SrcItem' at sqlite3.c:18391:1 changed:
                                                                                           type size hasn't changed
-                                                                                          1 data member changes (5 filtered):
+                                                                                          1 data member change (5 filtered):
                                                                                             type of 'Schema* pSchema' changed:
                                                                                               in pointed to type 'typedef Schema' at sqlite3.c:14689:1:
                                                                                                 underlying type 'struct Schema' at sqlite3.c:16646:1 changed:
@@ -80,14 +80,14 @@ Variables changes summary: 0 Removed, 0 Changed, 0 Added variable
                                                                                                       in pointed to type 'typedef Table' at sqlite3.c:14721:1:
                                                                                                         underlying type 'struct Table' at sqlite3.c:17574:1 changed:
                                                                                                           type size hasn't changed
-                                                                                                          1 data member changes (4 filtered):
+                                                                                                          1 data member change (4 filtered):
                                                                                                             type of 'Index* pIndex' changed:
                                                                                                               in pointed to type 'typedef Index' at sqlite3.c:14697:1:
                                                                                                                 underlying type 'struct Index' at sqlite3.c:17896:1 changed:
                                                                                                                   type size hasn't changed
                                                                                                                   1 data member insertion:
                                                                                                                     'unsigned int bHasExpr', at offset 803 (in bits) at sqlite3.c:18035:1
-                                                                                                                  no data member changes (5 filtered);
+                                                                                                                  no data member change (5 filtered);
                                                                                       type size hasn't changed
                                                     type size hasn't changed
                                           'Token constraintName' offset changed from 768 to 832 (in bits) (by +64 bits)

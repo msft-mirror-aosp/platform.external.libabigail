@@ -1030,13 +1030,16 @@ report_name_size_and_alignment_changes(decl_base_sptr		first,
 ///
 /// @param indent the string to use as indentation prefix in the
 /// header.
+///
+/// @param the diff context.
 void
 report_mem_header(ostream& out,
 		  size_t number,
 		  size_t num_filtered,
 		  diff_kind k,
 		  const string& section_name,
-		  const string& indent)
+		  const string& indent,
+		  const diff_context_sptr& ctxt)
 {
   size_t net_number = number - num_filtered;
   string change;
@@ -1045,14 +1048,14 @@ report_mem_header(ostream& out,
   switch (k)
     {
     case del_kind:
-      change = (number > 1) ? "deletions" : "deletion";
+      change = (net_number > 1) ? "deletions" : "deletion";
       break;
     case ins_kind:
-      change = (number > 1) ? "insertions" : "insertion";
+      change = (net_number > 1) ? "insertions" : "insertion";
       break;
     case subtype_change_kind:
     case change_kind:
-      change = (number > 1) ? "changes" : "change";
+      change = (net_number > 1) ? "changes" : "change";
       break;
     }
 
@@ -1067,8 +1070,9 @@ report_mem_header(ostream& out,
     out << indent << net_number << " " << section_name
 	<< " " << change;
 
-  if (num_filtered)
-    out << " (" << num_filtered << " filtered)";
+  if (ctxt->show_num_filtered_data_members())
+    if (num_filtered)
+      out << " (" << num_filtered << " filtered)";
   out << colon_or_semi_colon << "\n";
 }
 

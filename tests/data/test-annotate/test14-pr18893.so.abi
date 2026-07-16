@@ -1384,14 +1384,14 @@
       </data-member>
     </class-decl>
     <!-- struct {PQHeapHandle handle;} -->
-    <class-decl name='__anonymous_struct__' is-struct='yes' naming-typedef-id='type-id-41' visibility='default' size-in-bits='64' is-anonymous='yes' hash='0776f385f5bfb74a' id='type-id-163'>
+    <class-decl name='__anonymous_struct__' is-struct='yes' visibility='default' size-in-bits='64' is-anonymous='yes' hash='0776f385f5bfb74a' id='type-id-163'>
       <data-member access='public' layout-offset-in-bits='0'>
         <!-- PQHeapHandle handle -->
         <var-decl name='handle' type-id='type-id-158' visibility='default'/>
       </data-member>
     </class-decl>
     <!-- struct {PQHeapKey key; PQHeapHandle node;} -->
-    <class-decl name='__anonymous_struct__' is-struct='yes' naming-typedef-id='type-id-39' visibility='default' size-in-bits='128' is-anonymous='yes' hash='16d7e3573f428ecf' id='type-id-164'>
+    <class-decl name='__anonymous_struct__' is-struct='yes' visibility='default' size-in-bits='128' is-anonymous='yes' hash='16d7e3573f428ecf' id='type-id-164'>
       <data-member access='public' layout-offset-in-bits='0'>
         <!-- PQHeapKey key -->
         <var-decl name='key' type-id='type-id-83' visibility='default'/>
@@ -1402,7 +1402,7 @@
       </data-member>
     </class-decl>
     <!-- struct {unsigned long int __val[16];} -->
-    <class-decl name='__anonymous_struct__' is-struct='yes' naming-typedef-id='type-id-162' visibility='default' size-in-bits='1024' is-anonymous='yes' hash='c63b919fde7c3080' id='type-id-165'>
+    <class-decl name='__anonymous_struct__' is-struct='yes' visibility='default' size-in-bits='1024' is-anonymous='yes' hash='c63b919fde7c3080' id='type-id-165'>
       <data-member access='public' layout-offset-in-bits='0'>
         <!-- unsigned long int __val[16] -->
         <var-decl name='__val' type-id='type-id-166' visibility='default'/>

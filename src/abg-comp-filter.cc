@@ -66,6 +66,13 @@ is_void_ptr_to_ptr(const type_base* f, const type_base* s);
 static bool
 is_void_ptr_to_ptr(const type_base_sptr f, const type_base_sptr s);
 
+static bool
+class_diff_has_only_harmless_changes(const class_decl_sptr& f,
+				     const class_decl_sptr& s);
+
+static bool
+class_diff_has_only_harmless_changes(const class_diff* d);
+
 using std::dynamic_pointer_cast;
 
 /// Walk the diff sub-trees of a a @ref corpus_diff and apply a filter
@@ -580,16 +587,17 @@ has_offset_changes(const string_decl_base_sptr_map& f_data_members,
 /// Thus, this function tests that the class_diff carries none of the
 /// 3 kinds of changes above.
 ///
-/// @param d the @ref class_diff to consider.
+/// @param f the first version of the changed class diff to consider.
 ///
-/// @return true iff @p d has only harmless changes.
+/// @param s the second version of the changed class diff to consider.
+///
+/// @return true iff the diff has only harmless changes.
 static bool
-class_diff_has_only_harmless_changes(const class_diff* d)
+class_diff_has_only_harmless_changes(const class_decl_sptr& f,
+				     const class_decl_sptr& s)
 {
-  if (!d || !d->has_changes())
-    return true;
-
-  class_decl_sptr f = d->first_class_decl(), s = d->second_class_decl();
+  if (!f || !s)
+    return false;
 
   if (f->get_qualified_name() != s->get_qualified_name())
     return false;
@@ -607,6 +615,31 @@ class_diff_has_only_harmless_changes(const class_diff* d)
     return false;
 
   return true;
+}
+
+/// Test if the local changes of a @ref class_diff are harmless.
+///
+/// Harmful changes are basically:
+///   1/ name change (that changes the type altogether)
+///   2/ size change
+///   3/ offset change of any data member
+///
+///
+/// Thus, this function tests that the class_diff carries none of the
+/// 3 kinds of changes above.
+///
+/// @param d the @ref class_diff to consider.
+///
+/// @return true iff @p d has only harmless changes.
+static bool
+class_diff_has_only_harmless_changes(const class_diff* d)
+{
+  if (!d || !d->has_changes())
+    return true;
+
+  class_decl_sptr f = d->first_class_decl(), s = d->second_class_decl();
+
+  return class_diff_has_only_harmless_changes(f, s);
 }
 
 /// Test if the local changes of a @ref class_diff are harmless.
@@ -1040,6 +1073,13 @@ is_harmful_name_change(const decl_base_sptr& f,
 	      // Two unions that have only harmless changes (i.e, that
 	      // don't incur any offset or size change) don't
 	      // represent harmful name changes.
+	      return false;
+
+	t1 = peel_qualified_or_typedef_type(t1);
+	t2 = peel_qualified_or_typedef_type(t2);
+	if (class_decl_sptr class1 = is_class_type(t1))
+	  if (class_decl_sptr class2 = is_class_type(t2))
+	    if (class_diff_has_only_harmless_changes(class1, class2))
 	      return false;
       }
 

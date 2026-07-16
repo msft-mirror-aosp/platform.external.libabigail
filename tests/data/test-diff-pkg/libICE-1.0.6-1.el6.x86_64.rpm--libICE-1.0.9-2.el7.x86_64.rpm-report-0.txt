@@ -15,7 +15,7 @@
         underlying type '_IceConn*' changed:
           in pointed to type 'struct _IceConn' at ICEconn.h:131:1:
             type size hasn't changed
-            1 data member changes (3 filtered):
+            1 data member change (3 filtered):
               type of '_XtransConnInfo* trans_conn' changed:
                 in pointed to type 'struct _XtransConnInfo' at Xtransint.h:136:1:
                   type size changed from 640 to 768 (in bits)

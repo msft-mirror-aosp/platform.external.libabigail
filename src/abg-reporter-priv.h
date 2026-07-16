@@ -204,7 +204,8 @@ report_mem_header(ostream& out,
 		  size_t num_filtered,
 		  diff_kind k,
 		  const string& section_name,
-		  const string& indent);
+		  const string& indent,
+		  const diff_context_sptr& ctxt);
 
 void
 emit_changed_fn_report(const diff_context_sptr& ctxt,

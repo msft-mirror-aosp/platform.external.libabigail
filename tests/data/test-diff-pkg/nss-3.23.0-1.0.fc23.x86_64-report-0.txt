@@ -41,7 +41,7 @@
             type size hasn't changed
             1 data member insertion:
               'SSLAuthType authType', at offset 736 (in bits) at sslt.h:250:1
-            no data member changes (2 filtered);
+            no data member change (2 filtered);
 
   1 variable with incompatible sub-type changes:
 
@@ -67,16 +67,16 @@
         in pointed to type 'typedef NSSCMSContentInfo' at cmst.h:54:1:
           underlying type 'struct NSSCMSContentInfoStr' at cmst.h:131:1 changed:
             type size hasn't changed
-            1 data member changes (2 filtered):
+            1 data member change (2 filtered):
               type of 'NSSCMSContent content' changed:
                 underlying type 'union NSSCMSContentUnion' at cmst.h:118:1 changed:
                   type size hasn't changed
-                  1 data member changes (4 filtered):
+                  1 data member change (4 filtered):
                     type of 'NSSCMSEncryptedData* encryptedData' changed:
                       in pointed to type 'typedef NSSCMSEncryptedData' at cmst.h:65:1:
                         underlying type 'struct NSSCMSEncryptedDataStr' at cmst.h:468:1 changed:
                           type size hasn't changed
-                          1 data member changes (2 filtered):
+                          1 data member change (2 filtered):
                             type of 'NSSCMSAttribute** unprotectedAttr' changed:
                               in pointed to type 'NSSCMSAttribute*':
                                 in pointed to type 'typedef NSSCMSAttribute' at cmst.h:69:1:

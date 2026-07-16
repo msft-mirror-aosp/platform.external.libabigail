@@ -190,507 +190,507 @@
     </array-type-def>
     <pointer-type-def type-id='type-id-84' size-in-bits='64' hash='c0eda63c3a260e68' id='type-id-85'/>
     <pointer-type-def type-id='type-id-86' size-in-bits='64' hash='c37d9329d2215ccc' id='type-id-87'/>
-    <enum-decl name='__anonymous_enum__' naming-typedef-id='type-id-88' size-in-bits='32' alignment-in-bits='32' is-anonymous='yes' hash='be248b0984f02989' id='type-id-89'>
-      <underlying-type type-id='type-id-90'/>
+    <enum-decl name='__anonymous_enum__' size-in-bits='32' alignment-in-bits='32' is-anonymous='yes' hash='be248b0984f02989' id='type-id-88'>
+      <underlying-type type-id='type-id-89'/>
       <enumerator name='CTF_PREC_BASE' value='0'/>
       <enumerator name='CTF_PREC_POINTER' value='1'/>
       <enumerator name='CTF_PREC_ARRAY' value='2'/>
       <enumerator name='CTF_PREC_FUNCTION' value='3'/>
       <enumerator name='CTF_PREC_MAX' value='4'/>
     </enum-decl>
-    <function-type size-in-bits='64' hash='a0e3d07e40bb2f55' id='type-id-91'>
+    <function-type size-in-bits='64' hash='a0e3d07e40bb2f55' id='type-id-90'>
       <parameter type-id='type-id-10'/>
       <return type-id='type-id-8'/>
     </function-type>
-    <function-type size-in-bits='64' hash='4d29334130c186bf' id='type-id-92'>
+    <function-type size-in-bits='64' hash='4d29334130c186bf' id='type-id-91'>
       <parameter type-id='type-id-60'/>
       <parameter type-id='type-id-35'/>
       <parameter type-id='type-id-8'/>
-      <parameter type-id='type-id-93'/>
+      <parameter type-id='type-id-92'/>
       <return type-id='type-id-8'/>
     </function-type>
-    <function-type size-in-bits='64' hash='c9fd03cf35aaa841' id='type-id-94'>
+    <function-type size-in-bits='64' hash='c9fd03cf35aaa841' id='type-id-93'>
       <parameter type-id='type-id-60'/>
       <parameter type-id='type-id-35'/>
       <parameter type-id='type-id-8'/>
-      <parameter type-id='type-id-93'/>
+      <parameter type-id='type-id-92'/>
       <parameter type-id='type-id-10'/>
       <return type-id='type-id-8'/>
     </function-type>
-    <function-type size-in-bits='64' hash='8a3b66d30f802a73' id='type-id-95'>
+    <function-type size-in-bits='64' hash='8a3b66d30f802a73' id='type-id-94'>
       <parameter type-id='type-id-25'/>
-      <parameter type-id='type-id-96'/>
+      <parameter type-id='type-id-95'/>
       <return type-id='type-id-10'/>
     </function-type>
-    <function-type size-in-bits='64' hash='9f859f0edb84607a' id='type-id-97'>
+    <function-type size-in-bits='64' hash='9f859f0edb84607a' id='type-id-96'>
       <parameter type-id='type-id-60'/>
       <return type-id='type-id-10'/>
     </function-type>
-    <function-type size-in-bits='64' hash='7e9bbf82c04dea3e' id='type-id-98'>
+    <function-type size-in-bits='64' hash='7e9bbf82c04dea3e' id='type-id-97'>
       <parameter type-id='type-id-60'/>
       <parameter type-id='type-id-35'/>
-      <parameter type-id='type-id-99'/>
+      <parameter type-id='type-id-98'/>
       <return type-id='type-id-10'/>
     </function-type>
-    <function-type size-in-bits='64' hash='015e4098a986e90f' id='type-id-100'>
+    <function-type size-in-bits='64' hash='015e4098a986e90f' id='type-id-99'>
       <parameter type-id='type-id-60'/>
-      <parameter type-id='type-id-101'/>
+      <parameter type-id='type-id-100'/>
       <return type-id='type-id-10'/>
     </function-type>
-    <function-type size-in-bits='64' hash='53078ba50ca7355a' id='type-id-102'>
-      <parameter type-id='type-id-99'/>
+    <function-type size-in-bits='64' hash='53078ba50ca7355a' id='type-id-101'>
+      <parameter type-id='type-id-98'/>
       <return type-id='type-id-10'/>
     </function-type>
-    <function-type size-in-bits='64' hash='c0338902f053fe56' id='type-id-103'>
+    <function-type size-in-bits='64' hash='c0338902f053fe56' id='type-id-102'>
       <parameter type-id='type-id-60'/>
       <parameter type-id='type-id-35'/>
       <return type-id='type-id-53'/>
     </function-type>
-    <function-type size-in-bits='64' hash='f96fdcc9d1ae14da' id='type-id-104'>
+    <function-type size-in-bits='64' hash='f96fdcc9d1ae14da' id='type-id-103'>
       <parameter type-id='type-id-10'/>
-      <parameter type-id='type-id-105'/>
+      <parameter type-id='type-id-104'/>
       <return type-id='type-id-60'/>
     </function-type>
-    <function-type size-in-bits='64' hash='d6972e6b0c6db62f' id='type-id-106'>
+    <function-type size-in-bits='64' hash='d6972e6b0c6db62f' id='type-id-105'>
       <parameter type-id='type-id-43'/>
       <parameter type-id='type-id-43'/>
       <parameter type-id='type-id-43'/>
-      <parameter type-id='type-id-105'/>
+      <parameter type-id='type-id-104'/>
       <return type-id='type-id-60'/>
     </function-type>
-    <function-type size-in-bits='64' hash='1fe435695792a14c' id='type-id-107'>
+    <function-type size-in-bits='64' hash='1fe435695792a14c' id='type-id-106'>
       <parameter type-id='type-id-60'/>
       <return type-id='type-id-60'/>
     </function-type>
-    <function-type size-in-bits='64' hash='bd0e03a66f036b7e' id='type-id-108'>
-      <parameter type-id='type-id-105'/>
+    <function-type size-in-bits='64' hash='bd0e03a66f036b7e' id='type-id-107'>
+      <parameter type-id='type-id-104'/>
       <return type-id='type-id-60'/>
     </function-type>
-    <function-type size-in-bits='64' hash='8da2d04c74095c27' id='type-id-109'>
-      <parameter type-id='type-id-105'/>
-      <parameter type-id='type-id-99'/>
+    <function-type size-in-bits='64' hash='8da2d04c74095c27' id='type-id-108'>
+      <parameter type-id='type-id-104'/>
+      <parameter type-id='type-id-98'/>
       <return type-id='type-id-60'/>
     </function-type>
-    <function-type size-in-bits='64' hash='16b153e44a0038f7' id='type-id-110'>
-      <parameter type-id='type-id-99'/>
-      <parameter type-id='type-id-105'/>
+    <function-type size-in-bits='64' hash='16b153e44a0038f7' id='type-id-109'>
+      <parameter type-id='type-id-98'/>
+      <parameter type-id='type-id-104'/>
       <return type-id='type-id-60'/>
     </function-type>
-    <function-type size-in-bits='64' hash='8e05a06361464deb' id='type-id-111'>
+    <function-type size-in-bits='64' hash='8e05a06361464deb' id='type-id-110'>
       <parameter type-id='type-id-63'/>
       <parameter type-id='type-id-60'/>
       <parameter type-id='type-id-10'/>
-      <parameter type-id='type-id-93'/>
+      <parameter type-id='type-id-92'/>
       <return type-id='type-id-65'/>
     </function-type>
-    <function-type size-in-bits='64' hash='71ab48eed13d8bb2' id='type-id-112'>
+    <function-type size-in-bits='64' hash='71ab48eed13d8bb2' id='type-id-111'>
       <parameter type-id='type-id-60'/>
       <parameter type-id='type-id-10'/>
       <return type-id='type-id-35'/>
     </function-type>
-    <function-type size-in-bits='64' hash='d088c9ff00bbb2bf' id='type-id-113'>
+    <function-type size-in-bits='64' hash='d088c9ff00bbb2bf' id='type-id-112'>
       <parameter type-id='type-id-60'/>
       <parameter type-id='type-id-60'/>
       <parameter type-id='type-id-35'/>
       <return type-id='type-id-35'/>
     </function-type>
-    <function-type size-in-bits='64' hash='332631610d775b16' id='type-id-114'>
+    <function-type size-in-bits='64' hash='332631610d775b16' id='type-id-113'>
       <parameter type-id='type-id-60'/>
       <parameter type-id='type-id-35'/>
       <return type-id='type-id-35'/>
     </function-type>
-    <function-type size-in-bits='64' hash='f01ef27a1f376381' id='type-id-115'>
+    <function-type size-in-bits='64' hash='f01ef27a1f376381' id='type-id-114'>
       <parameter type-id='type-id-60'/>
-      <parameter type-id='type-id-96'/>
+      <parameter type-id='type-id-95'/>
       <parameter type-id='type-id-10'/>
       <return type-id='type-id-35'/>
     </function-type>
-    <function-type size-in-bits='64' hash='1ded1e9482596d12' id='type-id-116'>
+    <function-type size-in-bits='64' hash='1ded1e9482596d12' id='type-id-115'>
       <parameter type-id='type-id-60'/>
-      <parameter type-id='type-id-96'/>
+      <parameter type-id='type-id-95'/>
       <parameter type-id='type-id-10'/>
       <parameter type-id='type-id-22'/>
       <return type-id='type-id-35'/>
     </function-type>
-    <function-type size-in-bits='64' hash='74abe51db081e9fc' id='type-id-117'>
+    <function-type size-in-bits='64' hash='74abe51db081e9fc' id='type-id-116'>
       <parameter type-id='type-id-60'/>
-      <parameter type-id='type-id-96'/>
+      <parameter type-id='type-id-95'/>
       <parameter type-id='type-id-10'/>
       <parameter type-id='type-id-35'/>
       <return type-id='type-id-35'/>
     </function-type>
-    <function-type size-in-bits='64' hash='bd627bb2e305dfa5' id='type-id-118'>
+    <function-type size-in-bits='64' hash='bd627bb2e305dfa5' id='type-id-117'>
       <parameter type-id='type-id-60'/>
-      <parameter type-id='type-id-96'/>
+      <parameter type-id='type-id-95'/>
       <parameter type-id='type-id-10'/>
-      <parameter type-id='type-id-96'/>
+      <parameter type-id='type-id-95'/>
       <return type-id='type-id-35'/>
     </function-type>
-    <function-type size-in-bits='64' hash='2d2258fa6b01a0b7' id='type-id-119'>
+    <function-type size-in-bits='64' hash='2d2258fa6b01a0b7' id='type-id-118'>
       <parameter type-id='type-id-60'/>
-      <parameter type-id='type-id-96'/>
+      <parameter type-id='type-id-95'/>
       <parameter type-id='type-id-16'/>
       <return type-id='type-id-35'/>
     </function-type>
-    <function-type size-in-bits='64' hash='06d503f632d54f60' id='type-id-120'>
+    <function-type size-in-bits='64' hash='06d503f632d54f60' id='type-id-119'>
       <parameter type-id='type-id-60'/>
-      <parameter type-id='type-id-96'/>
+      <parameter type-id='type-id-95'/>
       <parameter type-id='type-id-31'/>
       <parameter type-id='type-id-37'/>
       <return type-id='type-id-35'/>
     </function-type>
-    <function-type size-in-bits='64' hash='35e14e596b849ace' id='type-id-121'>
+    <function-type size-in-bits='64' hash='35e14e596b849ace' id='type-id-120'>
       <parameter type-id='type-id-60'/>
-      <parameter type-id='type-id-96'/>
+      <parameter type-id='type-id-95'/>
       <parameter type-id='type-id-35'/>
       <return type-id='type-id-35'/>
     </function-type>
-    <function-type size-in-bits='64' hash='d55b1778e1f863d8' id='type-id-122'>
+    <function-type size-in-bits='64' hash='d55b1778e1f863d8' id='type-id-121'>
       <parameter type-id='type-id-60'/>
-      <parameter type-id='type-id-123'/>
+      <parameter type-id='type-id-122'/>
       <return type-id='type-id-35'/>
     </function-type>
-    <function-type size-in-bits='64' hash='6ec0463115cb1bbe' id='type-id-124'>
+    <function-type size-in-bits='64' hash='6ec0463115cb1bbe' id='type-id-123'>
       <parameter type-id='type-id-10'/>
       <parameter type-id='type-id-40'/>
-      <parameter type-id='type-id-101'/>
-      <return type-id='type-id-99'/>
+      <parameter type-id='type-id-100'/>
+      <return type-id='type-id-98'/>
     </function-type>
-    <function-type size-in-bits='64' hash='e7ea41a80d480a05' id='type-id-125'>
+    <function-type size-in-bits='64' hash='e7ea41a80d480a05' id='type-id-124'>
       <parameter type-id='type-id-10'/>
       <parameter type-id='type-id-35'/>
-      <parameter type-id='type-id-123'/>
-      <parameter type-id='type-id-99'/>
-      <parameter type-id='type-id-101'/>
-      <return type-id='type-id-99'/>
+      <parameter type-id='type-id-122'/>
+      <parameter type-id='type-id-98'/>
+      <parameter type-id='type-id-100'/>
+      <return type-id='type-id-98'/>
     </function-type>
-    <function-type size-in-bits='64' hash='006f8e6875a46f93' id='type-id-126'>
+    <function-type size-in-bits='64' hash='006f8e6875a46f93' id='type-id-125'>
       <parameter type-id='type-id-10'/>
       <parameter type-id='type-id-35'/>
-      <parameter type-id='type-id-123'/>
-      <parameter type-id='type-id-101'/>
-      <return type-id='type-id-99'/>
+      <parameter type-id='type-id-122'/>
+      <parameter type-id='type-id-100'/>
+      <return type-id='type-id-98'/>
     </function-type>
-    <function-type size-in-bits='64' hash='32473870a24380b6' id='type-id-127'>
+    <function-type size-in-bits='64' hash='32473870a24380b6' id='type-id-126'>
       <parameter type-id='type-id-10'/>
-      <parameter type-id='type-id-99'/>
-      <parameter type-id='type-id-101'/>
-      <return type-id='type-id-99'/>
+      <parameter type-id='type-id-98'/>
+      <parameter type-id='type-id-100'/>
+      <return type-id='type-id-98'/>
     </function-type>
-    <function-type size-in-bits='64' hash='70a1499b44d9d172' id='type-id-128'>
+    <function-type size-in-bits='64' hash='70a1499b44d9d172' id='type-id-127'>
       <parameter type-id='type-id-60'/>
-      <return type-id='type-id-99'/>
+      <return type-id='type-id-98'/>
     </function-type>
-    <function-type size-in-bits='64' hash='5dcbe75f74d57f91' id='type-id-129'>
+    <function-type size-in-bits='64' hash='5dcbe75f74d57f91' id='type-id-128'>
       <parameter type-id='type-id-60'/>
       <parameter type-id='type-id-10'/>
       <parameter type-id='type-id-69'/>
-      <return type-id='type-id-99'/>
+      <return type-id='type-id-98'/>
     </function-type>
-    <function-type size-in-bits='64' hash='a63f6f773d06c05d' id='type-id-130'>
+    <function-type size-in-bits='64' hash='a63f6f773d06c05d' id='type-id-129'>
       <parameter type-id='type-id-60'/>
       <parameter type-id='type-id-60'/>
-      <return type-id='type-id-99'/>
+      <return type-id='type-id-98'/>
     </function-type>
-    <function-type size-in-bits='64' hash='f5c3130c8c3933f2' id='type-id-131'>
+    <function-type size-in-bits='64' hash='f5c3130c8c3933f2' id='type-id-130'>
       <parameter type-id='type-id-60'/>
       <parameter type-id='type-id-35'/>
-      <return type-id='type-id-99'/>
+      <return type-id='type-id-98'/>
     </function-type>
-    <function-type size-in-bits='64' hash='ee1b3bd1e9fd68fa' id='type-id-132'>
+    <function-type size-in-bits='64' hash='ee1b3bd1e9fd68fa' id='type-id-131'>
       <parameter type-id='type-id-60'/>
       <parameter type-id='type-id-35'/>
       <parameter type-id='type-id-10'/>
       <parameter type-id='type-id-35'/>
-      <return type-id='type-id-99'/>
+      <return type-id='type-id-98'/>
     </function-type>
-    <function-type size-in-bits='64' hash='c455fbcb5f37cb83' id='type-id-133'>
+    <function-type size-in-bits='64' hash='c455fbcb5f37cb83' id='type-id-132'>
       <parameter type-id='type-id-60'/>
       <parameter type-id='type-id-35'/>
       <parameter type-id='type-id-10'/>
       <parameter type-id='type-id-80'/>
-      <return type-id='type-id-99'/>
+      <return type-id='type-id-98'/>
     </function-type>
-    <function-type size-in-bits='64' hash='732866e1c81d0f7c' id='type-id-134'>
+    <function-type size-in-bits='64' hash='732866e1c81d0f7c' id='type-id-133'>
       <parameter type-id='type-id-60'/>
       <parameter type-id='type-id-35'/>
       <parameter type-id='type-id-10'/>
-      <parameter type-id='type-id-99'/>
-      <return type-id='type-id-99'/>
+      <parameter type-id='type-id-98'/>
+      <return type-id='type-id-98'/>
     </function-type>
-    <function-type size-in-bits='64' hash='99b32d5b02096ef0' id='type-id-135'>
+    <function-type size-in-bits='64' hash='99b32d5b02096ef0' id='type-id-134'>
       <parameter type-id='type-id-60'/>
       <parameter type-id='type-id-35'/>
       <parameter type-id='type-id-10'/>
-      <parameter type-id='type-id-105'/>
-      <return type-id='type-id-99'/>
+      <parameter type-id='type-id-104'/>
+      <return type-id='type-id-98'/>
     </function-type>
-    <function-type size-in-bits='64' hash='4ead558b6160a42b' id='type-id-136'>
+    <function-type size-in-bits='64' hash='4ead558b6160a42b' id='type-id-135'>
       <parameter type-id='type-id-60'/>
       <parameter type-id='type-id-35'/>
       <parameter type-id='type-id-16'/>
-      <return type-id='type-id-99'/>
+      <return type-id='type-id-98'/>
     </function-type>
-    <function-type size-in-bits='64' hash='da5a38f718962681' id='type-id-137'>
+    <function-type size-in-bits='64' hash='da5a38f718962681' id='type-id-136'>
       <parameter type-id='type-id-60'/>
       <parameter type-id='type-id-35'/>
       <parameter type-id='type-id-47'/>
-      <return type-id='type-id-99'/>
+      <return type-id='type-id-98'/>
     </function-type>
-    <function-type size-in-bits='64' hash='e5338d730b63f91a' id='type-id-138'>
+    <function-type size-in-bits='64' hash='e5338d730b63f91a' id='type-id-137'>
       <parameter type-id='type-id-60'/>
       <parameter type-id='type-id-35'/>
       <parameter type-id='type-id-55'/>
-      <return type-id='type-id-99'/>
+      <return type-id='type-id-98'/>
     </function-type>
-    <function-type size-in-bits='64' hash='73dc1b03c8899e3f' id='type-id-139'>
+    <function-type size-in-bits='64' hash='73dc1b03c8899e3f' id='type-id-138'>
       <parameter type-id='type-id-60'/>
       <parameter type-id='type-id-35'/>
       <parameter type-id='type-id-57'/>
-      <parameter type-id='type-id-101'/>
-      <return type-id='type-id-99'/>
+      <parameter type-id='type-id-100'/>
+      <return type-id='type-id-98'/>
     </function-type>
-    <function-type size-in-bits='64' hash='54a1a443bddd01de' id='type-id-140'>
+    <function-type size-in-bits='64' hash='54a1a443bddd01de' id='type-id-139'>
       <parameter type-id='type-id-60'/>
       <parameter type-id='type-id-35'/>
       <parameter type-id='type-id-60'/>
       <parameter type-id='type-id-35'/>
-      <return type-id='type-id-99'/>
+      <return type-id='type-id-98'/>
     </function-type>
-    <function-type size-in-bits='64' hash='561fa070523c954a' id='type-id-141'>
+    <function-type size-in-bits='64' hash='561fa070523c954a' id='type-id-140'>
       <parameter type-id='type-id-60'/>
       <parameter type-id='type-id-35'/>
       <parameter type-id='type-id-78'/>
-      <parameter type-id='type-id-101'/>
-      <return type-id='type-id-99'/>
+      <parameter type-id='type-id-100'/>
+      <return type-id='type-id-98'/>
     </function-type>
-    <function-type size-in-bits='64' hash='c674a938540c0268' id='type-id-142'>
+    <function-type size-in-bits='64' hash='c674a938540c0268' id='type-id-141'>
       <parameter type-id='type-id-60'/>
       <parameter type-id='type-id-35'/>
       <parameter type-id='type-id-87'/>
-      <parameter type-id='type-id-101'/>
-      <return type-id='type-id-99'/>
+      <parameter type-id='type-id-100'/>
+      <return type-id='type-id-98'/>
     </function-type>
-    <function-type size-in-bits='64' hash='0ca500a80a35721a' id='type-id-143'>
+    <function-type size-in-bits='64' hash='0ca500a80a35721a' id='type-id-142'>
       <parameter type-id='type-id-60'/>
       <parameter type-id='type-id-68'/>
-      <parameter type-id='type-id-101'/>
-      <return type-id='type-id-99'/>
+      <parameter type-id='type-id-100'/>
+      <return type-id='type-id-98'/>
     </function-type>
-    <function-type size-in-bits='64' hash='8466cac2abb96c30' id='type-id-144'>
+    <function-type size-in-bits='64' hash='8466cac2abb96c30' id='type-id-143'>
       <parameter type-id='type-id-60'/>
       <parameter type-id='type-id-85'/>
-      <parameter type-id='type-id-101'/>
-      <return type-id='type-id-99'/>
+      <parameter type-id='type-id-100'/>
+      <return type-id='type-id-98'/>
     </function-type>
-    <function-type size-in-bits='64' hash='b03d101d640742b9' id='type-id-145'>
+    <function-type size-in-bits='64' hash='b03d101d640742b9' id='type-id-144'>
       <parameter type-id='type-id-60'/>
-      <parameter type-id='type-id-99'/>
-      <return type-id='type-id-99'/>
+      <parameter type-id='type-id-98'/>
+      <return type-id='type-id-98'/>
     </function-type>
-    <function-type size-in-bits='64' hash='40e01d9cf7657d95' id='type-id-146'>
+    <function-type size-in-bits='64' hash='40e01d9cf7657d95' id='type-id-145'>
       <parameter type-id='type-id-60'/>
-      <parameter type-id='type-id-123'/>
+      <parameter type-id='type-id-122'/>
       <parameter type-id='type-id-62'/>
-      <return type-id='type-id-99'/>
+      <return type-id='type-id-98'/>
     </function-type>
-    <function-type size-in-bits='64' hash='ba8669547f342942' id='type-id-147'>
+    <function-type size-in-bits='64' hash='ba8669547f342942' id='type-id-146'>
       <parameter type-id='type-id-60'/>
-      <parameter type-id='type-id-123'/>
-      <parameter type-id='type-id-96'/>
+      <parameter type-id='type-id-122'/>
+      <parameter type-id='type-id-95'/>
       <parameter type-id='type-id-66'/>
-      <return type-id='type-id-99'/>
+      <return type-id='type-id-98'/>
     </function-type>
-    <function-type size-in-bits='64' hash='fbf2dc3077959798' id='type-id-148'>
+    <function-type size-in-bits='64' hash='fbf2dc3077959798' id='type-id-147'>
       <parameter type-id='type-id-63'/>
       <parameter type-id='type-id-60'/>
-      <parameter type-id='type-id-96'/>
-      <parameter type-id='type-id-96'/>
-      <return type-id='type-id-99'/>
+      <parameter type-id='type-id-95'/>
+      <parameter type-id='type-id-95'/>
+      <return type-id='type-id-98'/>
     </function-type>
-    <function-type size-in-bits='64' hash='15bef19458950378' id='type-id-149'>
+    <function-type size-in-bits='64' hash='15bef19458950378' id='type-id-148'>
       <parameter type-id='type-id-63'/>
-      <parameter type-id='type-id-123'/>
-      <return type-id='type-id-99'/>
+      <parameter type-id='type-id-122'/>
+      <return type-id='type-id-98'/>
     </function-type>
-    <function-type size-in-bits='64' hash='ffbcff217ee9e686' id='type-id-150'>
+    <function-type size-in-bits='64' hash='ffbcff217ee9e686' id='type-id-149'>
       <parameter type-id='type-id-35'/>
-      <parameter type-id='type-id-101'/>
-      <return type-id='type-id-99'/>
+      <parameter type-id='type-id-100'/>
+      <return type-id='type-id-98'/>
     </function-type>
-    <function-type size-in-bits='64' hash='29dd414926d662e9' id='type-id-151'>
-      <parameter type-id='type-id-99'/>
-      <return type-id='type-id-99'/>
+    <function-type size-in-bits='64' hash='29dd414926d662e9' id='type-id-150'>
+      <parameter type-id='type-id-98'/>
+      <return type-id='type-id-98'/>
     </function-type>
-    <function-type size-in-bits='64' hash='a7a6a860e6eec3a0' id='type-id-152'>
-      <parameter type-id='type-id-96'/>
-      <return type-id='type-id-99'/>
+    <function-type size-in-bits='64' hash='a7a6a860e6eec3a0' id='type-id-151'>
+      <parameter type-id='type-id-95'/>
+      <return type-id='type-id-98'/>
     </function-type>
-    <function-type size-in-bits='64' hash='30af0dd5c7ad1d41' id='type-id-153'>
-      <parameter type-id='type-id-101'/>
-      <parameter type-id='type-id-154'/>
-      <parameter type-id='type-id-101'/>
-      <parameter type-id='type-id-93'/>
-      <return type-id='type-id-99'/>
+    <function-type size-in-bits='64' hash='30af0dd5c7ad1d41' id='type-id-152'>
+      <parameter type-id='type-id-100'/>
+      <parameter type-id='type-id-153'/>
+      <parameter type-id='type-id-100'/>
+      <parameter type-id='type-id-92'/>
+      <return type-id='type-id-98'/>
     </function-type>
-    <function-type size-in-bits='64' hash='893c5b603effd69a' id='type-id-155'>
+    <function-type size-in-bits='64' hash='893c5b603effd69a' id='type-id-154'>
       <parameter type-id='type-id-60'/>
-      <parameter type-id='type-id-99'/>
-      <return type-id='type-id-156'/>
+      <parameter type-id='type-id-98'/>
+      <return type-id='type-id-155'/>
     </function-type>
-    <function-type size-in-bits='64' hash='3b0338f4f0316a6f' id='type-id-157'>
+    <function-type size-in-bits='64' hash='3b0338f4f0316a6f' id='type-id-156'>
       <parameter type-id='type-id-25'/>
-      <parameter type-id='type-id-101'/>
-      <parameter type-id='type-id-158'/>
-      <parameter type-id='type-id-158'/>
-      <return type-id='type-id-159'/>
+      <parameter type-id='type-id-100'/>
+      <parameter type-id='type-id-157'/>
+      <parameter type-id='type-id-157'/>
+      <return type-id='type-id-158'/>
     </function-type>
-    <function-type size-in-bits='64' hash='3a947b2da37e0cb7' id='type-id-160'>
+    <function-type size-in-bits='64' hash='3a947b2da37e0cb7' id='type-id-159'>
       <parameter type-id='type-id-60'/>
       <parameter type-id='type-id-35'/>
-      <return type-id='type-id-159'/>
+      <return type-id='type-id-158'/>
     </function-type>
-    <function-type size-in-bits='64' hash='74be32c56c72a106' id='type-id-161'>
+    <function-type size-in-bits='64' hash='74be32c56c72a106' id='type-id-160'>
       <parameter type-id='type-id-60'/>
       <parameter type-id='type-id-35'/>
       <parameter type-id='type-id-8'/>
-      <parameter type-id='type-id-93'/>
-      <return type-id='type-id-159'/>
+      <parameter type-id='type-id-92'/>
+      <return type-id='type-id-158'/>
     </function-type>
-    <function-type size-in-bits='64' hash='4b1c38475b52b748' id='type-id-162'>
+    <function-type size-in-bits='64' hash='4b1c38475b52b748' id='type-id-161'>
       <parameter type-id='type-id-34'/>
-      <return type-id='type-id-96'/>
+      <return type-id='type-id-95'/>
     </function-type>
-    <function-type size-in-bits='64' hash='969d38da75191231' id='type-id-163'>
-      <parameter type-id='type-id-96'/>
-      <return type-id='type-id-96'/>
+    <function-type size-in-bits='64' hash='969d38da75191231' id='type-id-162'>
+      <parameter type-id='type-id-95'/>
+      <return type-id='type-id-95'/>
     </function-type>
-    <function-type size-in-bits='64' hash='d96a84844fcebe51' id='type-id-164'>
-      <parameter type-id='type-id-96'/>
-      <parameter type-id='type-id-96'/>
-      <return type-id='type-id-96'/>
+    <function-type size-in-bits='64' hash='d96a84844fcebe51' id='type-id-163'>
+      <parameter type-id='type-id-95'/>
+      <parameter type-id='type-id-95'/>
+      <return type-id='type-id-95'/>
     </function-type>
-    <function-type size-in-bits='64' hash='54639eeefb1dfc84' id='type-id-165'>
-      <parameter type-id='type-id-96'/>
-      <parameter type-id='type-id-96'/>
-      <parameter type-id='type-id-96'/>
-      <return type-id='type-id-96'/>
+    <function-type size-in-bits='64' hash='54639eeefb1dfc84' id='type-id-164'>
+      <parameter type-id='type-id-95'/>
+      <parameter type-id='type-id-95'/>
+      <parameter type-id='type-id-95'/>
+      <return type-id='type-id-95'/>
     </function-type>
-    <function-type size-in-bits='64' hash='98b7ea5c7a80c8a9' id='type-id-166'>
-      <return type-id='type-id-96'/>
+    <function-type size-in-bits='64' hash='98b7ea5c7a80c8a9' id='type-id-165'>
+      <return type-id='type-id-95'/>
     </function-type>
-    <function-type size-in-bits='64' hash='4e56b988bee7898e' id='type-id-167'>
+    <function-type size-in-bits='64' hash='4e56b988bee7898e' id='type-id-166'>
       <parameter type-id='type-id-10'/>
       <parameter is-variadic='yes'/>
-      <return type-id='type-id-168'/>
+      <return type-id='type-id-167'/>
     </function-type>
-    <function-type size-in-bits='64' hash='d89df36117839be7' id='type-id-169'>
+    <function-type size-in-bits='64' hash='d89df36117839be7' id='type-id-168'>
       <parameter type-id='type-id-25'/>
-      <parameter type-id='type-id-101'/>
-      <parameter type-id='type-id-93'/>
-      <parameter type-id='type-id-154'/>
+      <parameter type-id='type-id-100'/>
+      <parameter type-id='type-id-92'/>
+      <parameter type-id='type-id-153'/>
+      <parameter type-id='type-id-169'/>
       <parameter type-id='type-id-170'/>
-      <parameter type-id='type-id-171'/>
       <parameter type-id='type-id-11'/>
-      <return type-id='type-id-168'/>
+      <return type-id='type-id-167'/>
     </function-type>
-    <function-type size-in-bits='64' hash='cbcc7caafce58653' id='type-id-172'>
+    <function-type size-in-bits='64' hash='cbcc7caafce58653' id='type-id-171'>
       <parameter type-id='type-id-25'/>
-      <parameter type-id='type-id-101'/>
-      <parameter type-id='type-id-170'/>
-      <parameter type-id='type-id-170'/>
-      <parameter type-id='type-id-105'/>
-      <return type-id='type-id-168'/>
+      <parameter type-id='type-id-100'/>
+      <parameter type-id='type-id-169'/>
+      <parameter type-id='type-id-169'/>
+      <parameter type-id='type-id-104'/>
+      <return type-id='type-id-167'/>
     </function-type>
-    <function-type size-in-bits='64' hash='d34ff154508b1497' id='type-id-173'>
+    <function-type size-in-bits='64' hash='d34ff154508b1497' id='type-id-172'>
       <parameter type-id='type-id-43'/>
-      <return type-id='type-id-168'/>
+      <return type-id='type-id-167'/>
     </function-type>
-    <function-type size-in-bits='64' hash='8a3ca3a56e506531' id='type-id-174'>
+    <function-type size-in-bits='64' hash='8a3ca3a56e506531' id='type-id-173'>
       <parameter type-id='type-id-49'/>
-      <return type-id='type-id-168'/>
+      <return type-id='type-id-167'/>
     </function-type>
-    <function-type size-in-bits='64' hash='066ad8828528e0ed' id='type-id-175'>
+    <function-type size-in-bits='64' hash='066ad8828528e0ed' id='type-id-174'>
       <parameter type-id='type-id-49'/>
       <parameter type-id='type-id-8'/>
-      <parameter type-id='type-id-93'/>
-      <return type-id='type-id-168'/>
+      <parameter type-id='type-id-92'/>
+      <return type-id='type-id-167'/>
     </function-type>
-    <function-type size-in-bits='64' hash='2deff7a7d77b3102' id='type-id-176'>
+    <function-type size-in-bits='64' hash='2deff7a7d77b3102' id='type-id-175'>
       <parameter type-id='type-id-49'/>
       <parameter type-id='type-id-10'/>
       <parameter is-variadic='yes'/>
-      <return type-id='type-id-168'/>
+      <return type-id='type-id-167'/>
     </function-type>
-    <function-type size-in-bits='64' hash='d49e10d02f4b9d0d' id='type-id-177'>
+    <function-type size-in-bits='64' hash='d49e10d02f4b9d0d' id='type-id-176'>
       <parameter type-id='type-id-49'/>
       <parameter type-id='type-id-60'/>
       <parameter type-id='type-id-35'/>
-      <return type-id='type-id-168'/>
+      <return type-id='type-id-167'/>
     </function-type>
-    <function-type size-in-bits='64' hash='3674244429a29560' id='type-id-178'>
+    <function-type size-in-bits='64' hash='3674244429a29560' id='type-id-177'>
       <parameter type-id='type-id-60'/>
-      <return type-id='type-id-168'/>
+      <return type-id='type-id-167'/>
     </function-type>
-    <function-type size-in-bits='64' hash='babbf6b74f66293f' id='type-id-179'>
+    <function-type size-in-bits='64' hash='babbf6b74f66293f' id='type-id-178'>
       <parameter type-id='type-id-60'/>
       <parameter type-id='type-id-53'/>
-      <return type-id='type-id-168'/>
+      <return type-id='type-id-167'/>
     </function-type>
-    <function-type size-in-bits='64' hash='ab7677ebcaab00d3' id='type-id-180'>
+    <function-type size-in-bits='64' hash='ab7677ebcaab00d3' id='type-id-179'>
       <parameter type-id='type-id-60'/>
-      <parameter type-id='type-id-101'/>
-      <return type-id='type-id-168'/>
+      <parameter type-id='type-id-100'/>
+      <return type-id='type-id-167'/>
     </function-type>
-    <function-type size-in-bits='64' hash='def1698e188734c4' id='type-id-181'>
+    <function-type size-in-bits='64' hash='def1698e188734c4' id='type-id-180'>
       <parameter type-id='type-id-63'/>
-      <return type-id='type-id-168'/>
+      <return type-id='type-id-167'/>
     </function-type>
-    <function-type size-in-bits='64' hash='3a940aa4379ef3ec' id='type-id-182'>
+    <function-type size-in-bits='64' hash='3a940aa4379ef3ec' id='type-id-181'>
       <parameter type-id='type-id-73'/>
-      <parameter type-id='type-id-101'/>
-      <return type-id='type-id-168'/>
+      <parameter type-id='type-id-100'/>
+      <return type-id='type-id-167'/>
     </function-type>
-    <function-type size-in-bits='64' hash='a2bf7572e9861bb4' id='type-id-183'>
-      <return type-id='type-id-168'/>
+    <function-type size-in-bits='64' hash='a2bf7572e9861bb4' id='type-id-182'>
+      <return type-id='type-id-167'/>
     </function-type>
-    <function-type size-in-bits='64' hash='65f5000c26a83c64' id='type-id-184'>
-      <parameter type-id='type-id-101'/>
-      <parameter type-id='type-id-93'/>
-      <return type-id='type-id-168'/>
+    <function-type size-in-bits='64' hash='65f5000c26a83c64' id='type-id-183'>
+      <parameter type-id='type-id-100'/>
+      <parameter type-id='type-id-92'/>
+      <return type-id='type-id-167'/>
     </function-type>
-    <function-type size-in-bits='64' hash='f20de6dd68c03579' id='type-id-185'>
+    <function-type size-in-bits='64' hash='f20de6dd68c03579' id='type-id-184'>
       <parameter type-id='type-id-60'/>
-      <return type-id='type-id-101'/>
+      <return type-id='type-id-100'/>
     </function-type>
-    <function-type size-in-bits='64' hash='462b34ac39f2aa46' id='type-id-186'>
+    <function-type size-in-bits='64' hash='462b34ac39f2aa46' id='type-id-185'>
       <parameter type-id='type-id-61'/>
       <parameter type-id='type-id-35'/>
-      <return type-id='type-id-101'/>
+      <return type-id='type-id-100'/>
     </function-type>
-    <function-type size-in-bits='64' hash='324b824091ce7172' id='type-id-187'>
+    <function-type size-in-bits='64' hash='324b824091ce7172' id='type-id-186'>
       <parameter type-id='type-id-81'/>
-      <parameter type-id='type-id-99'/>
-      <return type-id='type-id-101'/>
+      <parameter type-id='type-id-98'/>
+      <return type-id='type-id-100'/>
     </function-type>
-    <function-type size-in-bits='64' hash='df3d5355c06e5c37' id='type-id-188'>
-      <parameter type-id='type-id-105'/>
-      <return type-id='type-id-101'/>
+    <function-type size-in-bits='64' hash='df3d5355c06e5c37' id='type-id-187'>
+      <parameter type-id='type-id-104'/>
+      <return type-id='type-id-100'/>
     </function-type>
-    <function-type size-in-bits='64' hash='b4fe2ecbdf2ffc7d' id='type-id-189'>
-      <parameter type-id='type-id-93'/>
-      <return type-id='type-id-101'/>
+    <function-type size-in-bits='64' hash='b4fe2ecbdf2ffc7d' id='type-id-188'>
+      <parameter type-id='type-id-92'/>
+      <return type-id='type-id-100'/>
     </function-type>
-    <type-decl name='int' size-in-bits='32' hash='09d17c08f594edc7' id='type-id-99'/>
-    <pointer-type-def type-id='type-id-152' size-in-bits='64' hash='afa4583b44705b4b' id='type-id-190'/>
-    <pointer-type-def type-id='type-id-99' size-in-bits='64' hash='d546a866961a5bb9' id='type-id-105'/>
-    <array-type-def dimensions='1' type-id='type-id-99' size-in-bits='128' hash='c3bdcf3865bf4c22' id='type-id-191'>
+    <type-decl name='int' size-in-bits='32' hash='09d17c08f594edc7' id='type-id-98'/>
+    <pointer-type-def type-id='type-id-151' size-in-bits='64' hash='afa4583b44705b4b' id='type-id-189'/>
+    <pointer-type-def type-id='type-id-98' size-in-bits='64' hash='d546a866961a5bb9' id='type-id-104'/>
+    <array-type-def dimensions='1' type-id='type-id-98' size-in-bits='128' hash='c3bdcf3865bf4c22' id='type-id-190'>
       <subrange length='4' lower-bound='0' upper-bound='3' type-id='type-id-1' size-in-bits='64' is-anonymous='yes' hash='cee611f4a73e486c' id='type-id-5'/>
     </array-type-def>
-    <type-decl name='long int' size-in-bits='64' hash='8aa1e1a2ab2c2d3e' id='type-id-156'/>
-    <pointer-type-def type-id='type-id-93' size-in-bits='64' hash='fce61c10660e5f2d' id='type-id-154'/>
-    <pointer-type-def type-id='type-id-159' size-in-bits='64' hash='1638a37bd1350b0c' id='type-id-158'/>
-    <class-decl name='ctf_arinfo' is-struct='yes' visibility='default' size-in-bits='192' hash='4fd4a578d5a24301' id='type-id-192'>
+    <type-decl name='long int' size-in-bits='64' hash='8aa1e1a2ab2c2d3e' id='type-id-155'/>
+    <pointer-type-def type-id='type-id-92' size-in-bits='64' hash='fce61c10660e5f2d' id='type-id-153'/>
+    <pointer-type-def type-id='type-id-158' size-in-bits='64' hash='1638a37bd1350b0c' id='type-id-157'/>
+    <class-decl name='ctf_arinfo' is-struct='yes' visibility='default' size-in-bits='192' hash='4fd4a578d5a24301' id='type-id-191'>
       <data-member access='public' layout-offset-in-bits='0'>
         <var-decl name='ctr_contents' type-id='type-id-35' visibility='default'/>
       </data-member>
@@ -698,21 +698,21 @@
         <var-decl name='ctr_index' type-id='type-id-35' visibility='default'/>
       </data-member>
       <data-member access='public' layout-offset-in-bits='128'>
-        <var-decl name='ctr_nelems' type-id='type-id-96' visibility='default'/>
+        <var-decl name='ctr_nelems' type-id='type-id-95' visibility='default'/>
       </data-member>
     </class-decl>
-    <class-decl name='ctf_decl' is-struct='yes' visibility='default' size-in-bits='1024' hash='1b23faaf3503cb7d' id='type-id-193'>
+    <class-decl name='ctf_decl' is-struct='yes' visibility='default' size-in-bits='1024' hash='1b23faaf3503cb7d' id='type-id-192'>
       <data-member access='public' layout-offset-in-bits='0'>
         <var-decl name='cd_nodes' type-id='type-id-74' visibility='default'/>
       </data-member>
       <data-member access='public' layout-offset-in-bits='512'>
-        <var-decl name='cd_order' type-id='type-id-191' visibility='default'/>
+        <var-decl name='cd_order' type-id='type-id-190' visibility='default'/>
       </data-member>
       <data-member access='public' layout-offset-in-bits='640'>
-        <var-decl name='cd_qualp' type-id='type-id-88' visibility='default'/>
+        <var-decl name='cd_qualp' type-id='type-id-193' visibility='default'/>
       </data-member>
       <data-member access='public' layout-offset-in-bits='672'>
-        <var-decl name='cd_ordp' type-id='type-id-88' visibility='default'/>
+        <var-decl name='cd_ordp' type-id='type-id-193' visibility='default'/>
       </data-member>
       <data-member access='public' layout-offset-in-bits='704'>
         <var-decl name='cd_buf' type-id='type-id-8' visibility='default'/>
@@ -724,10 +724,10 @@
         <var-decl name='cd_end' type-id='type-id-8' visibility='default'/>
       </data-member>
       <data-member access='public' layout-offset-in-bits='896'>
-        <var-decl name='cd_len' type-id='type-id-93' visibility='default'/>
+        <var-decl name='cd_len' type-id='type-id-92' visibility='default'/>
       </data-member>
       <data-member access='public' layout-offset-in-bits='960'>
-        <var-decl name='cd_err' type-id='type-id-99' visibility='default'/>
+        <var-decl name='cd_err' type-id='type-id-98' visibility='default'/>
       </data-member>
     </class-decl>
     <class-decl name='ctf_dmodel' is-struct='yes' visibility='default' size-in-bits='448' hash='90f9d79634cbb5c0' id='type-id-194'>
@@ -735,22 +735,22 @@
         <var-decl name='ctd_name' type-id='type-id-10' visibility='default'/>
       </data-member>
       <data-member access='public' layout-offset-in-bits='64'>
-        <var-decl name='ctd_code' type-id='type-id-99' visibility='default'/>
+        <var-decl name='ctd_code' type-id='type-id-98' visibility='default'/>
       </data-member>
       <data-member access='public' layout-offset-in-bits='128'>
-        <var-decl name='ctd_pointer' type-id='type-id-93' visibility='default'/>
+        <var-decl name='ctd_pointer' type-id='type-id-92' visibility='default'/>
       </data-member>
       <data-member access='public' layout-offset-in-bits='192'>
-        <var-decl name='ctd_char' type-id='type-id-93' visibility='default'/>
+        <var-decl name='ctd_char' type-id='type-id-92' visibility='default'/>
       </data-member>
       <data-member access='public' layout-offset-in-bits='256'>
-        <var-decl name='ctd_short' type-id='type-id-93' visibility='default'/>
+        <var-decl name='ctd_short' type-id='type-id-92' visibility='default'/>
       </data-member>
       <data-member access='public' layout-offset-in-bits='320'>
-        <var-decl name='ctd_int' type-id='type-id-93' visibility='default'/>
+        <var-decl name='ctd_int' type-id='type-id-92' visibility='default'/>
       </data-member>
       <data-member access='public' layout-offset-in-bits='384'>
-        <var-decl name='ctd_long' type-id='type-id-93' visibility='default'/>
+        <var-decl name='ctd_long' type-id='type-id-92' visibility='default'/>
       </data-member>
     </class-decl>
     <class-decl name='ctf_dtdef' is-struct='yes' visibility='default' size-in-bits='704' hash='3db20c463a7cd030' id='type-id-50'>
@@ -770,7 +770,7 @@
         <var-decl name='dtd_data' type-id='type-id-195' visibility='default'/>
       </data-member>
       <data-member access='public' layout-offset-in-bits='480'>
-        <var-decl name='dtd_ref' type-id='type-id-99' visibility='default'/>
+        <var-decl name='dtd_ref' type-id='type-id-98' visibility='default'/>
       </data-member>
       <data-member access='public' layout-offset-in-bits='512'>
         <var-decl name='dtd_u' type-id='type-id-196' visibility='default'/>
@@ -778,13 +778,13 @@
     </class-decl>
     <class-decl name='ctf_encoding' is-struct='yes' visibility='default' size-in-bits='96' hash='d39576c0800ac318' id='type-id-197'>
       <data-member access='public' layout-offset-in-bits='0'>
-        <var-decl name='cte_format' type-id='type-id-96' visibility='default'/>
+        <var-decl name='cte_format' type-id='type-id-95' visibility='default'/>
       </data-member>
       <data-member access='public' layout-offset-in-bits='32'>
-        <var-decl name='cte_offset' type-id='type-id-96' visibility='default'/>
+        <var-decl name='cte_offset' type-id='type-id-95' visibility='default'/>
       </data-member>
       <data-member access='public' layout-offset-in-bits='64'>
-        <var-decl name='cte_bits' type-id='type-id-96' visibility='default'/>
+        <var-decl name='cte_bits' type-id='type-id-95' visibility='default'/>
       </data-member>
     </class-decl>
     <class-decl name='ctf_file' is-struct='yes' visibility='default' size-in-bits='5120' hash='5a71a681b71d13d0' id='type-id-58'>
@@ -825,22 +825,22 @@
         <var-decl name='ctf_buf' type-id='type-id-46' visibility='default'/>
       </data-member>
       <data-member access='public' layout-offset-in-bits='3776'>
-        <var-decl name='ctf_size' type-id='type-id-93' visibility='default'/>
+        <var-decl name='ctf_size' type-id='type-id-92' visibility='default'/>
       </data-member>
       <data-member access='public' layout-offset-in-bits='3840'>
-        <var-decl name='ctf_sxlate' type-id='type-id-170' visibility='default'/>
+        <var-decl name='ctf_sxlate' type-id='type-id-169' visibility='default'/>
       </data-member>
       <data-member access='public' layout-offset-in-bits='3904'>
-        <var-decl name='ctf_nsyms' type-id='type-id-123' visibility='default'/>
+        <var-decl name='ctf_nsyms' type-id='type-id-122' visibility='default'/>
       </data-member>
       <data-member access='public' layout-offset-in-bits='3968'>
-        <var-decl name='ctf_txlate' type-id='type-id-170' visibility='default'/>
+        <var-decl name='ctf_txlate' type-id='type-id-169' visibility='default'/>
       </data-member>
       <data-member access='public' layout-offset-in-bits='4032'>
-        <var-decl name='ctf_ptrtab' type-id='type-id-170' visibility='default'/>
+        <var-decl name='ctf_ptrtab' type-id='type-id-169' visibility='default'/>
       </data-member>
       <data-member access='public' layout-offset-in-bits='4096'>
-        <var-decl name='ctf_typemax' type-id='type-id-123' visibility='default'/>
+        <var-decl name='ctf_typemax' type-id='type-id-122' visibility='default'/>
       </data-member>
       <data-member access='public' layout-offset-in-bits='4160'>
         <var-decl name='ctf_dmodel' type-id='type-id-19' visibility='default'/>
@@ -855,40 +855,40 @@
         <var-decl name='ctf_parname' type-id='type-id-10' visibility='default'/>
       </data-member>
       <data-member access='public' layout-offset-in-bits='4416'>
-        <var-decl name='ctf_refcnt' type-id='type-id-96' visibility='default'/>
+        <var-decl name='ctf_refcnt' type-id='type-id-95' visibility='default'/>
       </data-member>
       <data-member access='public' layout-offset-in-bits='4448'>
-        <var-decl name='ctf_flags' type-id='type-id-96' visibility='default'/>
+        <var-decl name='ctf_flags' type-id='type-id-95' visibility='default'/>
       </data-member>
       <data-member access='public' layout-offset-in-bits='4480'>
-        <var-decl name='ctf_errno' type-id='type-id-99' visibility='default'/>
+        <var-decl name='ctf_errno' type-id='type-id-98' visibility='default'/>
       </data-member>
       <data-member access='public' layout-offset-in-bits='4512'>
-        <var-decl name='ctf_version' type-id='type-id-99' visibility='default'/>
+        <var-decl name='ctf_version' type-id='type-id-98' visibility='default'/>
       </data-member>
       <data-member access='public' layout-offset-in-bits='4544'>
-        <var-decl name='ctf_idwidth' type-id='type-id-93' visibility='default'/>
+        <var-decl name='ctf_idwidth' type-id='type-id-92' visibility='default'/>
       </data-member>
       <data-member access='public' layout-offset-in-bits='4608'>
         <var-decl name='ctf_dthash' type-id='type-id-54' visibility='default'/>
       </data-member>
       <data-member access='public' layout-offset-in-bits='4672'>
-        <var-decl name='ctf_dthashlen' type-id='type-id-123' visibility='default'/>
+        <var-decl name='ctf_dthashlen' type-id='type-id-122' visibility='default'/>
       </data-member>
       <data-member access='public' layout-offset-in-bits='4736'>
         <var-decl name='ctf_dtdefs' type-id='type-id-72' visibility='default'/>
       </data-member>
       <data-member access='public' layout-offset-in-bits='4864'>
-        <var-decl name='ctf_dtstrlen' type-id='type-id-93' visibility='default'/>
+        <var-decl name='ctf_dtstrlen' type-id='type-id-92' visibility='default'/>
       </data-member>
       <data-member access='public' layout-offset-in-bits='4928'>
-        <var-decl name='ctf_dtnextid' type-id='type-id-123' visibility='default'/>
+        <var-decl name='ctf_dtnextid' type-id='type-id-122' visibility='default'/>
       </data-member>
       <data-member access='public' layout-offset-in-bits='4992'>
-        <var-decl name='ctf_dtoldid' type-id='type-id-123' visibility='default'/>
+        <var-decl name='ctf_dtoldid' type-id='type-id-122' visibility='default'/>
       </data-member>
       <data-member access='public' layout-offset-in-bits='5056'>
-        <var-decl name='ctf_specific' type-id='type-id-101' visibility='default'/>
+        <var-decl name='ctf_specific' type-id='type-id-100' visibility='default'/>
       </data-member>
     </class-decl>
     <class-decl name='ctf_fileops' is-struct='yes' visibility='default' size-in-bits='832' hash='9432570f33f56ed7' id='type-id-198'>
@@ -920,10 +920,10 @@
         <var-decl name='ctfo_type_info' type-id='type-id-201' visibility='default'/>
       </data-member>
       <data-member access='public' layout-offset-in-bits='576'>
-        <var-decl name='ctfo_type_isparent' type-id='type-id-190' visibility='default'/>
+        <var-decl name='ctfo_type_isparent' type-id='type-id-189' visibility='default'/>
       </data-member>
       <data-member access='public' layout-offset-in-bits='640'>
-        <var-decl name='ctfo_type_ischild' type-id='type-id-190' visibility='default'/>
+        <var-decl name='ctfo_type_ischild' type-id='type-id-189' visibility='default'/>
       </data-member>
       <data-member access='public' layout-offset-in-bits='704'>
         <var-decl name='ctfo_type_to_index' type-id='type-id-199' visibility='default'/>
@@ -937,38 +937,38 @@
         <var-decl name='ctc_return' type-id='type-id-35' visibility='default'/>
       </data-member>
       <data-member access='public' layout-offset-in-bits='64'>
-        <var-decl name='ctc_argc' type-id='type-id-96' visibility='default'/>
+        <var-decl name='ctc_argc' type-id='type-id-95' visibility='default'/>
       </data-member>
       <data-member access='public' layout-offset-in-bits='96'>
-        <var-decl name='ctc_flags' type-id='type-id-96' visibility='default'/>
+        <var-decl name='ctc_flags' type-id='type-id-95' visibility='default'/>
       </data-member>
     </class-decl>
     <class-decl name='ctf_hash' is-struct='yes' visibility='default' size-in-bits='256' hash='3e7746254c23113f' id='type-id-204'>
       <data-member access='public' layout-offset-in-bits='0'>
-        <var-decl name='h_buckets' type-id='type-id-170' visibility='default'/>
+        <var-decl name='h_buckets' type-id='type-id-169' visibility='default'/>
       </data-member>
       <data-member access='public' layout-offset-in-bits='64'>
         <var-decl name='h_chains' type-id='type-id-65' visibility='default'/>
       </data-member>
       <data-member access='public' layout-offset-in-bits='128'>
-        <var-decl name='h_nbuckets' type-id='type-id-96' visibility='default'/>
+        <var-decl name='h_nbuckets' type-id='type-id-95' visibility='default'/>
       </data-member>
       <data-member access='public' layout-offset-in-bits='160'>
-        <var-decl name='h_nelems' type-id='type-id-96' visibility='default'/>
+        <var-decl name='h_nelems' type-id='type-id-95' visibility='default'/>
       </data-member>
       <data-member access='public' layout-offset-in-bits='192'>
-        <var-decl name='h_free' type-id='type-id-96' visibility='default'/>
+        <var-decl name='h_free' type-id='type-id-95' visibility='default'/>
       </data-member>
     </class-decl>
     <class-decl name='ctf_helem' is-struct='yes' visibility='default' size-in-bits='96' hash='9184f1bf5be85b54' id='type-id-205'>
       <data-member access='public' layout-offset-in-bits='0'>
-        <var-decl name='h_name' type-id='type-id-96' visibility='default'/>
+        <var-decl name='h_name' type-id='type-id-95' visibility='default'/>
       </data-member>
       <data-member access='public' layout-offset-in-bits='32'>
-        <var-decl name='h_type' type-id='type-id-96' visibility='default'/>
+        <var-decl name='h_type' type-id='type-id-95' visibility='default'/>
       </data-member>
       <data-member access='public' layout-offset-in-bits='64'>
-        <var-decl name='h_next' type-id='type-id-96' visibility='default'/>
+        <var-decl name='h_next' type-id='type-id-95' visibility='default'/>
       </data-member>
     </class-decl>
     <class-decl name='ctf_lblinfo' is-struct='yes' visibility='default' size-in-bits='64' hash='ac63422cfe44fce5' id='type-id-206'>
@@ -989,7 +989,7 @@
         <var-decl name='ctl_prefix' type-id='type-id-10' visibility='default'/>
       </data-member>
       <data-member access='public' layout-offset-in-bits='64'>
-        <var-decl name='ctl_len' type-id='type-id-93' visibility='default'/>
+        <var-decl name='ctl_len' type-id='type-id-92' visibility='default'/>
       </data-member>
       <data-member access='public' layout-offset-in-bits='128'>
         <var-decl name='ctl_hash' type-id='type-id-63' visibility='default'/>
@@ -1000,7 +1000,7 @@
         <var-decl name='ctm_type' type-id='type-id-35' visibility='default'/>
       </data-member>
       <data-member access='public' layout-offset-in-bits='64'>
-        <var-decl name='ctm_offset' type-id='type-id-123' visibility='default'/>
+        <var-decl name='ctm_offset' type-id='type-id-122' visibility='default'/>
       </data-member>
     </class-decl>
     <class-decl name='ctf_sect' is-struct='yes' visibility='default' size-in-bits='448' hash='752491c06efa3bd2' id='type-id-209'>
@@ -1008,19 +1008,19 @@
         <var-decl name='cts_name' type-id='type-id-10' visibility='default'/>
       </data-member>
       <data-member access='public' layout-offset-in-bits='64'>
-        <var-decl name='cts_type' type-id='type-id-123' visibility='default'/>
+        <var-decl name='cts_type' type-id='type-id-122' visibility='default'/>
       </data-member>
       <data-member access='public' layout-offset-in-bits='128'>
-        <var-decl name='cts_flags' type-id='type-id-123' visibility='default'/>
+        <var-decl name='cts_flags' type-id='type-id-122' visibility='default'/>
       </data-member>
       <data-member access='public' layout-offset-in-bits='192'>
-        <var-decl name='cts_data' type-id='type-id-101' visibility='default'/>
+        <var-decl name='cts_data' type-id='type-id-100' visibility='default'/>
       </data-member>
       <data-member access='public' layout-offset-in-bits='256'>
-        <var-decl name='cts_size' type-id='type-id-93' visibility='default'/>
+        <var-decl name='cts_size' type-id='type-id-92' visibility='default'/>
       </data-member>
       <data-member access='public' layout-offset-in-bits='320'>
-        <var-decl name='cts_entsize' type-id='type-id-93' visibility='default'/>
+        <var-decl name='cts_entsize' type-id='type-id-92' visibility='default'/>
       </data-member>
       <data-member access='public' layout-offset-in-bits='384'>
         <var-decl name='cts_offset' type-id='type-id-210' visibility='default'/>
@@ -1031,7 +1031,7 @@
         <var-decl name='cts_strs' type-id='type-id-10' visibility='default'/>
       </data-member>
       <data-member access='public' layout-offset-in-bits='64'>
-        <var-decl name='cts_len' type-id='type-id-93' visibility='default'/>
+        <var-decl name='cts_len' type-id='type-id-92' visibility='default'/>
       </data-member>
     </class-decl>
     <class-decl name='ctf_type_v3' is-struct='yes' visibility='default' size-in-bits='160' hash='f6779292766f186f' id='type-id-195'>
@@ -1051,47 +1051,47 @@
         <var-decl name='ctt_lsizelo' type-id='type-id-212' visibility='default'/>
       </data-member>
     </class-decl>
-    <typedef-decl name='__int64_t' type-id='type-id-156' size-in-bits='64' hash='8aa1e1a2ab2c2d3e' id='type-id-214'/>
+    <typedef-decl name='__int64_t' type-id='type-id-155' size-in-bits='64' hash='8aa1e1a2ab2c2d3e' id='type-id-214'/>
     <typedef-decl name='__off64_t' type-id='type-id-214' size-in-bits='64' hash='8aa1e1a2ab2c2d3e' id='type-id-215'/>
     <typedef-decl name='__size_t' type-id='type-id-216' size-in-bits='64' hash='da551c1631705dfe' id='type-id-217'/>
     <typedef-decl name='__ssize_t' type-id='type-id-214' size-in-bits='64' hash='8aa1e1a2ab2c2d3e' id='type-id-218'/>
     <typedef-decl name='__uint32_t' type-id='type-id-219' size-in-bits='32' hash='e66b43f97c38e87a' id='type-id-212'/>
     <typedef-decl name='__uint64_t' type-id='type-id-220' size-in-bits='64' hash='da551c1631705dfe' id='type-id-216'/>
-    <typedef-decl name='ctf_arinfo_t' type-id='type-id-192' size-in-bits='192' hash='4fd4a578d5a24301' id='type-id-14'/>
-    <typedef-decl name='ctf_decl_prec_t' type-id='type-id-89' size-in-bits='32' alignment-in-bits='32' hash='be248b0984f02989' id='type-id-88'/>
-    <typedef-decl name='ctf_decl_t' type-id='type-id-193' size-in-bits='1024' hash='1b23faaf3503cb7d' id='type-id-48'/>
+    <typedef-decl name='ctf_arinfo_t' type-id='type-id-191' size-in-bits='192' hash='4fd4a578d5a24301' id='type-id-14'/>
+    <typedef-decl name='ctf_decl_prec_t' type-id='type-id-88' size-in-bits='32' alignment-in-bits='32' hash='be248b0984f02989' id='type-id-193'/>
+    <typedef-decl name='ctf_decl_t' type-id='type-id-192' size-in-bits='1024' hash='1b23faaf3503cb7d' id='type-id-48'/>
     <typedef-decl name='ctf_dmodel_t' type-id='type-id-194' size-in-bits='448' hash='90f9d79634cbb5c0' id='type-id-17'/>
     <typedef-decl name='ctf_dtdef_t' type-id='type-id-50' size-in-bits='704' hash='3db20c463a7cd030' id='type-id-52'/>
     <typedef-decl name='ctf_encoding_t' type-id='type-id-197' size-in-bits='96' hash='d39576c0800ac318' id='type-id-20'/>
-    <typedef-decl name='ctf_enum_f' type-id='type-id-127' size-in-bits='64' hash='32473870a24380b6' id='type-id-56'/>
+    <typedef-decl name='ctf_enum_f' type-id='type-id-126' size-in-bits='64' hash='32473870a24380b6' id='type-id-56'/>
     <typedef-decl name='ctf_file_t' type-id='type-id-58' size-in-bits='5120' hash='5a71a681b71d13d0' id='type-id-23'/>
     <typedef-decl name='ctf_fileops_t' type-id='type-id-198' size-in-bits='832' hash='9432570f33f56ed7' id='type-id-26'/>
     <typedef-decl name='ctf_funcinfo_t' type-id='type-id-203' size-in-bits='128' hash='44b1f7dd062c6c3d' id='type-id-29'/>
     <typedef-decl name='ctf_hash_t' type-id='type-id-204' size-in-bits='256' hash='3e7746254c23113f' id='type-id-32'/>
     <typedef-decl name='ctf_helem_t' type-id='type-id-205' size-in-bits='96' hash='9184f1bf5be85b54' id='type-id-64'/>
-    <typedef-decl name='ctf_id_t' type-id='type-id-156' size-in-bits='64' hash='8aa1e1a2ab2c2d3e' id='type-id-35'/>
-    <typedef-decl name='ctf_label_f' type-id='type-id-124' size-in-bits='64' hash='6ec0463115cb1bbe' id='type-id-67'/>
+    <typedef-decl name='ctf_id_t' type-id='type-id-155' size-in-bits='64' hash='8aa1e1a2ab2c2d3e' id='type-id-35'/>
+    <typedef-decl name='ctf_label_f' type-id='type-id-123' size-in-bits='64' hash='6ec0463115cb1bbe' id='type-id-67'/>
     <typedef-decl name='ctf_lblinfo_t' type-id='type-id-206' size-in-bits='64' hash='ac63422cfe44fce5' id='type-id-38'/>
     <typedef-decl name='ctf_list_t' type-id='type-id-70' size-in-bits='128' hash='47dcfc887f99c5bb' id='type-id-72'/>
     <typedef-decl name='ctf_lookup_t' type-id='type-id-207' size-in-bits='192' hash='28a5a330a76f39be' id='type-id-75'/>
-    <typedef-decl name='ctf_member_f' type-id='type-id-126' size-in-bits='64' hash='006f8e6875a46f93' id='type-id-77'/>
+    <typedef-decl name='ctf_member_f' type-id='type-id-125' size-in-bits='64' hash='006f8e6875a46f93' id='type-id-77'/>
     <typedef-decl name='ctf_membinfo_t' type-id='type-id-208' size-in-bits='128' hash='4da0d99ab3b9a0b5' id='type-id-79'/>
     <typedef-decl name='ctf_sect_t' type-id='type-id-209' size-in-bits='448' hash='752491c06efa3bd2' id='type-id-41'/>
     <typedef-decl name='ctf_strs_t' type-id='type-id-211' size-in-bits='128' hash='a5c58f1412d7f8a9' id='type-id-82'/>
-    <typedef-decl name='ctf_type_f' type-id='type-id-150' size-in-bits='64' hash='ffbcff217ee9e686' id='type-id-84'/>
-    <typedef-decl name='ctf_visit_f' type-id='type-id-125' size-in-bits='64' hash='e7ea41a80d480a05' id='type-id-86'/>
+    <typedef-decl name='ctf_type_f' type-id='type-id-149' size-in-bits='64' hash='ffbcff217ee9e686' id='type-id-84'/>
+    <typedef-decl name='ctf_visit_f' type-id='type-id-124' size-in-bits='64' hash='e7ea41a80d480a05' id='type-id-86'/>
     <typedef-decl name='off64_t' type-id='type-id-215' size-in-bits='64' hash='8aa1e1a2ab2c2d3e' id='type-id-210'/>
-    <typedef-decl name='size_t' type-id='type-id-217' size-in-bits='64' hash='da551c1631705dfe' id='type-id-93'/>
-    <typedef-decl name='ssize_t' type-id='type-id-218' size-in-bits='64' hash='8aa1e1a2ab2c2d3e' id='type-id-159'/>
+    <typedef-decl name='size_t' type-id='type-id-217' size-in-bits='64' hash='da551c1631705dfe' id='type-id-92'/>
+    <typedef-decl name='ssize_t' type-id='type-id-218' size-in-bits='64' hash='8aa1e1a2ab2c2d3e' id='type-id-158'/>
     <typedef-decl name='uchar_t' type-id='type-id-221' size-in-bits='8' hash='6ebac62b3366db68' id='type-id-44'/>
-    <typedef-decl name='uint_t' type-id='type-id-219' size-in-bits='32' hash='e66b43f97c38e87a' id='type-id-96'/>
-    <typedef-decl name='ulong_t' type-id='type-id-220' size-in-bits='64' hash='da551c1631705dfe' id='type-id-123'/>
-    <pointer-type-def type-id='type-id-163' size-in-bits='64' hash='3173bae4fa72ba76' id='type-id-199'/>
-    <pointer-type-def type-id='type-id-164' size-in-bits='64' hash='1efbc9f808352ec9' id='type-id-202'/>
-    <pointer-type-def type-id='type-id-165' size-in-bits='64' hash='4177817192d62f8a' id='type-id-201'/>
-    <pointer-type-def type-id='type-id-166' size-in-bits='64' hash='e73ee88e69289bb9' id='type-id-200'/>
-    <pointer-type-def type-id='type-id-96' size-in-bits='64' hash='7a46fbdc529de9da' id='type-id-170'/>
-    <pointer-type-def type-id='type-id-123' size-in-bits='64' hash='60dd5df5d7ad3ef9' id='type-id-171'/>
+    <typedef-decl name='uint_t' type-id='type-id-219' size-in-bits='32' hash='e66b43f97c38e87a' id='type-id-95'/>
+    <typedef-decl name='ulong_t' type-id='type-id-220' size-in-bits='64' hash='da551c1631705dfe' id='type-id-122'/>
+    <pointer-type-def type-id='type-id-162' size-in-bits='64' hash='3173bae4fa72ba76' id='type-id-199'/>
+    <pointer-type-def type-id='type-id-163' size-in-bits='64' hash='1efbc9f808352ec9' id='type-id-202'/>
+    <pointer-type-def type-id='type-id-164' size-in-bits='64' hash='4177817192d62f8a' id='type-id-201'/>
+    <pointer-type-def type-id='type-id-165' size-in-bits='64' hash='e73ee88e69289bb9' id='type-id-200'/>
+    <pointer-type-def type-id='type-id-95' size-in-bits='64' hash='7a46fbdc529de9da' id='type-id-169'/>
+    <pointer-type-def type-id='type-id-122' size-in-bits='64' hash='60dd5df5d7ad3ef9' id='type-id-170'/>
     <union-decl name='__anonymous_union__' visibility='default' size-in-bits='32' is-anonymous='yes' hash='49e6e58c31777752' id='type-id-213'>
       <data-member access='public'>
         <var-decl name='_size' type-id='type-id-212' visibility='default'/>
@@ -1114,142 +1114,142 @@
         <var-decl name='dtu_argv' type-id='type-id-66' visibility='default'/>
       </data-member>
     </union-decl>
-    <type-decl name='unnamed-enum-underlying-type-32' size-in-bits='32' alignment-in-bits='32' is-anonymous='yes' hash='c6ed5e1365fd2b09' id='type-id-90'/>
+    <type-decl name='unnamed-enum-underlying-type-32' size-in-bits='32' alignment-in-bits='32' is-anonymous='yes' hash='c6ed5e1365fd2b09' id='type-id-89'/>
     <type-decl name='unsigned char' size-in-bits='8' hash='6ebac62b3366db68' id='type-id-221'/>
     <type-decl name='unsigned int' size-in-bits='32' hash='e66b43f97c38e87a' id='type-id-219'/>
     <type-decl name='unsigned long int' size-in-bits='64' hash='da551c1631705dfe' id='type-id-220'/>
     <type-decl name='variadic parameter type' hash='71b2481760aa01a8' id='type-id-222'/>
-    <type-decl name='void' hash='8dcbc64750c3d4e3' id='type-id-168'/>
-    <pointer-type-def type-id='type-id-168' hash='19e246ce75ee6a42' id='type-id-101'/>
+    <type-decl name='void' hash='8dcbc64750c3d4e3' id='type-id-167'/>
+    <pointer-type-def type-id='type-id-167' hash='19e246ce75ee6a42' id='type-id-100'/>
   </abi-types>
   <abi-instr address-size='64' path='/usr/src/cddl/contrib/opensolaris/common/ctf/ctf_create.c' comp-dir-path='/usr/obj/usr/src/amd64.amd64/cddl/lib/libctf' language='LANG_C11'>
-      <function-decl name='ctf_dtd_lookup' type-id='type-id-103' mangled-name='ctf_dtd_lookup' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='ctf_dtd_lookup'/>
-      <function-decl name='ctf_create' type-id='type-id-108' mangled-name='ctf_create' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='ctf_create'/>
-      <function-decl name='ctf_add_array' type-id='type-id-119' mangled-name='ctf_add_array' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='ctf_add_array'/>
-      <function-decl name='ctf_add_const' type-id='type-id-121' mangled-name='ctf_add_const' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='ctf_add_const'/>
-      <function-decl name='ctf_add_enum' type-id='type-id-115' mangled-name='ctf_add_enum' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='ctf_add_enum'/>
-      <function-decl name='ctf_add_float' type-id='type-id-116' mangled-name='ctf_add_float' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='ctf_add_float'/>
-      <function-decl name='ctf_add_forward' type-id='type-id-118' mangled-name='ctf_add_forward' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='ctf_add_forward'/>
-      <function-decl name='ctf_add_function' type-id='type-id-120' mangled-name='ctf_add_function' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='ctf_add_function'/>
-      <function-decl name='ctf_add_integer' type-id='type-id-116' mangled-name='ctf_add_integer' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='ctf_add_integer'/>
-      <function-decl name='ctf_add_pointer' type-id='type-id-121' mangled-name='ctf_add_pointer' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='ctf_add_pointer'/>
-      <function-decl name='ctf_add_restrict' type-id='type-id-121' mangled-name='ctf_add_restrict' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='ctf_add_restrict'/>
-      <function-decl name='ctf_add_struct' type-id='type-id-115' mangled-name='ctf_add_struct' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='ctf_add_struct'/>
-      <function-decl name='ctf_add_type' type-id='type-id-113' mangled-name='ctf_add_type' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='ctf_add_type'/>
-      <function-decl name='ctf_add_typedef' type-id='type-id-117' mangled-name='ctf_add_typedef' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='ctf_add_typedef'/>
-      <function-decl name='ctf_add_union' type-id='type-id-115' mangled-name='ctf_add_union' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='ctf_add_union'/>
-      <function-decl name='ctf_add_volatile' type-id='type-id-121' mangled-name='ctf_add_volatile' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='ctf_add_volatile'/>
-      <function-decl name='ctf_add_enumerator' type-id='type-id-134' mangled-name='ctf_add_enumerator' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='ctf_add_enumerator'/>
-      <function-decl name='ctf_add_member' type-id='type-id-132' mangled-name='ctf_add_member' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='ctf_add_member'/>
-      <function-decl name='ctf_delete_type' type-id='type-id-131' mangled-name='ctf_delete_type' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='ctf_delete_type'/>
-      <function-decl name='ctf_discard' type-id='type-id-128' mangled-name='ctf_discard' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='ctf_discard'/>
-      <function-decl name='ctf_set_array' type-id='type-id-136' mangled-name='ctf_set_array' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='ctf_set_array'/>
-      <function-decl name='ctf_update' type-id='type-id-128' mangled-name='ctf_update' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='ctf_update'/>
-      <function-decl name='ctf_dtd_delete' type-id='type-id-179' mangled-name='ctf_dtd_delete' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='ctf_dtd_delete'/>
-      <function-decl name='ctf_dtd_insert' type-id='type-id-179' mangled-name='ctf_dtd_insert' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='ctf_dtd_insert'/>
+      <function-decl name='ctf_dtd_lookup' type-id='type-id-102' mangled-name='ctf_dtd_lookup' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='ctf_dtd_lookup'/>
+      <function-decl name='ctf_create' type-id='type-id-107' mangled-name='ctf_create' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='ctf_create'/>
+      <function-decl name='ctf_add_array' type-id='type-id-118' mangled-name='ctf_add_array' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='ctf_add_array'/>
+      <function-decl name='ctf_add_const' type-id='type-id-120' mangled-name='ctf_add_const' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='ctf_add_const'/>
+      <function-decl name='ctf_add_enum' type-id='type-id-114' mangled-name='ctf_add_enum' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='ctf_add_enum'/>
+      <function-decl name='ctf_add_float' type-id='type-id-115' mangled-name='ctf_add_float' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='ctf_add_float'/>
+      <function-decl name='ctf_add_forward' type-id='type-id-117' mangled-name='ctf_add_forward' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='ctf_add_forward'/>
+      <function-decl name='ctf_add_function' type-id='type-id-119' mangled-name='ctf_add_function' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='ctf_add_function'/>
+      <function-decl name='ctf_add_integer' type-id='type-id-115' mangled-name='ctf_add_integer' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='ctf_add_integer'/>
+      <function-decl name='ctf_add_pointer' type-id='type-id-120' mangled-name='ctf_add_pointer' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='ctf_add_pointer'/>
+      <function-decl name='ctf_add_restrict' type-id='type-id-120' mangled-name='ctf_add_restrict' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='ctf_add_restrict'/>
+      <function-decl name='ctf_add_struct' type-id='type-id-114' mangled-name='ctf_add_struct' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='ctf_add_struct'/>
+      <function-decl name='ctf_add_type' type-id='type-id-112' mangled-name='ctf_add_type' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='ctf_add_type'/>
+      <function-decl name='ctf_add_typedef' type-id='type-id-116' mangled-name='ctf_add_typedef' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='ctf_add_typedef'/>
+      <function-decl name='ctf_add_union' type-id='type-id-114' mangled-name='ctf_add_union' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='ctf_add_union'/>
+      <function-decl name='ctf_add_volatile' type-id='type-id-120' mangled-name='ctf_add_volatile' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='ctf_add_volatile'/>
+      <function-decl name='ctf_add_enumerator' type-id='type-id-133' mangled-name='ctf_add_enumerator' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='ctf_add_enumerator'/>
+      <function-decl name='ctf_add_member' type-id='type-id-131' mangled-name='ctf_add_member' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='ctf_add_member'/>
+      <function-decl name='ctf_delete_type' type-id='type-id-130' mangled-name='ctf_delete_type' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='ctf_delete_type'/>
+      <function-decl name='ctf_discard' type-id='type-id-127' mangled-name='ctf_discard' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='ctf_discard'/>
+      <function-decl name='ctf_set_array' type-id='type-id-135' mangled-name='ctf_set_array' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='ctf_set_array'/>
+      <function-decl name='ctf_update' type-id='type-id-127' mangled-name='ctf_update' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='ctf_update'/>
+      <function-decl name='ctf_dtd_delete' type-id='type-id-178' mangled-name='ctf_dtd_delete' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='ctf_dtd_delete'/>
+      <function-decl name='ctf_dtd_insert' type-id='type-id-178' mangled-name='ctf_dtd_insert' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='ctf_dtd_insert'/>
   </abi-instr>
   <abi-instr address-size='64' path='/usr/src/cddl/contrib/opensolaris/common/ctf/ctf_decl.c' comp-dir-path='/usr/obj/usr/src/amd64.amd64/cddl/lib/libctf' language='LANG_C11'>
-      <function-decl name='ctf_decl_fini' type-id='type-id-174' mangled-name='ctf_decl_fini' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='ctf_decl_fini'/>
-      <function-decl name='ctf_decl_init' type-id='type-id-175' mangled-name='ctf_decl_init' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='ctf_decl_init'/>
-      <function-decl name='ctf_decl_push' type-id='type-id-177' mangled-name='ctf_decl_push' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='ctf_decl_push'/>
-      <function-decl name='ctf_decl_sprintf' type-id='type-id-176' mangled-name='ctf_decl_sprintf' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='ctf_decl_sprintf'/>
+      <function-decl name='ctf_decl_fini' type-id='type-id-173' mangled-name='ctf_decl_fini' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='ctf_decl_fini'/>
+      <function-decl name='ctf_decl_init' type-id='type-id-174' mangled-name='ctf_decl_init' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='ctf_decl_init'/>
+      <function-decl name='ctf_decl_push' type-id='type-id-176' mangled-name='ctf_decl_push' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='ctf_decl_push'/>
+      <function-decl name='ctf_decl_sprintf' type-id='type-id-175' mangled-name='ctf_decl_sprintf' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='ctf_decl_sprintf'/>
   </abi-instr>
   <abi-instr address-size='64' path='/usr/src/cddl/contrib/opensolaris/common/ctf/ctf_error.c' comp-dir-path='/usr/obj/usr/src/amd64.amd64/cddl/lib/libctf' language='LANG_C11'>
-      <function-decl name='ctf_errmsg' type-id='type-id-102' mangled-name='ctf_errmsg' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='ctf_errmsg'/>
-      <function-decl name='ctf_errno' type-id='type-id-128' mangled-name='ctf_errno' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='ctf_errno'/>
+      <function-decl name='ctf_errmsg' type-id='type-id-101' mangled-name='ctf_errmsg' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='ctf_errmsg'/>
+      <function-decl name='ctf_errno' type-id='type-id-127' mangled-name='ctf_errno' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='ctf_errno'/>
   </abi-instr>
   <abi-instr address-size='64' path='/usr/src/cddl/contrib/opensolaris/common/ctf/ctf_hash.c' comp-dir-path='/usr/obj/usr/src/amd64.amd64/cddl/lib/libctf' language='LANG_C11'>
-      <function-decl name='ctf_hash_lookup' type-id='type-id-111' mangled-name='ctf_hash_lookup' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='ctf_hash_lookup'/>
-      <function-decl name='ctf_hash_create' type-id='type-id-149' mangled-name='ctf_hash_create' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='ctf_hash_create'/>
-      <function-decl name='ctf_hash_define' type-id='type-id-148' mangled-name='ctf_hash_define' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='ctf_hash_define'/>
-      <function-decl name='ctf_hash_insert' type-id='type-id-148' mangled-name='ctf_hash_insert' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='ctf_hash_insert'/>
-      <function-decl name='ctf_hash_size' type-id='type-id-162' mangled-name='ctf_hash_size' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='ctf_hash_size'/>
-      <function-decl name='ctf_hash_destroy' type-id='type-id-181' mangled-name='ctf_hash_destroy' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='ctf_hash_destroy'/>
+      <function-decl name='ctf_hash_lookup' type-id='type-id-110' mangled-name='ctf_hash_lookup' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='ctf_hash_lookup'/>
+      <function-decl name='ctf_hash_create' type-id='type-id-148' mangled-name='ctf_hash_create' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='ctf_hash_create'/>
+      <function-decl name='ctf_hash_define' type-id='type-id-147' mangled-name='ctf_hash_define' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='ctf_hash_define'/>
+      <function-decl name='ctf_hash_insert' type-id='type-id-147' mangled-name='ctf_hash_insert' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='ctf_hash_insert'/>
+      <function-decl name='ctf_hash_size' type-id='type-id-161' mangled-name='ctf_hash_size' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='ctf_hash_size'/>
+      <function-decl name='ctf_hash_destroy' type-id='type-id-180' mangled-name='ctf_hash_destroy' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='ctf_hash_destroy'/>
   </abi-instr>
   <abi-instr address-size='64' path='/usr/src/cddl/contrib/opensolaris/common/ctf/ctf_labels.c' comp-dir-path='/usr/obj/usr/src/amd64.amd64/cddl/lib/libctf' language='LANG_C11'>
-      <function-decl name='ctf_label_topmost' type-id='type-id-97' mangled-name='ctf_label_topmost' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='ctf_label_topmost'/>
-      <function-decl name='ctf_label_info' type-id='type-id-129' mangled-name='ctf_label_info' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='ctf_label_info'/>
-      <function-decl name='ctf_label_iter' type-id='type-id-143' mangled-name='ctf_label_iter' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='ctf_label_iter'/>
+      <function-decl name='ctf_label_topmost' type-id='type-id-96' mangled-name='ctf_label_topmost' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='ctf_label_topmost'/>
+      <function-decl name='ctf_label_info' type-id='type-id-128' mangled-name='ctf_label_info' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='ctf_label_info'/>
+      <function-decl name='ctf_label_iter' type-id='type-id-142' mangled-name='ctf_label_iter' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='ctf_label_iter'/>
   </abi-instr>
   <abi-instr address-size='64' path='/usr/src/cddl/contrib/opensolaris/common/ctf/ctf_lookup.c' comp-dir-path='/usr/obj/usr/src/amd64.amd64/cddl/lib/libctf' language='LANG_C11'>
-      <function-decl name='ctf_lookup_by_name' type-id='type-id-112' mangled-name='ctf_lookup_by_name' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='ctf_lookup_by_name'/>
-      <function-decl name='ctf_lookup_by_symbol' type-id='type-id-122' mangled-name='ctf_lookup_by_symbol' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='ctf_lookup_by_symbol'/>
-      <function-decl name='ctf_func_args' type-id='type-id-147' mangled-name='ctf_func_args' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='ctf_func_args'/>
-      <function-decl name='ctf_func_info' type-id='type-id-146' mangled-name='ctf_func_info' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='ctf_func_info'/>
-      <function-decl name='ctf_lookup_by_id' type-id='type-id-186' mangled-name='ctf_lookup_by_id' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='ctf_lookup_by_id'/>
+      <function-decl name='ctf_lookup_by_name' type-id='type-id-111' mangled-name='ctf_lookup_by_name' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='ctf_lookup_by_name'/>
+      <function-decl name='ctf_lookup_by_symbol' type-id='type-id-121' mangled-name='ctf_lookup_by_symbol' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='ctf_lookup_by_symbol'/>
+      <function-decl name='ctf_func_args' type-id='type-id-146' mangled-name='ctf_func_args' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='ctf_func_args'/>
+      <function-decl name='ctf_func_info' type-id='type-id-145' mangled-name='ctf_func_info' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='ctf_func_info'/>
+      <function-decl name='ctf_lookup_by_id' type-id='type-id-185' mangled-name='ctf_lookup_by_id' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='ctf_lookup_by_id'/>
   </abi-instr>
   <abi-instr address-size='64' path='/usr/src/cddl/contrib/opensolaris/common/ctf/ctf_open.c' comp-dir-path='/usr/obj/usr/src/amd64.amd64/cddl/lib/libctf' language='LANG_C11'>
     <var-decl name='_CTF_NULLSTR' type-id='type-id-13' mangled-name='_CTF_NULLSTR' visibility='default' elf-symbol-id='_CTF_NULLSTR'/>
     <var-decl name='_CTF_SECTION' type-id='type-id-12' mangled-name='_CTF_SECTION' visibility='default' elf-symbol-id='_CTF_SECTION'/>
-      <function-decl name='ctf_parent_name' type-id='type-id-97' mangled-name='ctf_parent_name' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='ctf_parent_name'/>
-      <function-decl name='ctf_bufopen' type-id='type-id-106' mangled-name='ctf_bufopen' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='ctf_bufopen'/>
-      <function-decl name='ctf_dup' type-id='type-id-107' mangled-name='ctf_dup' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='ctf_dup'/>
-      <function-decl name='ctf_parent_file' type-id='type-id-107' mangled-name='ctf_parent_file' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='ctf_parent_file'/>
-      <function-decl name='ctf_getmodel' type-id='type-id-128' mangled-name='ctf_getmodel' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='ctf_getmodel'/>
-      <function-decl name='ctf_import' type-id='type-id-130' mangled-name='ctf_import' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='ctf_import'/>
-      <function-decl name='ctf_setmodel' type-id='type-id-145' mangled-name='ctf_setmodel' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='ctf_setmodel'/>
-      <function-decl name='ctf_close' type-id='type-id-178' mangled-name='ctf_close' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='ctf_close'/>
-      <function-decl name='ctf_setspecific' type-id='type-id-180' mangled-name='ctf_setspecific' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='ctf_setspecific'/>
-      <function-decl name='ctf_getspecific' type-id='type-id-185' mangled-name='ctf_getspecific' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='ctf_getspecific'/>
-    <var-decl name='_libctf_debug' type-id='type-id-99' mangled-name='_libctf_debug' visibility='default' elf-symbol-id='_libctf_debug'/>
-    <var-decl name='_libctf_version' type-id='type-id-99' mangled-name='_libctf_version' visibility='default' elf-symbol-id='_libctf_version'/>
+      <function-decl name='ctf_parent_name' type-id='type-id-96' mangled-name='ctf_parent_name' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='ctf_parent_name'/>
+      <function-decl name='ctf_bufopen' type-id='type-id-105' mangled-name='ctf_bufopen' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='ctf_bufopen'/>
+      <function-decl name='ctf_dup' type-id='type-id-106' mangled-name='ctf_dup' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='ctf_dup'/>
+      <function-decl name='ctf_parent_file' type-id='type-id-106' mangled-name='ctf_parent_file' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='ctf_parent_file'/>
+      <function-decl name='ctf_getmodel' type-id='type-id-127' mangled-name='ctf_getmodel' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='ctf_getmodel'/>
+      <function-decl name='ctf_import' type-id='type-id-129' mangled-name='ctf_import' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='ctf_import'/>
+      <function-decl name='ctf_setmodel' type-id='type-id-144' mangled-name='ctf_setmodel' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='ctf_setmodel'/>
+      <function-decl name='ctf_close' type-id='type-id-177' mangled-name='ctf_close' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='ctf_close'/>
+      <function-decl name='ctf_setspecific' type-id='type-id-179' mangled-name='ctf_setspecific' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='ctf_setspecific'/>
+      <function-decl name='ctf_getspecific' type-id='type-id-184' mangled-name='ctf_getspecific' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='ctf_getspecific'/>
+    <var-decl name='_libctf_debug' type-id='type-id-98' mangled-name='_libctf_debug' visibility='default' elf-symbol-id='_libctf_debug'/>
+    <var-decl name='_libctf_version' type-id='type-id-98' mangled-name='_libctf_version' visibility='default' elf-symbol-id='_libctf_version'/>
   </abi-instr>
   <abi-instr address-size='64' path='/usr/src/cddl/contrib/opensolaris/common/ctf/ctf_types.c' comp-dir-path='/usr/obj/usr/src/amd64.amd64/cddl/lib/libctf' language='LANG_C11'>
-      <function-decl name='ctf_type_name' type-id='type-id-92' mangled-name='ctf_type_name' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='ctf_type_name'/>
-      <function-decl name='ctf_type_qname' type-id='type-id-94' mangled-name='ctf_type_qname' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='ctf_type_qname'/>
-      <function-decl name='ctf_enum_name' type-id='type-id-98' mangled-name='ctf_enum_name' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='ctf_enum_name'/>
-      <function-decl name='ctf_type_rname' type-id='type-id-100' mangled-name='ctf_type_rname' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='ctf_type_rname'/>
-      <function-decl name='ctf_type_pointer' type-id='type-id-114' mangled-name='ctf_type_pointer' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='ctf_type_pointer'/>
-      <function-decl name='ctf_type_reference' type-id='type-id-114' mangled-name='ctf_type_reference' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='ctf_type_reference'/>
-      <function-decl name='ctf_type_resolve' type-id='type-id-114' mangled-name='ctf_type_resolve' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='ctf_type_resolve'/>
-      <function-decl name='ctf_array_info' type-id='type-id-137' mangled-name='ctf_array_info' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='ctf_array_info'/>
-      <function-decl name='ctf_enum_iter' type-id='type-id-139' mangled-name='ctf_enum_iter' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='ctf_enum_iter'/>
-      <function-decl name='ctf_enum_value' type-id='type-id-135' mangled-name='ctf_enum_value' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='ctf_enum_value'/>
-      <function-decl name='ctf_member_info' type-id='type-id-133' mangled-name='ctf_member_info' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='ctf_member_info'/>
-      <function-decl name='ctf_member_iter' type-id='type-id-141' mangled-name='ctf_member_iter' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='ctf_member_iter'/>
-      <function-decl name='ctf_type_cmp' type-id='type-id-140' mangled-name='ctf_type_cmp' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='ctf_type_cmp'/>
-      <function-decl name='ctf_type_compat' type-id='type-id-140' mangled-name='ctf_type_compat' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='ctf_type_compat'/>
-      <function-decl name='ctf_type_encoding' type-id='type-id-138' mangled-name='ctf_type_encoding' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='ctf_type_encoding'/>
-      <function-decl name='ctf_type_iter' type-id='type-id-144' mangled-name='ctf_type_iter' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='ctf_type_iter'/>
-      <function-decl name='ctf_type_kind' type-id='type-id-131' mangled-name='ctf_type_kind' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='ctf_type_kind'/>
-      <function-decl name='ctf_type_visit' type-id='type-id-142' mangled-name='ctf_type_visit' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='ctf_type_visit'/>
-      <function-decl name='ctf_get_ctt_size' type-id='type-id-157' mangled-name='ctf_get_ctt_size' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='ctf_get_ctt_size'/>
-      <function-decl name='ctf_type_align' type-id='type-id-160' mangled-name='ctf_type_align' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='ctf_type_align'/>
-      <function-decl name='ctf_type_lname' type-id='type-id-161' mangled-name='ctf_type_lname' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='ctf_type_lname'/>
-      <function-decl name='ctf_type_size' type-id='type-id-160' mangled-name='ctf_type_size' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='ctf_type_size'/>
-      <function-decl name='ctf_get_ctm_info' type-id='type-id-169' mangled-name='ctf_get_ctm_info' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='ctf_get_ctm_info'/>
-      <function-decl name='ctf_get_ctt_index' type-id='type-id-172' mangled-name='ctf_get_ctt_index' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='ctf_get_ctt_index'/>
-      <function-decl name='ctf_get_ctt_info' type-id='type-id-172' mangled-name='ctf_get_ctt_info' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='ctf_get_ctt_info'/>
+      <function-decl name='ctf_type_name' type-id='type-id-91' mangled-name='ctf_type_name' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='ctf_type_name'/>
+      <function-decl name='ctf_type_qname' type-id='type-id-93' mangled-name='ctf_type_qname' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='ctf_type_qname'/>
+      <function-decl name='ctf_enum_name' type-id='type-id-97' mangled-name='ctf_enum_name' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='ctf_enum_name'/>
+      <function-decl name='ctf_type_rname' type-id='type-id-99' mangled-name='ctf_type_rname' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='ctf_type_rname'/>
+      <function-decl name='ctf_type_pointer' type-id='type-id-113' mangled-name='ctf_type_pointer' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='ctf_type_pointer'/>
+      <function-decl name='ctf_type_reference' type-id='type-id-113' mangled-name='ctf_type_reference' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='ctf_type_reference'/>
+      <function-decl name='ctf_type_resolve' type-id='type-id-113' mangled-name='ctf_type_resolve' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='ctf_type_resolve'/>
+      <function-decl name='ctf_array_info' type-id='type-id-136' mangled-name='ctf_array_info' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='ctf_array_info'/>
+      <function-decl name='ctf_enum_iter' type-id='type-id-138' mangled-name='ctf_enum_iter' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='ctf_enum_iter'/>
+      <function-decl name='ctf_enum_value' type-id='type-id-134' mangled-name='ctf_enum_value' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='ctf_enum_value'/>
+      <function-decl name='ctf_member_info' type-id='type-id-132' mangled-name='ctf_member_info' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='ctf_member_info'/>
+      <function-decl name='ctf_member_iter' type-id='type-id-140' mangled-name='ctf_member_iter' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='ctf_member_iter'/>
+      <function-decl name='ctf_type_cmp' type-id='type-id-139' mangled-name='ctf_type_cmp' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='ctf_type_cmp'/>
+      <function-decl name='ctf_type_compat' type-id='type-id-139' mangled-name='ctf_type_compat' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='ctf_type_compat'/>
+      <function-decl name='ctf_type_encoding' type-id='type-id-137' mangled-name='ctf_type_encoding' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='ctf_type_encoding'/>
+      <function-decl name='ctf_type_iter' type-id='type-id-143' mangled-name='ctf_type_iter' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='ctf_type_iter'/>
+      <function-decl name='ctf_type_kind' type-id='type-id-130' mangled-name='ctf_type_kind' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='ctf_type_kind'/>
+      <function-decl name='ctf_type_visit' type-id='type-id-141' mangled-name='ctf_type_visit' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='ctf_type_visit'/>
+      <function-decl name='ctf_get_ctt_size' type-id='type-id-156' mangled-name='ctf_get_ctt_size' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='ctf_get_ctt_size'/>
+      <function-decl name='ctf_type_align' type-id='type-id-159' mangled-name='ctf_type_align' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='ctf_type_align'/>
+      <function-decl name='ctf_type_lname' type-id='type-id-160' mangled-name='ctf_type_lname' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='ctf_type_lname'/>
+      <function-decl name='ctf_type_size' type-id='type-id-159' mangled-name='ctf_type_size' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='ctf_type_size'/>
+      <function-decl name='ctf_get_ctm_info' type-id='type-id-168' mangled-name='ctf_get_ctm_info' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='ctf_get_ctm_info'/>
+      <function-decl name='ctf_get_ctt_index' type-id='type-id-171' mangled-name='ctf_get_ctt_index' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='ctf_get_ctt_index'/>
+      <function-decl name='ctf_get_ctt_info' type-id='type-id-171' mangled-name='ctf_get_ctt_info' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='ctf_get_ctt_info'/>
   </abi-instr>
   <abi-instr address-size='64' path='/usr/src/cddl/contrib/opensolaris/common/ctf/ctf_util.c' comp-dir-path='/usr/obj/usr/src/amd64.amd64/cddl/lib/libctf' language='LANG_C11'>
-      <function-decl name='ctf_strdup' type-id='type-id-91' mangled-name='ctf_strdup' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='ctf_strdup'/>
-      <function-decl name='ctf_strptr' type-id='type-id-95' mangled-name='ctf_strptr' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='ctf_strptr'/>
-      <function-decl name='ctf_strraw' type-id='type-id-95' mangled-name='ctf_strraw' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='ctf_strraw'/>
-      <function-decl name='ctf_set_open_errno' type-id='type-id-109' mangled-name='ctf_set_open_errno' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='ctf_set_open_errno'/>
-      <function-decl name='ctf_set_errno' type-id='type-id-155' mangled-name='ctf_set_errno' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='ctf_set_errno'/>
-      <function-decl name='ctf_list_append' type-id='type-id-182' mangled-name='ctf_list_append' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='ctf_list_append'/>
-      <function-decl name='ctf_list_delete' type-id='type-id-182' mangled-name='ctf_list_delete' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='ctf_list_delete'/>
-      <function-decl name='ctf_list_prepend' type-id='type-id-182' mangled-name='ctf_list_prepend' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='ctf_list_prepend'/>
+      <function-decl name='ctf_strdup' type-id='type-id-90' mangled-name='ctf_strdup' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='ctf_strdup'/>
+      <function-decl name='ctf_strptr' type-id='type-id-94' mangled-name='ctf_strptr' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='ctf_strptr'/>
+      <function-decl name='ctf_strraw' type-id='type-id-94' mangled-name='ctf_strraw' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='ctf_strraw'/>
+      <function-decl name='ctf_set_open_errno' type-id='type-id-108' mangled-name='ctf_set_open_errno' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='ctf_set_open_errno'/>
+      <function-decl name='ctf_set_errno' type-id='type-id-154' mangled-name='ctf_set_errno' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='ctf_set_errno'/>
+      <function-decl name='ctf_list_append' type-id='type-id-181' mangled-name='ctf_list_append' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='ctf_list_append'/>
+      <function-decl name='ctf_list_delete' type-id='type-id-181' mangled-name='ctf_list_delete' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='ctf_list_delete'/>
+      <function-decl name='ctf_list_prepend' type-id='type-id-181' mangled-name='ctf_list_prepend' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='ctf_list_prepend'/>
   </abi-instr>
   <abi-instr address-size='64' path='/usr/src/cddl/contrib/opensolaris/lib/libctf/common/ctf_lib.c' comp-dir-path='/usr/obj/usr/src/amd64.amd64/cddl/lib/libctf' language='LANG_C11'>
-      <function-decl name='z_strerror' type-id='type-id-102' mangled-name='z_strerror' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='z_strerror'/>
-      <function-decl name='ctf_fdopen' type-id='type-id-110' mangled-name='ctf_fdopen' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='ctf_fdopen'/>
-      <function-decl name='ctf_open' type-id='type-id-104' mangled-name='ctf_open' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='ctf_open'/>
-      <function-decl name='ctf_version' type-id='type-id-151' mangled-name='ctf_version' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='ctf_version'/>
-      <function-decl name='ctf_write' type-id='type-id-145' mangled-name='ctf_write' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='ctf_write'/>
-      <function-decl name='z_uncompress' type-id='type-id-153' mangled-name='z_uncompress' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='z_uncompress'/>
-      <function-decl name='_libctf_init' type-id='type-id-183' mangled-name='_libctf_init' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_libctf_init'/>
-      <function-decl name='ctf_sect_munmap' type-id='type-id-173' mangled-name='ctf_sect_munmap' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='ctf_sect_munmap'/>
-      <function-decl name='ctf_sect_mmap' type-id='type-id-187' mangled-name='ctf_sect_mmap' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='ctf_sect_mmap'/>
-      <function-decl name='ctf_zopen' type-id='type-id-188' mangled-name='ctf_zopen' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='ctf_zopen'/>
+      <function-decl name='z_strerror' type-id='type-id-101' mangled-name='z_strerror' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='z_strerror'/>
+      <function-decl name='ctf_fdopen' type-id='type-id-109' mangled-name='ctf_fdopen' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='ctf_fdopen'/>
+      <function-decl name='ctf_open' type-id='type-id-103' mangled-name='ctf_open' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='ctf_open'/>
+      <function-decl name='ctf_version' type-id='type-id-150' mangled-name='ctf_version' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='ctf_version'/>
+      <function-decl name='ctf_write' type-id='type-id-144' mangled-name='ctf_write' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='ctf_write'/>
+      <function-decl name='z_uncompress' type-id='type-id-152' mangled-name='z_uncompress' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='z_uncompress'/>
+      <function-decl name='_libctf_init' type-id='type-id-182' mangled-name='_libctf_init' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_libctf_init'/>
+      <function-decl name='ctf_sect_munmap' type-id='type-id-172' mangled-name='ctf_sect_munmap' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='ctf_sect_munmap'/>
+      <function-decl name='ctf_sect_mmap' type-id='type-id-186' mangled-name='ctf_sect_mmap' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='ctf_sect_mmap'/>
+      <function-decl name='ctf_zopen' type-id='type-id-187' mangled-name='ctf_zopen' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='ctf_zopen'/>
   </abi-instr>
   <abi-instr address-size='64' path='/usr/src/cddl/contrib/opensolaris/lib/libctf/common/ctf_subr.c' comp-dir-path='/usr/obj/usr/src/amd64.amd64/cddl/lib/libctf' language='LANG_C11'>
-      <function-decl name='ctf_strerror' type-id='type-id-102' mangled-name='ctf_strerror' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='ctf_strerror'/>
-      <function-decl name='ctf_data_free' type-id='type-id-184' mangled-name='ctf_data_free' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='ctf_data_free'/>
-      <function-decl name='ctf_data_protect' type-id='type-id-184' mangled-name='ctf_data_protect' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='ctf_data_protect'/>
-      <function-decl name='ctf_dprintf' type-id='type-id-167' mangled-name='ctf_dprintf' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='ctf_dprintf'/>
-      <function-decl name='ctf_free' type-id='type-id-184' mangled-name='ctf_free' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='ctf_free'/>
-      <function-decl name='ctf_alloc' type-id='type-id-189' mangled-name='ctf_alloc' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='ctf_alloc'/>
-      <function-decl name='ctf_data_alloc' type-id='type-id-189' mangled-name='ctf_data_alloc' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='ctf_data_alloc'/>
+      <function-decl name='ctf_strerror' type-id='type-id-101' mangled-name='ctf_strerror' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='ctf_strerror'/>
+      <function-decl name='ctf_data_free' type-id='type-id-183' mangled-name='ctf_data_free' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='ctf_data_free'/>
+      <function-decl name='ctf_data_protect' type-id='type-id-183' mangled-name='ctf_data_protect' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='ctf_data_protect'/>
+      <function-decl name='ctf_dprintf' type-id='type-id-166' mangled-name='ctf_dprintf' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='ctf_dprintf'/>
+      <function-decl name='ctf_free' type-id='type-id-183' mangled-name='ctf_free' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='ctf_free'/>
+      <function-decl name='ctf_alloc' type-id='type-id-188' mangled-name='ctf_alloc' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='ctf_alloc'/>
+      <function-decl name='ctf_data_alloc' type-id='type-id-188' mangled-name='ctf_data_alloc' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='ctf_data_alloc'/>
   </abi-instr>
 </abi-corpus>

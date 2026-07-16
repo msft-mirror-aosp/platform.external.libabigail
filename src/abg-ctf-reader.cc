@@ -24,6 +24,7 @@
 
 #include "abg-internal.h"
 #include "abg-ir-priv.h"
+#include "abg-corpus-priv.h"
 #include "abg-symtab-reader.h"
 
 
@@ -243,6 +244,7 @@ public:
     additional_types_to_canonicalize.clear();
 
     ir::perform_type_canonicalization(types_to_canonicalize);
+    corpus()->priv_->types_are_canonicalized(true);
   }
 
   /// Constructor.
@@ -743,7 +745,6 @@ public:
 	t.start();
       }
 
-    env().canonicalization_is_done(false);
     if (ctfa == NULL)
       status |= fe_iface::STATUS_DEBUG_INFO_NOT_FOUND;
     else
@@ -758,8 +759,6 @@ public:
 	corpus()->sort_variables();
 	corpus()->mark_non_reachable_types();
       }
-
-    env().canonicalization_is_done(true);
 
     if (do_log())
       {
@@ -827,7 +826,7 @@ process_ctf_typedef(reader *rdr,
     {
       decl_base_sptr decl = is_decl(utype);
       ABG_ASSERT(decl);
-      decl->set_naming_typedef(result);
+      decl->add_naming_typedef(result);
     }
 
   if (result)

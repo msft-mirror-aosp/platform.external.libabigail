@@ -1885,6 +1885,20 @@ bool
 diff_context::show_added_vars() const
 {return priv_->show_added_vars_;}
 
+/// Set whether to show the number of filtered data members.
+///
+/// @param f the value of the flag.
+void
+diff_context::show_num_filtered_data_members(bool f)
+{priv_->show_num_filtered_data_members_ = f;}
+
+/// Get whether to show the number of filtered data members.
+///
+/// @return the value of the flag.
+bool
+diff_context::show_num_filtered_data_members() const
+{return priv_->show_num_filtered_data_members_;}
+
 bool
 diff_context::show_linkage_names() const
 {return priv_->show_linkage_names_;}
@@ -6036,14 +6050,6 @@ class_or_union_diff::chain_into_hierarchy()
   for (var_diff_sptrs_type::const_iterator i =
 	 get_priv()->sorted_changed_dm_.begin();
        i != get_priv()->sorted_changed_dm_.end();
-       ++i)
-    if (diff_sptr d = *i)
-      append_child_node(d);
-
-  // member types changes
-  for (diff_sptrs_type::const_iterator i =
-	 get_priv()->sorted_changed_member_types_.begin();
-       i != get_priv()->sorted_changed_member_types_.end();
        ++i)
     if (diff_sptr d = *i)
       append_child_node(d);

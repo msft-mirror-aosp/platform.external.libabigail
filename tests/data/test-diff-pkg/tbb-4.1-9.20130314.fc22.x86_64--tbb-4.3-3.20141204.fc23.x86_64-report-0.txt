@@ -37,7 +37,7 @@
                   type size hasn't changed
                   1 data member insertion:
                     'tbb::internal::cpu_ctl_env_space my_cpu_ctl_env', at offset 896 (in bits) at task.h:380:1
-                  1 data member changes (1 filtered):
+                  1 data member change (1 filtered):
                     type of 'char _leading_padding[80]' changed:
                       type name changed from 'char[80]' to 'char[72]'
                       array type size changed from 640 to 576
@@ -49,12 +49,12 @@
       implicit parameter 0 of type 'tbb::internal::concurrent_queue_base_v3*' has sub-type changes:
         in pointed to type 'class tbb::internal::concurrent_queue_base_v3' at _concurrent_queue_impl.h:834:1:
           type size hasn't changed
-          no member function changes (5 filtered);
+          no member function change (5 filtered);
           1 data member change:
             type of 'concurrent_queue_rep* my_rep' changed:
               in pointed to type 'class tbb::internal::concurrent_queue_rep' at concurrent_queue.cpp:129:1:
                 type size hasn't changed
-                1 data member changes (2 filtered):
+                1 data member change (2 filtered):
                   type of 'tbb::internal::concurrent_monitor items_avail' changed:
                     type size hasn't changed
                     1 data member change:
@@ -64,7 +64,7 @@
       implicit parameter 0 of type 'tbb::internal::concurrent_vector_base_v3*' has sub-type changes:
         in pointed to type 'class tbb::internal::concurrent_vector_base_v3' at concurrent_vector.h:92:1:
           type size hasn't changed
-          1 data member changes (2 filtered):
+          1 data member change (2 filtered):
             type of 'tbb::atomic<tbb::internal::concurrent_vector_base_v3::segment_t*> my_segment' changed:
               type size hasn't changed
               1 base class change:
@@ -89,7 +89,7 @@
       implicit parameter 0 of type 'tbb::internal::task_scheduler_observer_v3*' has sub-type changes:
         in pointed to type 'class tbb::internal::task_scheduler_observer_v3' at task_scheduler_observer.h:40:1:
           type size hasn't changed
-          no member function changes (2 filtered);
+          no member function change (2 filtered);
           1 data member change:
             type of 'observer_proxy* my_proxy' changed:
               in pointed to type 'class tbb::internal::observer_proxy' at observer_proxy.h:104:1:

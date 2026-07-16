@@ -862,6 +862,12 @@ public:
   show_added_vars() const;
 
   bool
+  show_num_filtered_data_members() const;
+
+  void
+  show_num_filtered_data_members(bool f);
+
+  bool
   show_linkage_names() const;
 
   void

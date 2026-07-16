@@ -649,6 +649,11 @@ Options
    Do not show information about where in the *second shared library*
    the respective type was changed.
 
+  * ``--no-show-num-filtered-data-members``
+
+    In the change report, do not show the number of filtered data
+    members.
+
 
   *  ``--no-show-relative-offset-changes``
 

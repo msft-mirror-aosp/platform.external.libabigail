@@ -206,6 +206,7 @@ struct diff_context::priv
   bool					show_deleted_vars_;
   bool					show_changed_vars_;
   bool					show_added_vars_;
+  bool					show_num_filtered_data_members_;
   bool					show_linkage_names_;
   bool					show_locs_;
   bool					show_redundant_changes_;
@@ -237,15 +238,16 @@ struct diff_context::priv
       show_deleted_vars_(true),
       show_changed_vars_(true),
       show_added_vars_(true),
+      show_num_filtered_data_members_(true),
       show_linkage_names_(false),
       show_locs_(true),
-      show_redundant_changes_(true),
+      show_redundant_changes_(false),
       show_syms_unreferenced_by_di_(true),
       show_added_syms_unreferenced_by_di_(true),
       show_unreachable_types_(false),
-      show_impacted_interfaces_(true),
-      dump_diff_tree_(),
-      do_log_()
+      show_impacted_interfaces_(false),
+      dump_diff_tree_(false),
+      do_log_(false)
    {}
 };// end struct diff_context::priv
 

@@ -312,20 +312,20 @@
     <array-type-def dimensions='1' type-id='type-id-105' size-in-bits='128' hash='0f38deb33e0e6d06' id='type-id-107'>
       <subrange length='4' lower-bound='0' upper-bound='3' type-id='type-id-1' size-in-bits='64' is-anonymous='yes' hash='cee611f4a73e486c' id='type-id-4'/>
     </array-type-def>
-    <enum-decl name='__anonymous_enum__' naming-typedef-id='type-id-108' size-in-bits='32' alignment-in-bits='32' is-anonymous='yes' hash='23f8ae0f12623f73' id='type-id-109'>
-      <underlying-type type-id='type-id-110'/>
+    <enum-decl name='__anonymous_enum__' size-in-bits='32' alignment-in-bits='32' is-anonymous='yes' hash='23f8ae0f12623f73' id='type-id-108'>
+      <underlying-type type-id='type-id-109'/>
       <enumerator name='DBUS_BUS_SESSION' value='0'/>
       <enumerator name='DBUS_BUS_SYSTEM' value='1'/>
       <enumerator name='DBUS_BUS_STARTER' value='2'/>
     </enum-decl>
-    <enum-decl name='__anonymous_enum__' naming-typedef-id='type-id-111' size-in-bits='32' alignment-in-bits='32' is-anonymous='yes' hash='6bedaf3bb45214a7' id='type-id-112'>
-      <underlying-type type-id='type-id-110'/>
+    <enum-decl name='__anonymous_enum__' size-in-bits='32' alignment-in-bits='32' is-anonymous='yes' hash='6bedaf3bb45214a7' id='type-id-110'>
+      <underlying-type type-id='type-id-109'/>
       <enumerator name='DBUS_DISPATCH_DATA_REMAINS' value='0'/>
       <enumerator name='DBUS_DISPATCH_COMPLETE' value='1'/>
       <enumerator name='DBUS_DISPATCH_NEED_MEMORY' value='2'/>
     </enum-decl>
-    <enum-decl name='__anonymous_enum__' naming-typedef-id='type-id-113' size-in-bits='32' alignment-in-bits='32' is-anonymous='yes' hash='2022d54d4294c611' id='type-id-114'>
-      <underlying-type type-id='type-id-110'/>
+    <enum-decl name='__anonymous_enum__' size-in-bits='32' alignment-in-bits='32' is-anonymous='yes' hash='2022d54d4294c611' id='type-id-111'>
+      <underlying-type type-id='type-id-109'/>
       <enumerator name='DBUS_HANDLER_RESULT_HANDLED' value='0'/>
       <enumerator name='DBUS_HANDLER_RESULT_NOT_YET_HANDLED' value='1'/>
       <enumerator name='DBUS_HANDLER_RESULT_NEED_MEMORY' value='2'/>
@@ -333,29 +333,29 @@
     <function-type size-in-bits='64' hash='913e48915227fe92' id='type-id-13'>
       <return type-id='type-id-12'/>
     </function-type>
-    <function-type size-in-bits='64' hash='77f9510fceaf5965' id='type-id-115'>
-      <parameter type-id='type-id-108'/>
+    <function-type size-in-bits='64' hash='77f9510fceaf5965' id='type-id-112'>
+      <parameter type-id='type-id-113'/>
       <parameter type-id='type-id-22'/>
       <return type-id='type-id-16'/>
     </function-type>
-    <function-type size-in-bits='64' hash='c7e7bd640449f68a' id='type-id-116'>
+    <function-type size-in-bits='64' hash='c7e7bd640449f68a' id='type-id-114'>
       <parameter type-id='type-id-16'/>
       <return type-id='type-id-16'/>
     </function-type>
-    <function-type size-in-bits='64' hash='c39e829526088009' id='type-id-117'>
+    <function-type size-in-bits='64' hash='c39e829526088009' id='type-id-115'>
       <parameter type-id='type-id-85'/>
       <parameter type-id='type-id-22'/>
       <return type-id='type-id-16'/>
     </function-type>
-    <function-type size-in-bits='64' hash='d1fe756e319cc861' id='type-id-118'>
+    <function-type size-in-bits='64' hash='d1fe756e319cc861' id='type-id-116'>
       <parameter type-id='type-id-16'/>
-      <return type-id='type-id-111'/>
+      <return type-id='type-id-117'/>
     </function-type>
     <function-type size-in-bits='64' hash='d6436583dd4fd4f7' id='type-id-23'>
       <parameter type-id='type-id-16'/>
       <parameter type-id='type-id-32'/>
-      <parameter type-id='type-id-119'/>
-      <return type-id='type-id-113'/>
+      <parameter type-id='type-id-118'/>
+      <return type-id='type-id-119'/>
     </function-type>
     <function-type size-in-bits='64' hash='b97e2e102f94cf14' id='type-id-120'>
       <parameter type-id='type-id-16'/>
@@ -505,7 +505,7 @@
       <parameter type-id='type-id-152'/>
       <parameter type-id='type-id-153'/>
       <parameter type-id='type-id-154'/>
-      <parameter type-id='type-id-119'/>
+      <parameter type-id='type-id-118'/>
       <parameter type-id='type-id-155'/>
       <return type-id='type-id-149'/>
     </function-type>
@@ -514,7 +514,7 @@
       <parameter type-id='type-id-157'/>
       <parameter type-id='type-id-158'/>
       <parameter type-id='type-id-159'/>
-      <parameter type-id='type-id-119'/>
+      <parameter type-id='type-id-118'/>
       <parameter type-id='type-id-155'/>
       <return type-id='type-id-149'/>
     </function-type>
@@ -526,7 +526,7 @@
     <function-type size-in-bits='64' hash='914418540b02a81c' id='type-id-161'>
       <parameter type-id='type-id-16'/>
       <parameter type-id='type-id-162'/>
-      <parameter type-id='type-id-119'/>
+      <parameter type-id='type-id-118'/>
       <parameter type-id='type-id-155'/>
       <return type-id='type-id-149'/>
     </function-type>
@@ -569,14 +569,14 @@
       <parameter type-id='type-id-16'/>
       <parameter type-id='type-id-85'/>
       <parameter type-id='type-id-75'/>
-      <parameter type-id='type-id-119'/>
+      <parameter type-id='type-id-118'/>
       <return type-id='type-id-149'/>
     </function-type>
     <function-type size-in-bits='64' hash='31c49522a3afebf8' id='type-id-170'>
       <parameter type-id='type-id-16'/>
       <parameter type-id='type-id-85'/>
       <parameter type-id='type-id-75'/>
-      <parameter type-id='type-id-119'/>
+      <parameter type-id='type-id-118'/>
       <parameter type-id='type-id-22'/>
       <return type-id='type-id-149'/>
     </function-type>
@@ -591,7 +591,7 @@
     <function-type size-in-bits='64' hash='b5a3c46cecc10317' id='type-id-89'>
       <parameter type-id='type-id-16'/>
       <parameter type-id='type-id-85'/>
-      <parameter type-id='type-id-119'/>
+      <parameter type-id='type-id-118'/>
       <return type-id='type-id-149'/>
     </function-type>
     <function-type size-in-bits='64' hash='1d0d75c0eec758bc' id='type-id-172'>
@@ -603,7 +603,7 @@
     <function-type size-in-bits='64' hash='edf1c7b114e27779' id='type-id-174'>
       <parameter type-id='type-id-16'/>
       <parameter type-id='type-id-103'/>
-      <parameter type-id='type-id-119'/>
+      <parameter type-id='type-id-118'/>
       <parameter type-id='type-id-155'/>
       <return type-id='type-id-149'/>
     </function-type>
@@ -625,7 +625,7 @@
     <function-type size-in-bits='64' hash='96b017e048999d9c' id='type-id-91'>
       <parameter type-id='type-id-16'/>
       <parameter type-id='type-id-1'/>
-      <parameter type-id='type-id-119'/>
+      <parameter type-id='type-id-118'/>
       <return type-id='type-id-149'/>
     </function-type>
     <function-type size-in-bits='64' hash='493bfaf1a38a703c' id='type-id-180'>
@@ -687,7 +687,7 @@
     <function-type size-in-bits='64' hash='c8f0d5921fd51419' id='type-id-190'>
       <parameter type-id='type-id-32'/>
       <parameter type-id='type-id-103'/>
-      <parameter type-id='type-id-119'/>
+      <parameter type-id='type-id-118'/>
       <parameter type-id='type-id-155'/>
       <return type-id='type-id-149'/>
     </function-type>
@@ -727,13 +727,13 @@
     <function-type size-in-bits='64' hash='52dbe957503ba37a' id='type-id-197'>
       <parameter type-id='type-id-34'/>
       <parameter type-id='type-id-122'/>
-      <parameter type-id='type-id-119'/>
+      <parameter type-id='type-id-118'/>
       <return type-id='type-id-149'/>
     </function-type>
     <function-type size-in-bits='64' hash='a5425108f52c77d3' id='type-id-198'>
       <parameter type-id='type-id-34'/>
       <parameter type-id='type-id-122'/>
-      <parameter type-id='type-id-119'/>
+      <parameter type-id='type-id-118'/>
       <parameter type-id='type-id-122'/>
       <return type-id='type-id-149'/>
     </function-type>
@@ -748,14 +748,14 @@
     <function-type size-in-bits='64' hash='f99e12056536e8fc' id='type-id-200'>
       <parameter type-id='type-id-42'/>
       <parameter type-id='type-id-201'/>
-      <parameter type-id='type-id-119'/>
+      <parameter type-id='type-id-118'/>
       <parameter type-id='type-id-155'/>
       <return type-id='type-id-149'/>
     </function-type>
     <function-type size-in-bits='64' hash='9c68164213304cdb' id='type-id-202'>
       <parameter type-id='type-id-42'/>
       <parameter type-id='type-id-103'/>
-      <parameter type-id='type-id-119'/>
+      <parameter type-id='type-id-118'/>
       <parameter type-id='type-id-155'/>
       <return type-id='type-id-149'/>
     </function-type>
@@ -768,7 +768,7 @@
       <parameter type-id='type-id-152'/>
       <parameter type-id='type-id-153'/>
       <parameter type-id='type-id-154'/>
-      <parameter type-id='type-id-119'/>
+      <parameter type-id='type-id-118'/>
       <parameter type-id='type-id-155'/>
       <return type-id='type-id-149'/>
     </function-type>
@@ -777,7 +777,7 @@
       <parameter type-id='type-id-157'/>
       <parameter type-id='type-id-158'/>
       <parameter type-id='type-id-159'/>
-      <parameter type-id='type-id-119'/>
+      <parameter type-id='type-id-118'/>
       <parameter type-id='type-id-155'/>
       <return type-id='type-id-149'/>
     </function-type>
@@ -789,7 +789,7 @@
     <function-type size-in-bits='64' hash='c0852b74d59ff1bc' id='type-id-207'>
       <parameter type-id='type-id-49'/>
       <parameter type-id='type-id-122'/>
-      <parameter type-id='type-id-119'/>
+      <parameter type-id='type-id-118'/>
       <parameter type-id='type-id-155'/>
       <return type-id='type-id-149'/>
     </function-type>
@@ -803,7 +803,7 @@
     </function-type>
     <function-type size-in-bits='64' hash='24037e9503ffa154' id='type-id-95'>
       <parameter type-id='type-id-53'/>
-      <parameter type-id='type-id-119'/>
+      <parameter type-id='type-id-118'/>
       <return type-id='type-id-149'/>
     </function-type>
     <function-type size-in-bits='64' hash='ccae686326d7d845' id='type-id-210'>
@@ -818,12 +818,12 @@
     <function-type size-in-bits='64' hash='047fe7bbb2574b28' id='type-id-97'>
       <parameter type-id='type-id-59'/>
       <parameter type-id='type-id-212'/>
-      <parameter type-id='type-id-119'/>
+      <parameter type-id='type-id-118'/>
       <return type-id='type-id-149'/>
     </function-type>
     <function-type size-in-bits='64' hash='7555dfb792c72201' id='type-id-99'>
       <parameter type-id='type-id-59'/>
-      <parameter type-id='type-id-119'/>
+      <parameter type-id='type-id-118'/>
       <return type-id='type-id-149'/>
     </function-type>
     <function-type size-in-bits='64' hash='e26c1472e1d4418e' id='type-id-213'>
@@ -879,7 +879,7 @@
       <return type-id='type-id-149'/>
     </function-type>
     <function-type size-in-bits='64' hash='e276dfb0165a7ba4' id='type-id-101'>
-      <parameter type-id='type-id-119'/>
+      <parameter type-id='type-id-118'/>
       <return type-id='type-id-149'/>
     </function-type>
     <function-type size-in-bits='64' hash='3282b83b22415ce9' id='type-id-224'>
@@ -962,34 +962,34 @@
     <function-type size-in-bits='64' hash='041874e4103ba9f4' id='type-id-243'>
       <parameter type-id='type-id-16'/>
       <parameter type-id='type-id-244'/>
-      <parameter type-id='type-id-119'/>
+      <parameter type-id='type-id-118'/>
       <parameter type-id='type-id-155'/>
       <return type-id='type-id-239'/>
     </function-type>
     <function-type size-in-bits='64' hash='8f3e189c1129196d' id='type-id-245'>
       <parameter type-id='type-id-16'/>
       <parameter type-id='type-id-246'/>
-      <parameter type-id='type-id-119'/>
+      <parameter type-id='type-id-118'/>
       <parameter type-id='type-id-155'/>
       <return type-id='type-id-239'/>
     </function-type>
     <function-type size-in-bits='64' hash='60d9bc646f897a38' id='type-id-247'>
       <parameter type-id='type-id-16'/>
-      <parameter type-id='type-id-111'/>
-      <parameter type-id='type-id-119'/>
+      <parameter type-id='type-id-117'/>
+      <parameter type-id='type-id-118'/>
       <return type-id='type-id-239'/>
     </function-type>
     <function-type size-in-bits='64' hash='2f5f351cf6356589' id='type-id-248'>
       <parameter type-id='type-id-16'/>
       <parameter type-id='type-id-249'/>
-      <parameter type-id='type-id-119'/>
+      <parameter type-id='type-id-118'/>
       <parameter type-id='type-id-155'/>
       <return type-id='type-id-239'/>
     </function-type>
     <function-type size-in-bits='64' hash='5aa0ba963aab652f' id='type-id-250'>
       <parameter type-id='type-id-16'/>
       <parameter type-id='type-id-162'/>
-      <parameter type-id='type-id-119'/>
+      <parameter type-id='type-id-118'/>
       <return type-id='type-id-239'/>
     </function-type>
     <function-type size-in-bits='64' hash='8ab13e3b6b70a0fe' id='type-id-251'>
@@ -1012,7 +1012,7 @@
     <function-type size-in-bits='64' hash='2886d8df6946ce2a' id='type-id-254'>
       <parameter type-id='type-id-16'/>
       <parameter type-id='type-id-255'/>
-      <parameter type-id='type-id-119'/>
+      <parameter type-id='type-id-118'/>
       <parameter type-id='type-id-155'/>
       <return type-id='type-id-239'/>
     </function-type>
@@ -1034,7 +1034,7 @@
     </function-type>
     <function-type size-in-bits='64' hash='91c26e51dbc89048' id='type-id-259'>
       <parameter type-id='type-id-16'/>
-      <parameter type-id='type-id-119'/>
+      <parameter type-id='type-id-118'/>
       <return type-id='type-id-239'/>
     </function-type>
     <function-type size-in-bits='64' hash='b51cc1e8cf623d61' id='type-id-260'>
@@ -1085,12 +1085,12 @@
     </function-type>
     <function-type size-in-bits='64' hash='2f293f052373b8a8' id='type-id-269'>
       <parameter type-id='type-id-34'/>
-      <parameter type-id='type-id-119'/>
+      <parameter type-id='type-id-118'/>
       <return type-id='type-id-239'/>
     </function-type>
     <function-type size-in-bits='64' hash='cfb05dc88701a6e7' id='type-id-270'>
       <parameter type-id='type-id-34'/>
-      <parameter type-id='type-id-119'/>
+      <parameter type-id='type-id-118'/>
       <parameter type-id='type-id-177'/>
       <return type-id='type-id-239'/>
     </function-type>
@@ -1104,7 +1104,7 @@
     </function-type>
     <function-type size-in-bits='64' hash='ca6e98eab0c694b8' id='type-id-273'>
       <parameter type-id='type-id-42'/>
-      <parameter type-id='type-id-119'/>
+      <parameter type-id='type-id-118'/>
       <return type-id='type-id-239'/>
     </function-type>
     <function-type size-in-bits='64' hash='63a3706689d13ece' id='type-id-274'>
@@ -1114,13 +1114,13 @@
     <function-type size-in-bits='64' hash='1d218d61315b746c' id='type-id-275'>
       <parameter type-id='type-id-49'/>
       <parameter type-id='type-id-16'/>
-      <parameter type-id='type-id-119'/>
+      <parameter type-id='type-id-118'/>
       <return type-id='type-id-239'/>
     </function-type>
     <function-type size-in-bits='64' hash='0345ee72b93ada90' id='type-id-276'>
       <parameter type-id='type-id-49'/>
       <parameter type-id='type-id-277'/>
-      <parameter type-id='type-id-119'/>
+      <parameter type-id='type-id-118'/>
       <parameter type-id='type-id-155'/>
       <return type-id='type-id-239'/>
     </function-type>
@@ -1131,23 +1131,23 @@
     </function-type>
     <function-type size-in-bits='64' hash='2c29f44025eb1da7' id='type-id-279'>
       <parameter type-id='type-id-53'/>
-      <parameter type-id='type-id-119'/>
+      <parameter type-id='type-id-118'/>
       <return type-id='type-id-239'/>
     </function-type>
     <function-type size-in-bits='64' hash='f5c1182091c7b352' id='type-id-280'>
       <parameter type-id='type-id-53'/>
-      <parameter type-id='type-id-119'/>
+      <parameter type-id='type-id-118'/>
       <parameter type-id='type-id-155'/>
       <return type-id='type-id-239'/>
     </function-type>
     <function-type size-in-bits='64' hash='57d010e792af9bb6' id='type-id-281'>
       <parameter type-id='type-id-59'/>
-      <parameter type-id='type-id-119'/>
+      <parameter type-id='type-id-118'/>
       <return type-id='type-id-239'/>
     </function-type>
     <function-type size-in-bits='64' hash='4d8498843fd7140f' id='type-id-282'>
       <parameter type-id='type-id-59'/>
-      <parameter type-id='type-id-119'/>
+      <parameter type-id='type-id-118'/>
       <parameter type-id='type-id-155'/>
       <return type-id='type-id-239'/>
     </function-type>
@@ -1178,45 +1178,45 @@
       <return type-id='type-id-239'/>
     </function-type>
     <function-type size-in-bits='64' hash='71d135a6f08f3c58' id='type-id-289'>
-      <parameter type-id='type-id-119'/>
+      <parameter type-id='type-id-118'/>
       <return type-id='type-id-239'/>
     </function-type>
     <function-type size-in-bits='64' hash='b0c545429f0b4992' id='type-id-290'>
       <parameter type-id='type-id-16'/>
       <parameter type-id='type-id-103'/>
-      <return type-id='type-id-119'/>
+      <return type-id='type-id-118'/>
     </function-type>
     <function-type size-in-bits='64' hash='74a5393d58a5ba5f' id='type-id-291'>
       <parameter type-id='type-id-32'/>
       <parameter type-id='type-id-103'/>
-      <return type-id='type-id-119'/>
+      <return type-id='type-id-118'/>
     </function-type>
     <function-type size-in-bits='64' hash='6c8c132ad997846b' id='type-id-292'>
       <parameter type-id='type-id-42'/>
       <parameter type-id='type-id-103'/>
-      <return type-id='type-id-119'/>
+      <return type-id='type-id-118'/>
     </function-type>
     <function-type size-in-bits='64' hash='dcbd8f608a2a3726' id='type-id-293'>
       <parameter type-id='type-id-49'/>
       <parameter type-id='type-id-122'/>
-      <return type-id='type-id-119'/>
+      <return type-id='type-id-118'/>
     </function-type>
     <function-type size-in-bits='64' hash='d0ad3899d3a23147' id='type-id-294'>
       <parameter type-id='type-id-53'/>
-      <return type-id='type-id-119'/>
+      <return type-id='type-id-118'/>
     </function-type>
     <function-type size-in-bits='64' hash='47e43f0e3ad37a23' id='type-id-295'>
       <parameter type-id='type-id-59'/>
-      <return type-id='type-id-119'/>
+      <return type-id='type-id-118'/>
     </function-type>
     <function-type size-in-bits='64' hash='b4fe2ecbdf2ffc7d' id='type-id-296'>
       <parameter type-id='type-id-297'/>
-      <return type-id='type-id-119'/>
+      <return type-id='type-id-118'/>
     </function-type>
     <function-type size-in-bits='64' hash='6c6eafee315c4d17' id='type-id-298'>
-      <parameter type-id='type-id-119'/>
+      <parameter type-id='type-id-118'/>
       <parameter type-id='type-id-297'/>
-      <return type-id='type-id-119'/>
+      <return type-id='type-id-118'/>
     </function-type>
     <type-decl name='int' size-in-bits='32' hash='09d17c08f594edc7' id='type-id-122'/>
     <pointer-type-def type-id='type-id-122' size-in-bits='64' hash='d546a866961a5bb9' id='type-id-177'/>
@@ -1310,7 +1310,7 @@
         <var-decl name='wakeup_main_function' type-id='type-id-255' visibility='default'/>
       </data-member>
       <data-member access='public' layout-offset-in-bits='1472'>
-        <var-decl name='wakeup_main_data' type-id='type-id-119' visibility='default'/>
+        <var-decl name='wakeup_main_data' type-id='type-id-118' visibility='default'/>
       </data-member>
       <data-member access='public' layout-offset-in-bits='1536'>
         <var-decl name='free_wakeup_main_data' type-id='type-id-155' visibility='default'/>
@@ -1319,13 +1319,13 @@
         <var-decl name='dispatch_status_function' type-id='type-id-249' visibility='default'/>
       </data-member>
       <data-member access='public' layout-offset-in-bits='1664'>
-        <var-decl name='dispatch_status_data' type-id='type-id-119' visibility='default'/>
+        <var-decl name='dispatch_status_data' type-id='type-id-118' visibility='default'/>
       </data-member>
       <data-member access='public' layout-offset-in-bits='1728'>
         <var-decl name='free_dispatch_status_data' type-id='type-id-155' visibility='default'/>
       </data-member>
       <data-member access='public' layout-offset-in-bits='1792'>
-        <var-decl name='last_dispatch_status' type-id='type-id-111' visibility='default'/>
+        <var-decl name='last_dispatch_status' type-id='type-id-117' visibility='default'/>
       </data-member>
       <data-member access='public' layout-offset-in-bits='1856'>
         <var-decl name='objects' type-id='type-id-40' visibility='default'/>
@@ -1364,7 +1364,7 @@
     <class-decl name='DBusCounter' is-struct='yes' visibility='default' is-declaration-only='yes' hash='9014cc932f8fd5ba' id='type-id-308'/>
     <class-decl name='DBusDataSlot' is-struct='yes' visibility='default' size-in-bits='128' hash='a77441c03f822ca4' id='type-id-309'>
       <data-member access='public' layout-offset-in-bits='0'>
-        <var-decl name='data' type-id='type-id-119' visibility='default'/>
+        <var-decl name='data' type-id='type-id-118' visibility='default'/>
       </data-member>
       <data-member access='public' layout-offset-in-bits='64'>
         <var-decl name='free_data_func' type-id='type-id-155' visibility='default'/>
@@ -1401,7 +1401,7 @@
         <var-decl name='dummy5' type-id='type-id-212' visibility='default'/>
       </data-member>
       <data-member access='public' layout-offset-in-bits='192'>
-        <var-decl name='padding1' type-id='type-id-119' visibility='default'/>
+        <var-decl name='padding1' type-id='type-id-118' visibility='default'/>
       </data-member>
     </class-decl>
     <class-decl name='DBusHashTable' is-struct='yes' visibility='default' is-declaration-only='yes' hash='54b8aeeae2ed3f4c' id='type-id-312'/>
@@ -1432,7 +1432,7 @@
         <var-decl name='next' type-id='type-id-30' visibility='default'/>
       </data-member>
       <data-member access='public' layout-offset-in-bits='128'>
-        <var-decl name='data' type-id='type-id-119' visibility='default'/>
+        <var-decl name='data' type-id='type-id-118' visibility='default'/>
       </data-member>
     </class-decl>
     <class-decl name='DBusMessage' is-struct='yes' visibility='default' size-in-bits='1472' hash='1285fec3fef4117b' id='type-id-316'>
@@ -1481,10 +1481,10 @@
     </class-decl>
     <class-decl name='DBusMessageIter' is-struct='yes' visibility='default' size-in-bits='576' hash='1b1fa4c51bc586dc' id='type-id-318'>
       <data-member access='public' layout-offset-in-bits='0'>
-        <var-decl name='dummy1' type-id='type-id-119' visibility='default'/>
+        <var-decl name='dummy1' type-id='type-id-118' visibility='default'/>
       </data-member>
       <data-member access='public' layout-offset-in-bits='64'>
-        <var-decl name='dummy2' type-id='type-id-119' visibility='default'/>
+        <var-decl name='dummy2' type-id='type-id-118' visibility='default'/>
       </data-member>
       <data-member access='public' layout-offset-in-bits='128'>
         <var-decl name='dummy3' type-id='type-id-105' visibility='default'/>
@@ -1520,7 +1520,7 @@
         <var-decl name='pad2' type-id='type-id-122' visibility='default'/>
       </data-member>
       <data-member access='public' layout-offset-in-bits='512'>
-        <var-decl name='pad3' type-id='type-id-119' visibility='default'/>
+        <var-decl name='pad3' type-id='type-id-118' visibility='default'/>
       </data-member>
     </class-decl>
     <class-decl name='DBusMutex' is-struct='yes' visibility='default' is-declaration-only='yes' hash='dae6d98312d0bfb3' id='type-id-319'/>
@@ -1627,7 +1627,7 @@
         <var-decl name='new_connection_function' type-id='type-id-277' visibility='default'/>
       </data-member>
       <data-member access='public' layout-offset-in-bits='960'>
-        <var-decl name='new_connection_data' type-id='type-id-119' visibility='default'/>
+        <var-decl name='new_connection_data' type-id='type-id-118' visibility='default'/>
       </data-member>
       <data-member access='public' layout-offset-in-bits='1024'>
         <var-decl name='new_connection_free_data_function' type-id='type-id-155' visibility='default'/>
@@ -1652,7 +1652,7 @@
     </class-decl>
     <class-decl name='DBusString' is-struct='yes' visibility='default' size-in-bits='192' hash='f6b0c65a639585c4' id='type-id-332'>
       <data-member access='public' layout-offset-in-bits='0'>
-        <var-decl name='dummy1' type-id='type-id-119' visibility='default'/>
+        <var-decl name='dummy1' type-id='type-id-118' visibility='default'/>
       </data-member>
       <data-member access='public' layout-offset-in-bits='64'>
         <var-decl name='dummy2' type-id='type-id-122' visibility='default'/>
@@ -1684,13 +1684,13 @@
         <var-decl name='handler' type-id='type-id-334' visibility='default'/>
       </data-member>
       <data-member access='public' layout-offset-in-bits='128'>
-        <var-decl name='handler_data' type-id='type-id-119' visibility='default'/>
+        <var-decl name='handler_data' type-id='type-id-118' visibility='default'/>
       </data-member>
       <data-member access='public' layout-offset-in-bits='192'>
         <var-decl name='free_handler_data_function' type-id='type-id-155' visibility='default'/>
       </data-member>
       <data-member access='public' layout-offset-in-bits='256'>
-        <var-decl name='data' type-id='type-id-119' visibility='default'/>
+        <var-decl name='data' type-id='type-id-118' visibility='default'/>
       </data-member>
       <data-member access='public' layout-offset-in-bits='320'>
         <var-decl name='free_data_function' type-id='type-id-155' visibility='default'/>
@@ -1715,13 +1715,13 @@
         <var-decl name='handler' type-id='type-id-338' visibility='default'/>
       </data-member>
       <data-member access='public' layout-offset-in-bits='192'>
-        <var-decl name='handler_data' type-id='type-id-119' visibility='default'/>
+        <var-decl name='handler_data' type-id='type-id-118' visibility='default'/>
       </data-member>
       <data-member access='public' layout-offset-in-bits='256'>
         <var-decl name='free_handler_data_function' type-id='type-id-155' visibility='default'/>
       </data-member>
       <data-member access='public' layout-offset-in-bits='320'>
-        <var-decl name='data' type-id='type-id-119' visibility='default'/>
+        <var-decl name='data' type-id='type-id-118' visibility='default'/>
       </data-member>
       <data-member access='public' layout-offset-in-bits='384'>
         <var-decl name='free_data_function' type-id='type-id-155' visibility='default'/>
@@ -1742,13 +1742,13 @@
         <var-decl name='fp_offset' type-id='type-id-212' visibility='default'/>
       </data-member>
       <data-member access='public' layout-offset-in-bits='64'>
-        <var-decl name='overflow_arg_area' type-id='type-id-119' visibility='default'/>
+        <var-decl name='overflow_arg_area' type-id='type-id-118' visibility='default'/>
       </data-member>
       <data-member access='public' layout-offset-in-bits='128'>
-        <var-decl name='reg_save_area' type-id='type-id-119' visibility='default'/>
+        <var-decl name='reg_save_area' type-id='type-id-118' visibility='default'/>
       </data-member>
     </class-decl>
-    <class-decl name='__anonymous_struct__' is-struct='yes' naming-typedef-id='type-id-81' visibility='default' size-in-bits='1216' is-anonymous='yes' hash='fcf3c34e708a8cad' id='type-id-340'>
+    <class-decl name='__anonymous_struct__' is-struct='yes' visibility='default' size-in-bits='1216' is-anonymous='yes' hash='fcf3c34e708a8cad' id='type-id-340'>
       <data-member access='public' layout-offset-in-bits='0'>
         <var-decl name='mask' type-id='type-id-212' visibility='default'/>
       </data-member>
@@ -1807,12 +1807,12 @@
         <var-decl name='padding4' type-id='type-id-355' visibility='default'/>
       </data-member>
     </class-decl>
-    <class-decl name='__anonymous_struct__' is-struct='yes' naming-typedef-id='type-id-50' visibility='default' size-in-bits='256' is-anonymous='yes' hash='14d756ac0c7e4032' id='type-id-356'>
+    <class-decl name='__anonymous_struct__' is-struct='yes' visibility='default' size-in-bits='256' is-anonymous='yes' hash='14d756ac0c7e4032' id='type-id-356'>
       <data-member access='public' layout-offset-in-bits='0'>
-        <var-decl name='dummy1' type-id='type-id-119' visibility='default'/>
+        <var-decl name='dummy1' type-id='type-id-118' visibility='default'/>
       </data-member>
       <data-member access='public' layout-offset-in-bits='64'>
-        <var-decl name='dummy2' type-id='type-id-119' visibility='default'/>
+        <var-decl name='dummy2' type-id='type-id-118' visibility='default'/>
       </data-member>
       <data-member access='public' layout-offset-in-bits='128'>
         <var-decl name='dummy8' type-id='type-id-105' visibility='default'/>
@@ -1830,7 +1830,7 @@
     <typedef-decl name='DBusAllowUnixUserFunction' type-id='type-id-92' size-in-bits='64' hash='6d5502cc5f4b54c3' id='type-id-244'/>
     <typedef-decl name='DBusAllowWindowsUserFunction' type-id='type-id-90' size-in-bits='64' hash='21c5f0f675d20eb7' id='type-id-246'/>
     <typedef-decl name='DBusAtomic' type-id='type-id-301' size-in-bits='32' hash='764434194cce5b73' id='type-id-306'/>
-    <typedef-decl name='DBusBusType' type-id='type-id-109' size-in-bits='32' alignment-in-bits='32' hash='23f8ae0f12623f73' id='type-id-108'/>
+    <typedef-decl name='DBusBusType' type-id='type-id-108' size-in-bits='32' alignment-in-bits='32' hash='23f8ae0f12623f73' id='type-id-113'/>
     <typedef-decl name='DBusCMutex' type-id='type-id-303' hash='98befd8d169e65fb' id='type-id-9'/>
     <typedef-decl name='DBusCondVar' type-id='type-id-304' hash='360d48a45b4f6843' id='type-id-11'/>
     <typedef-decl name='DBusCondVarFreeFunction' type-id='type-id-357' size-in-bits='64' hash='8a1e1e576fbb9aad' id='type-id-346'/>
@@ -1843,13 +1843,13 @@
     <typedef-decl name='DBusCounter' type-id='type-id-308' hash='9014cc932f8fd5ba' id='type-id-17'/>
     <typedef-decl name='DBusDataSlot' type-id='type-id-309' size-in-bits='128' hash='a77441c03f822ca4' id='type-id-19'/>
     <typedef-decl name='DBusDataSlotList' type-id='type-id-310' size-in-bits='128' hash='9d6e23de7bdc66bd' id='type-id-307'/>
-    <typedef-decl name='DBusDispatchStatus' type-id='type-id-112' size-in-bits='32' alignment-in-bits='32' hash='6bedaf3bb45214a7' id='type-id-111'/>
+    <typedef-decl name='DBusDispatchStatus' type-id='type-id-110' size-in-bits='32' alignment-in-bits='32' hash='6bedaf3bb45214a7' id='type-id-117'/>
     <typedef-decl name='DBusDispatchStatusFunction' type-id='type-id-359' size-in-bits='64' hash='6544ccf36476c264' id='type-id-249'/>
     <typedef-decl name='DBusError' type-id='type-id-311' size-in-bits='256' hash='a12a8a8ec97994ba' id='type-id-21'/>
     <typedef-decl name='DBusFreeFunction' type-id='type-id-323' size-in-bits='64' hash='3c6555b15ff3c2e2' id='type-id-155'/>
     <typedef-decl name='DBusGUID' type-id='type-id-360' size-in-bits='128' hash='3172e7dff28b3336' id='type-id-329'/>
     <typedef-decl name='DBusHandleMessageFunction' type-id='type-id-24' size-in-bits='64' hash='c093edde54c0cf79' id='type-id-162'/>
-    <typedef-decl name='DBusHandlerResult' type-id='type-id-114' size-in-bits='32' alignment-in-bits='32' hash='2022d54d4294c611' id='type-id-113'/>
+    <typedef-decl name='DBusHandlerResult' type-id='type-id-111' size-in-bits='32' alignment-in-bits='32' hash='2022d54d4294c611' id='type-id-119'/>
     <typedef-decl name='DBusHashTable' type-id='type-id-312' hash='54b8aeeae2ed3f4c' id='type-id-25'/>
     <typedef-decl name='DBusHeader' type-id='type-id-313' size-in-bits='576' hash='835688ee44de248e' id='type-id-317'/>
     <typedef-decl name='DBusHeaderField' type-id='type-id-314' size-in-bits='32' hash='c468661eb23b97a6' id='type-id-27'/>
@@ -1903,7 +1903,7 @@
         <var-decl name='as_bytes' type-id='type-id-68' visibility='default'/>
       </data-member>
     </union-decl>
-    <type-decl name='unnamed-enum-underlying-type-32' size-in-bits='32' alignment-in-bits='32' is-anonymous='yes' hash='c6ed5e1365fd2b09' id='type-id-110'/>
+    <type-decl name='unnamed-enum-underlying-type-32' size-in-bits='32' alignment-in-bits='32' is-anonymous='yes' hash='c6ed5e1365fd2b09' id='type-id-109'/>
     <type-decl name='unsigned int' size-in-bits='32' hash='e66b43f97c38e87a' id='type-id-212'/>
     <type-decl name='unsigned long int' size-in-bits='64' hash='da551c1631705dfe' id='type-id-1'/>
     <pointer-type-def type-id='type-id-1' size-in-bits='64' hash='bf1f3a522fae2fbf' id='type-id-179'/>
@@ -1921,8 +1921,8 @@
     <pointer-type-def type-id='type-id-281' size-in-bits='64' hash='fd2b9f008562db83' id='type-id-366'/>
     <pointer-type-def type-id='type-id-288' size-in-bits='64' hash='9e2dde4e1827ba48' id='type-id-355'/>
     <pointer-type-def type-id='type-id-289' size-in-bits='64' hash='3c6555b15ff3c2e2' id='type-id-323'/>
-    <pointer-type-def type-id='type-id-239' hash='19e246ce75ee6a42' id='type-id-119'/>
-    <pointer-type-def type-id='type-id-119' size-in-bits='64' hash='19174d54b48463ce' id='type-id-173'/>
+    <pointer-type-def type-id='type-id-239' hash='19e246ce75ee6a42' id='type-id-118'/>
+    <pointer-type-def type-id='type-id-118' size-in-bits='64' hash='19174d54b48463ce' id='type-id-173'/>
     <qualified-type-def type-id='type-id-103' volatile='yes' hash='baecb72156e8f1f9' id='type-id-302'/>
   </abi-types>
   <abi-instr address-size='64' path='dbus-address.c' comp-dir-path='/tmp/legendre/spack-stage/spack-stage-hI99PR/dbus-1.9.0/dbus' language='LANG_C89'>
@@ -1934,8 +1934,8 @@
       <function-decl name='dbus_address_entries_free' type-id='type-id-238' mangled-name='dbus_address_entries_free' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='dbus_address_entries_free'/>
   </abi-instr>
   <abi-instr address-size='64' path='dbus-bus.c' comp-dir-path='/tmp/legendre/spack-stage/spack-stage-hI99PR/dbus-1.9.0/dbus' language='LANG_C89'>
-      <function-decl name='dbus_bus_get' type-id='type-id-115' mangled-name='dbus_bus_get' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='dbus_bus_get'/>
-      <function-decl name='dbus_bus_get_private' type-id='type-id-115' mangled-name='dbus_bus_get_private' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='dbus_bus_get_private'/>
+      <function-decl name='dbus_bus_get' type-id='type-id-112' mangled-name='dbus_bus_get' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='dbus_bus_get'/>
+      <function-decl name='dbus_bus_get_private' type-id='type-id-112' mangled-name='dbus_bus_get_private' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='dbus_bus_get_private'/>
       <function-decl name='dbus_bus_get_id' type-id='type-id-137' mangled-name='dbus_bus_get_id' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='dbus_bus_get_id'/>
       <function-decl name='dbus_bus_get_unique_name' type-id='type-id-146' mangled-name='dbus_bus_get_unique_name' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='dbus_bus_get_unique_name'/>
       <function-decl name='dbus_bus_name_has_owner' type-id='type-id-167' mangled-name='dbus_bus_name_has_owner' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='dbus_bus_name_has_owner'/>
@@ -1949,11 +1949,11 @@
       <function-decl name='dbus_bus_remove_match' type-id='type-id-256' mangled-name='dbus_bus_remove_match' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='dbus_bus_remove_match'/>
   </abi-instr>
   <abi-instr address-size='64' path='dbus-connection.c' comp-dir-path='/tmp/legendre/spack-stage/spack-stage-hI99PR/dbus-1.9.0/dbus' language='LANG_C89'>
-      <function-decl name='dbus_connection_open' type-id='type-id-117' mangled-name='dbus_connection_open' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='dbus_connection_open'/>
-      <function-decl name='dbus_connection_open_private' type-id='type-id-117' mangled-name='dbus_connection_open_private' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='dbus_connection_open_private'/>
-      <function-decl name='dbus_connection_ref' type-id='type-id-116' mangled-name='dbus_connection_ref' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='dbus_connection_ref'/>
-      <function-decl name='dbus_connection_dispatch' type-id='type-id-118' mangled-name='dbus_connection_dispatch' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='dbus_connection_dispatch'/>
-      <function-decl name='dbus_connection_get_dispatch_status' type-id='type-id-118' mangled-name='dbus_connection_get_dispatch_status' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='dbus_connection_get_dispatch_status'/>
+      <function-decl name='dbus_connection_open' type-id='type-id-115' mangled-name='dbus_connection_open' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='dbus_connection_open'/>
+      <function-decl name='dbus_connection_open_private' type-id='type-id-115' mangled-name='dbus_connection_open_private' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='dbus_connection_open_private'/>
+      <function-decl name='dbus_connection_ref' type-id='type-id-114' mangled-name='dbus_connection_ref' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='dbus_connection_ref'/>
+      <function-decl name='dbus_connection_dispatch' type-id='type-id-116' mangled-name='dbus_connection_dispatch' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='dbus_connection_dispatch'/>
+      <function-decl name='dbus_connection_get_dispatch_status' type-id='type-id-116' mangled-name='dbus_connection_get_dispatch_status' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='dbus_connection_get_dispatch_status'/>
       <function-decl name='dbus_connection_borrow_message' type-id='type-id-120' mangled-name='dbus_connection_borrow_message' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='dbus_connection_borrow_message'/>
       <function-decl name='dbus_connection_pop_message' type-id='type-id-120' mangled-name='dbus_connection_pop_message' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='dbus_connection_pop_message'/>
       <function-decl name='dbus_connection_send_with_reply_and_block' type-id='type-id-121' mangled-name='dbus_connection_send_with_reply_and_block' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='dbus_connection_send_with_reply_and_block'/>

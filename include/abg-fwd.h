@@ -1607,12 +1607,6 @@ demangle_cplus_mangled_name(const string&);
 type_base_sptr
 type_or_void(const type_base_sptr, const environment&);
 
-type_base_sptr
-canonicalize(type_base_sptr type, bool do_log= false, bool show_stats= false);
-
-type_base_sptr
-hash_and_canonicalize_type(type_base_sptr t);
-
 type_base*
 type_has_non_canonicalized_subtype(type_base_sptr t);
 
@@ -1708,6 +1702,14 @@ copy_missing_member_functions(class_or_union_sptr& dest_class,
 void
 copy_missing_member_variables(class_or_union_sptr& dest_class,
 			      const class_or_union_sptr& src_class);
+
+type_base_sptr
+maybe_move_missing_member_type(class_or_union_sptr dest_class_or_union,
+			       type_base_sptr src_member_type);
+
+void
+move_missing_member_types(class_or_union_sptr dest_class_or_union,
+			  class_or_union_sptr src_class_or_union);
 
 typedef_decl_sptr
 copy_missing_naming_typedef(decl_base_sptr type,

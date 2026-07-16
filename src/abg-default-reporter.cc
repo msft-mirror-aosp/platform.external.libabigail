@@ -161,7 +161,7 @@ default_reporter::report(const enum_diff& d, ostream& out,
 
   if (numdels)
     {
-      report_mem_header(out, numdels, 0, del_kind, "enumerator", indent);
+      report_mem_header(out, numdels, 0, del_kind, "enumerator", indent, ctxt);
       enum_type_decl::enumerators sorted_deleted_enumerators;
       sort_enumerators(d.deleted_enumerators(), sorted_deleted_enumerators);
       for (enum_type_decl::enumerators::const_iterator i =
@@ -182,7 +182,7 @@ default_reporter::report(const enum_diff& d, ostream& out,
     }
   if (numins)
     {
-      report_mem_header(out, numins, 0, ins_kind, "enumerator", indent);
+      report_mem_header(out, numins, 0, ins_kind, "enumerator", indent, ctxt);
       enum_type_decl::enumerators sorted_inserted_enumerators;
       sort_enumerators(d.inserted_enumerators(), sorted_inserted_enumerators);
       for (enum_type_decl::enumerators::const_iterator i =
@@ -203,7 +203,8 @@ default_reporter::report(const enum_diff& d, ostream& out,
     }
   if (numchanges)
     {
-      report_mem_header(out, numchanges, 0, change_kind, "enumerator", indent);
+      report_mem_header(out, numchanges, 0, change_kind,
+			"enumerator", indent, ctxt);
       changed_enumerators_type sorted_changed_enumerators;
       sort_changed_enumerators(d.changed_enumerators(),
 			       sorted_changed_enumerators);
@@ -1114,7 +1115,7 @@ default_reporter::report(const class_or_union_diff& d,
 	d.get_priv()->count_filtered_deleted_mem_fns(ctxt);
       if (numdels)
 	report_mem_header(out, numdels, num_filtered, del_kind,
-			  "member function", indent);
+			  "member function", indent, ctxt);
       for (class_or_union::member_functions::const_iterator i =
 	     d.get_priv()->sorted_deleted_member_functions_.begin();
 	   i != d.get_priv()->sorted_deleted_member_functions_.end();
@@ -1135,7 +1136,7 @@ default_reporter::report(const class_or_union_diff& d,
       num_filtered = d.get_priv()->count_filtered_inserted_mem_fns(ctxt);
       if (numins)
 	report_mem_header(out, numins, num_filtered, ins_kind,
-			  "member function", indent);
+			  "member function", indent, ctxt);
       for (class_or_union::member_functions::const_iterator i =
 	     d.get_priv()->sorted_inserted_member_functions_.begin();
 	   i != d.get_priv()->sorted_inserted_member_functions_.end();
@@ -1156,7 +1157,7 @@ default_reporter::report(const class_or_union_diff& d,
       num_filtered = d.get_priv()->count_filtered_changed_mem_fns(ctxt);
       if (numchanges)
 	report_mem_header(out, numchanges, num_filtered, change_kind,
-			  "member function", indent);
+			  "member function", indent, ctxt);
       for (function_decl_diff_sptrs_type::const_iterator i =
 	     d.get_priv()->sorted_changed_member_functions_.begin();
 	   i != d.get_priv()->sorted_changed_member_functions_.end();
@@ -1196,7 +1197,7 @@ default_reporter::report(const class_or_union_diff& d,
       if (numdels)
 	{
 	  report_mem_header(out, numdels, 0, del_kind,
-			    "data member", indent);
+			    "data member", indent, ctxt);
 	  vector<decl_base_sptr> sorted_dms;
 	  sort_data_members
 	    (d.class_or_union_diff::get_priv()->deleted_data_members_,
@@ -1220,7 +1221,7 @@ default_reporter::report(const class_or_union_diff& d,
       if (numins)
 	{
 	  report_mem_header(out, numins, 0, ins_kind,
-			    "data member", indent);
+			    "data member", indent, ctxt);
 	  vector<decl_base_sptr> sorted_dms;
 	  sort_data_members
 	    (d.class_or_union_diff::get_priv()->inserted_data_members_,
@@ -1248,7 +1249,7 @@ default_reporter::report(const class_or_union_diff& d,
       if (num_changes)
 	{
 	  report_mem_header(out, num_changes, num_changes_filtered,
-			    change_kind, "data member", indent);
+			    change_kind, "data member", indent, ctxt);
 
 	  for (var_diff_sptrs_type::const_iterator it =
 		 d.sorted_changed_data_members().begin();
@@ -1282,7 +1283,7 @@ default_reporter::report(const class_or_union_diff& d,
       if (numdels)
 	{
 	  report_mem_header(out, numdels, 0, del_kind,
-			    "member type", indent);
+			    "member type", indent, ctxt);
 
 	  for (string_decl_base_sptr_map::const_iterator i =
 		 d.class_or_union_diff::get_priv()->deleted_member_types_.begin();
@@ -1300,7 +1301,7 @@ default_reporter::report(const class_or_union_diff& d,
       if (numchanges)
 	{
 	  report_mem_header(out, numchanges, 0, change_kind,
-			    "member type", indent);
+			    "member type", indent, ctxt);
 
 	  for (diff_sptrs_type::const_iterator it =
 		 d.class_or_union_diff::get_priv()->sorted_changed_member_types_.begin();
@@ -1330,7 +1331,7 @@ default_reporter::report(const class_or_union_diff& d,
       if (numins)
 	{
 	  report_mem_header(out, numins, 0, ins_kind,
-			    "member type", indent);
+			    "member type", indent, ctxt);
 
 	  for (vector<insertion>::const_iterator i = e.insertions().begin();
 	       i != e.insertions().end();
@@ -1364,7 +1365,8 @@ default_reporter::report(const class_or_union_diff& d,
       int numdels = e.num_deletions();
       if (numdels)
 	report_mem_header(out, numdels, 0, del_kind,
-			  "member function template", indent);
+			  "member function template",
+			  indent, ctxt);
       for (vector<deletion>::const_iterator i = e.deletions().begin();
 	   i != e.deletions().end();
 	   ++i)
@@ -1380,7 +1382,8 @@ default_reporter::report(const class_or_union_diff& d,
       int numins = e.num_insertions();
       if (numins)
 	report_mem_header(out, numins, 0, ins_kind,
-			  "member function template", indent);
+			  "member function template",
+			  indent, ctxt);
       for (vector<insertion>::const_iterator i = e.insertions().begin();
 	   i != e.insertions().end();
 	   ++i)
@@ -1407,7 +1410,8 @@ default_reporter::report(const class_or_union_diff& d,
       int numdels = e.num_deletions();
       if (numdels)
 	report_mem_header(out, numdels, 0, del_kind,
-			  "member class template", indent);
+			  "member class template",
+			  indent, ctxt);
       for (vector<deletion>::const_iterator i = e.deletions().begin();
 	   i != e.deletions().end();
 	   ++i)
@@ -1423,7 +1427,8 @@ default_reporter::report(const class_or_union_diff& d,
       int numins = e.num_insertions();
       if (numins)
 	report_mem_header(out, numins, 0, ins_kind,
-			  "member class template", indent);
+			  "member class template",
+			  indent, ctxt);
       for (vector<insertion>::const_iterator i = e.insertions().begin();
 	   i != e.insertions().end();
 	   ++i)
@@ -1487,7 +1492,7 @@ default_reporter::report(const class_diff& d, ostream& out,
       if (numdels)
 	{
 	  report_mem_header(out, numdels, 0, del_kind,
-			    "base class", indent);
+			    "base class", indent, ctxt);
 
 	  for (class_decl::base_specs::const_iterator i
 		 = d.get_priv()->sorted_deleted_bases_.begin();
@@ -1513,7 +1518,7 @@ default_reporter::report(const class_diff& d, ostream& out,
       if (numchanges)
 	{
 	  report_mem_header(out, numchanges, num_filtered, change_kind,
-			    "base class", indent);
+			    "base class", indent, ctxt);
 	  for (base_diff_sptrs_type::const_iterator it =
 		 d.get_priv()->sorted_changed_bases_.begin();
 	       it != d.get_priv()->sorted_changed_bases_.end();
@@ -1537,7 +1542,7 @@ default_reporter::report(const class_diff& d, ostream& out,
       if (numins)
 	{
 	  report_mem_header(out, numins, 0, ins_kind,
-			    "base class", indent);
+			    "base class", indent, ctxt);
 
 	  for (class_decl::base_specs::const_iterator i =
 		 d.get_priv()->sorted_inserted_bases_.begin();

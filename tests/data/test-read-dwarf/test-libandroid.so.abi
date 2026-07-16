@@ -903,7 +903,7 @@
       <enumerator name='JNIGlobalRefType' value='2'/>
       <enumerator name='JNIWeakGlobalRefType' value='3'/>
     </enum-decl>
-    <enum-decl name='__anonymous_enum__' naming-typedef-id='d098ee37' size-in-bits='32' alignment-in-bits='32' is-anonymous='yes' hash='a725f0cd8b3e7f85' id='08f5ca17'>
+    <enum-decl name='__anonymous_enum__' size-in-bits='32' alignment-in-bits='32' is-anonymous='yes' hash='a725f0cd8b3e7f85' id='08f5ca17'>
       <underlying-type type-id='9cac1fee'/>
       <enumerator name='XML_ELEMENT_NODE' value='1'/>
       <enumerator name='XML_ATTRIBUTE_NODE' value='2'/>
@@ -5359,7 +5359,7 @@
         <var-decl name='z_uncalib' type-id='a6c45d85' visibility='default'/>
       </data-member>
     </class-decl>
-    <class-decl name='__anonymous_struct__' is-struct='yes' naming-typedef-id='7a6844eb' visibility='default' size-in-bits='32' is-anonymous='yes' hash='193c4a5ce429784b' id='e7f43f7f'>
+    <class-decl name='__anonymous_struct__' is-struct='yes' visibility='default' size-in-bits='32' is-anonymous='yes' hash='193c4a5ce429784b' id='e7f43f7f'>
       <data-member access='public' layout-offset-in-bits='0'>
         <var-decl name='__private' type-id='e4652d73' visibility='default'/>
       </data-member>
@@ -5443,7 +5443,7 @@
         <var-decl name='smallestScreenWidthDp' type-id='149c6638' visibility='default'/>
       </data-member>
     </class-decl>
-    <class-decl name='__anonymous_struct__' is-struct='yes' naming-typedef-id='b7b5d51d' visibility='default' is-anonymous='yes' is-declaration-only='yes' hash='b0aa6cd322bfed5b' id='e7f43f80'/>
+    <class-decl name='__anonymous_struct__' is-struct='yes' visibility='default' is-anonymous='yes' is-declaration-only='yes' hash='b0aa6cd322bfed5b' id='e7f43f80'/>
     <typedef-decl name='AAdditionalInfoEvent' type-id='fa893a23' size-in-bits='512' hash='f21beb7b771ee051' id='1f241bc2'/>
     <typedef-decl name='AAsset' type-id='1fc4034c' size-in-bits='32' hash='cb9dbf59cc50d5fa' id='d27ea7e1'/>
     <typedef-decl name='AAssetDir' type-id='ea9788c3' size-in-bits='96' hash='3bc2479bb82ecc33' id='e6c9fab0'/>

@@ -2457,8 +2457,6 @@ public:
 	}
     }
 
-    env().canonicalization_is_done(false);
-
     {
       tools_utils::timer t;
       if (do_log())
@@ -2650,8 +2648,6 @@ public:
 	       << "\n";
 	}
     }
-
-    env().canonicalization_is_done(true);
 
     {
       tools_utils::timer t;
@@ -3887,12 +3883,21 @@ public:
       return !!l == !!r;
 
     const environment& e = l->get_environment();
-    ABG_ASSERT(!e.canonicalization_is_done());
+    bool canonicalization_is_done = false;
+
+    auto l_abi = l->get_corpus();
+    auto r_abi = r->get_corpus();
+
+    if ((l_abi && l_abi->priv_->types_are_canonicalized())
+	|| (r_abi && r_abi->priv_->types_are_canonicalized()))
+      canonicalization_is_done = true;
+
+    ABG_ASSERT(!canonicalization_is_done);
 
     if (is_decl(l) && is_decl(r)
 	&& l->kind() == r->kind()
-	&& ((l->get_corpus() && r->get_corpus()
-	     && (l->get_corpus() == r->get_corpus()))
+	&& ((l_abi && r_abi
+	     && (l_abi == r_abi))
 	    ||(l->get_translation_unit()
 	       && r->get_translation_unit()
 	       && l->get_translation_unit() == r->get_translation_unit())))
@@ -4448,7 +4453,7 @@ public:
 	  ABG_ASSERT(get_member_function_is_virtual(i->second));
 	  i->second->set_symbol(sym);
 
-	  if (do_log())
+	  if (do_log() && show_stats())
 	    cerr << "fixed up '"
 		 << i->second->get_pretty_representation()
 		 << "' with symbol '"
@@ -4529,7 +4534,9 @@ public:
 	  types.push_back(t);
       }
 
-    ir::perform_type_canonicalization(types, do_log());
+    ir::perform_type_canonicalization(types, do_log(), show_stats());
+
+    corpus()->priv_->types_are_canonicalized(true);
 
     if (do_log())
       {
@@ -14271,7 +14278,7 @@ build_ir_node_from_die(reader&				rdr,
 		// mark the underlying decl as such.
 		decl_base_sptr decl = is_decl(utype);
 		ABG_ASSERT(decl);
-		decl->set_naming_typedef(t);
+		decl->add_naming_typedef(t);
 		rdr.maybe_schedule_decl_only_type_for_resolution(utype);
 	      }
 

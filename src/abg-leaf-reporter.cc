@@ -568,7 +568,7 @@ leaf_reporter::report(const class_or_union_diff& d,
 	d.get_priv()->count_filtered_deleted_mem_fns(ctxt);
       if (numdels)
 	report_mem_header(out, numdels, num_filtered, del_kind,
-			  "member function", indent);
+			  "member function", indent, ctxt);
       for (string_member_function_sptr_map::const_iterator i =
 	     d.get_priv()->deleted_member_functions_.begin();
 	   i != d.get_priv()->deleted_member_functions_.end();
@@ -589,7 +589,7 @@ leaf_reporter::report(const class_or_union_diff& d,
       num_filtered = d.get_priv()->count_filtered_inserted_mem_fns(ctxt);
       if (numins)
 	report_mem_header(out, numins, num_filtered, ins_kind,
-			  "member function", indent);
+			  "member function", indent, ctxt);
       for (string_member_function_sptr_map::const_iterator i =
 	     d.get_priv()->inserted_member_functions_.begin();
 	   i != d.get_priv()->inserted_member_functions_.end();
@@ -642,7 +642,7 @@ leaf_reporter::report(const class_or_union_diff& d,
       if (numdels)
 	{
 	  report_mem_header(out, numdels, 0, del_kind,
-			    "data member", indent);
+			    "data member", indent, ctxt);
 	  vector<decl_base_sptr> sorted_dms;
 	  sort_data_members
 	    (d.class_or_union_diff::get_priv()->deleted_data_members_,
@@ -666,7 +666,7 @@ leaf_reporter::report(const class_or_union_diff& d,
       if (numins)
 	{
 	  report_mem_header(out, numins, 0, ins_kind,
-			    "data member", indent);
+			    "data member", indent, ctxt);
 	  vector<decl_base_sptr> sorted_dms;
 	  sort_data_members
 	    (d.class_or_union_diff::get_priv()->inserted_data_members_,

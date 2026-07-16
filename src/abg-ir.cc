@@ -1295,6 +1295,7 @@ try_canonical_compare(const T *l, const T *r)
 
 thread_local class_set_type class_or_union::priv::left_classes_being_compared_;
 thread_local class_set_type class_or_union::priv::right_classes_being_compared_;
+thread_local class_set_type class_or_union::priv::classes_being_printed_;
 
 /// Detect if a recursive comparison cycle is detected while
 /// structurally comparing two types (a.k.a member-wise comparison).
@@ -1427,6 +1428,33 @@ unmark_types_as_being_compared(const class_decl& l, const class_decl &r)
 }
 
 thread_local type_comparison_result_type environment::priv::type_comparison_results_cache_;
+thread_local bool environment::priv::allow_type_comparison_results_caching_ = false;
+
+/// Clear the cache type comparison results.
+void
+environment::priv::clear_type_comparison_results_cache()
+{type_comparison_results_cache_.clear();}
+
+/// Allow caching of the sub-types comparison results during the
+/// invocation of the @ref equal overloads for class and function
+/// types.
+///
+/// @param f if true, allow type comparison result caching.
+void
+environment::priv::allow_type_comparison_results_caching(bool f)
+{allow_type_comparison_results_caching_ = f;}
+
+/// Check whether if caching of the sub-types comparison results during the
+/// invocation of the @ref equal overloads for class and function
+/// types is in effect.
+///
+/// @return true iff caching of the sub-types comparison results
+/// during the invocation of the @ref equal overloads for class and
+/// function types is in effect.
+bool
+environment::priv::allow_type_comparison_results_caching()
+{return allow_type_comparison_results_caching_;}
+
 
 /// Return the result of the comparison of two (sub) types.
 ///
@@ -3881,6 +3909,231 @@ dm_context_rel::~dm_context_rel()
 {}
 // </class dm_context_rel stuff>
 
+// <homonym_type_group stuff>
+
+/// Add a type to a homonym type group.
+///
+/// If the type is already present in the group, this function does
+/// nothing.
+///
+/// @param t the type to add to the group.
+///
+/// @param group the homonym type group to add the type to.
+void
+add_type(type_base_sptr t, homonym_type_group_sptr group)
+{
+  if (group->types_set_.find(t) != group->types_set_.end())
+    return;
+  group->types_set_.insert(t);
+  group->types_.push_back(t);
+  t->priv_->group = group;
+}
+
+/// Add a canonical type to a homonym type group.
+///
+/// If @p t is already in the group's canonical type set, it is not
+/// added again.
+///
+/// @param t the canonical type to add to @p group.
+///
+/// @param group the homonym type group to add @p t to.
+void
+add_canonical_type(type_base_sptr t, homonym_type_group_sptr group)
+{
+  if (group->canonical_types_set_.find(t) != group->types_set_.end())
+    return;
+  group->canonical_types_.push_back(t);
+  t->priv_->group = group;
+}
+
+/// Compute the canonical type for a given instance of @ref type_base.
+///
+/// Consider two types T and T'.  The canonical type of T, denoted
+/// C(T) is a type such as T == T' if and only if C(T) == C(T').  Said
+/// otherwise, to compare two types, one just needs to compare their
+/// canonical types using pointer equality.  That makes type
+/// comparison faster than the structural comparison performed by the
+/// abigail::ir::equals() overloads.
+///
+/// If there is not yet any canonical type for @p t, then @p t is its
+/// own canonical type.  Otherwise, this function returns the
+/// canonical type of @p t which is the canonical type that has the
+/// same hash value as @p t and that structurally equals @p t.  Note
+/// that after invoking this function, the life time of the returned
+/// canonical time is then equals to the life time of the current
+/// process.
+///
+/// @param t a smart pointer to instance of @ref type_base we want to
+/// compute a canonical type for.
+///
+/// @return the canonical type for @p t.
+type_base_sptr
+homonym_type_group::get_canonical_type_for(type_base_sptr t)
+{
+  if (!t)
+    return t;
+
+  if (is_non_canonicalized_type(t))
+    // This type should not be canonicalized!
+    return type_base_sptr();
+
+  if (t->get_canonical_type())
+    return t->get_canonical_type();
+
+  if (auto d = is_decl(t))
+    {
+      // All type decalrations must have a scope at this point.
+      ABG_ASSERT(d->get_scope());
+      t = is_type(look_through_decl_only(d));
+    }
+
+  string repr = t->get_cached_pretty_representation(/*internal=*/true);
+
+  type_base_sptr result;
+  result = candidate_matches_a_canonical_type_hash(canonical_types_, *t);
+  if (!result)
+    for (auto canonical_type : reverse(canonical_types_))
+      {
+	bool equal =
+	  compare_canonical_type_against_candidate(canonical_type, t);
+	if (equal)
+	  {
+	    result = canonical_type;
+	    break;
+	  }
+      }
+
+#ifdef WITH_DEBUG_SELF_COMPARISON
+  environment& env = const_cast<environment&>(t->get_environment());
+
+  if (env.self_comparison_debug_is_on())
+    {
+      // So we are debugging the canonicalization process,
+      // possibly via the use of 'abidw --debug-abidiff <binary>'.
+      corpus_sptr corp1, corp2;
+      env.get_self_comparison_debug_inputs(corp1, corp2);
+      if (corp1 && corp2 && type_originates_from_corpus(t, corp2)
+	  && corp1->get_origin() != corp2->get_origin()
+	  && corp2->get_origin() & corpus::NATIVE_XML_ORIGIN)
+	{
+	  // If 't' comes from the second corpus, then it *must*
+	  // be equal to its matching canonical type coming from
+	  // the first corpus because the second corpus is the
+	  // abixml representation of the first corpus.  In other
+	  // words, all types coming from the second corpus must
+	  // have canonical types coming from the first corpus.
+	  if (result)
+	    {
+	      if (!env.priv_->
+		  check_canonical_type_from_abixml_during_self_comp(t,
+								    result))
+		{
+		  // The canonical type of the type re-read from abixml
+		  // type doesn't match the canonical type that was
+		  // initially serialized down.
+		  uintptr_t should_have_canonical_type = 0;
+		  string type_id = env.get_type_id_from_type(t.get());
+		  if (type_id.empty())
+		    type_id = "type-id-<not-found>";
+		  else
+		    should_have_canonical_type =
+		      env.get_canonical_type_from_type_id(type_id.c_str());
+
+		  std::cerr << "error: wrong canonical type for '"
+			    << repr
+			    << "' / type: @"
+			    << std::hex
+			    << t.get()
+			    << "/ canon: @"
+			    << result.get()
+			    << ", type-id: '"
+			    << type_id
+			    << "'.  Should have had canonical type: "
+			    << std::hex
+			    << should_have_canonical_type
+			    << std::dec
+			    << std::endl;
+		}
+	    }
+	  else //!result
+	    {
+	      uintptr_t ptr_val = reinterpret_cast<uintptr_t>(t.get());
+	      string type_id = env.get_type_id_from_pointer(ptr_val);
+	      if (type_id.empty())
+		type_id = "type-id-<not-found>";
+	      // We are in the case where 't' is different from all
+	      // the canonical types of the same name that come from
+	      // the first corpus.
+	      //
+	      // If 't' indeed comes from the second corpus then this
+	      // clearly is a canonicalization failure.
+	      //
+	      // There was a problem either during the serialization
+	      // of 't' into abixml, or during the de-serialization
+	      // from abixml into abigail::ir.  Further debugging is
+	      // needed to determine what that root cause problem is.
+	      //
+	      // Note that the first canonicalization problem of this
+	      // kind must be fixed before looking at the subsequent
+	      // ones, because the later might well just be
+	      // consequences of the former.
+	      std::cerr << "error: wrong induced canonical type for '"
+			<< repr
+			<< "' from second corpus"
+			<< ", ptr: " << std::hex << t.get()
+			<< " type-id: " << type_id
+			<< " /hash="
+			<< *t->hash_value()
+			<< std::dec
+			<< std::endl;
+	    }
+	}
+      if (result)
+	{
+	  if (!is_type_decl(t))
+	    if (hash_t t_hash = peek_hash_value(*t))
+	      if (hash_t result_hash = peek_hash_value(*result))
+		if (t_hash != result_hash)
+		  {
+		    std::cerr << "error: type hash mismatch"
+			      << " between type: '"
+			      << repr
+			      << "' @ "
+			      << std::hex
+			      << t.get()
+			      << "/hash="
+			      << *t->hash_value()
+			      << " and its computed canonical type @"
+			      << std::hex
+			      << result.get()
+			      << "/hash="
+			      << std::hex
+			      << *result->hash_value()
+			      << std::dec
+			      << std::endl;
+		  }
+	}
+    }
+#endif //WITH_DEBUG_SELF_COMPARISON
+
+  if (result)
+    return result;
+
+  result = t;
+
+  if (!canonical_types_.empty())
+    {
+      int canonical_type_index = 0;
+      if (compute_canonical_type_index(canonical_types_, result,
+				       canonical_type_index))
+	t->priv_->canonical_type_index = canonical_type_index;
+    }
+  canonical_types_.push_back(result);
+  return result;
+}
+
+// </homonym_type_group stuff>
+
 // <environment stuff>
 
 thread_local string variadic_parameter_type_name = "variadic parameter type";
@@ -4072,51 +4325,6 @@ environment::get_variadic_parameter_type_name()
 {
   return variadic_parameter_type_name;
 }
-
-/// Test if the canonicalization of types created out of the current
-/// environment is done.
-///
-/// @return true iff the canonicalization of types created out of the current
-/// environment is done.
-bool
-environment::canonicalization_is_done() const
-{return priv_->canonicalization_is_done_;}
-
-/// Set a flag saying if the canonicalization of types created out of
-/// the current environment is done or not.
-///
-/// Note that this function must only be called by internal code of
-/// the library that creates ABI artifacts (e.g, read an abi corpus
-/// from elf or from our own xml format and creates representations of
-/// types out of it) and thus needs to canonicalize types to speed-up
-/// further type comparison.
-///
-/// @param f the new value of the flag.
-void
-environment::canonicalization_is_done(bool f)
-{
-  priv_->canonicalization_is_done_ = f;
-  if (priv_->canonicalization_is_done_)
-    canonicalization_started(false);
-}
-
-/// Getter of a flag saying if the canonicalization process has
-/// started or not.
-///
-/// @return the flag saying if the canonicalization process has
-/// started or not.
-bool
-environment::canonicalization_started() const
-{return priv_->canonicalization_started_;}
-
-/// Setter of a flag saying if the canonicalization process has
-/// started or not.
-///
-/// @param f the new value of the flag saying if the canonicalization
-/// process has started or not.
-void
-environment::canonicalization_started(bool f)
-{priv_->canonicalization_started_ = f;}
 
 /// Getter of the "decl-only-class-equals-definition" flag.
 ///
@@ -4914,7 +5122,7 @@ void
 type_or_decl_base::set_translation_unit(translation_unit* tu)
 {
   {
-    lock_guard<recursive_mutex> lock(get_mutex());
+    lock_guard<recursive_mutex> lock(priv_->local_mutex_);
     priv_->translation_unit_ = tu;
   }
   if (tu)
@@ -4967,7 +5175,7 @@ type_or_decl_base::get_original_artefact() const
 void
 type_or_decl_base::set_original_artefact(const type_or_decl_base* o)
 {
-  lock_guard<recursive_mutex> lock(get_mutex());
+  lock_guard<recursive_mutex> lock(priv_->local_mutex_);
   priv_->original_artefact_ = o;
 }
 
@@ -4999,7 +5207,7 @@ type_or_decl_base::get_cached_pretty_representation(bool internal) const
       if (priv_->internal_cached_repr_.empty())
 	{
 	  string r = ir::get_pretty_representation(this, internal);
-	  lock_guard<recursive_mutex> lock(get_mutex());
+	  lock_guard<recursive_mutex> lock(priv_->local_mutex_);
 	  priv_->internal_cached_repr_ = get_environment().intern(r);
 	}
       return priv_->internal_cached_repr_;
@@ -5008,7 +5216,7 @@ type_or_decl_base::get_cached_pretty_representation(bool internal) const
   if (priv_->cached_repr_.empty())
     {
       string r = ir::get_pretty_representation(this, internal);
-      lock_guard<recursive_mutex> lock(get_mutex());
+      lock_guard<recursive_mutex> lock(priv_->local_mutex_);
       priv_->cached_repr_ = get_environment().intern(r);
     }
 
@@ -5130,14 +5338,14 @@ struct decl_base::priv
   // Unline qualified_name_, scoped_name_ contains the name of the
   // decl and the name of its scope; not the qualified name of the
   // scope.
-  interned_string	scoped_name_;
-  interned_string	linkage_name_;
-  visibility		visibility_;
-  decl_base_sptr	declaration_;
-  decl_base_wptr	definition_of_declaration_;
-  decl_base*		naked_definition_of_declaration_;
-  std::atomic<bool>	is_declaration_only_;
-  typedef_decl_sptr	naming_typedef_;
+  interned_string		scoped_name_;
+  interned_string		linkage_name_;
+  visibility			visibility_;
+  decl_base_sptr		declaration_;
+  decl_base_wptr		definition_of_declaration_;
+  decl_base*			naked_definition_of_declaration_;
+  std::atomic<bool>		is_declaration_only_;
+  std::list<typedef_decl_sptr>	naming_typedefs_;
 
   priv()
     : in_pub_sym_tab_(false),
@@ -5486,11 +5694,11 @@ decl_base::get_is_anonymous_or_has_anonymous_parent() const
 /// struct that is declared.
 ///
 /// @return the naming typedef, if any.  Otherwise, returns nil.
-typedef_decl_sptr
-decl_base::get_naming_typedef() const
+list<typedef_decl_sptr>&
+decl_base::get_naming_typedefs() const
 {
   lock_guard<recursive_mutex> lock(priv_->local_mutex_);
-  return priv_->naming_typedef_;
+  return priv_->naming_typedefs_;
 }
 
 /// Set the naming typedef of the current instance of @ref decl_base.
@@ -5508,20 +5716,33 @@ decl_base::get_naming_typedef() const
 ///
 /// @param typedef_type the new naming typedef.
 void
-decl_base::set_naming_typedef(const typedef_decl_sptr& t)
+decl_base::add_naming_typedef(const typedef_decl_sptr t)
 {
-  // A naming typedef is usually for an anonymous type.
-  ABG_ASSERT(get_is_anonymous()
-	     // Whe the typedef-named decl is saved into abixml, it's
-	     // not anonymous anymore.  Its name is the typedef name.
-	     // So when we read it back, we must still be able to
-	     // apply the naming typedef to the decl.
-	     || t->get_name() == get_name());
-
+  ABG_ASSERT(t);
   {
     lock_guard<recursive_mutex> lock(priv_->local_mutex_);
-    priv_->naming_typedef_ = t;
+    priv_->naming_typedefs_.push_back(t);
   }
+}
+
+/// Test if the current decl has a given naming typedef.
+///
+/// Note that the comparison is done canonically if the types are
+/// canonicalized, structurally otherwise.
+///
+/// @param naming_typedef the naming typedef to consider.
+///
+/// @return true iff if the current instance of @ref decl_base has the
+/// naming typedef @p naming_typedef.
+bool
+decl_base::has_naming_typedef(const typedef_decl_sptr naming_typedef)
+{
+  lock_guard<recursive_mutex> lock(priv_->local_mutex_);
+  for (auto t : priv_->naming_typedefs_)
+    if (t == naming_typedef)
+      return true;
+
+  return false;
 }
 
 /// Getter for the mangled name.
@@ -5620,7 +5841,7 @@ decl_base::get_qualified_name(interned_string& qn, bool internal) const
 /// @param internal set to true if the call is intended to get a
 /// representation of the decl (or type) for the purpose of canonical
 /// type comparison.  This is mainly used in the function
-/// type_base::get_canonical_type_for().
+/// homonym_type_group::get_canonical_type_for().
 ///
 /// In other words if the argument for this parameter is true then the
 /// call is meant for internal use (for technical use inside the
@@ -5850,34 +6071,7 @@ maybe_compare_as_member_decls(const decl_base& l,
       context_rel* r1 = const_cast<context_rel*>(l.get_context_rel());
       context_rel *r2 = const_cast<context_rel*>(r.get_context_rel());
 
-      access_specifier la = no_access, ra = no_access;
-      bool member_types_or_functions =
-	((is_type(l) && is_type(r))
-	 || (is_function_decl(l) && is_function_decl(r)));
-
-      if (member_types_or_functions)
-	{
-	  // Access specifiers on member types in DWARF is not
-	  // reliable; in the same DSO, the same struct can be either
-	  // a class or a struct, and the access specifiers of its
-	  // member types are not necessarily given, so they
-	  // effectively can be considered differently, again, in the
-	  // same DSO.  So, here, let's avoid considering those!
-	  // during comparison.
-	  la = r1->get_access_specifier();
-	  ra = r2->get_access_specifier();
-	  r1->set_access_specifier(no_access);
-	  r2->set_access_specifier(no_access);
-	}
-
       bool rels_are_different = *r1 != *r2;
-
-      if (member_types_or_functions)
-	{
-	  // restore the access specifiers.
-	  r1->set_access_specifier(la);
-	  r2->set_access_specifier(ra);
-	}
 
       if (rels_are_different)
 	{
@@ -5907,41 +6101,54 @@ maybe_compare_as_member_decls(const decl_base& l,
 /// equal, the function keeps up the comparison in order to determine
 /// the different kinds of ways in which they are different.
 ///
+/// @param qualified_name if this is true, then the function considers
+/// the qualified name when comparing the two decls.  Otherwise, the
+/// qualified name is ignored.
+///
+/// @param linkage_name if this is true, then the function considers
+/// the linkage name when comparing the two decls.  Otherwise, the
+/// linkage_name name is ignored.
+///
 /// @return true if @p l equals @p r, false otherwise.
 bool
-equals(const decl_base& l, const decl_base& r, change_kind* k)
+equals(const decl_base& l, const decl_base& r, change_kind* k,
+       bool qualified_name, bool linkage_name)
 {
   bool result = true;
   const interned_string &l_linkage_name = l.get_linkage_name();
   const interned_string &r_linkage_name = r.get_linkage_name();
-  if (!l_linkage_name.empty() && !r_linkage_name.empty())
+  if (linkage_name)
+    if (!l_linkage_name.empty() && !r_linkage_name.empty())
+      {
+	if (l_linkage_name != r_linkage_name)
+	  {
+	    // Linkage names are different.  That usually means the two
+	    // decls are different, unless we are looking at two
+	    // function declarations which have two different symbols
+	    // that are aliases of each other.
+	    const function_decl *f1 = is_function_decl(&l),
+	      *f2 = is_function_decl(&r);
+	    if (f1 && f2 && function_decls_alias(*f1, *f2))
+	      ;// The two functions are aliases, so they are not
+	    // different.
+	    else
+	      {
+		result = false;
+		if (k)
+		  *k |= LOCAL_NON_TYPE_CHANGE_KIND;
+		else
+		  ABG_RETURN_FALSE;
+	      }
+	  }
+      }
+
+  bool decls_are_same = true;
+  if (qualified_name)
     {
-      if (l_linkage_name != r_linkage_name)
-	{
-	  // Linkage names are different.  That usually means the two
-	  // decls are different, unless we are looking at two
-	  // function declarations which have two different symbols
-	  // that are aliases of each other.
-	  const function_decl *f1 = is_function_decl(&l),
-	    *f2 = is_function_decl(&r);
-	  if (f1 && f2 && function_decls_alias(*f1, *f2))
-	    ;// The two functions are aliases, so they are not
-	     // different.
-	  else
-	    {
-	      result = false;
-	      if (k)
-		*k |= LOCAL_NON_TYPE_CHANGE_KIND;
-	      else
-		ABG_RETURN_FALSE;
-	    }
-	}
+      interned_string ln = l.get_qualified_name();
+      interned_string rn = r.get_qualified_name();
+      decls_are_same = (ln == rn);
     }
-
-  interned_string ln = l.get_qualified_name();
-  interned_string rn = r.get_qualified_name();
-
-    bool decls_are_same = (ln == rn);
 
   if (!decls_are_same)
     {
@@ -5966,7 +6173,7 @@ equals(const decl_base& l, const decl_base& r, change_kind* k)
 /// that extend the \p decl_base class.
 bool
 decl_base::operator==(const decl_base& other) const
-{return equals(*this, other, 0);}
+{return equals(*this, other, nullptr);}
 
 /// Inequality operator.
 ///
@@ -6903,7 +7110,7 @@ anonymous_data_member_exists_in_class(const var_decl& anon_dm,
 bool
 is_anonymous_or_typedef_named(const decl_base& d)
 {
-  if (d.get_is_anonymous() || d.get_naming_typedef())
+  if (d.get_is_anonymous() || !d.get_naming_typedefs().empty())
     return true;
   return false;
 }
@@ -8556,18 +8763,6 @@ canonical_type_hash::operator()(const type_base *l) const
   return reinterpret_cast<size_t>(l);
 }
 
-struct scope_decl::priv
-{
-  declarations members_;
-  declarations sorted_members_;
-  type_base_sptrs_type member_types_;
-  type_base_sptrs_type sorted_member_types_;
-  scopes member_scopes_;
-  canonical_type_sptr_set_type canonical_types_;
-  type_base_sptrs_type sorted_canonical_types_;
-  bool clear_sorted_member_types_cache_ = false;
-}; // end struct scope_decl::priv
-
 /// Constructor of the @ref scope_decl type.
 ///
 /// @param the environment to use for the new instance.
@@ -8985,8 +9180,8 @@ scope_decl::get_sorted_member_types() const
 		       comp);
     }
 
-  const ir::environment& env = get_environment();
-  if (!env.canonicalization_started() && !env.canonicalization_is_done())
+  auto abi = get_corpus();
+  if (!abi || !abi->priv_->types_are_canonicalized())
     priv_->clear_sorted_member_types_cache_ = true;
 
   return priv_->sorted_member_types_;
@@ -9437,8 +9632,8 @@ get_scope_of_type(type_base& type)
   scope_decl_sptr scope;
   if (auto d = dynamic_cast<decl_base*>(&type))
     scope = d->get_scope();
-  else
-    scope = type.get_translation_unit()->get_global_scope();
+  else if (auto tu = type.get_translation_unit())
+    scope = tu->get_global_scope();
 
   return scope;
 }
@@ -10435,7 +10630,7 @@ get_class_or_union_flat_representation(const class_or_union& cou,
   if (!cou.get_is_anonymous())
     repr += name;
 
-  if (cou.priv_->is_printing_flat_representation())
+  if (class_or_union::priv::is_printing_flat_representation(&cou))
     {
       // We have just detected a cycle while walking the sub-tree
       // of this class or union type for the purpose of printing
@@ -10448,7 +10643,7 @@ get_class_or_union_flat_representation(const class_or_union& cou,
   // Let's mark this class or union type to signify that we started
   // walking its sub-tree.  This is to detect potential cycles and
   // avoid looping endlessly.
-  cou.priv_->set_printing_flat_representation();
+  class_or_union::priv::set_printing_flat_representation(&cou);
 
   repr += "{";
 
@@ -10500,7 +10695,7 @@ get_class_or_union_flat_representation(const class_or_union& cou,
   // Let's unmark this class or union type to signify that we are done
   // walking its sub-tree.  This was to detect potential cycles and
   // avoid looping endlessly.
-  cou.priv_->unset_printing_flat_representation();
+  class_or_union::priv::unset_printing_flat_representation(&cou);
 
   return repr;
 }
@@ -11758,17 +11953,8 @@ is_anonymous_type(const type_base* t)
   const decl_base* d = get_type_declaration(t);
   if (d)
     if (d->get_is_anonymous())
-      {
-	if (class_or_union *cou = is_class_or_union_type(t))
-	  {
-	    // An anonymous class that is named by a typedef is not
-	    // considered anonymous anymore.
-	    if (!cou->get_naming_typedef())
-	      return true;
-	  }
-	else
-	  return true;
-      }
+      return true;
+
   return false;
 }
 
@@ -11791,8 +11977,9 @@ is_naming_typedef(const typedef_decl_sptr typedf)
   ABG_ASSERT(utype);
 
   if (decl_base_sptr d = is_decl(utype))
-    if (d->get_naming_typedef().get() == typedf.get())
-      return true;
+    for (auto naming_typedef : d->get_naming_typedefs())
+      if (naming_typedef.get() == typedf.get())
+	return true;
 
   return false;
 }
@@ -15803,7 +15990,7 @@ synthesize_type_from_translation_unit(const type_base_sptr& type,
       if (result)
 	{
 	  add_decl_to_scope(is_decl(result), tu.get_global_scope());
-	  canonicalize(result);
+	  hash_and_canonicalize_type(result);
 	}
     }
 
@@ -15897,7 +16084,8 @@ synthesize_function_type_from_translation_unit(const function_type& fn_type,
   tu.priv_->synthesized_types_.push_back(result_fn_type);
   tu.bind_function_type_life_time(result_fn_type);
 
-  canonicalize(result_fn_type);
+  homonym_type_group_sptr group = fn_type.type_base::priv_->group.lock();
+  hash_and_canonicalize_type(result_fn_type);
   return result_fn_type;
 }
 
@@ -15953,6 +16141,26 @@ global_scope::~global_scope()
 {
 }
 
+/// Test if two decls have at least of naming typedef with the same
+/// name in common.
+///
+/// @param d1 the first decl to consider.
+///
+/// @param d2 the second decl to consider.
+///
+/// @return iff the two decls have at least one naming typedef with the
+/// same name in common.
+static bool
+decls_have_naming_typedefs_same_name(decl_base& d1, decl_base& d2)
+{
+  for (auto typedef1 : d1.get_naming_typedefs())
+    for (auto typedef2 : d2.get_naming_typedefs())
+      if (typedef1->get_name() == typedef2->get_name())
+	return true;
+
+  return false;
+}
+
 /// Test if two types are eligible to the "Linux Kernel Fast Type
 /// Comparison Optimization", a.k.a LKFTCO.
 ///
@@ -15991,18 +16199,17 @@ types_defined_same_linux_kernel_corpus_public(const type_base& t1,
 
   // Two anonymous class types with no naming typedefs cannot be
   // eligible to this optimization.
-  if ((c1 && c1->get_is_anonymous() && !c1->get_naming_typedef())
-      || (c2 && c2->get_is_anonymous() && !c2->get_naming_typedef()))
+  if ((c1 && c1->get_is_anonymous() && c1->get_naming_typedefs().empty())
+      || (c2 && c2->get_is_anonymous() && c2->get_naming_typedefs().empty()))
     return false;
 
   // Two anonymous classes with naming typedefs should have the same
   // typedef name.
   if (c1
       && c2
-      && c1->get_is_anonymous() && c1->get_naming_typedef()
-      && c2->get_is_anonymous() && c2->get_naming_typedef())
-    if (c1->get_naming_typedef()->get_name()
-	!= c2->get_naming_typedef()->get_name())
+      && c1->get_is_anonymous() && !c1->get_naming_typedefs().empty()
+      && c2->get_is_anonymous() && !c2->get_naming_typedefs().empty())
+    if (!decls_have_naming_typedefs_same_name(*c1, *c2))
       return false;
 
   // Two anonymous enum types cannot be eligible to this optimization.
@@ -16087,7 +16294,7 @@ types_defined_same_linux_kernel_corpus_public(const type_base& t1,
 /// canonicalization process is said to be faulty and this function
 /// aborts.
 ///
-/// This is a sub-routine of type_base::get_canonical_type_for.
+/// This is a sub-routine of homonym_type_group::get_canonical_type_for.
 ///
 /// @param canonical_type the canonical type to compare the candidate
 /// type against.
@@ -16128,10 +16335,10 @@ compare_types_during_canonicalization(const type_base& canonical_type,
 /// Compare a canonical type against a candidate canonical type.
 ///
 /// This is ultimately a sub-routine of the
-/// type_base::get_canonical_type_for().
+/// homonym_type_group::get_canonical_type_for().
 ///
 /// The goal of this function is to ease debugging because it can be
-/// called from within type_base::get_canonical_type_for() from the
+/// called from within homonym_type_group::get_canonical_type_for() from the
 /// prompt of the debugger (with some breakpoint appropriately set) to
 /// debug the comparison that happens during type canonicalization,
 /// between a candidate type being canonicalized, and an existing
@@ -16145,43 +16352,14 @@ compare_types_during_canonicalization(const type_base& canonical_type,
 ///
 /// @return true iff @p canonical_type compares equal to @p
 /// candidate_type.
-static bool
+bool
 compare_canonical_type_against_candidate(const type_base& canonical_type,
 					 const type_base& candidate_type)
 {
-  environment& env = const_cast<environment&>(canonical_type.get_environment());
-
-  // For C types, let's consider that an unresolved struct
-  // declaration'struct S' is different from a definition'struct S'.
-  // This is because normally, at this point all the declarations of
-  // struct S that are compatible with the definition of struct S have
-  // already been resolved to that definition, during the DWARF
-  // parsing.  The remaining unresolved declaration are thus
-  // considered different.  With this setup we can properly handle
-  // cases of two *different* struct S being defined in the same
-  // binary (in different translation units), and a third struct S
-  // being only declared as an opaque type in a third translation unit
-  // of its own, with no definition in there.  In that case, the
-  // declaration-only struct S should be left alone and not resolved
-  // to any of the two definitions of struct S.
-  bool saved_decl_only_class_equals_definition =
-    env.decl_only_class_equals_definition();
-
-  // Compare types by considering that decl-only classes don't
-  // equal their definition.
-  env.decl_only_class_equals_definition(false);
-  env.priv_->allow_type_comparison_results_caching(true);
   bool equal = (types_defined_same_linux_kernel_corpus_public(canonical_type,
 							      candidate_type)
 		|| compare_types_during_canonicalization(canonical_type,
 							 candidate_type));
-  // Restore the state of the on-the-fly-canonicalization and
-  // the decl-only-class-being-equal-to-a-matching-definition
-  // flags.
-  env.priv_->clear_type_comparison_results_cache();
-  env.priv_->allow_type_comparison_results_caching(false);
-  env.decl_only_class_equals_definition
-    (saved_decl_only_class_equals_definition);
 
   if (equal)
     {
@@ -16195,10 +16373,10 @@ compare_canonical_type_against_candidate(const type_base& canonical_type,
 /// Compare a canonical type against a candidate canonical type.
 ///
 /// This is ultimately a sub-routine of the
-/// type_base::get_canonical_type_for().
+/// homonym_type_group::get_canonical_type_for().
 ///
 /// The goal of this function is to ease debugging because it can be
-/// called from within type_base::get_canonical_type_for() from the
+/// called from within homonym_type_group::get_canonical_type_for() from the
 /// prompt of the debugger (with some breakpoint appropriately set) to
 /// debug the comparison that happens during type canonicalization,
 /// between a candidate type being canonicalized, and an existing
@@ -16212,7 +16390,7 @@ compare_canonical_type_against_candidate(const type_base& canonical_type,
 ///
 /// @return true iff @p canonical_type compares equal to @p
 /// candidate_type.
-static bool
+bool
 compare_canonical_type_against_candidate(const type_base* canonical_type,
 					 const type_base* candidate_type)
 {
@@ -16223,10 +16401,10 @@ compare_canonical_type_against_candidate(const type_base* canonical_type,
 /// Compare a canonical type against a candidate canonical type.
 ///
 /// This is ultimately a sub-routine of the
-/// type_base::get_canonical_type_for().
+/// homonym_type_group::get_canonical_type_for().
 ///
 /// The goal of this function is to ease debugging because it can be
-/// called from within type_base::get_canonical_type_for() from the
+/// called from within homonym_type_group::get_canonical_type_for() from the
 /// prompt of the debugger (with some breakpoint appropriately set) to
 /// debug the comparison that happens during type canonicalization,
 /// between a candidate type being canonicalized, and an existing
@@ -16240,7 +16418,7 @@ compare_canonical_type_against_candidate(const type_base* canonical_type,
 ///
 /// @return true iff @p canonical_type compares equal to @p
 /// candidate_type.
-static bool
+bool
 compare_canonical_type_against_candidate(const type_base_sptr& canonical_type,
 					 const type_base_sptr& candidate_type)
 {
@@ -16265,7 +16443,7 @@ compare_canonical_type_against_candidate(const type_base_sptr& canonical_type,
 ///
 /// @return the canonical type from @p cncls that matches the
 /// candidate @p type.
-static type_base_sptr
+type_base_sptr
 candidate_matches_a_canonical_type_hash(const vector<type_base_sptr>&	cncls,
 					type_base&			type)
 {
@@ -16297,8 +16475,8 @@ candidate_matches_a_canonical_type_hash(const vector<type_base_sptr>&	cncls,
 				<< "having the same hash value: "
 				<< " type:" << std::hex << &type
 				<< ", canonical type candidate:" << std::hex << c
-				<< " hash value: " << std::hex << *peek_hash_value(type)
-				<< "string repr: " << type.get_pretty_representation()
+				<< " hash value: '" << std::hex << *peek_hash_value(type)
+				<< "' string repr: " << type.get_pretty_representation()
 				<< std::endl;
 		    }
 		}
@@ -16309,7 +16487,7 @@ candidate_matches_a_canonical_type_hash(const vector<type_base_sptr>&	cncls,
       for (const auto& c : reverse(cncls))
 	// We walk the canonical types in the reverse order to comply
 	// with what we are doing in
-	// type_base::get_canonical_type_for.
+	// homonym_type_group::get_canonical_type_for.
 	if (peek_hash_value(type) == peek_hash_value(*c))
 	  // We found a potential canonical type which hash matches the
 	  // stashed hash of the candidate type.  Let's compare them to
@@ -16373,7 +16551,7 @@ type_is_suitable_for_hash_computing(const type_base& t)
 ///
 /// @return true iff the function could compute the canonical index
 /// and set it into @p resulting_index.
-static bool
+bool
 compute_canonical_type_index(const vector<type_base_sptr>&	adjacent_canonical_types,
 			     const type_base_sptr		canonical_type,
 			     int&				resulting_index)
@@ -16406,235 +16584,6 @@ compute_canonical_type_index(const vector<type_base_sptr>&	adjacent_canonical_ty
   return false;
 }
 
-/// Compute the canonical type for a given instance of @ref type_base.
-///
-/// Consider two types T and T'.  The canonical type of T, denoted
-/// C(T) is a type such as T == T' if and only if C(T) == C(T').  Said
-/// otherwise, to compare two types, one just needs to compare their
-/// canonical types using pointer equality.  That makes type
-/// comparison faster than the structural comparison performed by the
-/// abigail::ir::equals() overloads.
-///
-/// If there is not yet any canonical type for @p t, then @p t is its
-/// own canonical type.  Otherwise, this function returns the
-/// canonical type of @p t which is the canonical type that has the
-/// same hash value as @p t and that structurally equals @p t.  Note
-/// that after invoking this function, the life time of the returned
-/// canonical time is then equals to the life time of the current
-/// process.
-///
-/// @param t a smart pointer to instance of @ref type_base we want to
-/// compute a canonical type for.
-///
-/// @return the canonical type for the current instance of @ref
-/// type_base.
-type_base_sptr
-type_base::get_canonical_type_for(type_base_sptr t)
-{
-  if (!t)
-    return t;
-
-  environment& env = const_cast<environment&>(t->get_environment());
-
-  if (is_non_canonicalized_type(t))
-    // This type should not be canonicalized!
-    return type_base_sptr();
-
-  if (t->get_canonical_type())
-    return t->get_canonical_type();
-
-  if (auto d = is_decl(t))
-    {
-      // All type decalrations must have a scope at this point.
-      ABG_ASSERT(d->get_scope());
-      t = is_type(look_through_decl_only(d));
-    }
-
-  class_or_union_sptr class_or_union = is_class_or_union_type(t);
-
-  class_decl_sptr is_class = is_class_type(t);
-
-  // We want the pretty representation of the type, but for an
-  // internal use, not for a user-facing purpose.
-  //
-  // If two classe types Foo are declared, one as a class and the
-  // other as a struct, but are otherwise equivalent, we want their
-  // pretty representation to be the same.  Hence the 'internal'
-  // argument of ir::get_pretty_representation() is set to true here.
-  // So in this case, the pretty representation of Foo is going to be
-  // "class Foo", regardless of its struct-ness. This also applies to
-  // composite types which would have "class Foo" as a sub-type.
-  string repr = t->get_cached_pretty_representation(/*internal=*/true);
-
-  // If 't' already has a canonical type 'inside' its corpus
-  // (t_corpus), then this variable is going to contain that canonical
-  // type.
-  type_base_sptr canonical_type_present_in_corpus;
-  environment::canonical_types_map_type& types =
-    env.get_canonical_types_map();
-
-  type_base_sptr result;
-  environment::canonical_types_map_type::iterator i = types.find(repr);
-
-  if (i == types.end())
-    {
-      vector<type_base_sptr> v;
-      v.push_back(t);
-      types[repr] = v;
-      result = t;
-    }
-  else
-    {
-      vector<type_base_sptr> &v = i->second;
-      // Look at the canonical types and if the current candidate type
-      // coming from abixml has the same hash as one of the canonical
-      // types, then compare the current candidate with the one with a
-      // matching hash.
-      result = candidate_matches_a_canonical_type_hash(v, *t);
-
-      // Let's compare 't' structurally (i.e, compare its sub-types
-      // recursively) against the canonical types of the system. If it
-      // equals a given canonical type C, then it means C is the
-      // canonical type of 't'.  Otherwise, if 't' is different from
-      // all the canonical types of the system, then it means 't' is a
-      // canonical type itself.
-      for (vector<type_base_sptr>::const_reverse_iterator it = v.rbegin();
-	   !result && it != v.rend();
-	   ++it)
-	{
-	  bool equal = compare_canonical_type_against_candidate(*it, t);
-	  if (equal)
-	    {
-	      result = *it;
-	      break;
-	    }
-	}
-#ifdef WITH_DEBUG_SELF_COMPARISON
-      if (env.self_comparison_debug_is_on())
-	{
-	  // So we are debugging the canonicalization process,
-	  // possibly via the use of 'abidw --debug-abidiff <binary>'.
-	  corpus_sptr corp1, corp2;
-	  env.get_self_comparison_debug_inputs(corp1, corp2);
-	  if (corp1 && corp2 && type_originates_from_corpus(t, corp2)
-	      && corp1->get_origin() != corp2->get_origin()
-	      && corp2->get_origin() & corpus::NATIVE_XML_ORIGIN)
-	    {
-	      // If 't' comes from the second corpus, then it *must*
-	      // be equal to its matching canonical type coming from
-	      // the first corpus because the second corpus is the
-	      // abixml representation of the first corpus.  In other
-	      // words, all types coming from the second corpus must
-	      // have canonical types coming from the first corpus.
-	      if (result)
-		{
-		  if (!env.priv_->
-		      check_canonical_type_from_abixml_during_self_comp(t,
-									result))
-		    {
-		      // The canonical type of the type re-read from abixml
-		      // type doesn't match the canonical type that was
-		      // initially serialized down.
-		      uintptr_t should_have_canonical_type = 0;
-		      string type_id = env.get_type_id_from_type(t.get());
-		      if (type_id.empty())
-			type_id = "type-id-<not-found>";
-		      else
-			should_have_canonical_type =
-			  env.get_canonical_type_from_type_id(type_id.c_str());
-		      std::cerr << "error: wrong canonical type for '"
-				<< repr
-				<< "' / type: @"
-				<< std::hex
-				<< t.get()
-				<< "/ canon: @"
-				<< result.get()
-				<< ", type-id: '"
-				<< type_id
-				<< "'.  Should have had canonical type: "
-				<< std::hex
-				<< should_have_canonical_type
-				<< std::dec
-				<< std::endl;
-		    }
-		}
-	      else //!result
-		{
-		  uintptr_t ptr_val = reinterpret_cast<uintptr_t>(t.get());
-		  string type_id = env.get_type_id_from_pointer(ptr_val);
-		  if (type_id.empty())
-		    type_id = "type-id-<not-found>";
-		  // We are in the case where 't' is different from all
-		  // the canonical types of the same name that come from
-		  // the first corpus.
-		  //
-		  // If 't' indeed comes from the second corpus then this
-		  // clearly is a canonicalization failure.
-		  //
-		  // There was a problem either during the serialization
-		  // of 't' into abixml, or during the de-serialization
-		  // from abixml into abigail::ir.  Further debugging is
-		  // needed to determine what that root cause problem is.
-		  //
-		  // Note that the first canonicalization problem of this
-		  // kind must be fixed before looking at the subsequent
-		  // ones, because the later might well just be
-		  // consequences of the former.
-		  std::cerr << "error: wrong induced canonical type for '"
-			    << repr
-			    << "' from second corpus"
-			    << ", ptr: " << std::hex << t.get()
-			    << " type-id: " << type_id
-			    << " /hash="
-			    << *t->hash_value()
-			    << std::dec
-			    << std::endl;
-		}
-	    }
-	  if (result)
-	    {
-	      if (!is_type_decl(t))
-		  if (hash_t t_hash = peek_hash_value(*t))
-		    if (hash_t result_hash = peek_hash_value(*result))
-		      if (t_hash != result_hash)
-			{
-			  std::cerr << "error: type hash mismatch"
-				    << " between type: '"
-				    << repr
-				    << "' @ "
-				    << std::hex
-				    << t.get()
-				    << "/hash="
-				    << *t->hash_value()
-				    << " and its computed canonical type @"
-				    << std::hex
-				    << result.get()
-				    << "/hash="
-				    << std::hex
-				    << *result->hash_value()
-				    << std::dec
-				    << std::endl;
-			}
-	    }
-	}
-#endif //WITH_DEBUG_SELF_COMPARISON
-
-      if (!result)
-	{
-	  // we need to generate a canonical type index to sort these
-	  // types that have the internal representation and same hash
-	  // value but are canonically different.
-	  int canonical_type_index = 0;
-	  if (compute_canonical_type_index(v, t, canonical_type_index))
-	    t->priv_->canonical_type_index = canonical_type_index;
-	  v.push_back(t);
-	  result = t;
-	}
-    }
-
-  return result;
-}
-
 /// This method is invoked automatically right after the current
 /// instance of @ref class_decl has been canonicalized.
 void
@@ -16656,11 +16605,11 @@ type_base::on_canonical_type_set()
 /// to any underlying symbol, whereas in T, M is to link to an
 /// underlying symbol.  In that case, this function updates M in C so
 /// that it's linked to the same underlying symbol as for M in T.
-static void
+void
 maybe_adjust_canonical_type(const type_base_sptr& canonical,
 			    const type_base_sptr& type)
 {
-  if (type->get_naked_canonical_type())
+  if (canonical.get() == type.get())
     return;
 
   class_or_union_sptr cou = is_class_or_union_type(canonical);
@@ -16668,22 +16617,26 @@ maybe_adjust_canonical_type(const type_base_sptr& canonical,
 
   if (cou)
     {
+      lock_guard<recursive_mutex> lock(cou->get_mutex());
       // Ensure that the canonical type has the union of the member
-      // functions and variables of the types that are in its class of
-      // equivalence.  This way, just emitting a canonical type (in
-      // the ABIXML format, for instance) is enough to capture the
-      // member functions and variables of all the types that are in
-      // its class of equivalence.
+      // functions, variables, and member types of the types that are
+      // in its class of equivalence.  This way, just emitting a
+      // canonical type (in the ABIXML format, for instance) is enough
+      // to capture the member functions and variables of all the
+      // types that are in its class of equivalence.
+      //
+      // NOTE: This is done after type canonicalization is done.
       copy_missing_member_functions(cou, is_class_or_union_type(type),
 				    /*copy_virtual_mem_fns=*/true);
       copy_missing_member_variables(cou, is_class_or_union_type(type));
       copy_missing_naming_typedef(is_decl(canonical), is_decl(type));
+      move_missing_member_types(cou, is_class_or_union_type(type));
 
       class_or_union_sptr clazz = is_class_or_union_type(type);
       clazz = look_through_decl_only_class(clazz);
     }
 
-  class_decl_sptr canonical_class = is_class_type(canonical);
+  class_decl_sptr canonical_class = is_class_type(cou);
 
   if (class_decl_sptr cl = is_class_type(type))
     {
@@ -16694,72 +16647,66 @@ maybe_adjust_canonical_type(const type_base_sptr& canonical,
 	{
 	  // Set symbols of member functions that might be missing
 	  // theirs.
-	  for (auto& mem_fn : cl->get_member_functions())
+	  auto mem_fns = cl->get_member_functions_copy();
+	  for (auto mem_fn : mem_fns)
 	    if (mem_fn->get_symbol())
 	      {
 		string n = mem_fn->get_linkage_name();
 		if (n.empty())
 		  n = mem_fn->get_name();
-		method_decl *m = canonical_class->find_member_function(n);
-		if (!m)
-		  {
-		    if (!mem_fn->get_linkage_name().empty())
-		      {
-			n = demangle_cplus_mangled_name(n);
-			m = canonical_class->find_member_function(n);
-		      }
-		  }
-		if (m)
-		  {
-		    elf_symbol_sptr s1 = mem_fn->get_symbol();
-		    if (s1 && !m->get_symbol())
-		      // Method 'm' in the canonical type is not
-		      // linked to the underlying symbol of '*i'.
-		      // Let's link it now.
-		      m->set_symbol(s1);
-		  }
-		else
-		  if (!is_anonymous_type(cl)
-		      && canonical_class->get_corpus()
-		      && cl->get_corpus()
-		      && (cl->get_corpus() == canonical_class->get_corpus()))
-		    // There is a member function defined and publicly
-		    // exported in the other class and the canonical
-		    // class doesn't have that member function.  This
-		    // should not have happened!  For instance, the
-		    // DWARF reader does merge the member functions of
-		    // classes having the same name so that all of them
-		    // end-up having the same member functions.  What's
-		    // going on here?
-		    ABG_ASSERT_NOT_REACHED;
+
+		{
+		  lock_guard<recursive_mutex> lock(canonical_class->get_mutex());
+		  method_decl *m = canonical_class->find_member_function(n);
+		  if (!m)
+		    {
+		      if (!mem_fn->get_linkage_name().empty())
+			{
+			  n = demangle_cplus_mangled_name(n);
+			  m = canonical_class->find_member_function(n);
+			}
+		    }
+		  if (m)
+		    {
+		      elf_symbol_sptr s1 = mem_fn->get_symbol();
+		      if (s1 && !m->get_symbol())
+			// Method 'm' in the canonical type is not
+			// linked to the underlying symbol of '*i'.
+			// Let's link it now.
+			m->set_symbol(s1);
+		    }
+		  else
+		    if (!is_anonymous_type(cl)
+			&& canonical_class->get_corpus()
+			&& cl->get_corpus()
+			&& (cl->get_corpus() == canonical_class->get_corpus()))
+		      // There is a member function defined and publicly
+		      // exported in the other class and the canonical
+		      // class doesn't have that member function.  This
+		      // should not have happened!  For instance, the
+		      // DWARF reader does merge the member functions of
+		      // classes having the same name so that all of them
+		      // end-up having the same member functions.  What's
+		      // going on here?
+		      ABG_ASSERT_NOT_REACHED;
+		}
 	      }
 
 	  // Set symbols of static data members that might be missing
 	  // theirs.
-	  for (const auto& data_member : cl->get_data_members())
+	  auto data_members = cl->get_data_members_copy();
+	  for (auto data_member : data_members)
 	    {
 	      if (!get_member_is_static(data_member))
 		continue;
 	      elf_symbol_sptr sym = data_member->get_symbol();
 	      if (!sym)
 		continue;
-	      const auto& canonical_data_member =
+
+	      auto canonical_data_member =
 		canonical_class->find_data_member(data_member->get_name());
 	      if (!canonical_data_member)
-		{
-		  // Two classes my be equivalent (same name, non-static
-		  // sub-objects) and yet not have the same number of
-		  // static data members, if they are coming from
-		  // different corpora.  If they are in the same corpus,
-		  // however then that means there is a problem!
-		  if (!is_anonymous_type(cl)
-		      && canonical_class->get_corpus()
-		      && cl->get_corpus()
-		      && canonical_class->get_corpus() == cl->get_corpus())
-		    ABG_ASSERT_NOT_REACHED;
-
-		  continue;
-		}
+		continue;
 
 	      if (!canonical_data_member->get_symbol())
 		canonical_data_member->set_symbol(sym);
@@ -16783,9 +16730,11 @@ maybe_adjust_canonical_type(const type_base_sptr& canonical,
 
   if (canonical_class)
     {
+      lock_guard<recursive_mutex> lock(canonical_class->get_mutex());
+
       if (auto abi_corpus = canonical_class->get_corpus())
 	{
-	  for (auto& fn : canonical_class->get_member_functions())
+	  for (auto fn : canonical_class->get_member_functions())
 	    {
 	      if (elf_symbol_sptr sym = fn->get_symbol())
 		{
@@ -16797,7 +16746,10 @@ maybe_adjust_canonical_type(const type_base_sptr& canonical,
 						      /*do_update=*/true);
 		    }
 		  else if (!sym->is_defined())
-		    abi_corpus->get_undefined_functions().insert(fn.get());
+		    {
+		      lock_guard<recursive_mutex> lock(abi_corpus->priv_->mutex_);
+		      abi_corpus->get_undefined_functions().insert(fn.get());
+		    }
 		}
 	    }
 	}
@@ -16811,6 +16763,8 @@ maybe_adjust_canonical_type(const type_base_sptr& canonical,
   if (is_function_type(type))
     if (type->get_is_artificial() != canonical->get_is_artificial())
       canonical->set_is_artificial(false);
+
+  type->on_canonical_type_set();
 }
 
 /// Compute the canonical type of a given type.
@@ -16827,6 +16781,9 @@ maybe_adjust_canonical_type(const type_base_sptr& canonical,
 /// t->get_canonical_type() will return the newly computed canonical
 /// type.
 ///
+/// @param group the @ref homonym_type_group the type @p t belongs to.
+/// Read the README-type-canonicalization.txt file to learn more.
+///
 /// @param do_log if true then logs are emitted about canonicalization
 /// progress.
 ///
@@ -16835,13 +16792,17 @@ maybe_adjust_canonical_type(const type_base_sptr& canonical,
 ///
 /// @return the canonical type computed for @p t.
 type_base_sptr
-canonicalize(type_base_sptr t, bool do_log, bool show_stats)
+canonicalize(type_base_sptr t,
+	     homonym_type_group_sptr group,
+	     bool do_log, bool show_stats)
 {
   if (!t)
     return t;
 
   if (t->get_canonical_type())
     return t->get_canonical_type();
+
+  ABG_ASSERT(group);
 
   if (do_log && show_stats)
     std::cerr << "Canonicalization of type '"
@@ -16852,7 +16813,8 @@ canonicalize(type_base_sptr t, bool do_log, bool show_stats)
 
   if (do_log && show_stats)
     tmr.start();
-  type_base_sptr canonical = type_base::get_canonical_type_for(t);
+
+  type_base_sptr canonical = group->get_canonical_type_for(t);
 
   if (do_log && show_stats)
     tmr.stop();
@@ -16860,17 +16822,23 @@ canonicalize(type_base_sptr t, bool do_log, bool show_stats)
   if (do_log && show_stats)
     std::cerr << tmr << "\n";
 
-  t->priv_->canonical_type = canonical;
+  {
+    lock_guard<recursive_mutex> lock(t->priv_->mutex);
+    t->priv_->canonical_type = canonical;
+  }
+
   if (canonical)
     {
-      maybe_adjust_canonical_type(canonical, t);
       if (!t->priv_->canonical_type_index)
 	t->priv_->canonical_type_index = canonical->priv_->canonical_type_index;
       hash_t h1 = peek_hash_value(*t);
       hash_t h2 = peek_hash_value(*canonical);
       ABG_ASSERT(h1 == h2);
     }
-  t->priv_->naked_canonical_type = canonical.get();
+  {
+    lock_guard<recursive_mutex> lock(t->priv_->mutex);
+    t->priv_->naked_canonical_type = canonical.get();
+  }
 
   if (class_decl_sptr cl = is_class_type(t))
     if (type_base_sptr d = is_type(cl->get_earlier_declaration()))
@@ -16901,8 +16869,11 @@ canonicalize(type_base_sptr t, bool do_log, bool show_stats)
 		  // type of ST is enough to get the types that belong
 		  // to the scope of the class of equivalence of ST.
 		  scope = is_scope_decl(is_decl(c));
-	      scope->get_canonical_types().insert(canonical);
-	      scope->priv_->sorted_canonical_types_.clear();
+	      {
+		lock_guard<recursive_mutex> lock(scope->get_mutex());
+		scope->get_canonical_types().insert(canonical);
+		scope->priv_->sorted_canonical_types_.clear();
+	      }
 	    }
 	  // else, if the type doesn't have a scope, it's not meant to be
 	  // emitted.  This can be the case for the result of the
@@ -16910,7 +16881,6 @@ canonicalize(type_base_sptr t, bool do_log, bool show_stats)
 	}
     }
 
-  t->on_canonical_type_set();
   return canonical;
 }
 
@@ -16926,7 +16896,70 @@ hash_and_canonicalize_type(type_base_sptr t)
     return nullptr;
 
   t->hash_value();
-  return canonicalize(t);
+  auto& env = t->get_environment();
+  auto group = env.priv_->types_partition_.get_or_create_type_group(t);
+  return canonicalize(t, group);
+}
+
+/// Canonicalize types coming from a vector of homonym_type_group_sptr
+/// in //.
+///
+/// Each set of types that are in a given group are canonicalized in
+/// a separate thread.
+///
+/// @param groups the vector of type groups to canonicalize.
+///
+/// @param do_log when set to true, emit logs about progress and
+/// timing.
+///
+/// @param show_stas when set to true, emit details stats about type
+/// canonicalization and whatnot.
+void
+canonicalize_homonym_type_groups(const vector<homonym_type_group_sptr>& groups,
+				 bool do_log, bool show_stats)
+{
+  tools_utils::timer tmr;
+
+  if (do_log)
+    {
+      std::cerr << "Types are broken into " << groups.size() << " groups ...\n";
+      tmr.start();
+    }
+
+  size_t num_workers = std::min(get_number_of_available_threads(),
+				groups.size());
+  queue task_queue(num_workers);
+
+  // canonicalize types within each type group in parallel.
+  for (auto type_group : groups)
+    {
+      c14n_task_sptr t(new c14n_task(type_group, do_log, show_stats));
+      ABG_ASSERT(task_queue.schedule_task(t));
+    }
+
+  // Wait for all worker threads to finish their job and wind down.
+  task_queue.wait_for_workers_to_complete();
+
+  const vector<task_sptr>& completed_tasks =
+    task_queue.get_completed_tasks();
+
+  if (do_log)
+    {
+      tmr.stop();
+      std::cerr << "Canonicalizing of types DONE in: " << tmr << "\n\n";
+
+      if (show_stats)
+	{
+	  std::cerr << "Details about homonym type groups c14n ...\n";
+	  for (auto task : completed_tasks)
+	    {
+	      c14n_task_sptr t = dynamic_pointer_cast<c14n_task>(task);
+	      ABG_ASSERT(t);
+	      std::cerr << t->log_message << std::endl;
+	    }
+	  std::cerr << "Details about homonym type groups c14n DONE\n";
+	}
+    }
 }
 
 /// Set the definition of this declaration-only @ref decl_base.
@@ -16977,7 +17010,10 @@ type_base::hash_value() const
 /// type.
 type_base_sptr
 type_base::get_canonical_type() const
-{return priv_->canonical_type.lock();}
+{
+  lock_guard<recursive_mutex> lock(priv_->mutex);
+  return priv_->canonical_type.lock();
+}
 
 /// Getter of the canonical type pointer.
 ///
@@ -16993,7 +17029,10 @@ type_base::get_canonical_type() const
 /// pointer.
 type_base*
 type_base::get_naked_canonical_type() const
-{return priv_->naked_canonical_type;}
+{
+  lock_guard<recursive_mutex> lock(priv_->mutex);
+  return priv_->naked_canonical_type;
+}
 
 /// Compares two instances of @ref type_base.
 ///
@@ -17049,7 +17088,7 @@ type_base::operator!=(const type_base& other) const
 void
 type_base::set_size_in_bits(size_t s)
 {
-  lock_guard<recursive_mutex> lock(get_mutex());
+  lock_guard<recursive_mutex> lock(priv_->mutex);
   priv_->size_in_bits = s;
 }
 
@@ -17059,7 +17098,7 @@ type_base::set_size_in_bits(size_t s)
 size_t
 type_base::get_size_in_bits() const
 {
-  lock_guard<recursive_mutex> lock(get_mutex());
+  lock_guard<recursive_mutex> lock(priv_->mutex);
   return priv_->size_in_bits;
 }
 
@@ -17069,7 +17108,7 @@ type_base::get_size_in_bits() const
 void
 type_base::set_alignment_in_bits(size_t a)
 {
-  lock_guard<recursive_mutex> lock(get_mutex());
+  lock_guard<recursive_mutex> lock(priv_->mutex);
   priv_->alignment_in_bits = a;
 }
 
@@ -17079,7 +17118,7 @@ type_base::set_alignment_in_bits(size_t a)
 size_t
 type_base::get_alignment_in_bits() const
 {
-  lock_guard<recursive_mutex> lock(get_mutex());
+  lock_guard<recursive_mutex> lock(priv_->mutex);
   return priv_->alignment_in_bits;
 }
 
@@ -17759,7 +17798,7 @@ type_decl::get_qualified_name(bool internal) const
 /// @param internal set to true if the call is intended to get a
 /// representation of the decl (or type) for the purpose of canonical
 /// type comparison.  This is mainly used in the function
-/// type_base::get_canonical_type_for().
+/// homonym_type_group::get_canonical_type_for().
 ///
 /// In other words if the argument for this parameter is true then the
 /// call is meant for internal use (for technical use inside the
@@ -17984,7 +18023,7 @@ namespace_decl::namespace_decl(const environment&	env,
 /// @param internal set to true if the call is intended to get a
 /// representation of the decl (or type) for the purpose of canonical
 /// type comparison.  This is mainly used in the function
-/// type_base::get_canonical_type_for().
+/// homonym_type_group::get_canonical_type_for().
 ///
 /// In other words if the argument for this parameter is true then the
 /// call is meant for internal use (for technical use inside the
@@ -19364,7 +19403,7 @@ reference_type_def::get_qualified_name(bool internal) const
 /// @param internal set to true if the call is intended to get a
 /// representation of the decl (or type) for the purpose of canonical
 /// type comparison.  This is mainly used in the function
-/// type_base::get_canonical_type_for().
+/// homonym_type_group::get_canonical_type_for().
 ///
 /// In other words if the argument for this parameter is true then the
 /// call is meant for internal use (for technical use inside the
@@ -20242,7 +20281,7 @@ array_type_def::subrange_type::operator!=(const subrange_type& o) const
 /// @param internal set to true if the call is intended to get a
 /// representation of the decl (or type) for the purpose of canonical
 /// type comparison.  This is mainly used in the function
-/// type_base::get_canonical_type_for().
+/// homonym_type_group::get_canonical_type_for().
 ///
 /// In other words if the argument for this parameter is true then the
 /// call is meant for internal use (for technical use inside the
@@ -20421,7 +20460,7 @@ array_type_def::get_subrange_representation() const
 /// @param internal set to true if the call is intended to get a
 /// representation of the decl (or type) for the purpose of canonical
 /// type comparison.  This is mainly used in the function
-/// type_base::get_canonical_type_for().
+/// homonym_type_group::get_canonical_type_for().
 ///
 /// In other words if the argument for this parameter is true then the
 /// call is meant for internal use (for technical use inside the
@@ -20994,7 +21033,7 @@ enum_type_decl::find_enumerator_by_name(const string& name,
 /// @param internal set to true if the call is intended to get a
 /// representation of the decl (or type) for the purpose of canonical
 /// type comparison.  This is mainly used in the function
-/// type_base::get_canonical_type_for().
+/// homonym_type_group::get_canonical_type_for().
 ///
 /// In other words if the argument for this parameter is true then the
 /// call is meant for internal use (for technical use inside the
@@ -21175,9 +21214,14 @@ is_enumerator_value_redundant(const enum_type_decl::enumerator &enr,
 /// equal, the function keeps up the comparison in order to determine
 /// the different kinds of ways in which they are different.
 ///
+/// @param name if this is true, then the function considers the name
+/// when comparing the two enums.  Otherwise, the name is ignored.
+///
 /// @return true if @p l equals @p r, false otherwise.
 bool
-equals(const enum_type_decl& l, const enum_type_decl& r, change_kind* k)
+equals(const enum_type_decl& l,
+       const enum_type_decl& r,
+       change_kind* k, bool name)
 {
   bool result = true;
 
@@ -21225,7 +21269,9 @@ equals(const enum_type_decl& l, const enum_type_decl& r, change_kind* k)
 	ABG_RETURN_FALSE;
     }
 
-  if (!(def1->decl_base::operator==(*def2)
+  if (!(equals(static_cast<const decl_base&>(*def1),
+	       static_cast<const decl_base&>(*def2),
+	       nullptr, name, name)
 	&& def1->type_base::operator==(*def2)))
     {
       result = false;
@@ -21360,23 +21406,7 @@ enum_equals_modulo_name(const enum_type_decl& l,
 			const enum_type_decl& r,
 			change_kind* k)
 {
-  const interned_string l_saved_linkage_name = l.get_linkage_name();
-  const interned_string r_saved_linkage_name = r.get_linkage_name();
-  const interned_string l_saved_qualified_name = l.get_qualified_name();
-  const interned_string r_saved_qualified_name = r.get_qualified_name();
-
-  interned_string nil;
-  const_cast<enum_type_decl&>(l).set_linkage_name(nil);
-  const_cast<enum_type_decl&>(l).set_qualified_name(nil);
-  const_cast<enum_type_decl&>(r).set_linkage_name(nil);
-  const_cast<enum_type_decl&>(r).set_qualified_name(nil);
-
-  bool result = equals(l, r, k);
-
-  const_cast<enum_type_decl&>(l).set_linkage_name(l_saved_linkage_name);
-  const_cast<enum_type_decl&>(l).set_qualified_name(l_saved_qualified_name);
-  const_cast<enum_type_decl&>(r).set_linkage_name(r_saved_linkage_name);
-  const_cast<enum_type_decl&>(r).set_qualified_name(r_saved_qualified_name);
+  bool result = equals(l, r, k, /*name=*/false);
 
   return result;
 }
@@ -21767,6 +21797,18 @@ equals(const typedef_decl& l, const typedef_decl& r, change_kind* k)
 {
   bool result = true;
 
+  // No need to go further if the types have different names or
+  // different size / alignment.  This is useful to tell member
+  // typedefs appart.
+  if (!(l.decl_base::operator==(r)))
+    {
+      result = false;
+      if (k)
+	*k |= LOCAL_TYPE_CHANGE_KIND;
+      else
+	ABG_RETURN_FALSE;
+    }
+
   if ((!!l.get_underlying_type() != !!r.get_underlying_type())
       || (l.get_underlying_type() && r.get_underlying_type()
 	  && *l.get_underlying_type() != *r.get_underlying_type()))
@@ -21815,7 +21857,7 @@ typedef_decl::operator==(const type_base& o) const
 /// @param internal set to true if the call is intended to get a
 /// representation of the decl (or type) for the purpose of canonical
 /// type comparison.  This is mainly used in the function
-/// type_base::get_canonical_type_for().
+/// homonym_type_group::get_canonical_type_for().
 ///
 /// In other words if the argument for this parameter is true then the
 /// call is meant for internal use (for technical use inside the
@@ -22151,13 +22193,11 @@ var_equals_modulo_types(const var_decl& l, const var_decl& r, change_kind* k)
       // The variables have underlying elf symbols that are equal, so
       // now, let's compare the decl_base part of the variables w/o
       // considering their decl names.
-      const environment& env = l.get_environment();
-      const interned_string n1 = l.get_qualified_name(), n2 = r.get_qualified_name();
-      const_cast<var_decl&>(l).set_qualified_name(env.intern(""));
-      const_cast<var_decl&>(r).set_qualified_name(env.intern(""));
-      bool decl_bases_different = !l.decl_base::operator==(r);
-      const_cast<var_decl&>(l).set_qualified_name(n1);
-      const_cast<var_decl&>(r).set_qualified_name(n2);
+      bool decl_bases_different =
+	!equals(static_cast<const decl_base&>(l),
+		static_cast<const decl_base&>(r),
+		nullptr, /*qualified_name=*/false,
+		/*linkage_name=*/false);
 
       if (decl_bases_different)
 	{
@@ -22336,7 +22376,7 @@ var_decl::get_qualified_name(bool internal) const
 /// @param internal set to true if the call is intended to get a
 /// representation of the decl (or type) for the purpose of canonical
 /// type comparison.  This is mainly used in the function
-/// type_base::get_canonical_type_for().
+/// homonym_type_group::get_canonical_type_for().
 ///
 /// In other words if the argument for this parameter is true then the
 /// call is meant for internal use (for technical use inside the
@@ -22502,6 +22542,7 @@ var_decl::~var_decl()
 
 thread_local fn_set_type function_type::priv::left_fn_types_being_compared_;
 thread_local fn_set_type function_type::priv::right_fn_types_being_compared_;
+thread_local fn_set_type function_type::priv::fn_types_being_printed_;
 
 /// This function is automatically invoked whenever an instance of
 /// this type is canonicalized.
@@ -23073,7 +23114,7 @@ function_type::operator==(const type_base& other) const
 /// @param internal set to true if the call is intended to get a
 /// representation of the decl (or type) for the purpose of canonical
 /// type comparison.  This is mainly used in the function
-/// type_base::get_canonical_type_for().
+/// homonym_type_group::get_canonical_type_for().
 ///
 /// In other words if the argument for this parameter is true then the
 /// call is meant for internal use (for technical use inside the
@@ -23320,7 +23361,7 @@ method_type::set_class_type(const class_or_union_sptr& t)
 /// @param internal set to true if the call is intended to get a
 /// representation of the decl (or type) for the purpose of canonical
 /// type comparison.  This is mainly used in the function
-/// type_base::get_canonical_type_for().
+/// homonym_type_group::get_canonical_type_for().
 ///
 /// In other words if the argument for this parameter is true then the
 /// call is meant for internal use (for technical use inside the
@@ -23571,7 +23612,7 @@ function_decl::function_decl(const string&	name,
 /// @param internal set to true if the call is intended to get a
 /// representation of the decl (or type) for the purpose of canonical
 /// type comparison.  This is mainly used in the function
-/// type_base::get_canonical_type_for().
+/// homonym_type_group::get_canonical_type_for().
 ///
 /// In other words if the argument for this parameter is true then the
 /// call is meant for internal use (for technical use inside the
@@ -23638,7 +23679,7 @@ function_decl::get_pretty_representation(bool internal,
 /// @param internal set to true if the call is intended to get a
 /// representation of the decl (or type) for the purpose of canonical
 /// type comparison.  This is mainly used in the function
-/// type_base::get_canonical_type_for().
+/// homonym_type_group::get_canonical_type_for().
 ///
 /// In other words if the argument for this parameter is true then the
 /// call is meant for internal use (for technical use inside the
@@ -23928,9 +23969,18 @@ function_decl::clone() const
 /// equal, the function keeps up the comparison in order to determine
 /// the different kinds of ways in which they are different.
 ///
+/// @param linkage_name if this is true, then the function considers
+/// the linkage name when comparing the two functions.  Otherwise, the
+/// linkage_name name is ignored.
+///
+/// @param elf_symbol if this is true, then the function considers the
+/// elf_symbol when comparing the two functions.  Otherwise, the
+/// elf_symbol is ignored.
+///
 /// @return true if @p l equals @p r, false otherwise.
 bool
-equals(const function_decl& l, const function_decl& r, change_kind* k)
+equals(const function_decl& l, const function_decl& r, change_kind* k,
+       bool linkage_name, bool elf_symbol)
 {
   bool result = true;
 
@@ -23953,18 +24003,11 @@ equals(const function_decl& l, const function_decl& r, change_kind* k)
 	ABG_RETURN_FALSE;
     }
 
-  const elf_symbol_sptr &s0 = l.get_symbol(), &s1 = r.get_symbol();
-  if (!!s0 != !!s1)
+  bool symbols_are_equal = true;
+  if (elf_symbol)
     {
-      result = false;
-      if (k)
-	*k |= LOCAL_NON_TYPE_CHANGE_KIND;
-      else
-	ABG_RETURN_FALSE;
-    }
-  else if (s0 && s0 != s1)
-    {
-      if (!elf_symbols_alias(s0, s1))
+      const elf_symbol_sptr &s0 = l.get_symbol(), &s1 = r.get_symbol();
+      if (!!s0 != !!s1)
 	{
 	  result = false;
 	  if (k)
@@ -23972,34 +24015,32 @@ equals(const function_decl& l, const function_decl& r, change_kind* k)
 	  else
 	    ABG_RETURN_FALSE;
 	}
+      else if (s0 && s0 != s1)
+	{
+	  if (!elf_symbols_alias(s0, s1))
+	    {
+	      result = false;
+	      if (k)
+		*k |= LOCAL_NON_TYPE_CHANGE_KIND;
+	      else
+		ABG_RETURN_FALSE;
+	    }
+	}
+      symbols_are_equal = (s0 && s1 && result);
     }
-  bool symbols_are_equal = (s0 && s1 && result);
 
   if (symbols_are_equal)
     {
+      bool decl_bases_different = false;
       // The functions have underlying elf symbols that are equal,
       // so now, let's compare the decl_base part of the functions
       // w/o considering their decl names.
-      const environment& env = l.get_environment();
 
-      interned_string n1 = l.get_name(), n2 = r.get_name();
-      interned_string qn1 = l.get_qualified_name(), qn2 = r.get_qualified_name();
-      interned_string ln1 = l.get_linkage_name(), ln2 = r.get_linkage_name();
-      const_cast<function_decl&>(l).set_name("");
-      const_cast<function_decl&>(l).set_qualified_name(env.intern(""));
-      const_cast<function_decl&>(l).set_linkage_name("");
-      const_cast<function_decl&>(r).set_name("");
-      const_cast<function_decl&>(r).set_qualified_name(env.intern(""));
-      const_cast<function_decl&>(r).set_linkage_name("");
-
-      bool decl_bases_different = !l.decl_base::operator==(r);
-
-      const_cast<function_decl&>(l).set_name(n1);
-      const_cast<function_decl&>(l).set_qualified_name(qn1);
-      const_cast<function_decl&>(l).set_linkage_name(ln1);
-      const_cast<function_decl&>(r).set_name(n2);
-      const_cast<function_decl&>(r).set_qualified_name(qn2);
-      const_cast<function_decl&>(r).set_linkage_name(ln2);
+      decl_bases_different = !equals(static_cast<const decl_base&>(l),
+				     static_cast<const decl_base&>(r),
+				     nullptr,
+				     /*qualified_name=*/false,
+				     /*linkage_name=*/false);
 
       if (decl_bases_different)
 	{
@@ -24011,7 +24052,9 @@ equals(const function_decl& l, const function_decl& r, change_kind* k)
 	}
     }
   else
-    if (!l.decl_base::operator==(r))
+    if (!equals(static_cast<const decl_base&>(l),
+		static_cast<const decl_base&>(r),
+		nullptr, /*qualified_name=*/true, linkage_name))
       {
 	result = false;
 	if (k)
@@ -24250,6 +24293,7 @@ operator!=(const function_decl_sptr& l, const function_decl_sptr& r)
 
 struct function_decl::parameter::priv
 {
+  recursive_mutex	mutex_;
   type_base_wptr	type_;
   unsigned		index_;
   bool			variadic_marker_;
@@ -24380,16 +24424,25 @@ function_decl::parameter::get_name_id() const
 
 unsigned
 function_decl::parameter::get_index() const
-{return priv_->index_;}
+{
+  lock_guard<recursive_mutex> lock(priv_->mutex_);
+  return priv_->index_;
+}
 
 void
 function_decl::parameter::set_index(unsigned i)
-{priv_->index_ = i;}
+{
+  lock_guard<recursive_mutex> lock(priv_->mutex_);
+  priv_->index_ = i;
+}
 
 
 bool
 function_decl::parameter::get_variadic_marker() const
-{return priv_->variadic_marker_;}
+{
+  lock_guard<recursive_mutex> lock(priv_->mutex_);
+  return priv_->variadic_marker_;
+}
 
 /// Compares two instances of @ref function_decl::parameter.
 ///
@@ -24540,7 +24593,7 @@ function_decl::parameter::get_qualified_name(interned_string& qualified_name,
 /// @param internal set to true if the call is intended to get a
 /// representation of the decl (or type) for the purpose of canonical
 /// type comparison.  This is mainly used in the function
-/// type_base::get_canonical_type_for().
+/// homonym_type_group::get_canonical_type_for().
 ///
 /// In other words if the argument for this parameter is true then the
 /// call is meant for internal use (for technical use inside the
@@ -24687,14 +24740,13 @@ class_or_union::traverse(ir_node_visitor& v)
 	    }
 
       if (!stop)
-	for (auto i = get_sorted_member_types().begin();
-	     i != get_sorted_member_types().end();
-	     ++i)
-	  if (!(*i)->traverse(v))
-	    {
-	      stop = true;
-	      break;
-	    }
+	if (v.allow_visiting_member_type_nodes())
+	  for (auto member_type : get_sorted_member_types())
+	    if (!member_type->traverse(v))
+	      {
+		stop = true;
+		break;
+	      }
 
       if (!stop)
 	for (member_function_templates::const_iterator i =
@@ -25643,13 +25695,13 @@ equals(const class_or_union& l, const class_or_union& r, change_kind* k)
   if (types_defined_same_linux_kernel_corpus_public(l, r))
     return true;
 
+#define RETURN(value)  return return_comparison_result(l, r, value);
+
   //TODO: Maybe remove this (cycle detection and canonical type
   //propagation handling) from here and have it only in the equal
   //overload for class_decl and union_decl because this one ( the
   //equal overload for class_or_union) is just a sub-routine of these
   //two above.
-#define RETURN(value)				\
-  return return_comparison_result(l, r, value);
 
   RETURN_TRUE_IF_COMPARISON_CYCLE_DETECTED(l, r);
 
@@ -26165,7 +26217,7 @@ class_decl::sort_virtual_mem_fns()
 /// @param internal set to true if the call is intended to get a
 /// representation of the decl (or type) for the purpose of canonical
 /// type comparison.  This is mainly used in the function
-/// type_base::get_canonical_type_for().
+/// homonym_type_group::get_canonical_type_for().
 ///
 /// In other words if the argument for this parameter is true then the
 /// call is meant for internal use (for technical use inside the
@@ -26963,28 +27015,9 @@ static bool
 methods_equal_modulo_elf_symbol(const method_decl_sptr& f,
 				const method_decl_sptr& s)
 {
-  method_decl_sptr first = f, second = s;
-  elf_symbol_sptr saved_first_elf_symbol =
-    first->get_symbol();
-  elf_symbol_sptr saved_second_elf_symbol =
-    second->get_symbol();
-  interned_string saved_first_linkage_name =
-    first->get_linkage_name();
-  interned_string saved_second_linkage_name =
-    second->get_linkage_name();
-
-  first->set_symbol(elf_symbol_sptr());
-  first->set_linkage_name("");
-  second->set_symbol(elf_symbol_sptr());
-  second->set_linkage_name("");
-
-  bool equal = *first == *second;
-
-  first->set_symbol(saved_first_elf_symbol);
-  first->set_linkage_name(saved_first_linkage_name);
-  second->set_symbol(saved_second_elf_symbol);
-  second->set_linkage_name(saved_second_linkage_name);
-
+  bool equal = equals(*f, *s, nullptr,
+		      /*linkage_name=*/false,
+		      /*elf_symbol=*/false);
   return equal;
 }
 
@@ -27015,7 +27048,7 @@ method_matches_at_least_one_in_vector(const method_decl_sptr& method,
     //  important especially when doing type canonicalization.  The
     //  already canonicalize type is the left operand, and the type
     //  being canonicalized is the right operand.  This comes from the
-    // code in type_base::get_canonical_type_for().
+    // code in homonym_type_group::get_canonical_type_for().
     if (methods_equal_modulo_elf_symbol(method, *i))
       return true;
 
@@ -27425,8 +27458,8 @@ class_decl::traverse(ir_node_visitor& v)
       visiting(true);
       bool stop = false;
 
-      if (typedef_decl_sptr typdef = get_naming_typedef())
-	typdef->traverse(v);
+      for (auto naming_typedef : get_naming_typedefs())
+	naming_typedef->traverse(v);
 
       for (const auto& base : get_base_specifiers_copy())
 	{
@@ -27463,12 +27496,13 @@ class_decl::traverse(ir_node_visitor& v)
 
       if (!stop)
 	{
-	  for (auto t : get_sorted_member_types_copy())
-	    if (!t->traverse(v))
-	      {
-		stop = true;
-		break;
-	      }
+	  if (v.allow_visiting_member_type_nodes())
+	    for (auto t : get_sorted_member_types_copy())
+	      if (!t->traverse(v))
+		{
+		  stop = true;
+		  break;
+		}
 	}
 
       if (!stop)
@@ -28124,7 +28158,7 @@ union_decl::hash_value() const
 /// @param internal set to true if the call is intended to get a
 /// representation of the decl (or type) for the purpose of canonical
 /// type comparison.  This is mainly used in the function
-/// type_base::get_canonical_type_for().
+/// homonym_type_group::get_canonical_type_for().
 ///
 /// In other words if the argument for this parameter is true then the
 /// call is meant for internal use (for technical use inside the
@@ -28421,7 +28455,10 @@ copy_missing_member_functions(class_or_union_sptr& dest_class,
 		     == method->get_linkage_name());
 	  ABG_ASSERT(copied_method->get_name()
 		     == method->get_name());
-	  if (type_base_sptr method_type = copied_method->get_type())
+
+	  auto copied_mtype = copied_method->get_type();
+
+	  if (type_base_sptr method_type = copied_mtype)
 	    hash_and_canonicalize_type(method_type);
 	}
     }
@@ -28470,24 +28507,115 @@ copy_missing_naming_typedef(decl_base_sptr type,
   if (!type
       || !is_type(type)
       || !named_type
-      || !named_type->get_naming_typedef()
-      || type->get_naming_typedef())
+      || named_type->get_naming_typedefs().empty())
     return nullptr;
 
-  typedef_decl_sptr naming_typedef = named_type->get_naming_typedef();
+  typedef_decl_sptr naming_typedef;
+  for (auto n : named_type->get_naming_typedefs())
+    if (!type->has_naming_typedef(n))
+      {
+	naming_typedef = n;
+	break;
+      }
 
-  typedef_decl_sptr result(new typedef_decl(naming_typedef->get_name(),
-					    is_type(type),
-					    naming_typedef->get_location(),
-					    naming_typedef->get_linkage_name(),
-					    naming_typedef->get_visibility()));
-  result->set_original_artefact(naming_typedef.get());
-  add_decl_to_scope(result, type->get_scope());
-  type->set_naming_typedef(result);
+  if (naming_typedef)
+    {
+      typedef_decl_sptr result(new typedef_decl(naming_typedef->get_name(),
+						is_type(type),
+						naming_typedef->get_location(),
+						naming_typedef->get_linkage_name(),
+						naming_typedef->get_visibility()));
+      result->set_original_artefact(naming_typedef.get());
+      add_decl_to_scope(result, type->get_scope());
+      type->add_naming_typedef(result);
 
-  hash_and_canonicalize_type(result);
+      hash_and_canonicalize_type(result);
+      return result;
+    }
+
+  return nullptr;
+}
+
+/// Move a member type from its current class or union scope to a
+/// destination class or union, if the member type is missing from the
+/// destination.
+///
+/// The move is performed only if:
+///   - Both artifacts belong to the same ABI corpus.
+///   - The source member type belongs to a class or union scope.
+///   - The destination class or union does not already have a member
+///     type with the same name, or has one but with a different
+///     canonical type.
+///
+/// @param dest_class_or_union the destination class or union to move
+/// the member type into.
+///
+/// @param src_member_type the member type to potentially move into
+/// @p dest_class_or_union.
+///
+/// @return the member type that was moved into @p dest_class_or_union,
+/// or nullptr if no move was performed.
+type_base_sptr
+maybe_move_missing_member_type(class_or_union_sptr dest_class_or_union,
+			       type_base_sptr src_member_type)
+{
+  ABG_ASSERT(dest_class_or_union);
+  ABG_ASSERT(src_member_type);
+
+  // The two artifacts must come from the same ABI.
+  corpus *src_abi = src_member_type->get_corpus(),
+    *dest_abi = dest_class_or_union->get_corpus();
+  if (src_abi != dest_abi)
+    return nullptr;
+
+  // The source artifact must belong to a class or union.
+  decl_base_sptr decl_of_type = is_decl(src_member_type);
+  class_or_union_sptr src_scope = is_class_type(decl_of_type->get_scope());
+  if (!src_scope)
+    return nullptr;
+
+  // Perform the move.
+  type_base_sptr result;
+  bool perform_the_move = false;
+  type_base_sptr member_type =
+    dest_class_or_union->find_member_type(decl_of_type->get_name());
+  if (!member_type)
+    perform_the_move = true;
+  else if (typedef_decl_sptr t = is_typedef(member_type))
+    {
+      if (type_base* c1 = src_member_type->get_naked_canonical_type())
+	if (type_base* c2 = t->get_naked_canonical_type())
+	  if (c1 != c2)
+	    perform_the_move = true;
+    }
+
+  if (perform_the_move)
+    {
+      move_member_type(decl_of_type, dest_class_or_union);
+      // A last sanity check.
+      src_scope = is_class_type(decl_of_type->get_scope());
+      ABG_ASSERT(dest_class_or_union.get() == src_scope.get());
+      result = src_member_type;
+    }
 
   return result;
+}
+
+/// Move member types that are present in @p src_class_or_union but
+/// missing from @p dest_class_or_union into @p dest_class_or_union.
+///
+/// @param dest_class_or_union the class or union to move the missing
+/// member types into.
+///
+/// @param src_class_or_union the class or union to look for member
+/// types to move from.
+void
+move_missing_member_types(class_or_union_sptr dest_class_or_union,
+			  class_or_union_sptr src_class_or_union)
+{
+  if (dest_class_or_union && src_class_or_union)
+    for (auto member_type : src_class_or_union->get_member_types())
+      maybe_move_missing_member_type(dest_class_or_union, member_type);
 }
 
 /// Turn equality of shared_ptr of union_decl into a deep equality;
@@ -30647,7 +30775,7 @@ add_outer_pointer_to_fn_type_expr(const type_base* p,
   if (!pointed_to_fn)
     return "";
 
-  if (pointed_to_fn->priv_->is_pretty_printing())
+  if (function_type::priv::is_pretty_printing(pointed_to_fn.get()))
     // We have just detected a cycle while walking the sub-tree of
     // this function type for the purpose of printing its
     // representation.  We need to get out of here pronto or else
@@ -30657,7 +30785,7 @@ add_outer_pointer_to_fn_type_expr(const type_base* p,
   // Let's mark thie function type  to signify that we started walking
   // its subtree.  This is to detect potential cycles and avoid
   // looping endlessly.
-  pointed_to_fn->priv_->set_is_pretty_printing();
+  function_type::priv::set_is_pretty_printing(pointed_to_fn.get());
 
   std::ostringstream left, right, inner;
 
@@ -30696,7 +30824,7 @@ add_outer_pointer_to_fn_type_expr(const type_base* p,
   // Lets unmark this function type to signify that we are done
   // walking its subtree.  This was to detect potential cycles and
   // avoid looping endlessly.
-  pointed_to_fn->priv_->unset_is_pretty_printing();
+  function_type::priv::unset_is_pretty_printing(pointed_to_fn.get());
   return result;
 }
 
@@ -31511,6 +31639,7 @@ bind_function_type_life_time(const function_type_sptr& fn_type,
       lock_guard<recursive_mutex> lock(corp->priv_->get_mutex());
       corp->priv_->live_fn_types_.insert(fn_type);
       fn_type->set_corpus(corp);
+      fn_type->set_translation_unit(tu);
       maybe_update_types_lookup_map(fn_type);
     }
   else
@@ -31543,9 +31672,14 @@ bind_function_type_life_time(const function_type_sptr& fn_type,
 ///
 /// @param do_log if true, then this functions emits logs about its
 /// progression.
+///
+/// @param show_stats if true, then this functions emits detailed
+/// statistics about internal stuff like type canonicalization and
+/// what not.
 void
-perform_type_canonicalization(vector<type_base_sptr>& types, bool do_log)
-{return hash_and_canonicalize_types(types, do_log);}
+perform_type_canonicalization(vector<type_base_sptr>& types,
+			      bool do_log, bool show_stats)
+{return hash_and_canonicalize_types(types, do_log, show_stats);}
 
 // <ir_node_visitor stuff>
 
@@ -31558,9 +31692,11 @@ struct ir_node_visitor::priv
 {
   pointer_set visited_ir_nodes;
   bool allow_visiting_already_visited_type_node;
+  bool allow_visiting_member_type_nodes;
 
   priv()
-    : allow_visiting_already_visited_type_node(true)
+    : allow_visiting_already_visited_type_node(true),
+      allow_visiting_member_type_nodes(true)
   {}
 }; // end struct ir_node_visitory::priv
 
@@ -31588,6 +31724,24 @@ ir_node_visitor::allow_visiting_already_visited_type_node(bool f)
 bool
 ir_node_visitor::allow_visiting_already_visited_type_node() const
 {return priv_->allow_visiting_already_visited_type_node;}
+
+/// Set if the walker using this visitor is allowed to visit member
+/// type nodes.
+///
+/// @param f if true then walker using this visitor is allowed to
+/// visit member type nodes.
+void
+ir_node_visitor::allow_visiting_member_type_nodes(bool f)
+{priv_->allow_visiting_member_type_nodes = f;}
+
+/// Get if the walker using this visitor is allowed to visit member
+/// type nodes.
+///
+/// @return true iff the walker using this visitor is allowed to visit
+/// member type nodes.
+bool
+ir_node_visitor::allow_visiting_member_type_nodes() const
+{return priv_->allow_visiting_member_type_nodes;}
 
 /// Mark a given type node as having been visited.
 ///

@@ -94,6 +94,7 @@ struct options
   bool			leaf_changes_only;
   bool			fail_no_debug_info;
   bool			show_hexadecimal_values;
+  bool			show_num_filtered_data_members;
   bool			show_offsets_sizes_in_bits;
   bool			show_relative_offset_changes;
   bool			show_stats_only;
@@ -151,7 +152,8 @@ struct options
       ignore_soname(false),
       leaf_changes_only(),
       fail_no_debug_info(),
-      show_hexadecimal_values(),
+      show_hexadecimal_values(false),
+      show_num_filtered_data_members(true),
       show_offsets_sizes_in_bits(true),
       show_relative_offset_changes(true),
       show_stats_only(),
@@ -257,6 +259,7 @@ enum option_key
   OPT_NO_LINUX_KERNEL_MODE,
   OPT_NO_REDUNDANT,
   OPT_NO_SHOW_LOCS,
+  OPT_NO_SHOW_NUM_FILTERED_DATA_MEMBERS,
   OPT_NO_SHOW_RELATIVE_OFFSET_CHANGES,
   OPT_NO_UNREFERENCED_SYMBOLS,
   OPT_NON_REACHABLE_TYPES = 't',
@@ -398,6 +401,8 @@ static const struct argp_option argp_options[] =
     "do not display redundant changes (this is the default)", 0 },
   { "no-show-locs", OPT_NO_SHOW_LOCS, 0, 0,
     "do not show location information", 0 },
+  { "no-show-num-filtered-data-members", OPT_NO_SHOW_NUM_FILTERED_DATA_MEMBERS, 0, 0,
+    "do not show number of filtered data members", 0 },
   { "no-show-relative-offset-changes", OPT_NO_SHOW_RELATIVE_OFFSET_CHANGES,
     0, 0,
     "do not show relative offset changes", 0 },
@@ -681,6 +686,10 @@ parse_opt(int key, char* arg, struct argp_state* state)
       opts.show_locs = false;
       break;
 
+    case OPT_NO_SHOW_NUM_FILTERED_DATA_MEMBERS:
+      opts.show_num_filtered_data_members = false;
+      break;
+
     case OPT_NO_SHOW_RELATIVE_OFFSET_CHANGES:
       opts.show_relative_offset_changes = false;
       break;
@@ -889,6 +898,7 @@ set_diff_context_from_opts(diff_context_sptr ctxt,
   ctxt->show_added_vars(opts.show_all_vars || opts.show_added_vars);
   ctxt->show_linkage_names(opts.show_linkage_names);
   ctxt->show_locs(opts.show_locs);
+  ctxt->show_num_filtered_data_members(opts.show_num_filtered_data_members);
   // Intentional logic flip of ignore_soname
   ctxt->show_soname_change(!opts.ignore_soname);
   // So when we are showing only leaf changes, we want to show

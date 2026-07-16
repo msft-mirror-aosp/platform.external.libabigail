@@ -9,7 +9,7 @@ Variables changes summary: 0 Removed, 0 Changed, 0 Added variable
         underlying type 'struct {int needed; Uint16 src_format; Uint16 dst_format; double rate_incr; Uint8* buf; int len; int len_cvt; int len_mult; double len_ratio; void (* filters[10])(SDL_AudioCVT*, Uint16); int filter_index;}' at SDL12_compat.c:880:1 changed:
           type name changed from '__anonymous_struct__' to 'SDL12_AudioCVT'
           type size hasn't changed
-          1 data member changes (10 filtered):
+          1 data member change (10 filtered):
             type of 'void (* filters[10])(SDL_AudioCVT*, Uint16)' changed:
               array element type 'void (*)(SDL_AudioCVT*, Uint16)' changed:
                 entity changed from 'void (*)(SDL_AudioCVT*, Uint16)' to 'typedef SDL12_AudioCVTFilter' at SDL12_compat.c:903:1

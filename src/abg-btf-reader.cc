@@ -20,6 +20,7 @@
 
 #include "abg-elf-helpers.h"
 #include "abg-ir-priv.h"
+#include "abg-corpus-priv.h"
 
 // <headers defining libabigail's API go under here>
 ABG_BEGIN_EXPORT_DECLARATIONS
@@ -349,6 +350,7 @@ class reader : public elf_based_reader
       }
 
     ir::perform_type_canonicalization(types_to_canonicalize_, do_log());
+    corpus()->priv_->types_are_canonicalized(true);
 
     if (do_log())
       {
@@ -943,7 +945,7 @@ public:
     if ((is_class_or_union_type(underlying_type)
 	 || is_enum_type(underlying_type))
 	&& is_anonymous_type(underlying_type))
-      get_type_declaration(underlying_type)->set_naming_typedef(result);
+      get_type_declaration(underlying_type)->add_naming_typedef(result);
 
     return result;
   }

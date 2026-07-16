@@ -820,6 +820,24 @@ recursive_mutex&
 corpus::priv::get_mutex()
 {return mutex_;}
 
+/// Getter of whether the types reachable from this ABI are
+/// canonicalized or not.
+///
+/// @return true iff the types reachable from this ABI are
+/// canonicalized.
+bool
+corpus::priv::types_are_canonicalized() const
+{return types_are_canonicalized_.load();}
+
+/// Setter of whether the types reachable from this ABI are
+/// canonicalized or not.
+///
+/// @param f set to true iff the types reachable from this ABI are
+/// canonicalized.
+void
+corpus::priv::types_are_canonicalized(bool f)
+{types_are_canonicalized_ = f;}
+
 /// Destructor of the @ref corpus::priv type.
 corpus::priv::~priv()
 {
@@ -1109,6 +1127,8 @@ public:
     : corpus_(abi)
   {
     allow_visiting_already_visited_type_node(false);
+    // Member type nodes are not marked reachable by default.
+    allow_visiting_member_type_nodes(false);
   }
 
   /// This is a sub-routine of
@@ -1142,7 +1162,7 @@ public:
 
     if (auto d = is_decl(examplar_type))
       {
-	if (auto n = d->get_naming_typedef())
+	for (auto n : d->get_naming_typedefs())
 	  abi->record_type_as_reachable_from_public_interfaces(*n);
       }
 
@@ -1208,9 +1228,16 @@ public:
 	    if (abi->record_type_as_reachable_from_public_interfaces(*t))
 	      maybe_record_subtypes_as_reachable(t.get(), rec_types);
 
-	for (auto t : cou->get_sorted_member_types())
-	  if (abi->record_type_as_reachable_from_public_interfaces(*t))
-	    maybe_record_subtypes_as_reachable(t.get(), rec_types);
+	// NOTE: do *NOT* mark member types as being systematically
+	// reachable.  A given member type will be marked as reachable
+	// if it's (in)directly used as a type by a decl.  I am thus
+	// commenting below what should NOT be done.
+	//
+	// So the code below shall NOT be un-commented.
+	//
+	// for (auto t : cou->get_sorted_member_types())
+	//  if (abi->record_type_as_reachable_from_public_interfaces(*t))
+	//    maybe_record_subtypes_as_reachable(t.get(), rec_types);
 
 	if (auto klass = is_class_type(cou))
 	  {
