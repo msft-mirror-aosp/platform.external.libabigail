@@ -3508,20 +3508,20 @@
     <pointer-type-def type-id='43c2ddeb' size-in-bits='32' hash='78413ce64d81fb18' id='1d2b5c3c'/>
     <type-decl name='long int' size-in-bits='32' hash='09d17c08f594edc7#1' id='95e97e5f'/>
     <type-decl name='long long int' size-in-bits='64' hash='8aa1e1a2ab2c2d3e' id='95e97e60'/>
-    <function-type method-class-id='38e516d0' size-in-bits='32' hash='49e963c49de88127' id='49998c93'>
+    <function-type method-class-id='38e516d0' static='yes' size-in-bits='32' hash='49e963c49de88127' id='49998c93'>
       <parameter type-id='7376f3a6' is-artificial='yes'/>
       <parameter type-id='157d4f95'/>
       <parameter type-id='922df12b'/>
       <parameter type-id='922df12b'/>
       <return type-id='48b5725f'/>
     </function-type>
-    <function-type method-class-id='d6a105f5' const='yes' size-in-bits='32' hash='a6697d839ae861fa' id='a0710e30'>
+    <function-type method-class-id='d6a105f5' static='yes' const='yes' size-in-bits='32' hash='a6697d839ae861fa' id='a0710e30'>
       <parameter type-id='d23a3240' is-artificial='yes'/>
       <parameter type-id='eaa32e2f'/>
       <parameter type-id='b59d7dce'/>
       <return type-id='48b5725f'/>
     </function-type>
-    <function-type method-class-id='d6a105f5' const='yes' size-in-bits='32' hash='d7322fb3710d2c7a' id='effef416'>
+    <function-type method-class-id='d6a105f5' static='yes' const='yes' size-in-bits='32' hash='d7322fb3710d2c7a' id='effef416'>
       <parameter type-id='d23a3240' is-artificial='yes'/>
       <parameter type-id='eaa32e2f'/>
       <parameter type-id='eaa32e2f'/>

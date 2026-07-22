@@ -186,7 +186,7 @@ public:
   types_map_type					m_types_map;
   unordered_map<string, shared_ptr<function_tdecl> >	m_fn_tmpl_map;
   unordered_map<string, shared_ptr<class_tdecl> >	m_class_tmpl_map;
-  vector<type_base_sptr>				m_types_to_canonicalize;
+  type_wptr_set_type					m_types_to_canonicalize;
   string_xml_node_map					m_id_xml_node_map;
   xml_node_decl_base_sptr_map				m_xml_node_decl_map;
   xml::reader_sptr					m_reader;
@@ -1009,7 +1009,7 @@ public:
   schedule_type_for_canonicalization(type_base_sptr t)
   {
     if (t)
-      m_types_to_canonicalize.push_back(t);
+      m_types_to_canonicalize.insert(t);
   }
 
   /// Perform the canonicalizing of types that ought to be done after
@@ -5267,6 +5267,10 @@ build_function_type(reader&			rdr,
   size_t size = rdr.get_translation_unit()->get_address_size(), align = 0;
   read_size_and_alignment(node, size, align);
 
+  bool is_static = false;
+  if (is_method_t)
+    read_static(node, is_static);
+
   const environment& env = rdr.get_environment();
   std::vector<shared_ptr<function_decl::parameter> > parms;
   type_base_sptr return_type = env.get_void_type();
@@ -5293,6 +5297,12 @@ build_function_type(reader&			rdr,
 
   bind_function_type_life_time(fn_type, rdr.get_translation_unit());
   fn_type->set_translation_unit(rdr.get_translation_unit());
+  if (is_method_t)
+    {
+      method_type_sptr m = is_method_type(fn_type);
+      ABG_ASSERT(m);
+      m->set_is_static(is_static);
+    }
 
   if (!id.empty())
     {

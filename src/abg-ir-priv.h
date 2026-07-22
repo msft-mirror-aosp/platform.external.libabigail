@@ -1510,8 +1510,10 @@ struct type_topo_comp
 
 	// If two method types have the same name (textual
 	// representation), make the non-static one come first.
-	if (m_f->get_is_for_static_method() != m_s->get_is_for_static_method())
-	  return m_f->get_is_for_static_method() < m_s->get_is_for_static_method();
+	bool m_f_static = m_f->get_is_static(),
+	  m_s_static = m_s->get_is_static();
+	if (m_f_static != m_s_static)
+	  return m_f_static < m_s_static;
       }
 
     // If all pretty representions are equal, sort by
@@ -1706,7 +1708,7 @@ sort_types_for_hash_computing_and_c14n(IteratorType begin,
 				       IteratorType end)
 {
   sort_for_hash_functor comp;
-  return std::stable_sort(begin, end, comp);
+  return std::sort(begin, end, comp);
 }
 
 void

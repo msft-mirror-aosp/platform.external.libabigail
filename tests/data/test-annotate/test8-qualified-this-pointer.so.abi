@@ -21,7 +21,7 @@
     <!-- int -->
     <type-decl name='int' size-in-bits='32' hash='09d17c08f594edc7' id='type-id-4'/>
     <!-- int (S::*) () -->
-    <function-type method-class-id='type-id-1' const='yes' size-in-bits='64' hash='de1d1267e996f729' id='type-id-5'>
+    <function-type method-class-id='type-id-1' static='yes' const='yes' size-in-bits='64' hash='de1d1267e996f729' id='type-id-5'>
       <!-- implicit parameter of type 'const S*' -->
       <parameter type-id='type-id-3' is-artificial='yes'/>
       <!-- int -->

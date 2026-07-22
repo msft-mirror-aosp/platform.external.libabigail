@@ -81,14 +81,14 @@
     <!-- long long int -->
     <type-decl name='long long int' size-in-bits='64' hash='8aa1e1a2ab2c2d3e' id='type-id-8'/>
     <!-- s0::integer (s0::*) () -->
-    <function-type method-class-id='type-id-9' size-in-bits='64' hash='61d56fd2006ef201' id='type-id-10'>
+    <function-type method-class-id='type-id-9' static='yes' size-in-bits='64' hash='61d56fd2006ef201' id='type-id-10'>
       <!-- implicit parameter of type 's0*' -->
       <parameter type-id='type-id-11' is-artificial='yes'/>
       <!-- typedef s0::integer -->
       <return type-id='type-id-12'/>
     </function-type>
     <!-- void (s0::*) () -->
-    <function-type method-class-id='type-id-9' size-in-bits='64' hash='30d7a232e0a3e495' id='type-id-13'>
+    <function-type method-class-id='type-id-9' static='yes' size-in-bits='64' hash='30d7a232e0a3e495' id='type-id-13'>
       <!-- implicit parameter of type 's0*' -->
       <parameter type-id='type-id-11' is-artificial='yes'/>
       <!-- void -->

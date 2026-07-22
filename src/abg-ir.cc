@@ -22872,12 +22872,25 @@ equals(const function_type& l, const function_type& r, change_kind* k)
 	RETURN(result);
     }
 
-  class_or_union* l_class = 0, *r_class = 0;
-  if (const method_type* m = dynamic_cast<const method_type*>(&l))
-    l_class = m->get_class_type().get();
+  class_or_union* l_class = nullptr, *r_class = nullptr;
+  const method_type* l_method_type = dynamic_cast<const method_type*>(&l),
+    *r_method_type = dynamic_cast<const method_type*>(&r);
 
-  if (const method_type* m = dynamic_cast<const method_type*>(&r))
-    r_class = m->get_class_type().get();
+  if (l_method_type && r_method_type)
+    if (l_method_type->get_is_static() != r_method_type->get_is_static())
+      {
+	result = false;
+	if (k)
+	  *k |= SUBTYPE_CHANGE_KIND;
+	else
+	  RETURN(result);
+      }
+
+  if (l_method_type)
+    l_class = l_method_type->get_class_type().get();
+
+  if (r_method_type)
+    r_class = r_method_type->get_class_type().get();
 
   // Compare the names of the class of the method
 
@@ -23185,9 +23198,11 @@ struct method_type::priv
   std::recursive_mutex mutex_;
   class_or_union_wptr class_type_;
   bool is_const;
+  bool is_static;
 
   priv()
-    : is_const()
+    : is_const(false),
+      is_static(false)
   {}
 }; // end struct method_type::priv
 
@@ -23397,10 +23412,34 @@ method_type::get_is_const() const
   return priv_->is_const;
 }
 
+/// Setter of the "is-static" property of @ref method_type.
+///
+/// @param f the new argument of the "is-static" propety.
+void
+method_type::set_is_static(bool f)
+{
+  lock_guard<recursive_mutex> lock(priv_->mutex_);
+  priv_->is_static = f;
+}
+
+/// Fetter of the "is-static" property of @ref method_type.
+///
+/// @return the argument of the "is-static" propety.
+bool
+method_type::get_is_static() const
+{
+  lock_guard<recursive_mutex> lock(priv_->mutex_);
+  return priv_->is_static;
+}
+
 /// Test if the current method type is for a static method or not.
 ///
-/// @return true iff the current method_type denotes a the type of a
-/// static method.
+/// This is a slow method that has to be called only once to set
+/// method_type::set_is_static, so that we can subsequently call
+/// method_type::get_is_static instead.
+///
+/// @return true iff the current
+/// method_type denotes a the type of a static method.
 bool
 method_type::get_is_for_static_method() const
 {
@@ -28025,6 +28064,12 @@ set_member_is_static(decl_base& d, bool s)
 		  cl->priv_->non_static_data_members_.push_back(var);
 	      }
 	    }
+	}
+      else if (method_decl* method = is_method_decl(&d))
+	{
+	  method_type_sptr method_type = method->get_type();
+	  ABG_ASSERT(method_type);
+	  method_type->set_is_static(true);
 	}
     }
 }

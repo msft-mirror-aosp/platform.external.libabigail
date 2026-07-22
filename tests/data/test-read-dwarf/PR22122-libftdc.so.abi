@@ -475,104 +475,104 @@
     <type-decl name='long int' size-in-bits='64' hash='8aa1e1a2ab2c2d3e' id='type-id-85'/>
     <type-decl name='long long int' size-in-bits='64' hash='8aa1e1a2ab2c2d3e#1' id='type-id-89'/>
     <reference-type-def kind='rvalue' type-id='type-id-89' size-in-bits='64' hash='17403b8d654209cb' id='type-id-90'/>
-    <function-type method-class-id='type-id-53' size-in-bits='64' hash='091f65a92015ffbd' id='type-id-91'>
+    <function-type method-class-id='type-id-53' static='yes' size-in-bits='64' hash='091f65a92015ffbd' id='type-id-91'>
       <parameter type-id='type-id-74' is-artificial='yes'/>
       <return type-id='type-id-30'/>
     </function-type>
-    <function-type method-class-id='type-id-53' const='yes' size-in-bits='64' hash='5c7918a87b296749' id='type-id-92'>
+    <function-type method-class-id='type-id-53' static='yes' const='yes' size-in-bits='64' hash='5c7918a87b296749' id='type-id-92'>
       <parameter type-id='type-id-56' is-artificial='yes'/>
       <parameter type-id='type-id-64'/>
       <return type-id='type-id-55'/>
     </function-type>
-    <function-type method-class-id='type-id-53' const='yes' size-in-bits='64' hash='eeefe9b4f18fd98e' id='type-id-93'>
+    <function-type method-class-id='type-id-53' static='yes' const='yes' size-in-bits='64' hash='eeefe9b4f18fd98e' id='type-id-93'>
       <parameter type-id='type-id-56' is-artificial='yes'/>
       <return type-id='type-id-89'/>
     </function-type>
-    <function-type method-class-id='type-id-53' size-in-bits='64' hash='ceffc2274feacb34' id='type-id-94'>
+    <function-type method-class-id='type-id-53' static='yes' size-in-bits='64' hash='ceffc2274feacb34' id='type-id-94'>
       <parameter type-id='type-id-74' is-artificial='yes'/>
       <parameter type-id='type-id-53'/>
       <return type-id='type-id-95'/>
     </function-type>
-    <function-type method-class-id='type-id-53' size-in-bits='64' hash='c6695b94423f7f1a' id='type-id-96'>
+    <function-type method-class-id='type-id-53' static='yes' size-in-bits='64' hash='c6695b94423f7f1a' id='type-id-96'>
       <parameter type-id='type-id-74' is-artificial='yes'/>
       <return type-id='type-id-53'/>
     </function-type>
-    <function-type method-class-id='type-id-53' size-in-bits='64' hash='1336b9505348306a' id='type-id-97'>
+    <function-type method-class-id='type-id-53' static='yes' size-in-bits='64' hash='1336b9505348306a' id='type-id-97'>
       <parameter type-id='type-id-74' is-artificial='yes'/>
       <parameter type-id='type-id-9'/>
       <return type-id='type-id-53'/>
     </function-type>
-    <function-type method-class-id='type-id-53' size-in-bits='64' hash='a571934df360972e' id='type-id-98'>
+    <function-type method-class-id='type-id-53' static='yes' size-in-bits='64' hash='a571934df360972e' id='type-id-98'>
       <parameter type-id='type-id-74' is-artificial='yes'/>
       <parameter type-id='type-id-35'/>
       <parameter type-id='type-id-53'/>
       <return type-id='type-id-53'/>
     </function-type>
-    <function-type method-class-id='type-id-53' size-in-bits='64' hash='d15e6debed04c222' id='type-id-99'>
+    <function-type method-class-id='type-id-53' static='yes' size-in-bits='64' hash='d15e6debed04c222' id='type-id-99'>
       <parameter type-id='type-id-74' is-artificial='yes'/>
       <parameter type-id='type-id-40'/>
       <return type-id='type-id-53'/>
     </function-type>
-    <function-type method-class-id='type-id-53' size-in-bits='64' hash='b0c7fff8cd85969a' id='type-id-100'>
+    <function-type method-class-id='type-id-53' static='yes' size-in-bits='64' hash='b0c7fff8cd85969a' id='type-id-100'>
       <parameter type-id='type-id-74' is-artificial='yes'/>
       <parameter type-id='type-id-40'/>
       <parameter type-id='type-id-53'/>
       <return type-id='type-id-53'/>
     </function-type>
-    <function-type method-class-id='type-id-53' size-in-bits='64' hash='28ad11b1f7d7efa4' id='type-id-101'>
+    <function-type method-class-id='type-id-53' static='yes' size-in-bits='64' hash='28ad11b1f7d7efa4' id='type-id-101'>
       <parameter type-id='type-id-74' is-artificial='yes'/>
       <parameter type-id='type-id-55'/>
       <parameter type-id='type-id-53'/>
       <return type-id='type-id-53'/>
     </function-type>
-    <function-type method-class-id='type-id-53' size-in-bits='64' hash='c935820f0935a341' id='type-id-102'>
+    <function-type method-class-id='type-id-53' static='yes' size-in-bits='64' hash='c935820f0935a341' id='type-id-102'>
       <parameter type-id='type-id-74' is-artificial='yes'/>
       <parameter type-id='type-id-55'/>
       <return type-id='type-id-53'/>
     </function-type>
-    <function-type method-class-id='type-id-53' size-in-bits='64' hash='1cd6a69dd42cc04b' id='type-id-103'>
+    <function-type method-class-id='type-id-53' static='yes' size-in-bits='64' hash='1cd6a69dd42cc04b' id='type-id-103'>
       <parameter type-id='type-id-56'/>
       <parameter type-id='type-id-40'/>
       <parameter type-id='type-id-74'/>
       <parameter type-id='type-id-104'/>
       <return type-id='type-id-53'/>
     </function-type>
-    <function-type method-class-id='type-id-53' size-in-bits='64' hash='bfdf8c3b3d5b3d72' id='type-id-105'>
+    <function-type method-class-id='type-id-53' static='yes' size-in-bits='64' hash='bfdf8c3b3d5b3d72' id='type-id-105'>
       <parameter type-id='type-id-74' is-artificial='yes'/>
       <parameter type-id='type-id-104'/>
       <return type-id='type-id-53'/>
     </function-type>
-    <function-type method-class-id='type-id-53' size-in-bits='64' hash='70068f93dd28182c' id='type-id-106'>
+    <function-type method-class-id='type-id-53' static='yes' size-in-bits='64' hash='70068f93dd28182c' id='type-id-106'>
       <parameter type-id='type-id-74' is-artificial='yes'/>
       <parameter type-id='type-id-104'/>
       <parameter type-id='type-id-40'/>
       <parameter type-id='type-id-61'/>
       <return type-id='type-id-53'/>
     </function-type>
-    <function-type method-class-id='type-id-53' size-in-bits='64' hash='44b1872af37d4002' id='type-id-107'>
+    <function-type method-class-id='type-id-53' static='yes' size-in-bits='64' hash='44b1872af37d4002' id='type-id-107'>
       <parameter type-id='type-id-74' is-artificial='yes'/>
       <parameter type-id='type-id-104'/>
       <parameter type-id='type-id-55'/>
       <parameter type-id='type-id-53'/>
       <return type-id='type-id-53'/>
     </function-type>
-    <function-type method-class-id='type-id-53' size-in-bits='64' hash='826273f3c8db155a' id='type-id-108'>
+    <function-type method-class-id='type-id-53' static='yes' size-in-bits='64' hash='826273f3c8db155a' id='type-id-108'>
       <parameter type-id='type-id-74' is-artificial='yes'/>
       <parameter type-id='type-id-53'/>
       <return type-id='type-id-53'/>
     </function-type>
-    <function-type method-class-id='type-id-53' size-in-bits='64' hash='da26ec3b35762981' id='type-id-109'>
+    <function-type method-class-id='type-id-53' static='yes' size-in-bits='64' hash='da26ec3b35762981' id='type-id-109'>
       <parameter type-id='type-id-74' is-artificial='yes'/>
       <parameter type-id='type-id-53'/>
       <parameter type-id='type-id-110'/>
       <return type-id='type-id-53'/>
     </function-type>
-    <function-type method-class-id='type-id-53' const='yes' size-in-bits='64' hash='8af6385281cb001b' id='type-id-111'>
+    <function-type method-class-id='type-id-53' static='yes' const='yes' size-in-bits='64' hash='8af6385281cb001b' id='type-id-111'>
       <parameter type-id='type-id-56' is-artificial='yes'/>
       <parameter type-id='type-id-112'/>
       <return type-id='type-id-53'/>
     </function-type>
-    <function-type method-class-id='type-id-113' size-in-bits='64' hash='8bccfc7dfb48e775' id='type-id-114'>
+    <function-type method-class-id='type-id-113' static='yes' size-in-bits='64' hash='8bccfc7dfb48e775' id='type-id-114'>
       <parameter type-id='type-id-55'/>
       <parameter type-id='type-id-30'/>
       <parameter type-id='type-id-110'/>
@@ -580,7 +580,7 @@
       <parameter type-id='type-id-116'/>
       <return type-id='type-id-53'/>
     </function-type>
-    <function-type method-class-id='type-id-113' size-in-bits='64' hash='cb0250db05d2abea' id='type-id-117'>
+    <function-type method-class-id='type-id-113' static='yes' size-in-bits='64' hash='cb0250db05d2abea' id='type-id-117'>
       <parameter type-id='type-id-74'/>
       <parameter type-id='type-id-42'/>
       <parameter type-id='type-id-110'/>
@@ -588,43 +588,43 @@
       <parameter type-id='type-id-116'/>
       <return type-id='type-id-53'/>
     </function-type>
-    <function-type method-class-id='type-id-53' size-in-bits='64' hash='798a13326dd5f81b' id='type-id-118'>
+    <function-type method-class-id='type-id-53' static='yes' size-in-bits='64' hash='798a13326dd5f81b' id='type-id-118'>
       <parameter type-id='type-id-74' is-artificial='yes'/>
       <parameter type-id='type-id-55'/>
       <return type-id='type-id-119'/>
     </function-type>
-    <function-type method-class-id='type-id-53' size-in-bits='64' hash='63df5e3d481ef454' id='type-id-120'>
+    <function-type method-class-id='type-id-53' static='yes' size-in-bits='64' hash='63df5e3d481ef454' id='type-id-120'>
       <parameter type-id='type-id-74' is-artificial='yes'/>
       <parameter type-id='type-id-88'/>
       <parameter type-id='type-id-88'/>
       <return type-id='type-id-119'/>
     </function-type>
-    <function-type method-class-id='type-id-53' size-in-bits='64' hash='49cebc7285ca37d6' id='type-id-121'>
+    <function-type method-class-id='type-id-53' static='yes' size-in-bits='64' hash='49cebc7285ca37d6' id='type-id-121'>
       <parameter type-id='type-id-74' is-artificial='yes'/>
       <parameter type-id='type-id-89'/>
       <parameter type-id='type-id-88'/>
       <return type-id='type-id-119'/>
     </function-type>
-    <function-type method-class-id='type-id-53' size-in-bits='64' hash='9af697896821d42c' id='type-id-122'>
+    <function-type method-class-id='type-id-53' static='yes' size-in-bits='64' hash='9af697896821d42c' id='type-id-122'>
       <parameter type-id='type-id-74' is-artificial='yes'/>
       <parameter type-id='type-id-53'/>
       <parameter type-id='type-id-9'/>
       <return type-id='type-id-119'/>
     </function-type>
-    <function-type method-class-id='type-id-53' size-in-bits='64' hash='311a1c5c7d3fdf1c' id='type-id-123'>
+    <function-type method-class-id='type-id-53' static='yes' size-in-bits='64' hash='311a1c5c7d3fdf1c' id='type-id-123'>
       <parameter type-id='type-id-74' is-artificial='yes'/>
       <parameter type-id='type-id-53'/>
       <parameter type-id='type-id-42'/>
       <parameter type-id='type-id-88'/>
       <return type-id='type-id-119'/>
     </function-type>
-    <function-type method-class-id='type-id-53' size-in-bits='64' hash='2a73a3ed3964bfdd' id='type-id-124'>
+    <function-type method-class-id='type-id-53' static='yes' size-in-bits='64' hash='2a73a3ed3964bfdd' id='type-id-124'>
       <parameter type-id='type-id-74' is-artificial='yes'/>
       <parameter type-id='type-id-53'/>
       <parameter type-id='type-id-88'/>
       <return type-id='type-id-119'/>
     </function-type>
-    <function-type method-class-id='type-id-53' size-in-bits='64' hash='7819eb0f1526dcbf' id='type-id-125'>
+    <function-type method-class-id='type-id-53' static='yes' size-in-bits='64' hash='7819eb0f1526dcbf' id='type-id-125'>
       <parameter type-id='type-id-74' is-artificial='yes'/>
       <parameter type-id='type-id-53'/>
       <parameter type-id='type-id-88'/>
@@ -632,186 +632,186 @@
       <parameter type-id='type-id-126'/>
       <return type-id='type-id-119'/>
     </function-type>
-    <function-type method-class-id='type-id-53' size-in-bits='64' hash='2444107157d15599' id='type-id-127'>
+    <function-type method-class-id='type-id-53' static='yes' size-in-bits='64' hash='2444107157d15599' id='type-id-127'>
       <parameter type-id='type-id-74' is-artificial='yes'/>
       <parameter type-id='type-id-53'/>
       <parameter type-id='type-id-89'/>
       <return type-id='type-id-119'/>
     </function-type>
-    <function-type method-class-id='type-id-128' size-in-bits='64' hash='9d41c6a21b3949a2' id='type-id-129'>
+    <function-type method-class-id='type-id-128' static='yes' size-in-bits='64' hash='9d41c6a21b3949a2' id='type-id-129'>
       <parameter type-id='type-id-130' is-artificial='yes'/>
       <parameter type-id='type-id-55'/>
       <return type-id='type-id-131'/>
     </function-type>
-    <function-type method-class-id='type-id-53' size-in-bits='64' hash='757374cddf64b1a5' id='type-id-132'>
+    <function-type method-class-id='type-id-53' static='yes' size-in-bits='64' hash='757374cddf64b1a5' id='type-id-132'>
       <parameter type-id='type-id-74' is-artificial='yes'/>
       <return type-id='type-id-59'/>
     </function-type>
-    <function-type method-class-id='type-id-53' size-in-bits='64' hash='9f270c331d9ebe6a' id='type-id-133'>
+    <function-type method-class-id='type-id-53' static='yes' size-in-bits='64' hash='9f270c331d9ebe6a' id='type-id-133'>
       <parameter type-id='type-id-74' is-artificial='yes'/>
       <parameter type-id='type-id-74'/>
       <return type-id='type-id-59'/>
     </function-type>
-    <function-type method-class-id='type-id-59' size-in-bits='64' hash='5cdae23911790379' id='type-id-134'>
+    <function-type method-class-id='type-id-59' static='yes' size-in-bits='64' hash='5cdae23911790379' id='type-id-134'>
       <parameter type-id='type-id-70' is-artificial='yes'/>
       <parameter type-id='type-id-61'/>
       <return type-id='type-id-135'/>
     </function-type>
-    <function-type method-class-id='type-id-16' size-in-bits='64' hash='b7d9938eba5f2d72' id='type-id-17'>
+    <function-type method-class-id='type-id-16' static='yes' size-in-bits='64' hash='b7d9938eba5f2d72' id='type-id-17'>
       <parameter type-id='type-id-21' is-artificial='yes'/>
       <return type-id='type-id-80'/>
     </function-type>
-    <function-type method-class-id='type-id-12' size-in-bits='64' hash='b7d9938eba5f2d72#1' id='type-id-13'>
+    <function-type method-class-id='type-id-12' static='yes' size-in-bits='64' hash='b7d9938eba5f2d72#1' id='type-id-13'>
       <parameter type-id='type-id-20' is-artificial='yes'/>
       <return type-id='type-id-80'/>
     </function-type>
-    <function-type method-class-id='type-id-18' size-in-bits='64' hash='2b6aa7e96c57d480' id='type-id-19'>
+    <function-type method-class-id='type-id-18' static='yes' size-in-bits='64' hash='2b6aa7e96c57d480' id='type-id-19'>
       <parameter type-id='type-id-22' is-artificial='yes'/>
       <parameter type-id='type-id-28'/>
       <return type-id='type-id-80'/>
     </function-type>
-    <function-type method-class-id='type-id-23' size-in-bits='64' hash='7cc0469cd40ce252' id='type-id-24'>
+    <function-type method-class-id='type-id-23' static='yes' size-in-bits='64' hash='7cc0469cd40ce252' id='type-id-24'>
       <parameter type-id='type-id-26' is-artificial='yes'/>
       <parameter type-id='type-id-40'/>
       <return type-id='type-id-80'/>
     </function-type>
-    <function-type method-class-id='type-id-53' size-in-bits='64' hash='eb99fd5a868aaf05' id='type-id-136'>
+    <function-type method-class-id='type-id-53' static='yes' size-in-bits='64' hash='eb99fd5a868aaf05#1' id='type-id-136'>
       <parameter type-id='type-id-74' is-artificial='yes'/>
       <return type-id='type-id-80'/>
     </function-type>
-    <function-type method-class-id='type-id-53' size-in-bits='64' hash='31992b693bc7a568' id='type-id-137'>
+    <function-type method-class-id='type-id-53' static='yes' size-in-bits='64' hash='31992b693bc7a568' id='type-id-137'>
       <parameter type-id='type-id-74' is-artificial='yes'/>
       <parameter type-id='type-id-42'/>
       <return type-id='type-id-80'/>
     </function-type>
-    <function-type method-class-id='type-id-53' size-in-bits='64' hash='3f65a8f0f3687c99' id='type-id-138'>
+    <function-type method-class-id='type-id-53' static='yes' size-in-bits='64' hash='3f65a8f0f3687c99' id='type-id-138'>
       <parameter type-id='type-id-74' is-artificial='yes'/>
       <parameter type-id='type-id-55'/>
       <parameter type-id='type-id-53'/>
       <return type-id='type-id-80'/>
     </function-type>
-    <function-type method-class-id='type-id-53' size-in-bits='64' hash='3ae8b3ae72307f3d' id='type-id-139'>
+    <function-type method-class-id='type-id-53' static='yes' size-in-bits='64' hash='3ae8b3ae72307f3d' id='type-id-139'>
       <parameter type-id='type-id-74' is-artificial='yes'/>
       <parameter type-id='type-id-56'/>
       <return type-id='type-id-80'/>
     </function-type>
-    <function-type method-class-id='type-id-53' size-in-bits='64' hash='2efb9e4136e3b996' id='type-id-140'>
+    <function-type method-class-id='type-id-53' static='yes' size-in-bits='64' hash='2efb9e4136e3b996' id='type-id-140'>
       <parameter type-id='type-id-74' is-artificial='yes'/>
       <parameter type-id='type-id-56'/>
       <parameter type-id='type-id-40'/>
       <parameter type-id='type-id-74'/>
       <return type-id='type-id-80'/>
     </function-type>
-    <function-type method-class-id='type-id-53' size-in-bits='64' hash='a9619623288fb9dd' id='type-id-141'>
+    <function-type method-class-id='type-id-53' static='yes' size-in-bits='64' hash='a9619623288fb9dd' id='type-id-141'>
       <parameter type-id='type-id-74' is-artificial='yes'/>
       <parameter type-id='type-id-88'/>
       <return type-id='type-id-80'/>
     </function-type>
-    <function-type method-class-id='type-id-53' size-in-bits='64' hash='38fdbd00c7781bf7' id='type-id-142'>
+    <function-type method-class-id='type-id-53' static='yes' size-in-bits='64' hash='38fdbd00c7781bf7' id='type-id-142'>
       <parameter type-id='type-id-74' is-artificial='yes'/>
       <parameter type-id='type-id-95'/>
       <return type-id='type-id-80'/>
     </function-type>
-    <function-type method-class-id='type-id-53' size-in-bits='64' hash='01f14e82ca899b76' id='type-id-143'>
+    <function-type method-class-id='type-id-53' static='yes' size-in-bits='64' hash='01f14e82ca899b76' id='type-id-143'>
       <parameter type-id='type-id-74' is-artificial='yes'/>
       <parameter type-id='type-id-76'/>
       <return type-id='type-id-80'/>
     </function-type>
-    <function-type method-class-id='type-id-53' size-in-bits='64' hash='5e2a06b220c09dbb' id='type-id-144'>
+    <function-type method-class-id='type-id-53' static='yes' size-in-bits='64' hash='5e2a06b220c09dbb' id='type-id-144'>
       <parameter type-id='type-id-74' is-artificial='yes'/>
       <parameter type-id='type-id-110'/>
       <return type-id='type-id-80'/>
     </function-type>
-    <function-type method-class-id='type-id-53' size-in-bits='64' hash='b52d3317eb117e3b' id='type-id-145'>
+    <function-type method-class-id='type-id-53' static='yes' size-in-bits='64' hash='b52d3317eb117e3b' id='type-id-145'>
       <parameter type-id='type-id-74' is-artificial='yes'/>
       <parameter type-id='type-id-135'/>
       <return type-id='type-id-80'/>
     </function-type>
-    <function-type method-class-id='type-id-53' size-in-bits='64' hash='cd74f4b6bf692558' id='type-id-146'>
+    <function-type method-class-id='type-id-53' static='yes' size-in-bits='64' hash='cd74f4b6bf692558' id='type-id-146'>
       <parameter type-id='type-id-74' is-artificial='yes'/>
       <parameter type-id='type-id-59'/>
       <return type-id='type-id-80'/>
     </function-type>
-    <function-type method-class-id='type-id-53' size-in-bits='64' hash='ffe18ad036b77dd9' id='type-id-147'>
+    <function-type method-class-id='type-id-53' static='yes' size-in-bits='64' hash='ffe18ad036b77dd9' id='type-id-147'>
       <parameter type-id='type-id-74' is-artificial='yes'/>
       <parameter type-id='type-id-112'/>
       <return type-id='type-id-80'/>
     </function-type>
-    <function-type method-class-id='type-id-53' size-in-bits='64' hash='513e20440b4ed600' id='type-id-148'>
+    <function-type method-class-id='type-id-53' static='yes' size-in-bits='64' hash='513e20440b4ed600' id='type-id-148'>
       <parameter type-id='type-id-74' is-artificial='yes'/>
       <parameter type-id='type-id-149'/>
       <return type-id='type-id-80'/>
     </function-type>
-    <function-type method-class-id='type-id-50' const='yes' size-in-bits='64' hash='105d8c6aac01ee38' id='type-id-150'>
+    <function-type method-class-id='type-id-50' static='yes' const='yes' size-in-bits='64' hash='105d8c6aac01ee38' id='type-id-150'>
       <parameter type-id='type-id-52' is-artificial='yes'/>
       <return type-id='type-id-80'/>
     </function-type>
-    <function-type method-class-id='type-id-151' size-in-bits='64' hash='34be4b5fbc1dda5d' id='type-id-152'>
+    <function-type method-class-id='type-id-151' static='yes' size-in-bits='64' hash='34be4b5fbc1dda5d' id='type-id-152'>
       <parameter type-id='type-id-153' is-artificial='yes'/>
       <return type-id='type-id-80'/>
     </function-type>
-    <function-type method-class-id='type-id-59' size-in-bits='64' hash='34be4b5fbc1dda5d#1' id='type-id-154'>
+    <function-type method-class-id='type-id-59' static='yes' size-in-bits='64' hash='34be4b5fbc1dda5d#1' id='type-id-154'>
       <parameter type-id='type-id-70' is-artificial='yes'/>
       <return type-id='type-id-80'/>
     </function-type>
-    <function-type method-class-id='type-id-59' size-in-bits='64' hash='83af9e53c7a20006' id='type-id-155'>
+    <function-type method-class-id='type-id-59' static='yes' size-in-bits='64' hash='83af9e53c7a20006' id='type-id-155'>
       <parameter type-id='type-id-70' is-artificial='yes'/>
       <parameter type-id='type-id-10'/>
       <return type-id='type-id-80'/>
     </function-type>
-    <function-type method-class-id='type-id-59' size-in-bits='64' hash='30eb3696ba5b35fd' id='type-id-156'>
+    <function-type method-class-id='type-id-59' static='yes' size-in-bits='64' hash='30eb3696ba5b35fd' id='type-id-156'>
       <parameter type-id='type-id-70' is-artificial='yes'/>
       <parameter type-id='type-id-25'/>
       <return type-id='type-id-80'/>
     </function-type>
-    <function-type method-class-id='type-id-59' size-in-bits='64' hash='b8eceae882efa9b2' id='type-id-157'>
+    <function-type method-class-id='type-id-59' static='yes' size-in-bits='64' hash='b8eceae882efa9b2' id='type-id-157'>
       <parameter type-id='type-id-70' is-artificial='yes'/>
       <parameter type-id='type-id-90'/>
       <return type-id='type-id-80'/>
     </function-type>
-    <function-type method-class-id='type-id-59' size-in-bits='64' hash='bfee6a5cfb607342' id='type-id-158'>
+    <function-type method-class-id='type-id-59' static='yes' size-in-bits='64' hash='bfee6a5cfb607342' id='type-id-158'>
       <parameter type-id='type-id-70' is-artificial='yes'/>
       <parameter type-id='type-id-159'/>
       <return type-id='type-id-80'/>
     </function-type>
-    <function-type method-class-id='type-id-59' size-in-bits='64' hash='2147ef1a2149143a' id='type-id-160'>
+    <function-type method-class-id='type-id-59' static='yes' size-in-bits='64' hash='2147ef1a2149143a' id='type-id-160'>
       <parameter type-id='type-id-70' is-artificial='yes'/>
       <parameter type-id='type-id-119'/>
       <return type-id='type-id-80'/>
     </function-type>
-    <function-type method-class-id='type-id-59' size-in-bits='64' hash='9289df8537f15d31' id='type-id-161'>
+    <function-type method-class-id='type-id-59' static='yes' size-in-bits='64' hash='9289df8537f15d31' id='type-id-161'>
       <parameter type-id='type-id-70' is-artificial='yes'/>
       <parameter type-id='type-id-162'/>
       <return type-id='type-id-80'/>
     </function-type>
-    <function-type method-class-id='type-id-59' size-in-bits='64' hash='115c44b130310307' id='type-id-163'>
+    <function-type method-class-id='type-id-59' static='yes' size-in-bits='64' hash='115c44b130310307' id='type-id-163'>
       <parameter type-id='type-id-70' is-artificial='yes'/>
       <parameter type-id='type-id-164'/>
       <return type-id='type-id-80'/>
     </function-type>
-    <function-type method-class-id='type-id-59' size-in-bits='64' hash='4b5702f45783c369' id='type-id-165'>
+    <function-type method-class-id='type-id-59' static='yes' size-in-bits='64' hash='4b5702f45783c369' id='type-id-165'>
       <parameter type-id='type-id-70' is-artificial='yes'/>
       <parameter type-id='type-id-166'/>
       <return type-id='type-id-80'/>
     </function-type>
-    <function-type method-class-id='type-id-167' size-in-bits='64' hash='10bc8ed877c06400' id='type-id-168'>
+    <function-type method-class-id='type-id-167' static='yes' size-in-bits='64' hash='10bc8ed877c06400' id='type-id-168'>
       <parameter type-id='type-id-169' is-artificial='yes'/>
       <return type-id='type-id-80'/>
     </function-type>
-    <function-type method-class-id='type-id-170' size-in-bits='64' hash='10bc8ed877c06400#1' id='type-id-171'>
+    <function-type method-class-id='type-id-170' static='yes' size-in-bits='64' hash='10bc8ed877c06400#1' id='type-id-171'>
       <parameter type-id='type-id-172' is-artificial='yes'/>
       <return type-id='type-id-80'/>
     </function-type>
-    <function-type method-class-id='type-id-12' size-in-bits='64' hash='42da2aee204175df' id='type-id-15'>
+    <function-type method-class-id='type-id-12' static='yes' size-in-bits='64' hash='42da2aee204175df' id='type-id-15'>
       <parameter type-id='type-id-20' is-artificial='yes'/>
       <return type-id='type-id-126'/>
     </function-type>
-    <function-type method-class-id='type-id-12' size-in-bits='64' hash='71af1c09a34cb87a' id='type-id-14'>
+    <function-type method-class-id='type-id-12' static='yes' size-in-bits='64' hash='71af1c09a34cb87a' id='type-id-14'>
       <parameter type-id='type-id-20' is-artificial='yes'/>
       <parameter type-id='type-id-38'/>
       <return type-id='type-id-126'/>
     </function-type>
-    <function-type method-class-id='type-id-151' size-in-bits='64' hash='7dbe37910833919a' id='type-id-173'>
+    <function-type method-class-id='type-id-151' static='yes' size-in-bits='64' hash='7dbe37910833919a' id='type-id-173'>
       <parameter type-id='type-id-153' is-artificial='yes'/>
       <parameter type-id='type-id-63'/>
       <return type-id='type-id-126'/>

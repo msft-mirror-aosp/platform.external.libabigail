@@ -6607,7 +6607,7 @@
     <!-- long int -->
     <type-decl name='long int' size-in-bits='64' hash='8aa1e1a2ab2c2d3e' id='type-id-842'/>
     <!-- Atomic32 (SpinLock::*) (int64, Atomic32*) -->
-    <function-type method-class-id='type-id-126' size-in-bits='64' hash='d08d370c1e61a6b1' id='type-id-390'>
+    <function-type method-class-id='type-id-126' static='yes' size-in-bits='64' hash='d08d370c1e61a6b1' id='type-id-390'>
       <!-- implicit parameter of type 'SpinLock*' -->
       <parameter type-id='type-id-127' is-artificial='yes'/>
       <!-- parameter of type 'typedef int64' -->
@@ -6618,19 +6618,19 @@
       <return type-id='type-id-32'/>
     </function-type>
     <!-- HeapLeakChecker* (HeapLeakChecker::*) (void) -->
-    <function-type method-class-id='type-id-46' size-in-bits='64' hash='0eded3bf48121940' id='type-id-210'>
+    <function-type method-class-id='type-id-46' static='yes' size-in-bits='64' hash='0eded3bf48121940' id='type-id-210'>
       <!-- HeapLeakChecker* -->
       <return type-id='type-id-47'/>
     </function-type>
     <!-- HeapLeakChecker::ProcMapsResult (HeapLeakChecker::*) (HeapLeakChecker::ProcMapsTask) -->
-    <function-type method-class-id='type-id-46' size-in-bits='64' hash='cbbc2a019ef2b458' id='type-id-216'>
+    <function-type method-class-id='type-id-46' static='yes' size-in-bits='64' hash='cbbc2a019ef2b458' id='type-id-216'>
       <!-- parameter of type 'enum HeapLeakChecker::ProcMapsTask' -->
       <parameter type-id='type-id-202'/>
       <!-- enum HeapLeakChecker::ProcMapsResult -->
       <return type-id='type-id-200'/>
     </function-type>
     <!-- HeapProfileBucket* (MemoryRegionMap::*) (int, void* const*) -->
-    <function-type method-class-id='type-id-321' size-in-bits='64' hash='fcb8376b65d1b343' id='type-id-342'>
+    <function-type method-class-id='type-id-321' static='yes' size-in-bits='64' hash='fcb8376b65d1b343' id='type-id-342'>
       <!-- parameter of type 'int' -->
       <parameter type-id='type-id-205'/>
       <!-- parameter of type 'void* const*' -->
@@ -6639,7 +6639,7 @@
       <return type-id='type-id-53'/>
     </function-type>
     <!-- HeapProfileTable::AllocValue::Bucket* (HeapProfileTable::*) (int, void* const*) -->
-    <function-type method-class-id='type-id-58' size-in-bits='64' hash='e3d8934de488be37' id='type-id-264'>
+    <function-type method-class-id='type-id-58' static='yes' size-in-bits='64' hash='e3d8934de488be37' id='type-id-264'>
       <!-- implicit parameter of type 'HeapProfileTable*' -->
       <parameter type-id='type-id-59' is-artificial='yes'/>
       <!-- parameter of type 'int' -->
@@ -6650,21 +6650,21 @@
       <return type-id='type-id-67'/>
     </function-type>
     <!-- HeapProfileTable::AllocValue::Bucket** (HeapProfileTable::*) () -->
-    <function-type method-class-id='type-id-58' size-in-bits='64' hash='a2d1fd46a3236a17' id='type-id-270'>
+    <function-type method-class-id='type-id-58' static='yes' size-in-bits='64' hash='a2d1fd46a3236a17' id='type-id-270'>
       <!-- implicit parameter of type 'const HeapProfileTable*' -->
       <parameter type-id='type-id-659' is-artificial='yes'/>
       <!-- HeapProfileTable::AllocValue::Bucket** -->
       <return type-id='type-id-68'/>
     </function-type>
     <!-- HeapProfileTable::Snapshot* (HeapProfileTable::*) () -->
-    <function-type method-class-id='type-id-58' size-in-bits='64' hash='2fe88a0fc3cf8d6f' id='type-id-252'>
+    <function-type method-class-id='type-id-58' static='yes' size-in-bits='64' hash='2fe88a0fc3cf8d6f' id='type-id-252'>
       <!-- implicit parameter of type 'HeapProfileTable*' -->
       <parameter type-id='type-id-59' is-artificial='yes'/>
       <!-- HeapProfileTable::Snapshot* -->
       <return type-id='type-id-76'/>
     </function-type>
     <!-- HeapProfileTable::Snapshot* (HeapProfileTable::*) (HeapProfileTable::Snapshot*) -->
-    <function-type method-class-id='type-id-58' size-in-bits='64' hash='0c08fcc620c69774' id='type-id-257'>
+    <function-type method-class-id='type-id-58' static='yes' size-in-bits='64' hash='0c08fcc620c69774' id='type-id-257'>
       <!-- implicit parameter of type 'HeapProfileTable*' -->
       <parameter type-id='type-id-59' is-artificial='yes'/>
       <!-- parameter of type 'HeapProfileTable::Snapshot*' -->
@@ -6673,7 +6673,7 @@
       <return type-id='type-id-76'/>
     </function-type>
     <!-- Length (tcmalloc::PageHeap::*) (Length) -->
-    <function-type method-class-id='type-id-562' size-in-bits='64' hash='99371789598699f3' id='type-id-582'>
+    <function-type method-class-id='type-id-562' static='yes' size-in-bits='64' hash='99371789598699f3' id='type-id-582'>
       <!-- implicit parameter of type 'tcmalloc::PageHeap*' -->
       <parameter type-id='type-id-616' is-artificial='yes'/>
       <!-- parameter of type 'typedef Length' -->
@@ -6682,7 +6682,7 @@
       <return type-id='type-id-835'/>
     </function-type>
     <!-- Length (tcmalloc::PageHeap::*) (tcmalloc::PageHeap::SpanList*) -->
-    <function-type method-class-id='type-id-562' size-in-bits='64' hash='628b6a26613ef572' id='type-id-583'>
+    <function-type method-class-id='type-id-562' static='yes' size-in-bits='64' hash='628b6a26613ef572' id='type-id-583'>
       <!-- implicit parameter of type 'tcmalloc::PageHeap*' -->
       <parameter type-id='type-id-616' is-artificial='yes'/>
       <!-- parameter of type 'tcmalloc::PageHeap::SpanList*' -->
@@ -6691,7 +6691,7 @@
       <return type-id='type-id-835'/>
     </function-type>
     <!-- LowLevelAlloc::Arena* (LowLevelAlloc::*) (int32, LowLevelAlloc::Arena*) -->
-    <function-type method-class-id='type-id-277' size-in-bits='64' hash='b560b713e60ecd58' id='type-id-283'>
+    <function-type method-class-id='type-id-277' static='yes' size-in-bits='64' hash='b560b713e60ecd58' id='type-id-283'>
       <!-- parameter of type 'typedef int32' -->
       <parameter type-id='type-id-367'/>
       <!-- parameter of type 'LowLevelAlloc::Arena*' -->
@@ -6700,17 +6700,17 @@
       <return type-id='type-id-84'/>
     </function-type>
     <!-- LowLevelAlloc::Arena* (LowLevelAlloc::*) (void) -->
-    <function-type method-class-id='type-id-277' size-in-bits='64' hash='e54afc082af6d86f' id='type-id-279'>
+    <function-type method-class-id='type-id-277' static='yes' size-in-bits='64' hash='e54afc082af6d86f' id='type-id-279'>
       <!-- LowLevelAlloc::Arena* -->
       <return type-id='type-id-84'/>
     </function-type>
     <!-- MallocExtension* (MallocExtension::*) (void) -->
-    <function-type method-class-id='type-id-85' size-in-bits='64' hash='8c3af5058c827401' id='type-id-288'>
+    <function-type method-class-id='type-id-85' static='yes' size-in-bits='64' hash='8c3af5058c827401' id='type-id-288'>
       <!-- MallocExtension* -->
       <return type-id='type-id-86'/>
     </function-type>
     <!-- MallocExtension::Ownership (MallocExtension::*) (void*) -->
-    <function-type method-class-id='type-id-85' size-in-bits='64' hash='237aa2a1d2b1ab7b' id='type-id-305'>
+    <function-type method-class-id='type-id-85' static='yes' size-in-bits='64' hash='237aa2a1d2b1ab7b' id='type-id-305'>
       <!-- implicit parameter of type 'MallocExtension*' -->
       <parameter type-id='type-id-86' is-artificial='yes'/>
       <!-- parameter of type 'void*' -->
@@ -6719,7 +6719,7 @@
       <return type-id='type-id-284'/>
     </function-type>
     <!-- MallocExtension::Ownership (TCMallocImplementation::*) (void*) -->
-    <function-type method-class-id='type-id-137' size-in-bits='64' hash='f0d06eb66b4baa2f' id='type-id-413'>
+    <function-type method-class-id='type-id-137' static='yes' size-in-bits='64' hash='f0d06eb66b4baa2f' id='type-id-413'>
       <!-- implicit parameter of type 'TCMallocImplementation*' -->
       <parameter type-id='type-id-138' is-artificial='yes'/>
       <!-- parameter of type 'void*' -->
@@ -6728,17 +6728,17 @@
       <return type-id='type-id-284'/>
     </function-type>
     <!-- MemoryRegionMap::RegionIterator (MemoryRegionMap::*) (void) -->
-    <function-type method-class-id='type-id-321' size-in-bits='64' hash='413a89e967864175' id='type-id-334'>
+    <function-type method-class-id='type-id-321' static='yes' size-in-bits='64' hash='413a89e967864175' id='type-id-334'>
       <!-- typedef MemoryRegionMap::RegionIterator -->
       <return type-id='type-id-324'/>
     </function-type>
     <!-- ProfileHandler* (ProfileHandler::*) (void) -->
-    <function-type method-class-id='type-id-116' size-in-bits='64' hash='c8b6b99bfa370c07' id='type-id-376'>
+    <function-type method-class-id='type-id-116' static='yes' size-in-bits='64' hash='c8b6b99bfa370c07' id='type-id-376'>
       <!-- ProfileHandler* -->
       <return type-id='type-id-117'/>
     </function-type>
     <!-- ProfileHandlerToken* (ProfileHandler::*) (ProfileHandlerCallback, void*) -->
-    <function-type method-class-id='type-id-116' size-in-bits='64' hash='0f29c04ae00e50f4' id='type-id-372'>
+    <function-type method-class-id='type-id-116' static='yes' size-in-bits='64' hash='0f29c04ae00e50f4' id='type-id-372'>
       <!-- implicit parameter of type 'ProfileHandler*' -->
       <parameter type-id='type-id-117' is-artificial='yes'/>
       <!-- parameter of type 'typedef ProfileHandlerCallback' -->
@@ -6749,42 +6749,42 @@
       <return type-id='type-id-121'/>
     </function-type>
     <!-- SysAllocator* (MallocExtension::*) () -->
-    <function-type method-class-id='type-id-85' size-in-bits='64' hash='e7bf6a2f54167f08' id='type-id-298'>
+    <function-type method-class-id='type-id-85' static='yes' size-in-bits='64' hash='e7bf6a2f54167f08' id='type-id-298'>
       <!-- implicit parameter of type 'MallocExtension*' -->
       <parameter type-id='type-id-86' is-artificial='yes'/>
       <!-- SysAllocator* -->
       <return type-id='type-id-133'/>
     </function-type>
     <!-- SysAllocator* (TCMallocImplementation::*) () -->
-    <function-type method-class-id='type-id-137' size-in-bits='64' hash='00b7358e4879e558' id='type-id-406'>
+    <function-type method-class-id='type-id-137' static='yes' size-in-bits='64' hash='00b7358e4879e558' id='type-id-406'>
       <!-- implicit parameter of type 'TCMallocImplementation*' -->
       <parameter type-id='type-id-138' is-artificial='yes'/>
       <!-- SysAllocator* -->
       <return type-id='type-id-133'/>
     </function-type>
     <!-- base::ElfMemImage::SymbolIterator (base::ElfMemImage::*) () -->
-    <function-type method-class-id='type-id-145' size-in-bits='64' hash='2494c7a3d1aa687f' id='type-id-450'>
+    <function-type method-class-id='type-id-145' static='yes' size-in-bits='64' hash='2494c7a3d1aa687f' id='type-id-450'>
       <!-- implicit parameter of type 'const base::ElfMemImage*' -->
       <parameter type-id='type-id-690' is-artificial='yes'/>
       <!-- class base::ElfMemImage::SymbolIterator -->
       <return type-id='type-id-149'/>
     </function-type>
     <!-- base::ElfMemImage::SymbolIterator& (base::ElfMemImage::SymbolIterator::*) () -->
-    <function-type method-class-id='type-id-149' size-in-bits='64' hash='e0e1446dd4b3cbf6' id='type-id-434'>
+    <function-type method-class-id='type-id-149' static='yes' size-in-bits='64' hash='e0e1446dd4b3cbf6' id='type-id-434'>
       <!-- implicit parameter of type 'base::ElfMemImage::SymbolIterator*' -->
       <parameter type-id='type-id-151' is-artificial='yes'/>
       <!-- base::ElfMemImage::SymbolIterator& -->
       <return type-id='type-id-150'/>
     </function-type>
     <!-- bool (CpuProfiler::*) () -->
-    <function-type method-class-id='type-id-36' size-in-bits='64' hash='bad1898019904f8d' id='type-id-186'>
+    <function-type method-class-id='type-id-36' static='yes' size-in-bits='64' hash='bad1898019904f8d' id='type-id-186'>
       <!-- implicit parameter of type 'CpuProfiler*' -->
       <parameter type-id='type-id-37' is-artificial='yes'/>
       <!-- bool -->
       <return type-id='type-id-162'/>
     </function-type>
     <!-- bool (CpuProfiler::*) (const char*, const ProfilerOptions*) -->
-    <function-type method-class-id='type-id-36' size-in-bits='64' hash='3a1356819e341e52' id='type-id-185'>
+    <function-type method-class-id='type-id-36' static='yes' size-in-bits='64' hash='3a1356819e341e52' id='type-id-185'>
       <!-- implicit parameter of type 'CpuProfiler*' -->
       <parameter type-id='type-id-37' is-artificial='yes'/>
       <!-- parameter of type 'const char*' -->
@@ -6795,7 +6795,7 @@
       <return type-id='type-id-162'/>
     </function-type>
     <!-- bool (HeapLeakChecker::*) (HeapLeakChecker::ShouldSymbolize) -->
-    <function-type method-class-id='type-id-46' size-in-bits='64' hash='7b8df4cc4d57ed5f' id='type-id-224'>
+    <function-type method-class-id='type-id-46' static='yes' size-in-bits='64' hash='7b8df4cc4d57ed5f' id='type-id-224'>
       <!-- implicit parameter of type 'HeapLeakChecker*' -->
       <parameter type-id='type-id-47' is-artificial='yes'/>
       <!-- parameter of type 'enum HeapLeakChecker::ShouldSymbolize' -->
@@ -6804,19 +6804,19 @@
       <return type-id='type-id-162'/>
     </function-type>
     <!-- bool (HeapLeakChecker::*) (HeapLeakChecker::ShouldSymbolize) -->
-    <function-type method-class-id='type-id-46' size-in-bits='64' hash='7d6983cf348ebce0' id='type-id-222'>
+    <function-type method-class-id='type-id-46' static='yes' size-in-bits='64' hash='7d6983cf348ebce0' id='type-id-222'>
       <!-- parameter of type 'enum HeapLeakChecker::ShouldSymbolize' -->
       <parameter type-id='type-id-203'/>
       <!-- bool -->
       <return type-id='type-id-162'/>
     </function-type>
     <!-- bool (HeapLeakChecker::*) (void) -->
-    <function-type method-class-id='type-id-46' size-in-bits='64' hash='8b2d815524c82511' id='type-id-211'>
+    <function-type method-class-id='type-id-46' static='yes' size-in-bits='64' hash='8b2d815524c82511' id='type-id-211'>
       <!-- bool -->
       <return type-id='type-id-162'/>
     </function-type>
     <!-- bool (HeapProfileTable::*) (const char*, const HeapProfileTable::AllocValue::Bucket&, HeapProfileTable::AllocationMap*) -->
-    <function-type method-class-id='type-id-58' size-in-bits='64' hash='70e4ef696ae0f235' id='type-id-253'>
+    <function-type method-class-id='type-id-58' static='yes' size-in-bits='64' hash='70e4ef696ae0f235' id='type-id-253'>
       <!-- parameter of type 'const char*' -->
       <parameter type-id='type-id-208'/>
       <!-- parameter of type 'const HeapProfileTable::AllocValue::Bucket&' -->
@@ -6827,7 +6827,7 @@
       <return type-id='type-id-162'/>
     </function-type>
     <!-- bool (HeapProfileTable::*) (void*) -->
-    <function-type method-class-id='type-id-58' size-in-bits='64' hash='4a4fd4c63a874ba2' id='type-id-248'>
+    <function-type method-class-id='type-id-58' static='yes' size-in-bits='64' hash='4a4fd4c63a874ba2' id='type-id-248'>
       <!-- implicit parameter of type 'HeapProfileTable*' -->
       <parameter type-id='type-id-59' is-artificial='yes'/>
       <!-- parameter of type 'void*' -->
@@ -6836,7 +6836,7 @@
       <return type-id='type-id-162'/>
     </function-type>
     <!-- bool (HeapProfileTable::*) (void*, HeapProfileTable::AllocInfo*) -->
-    <function-type method-class-id='type-id-58' size-in-bits='64' hash='f98ef67b12167a03' id='type-id-268'>
+    <function-type method-class-id='type-id-58' static='yes' size-in-bits='64' hash='f98ef67b12167a03' id='type-id-268'>
       <!-- implicit parameter of type 'const HeapProfileTable*' -->
       <parameter type-id='type-id-659' is-artificial='yes'/>
       <!-- parameter of type 'void*' -->
@@ -6847,7 +6847,7 @@
       <return type-id='type-id-162'/>
     </function-type>
     <!-- bool (HeapProfileTable::*) (void*, size_t*) -->
-    <function-type method-class-id='type-id-58' size-in-bits='64' hash='a3193ae32dadb2e4' id='type-id-272'>
+    <function-type method-class-id='type-id-58' static='yes' size-in-bits='64' hash='a3193ae32dadb2e4' id='type-id-272'>
       <!-- implicit parameter of type 'const HeapProfileTable*' -->
       <parameter type-id='type-id-659' is-artificial='yes'/>
       <!-- parameter of type 'void*' -->
@@ -6858,7 +6858,7 @@
       <return type-id='type-id-162'/>
     </function-type>
     <!-- bool (HeapProfileTable::*) (void*, size_t, void**, size_t*) -->
-    <function-type method-class-id='type-id-58' size-in-bits='64' hash='3a324221ce9fd72b' id='type-id-267'>
+    <function-type method-class-id='type-id-58' static='yes' size-in-bits='64' hash='3a324221ce9fd72b' id='type-id-267'>
       <!-- implicit parameter of type 'const HeapProfileTable*' -->
       <parameter type-id='type-id-659' is-artificial='yes'/>
       <!-- parameter of type 'void*' -->
@@ -6873,28 +6873,28 @@
       <return type-id='type-id-162'/>
     </function-type>
     <!-- bool (HugetlbSysAllocator::*) () -->
-    <function-type method-class-id='type-id-81' size-in-bits='64' hash='a9bd7a6f8cb23aef' id='type-id-275'>
+    <function-type method-class-id='type-id-81' static='yes' size-in-bits='64' hash='a9bd7a6f8cb23aef' id='type-id-275'>
       <!-- implicit parameter of type 'HugetlbSysAllocator*' -->
       <parameter type-id='type-id-82' is-artificial='yes'/>
       <!-- bool -->
       <return type-id='type-id-162'/>
     </function-type>
     <!-- bool (LowLevelAlloc::*) (LowLevelAlloc::Arena*) -->
-    <function-type method-class-id='type-id-277' size-in-bits='64' hash='7964c263bba9bfd0' id='type-id-278'>
+    <function-type method-class-id='type-id-277' static='yes' size-in-bits='64' hash='7964c263bba9bfd0' id='type-id-278'>
       <!-- parameter of type 'LowLevelAlloc::Arena*' -->
       <parameter type-id='type-id-84'/>
       <!-- bool -->
       <return type-id='type-id-162'/>
     </function-type>
     <!-- bool (MallocExtension::*) () -->
-    <function-type method-class-id='type-id-85' size-in-bits='64' hash='54adf5abd8168718' id='type-id-289'>
+    <function-type method-class-id='type-id-85' static='yes' size-in-bits='64' hash='54adf5abd8168718' id='type-id-289'>
       <!-- implicit parameter of type 'MallocExtension*' -->
       <parameter type-id='type-id-86' is-artificial='yes'/>
       <!-- bool -->
       <return type-id='type-id-162'/>
     </function-type>
     <!-- bool (MallocExtension::*) (const char*, size_t) -->
-    <function-type method-class-id='type-id-85' size-in-bits='64' hash='929f376745c4fce2' id='type-id-296'>
+    <function-type method-class-id='type-id-85' static='yes' size-in-bits='64' hash='929f376745c4fce2' id='type-id-296'>
       <!-- implicit parameter of type 'MallocExtension*' -->
       <parameter type-id='type-id-86' is-artificial='yes'/>
       <!-- parameter of type 'const char*' -->
@@ -6905,7 +6905,7 @@
       <return type-id='type-id-162'/>
     </function-type>
     <!-- bool (MallocExtension::*) (const char*, size_t*) -->
-    <function-type method-class-id='type-id-85' size-in-bits='64' hash='e9098f6a79c2ebfc' id='type-id-295'>
+    <function-type method-class-id='type-id-85' static='yes' size-in-bits='64' hash='e9098f6a79c2ebfc' id='type-id-295'>
       <!-- implicit parameter of type 'MallocExtension*' -->
       <parameter type-id='type-id-86' is-artificial='yes'/>
       <!-- parameter of type 'const char*' -->
@@ -6916,7 +6916,7 @@
       <return type-id='type-id-162'/>
     </function-type>
     <!-- bool (MallocExtension::*) (int*, size_t*, int*) -->
-    <function-type method-class-id='type-id-85' size-in-bits='64' hash='a39debb9bbfc9629' id='type-id-291'>
+    <function-type method-class-id='type-id-85' static='yes' size-in-bits='64' hash='a39debb9bbfc9629' id='type-id-291'>
       <!-- implicit parameter of type 'MallocExtension*' -->
       <parameter type-id='type-id-86' is-artificial='yes'/>
       <!-- parameter of type 'int*' -->
@@ -6929,7 +6929,7 @@
       <return type-id='type-id-162'/>
     </function-type>
     <!-- bool (MallocExtension::*) (void*) -->
-    <function-type method-class-id='type-id-85' size-in-bits='64' hash='f6c86375d098fc43' id='type-id-290'>
+    <function-type method-class-id='type-id-85' static='yes' size-in-bits='64' hash='f6c86375d098fc43' id='type-id-290'>
       <!-- implicit parameter of type 'MallocExtension*' -->
       <parameter type-id='type-id-86' is-artificial='yes'/>
       <!-- parameter of type 'void*' -->
@@ -6938,7 +6938,7 @@
       <return type-id='type-id-162'/>
     </function-type>
     <!-- bool (MallocHook::*) (void*, size_t, int*) -->
-    <function-type method-class-id='type-id-309' size-in-bits='64' hash='c4ad318fadb5b1ae' id='type-id-320'>
+    <function-type method-class-id='type-id-309' static='yes' size-in-bits='64' hash='c4ad318fadb5b1ae' id='type-id-320'>
       <!-- parameter of type 'void*' -->
       <parameter type-id='type-id-181'/>
       <!-- parameter of type 'typedef size_t' -->
@@ -6949,7 +6949,7 @@
       <return type-id='type-id-162'/>
     </function-type>
     <!-- bool (MallocHook::*) (void*, size_t, int, int, int, off_t, void**) -->
-    <function-type method-class-id='type-id-309' size-in-bits='64' hash='791403af94ab2f24' id='type-id-319'>
+    <function-type method-class-id='type-id-309' static='yes' size-in-bits='64' hash='791403af94ab2f24' id='type-id-319'>
       <!-- parameter of type 'void*' -->
       <parameter type-id='type-id-181'/>
       <!-- parameter of type 'typedef size_t' -->
@@ -6968,7 +6968,7 @@
       <return type-id='type-id-162'/>
     </function-type>
     <!-- bool (MemoryRegionMap::*) (uintptr_t, MemoryRegionMap::Region*) -->
-    <function-type method-class-id='type-id-321' size-in-bits='64' hash='43a0d5fcdb57ee5b' id='type-id-329'>
+    <function-type method-class-id='type-id-321' static='yes' size-in-bits='64' hash='43a0d5fcdb57ee5b' id='type-id-329'>
       <!-- parameter of type 'typedef uintptr_t' -->
       <parameter type-id='type-id-233'/>
       <!-- parameter of type 'MemoryRegionMap::Region*' -->
@@ -6977,19 +6977,19 @@
       <return type-id='type-id-162'/>
     </function-type>
     <!-- bool (MemoryRegionMap::*) (void) -->
-    <function-type method-class-id='type-id-321' size-in-bits='64' hash='8b2d815524c82511' id='type-id-330'>
+    <function-type method-class-id='type-id-321' static='yes' size-in-bits='64' hash='8b2d815524c82511' id='type-id-330'>
       <!-- bool -->
       <return type-id='type-id-162'/>
     </function-type>
     <!-- bool (ProcMapsIterator::*) () -->
-    <function-type method-class-id='type-id-99' size-in-bits='64' hash='330768f7d554758d' id='type-id-354'>
+    <function-type method-class-id='type-id-99' static='yes' size-in-bits='64' hash='330768f7d554758d' id='type-id-354'>
       <!-- implicit parameter of type 'const ProcMapsIterator*' -->
       <parameter type-id='type-id-677' is-artificial='yes'/>
       <!-- bool -->
       <return type-id='type-id-162'/>
     </function-type>
     <!-- bool (ProcMapsIterator::*) (uint64*, uint64*, char**, uint64*, int64*, char**) -->
-    <function-type method-class-id='type-id-99' size-in-bits='64' hash='abbc9286d122720f' id='type-id-349'>
+    <function-type method-class-id='type-id-99' static='yes' size-in-bits='64' hash='abbc9286d122720f' id='type-id-349'>
       <!-- implicit parameter of type 'ProcMapsIterator*' -->
       <parameter type-id='type-id-100' is-artificial='yes'/>
       <!-- parameter of type 'uint64*' -->
@@ -7008,7 +7008,7 @@
       <return type-id='type-id-162'/>
     </function-type>
     <!-- bool (ProcMapsIterator::*) (uint64*, uint64*, char**, uint64*, int64*, char**, uint64*, uint64*, uint64*, uint64*, dev_t*) -->
-    <function-type method-class-id='type-id-99' size-in-bits='64' hash='c01f2c2def922330' id='type-id-350'>
+    <function-type method-class-id='type-id-99' static='yes' size-in-bits='64' hash='c01f2c2def922330' id='type-id-350'>
       <!-- implicit parameter of type 'ProcMapsIterator*' -->
       <parameter type-id='type-id-100' is-artificial='yes'/>
       <!-- parameter of type 'uint64*' -->
@@ -7037,7 +7037,7 @@
       <return type-id='type-id-162'/>
     </function-type>
     <!-- bool (ProfileData::*) (const char*, const ProfileData::Options&) -->
-    <function-type method-class-id='type-id-103' size-in-bits='64' hash='c8b2a70be2a96eef' id='type-id-360'>
+    <function-type method-class-id='type-id-103' static='yes' size-in-bits='64' hash='c8b2a70be2a96eef' id='type-id-360'>
       <!-- implicit parameter of type 'ProfileData*' -->
       <parameter type-id='type-id-104' is-artificial='yes'/>
       <!-- parameter of type 'const char*' -->
@@ -7048,14 +7048,14 @@
       <return type-id='type-id-162'/>
     </function-type>
     <!-- bool (ProfileHandler::*) () -->
-    <function-type method-class-id='type-id-116' size-in-bits='64' hash='deb70458ce863bae' id='type-id-371'>
+    <function-type method-class-id='type-id-116' static='yes' size-in-bits='64' hash='deb70458ce863bae' id='type-id-371'>
       <!-- implicit parameter of type 'ProfileHandler*' -->
       <parameter type-id='type-id-117' is-artificial='yes'/>
       <!-- bool -->
       <return type-id='type-id-162'/>
     </function-type>
     <!-- bool (TCMallocImplementation::*) (const char*, size_t) -->
-    <function-type method-class-id='type-id-137' size-in-bits='64' hash='52ba5837f19883ae' id='type-id-404'>
+    <function-type method-class-id='type-id-137' static='yes' size-in-bits='64' hash='52ba5837f19883ae' id='type-id-404'>
       <!-- implicit parameter of type 'TCMallocImplementation*' -->
       <parameter type-id='type-id-138' is-artificial='yes'/>
       <!-- parameter of type 'const char*' -->
@@ -7066,7 +7066,7 @@
       <return type-id='type-id-162'/>
     </function-type>
     <!-- bool (TCMallocImplementation::*) (const char*, size_t*) -->
-    <function-type method-class-id='type-id-137' size-in-bits='64' hash='c038724bdc9f8459' id='type-id-403'>
+    <function-type method-class-id='type-id-137' static='yes' size-in-bits='64' hash='c038724bdc9f8459' id='type-id-403'>
       <!-- implicit parameter of type 'TCMallocImplementation*' -->
       <parameter type-id='type-id-138' is-artificial='yes'/>
       <!-- parameter of type 'const char*' -->
@@ -7077,7 +7077,7 @@
       <return type-id='type-id-162'/>
     </function-type>
     <!-- bool (base::ElfMemImage::*) (const char*, const char*, int, base::ElfMemImage::SymbolInfo*) -->
-    <function-type method-class-id='type-id-145' size-in-bits='64' hash='8221ee220ba32ee7' id='type-id-447'>
+    <function-type method-class-id='type-id-145' static='yes' size-in-bits='64' hash='8221ee220ba32ee7' id='type-id-447'>
       <!-- implicit parameter of type 'const base::ElfMemImage*' -->
       <parameter type-id='type-id-690' is-artificial='yes'/>
       <!-- parameter of type 'const char*' -->
@@ -7092,7 +7092,7 @@
       <return type-id='type-id-162'/>
     </function-type>
     <!-- bool (base::ElfMemImage::*) (void*, base::ElfMemImage::SymbolInfo*) -->
-    <function-type method-class-id='type-id-145' size-in-bits='64' hash='5053191be8cf2abd' id='type-id-449'>
+    <function-type method-class-id='type-id-145' static='yes' size-in-bits='64' hash='5053191be8cf2abd' id='type-id-449'>
       <!-- implicit parameter of type 'const base::ElfMemImage*' -->
       <parameter type-id='type-id-690' is-artificial='yes'/>
       <!-- parameter of type 'void*' -->
@@ -7103,7 +7103,7 @@
       <return type-id='type-id-162'/>
     </function-type>
     <!-- bool (base::ElfMemImage::SymbolIterator::*) (const base::ElfMemImage::SymbolIterator&) -->
-    <function-type method-class-id='type-id-149' size-in-bits='64' hash='25331387922479b3' id='type-id-436'>
+    <function-type method-class-id='type-id-149' static='yes' size-in-bits='64' hash='25331387922479b3' id='type-id-436'>
       <!-- implicit parameter of type 'const base::ElfMemImage::SymbolIterator*' -->
       <parameter type-id='type-id-696' is-artificial='yes'/>
       <!-- parameter of type 'const base::ElfMemImage::SymbolIterator&' -->
@@ -7112,7 +7112,7 @@
       <return type-id='type-id-162'/>
     </function-type>
     <!-- bool (base::VDSOSupport::*) (const char*, const char*, int, base::VDSOSupport::SymbolInfo*) -->
-    <function-type method-class-id='type-id-156' size-in-bits='64' hash='89a24b146b1e4747' id='type-id-461'>
+    <function-type method-class-id='type-id-156' static='yes' size-in-bits='64' hash='89a24b146b1e4747' id='type-id-461'>
       <!-- implicit parameter of type 'const base::VDSOSupport*' -->
       <parameter type-id='type-id-701' is-artificial='yes'/>
       <!-- parameter of type 'const char*' -->
@@ -7127,7 +7127,7 @@
       <return type-id='type-id-162'/>
     </function-type>
     <!-- bool (base::VDSOSupport::*) (void*, base::VDSOSupport::SymbolInfo*) -->
-    <function-type method-class-id='type-id-156' size-in-bits='64' hash='5de9da47b38595a7' id='type-id-462'>
+    <function-type method-class-id='type-id-156' static='yes' size-in-bits='64' hash='5de9da47b38595a7' id='type-id-462'>
       <!-- implicit parameter of type 'const base::VDSOSupport*' -->
       <parameter type-id='type-id-701' is-artificial='yes'/>
       <!-- parameter of type 'void*' -->
@@ -7138,14 +7138,14 @@
       <return type-id='type-id-162'/>
     </function-type>
     <!-- bool (base::internal::HookList<void(*)(constvoid*,size_t)>::*) () -->
-    <function-type method-class-id='type-id-160' size-in-bits='64' hash='638cc3d8a7f2ab6d' id='type-id-903'>
+    <function-type method-class-id='type-id-160' static='yes' size-in-bits='64' hash='638cc3d8a7f2ab6d' id='type-id-903'>
       <!-- implicit parameter of type 'const base::internal::HookList<void(*)(constvoid*,size_t)>*' -->
       <parameter type-id='type-id-703' is-artificial='yes'/>
       <!-- bool -->
       <return type-id='type-id-162'/>
     </function-type>
     <!-- bool (base::internal::HookList<void(*)(constvoid*,size_t)>::*) (void (*)(void*, size_t)) -->
-    <function-type method-class-id='type-id-160' size-in-bits='64' hash='0717249062d07ffa' id='type-id-904'>
+    <function-type method-class-id='type-id-160' static='yes' size-in-bits='64' hash='0717249062d07ffa' id='type-id-904'>
       <!-- implicit parameter of type 'base::internal::HookList<void(*)(constvoid*,size_t)>*' -->
       <parameter type-id='type-id-161' is-artificial='yes'/>
       <!-- parameter of type 'void (*)(void*, size_t)' -->
@@ -7154,16 +7154,14 @@
       <return type-id='type-id-162'/>
     </function-type>
     <!-- bool (tcmalloc::CentralFreeList::*) () -->
-    <function-type method-class-id='type-id-535' size-in-bits='64' hash='1b4d781eea00f50f' id='type-id-544'>
+    <function-type method-class-id='type-id-535' static='yes' size-in-bits='64' hash='1b4d781eea00f50f' id='type-id-544'>
       <!-- implicit parameter of type 'tcmalloc::CentralFreeList*' -->
       <parameter type-id='type-id-906' is-artificial='yes'/>
       <!-- bool -->
       <return type-id='type-id-162'/>
     </function-type>
     <!-- bool (tcmalloc::CentralFreeList::*) (int, bool) -->
-    <function-type method-class-id='type-id-535' size-in-bits='64' hash='6670e9d3e9ee85b0' id='type-id-542'>
-      <!-- implicit parameter of type 'tcmalloc::CentralFreeList*' -->
-      <parameter type-id='type-id-906' is-artificial='yes'/>
+    <function-type method-class-id='type-id-535' static='yes' size-in-bits='64' hash='3dc410884bda3ac7' id='type-id-547'>
       <!-- parameter of type 'int' -->
       <parameter type-id='type-id-205'/>
       <!-- parameter of type 'bool' -->
@@ -7172,7 +7170,9 @@
       <return type-id='type-id-162'/>
     </function-type>
     <!-- bool (tcmalloc::CentralFreeList::*) (int, bool) -->
-    <function-type method-class-id='type-id-535' size-in-bits='64' hash='3dc410884bda3ac7' id='type-id-547'>
+    <function-type method-class-id='type-id-535' static='yes' size-in-bits='64' hash='6670e9d3e9ee85b0' id='type-id-542'>
+      <!-- implicit parameter of type 'tcmalloc::CentralFreeList*' -->
+      <parameter type-id='type-id-906' is-artificial='yes'/>
       <!-- parameter of type 'int' -->
       <parameter type-id='type-id-205'/>
       <!-- parameter of type 'bool' -->
@@ -7181,7 +7181,7 @@
       <return type-id='type-id-162'/>
     </function-type>
     <!-- bool (tcmalloc::Logger::*) (const char*, int) -->
-    <function-type method-class-id='type-id-558' size-in-bits='64' hash='bff71c6c30b1c93b' id='type-id-561'>
+    <function-type method-class-id='type-id-558' static='yes' size-in-bits='64' hash='bff71c6c30b1c93b' id='type-id-561'>
       <!-- implicit parameter of type 'tcmalloc::Logger*' -->
       <parameter type-id='type-id-907' is-artificial='yes'/>
       <!-- parameter of type 'const char*' -->
@@ -7192,7 +7192,7 @@
       <return type-id='type-id-162'/>
     </function-type>
     <!-- bool (tcmalloc::Logger::*) (const tcmalloc::LogItem&) -->
-    <function-type method-class-id='type-id-558' size-in-bits='64' hash='61bace687cbef420' id='type-id-559'>
+    <function-type method-class-id='type-id-558' static='yes' size-in-bits='64' hash='61bace687cbef420' id='type-id-559'>
       <!-- implicit parameter of type 'tcmalloc::Logger*' -->
       <parameter type-id='type-id-907' is-artificial='yes'/>
       <!-- parameter of type 'const tcmalloc::LogItem&' -->
@@ -7201,7 +7201,7 @@
       <return type-id='type-id-162'/>
     </function-type>
     <!-- bool (tcmalloc::Logger::*) (uint64_t, int) -->
-    <function-type method-class-id='type-id-558' size-in-bits='64' hash='beea4d18411c4bbf' id='type-id-560'>
+    <function-type method-class-id='type-id-558' static='yes' size-in-bits='64' hash='beea4d18411c4bbf' id='type-id-560'>
       <!-- implicit parameter of type 'tcmalloc::Logger*' -->
       <parameter type-id='type-id-907' is-artificial='yes'/>
       <!-- parameter of type 'typedef uint64_t' -->
@@ -7212,14 +7212,14 @@
       <return type-id='type-id-162'/>
     </function-type>
     <!-- bool (tcmalloc::PageHeap::*) () -->
-    <function-type method-class-id='type-id-562' size-in-bits='64' hash='f183460384ef5a2d' id='type-id-577'>
+    <function-type method-class-id='type-id-562' static='yes' size-in-bits='64' hash='f183460384ef5a2d' id='type-id-577'>
       <!-- implicit parameter of type 'tcmalloc::PageHeap*' -->
       <parameter type-id='type-id-616' is-artificial='yes'/>
       <!-- bool -->
       <return type-id='type-id-162'/>
     </function-type>
     <!-- bool (tcmalloc::PageHeap::*) (Length) -->
-    <function-type method-class-id='type-id-562' size-in-bits='64' hash='fff4ee37bca60935' id='type-id-585'>
+    <function-type method-class-id='type-id-562' static='yes' size-in-bits='64' hash='fff4ee37bca60935' id='type-id-585'>
       <!-- implicit parameter of type 'tcmalloc::PageHeap*' -->
       <parameter type-id='type-id-616' is-artificial='yes'/>
       <!-- parameter of type 'typedef Length' -->
@@ -7228,7 +7228,7 @@
       <return type-id='type-id-162'/>
     </function-type>
     <!-- bool (tcmalloc::PageHeap::*) (Length, bool) -->
-    <function-type method-class-id='type-id-562' size-in-bits='64' hash='97774f04c416ba2d' id='type-id-573'>
+    <function-type method-class-id='type-id-562' static='yes' size-in-bits='64' hash='97774f04c416ba2d' id='type-id-573'>
       <!-- implicit parameter of type 'tcmalloc::PageHeap*' -->
       <parameter type-id='type-id-616' is-artificial='yes'/>
       <!-- parameter of type 'typedef Length' -->
@@ -7239,7 +7239,7 @@
       <return type-id='type-id-162'/>
     </function-type>
     <!-- bool (tcmalloc::PageHeap::*) (PageID, base::MallocRange*) -->
-    <function-type method-class-id='type-id-562' size-in-bits='64' hash='4799fb622e5cf075' id='type-id-575'>
+    <function-type method-class-id='type-id-562' static='yes' size-in-bits='64' hash='4799fb622e5cf075' id='type-id-575'>
       <!-- implicit parameter of type 'tcmalloc::PageHeap*' -->
       <parameter type-id='type-id-616' is-artificial='yes'/>
       <!-- parameter of type 'typedef PageID' -->
@@ -7250,7 +7250,7 @@
       <return type-id='type-id-162'/>
     </function-type>
     <!-- bool (tcmalloc::PageHeap::*) (tcmalloc::Span*) -->
-    <function-type method-class-id='type-id-562' size-in-bits='64' hash='8b1c6ba0e138a919' id='type-id-574'>
+    <function-type method-class-id='type-id-562' static='yes' size-in-bits='64' hash='8b1c6ba0e138a919' id='type-id-574'>
       <!-- implicit parameter of type 'tcmalloc::PageHeap*' -->
       <parameter type-id='type-id-616' is-artificial='yes'/>
       <!-- parameter of type 'tcmalloc::Span*' -->
@@ -7259,7 +7259,7 @@
       <return type-id='type-id-162'/>
     </function-type>
     <!-- bool (tcmalloc::PageHeap::*) (tcmalloc::Span*, Length, Length, int) -->
-    <function-type method-class-id='type-id-562' size-in-bits='64' hash='9d9f4f54f661fcd5' id='type-id-586'>
+    <function-type method-class-id='type-id-562' static='yes' size-in-bits='64' hash='9d9f4f54f661fcd5' id='type-id-586'>
       <!-- implicit parameter of type 'tcmalloc::PageHeap*' -->
       <parameter type-id='type-id-616' is-artificial='yes'/>
       <!-- parameter of type 'tcmalloc::Span*' -->
@@ -7274,7 +7274,7 @@
       <return type-id='type-id-162'/>
     </function-type>
     <!-- bool (tcmalloc::PageHeap::*) (tcmalloc::Span*, tcmalloc::Span*) -->
-    <function-type method-class-id='type-id-562' size-in-bits='64' hash='9e249e2f61e46f5a' id='type-id-576'>
+    <function-type method-class-id='type-id-562' static='yes' size-in-bits='64' hash='9e249e2f61e46f5a' id='type-id-576'>
       <!-- implicit parameter of type 'tcmalloc::PageHeap*' -->
       <parameter type-id='type-id-616' is-artificial='yes'/>
       <!-- parameter of type 'tcmalloc::Span*' -->
@@ -7285,7 +7285,7 @@
       <return type-id='type-id-162'/>
     </function-type>
     <!-- bool (tcmalloc::StackTraceTable::Bucket::*) (uintptr_t, const tcmalloc::StackTrace&) -->
-    <function-type method-class-id='type-id-605' size-in-bits='64' hash='2eddf176159a9126' id='type-id-608'>
+    <function-type method-class-id='type-id-605' static='yes' size-in-bits='64' hash='2eddf176159a9126' id='type-id-608'>
       <!-- implicit parameter of type 'const tcmalloc::StackTraceTable::Bucket*' -->
       <parameter type-id='type-id-740' is-artificial='yes'/>
       <!-- parameter of type 'typedef uintptr_t' -->
@@ -7296,14 +7296,14 @@
       <return type-id='type-id-162'/>
     </function-type>
     <!-- char* (HeapLeakChecker::*) () -->
-    <function-type method-class-id='type-id-46' size-in-bits='64' hash='8b9606a6bb7e080b' id='type-id-217'>
+    <function-type method-class-id='type-id-46' static='yes' size-in-bits='64' hash='8b9606a6bb7e080b' id='type-id-217'>
       <!-- implicit parameter of type 'HeapLeakChecker*' -->
       <parameter type-id='type-id-47' is-artificial='yes'/>
       <!-- char* -->
       <return type-id='type-id-168'/>
     </function-type>
     <!-- const Elf64_Phdr* (base::ElfMemImage::*) (int) -->
-    <function-type method-class-id='type-id-145' size-in-bits='64' hash='44f62baee5d23d3b' id='type-id-451'>
+    <function-type method-class-id='type-id-145' static='yes' size-in-bits='64' hash='44f62baee5d23d3b' id='type-id-451'>
       <!-- implicit parameter of type 'const base::ElfMemImage*' -->
       <parameter type-id='type-id-690' is-artificial='yes'/>
       <!-- parameter of type 'int' -->
@@ -7312,7 +7312,7 @@
       <return type-id='type-id-644'/>
     </function-type>
     <!-- const Elf64_Sym* (base::ElfMemImage::*) (int) -->
-    <function-type method-class-id='type-id-145' size-in-bits='64' hash='0c3882f929b34c49' id='type-id-453'>
+    <function-type method-class-id='type-id-145' static='yes' size-in-bits='64' hash='0c3882f929b34c49' id='type-id-453'>
       <!-- implicit parameter of type 'const base::ElfMemImage*' -->
       <parameter type-id='type-id-690' is-artificial='yes'/>
       <!-- parameter of type 'int' -->
@@ -7321,7 +7321,7 @@
       <return type-id='type-id-438'/>
     </function-type>
     <!-- const Elf64_Verdaux* (base::ElfMemImage::*) (const Elf64_Verdef*) -->
-    <function-type method-class-id='type-id-145' size-in-bits='64' hash='a8aeec6b2a710788' id='type-id-446'>
+    <function-type method-class-id='type-id-145' static='yes' size-in-bits='64' hash='a8aeec6b2a710788' id='type-id-446'>
       <!-- implicit parameter of type 'const base::ElfMemImage*' -->
       <parameter type-id='type-id-690' is-artificial='yes'/>
       <!-- parameter of type 'const Elf64_Verdef*' -->
@@ -7330,7 +7330,7 @@
       <return type-id='type-id-649'/>
     </function-type>
     <!-- const Elf64_Verdef* (base::ElfMemImage::*) (int) -->
-    <function-type method-class-id='type-id-145' size-in-bits='64' hash='37ea784ac28f678d' id='type-id-454'>
+    <function-type method-class-id='type-id-145' static='yes' size-in-bits='64' hash='37ea784ac28f678d' id='type-id-454'>
       <!-- implicit parameter of type 'const base::ElfMemImage*' -->
       <parameter type-id='type-id-690' is-artificial='yes'/>
       <!-- parameter of type 'int' -->
@@ -7339,7 +7339,7 @@
       <return type-id='type-id-441'/>
     </function-type>
     <!-- const Elf64_Versym* (base::ElfMemImage::*) (int) -->
-    <function-type method-class-id='type-id-145' size-in-bits='64' hash='f8b6f926339d9793' id='type-id-455'>
+    <function-type method-class-id='type-id-145' static='yes' size-in-bits='64' hash='f8b6f926339d9793' id='type-id-455'>
       <!-- implicit parameter of type 'const base::ElfMemImage*' -->
       <parameter type-id='type-id-690' is-artificial='yes'/>
       <!-- parameter of type 'int' -->
@@ -7348,28 +7348,28 @@
       <return type-id='type-id-440'/>
     </function-type>
     <!-- const MemoryRegionMap::Region* (MemoryRegionMap::*) (uintptr_t) -->
-    <function-type method-class-id='type-id-321' size-in-bits='64' hash='e789a19109f75d81' id='type-id-335'>
+    <function-type method-class-id='type-id-321' static='yes' size-in-bits='64' hash='e789a19109f75d81' id='type-id-335'>
       <!-- parameter of type 'typedef uintptr_t' -->
       <parameter type-id='type-id-233'/>
       <!-- const MemoryRegionMap::Region* -->
       <return type-id='type-id-675'/>
     </function-type>
     <!-- const base::ElfMemImage::SymbolInfo& (base::ElfMemImage::SymbolIterator::*) () -->
-    <function-type method-class-id='type-id-149' size-in-bits='64' hash='b89eadf2e7309148' id='type-id-435'>
+    <function-type method-class-id='type-id-149' static='yes' size-in-bits='64' hash='b89eadf2e7309148' id='type-id-435'>
       <!-- implicit parameter of type 'const base::ElfMemImage::SymbolIterator*' -->
       <parameter type-id='type-id-696' is-artificial='yes'/>
       <!-- const base::ElfMemImage::SymbolInfo& -->
       <return type-id='type-id-692'/>
     </function-type>
     <!-- const base::ElfMemImage::SymbolInfo* (base::ElfMemImage::SymbolIterator::*) () -->
-    <function-type method-class-id='type-id-149' size-in-bits='64' hash='ac86b7affc53b69b' id='type-id-437'>
+    <function-type method-class-id='type-id-149' static='yes' size-in-bits='64' hash='ac86b7affc53b69b' id='type-id-437'>
       <!-- implicit parameter of type 'const base::ElfMemImage::SymbolIterator*' -->
       <parameter type-id='type-id-696' is-artificial='yes'/>
       <!-- const base::ElfMemImage::SymbolInfo* -->
       <return type-id='type-id-693'/>
     </function-type>
     <!-- const char* (SymbolTable::*) (void*) -->
-    <function-type method-class-id='type-id-130' size-in-bits='64' hash='03885aabe3ad60d6' id='type-id-396'>
+    <function-type method-class-id='type-id-130' static='yes' size-in-bits='64' hash='03885aabe3ad60d6' id='type-id-396'>
       <!-- implicit parameter of type 'SymbolTable*' -->
       <parameter type-id='type-id-131' is-artificial='yes'/>
       <!-- parameter of type 'void*' -->
@@ -7378,7 +7378,7 @@
       <return type-id='type-id-208'/>
     </function-type>
     <!-- const char* (base::ElfMemImage::*) (Elf64_Word) -->
-    <function-type method-class-id='type-id-145' size-in-bits='64' hash='40e5eb0f438da377' id='type-id-452'>
+    <function-type method-class-id='type-id-145' static='yes' size-in-bits='64' hash='40e5eb0f438da377' id='type-id-452'>
       <!-- implicit parameter of type 'const base::ElfMemImage*' -->
       <parameter type-id='type-id-690' is-artificial='yes'/>
       <!-- parameter of type 'typedef Elf64_Word' -->
@@ -7387,21 +7387,21 @@
       <return type-id='type-id-208'/>
     </function-type>
     <!-- double (MallocExtension::*) () -->
-    <function-type method-class-id='type-id-85' size-in-bits='64' hash='98755afade2f0235' id='type-id-302'>
+    <function-type method-class-id='type-id-85' static='yes' size-in-bits='64' hash='98755afade2f0235' id='type-id-302'>
       <!-- implicit parameter of type 'MallocExtension*' -->
       <parameter type-id='type-id-86' is-artificial='yes'/>
       <!-- double -->
       <return type-id='type-id-745'/>
     </function-type>
     <!-- double (TCMallocImplementation::*) () -->
-    <function-type method-class-id='type-id-137' size-in-bits='64' hash='7b8df599040cf107' id='type-id-410'>
+    <function-type method-class-id='type-id-137' static='yes' size-in-bits='64' hash='7b8df599040cf107' id='type-id-410'>
       <!-- implicit parameter of type 'TCMallocImplementation*' -->
       <parameter type-id='type-id-138' is-artificial='yes'/>
       <!-- double -->
       <return type-id='type-id-745'/>
     </function-type>
     <!-- int (HeapLeakChecker::*) (void*, int, pid_t*, typedef__va_list_tag__va_list_tag*) -->
-    <function-type method-class-id='type-id-46' size-in-bits='64' hash='bdaf5905b4b38079' id='type-id-219'>
+    <function-type method-class-id='type-id-46' static='yes' size-in-bits='64' hash='bdaf5905b4b38079' id='type-id-219'>
       <!-- parameter of type 'void*' -->
       <parameter type-id='type-id-181'/>
       <!-- parameter of type 'int' -->
@@ -7414,7 +7414,7 @@
       <return type-id='type-id-205'/>
     </function-type>
     <!-- int (HeapProfileTable::*) (char*, int) -->
-    <function-type method-class-id='type-id-58' size-in-bits='64' hash='d430e56e03a2f0f6' id='type-id-269'>
+    <function-type method-class-id='type-id-58' static='yes' size-in-bits='64' hash='d430e56e03a2f0f6' id='type-id-269'>
       <!-- implicit parameter of type 'const HeapProfileTable*' -->
       <parameter type-id='type-id-659' is-artificial='yes'/>
       <!-- parameter of type 'char*' -->
@@ -7425,7 +7425,7 @@
       <return type-id='type-id-205'/>
     </function-type>
     <!-- int (HeapProfileTable::*) (const HeapProfileTable::AllocValue::Bucket&, char*, int, int, const char*, HeapProfileTable::DumpArgs::Stats*) -->
-    <function-type method-class-id='type-id-58' size-in-bits='64' hash='92e7191f7b142324' id='type-id-255'>
+    <function-type method-class-id='type-id-58' static='yes' size-in-bits='64' hash='92e7191f7b142324' id='type-id-255'>
       <!-- parameter of type 'const HeapProfileTable::AllocValue::Bucket&' -->
       <parameter type-id='type-id-667'/>
       <!-- parameter of type 'char*' -->
@@ -7442,7 +7442,7 @@
       <return type-id='type-id-205'/>
     </function-type>
     <!-- int (HeapProfileTable::*) (int, void**) -->
-    <function-type method-class-id='type-id-58' size-in-bits='64' hash='8fbba35d2f9611dd' id='type-id-262'>
+    <function-type method-class-id='type-id-58' static='yes' size-in-bits='64' hash='8fbba35d2f9611dd' id='type-id-262'>
       <!-- parameter of type 'int' -->
       <parameter type-id='type-id-205'/>
       <!-- parameter of type 'void**' -->
@@ -7451,7 +7451,7 @@
       <return type-id='type-id-205'/>
     </function-type>
     <!-- int (MallocHook::*) (void*, size_t) -->
-    <function-type method-class-id='type-id-309' size-in-bits='64' hash='d9b6ff905d38255e' id='type-id-311'>
+    <function-type method-class-id='type-id-309' static='yes' size-in-bits='64' hash='d9b6ff905d38255e' id='type-id-311'>
       <!-- parameter of type 'void*' -->
       <parameter type-id='type-id-181'/>
       <!-- parameter of type 'typedef size_t' -->
@@ -7460,7 +7460,7 @@
       <return type-id='type-id-205'/>
     </function-type>
     <!-- int (ProcMapsIterator::*) (char*, int, uint64, uint64, const char*, uint64, int64, const char*, dev_t) -->
-    <function-type method-class-id='type-id-99' size-in-bits='64' hash='bb238af940c97e93' id='type-id-347'>
+    <function-type method-class-id='type-id-99' static='yes' size-in-bits='64' hash='bb238af940c97e93' id='type-id-347'>
       <!-- parameter of type 'char*' -->
       <parameter type-id='type-id-168'/>
       <!-- parameter of type 'int' -->
@@ -7483,21 +7483,21 @@
       <return type-id='type-id-205'/>
     </function-type>
     <!-- int (SymbolTable::*) () -->
-    <function-type method-class-id='type-id-130' size-in-bits='64' hash='1cd344bd60abc9e1' id='type-id-397'>
+    <function-type method-class-id='type-id-130' static='yes' size-in-bits='64' hash='1cd344bd60abc9e1' id='type-id-397'>
       <!-- implicit parameter of type 'SymbolTable*' -->
       <parameter type-id='type-id-131' is-artificial='yes'/>
       <!-- int -->
       <return type-id='type-id-205'/>
     </function-type>
     <!-- int (base::ElfMemImage::*) () -->
-    <function-type method-class-id='type-id-145' size-in-bits='64' hash='310c622e36150b97' id='type-id-448'>
+    <function-type method-class-id='type-id-145' static='yes' size-in-bits='64' hash='310c622e36150b97' id='type-id-448'>
       <!-- implicit parameter of type 'const base::ElfMemImage*' -->
       <parameter type-id='type-id-690' is-artificial='yes'/>
       <!-- int -->
       <return type-id='type-id-205'/>
     </function-type>
     <!-- int (base::internal::HookList<void(*)(constvoid*,size_t)>::*) (void (*)(void*, size_t)*, int) -->
-    <function-type method-class-id='type-id-160' size-in-bits='64' hash='9f89f23c5c04507e' id='type-id-909'>
+    <function-type method-class-id='type-id-160' static='yes' size-in-bits='64' hash='9f89f23c5c04507e' id='type-id-909'>
       <!-- implicit parameter of type 'const base::internal::HookList<void(*)(constvoid*,size_t)>*' -->
       <parameter type-id='type-id-703' is-artificial='yes'/>
       <!-- parameter of type 'void (*)(void*, size_t)*' -->
@@ -7508,14 +7508,14 @@
       <return type-id='type-id-205'/>
     </function-type>
     <!-- int (tcmalloc::CentralFreeList::*) () -->
-    <function-type method-class-id='type-id-535' size-in-bits='64' hash='f285c4a0199c6e6b' id='type-id-550'>
+    <function-type method-class-id='type-id-535' static='yes' size-in-bits='64' hash='f285c4a0199c6e6b' id='type-id-550'>
       <!-- implicit parameter of type 'tcmalloc::CentralFreeList*' -->
       <parameter type-id='type-id-906' is-artificial='yes'/>
       <!-- int -->
       <return type-id='type-id-205'/>
     </function-type>
     <!-- int (tcmalloc::CentralFreeList::*) (int, void**, void**) -->
-    <function-type method-class-id='type-id-535' size-in-bits='64' hash='e4c09ba27c14c662' id='type-id-546'>
+    <function-type method-class-id='type-id-535' static='yes' size-in-bits='64' hash='e4c09ba27c14c662' id='type-id-546'>
       <!-- implicit parameter of type 'tcmalloc::CentralFreeList*' -->
       <parameter type-id='type-id-906' is-artificial='yes'/>
       <!-- parameter of type 'int' -->
@@ -7528,7 +7528,7 @@
       <return type-id='type-id-205'/>
     </function-type>
     <!-- int (tcmalloc::CentralFreeList::*) (void**, void**, int) -->
-    <function-type method-class-id='type-id-535' size-in-bits='64' hash='9ce356637b205647' id='type-id-541'>
+    <function-type method-class-id='type-id-535' static='yes' size-in-bits='64' hash='9ce356637b205647' id='type-id-541'>
       <!-- implicit parameter of type 'tcmalloc::CentralFreeList*' -->
       <parameter type-id='type-id-906' is-artificial='yes'/>
       <!-- parameter of type 'void**' -->
@@ -7541,14 +7541,14 @@
       <return type-id='type-id-205'/>
     </function-type>
     <!-- int (tcmalloc::Sampler::*) () -->
-    <function-type method-class-id='type-id-592' size-in-bits='64' hash='c2ade58f764ead98' id='type-id-595'>
+    <function-type method-class-id='type-id-592' static='yes' size-in-bits='64' hash='c2ade58f764ead98' id='type-id-595'>
       <!-- implicit parameter of type 'tcmalloc::Sampler*' -->
       <parameter type-id='type-id-911' is-artificial='yes'/>
       <!-- int -->
       <return type-id='type-id-205'/>
     </function-type>
     <!-- int (tcmalloc::SizeMap::*) (size_t) -->
-    <function-type method-class-id='type-id-598' size-in-bits='64' hash='523521eeed07e388' id='type-id-602'>
+    <function-type method-class-id='type-id-598' static='yes' size-in-bits='64' hash='523521eeed07e388' id='type-id-602'>
       <!-- implicit parameter of type 'tcmalloc::SizeMap*' -->
       <parameter type-id='type-id-912' is-artificial='yes'/>
       <!-- parameter of type 'typedef size_t' -->
@@ -7557,21 +7557,21 @@
       <return type-id='type-id-205'/>
     </function-type>
     <!-- int (tcmalloc::ThreadCache::*) () -->
-    <function-type method-class-id='type-id-618' size-in-bits='64' hash='be605d6bf0024fb2' id='type-id-629'>
+    <function-type method-class-id='type-id-618' static='yes' size-in-bits='64' hash='be605d6bf0024fb2' id='type-id-629'>
       <!-- implicit parameter of type 'tcmalloc::ThreadCache*' -->
       <parameter type-id='type-id-622' is-artificial='yes'/>
       <!-- int -->
       <return type-id='type-id-205'/>
     </function-type>
     <!-- size_t (HeapProfileTable::*) (const HeapProfileTable::AllocValue&) -->
-    <function-type method-class-id='type-id-58' size-in-bits='64' hash='29582e95c8fa1239' id='type-id-256'>
+    <function-type method-class-id='type-id-58' static='yes' size-in-bits='64' hash='29582e95c8fa1239' id='type-id-256'>
       <!-- parameter of type 'const HeapProfileTable::AllocValue&' -->
       <parameter type-id='type-id-665'/>
       <!-- typedef size_t -->
       <return type-id='type-id-232'/>
     </function-type>
     <!-- size_t (MallocExtension::*) (size_t) -->
-    <function-type method-class-id='type-id-85' size-in-bits='64' hash='c913d3643ce58edc' id='type-id-303'>
+    <function-type method-class-id='type-id-85' static='yes' size-in-bits='64' hash='c913d3643ce58edc' id='type-id-303'>
       <!-- implicit parameter of type 'MallocExtension*' -->
       <parameter type-id='type-id-86' is-artificial='yes'/>
       <!-- parameter of type 'typedef size_t' -->
@@ -7580,7 +7580,7 @@
       <return type-id='type-id-232'/>
     </function-type>
     <!-- size_t (MallocExtension::*) (void*) -->
-    <function-type method-class-id='type-id-85' size-in-bits='64' hash='16dba70339882b39' id='type-id-304'>
+    <function-type method-class-id='type-id-85' static='yes' size-in-bits='64' hash='16dba70339882b39' id='type-id-304'>
       <!-- implicit parameter of type 'MallocExtension*' -->
       <parameter type-id='type-id-86' is-artificial='yes'/>
       <!-- parameter of type 'void*' -->
@@ -7589,7 +7589,7 @@
       <return type-id='type-id-232'/>
     </function-type>
     <!-- size_t (TCMallocImplementation::*) (size_t) -->
-    <function-type method-class-id='type-id-137' size-in-bits='64' hash='33d980b168565c5b' id='type-id-411'>
+    <function-type method-class-id='type-id-137' static='yes' size-in-bits='64' hash='33d980b168565c5b' id='type-id-411'>
       <!-- implicit parameter of type 'TCMallocImplementation*' -->
       <parameter type-id='type-id-138' is-artificial='yes'/>
       <!-- parameter of type 'typedef size_t' -->
@@ -7598,7 +7598,7 @@
       <return type-id='type-id-232'/>
     </function-type>
     <!-- size_t (TCMallocImplementation::*) (void*) -->
-    <function-type method-class-id='type-id-137' size-in-bits='64' hash='bc290e0e3fefef1a' id='type-id-412'>
+    <function-type method-class-id='type-id-137' static='yes' size-in-bits='64' hash='bc290e0e3fefef1a' id='type-id-412'>
       <!-- implicit parameter of type 'TCMallocImplementation*' -->
       <parameter type-id='type-id-138' is-artificial='yes'/>
       <!-- parameter of type 'void*' -->
@@ -7607,28 +7607,28 @@
       <return type-id='type-id-232'/>
     </function-type>
     <!-- size_t (tcmalloc::CentralFreeList::*) () -->
-    <function-type method-class-id='type-id-535' size-in-bits='64' hash='add8075afd317a88' id='type-id-543'>
+    <function-type method-class-id='type-id-535' static='yes' size-in-bits='64' hash='add8075afd317a88' id='type-id-543'>
       <!-- implicit parameter of type 'tcmalloc::CentralFreeList*' -->
       <parameter type-id='type-id-906' is-artificial='yes'/>
       <!-- typedef size_t -->
       <return type-id='type-id-232'/>
     </function-type>
     <!-- size_t (tcmalloc::Sampler::*) () -->
-    <function-type method-class-id='type-id-592' size-in-bits='64' hash='02b5bd1b0f57edf7' id='type-id-596'>
+    <function-type method-class-id='type-id-592' static='yes' size-in-bits='64' hash='02b5bd1b0f57edf7' id='type-id-596'>
       <!-- implicit parameter of type 'tcmalloc::Sampler*' -->
       <parameter type-id='type-id-911' is-artificial='yes'/>
       <!-- typedef size_t -->
       <return type-id='type-id-232'/>
     </function-type>
     <!-- ssize_t (HeapLeakChecker::*) () -->
-    <function-type method-class-id='type-id-46' size-in-bits='64' hash='9e4832670daa5098' id='type-id-227'>
+    <function-type method-class-id='type-id-46' static='yes' size-in-bits='64' hash='9e4832670daa5098' id='type-id-227'>
       <!-- implicit parameter of type 'const HeapLeakChecker*' -->
       <parameter type-id='type-id-657' is-artificial='yes'/>
       <!-- typedef ssize_t -->
       <return type-id='type-id-209'/>
     </function-type>
     <!-- std::_Rb_tree_iterator<MemoryRegionMap::Region> (std::_Rb_tree<MemoryRegionMap::Region,MemoryRegionMap::Region,std::_Identity<MemoryRegionMap::Region>,MemoryRegionMap::RegionCmp,STL_Allocator<MemoryRegionMap::Region,MemoryRegionMap::MyAllocator>>::*) (const std::_Rb_tree_node_base*, const std::_Rb_tree_node_base*, const MemoryRegionMap::Region&) -->
-    <function-type method-class-id='type-id-476' size-in-bits='64' hash='4918346f010a5f0d' id='type-id-478'>
+    <function-type method-class-id='type-id-476' static='yes' size-in-bits='64' hash='4918346f010a5f0d' id='type-id-478'>
       <!-- implicit parameter of type 'std::_Rb_tree<MemoryRegionMap::Region,MemoryRegionMap::Region,std::_Identity<MemoryRegionMap::Region>,MemoryRegionMap::RegionCmp,STL_Allocator<MemoryRegionMap::Region,MemoryRegionMap::MyAllocator>>*' -->
       <parameter type-id='type-id-913' is-artificial='yes'/>
       <!-- parameter of type 'const std::_Rb_tree_node_base*' -->
@@ -7641,7 +7641,7 @@
       <return type-id='type-id-914'/>
     </function-type>
     <!-- std::_Rb_tree_iterator<longunsignedint> (std::_Rb_tree<longunsignedint,longunsignedint,std::_Identity<longunsignedint>,std::less<longunsignedint>,STL_Allocator<longunsignedint,HeapLeakChecker::Allocator>>::*) (const std::_Rb_tree_node_base*, const std::_Rb_tree_node_base*, const unsigned long int&) -->
-    <function-type method-class-id='type-id-488' size-in-bits='64' hash='5087f14ecbfb216d' id='type-id-491'>
+    <function-type method-class-id='type-id-488' static='yes' size-in-bits='64' hash='5087f14ecbfb216d' id='type-id-491'>
       <!-- implicit parameter of type 'std::_Rb_tree<longunsignedint,longunsignedint,std::_Identity<longunsignedint>,std::less<longunsignedint>,STL_Allocator<longunsignedint,HeapLeakChecker::Allocator>>*' -->
       <parameter type-id='type-id-915' is-artificial='yes'/>
       <!-- parameter of type 'const std::_Rb_tree_node_base*' -->
@@ -7654,7 +7654,7 @@
       <return type-id='type-id-916'/>
     </function-type>
     <!-- std::_Rb_tree_iterator<std::pair<HeapProfileTable::Bucket*const,HeapProfileTable::Snapshot::Entry>> (std::_Rb_tree<HeapProfileTable::Bucket*,std::pair<HeapProfileTable::Bucket*const,HeapProfileTable::Snapshot::Entry>,std::_Select1st<std::pair<HeapProfileTable::Bucket*const,HeapProfileTable::Snapshot::Entry>>,std::less<HeapProfileTable::Bucket*>,std::allocator<std::pair<HeapProfileTable::Bucket*const,HeapProfileTable::Snapshot::Entry>>>::*) (const std::_Rb_tree_node_base*, const std::_Rb_tree_node_base*, const std::pair<HeapProfileTable::Bucket*const,HeapProfileTable::Snapshot::Entry>&) -->
-    <function-type method-class-id='type-id-467' size-in-bits='64' hash='fcb22b2a485cc0a3' id='type-id-472'>
+    <function-type method-class-id='type-id-467' static='yes' size-in-bits='64' hash='fcb22b2a485cc0a3' id='type-id-472'>
       <!-- implicit parameter of type 'std::_Rb_tree<HeapProfileTable::Bucket*,std::pair<HeapProfileTable::Bucket*const,HeapProfileTable::Snapshot::Entry>,std::_Select1st<std::pair<HeapProfileTable::Bucket*const,HeapProfileTable::Snapshot::Entry>>,std::less<HeapProfileTable::Bucket*>,std::allocator<std::pair<HeapProfileTable::Bucket*const,HeapProfileTable::Snapshot::Entry>>>*' -->
       <parameter type-id='type-id-917' is-artificial='yes'/>
       <!-- parameter of type 'const std::_Rb_tree_node_base*' -->
@@ -7667,7 +7667,7 @@
       <return type-id='type-id-918'/>
     </function-type>
     <!-- std::_Rb_tree_iterator<std::pair<HeapProfileTable::Bucket*const,HeapProfileTable::Snapshot::Entry>> (std::_Rb_tree<HeapProfileTable::Bucket*,std::pair<HeapProfileTable::Bucket*const,HeapProfileTable::Snapshot::Entry>,std::_Select1st<std::pair<HeapProfileTable::Bucket*const,HeapProfileTable::Snapshot::Entry>>,std::less<HeapProfileTable::Bucket*>,std::allocator<std::pair<HeapProfileTable::Bucket*const,HeapProfileTable::Snapshot::Entry>>>::*) (std::_Rb_tree_const_iterator<std::pair<HeapProfileTable::Bucket*const,HeapProfileTable::Snapshot::Entry>>, const std::pair<HeapProfileTable::Bucket*const,HeapProfileTable::Snapshot::Entry>&) -->
-    <function-type method-class-id='type-id-467' size-in-bits='64' hash='85731b96074b06c6' id='type-id-474'>
+    <function-type method-class-id='type-id-467' static='yes' size-in-bits='64' hash='85731b96074b06c6' id='type-id-474'>
       <!-- implicit parameter of type 'std::_Rb_tree<HeapProfileTable::Bucket*,std::pair<HeapProfileTable::Bucket*const,HeapProfileTable::Snapshot::Entry>,std::_Select1st<std::pair<HeapProfileTable::Bucket*const,HeapProfileTable::Snapshot::Entry>>,std::less<HeapProfileTable::Bucket*>,std::allocator<std::pair<HeapProfileTable::Bucket*const,HeapProfileTable::Snapshot::Entry>>>*' -->
       <parameter type-id='type-id-917' is-artificial='yes'/>
       <!-- parameter of type 'struct std::_Rb_tree_const_iterator<std::pair<HeapProfileTable::Bucket*const,HeapProfileTable::Snapshot::Entry>>' -->
@@ -7678,7 +7678,7 @@
       <return type-id='type-id-918'/>
     </function-type>
     <!-- std::_Rb_tree_iterator<std::pair<constlongunsignedint,HeapLeakChecker::RangeValue>> (std::_Rb_tree<longunsignedint,std::pair<constlongunsignedint,HeapLeakChecker::RangeValue>,std::_Select1st<std::pair<constlongunsignedint,HeapLeakChecker::RangeValue>>,std::less<longunsignedint>,STL_Allocator<std::pair<constlongunsignedint,HeapLeakChecker::RangeValue>,HeapLeakChecker::Allocator>>::*) (const std::_Rb_tree_node_base*, const std::_Rb_tree_node_base*, const std::pair<constlongunsignedint,HeapLeakChecker::RangeValue>&) -->
-    <function-type method-class-id='type-id-493' size-in-bits='64' hash='ccfb303ca911a8b5' id='type-id-495'>
+    <function-type method-class-id='type-id-493' static='yes' size-in-bits='64' hash='ccfb303ca911a8b5' id='type-id-495'>
       <!-- implicit parameter of type 'std::_Rb_tree<longunsignedint,std::pair<constlongunsignedint,HeapLeakChecker::RangeValue>,std::_Select1st<std::pair<constlongunsignedint,HeapLeakChecker::RangeValue>>,std::less<longunsignedint>,STL_Allocator<std::pair<constlongunsignedint,HeapLeakChecker::RangeValue>,HeapLeakChecker::Allocator>>*' -->
       <parameter type-id='type-id-920' is-artificial='yes'/>
       <!-- parameter of type 'const std::_Rb_tree_node_base*' -->
@@ -7691,7 +7691,7 @@
       <return type-id='type-id-921'/>
     </function-type>
     <!-- std::_Rb_tree_iterator<std::pair<constlongunsignedint,longunsignedint>> (std::_Rb_tree<longunsignedint,std::pair<constlongunsignedint,longunsignedint>,std::_Select1st<std::pair<constlongunsignedint,longunsignedint>>,std::less<longunsignedint>,STL_Allocator<std::pair<constlongunsignedint,longunsignedint>,HeapLeakChecker::Allocator>>::*) (const std::_Rb_tree_node_base*, const std::_Rb_tree_node_base*, const std::pair<constlongunsignedint,longunsignedint>&) -->
-    <function-type method-class-id='type-id-497' size-in-bits='64' hash='abc9fae8537810ba' id='type-id-499'>
+    <function-type method-class-id='type-id-497' static='yes' size-in-bits='64' hash='abc9fae8537810ba' id='type-id-499'>
       <!-- implicit parameter of type 'std::_Rb_tree<longunsignedint,std::pair<constlongunsignedint,longunsignedint>,std::_Select1st<std::pair<constlongunsignedint,longunsignedint>>,std::less<longunsignedint>,STL_Allocator<std::pair<constlongunsignedint,longunsignedint>,HeapLeakChecker::Allocator>>*' -->
       <parameter type-id='type-id-922' is-artificial='yes'/>
       <!-- parameter of type 'const std::_Rb_tree_node_base*' -->
@@ -7704,7 +7704,7 @@
       <return type-id='type-id-923'/>
     </function-type>
     <!-- std::_Rb_tree_iterator<std::pair<conststd::basic_string<char,std::char_traits<char>,STL_Allocator<char,HeapLeakChecker::Allocator>>,std::vector<AllocObject,STL_Allocator<AllocObject,HeapLeakChecker::Allocator>>>> (std::_Rb_tree<std::basic_string<char,std::char_traits<char>,STL_Allocator<char,HeapLeakChecker::Allocator>>,std::pair<conststd::basic_string<char,std::char_traits<char>,STL_Allocator<char,HeapLeakChecker::Allocator>>,std::vector<AllocObject,STL_Allocator<AllocObject,HeapLeakChecker::Allocator>>>,std::_Select1st<std::pair<conststd::basic_string<char,std::char_traits<char>,STL_Allocator<char,HeapLeakChecker::Allocator>>,std::vector<AllocObject,STL_Allocator<AllocObject,HeapLeakChecker::Allocator>>>>,std::less<std::basic_string<char,std::char_traits<char>,STL_Allocator<char,HeapLeakChecker::Allocator>>>,STL_Allocator<std::pair<conststd::basic_string<char,std::char_traits<char>,STL_Allocator<char,HeapLeakChecker::Allocator>>,std::vector<AllocObject,STL_Allocator<AllocObject,HeapLeakChecker::Allocator>>>,HeapLeakChecker::Allocator>>::*) (const std::_Rb_tree_node_base*, const std::_Rb_tree_node_base*, const std::pair<conststd::basic_string<char,std::char_traits<char>,STL_Allocator<char,HeapLeakChecker::Allocator>>,std::vector<AllocObject,STL_Allocator<AllocObject,HeapLeakChecker::Allocator>>>&) -->
-    <function-type method-class-id='type-id-501' size-in-bits='64' hash='38c2286713c6ab20' id='type-id-504'>
+    <function-type method-class-id='type-id-501' static='yes' size-in-bits='64' hash='38c2286713c6ab20' id='type-id-504'>
       <!-- implicit parameter of type 'std::_Rb_tree<std::basic_string<char,std::char_traits<char>,STL_Allocator<char,HeapLeakChecker::Allocator>>,std::pair<conststd::basic_string<char,std::char_traits<char>,STL_Allocator<char,HeapLeakChecker::Allocator>>,std::vector<AllocObject,STL_Allocator<AllocObject,HeapLeakChecker::Allocator>>>,std::_Select1st<std::pair<conststd::basic_string<char,std::char_traits<char>,STL_Allocator<char,HeapLeakChecker::Allocator>>,std::vector<AllocObject,STL_Allocator<AllocObject,HeapLeakChecker::Allocator>>>>,std::less<std::basic_string<char,std::char_traits<char>,STL_Allocator<char,HeapLeakChecker::Allocator>>>,STL_Allocator<std::pair<conststd::basic_string<char,std::char_traits<char>,STL_Allocator<char,HeapLeakChecker::Allocator>>,std::vector<AllocObject,STL_Allocator<AllocObject,HeapLeakChecker::Allocator>>>,HeapLeakChecker::Allocator>>*' -->
       <parameter type-id='type-id-924' is-artificial='yes'/>
       <!-- parameter of type 'const std::_Rb_tree_node_base*' -->
@@ -7717,7 +7717,7 @@
       <return type-id='type-id-925'/>
     </function-type>
     <!-- std::_Rb_tree_iterator<std::pair<conststd::basic_string<char,std::char_traits<char>,STL_Allocator<char,HeapLeakChecker::Allocator>>,std::vector<AllocObject,STL_Allocator<AllocObject,HeapLeakChecker::Allocator>>>> (std::_Rb_tree<std::basic_string<char,std::char_traits<char>,STL_Allocator<char,HeapLeakChecker::Allocator>>,std::pair<conststd::basic_string<char,std::char_traits<char>,STL_Allocator<char,HeapLeakChecker::Allocator>>,std::vector<AllocObject,STL_Allocator<AllocObject,HeapLeakChecker::Allocator>>>,std::_Select1st<std::pair<conststd::basic_string<char,std::char_traits<char>,STL_Allocator<char,HeapLeakChecker::Allocator>>,std::vector<AllocObject,STL_Allocator<AllocObject,HeapLeakChecker::Allocator>>>>,std::less<std::basic_string<char,std::char_traits<char>,STL_Allocator<char,HeapLeakChecker::Allocator>>>,STL_Allocator<std::pair<conststd::basic_string<char,std::char_traits<char>,STL_Allocator<char,HeapLeakChecker::Allocator>>,std::vector<AllocObject,STL_Allocator<AllocObject,HeapLeakChecker::Allocator>>>,HeapLeakChecker::Allocator>>::*) (std::_Rb_tree_const_iterator<std::pair<conststd::basic_string<char,std::char_traits<char>,STL_Allocator<char,HeapLeakChecker::Allocator>>,std::vector<AllocObject,STL_Allocator<AllocObject,HeapLeakChecker::Allocator>>>>, const std::pair<conststd::basic_string<char,std::char_traits<char>,STL_Allocator<char,HeapLeakChecker::Allocator>>,std::vector<AllocObject,STL_Allocator<AllocObject,HeapLeakChecker::Allocator>>>&) -->
-    <function-type method-class-id='type-id-501' size-in-bits='64' hash='bb56e9889def67ee' id='type-id-506'>
+    <function-type method-class-id='type-id-501' static='yes' size-in-bits='64' hash='bb56e9889def67ee' id='type-id-506'>
       <!-- implicit parameter of type 'std::_Rb_tree<std::basic_string<char,std::char_traits<char>,STL_Allocator<char,HeapLeakChecker::Allocator>>,std::pair<conststd::basic_string<char,std::char_traits<char>,STL_Allocator<char,HeapLeakChecker::Allocator>>,std::vector<AllocObject,STL_Allocator<AllocObject,HeapLeakChecker::Allocator>>>,std::_Select1st<std::pair<conststd::basic_string<char,std::char_traits<char>,STL_Allocator<char,HeapLeakChecker::Allocator>>,std::vector<AllocObject,STL_Allocator<AllocObject,HeapLeakChecker::Allocator>>>>,std::less<std::basic_string<char,std::char_traits<char>,STL_Allocator<char,HeapLeakChecker::Allocator>>>,STL_Allocator<std::pair<conststd::basic_string<char,std::char_traits<char>,STL_Allocator<char,HeapLeakChecker::Allocator>>,std::vector<AllocObject,STL_Allocator<AllocObject,HeapLeakChecker::Allocator>>>,HeapLeakChecker::Allocator>>*' -->
       <parameter type-id='type-id-924' is-artificial='yes'/>
       <!-- parameter of type 'struct std::_Rb_tree_const_iterator<std::pair<conststd::basic_string<char,std::char_traits<char>,STL_Allocator<char,HeapLeakChecker::Allocator>>,std::vector<AllocObject,STL_Allocator<AllocObject,HeapLeakChecker::Allocator>>>>' -->
@@ -7728,7 +7728,7 @@
       <return type-id='type-id-925'/>
     </function-type>
     <!-- std::_Rb_tree_iterator<std::pair<constvoid*const,constchar*>> (std::_Rb_tree<constvoid*,std::pair<constvoid*const,constchar*>,std::_Select1st<std::pair<constvoid*const,constchar*>>,std::less<constvoid*>,std::allocator<std::pair<constvoid*const,constchar*>>>::*) (const std::_Rb_tree_node_base*, const std::_Rb_tree_node_base*, const std::pair<constvoid*const,constchar*>&) -->
-    <function-type method-class-id='type-id-480' size-in-bits='64' hash='d97aabb3946a1aa6' id='type-id-484'>
+    <function-type method-class-id='type-id-480' static='yes' size-in-bits='64' hash='d97aabb3946a1aa6' id='type-id-484'>
       <!-- implicit parameter of type 'std::_Rb_tree<constvoid*,std::pair<constvoid*const,constchar*>,std::_Select1st<std::pair<constvoid*const,constchar*>>,std::less<constvoid*>,std::allocator<std::pair<constvoid*const,constchar*>>>*' -->
       <parameter type-id='type-id-927' is-artificial='yes'/>
       <!-- parameter of type 'const std::_Rb_tree_node_base*' -->
@@ -7741,7 +7741,7 @@
       <return type-id='type-id-928'/>
     </function-type>
     <!-- std::_Rb_tree_iterator<std::pair<constvoid*const,constchar*>> (std::_Rb_tree<constvoid*,std::pair<constvoid*const,constchar*>,std::_Select1st<std::pair<constvoid*const,constchar*>>,std::less<constvoid*>,std::allocator<std::pair<constvoid*const,constchar*>>>::*) (std::_Rb_tree_const_iterator<std::pair<constvoid*const,constchar*>>, const std::pair<constvoid*const,constchar*>&) -->
-    <function-type method-class-id='type-id-480' size-in-bits='64' hash='2f7622ea74e8e0fa' id='type-id-486'>
+    <function-type method-class-id='type-id-480' static='yes' size-in-bits='64' hash='2f7622ea74e8e0fa' id='type-id-486'>
       <!-- implicit parameter of type 'std::_Rb_tree<constvoid*,std::pair<constvoid*const,constchar*>,std::_Select1st<std::pair<constvoid*const,constchar*>>,std::less<constvoid*>,std::allocator<std::pair<constvoid*const,constchar*>>>*' -->
       <parameter type-id='type-id-927' is-artificial='yes'/>
       <!-- parameter of type 'struct std::_Rb_tree_const_iterator<std::pair<constvoid*const,constchar*>>' -->
@@ -7752,7 +7752,7 @@
       <return type-id='type-id-928'/>
     </function-type>
     <!-- std::basic_string<char,std::char_traits<char>,STL_Allocator<char,HeapLeakChecker::Allocator>>::_Rep* (std::basic_string<char,std::char_traits<char>,STL_Allocator<char,HeapLeakChecker::Allocator>>::_Rep::*) (size_t, size_t, const STL_Allocator<char,HeapLeakChecker::Allocator>&) -->
-    <function-type method-class-id='type-id-513' size-in-bits='64' hash='298a227471f54e89' id='type-id-518'>
+    <function-type method-class-id='type-id-513' static='yes' size-in-bits='64' hash='298a227471f54e89' id='type-id-518'>
       <!-- parameter of type 'typedef size_t' -->
       <parameter type-id='type-id-232'/>
       <!-- parameter of type 'typedef size_t' -->
@@ -7763,7 +7763,7 @@
       <return type-id='type-id-930'/>
     </function-type>
     <!-- std::pair<std::_Rb_tree_iterator<std::pair<HeapProfileTable::Bucket*const,HeapProfileTable::Snapshot::Entry>>,bool> (std::_Rb_tree<HeapProfileTable::Bucket*,std::pair<HeapProfileTable::Bucket*const,HeapProfileTable::Snapshot::Entry>,std::_Select1st<std::pair<HeapProfileTable::Bucket*const,HeapProfileTable::Snapshot::Entry>>,std::less<HeapProfileTable::Bucket*>,std::allocator<std::pair<HeapProfileTable::Bucket*const,HeapProfileTable::Snapshot::Entry>>>::*) (const std::pair<HeapProfileTable::Bucket*const,HeapProfileTable::Snapshot::Entry>&) -->
-    <function-type method-class-id='type-id-467' size-in-bits='64' hash='231447309e5d6662' id='type-id-473'>
+    <function-type method-class-id='type-id-467' static='yes' size-in-bits='64' hash='231447309e5d6662' id='type-id-473'>
       <!-- implicit parameter of type 'std::_Rb_tree<HeapProfileTable::Bucket*,std::pair<HeapProfileTable::Bucket*const,HeapProfileTable::Snapshot::Entry>,std::_Select1st<std::pair<HeapProfileTable::Bucket*const,HeapProfileTable::Snapshot::Entry>>,std::less<HeapProfileTable::Bucket*>,std::allocator<std::pair<HeapProfileTable::Bucket*const,HeapProfileTable::Snapshot::Entry>>>*' -->
       <parameter type-id='type-id-917' is-artificial='yes'/>
       <!-- parameter of type 'const std::pair<HeapProfileTable::Bucket*const,HeapProfileTable::Snapshot::Entry>&' -->
@@ -7772,7 +7772,7 @@
       <return type-id='type-id-931'/>
     </function-type>
     <!-- std::pair<std::_Rb_tree_iterator<std::pair<conststd::basic_string<char,std::char_traits<char>,STL_Allocator<char,HeapLeakChecker::Allocator>>,std::vector<AllocObject,STL_Allocator<AllocObject,HeapLeakChecker::Allocator>>>>,bool> (std::_Rb_tree<std::basic_string<char,std::char_traits<char>,STL_Allocator<char,HeapLeakChecker::Allocator>>,std::pair<conststd::basic_string<char,std::char_traits<char>,STL_Allocator<char,HeapLeakChecker::Allocator>>,std::vector<AllocObject,STL_Allocator<AllocObject,HeapLeakChecker::Allocator>>>,std::_Select1st<std::pair<conststd::basic_string<char,std::char_traits<char>,STL_Allocator<char,HeapLeakChecker::Allocator>>,std::vector<AllocObject,STL_Allocator<AllocObject,HeapLeakChecker::Allocator>>>>,std::less<std::basic_string<char,std::char_traits<char>,STL_Allocator<char,HeapLeakChecker::Allocator>>>,STL_Allocator<std::pair<conststd::basic_string<char,std::char_traits<char>,STL_Allocator<char,HeapLeakChecker::Allocator>>,std::vector<AllocObject,STL_Allocator<AllocObject,HeapLeakChecker::Allocator>>>,HeapLeakChecker::Allocator>>::*) (const std::pair<conststd::basic_string<char,std::char_traits<char>,STL_Allocator<char,HeapLeakChecker::Allocator>>,std::vector<AllocObject,STL_Allocator<AllocObject,HeapLeakChecker::Allocator>>>&) -->
-    <function-type method-class-id='type-id-501' size-in-bits='64' hash='4495c614dfdd7b35' id='type-id-505'>
+    <function-type method-class-id='type-id-501' static='yes' size-in-bits='64' hash='4495c614dfdd7b35' id='type-id-505'>
       <!-- implicit parameter of type 'std::_Rb_tree<std::basic_string<char,std::char_traits<char>,STL_Allocator<char,HeapLeakChecker::Allocator>>,std::pair<conststd::basic_string<char,std::char_traits<char>,STL_Allocator<char,HeapLeakChecker::Allocator>>,std::vector<AllocObject,STL_Allocator<AllocObject,HeapLeakChecker::Allocator>>>,std::_Select1st<std::pair<conststd::basic_string<char,std::char_traits<char>,STL_Allocator<char,HeapLeakChecker::Allocator>>,std::vector<AllocObject,STL_Allocator<AllocObject,HeapLeakChecker::Allocator>>>>,std::less<std::basic_string<char,std::char_traits<char>,STL_Allocator<char,HeapLeakChecker::Allocator>>>,STL_Allocator<std::pair<conststd::basic_string<char,std::char_traits<char>,STL_Allocator<char,HeapLeakChecker::Allocator>>,std::vector<AllocObject,STL_Allocator<AllocObject,HeapLeakChecker::Allocator>>>,HeapLeakChecker::Allocator>>*' -->
       <parameter type-id='type-id-924' is-artificial='yes'/>
       <!-- parameter of type 'const std::pair<conststd::basic_string<char,std::char_traits<char>,STL_Allocator<char,HeapLeakChecker::Allocator>>,std::vector<AllocObject,STL_Allocator<AllocObject,HeapLeakChecker::Allocator>>>&' -->
@@ -7781,7 +7781,7 @@
       <return type-id='type-id-932'/>
     </function-type>
     <!-- std::pair<std::_Rb_tree_iterator<std::pair<constvoid*const,constchar*>>,bool> (std::_Rb_tree<constvoid*,std::pair<constvoid*const,constchar*>,std::_Select1st<std::pair<constvoid*const,constchar*>>,std::less<constvoid*>,std::allocator<std::pair<constvoid*const,constchar*>>>::*) (const std::pair<constvoid*const,constchar*>&) -->
-    <function-type method-class-id='type-id-480' size-in-bits='64' hash='1472845f8c5688b7' id='type-id-485'>
+    <function-type method-class-id='type-id-480' static='yes' size-in-bits='64' hash='1472845f8c5688b7' id='type-id-485'>
       <!-- implicit parameter of type 'std::_Rb_tree<constvoid*,std::pair<constvoid*const,constchar*>,std::_Select1st<std::pair<constvoid*const,constchar*>>,std::less<constvoid*>,std::allocator<std::pair<constvoid*const,constchar*>>>*' -->
       <parameter type-id='type-id-927' is-artificial='yes'/>
       <!-- parameter of type 'const std::pair<constvoid*const,constchar*>&' -->
@@ -7790,7 +7790,7 @@
       <return type-id='type-id-933'/>
     </function-type>
     <!-- tcmalloc::Span* (tcmalloc::PageHeap::*) (Length) -->
-    <function-type method-class-id='type-id-562' size-in-bits='64' hash='2ae21a3e52cbaf82' id='type-id-571'>
+    <function-type method-class-id='type-id-562' static='yes' size-in-bits='64' hash='2ae21a3e52cbaf82' id='type-id-571'>
       <!-- implicit parameter of type 'tcmalloc::PageHeap*' -->
       <parameter type-id='type-id-616' is-artificial='yes'/>
       <!-- parameter of type 'typedef Length' -->
@@ -7799,7 +7799,7 @@
       <return type-id='type-id-836'/>
     </function-type>
     <!-- tcmalloc::Span* (tcmalloc::PageHeap::*) (tcmalloc::Span*, Length) -->
-    <function-type method-class-id='type-id-562' size-in-bits='64' hash='1a01654fc117dc4b' id='type-id-584'>
+    <function-type method-class-id='type-id-562' static='yes' size-in-bits='64' hash='1a01654fc117dc4b' id='type-id-584'>
       <!-- implicit parameter of type 'tcmalloc::PageHeap*' -->
       <parameter type-id='type-id-616' is-artificial='yes'/>
       <!-- parameter of type 'tcmalloc::Span*' -->
@@ -7810,26 +7810,26 @@
       <return type-id='type-id-836'/>
     </function-type>
     <!-- tcmalloc::ThreadCache* (tcmalloc::ThreadCache::*) (pthread_t) -->
-    <function-type method-class-id='type-id-618' size-in-bits='64' hash='b2219f7bf0f45387' id='type-id-637'>
+    <function-type method-class-id='type-id-618' static='yes' size-in-bits='64' hash='b2219f7bf0f45387' id='type-id-637'>
       <!-- parameter of type 'typedef pthread_t' -->
       <parameter type-id='type-id-327'/>
       <!-- tcmalloc::ThreadCache* -->
       <return type-id='type-id-622'/>
     </function-type>
     <!-- tcmalloc::ThreadCache* (tcmalloc::ThreadCache::*) (void) -->
-    <function-type method-class-id='type-id-618' size-in-bits='64' hash='fddab1c8e1d72766' id='type-id-634'>
+    <function-type method-class-id='type-id-618' static='yes' size-in-bits='64' hash='fddab1c8e1d72766' id='type-id-634'>
       <!-- tcmalloc::ThreadCache* -->
       <return type-id='type-id-622'/>
     </function-type>
     <!-- void (*)(void*, size_t) (base::internal::HookList<void(*)(constvoid*,size_t)>::*) () -->
-    <function-type method-class-id='type-id-160' size-in-bits='64' hash='e4d1304c02314c84' id='type-id-934'>
+    <function-type method-class-id='type-id-160' static='yes' size-in-bits='64' hash='e4d1304c02314c84' id='type-id-934'>
       <!-- implicit parameter of type 'const base::internal::HookList<void(*)(constvoid*,size_t)>*' -->
       <parameter type-id='type-id-703' is-artificial='yes'/>
       <!-- void (*)(void*, size_t) -->
       <return type-id='type-id-905'/>
     </function-type>
     <!-- void (*)(void*, size_t) (base::internal::HookList<void(*)(constvoid*,size_t)>::*) (void (*)(void*, size_t)) -->
-    <function-type method-class-id='type-id-160' size-in-bits='64' hash='7136bb592983125a' id='type-id-935'>
+    <function-type method-class-id='type-id-160' static='yes' size-in-bits='64' hash='7136bb592983125a' id='type-id-935'>
       <!-- implicit parameter of type 'base::internal::HookList<void(*)(constvoid*,size_t)>*' -->
       <parameter type-id='type-id-161' is-artificial='yes'/>
       <!-- parameter of type 'void (*)(void*, size_t)' -->
@@ -7838,7 +7838,7 @@
       <return type-id='type-id-905'/>
     </function-type>
     <!-- void (AddressMap<HeapProfileTable::AllocValue>::*) (void* (*)(unsigned long int), void (*)(void*)) -->
-    <function-type method-class-id='type-id-21' size-in-bits='64' hash='26378429a899b998' id='type-id-179'>
+    <function-type method-class-id='type-id-21' static='yes' size-in-bits='64' hash='26378429a899b998' id='type-id-179'>
       <!-- implicit parameter of type 'AddressMap<HeapProfileTable::AllocValue>*' -->
       <parameter type-id='type-id-22' is-artificial='yes'/>
       <!-- parameter of type 'void* (*)(unsigned long int)' -->
@@ -7849,7 +7849,7 @@
       <return type-id='type-id-839'/>
     </function-type>
     <!-- void (AddressMap<HeapProfileTable::AllocValue>::*) (void*, HeapProfileTable::AllocValue) -->
-    <function-type method-class-id='type-id-21' size-in-bits='64' hash='e0df88af1dfcce1b' id='type-id-178'>
+    <function-type method-class-id='type-id-21' static='yes' size-in-bits='64' hash='e0df88af1dfcce1b' id='type-id-178'>
       <!-- implicit parameter of type 'AddressMap<HeapProfileTable::AllocValue>*' -->
       <parameter type-id='type-id-22' is-artificial='yes'/>
       <!-- parameter of type 'void*' -->
@@ -7860,14 +7860,14 @@
       <return type-id='type-id-839'/>
     </function-type>
     <!-- void (CpuProfiler::*) () -->
-    <function-type method-class-id='type-id-36' size-in-bits='64' hash='e7ed69e6caf75f30' id='type-id-182'>
+    <function-type method-class-id='type-id-36' static='yes' size-in-bits='64' hash='e7ed69e6caf75f30' id='type-id-182'>
       <!-- implicit parameter of type 'CpuProfiler*' -->
       <parameter type-id='type-id-37' is-artificial='yes'/>
       <!-- void -->
       <return type-id='type-id-839'/>
     </function-type>
     <!-- void (CpuProfiler::*) (ProfilerState*) -->
-    <function-type method-class-id='type-id-36' size-in-bits='64' hash='4ad6d3c49aac7a2a' id='type-id-184'>
+    <function-type method-class-id='type-id-36' static='yes' size-in-bits='64' hash='4ad6d3c49aac7a2a' id='type-id-184'>
       <!-- implicit parameter of type 'CpuProfiler*' -->
       <parameter type-id='type-id-37' is-artificial='yes'/>
       <!-- parameter of type 'ProfilerState*' -->
@@ -7876,7 +7876,7 @@
       <return type-id='type-id-839'/>
     </function-type>
     <!-- void (CpuProfiler::*) (int, siginfo_t*, void*, void*) -->
-    <function-type method-class-id='type-id-36' size-in-bits='64' hash='0b5657b3c3ed28d9' id='type-id-183'>
+    <function-type method-class-id='type-id-36' static='yes' size-in-bits='64' hash='0b5657b3c3ed28d9' id='type-id-183'>
       <!-- parameter of type 'int' -->
       <parameter type-id='type-id-205'/>
       <!-- parameter of type 'siginfo_t*' -->
@@ -7889,14 +7889,14 @@
       <return type-id='type-id-839'/>
     </function-type>
     <!-- void (GoogleInitializer::*) () -->
-    <function-type method-class-id='type-id-42' size-in-bits='64' hash='3aa4715d499b39cc' id='type-id-194'>
+    <function-type method-class-id='type-id-42' static='yes' size-in-bits='64' hash='3aa4715d499b39cc' id='type-id-194'>
       <!-- implicit parameter of type 'GoogleInitializer*' -->
       <parameter type-id='type-id-43' is-artificial='yes'/>
       <!-- void -->
       <return type-id='type-id-839'/>
     </function-type>
     <!-- void (HeapCleaner::*) (HeapCleaner::void_function) -->
-    <function-type method-class-id='type-id-44' size-in-bits='64' hash='ed87ef625a18e82e' id='type-id-198'>
+    <function-type method-class-id='type-id-44' static='yes' size-in-bits='64' hash='ed87ef625a18e82e' id='type-id-198'>
       <!-- implicit parameter of type 'HeapCleaner*' -->
       <parameter type-id='type-id-45' is-artificial='yes'/>
       <!-- parameter of type 'typedef HeapCleaner::void_function' -->
@@ -7905,35 +7905,35 @@
       <return type-id='type-id-839'/>
     </function-type>
     <!-- void (HeapCleaner::*) (void) -->
-    <function-type method-class-id='type-id-44' size-in-bits='64' hash='d9f8e6086cefd10a' id='type-id-197'>
+    <function-type method-class-id='type-id-44' static='yes' size-in-bits='64' hash='d9f8e6086cefd10a' id='type-id-197'>
       <!-- void -->
       <return type-id='type-id-839'/>
     </function-type>
     <!-- void (HeapLeakChecker::*) () -->
-    <function-type method-class-id='type-id-46' size-in-bits='64' hash='f2a36a18a8360a92' id='type-id-226'>
+    <function-type method-class-id='type-id-46' static='yes' size-in-bits='64' hash='f2a36a18a8360a92' id='type-id-226'>
       <!-- implicit parameter of type 'HeapLeakChecker*' -->
       <parameter type-id='type-id-47' is-artificial='yes'/>
       <!-- void -->
       <return type-id='type-id-839'/>
     </function-type>
     <!-- void (HeapLeakChecker::*) (const char*) -->
-    <function-type method-class-id='type-id-46' size-in-bits='64' hash='9f3f2ad3faba66af' id='type-id-225'>
-      <!-- implicit parameter of type 'HeapLeakChecker*' -->
-      <parameter type-id='type-id-47' is-artificial='yes'/>
+    <function-type method-class-id='type-id-46' static='yes' size-in-bits='64' hash='1982d05fd9370fed' id='type-id-214'>
       <!-- parameter of type 'const char*' -->
       <parameter type-id='type-id-208'/>
       <!-- void -->
       <return type-id='type-id-839'/>
     </function-type>
     <!-- void (HeapLeakChecker::*) (const char*) -->
-    <function-type method-class-id='type-id-46' size-in-bits='64' hash='1982d05fd9370fed' id='type-id-214'>
+    <function-type method-class-id='type-id-46' static='yes' size-in-bits='64' hash='9f3f2ad3faba66af' id='type-id-225'>
+      <!-- implicit parameter of type 'HeapLeakChecker*' -->
+      <parameter type-id='type-id-47' is-artificial='yes'/>
       <!-- parameter of type 'const char*' -->
       <parameter type-id='type-id-208'/>
       <!-- void -->
       <return type-id='type-id-839'/>
     </function-type>
     <!-- void (HeapLeakChecker::*) (const char*, bool) -->
-    <function-type method-class-id='type-id-46' size-in-bits='64' hash='241a4094cd57cdf5' id='type-id-223'>
+    <function-type method-class-id='type-id-46' static='yes' size-in-bits='64' hash='241a4094cd57cdf5' id='type-id-223'>
       <!-- implicit parameter of type 'HeapLeakChecker*' -->
       <parameter type-id='type-id-47' is-artificial='yes'/>
       <!-- parameter of type 'const char*' -->
@@ -7944,7 +7944,7 @@
       <return type-id='type-id-839'/>
     </function-type>
     <!-- void (HeapLeakChecker::*) (const char*, const char*) -->
-    <function-type method-class-id='type-id-46' size-in-bits='64' hash='28d57495ea0fd68a' id='type-id-218'>
+    <function-type method-class-id='type-id-46' static='yes' size-in-bits='64' hash='28d57495ea0fd68a' id='type-id-218'>
       <!-- parameter of type 'const char*' -->
       <parameter type-id='type-id-208'/>
       <!-- parameter of type 'const char*' -->
@@ -7953,7 +7953,7 @@
       <return type-id='type-id-839'/>
     </function-type>
     <!-- void (HeapLeakChecker::*) (const char*, uintptr_t, uintptr_t) -->
-    <function-type method-class-id='type-id-46' size-in-bits='64' hash='287199d7e75a2d84' id='type-id-221'>
+    <function-type method-class-id='type-id-46' static='yes' size-in-bits='64' hash='287199d7e75a2d84' id='type-id-221'>
       <!-- parameter of type 'const char*' -->
       <parameter type-id='type-id-208'/>
       <!-- parameter of type 'typedef uintptr_t' -->
@@ -7964,19 +7964,19 @@
       <return type-id='type-id-839'/>
     </function-type>
     <!-- void (HeapLeakChecker::*) (void) -->
-    <function-type method-class-id='type-id-46' size-in-bits='64' hash='d9f8e6086cefd10a' id='type-id-215'>
+    <function-type method-class-id='type-id-46' static='yes' size-in-bits='64' hash='d9f8e6086cefd10a' id='type-id-215'>
       <!-- void -->
       <return type-id='type-id-839'/>
     </function-type>
     <!-- void (HeapLeakChecker::*) (void*) -->
-    <function-type method-class-id='type-id-46' size-in-bits='64' hash='031cf174bf917bb0' id='type-id-212'>
+    <function-type method-class-id='type-id-46' static='yes' size-in-bits='64' hash='031cf174bf917bb0' id='type-id-212'>
       <!-- parameter of type 'void*' -->
       <parameter type-id='type-id-181'/>
       <!-- void -->
       <return type-id='type-id-839'/>
     </function-type>
     <!-- void (HeapLeakChecker::*) (void*, void*, int) -->
-    <function-type method-class-id='type-id-46' size-in-bits='64' hash='349949d8113b8c49' id='type-id-220'>
+    <function-type method-class-id='type-id-46' static='yes' size-in-bits='64' hash='349949d8113b8c49' id='type-id-220'>
       <!-- parameter of type 'void*' -->
       <parameter type-id='type-id-181'/>
       <!-- parameter of type 'void*' -->
@@ -7987,42 +7987,42 @@
       <return type-id='type-id-839'/>
     </function-type>
     <!-- void (HeapLeakChecker::Allocator::*) (void*) -->
-    <function-type method-class-id='type-id-204' size-in-bits='64' hash='031cf174bf917bb0' id='type-id-206'>
+    <function-type method-class-id='type-id-204' static='yes' size-in-bits='64' hash='031cf174bf917bb0' id='type-id-206'>
       <!-- parameter of type 'void*' -->
       <parameter type-id='type-id-181'/>
       <!-- void -->
       <return type-id='type-id-839'/>
     </function-type>
     <!-- void (HeapLeakChecker::Disabler::*) () -->
-    <function-type method-class-id='type-id-48' size-in-bits='64' hash='3e29a35a9be9b927' id='type-id-199'>
+    <function-type method-class-id='type-id-48' static='yes' size-in-bits='64' hash='3e29a35a9be9b927' id='type-id-199'>
       <!-- implicit parameter of type 'HeapLeakChecker::Disabler*' -->
       <parameter type-id='type-id-49' is-artificial='yes'/>
       <!-- void -->
       <return type-id='type-id-839'/>
     </function-type>
     <!-- void (HeapLeakCheckerGlobalPrePost::*) () -->
-    <function-type method-class-id='type-id-50' size-in-bits='64' hash='da08eda77d8b0710' id='type-id-228'>
+    <function-type method-class-id='type-id-50' static='yes' size-in-bits='64' hash='da08eda77d8b0710' id='type-id-228'>
       <!-- implicit parameter of type 'HeapLeakCheckerGlobalPrePost*' -->
       <parameter type-id='type-id-51' is-artificial='yes'/>
       <!-- void -->
       <return type-id='type-id-839'/>
     </function-type>
     <!-- void (HeapProfileEndWriter::*) () -->
-    <function-type method-class-id='type-id-56' size-in-bits='64' hash='46544e1800ce99d4' id='type-id-936'>
+    <function-type method-class-id='type-id-56' static='yes' size-in-bits='64' hash='46544e1800ce99d4' id='type-id-936'>
       <!-- implicit parameter of type 'HeapProfileEndWriter*' -->
       <parameter type-id='type-id-57' is-artificial='yes'/>
       <!-- void -->
       <return type-id='type-id-839'/>
     </function-type>
     <!-- void (HeapProfileTable::*) () -->
-    <function-type method-class-id='type-id-58' size-in-bits='64' hash='c712426f252fc0c8' id='type-id-266'>
+    <function-type method-class-id='type-id-58' static='yes' size-in-bits='64' hash='c712426f252fc0c8' id='type-id-266'>
       <!-- implicit parameter of type 'HeapProfileTable*' -->
       <parameter type-id='type-id-59' is-artificial='yes'/>
       <!-- void -->
       <return type-id='type-id-839'/>
     </function-type>
     <!-- void (HeapProfileTable::*) (HeapProfileTable::AllocContextIterator) -->
-    <function-type method-class-id='type-id-58' size-in-bits='64' hash='41a2fc89c0dcfcbc' id='type-id-271'>
+    <function-type method-class-id='type-id-58' static='yes' size-in-bits='64' hash='41a2fc89c0dcfcbc' id='type-id-271'>
       <!-- implicit parameter of type 'const HeapProfileTable*' -->
       <parameter type-id='type-id-659' is-artificial='yes'/>
       <!-- parameter of type 'typedef HeapProfileTable::AllocContextIterator' -->
@@ -8031,7 +8031,7 @@
       <return type-id='type-id-839'/>
     </function-type>
     <!-- void (HeapProfileTable::*) (HeapProfileTable::Allocator, HeapProfileTable::DeAllocator, bool) -->
-    <function-type method-class-id='type-id-58' size-in-bits='64' hash='52c5fad9a08277b1' id='type-id-265'>
+    <function-type method-class-id='type-id-58' static='yes' size-in-bits='64' hash='52c5fad9a08277b1' id='type-id-265'>
       <!-- implicit parameter of type 'HeapProfileTable*' -->
       <parameter type-id='type-id-59' is-artificial='yes'/>
       <!-- parameter of type 'typedef HeapProfileTable::Allocator' -->
@@ -8044,7 +8044,7 @@
       <return type-id='type-id-839'/>
     </function-type>
     <!-- void (HeapProfileTable::*) (HeapProfileTable::Snapshot*) -->
-    <function-type method-class-id='type-id-58' size-in-bits='64' hash='9b740753fd8f9b59' id='type-id-258'>
+    <function-type method-class-id='type-id-58' static='yes' size-in-bits='64' hash='9b740753fd8f9b59' id='type-id-258'>
       <!-- implicit parameter of type 'HeapProfileTable*' -->
       <parameter type-id='type-id-59' is-artificial='yes'/>
       <!-- parameter of type 'HeapProfileTable::Snapshot*' -->
@@ -8053,7 +8053,7 @@
       <return type-id='type-id-839'/>
     </function-type>
     <!-- void (HeapProfileTable::*) (const HeapProfileTable::AllocValue::Bucket*, HeapProfileTable::BufferArgs*) -->
-    <function-type method-class-id='type-id-58' size-in-bits='64' hash='a10edc733ab5f697' id='type-id-260'>
+    <function-type method-class-id='type-id-58' static='yes' size-in-bits='64' hash='a10edc733ab5f697' id='type-id-260'>
       <!-- parameter of type 'const HeapProfileTable::AllocValue::Bucket*' -->
       <parameter type-id='type-id-668'/>
       <!-- parameter of type 'HeapProfileTable::BufferArgs*' -->
@@ -8062,14 +8062,14 @@
       <return type-id='type-id-839'/>
     </function-type>
     <!-- void (HeapProfileTable::*) (const char*) -->
-    <function-type method-class-id='type-id-58' size-in-bits='64' hash='1982d05fd9370fed' id='type-id-259'>
+    <function-type method-class-id='type-id-58' static='yes' size-in-bits='64' hash='1982d05fd9370fed' id='type-id-259'>
       <!-- parameter of type 'const char*' -->
       <parameter type-id='type-id-208'/>
       <!-- void -->
       <return type-id='type-id-839'/>
     </function-type>
     <!-- void (HeapProfileTable::*) (void*) -->
-    <function-type method-class-id='type-id-58' size-in-bits='64' hash='956a685813626eb2' id='type-id-249'>
+    <function-type method-class-id='type-id-58' static='yes' size-in-bits='64' hash='956a685813626eb2' id='type-id-249'>
       <!-- implicit parameter of type 'HeapProfileTable*' -->
       <parameter type-id='type-id-59' is-artificial='yes'/>
       <!-- parameter of type 'void*' -->
@@ -8078,7 +8078,7 @@
       <return type-id='type-id-839'/>
     </function-type>
     <!-- void (HeapProfileTable::*) (void*, HeapProfileTable::AllocValue*, HeapProfileTable::AddNonLiveArgs*) -->
-    <function-type method-class-id='type-id-58' size-in-bits='64' hash='94bde8d333965eea' id='type-id-251'>
+    <function-type method-class-id='type-id-58' static='yes' size-in-bits='64' hash='94bde8d333965eea' id='type-id-251'>
       <!-- parameter of type 'void*' -->
       <parameter type-id='type-id-181'/>
       <!-- parameter of type 'HeapProfileTable::AllocValue*' -->
@@ -8089,7 +8089,7 @@
       <return type-id='type-id-839'/>
     </function-type>
     <!-- void (HeapProfileTable::*) (void*, HeapProfileTable::AllocValue*, HeapProfileTable::AllocIterator) -->
-    <function-type method-class-id='type-id-58' size-in-bits='64' hash='9c055a9fffbfb5e8' id='type-id-263'>
+    <function-type method-class-id='type-id-58' static='yes' size-in-bits='64' hash='9c055a9fffbfb5e8' id='type-id-263'>
       <!-- parameter of type 'void*' -->
       <parameter type-id='type-id-181'/>
       <!-- parameter of type 'HeapProfileTable::AllocValue*' -->
@@ -8100,7 +8100,7 @@
       <return type-id='type-id-839'/>
     </function-type>
     <!-- void (HeapProfileTable::*) (void*, HeapProfileTable::AllocValue*, HeapProfileTable::Snapshot*) -->
-    <function-type method-class-id='type-id-58' size-in-bits='64' hash='69772cf5b9f3913e' id='type-id-254'>
+    <function-type method-class-id='type-id-58' static='yes' size-in-bits='64' hash='69772cf5b9f3913e' id='type-id-254'>
       <!-- parameter of type 'void*' -->
       <parameter type-id='type-id-181'/>
       <!-- parameter of type 'HeapProfileTable::AllocValue*' -->
@@ -8111,7 +8111,7 @@
       <return type-id='type-id-839'/>
     </function-type>
     <!-- void (HeapProfileTable::*) (void*, HeapProfileTable::AllocValue*, const HeapProfileTable::DumpArgs&) -->
-    <function-type method-class-id='type-id-58' size-in-bits='64' hash='fce748bd00d9a105' id='type-id-261'>
+    <function-type method-class-id='type-id-58' static='yes' size-in-bits='64' hash='fce748bd00d9a105' id='type-id-261'>
       <!-- parameter of type 'void*' -->
       <parameter type-id='type-id-181'/>
       <!-- parameter of type 'HeapProfileTable::AllocValue*' -->
@@ -8122,7 +8122,7 @@
       <return type-id='type-id-839'/>
     </function-type>
     <!-- void (HeapProfileTable::*) (void*, size_t, int, void* const*) -->
-    <function-type method-class-id='type-id-58' size-in-bits='64' hash='c008a00eb343cae4' id='type-id-250'>
+    <function-type method-class-id='type-id-58' static='yes' size-in-bits='64' hash='c008a00eb343cae4' id='type-id-250'>
       <!-- implicit parameter of type 'HeapProfileTable*' -->
       <parameter type-id='type-id-59' is-artificial='yes'/>
       <!-- parameter of type 'void*' -->
@@ -8137,14 +8137,14 @@
       <return type-id='type-id-839'/>
     </function-type>
     <!-- void (HeapProfileTable::Snapshot::*) () -->
-    <function-type method-class-id='type-id-75' size-in-bits='64' hash='63fcf5584b012549' id='type-id-239'>
+    <function-type method-class-id='type-id-75' static='yes' size-in-bits='64' hash='63fcf5584b012549' id='type-id-239'>
       <!-- implicit parameter of type 'HeapProfileTable::Snapshot*' -->
       <parameter type-id='type-id-76' is-artificial='yes'/>
       <!-- void -->
       <return type-id='type-id-839'/>
     </function-type>
     <!-- void (HeapProfileTable::Snapshot::*) (const char*, const char*, bool) -->
-    <function-type method-class-id='type-id-75' size-in-bits='64' hash='242ceb0f82c17d28' id='type-id-236'>
+    <function-type method-class-id='type-id-75' static='yes' size-in-bits='64' hash='242ceb0f82c17d28' id='type-id-236'>
       <!-- implicit parameter of type 'HeapProfileTable::Snapshot*' -->
       <parameter type-id='type-id-76' is-artificial='yes'/>
       <!-- parameter of type 'const char*' -->
@@ -8157,7 +8157,7 @@
       <return type-id='type-id-839'/>
     </function-type>
     <!-- void (HeapProfileTable::Snapshot::*) (void*, HeapProfileTable::AllocValue*, HeapProfileTable::Snapshot::ReportState*) -->
-    <function-type method-class-id='type-id-75' size-in-bits='64' hash='f58fdb297b802256' id='type-id-238'>
+    <function-type method-class-id='type-id-75' static='yes' size-in-bits='64' hash='f58fdb297b802256' id='type-id-238'>
       <!-- parameter of type 'void*' -->
       <parameter type-id='type-id-181'/>
       <!-- parameter of type 'HeapProfileTable::AllocValue*' -->
@@ -8168,7 +8168,7 @@
       <return type-id='type-id-839'/>
     </function-type>
     <!-- void (HeapProfileTable::Snapshot::*) (void*, HeapProfileTable::AllocValue*, char*) -->
-    <function-type method-class-id='type-id-75' size-in-bits='64' hash='205ca5742d060271' id='type-id-237'>
+    <function-type method-class-id='type-id-75' static='yes' size-in-bits='64' hash='205ca5742d060271' id='type-id-237'>
       <!-- parameter of type 'void*' -->
       <parameter type-id='type-id-181'/>
       <!-- parameter of type 'HeapProfileTable::AllocValue*' -->
@@ -8179,28 +8179,28 @@
       <return type-id='type-id-839'/>
     </function-type>
     <!-- void (LowLevelAlloc::*) (void*) -->
-    <function-type method-class-id='type-id-277' size-in-bits='64' hash='031cf174bf917bb0' id='type-id-281'>
+    <function-type method-class-id='type-id-277' static='yes' size-in-bits='64' hash='031cf174bf917bb0' id='type-id-281'>
       <!-- parameter of type 'void*' -->
       <parameter type-id='type-id-181'/>
       <!-- void -->
       <return type-id='type-id-839'/>
     </function-type>
     <!-- void (MallocExtension::*) () -->
-    <function-type method-class-id='type-id-85' size-in-bits='64' hash='95a9ea7e84a3f2b1' id='type-id-297'>
+    <function-type method-class-id='type-id-85' static='yes' size-in-bits='64' hash='95a9ea7e84a3f2b1' id='type-id-297'>
       <!-- implicit parameter of type 'MallocExtension*' -->
       <parameter type-id='type-id-86' is-artificial='yes'/>
       <!-- void -->
       <return type-id='type-id-839'/>
     </function-type>
     <!-- void (MallocExtension::*) (MallocExtension*) -->
-    <function-type method-class-id='type-id-85' size-in-bits='64' hash='95a9ea7e84a3f2b1' id='type-id-287'>
+    <function-type method-class-id='type-id-85' static='yes' size-in-bits='64' hash='95a9ea7e84a3f2b1' id='type-id-287'>
       <!-- parameter of type 'MallocExtension*' -->
       <parameter type-id='type-id-86'/>
       <!-- void -->
       <return type-id='type-id-839'/>
     </function-type>
     <!-- void (MallocExtension::*) (MallocExtensionWriter*) -->
-    <function-type method-class-id='type-id-85' size-in-bits='64' hash='41bcb21dafedf120' id='type-id-293'>
+    <function-type method-class-id='type-id-85' static='yes' size-in-bits='64' hash='41bcb21dafedf120' id='type-id-293'>
       <!-- implicit parameter of type 'MallocExtension*' -->
       <parameter type-id='type-id-86' is-artificial='yes'/>
       <!-- parameter of type 'MallocExtensionWriter*' -->
@@ -8209,7 +8209,7 @@
       <return type-id='type-id-839'/>
     </function-type>
     <!-- void (MallocExtension::*) (SysAllocator*) -->
-    <function-type method-class-id='type-id-85' size-in-bits='64' hash='1a978146fb2b4095' id='type-id-299'>
+    <function-type method-class-id='type-id-85' static='yes' size-in-bits='64' hash='1a978146fb2b4095' id='type-id-299'>
       <!-- implicit parameter of type 'MallocExtension*' -->
       <parameter type-id='type-id-86' is-artificial='yes'/>
       <!-- parameter of type 'SysAllocator*' -->
@@ -8218,7 +8218,7 @@
       <return type-id='type-id-839'/>
     </function-type>
     <!-- void (MallocExtension::*) (char*, int) -->
-    <function-type method-class-id='type-id-85' size-in-bits='64' hash='6ac6f34e76833af3' id='type-id-292'>
+    <function-type method-class-id='type-id-85' static='yes' size-in-bits='64' hash='6ac6f34e76833af3' id='type-id-292'>
       <!-- implicit parameter of type 'MallocExtension*' -->
       <parameter type-id='type-id-86' is-artificial='yes'/>
       <!-- parameter of type 'char*' -->
@@ -8229,7 +8229,7 @@
       <return type-id='type-id-839'/>
     </function-type>
     <!-- void (MallocExtension::*) (double) -->
-    <function-type method-class-id='type-id-85' size-in-bits='64' hash='19e4d4088e9a8746' id='type-id-301'>
+    <function-type method-class-id='type-id-85' static='yes' size-in-bits='64' hash='19e4d4088e9a8746' id='type-id-301'>
       <!-- implicit parameter of type 'MallocExtension*' -->
       <parameter type-id='type-id-86' is-artificial='yes'/>
       <!-- parameter of type 'double' -->
@@ -8238,7 +8238,7 @@
       <return type-id='type-id-839'/>
     </function-type>
     <!-- void (MallocExtension::*) (size_t) -->
-    <function-type method-class-id='type-id-85' size-in-bits='64' hash='472b3796f4fc17d9' id='type-id-300'>
+    <function-type method-class-id='type-id-85' static='yes' size-in-bits='64' hash='472b3796f4fc17d9' id='type-id-300'>
       <!-- implicit parameter of type 'MallocExtension*' -->
       <parameter type-id='type-id-86' is-artificial='yes'/>
       <!-- parameter of type 'typedef size_t' -->
@@ -8247,7 +8247,7 @@
       <return type-id='type-id-839'/>
     </function-type>
     <!-- void (MallocExtension::*) (std::vector<MallocExtension::FreeListInfo,std::allocator<MallocExtension::FreeListInfo>>*) -->
-    <function-type method-class-id='type-id-85' size-in-bits='64' hash='71e082d3e2f789e2' id='type-id-306'>
+    <function-type method-class-id='type-id-85' static='yes' size-in-bits='64' hash='71e082d3e2f789e2' id='type-id-306'>
       <!-- implicit parameter of type 'MallocExtension*' -->
       <parameter type-id='type-id-86' is-artificial='yes'/>
       <!-- parameter of type 'std::vector<MallocExtension::FreeListInfo,std::allocator<MallocExtension::FreeListInfo>>*' -->
@@ -8256,12 +8256,12 @@
       <return type-id='type-id-839'/>
     </function-type>
     <!-- void (MallocExtension::*) (void) -->
-    <function-type method-class-id='type-id-85' size-in-bits='64' hash='d9f8e6086cefd10a' id='type-id-286'>
+    <function-type method-class-id='type-id-85' static='yes' size-in-bits='64' hash='d9f8e6086cefd10a' id='type-id-286'>
       <!-- void -->
       <return type-id='type-id-839'/>
     </function-type>
     <!-- void (MallocExtension::*) (void*, MallocExtension::RangeFunction*) -->
-    <function-type method-class-id='type-id-85' size-in-bits='64' hash='fb2ad89998d87143' id='type-id-294'>
+    <function-type method-class-id='type-id-85' static='yes' size-in-bits='64' hash='fb2ad89998d87143' id='type-id-294'>
       <!-- implicit parameter of type 'MallocExtension*' -->
       <parameter type-id='type-id-86' is-artificial='yes'/>
       <!-- parameter of type 'void*' -->
@@ -8272,21 +8272,21 @@
       <return type-id='type-id-839'/>
     </function-type>
     <!-- void (MallocHook::*) (ptrdiff_t) -->
-    <function-type method-class-id='type-id-309' size-in-bits='64' hash='2f727fc39edeb099' id='type-id-318'>
+    <function-type method-class-id='type-id-309' static='yes' size-in-bits='64' hash='2f727fc39edeb099' id='type-id-318'>
       <!-- parameter of type 'typedef ptrdiff_t' -->
       <parameter type-id='type-id-863'/>
       <!-- void -->
       <return type-id='type-id-839'/>
     </function-type>
     <!-- void (MallocHook::*) (void*) -->
-    <function-type method-class-id='type-id-309' size-in-bits='64' hash='031cf174bf917bb0' id='type-id-315'>
+    <function-type method-class-id='type-id-309' static='yes' size-in-bits='64' hash='031cf174bf917bb0' id='type-id-315'>
       <!-- parameter of type 'void*' -->
       <parameter type-id='type-id-181'/>
       <!-- void -->
       <return type-id='type-id-839'/>
     </function-type>
     <!-- void (MallocHook::*) (void*, ptrdiff_t) -->
-    <function-type method-class-id='type-id-309' size-in-bits='64' hash='2ee61e1701048bc6' id='type-id-314'>
+    <function-type method-class-id='type-id-309' static='yes' size-in-bits='64' hash='2ee61e1701048bc6' id='type-id-314'>
       <!-- parameter of type 'void*' -->
       <parameter type-id='type-id-181'/>
       <!-- parameter of type 'typedef ptrdiff_t' -->
@@ -8295,7 +8295,7 @@
       <return type-id='type-id-839'/>
     </function-type>
     <!-- void (MallocHook::*) (void*, size_t) -->
-    <function-type method-class-id='type-id-309' size-in-bits='64' hash='8a9abeb6e385bfa6' id='type-id-312'>
+    <function-type method-class-id='type-id-309' static='yes' size-in-bits='64' hash='8a9abeb6e385bfa6' id='type-id-312'>
       <!-- parameter of type 'void*' -->
       <parameter type-id='type-id-181'/>
       <!-- parameter of type 'typedef size_t' -->
@@ -8304,7 +8304,7 @@
       <return type-id='type-id-839'/>
     </function-type>
     <!-- void (MallocHook::*) (void*, size_t, int, int, int, off_t) -->
-    <function-type method-class-id='type-id-309' size-in-bits='64' hash='f28b0b9e9396d480' id='type-id-317'>
+    <function-type method-class-id='type-id-309' static='yes' size-in-bits='64' hash='f28b0b9e9396d480' id='type-id-317'>
       <!-- parameter of type 'void*' -->
       <parameter type-id='type-id-181'/>
       <!-- parameter of type 'typedef size_t' -->
@@ -8321,7 +8321,7 @@
       <return type-id='type-id-839'/>
     </function-type>
     <!-- void (MallocHook::*) (void*, void*, size_t, int, int, int, off_t) -->
-    <function-type method-class-id='type-id-309' size-in-bits='64' hash='a61082864981c732' id='type-id-313'>
+    <function-type method-class-id='type-id-309' static='yes' size-in-bits='64' hash='a61082864981c732' id='type-id-313'>
       <!-- parameter of type 'void*' -->
       <parameter type-id='type-id-181'/>
       <!-- parameter of type 'void*' -->
@@ -8340,7 +8340,7 @@
       <return type-id='type-id-839'/>
     </function-type>
     <!-- void (MallocHook::*) (void*, void*, size_t, size_t, int, void*) -->
-    <function-type method-class-id='type-id-309' size-in-bits='64' hash='b32fb84b6a098588' id='type-id-316'>
+    <function-type method-class-id='type-id-309' static='yes' size-in-bits='64' hash='b32fb84b6a098588' id='type-id-316'>
       <!-- parameter of type 'void*' -->
       <parameter type-id='type-id-181'/>
       <!-- parameter of type 'void*' -->
@@ -8357,14 +8357,14 @@
       <return type-id='type-id-839'/>
     </function-type>
     <!-- void (MemoryRegionMap::*) (const MemoryRegionMap::Region&) -->
-    <function-type method-class-id='type-id-321' size-in-bits='64' hash='b47fe6137964d159' id='type-id-336'>
+    <function-type method-class-id='type-id-321' static='yes' size-in-bits='64' hash='b47fe6137964d159' id='type-id-336'>
       <!-- parameter of type 'const MemoryRegionMap::Region&' -->
       <parameter type-id='type-id-674'/>
       <!-- void -->
       <return type-id='type-id-839'/>
     </function-type>
     <!-- void (MemoryRegionMap::*) (int, bool) -->
-    <function-type method-class-id='type-id-321' size-in-bits='64' hash='1791c38df56d87bb' id='type-id-339'>
+    <function-type method-class-id='type-id-321' static='yes' size-in-bits='64' hash='1791c38df56d87bb' id='type-id-339'>
       <!-- parameter of type 'int' -->
       <parameter type-id='type-id-205'/>
       <!-- parameter of type 'bool' -->
@@ -8373,7 +8373,7 @@
       <return type-id='type-id-839'/>
     </function-type>
     <!-- void (MemoryRegionMap::*) (int, void* const*, size_t) -->
-    <function-type method-class-id='type-id-321' size-in-bits='64' hash='43b92a82a1f32eb1' id='type-id-338'>
+    <function-type method-class-id='type-id-321' static='yes' size-in-bits='64' hash='43b92a82a1f32eb1' id='type-id-338'>
       <!-- parameter of type 'int' -->
       <parameter type-id='type-id-205'/>
       <!-- parameter of type 'void* const*' -->
@@ -8384,19 +8384,19 @@
       <return type-id='type-id-839'/>
     </function-type>
     <!-- void (MemoryRegionMap::*) (void (*)(const MemoryRegionMap::Region&)) -->
-    <function-type method-class-id='type-id-321' size-in-bits='64' hash='bf7e8fedfd5996b8' id='type-id-337'>
+    <function-type method-class-id='type-id-321' static='yes' size-in-bits='64' hash='bf7e8fedfd5996b8' id='type-id-337'>
       <!-- parameter of type 'void (*)(const MemoryRegionMap::Region&)' -->
       <parameter type-id='type-id-938'/>
       <!-- void -->
       <return type-id='type-id-839'/>
     </function-type>
     <!-- void (MemoryRegionMap::*) (void) -->
-    <function-type method-class-id='type-id-321' size-in-bits='64' hash='d9f8e6086cefd10a' id='type-id-333'>
+    <function-type method-class-id='type-id-321' static='yes' size-in-bits='64' hash='d9f8e6086cefd10a' id='type-id-333'>
       <!-- void -->
       <return type-id='type-id-839'/>
     </function-type>
     <!-- void (MemoryRegionMap::*) (void*, ptrdiff_t) -->
-    <function-type method-class-id='type-id-321' size-in-bits='64' hash='2ee61e1701048bc6' id='type-id-341'>
+    <function-type method-class-id='type-id-321' static='yes' size-in-bits='64' hash='2ee61e1701048bc6' id='type-id-341'>
       <!-- parameter of type 'void*' -->
       <parameter type-id='type-id-181'/>
       <!-- parameter of type 'typedef ptrdiff_t' -->
@@ -8405,7 +8405,7 @@
       <return type-id='type-id-839'/>
     </function-type>
     <!-- void (MemoryRegionMap::*) (void*, size_t) -->
-    <function-type method-class-id='type-id-321' size-in-bits='64' hash='8a9abeb6e385bfa6' id='type-id-332'>
+    <function-type method-class-id='type-id-321' static='yes' size-in-bits='64' hash='8a9abeb6e385bfa6' id='type-id-332'>
       <!-- parameter of type 'void*' -->
       <parameter type-id='type-id-181'/>
       <!-- parameter of type 'typedef size_t' -->
@@ -8414,7 +8414,7 @@
       <return type-id='type-id-839'/>
     </function-type>
     <!-- void (MemoryRegionMap::*) (void*, void*, size_t, int, int, int, off_t) -->
-    <function-type method-class-id='type-id-321' size-in-bits='64' hash='a61082864981c732' id='type-id-340'>
+    <function-type method-class-id='type-id-321' static='yes' size-in-bits='64' hash='a61082864981c732' id='type-id-340'>
       <!-- parameter of type 'void*' -->
       <parameter type-id='type-id-181'/>
       <!-- parameter of type 'void*' -->
@@ -8433,7 +8433,7 @@
       <return type-id='type-id-839'/>
     </function-type>
     <!-- void (MemoryRegionMap::*) (void*, void*, size_t, size_t, int, void*) -->
-    <function-type method-class-id='type-id-321' size-in-bits='64' hash='b32fb84b6a098588' id='type-id-331'>
+    <function-type method-class-id='type-id-321' static='yes' size-in-bits='64' hash='b32fb84b6a098588' id='type-id-331'>
       <!-- parameter of type 'void*' -->
       <parameter type-id='type-id-181'/>
       <!-- parameter of type 'void*' -->
@@ -8450,14 +8450,14 @@
       <return type-id='type-id-839'/>
     </function-type>
     <!-- void (ProcMapsIterator::*) () -->
-    <function-type method-class-id='type-id-99' size-in-bits='64' hash='77af9ba59ad88cc5' id='type-id-353'>
+    <function-type method-class-id='type-id-99' static='yes' size-in-bits='64' hash='77af9ba59ad88cc5' id='type-id-353'>
       <!-- implicit parameter of type 'ProcMapsIterator*' -->
       <parameter type-id='type-id-100' is-artificial='yes'/>
       <!-- void -->
       <return type-id='type-id-839'/>
     </function-type>
     <!-- void (ProcMapsIterator::*) (pid_t) -->
-    <function-type method-class-id='type-id-99' size-in-bits='64' hash='5cc4d08e0797ffbb' id='type-id-351'>
+    <function-type method-class-id='type-id-99' static='yes' size-in-bits='64' hash='5cc4d08e0797ffbb' id='type-id-351'>
       <!-- implicit parameter of type 'ProcMapsIterator*' -->
       <parameter type-id='type-id-100' is-artificial='yes'/>
       <!-- parameter of type 'typedef pid_t' -->
@@ -8466,7 +8466,7 @@
       <return type-id='type-id-839'/>
     </function-type>
     <!-- void (ProcMapsIterator::*) (pid_t, ProcMapsIterator::Buffer*) -->
-    <function-type method-class-id='type-id-99' size-in-bits='64' hash='c11b34839e8aab98' id='type-id-352'>
+    <function-type method-class-id='type-id-99' static='yes' size-in-bits='64' hash='c11b34839e8aab98' id='type-id-352'>
       <!-- implicit parameter of type 'ProcMapsIterator*' -->
       <parameter type-id='type-id-100' is-artificial='yes'/>
       <!-- parameter of type 'typedef pid_t' -->
@@ -8477,7 +8477,7 @@
       <return type-id='type-id-839'/>
     </function-type>
     <!-- void (ProcMapsIterator::*) (pid_t, ProcMapsIterator::Buffer*, bool) -->
-    <function-type method-class-id='type-id-99' size-in-bits='64' hash='bfe58e352ea2145a' id='type-id-348'>
+    <function-type method-class-id='type-id-99' static='yes' size-in-bits='64' hash='bfe58e352ea2145a' id='type-id-348'>
       <!-- implicit parameter of type 'ProcMapsIterator*' -->
       <parameter type-id='type-id-100' is-artificial='yes'/>
       <!-- parameter of type 'typedef pid_t' -->
@@ -8490,14 +8490,14 @@
       <return type-id='type-id-839'/>
     </function-type>
     <!-- void (ProfileData::*) () -->
-    <function-type method-class-id='type-id-103' size-in-bits='64' hash='db31f0a749540de3' id='type-id-357'>
+    <function-type method-class-id='type-id-103' static='yes' size-in-bits='64' hash='db31f0a749540de3' id='type-id-357'>
       <!-- implicit parameter of type 'ProfileData*' -->
       <parameter type-id='type-id-104' is-artificial='yes'/>
       <!-- void -->
       <return type-id='type-id-839'/>
     </function-type>
     <!-- void (ProfileData::*) (ProfileData::State*) -->
-    <function-type method-class-id='type-id-103' size-in-bits='64' hash='90bb226b9b78d5c9' id='type-id-361'>
+    <function-type method-class-id='type-id-103' static='yes' size-in-bits='64' hash='90bb226b9b78d5c9' id='type-id-361'>
       <!-- implicit parameter of type 'const ProfileData*' -->
       <parameter type-id='type-id-679' is-artificial='yes'/>
       <!-- parameter of type 'ProfileData::State*' -->
@@ -8506,7 +8506,7 @@
       <return type-id='type-id-839'/>
     </function-type>
     <!-- void (ProfileData::*) (const ProfileData::Entry&) -->
-    <function-type method-class-id='type-id-103' size-in-bits='64' hash='ccbaaa781006981f' id='type-id-359'>
+    <function-type method-class-id='type-id-103' static='yes' size-in-bits='64' hash='ccbaaa781006981f' id='type-id-359'>
       <!-- implicit parameter of type 'ProfileData*' -->
       <parameter type-id='type-id-104' is-artificial='yes'/>
       <!-- parameter of type 'const ProfileData::Entry&' -->
@@ -8515,7 +8515,7 @@
       <return type-id='type-id-839'/>
     </function-type>
     <!-- void (ProfileData::*) (int, void* const*) -->
-    <function-type method-class-id='type-id-103' size-in-bits='64' hash='825e6a6855c9004d' id='type-id-358'>
+    <function-type method-class-id='type-id-103' static='yes' size-in-bits='64' hash='825e6a6855c9004d' id='type-id-358'>
       <!-- implicit parameter of type 'ProfileData*' -->
       <parameter type-id='type-id-104' is-artificial='yes'/>
       <!-- parameter of type 'int' -->
@@ -8526,21 +8526,21 @@
       <return type-id='type-id-839'/>
     </function-type>
     <!-- void (ProfileData::Options::*) () -->
-    <function-type method-class-id='type-id-112' size-in-bits='64' hash='a514c771bf4eeeb2' id='type-id-355'>
+    <function-type method-class-id='type-id-112' static='yes' size-in-bits='64' hash='a514c771bf4eeeb2' id='type-id-355'>
       <!-- implicit parameter of type 'ProfileData::Options*' -->
       <parameter type-id='type-id-113' is-artificial='yes'/>
       <!-- void -->
       <return type-id='type-id-839'/>
     </function-type>
     <!-- void (ProfileHandler::*) () -->
-    <function-type method-class-id='type-id-116' size-in-bits='64' hash='8df848a94365287d' id='type-id-369'>
+    <function-type method-class-id='type-id-116' static='yes' size-in-bits='64' hash='8df848a94365287d' id='type-id-369'>
       <!-- implicit parameter of type 'ProfileHandler*' -->
       <parameter type-id='type-id-117' is-artificial='yes'/>
       <!-- void -->
       <return type-id='type-id-839'/>
     </function-type>
     <!-- void (ProfileHandler::*) (ProfileHandlerState*) -->
-    <function-type method-class-id='type-id-116' size-in-bits='64' hash='8a78255f4d0a206b' id='type-id-375'>
+    <function-type method-class-id='type-id-116' static='yes' size-in-bits='64' hash='8a78255f4d0a206b' id='type-id-375'>
       <!-- implicit parameter of type 'ProfileHandler*' -->
       <parameter type-id='type-id-117' is-artificial='yes'/>
       <!-- parameter of type 'ProfileHandlerState*' -->
@@ -8549,7 +8549,7 @@
       <return type-id='type-id-839'/>
     </function-type>
     <!-- void (ProfileHandler::*) (ProfileHandlerToken*) -->
-    <function-type method-class-id='type-id-116' size-in-bits='64' hash='6a61beb0024da0ed' id='type-id-373'>
+    <function-type method-class-id='type-id-116' static='yes' size-in-bits='64' hash='6a61beb0024da0ed' id='type-id-373'>
       <!-- implicit parameter of type 'ProfileHandler*' -->
       <parameter type-id='type-id-117' is-artificial='yes'/>
       <!-- parameter of type 'ProfileHandlerToken*' -->
@@ -8558,7 +8558,7 @@
       <return type-id='type-id-839'/>
     </function-type>
     <!-- void (ProfileHandler::*) (int, siginfo_t*, void*) -->
-    <function-type method-class-id='type-id-116' size-in-bits='64' hash='4bbcc62980652be1' id='type-id-370'>
+    <function-type method-class-id='type-id-116' static='yes' size-in-bits='64' hash='4bbcc62980652be1' id='type-id-370'>
       <!-- parameter of type 'int' -->
       <parameter type-id='type-id-205'/>
       <!-- parameter of type 'siginfo_t*' -->
@@ -8569,19 +8569,19 @@
       <return type-id='type-id-839'/>
     </function-type>
     <!-- void (ProfileHandler::*) (void) -->
-    <function-type method-class-id='type-id-116' size-in-bits='64' hash='d9f8e6086cefd10a' id='type-id-374'>
+    <function-type method-class-id='type-id-116' static='yes' size-in-bits='64' hash='d9f8e6086cefd10a' id='type-id-374'>
       <!-- void -->
       <return type-id='type-id-839'/>
     </function-type>
     <!-- void (SpinLock::*) () -->
-    <function-type method-class-id='type-id-126' size-in-bits='64' hash='082065e64c125aad' id='type-id-389'>
+    <function-type method-class-id='type-id-126' static='yes' size-in-bits='64' hash='082065e64c125aad' id='type-id-389'>
       <!-- implicit parameter of type 'SpinLock*' -->
       <parameter type-id='type-id-127' is-artificial='yes'/>
       <!-- void -->
       <return type-id='type-id-839'/>
     </function-type>
     <!-- void (SpinLock::*) (uint64) -->
-    <function-type method-class-id='type-id-126' size-in-bits='64' hash='41583151d47a8560' id='type-id-388'>
+    <function-type method-class-id='type-id-126' static='yes' size-in-bits='64' hash='41583151d47a8560' id='type-id-388'>
       <!-- implicit parameter of type 'SpinLock*' -->
       <parameter type-id='type-id-127' is-artificial='yes'/>
       <!-- parameter of type 'typedef uint64' -->
@@ -8590,14 +8590,14 @@
       <return type-id='type-id-839'/>
     </function-type>
     <!-- void (SpinLockHolder::*) () -->
-    <function-type method-class-id='type-id-128' size-in-bits='64' hash='e6753017ccb7ec99' id='type-id-392'>
+    <function-type method-class-id='type-id-128' static='yes' size-in-bits='64' hash='e6753017ccb7ec99' id='type-id-392'>
       <!-- implicit parameter of type 'SpinLockHolder*' -->
       <parameter type-id='type-id-129' is-artificial='yes'/>
       <!-- void -->
       <return type-id='type-id-839'/>
     </function-type>
     <!-- void (SpinLockHolder::*) (SpinLock*) -->
-    <function-type method-class-id='type-id-128' size-in-bits='64' hash='e1d7eab92081ede3' id='type-id-391'>
+    <function-type method-class-id='type-id-128' static='yes' size-in-bits='64' hash='e1d7eab92081ede3' id='type-id-391'>
       <!-- implicit parameter of type 'SpinLockHolder*' -->
       <parameter type-id='type-id-129' is-artificial='yes'/>
       <!-- parameter of type 'SpinLock*' -->
@@ -8606,7 +8606,7 @@
       <return type-id='type-id-839'/>
     </function-type>
     <!-- void (SymbolTable::*) (void*) -->
-    <function-type method-class-id='type-id-130' size-in-bits='64' hash='0d7c181808494679' id='type-id-395'>
+    <function-type method-class-id='type-id-130' static='yes' size-in-bits='64' hash='0d7c181808494679' id='type-id-395'>
       <!-- implicit parameter of type 'SymbolTable*' -->
       <parameter type-id='type-id-131' is-artificial='yes'/>
       <!-- parameter of type 'void*' -->
@@ -8615,21 +8615,21 @@
       <return type-id='type-id-839'/>
     </function-type>
     <!-- void (TCMallocGuard::*) () -->
-    <function-type method-class-id='type-id-135' size-in-bits='64' hash='f2e37e404596f6f4' id='type-id-399'>
+    <function-type method-class-id='type-id-135' static='yes' size-in-bits='64' hash='f2e37e404596f6f4' id='type-id-399'>
       <!-- implicit parameter of type 'TCMallocGuard*' -->
       <parameter type-id='type-id-136' is-artificial='yes'/>
       <!-- void -->
       <return type-id='type-id-839'/>
     </function-type>
     <!-- void (TCMallocImplementation::*) () -->
-    <function-type method-class-id='type-id-137' size-in-bits='64' hash='95a26075b04bccce' id='type-id-405'>
+    <function-type method-class-id='type-id-137' static='yes' size-in-bits='64' hash='95a26075b04bccce' id='type-id-405'>
       <!-- implicit parameter of type 'TCMallocImplementation*' -->
       <parameter type-id='type-id-138' is-artificial='yes'/>
       <!-- void -->
       <return type-id='type-id-839'/>
     </function-type>
     <!-- void (TCMallocImplementation::*) (MallocExtensionWriter*) -->
-    <function-type method-class-id='type-id-137' size-in-bits='64' hash='405e65d5cf5c6f18' id='type-id-401'>
+    <function-type method-class-id='type-id-137' static='yes' size-in-bits='64' hash='405e65d5cf5c6f18' id='type-id-401'>
       <!-- implicit parameter of type 'TCMallocImplementation*' -->
       <parameter type-id='type-id-138' is-artificial='yes'/>
       <!-- parameter of type 'MallocExtensionWriter*' -->
@@ -8638,7 +8638,7 @@
       <return type-id='type-id-839'/>
     </function-type>
     <!-- void (TCMallocImplementation::*) (SysAllocator*) -->
-    <function-type method-class-id='type-id-137' size-in-bits='64' hash='94492d338428fdfc' id='type-id-407'>
+    <function-type method-class-id='type-id-137' static='yes' size-in-bits='64' hash='94492d338428fdfc' id='type-id-407'>
       <!-- implicit parameter of type 'TCMallocImplementation*' -->
       <parameter type-id='type-id-138' is-artificial='yes'/>
       <!-- parameter of type 'SysAllocator*' -->
@@ -8647,7 +8647,7 @@
       <return type-id='type-id-839'/>
     </function-type>
     <!-- void (TCMallocImplementation::*) (char*, int) -->
-    <function-type method-class-id='type-id-137' size-in-bits='64' hash='e2fe4bc53141f280' id='type-id-400'>
+    <function-type method-class-id='type-id-137' static='yes' size-in-bits='64' hash='e2fe4bc53141f280' id='type-id-400'>
       <!-- implicit parameter of type 'TCMallocImplementation*' -->
       <parameter type-id='type-id-138' is-artificial='yes'/>
       <!-- parameter of type 'char*' -->
@@ -8658,7 +8658,7 @@
       <return type-id='type-id-839'/>
     </function-type>
     <!-- void (TCMallocImplementation::*) (double) -->
-    <function-type method-class-id='type-id-137' size-in-bits='64' hash='70a7166878480da8' id='type-id-409'>
+    <function-type method-class-id='type-id-137' static='yes' size-in-bits='64' hash='70a7166878480da8' id='type-id-409'>
       <!-- implicit parameter of type 'TCMallocImplementation*' -->
       <parameter type-id='type-id-138' is-artificial='yes'/>
       <!-- parameter of type 'double' -->
@@ -8667,7 +8667,7 @@
       <return type-id='type-id-839'/>
     </function-type>
     <!-- void (TCMallocImplementation::*) (size_t) -->
-    <function-type method-class-id='type-id-137' size-in-bits='64' hash='91be754bc315d4fb' id='type-id-408'>
+    <function-type method-class-id='type-id-137' static='yes' size-in-bits='64' hash='91be754bc315d4fb' id='type-id-408'>
       <!-- implicit parameter of type 'TCMallocImplementation*' -->
       <parameter type-id='type-id-138' is-artificial='yes'/>
       <!-- parameter of type 'typedef size_t' -->
@@ -8676,7 +8676,7 @@
       <return type-id='type-id-839'/>
     </function-type>
     <!-- void (TCMallocImplementation::*) (std::vector<MallocExtension::FreeListInfo,std::allocator<MallocExtension::FreeListInfo>>*) -->
-    <function-type method-class-id='type-id-137' size-in-bits='64' hash='e77a9fcb45a798d3' id='type-id-414'>
+    <function-type method-class-id='type-id-137' static='yes' size-in-bits='64' hash='e77a9fcb45a798d3' id='type-id-414'>
       <!-- implicit parameter of type 'TCMallocImplementation*' -->
       <parameter type-id='type-id-138' is-artificial='yes'/>
       <!-- parameter of type 'std::vector<MallocExtension::FreeListInfo,std::allocator<MallocExtension::FreeListInfo>>*' -->
@@ -8685,7 +8685,7 @@
       <return type-id='type-id-839'/>
     </function-type>
     <!-- void (TCMallocImplementation::*) (void*, TCMallocImplementation::Ranges::RangeFunction*) -->
-    <function-type method-class-id='type-id-137' size-in-bits='64' hash='485e2b70e3504bb4' id='type-id-402'>
+    <function-type method-class-id='type-id-137' static='yes' size-in-bits='64' hash='485e2b70e3504bb4' id='type-id-402'>
       <!-- implicit parameter of type 'TCMallocImplementation*' -->
       <parameter type-id='type-id-138' is-artificial='yes'/>
       <!-- parameter of type 'void*' -->
@@ -8696,7 +8696,7 @@
       <return type-id='type-id-839'/>
     </function-type>
     <!-- void (TCMalloc_Printer::*) (const char*, ...) -->
-    <function-type method-class-id='type-id-143' size-in-bits='64' hash='a41e0aa3b2d1c945' id='type-id-418'>
+    <function-type method-class-id='type-id-143' static='yes' size-in-bits='64' hash='a41e0aa3b2d1c945' id='type-id-418'>
       <!-- implicit parameter of type 'TCMalloc_Printer*' -->
       <parameter type-id='type-id-144' is-artificial='yes'/>
       <!-- parameter of type 'const char*' -->
@@ -8706,7 +8706,7 @@
       <return type-id='type-id-839'/>
     </function-type>
     <!-- void (base::ElfMemImage::*) (void*) -->
-    <function-type method-class-id='type-id-145' size-in-bits='64' hash='f7430c6cb57765e2' id='type-id-444'>
+    <function-type method-class-id='type-id-145' static='yes' size-in-bits='64' hash='f7430c6cb57765e2' id='type-id-444'>
       <!-- implicit parameter of type 'base::ElfMemImage*' -->
       <parameter type-id='type-id-146' is-artificial='yes'/>
       <!-- parameter of type 'void*' -->
@@ -8715,7 +8715,7 @@
       <return type-id='type-id-839'/>
     </function-type>
     <!-- void (base::ElfMemImage::SymbolIterator::*) (int) -->
-    <function-type method-class-id='type-id-149' size-in-bits='64' hash='42f6d2a1dad08709' id='type-id-432'>
+    <function-type method-class-id='type-id-149' static='yes' size-in-bits='64' hash='42f6d2a1dad08709' id='type-id-432'>
       <!-- implicit parameter of type 'base::ElfMemImage::SymbolIterator*' -->
       <parameter type-id='type-id-151' is-artificial='yes'/>
       <!-- parameter of type 'int' -->
@@ -8724,7 +8724,7 @@
       <return type-id='type-id-839'/>
     </function-type>
     <!-- void (base::ElfMemImage::SymbolIterator::*) (void* const, int) -->
-    <function-type method-class-id='type-id-149' size-in-bits='64' hash='3dd9131debf3d2e3' id='type-id-433'>
+    <function-type method-class-id='type-id-149' static='yes' size-in-bits='64' hash='3dd9131debf3d2e3' id='type-id-433'>
       <!-- implicit parameter of type 'base::ElfMemImage::SymbolIterator*' -->
       <parameter type-id='type-id-151' is-artificial='yes'/>
       <!-- parameter of type 'void* const' -->
@@ -8735,7 +8735,7 @@
       <return type-id='type-id-839'/>
     </function-type>
     <!-- void (base::RawPrinter::*) (char*, int) -->
-    <function-type method-class-id='type-id-154' size-in-bits='64' hash='09a5e3dfaf8fbd37' id='type-id-457'>
+    <function-type method-class-id='type-id-154' static='yes' size-in-bits='64' hash='09a5e3dfaf8fbd37' id='type-id-457'>
       <!-- implicit parameter of type 'base::RawPrinter*' -->
       <parameter type-id='type-id-155' is-artificial='yes'/>
       <!-- parameter of type 'char*' -->
@@ -8746,7 +8746,7 @@
       <return type-id='type-id-839'/>
     </function-type>
     <!-- void (base::RawPrinter::*) (const char*, ...) -->
-    <function-type method-class-id='type-id-154' size-in-bits='64' hash='dd7f39f122ac7621' id='type-id-456'>
+    <function-type method-class-id='type-id-154' static='yes' size-in-bits='64' hash='dd7f39f122ac7621' id='type-id-456'>
       <!-- implicit parameter of type 'base::RawPrinter*' -->
       <parameter type-id='type-id-155' is-artificial='yes'/>
       <!-- parameter of type 'const char*' -->
@@ -8756,21 +8756,21 @@
       <return type-id='type-id-839'/>
     </function-type>
     <!-- void (base::VDSOSupport::*) () -->
-    <function-type method-class-id='type-id-156' size-in-bits='64' hash='7b6c5a7267e77b91' id='type-id-460'>
+    <function-type method-class-id='type-id-156' static='yes' size-in-bits='64' hash='7b6c5a7267e77b91' id='type-id-460'>
       <!-- implicit parameter of type 'base::VDSOSupport*' -->
       <parameter type-id='type-id-157' is-artificial='yes'/>
       <!-- void -->
       <return type-id='type-id-839'/>
     </function-type>
     <!-- void (base::internal::HookList<void(*)(constvoid*,size_t)>::*) () -->
-    <function-type method-class-id='type-id-160' size-in-bits='64' hash='63f19318345dbe0f' id='type-id-939'>
+    <function-type method-class-id='type-id-160' static='yes' size-in-bits='64' hash='63f19318345dbe0f' id='type-id-939'>
       <!-- implicit parameter of type 'base::internal::HookList<void(*)(constvoid*,size_t)>*' -->
       <parameter type-id='type-id-161' is-artificial='yes'/>
       <!-- void -->
       <return type-id='type-id-839'/>
     </function-type>
     <!-- void (std::_Rb_tree<HeapProfileTable::Bucket*,std::pair<HeapProfileTable::Bucket*const,HeapProfileTable::Snapshot::Entry>,std::_Select1st<std::pair<HeapProfileTable::Bucket*const,HeapProfileTable::Snapshot::Entry>>,std::less<HeapProfileTable::Bucket*>,std::allocator<std::pair<HeapProfileTable::Bucket*const,HeapProfileTable::Snapshot::Entry>>>::*) (std::_Rb_tree_node<std::pair<HeapProfileTable::Bucket*const,HeapProfileTable::Snapshot::Entry>>*) -->
-    <function-type method-class-id='type-id-467' size-in-bits='64' hash='d0a12f65b236aa29' id='type-id-475'>
+    <function-type method-class-id='type-id-467' static='yes' size-in-bits='64' hash='d0a12f65b236aa29' id='type-id-475'>
       <!-- implicit parameter of type 'std::_Rb_tree<HeapProfileTable::Bucket*,std::pair<HeapProfileTable::Bucket*const,HeapProfileTable::Snapshot::Entry>,std::_Select1st<std::pair<HeapProfileTable::Bucket*const,HeapProfileTable::Snapshot::Entry>>,std::less<HeapProfileTable::Bucket*>,std::allocator<std::pair<HeapProfileTable::Bucket*const,HeapProfileTable::Snapshot::Entry>>>*' -->
       <parameter type-id='type-id-917' is-artificial='yes'/>
       <!-- parameter of type 'std::_Rb_tree_node<std::pair<HeapProfileTable::Bucket*const,HeapProfileTable::Snapshot::Entry>>*' -->
@@ -8779,7 +8779,7 @@
       <return type-id='type-id-839'/>
     </function-type>
     <!-- void (std::_Rb_tree<MemoryRegionMap::Region,MemoryRegionMap::Region,std::_Identity<MemoryRegionMap::Region>,MemoryRegionMap::RegionCmp,STL_Allocator<MemoryRegionMap::Region,MemoryRegionMap::MyAllocator>>::*) (std::_Rb_tree_node<MemoryRegionMap::Region>*) -->
-    <function-type method-class-id='type-id-476' size-in-bits='64' hash='63ea31a0c2b3bda1' id='type-id-479'>
+    <function-type method-class-id='type-id-476' static='yes' size-in-bits='64' hash='63ea31a0c2b3bda1' id='type-id-479'>
       <!-- implicit parameter of type 'std::_Rb_tree<MemoryRegionMap::Region,MemoryRegionMap::Region,std::_Identity<MemoryRegionMap::Region>,MemoryRegionMap::RegionCmp,STL_Allocator<MemoryRegionMap::Region,MemoryRegionMap::MyAllocator>>*' -->
       <parameter type-id='type-id-913' is-artificial='yes'/>
       <!-- parameter of type 'std::_Rb_tree_node<MemoryRegionMap::Region>*' -->
@@ -8788,7 +8788,7 @@
       <return type-id='type-id-839'/>
     </function-type>
     <!-- void (std::_Rb_tree<constvoid*,std::pair<constvoid*const,constchar*>,std::_Select1st<std::pair<constvoid*const,constchar*>>,std::less<constvoid*>,std::allocator<std::pair<constvoid*const,constchar*>>>::*) (std::_Rb_tree_node<std::pair<constvoid*const,constchar*>>*) -->
-    <function-type method-class-id='type-id-480' size-in-bits='64' hash='b6aa6d8049920625' id='type-id-487'>
+    <function-type method-class-id='type-id-480' static='yes' size-in-bits='64' hash='b6aa6d8049920625' id='type-id-487'>
       <!-- implicit parameter of type 'std::_Rb_tree<constvoid*,std::pair<constvoid*const,constchar*>,std::_Select1st<std::pair<constvoid*const,constchar*>>,std::less<constvoid*>,std::allocator<std::pair<constvoid*const,constchar*>>>*' -->
       <parameter type-id='type-id-927' is-artificial='yes'/>
       <!-- parameter of type 'std::_Rb_tree_node<std::pair<constvoid*const,constchar*>>*' -->
@@ -8797,7 +8797,7 @@
       <return type-id='type-id-839'/>
     </function-type>
     <!-- void (std::_Rb_tree<longunsignedint,longunsignedint,std::_Identity<longunsignedint>,std::less<longunsignedint>,STL_Allocator<longunsignedint,HeapLeakChecker::Allocator>>::*) (std::_Rb_tree_node<longunsignedint>*) -->
-    <function-type method-class-id='type-id-488' size-in-bits='64' hash='b5a8baef2d7fd8a6' id='type-id-492'>
+    <function-type method-class-id='type-id-488' static='yes' size-in-bits='64' hash='b5a8baef2d7fd8a6' id='type-id-492'>
       <!-- implicit parameter of type 'std::_Rb_tree<longunsignedint,longunsignedint,std::_Identity<longunsignedint>,std::less<longunsignedint>,STL_Allocator<longunsignedint,HeapLeakChecker::Allocator>>*' -->
       <parameter type-id='type-id-915' is-artificial='yes'/>
       <!-- parameter of type 'std::_Rb_tree_node<longunsignedint>*' -->
@@ -8806,7 +8806,7 @@
       <return type-id='type-id-839'/>
     </function-type>
     <!-- void (std::_Rb_tree<longunsignedint,std::pair<constlongunsignedint,HeapLeakChecker::RangeValue>,std::_Select1st<std::pair<constlongunsignedint,HeapLeakChecker::RangeValue>>,std::less<longunsignedint>,STL_Allocator<std::pair<constlongunsignedint,HeapLeakChecker::RangeValue>,HeapLeakChecker::Allocator>>::*) (std::_Rb_tree_node<std::pair<constlongunsignedint,HeapLeakChecker::RangeValue>>*) -->
-    <function-type method-class-id='type-id-493' size-in-bits='64' hash='52f0aae7628aa070' id='type-id-496'>
+    <function-type method-class-id='type-id-493' static='yes' size-in-bits='64' hash='52f0aae7628aa070' id='type-id-496'>
       <!-- implicit parameter of type 'std::_Rb_tree<longunsignedint,std::pair<constlongunsignedint,HeapLeakChecker::RangeValue>,std::_Select1st<std::pair<constlongunsignedint,HeapLeakChecker::RangeValue>>,std::less<longunsignedint>,STL_Allocator<std::pair<constlongunsignedint,HeapLeakChecker::RangeValue>,HeapLeakChecker::Allocator>>*' -->
       <parameter type-id='type-id-920' is-artificial='yes'/>
       <!-- parameter of type 'std::_Rb_tree_node<std::pair<constlongunsignedint,HeapLeakChecker::RangeValue>>*' -->
@@ -8815,7 +8815,7 @@
       <return type-id='type-id-839'/>
     </function-type>
     <!-- void (std::_Rb_tree<longunsignedint,std::pair<constlongunsignedint,longunsignedint>,std::_Select1st<std::pair<constlongunsignedint,longunsignedint>>,std::less<longunsignedint>,STL_Allocator<std::pair<constlongunsignedint,longunsignedint>,HeapLeakChecker::Allocator>>::*) (std::_Rb_tree_node<std::pair<constlongunsignedint,longunsignedint>>*) -->
-    <function-type method-class-id='type-id-497' size-in-bits='64' hash='f623b77e4422357b' id='type-id-500'>
+    <function-type method-class-id='type-id-497' static='yes' size-in-bits='64' hash='f623b77e4422357b' id='type-id-500'>
       <!-- implicit parameter of type 'std::_Rb_tree<longunsignedint,std::pair<constlongunsignedint,longunsignedint>,std::_Select1st<std::pair<constlongunsignedint,longunsignedint>>,std::less<longunsignedint>,STL_Allocator<std::pair<constlongunsignedint,longunsignedint>,HeapLeakChecker::Allocator>>*' -->
       <parameter type-id='type-id-922' is-artificial='yes'/>
       <!-- parameter of type 'std::_Rb_tree_node<std::pair<constlongunsignedint,longunsignedint>>*' -->
@@ -8824,7 +8824,7 @@
       <return type-id='type-id-839'/>
     </function-type>
     <!-- void (std::_Rb_tree<std::basic_string<char,std::char_traits<char>,STL_Allocator<char,HeapLeakChecker::Allocator>>,std::pair<conststd::basic_string<char,std::char_traits<char>,STL_Allocator<char,HeapLeakChecker::Allocator>>,std::vector<AllocObject,STL_Allocator<AllocObject,HeapLeakChecker::Allocator>>>,std::_Select1st<std::pair<conststd::basic_string<char,std::char_traits<char>,STL_Allocator<char,HeapLeakChecker::Allocator>>,std::vector<AllocObject,STL_Allocator<AllocObject,HeapLeakChecker::Allocator>>>>,std::less<std::basic_string<char,std::char_traits<char>,STL_Allocator<char,HeapLeakChecker::Allocator>>>,STL_Allocator<std::pair<conststd::basic_string<char,std::char_traits<char>,STL_Allocator<char,HeapLeakChecker::Allocator>>,std::vector<AllocObject,STL_Allocator<AllocObject,HeapLeakChecker::Allocator>>>,HeapLeakChecker::Allocator>>::*) (std::_Rb_tree_node<std::pair<conststd::basic_string<char,std::char_traits<char>,STL_Allocator<char,HeapLeakChecker::Allocator>>,std::vector<AllocObject,STL_Allocator<AllocObject,HeapLeakChecker::Allocator>>>>*) -->
-    <function-type method-class-id='type-id-501' size-in-bits='64' hash='79a46ffc17c3ec73' id='type-id-507'>
+    <function-type method-class-id='type-id-501' static='yes' size-in-bits='64' hash='79a46ffc17c3ec73' id='type-id-507'>
       <!-- implicit parameter of type 'std::_Rb_tree<std::basic_string<char,std::char_traits<char>,STL_Allocator<char,HeapLeakChecker::Allocator>>,std::pair<conststd::basic_string<char,std::char_traits<char>,STL_Allocator<char,HeapLeakChecker::Allocator>>,std::vector<AllocObject,STL_Allocator<AllocObject,HeapLeakChecker::Allocator>>>,std::_Select1st<std::pair<conststd::basic_string<char,std::char_traits<char>,STL_Allocator<char,HeapLeakChecker::Allocator>>,std::vector<AllocObject,STL_Allocator<AllocObject,HeapLeakChecker::Allocator>>>>,std::less<std::basic_string<char,std::char_traits<char>,STL_Allocator<char,HeapLeakChecker::Allocator>>>,STL_Allocator<std::pair<conststd::basic_string<char,std::char_traits<char>,STL_Allocator<char,HeapLeakChecker::Allocator>>,std::vector<AllocObject,STL_Allocator<AllocObject,HeapLeakChecker::Allocator>>>,HeapLeakChecker::Allocator>>*' -->
       <parameter type-id='type-id-924' is-artificial='yes'/>
       <!-- parameter of type 'std::_Rb_tree_node<std::pair<conststd::basic_string<char,std::char_traits<char>,STL_Allocator<char,HeapLeakChecker::Allocator>>,std::vector<AllocObject,STL_Allocator<AllocObject,HeapLeakChecker::Allocator>>>>*' -->
@@ -8833,14 +8833,14 @@
       <return type-id='type-id-839'/>
     </function-type>
     <!-- void (std::basic_string<char,std::char_traits<char>,STL_Allocator<char,HeapLeakChecker::Allocator>>::*) () -->
-    <function-type method-class-id='type-id-511' size-in-bits='64' hash='83cdd85d5a80a50f' id='type-id-522'>
+    <function-type method-class-id='type-id-511' static='yes' size-in-bits='64' hash='83cdd85d5a80a50f' id='type-id-522'>
       <!-- implicit parameter of type 'std::basic_string<char,std::char_traits<char>,STL_Allocator<char,HeapLeakChecker::Allocator>>*' -->
       <parameter type-id='type-id-947' is-artificial='yes'/>
       <!-- void -->
       <return type-id='type-id-839'/>
     </function-type>
     <!-- void (std::basic_string<char,std::char_traits<char>,STL_Allocator<char,HeapLeakChecker::Allocator>>::*) (const char*, const STL_Allocator<char,HeapLeakChecker::Allocator>&) -->
-    <function-type method-class-id='type-id-511' size-in-bits='64' hash='6ab446e2eeddb89d' id='type-id-521'>
+    <function-type method-class-id='type-id-511' static='yes' size-in-bits='64' hash='6ab446e2eeddb89d' id='type-id-521'>
       <!-- implicit parameter of type 'std::basic_string<char,std::char_traits<char>,STL_Allocator<char,HeapLeakChecker::Allocator>>*' -->
       <parameter type-id='type-id-947' is-artificial='yes'/>
       <!-- parameter of type 'const char*' -->
@@ -8851,7 +8851,7 @@
       <return type-id='type-id-839'/>
     </function-type>
     <!-- void (std::basic_string<char,std::char_traits<char>,STL_Allocator<char,HeapLeakChecker::Allocator>>::*) (const std::basic_string<char,std::char_traits<char>,STL_Allocator<char,HeapLeakChecker::Allocator>>&) -->
-    <function-type method-class-id='type-id-511' size-in-bits='64' hash='16121b3b152ca25b' id='type-id-520'>
+    <function-type method-class-id='type-id-511' static='yes' size-in-bits='64' hash='16121b3b152ca25b' id='type-id-520'>
       <!-- implicit parameter of type 'std::basic_string<char,std::char_traits<char>,STL_Allocator<char,HeapLeakChecker::Allocator>>*' -->
       <parameter type-id='type-id-947' is-artificial='yes'/>
       <!-- parameter of type 'const std::basic_string<char,std::char_traits<char>,STL_Allocator<char,HeapLeakChecker::Allocator>>&' -->
@@ -8860,7 +8860,7 @@
       <return type-id='type-id-839'/>
     </function-type>
     <!-- void (std::basic_string<char,std::char_traits<char>,STL_Allocator<char,HeapLeakChecker::Allocator>>::_Rep::*) (const STL_Allocator<char,HeapLeakChecker::Allocator>&) -->
-    <function-type method-class-id='type-id-513' size-in-bits='64' hash='e1f3caae09ccc47d' id='type-id-517'>
+    <function-type method-class-id='type-id-513' static='yes' size-in-bits='64' hash='e1f3caae09ccc47d' id='type-id-517'>
       <!-- implicit parameter of type 'std::basic_string<char,std::char_traits<char>,STL_Allocator<char,HeapLeakChecker::Allocator>>::_Rep*' -->
       <parameter type-id='type-id-930' is-artificial='yes'/>
       <!-- parameter of type 'const STL_Allocator<char,HeapLeakChecker::Allocator>&' -->
@@ -8869,7 +8869,7 @@
       <return type-id='type-id-839'/>
     </function-type>
     <!-- void (std::vector<AllocObject,STL_Allocator<AllocObject,HeapLeakChecker::Allocator>>::*) (__gnu_cxx::__normal_iterator<AllocObject*,std::vector<AllocObject,STL_Allocator<AllocObject,HeapLeakChecker::Allocator>>>, const AllocObject&) -->
-    <function-type method-class-id='type-id-523' size-in-bits='64' hash='5fa6aac4526c1cc5' id='type-id-525'>
+    <function-type method-class-id='type-id-523' static='yes' size-in-bits='64' hash='5fa6aac4526c1cc5' id='type-id-525'>
       <!-- implicit parameter of type 'std::vector<AllocObject,STL_Allocator<AllocObject,HeapLeakChecker::Allocator>>*' -->
       <parameter type-id='type-id-948' is-artificial='yes'/>
       <!-- parameter of type 'class __gnu_cxx::__normal_iterator<AllocObject*,std::vector<AllocObject,STL_Allocator<AllocObject,HeapLeakChecker::Allocator>>>' -->
@@ -8880,7 +8880,7 @@
       <return type-id='type-id-839'/>
     </function-type>
     <!-- void (std::vector<MallocExtension::FreeListInfo,std::allocator<MallocExtension::FreeListInfo>>::*) (__gnu_cxx::__normal_iterator<MallocExtension::FreeListInfo*,std::vector<MallocExtension::FreeListInfo,std::allocator<MallocExtension::FreeListInfo>>>, const MallocExtension::FreeListInfo&) -->
-    <function-type method-class-id='type-id-526' size-in-bits='64' hash='69026482507383cd' id='type-id-528'>
+    <function-type method-class-id='type-id-526' static='yes' size-in-bits='64' hash='69026482507383cd' id='type-id-528'>
       <!-- implicit parameter of type 'std::vector<MallocExtension::FreeListInfo,std::allocator<MallocExtension::FreeListInfo>>*' -->
       <parameter type-id='type-id-937' is-artificial='yes'/>
       <!-- parameter of type 'class __gnu_cxx::__normal_iterator<MallocExtension::FreeListInfo*,std::vector<MallocExtension::FreeListInfo,std::allocator<MallocExtension::FreeListInfo>>>' -->
@@ -8891,7 +8891,7 @@
       <return type-id='type-id-839'/>
     </function-type>
     <!-- void (std::vector<void(*)(),std::allocator<void(*)()>>::*) (__gnu_cxx::__normal_iterator<void(**)(),std::vector<void(*)(),std::allocator<void(*)()>>>, void (*)(void) const&) -->
-    <function-type method-class-id='type-id-529' size-in-bits='64' hash='bed4e4b7fa8428fd' id='type-id-531'>
+    <function-type method-class-id='type-id-529' static='yes' size-in-bits='64' hash='bed4e4b7fa8428fd' id='type-id-531'>
       <!-- implicit parameter of type 'std::vector<void(*)(),std::allocator<void(*)()>>*' -->
       <parameter type-id='type-id-196' is-artificial='yes'/>
       <!-- parameter of type 'class __gnu_cxx::__normal_iterator<void(**)(),std::vector<void(*)(),std::allocator<void(*)()>>>' -->
@@ -8902,7 +8902,7 @@
       <return type-id='type-id-839'/>
     </function-type>
     <!-- void (std::vector<void*,STL_Allocator<void*,HeapLeakChecker::Allocator>>::*) (__gnu_cxx::__normal_iterator<void**,std::vector<void*,STL_Allocator<void*,HeapLeakChecker::Allocator>>>, void* const&) -->
-    <function-type method-class-id='type-id-532' size-in-bits='64' hash='44dd86b543a2ce10' id='type-id-534'>
+    <function-type method-class-id='type-id-532' static='yes' size-in-bits='64' hash='44dd86b543a2ce10' id='type-id-534'>
       <!-- implicit parameter of type 'std::vector<void*,STL_Allocator<void*,HeapLeakChecker::Allocator>>*' -->
       <parameter type-id='type-id-950' is-artificial='yes'/>
       <!-- parameter of type 'class __gnu_cxx::__normal_iterator<void**,std::vector<void*,STL_Allocator<void*,HeapLeakChecker::Allocator>>>' -->
@@ -8913,14 +8913,14 @@
       <return type-id='type-id-839'/>
     </function-type>
     <!-- void (tcmalloc::CentralFreeList::*) () -->
-    <function-type method-class-id='type-id-535' size-in-bits='64' hash='42843113a8548c2f' id='type-id-549'>
+    <function-type method-class-id='type-id-535' static='yes' size-in-bits='64' hash='42843113a8548c2f' id='type-id-549'>
       <!-- implicit parameter of type 'tcmalloc::CentralFreeList*' -->
       <parameter type-id='type-id-906' is-artificial='yes'/>
       <!-- void -->
       <return type-id='type-id-839'/>
     </function-type>
     <!-- void (tcmalloc::CentralFreeList::*) (size_t) -->
-    <function-type method-class-id='type-id-535' size-in-bits='64' hash='83d36bbe5b9e8b20' id='type-id-548'>
+    <function-type method-class-id='type-id-535' static='yes' size-in-bits='64' hash='83d36bbe5b9e8b20' id='type-id-548'>
       <!-- implicit parameter of type 'tcmalloc::CentralFreeList*' -->
       <parameter type-id='type-id-906' is-artificial='yes'/>
       <!-- parameter of type 'typedef size_t' -->
@@ -8929,7 +8929,7 @@
       <return type-id='type-id-839'/>
     </function-type>
     <!-- void (tcmalloc::CentralFreeList::*) (void*) -->
-    <function-type method-class-id='type-id-535' size-in-bits='64' hash='13da91fd37c36465' id='type-id-545'>
+    <function-type method-class-id='type-id-535' static='yes' size-in-bits='64' hash='13da91fd37c36465' id='type-id-545'>
       <!-- implicit parameter of type 'tcmalloc::CentralFreeList*' -->
       <parameter type-id='type-id-906' is-artificial='yes'/>
       <!-- parameter of type 'void*' -->
@@ -8938,7 +8938,7 @@
       <return type-id='type-id-839'/>
     </function-type>
     <!-- void (tcmalloc::CentralFreeList::*) (void*, void*, int) -->
-    <function-type method-class-id='type-id-535' size-in-bits='64' hash='1f698670638e6346' id='type-id-540'>
+    <function-type method-class-id='type-id-535' static='yes' size-in-bits='64' hash='1f698670638e6346' id='type-id-540'>
       <!-- implicit parameter of type 'tcmalloc::CentralFreeList*' -->
       <parameter type-id='type-id-906' is-artificial='yes'/>
       <!-- parameter of type 'void*' -->
@@ -8951,14 +8951,14 @@
       <return type-id='type-id-839'/>
     </function-type>
     <!-- void (tcmalloc::PageHeap::*) () -->
-    <function-type method-class-id='type-id-562' size-in-bits='64' hash='1f06b3084c9648eb' id='type-id-587'>
+    <function-type method-class-id='type-id-562' static='yes' size-in-bits='64' hash='1f06b3084c9648eb' id='type-id-587'>
       <!-- implicit parameter of type 'tcmalloc::PageHeap*' -->
       <parameter type-id='type-id-616' is-artificial='yes'/>
       <!-- void -->
       <return type-id='type-id-839'/>
     </function-type>
     <!-- void (tcmalloc::PageHeap::*) (Length) -->
-    <function-type method-class-id='type-id-562' size-in-bits='64' hash='24868623fc4e9904' id='type-id-581'>
+    <function-type method-class-id='type-id-562' static='yes' size-in-bits='64' hash='24868623fc4e9904' id='type-id-581'>
       <!-- implicit parameter of type 'tcmalloc::PageHeap*' -->
       <parameter type-id='type-id-616' is-artificial='yes'/>
       <!-- parameter of type 'typedef Length' -->
@@ -8967,7 +8967,7 @@
       <return type-id='type-id-839'/>
     </function-type>
     <!-- void (tcmalloc::PageHeap::*) (tcmalloc::PageHeap::LargeSpanStats*) -->
-    <function-type method-class-id='type-id-562' size-in-bits='64' hash='526866113288647e' id='type-id-578'>
+    <function-type method-class-id='type-id-562' static='yes' size-in-bits='64' hash='526866113288647e' id='type-id-578'>
       <!-- implicit parameter of type 'tcmalloc::PageHeap*' -->
       <parameter type-id='type-id-616' is-artificial='yes'/>
       <!-- parameter of type 'tcmalloc::PageHeap::LargeSpanStats*' -->
@@ -8976,7 +8976,7 @@
       <return type-id='type-id-839'/>
     </function-type>
     <!-- void (tcmalloc::PageHeap::*) (tcmalloc::PageHeap::SmallSpanStats*) -->
-    <function-type method-class-id='type-id-562' size-in-bits='64' hash='5028976e48ef7676' id='type-id-579'>
+    <function-type method-class-id='type-id-562' static='yes' size-in-bits='64' hash='5028976e48ef7676' id='type-id-579'>
       <!-- implicit parameter of type 'tcmalloc::PageHeap*' -->
       <parameter type-id='type-id-616' is-artificial='yes'/>
       <!-- parameter of type 'tcmalloc::PageHeap::SmallSpanStats*' -->
@@ -8985,7 +8985,7 @@
       <return type-id='type-id-839'/>
     </function-type>
     <!-- void (tcmalloc::PageHeap::*) (tcmalloc::Span*) -->
-    <function-type method-class-id='type-id-562' size-in-bits='64' hash='35fea3fc3b8d20eb' id='type-id-572'>
+    <function-type method-class-id='type-id-562' static='yes' size-in-bits='64' hash='35fea3fc3b8d20eb' id='type-id-572'>
       <!-- implicit parameter of type 'tcmalloc::PageHeap*' -->
       <parameter type-id='type-id-616' is-artificial='yes'/>
       <!-- parameter of type 'tcmalloc::Span*' -->
@@ -8994,7 +8994,7 @@
       <return type-id='type-id-839'/>
     </function-type>
     <!-- void (tcmalloc::PageHeap::*) (tcmalloc::Span*, size_t) -->
-    <function-type method-class-id='type-id-562' size-in-bits='64' hash='9625ffdbd1abfafb' id='type-id-580'>
+    <function-type method-class-id='type-id-562' static='yes' size-in-bits='64' hash='9625ffdbd1abfafb' id='type-id-580'>
       <!-- implicit parameter of type 'tcmalloc::PageHeap*' -->
       <parameter type-id='type-id-616' is-artificial='yes'/>
       <!-- parameter of type 'tcmalloc::Span*' -->
@@ -9005,7 +9005,7 @@
       <return type-id='type-id-839'/>
     </function-type>
     <!-- void (tcmalloc::Sampler::*) (uint32_t) -->
-    <function-type method-class-id='type-id-592' size-in-bits='64' hash='93043ac0abe1502b' id='type-id-597'>
+    <function-type method-class-id='type-id-592' static='yes' size-in-bits='64' hash='93043ac0abe1502b' id='type-id-597'>
       <!-- implicit parameter of type 'tcmalloc::Sampler*' -->
       <parameter type-id='type-id-911' is-artificial='yes'/>
       <!-- parameter of type 'typedef uint32_t' -->
@@ -9014,26 +9014,26 @@
       <return type-id='type-id-839'/>
     </function-type>
     <!-- void (tcmalloc::Sampler::*) (void) -->
-    <function-type method-class-id='type-id-592' size-in-bits='64' hash='d9f8e6086cefd10a' id='type-id-594'>
+    <function-type method-class-id='type-id-592' static='yes' size-in-bits='64' hash='d9f8e6086cefd10a' id='type-id-594'>
       <!-- void -->
       <return type-id='type-id-839'/>
     </function-type>
     <!-- void (tcmalloc::SizeMap::*) () -->
-    <function-type method-class-id='type-id-598' size-in-bits='64' hash='4a97a3c101b21592' id='type-id-603'>
+    <function-type method-class-id='type-id-598' static='yes' size-in-bits='64' hash='4a97a3c101b21592' id='type-id-603'>
       <!-- implicit parameter of type 'tcmalloc::SizeMap*' -->
       <parameter type-id='type-id-912' is-artificial='yes'/>
       <!-- void -->
       <return type-id='type-id-839'/>
     </function-type>
     <!-- void (tcmalloc::StackTraceTable::*) () -->
-    <function-type method-class-id='type-id-604' size-in-bits='64' hash='25d5b72b05e4eff1' id='type-id-612'>
+    <function-type method-class-id='type-id-604' static='yes' size-in-bits='64' hash='25d5b72b05e4eff1' id='type-id-612'>
       <!-- implicit parameter of type 'tcmalloc::StackTraceTable*' -->
       <parameter type-id='type-id-954' is-artificial='yes'/>
       <!-- void -->
       <return type-id='type-id-839'/>
     </function-type>
     <!-- void (tcmalloc::StackTraceTable::*) (const tcmalloc::StackTrace&) -->
-    <function-type method-class-id='type-id-604' size-in-bits='64' hash='5c37c0575ac07bcb' id='type-id-611'>
+    <function-type method-class-id='type-id-604' static='yes' size-in-bits='64' hash='5c37c0575ac07bcb' id='type-id-611'>
       <!-- implicit parameter of type 'tcmalloc::StackTraceTable*' -->
       <parameter type-id='type-id-954' is-artificial='yes'/>
       <!-- parameter of type 'const tcmalloc::StackTrace&' -->
@@ -9042,19 +9042,19 @@
       <return type-id='type-id-839'/>
     </function-type>
     <!-- void (tcmalloc::Static::*) (void) -->
-    <function-type method-class-id='type-id-613' size-in-bits='64' hash='d9f8e6086cefd10a' id='type-id-617'>
+    <function-type method-class-id='type-id-613' static='yes' size-in-bits='64' hash='d9f8e6086cefd10a' id='type-id-617'>
       <!-- void -->
       <return type-id='type-id-839'/>
     </function-type>
     <!-- void (tcmalloc::ThreadCache::*) () -->
-    <function-type method-class-id='type-id-618' size-in-bits='64' hash='432233cb860cddb2' id='type-id-631'>
+    <function-type method-class-id='type-id-618' static='yes' size-in-bits='64' hash='432233cb860cddb2' id='type-id-631'>
       <!-- implicit parameter of type 'tcmalloc::ThreadCache*' -->
       <parameter type-id='type-id-622' is-artificial='yes'/>
       <!-- void -->
       <return type-id='type-id-839'/>
     </function-type>
     <!-- void (tcmalloc::ThreadCache::*) (pthread_t) -->
-    <function-type method-class-id='type-id-618' size-in-bits='64' hash='7190000fd64791bd' id='type-id-636'>
+    <function-type method-class-id='type-id-618' static='yes' size-in-bits='64' hash='7190000fd64791bd' id='type-id-636'>
       <!-- implicit parameter of type 'tcmalloc::ThreadCache*' -->
       <parameter type-id='type-id-622' is-artificial='yes'/>
       <!-- parameter of type 'typedef pthread_t' -->
@@ -9063,21 +9063,21 @@
       <return type-id='type-id-839'/>
     </function-type>
     <!-- void (tcmalloc::ThreadCache::*) (size_t) -->
-    <function-type method-class-id='type-id-618' size-in-bits='64' hash='0300d31140ba48f3' id='type-id-635'>
+    <function-type method-class-id='type-id-618' static='yes' size-in-bits='64' hash='0300d31140ba48f3' id='type-id-635'>
       <!-- parameter of type 'typedef size_t' -->
       <parameter type-id='type-id-232'/>
       <!-- void -->
       <return type-id='type-id-839'/>
     </function-type>
     <!-- void (tcmalloc::ThreadCache::*) (tcmalloc::ThreadCache*) -->
-    <function-type method-class-id='type-id-618' size-in-bits='64' hash='432233cb860cddb2' id='type-id-626'>
+    <function-type method-class-id='type-id-618' static='yes' size-in-bits='64' hash='432233cb860cddb2' id='type-id-626'>
       <!-- parameter of type 'tcmalloc::ThreadCache*' -->
       <parameter type-id='type-id-622'/>
       <!-- void -->
       <return type-id='type-id-839'/>
     </function-type>
     <!-- void (tcmalloc::ThreadCache::*) (tcmalloc::ThreadCache::FreeList*, size_t) -->
-    <function-type method-class-id='type-id-618' size-in-bits='64' hash='c1a2ddde156c98ac' id='type-id-627'>
+    <function-type method-class-id='type-id-618' static='yes' size-in-bits='64' hash='c1a2ddde156c98ac' id='type-id-627'>
       <!-- implicit parameter of type 'tcmalloc::ThreadCache*' -->
       <parameter type-id='type-id-622' is-artificial='yes'/>
       <!-- parameter of type 'tcmalloc::ThreadCache::FreeList*' -->
@@ -9088,7 +9088,7 @@
       <return type-id='type-id-839'/>
     </function-type>
     <!-- void (tcmalloc::ThreadCache::*) (tcmalloc::ThreadCache::FreeList*, size_t, int) -->
-    <function-type method-class-id='type-id-618' size-in-bits='64' hash='925f8c4486905fbd' id='type-id-633'>
+    <function-type method-class-id='type-id-618' static='yes' size-in-bits='64' hash='925f8c4486905fbd' id='type-id-633'>
       <!-- implicit parameter of type 'tcmalloc::ThreadCache*' -->
       <parameter type-id='type-id-622' is-artificial='yes'/>
       <!-- parameter of type 'tcmalloc::ThreadCache::FreeList*' -->
@@ -9101,7 +9101,7 @@
       <return type-id='type-id-839'/>
     </function-type>
     <!-- void (tcmalloc::ThreadCache::*) (uint64_t*, uint64_t*) -->
-    <function-type method-class-id='type-id-618' size-in-bits='64' hash='cbb6038e420d76db' id='type-id-628'>
+    <function-type method-class-id='type-id-618' static='yes' size-in-bits='64' hash='cbb6038e420d76db' id='type-id-628'>
       <!-- parameter of type 'uint64_t*' -->
       <parameter type-id='type-id-956'/>
       <!-- parameter of type 'uint64_t*' -->
@@ -9110,19 +9110,19 @@
       <return type-id='type-id-839'/>
     </function-type>
     <!-- void (tcmalloc::ThreadCache::*) (void) -->
-    <function-type method-class-id='type-id-618' size-in-bits='64' hash='d9f8e6086cefd10a' id='type-id-625'>
+    <function-type method-class-id='type-id-618' static='yes' size-in-bits='64' hash='d9f8e6086cefd10a' id='type-id-625'>
       <!-- void -->
       <return type-id='type-id-839'/>
     </function-type>
     <!-- void (tcmalloc::ThreadCache::*) (void*) -->
-    <function-type method-class-id='type-id-618' size-in-bits='64' hash='031cf174bf917bb0' id='type-id-630'>
+    <function-type method-class-id='type-id-618' static='yes' size-in-bits='64' hash='031cf174bf917bb0' id='type-id-630'>
       <!-- parameter of type 'void*' -->
       <parameter type-id='type-id-181'/>
       <!-- void -->
       <return type-id='type-id-839'/>
     </function-type>
     <!-- void* (DefaultSysAllocator::*) (size_t, size_t*, size_t) -->
-    <function-type method-class-id='type-id-38' size-in-bits='64' hash='fc409bb46161894e' id='type-id-188'>
+    <function-type method-class-id='type-id-38' static='yes' size-in-bits='64' hash='fc409bb46161894e' id='type-id-188'>
       <!-- implicit parameter of type 'DefaultSysAllocator*' -->
       <parameter type-id='type-id-39' is-artificial='yes'/>
       <!-- parameter of type 'typedef size_t' -->
@@ -9135,7 +9135,7 @@
       <return type-id='type-id-181'/>
     </function-type>
     <!-- void* (DevMemSysAllocator::*) (size_t, size_t*, size_t) -->
-    <function-type method-class-id='type-id-40' size-in-bits='64' hash='15acc62d6086b11c' id='type-id-189'>
+    <function-type method-class-id='type-id-40' static='yes' size-in-bits='64' hash='15acc62d6086b11c' id='type-id-189'>
       <!-- implicit parameter of type 'DevMemSysAllocator*' -->
       <parameter type-id='type-id-41' is-artificial='yes'/>
       <!-- parameter of type 'typedef size_t' -->
@@ -9148,21 +9148,21 @@
       <return type-id='type-id-181'/>
     </function-type>
     <!-- void* (HeapLeakChecker::*) (void*) -->
-    <function-type method-class-id='type-id-46' size-in-bits='64' hash='2610d5224f339b02' id='type-id-213'>
+    <function-type method-class-id='type-id-46' static='yes' size-in-bits='64' hash='2610d5224f339b02' id='type-id-213'>
       <!-- parameter of type 'void*' -->
       <parameter type-id='type-id-181'/>
       <!-- void* -->
       <return type-id='type-id-181'/>
     </function-type>
     <!-- void* (HeapLeakChecker::Allocator::*) (size_t) -->
-    <function-type method-class-id='type-id-204' size-in-bits='64' hash='612075084f2e38fc' id='type-id-207'>
+    <function-type method-class-id='type-id-204' static='yes' size-in-bits='64' hash='612075084f2e38fc' id='type-id-207'>
       <!-- parameter of type 'typedef size_t' -->
       <parameter type-id='type-id-232'/>
       <!-- void* -->
       <return type-id='type-id-181'/>
     </function-type>
     <!-- void* (HugetlbSysAllocator::*) (size_t, size_t*, size_t) -->
-    <function-type method-class-id='type-id-81' size-in-bits='64' hash='c90473a04dcc603b' id='type-id-276'>
+    <function-type method-class-id='type-id-81' static='yes' size-in-bits='64' hash='c90473a04dcc603b' id='type-id-276'>
       <!-- implicit parameter of type 'HugetlbSysAllocator*' -->
       <parameter type-id='type-id-82' is-artificial='yes'/>
       <!-- parameter of type 'typedef size_t' -->
@@ -9175,14 +9175,14 @@
       <return type-id='type-id-181'/>
     </function-type>
     <!-- void* (LowLevelAlloc::*) (size_t) -->
-    <function-type method-class-id='type-id-277' size-in-bits='64' hash='612075084f2e38fc' id='type-id-282'>
+    <function-type method-class-id='type-id-277' static='yes' size-in-bits='64' hash='612075084f2e38fc' id='type-id-282'>
       <!-- parameter of type 'typedef size_t' -->
       <parameter type-id='type-id-232'/>
       <!-- void* -->
       <return type-id='type-id-181'/>
     </function-type>
     <!-- void* (LowLevelAlloc::*) (size_t, LowLevelAlloc::Arena*) -->
-    <function-type method-class-id='type-id-277' size-in-bits='64' hash='9e87644d96d65baa' id='type-id-280'>
+    <function-type method-class-id='type-id-277' static='yes' size-in-bits='64' hash='9e87644d96d65baa' id='type-id-280'>
       <!-- parameter of type 'typedef size_t' -->
       <parameter type-id='type-id-232'/>
       <!-- parameter of type 'LowLevelAlloc::Arena*' -->
@@ -9191,7 +9191,7 @@
       <return type-id='type-id-181'/>
     </function-type>
     <!-- void* (MallocHook::*) (void*, size_t, int, int, int, off_t) -->
-    <function-type method-class-id='type-id-309' size-in-bits='64' hash='d5d4f15a649a3691' id='type-id-310'>
+    <function-type method-class-id='type-id-309' static='yes' size-in-bits='64' hash='d5d4f15a649a3691' id='type-id-310'>
       <!-- parameter of type 'void*' -->
       <parameter type-id='type-id-181'/>
       <!-- parameter of type 'typedef size_t' -->
@@ -9208,7 +9208,7 @@
       <return type-id='type-id-181'/>
     </function-type>
     <!-- void* (MmapSysAllocator::*) (size_t, size_t*, size_t) -->
-    <function-type method-class-id='type-id-97' size-in-bits='64' hash='3f63eb95a0a3740c' id='type-id-343'>
+    <function-type method-class-id='type-id-97' static='yes' size-in-bits='64' hash='3f63eb95a0a3740c' id='type-id-343'>
       <!-- implicit parameter of type 'MmapSysAllocator*' -->
       <parameter type-id='type-id-98' is-artificial='yes'/>
       <!-- parameter of type 'typedef size_t' -->
@@ -9221,7 +9221,7 @@
       <return type-id='type-id-181'/>
     </function-type>
     <!-- void* (SbrkSysAllocator::*) (size_t, size_t*, size_t) -->
-    <function-type method-class-id='type-id-124' size-in-bits='64' hash='888383818d0c8b51' id='type-id-385'>
+    <function-type method-class-id='type-id-124' static='yes' size-in-bits='64' hash='888383818d0c8b51' id='type-id-385'>
       <!-- implicit parameter of type 'SbrkSysAllocator*' -->
       <parameter type-id='type-id-125' is-artificial='yes'/>
       <!-- parameter of type 'typedef size_t' -->
@@ -9234,7 +9234,7 @@
       <return type-id='type-id-181'/>
     </function-type>
     <!-- void* (SysAllocator::*) (size_t, size_t*, size_t) -->
-    <function-type method-class-id='type-id-132' size-in-bits='64' hash='4a06c9141d40cb3f' id='type-id-398'>
+    <function-type method-class-id='type-id-132' static='yes' size-in-bits='64' hash='4a06c9141d40cb3f' id='type-id-398'>
       <!-- implicit parameter of type 'SysAllocator*' -->
       <parameter type-id='type-id-133' is-artificial='yes'/>
       <!-- parameter of type 'typedef size_t' -->
@@ -9247,7 +9247,7 @@
       <return type-id='type-id-181'/>
     </function-type>
     <!-- void* (base::ElfMemImage::*) (const Elf64_Sym*) -->
-    <function-type method-class-id='type-id-145' size-in-bits='64' hash='68328bfd15cea4ec' id='type-id-445'>
+    <function-type method-class-id='type-id-145' static='yes' size-in-bits='64' hash='68328bfd15cea4ec' id='type-id-445'>
       <!-- implicit parameter of type 'const base::ElfMemImage*' -->
       <parameter type-id='type-id-690' is-artificial='yes'/>
       <!-- parameter of type 'const Elf64_Sym*' -->
@@ -9256,12 +9256,12 @@
       <return type-id='type-id-181'/>
     </function-type>
     <!-- void* (base::VDSOSupport::*) (void) -->
-    <function-type method-class-id='type-id-156' size-in-bits='64' hash='0b3a9aa8b3acf6b7' id='type-id-458'>
+    <function-type method-class-id='type-id-156' static='yes' size-in-bits='64' hash='0b3a9aa8b3acf6b7' id='type-id-458'>
       <!-- void* -->
       <return type-id='type-id-181'/>
     </function-type>
     <!-- void* (base::VDSOSupport::*) (void*) -->
-    <function-type method-class-id='type-id-156' size-in-bits='64' hash='cbdadc6068d91748' id='type-id-459'>
+    <function-type method-class-id='type-id-156' static='yes' size-in-bits='64' hash='cbdadc6068d91748' id='type-id-459'>
       <!-- implicit parameter of type 'base::VDSOSupport*' -->
       <parameter type-id='type-id-157' is-artificial='yes'/>
       <!-- parameter of type 'void*' -->
@@ -9270,7 +9270,7 @@
       <return type-id='type-id-181'/>
     </function-type>
     <!-- void* (tcmalloc::ThreadCache::*) (size_t, size_t) -->
-    <function-type method-class-id='type-id-618' size-in-bits='64' hash='b7a6fccd1c8723fe' id='type-id-632'>
+    <function-type method-class-id='type-id-618' static='yes' size-in-bits='64' hash='b7a6fccd1c8723fe' id='type-id-632'>
       <!-- implicit parameter of type 'tcmalloc::ThreadCache*' -->
       <parameter type-id='type-id-622' is-artificial='yes'/>
       <!-- parameter of type 'typedef size_t' -->
@@ -9281,14 +9281,14 @@
       <return type-id='type-id-181'/>
     </function-type>
     <!-- void** (MallocExtension::*) () -->
-    <function-type method-class-id='type-id-85' size-in-bits='64' hash='59dac999e8f97af1' id='type-id-308'>
+    <function-type method-class-id='type-id-85' static='yes' size-in-bits='64' hash='59dac999e8f97af1' id='type-id-308'>
       <!-- implicit parameter of type 'MallocExtension*' -->
       <parameter type-id='type-id-86' is-artificial='yes'/>
       <!-- void** -->
       <return type-id='type-id-424'/>
     </function-type>
     <!-- void** (MallocExtension::*) (int*) -->
-    <function-type method-class-id='type-id-85' size-in-bits='64' hash='13e231d4ab53cca1' id='type-id-307'>
+    <function-type method-class-id='type-id-85' static='yes' size-in-bits='64' hash='13e231d4ab53cca1' id='type-id-307'>
       <!-- implicit parameter of type 'MallocExtension*' -->
       <parameter type-id='type-id-86' is-artificial='yes'/>
       <!-- parameter of type 'int*' -->
@@ -9297,14 +9297,14 @@
       <return type-id='type-id-424'/>
     </function-type>
     <!-- void** (TCMallocImplementation::*) () -->
-    <function-type method-class-id='type-id-137' size-in-bits='64' hash='906177c60c1902a2' id='type-id-416'>
+    <function-type method-class-id='type-id-137' static='yes' size-in-bits='64' hash='906177c60c1902a2' id='type-id-416'>
       <!-- implicit parameter of type 'TCMallocImplementation*' -->
       <parameter type-id='type-id-138' is-artificial='yes'/>
       <!-- void** -->
       <return type-id='type-id-424'/>
     </function-type>
     <!-- void** (TCMallocImplementation::*) (int*) -->
-    <function-type method-class-id='type-id-137' size-in-bits='64' hash='23c4339a1874e894' id='type-id-415'>
+    <function-type method-class-id='type-id-137' static='yes' size-in-bits='64' hash='23c4339a1874e894' id='type-id-415'>
       <!-- implicit parameter of type 'TCMallocImplementation*' -->
       <parameter type-id='type-id-138' is-artificial='yes'/>
       <!-- parameter of type 'int*' -->
@@ -9313,7 +9313,7 @@
       <return type-id='type-id-424'/>
     </function-type>
     <!-- void** (tcmalloc::StackTraceTable::*) () -->
-    <function-type method-class-id='type-id-604' size-in-bits='64' hash='145f31b37602e3d8' id='type-id-610'>
+    <function-type method-class-id='type-id-604' static='yes' size-in-bits='64' hash='145f31b37602e3d8' id='type-id-610'>
       <!-- implicit parameter of type 'tcmalloc::StackTraceTable*' -->
       <parameter type-id='type-id-954' is-artificial='yes'/>
       <!-- void** -->

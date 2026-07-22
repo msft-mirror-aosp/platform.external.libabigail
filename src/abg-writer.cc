@@ -4330,7 +4330,8 @@ write_function_type(const function_type_sptr& fun_type,
 
       write_cdtor_const_static(/*is_ctor=*/false, /*is_dtor=*/false,
 			       /*is_const=*/method_type->get_is_const(),
-			       /*is_static=*/false, o);
+			       /*is_static=*/method_type->get_is_static(),
+			       o);
     }
 
   write_common_type_info(fn_type, ctxt);

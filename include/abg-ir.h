@@ -3562,6 +3562,10 @@ public:
 
   bool get_is_const() const;
 
+  void set_is_static(bool);
+
+  bool get_is_static() const;
+
   bool get_is_for_static_method() const;
 
   virtual bool

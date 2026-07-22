@@ -14,7 +14,7 @@
     <qualified-type-def type-id='type-id-1' const='yes' hash='6f6949ee48b4ba5e' id='type-id-2'/>
     <pointer-type-def type-id='type-id-2' size-in-bits='64' hash='13704968483edc48' id='type-id-3'/>
     <type-decl name='int' size-in-bits='32' hash='09d17c08f594edc7' id='type-id-4'/>
-    <function-type method-class-id='type-id-1' const='yes' size-in-bits='64' hash='de1d1267e996f729' id='type-id-5'>
+    <function-type method-class-id='type-id-1' static='yes' const='yes' size-in-bits='64' hash='de1d1267e996f729' id='type-id-5'>
       <parameter type-id='type-id-3' is-artificial='yes'/>
       <return type-id='type-id-4'/>
     </function-type>
