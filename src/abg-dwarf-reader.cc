@@ -5091,9 +5091,13 @@ public:
 	if (do_log())
 	  {
 	    cn_timer.stop();
+	    const environment& env = types_to_canonicalize().front()->get_environment();
 	    cerr << "DWARF Reader finished types "
 		 << "sorting, hashing & canonicalizing in: "
-		 << cn_timer << "\n";
+		 << cn_timer
+		 << ", for "
+		 << env.priv_->get_number_of_canonical_types()
+		 << " types\n";
 	  }
   }
 

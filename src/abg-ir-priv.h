@@ -806,6 +806,20 @@ struct environment::priv
     right_type_comp_operands_.pop_back();
   }
 
+  /// Get the number of canonical types in the system.
+  ///
+  /// @return the number of canonical types in the system.
+  size_t
+  get_number_of_canonical_types()
+  {
+    size_t n = 0;
+    for (auto& entry : canonical_types_)
+      for(unsigned i = 0; i < entry.second.size(); ++i)
+	++n;
+
+    return n;
+  }
+
 #ifdef WITH_DEBUG_SELF_COMPARISON
 
   const unordered_map<string, uintptr_t>&
