@@ -1041,6 +1041,16 @@ AM_CONDITIONAL([BTF_READER],[test "x$ENABLE_BTF" = "xyes"])
 dnl Set the level of C++ standard we use.
 CXXFLAGS="$CXXFLAGS -std=$CXX_STANDARD"
 
+use_prefixed_includedir=""
+if test x$prefix != x; then
+  use_prefixed_includedir=$prefix
+fi
+
+if test x$use_prefixed_includedir != x; then
+  saved_CPPFLAGS="$CPPFLAGS"
+  CPPFLAGS="-I${prefix}/include $CPPFLAGS"
+fi
+
 dnl Check if several decls and constant are defined in dependant
 dnl libraries
 HAS_EM_AARCH64=no
@@ -1616,6 +1626,11 @@ if test x$HAS_DW_FORM_strx1 = xyes -a \
    	     1,
 	     [Define to 1 if dwarf.h has the DW_FORM_strx enumerators])
 fi
+
+if test x$use_prefixed_includedir != x; then
+  CPPFLAGS="$saved_CPPFLAGS"
+fi
+
 
 dnl Set large files support
 AC_SYS_LARGEFILE
