@@ -48,6 +48,6 @@ kmidiffdir = $(bindir)
 kmidiff_LDADD = $(abs_top_builddir)/src/libabigail.la
 kmidiff_LDFLAGS = $(abs_top_builddir)/src/libabigail.la -pthread
 
-AM_CXXFLAGS = \
+AM_CPPFLAGS= $(DEPS_CPPFLAGS) \
 $(VISIBILITY_FLAGS) -I$(abs_top_srcdir)/include \
 -I$(abs_top_srcdir)/tools -fPIC

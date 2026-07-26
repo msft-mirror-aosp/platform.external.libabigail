@@ -234,7 +234,7 @@ runtestabidb3_sh_SOURCES =
 runtestabidb3.sh$(EXEEXT):
 
 
-AM_CPPFLAGS=-I${abs_top_srcdir}/include -I${abs_top_srcdir}/src \
+AM_CPPFLAGS=$(DEPS_CPPFLAGS) -I${abs_top_srcdir}/include -I${abs_top_srcdir}/src \
 -I${abs_top_builddir}/include -I${abs_top_srcdir}/tools -fPIC
 
 clean-local: clean-local-check
