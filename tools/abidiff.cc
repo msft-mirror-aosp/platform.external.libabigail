@@ -8,6 +8,7 @@
 /// @file
 
 #include "config.h"
+#include <argp.h>
 #include <cstring>
 #include <iostream>
 #include <memory>
@@ -71,10 +72,6 @@ using namespace abigail;
 
 struct options
 {
-  bool display_usage;
-  bool display_version;
-  bool missing_operand;
-  string		wrong_option;
   string		file1;
   string		file2;
   vector<string>	suppression_paths;
@@ -145,10 +142,7 @@ struct options
   vector<string> added_bins1;
   vector<string> added_bins2;
 
-  options()
-    : display_usage(),
-      display_version(),
-      missing_operand(),
+  options() :
       drop_private_types(false),
       linux_kernel_mode(true),
       no_default_supprs(),
@@ -210,104 +204,581 @@ struct options
   }
 };//end struct options;
 
-static void
-display_usage(const string& prog_name, ostream& out)
+
+enum option_key
 {
-  emit_prefix(prog_name, out)
-    << "usage: " << prog_name << " [options] [<file1> <file2>]\n"
-    << " where options can be:\n"
-    << " --help|-h  display this message\n "
-    << " --version|-v  display program version information and exit\n"
-    << " --debug-info-dir1|--d1 <path> the root for the debug info of file1\n"
-    << " --debug-info-dir2|--d2 <path> the root for the debug info of file2\n"
-    << " --headers-dir1|--hd1 <path>  the path to headers of file1\n"
-    << " --header-file1|--hf1 <path>  the path to one header of file1\n"
-    << " --headers-dir2|--hd2 <path>  the path to headers of file2\n"
-    << " --header-file2|--hf2 <path>  the path to one header of file2\n"
-    << " --added-binaries-dir1  the path to the dependencies of file1\n"
-    << " --added-binaries-dir2  the path to the dependencies of file2\n"
-    << " --add-binaries1 <bin1,bin2,.>. build corpus groups with "
-    "extra binaries added to the first one and compare them\n"
-    << " --add-binaries2 <bin1,bin2,..> build corpus groups with "
-    "extra binaries added to the second one and compare them\n"
-    << " --follow-dependencies|--fdeps build corpus groups with the "
-    "dependencies of the input files\n"
-    << " --list-dependencies|--ldeps show the dependencies of the input files\n"
-    << " --drop-private-types  drop private types from "
-    "internal representation\n"
-    << " --exported-interfaces-only  analyze exported interfaces only\n"
-    << " --allow-non-exported-interfaces  analyze interfaces that "
-    "might not be exported\n"
-    << " --no-linux-kernel-mode  don't consider the input binaries as "
-       "linux kernel binaries\n"
-    << " --kmi-whitelist|-w  path to a "
-       "linux kernel abi whitelist\n"
-    << " --stat  only display the diff stats\n"
-    << " --symtabs  only display the symbol tables of the corpora\n"
-    << " --no-default-suppression  don't load any "
-       "default suppression specification\n"
-    << " --no-architecture  do not take architecture in account\n"
-    << " --no-corpus-path  do not take the path to the corpora into account\n"
-    << " --ignore-soname  do not take the SONAMEs into account\n"
-    << " --fail-no-debug-info  bail out if no debug info was found\n"
-    << " --leaf-changes-only|-l  only show leaf changes, "
-    "so no change impact analysis (implies --redundant)\n"
-    << " --deleted-fns  display deleted public functions\n"
-    << " --changed-fns  display changed public functions\n"
-    << " --added-fns  display added public functions\n"
-    << " --deleted-vars  display deleted global public variables\n"
-    << " --changed-vars  display changed global public variables\n"
-    << " --added-vars  display added global public variables\n"
-    << " --non-reachable-types|-t  consider types non reachable"
-    " from public interfaces\n"
-    << " --no-added-syms  do not display added functions or variables\n"
-    << " --no-linkage-name  do not display linkage names of "
-    "added/removed/changed\n"
-    << " --no-unreferenced-symbols  do not display changes "
-    "about symbols not referenced by debug info\n"
-    << " --no-show-locs  do now show location information\n"
-    << " --show-bytes  show size and offsets in bytes\n"
-    << " --show-bits  show size and offsets in bits\n"
-    << " --show-hex  show size and offset in hexadecimal\n"
-    << " --show-dec  show size and offset in decimal\n"
-    << " --no-show-relative-offset-changes  do not show relative"
-    " offset changes\n"
-    << " --suppressions|--suppr <path> specify a suppression file\n"
-    << " --drop <regex>  drop functions and variables matching a regexp\n"
-    << " --drop-fn <regex> drop functions matching a regexp\n"
-    << " --drop-var <regex> drop variables matching a regexp\n"
-    << " --keep <regex>  keep only functions and variables matching a regex\n"
-    << " --keep-fn <regex>  keep only functions matching a regex\n"
-    << " --keep-var  <regex>  keep only variables matching a regex\n"
-    << " --harmless  display the harmless changes\n"
-    << " --no-harmful  do not display the harmful changes\n"
-    << " --redundant  display redundant changes\n"
-    << " --no-redundant  do not display redundant changes "
-    "(this is the default)\n"
-    << " --impacted-interfaces  display interfaces impacted by leaf changes\n"
-    << " --no-leverage-dwarf-factorization  do not use DWZ optimisations to "
-    "speed-up the analysis of the binary\n"
-    << " --no-change-categorization | -x don't perform categorization "
-    "of changes, for speed purposes\n"
-    << " --no-assume-odr-for-cplusplus  do not assume the ODR to speed-up the "
-    "analysis of the binary\n"
-    << " --dump-diff-tree  emit a debug dump of the internal diff tree to "
-    "the error output stream\n"
-    <<  " --stats  show statistics about various internal stuff\n"
-#ifdef WITH_CTF
-    << " --ctf use CTF instead of DWARF in ELF files\n"
-#endif
+  OPT_ADDED_BINS_DIR1 = 256,
+  OPT_ADDED_BINS_DIR2,
+  OPT_ADDED_BINS1,
+  OPT_ADDED_BINS2,
+  OPT_ALLOW_NON_EXPORTED_INTERFACES,
+  OPT_NO_ASSUME_ODR_FOR_CPLUSPLUS,
+  OPT_BTF,
+  OPT_CTF,
+  OPT_D1,
+  OPT_D2,
+  OPT_DEBUG_SELF_COMPARISON,
+  OPT_DEBUG_TC,
+  OPT_DELETED_FNS,
+  OPT_DELETED_VARS,
+  OPT_CHANGED_FNS,
+  OPT_CHANGED_VARS,
+  OPT_ADDED_FNS,
+  OPT_ADDED_VARS,
+  OPT_DROP,
+  OPT_DROP_FN,
+  OPT_DROP_PRIVATE_TYPES,
+  OPT_DROP_VAR,
+  OPT_DUMP_DIFF_TREE,
+  OPT_EXPORTED_INTERFACES_ONLY,
+  OPT_FAIL_NO_DEBUG_INFO,
+  OPT_FDEPS,
+  OPT_HD1,
+  OPT_HD2,
+  OPT_HF1,
+  OPT_HF2,
+  OPT_HARMLESS,
+  OPT_IGNORE_SONAME,
+  OPT_IMPACTED_INTERFACES,
+  OPT_KEEP,
+  OPT_KEEP_FN,
+  OPT_KEEP_VAR,
+  OPT_KMI_WHITELIST,
+  OPT_LDEPS,
+  OPT_LEAF_CHANGES_ONLY,
+  OPT_NO_ADDED_SYMS,
+  OPT_NO_ARCH,
+  OPT_NO_CHANGE_CATEGORIZATION,
+  OPT_NO_CORPUS_PATH,
+  OPT_NO_DEFAULT_SUPPRESSION,
+  OPT_NO_HARMFUL,
+  OPT_NO_LEVERAGE_DWARF_FACTORIZATION,
+  OPT_NO_LINKAGE_NAME,
+  OPT_NO_LINUX_KERNEL_MODE,
+  OPT_NO_REDUNDANT,
+  OPT_NO_SHOW_LOCS,
+  OPT_NO_SHOW_RELATIVE_OFFSET_CHANGES,
+  OPT_NO_UNREFERENCED_SYMBOLS,
+  OPT_NON_REACHABLE_TYPES,
+  OPT_REDUNDANT,
+  OPT_SHOW_BITS,
+  OPT_SHOW_BYTES,
+  OPT_SHOW_DEC,
+  OPT_SHOW_HEX,
+  OPT_STAT,
+  OPT_STATS,
+  OPT_SUPPR,
+  OPT_SYMTABS,
+  OPT_VERBOSE,
+};
+
+static const struct argp_option argp_options[] =
+{
+  { "add-binaries1", OPT_ADDED_BINS1, "BIN1,BIN2,..", 0,
+    "build corpus groups with extra binaries added to the first one "
+    "and compare them", 0 },
+  { "add-binaries2", OPT_ADDED_BINS2, "BIN1,BIN2,..", 0,
+    "build corpus groups with extra binaries added to the second one "
+    "and compare them", 0 },
+  { "added-binaries-dir1", OPT_ADDED_BINS_DIR1, "PATH", 0,
+    "the path to the dependencies of file1", 0 },
+  { "abd1", OPT_ADDED_BINS_DIR1, "PATH", OPTION_ALIAS, 0, 0 },
+  { "added-binaries-dir2", OPT_ADDED_BINS_DIR2, "PATH", 0,
+    "the path to the dependencies of file2", 0 },
+  { "abd2", OPT_ADDED_BINS_DIR2, "PATH", OPTION_ALIAS, 0, 0 },
+  { "added-fns", OPT_ADDED_FNS, 0, 0,
+    "display added public functions", 0 },
+  { "added-vars", OPT_ADDED_VARS, 0, 0,
+    "display added global public variables", 0 },
+  { "allow-non-exported-interfaces", OPT_ALLOW_NON_EXPORTED_INTERFACES, 0, 0,
+    "analyze interfaces that might not be exported", 0 },
 #ifdef WITH_BTF
-    << " --btf use BTF instead of DWARF in ELF files\n"
+  { "btf", OPT_BTF, 0, 0,
+    "use BTF instead of DWARF in ELF files", 0 },
 #endif
+  { "changed-fns", OPT_CHANGED_FNS, 0, 0,
+    "display changed public functions", 0 },
+  { "changed-vars", OPT_CHANGED_VARS, 0, 0,
+    "display changed global public variables", 0 },
+#ifdef WITH_CTF
+  { "ctf", OPT_CTF, 0, 0,
+    "use CTF instead of DWARF in ELF files", 0 },
+#endif
+  { "debug-info-dir1", OPT_D1, "PATH", 0,
+    "the root for the debug info of file1", 0 },
+  { "d1", OPT_D1, "PATH", OPTION_ALIAS, 0, 0 },
+  { "debug-info-dir2", OPT_D2, "PATH", 0,
+    "the root for the debug info of file2", 0 },
+  { "d2", OPT_D2, "PATH", OPTION_ALIAS, 0, 0 },
 #ifdef WITH_DEBUG_SELF_COMPARISON
-    << " --debug-self-comparison debug the process of comparing "
-    "an ABI corpus against itself"
+  { "debug-self-comparison", OPT_DEBUG_SELF_COMPARISON, 0, 0,
+    "debug the process of comparing an ABI corpus against itself", 0 },
 #endif
 #ifdef WITH_DEBUG_TYPE_CANONICALIZATION
-    << " --debug-tc debug the type canonicalization process"
+  { "debug-tc", OPT_DEBUG_TC, 0, 0,
+    "debug the type canonicalization process", 0 },
 #endif
-    << " --verbose show verbose messages about internal stuff\n";
+  { "deleted-fns", OPT_DELETED_FNS, 0, 0,
+    "display deleted public functions", 0 },
+  { "deleted-vars", OPT_DELETED_VARS, 0, 0,
+    "display deleted global public variables", 0 },
+  { "drop", OPT_DROP, "REGEX", 0,
+    "drop functions and variables matching a regexp", 0 },
+  { "drop-fn", OPT_DROP_FN, "REGEX", 0,
+    "drop functions matching a regexp", 0 },
+  { "drop-private-types", OPT_DROP_PRIVATE_TYPES, 0, 0,
+    "drop private types from internal representation", 0 },
+  { "drop-var", OPT_DROP_VAR, "REGEX", 0,
+    "drop variables matching a regexp", 0 },
+  { "dump-diff-tree", OPT_DUMP_DIFF_TREE, 0, 0,
+    "emit a debug dump of the internal diff tree to the error output stream",
+    0 },
+  { "exported-interfaces-only", OPT_EXPORTED_INTERFACES_ONLY, 0, 0,
+    "analyze exported interfaces only", 0 },
+  { "fail-no-debug-info", OPT_FAIL_NO_DEBUG_INFO, 0, 0,
+    "bail out if no debug info was found", 0 },
+  { "follow-dependencies", OPT_FDEPS, 0, 0,
+    "build corpus groups with the dependencies of the input files", 0 },
+  { "fdeps", OPT_FDEPS, 0, OPTION_ALIAS, 0, 0 },
+  { "harmless", OPT_HARMLESS, 0, 0,
+    "display the harmless changes", 0 },
+  { "header-file1", OPT_HF1, "PATH", 0,
+    "the path to one header of file1", 0 },
+  { "hf1", OPT_HF1, "PATH", OPTION_ALIAS, 0, 0 },
+  { "header-file2", OPT_HF2, "PATH", 0,
+    "the path to one header of file2", 0 },
+  { "hf2", OPT_HF2, "PATH", OPTION_ALIAS, 0, 0 },
+  { "headers-dir1", OPT_HD1, "PATH", 0,
+    "the path to headers of file1", 0 },
+  { "hd1", OPT_HD1, "PATH", OPTION_ALIAS, 0, 0 },
+  { "headers-dir2", OPT_HD2, "PATH", 0,
+    "the path to headers of file2", 0 },
+  { "hd2", OPT_HD2, "PATH", OPTION_ALIAS, 0, 0 },
+  { "ignore-soname", OPT_IGNORE_SONAME, 0, 0,
+    "do not take the SONAMEs into account", 0 },
+  { "impacted-interfaces", OPT_IMPACTED_INTERFACES, 0, 0,
+    "display interfaces impacted by leaf changes", 0 },
+  { "keep", OPT_KEEP, "REGEX", 0,
+    "keep only functions and variables matching a regex", 0 },
+  { "keep-fn", OPT_KEEP_FN, "REGEX", 0,
+    "keep only functions matching a regex", 0 },
+  { "keep-var", OPT_KEEP_VAR, "REGEX", 0,
+    "keep only variables matching a regex", 0 },
+  { "kmi-whitelist", OPT_KMI_WHITELIST, "PATH", 0,
+    "path to a linux kernel abi whitelist", 0 },
+  { "w", OPT_KMI_WHITELIST, "PATH", OPTION_ALIAS, 0, 0 },
+  { "leaf-changes-only", OPT_LEAF_CHANGES_ONLY, 0, 0,
+    "only show leaf changes, so no change impact analysis "
+    "(implies --redundant)", 0 },
+  { "l", OPT_LEAF_CHANGES_ONLY, 0, OPTION_ALIAS, 0, 0 },
+  { "list-dependencies", OPT_LDEPS, 0, 0,
+    "show the dependencies of the input files", 0 },
+  { "ldeps", OPT_LDEPS, 0, OPTION_ALIAS, 0, 0 },
+  { "no-added-syms", OPT_NO_ADDED_SYMS, 0, 0,
+    "do not display added functions or variables", 0 },
+  { "no-architecture", OPT_NO_ARCH, 0, 0,
+    "do not take architecture in account", 0 },
+  { "no-assume-odr-for-cplusplus", OPT_NO_ASSUME_ODR_FOR_CPLUSPLUS, 0, 0,
+    "do not assume the ODR to speed-up the analysis of the binary", 0 },
+  { "no-change-categorization", OPT_NO_CHANGE_CATEGORIZATION, 0, 0,
+    "don't perform categorization of changes, for speed purposes", 0 },
+  { "x", OPT_NO_CHANGE_CATEGORIZATION, 0, OPTION_ALIAS, 0, 0 },
+  { "no-corpus-path", OPT_NO_CORPUS_PATH, 0, 0,
+    "do not take the path to the corpora into account", 0 },
+  { "no-default-suppression", OPT_NO_DEFAULT_SUPPRESSION, 0, 0,
+    "don't load any default suppression specification", 0 },
+  { "no-harmful", OPT_NO_HARMFUL, 0, 0,
+    "do not display the harmful changes", 0 },
+  { "no-leverage-dwarf-factorization", OPT_NO_LEVERAGE_DWARF_FACTORIZATION,
+    0, 0,
+    "do not use DWZ optimisations to speed-up the analysis of the binary",
+    0 },
+  { "no-linkage-name", OPT_NO_LINKAGE_NAME, 0, 0,
+    "do not display linkage names of added/removed/changed", 0 },
+  { "no-linux-kernel-mode", OPT_NO_LINUX_KERNEL_MODE, 0, 0,
+    "don't consider the input binaries as linux kernel binaries", 0 },
+  { "no-redundant", OPT_NO_REDUNDANT, 0, 0,
+    "do not display redundant changes (this is the default)", 0 },
+  { "no-show-locs", OPT_NO_SHOW_LOCS, 0, 0,
+    "do not show location information", 0 },
+  { "no-show-relative-offset-changes", OPT_NO_SHOW_RELATIVE_OFFSET_CHANGES,
+    0, 0,
+    "do not show relative offset changes", 0 },
+  { "no-unreferenced-symbols", OPT_NO_UNREFERENCED_SYMBOLS, 0, 0,
+    "do not display changes about symbols not referenced by debug info", 0 },
+  { "non-reachable-types", OPT_NON_REACHABLE_TYPES, 0, 0,
+    "consider types non reachable from public interfaces", 0 },
+  { "t", OPT_NON_REACHABLE_TYPES, 0, OPTION_ALIAS, 0, 0 },
+  { "redundant", OPT_REDUNDANT, 0, 0,
+    "display redundant changes", 0 },
+  { "show-bits", OPT_SHOW_BITS, 0, 0,
+    "show size and offsets in bits", 0 },
+  { "show-bytes", OPT_SHOW_BYTES, 0, 0,
+    "show size and offsets in bytes", 0 },
+  { "show-dec", OPT_SHOW_DEC, 0, 0,
+    "show size and offset in decimal", 0 },
+  { "show-hex", OPT_SHOW_HEX, 0, 0,
+    "show size and offset in hexadecimal", 0 },
+  { "stat", OPT_STAT, 0, 0,
+    "only display the diff stats", 0 },
+  { "stats", OPT_STATS, 0, 0,
+    "show statistics about various internal stuff", 0 },
+  { "suppressions", OPT_SUPPR, "PATH", 0,
+    "specify a suppression file", 0 },
+  { "suppr", OPT_SUPPR, "PATH", OPTION_ALIAS, 0, 0 },
+  { "symtabs", OPT_SYMTABS, 0, 0,
+    "only display the symbol tables of the corpora", 0 },
+  { "verbose", OPT_VERBOSE, 0, 0,
+    "show verbose messages about internal stuff", 0 },
+  { 0, 0, 0, 0, 0, 0 }
+};
+
+static error_t
+parse_opt(int key, char* arg, struct argp_state* state)
+{
+  options& opts = *static_cast<options*>(state->input);
+  const string argument = arg ? string(arg) : string();
+
+  switch (key)
+    {
+    case OPT_ADDED_BINS1:
+      if (argument.find(',') != string::npos)
+	tools_utils::split_string(argument, ",", opts.added_bins1);
+      else
+	opts.added_bins1.push_back(argument);
+      break;
+
+    case OPT_ADDED_BINS2:
+      if (argument.find(',') != string::npos)
+	tools_utils::split_string(argument, ",", opts.added_bins2);
+      else
+	opts.added_bins2.push_back(argument);
+      break;
+
+    case OPT_ADDED_BINS_DIR1:
+      opts.added_bins_dirs1.push_back(argument);
+      break;
+
+    case OPT_ADDED_BINS_DIR2:
+      opts.added_bins_dirs2.push_back(argument);
+      break;
+
+    case OPT_ADDED_FNS:
+      opts.show_added_fns = true;
+      opts.show_all_fns = false;
+      opts.show_all_vars = false;
+      break;
+
+    case OPT_ADDED_VARS:
+      opts.show_added_vars = true;
+      opts.show_all_fns = false;
+      opts.show_all_vars = false;
+      break;
+
+    case OPT_ALLOW_NON_EXPORTED_INTERFACES:
+      opts.exported_interfaces_only = false;
+      break;
+
+    case OPT_NO_ASSUME_ODR_FOR_CPLUSPLUS:
+      opts.assume_odr_for_cplusplus = false;
+      break;
+
+#ifdef WITH_BTF
+    case OPT_BTF:
+      opts.use_btf = true;
+      break;
+#endif
+
+    case OPT_CHANGED_FNS:
+      opts.show_changed_fns = true;
+      opts.show_all_fns = false;
+      opts.show_all_vars = false;
+      break;
+
+    case OPT_CHANGED_VARS:
+      opts.show_changed_vars = true;
+      opts.show_all_fns = false;
+      opts.show_all_vars = false;
+      break;
+
+#ifdef WITH_CTF
+    case OPT_CTF:
+      opts.use_ctf = true;
+      break;
+#endif
+
+    case OPT_D1:
+      opts.di_root_paths1.push_back
+	(abigail::tools_utils::make_path_absolute(argument));
+      break;
+
+    case OPT_D2:
+      opts.di_root_paths2.push_back
+	(abigail::tools_utils::make_path_absolute(argument));
+      break;
+
+#ifdef WITH_DEBUG_SELF_COMPARISON
+    case OPT_DEBUG_SELF_COMPARISON:
+      opts.do_debug_self_comparison = true;
+      break;
+#endif
+
+#ifdef WITH_DEBUG_TYPE_CANONICALIZATION
+    case OPT_DEBUG_TC:
+      opts.do_debug_type_canonicalization = true;
+      break;
+#endif
+
+    case OPT_DELETED_FNS:
+      opts.show_deleted_fns = true;
+      opts.show_all_fns = false;
+      opts.show_all_vars = false;
+      break;
+
+    case OPT_DELETED_VARS:
+      opts.show_deleted_vars = true;
+      opts.show_all_fns = false;
+      opts.show_all_vars = false;
+      break;
+
+    case OPT_DROP:
+      opts.drop_fn_regex_patterns.push_back(argument);
+      opts.drop_var_regex_patterns.push_back(argument);
+      break;
+
+    case OPT_DROP_FN:
+      opts.drop_fn_regex_patterns.push_back(argument);
+      break;
+
+    case OPT_DROP_PRIVATE_TYPES:
+      opts.drop_private_types = true;
+      break;
+
+    case OPT_DROP_VAR:
+      opts.drop_var_regex_patterns.push_back(argument);
+      break;
+
+    case OPT_DUMP_DIFF_TREE:
+      opts.dump_diff_tree = true;
+      break;
+
+    case OPT_EXPORTED_INTERFACES_ONLY:
+      opts.exported_interfaces_only = true;
+      break;
+
+    case OPT_FAIL_NO_DEBUG_INFO:
+      opts.fail_no_debug_info = true;
+      break;
+
+    case OPT_FDEPS:
+      opts.follow_dependencies = true;
+      break;
+
+    case OPT_HARMLESS:
+      opts.show_harmless_changes = true;
+      break;
+
+    case OPT_HD1:
+      opts.headers_dirs1.push_back(argument);
+      break;
+
+    case OPT_HD2:
+      opts.headers_dirs2.push_back(argument);
+      break;
+
+    case OPT_HF1:
+      opts.header_files1.push_back(argument);
+      break;
+
+    case OPT_HF2:
+      opts.header_files2.push_back(argument);
+      break;
+
+    case OPT_IGNORE_SONAME:
+      opts.ignore_soname = true;
+      break;
+
+    case OPT_IMPACTED_INTERFACES:
+      opts.show_impacted_interfaces = true;
+      break;
+
+    case OPT_KEEP:
+      opts.keep_fn_regex_patterns.push_back(argument);
+      opts.keep_var_regex_patterns.push_back(argument);
+      break;
+
+    case OPT_KEEP_FN:
+      opts.keep_fn_regex_patterns.push_back(argument);
+      break;
+
+    case OPT_KEEP_VAR:
+      opts.keep_var_regex_patterns.push_back(argument);
+      break;
+
+    case OPT_KMI_WHITELIST:
+      opts.kernel_abi_whitelist_paths.push_back(argument);
+      break;
+
+    case OPT_LDEPS:
+      opts.list_dependencies = true;
+      break;
+
+    case OPT_LEAF_CHANGES_ONLY:
+      opts.leaf_changes_only = true;
+      break;
+
+    case OPT_NO_ADDED_SYMS:
+      opts.show_added_syms = false;
+      opts.show_added_vars = false;
+      opts.show_added_fns = false;
+      if (!(opts.show_changed_fns
+	    || opts.show_changed_vars
+	    || opts.show_deleted_fns
+	    || opts.show_deleted_vars))
+	{
+	  opts.show_changed_fns = true;
+	  opts.show_changed_vars = true;
+	  opts.show_deleted_vars = true;
+	  opts.show_deleted_fns = true;
+	}
+      opts.show_all_fns = false;
+      opts.show_all_vars = false;
+      break;
+
+    case OPT_NO_ARCH:
+      opts.no_arch = true;
+      break;
+
+    case OPT_NO_CHANGE_CATEGORIZATION:
+      opts.perform_change_categorization = false;
+      break;
+
+    case OPT_NO_CORPUS_PATH:
+      opts.no_corpus = true;
+      break;
+
+    case OPT_NO_DEFAULT_SUPPRESSION:
+      opts.no_default_supprs = true;
+      break;
+
+    case OPT_NO_HARMFUL:
+      opts.show_harmful_changes = false;
+      break;
+
+    case OPT_NO_LEVERAGE_DWARF_FACTORIZATION:
+      opts.leverage_dwarf_factorization = false;
+      break;
+
+    case OPT_NO_LINKAGE_NAME:
+      opts.show_linkage_names = false;
+      break;
+
+    case OPT_NO_LINUX_KERNEL_MODE:
+      opts.linux_kernel_mode = false;
+      break;
+
+    case OPT_NO_REDUNDANT:
+      opts.show_redundant_changes = false;
+      break;
+
+    case OPT_NO_SHOW_LOCS:
+      opts.show_locs = false;
+      break;
+
+    case OPT_NO_SHOW_RELATIVE_OFFSET_CHANGES:
+      opts.show_relative_offset_changes = false;
+      break;
+
+    case OPT_NO_UNREFERENCED_SYMBOLS:
+      opts.show_symbols_not_referenced_by_debug_info = false;
+      break;
+
+    case OPT_NON_REACHABLE_TYPES:
+      opts.show_all_types = true;
+      break;
+
+    case OPT_REDUNDANT:
+      opts.show_redundant_changes = true;
+      break;
+
+    case OPT_SHOW_BITS:
+      opts.show_offsets_sizes_in_bits = true;
+      break;
+
+    case OPT_SHOW_BYTES:
+      opts.show_offsets_sizes_in_bits = false;
+      break;
+
+    case OPT_SHOW_DEC:
+      opts.show_hexadecimal_values = false;
+      break;
+
+    case OPT_SHOW_HEX:
+      opts.show_hexadecimal_values = true;
+      break;
+
+    case OPT_STAT:
+      opts.show_stats_only = true;
+      break;
+
+    case OPT_STATS:
+      opts.show_stats = true;
+      break;
+
+    case OPT_SUPPR:
+      opts.suppression_paths.push_back(argument);
+      break;
+
+    case OPT_SYMTABS:
+      opts.show_symtabs = true;
+      break;
+
+    case OPT_VERBOSE:
+      opts.do_log = true;
+      break;
+
+    case ARGP_KEY_ARG:
+      if (opts.file1.empty())
+	opts.file1 = argument;
+      else if (opts.file2.empty())
+	opts.file2 = argument;
+      else
+	argp_usage(state);
+      break;
+
+    default:
+      return ARGP_ERR_UNKNOWN;
+    }
+
+  return 0;
+}
+
+static const char* argp_args_doc = "[<file1> <file2>]";
+static const char* argp_doc =
+  "Compare the ABI of two ELF files, returning 0 if they are identical, "
+  "or non-zero if they differ.";
+
+static const struct argp abidiff_argp =
+{
+  argp_options,
+  parse_opt,
+  argp_args_doc,
+  argp_doc,
+  0,
+  0,
+  0
+};
+
+/// Version printing hook to be passed to ARGP.
+///
+/// @param stream the output stream.
+///
+/// @param state the ARGP state.
+static void
+print_abidiff_version(FILE *stream, struct argp_state* /*state*/)
+{
+  fprintf(stream, "abidiff %s\n",
+	  abigail::tools_utils::get_library_version_string().c_str());
 }
 
 /// Parse the command line and set the options accordingly.
@@ -324,445 +795,11 @@ display_usage(const string& prog_name, ostream& out)
 bool
 parse_command_line(int argc, char* argv[], options& opts)
 {
-  if (argc < 2)
+  argp_program_version_hook = print_abidiff_version;
+  argp_program_bug_address = "<libabigail@sourceware.org>";
+
+  if (argp_parse(&abidiff_argp, argc, argv, 0, 0, &opts) != 0)
     return false;
-
-  for (int i = 1; i < argc; ++i)
-    {
-      if (argv[i][0] != '-')
-	{
-	  if (opts.file1.empty())
-	    opts.file1 = argv[i];
-	  else if (opts.file2.empty())
-	    opts.file2 = argv[i];
-	  else
-	    return false;
-	}
-      else if (!strcmp(argv[i], "--version")
-	       || !strcmp(argv[i], "-v"))
-	{
-	  opts.display_version = true;
-	  return true;
-	}
-      else if (!strcmp(argv[i], "--debug-info-dir1")
-	       || !strcmp(argv[i], "--d1"))
-	{
-	  int j = i + 1;
-	  if (j >= argc)
-	    {
-	      opts.missing_operand = true;
-	      opts.wrong_option = argv[i];
-	      return true;
-	    }
-	  // elfutils wants the root path to the debug info to be
-	  // absolute.
-	  opts.di_root_paths1.push_back
-	    (abigail::tools_utils::make_path_absolute(string(argv[j])));
-	  ++i;
-	}
-      else if (!strcmp(argv[i], "--debug-info-dir2")
-	       || !strcmp(argv[i], "--d2"))
-	{
-	  int j = i + 1;
-	  if (j >= argc)
-	    {
-	      opts.missing_operand = true;
-	      opts.wrong_option = argv[i];
-	      return true;
-	    }
-	  // elfutils wants the root path to the debug info to be
-	  // absolute.
-	  opts.di_root_paths2.push_back
-	    (abigail::tools_utils::make_path_absolute(string(argv[j])));
-	  ++i;
-	}
-      else if (!strcmp(argv[i], "--headers-dir1")
-	       || !strcmp(argv[i], "--hd1"))
-	{
-	  int j = i + 1;
-	  if (j >= argc)
-	    {
-	      opts.missing_operand = true;
-	      opts.wrong_option = argv[i];
-	      return true;
-	    }
-	  // The user can specify several header files directories for
-	  // the first binary.
-	  opts.headers_dirs1.push_back(argv[j]);
-	  ++i;
-	}
-      else if (!strcmp(argv[i], "--header-file1")
-	       || !strcmp(argv[i], "--hf1"))
-	{
-	  int j = i + 1;
-	  if (j >= argc)
-	    {
-	      opts.missing_operand = true;
-	      opts.wrong_option = argv[i];
-	      return true;
-	    }
-	  opts.header_files1.push_back(argv[j]);
-	  ++i;
-	}
-      else if (!strcmp(argv[i], "--headers-dir2")
-	       || !strcmp(argv[i], "--hd2"))
-	{
-	  int j = i + 1;
-	  if (j >= argc)
-	    {
-	      opts.missing_operand = true;
-	      opts.wrong_option = argv[i];
-	      return true;
-	    }
-	  // The user can specify several header files directories for
-	  // the first binary.
-	  opts.headers_dirs2.push_back(argv[j]);
-	  ++i;
-	}
-      else if (!strcmp(argv[i], "--header-file2")
-	       || !strcmp(argv[i], "--hf2"))
-	{
-	  int j = i + 1;
-	  if (j >= argc)
-	    {
-	      opts.missing_operand = true;
-	      opts.wrong_option = argv[i];
-	      return true;
-	    }
-	  opts.header_files2.push_back(argv[j]);
-	  ++i;
-	}
-      else if (!strcmp(argv[i], "--follow-dependencies")
-	       || !strcmp(argv[i], "--fdeps"))
-	opts.follow_dependencies = true;
-      else if (!strcmp(argv[i], "--list-dependencies")
-	       || !strcmp(argv[i], "--ldeps"))
-	opts.list_dependencies = true;
-      else if (!strcmp(argv[i], "--added-binaries-dir1")
-	       || !strcmp(argv[i], "--abd1"))
-	{
-	  int j = i + 1;
-	  if (j >= argc)
-	    {
-	      opts.missing_operand = true;
-	      opts.wrong_option = argv[i];
-	      return true;
-	    }
-	  opts.added_bins_dirs1.push_back(argv[j]);
-	  ++i;
-	}
-      else if (!strcmp(argv[i], "--added-binaries-dir2")
-	       || !strcmp(argv[i], "--abd2"))
-	{
-	  int j = i + 1;
-	  if (j >= argc)
-	    {
-	      opts.missing_operand = true;
-	      opts.wrong_option = argv[i];
-	      return true;
-	    }
-	  opts.added_bins_dirs2.push_back(argv[j]);
-	  ++i;
-	}
-      else if (!strncmp(argv[i], "--add-binaries1=",
-			strlen("--add-binaries1=")))
-	tools_utils::get_comma_separated_args_of_option(argv[i],
-							"--add-binaries1=",
-							opts.added_bins1);
-      else if (!strcmp(argv[i], "--add-binaries1"))
-	{
-	  int j = i + 1;
-	  if (j >= argc)
-	    {
-	      opts.missing_operand = true;
-	      opts.wrong_option = argv[i];
-	      return true;
-	    }
-	  string s = argv[j];
-	  if (s.find(','))
-	    tools_utils::split_string(s, ",", opts.added_bins1);
-	  else
-	    opts.added_bins1.push_back(s);
-	  ++i;
-	}
-      else if (!strncmp(argv[i], "--add-binaries2=",
-			strlen("--add-binaries2=")))
-	tools_utils::get_comma_separated_args_of_option(argv[i],
-							"--add-binaries2=",
-							opts.added_bins2);
-      else if (!strcmp(argv[i], "--add-binaries2"))
-	{
-	  int j = i + 1;
-	  if (j >= argc)
-	    {
-	      opts.missing_operand = true;
-	      opts.wrong_option = argv[i];
-	      return true;
-	    }
-	  string s = argv[j];
-	  if (s.find(','))
-	    tools_utils::split_string(s, ",", opts.added_bins2);
-	  else
-	    opts.added_bins2.push_back(s);
-	  ++i;
-	}
-      else if (!strcmp(argv[i], "--kmi-whitelist")
-	       || !strcmp(argv[i], "-w"))
-	{
-	  int j = i + 1;
-	  if (j >= argc)
-	    {
-	      opts.missing_operand = true;
-	      opts.wrong_option = argv[i];
-	      return true;
-	    }
-	  opts.kernel_abi_whitelist_paths.push_back(argv[j]);
-	  ++i;
-	}
-      else if (!strcmp(argv[i], "--stat"))
-	opts.show_stats_only = true;
-      else if (!strcmp(argv[i], "--symtabs"))
-	opts.show_symtabs = true;
-      else if (!strcmp(argv[i], "--help")
-	       || !strcmp(argv[i], "-h"))
-	{
-	  opts.display_usage = true;
-	  return true;
-	}
-      else if (!strcmp(argv[i], "--drop-private-types"))
-	opts.drop_private_types = true;
-      else if (!strcmp(argv[i], "--exported-interfaces-only"))
-	opts.exported_interfaces_only = true;
-      else if (!strcmp(argv[i], "--allow-non-exported-interfaces"))
-	opts.exported_interfaces_only = false;
-      else if (!strcmp(argv[i], "--no-linux-kernel-mode"))
-	opts.linux_kernel_mode = false;
-      else if (!strcmp(argv[i], "--no-default-suppression"))
-	opts.no_default_supprs = true;
-      else if (!strcmp(argv[i], "--no-architecture"))
-	opts.no_arch = true;
-      else if (!strcmp(argv[i], "--no-corpus-path"))
-	opts.no_corpus = true;
-      else if (!strcmp(argv[i], "--ignore-soname"))
-	opts.ignore_soname = true;
-      else if (!strcmp(argv[i], "--fail-no-debug-info"))
-	opts.fail_no_debug_info = true;
-      else if (!strcmp(argv[i], "--leaf-changes-only")
-	       ||!strcmp(argv[i], "-l"))
-	opts.leaf_changes_only = true;
-      else if (!strcmp(argv[i], "--deleted-fns"))
-	{
-	  opts.show_deleted_fns = true;
-	  opts.show_all_fns = false;
-	  opts.show_all_vars = false;
-	}
-      else if (!strcmp(argv[i], "--changed-fns"))
-	{
-	  opts.show_changed_fns = true;
-	  opts.show_all_fns = false;
-	  opts.show_all_vars = false;
-	}
-      else if (!strcmp(argv[i], "--added-fns"))
-	{
-	  opts.show_added_fns = true;
-	  opts.show_all_fns = false;
-	  opts.show_all_vars = false;
-	}
-      else if (!strcmp(argv[i], "--deleted-vars"))
-	{
-	  opts.show_deleted_vars = true;
-	  opts.show_all_fns = false;
-	  opts.show_all_vars = false;
-	}
-      else if (!strcmp(argv[i], "--changed-vars"))
-	{
-	  opts.show_changed_vars = true;
-	  opts.show_all_fns = false;
-	  opts.show_all_vars = false;
-	}
-      else if (!strcmp(argv[i], "--added-vars"))
-	{
-	  opts.show_added_vars = true;
-	  opts.show_all_fns = false;
-	  opts.show_all_vars = false;
-	}
-      else if (!strcmp(argv[i], "--non-reachable-types")
-	       || !strcmp(argv[i], "-t"))
-	  opts.show_all_types = true;
-      else if (!strcmp(argv[i], "--no-added-syms"))
-	{
-	  opts.show_added_syms = false;
-	  opts.show_added_vars = false;
-	  opts.show_added_fns = false;
-
-	  // If any of the {changed,deleted}_{vars,fns} is already
-	  // specified, --no-added-syms has no further effect.  If it
-	  // is the only option specified (as of the time of parsing
-	  // it), it shall mean "show everything, except added vars,
-	  // fns and unreferenced symbols.
-	  if (!(opts.show_changed_fns
-		|| opts.show_changed_vars
-		|| opts.show_deleted_fns
-		|| opts.show_deleted_vars))
-	    {
-	      opts.show_changed_fns = true;
-	      opts.show_changed_vars = true;
-
-	      opts.show_deleted_vars = true;
-	      opts.show_deleted_fns = true;
-	    }
-
-	  opts.show_all_fns = false;
-	  opts.show_all_vars = false;
-	}
-      else if (!strcmp(argv[i], "--no-linkage-name"))
-	opts.show_linkage_names = false;
-      else if (!strcmp(argv[i], "--no-unreferenced-symbols"))
-	opts.show_symbols_not_referenced_by_debug_info = false;
-      else if (!strcmp(argv[i], "--no-show-locs"))
-	opts.show_locs = false;
-      else if (!strcmp(argv[i], "--show-bytes"))
-	opts.show_offsets_sizes_in_bits = false;
-      else if (!strcmp(argv[i], "--show-bits"))
-	opts.show_offsets_sizes_in_bits = true;
-      else if (!strcmp(argv[i], "--show-hex"))
-	opts.show_hexadecimal_values = true;
-      else if (!strcmp(argv[i], "--show-dec"))
-	opts.show_hexadecimal_values = false;
-      else if (!strcmp(argv[i], "--no-show-relative-offset-changes"))
-	opts.show_relative_offset_changes = false;
-      else if (!strcmp(argv[i], "--suppressions")
-	       || !strcmp(argv[i], "--suppr"))
-	{
-	  int j = i + 1;
-	  if (j >= argc)
-	    {
-	      opts.missing_operand = true;
-	      opts.wrong_option = argv[i];
-	      return true;
-	    }
-	  opts.suppression_paths.push_back(argv[j]);
-	  ++i;
-	}
-      else if (!strcmp(argv[i], "--drop"))
-	{
-	  int j = i + 1;
-	  if (j >= argc)
-	    {
-	      opts.missing_operand = true;
-	      opts.wrong_option = argv[i];
-	      return true;
-	    }
-	  opts.drop_fn_regex_patterns.push_back(argv[j]);
-	  opts.drop_var_regex_patterns.push_back(argv[j]);
-	  ++i;
-	}
-      else if (!strcmp(argv[i], "--drop-fn"))
-	{
-	  int j = i + 1;
-	  if (j >= argc)
-	    {
-	      opts.missing_operand = true;
-	      opts.wrong_option = argv[i];
-	      return true;
-	    }
-	  opts.drop_fn_regex_patterns.push_back(argv[j]);
-	  ++i;
-	}
-      else if (!strcmp(argv[i], "--drop-var"))
-	{
-	  int j = i + 1;
-	  if (j >= argc)
-	    {
-	      opts.missing_operand = true;
-	      opts.wrong_option = argv[i];
-	      return true;
-	    }
-	  opts.drop_var_regex_patterns.push_back(argv[j]);
-	  ++i;
-	}
-      else if (!strcmp(argv[i], "--keep"))
-	{
-	  int j = i + 1;
-	  if (j >= argc)
-	    {
-	      opts.missing_operand = true;
-	      opts.wrong_option = argv[i];
-	      return true;
-	    }
-	  opts.keep_fn_regex_patterns.push_back(argv[j]);
-	  opts.keep_var_regex_patterns.push_back(argv[j]);
-	  ++i;
-	}
-      else if (!strcmp(argv[i], "--keep-fn"))
-	{
-	  int j = i + 1;
-	  if (j >= argc)
-	    {
-	      opts.missing_operand = true;
-	      opts.wrong_option = argv[i];
-	      return true;
-	    }
-	  opts.keep_fn_regex_patterns.push_back(argv[j]);
-	}
-      else if (!strcmp(argv[i], "--keep-var"))
-	{
-	  int j = i + 1;
-	  if (j >= argc)
-	    {
-	      opts.missing_operand = true;
-	      opts.wrong_option = argv[i];
-	      return true;
-	    }
-	  opts.keep_var_regex_patterns.push_back(argv[j]);
-	}
-      else if (!strcmp(argv[i], "--harmless"))
-	opts.show_harmless_changes = true;
-      else if (!strcmp(argv[i], "--no-harmful"))
-	opts.show_harmful_changes = false;
-      else if (!strcmp(argv[i], "--redundant"))
-	opts.show_redundant_changes = true;
-      else if (!strcmp(argv[i], "--no-redundant"))
-	opts.show_redundant_changes = false;
-      else if (!strcmp(argv[i], "--impacted-interfaces"))
-	opts.show_impacted_interfaces = true;
-      else if (!strcmp(argv[i], "--no-leverage-dwarf-factorization"))
-	opts.leverage_dwarf_factorization = false;
-      else if (!strcmp(argv[i], "--no-change-categorization")
-	       || !strcmp(argv[i], "-x"))
-	opts.perform_change_categorization = false;
-      else if (!strcmp(argv[i], "--no-assume-odr-for-cplusplus"))
-	opts.leverage_dwarf_factorization = false;
-      else if (!strcmp(argv[i], "--dump-diff-tree"))
-	opts.dump_diff_tree = true;
-      else if (!strcmp(argv[i], "--stats"))
-	opts.show_stats = true;
-      else if (!strcmp(argv[i], "--verbose"))
-	opts.do_log = true;
-#ifdef WITH_CTF
-      else if (!strcmp(argv[i], "--ctf"))
-        opts.use_ctf = true;
-#endif
-#ifdef WITH_BTF
-      else if (!strcmp(argv[i], "--btf"))
-        opts.use_btf = true;
-#endif
-#ifdef WITH_DEBUG_SELF_COMPARISON
-      else if (!strcmp(argv[i], "--debug-self-comparison"))
-	opts.do_debug_self_comparison = true;
-#endif
-#ifdef WITH_DEBUG_TYPE_CANONICALIZATION
-      else if (!strcmp(argv[i], "--debug-tc"))
-	opts.do_debug_type_canonicalization = true;
-#endif
-      else
-	{
-	  if (strlen(argv[i]) >= 2 && argv[i][0] == '-' && argv[i][1] == '-')
-	    opts.wrong_option = argv[i];
-	  return false;
-	}
-    }
-
   return true;
 }
 
@@ -1287,38 +1324,8 @@ main(int argc, char* argv[])
 
   options opts;
   if (!parse_command_line(argc, argv, opts))
-    {
-      emit_prefix(argv[0], cerr)
-	<< "unrecognized option: "
-	<< opts.wrong_option << "\n"
-	<< "try the --help option for more information\n";
-      return (abigail::tools_utils::ABIDIFF_USAGE_ERROR
-	      | abigail::tools_utils::ABIDIFF_ERROR);
-    }
-
-  if (opts.missing_operand)
-    {
-      emit_prefix(argv[0], cerr)
-	<< "missing operand to option: " << opts.wrong_option <<"\n"
-	<< "try the --help option for more information\n";
-      return (abigail::tools_utils::ABIDIFF_USAGE_ERROR
-	      | abigail::tools_utils::ABIDIFF_ERROR);
-    }
-
-  if (opts.display_usage)
-    {
-      display_usage(argv[0], cout);
-      return (abigail::tools_utils::ABIDIFF_USAGE_ERROR
-	      | abigail::tools_utils::ABIDIFF_ERROR);
-    }
-
-  if (opts.display_version)
-    {
-      emit_prefix(argv[0], cout)
-	<< abigail::tools_utils::get_library_version_string()
-	<< "\n";
-      return 0;
-    }
+    return (abigail::tools_utils::ABIDIFF_USAGE_ERROR
+	    | abigail::tools_utils::ABIDIFF_ERROR);
 
   if (!maybe_check_suppression_files(opts))
     return (abigail::tools_utils::ABIDIFF_USAGE_ERROR
@@ -1858,6 +1865,15 @@ main(int argc, char* argv[])
 	}
       else
 	status = abigail::tools_utils::ABIDIFF_ERROR;
+    }
+  else
+    {
+      char* prog_name = (char*) "abidiff";
+      emit_prefix(prog_name, cerr)
+	<< "At least one of the files to compare is missing\n";
+      argp_help(&abidiff_argp, stderr, ARGP_HELP_USAGE, prog_name);
+      return (abigail::tools_utils::ABIDIFF_USAGE_ERROR
+	      | abigail::tools_utils::ABIDIFF_ERROR);
     }
 
   return status;

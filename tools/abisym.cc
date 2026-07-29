@@ -10,6 +10,7 @@
 /// This program takes parameters to open an elf file, lookup a symbol
 /// in its symbol tables and report what it sees.
 
+#include <argp.h>
 #include <libgen.h>
 #include <elf.h>
 #include <cstring>
@@ -34,76 +35,112 @@ using abigail::elf_symbol_sptr;
 
 struct options
 {
-  bool	show_help;
-  bool	display_version;
-  char* elf_path;
-  char* symbol_name;
+  string elf_path;
+  string symbol_name;
   bool	demangle;
   bool absolute_path;
 
   options()
-    : show_help(false),
-      display_version(false),
-      elf_path(0),
-      symbol_name(0),
-      demangle(false),
+    : demangle(false),
       absolute_path(true)
   {}
 };
 
-static void
-display_usage(const string& prog_name, ostream &out)
+
+enum option_key
 {
-  out << "usage: " << prog_name << " [options] <elf file> <symbol-name>\n"
-      << "where [options] can be:\n"
-      << "  --help  display this help string\n"
-      << "  --version|-v  display program version information and exit\n"
-      << "  --demangle  demangle the symbols from the symbol table\n"
-      << "  --no-absolute-path  do not show absolute paths in messages\n";
+  OPT_DEMANGLE = 256,
+  OPT_NO_ABSOLUTE_PATH,
+};
+
+static const struct argp_option argp_options[] =
+{
+  { "demangle", OPT_DEMANGLE, 0, 0,
+    "demangle the symbols from the symbol table", 0 },
+  { "no-absolute-path", OPT_NO_ABSOLUTE_PATH, 0, 0,
+    "do not show absolute paths in messages", 0 },
+  { 0, 0, 0, 0, 0, 0 }
+};
+
+static error_t
+parse_opt(int key, char* arg, struct argp_state* state)
+{
+  options& opts = *static_cast<options*>(state->input);
+  const string argument = arg ? string(arg) : string();
+
+  switch (key)
+    {
+    case OPT_DEMANGLE:
+      opts.demangle = true;
+      break;
+
+    case OPT_NO_ABSOLUTE_PATH:
+      opts.absolute_path = false;
+      break;
+
+    case ARGP_KEY_ARG:
+      if (opts.elf_path.empty())
+	opts.elf_path = argument;
+      else if (opts.symbol_name.empty())
+	opts.symbol_name = argument;
+      else
+	argp_usage(state);
+      break;
+
+    case ARGP_KEY_END:
+      if (opts.elf_path.empty() || opts.symbol_name.empty())
+	argp_usage(state);
+      break;
+
+    default:
+      return ARGP_ERR_UNKNOWN;
+    }
+
+  return 0;
 }
 
+static const char* argp_args_doc = "<elf-file> <symbol-name>";
+static const char* argp_doc =
+  "Look up a symbol in the symbol table of an ELF file and report "
+  "information about it.";
+
+static const struct argp abisym_argp =
+{
+  argp_options,
+  parse_opt,
+  argp_args_doc,
+  argp_doc,
+  0,
+  0,
+  0
+};
+
+/// Version printing hook to be passed to ARGP.
+///
+/// @param stream the output stream.
+///
+/// @param state the ARGP state.
+static void
+print_abisym_version(FILE *stream, struct argp_state* /*state*/)
+{
+  fprintf(stream, "abisym %s\n",
+	  abigail::tools_utils::get_library_version_string().c_str());
+}
+
+/// Parse the command line
+///
+/// @param argc number of args
+///
+/// @param argv the array of arguments.
+///
+/// @param opts the options set as result of command line parsing.
 static void
 parse_command_line(int argc, char* argv[], options& opts)
 {
-  if (argc < 2)
-    {
-      opts.show_help = true;
-      return;
-    }
+  argp_program_version_hook = print_abisym_version;
+  argp_program_bug_address = "<libabigail@sourceware.org>";
 
-  for (int i = 1; i < argc; ++i)
-    {
-      if (argv[i][0] != '-')
-	{
-	  if (!opts.elf_path)
-	    opts.elf_path = argv[i];
-	  else if (!opts.symbol_name)
-	    opts.symbol_name = argv[i] ;
-	  else
-	    {
-	      opts.show_help = true;
-	      return;
-	    }
-	}
-      else if (!strcmp(argv[i], "--help")
-	       || !strcmp(argv[i], "-h"))
-	{
-	  opts.show_help = true;
-	  return;
-	}
-      else if (!strcmp(argv[i], "--version")
-	       || !strcmp(argv[i], "-v"))
-	{
-	  opts.display_version = true;
-	  return;
-	}
-      else if (!strcmp(argv[i], "--demangle"))
-	opts.demangle = true;
-      else if (!strcmp(argv[i], "--no-absolute-path"))
-	opts.absolute_path = false;
-      else
-	opts.show_help = true;
-    }
+  argp_parse(&abisym_argp, argc, argv, 0, 0, &opts);
 }
 
 int
@@ -111,23 +148,6 @@ main(int argc, char* argv[])
 {
   options opts;
   parse_command_line(argc, argv, opts);
-
-  if (opts.show_help)
-    {
-      display_usage(argv[0], cout);
-      return 1;
-    }
-
-  if (opts.display_version)
-    {
-      abigail::tools_utils::emit_prefix(argv[0], cout)
-	<< abigail::tools_utils::get_library_version_string()
-	<< "\n";
-      return 0;
-    }
-
-  assert(opts.elf_path != 0
-	 && opts.symbol_name != 0);
 
   string p = opts.elf_path, n = opts.symbol_name;
   environment env;
@@ -140,7 +160,11 @@ main(int argc, char* argv[])
       if (opts.absolute_path)
 	cout << opts.elf_path << "'\n";
       else
-	cout << basename(opts.elf_path);
+	{
+	  string b;
+	  abigail::tools_utils::base_name(opts.elf_path, b);
+	  cout << b;
+	}
       return 0;
     }
 

@@ -12,6 +12,7 @@
 /// libabigail XML format.
 
 #include "config.h"
+#include <argp.h>
 #include <unistd.h>
 #include <cassert>
 #include <cstdio>
@@ -84,7 +85,6 @@ using namespace abigail;
 
 struct options
 {
-  string		wrong_option;
   string		in_file_path;
   string		out_file_path;
   vector<string>	di_root_paths;
@@ -96,7 +96,6 @@ struct options
   vector<string>	suppression_paths;
   vector<string>	kabi_whitelist_paths;
   suppressions_type	kabi_whitelist_supprs;
-  bool			display_version;
   bool			display_abixml_version;
   bool			fail_no_debug_info;
   bool			check_alt_debug_info_path;
@@ -145,8 +144,7 @@ struct options
 #endif
 
   options()
-    : display_version(),
-      display_abixml_version(),
+    : display_abixml_version(),
       fail_no_debug_info(),
       check_alt_debug_info_path(),
       show_base_name_alt_debug_info_path(),
@@ -194,324 +192,6 @@ struct options
   {
   }
 };
-
-static void
-display_usage(const string& prog_name, ostream& out)
-{
-  emit_prefix(prog_name, out)
-    << "usage: " << prog_name << " [options] [<path-to-elf-file>]\n"
-    << " where options can be: \n"
-    << "  --abidiff  compare the loaded ABI against itself\n"
-    << "  --abixml-version  display the version of the ABIXML ABI format\n"
-    << "  --add-binaries <bin1,bin2,...>  build a corpus group with "
-    "the added inaries\n"
-    << "  --allow-non-exported-interfaces analyze interfaces that"
-    "might not be exported\n"
-    << "  --annotate  annotate the ABI artifacts emitted in the output\n"
-#ifdef WITH_BTF
-    << "  --btf use BTF instead of DWARF in ELF files\n"
-#endif
-    << "  --check-alternate-debug-info <elf-path>  check alternate debug info "
-    "of <elf-path>\n"
-    << "  --check-alternate-debug-info-base-name <elf-path>  check alternate "
-    "debug info of <elf-path>, and show its base name\n"
-#ifdef WITH_CTF
-    << "  --ctf use CTF instead of DWARF in ELF files\n"
-#endif
-#ifdef WITH_DEBUG_SELF_COMPARISON
-    << "  --debug-abidiff  debug the process of comparing the loaded ABI against itself\n"
-#endif
-    << "  --debug-info-dir|-d <dir-path>  look for debug info under 'dir-path'\n"
-#ifdef WITH_DEBUG_TYPE_CANONICALIZATION
-    << "  --debug-tc  debug the type canonicalization process\n"
-    << "  --debug-dc  debug the DIE canonicalization process\n"
-#endif
-    << "  --drop-undefined-syms  drop undefined symbols from representation\n"
-    << "  --exported-interfaces-only  analyze exported interfaces only\n"
-    << "  --follow-dependencies  build a corpus group with the dependencies\n"
-    << "  --follow-dependencies  build a corpus group with the dependencies\n"
-    << "  --force-early-suppression  drop IR nodes that match suppression specifications\n"
-    << "  --headers-dir|--hd <path> the path to headers of the elf file\n"
-    << "  --header-file|--hf <path> the path one header of the elf file\n"
-    << "  --help|-h  display this message\n"
-    << "  --kmi-whitelist|--kmi-stablelist|-w  path to a linux kernel "
-    "abi whitelist\n"
-    << "  --list-dependencies  list the dependencies of a given binary\n"
-    << "  --added-binaries-dir|--abd <dir-of-deps>  where to look for dependencies "
-    "or added binaries\n"
-    << "  --linux-tree|--lt  emit the ABI for the union of a "
-    "vmlinux and its modules\n"
-    << "  --load-all-types  read all types including those not reachable from "
-    "exported declarations\n"
-    << "  --no-architecture  do not emit architecture info in the output\n"
-    << "  --no-assume-odr-for-cplusplus  do not assume the ODR to speed-up the "
-    "analysis of the binary\n"
-    << "  --no-comp-dir-path  do not show compilation path information\n"
-    << "  --no-corpus-path  do not take the path to the corpora into account\n"
-    << "  --no-elf-needed  do not show the DT_NEEDED information\n"
-    << "  --no-leverage-dwarf-factorization  do not use DWZ optimisations to "
-    "speed-up the analysis of the binary\n"
-    << "  --no-linux-kernel-mode  don't consider the input binary as "
-       "a Linux Kernel binary\n"
-    << "  --no-load-undefined-interfaces  do not consider undefined "
-    "interfaces from the binary"
-    << "  --no-parameter-names  do not show names of function parameters\n"
-    << "  --no-show-locs  do not show location information\n"
-    << "  --no-write-default-sizes  do not emit pointer size when it equals"
-    " the default address size of the translation unit\n"
-    << "  --noout  do not emit anything after reading the binary\n"
-    << "  --out-file|-o  <file-path>  write the output to 'file-path'\n"
-    << "  --short-locs  only print filenames rather than paths\n"
-    << "  --suppressions|--suppr <path> specify a suppression file\n"
-    << "  --type-id-style <sequence|hash>  type id style (sequence(default): "
-       "\"type-id-\" + number; hash: hex-digits)\n"
-    << "  --stats  show statistics about various internal stuff\n"
-    << "  --verbose show verbose messages about internal stuff\n"
-    << "  --version|-v  display program version information and exit\n"
-    << "  --vmlinux <path>  the path to the vmlinux binary to consider to emit "
-       "the ABI of the union of vmlinux and its modules\n" ;
-}
-
-static bool
-parse_command_line(int argc, char* argv[], options& opts)
-{
-  if (argc < 2)
-    return false;
-
-  for (int i = 1; i < argc; ++i)
-    {
-      if (argv[i][0] != '-')
-	{
-	  if (opts.in_file_path.empty())
-	    opts.in_file_path = argv[i];
-	  else
-	    return false;
-	}
-      else if (!strcmp(argv[i], "--version")
-	       || !strcmp(argv[i], "-v"))
-	opts.display_version = true;
-      else if (!strcmp(argv[i], "--abixml-version")
-	       || !strcmp(argv[i], "-v"))
-	opts.display_abixml_version = true;
-      else if (!strcmp(argv[i], "--fail-no-debug-info"))
-	opts.fail_no_debug_info = true;
-      else if (!strcmp(argv[i], "--debug-info-dir")
-	       || !strcmp(argv[i], "-d"))
-	{
-	  if (argc <= i + 1
-	      || argv[i + 1][0] == '-')
-	    return false;
-	  // elfutils wants the root path to the debug info to be
-	  // absolute.
-	  opts.di_root_paths.push_back
-	    (abigail::tools_utils::make_path_absolute(string(argv[i + 1])));
-	  ++i;
-	}
-      else if (!strcmp(argv[i], "--headers-dir")
-	       || !strcmp(argv[i], "--hd"))
-	{
-	  int j = i + 1;
-	  if (j >= argc)
-	    return false;
-	  opts.headers_dirs.push_back(argv[j]);
-	  // The user is indirectly defining private types so she
-	  // really wants those types to be removed from the ABIXML.
-	  // So let's drop them from the IR.
-	  opts.drop_private_types = true;
-	  ++i;
-	}
-      else if (!strcmp(argv[i], "--added-binaries-dir")
-	       || !strcmp(argv[i], "--abd"))
-	{
-	  int j = i + 1;
-	  if (j >= argc)
-	    return false;
-	  opts.added_bins_dirs.push_back(argv[j]);
-	  ++i;
-	}
-      else if (!strcmp(argv[i], "--header-file")
-	       || !strcmp(argv[i], "--hf"))
-	{
-	  int j = i + 1;
-	  if (j >= argc)
-	    return false;
-	  opts.header_files.push_back(argv[j]);
-	  // The user is indirectly defining private types so she
-	  // really wants those types to be removed from the ABIXML.
-	  // So let's drop them from the IR.
-	  opts.drop_private_types = true;
-	  ++i;
-	}
-      else if (!strcmp(argv[i], "--out-file")
-	       || !strcmp(argv[i], "-o"))
-	{
-	  if (argc <= i + 1
-	      || argv[i + 1][0] == '-'
-	      || !opts.out_file_path.empty())
-	    return false;
-
-	  opts.out_file_path = argv[i + 1];
-	  ++i;
-	}
-      else if (!strcmp(argv[i], "--suppressions")
-	       || !strcmp(argv[i], "--suppr"))
-	{
-	  int j = i + 1;
-	  if (j >= argc)
-	    return false;
-	  opts.suppression_paths.push_back(argv[j]);
-	  ++i;
-	}
-      else if (!strcmp(argv[i], "--kmi-whitelist")
-	       || !strcmp(argv[i], "--kmi-stablelist")
-	       || !strcmp(argv[i], "-w"))
-	{
-	  int j = i + 1;
-	  if (j >= argc)
-	    return false;
-	  opts.kabi_whitelist_paths.push_back(argv[j]);
-	  ++i;
-	}
-      else if (!strcmp(argv[i], "--linux-tree")
-	       || !strcmp(argv[i], "--lt"))
-	opts.corpus_group_for_linux = true;
-      else if (!strcmp(argv[i], "--vmlinux"))
-	{
-	  int j = i + 1;
-	  if (j >= argc)
-	    return false;
-	  opts.vmlinux = argv[j];
-	  ++i;
-	}
-      else if (!strcmp(argv[i], "--noout"))
-	opts.noout = true;
-      else if (!strcmp(argv[i], "--follow-dependencies"))
-	opts.follow_dependencies = true;
-      else if (!strcmp(argv[i], "--list-dependencies"))
-	opts.list_dependencies = true;
-      else if (!strncmp(argv[i], "--add-binaries=",
-			strlen("--add-binaries=")))
-	tools_utils::get_comma_separated_args_of_option(argv[i],
-							"--add-binaries=",
-							opts.added_bins);
-      else if (!strcmp(argv[i], "--add-binaries"))
-	{
-	  int j = i + 1;
-	  if (j >= argc)
-	    return false;
-
-	  string s = argv[j];
-	  if (s.find(','))
-	    tools_utils::split_string(s, ",", opts.added_bins);
-	  else
-	    opts.added_bins.push_back(s);
-	  ++i;
-	}
-#ifdef WITH_CTF
-        else if (!strcmp(argv[i], "--ctf"))
-          opts.use_ctf = true;
-#endif
-#ifdef WITH_BTF
-        else if (!strcmp(argv[i], "--btf"))
-          opts.use_btf = true;
-#endif
-      else if (!strcmp(argv[i], "--no-architecture"))
-	opts.write_architecture = false;
-      else if (!strcmp(argv[i], "--no-corpus-path"))
-	opts.write_corpus_path = false;
-      else if (!strcmp(argv[i], "--no-show-locs"))
-	opts.show_locs = false;
-      else if (!strcmp(argv[i], "--short-locs"))
-	opts.short_locs = true;
-      else if (!strcmp(argv[i], "--no-comp-dir-path"))
-	opts.write_comp_dir = false;
-      else if (!strcmp(argv[i], "--no-elf-needed"))
-	opts.write_elf_needed = false;
-      else if (!strcmp(argv[i], "--no-write-default-sizes"))
-	opts.default_sizes = false;
-      else if (!strcmp(argv[i], "--no-parameter-names"))
-	opts.write_parameter_names = false;
-      else if (!strcmp(argv[i], "--type-id-style"))
-        {
-          ++i;
-          if (i >= argc)
-            return false;
-          if (!strcmp(argv[i], "sequence"))
-            opts.type_id_style = SEQUENCE_TYPE_ID_STYLE;
-          else if (!strcmp(argv[i], "hash"))
-            opts.type_id_style = HASH_TYPE_ID_STYLE;
-          else
-            return false;
-        }
-      else if (!strcmp(argv[i], "--check-alternate-debug-info")
-	       || !strcmp(argv[i], "--check-alternate-debug-info-base-name"))
-	{
-	  if (argc <= i + 1
-	      || argv[i + 1][0] == '-'
-	      || !opts.in_file_path.empty())
-	    return false;
-	  if (!strcmp(argv[i], "--check-alternate-debug-info-base-name"))
-	    opts.show_base_name_alt_debug_info_path = true;
-	  opts.check_alt_debug_info_path = true;
-	  opts.in_file_path = argv[i + 1];
-	  ++i;
-	}
-      else if (!strcmp(argv[i], "--load-all-types"))
-	opts.load_all_types = true;
-      else if (!strcmp(argv[i], "--no-load-undefined-interfaces"))
-	opts.load_undefined_interfaces = false;
-      else if (!strcmp(argv[i], "--drop-private-types"))
-	opts.drop_private_types = true;
-      else if (!strcmp(argv[i], "--force-early-suppression"))
-	opts.force_early_suppression = true;
-      else if (!strcmp(argv[i], "--drop-undefined-syms"))
-	opts.drop_undefined_syms = true;
-      else if (!strcmp(argv[i], "--exported-interfaces-only"))
-	opts.exported_interfaces_only = true;
-      else if (!strcmp(argv[i], "--allow-non-exported-interfaces"))
-	opts.exported_interfaces_only = false;
-      else if (!strcmp(argv[i], "--no-linux-kernel-mode"))
-	opts.linux_kernel_mode = false;
-      else if (!strcmp(argv[i], "--abidiff"))
-	opts.abidiff = true;
-#ifdef WITH_DEBUG_SELF_COMPARISON
-      else if (!strcmp(argv[i], "--debug-abidiff"))
-	{
-	  opts.abidiff = true;
-	  opts.debug_abidiff = true;
-	}
-#endif
-#ifdef WITH_DEBUG_TYPE_CANONICALIZATION
-      else if (!strcmp(argv[i], "--debug-tc")
-	       || !strcmp(argv[i], "debug-type-canonicalization"))
-	opts.debug_type_canonicalization = true;
-      else if (!strcmp(argv[i], "--debug-dc")
-	       || !strcmp(argv[i], "debug-die-canonicalization"))
-	opts.debug_die_canonicalization = true;
-#endif
-      else if (!strcmp (argv[i], "--no-assume-odr-for-cplusplus"))
-	opts.assume_odr_for_cplusplus = false;
-      else if (!strcmp (argv[i], "--no-leverage-dwarf-factorization"))
-	opts.leverage_dwarf_factorization = false;
-      else if (!strcmp(argv[i], "--annotate"))
-	opts.annotate = true;
-      else if (!strcmp(argv[i], "--stats"))
-	opts.show_stats = true;
-      else if (!strcmp(argv[i], "--verbose"))
-	opts.do_log = true;
-      else if (!strcmp(argv[i], "--help")
-	       || !strcmp(argv[i], "--h"))
-	return false;
-      else
-	{
-	  if (strlen(argv[i]) >= 2 && argv[i][0] == '-' && argv[i][1] == '-')
-	    opts.wrong_option = argv[i];
-	  return false;
-	}
-    }
-
-  return true;
-}
 
 /// Initialize the context use for driving ABI comparison.
 ///
@@ -1159,6 +839,445 @@ load_kernel_corpus_group_and_write_abixml(char* argv[],
   return exit_code;
 }
 
+enum option_key
+{
+  OPT_ABIDIFF = 256,
+  OPT_ABIXML_VERSION,
+  OPT_ADD_BINARIES,
+  OPT_ADDED_BINS_DIR,
+  OPT_ALLOW_NON_EXPORTED_INTERFACES,
+  OPT_ANNOTATE,
+  OPT_BTF,
+  OPT_CHECK_ALT_DEBUG_INFO,
+  OPT_CHECK_ALT_DEBUG_INFO_BASE_NAME,
+  OPT_CTF,
+  OPT_DEBUG_ABIDIFF,
+  OPT_DEBUG_DC,
+  OPT_DEBUG_TC,
+  OPT_DEBUG_INFO_DIR,
+  OPT_DROP_PRIVATE_TYPES,
+  OPT_DROP_UNDEFINED_SYMS,
+  OPT_EXPORTED_INTERFACES_ONLY,
+  OPT_FAIL_NO_DEBUG_INFO,
+  OPT_FDEPS,
+  OPT_FORCE_EARLY_SUPPRESSION,
+  OPT_HD,
+  OPT_HF,
+  OPT_KMI_WHITELIST,
+  OPT_LDEPS,
+  OPT_LINUX_TREE,
+  OPT_LOAD_ALL_TYPES,
+  OPT_NO_ARCH,
+  OPT_NO_ASSUME_ODR_FOR_CPLUSPLUS,
+  OPT_NO_COMP_DIR_PATH,
+  OPT_NO_CORPUS_PATH,
+  OPT_NO_ELF_NEEDED,
+  OPT_NO_LEVERAGE_DWARF_FACTORIZATION,
+  OPT_NO_LINUX_KERNEL_MODE,
+  OPT_NO_LOAD_UNDEFINED_INTERFACES,
+  OPT_NO_PARAMETER_NAMES,
+  OPT_NO_SHOW_LOCS,
+  OPT_NO_WRITE_DEFAULT_SIZES,
+  OPT_NOOUT,
+  OPT_OUT_FILE,
+  OPT_SHORT_LOCS,
+  OPT_SHOW_STATS,
+  OPT_SUPPR,
+  OPT_TYPE_ID_STYLE,
+  OPT_VERBOSE,
+  OPT_VMLINUX,
+};
+
+static const struct argp_option argp_options[] =
+{
+  { "abidiff", OPT_ABIDIFF, 0, 0,
+    "compare the loaded ABI against itself", 0 },
+  { "abixml-version", OPT_ABIXML_VERSION, 0, 0,
+    "display the version of the ABIXML ABI format", 0 },
+  { "add-binaries", OPT_ADD_BINARIES, "BIN1,BIN2,..", 0,
+    "build a corpus group with the added binaries", 0 },
+  { "added-binaries-dir", OPT_ADDED_BINS_DIR, "PATH", 0,
+    "where to look for dependencies or added binaries", 0 },
+  { "abd", OPT_ADDED_BINS_DIR, "PATH", OPTION_ALIAS, 0, 0 },
+  { "allow-non-exported-interfaces", OPT_ALLOW_NON_EXPORTED_INTERFACES, 0, 0,
+    "analyze interfaces that might not be exported", 0 },
+  { "annotate", OPT_ANNOTATE, 0, 0,
+    "annotate the ABI artifacts emitted in the output", 0 },
+#ifdef WITH_BTF
+  { "btf", OPT_BTF, 0, 0,
+    "use BTF instead of DWARF in ELF files", 0 },
+#endif
+  { "check-alternate-debug-info", OPT_CHECK_ALT_DEBUG_INFO, "ELF-PATH", 0,
+    "check alternate debug info of <elf-path>", 0 },
+  { "check-alternate-debug-info-base-name",
+    OPT_CHECK_ALT_DEBUG_INFO_BASE_NAME, "ELF-PATH", 0,
+    "check alternate debug info of <elf-path>, and show its base name", 0 },
+#ifdef WITH_CTF
+  { "ctf", OPT_CTF, 0, 0,
+    "use CTF instead of DWARF in ELF files", 0 },
+#endif
+#ifdef WITH_DEBUG_SELF_COMPARISON
+  { "debug-abidiff", OPT_DEBUG_ABIDIFF, 0, 0,
+    "debug the process of comparing the loaded ABI against itself", 0 },
+#endif
+#ifdef WITH_DEBUG_TYPE_CANONICALIZATION
+  { "debug-dc", OPT_DEBUG_DC, 0, 0,
+    "debug the DIE canonicalization process", 0 },
+  { "debug-tc", OPT_DEBUG_TC, 0, 0,
+    "debug the type canonicalization process", 0 },
+#endif
+  { "debug-info-dir", OPT_DEBUG_INFO_DIR, "PATH", 0,
+    "look for debug info under 'dir-path'", 0 },
+  { "d", OPT_DEBUG_INFO_DIR, "PATH", OPTION_ALIAS, 0, 0 },
+  { "drop-private-types", OPT_DROP_PRIVATE_TYPES, 0, 0,
+    "drop private types from internal representation", 0 },
+  { "drop-undefined-syms", OPT_DROP_UNDEFINED_SYMS, 0, 0,
+    "drop undefined symbols from representation", 0 },
+  { "exported-interfaces-only", OPT_EXPORTED_INTERFACES_ONLY, 0, 0,
+    "analyze exported interfaces only", 0 },
+  { "fail-no-debug-info", OPT_FAIL_NO_DEBUG_INFO, 0, 0,
+    "bail out if no debug info was found", 0 },
+  { "follow-dependencies", OPT_FDEPS, 0, 0,
+    "build a corpus group with the dependencies", 0 },
+  { "force-early-suppression", OPT_FORCE_EARLY_SUPPRESSION, 0, 0,
+    "drop IR nodes that match suppression specifications", 0 },
+  { "headers-dir", OPT_HD, "PATH", 0,
+    "the path to headers of the elf file", 0 },
+  { "hd", OPT_HD, "PATH", OPTION_ALIAS, 0, 0 },
+  { "header-file", OPT_HF, "PATH", 0,
+    "the path to one header of the elf file", 0 },
+  { "hf", OPT_HF, "PATH", OPTION_ALIAS, 0, 0 },
+  { "kmi-whitelist", OPT_KMI_WHITELIST, "PATH", 0,
+    "path to a linux kernel abi whitelist", 0 },
+  { "kmi-stablelist", OPT_KMI_WHITELIST, "PATH", OPTION_ALIAS, 0, 0 },
+  { "w", OPT_KMI_WHITELIST, "PATH", OPTION_ALIAS, 0, 0 },
+  { "list-dependencies", OPT_LDEPS, 0, 0,
+    "list the dependencies of a given binary", 0 },
+  { "linux-tree", OPT_LINUX_TREE, 0, 0,
+    "emit the ABI for the union of a vmlinux and its modules", 0 },
+  { "lt", OPT_LINUX_TREE, 0, OPTION_ALIAS, 0, 0 },
+  { "load-all-types", OPT_LOAD_ALL_TYPES, 0, 0,
+    "read all types including those not reachable from exported declarations",
+    0 },
+  { "no-architecture", OPT_NO_ARCH, 0, 0,
+    "do not emit architecture info in the output", 0 },
+  { "no-assume-odr-for-cplusplus", OPT_NO_ASSUME_ODR_FOR_CPLUSPLUS, 0, 0,
+    "do not assume the ODR to speed-up the analysis of the binary", 0 },
+  { "no-comp-dir-path", OPT_NO_COMP_DIR_PATH, 0, 0,
+    "do not show compilation path information", 0 },
+  { "no-corpus-path", OPT_NO_CORPUS_PATH, 0, 0,
+    "do not take the path to the corpora into account", 0 },
+  { "no-elf-needed", OPT_NO_ELF_NEEDED, 0, 0,
+    "do not show the DT_NEEDED information", 0 },
+  { "no-leverage-dwarf-factorization", OPT_NO_LEVERAGE_DWARF_FACTORIZATION,
+    0, 0,
+    "do not use DWZ optimisations to speed-up the analysis of the binary", 0 },
+  { "no-linux-kernel-mode", OPT_NO_LINUX_KERNEL_MODE, 0, 0,
+    "don't consider the input binary as a Linux Kernel binary", 0 },
+  { "no-load-undefined-interfaces", OPT_NO_LOAD_UNDEFINED_INTERFACES, 0, 0,
+    "do not consider undefined interfaces from the binary", 0 },
+  { "no-parameter-names", OPT_NO_PARAMETER_NAMES, 0, 0,
+    "do not show names of function parameters", 0 },
+  { "no-show-locs", OPT_NO_SHOW_LOCS, 0, 0,
+    "do not show location information", 0 },
+  { "no-write-default-sizes", OPT_NO_WRITE_DEFAULT_SIZES, 0, 0,
+    "do not emit pointer size when it equals the default address size of "
+    "the translation unit", 0 },
+  { "noout", OPT_NOOUT, 0, 0,
+    "do not emit anything after reading the binary", 0 },
+  { "out-file", OPT_OUT_FILE, "PATH", 0,
+    "write the output to 'file-path'", 0 },
+  { "o", OPT_OUT_FILE, "PATH", OPTION_ALIAS, 0, 0 },
+  { "short-locs", OPT_SHORT_LOCS, 0, 0,
+    "only print filenames rather than paths", 0 },
+  { "stats", OPT_SHOW_STATS, 0, 0,
+    "show statistics about various internal stuff", 0 },
+  { "suppressions", OPT_SUPPR, "PATH", 0,
+    "specify a suppression file", 0 },
+  { "suppr", OPT_SUPPR, "PATH", OPTION_ALIAS, 0, 0 },
+  { "type-id-style", OPT_TYPE_ID_STYLE, "STYLE", 0,
+    "type id style (sequence(default): \"type-id-\" + number; hash: "
+    "hex-digits)", 0 },
+  { "verbose", OPT_VERBOSE, 0, 0,
+    "show verbose messages about internal stuff", 0 },
+  { "vmlinux", OPT_VMLINUX, "PATH", 0,
+    "the path to the vmlinux binary to consider to emit the ABI of the union "
+    "of vmlinux and its modules", 0 },
+  { 0, 0, 0, 0, 0, 0 }
+};
+
+static error_t
+parse_opt(int key, char* arg, struct argp_state* state)
+{
+  options& opts = *static_cast<options*>(state->input);
+  const string argument = arg ? string(arg) : string();
+
+  switch (key)
+    {
+    case OPT_ABIDIFF:
+      opts.abidiff = true;
+      break;
+
+    case OPT_ABIXML_VERSION:
+      opts.display_abixml_version = true;
+      break;
+
+    case OPT_ADD_BINARIES:
+      if (argument.find(',') != string::npos)
+	tools_utils::split_string(argument, ",", opts.added_bins);
+      else
+	opts.added_bins.push_back(argument);
+      break;
+
+    case OPT_ADDED_BINS_DIR:
+      opts.added_bins_dirs.push_back(argument);
+      break;
+
+    case OPT_ALLOW_NON_EXPORTED_INTERFACES:
+      opts.exported_interfaces_only = false;
+      break;
+
+    case OPT_ANNOTATE:
+      opts.annotate = true;
+      break;
+
+#ifdef WITH_BTF
+    case OPT_BTF:
+      opts.use_btf = true;
+      break;
+#endif
+
+    case OPT_CHECK_ALT_DEBUG_INFO:
+      if (opts.in_file_path.empty())
+	opts.in_file_path = argument;
+      else
+	argp_usage(state);
+      opts.check_alt_debug_info_path = true;
+      break;
+
+    case OPT_CHECK_ALT_DEBUG_INFO_BASE_NAME:
+      if (opts.in_file_path.empty())
+	opts.in_file_path = argument;
+      else
+	argp_usage(state);
+      opts.check_alt_debug_info_path = true;
+      opts.show_base_name_alt_debug_info_path = true;
+      break;
+
+#ifdef WITH_CTF
+    case OPT_CTF:
+      opts.use_ctf = true;
+      break;
+#endif
+
+#ifdef WITH_DEBUG_SELF_COMPARISON
+    case OPT_DEBUG_ABIDIFF:
+      opts.abidiff = true;
+      opts.debug_abidiff = true;
+      break;
+#endif
+
+#ifdef WITH_DEBUG_TYPE_CANONICALIZATION
+    case OPT_DEBUG_DC:
+      opts.debug_die_canonicalization = true;
+      break;
+
+    case OPT_DEBUG_TC:
+      opts.debug_type_canonicalization = true;
+      break;
+#endif
+
+    case OPT_DEBUG_INFO_DIR:
+      opts.di_root_paths.push_back
+	(abigail::tools_utils::make_path_absolute(argument));
+      break;
+
+    case OPT_DROP_PRIVATE_TYPES:
+      opts.drop_private_types = true;
+      break;
+
+    case OPT_DROP_UNDEFINED_SYMS:
+      opts.drop_undefined_syms = true;
+      break;
+
+    case OPT_EXPORTED_INTERFACES_ONLY:
+      opts.exported_interfaces_only = true;
+      break;
+
+    case OPT_FAIL_NO_DEBUG_INFO:
+      opts.fail_no_debug_info = true;
+      break;
+
+    case OPT_FDEPS:
+      opts.follow_dependencies = true;
+      break;
+
+    case OPT_FORCE_EARLY_SUPPRESSION:
+      opts.force_early_suppression = true;
+      break;
+
+    case OPT_HD:
+      opts.headers_dirs.push_back(argument);
+      opts.drop_private_types = true;
+      break;
+
+    case OPT_HF:
+      opts.header_files.push_back(argument);
+      opts.drop_private_types = true;
+      break;
+
+    case OPT_KMI_WHITELIST:
+      opts.kabi_whitelist_paths.push_back(argument);
+      break;
+
+    case OPT_LDEPS:
+      opts.list_dependencies = true;
+      break;
+
+    case OPT_LINUX_TREE:
+      opts.corpus_group_for_linux = true;
+      break;
+
+    case OPT_LOAD_ALL_TYPES:
+      opts.load_all_types = true;
+      break;
+
+    case OPT_NO_ARCH:
+      opts.write_architecture = false;
+      break;
+
+    case OPT_NO_ASSUME_ODR_FOR_CPLUSPLUS:
+      opts.assume_odr_for_cplusplus = false;
+      break;
+
+    case OPT_NO_COMP_DIR_PATH:
+      opts.write_comp_dir = false;
+      break;
+
+    case OPT_NO_CORPUS_PATH:
+      opts.write_corpus_path = false;
+      break;
+
+    case OPT_NO_ELF_NEEDED:
+      opts.write_elf_needed = false;
+      break;
+
+    case OPT_NO_LEVERAGE_DWARF_FACTORIZATION:
+      opts.leverage_dwarf_factorization = false;
+      break;
+
+    case OPT_NO_LINUX_KERNEL_MODE:
+      opts.linux_kernel_mode = false;
+      break;
+
+    case OPT_NO_LOAD_UNDEFINED_INTERFACES:
+      opts.load_undefined_interfaces = false;
+      break;
+
+    case OPT_NO_PARAMETER_NAMES:
+      opts.write_parameter_names = false;
+      break;
+
+    case OPT_NO_SHOW_LOCS:
+      opts.show_locs = false;
+      break;
+
+    case OPT_NO_WRITE_DEFAULT_SIZES:
+      opts.default_sizes = false;
+      break;
+
+    case OPT_NOOUT:
+      opts.noout = true;
+      break;
+
+    case OPT_OUT_FILE:
+      if (!opts.out_file_path.empty())
+	argp_usage(state);
+      opts.out_file_path = argument;
+      break;
+
+    case OPT_SHORT_LOCS:
+      opts.short_locs = true;
+      break;
+
+    case OPT_SHOW_STATS:
+      opts.show_stats = true;
+      break;
+
+    case OPT_SUPPR:
+      opts.suppression_paths.push_back(argument);
+      break;
+
+    case OPT_TYPE_ID_STYLE:
+      if (argument == "sequence")
+	opts.type_id_style = SEQUENCE_TYPE_ID_STYLE;
+      else if (argument == "hash")
+	opts.type_id_style = HASH_TYPE_ID_STYLE;
+      else
+	argp_usage(state);
+      break;
+
+    case OPT_VERBOSE:
+      opts.do_log = true;
+      break;
+
+    case OPT_VMLINUX:
+      opts.vmlinux = argument;
+      break;
+
+    case ARGP_KEY_ARG:
+      if (opts.in_file_path.empty())
+	opts.in_file_path = argument;
+      else
+	argp_usage(state);
+      break;
+
+    default:
+      return ARGP_ERR_UNKNOWN;
+    }
+
+  return 0;
+}
+
+static const char* argp_args_doc = "[<path-to-elf-file>]";
+static const char* argp_doc =
+  "Read an ELF file, load its debug info and emit it in the native "
+  "libabigail XML format.";
+
+static const struct argp abidw_argp =
+{
+  argp_options,
+  parse_opt,
+  argp_args_doc,
+  argp_doc,
+  0,
+  0,
+  0
+};
+
+static void
+print_abidw_version(FILE *stream, struct argp_state* /*state*/)
+{
+  fprintf(stream, "abidw %s\n",
+	  abigail::tools_utils::get_library_version_string().c_str());
+}
+
+/// Version printing hook to be passed to ARGP.
+///
+/// @param stream the output stream.
+///
+/// @param state the ARGP state.
+static bool
+parse_command_line(int argc, char* argv[], options& opts)
+{
+  argp_program_version_hook = print_abidw_version;
+  argp_program_bug_address = "<libabigail@sourceware.org>";
+
+  if (argp_parse(&abidw_argp, argc, argv, 0, 0, &opts) != 0)
+    return false;
+  return true;
+}
+
 int
 main(int argc, char* argv[])
 {
@@ -1168,22 +1287,11 @@ main(int argc, char* argv[])
 
   if (!parse_command_line(argc, argv, opts)
       || (opts.in_file_path.empty()
-	  && !opts.display_version
 	  && !opts.display_abixml_version))
     {
-      if (!opts.wrong_option.empty())
-	emit_prefix(argv[0], cerr)
-	  << "unrecognized option: " << opts.wrong_option << "\n";
-      display_usage(argv[0], cerr);
+      char* prog_name = (char*) "abidw";
+      argp_help(&abidw_argp, stderr, ARGP_HELP_USAGE, prog_name);
       return 1;
-    }
-
-  if (opts.display_version)
-    {
-      emit_prefix(argv[0], cout)
-	<< abigail::tools_utils::get_library_version_string()
-	<< "\n";
-      return 0;
     }
 
     if (opts.display_abixml_version)

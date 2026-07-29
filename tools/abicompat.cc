@@ -26,6 +26,7 @@
 /// library provides.
 
 #include <unistd.h>
+#include <argp.h>
 #include <cassert>
 #include <cstdio>
 #include <cstdlib>
@@ -93,7 +94,6 @@ class options
 
 public:
   string		prog_name;
-  string		unknow_option;
   string		app_path;
   string		lib1_path;
   string		lib2_path;
@@ -101,8 +101,6 @@ public:
   string		lib1_di_root_path;
   string		lib2_di_root_path;
   vector<string>	suppression_paths;
-  bool			display_help;
-  bool			display_version;
   bool			weak_mode;
   bool			list_undefined_symbols_only;
   bool			show_base_names;
@@ -121,8 +119,6 @@ public:
 
   options(const char* program_name)
     :prog_name(program_name),
-     display_help(),
-     display_version(),
      weak_mode(),
      list_undefined_symbols_only(),
      show_base_names(),
@@ -217,170 +213,6 @@ perform_compat_check_in_weak_mode(options& opts,
 				  diff_context_sptr& ctxt,
 				  corpus_sptr app_corpus,
 				  corpus_sptr lib_corpus);
-
-static void
-display_usage(const string& prog_name, ostream& out)
-{
-  emit_prefix(prog_name, out)
-    << "usage: " << prog_name
-    << " [options] [application-path] [lib-v1-path] [lib-v2-path]"
-    << "\n"
-    << " where options can be: \n"
-    << "  --help|-h  display this help message\n"
-    << "  --version|-v  show program version information and exit\n"
-    << "  --list-undefined-symbols|-u  display the list of "
-    "undefined symbols of the application\n"
-    << "  --show-base-names|b  in the report, only show the base names "
-    " of the files; not the full paths\n"
-    << "  --app-debug-info-dir|--appd <path-to-app-debug-info>  set the path "
-    "to the debug information directory for the application\n"
-    << "  --lib-debug-info-dir1|--libd1 <path-to-lib-debug-info1>  set the path "
-    "to the debug information directory for the first library\n"
-    << "  --lib-debug-info-dir2|--libd2 <path-to-lib-debug-info2>  set the path "
-    "to the debug information directory for the second library\n"
-    << "  --suppressions|--suppr <path> specify a suppression file\n"
-    << "  --no-redundant  do not display redundant changes\n"
-    << "  --no-show-locs  do now show location information\n"
-    << "  --ignore-soname  do not take the SONAMEs into account\n"
-    << "  --fail-no-debug-info  bail out if no debug info was found\n"
-    << "  --redundant  display redundant changes (this is the default)\n"
-    << "  --weak-mode  check compatibility between the application and "
-    "just one version of the library.\n"
-#ifdef WITH_CTF
-    << "  --ctf use CTF instead of DWARF in ELF files\n"
-#endif
-#ifdef WITH_BTF
-    << "  --btf use BTF instead of DWARF in ELF files\n"
-#endif
-    ;
-}
-
-static bool
-parse_command_line(int argc, char* argv[], options& opts)
-{
-  if (argc < 2)
-    return false;
-
-  for (int i = 1; i < argc; ++i)
-    {
-      if (argv[i][0] != '-')
-	{
-	  if (opts.app_path.empty())
-	    opts.app_path = argv[i];
-	  else if (opts.lib1_path.empty())
-	    opts.lib1_path = argv[i];
-	  else if (opts.lib2_path.empty())
-	    opts.lib2_path = argv[i];
-	  else
-	    return false;
-	}
-      else if (!strcmp(argv[i], "--version")
-	       || !strcmp(argv[i], "-v"))
-	{
-	  opts.display_version = true;
-	  return true;
-	}
-      else if (!strcmp(argv[i], "--list-undefined-symbols")
-	       || !strcmp(argv[i], "-u"))
-	opts.list_undefined_symbols_only = true;
-      else if (!strcmp(argv[i], "--show-base-names")
-	       || !strcmp(argv[i], "-b"))
-	opts.show_base_names = true;
-      else if (!strcmp(argv[i], "--app-debug-info-dir")
-	       || !strcmp(argv[i], "--appd"))
-	{
-	  if (argc <= i + 1
-	      || argv[i + 1][0] == '-')
-	    return false;
-	  // elfutils wants the root path to the debug info to be
-	  // absolute.
-	  opts.app_di_root_path =
-	    abigail::tools_utils::make_path_absolute(string(argv[i + 1]));
-	  ++i;
-	}
-      else if (!strcmp(argv[i], "--lib-debug-info-dir1")
-	       || !strcmp(argv[i], "--libd1"))
-	{
-	  if (argc <= i + 1
-	      || argv[i + 1][0] == '-')
-	    return false;
-	  // elfutils wants the root path to the debug info to be
-	  // absolute.
-	  opts.lib1_di_root_path =
-	    abigail::tools_utils::make_path_absolute(string(argv[i + 1]));
-	  ++i;
-	}
-      else if (!strcmp(argv[i], "--lib-debug-info-dir2")
-	       || !strcmp(argv[i], "--libd2"))
-	{
-	  if (argc <= i + 1
-	      || argv[i + 1][0] == '-')
-	    return false;
-	  // elfutils wants the root path to the debug info to be
-	  // absolute.
-	  opts.lib2_di_root_path =
-	    abigail::tools_utils::make_path_absolute(string(argv[i + 1]));
-	  ++i;
-	}
-      else if (!strcmp(argv[i], "--suppressions")
-	       || !strcmp(argv[i], "--suppr"))
-	{
-	  int j = i + 1;
-	  if (j >= argc)
-	    return false;
-	  opts.suppression_paths.push_back(argv[j]);
-	  ++i;
-	}
-      else if (!strcmp(argv[i], "--redundant"))
-        {
-	  opts.show_redundant = true;
-	  opts.redundant_opt_set = true;
-	}
-      else if (!strcmp(argv[i], "--no-redundant"))
-        {
-  	  opts.show_redundant = false;
-	  opts.no_redundant_opt_set = true;
-	}
-      else if (!strcmp(argv[i], "--no-show-locs"))
-	opts.show_locs = false;
-      else if (!strcmp(argv[i], "--ignore-soname"))
-	opts.ignore_soname=true;
-      else if (!strcmp(argv[i], "--fail-no-debug-info"))
-	opts.fail_no_debug_info = true;
-      else if (!strcmp(argv[i], "--help")
-	       || !strcmp(argv[i], "-h"))
-	{
-	  opts.display_help = true;
-	  return true;
-	}
-      else if (!strcmp(argv[i], "--weak-mode"))
-	opts.weak_mode = true;
-#ifdef WITH_CTF
-      else if (!strcmp(argv[i], "--ctf"))
-        opts.use_ctf = true;
-#endif
-#ifdef WITH_BTF
-      else if (!strcmp(argv[i], "--btf"))
-        opts.use_btf = true;
-#endif
-      else
-	{
-	  opts.unknow_option = argv[i];
-	  return false;
-	}
-    }
-
-  if (!opts.list_undefined_symbols_only)
-    {
-      if (opts.app_path.empty()
-	  || opts.lib1_path.empty())
-	return false;
-      if (!opts.weak_mode && opts.lib2_path.empty())
-	opts.weak_mode = true;
-    }
-
-  return true;
-}
 
 /// Create the context of a diff.
 ///
@@ -904,6 +736,215 @@ read_corpus(options			opts,
   return retval;
 }
 
+enum option_key
+{
+  OPT_APP_DEBUG_INFO_DIR = 256,
+  OPT_BTF,
+  OPT_CTF,
+  OPT_FAIL_NO_DEBUG_INFO,
+  OPT_IGNORE_SONAME,
+  OPT_LIB_DEBUG_INFO_DIR1,
+  OPT_LIB_DEBUG_INFO_DIR2,
+  OPT_LIST_UNDEFINED_SYMBOLS,
+  OPT_NO_REDUNDANT,
+  OPT_NO_SHOW_LOCS,
+  OPT_REDUNDANT,
+  OPT_SHOW_BASE_NAMES,
+  OPT_SUPPR,
+  OPT_WEAK_MODE,
+};
+
+static const struct argp_option argp_options[] =
+{
+  { "app-debug-info-dir", OPT_APP_DEBUG_INFO_DIR, "PATH", 0,
+    "set the path to the debug information directory for the application", 0 },
+  { "appd", OPT_APP_DEBUG_INFO_DIR, "PATH", OPTION_ALIAS, 0, 0 },
+#ifdef WITH_BTF
+  { "btf", OPT_BTF, 0, 0,
+    "use BTF instead of DWARF in ELF files", 0 },
+#endif
+#ifdef WITH_CTF
+  { "ctf", OPT_CTF, 0, 0,
+    "use CTF instead of DWARF in ELF files", 0 },
+#endif
+  { "fail-no-debug-info", OPT_FAIL_NO_DEBUG_INFO, 0, 0,
+    "bail out if no debug info was found", 0 },
+  { "ignore-soname", OPT_IGNORE_SONAME, 0, 0,
+    "do not take the SONAMEs into account", 0 },
+  { "lib-debug-info-dir1", OPT_LIB_DEBUG_INFO_DIR1, "PATH", 0,
+    "set the path to the debug information directory for the first library", 0 },
+  { "libd1", OPT_LIB_DEBUG_INFO_DIR1, "PATH", OPTION_ALIAS, 0, 0 },
+  { "lib-debug-info-dir2", OPT_LIB_DEBUG_INFO_DIR2, "PATH", 0,
+    "set the path to the debug information directory for the second library", 0 },
+  { "libd2", OPT_LIB_DEBUG_INFO_DIR2, "PATH", OPTION_ALIAS, 0, 0 },
+  { "list-undefined-symbols", OPT_LIST_UNDEFINED_SYMBOLS, 0, 0,
+    "display the list of undefined symbols of the application", 0 },
+  { "u", OPT_LIST_UNDEFINED_SYMBOLS, 0, OPTION_ALIAS, 0, 0 },
+  { "no-redundant", OPT_NO_REDUNDANT, 0, 0,
+    "do not display redundant changes", 0 },
+  { "no-show-locs", OPT_NO_SHOW_LOCS, 0, 0,
+    "do not show location information", 0 },
+  { "redundant", OPT_REDUNDANT, 0, 0,
+    "display redundant changes (this is the default)", 0 },
+  { "show-base-names", OPT_SHOW_BASE_NAMES, 0, 0,
+    "in the report, only show the base names of the files; not the full paths",
+    0 },
+  { "b", OPT_SHOW_BASE_NAMES, 0, OPTION_ALIAS, 0, 0 },
+  { "suppressions", OPT_SUPPR, "PATH", 0,
+    "specify a suppression file", 0 },
+  { "suppr", OPT_SUPPR, "PATH", OPTION_ALIAS, 0, 0 },
+  { "weak-mode", OPT_WEAK_MODE, 0, 0,
+    "check compatibility between the application and just one version of "
+    "the library", 0 },
+  { 0, 0, 0, 0, 0, 0 }
+};
+
+static error_t
+parse_opt(int key, char* arg, struct argp_state* state)
+{
+  options& opts = *static_cast<options*>(state->input);
+  const string argument = arg ? string(arg) : string();
+
+  switch (key)
+    {
+    case OPT_APP_DEBUG_INFO_DIR:
+      opts.app_di_root_path =
+	abigail::tools_utils::make_path_absolute(argument);
+      break;
+
+#ifdef WITH_BTF
+    case OPT_BTF:
+      opts.use_btf = true;
+      break;
+#endif
+
+#ifdef WITH_CTF
+    case OPT_CTF:
+      opts.use_ctf = true;
+      break;
+#endif
+
+    case OPT_FAIL_NO_DEBUG_INFO:
+      opts.fail_no_debug_info = true;
+      break;
+
+    case OPT_IGNORE_SONAME:
+      opts.ignore_soname = true;
+      break;
+
+    case OPT_LIB_DEBUG_INFO_DIR1:
+      opts.lib1_di_root_path =
+	abigail::tools_utils::make_path_absolute(argument);
+      break;
+
+    case OPT_LIB_DEBUG_INFO_DIR2:
+      opts.lib2_di_root_path =
+	abigail::tools_utils::make_path_absolute(argument);
+      break;
+
+    case OPT_LIST_UNDEFINED_SYMBOLS:
+      opts.list_undefined_symbols_only = true;
+      break;
+
+    case OPT_NO_REDUNDANT:
+      opts.show_redundant = false;
+      opts.no_redundant_opt_set = true;
+      break;
+
+    case OPT_NO_SHOW_LOCS:
+      opts.show_locs = false;
+      break;
+
+    case OPT_REDUNDANT:
+      opts.show_redundant = true;
+      opts.redundant_opt_set = true;
+      break;
+
+    case OPT_SHOW_BASE_NAMES:
+      opts.show_base_names = true;
+      break;
+
+    case OPT_SUPPR:
+      opts.suppression_paths.push_back(argument);
+      break;
+
+    case OPT_WEAK_MODE:
+      opts.weak_mode = true;
+      break;
+
+    case ARGP_KEY_ARG:
+      if (opts.app_path.empty())
+	opts.app_path = argument;
+      else if (opts.lib1_path.empty())
+	opts.lib1_path = argument;
+      else if (opts.lib2_path.empty())
+	opts.lib2_path = argument;
+      else
+	argp_usage(state);
+      break;
+
+    case ARGP_KEY_END:
+      if (!opts.list_undefined_symbols_only)
+	{
+	  if (opts.app_path.empty() || opts.lib1_path.empty())
+	    argp_usage(state);
+	  if (!opts.weak_mode && opts.lib2_path.empty())
+	    opts.weak_mode = true;
+	}
+      break;
+
+    default:
+      return ARGP_ERR_UNKNOWN;
+    }
+
+  return 0;
+}
+
+static const char* argp_args_doc = "[<application-path>] [<lib-v1-path>] [<lib-v2-path>]";
+static const char* argp_doc =
+  "Check ABI compatibility of an application against two versions of a library.";
+
+static const struct argp abicompat_argp =
+{
+  argp_options,
+  parse_opt,
+  argp_args_doc,
+  argp_doc,
+  0,
+  0,
+  0
+};
+
+/// Version printing hook to be passed to ARGP.
+///
+/// @param stream the output stream.
+///
+/// @param state the ARGP state.
+static void
+print_abicompat_version(FILE *stream, struct argp_state* /*state*/)
+{
+  fprintf(stream, "abicompat %s\n",
+	  abigail::tools_utils::get_library_version_string().c_str());
+}
+
+/// Parse the command line
+///
+/// @param argc number of args
+///
+/// @param argv the array of arguments.
+///
+/// @param opts the options set as result of command line parsing.
+static bool
+parse_command_line(int argc, char* argv[], options& opts)
+{
+  argp_program_bug_address = "<libabigail@sourceware.org>";
+  argp_program_version_hook = print_abicompat_version;
+
+  if (argp_parse(&abicompat_argp, argc, argv, 0, 0, &opts) != 0)
+    return false;
+  return true;
+}
+
 int
 main(int argc, char* argv[])
 {
@@ -912,37 +953,8 @@ main(int argc, char* argv[])
   abigail::tools_utils::initialize();
 
   if (!parse_command_line(argc, argv, opts))
-    {
-      if (!opts.unknow_option.empty())
-	{
-	  emit_prefix(argv[0], cerr)
-	    << "unrecognized option: " << opts.unknow_option << "\n"
-	    << "try the --help option for more information\n";
-	  return (abigail::tools_utils::ABIDIFF_USAGE_ERROR
-		  | abigail::tools_utils::ABIDIFF_ERROR);
-	}
-
-      emit_prefix(argv[0], cerr)
-	<< "wrong invocation\n"
-	<< "try the --help option for more information\n";
-      return (abigail::tools_utils::ABIDIFF_USAGE_ERROR
-	      | abigail::tools_utils::ABIDIFF_ERROR);
-    }
-
-  if (opts.display_help)
-    {
-      display_usage(argv[0], cout);
-      return (abigail::tools_utils::ABIDIFF_USAGE_ERROR
-		  | abigail::tools_utils::ABIDIFF_ERROR);
-    }
-
-  if (opts.display_version)
-    {
-      emit_prefix(argv[0], cout)
-	<< abigail::tools_utils::get_library_version_string()
-	<< "\n";
-      return 0;
-    }
+    return (abigail::tools_utils::ABIDIFF_USAGE_ERROR
+	    | abigail::tools_utils::ABIDIFF_ERROR);
 
   if (opts.weak_mode && !opts.lib2_path.empty())
     {

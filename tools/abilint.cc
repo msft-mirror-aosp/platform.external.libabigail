@@ -14,6 +14,7 @@
 /// be empty.
 
 #include "config.h"
+#include <argp.h>
 #include <cstdio>
 #include <cstdlib>
 #include <cstring>
@@ -74,9 +75,7 @@ using abigail::xml_writer::write_corpus_to_archive;
 
 struct options
 {
-  string			wrong_option;
   string			file_path;
-  bool				display_version;
   bool				read_from_stdin;
   bool				read_tu;
   bool				diff;
@@ -95,8 +94,7 @@ struct options
 #endif
 
   options()
-    : display_version(false),
-      read_from_stdin(false),
+    : read_from_stdin(false),
       read_tu(false),
       diff(false),
       noout(false),
@@ -480,157 +478,6 @@ show_how_type_is_used(abigail::fe_iface &iface, const string& type_id)
 }
 #endif // WITH_SHOW_TYPE_USE_IN_ABILINT
 
-static void
-display_usage(const string& prog_name, ostream& out)
-{
-  emit_prefix(prog_name, out)
-    << "usage: " << prog_name << " [options] [<abi-file1>]\n"
-    << " where options can be:\n"
-    << "  --annotate  annotate the ABI artifacts emitted in the output\n"
-    << "  --verbose  show verbose messages about internal stuff\n"
-#ifdef WITH_CTF
-    << "  --ctf use CTF instead of DWARF in ELF files\n"
-#endif
-    << "  --debug-info-dir <path> the path under which to look for "
-    "debug info for the elf <abi-file>\n"
-    << "  --diff  for xml inputs, perform a text diff between "
-    "the input and the memory model saved back to disk\n"
-    << "  --header-file|--hf <path> the path to one header of the elf file\n"
-    << "  --headers-dir|--hd <path> the path to headers of the elf file\n"
-    << "  --help  display this message\n"
-    << "  --noout  do not display anything on stdout\n"
-#ifdef WITH_SHOW_TYPE_USE_IN_ABILINT
-    << "  --show-type-use <type-id>  show how a type is used from the abixml file\n"
-#endif
-    << "  --stdin  read abi-file content from stdin\n"
-    << "  --suppressions|--suppr <path> specify a suppression file\n"
-    << "  --tu  expect a single translation unit file\n"
-    << "  --version|-v  display program version information and exit\n"
-    ;
-}
-
-bool
-parse_command_line(int argc, char* argv[], options& opts)
-{
-  if (argc < 2)
-    {
-      opts.read_from_stdin = true;
-      return true;
-    }
-
-    for (int i = 1; i < argc; ++i)
-      {
-	if (argv[i][0] != '-')
-	  {
-	    if (opts.file_path.empty())
-	      opts.file_path = argv[i];
-	    else
-	      return false;
-	  }
-	else if (!strcmp(argv[i], "--help"))
-	  return false;
-	else if (!strcmp(argv[i], "--version")
-		 || !strcmp(argv[i], "-v"))
-	  {
-	    opts.display_version = true;
-	    return true;
-	  }
-	else if (!strcmp(argv[i], "--debug-info-dir"))
-	  {
-	    if (argc <= i + 1
-		|| argv[i + 1][0] == '-')
-	      return false;
-	    // elfutils wants the root path to the debug info to be
-	    // absolute.
-	    opts.di_root_path =
-	      abigail::tools_utils::make_path_absolute(string(argv[i + 1]));
-	    ++i;
-	  }
-      else if (!strcmp(argv[i], "--headers-dir")
-	       || !strcmp(argv[i], "--hd"))
-	{
-	  int j = i + 1;
-	  if (j >= argc)
-	    return false;
-	  opts.headers_dir = argv[j];
-	  ++i;
-	}
-      else if (!strcmp(argv[i], "--header-file")
-	       || !strcmp(argv[i], "--hf"))
-	{
-	  int j = i + 1;
-	  if (j >= argc)
-	    return false;
-	  opts.header_files.push_back(argv[j]);
-	  ++i;
-	}
-      else if (!strcmp(argv[i], "--suppressions")
-	       || !strcmp(argv[i], "--suppr"))
-	{
-	  int j = i + 1;
-	  if (j >= argc)
-	    {
-	      opts.wrong_option = argv[i];
-	      return true;
-	    }
-	  opts.suppression_paths.push_back(argv[j]);
-	  ++i;
-	}
-	else if (!strcmp(argv[i], "--stdin"))
-	  opts.read_from_stdin = true;
-	else if (!strcmp(argv[i], "--tu"))
-	  opts.read_tu = true;
-#ifdef WITH_CTF
-        else if (!strcmp(argv[i], "--ctf"))
-          opts.use_ctf = true;
-#endif
-	else if (!strcmp(argv[i], "--diff"))
-	  opts.diff = true;
-	else if (!strcmp(argv[i], "--noout"))
-	  opts.noout = true;
-	else if (!strcmp(argv[i], "--annotate"))
-	  opts.annotate = true;
-	else if (!strcmp(argv[i], "--verbose"))
-	  opts.do_log = true;
-#ifdef WITH_SHOW_TYPE_USE_IN_ABILINT
-      else if (!strcmp(argv[i], "--show-type-use"))
-	{
-	  ++i;
-	  if (i >= argc || argv[i][0] == '-')
-	    return false;
-	  opts.type_id_to_show = argv[i];
-	}
-#endif
-	else
-	  {
-	    if (strlen(argv[i]) >= 2 && argv[i][0] == '-' && argv[i][1] == '-')
-	      opts.wrong_option = argv[i];
-	    return false;
-	  }
-      }
-
-#ifdef WITH_SHOW_TYPE_USE_IN_ABILINT
-    if (!opts.type_id_to_show.empty()
-	&& opts.file_path.empty())
-      emit_prefix(argv[0], cout)
-	<< "WARNING: --show-type-use <type-id> "
-	"must be accompanied with an abixml file\n";
-
-    if (opts.file_path.empty()
-	&& opts.type_id_to_show.empty())
-      opts.read_from_stdin = true;
-#endif
-
-    if (opts.read_from_stdin && !opts.file_path.empty())
-    {
-      emit_prefix(argv[0], cout)
-        << "WARNING: The \'--stdin\' option is used. The "
-        << opts.file_path << " will be ignored automatically\n";
-    }
-
-    return true;
-}
-
 /// Check that the suppression specification files supplied are
 /// present.  If not, emit an error on stderr.
 ///
@@ -696,6 +543,203 @@ set_reader_options(abigail::fe_iface& reader, const options& opts)
   reader.options().do_log = opts.do_log;
 }
 
+enum option_key
+{
+  OPT_ANNOTATE = 256,
+#ifdef WITH_CTF
+  OPT_CTF,
+#endif
+  OPT_DEBUG_INFO_DIR,
+  OPT_DIFF,
+  OPT_HD,
+  OPT_HF,
+  OPT_NOOUT,
+#ifdef WITH_SHOW_TYPE_USE_IN_ABILINT
+  OPT_SHOW_TYPE_USE,
+#endif
+  OPT_STDIN,
+  OPT_SUPPR,
+  OPT_TU,
+  OPT_VERBOSE
+};
+
+static const struct argp_option argp_options[] =
+{
+  { "annotate", OPT_ANNOTATE, 0, 0,
+    "annotate the ABI artifacts emitted in the output", 0 },
+#ifdef WITH_CTF
+  { "ctf", OPT_CTF, 0, 0,
+    "use CTF instead of DWARF in ELF files", 0 },
+#endif
+  { "debug-info-dir", OPT_DEBUG_INFO_DIR, "PATH", 0,
+    "the path under which to look for debug info for the elf <abi-file>", 0 },
+  { "diff", OPT_DIFF, 0, 0,
+    "for xml inputs, perform a text diff between "
+    "the input and the memory model saved back to disk", 0 },
+  { "headers-dir", OPT_HD, "PATH", 0,
+    "the path to headers of the elf file", 0 },
+  { "hd", OPT_HD, "PATH", OPTION_ALIAS, 0, 0 },
+  { "header-file", OPT_HF, "PATH", 0,
+    "the path to one header of the elf file", 0 },
+  { "hf", OPT_HF, "PATH", OPTION_ALIAS, 0, 0 },
+  { "noout", OPT_NOOUT, 0, 0,
+    "do not display anything on stdout", 0 },
+#ifdef WITH_SHOW_TYPE_USE_IN_ABILINT
+  { "show-type-use", OPT_SHOW_TYPE_USE, "TYPE-ID", 0,
+    "show how a type is used from the abixml file", 0 },
+#endif
+  { "stdin", OPT_STDIN, 0, 0,
+    "read abi-file content from stdin", 0 },
+  { "suppressions", OPT_SUPPR, "PATH", 0,
+    "specify a suppression file", 0 },
+  { "suppr", OPT_SUPPR, "PATH", OPTION_ALIAS, 0, 0 },
+  { "tu", OPT_TU, 0, 0,
+    "expect a single translation unit file", 0 },
+  { "verbose", OPT_VERBOSE, 0, 0,
+    "show verbose messages about internal stuff", 0 },
+  { 0, 0, 0, 0, 0, 0 }
+};
+
+static error_t
+parse_opt(int key, char* arg, struct argp_state* state)
+{
+  options& opts = *static_cast<options*>(state->input);
+  const string argument = arg ? string(arg) : string();
+
+  switch (key)
+    {
+    case OPT_ANNOTATE:
+      opts.annotate = true;
+      break;
+
+#ifdef WITH_CTF
+    case OPT_CTF:
+      opts.use_ctf = true;
+      break;
+#endif
+
+    case OPT_DEBUG_INFO_DIR:
+      opts.di_root_path =
+	abigail::tools_utils::make_path_absolute(argument);
+      break;
+
+    case OPT_DIFF:
+      opts.diff = true;
+      break;
+
+    case OPT_HD:
+      opts.headers_dir = argument;
+      break;
+
+    case OPT_HF:
+      opts.header_files.push_back(argument);
+      break;
+
+    case OPT_NOOUT:
+      opts.noout = true;
+      break;
+
+#ifdef WITH_SHOW_TYPE_USE_IN_ABILINT
+    case OPT_SHOW_TYPE_USE:
+      opts.type_id_to_show = argument;
+      break;
+#endif
+
+    case OPT_STDIN:
+      opts.read_from_stdin = true;
+      break;
+
+    case OPT_SUPPR:
+      opts.suppression_paths.push_back(argument);
+      break;
+
+    case OPT_TU:
+      opts.read_tu = true;
+      break;
+
+    case OPT_VERBOSE:
+      opts.do_log = true;
+      break;
+
+    case ARGP_KEY_ARG:
+      if (opts.file_path.empty())
+	opts.file_path = argument;
+      else
+	argp_usage(state);
+      break;
+
+    case ARGP_KEY_END:
+#ifdef WITH_SHOW_TYPE_USE_IN_ABILINT
+      if (!opts.type_id_to_show.empty() && opts.file_path.empty())
+	emit_prefix("abilint", cout)
+	  << "WARNING: --show-type-use <type-id> "
+	  "must be accompanied with an abixml file\n";
+
+      if (opts.file_path.empty() && opts.type_id_to_show.empty())
+	opts.read_from_stdin = true;
+#else
+      if (opts.file_path.empty())
+	opts.read_from_stdin = true;
+#endif
+      if (opts.read_from_stdin && !opts.file_path.empty())
+	emit_prefix("abilint", cout)
+	  << "WARNING: The '--stdin' option is used. The "
+	  << opts.file_path << " will be ignored automatically\n";
+      break;
+
+    default:
+      return ARGP_ERR_UNKNOWN;
+    }
+
+  return 0;
+}
+
+static const char* argp_args_doc = "[<abi-file>]";
+static const char* argp_doc =
+  "Read an ABI instrumentation file in native XML format and check its "
+  "integrity.";
+
+static const struct argp abilint_argp =
+{
+  argp_options,
+  parse_opt,
+  argp_args_doc,
+  argp_doc,
+  0,
+  0,
+  0
+};
+
+/// Version printing hook to be passed to ARGP.
+///
+/// @param stream the output stream.
+///
+/// @param state the ARGP state.
+void
+print_abilint_version(FILE *stream, struct argp_state* /*state*/)
+{
+  fprintf(stream, "abilint %s\n",
+	  abigail::tools_utils::get_library_version_string().c_str());
+}
+
+/// Parse the command line
+///
+/// @param argc number of args
+///
+/// @param argv the array of arguments.
+///
+/// @param opts the options set as result of command line parsing.
+bool
+parse_command_line(int argc, char* argv[], options& opts)
+{
+  argp_program_bug_address = "<libabigail@sourceware.org>";
+  argp_program_version_hook = print_abilint_version;
+
+  if (argp_parse(&abilint_argp, argc, argv, 0, 0, &opts) != 0)
+    return false;
+  return true;
+}
+
 /// Reads a bi (binary instrumentation) file, saves it back to a
 /// temporary file and run a diff on the two versions.
 int
@@ -706,19 +750,9 @@ main(int argc, char* argv[])
   options opts;
   if (!parse_command_line(argc, argv, opts))
     {
-      if (!opts.wrong_option.empty())
-	emit_prefix(argv[0], cerr)
-	  << "unrecognized option: " << opts.wrong_option << "\n";
-      display_usage(argv[0], cerr);
+      char* prog_name = (char*)"abilint";
+      argp_help(&abilint_argp, stderr, ARGP_HELP_USAGE, prog_name);
       return 1;
-    }
-
-  if (opts.display_version)
-    {
-      emit_prefix(argv[0], cout)
-	<< abigail::tools_utils::get_library_version_string()
-	<< "\n";
-      return 0;
     }
 
   if (!maybe_check_suppression_files(opts))

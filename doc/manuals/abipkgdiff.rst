@@ -49,10 +49,16 @@ An alternate invocation style would be:
 
   abipkgdiff [options] --set1 <pkg1-v1> <pkg2-v1> <pkg3-v1> \
                        --set2 <pkg1-v2> <pkg2-v2> <pkg3-v2>
+or
+
+  abipkgdiff [options] --set1 <pkg1-v1>,<pkg2-v1>,<pkg3-v1> \
+                       --set2 <pkg1-v2>,<pkg2-v2>,<pkg3-v2>
 
 where the ABI of binaries contained in the second set of packages are
 compared against binaries contained in the first set of packages.
 
+Packages in a set are delimited either by a white spaces or by a
+comma.
 
 Environment
 ===========

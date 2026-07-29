@@ -12,9 +12,11 @@
 /// abigail::ini::* functions, but one could also use it to make sure
 /// that an ini file can be handled by the abigail::ini::* facilities
 
+#include <argp.h>
 #include <cstring>
 #include <iostream>
 #include "abg-ini.h"
+#include "abg-tools-utils.h"
 
 using std::cout;
 using std::cerr;
@@ -28,83 +30,108 @@ using abigail::ini::write_config;
 
 struct options
 {
-  bool display_usage;
   bool read_from_stdin;
   bool no_out;
-  bool wrong_command_line_usage;
   string path;
 
   options ()
-    : display_usage(false),
-      read_from_stdin(false),
-      no_out(false),
-      wrong_command_line_usage(false)
+    : read_from_stdin(false),
+      no_out(false)
   {}
 };
 
-static void
-display_usage(const string& prog_name, ostream& out)
+enum option_key
 {
-  out << "usage: " << prog_name << " [options] <ini file>\n"
-      << "where options can be:\n"
-      << "--help  display this help\n"
-      << "--from-stdin  read the input ini file from stdin\n"
-      << "--noout  do not output anything on stdout\n"
-    ;
+  OPT_FROM_STDIN = 256,
+  OPT_NOOUT,
+};
+
+static const struct argp_option argp_options[] =
+{
+  { "from-stdin", OPT_FROM_STDIN, 0, 0,
+    "read the input ini file from stdin", 0 },
+  { "noout", OPT_NOOUT, 0, 0,
+    "do not output anything on stdout", 0 },
+  { 0, 0, 0, 0, 0, 0 }
+};
+
+static error_t
+parse_opt(int key, char* arg, struct argp_state* state)
+{
+  options& opts = *static_cast<options*>(state->input);
+  const string argument = arg ? string(arg) : string();
+
+  switch (key)
+    {
+    case OPT_FROM_STDIN:
+      opts.read_from_stdin = true;
+      break;
+
+    case OPT_NOOUT:
+      opts.no_out = true;
+      break;
+
+    case ARGP_KEY_ARG:
+      if (opts.path.empty())
+	opts.path = argument;
+      else
+	argp_usage(state);
+      break;
+
+    default:
+      return ARGP_ERR_UNKNOWN;
+    }
+
+  return 0;
+}
+
+static const char* argp_args_doc = "[<ini-file>]";
+static const char* argp_doc =
+  "Read an ini file and print it back on standard output.";
+
+static const struct argp binilint_argp =
+{
+  argp_options,
+  parse_opt,
+  argp_args_doc,
+  argp_doc,
+  0,
+  0,
+  0
+};
+
+static void
+print_binilint_version(FILE *stream, struct argp_state* /*state*/)
+{
+  fprintf(stream, "abinilint %s\n",
+	  abigail::tools_utils::get_library_version_string().c_str());
 }
 
 static bool
 parse_command_line(int argc, char* argv[], options& opts)
 {
-  if (argc == 1)
-    return false;
+  argp_program_version_hook = print_binilint_version;
+  argp_program_bug_address = "<libabigail@sourceware.org>";
 
-  for (int i = 1; i < argc; ++i)
-    {
-      if (argv[i][0] != '-')
-	{
-	  if (opts.path.empty())
-	    opts.path = argv[i];
-	  else
-	    opts.wrong_command_line_usage = true;
-	}
-      else if (!strcmp(argv[i], "--help"))
-	opts.display_usage = true;
-      else if (!strcmp(argv[i], "--from-stdin"))
-	opts.read_from_stdin = true;
-      else if (!strcmp(argv[i], "--noout"))
-	opts.no_out = true;
-      else
-	return false;
-    }
+  if (argp_parse(&binilint_argp, argc, argv, 0, 0, &opts) != 0)
+    return false;
   return true;
 }
 
 int
 main(int argc, char* argv[])
 {
-  // First, parse the command line.
-
   options opts;
-
-  if (argc == 1 || !parse_command_line(argc, argv, opts))
+  if (!parse_command_line(argc, argv, opts))
     {
-      cerr << argv[0] << ": bad command usage\n"
-	   << "Try " << argv[0] << " --help for more information\n";
+      char* prog_name = (char*) "abinilint";
+      argp_help(&binilint_argp, stderr, ARGP_HELP_USAGE, prog_name);
       return 1;
     }
 
-  // Then if we need to display the help, display it and get out.
-
-  if (opts.display_usage)
-    {
-      display_usage(argv[0], cout);
-      return 0;
-    }
-
-  // Otherwise, do the real work we are supposed to do after all.
-  // That real work is driven by the options the user set; these
-  // options are recorded in the opts variable.
+  // Do the real work we are supposed to do after all.  That real work
+  // is driven by the options the user set; these options are recorded
+  // in the opts variable.
 
   config_sptr conf;
 

@@ -55,6 +55,7 @@
 #include "config.h"
 
 #include <assert.h>
+#include <argp.h>
 #include <fcntl.h>
 #include <sys/stat.h>
 
@@ -178,12 +179,8 @@ class options
   options();
 
 public:
-  string	wrong_option;
-  string	wrong_arg;
+  vector<string> wrong_args;
   string	prog_name;
-  bool		display_usage;
-  bool		display_version;
-  bool		missing_operand;
   bool		nonexistent_file;
   bool		abignore;
   bool		parallel;
@@ -194,6 +191,7 @@ public:
   string	devel_package1;
   string	devel_package2;
   size_t	num_workers;
+  unsigned 	last_seen_set;
   bool		verbose;
   bool		verbose_diff;
   bool		drop_private_types;
@@ -238,12 +236,10 @@ public:
 
   options(const string& program_name)
     : prog_name(program_name),
-      display_usage(),
-      display_version(),
-      missing_operand(),
       nonexistent_file(),
       abignore(true),
       parallel(true),
+      last_seen_set(0),
       verbose(),
       verbose_diff(),
       drop_private_types(),
@@ -970,82 +966,6 @@ package::extracted_packages_parent_dir()
 
 /// A convenience typedef for shared_ptr of package.
 typedef shared_ptr<package> package_sptr;
-
-/// Show the usage of this program.
-///
-/// @param prog_name the name of the program.
-///
-/// @param out the output stream to emit the usage to .
-static void
-display_usage(const string& prog_name, ostream& out)
-{
-  emit_prefix(prog_name, out)
-    << "usage: " << prog_name << " [options] <package1> <package2>\n"
-    << " where options can be:\n"
-    << " --debug-info-pkg1|--d1 <path>  path of debug-info package of package1\n"
-    << " --debug-info-pkg2|--d2 <path>  path of debug-info package of package2\n"
-    << " --devel-pkg1|--devel1 <path>   path of devel package of pakage1\n"
-    << " --devel-pkg2|--devel2 <path>   path of devel package of pakage1\n"
-    << " --drop-private-types  drop private types from "
-    "internal representation\n"
-    << " --no-default-suppression       don't load any default "
-       "suppression specifications\n"
-    << " --suppressions|--suppr <path>  specify supression specification path\n"
-    << " --linux-kernel-abi-whitelist|-w path to a "
-    "linux kernel abi whitelist\n"
-    << " --wp <path>                    path to a linux kernel abi whitelist package\n"
-    << " --keep-tmp-files               don't erase created temporary files\n"
-    << " --dso-only                     compare shared libraries only\n"
-    << " --private-dso                  compare DSOs that are private "
-    "to the package as well\n"
-    << " --leaf-changes-only|-l  only show leaf changes, "
-    "so no change impact analysis (implies --redundant)\n"
-    << " --impacted-interfaces|-i  display interfaces impacted by leaf changes\n"
-    << " --full-impact|-f  when comparing kernel packages, show the "
-    "full impact analysis report rather than the default leaf changes reports\n"
-    << " --non-reachable-types|-t  consider types non reachable"
-    " from public interfaces\n"
-    << " --exported-interfaces-only  analyze exported interfaces only\n"
-    << " --allow-non-exported-interfaces  analyze interfaces that "
-    "might not be exported\n"
-    << " --no-linkage-name		do not display linkage names of "
-    "added/removed/changed\n"
-    << " --redundant                    display redundant changes\n"
-    << " --harmless                     display the harmless changes\n"
-    << " --no-show-locs                 do not show location information\n"
-    << " --ignore-soname                do not take the SONAMEs into account\n"
-    << " --show-bytes  show size and offsets in bytes\n"
-    << " --show-bits  show size and offsets in bits\n"
-    << " --show-hex  show size and offset in hexadecimal\n"
-    << " --show-dec  show size and offset in decimal\n"
-    << " --no-show-relative-offset-changes  do not show relative"
-    " offset changes\n"
-    << " --no-added-syms                do not display added functions or variables\n"
-    << " --no-unreferenced-symbols do not display changes "
-    "about symbols not referenced by debug info\n"
-    << " --no-added-binaries            do not display added binaries\n"
-    << " --no-abignore                  do not look for *.abignore files\n"
-    << " --no-parallel                  do not execute in parallel\n"
-    << " --fail-no-dbg                  fail if no debug info was found\n"
-    << " --show-identical-binaries      show the names of identical binaries\n"
-    << " --no-leverage-dwarf-factorization  do not use DWZ optimisations to "
-    "speed-up the analysis of the binary\n"
-    << " --no-assume-odr-for-cplusplus  do not assume the ODR to speed-up the"
-    "analysis of the binary\n"
-    << " --verbose                      emit verbose progress messages\n"
-    << " --verbose-diff                 emit verbose diff progress messages\n"
-    << " --self-check                   perform a sanity check by comparing "
-    "binaries inside the input package against their ABIXML representation\n"
-#ifdef WITH_CTF
-    << " --ctf                          use CTF instead of DWARF in ELF files\n"
-#endif
-#ifdef WITH_BTF
-    << " --btf                          use BTF instead of DWARF in ELF files\n"
-#endif
-    << " --help|-h                      display this help message\n"
-    << " --version|-v                   display program version information"
-    " and exit\n";
-}
 
 #ifdef WITH_RPM
 
@@ -3759,278 +3679,489 @@ compare(const package_set_sptr& first_ps,
   return compare(first_ps, second_ps, diff, opts);
 }
 
-/// Parse the command line of the current program.
+
+enum option_key
+{
+  OPT_ALLOW_NON_EXPORTED_INTERFACES = 256,
+  OPT_BTF,
+  OPT_CTF,
+  OPT_D1,
+  OPT_D2,
+  OPT_DEVEL1,
+  OPT_DEVEL2,
+  OPT_DROP_PRIVATE_TYPES,
+  OPT_DSO_ONLY,
+  OPT_EXPORTED_INTERFACES_ONLY,
+  OPT_FAIL_NO_DBG,
+  OPT_FULL_IMPACT,
+  OPT_HARMLESS,
+  OPT_IGNORE_SONAME,
+  OPT_IMPACTED_INTERFACES,
+  OPT_KEEP_TMP_FILES,
+  OPT_KMI_WHITELIST,
+  OPT_KMI_WHITELIST_PKG,
+  OPT_LEAF_CHANGES_ONLY,
+  OPT_NO_ABIGNORE,
+  OPT_NO_ADDED_BINARIES,
+  OPT_NO_ADDED_SYMS,
+  OPT_NO_ASSUME_ODR_FOR_CPLUSPLUS,
+  OPT_NO_DEFAULT_SUPPRESSION,
+  OPT_NO_LEVERAGE_DWARF_FACTORIZATION,
+  OPT_NO_LINKAGE_NAME,
+  OPT_NO_PARALLEL,
+  OPT_NO_SHOW_LOCS,
+  OPT_NO_SHOW_RELATIVE_OFFSET_CHANGES,
+  OPT_NO_UNREFERENCED_SYMBOLS,
+  OPT_NON_REACHABLE_TYPES,
+  OPT_PRIVATE_DSO,
+  OPT_REDUNDANT,
+  OPT_SELF_CHECK,
+  OPT_SET1,
+  OPT_SET2,
+  OPT_SHOW_BITS,
+  OPT_SHOW_BYTES,
+  OPT_SHOW_DEC,
+  OPT_SHOW_HEX,
+  OPT_SHOW_IDENTICAL_BINARIES,
+  OPT_SUPPR,
+  OPT_VERBOSE,
+  OPT_VERBOSE_DIFF
+};
+
+static const struct argp_option argp_options[] =
+{
+  { "allow-non-exported-interfaces", OPT_ALLOW_NON_EXPORTED_INTERFACES, 0, 0,
+    "analyze interfaces that might not be exported", 0 },
+#ifdef WITH_BTF
+  { "btf", OPT_BTF, 0, 0,
+    "use BTF instead of DWARF in ELF files", 0 },
+#endif
+#ifdef WITH_CTF
+  { "ctf", OPT_CTF, 0, 0,
+    "use CTF instead of DWARF in ELF files", 0 },
+#endif
+  { "debug-info-pkg1", OPT_D1, "PATH", 0,
+    "path of debug-info package of package1", 0 },
+  { "d1", OPT_D1, "PATH", OPTION_ALIAS, 0, 0 },
+  { "debug-info-pkg2", OPT_D2, "PATH", 0,
+    "path of debug-info package of package2", 0 },
+  { "d2", OPT_D2, "PATH", OPTION_ALIAS, 0, 0 },
+  { "devel-pkg1", OPT_DEVEL1, "PATH", 0,
+    "path of devel package of package1", 0 },
+  { "devel1", OPT_DEVEL1, "PATH", OPTION_ALIAS, 0, 0 },
+  { "devel-pkg2", OPT_DEVEL2, "PATH", 0,
+    "path of devel package of package2", 0 },
+  { "devel2", OPT_DEVEL2, "PATH", OPTION_ALIAS, 0, 0 },
+  { "drop-private-types", OPT_DROP_PRIVATE_TYPES, 0, 0,
+    "drop private types from internal representation", 0 },
+  { "dso-only", OPT_DSO_ONLY, 0, 0,
+    "compare shared libraries only", 0 },
+  { "exported-interfaces-only", OPT_EXPORTED_INTERFACES_ONLY, 0, 0,
+    "analyze exported interfaces only", 0 },
+  { "fail-no-dbg", OPT_FAIL_NO_DBG, 0, 0,
+    "fail if no debug info was found", 0 },
+  { "full-impact", OPT_FULL_IMPACT, 0, 0,
+    "when comparing kernel packages, show the full impact analysis report "
+    "rather than the default leaf changes reports", 0 },
+  { "f", OPT_FULL_IMPACT, 0, OPTION_ALIAS, 0, 0 },
+  { "harmless", OPT_HARMLESS, 0, 0,
+    "display the harmless changes", 0 },
+  { "ignore-soname", OPT_IGNORE_SONAME, 0, 0,
+    "do not take the SONAMEs into account", 0 },
+  { "impacted-interfaces", OPT_IMPACTED_INTERFACES, 0, 0,
+    "display interfaces impacted by leaf changes", 0 },
+  { "i", OPT_IMPACTED_INTERFACES, 0, OPTION_ALIAS, 0, 0 },
+  { "keep-tmp-files", OPT_KEEP_TMP_FILES, 0, 0,
+    "don't erase created temporary files", 0 },
+  { "linux-kernel-abi-whitelist", OPT_KMI_WHITELIST, "PATH", 0,
+    "path to a linux kernel abi whitelist", 0 },
+  { "w", OPT_KMI_WHITELIST, "PATH", OPTION_ALIAS, 0, 0 },
+  { "wp", OPT_KMI_WHITELIST_PKG, "PATH", 0,
+    "path to a linux kernel abi whitelist package", 0 },
+  { "leaf-changes-only", OPT_LEAF_CHANGES_ONLY, 0, 0,
+    "only show leaf changes, so no change impact analysis "
+    "(implies --redundant)", 0 },
+  { "l", OPT_LEAF_CHANGES_ONLY, 0, OPTION_ALIAS, 0, 0 },
+  { "no-abignore", OPT_NO_ABIGNORE, 0, 0,
+    "do not look for *.abignore files", 0 },
+  { "no-added-binaries", OPT_NO_ADDED_BINARIES, 0, 0,
+    "do not display added binaries", 0 },
+  { "no-added-syms", OPT_NO_ADDED_SYMS, 0, 0,
+    "do not display added functions or variables", 0 },
+  { "no-assume-odr-for-cplusplus", OPT_NO_ASSUME_ODR_FOR_CPLUSPLUS, 0, 0,
+    "do not assume the ODR to speed-up the analysis of the binary", 0 },
+  { "no-default-suppression", OPT_NO_DEFAULT_SUPPRESSION, 0, 0,
+    "don't load any default suppression specifications", 0 },
+  { "no-leverage-dwarf-factorization", OPT_NO_LEVERAGE_DWARF_FACTORIZATION,
+    0, 0,
+    "do not use DWZ optimisations to speed-up the analysis of the binary",
+    0 },
+  { "no-linkage-name", OPT_NO_LINKAGE_NAME, 0, 0,
+    "do not display linkage names of added/removed/changed", 0 },
+  { "no-parallel", OPT_NO_PARALLEL, 0, 0,
+    "do not execute in parallel", 0 },
+  { "no-show-locs", OPT_NO_SHOW_LOCS, 0, 0,
+    "do not show location information", 0 },
+  { "no-show-relative-offset-changes",
+    OPT_NO_SHOW_RELATIVE_OFFSET_CHANGES, 0, 0,
+    "do not show relative offset changes", 0 },
+  { "no-unreferenced-symbols", OPT_NO_UNREFERENCED_SYMBOLS, 0, 0,
+    "do not display changes about symbols not referenced by debug info", 0 },
+  { "non-reachable-types", OPT_NON_REACHABLE_TYPES, 0, 0,
+    "consider types non reachable from public interfaces", 0 },
+  { "t", OPT_NON_REACHABLE_TYPES, 0, OPTION_ALIAS, 0, 0 },
+  { "private-dso", OPT_PRIVATE_DSO, 0, 0,
+    "compare DSOs that are private to the package as well", 0 },
+  { "redundant", OPT_REDUNDANT, 0, 0,
+    "display redundant changes", 0 },
+  { "self-check", OPT_SELF_CHECK, 0, 0,
+    "perform a sanity check by comparing binaries inside the input package "
+    "against their ABIXML representation", 0 },
+  { "set1", OPT_SET1, "PKG1[,PKG2,..] | PKG1[ PKG2 ..]", 0,
+    "the first set of packages to compare", 0 },
+  { "set2", OPT_SET2, "PKG1[,PKG2,..] | PKG1[ PKG2 ..]", 0,
+    "the second set of packages to compare", 0 },
+  { "show-bits", OPT_SHOW_BITS, 0, 0,
+    "show size and offsets in bits", 0 },
+  { "show-bytes", OPT_SHOW_BYTES, 0, 0,
+    "show size and offsets in bytes", 0 },
+  { "show-dec", OPT_SHOW_DEC, 0, 0,
+    "show size and offset in decimal", 0 },
+  { "show-hex", OPT_SHOW_HEX, 0, 0,
+    "show size and offset in hexadecimal", 0 },
+  { "show-identical-binaries", OPT_SHOW_IDENTICAL_BINARIES, 0, 0,
+    "show the names of identical binaries", 0 },
+  { "suppressions", OPT_SUPPR, "PATH", 0,
+    "specify a suppression file", 0 },
+  { "suppr", OPT_SUPPR, "PATH", OPTION_ALIAS, 0, 0 },
+  { "verbose", OPT_VERBOSE, 0, 0,
+    "emit verbose progress messages", 0 },
+  { "verbose-diff", OPT_VERBOSE_DIFF, 0, 0,
+    "emit verbose diff progress messages", 0 },
+  { 0, 0, 0, 0, 0, 0 }
+};
+
+static error_t
+parse_opt(int key, char* arg, struct argp_state* state)
+{
+  options& opts = *static_cast<options*>(state->input);
+  const string argument = arg ? string(arg) : string();
+
+  if (key != OPT_SET1
+      && key != OPT_SET2
+      && key != ARGP_KEY_ARG)
+    // Reset the opts.last_seen_set if we see an option that is neiter
+    // --set1 not --set2.
+    opts.last_seen_set = 0;
+
+    
+  switch (key)
+    {
+    case OPT_ALLOW_NON_EXPORTED_INTERFACES:
+      opts.exported_interfaces_only = false;
+      break;
+
+#ifdef WITH_BTF
+    case OPT_BTF:
+      opts.use_btf = true;
+      break;
+#endif
+
+#ifdef WITH_CTF
+    case OPT_CTF:
+      opts.use_ctf = true;
+      break;
+#endif
+
+    case OPT_D1:
+      opts.debug_packages1.push_back
+	(abigail::tools_utils::make_path_absolute(argument));
+      break;
+
+    case OPT_D2:
+      opts.debug_packages2.push_back
+	(abigail::tools_utils::make_path_absolute(argument));
+      break;
+
+    case OPT_DEVEL1:
+      opts.devel_package1 =
+	abigail::tools_utils::make_path_absolute(argument);
+      break;
+
+    case OPT_DEVEL2:
+      opts.devel_package2 =
+	abigail::tools_utils::make_path_absolute(argument);
+      break;
+
+    case OPT_DROP_PRIVATE_TYPES:
+      opts.drop_private_types = true;
+      break;
+
+    case OPT_DSO_ONLY:
+      opts.compare_dso_only = true;
+      break;
+
+    case OPT_EXPORTED_INTERFACES_ONLY:
+      opts.exported_interfaces_only = true;
+      break;
+
+    case OPT_FAIL_NO_DBG:
+      opts.fail_if_no_debug_info = true;
+      break;
+
+    case OPT_FULL_IMPACT:
+      opts.show_full_impact_report = true;
+      break;
+
+    case OPT_HARMLESS:
+      opts.show_harmless_changes = true;
+      break;
+
+    case OPT_IGNORE_SONAME:
+      opts.ignore_soname = true;
+      opts.show_identical_binaries = true;
+      break;
+
+    case OPT_IMPACTED_INTERFACES:
+      opts.show_impacted_interfaces = true;
+      break;
+
+    case OPT_KEEP_TMP_FILES:
+      opts.keep_tmp_files = true;
+      break;
+
+    case OPT_KMI_WHITELIST:
+      if (guess_file_type(argument) == abigail::tools_utils::FILE_TYPE_RPM)
+	opts.kabi_stablelist_packages.push_back(make_path_absolute(argument));
+      else
+	opts.kabi_stablelist_paths.push_back(argument);
+      break;
+
+    case OPT_KMI_WHITELIST_PKG:
+      opts.kabi_stablelist_packages.push_back
+	(make_path_absolute(argument));
+      break;
+
+    case OPT_LEAF_CHANGES_ONLY:
+      opts.leaf_changes_only = true;
+      break;
+
+    case OPT_NO_ABIGNORE:
+      opts.abignore = false;
+      break;
+
+    case OPT_NO_ADDED_BINARIES:
+      opts.show_added_binaries = false;
+      break;
+
+    case OPT_NO_ADDED_SYMS:
+      opts.show_added_syms = false;
+      break;
+
+    case OPT_NO_ASSUME_ODR_FOR_CPLUSPLUS:
+      opts.assume_odr_for_cplusplus = false;
+      break;
+
+    case OPT_NO_DEFAULT_SUPPRESSION:
+      opts.no_default_suppression = true;
+      break;
+
+    case OPT_NO_LEVERAGE_DWARF_FACTORIZATION:
+      opts.leverage_dwarf_factorization = false;
+      break;
+
+    case OPT_NO_LINKAGE_NAME:
+      opts.show_linkage_names = false;
+      break;
+
+    case OPT_NO_PARALLEL:
+      opts.parallel = false;
+      break;
+
+    case OPT_NO_SHOW_LOCS:
+      opts.show_locs = false;
+      break;
+
+    case OPT_NO_SHOW_RELATIVE_OFFSET_CHANGES:
+      opts.show_relative_offset_changes = false;
+      break;
+
+    case OPT_NO_UNREFERENCED_SYMBOLS:
+      opts.show_symbols_not_referenced_by_debug_info = false;
+      break;
+
+    case OPT_NON_REACHABLE_TYPES:
+      opts.show_all_types = true;
+      break;
+
+    case OPT_PRIVATE_DSO:
+      opts.compare_private_dsos = true;
+      break;
+
+    case OPT_REDUNDANT:
+      opts.show_redundant_changes = true;
+      break;
+
+    case OPT_SELF_CHECK:
+      opts.self_check = true;
+      break;
+
+    case OPT_SET1:
+      {
+	opts.last_seen_set = 1;
+	vector<string> paths;
+	if (!tools_utils::split_string(argument, ",", paths)
+	    && !argument.empty())
+	  paths.push_back(argument);
+	for (auto& p : paths)
+	  {
+	    string abs_p = make_path_absolute(p);
+	    if (!file_exists(abs_p))
+	      {
+		opts.nonexistent_file = true;
+		opts.wrong_args.push_back(abs_p);
+	      }
+	    else
+	      opts.package_set_paths1.insert(abs_p);
+	  }
+      }
+      break;
+
+    case OPT_SET2:
+      {
+	opts.last_seen_set = 2;
+	vector<string> paths;
+	if (!tools_utils::split_string(argument, ",", paths)
+	    && !argument.empty())
+	  paths.push_back(argument);
+	for (auto& p : paths)
+	  {
+	    string abs_p = make_path_absolute(p);
+	    if (!file_exists(abs_p))
+	      {
+		opts.nonexistent_file = true;
+		opts.wrong_args.push_back(abs_p);
+	      }
+	    else
+	      opts.package_set_paths2.insert(abs_p);
+	  }
+      }
+      break;
+
+    case OPT_SHOW_BITS:
+      opts.show_offsets_sizes_in_bits = true;
+      break;
+
+    case OPT_SHOW_BYTES:
+      opts.show_offsets_sizes_in_bits = false;
+      break;
+
+    case OPT_SHOW_DEC:
+      opts.show_hexadecimal_values = false;
+      break;
+
+    case OPT_SHOW_HEX:
+      opts.show_hexadecimal_values = true;
+      break;
+
+    case OPT_SHOW_IDENTICAL_BINARIES:
+      opts.show_identical_binaries = true;
+      break;
+
+    case OPT_SUPPR:
+      opts.suppression_paths.push_back(argument);
+      break;
+
+    case OPT_VERBOSE:
+      opts.verbose = true;
+      break;
+
+    case OPT_VERBOSE_DIFF:
+      opts.verbose_diff = true;
+      opts.verbose = true;
+      break;
+
+    case ARGP_KEY_ARG:
+      {
+	string path = make_path_absolute(argument);
+	if (!file_exists(path))
+	  {
+	    // This is later handled in the main function so that the
+	    // program can return an appropriate return code from
+	    // there, so we don't need an ARGP_KEY_END case to handle
+	    // it.
+	    opts.nonexistent_file = true;
+	    opts.wrong_args.push_back(path);
+	  }
+	else if (opts.last_seen_set == 1)
+	  opts.package_set_paths1.insert(path);
+	else if (opts.last_seen_set == 2)
+	  opts.package_set_paths2.insert(path);
+	else
+	  {
+	    if (opts.package_set_paths1.empty())
+	      opts.package_set_paths1.insert(path);
+	    else if (opts.package_set_paths2.empty())
+	      opts.package_set_paths2.insert(path);
+	    else
+	      argp_usage(state);
+	  }
+      }
+      break;
+
+    default:
+      return ARGP_ERR_UNKNOWN;
+    }
+
+  return 0;
+}
+
+static const char* argp_args_doc = "[<package1> <package2>]";
+static const char* argp_doc =
+  "Compare the ABI of binaries in two packages, returning 0 if they are "
+  "identical, or non-zero if they differ.";
+
+static const struct argp abipkgdiff_argp =
+{
+  argp_options,
+  parse_opt,
+  argp_args_doc,
+  argp_doc,
+  0,
+  0,
+  0
+};
+
+/// Version printing hook to be passed to ARGP.
 ///
-/// @param argc the number of arguments in the @p argv parameter.
+/// @param stream the output stream.
 ///
-/// @param argv the array of arguemnts passed to the function.  The
-/// first argument is the name of this program.
+/// @param state the ARGP state.
+static void
+print_abipkgdiff_version(FILE *stream, struct argp_state* /*state*/)
+{
+  fprintf(stream, "abipkgdiff %s\n",
+	  abigail::tools_utils::get_library_version_string().c_str());
+}
+
+typedef void (*program_version_hook_type) (FILE *__restrict __stream,
+					   struct argp_state *__restrict __state);
+
+/// Parse the command line
 ///
-/// @param opts the resulting options.
+/// @param argc number of args
 ///
-/// @return true upon successful parsing.
+/// @param argv the array of arguments.
+///
+/// @param opts the options set as result of command line parsing.
 static bool
 parse_command_line(int argc, char* argv[], options& opts)
 {
-  if (argc < 2)
+  argp_program_version_hook = print_abipkgdiff_version;
+  argp_program_bug_address = "<libabigail@sourceware.org>";
+
+  if (argp_parse(&abipkgdiff_argp, argc, argv, 0, 0, &opts) != 0)
     return false;
-
-  for (int i = 1; i < argc; ++i)
-    {
-      if (argv[i][0] != '-')
-        {
-          if (opts.package_set_paths1.empty())
-            {
-              string path = make_path_absolute(argv[i]).get();
-	      opts.package_set_paths1.insert(path);
-              opts.nonexistent_file = !file_exists(path);
-            }
-          else if (opts.package_set_paths2.empty())
-            {
-              string path = make_path_absolute(argv[i]).get();
-	      opts.package_set_paths2.insert(path);
-              opts.nonexistent_file = !file_exists(path);
-            }
-          else
-	    {
-	      opts.wrong_arg = argv[i];
-	      return false;
-	    }
-
-          if (opts.nonexistent_file)
-            {
-              opts.wrong_arg = argv[i];
-              return true;
-            }
-        }
-      else if (!strcmp(argv[i], "--set1")
-	       || !strcmp(argv[i], "--set2"))
-	{
-	  bool is_set1 = !strcmp(argv[i], "--set1");
-	  set<string>& set =
-	    is_set1 ? opts.package_set_paths1 : opts.package_set_paths2;
-	  for (int j = i + 1; j < argc; ++j)
-	    {
-	      if (argv[j][0] == '-')
-		{
-		  i = j - 1;
-		  break;
-		}
-	      const char* p = argv[j];
-	      string pkg_path = make_path_absolute(p).get();
-	      if (!opts.nonexistent_file)
-		opts.nonexistent_file = !file_exists(pkg_path);
-	      if (opts.nonexistent_file && opts.wrong_arg.empty())
-		opts.wrong_arg = pkg_path;
-	      set.insert(pkg_path);
-	      i = j;
-	    }
-	  if (!opts.wrong_arg.empty())
-	    return false;
-	}
-      else if (!strcmp(argv[i], "--debug-info-pkg1")
-	       || !strcmp(argv[i], "--d1"))
-        {
-          int j = i + 1;
-          if (j >= argc)
-            {
-	      opts.missing_operand = true;
-	      opts.wrong_option = argv[i];
-	      return true;
-            }
-          opts.debug_packages1.push_back
-	    (abigail::tools_utils::make_path_absolute(argv[j]).get());
-          ++i;
-        }
-      else if (!strcmp(argv[i], "--debug-info-pkg2")
-	       || !strcmp(argv[i], "--d2"))
-        {
-          int j = i + 1;
-          if (j >= argc)
-            {
-	      opts.missing_operand = true;
-	      opts.wrong_option = argv[i];
-	      return true;
-            }
-          opts.debug_packages2.push_back
-	    (abigail::tools_utils::make_path_absolute(argv[j]).get());
-          ++i;
-        }
-      else if (!strcmp(argv[i], "--devel-pkg1")
-	       || !strcmp(argv[i], "--devel1"))
-        {
-          int j = i + 1;
-          if (j >= argc)
-            {
-	      opts.missing_operand = true;
-	      opts.wrong_option = argv[i];
-	      return true;
-            }
-          opts.devel_package1 =
-	    abigail::tools_utils::make_path_absolute(argv[j]).get();
-          ++i;
-        }
-      else if (!strcmp(argv[i], "--devel-pkg2")
-	       || !strcmp(argv[i], "--devel2"))
-        {
-          int j = i + 1;
-          if (j >= argc)
-            {
-	      opts.missing_operand = true;
-	      opts.wrong_option = argv[i];
-	      return true;
-            }
-          opts.devel_package2 =
-	    abigail::tools_utils::make_path_absolute(argv[j]).get();
-          ++i;
-        }
-      else if (!strcmp(argv[i], "--drop-private-types"))
-	opts.drop_private_types = true;
-      else if (!strcmp(argv[i], "--no-default-suppression"))
-	opts.no_default_suppression = true;
-      else if (!strcmp(argv[i], "--keep-tmp-files"))
-	opts.keep_tmp_files = true;
-      else if (!strcmp(argv[i], "--dso-only"))
-	opts.compare_dso_only = true;
-      else if (!strcmp(argv[i], "--private-dso"))
-	opts.compare_private_dsos = true;
-      else if (!strcmp(argv[i], "--leaf-changes-only")
-	       ||!strcmp(argv[i], "-l"))
-	opts.leaf_changes_only = true;
-      else if (!strcmp(argv[i], "--impacted-interfaces")
-	       ||!strcmp(argv[i], "-i"))
-	opts.show_impacted_interfaces = true;
-      else if (!strcmp(argv[i], "--non-reachable-types")
-	       ||!strcmp(argv[i], "-t"))
-	opts.show_all_types = true;
-      else if (!strcmp(argv[i], "--full-impact")
-	       ||!strcmp(argv[i], "-f"))
-	opts.show_full_impact_report = true;
-      else if (!strcmp(argv[i], "--exported-interfaces-only"))
-	opts.exported_interfaces_only = true;
-      else if (!strcmp(argv[i], "--allow-non-exported-interfaces"))
-	opts.exported_interfaces_only = false;
-      else if (!strcmp(argv[i], "--no-linkage-name"))
-	opts.show_linkage_names = false;
-      else if (!strcmp(argv[i], "--redundant"))
-	opts.show_redundant_changes = true;
-      else if (!strcmp(argv[i], "--harmless"))
-	opts.show_harmless_changes = true;
-      else if (!strcmp(argv[i], "--no-show-locs"))
-	opts.show_locs = false;
-      else if (!strcmp(argv[i], "--show-bytes"))
-	opts.show_offsets_sizes_in_bits = false;
-      else if (!strcmp(argv[i], "--show-bits"))
-	opts.show_offsets_sizes_in_bits = true;
-      else if (!strcmp(argv[i], "--show-hex"))
-	opts.show_hexadecimal_values = true;
-      else if (!strcmp(argv[i], "--show-dec"))
-	opts.show_hexadecimal_values = false;
-      else if (!strcmp(argv[i], "--no-show-relative-offset-changes"))
-	opts.show_relative_offset_changes = false;
-      else if (!strcmp(argv[i], "--no-added-syms"))
-	opts.show_added_syms = false;
-      else if (!strcmp(argv[i], "--no-unreferenced-symbols"))
-	opts.show_symbols_not_referenced_by_debug_info = false;
-      else if (!strcmp(argv[i], "--no-added-binaries"))
-	opts.show_added_binaries = false;
-      else if (!strcmp(argv[i], "--fail-no-dbg"))
-	opts.fail_if_no_debug_info = true;
-      else if (!strcmp(argv[i], "--no-leverage-dwarf-factorization"))
-	opts.leverage_dwarf_factorization = false;
-      else if (!strcmp(argv[i], "--no-assume-odr-for-cplusplus"))
-	opts.assume_odr_for_cplusplus = false;
-      else if (!strcmp(argv[i], "--verbose"))
-	opts.verbose = true;
-      else if (!strcmp(argv[i], "--verbose-diff"))
-	{
-	  opts.verbose_diff = true;
-	  opts.verbose = true;
-	}
-      else if (!strcmp(argv[i], "--no-abignore"))
-	opts.abignore = false;
-      else if (!strcmp(argv[i], "--no-parallel"))
-	opts.parallel = false;
-      else if (!strcmp(argv[i], "--show-identical-binaries"))
-	opts.show_identical_binaries = true;
-      else if (!strcmp(argv[i], "--self-check"))
-	opts.self_check = true;
-      else if (!strcmp(argv[i], "--suppressions")
-	       || !strcmp(argv[i], "--suppr"))
-	{
-	  int j = i + 1;
-	  if (j >= argc)
-	    return false;
-	  opts.suppression_paths.push_back(argv[j]);
-	  ++i;
-	}
-      else if (!strcmp(argv[i], "--linux-kernel-abi-whitelist")
-	       || !strcmp(argv[i], "-w"))
-	{
-	  int j = i + 1;
-	  if (j >= argc)
-	    {
-	      opts.missing_operand = true;
-	      opts.wrong_option = argv[i];
-	      return true;
-	    }
-	  if (guess_file_type(argv[j]) == abigail::tools_utils::FILE_TYPE_RPM)
-	    // The kernel abi stablelist is actually a stablelist
-	    // *package*.  Take that into account.
-	    opts.kabi_stablelist_packages.push_back
-	      (make_path_absolute(argv[j]).get());
-	  else
-	    // We assume the kernel abi stablelist is a white list
-	    // file.
-	    opts.kabi_stablelist_paths.push_back(argv[j]);
-	  ++i;
-	}
-      else if (!strcmp(argv[i], "--wp"))
-	{
-	  int j = i + 1;
-	  if (j >= argc)
-	    {
-	      opts.missing_operand = true;
-	      opts.wrong_option = argv[i];
-	      return true;
-	    }
-	  opts.kabi_stablelist_packages.push_back
-	    (make_path_absolute(argv[j]).get());
-	  ++i;
-	}
-#ifdef WITH_CTF
-	else if (!strcmp(argv[i], "--ctf"))
-          opts.use_ctf = true;
-#endif
-#ifdef WITH_BTF
-	else if (!strcmp(argv[i], "--btf"))
-          opts.use_btf = true;
-#endif
-      else if (!strcmp(argv[i], "--ignore-soname"))
-	{
-	  opts.ignore_soname = true;
-	  opts.show_identical_binaries = true;
-	}
-      else if (!strcmp(argv[i], "--help")
-	       || !strcmp(argv[i], "-h"))
-        {
-          opts.display_usage = true;
-          return true;
-        }
-      else if (!strcmp(argv[i], "--version")
-	       || !strcmp(argv[i], "-v"))
-	{
-	  opts.display_version = true;
-	  return true;
-	}
-      else
-	{
-	  if (strlen(argv[i]) >= 2 && argv[i][0] == '-' && argv[i][1] == '-')
-	    opts.wrong_option = argv[i];
-	  return false;
-	}
-    }
-
   return true;
 }
 
@@ -4043,34 +4174,39 @@ main(int argc, char* argv[])
 
   if (!parse_command_line(argc, argv, opts))
     {
-      if (!opts.wrong_option.empty())
-	emit_prefix("abipkgdiff", cerr)
-	  << "unrecognized option: " << opts.wrong_option
-	  << "\ntry the --help option for more information\n";
-      if (!opts.wrong_arg.empty())
-	emit_prefix("abipkgdiff", cerr)
-	  << "unrecognized argument: " << opts.wrong_arg
-	  << "\ntry the --help option for more information\n";
-      return (abigail::tools_utils::ABIDIFF_USAGE_ERROR
-	      | abigail::tools_utils::ABIDIFF_ERROR);
-    }
-
-  if (opts.missing_operand)
-    {
-      emit_prefix("abipkgdiff", cerr)
-	<< "missing operand\n"
-        "try the --help option for more information\n";
+      char* prog_name = (char*) "abipkgdiff";
+      argp_help(&abipkgdiff_argp, stderr, ARGP_HELP_USAGE, prog_name);
       return (abigail::tools_utils::ABIDIFF_USAGE_ERROR
 	      | abigail::tools_utils::ABIDIFF_ERROR);
     }
 
   if (opts.nonexistent_file)
     {
+      vector<string> input_files;
       string input_file;
-      base_name(opts.wrong_arg, input_file);
-      emit_prefix("abipkgdiff", cerr)
-	<< "The input file " << input_file << " doesn't exist\n"
-	"try the --help option for more information\n";
+      for (auto& f : opts.wrong_args)
+	{
+	  base_name(f, input_file);
+	  input_files.push_back(input_file);
+	}
+      bool plural = input_files.size() > 1;
+
+      if (plural)
+	emit_prefix("abipkgdiff", cerr)
+	  << "Input files";
+      else
+	emit_prefix("abipkgdiff", cerr)
+	  << "The input file";
+      for (auto& f : input_files)
+	cerr << " " << f;
+
+      if (plural)
+	cerr << " don't exist\n";
+      else
+	cerr << " doesn't exist\n";
+
+      cerr << "try the --help option for more information\n";
+
       return (abigail::tools_utils::ABIDIFF_USAGE_ERROR
 	      | abigail::tools_utils::ABIDIFF_ERROR);
     }
@@ -4081,21 +4217,6 @@ main(int argc, char* argv[])
 	<< "no more than 2 Linux kernel white list packages can be provided\n";
       return (abigail::tools_utils::ABIDIFF_USAGE_ERROR
 	      | abigail::tools_utils::ABIDIFF_ERROR);
-    }
-
-  if (opts.display_usage)
-    {
-      display_usage(argv[0], cout);
-      return (abigail::tools_utils::ABIDIFF_USAGE_ERROR
-	      | abigail::tools_utils::ABIDIFF_ERROR);
-    }
-
-  if (opts.display_version)
-    {
-      emit_prefix(argv[0], cout)
-	<< abigail::tools_utils::get_library_version_string()
-	<< "\n";
-      return 0;
     }
 
     if (!opts.no_default_suppression && opts.suppression_paths.empty())
@@ -4129,9 +4250,11 @@ main(int argc, char* argv[])
 	}
       if (opts.package_set_paths1.empty())
 	{
+	  char* prog_name = (char*) "abipkgdiff";
 	  // We need at least one package to work with!
 	  emit_prefix("abipkgdiff", cerr)
 	    << "missing input package\n";
+	  argp_help(&abipkgdiff_argp, stderr, ARGP_HELP_USAGE, prog_name);
 	  if (bail_out)
 	    return (abigail::tools_utils::ABIDIFF_USAGE_ERROR
 		    | abigail::tools_utils::ABIDIFF_ERROR);
@@ -4139,8 +4262,10 @@ main(int argc, char* argv[])
     }
   else if(opts.package_set_paths1.empty() && opts.package_set_paths2.empty())
     {
+      char* prog_name = (char*) "abipkgdiff";
       emit_prefix("abipkgdiff", cerr)
 	<< "please enter two packages to compare" << "\n";
+      argp_help(&abipkgdiff_argp, stderr, ARGP_HELP_USAGE, prog_name);
       return (abigail::tools_utils::ABIDIFF_USAGE_ERROR
 	      | abigail::tools_utils::ABIDIFF_ERROR);
     }
@@ -4217,9 +4342,11 @@ main(int argc, char* argv[])
 	  if (is_kernel_package(first_package_set)
 	      != is_kernel_package(second_package_set))
 	    {
+	      char* prog_name = (char*) "abipkgdiff";
 	      emit_prefix("abipkgdiff", cerr)
 		<< "a Linux kernel package can only be compared to another "
 		"Linux kernel package\n";
+	      argp_help(&abipkgdiff_argp, stderr, ARGP_HELP_USAGE, prog_name);
 	      return (abigail::tools_utils::ABIDIFF_USAGE_ERROR
 		      | abigail::tools_utils::ABIDIFF_ERROR);
 	    }
@@ -4228,9 +4355,11 @@ main(int argc, char* argv[])
 	      || (!second_package_set->path().empty()
 		  && second_package_set->debug_info_packages().empty()))
 	    {
+	      char* prog_name = (char*) "abipkgdiff";
 	      emit_prefix("abipkgdiff", cerr)
 		<< "a Linux Kernel package must be accompanied with its "
 		"debug info package\n";
+	      argp_help(&abipkgdiff_argp, stderr, ARGP_HELP_USAGE, prog_name);
 	      return (abigail::tools_utils::ABIDIFF_USAGE_ERROR
 		      | abigail::tools_utils::ABIDIFF_ERROR);
 	    }
