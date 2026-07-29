@@ -1575,7 +1575,7 @@ main(int argc, char* argv[])
 	      // it.
 	      g2.reset(new corpus_group(c2->get_environment(),
 					c2->get_path()));
-	      g2->add_corpus(c1);
+	      g2->add_corpus(c2);
 	    }
 	}
 
