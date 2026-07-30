@@ -872,9 +872,8 @@ read_corpus(options			opts,
 	  requested_fe_kind = corpus::BTF_ORIGIN;
 #endif
 
-	rdr = create_best_elf_based_reader (path, di_roots, env, requested_fe_kind,
-					    /*load_all_types=*/opts.weak_mode,
-					    status);
+	rdr = create_best_elf_based_reader(path, di_roots, env, requested_fe_kind,
+					   /*load_all_types=*/opts.weak_mode);
 	ABG_ASSERT(rdr);
 	rdr->options().load_undefined_interfaces = true;
 	retval = rdr->read_corpus(status);
