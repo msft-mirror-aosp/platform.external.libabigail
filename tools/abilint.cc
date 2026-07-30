@@ -893,7 +893,10 @@ main(int argc, char* argv[])
       if (tu)
 	{
 	  if (!opts.noout)
-	    is_ok = write_translation_unit(*ctxt, *tu, 0);
+	    {
+	      set_annotate(*ctxt, opts.annotate);
+	      is_ok = write_translation_unit(*ctxt, *tu, 0);
+	    }
 	}
       else
 	{
