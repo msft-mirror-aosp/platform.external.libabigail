@@ -306,16 +306,16 @@ fill_artifact_use_tree(const std::unordered_map<type_or_decl_base*,
 /// @param type_id the type-id of the type to construct the "use tree"
 /// for.
 static unique_ptr<artifact_use_relation_tree>
-build_type_use_tree(abigail::abixml::reader &ctxt,
+build_type_use_tree(abigail::fe_iface &iface,
 		    const string& type_id)
 {
   unique_ptr<artifact_use_relation_tree> result;
-  vector<type_base_sptr>* types = get_types_from_type_id(ctxt, type_id);
+  vector<type_base_sptr>* types = get_types_from_type_id(iface, type_id);
   if (!types)
     return result;
 
   std::unordered_map<type_or_decl_base*, vector<type_or_decl_base*>>*
-    artifact_use_rel = get_artifact_used_by_relation_map(ctxt);
+    artifact_use_rel = get_artifact_used_by_relation_map(iface);
   if (!artifact_use_rel)
     return result;
 
@@ -452,18 +452,17 @@ emit_artifact_use_trace(const artifact_use_relation_tree& artifact_use_tree,
 /// The type to consider is designated by a type-id string that is
 /// carried by the options data structure.
 ///
-/// @param ctxt the abixml read context to consider.
+/// @param iface the abixml reader interface to consider.
 ///
 /// @param the type_id of the type which usage to analyse.
 static bool
-show_how_type_is_used(abigail::abixml::reader &ctxt,
-		      const string& type_id)
+show_how_type_is_used(abigail::fe_iface &iface, const string& type_id)
 {
   if (type_id.empty())
     return false;
 
   unique_ptr<artifact_use_relation_tree> use_tree =
-    build_type_use_tree(ctxt, type_id);
+    build_type_use_tree(iface, type_id);
   if (!use_tree)
     return false;
 
@@ -780,6 +779,7 @@ main(int argc, char* argv[])
       abigail::fe_iface::status s = abigail::fe_iface::STATUS_OK;
       string di_root_path;
       file_type type = guess_file_type(opts.file_path);
+      abigail::fe_iface_sptr rdr;
 
       switch (type)
 	{
@@ -790,9 +790,8 @@ main(int argc, char* argv[])
 	  return 1;
 	case abigail::tools_utils::FILE_TYPE_NATIVE_BI:
 	  {
-	    abigail::fe_iface_sptr rdr =
-	      abigail::abixml::create_reader(opts.file_path,
-					     env);
+	    rdr = abigail::abixml::create_reader(opts.file_path,
+						 env);
 	    set_reader_options(*rdr, opts);
 	    tu = abigail::abixml::read_translation_unit(*rdr);
 	  }
@@ -803,7 +802,6 @@ main(int argc, char* argv[])
 	    di_root_path = opts.di_root_path;
 	    vector<string> di_roots;
 	    di_roots.push_back(di_root_path);
-	    abigail::elf_based_reader_sptr rdr;
 #ifdef WITH_CTF
             if (opts.use_ctf)
 	      rdr =
@@ -821,8 +819,7 @@ main(int argc, char* argv[])
 	  break;
 	case abigail::tools_utils::FILE_TYPE_XML_CORPUS:
 	  {
-	    abigail::fe_iface_sptr rdr =
-	      abigail::abixml::create_reader(opts.file_path, env);
+	    rdr = abigail::abixml::create_reader(opts.file_path, env);
 	    assert(rdr);
 	    set_reader_options(*rdr, opts);
 	    corp = rdr->read_corpus(s);
@@ -830,8 +827,7 @@ main(int argc, char* argv[])
 	  }
 	case abigail::tools_utils::FILE_TYPE_XML_CORPUS_GROUP:
 	  {
-	    abigail::fe_iface_sptr rdr =
-	      abigail::abixml::create_reader(opts.file_path, env);
+	    rdr = abigail::abixml::create_reader(opts.file_path, env);
 	    assert(rdr);
 	    set_reader_options(*rdr, opts);
 	    group = read_corpus_group_from_input(*rdr);
@@ -941,8 +937,8 @@ main(int argc, char* argv[])
       if (is_ok
 	  && !opts.type_id_to_show.empty())
 	{
-	  ABG_ASSERT(abixml_read_ctxt);
-	  show_how_type_is_used(*abixml_read_ctxt, opts.type_id_to_show);
+	  ABG_ASSERT(rdr);
+	  show_how_type_is_used(*rdr, opts.type_id_to_show);
 	}
 #endif
       return is_ok ? 0 : 1;

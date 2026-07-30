@@ -71,6 +71,12 @@ void
 consider_types_not_reachable_from_public_interfaces(fe_iface& ctxt,
 						    bool flag);
 
+class reader;
+typedef shared_ptr<reader> reader_sptr;
+
+reader_sptr
+is_reader(fe_iface_sptr);
+
 #ifdef WITH_SHOW_TYPE_USE_IN_ABILINT
 vector<type_base_sptr>*
 get_types_from_type_id(fe_iface&, const string&);

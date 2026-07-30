@@ -62,8 +62,6 @@ using std::istream;
 /// strings.
 typedef unordered_map<string, vector<string>> string_strings_map_type;
 
-class reader;
-
 static bool	read_is_declaration_only(xmlNodePtr, bool&);
 static bool	read_is_artificial(xmlNodePtr, bool&);
 static bool	read_tracking_non_reachable_types(xmlNodePtr, bool&);
@@ -85,8 +83,6 @@ static bool	maybe_map_type_with_type_id(const type_base_sptr&,
 static void	maybe_set_naming_typedef(reader& rdr,
 					 xmlNodePtr,
 					 const decl_base_sptr &);
-class reader;
-
 static int advance_cursor(reader& rdr);
 
 static void
@@ -165,7 +161,6 @@ public:
   friend unordered_map<type_or_decl_base*, vector<type_or_decl_base*>>*
 	 get_artifact_used_by_relation_map(reader& rdr);
 
-private:
   types_map_type					m_types_map;
   unordered_map<string, shared_ptr<function_tdecl> >	m_fn_tmpl_map;
   unordered_map<string, shared_ptr<class_tdecl> >	m_class_tmpl_map;
@@ -1471,7 +1466,14 @@ public:
   }
 };// end class reader
 
-typedef shared_ptr<reader> reader_sptr;
+/// Convert a @ref abigail:fe_iface into an abigail::abixml::reader.
+///
+/// @param f the interface to convert.
+///
+/// @return the resulting abigail::abixml::reader.
+reader_sptr
+is_reader(fe_iface_sptr iface)
+{return dynamic_pointer_cast<reader>(iface);}
 
 static int	advance_cursor(reader&);
 static bool read_translation_unit(fe_iface&, translation_unit&, xmlNodePtr);
@@ -2291,8 +2293,7 @@ add_reader_suppressions(reader& rdr,
 /// @param flag if yes, then types not reachable from public interface
 /// are taken into account when the abixml file is read.
 void
-consider_types_not_reachable_from_public_interfaces(fe_iface& iface,
-						    bool flag)
+consider_types_not_reachable_from_public_interfaces(fe_iface& iface, bool flag)
 {
   abixml::reader& rdr = dynamic_cast<abixml::reader&>(iface);
   rdr.tracking_non_reachable_types(flag);
@@ -2304,13 +2305,13 @@ consider_types_not_reachable_from_public_interfaces(fe_iface& iface,
 /// This function is available only if the project has been configured
 /// with --enable-show-type-use-in-abilint.
 ///
-/// @param rdr the abixml text reader context to use.
+/// @param rdr the abixml reader to use.
 ///
 /// @param type_id the type-id to consider.
 vector<type_base_sptr>*
 get_types_from_type_id(fe_iface& iface, const string& type_id)
 {
-  xml_reader::reader& rdr = dynamic_cast<xml_reader::reader&>(iface);
+  reader& rdr = dynamic_cast<reader&>(iface);
   auto it = rdr.m_types_map.find(type_id);
   if (it == rdr.m_types_map.end())
     return nullptr;
@@ -2326,7 +2327,7 @@ get_types_from_type_id(fe_iface& iface, const string& type_id)
 unordered_map<type_or_decl_base*, vector<type_or_decl_base*>>*
 get_artifact_used_by_relation_map(fe_iface& iface)
 {
-  xml_reader::reader& rdr = dynamic_cast<xml_reader::reader&>(iface);
+  reader& rdr = dynamic_cast<reader&>(iface);
   return &rdr.m_artifact_used_by_map;
 }
 #endif
@@ -6959,7 +6960,7 @@ struct array_deleter
 };//end array_deleter
 
 
-/// Create an xml_reader::reader to read a native XML ABI file.
+/// Create an abixml::reader to read a native XML ABI file.
 ///
 /// @param path the path to the native XML file to read.
 ///

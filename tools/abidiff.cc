@@ -1026,8 +1026,7 @@ static void
 set_native_xml_reader_options(abigail::fe_iface& rdr,
 			      const options& opts)
 {
-  abixml::consider_types_not_reachable_from_public_interfaces(rdr,
-							      opts.show_all_types);
+  abixml::consider_types_not_reachable_from_public_interfaces(rdr, opts.show_all_types);
   rdr.options().do_log = opts.do_log;
 
 }
