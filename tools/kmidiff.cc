@@ -12,7 +12,7 @@
 #include "config.h"
 #include <sys/types.h>
 #include <dirent.h>
-#include <cstring>
+#include <argp.h>
 #include <string>
 #include <vector>
 #include <iostream>
@@ -52,10 +52,7 @@ using abigail::tools_utils::file_type;
 /// The options of this program.
 struct options
 {
-  bool			display_usage;
-  bool			display_version;
   bool			verbose;
-  bool			missing_operand;
   bool			perform_change_categorization;
   bool			leaf_changes_only;
   bool			show_hexadecimal_values;
@@ -68,7 +65,6 @@ struct options
 #ifdef WITH_BTF
   bool			use_btf;
 #endif
-  string		wrong_option;
   string		kernel_dist_root1;
   string		kernel_dist_root2;
   string		vmlinux1;
@@ -81,10 +77,7 @@ struct options
   shared_ptr<char>	di_root_path2;
 
   options()
-    : display_usage(),
-      display_version(),
-      verbose(),
-      missing_operand(),
+    : verbose(),
       perform_change_categorization(true),
       leaf_changes_only(true),
       show_hexadecimal_values(true),
@@ -101,47 +94,216 @@ struct options
   {}
 }; // end struct options.
 
-/// Display the usage of the program.
-///
-/// @param prog_name the name of this program.
-///
-/// @param out the output stream the usage stream is sent to.
-static void
-display_usage(const string& prog_name, ostream& out)
+enum option_key
 {
-  emit_prefix(prog_name, out)
-    << "usage: " << prog_name << " [options] kernel-modules-dir1 kernel-modules-dir2\n"
-    << " where options can be:\n"
-    << " --help|-h  display this message\n"
-    << " --version|-v  display program version information and exit\n"
-    << " --verbose  display verbose messages\n"
-    << " --debug-info-dir1|--d1 <path> the root for the debug info of "
-	"the first kernel\n"
-    << " --debug-info-dir2|--d2 <path> the root for the debug info of "
-	"the second kernel\n"
-    << " --vmlinux1|--l1 <path>  the path to the first vmlinux\n"
-    << " --vmlinux2|--l2 <path>  the path to the second vmlinux\n"
-    << " --suppressions|--suppr <path>  specify a suppression file\n"
-    << " --kmi-whitelist|-w <path>  path to a kernel module interface "
-    "whitelist\n"
-#ifdef WITH_CTF
-    << " --ctf use CTF instead of DWARF in ELF files\n"
-#endif
+  OPT_ALLOW_NON_EXPORTED_INTERFACES = 256,
 #ifdef WITH_BTF
-    << " --btf use BTF instead of DWARF in ELF files\n"
+  OPT_BTF,
 #endif
-    << " --no-change-categorization | -x don't perform categorization "
-    "of changes, for speed purposes\n"
-    << " --impacted-interfaces|-i  show interfaces impacted by ABI changes\n"
-    << " --full-impact|-f  show the full impact of changes on top-most "
-	 "interfaces\n"
-    << " --exported-interfaces-only  analyze exported interfaces only\n"
-    << " --allow-non-exported-interfaces  analyze interfaces that "
-    "might not be exported\n"
-    << " --show-bytes  show size and offsets in bytes\n"
-    << " --show-bits  show size and offsets in bits\n"
-    << " --show-hex  show size and offset in hexadecimal\n"
-    << " --show-dec  show size and offset in decimal\n";
+#ifdef WITH_CTF
+  OPT_CTF,
+#endif
+  OPT_D1,
+  OPT_D2,
+  OPT_EXPORTED_INTERFACES_ONLY,
+  OPT_FULL_IMPACT = 'f',
+  OPT_IMPACTED_INTERFACES = 'i',
+  OPT_KMI_WHITELIST = 'w',
+  OPT_NO_CHANGE_CATEGORIZATION = 'x',
+  OPT_SHOW_BITS = 262,
+  OPT_SHOW_BYTES,
+  OPT_SHOW_DEC,
+  OPT_SHOW_HEX,
+  OPT_SUPPR,
+  OPT_VERBOSE,
+  OPT_VMLINUX1,
+  OPT_VMLINUX2,
+};
+
+static const struct argp_option argp_options[] =
+{
+  { "allow-non-exported-interfaces", OPT_ALLOW_NON_EXPORTED_INTERFACES, 0, 0,
+    "analyze interfaces that might not be exported", 0 },
+#ifdef WITH_BTF
+  { "btf", OPT_BTF, 0, 0,
+    "use BTF instead of DWARF in ELF files", 0 },
+#endif
+#ifdef WITH_CTF
+  { "ctf", OPT_CTF, 0, 0,
+    "use CTF instead of DWARF in ELF files", 0 },
+#endif
+  { "debug-info-dir1", OPT_D1, "PATH", 0,
+    "the root for the debug info of the first kernel", 0 },
+  { "d1", OPT_D1, "PATH", OPTION_ALIAS, 0, 0 },
+  { "debug-info-dir2", OPT_D2, "PATH", 0,
+    "the root for the debug info of the second kernel", 0 },
+  { "d2", OPT_D2, "PATH", OPTION_ALIAS, 0, 0 },
+  { "exported-interfaces-only", OPT_EXPORTED_INTERFACES_ONLY, 0, 0,
+    "analyze exported interfaces only", 0 },
+  { "full-impact", OPT_FULL_IMPACT, 0, 0,
+    "show the full impact of changes on top-most interfaces", 0 },
+  { "impacted-interfaces", OPT_IMPACTED_INTERFACES, 0, 0,
+    "show interfaces impacted by ABI changes", 0 },
+  { "linux-kernel-abi-whitelist", OPT_KMI_WHITELIST, "PATH", 0,
+    "path to a linux kernel abi whitelist", 0 },
+  { "w", OPT_KMI_WHITELIST, "PATH", OPTION_ALIAS, 0, 0 },
+  { "no-change-categorization", OPT_NO_CHANGE_CATEGORIZATION, 0, 0,
+    "don't perform categorization of changes, for speed purposes", 0 },
+  { "show-bits", OPT_SHOW_BITS, 0, 0,
+    "show size and offsets in bits", 0 },
+  { "show-bytes", OPT_SHOW_BYTES, 0, 0,
+    "show size and offsets in bytes", 0 },
+  { "show-dec", OPT_SHOW_DEC, 0, 0,
+    "show size and offset in decimal", 0 },
+  { "show-hex", OPT_SHOW_HEX, 0, 0,
+    "show size and offset in hexadecimal", 0 },
+  { "suppressions", OPT_SUPPR, "PATH", 0,
+    "specify a suppression file", 0 },
+  { "suppr", OPT_SUPPR, "PATH", OPTION_ALIAS, 0, 0 },
+  { "verbose", OPT_VERBOSE, 0, 0,
+    "display verbose messages", 0 },
+  { "vmlinux1", OPT_VMLINUX1, "PATH", 0,
+    "the path to the first vmlinux", 0 },
+  { "l1", OPT_VMLINUX1, "PATH", OPTION_ALIAS, 0, 0 },
+  { "vmlinux2", OPT_VMLINUX2, "PATH", 0,
+    "the path to the second vmlinux", 0 },
+  { "l2", OPT_VMLINUX2, "PATH", OPTION_ALIAS, 0, 0 },
+  { 0, 0, 0, 0, 0, 0 }
+};
+
+static error_t
+parse_opt(int key, char* arg, struct argp_state* state)
+{
+  options& opts = *static_cast<options*>(state->input);
+  const string argument = arg ? string(arg) : string();
+
+  switch (key)
+    {
+    case OPT_ALLOW_NON_EXPORTED_INTERFACES:
+      opts.exported_interfaces_only = false;
+      break;
+
+#ifdef WITH_BTF
+    case OPT_BTF:
+      opts.use_btf = true;
+      break;
+#endif
+
+#ifdef WITH_CTF
+    case OPT_CTF:
+      opts.use_ctf = true;
+      break;
+#endif
+
+    case OPT_D1:
+      opts.di_root_path1 =
+	abigail::tools_utils::make_path_absolute(argument.c_str());
+      break;
+
+    case OPT_D2:
+      opts.di_root_path2 =
+	abigail::tools_utils::make_path_absolute(argument.c_str());
+      break;
+
+    case OPT_EXPORTED_INTERFACES_ONLY:
+      opts.exported_interfaces_only = true;
+      break;
+
+    case OPT_FULL_IMPACT:
+      opts.leaf_changes_only = false;
+      break;
+
+    case OPT_IMPACTED_INTERFACES:
+      opts.show_impacted_interfaces = true;
+      break;
+
+    case OPT_KMI_WHITELIST:
+      opts.kabi_whitelist_paths.push_back(argument);
+      break;
+
+    case OPT_NO_CHANGE_CATEGORIZATION:
+      opts.perform_change_categorization = false;
+      break;
+
+    case OPT_SHOW_BITS:
+      opts.show_offsets_sizes_in_bits = true;
+      break;
+
+    case OPT_SHOW_BYTES:
+      opts.show_offsets_sizes_in_bits = false;
+      break;
+
+    case OPT_SHOW_DEC:
+      opts.show_hexadecimal_values = false;
+      break;
+
+    case OPT_SHOW_HEX:
+      opts.show_hexadecimal_values = true;
+      break;
+
+    case OPT_SUPPR:
+      opts.suppression_paths.push_back(argument);
+      break;
+
+    case OPT_VERBOSE:
+      opts.verbose = true;
+      break;
+
+    case OPT_VMLINUX1:
+      opts.vmlinux1 = argument;
+      break;
+
+    case OPT_VMLINUX2:
+      opts.vmlinux2 = argument;
+      break;
+
+    case ARGP_KEY_ARG:
+      if (opts.kernel_dist_root1.empty())
+	opts.kernel_dist_root1 = argument;
+      else if (opts.kernel_dist_root2.empty())
+	opts.kernel_dist_root2 = argument;
+      else
+	argp_usage(state);
+      break;
+
+    case ARGP_KEY_END:
+      if (opts.kernel_dist_root1.empty() || opts.kernel_dist_root2.empty())
+	{
+	  std::cerr << state->argv[0]
+		    << ": "
+		    << "Two kernel trees are required\n";
+	  argp_usage(state);
+	}
+      break;
+
+    default:
+      return ARGP_ERR_UNKNOWN;
+    }
+
+  return 0;
+}
+
+static const char* argp_args_doc =
+  "<kernel-tree-dir1> <kernel-tree-dir2>";
+static const char* argp_doc =
+  "Compare the ABI of kernel module interfaces of two Linux kernel trees.";
+
+static const struct argp kmidiff_argp =
+{
+  argp_options,
+  parse_opt,
+  argp_args_doc,
+  argp_doc,
+  0,
+  0,
+  0
+};
+
+static void
+print_kmidiff_version(FILE* stream, struct argp_state* /*state*/)
+{
+  fprintf(stream, "kmidiff %s\n",
+	  abigail::tools_utils::get_library_version_string().c_str());
 }
 
 /// Parse the command line of the program.
@@ -158,154 +320,11 @@ display_usage(const string& prog_name, ostream& out)
 bool
 parse_command_line(int argc, char* argv[], options& opts)
 {
-  if (argc < 2)
+  argp_program_version_hook = print_kmidiff_version;
+  argp_program_bug_address = "<libabigail@sourceware.org>";
+
+  if (argp_parse(&kmidiff_argp, argc, argv, 0, 0, &opts) != 0)
     return false;
-
-  for (int i = 1; i < argc; ++i)
-    {
-      if (argv[i][0] != '-')
-	{
-	  if (opts.kernel_dist_root1.empty())
-	    opts.kernel_dist_root1 = argv[i];
-	  else if (opts.kernel_dist_root2.empty())
-	    opts.kernel_dist_root2 = argv[i];
-	  else
-	    return false;
-	}
-      else if (!strcmp(argv[i], "--verbose"))
-	  opts.verbose = true;
-      else if (!strcmp(argv[i], "--version")
-	       || !strcmp(argv[i], "-v"))
-	{
-	  opts.display_version = true;
-	  return true;
-	}
-      else if (!strcmp(argv[i], "--help")
-	       || !strcmp(argv[i], "-h"))
-	{
-	  opts.display_usage = true;
-	  return true;
-	}
-      else if (!strcmp(argv[i], "--debug-info-dir1")
-	       || !strcmp(argv[i], "--d1"))
-	{
-	  int j = i + 1;
-	  if (j >= argc)
-	    {
-	      opts.missing_operand = true;
-	      opts.wrong_option = argv[i];
-	      return true;
-	    }
-	  // elfutils wants the root path to the debug info to be
-	  // absolute.
-	  opts.di_root_path1 =
-	    abigail::tools_utils::make_path_absolute(argv[j]);
-	  ++i;
-	}
-      else if (!strcmp(argv[i], "--debug-info-dir2")
-	       || !strcmp(argv[i], "--d2"))
-	{
-	  int j = i + 1;
-	  if (j >= argc)
-	    {
-	      opts.missing_operand = true;
-	      opts.wrong_option = argv[i];
-	      return true;
-	    }
-	  // elfutils wants the root path to the debug info to be
-	  // absolute.
-	  opts.di_root_path2 =
-	    abigail::tools_utils::make_path_absolute(argv[j]);
-	  ++i;
-	}
-      else if (!strcmp(argv[i], "--vmlinux1")
-	       || !strcmp(argv[i], "--l1"))
-	{
-	  int j = i + 1;
-	  if (j >= argc)
-	    {
-	      opts.missing_operand = true;
-	      opts.wrong_option = argv[i];
-	      return false;
-	    }
-	  opts.vmlinux1 = argv[j];
-	  ++i;
-	}
-      else if (!strcmp(argv[i], "--vmlinux2")
-	       || !strcmp(argv[i], "--l2"))
-	{
-	  int j = i + 1;
-	  if (j >= argc)
-	    {
-	      opts.missing_operand = true;
-	      opts.wrong_option = argv[i];
-	      return false;
-	    }
-	  opts.vmlinux2 = argv[j];
-	  ++i;
-	}
-      else if (!strcmp(argv[i], "--kmi-whitelist")
-	       || !strcmp(argv[i], "-w"))
-	{
-	  int j = i + 1;
-	  if (j >= argc)
-	    {
-	      opts.missing_operand = true;
-	      opts.wrong_option = argv[i];
-	      return false;
-	    }
-	  opts.kabi_whitelist_paths.push_back(argv[j]);
-	  ++i;
-	}
-      else if (!strcmp(argv[i], "--suppressions")
-	       || !strcmp(argv[i], "--suppr"))
-	{
-	  int j = i + 1;
-	  if (j >= argc)
-	    {
-	      opts.missing_operand = true;
-	      opts.wrong_option = argv[i];
-	      return false;
-	    }
-	  opts.suppression_paths.push_back(argv[j]);
-	  ++i;
-	}
-#ifdef WITH_CTF
-      else if (!strcmp(argv[i], "--ctf"))
-	opts.use_ctf = true;
-#endif
-#ifdef WITH_BTF
-      else if (!strcmp(argv[i], "--btf"))
-	opts.use_btf = true;
-#endif
-      else if (!strcmp(argv[i], "--no-change-categorization")
-	       || !strcmp(argv[i], "-x"))
-	opts.perform_change_categorization = false;
-      else if (!strcmp(argv[i], "--impacted-interfaces")
-	       || !strcmp(argv[i], "-i"))
-	opts.show_impacted_interfaces = true;
-      else if (!strcmp(argv[i], "--full-impact")
-	       || !strcmp(argv[i], "-f"))
-	opts.leaf_changes_only = false;
-      else if (!strcmp(argv[i], "--exported-interfaces-only"))
-	opts.exported_interfaces_only = true;
-      else if (!strcmp(argv[i], "--allow-non-exported-interfaces"))
-	opts.exported_interfaces_only = false;
-      else if (!strcmp(argv[i], "--show-bytes"))
-	opts.show_offsets_sizes_in_bits = false;
-      else if (!strcmp(argv[i], "--show-bits"))
-	opts.show_offsets_sizes_in_bits = true;
-      else if (!strcmp(argv[i], "--show-hex"))
-	opts.show_hexadecimal_values = true;
-      else if (!strcmp(argv[i], "--show-dec"))
-	opts.show_hexadecimal_values = false;
-      else
-	{
-	  opts.wrong_option = argv[i];
-	  return false;
-	}
-    }
-
   return true;
 }
 
@@ -403,38 +422,10 @@ main(int argc, char* argv[])
 {
   options opts;
   if (!parse_command_line(argc, argv, opts))
-    {
-      emit_prefix(argv[0], cerr)
-	<< "unrecognized option: "
-	<< opts.wrong_option << "\n"
-	<< "try the --help option for more information\n";
-      return 1;
-    }
-
-  if (opts.missing_operand)
-    {
-      emit_prefix(argv[0], cerr)
-	<< "missing operand to option: " << opts.wrong_option <<"\n"
-	<< "try the --help option for more information\n";
-      return 1;
-    }
+    return 1;
 
   if (!maybe_check_suppression_files(opts))
     return 1;
-
-  if (opts.display_usage)
-    {
-      display_usage(argv[0], cout);
-      return 1;
-    }
-
-  if (opts.display_version)
-    {
-      emit_prefix(argv[0], cout)
-	<< abigail::tools_utils::get_library_version_string()
-	<< "\n";
-      return 0;
-    }
 
   environment env;
 
