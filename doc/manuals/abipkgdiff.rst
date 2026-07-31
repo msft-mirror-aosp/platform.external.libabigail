@@ -95,6 +95,19 @@ default suppression specification that might be already loaded.
 The user might as well use the ``--suppressions`` option (that is
 documented further below) to provide a suppression specification.
 
+* Parallel processing
+
+  The environment variable ABIGAIL_THREAD_POOL_SIZE can be set to
+  either an integer, or a percentage value, e.g, 10%.  The integer
+  value defines the number of threads used by Libabigail to perform
+  parallel processing when applicable.  The percentage defines the
+  percentage of the total available cores to use by Libabigail to
+  perform the parallel processing when applicable.
+
+  By default, Libabigail uses all the available cores to perform its
+  parallel processing.
+
+
 .. _abipkgdiff_options_label:
 
 Options
@@ -631,6 +644,19 @@ Options
     provided -- then the ABI of all publicly defined and exported
     functions and global variables by the Linux Kernel binaries are
     compared.
+
+
+  * ``--thread-pool-size <N|N%> | -j <N|N%>``
+
+    Set the size of the thread pool used by Libabigail for parallel
+    processing.  The size is either the number of threads or a
+    percentage of the total number of available cores on the machine.
+    By default, all the available cores of the machine are used for
+    parallel processing.
+
+    Note that the environment variable ABIGAIL_THREAD_POOL_SIZE can
+    also be set to similar values.  This command line option, if
+    present, supersedes the value of the environment variable.
 
 
   * ``--verbose``

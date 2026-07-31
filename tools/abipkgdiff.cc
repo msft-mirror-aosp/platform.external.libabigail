@@ -219,6 +219,7 @@ public:
   bool		assume_odr_for_cplusplus;
   bool		self_check;
   bool		ignore_soname;
+  size_t	thread_pool_size;
   optional<bool> exported_interfaces_only;
 #ifdef WITH_CTF
   bool		use_ctf;
@@ -267,6 +268,7 @@ public:
       assume_odr_for_cplusplus(true),
       self_check(),
       ignore_soname(),
+      thread_pool_size(0),
       exported_interfaces_only(true)
 #ifdef WITH_CTF
       ,
@@ -1337,6 +1339,9 @@ set_diff_context_from_opts(diff_context_sptr ctxt,
 static void
 set_generic_options(abigail::fe_iface::options_type& o, const options& opts)
 {
+  if (opts.thread_pool_size)
+    environment::set_number_of_threads_to_use(opts.thread_pool_size);
+
   o.load_all_types = opts.show_all_types;
   o.leverage_dwarf_factorization =
     opts.leverage_dwarf_factorization;
@@ -3740,7 +3745,8 @@ enum option_key
   OPT_SHOW_HEX,
   OPT_SHOW_IDENTICAL_BINARIES,
   OPT_SUPPR,
-  OPT_VERBOSE,
+  OPT_THREAD_POOL_SIZE = 'j',
+  OPT_VERBOSE = OPT_SUPPR + 1,
   OPT_VERBOSE_DIFF
 };
 
@@ -3847,6 +3853,9 @@ static const struct argp_option argp_options[] =
   { "suppressions", OPT_SUPPR, "PATH", 0,
     "specify a suppression file", 0 },
   { "suppr", OPT_SUPPR, "PATH", OPTION_ALIAS, 0, 0 },
+  { "thread-pool-size", OPT_THREAD_POOL_SIZE, "N|N%", 0,
+    "set thread pool size for parallel processing", 0 },
+  { "j", OPT_THREAD_POOL_SIZE, "N|N%", OPTION_ALIAS, 0, 0 },
   { "verbose", OPT_VERBOSE, 0, 0,
     "emit verbose progress messages", 0 },
   { "verbose-diff", OPT_VERBOSE_DIFF, 0, 0,
@@ -4083,6 +4092,11 @@ parse_opt(int key, char* arg, struct argp_state* state)
 
     case OPT_SUPPR:
       opts.suppression_paths.push_back(argument);
+      break;
+
+    case OPT_THREAD_POOL_SIZE:
+      opts.thread_pool_size =
+	environment::process_thread_pool_size_string(argument);
       break;
 
     case OPT_VERBOSE:

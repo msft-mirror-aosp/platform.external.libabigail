@@ -50,13 +50,25 @@ change reports that might be considered as false positives to users.
   present, then no default system-wide suppression specification file
   is loaded.
 
-* Default user suppression specification file.
+* Default user suppression specification file
 
   It's located by the optional environment
   LIBABIGAIL_DEFAULT_USER_SUPPRESSION_FILE.  If that environment
   variable is not set, then abidiff tries to load the suppression file
   $HOME/.abignore.  If that file is not present, then no default user
   suppression specification is loaded.
+
+* Parallel processing
+
+  The environment variable ABIGAIL_THREAD_POOL_SIZE can be set to
+  either an integer, or a percentage value, e.g, 10%.  The integer
+  value defines the number of threads used by Libabigail to perform
+  parallel processing when applicable.  The percentage defines the
+  percentage of the total available cores to use by Libabigail to
+  perform the parallel processing when applicable.
+
+  By default, Libabigail uses all the available cores to perform its
+  parallel processing.
 
 .. _abidiff_options_label:
 
@@ -755,6 +767,18 @@ Options
     Only display the symbol tables of the *first-shared-library* and
     *second-shared-library*.
 
+
+  * ``--thread-pool-size <N|N%> | -j <N|N%>``
+
+    Set the size of the thread pool used by Libabigail for parallel
+    processing.  The size is either the number of threads or a
+    percentage of the total number of available cores on the machine.
+    By default, all the available cores of the machine are used for
+    parallel processing.
+
+    Note that the environment variable ABIGAIL_THREAD_POOL_SIZE can
+    also be set to similar values.  This command line option, if
+    present, supersedes the value of the environment variable.
 
   * ``--verbose``
 

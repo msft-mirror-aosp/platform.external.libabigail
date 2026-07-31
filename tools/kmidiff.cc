@@ -73,6 +73,7 @@ struct options
   vector<string>	suppression_paths;
   suppressions_type	read_time_supprs;
   suppressions_type	diff_time_supprs;
+  size_t		thread_pool_size;
   shared_ptr<char>	di_root_path1;
   shared_ptr<char>	di_root_path2;
 
@@ -91,6 +92,7 @@ struct options
     ,
       use_btf(false)
 #endif
+    ,thread_pool_size(0)
   {}
 }; // end struct options.
 
@@ -115,6 +117,7 @@ enum option_key
   OPT_SHOW_DEC,
   OPT_SHOW_HEX,
   OPT_SUPPR,
+  OPT_THREAD_POOL_SIZE = 'j',
   OPT_VERBOSE,
   OPT_VMLINUX1,
   OPT_VMLINUX2,
@@ -159,6 +162,10 @@ static const struct argp_option argp_options[] =
   { "suppressions", OPT_SUPPR, "PATH", 0,
     "specify a suppression file", 0 },
   { "suppr", OPT_SUPPR, "PATH", OPTION_ALIAS, 0, 0 },
+  { "thread-pool-size", OPT_THREAD_POOL_SIZE, "N|N%", 0,
+    "set the size of the thread pool used by libabigail for parallel processing"
+    " to either the number of threads or a percentage"
+    " of the number of available cores on the machines", 0 },
   { "verbose", OPT_VERBOSE, 0, 0,
     "display verbose messages", 0 },
   { "vmlinux1", OPT_VMLINUX1, "PATH", 0,
@@ -242,6 +249,13 @@ parse_opt(int key, char* arg, struct argp_state* state)
 
     case OPT_SUPPR:
       opts.suppression_paths.push_back(argument);
+      break;
+
+    case OPT_THREAD_POOL_SIZE:
+      {
+	size_t tps = environment::process_thread_pool_size_string(argument);
+	opts.thread_pool_size = tps;
+      }
       break;
 
     case OPT_VERBOSE:
@@ -446,6 +460,9 @@ main(int argc, char* argv[])
     return 1;
 
   environment env;
+
+  if (opts.thread_pool_size)
+    environment::set_number_of_threads_to_use(opts.thread_pool_size);
 
   if (opts.exported_interfaces_only.has_value())
     env.analyze_exported_interfaces_only(*opts.exported_interfaces_only);

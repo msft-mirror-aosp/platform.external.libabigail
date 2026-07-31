@@ -295,6 +295,15 @@ public:
   bool
   load_all_types() const;
 
+  static size_t
+  get_number_of_threads_to_use();
+
+  static void
+  set_number_of_threads_to_use(size_t);
+
+  static size_t
+  process_thread_pool_size_string(const string&);
+
 #ifdef WITH_DEBUG_SELF_COMPARISON
   void
   set_self_comparison_debug_input(const corpus_sptr& corpus);

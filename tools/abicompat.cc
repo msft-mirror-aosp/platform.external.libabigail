@@ -111,6 +111,7 @@ public:
   bool			show_locs;
   bool			fail_no_debug_info;
   bool			ignore_soname;
+  size_t		thread_pool_size;
 #ifdef WITH_CTF
   bool			use_ctf;
 #endif
@@ -128,7 +129,8 @@ public:
      no_redundant_opt_set(),
      show_locs(true),
      fail_no_debug_info(),
-     ignore_soname(false)
+     ignore_soname(false),
+     thread_pool_size(0)
 #ifdef WITH_CTF
     ,
       use_ctf()
@@ -765,7 +767,8 @@ enum option_key
   OPT_REDUNDANT,
   OPT_SHOW_BASE_NAMES = 'b',
   OPT_SUPPR = OPT_REDUNDANT + 1,
-  OPT_WEAK_MODE,
+  OPT_THREAD_POOL_SIZE = 'j',
+  OPT_WEAK_MODE = OPT_SUPPR + 1,
 };
 
 static const struct argp_option argp_options[] =
@@ -805,6 +808,9 @@ static const struct argp_option argp_options[] =
   { "suppressions", OPT_SUPPR, "PATH", 0,
     "specify a suppression file", 0 },
   { "suppr", OPT_SUPPR, "PATH", OPTION_ALIAS, 0, 0 },
+  { "thread-pool-size", OPT_THREAD_POOL_SIZE, "N|N%", 0,
+    "set thread pool size for parallel processing", 0 },
+  { "j", OPT_THREAD_POOL_SIZE, "N|N%", OPTION_ALIAS, 0, 0 },
   { "weak-mode", OPT_WEAK_MODE, 0, 0,
     "check compatibility between the application and just one version of "
     "the library", 0 },
@@ -878,6 +884,11 @@ parse_opt(int key, char* arg, struct argp_state* state)
 
     case OPT_SUPPR:
       opts.suppression_paths.push_back(argument);
+      break;
+
+    case OPT_THREAD_POOL_SIZE:
+      opts.thread_pool_size =
+	environment::process_thread_pool_size_string(argument);
       break;
 
     case OPT_WEAK_MODE:
@@ -1023,6 +1034,9 @@ main(int argc, char* argv[])
     app_di_roots.push_back(app_di_root);
   abigail::fe_iface::status status = abigail::fe_iface::STATUS_UNKNOWN;
   environment env;
+
+  if (opts.thread_pool_size)
+    environment::set_number_of_threads_to_use(opts.thread_pool_size);
 
   corpus_sptr app_corpus = read_corpus(opts, status,
 				       app_di_roots, env,

@@ -1106,6 +1106,39 @@ string_suffix(const string&	input_string,
   return true;
 }
 
+/// Get the prefix of a string, given a suffix to consider.
+///
+/// @param the input_string to consider.
+///
+/// @param suffix the suffix to consider.
+///
+/// @param output parameter.  Is set to the resulting prefix iff the
+/// function returns true.
+///
+/// @return true iff @p prefix is set to the prefix.
+bool
+string_prefix(const string&	input_string,
+	      const string&	suffix,
+	      string&		prefix)
+{
+  if (input_string.empty() || suffix.length() > input_string.length())
+    return false;
+
+  if (suffix.empty())
+    {
+      prefix = input_string;
+      return true;
+    }
+
+  if (input_string.compare(input_string.length() - suffix.length(),
+			   suffix.length(), suffix) != 0)
+    return false;
+
+  prefix = input_string.substr(0, input_string.length() - suffix.length());
+
+  return true;
+}
+
 /// Return the prefix that is common to two strings.
 ///
 /// @param s1 the first input string to consider.

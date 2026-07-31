@@ -142,6 +142,7 @@ struct options
   optional<bool>	exported_interfaces_only;
   bool			emit_native_offsets;
   type_id_style_kind	type_id_style;
+  size_t		thread_pool_size;
 #ifdef WITH_DEBUG_SELF_COMPARISON
   string		type_id_file_path;
 #endif
@@ -191,7 +192,8 @@ struct options
       assume_odr_for_cplusplus(true),
       leverage_dwarf_factorization(true),
       emit_native_offsets(false),
-      type_id_style(SEQUENCE_TYPE_ID_STYLE)
+      type_id_style(SEQUENCE_TYPE_ID_STYLE),
+      thread_pool_size(0)
   {}
 
   ~options()
@@ -327,6 +329,8 @@ set_generic_options(abigail::fe_iface::options_type& o, options& opts)
   o.assume_odr_for_cplusplus =
     opts.assume_odr_for_cplusplus;
   o.load_undefined_interfaces = opts.load_undefined_interfaces;
+  if (opts.thread_pool_size)
+    environment::set_number_of_threads_to_use(opts.thread_pool_size);
 }
 
 /// Given a corpus (or a corpus group), write it as ABIXML, read it
@@ -979,6 +983,7 @@ enum option_key
   OPT_SHOW_LOCS,
   OPT_SHOW_STATS,
   OPT_SUPPR,
+  OPT_THREAD_POOL_SIZE = 'j',
   OPT_TYPE_ID_STYLE,
   OPT_VERBOSE,
   OPT_VMLINUX,
@@ -1095,6 +1100,10 @@ static const struct argp_option argp_options[] =
   { "suppressions", OPT_SUPPR, "PATH", 0,
     "specify a suppression file", 0 },
   { "suppr", OPT_SUPPR, "PATH", OPTION_ALIAS, 0, 0 },
+  { "thread-pool-size", OPT_THREAD_POOL_SIZE, "N|N%", 0,
+    "set the size of the thread pool used by libabigail for parallel processing"
+    " to either the number of threads or a percentage"
+    " of the number of available cores on the machines", 0 },
   { "type-id-style", OPT_TYPE_ID_STYLE, "STYLE", 0,
     "type id style (sequence(default): \"type-id-\" + number; hash: "
     "hex-digits)", 0 },
@@ -1335,6 +1344,13 @@ parse_opt(int key, char* arg, struct argp_state* state)
 	opts.type_id_style = HASH_TYPE_ID_STYLE;
       else
 	argp_usage(state);
+      break;
+
+    case OPT_THREAD_POOL_SIZE:
+      {
+	size_t tps = environment::process_thread_pool_size_string(argument);
+	opts.thread_pool_size = tps;
+      }
       break;
 
     case OPT_VERBOSE:

@@ -2476,8 +2476,13 @@ public:
       // queue, and once the staging is done, the tasks are scheduled
       // for execution by worker threads.  The number of worker
       // threads is determined by the the variable nb_workers below.
-      int nb_workers = get_number_of_available_threads();
+      int nb_workers = environment::get_number_of_threads_to_use();
       workers::queue tu_ir_building_queue(nb_workers);
+
+      if (do_log())
+	cerr << "DWARF Reader: Using "
+	     << nb_workers
+	     << " threads to construct the internal representations ...\n";
 
       Dwarf_Half dwarf_vers = 0;
       unsigned nb_tus = 0;
@@ -4514,7 +4519,7 @@ public:
     tools_utils::timer cn_timer;
     if (do_log())
       {
-	cerr << "DWARF Reader is going to canonicalize "
+	cerr << "DWARF Reader canonicalizing "
 	     << std::dec
 	     << types_to_canonicalize().size()
 	     << " types";

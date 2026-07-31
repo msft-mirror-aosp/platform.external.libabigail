@@ -931,6 +931,7 @@ struct environment::priv
   bool					do_log_;
   optional<bool>			analyze_exported_interfaces_only_;
   optional<bool>			load_all_types_;
+  static atomic<size_t>		number_of_threads_to_use_;
 #ifdef WITH_DEBUG_SELF_COMPARISON
   bool					self_comparison_debug_on_;
 #endif
@@ -966,6 +967,12 @@ struct environment::priv
       debug_die_canonicalization_(false)
 #endif
   {}
+
+  static size_t
+  process_thread_pool_size_string(const string& tps);
+
+  static size_t
+  compute_number_of_threads_to_use();
 
   static void
   allow_type_comparison_results_caching(bool f);
@@ -1752,6 +1759,7 @@ partition_types(SequenceType types)
 
   auto first = types.front();
   environment& env = const_cast<environment&>(first->get_environment());
+
   homonym_type_group_sptr group;
   interned_string type_repr;
 
@@ -1797,13 +1805,18 @@ adjust_canonicalized_types_task_sptr;
 /// consider.
 ///
 /// @param types the types to adjust.  These must be canonicalized.
+///
+/// @param do_log log the progress if true.
 template<typename SequenceType>
 void
-adjust_canonicalized_types(SequenceType types)
+adjust_canonicalized_types(SequenceType types, bool do_log)
 {
   size_t num_workers =
-    std::min(get_number_of_available_threads(), types.size());
+    std::min(environment::get_number_of_threads_to_use(), types.size());
   queue task_queue(num_workers);
+
+  if (do_log)
+    std::cerr << "Using " << num_workers << " threads to adjust canonical types ...\n";
 
   type_base_sptr type, canonical_type;
   for (auto& type : types)
@@ -1939,7 +1952,7 @@ canonicalize_types(const SequenceType&	types,
       tmr.start();
     }
 
-  adjust_canonicalized_types(types);
+  adjust_canonicalized_types(types, do_log);
 
   // This part however is done sequentially.
   env.priv_->populate_canonical_types_map_from_partition();

@@ -142,6 +142,7 @@ struct options
   vector<string> added_bins_dirs2;
   vector<string> added_bins1;
   vector<string> added_bins2;
+  size_t thread_pool_size;
 
   options() :
       drop_private_types(false),
@@ -199,6 +200,8 @@ struct options
     ,
       use_btf()
 #endif
+    ,
+      thread_pool_size(0)
   {}
 
   ~options()
@@ -272,6 +275,7 @@ enum option_key
   OPT_STATS,
   OPT_SUPPR,
   OPT_SYMTABS,
+  OPT_THREAD_POOL_SIZE = 'j',
   OPT_VERBOSE,
 };
 
@@ -429,6 +433,10 @@ static const struct argp_option argp_options[] =
   { "suppr", OPT_SUPPR, "PATH", OPTION_ALIAS, 0, 0 },
   { "symtabs", OPT_SYMTABS, 0, 0,
     "only display the symbol tables of the corpora", 0 },
+  { "thread-pool-size", OPT_THREAD_POOL_SIZE, "N|N%", 0,
+    "set the size of the thread pool used by libabigail for parallel processing"
+    " to either the number of threads or a percentage"
+    " of the number of available cores on the machines", 0 },
   { "verbose", OPT_VERBOSE, 0, 0,
     "show verbose messages about internal stuff", 0 },
   { 0, 0, 0, 0, 0, 0 }
@@ -738,6 +746,13 @@ parse_opt(int key, char* arg, struct argp_state* state)
       opts.show_symtabs = true;
       break;
 
+    case OPT_THREAD_POOL_SIZE:
+      {
+	size_t tps = environment::process_thread_pool_size_string(argument);
+	opts.thread_pool_size = tps;
+      }
+      break;
+
     case OPT_VERBOSE:
       opts.do_log = true;
       break;
@@ -993,6 +1008,8 @@ set_generic_options(abigail::fe_iface::options_type& o, options& opts)
   o.leverage_dwarf_factorization =
     opts.leverage_dwarf_factorization;
   o.assume_odr_for_cplusplus = opts.assume_odr_for_cplusplus;
+  if (opts.thread_pool_size)
+    environment::set_number_of_threads_to_use(opts.thread_pool_size);
 }
 
 /// Set suppression specifications to the @p read_context used to load

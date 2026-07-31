@@ -69,6 +69,8 @@ More generally, ``kmidiff`` is invoked under the form: ::
 Environment
 ===========
 
+* General considerations
+
 By default, ``kmidiff`` compares all the interfaces (exported
 functions and variables) between the Kernel and its modules.  In
 practice, though, some users might want to compare a subset of the
@@ -106,6 +108,18 @@ interfaces associated with `ELF`_ symbols that are defined and
 exported by the `Linux Kernel`_ as being the union of the ``vmlinux``
 binary and all its compiled modules.  It then compares those
 interfaces (along with their types).
+
+* Parallel processing
+
+  The environment variable ABIGAIL_THREAD_POOL_SIZE can be set to
+  either an integer, or a percentage value, e.g, 10%.  The integer
+  value defines the number of threads used by Libabigail to perform
+  parallel processing when applicable.  The percentage defines the
+  percentage of the total available cores to use by Libabigail to
+  perform the parallel processing when applicable.
+
+  By default, Libabigail uses all the available cores to perform its
+  parallel processing.
 
 Options
 =======
@@ -259,6 +273,18 @@ Options
   * ``--show-dec``
 
     Show sizes and offsets in decimal base.
+
+  * ``--thread-pool-size <N|N%> | -j <N|N%>``
+
+    Set the size of the thread pool used by Libabigail for parallel
+    processing.  The size is either the number of threads or a
+    percentage of the total number of available cores on the machine.
+    By default, all the available cores of the machine are used for
+    parallel processing.
+
+    Note that the environment variable ABIGAIL_THREAD_POOL_SIZE can
+    also be set to similar values.  This command line option, if
+    present, supersedes the value of the environment variable.
 
 
 .. _ELF: http://en.wikipedia.org/wiki/Executable_and_Linkable_Format

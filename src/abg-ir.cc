@@ -1429,6 +1429,84 @@ unmark_types_as_being_compared(const class_decl& l, const class_decl &r)
 
 thread_local type_comparison_result_type environment::priv::type_comparison_results_cache_;
 thread_local bool environment::priv::allow_type_comparison_results_caching_ = false;
+std::atomic<size_t> environment::priv::number_of_threads_to_use_
+(environment::priv::compute_number_of_threads_to_use());
+
+/// Process a thread pool size string and convert it to a numeric value.
+///
+/// The string can be either an absolute number of threads or a
+/// percentage of available threads (indicated by a trailing '%').
+///
+/// @param tps the thread pool size string to process. If empty, the
+/// default value (number of available threads) is returned.
+///
+/// @return the computed thread pool size. If @p tps is a percentage,
+/// returns that percentage of available threads. If @p tps is an
+/// absolute value, returns that value directly. If @p tps is empty,
+/// returns the number of available threads.
+size_t
+environment::process_thread_pool_size_string(const string& tps)
+{return priv::process_thread_pool_size_string(tps);}
+
+/// Compute the number of threads to use by looking at if
+/// multithreading is enabled in libabigail at all.  Then look at the
+/// underlying hardware concurrency.  Then, look at the value of the
+/// environment variable ABIGAIL_THREAD_POOL_SIZE.
+size_t
+environment::priv::compute_number_of_threads_to_use()
+{
+  size_t initial_value = workers::get_number_of_available_threads();
+  size_t computed_value = initial_value;
+
+  if (initial_value > 1)
+    if (const char* v = std::getenv("ABIGAIL_THREAD_POOL_SIZE"))
+      computed_value = process_thread_pool_size_string(v);
+
+  return computed_value;
+}
+
+/// Process a thread pool size string and convert it to a numeric value.
+///
+/// The string can be either an absolute number of threads or a
+/// percentage of available threads (indicated by a trailing '%').
+///
+/// @param tps the thread pool size string to process. If empty, the
+/// default value (number of available threads) is returned.
+///
+/// @return the computed thread pool size. If @p tps is a percentage,
+/// returns that percentage of available threads. If @p tps is an
+/// absolute value, returns that value directly. If @p tps is empty,
+/// returns the number of available threads.
+size_t
+environment::priv::process_thread_pool_size_string(const string& tps)
+{
+  size_t default_value = workers::get_number_of_available_threads();
+  if (tps.empty())
+    return default_value;
+
+  size_t result = 0;
+  bool is_percentage = false;
+  if (tools_utils::string_ends_with(tps, "%"))
+    is_percentage = true;
+
+  if (is_percentage)
+    {
+      // tps is a percentage.
+      string percentage_value;
+      ABG_ASSERT(tools_utils::string_prefix(tps, "%", percentage_value));
+      result = strtoull(percentage_value.c_str(), 0, 0);
+      // The percentage of default_value.
+      result = (default_value * result) / 100;
+    }
+  else
+    // str is an absolute value.
+    result = strtoull(tps.c_str(), 0, 0);
+
+  if (result == 0)
+    result = default_value;
+
+  return result;
+}
 
 /// Clear the cache type comparison results.
 void
@@ -4534,6 +4612,30 @@ environment::load_all_types(bool f)
 bool
 environment::load_all_types() const
 {return priv_->load_all_types_.value_or(false);}
+
+/// Getter of the number of threads to use, as set by the user.
+///
+/// If the function returns zero, then it means the user didn't set
+/// any value.
+///
+/// @return the number of threads to use, as set by the user.
+size_t
+environment::get_number_of_threads_to_use()
+{return environment::priv::number_of_threads_to_use_.load();}
+
+/// Setter of the number of threads to use, as set by the user.
+///
+/// If the number is zero, then it means the user didn't set any
+/// value.  Also, note that the number cannot be higher than twice the
+/// number of available cores on the undelying machine.
+///
+/// @param n the number of threads to use, as set by the user.
+void
+environment::set_number_of_threads_to_use(size_t n)
+{
+  environment::priv::number_of_threads_to_use_ =
+    std::min (n, 2* workers::get_number_of_available_threads());
+}
 
 #ifdef WITH_DEBUG_SELF_COMPARISON
 /// Setter of the corpus of the input corpus of the self comparison
@@ -16918,16 +17020,21 @@ void
 canonicalize_homonym_type_groups(const vector<homonym_type_group_sptr>& groups,
 				 bool do_log, bool show_stats)
 {
+  if (groups.empty())
+    return;
+
   tools_utils::timer tmr;
+
+  size_t num_workers = std::min(environment::get_number_of_threads_to_use(),
+				groups.size());
 
   if (do_log)
     {
       std::cerr << "Types are broken into " << groups.size() << " groups ...\n";
+      std::cerr << "Going to use " << num_workers << " threads to canonicalize them ...\n";
       tmr.start();
     }
 
-  size_t num_workers = std::min(get_number_of_available_threads(),
-				groups.size());
   queue task_queue(num_workers);
 
   // canonicalize types within each type group in parallel.
