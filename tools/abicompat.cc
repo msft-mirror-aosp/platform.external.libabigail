@@ -971,9 +971,22 @@ main(int argc, char* argv[])
       return 1;
     }
 
-  ABG_ASSERT(!opts.app_path.empty());
+  if (opts.app_path.empty())
+    {
+      emit_prefix(argv[0], cerr)
+	<< "Expecting at least the path to an application binary\n";
+      argp_help(&abicompat_argp, stderr, ARGP_HELP_USAGE, argv[0]);
+      return (abigail::tools_utils::ABIDIFF_USAGE_ERROR
+	    | abigail::tools_utils::ABIDIFF_ERROR);
+    }
+
   if (!abigail::tools_utils::check_file(opts.app_path, cerr, opts.prog_name))
-    return abigail::tools_utils::ABIDIFF_ERROR;
+    {
+      emit_prefix(argv[0], cerr)
+	<< "Application file " << opts.app_path << "doesn't exist\n";
+      argp_help(&abicompat_argp, stderr, ARGP_HELP_USAGE, argv[0]);
+      return abigail::tools_utils::ABIDIFF_ERROR;
+    }
 
   // Create the context of the diff
   diff_context_sptr ctxt = create_diff_context(opts);
