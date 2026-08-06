@@ -358,11 +358,28 @@ perform_self_comparison(const write_context_sptr& write_ctxt,
   set_ostream(*write_ctxt, tmp_file->get_stream());
   corpus_group_sptr corp_group = is_corpus_group(corp);
 
+  if (opts.do_log)
+    {
+      emit_prefix(argv[0], cerr)
+	<< "Writing ABIXML file to disk at '"
+	<< tmp_file->get_path()
+	<< "' ..."
+	<< std::endl;
+      t.start();
+    }
+
   if (corp_group)
     write_corpus_group(*write_ctxt, corp_group, 0);
   else
     write_corpus(*write_ctxt, corp, 0);
   tmp_file->get_stream().flush();
+
+  if (opts.do_log)
+    {
+      t.stop();
+      emit_prefix(argv[0], cerr)
+	<< " wrote ABIXML file to disk in " << t << "\n";
+    }
 
 #ifdef WITH_DEBUG_SELF_COMPARISON
   if (opts.debug_abidiff)
@@ -380,7 +397,13 @@ perform_self_comparison(const write_context_sptr& write_ctxt,
     load_canonical_type_ids(*rdr, opts.type_id_file_path);
 #endif
 
-  t.start();
+  if (opts.do_log)
+    {
+      emit_prefix(argv[0], cerr)
+	<< "Reading ABIXML back from disk ...\n";
+      t.start();
+    }
+
   fe_iface::status sts;
   corpus_sptr corp2;
   corpus_group_sptr corp_group2;
@@ -390,10 +413,12 @@ perform_self_comparison(const write_context_sptr& write_ctxt,
   else
     corp2 = rdr->read_corpus(sts);
 
-  t.stop();
   if (opts.do_log)
-    emit_prefix(argv[0], cerr)
-      << "Read corpus in: " << t << "\n";
+    {
+      t.stop();
+      emit_prefix(argv[0], cerr)
+	<< "Read back from disk corpus in: " << t << "\n";
+    }
 
 #ifdef WITH_DEBUG_SELF_COMPARISON
   if (opts.debug_abidiff
@@ -412,27 +437,70 @@ perform_self_comparison(const write_context_sptr& write_ctxt,
   diff_context_sptr ctxt(new diff_context);
   set_diff_context(ctxt);
   ctxt->show_locs(opts.show_locs);
-  t.start();
+  ctxt->do_log(opts.do_log && opts.show_stats);
+
+  if (opts.do_log)
+    {
+      emit_prefix(argv[0], cerr)
+	<< "comparing the two ABIs ...\n";
+      t.start();
+    }
+
   corpus_diff_sptr diff =
     corp_group2
     ? compute_diff(corp_group, corp_group2, ctxt)
     : compute_diff(corp, corp2, ctxt);
 
-  t.stop();
   if (opts.do_log)
-    emit_prefix(argv[0], cerr)
-      << "computed diff in: " << t << "\n";
+    {
+      t.stop();
+      emit_prefix(argv[0], cerr)
+	<< "computed diff in: " << t << "\n\n";
+
+      emit_prefix(argv[0], cerr)
+	<< "detecting potential changes ...\n";
+      t.start();
+    }
 
   bool has_error = diff->has_changes();
+
+  if (opts.do_log)
+    {
+      t.stop();
+      emit_prefix(argv[0], cerr)
+	<< "detected "
+	<< (has_error ? string("changes ") : string("no change "))
+	<< "in "
+	<< t
+	<< std::endl;
+    }
+
   if (has_error)
     {
-      t.start();
+      if (opts.do_log)
+	{
+	  emit_prefix(argv[0], cerr)
+	    << "analyzing changes and emitting report ..." << std::endl;
+	  t.start();
+	}
+
       diff->report(cerr);
-      t.stop();
+
+      if (opts.do_log)
+	{
+	  t.stop();
+	  emit_prefix(argv[0], cerr)
+	    << "analyzed changes and emitted report in " << t << std::endl;
+	}
+
+      return 1;
+    }
+  else
+    {
       if (opts.do_log)
 	emit_prefix(argv[0], cerr)
-	  << "emitted report in: " << t << "\n";
-      return 1;
+	  << "detected no error"
+	  << std::endl;
     }
   return 0;
 }
@@ -533,10 +601,6 @@ load_corpus_and_write_abixml(char* argv[],
   if (opts.do_log)
     emit_prefix(argv[0], cerr)
       << "read corpus from elf file in: " << t << "\n";
-
-  if (opts.do_log)
-    emit_prefix(argv[0], cerr)
-      << "reset reader ELF in: " << t << "\n";
 
   // If we couldn't create a corpus, emit some (hopefully) useful
   // diagnostics and return an error.
@@ -652,11 +716,6 @@ load_corpus_and_write_abixml(char* argv[],
 							  opts.added_bins_dirs);
     }
 
-  // Clear some resources to gain back some space.
-  t.start();
-  reader.reset();
-  t.stop();
-
   // Now create a write context and write out an ABI XML description
   // of the read corpus.
   t.start();
@@ -755,7 +814,7 @@ load_kernel_corpus_group_and_write_abixml(char* argv[],
 
   if (opts.do_log)
     emit_prefix(argv[0], cerr)
-      << "going to build ABI representation of the Linux Kernel ...\n";
+      << "building ABI representation of the Linux Kernel ...\n";
 
   global_timer.start();
   t.start();
