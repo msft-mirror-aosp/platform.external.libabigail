@@ -67,6 +67,7 @@ using abigail::tools_utils::stick_corpus_and_dependencies_into_corpus_group;
 using abigail::tools_utils::stick_corpus_and_binaries_into_corpus_group;
 using abigail::tools_utils::add_dependencies_into_corpus_group;
 using abigail::tools_utils::get_dependencies;
+using abigail::tools_utils::timer;
 
 using namespace abigail;
 
@@ -984,7 +985,7 @@ set_diff_context_from_opts(diff_context_sptr ctxt,
 
   ctxt->dump_diff_tree(opts.dump_diff_tree);
 
-  ctxt->do_log(opts.do_log);
+  ctxt->do_log(opts.do_log && opts.show_stats);
 }
 
 /// Set a bunch of tunable buttons on the ELF-based reader from the
@@ -1397,6 +1398,7 @@ main(int argc, char* argv[])
 	// loading either one of the input files.
 	return abigail::tools_utils::ABIDIFF_OK;
 
+      timer t;
       switch (t1_type)
 	{
 	case abigail::tools_utils::FILE_TYPE_UNKNOWN:
@@ -1405,7 +1407,24 @@ main(int argc, char* argv[])
 	  return abigail::tools_utils::ABIDIFF_ERROR;
 	  break;
 	case abigail::tools_utils::FILE_TYPE_NATIVE_BI:
-	  t1 = abixml::read_translation_unit_from_file(opts.file1, env);
+	  {
+	    if (opts.do_log)
+	      {
+		t.start();
+		std::cerr << "reading first translation unit ABIXML file '"
+			  << opts.file1
+			  << "'...\n";
+	      }
+
+	    t1 = abixml::read_translation_unit_from_file(opts.file1, env);
+
+	    if (opts.do_log)
+	      {
+		t.stop();
+		std::cerr << "read first ABIXML file '"
+			  << opts.file1 << "' in " << t << "\n";
+	      }
+	  }
 	  break;
 	case abigail::tools_utils::FILE_TYPE_ELF: // fall through
 	case abigail::tools_utils::FILE_TYPE_AR:
@@ -1427,7 +1446,23 @@ main(int argc, char* argv[])
 
 	    ABG_ASSERT(rdr);
 	    set_suppressions(*rdr, opts);
+
+	    if (opts.do_log)
+	      {
+		std::cerr << "Reading first binary '"
+			  << opts.file1
+			  << "' ...\n";
+		t.start();
+	      }
+
 	    c1 = rdr->read_corpus(c1_status);
+
+	    if (opts.do_log)
+	      {
+		t.stop();
+		std::cerr << "read first binary '"
+			  << opts.file1 << "' in " << t << "\n";
+	      }
 
 	    if (!c1
 		|| (opts.fail_no_debug_info
@@ -1459,7 +1494,23 @@ main(int argc, char* argv[])
 	    assert(rdr);
 	    set_suppressions(*rdr, opts);
 
+	    if (opts.do_log)
+	      {
+		std::cerr << "Reading first ABIXML corpus file '"
+			  << opts.file1
+			  << "' ...\n";
+		t.start();
+	      }
+
 	    c1 = rdr->read_corpus(c1_status);
+
+	    if (opts.do_log)
+	      {
+		t.stop();
+		std::cerr << "read first ABIXML corpus file '"
+			  << opts.file1 << "' in " << t << "\n";
+	      }
+
 	    if (!c1)
 	      return handle_error(c1_status, /*ctxt=*/0, argv[0], opts);
 	  }
@@ -1471,7 +1522,23 @@ main(int argc, char* argv[])
 	    assert(rdr);
 	    set_suppressions(*rdr, opts);
 
+	    if (opts.do_log)
+	      {
+		std::cerr << "Reading first ABIXML corpus group file '"
+			  << opts.file1
+			  << "' ...\n";
+		t.start();
+	      }
+
 	    g1 = abixml::read_corpus_group_from_input(*rdr);
+
+	    if (opts.do_log)
+	      {
+		t.stop();
+		std::cerr << "read first ABIXML corpus group file '"
+			  << opts.file1 << "' in " << t << "\n";
+	      }
+
 	    if (!g1)
 	      return handle_error(c1_status, /*ctxt=*/0,
 				  argv[0], opts);
@@ -1494,7 +1561,24 @@ main(int argc, char* argv[])
 	  return abigail::tools_utils::ABIDIFF_ERROR;
 	  break;
 	case abigail::tools_utils::FILE_TYPE_NATIVE_BI:
-	  t2 = abixml::read_translation_unit_from_file(opts.file2, env);
+	  {
+	    if (opts.do_log)
+	      {
+		t.start();
+		std::cerr << "reading second translation unit ABIXML file '"
+			  << opts.file2
+			  << "'...\n";
+	      }
+
+	    t2 = abixml::read_translation_unit_from_file(opts.file2, env);
+
+	    if (opts.do_log)
+	      {
+		t.stop();
+		std::cerr << "read second translation unit ABIXML file '"
+			  << opts.file2 << "' in " << t << "\n";
+	      }
+	  }
 	  break;
 	case abigail::tools_utils::FILE_TYPE_ELF: // Fall through
 	case abigail::tools_utils::FILE_TYPE_AR:
@@ -1515,7 +1599,23 @@ main(int argc, char* argv[])
 					   abi_reader_options);
             ABG_ASSERT(rdr);
 	    set_suppressions(*rdr, opts);
+
+	    if (opts.do_log)
+	      {
+		t.start();
+		std::cerr << "reading second binary file '"
+			  << opts.file2
+			  << "'...\n";
+	      }
+
 	    c2 = rdr->read_corpus(c2_status);
+
+	    if (opts.do_log)
+	      {
+		t.stop();
+		std::cerr << "read second binary file '"
+			  << opts.file2 << "' in " << t << "\n";
+	      }
 
 	    if (!c2
 		|| (opts.fail_no_debug_info
@@ -1546,7 +1646,23 @@ main(int argc, char* argv[])
 	    assert(rdr);
 	    set_suppressions(*rdr, opts);
 
+	    if (opts.do_log)
+	      {
+		t.start();
+		std::cerr << "reading second ABIXML corpus file '"
+			  << opts.file2
+			  << "'...\n";
+	      }
+
 	    c2 = rdr->read_corpus(c2_status);
+
+	    if (opts.do_log)
+	      {
+		t.stop();
+		std::cerr << "read second ABIXML corpus file '"
+			  << opts.file2 << "' in " << t << "\n";
+	      }
+
 	    if (!c2)
 	      return handle_error(c2_status, /*ctxt=*/0, argv[0], opts);
 
@@ -1559,7 +1675,23 @@ main(int argc, char* argv[])
 	    assert(rdr);
 	    set_suppressions(*rdr, opts);
 
+	    if (opts.do_log)
+	      {
+		t.start();
+		std::cerr << "reading second ABIXML corpus group file '"
+			  << opts.file2
+			  << "'...\n";
+	      }
+
 	    g2 = abixml::read_corpus_group_from_input(*rdr);
+
+	    if (opts.do_log)
+	      {
+		t.stop();
+		std::cerr << "read second ABIXML corpus group file '"
+			  << opts.file2 << "' in " << t << "\n";
+	      }
+
 	    if (!g2)
 	      return handle_error(c2_status, /*ctxt=*/0, argv[0], opts);
 	  }
@@ -1627,11 +1759,10 @@ main(int argc, char* argv[])
 
       if (t1)
 	{
-	  tools_utils::timer t;
 	  if (opts.do_log)
 	    {
-	      t.start();
 	      std::cerr << "Compute diff ...\n";
+	      t.start();
 	    }
 
 	  translation_unit_diff_sptr diff = compute_diff(t1, t2, ctxt);
@@ -1656,7 +1787,7 @@ main(int argc, char* argv[])
 	      if (opts.do_log)
 		{
 		  t.stop();
-		  std::cerr << "Report computed!:" << t << "\n";
+		  std::cerr << "Report computed in:" << t << "\n";
 		}
 	    }
 	}
@@ -1683,11 +1814,10 @@ main(int argc, char* argv[])
 	      }
 
 	  adjust_diff_context_for_kmidiff(*ctxt);
-	  tools_utils::timer t;
 	  if (opts.do_log)
 	    {
-	      t.start();
 	      std::cerr << "Compute diff ...\n";
+	      t.start();
 	    }
 
 	  corpus_diff_sptr diff = compute_diff(g1, g2, ctxt);
@@ -1696,7 +1826,7 @@ main(int argc, char* argv[])
 	    {
 	      t.stop();
 	      diff->do_log(true);
-	      std::cerr << "diff computed!:" << t << "\n";
+	      std::cerr << "diff computed in:" << t << "\n";
 	    }
 
 	  if (opts.do_log)
@@ -1707,16 +1837,17 @@ main(int argc, char* argv[])
 
 	  if (diff->has_net_changes())
 	    status = abigail::tools_utils::ABIDIFF_ABI_CHANGE;
+
 	  if (opts.do_log)
 	    {
 	      t.stop();
-	      std::cerr << "net changes computed!: "<< t << "\n";
+	      std::cerr << "net changes computed in: "<< t << "\n";
 	    }
 
 	  if (opts.do_log)
 	    {
-	      t.start();
 	      std::cerr << "Computing incompatible changes ...\n";
+	      t.start();
 	    }
 
 	  if (diff->has_incompatible_changes())
@@ -1725,7 +1856,7 @@ main(int argc, char* argv[])
 	  if (opts.do_log)
 	    {
 	      t.stop();
-	      std::cerr << "incompatible changes computed!: "<< t << "\n";
+	      std::cerr << "incompatible changes computed in: "<< t << "\n";
 	    }
 
 	  if (opts.do_log)
@@ -1739,7 +1870,7 @@ main(int argc, char* argv[])
 	      if (opts.do_log)
 		{
 		  t.stop();
-		  std::cerr << "changes computed!: "<< t << "\n";
+		  std::cerr << "changes computed in: "<< t << "\n";
 		}
 
 	      if (opts.do_log)
@@ -1753,7 +1884,7 @@ main(int argc, char* argv[])
 	      if (opts.do_log)
 		{
 		  t.stop();
-		  std::cerr << "Report computed!:" << t << "\n";
+		  std::cerr << "Report computed in:" << t << "\n";
 		}
 	    }
 	  else
@@ -1761,7 +1892,7 @@ main(int argc, char* argv[])
 	      if (opts.do_log)
 		{
 		  t.stop();
-		  std::cerr << "changes computed!: "<< t << "\n";
+		  std::cerr << "changes computed in: "<< t << "\n";
 		}
 	    }
 
@@ -1805,11 +1936,10 @@ main(int argc, char* argv[])
 	  set_corpus_keep_drop_regex_patterns(opts, c1);
 	  set_corpus_keep_drop_regex_patterns(opts, c2);
 
-	  tools_utils::timer t;
 	  if (opts.do_log)
 	    {
+	      std::cerr << "Computing diff ...\n";
 	      t.start();
-	      std::cerr << "Compute diff ...\n";
 	    }
 
 	  corpus_diff_sptr diff = compute_diff(c1, c2, ctxt);
@@ -1817,23 +1947,22 @@ main(int argc, char* argv[])
 	  if (opts.do_log)
 	    {
 	      t.stop();
-	      std::cerr << "diff computed!:" << t << "\n";
+	      std::cerr << "diff computed in:" << t << "\n";
 	    }
 
 	  if (opts.do_log)
 	    {
-	      t.start();
 	      std::cerr << "Computing net changes ...\n";
+	      t.start();
 	    }
 
 	  if (diff->has_net_changes())
-	    {
-	      if (opts.do_log)
-		{
-		  t.stop();
-		  std::cerr << "net changes computed!: "<< t << "\n";
-		}
 	      status = abigail::tools_utils::ABIDIFF_ABI_CHANGE;
+
+	  if (opts.do_log)
+	    {
+	      t.stop();
+	      std::cerr << "net changes computed in: "<< t << "\n";
 	    }
 
 	  if (opts.do_log)
@@ -1843,19 +1972,15 @@ main(int argc, char* argv[])
 	    }
 
 	  if (diff->has_incompatible_changes())
-	    {
-	      if (opts.do_log)
-		{
-		  t.stop();
-		  std::cerr << "incompatible changes computed!: "<< t << "\n";
-		}
-	      status |= abigail::tools_utils::ABIDIFF_ABI_INCOMPATIBLE_CHANGE;
-	    }
+	    status |= abigail::tools_utils::ABIDIFF_ABI_INCOMPATIBLE_CHANGE;
 
 	  if (opts.do_log)
 	    {
-	      t.start();
+	      t.stop();
+	      std::cerr << "incompatible changes computed in: "<< t << "\n";
+
 	      std::cerr << "Computing changes ...\n";
+	      t.start();
 	    }
 
 	  if (diff->has_changes())
@@ -1863,13 +1988,13 @@ main(int argc, char* argv[])
 	      if (opts.do_log)
 		{
 		  t.stop();
-		  std::cerr << "changes computed!: "<< t << "\n";
+		  std::cerr << "changes computed in: "<< t << "\n";
 		}
 
 	      if (opts.do_log)
 		{
-		  t.start();
 		  std::cerr << "Computing report ...\n";
+		  t.start();
 		}
 
 	      diff->report(cout);
@@ -1877,7 +2002,15 @@ main(int argc, char* argv[])
 	      if (opts.do_log)
 		{
 		  t.stop();
-		  std::cerr << "Report computed!:" << t << "\n";
+		  std::cerr << "Report computed in:" << t << "\n";
+		}
+	    }
+	  else
+	    {
+	      if (opts.do_log)
+		{
+		  t.stop();
+		  std::cerr << "No change found! Computed in: "<< t << "\n";
 		}
 	    }
 	}
