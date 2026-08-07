@@ -1369,12 +1369,12 @@ main(int argc, char* argv[])
 	env.analyze_exported_interfaces_only(*opts.exported_interfaces_only);
 
 #ifdef WITH_DEBUG_SELF_COMPARISON
-	    if (opts.do_debug_self_comparison)
-	      env.self_comparison_debug_is_on(true);
+      if (opts.do_debug_self_comparison)
+	env.self_comparison_debug_is_on(true);
 #endif
 #ifdef WITH_DEBUG_TYPE_CANONICALIZATION
-	    if (opts.do_debug_type_canonicalization)
-	      env.debug_type_canonicalization_is_on(true);
+      if (opts.do_debug_type_canonicalization)
+	env.debug_type_canonicalization_is_on(true);
 #endif
       translation_unit_sptr t1, t2;
       abigail::fe_iface::status c1_status =
