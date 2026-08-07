@@ -707,7 +707,11 @@ public:
     if (do_log && show_stats)
       std::cerr << "Canonicalization of type '"
 		<< t->get_pretty_representation(true, true)
-		<< "/@#" << std::hex << t.get() << ": ";
+		<< "/@#"
+		<< std::hex
+		<< t.get()
+		<< std::dec
+		<< ": ";
 
     tools_utils::timer tmr;
 

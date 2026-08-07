@@ -1528,7 +1528,7 @@ diff_context::maybe_apply_filters(diff_sptr diff)
       if (do_log())
 	{
 	  t.stop();
-	  std::cerr << "filter applied!:" << t << "\n";
+	  std::cerr << "filter applied in:" << t << "\n";
 
 	  std::cerr << "propagating categories for the same diff node ... \n";
 	  t.start();
@@ -1539,7 +1539,7 @@ diff_context::maybe_apply_filters(diff_sptr diff)
       if (do_log())
 	{
 	  t.stop();
-	  std::cerr << "category propagated!: " << t << "\n";
+	  std::cerr << "categories propagated in: " << t << "\n";
 	}
     }
 
@@ -11168,7 +11168,7 @@ corpus_diff::priv::maybe_perform_change_categorization()
 	{
 	  t.stop();
 	  std::cerr << "in corpus_diff::priv::perform_change_categorization():"
-		    << "filters to changed fn applied!:" << t << "\n";
+		    << "filters to changed fn applied in:" << t << "\n";
 
 	  std::cerr << "in corpus_diff::priv::perform_change_categorization:"
 		    << "applying filters to "
@@ -11191,10 +11191,14 @@ corpus_diff::priv::maybe_perform_change_categorization()
 	{
 	  t.stop();
 	  std::cerr << "in corpus_diff::priv::perform_change_categorization:"
-		    << "filters to changed vars applied!:" << t << "\n";
+		    << "filters to changed vars applied in:" << t << "\n";
+
+	  unsigned n = changed_unreachable_types_sorted().size();
 
 	  std::cerr << "in corpus_diff::priv::perform_change_categorization:"
-		    << "applying filters to unreachable types ...\n";
+		    << "applying filters to "
+		    << n
+		    <<" unreachable types ...\n";
 	  t.start();
 	}
 
@@ -11202,6 +11206,15 @@ corpus_diff::priv::maybe_perform_change_categorization()
       // filters
       for (auto& diff : changed_unreachable_types_sorted())
 	ctxt->maybe_apply_filters(diff);
+
+      if (get_context()->do_log())
+	{
+	  t.stop();
+	  unsigned n = changed_unreachable_types_sorted().size();
+	  std::cerr << "in corpus_diff::priv::perform_change_categorization:"
+		    << "applied filters to " << n << " unreachable types in "
+		    << t << "\n";
+	}
     }
 }
 
@@ -11218,7 +11231,7 @@ corpus_diff::priv::maybe_perform_redundant_node_categorization()
       if (get_context()->do_log())
 	{
 	  std::cerr << "in corpus_diff::priv::perform_redundant_node_categorization:"
-		    << "filters to unreachable types applied!:" << t << "\n";
+		    << "filters to unreachable types applied in:" << t << "\n";
 
 	  std::cerr << "in corpus_diff::priv::perform_redundant_node_categorization:"
 		    << "categorizing redundant changed sub nodes ...\n";
@@ -11231,7 +11244,7 @@ corpus_diff::priv::maybe_perform_redundant_node_categorization()
 	{
 	  t.stop();
 	  std::cerr << "in corpus_diff::priv::perform_redundant_node_categorization:"
-		    << "redundant changed sub nodes categorized!:" << t << "\n";
+		    << "redundant changed sub nodes categorized in:" << t << "\n";
 
 	  std::cerr << "in corpus_diff::priv::perform_redundant_node_categorization:"
 		    << "count changed fns ...\n";
@@ -11360,7 +11373,7 @@ corpus_diff::priv::apply_filters_and_compute_diff_stats(corpus_diff* d,
   if (get_context()->do_log())
     {
       std::cerr << "in apply_filters_and_compute_diff_stats:"
-		<< "changed fn counted!:" << t << "\n";
+		<< "changed fn counted in:" << t << "\n";
 
       std::cerr << "in apply_filters_and_compute_diff_stats:"
 		<< "count changed vars ...\n";
@@ -11423,7 +11436,7 @@ corpus_diff::priv::apply_filters_and_compute_diff_stats(corpus_diff* d,
     {
       t.stop();
       std::cerr << "in apply_filters_and_compute_diff_stats:"
-		<< "changed vars counted!:" << t << "\n";
+		<< "changed vars counted in:" << t << "\n";
 
       std::cerr << "in apply_filters_and_compute_diff_stats:"
 		<< "count leaf changed types ...\n";
@@ -11452,7 +11465,7 @@ corpus_diff::priv::apply_filters_and_compute_diff_stats(corpus_diff* d,
     {
       t.stop();
       std::cerr << "in apply_filters_and_compute_diff_stats:"
-		<< "changed leaf types counted!:" << t << "\n";
+		<< "changed leaf types counted in:" << t << "\n";
 
       std::cerr << "in apply_filters_and_compute_diff_stats:"
 		<< "count leaf changed artefacts ...\n";
@@ -11472,7 +11485,7 @@ corpus_diff::priv::apply_filters_and_compute_diff_stats(corpus_diff* d,
     {
       t.stop();
       std::cerr << "in apply_filters_and_compute_diff_stats:"
-		<< "changed leaf artefacts counted!:" << t << "\n";
+		<< "changed leaf artefacts counted in:" << t << "\n";
 
       std::cerr << "in apply_filters_and_compute_diff_stats:"
 		<< "count unreachable types ...\n";
@@ -11499,7 +11512,7 @@ corpus_diff::priv::apply_filters_and_compute_diff_stats(corpus_diff* d,
       {
 	t.stop();
 	std::cerr << "in apply_filters_and_compute_diff_stats:"
-		  << "unreachable types counted!:" << t << "\n";
+		  << "unreachable types counted in:" << t << "\n";
       }
 
     stat.num_added_unreachable_types(num_added_unreachable_types);
@@ -12437,7 +12450,7 @@ corpus_diff::apply_filters_and_suppressions_before_reporting()
   if (do_log())
     {
       t.stop();
-      std::cerr << "leaf nodes marked!:" << t << "\n";
+      std::cerr << "leaf nodes marked in:" << t << "\n";
       std::cerr << "Applying filters and computing diff stats ...\n";
       t.start();
     }
@@ -12447,7 +12460,7 @@ corpus_diff::apply_filters_and_suppressions_before_reporting()
   if (do_log())
     {
       t.stop();
-      std::cerr << "Filters applied and diff stats computed!: " << t << "\n";
+      std::cerr << "Filters applied and diff stats computed in: " << t << "\n";
     }
 
   return *priv_->diff_stats_;
