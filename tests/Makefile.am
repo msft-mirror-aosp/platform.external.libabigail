@@ -27,7 +27,7 @@ if ENABLE_LIBABIGAIL_MULTITHREADING
 # They also need LD_LIBRARY_PATH to be set to pick up the right
 # elfutils library, in case the --with-elfutils= configure option was
 # used.
-AM_TESTS_ENVIRONMENT = export ENABLE_SLOW_TEST=yes; export LD_LIBRARY_PATH=${eu_prefix}/lib;
+AM_TESTS_ENVIRONMENT = export ENABLE_SLOW_TEST=yes; export LD_LIBRARY_PATH=${EU_LIBDIR};
 endif
 
 # rather expensive tests (keep in this order), > 1s runtime

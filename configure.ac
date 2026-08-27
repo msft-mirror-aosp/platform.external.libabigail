@@ -258,19 +258,11 @@ AC_ARG_ENABLE(inlined-xxhash,
 	      ENABLE_INLINED_XXHASH=$enableval,
 	      ENABLE_INLINED_XXHASH=no)
 
-WITH_DW_LIBS_PATH=auto
-AC_ARG_WITH(libdw,
-	    AS_HELP_STRING([--with-libdw=/path/to/libdw-library/prefix],
-			   [Set the path to the libdw library prefix]),
-	    WITH_DW_LIBS_PATH=$withval,
-	    WITH_DW_LIBS_PATH=auto)
-
-WITH_ELF_LIBS_PATH=auto
-AC_ARG_WITH(libelf,
-	    AS_HELP_STRING([--with-libelf=/path/to/libelf-library/prefix],
-			   [Set the path to the libelf library prefix]),
-	    WITH_ELF_LIBS_PATH=$withval,
-	    WITH_ELF_LIBS_PATH=auto)
+AC_ARG_WITH(elfutils,
+	    AS_HELP_STRING([--with-elfutils=/path/to/elfutils/prefix],
+			   [Set the path to the prefix for elfutils libraries]),
+	    WITH_ELFUTILS_PATH=$withval,
+	    WITH_ELFUTILS_PATH=auto)
 
 WITH_LIBXML2_PATH=auto
 AC_ARG_WITH(libxml2,
@@ -358,29 +350,41 @@ dnl Those were added in version 0.165.
 dnl look for libelf
 ELF_LIBS_VERSION=0.171
 SAVED_PKG_CONFIG_PATH=$PKG_CONFIG_PATH
-if test $WITH_ELF_LIBS_PATH != xauto; then
-  export PKG_CONFIG_PATH="$WITH_ELF_LIBS_PATH/lib/pkgconfig:$PKG_CONFIG_PATH"
+if test x$WITH_ELFUTILS_PATH != xauto; then
+  export PKG_CONFIG_PATH=$WITH_ELFUTILS_PATH/lib/pkgconfig
 fi
 
-AC_MSG_NOTICE([used PKG_CONFIG_PATH=$PKG_CONFIG_PATH to check for libelf]);
+AC_MSG_NOTICE([using PKG_CONFIG_PATH=$PKG_CONFIG_PATH to check for libelf]);
 PKG_CHECK_MODULES(ELF, libelf >= $ELF_LIBS_VERSION)
-if test $WITH_ELF_LIBS_PATH != xauto; then
+if test x$WITH_ELFUTILS_PATH != xauto; then
   PKG_CONFIG_PATH=$SAVED_PKG_CONFIG_PATH
 fi
 
 dnl Look for libdw
+EU_PREFIX=
+EU_LIBDIR=
+EU_INCLUDEDIR=
+
 DW_LIBS_VERSION=0.171
 SAVED_PKG_CONFIG_PATH=$PKG_CONFIG_PATH
-if test $WITH_DW_LIBS_PATH != xauto; then
-  export PKG_CONFIG_PATH="$WITH_DW_LIBS_PATH/lib/pkgconfig:$PKG_CONFIG_PATH"
+if test x$WITH_ELFUTILS_PATH != xauto; then
+  export PKG_CONFIG_PATH=$WITH_ELFUTILS_PATH/lib/pkgconfig
 fi
 
 AC_MSG_NOTICE([used PKG_CONFIG_PATH=$PKG_CONFIG_PATH to check for libdw]);
+
 PKG_CHECK_MODULES(DW, libdw >= $DW_LIBS_VERSION)
-if test $WITH_DW_LIBS_PATH != xauto; then
+PKG_CHECK_VAR(EU_PREFIX, libdw, prefix)
+PKG_CHECK_VAR(EU_LIBDIR, libdw, libdir)
+PKG_CHECK_VAR(EU_INCLUDEDIR, libdw, includedir)
+
+if test x$WITH_ELFUTILS_PATH != xauto; then
   PKG_CONFIG_PATH=$SAVED_PKG_CONFIG_PATH
 fi
 
+AC_MSG_NOTICE([found elfutils' prefix at $EU_PREFIX])
+AC_MSG_NOTICE([found elfutils' libdir at $EU_LIBDIR])
+AC_MSG_NOTICE([found elfutils' includedir at $EU_INCLUDEDIR])
 
 dnl Allow users to compile with the NDEBUG macro defined,
 dnl meaning they are compiling in a mode where the
@@ -1019,9 +1023,12 @@ AC_SUBST(HELGRIND_TRACK_DESTROY)
 
 
 ELFUTILS_HAS_THREAD_SAFETY=no
+dnl By default, look for elfutils in the default system prefix.
+
 if test x$ENABLE_MULTITHREADING != xno; then
-saved_CPPFLAGS="$CPPFLAGS"
-CPPFLAGS="-I${prefix}/include $CPPFLAGS"
+   saved_CPPFLAGS="$CPPFLAGS"
+   
+   CPPFLAGS="-I$EU_INCLUDEDIR $CPPFLAGS"
    AC_CHECK_HEADER([elfutils/version.h],
 		   [HAS_ELFUTILS_VERSION=yes],
 		   [AC_MSG_NOTICE([could not find elfutils/version.h])])
@@ -1040,7 +1047,8 @@ CPPFLAGS="-I${prefix}/include $CPPFLAGS"
       AC_MSG_NOTICE([I haven't detected thread-safety support in elfutils/version.h :-(])
       FOUND_MULTITHREADING_ENABLED_ELFUTILS=no
    fi
-CPPFLAGS="$saved_CPPFLAGS"
+
+   CPPFLAGS="$saved_CPPFLAGS"
 fi
 
 if test x$FOUND_MULTITHREADING_ENABLED_ELFUTILS = xyes; then
@@ -1051,7 +1059,9 @@ if test x$FOUND_MULTITHREADING_ENABLED_ELFUTILS = xyes; then
 		 [Define if elfutils defines _ELFUTILS_THREAD_SAFE])
        AC_DEFINE([HAVE_MULTITHREADING_SUPPORT], [1],
 		 [Define if libabigail has multithreading support])
-       AC_SUBST(eu_prefix)
+       AC_SUBST(EU_PREFIX)
+       AC_SUBST(EU_LIBDIR)
+       AC_SUBST(EU_INCLUDEDIR)
    fi
 else
    if test x$ENABLE_MULTITHREADING != xyes; then
@@ -1065,10 +1075,11 @@ fi
 MT_LIBS=-latomic
 
 dnl Set the list of libraries libabigail depends on
-DEPS_LIBS="$XML_LIBS $ELF_LIBS $DW_LIBS $CTF_LIBS $BPF_LIBS $LZMA_LIBS $MT_LIBS"
+DEPS_LIBS="$XML_LIBS $CTF_LIBS $BPF_LIBS $LZMA_LIBS $MT_LIBS"
 if test x$ENABLE_INLINED_XXHASH = xno; then
   DEPS_LIBS="$DEPS_LIBS $XXHASH_LIBS"
 fi
+DEPS_LIBS="$DEPS_LIBS $DW_LIBS $ELF_LIBS"
 
 AC_SUBST(DEPS_LIBS)
 
@@ -1768,6 +1779,7 @@ AC_MSG_NOTICE([
     C++ Compiler		                   : ${CXX}
     GCC visibility attribute supported             : ${SUPPORTS_GCC_VISIBILITY_ATTRIBUTE}
     CXXFLAGS	   	     			   : ${CXXFLAGS}
+    ELFUTILS prefix				   : ${EU_PREFIX}
     ELF_LIBS					   : ${ELF_LIBS}
     ELF_CFLAGS					   : ${ELF_CFLAGS}
     DW_LIBS					   : ${DW_LIBS}
