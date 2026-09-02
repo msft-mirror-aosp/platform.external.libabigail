@@ -20,6 +20,7 @@ endif
 
 noinst_PROGRAMS = abisym abinilint
 LDADD = $(abs_top_builddir)/src/libabigail.la
+AM_LDFLAGS = -lpthread
 
 abidiff_SOURCES = abidiff.cc
 abidiffdir = $(bindir)
@@ -41,12 +42,9 @@ abicompatdir = $(bindir)
 
 abipkgdiff_SOURCES = abipkgdiff.cc
 abipkgdiffdir = $(bindir)
-abipkgdiff_LDFLAGS = $(abs_top_builddir)/src/libabigail.la -pthread
 
 kmidiff_SOURCES = kmidiff.cc
 kmidiffdir = $(bindir)
-kmidiff_LDADD = $(abs_top_builddir)/src/libabigail.la
-kmidiff_LDFLAGS = $(abs_top_builddir)/src/libabigail.la -pthread
 
 AM_CPPFLAGS= $(DEPS_CPPFLAGS) \
 $(VISIBILITY_FLAGS) -I$(abs_top_srcdir)/include \
