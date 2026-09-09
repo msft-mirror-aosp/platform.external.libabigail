@@ -1735,6 +1735,7 @@ libabigail.pc
   doc/Makefile
     doc/manuals/Makefile
   src/Makefile
+  parallel-hashmap/Makefile
   tools/Makefile
   tests/Makefile
     tests/data/Makefile

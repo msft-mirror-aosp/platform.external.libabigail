@@ -48,4 +48,5 @@ kmidiffdir = $(bindir)
 
 AM_CPPFLAGS= $(DEPS_CPPFLAGS) \
 $(VISIBILITY_FLAGS) -I$(abs_top_srcdir)/include \
+-I$(abs_top_srcdir)/parallel-hashmap \
 -I$(abs_top_srcdir)/tools -fPIC

@@ -1,5 +1,5 @@
 ## SPDX-License-Identifier: Apache-2.0 WITH LLVM-exception
-SUBDIRS = include src tools tests doc bash-completion
+SUBDIRS = include src tools tests doc bash-completion parallel-hashmap
 ACLOCAL_AMFLAGS = -I m4 ${ACLOCAL_FLAGS}
 headers = config.h
 

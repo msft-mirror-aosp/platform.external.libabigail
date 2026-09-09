@@ -3270,7 +3270,7 @@ get_binary_paths_from_kernel_dist(const string&	dist_root,
 /// @param root the path of the directory under which the kernel
 /// kernel modules were found.
 ///
-/// @param di_root the directory in aboslute path which debug
+/// @param di_root the directory in absolute path which debug
 /// info is to be found for binaries under director @p root
 ///
 /// @param suppr_paths the paths to the suppression specifications to
