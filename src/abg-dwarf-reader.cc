@@ -5276,7 +5276,7 @@ public:
   }
 
   /// Walk all the DIEs accessible in the debug info (and in the
-  /// alternate debug info as well) and build maps representing the
+  /// alternate debug info as well) and build a map representing the
   /// relationship DIE -> parent.  That is, make it so that we can get
   /// the parent for a given DIE.
   ///
