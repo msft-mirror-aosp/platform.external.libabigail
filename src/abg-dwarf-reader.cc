@@ -2441,7 +2441,7 @@ public:
       tools_utils::timer t;
       if (do_log())
 	{
-	  cerr << "building die -> parent maps ...";
+	  cerr << "building die -> parent maps ...\n";
 	  t.start();
 	}
 
@@ -2450,8 +2450,8 @@ public:
       if (do_log())
 	{
 	  t.stop();
-	  cerr << " DONE@" << corpus()->get_path()
-	       << ":"
+	  cerr << "built DIE -> parent maps for " << corpus()->get_path()
+	       << " in : "
 	       << t
 	       << "\n";
 	}
