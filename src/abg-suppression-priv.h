@@ -36,7 +36,7 @@ using std::atomic;
 /// The private data of @ref suppression_base.
 class suppression_base::priv
 {
-  mutex				mutex_;
+  mutable mutex			mutex_;
   std::atomic<bool>			is_artificial_;
   std::atomic<bool>			drops_artifact_;
   string				label_;
@@ -84,6 +84,7 @@ public:
   const regex::regex_t_sptr&
   get_file_name_regex() const
   {
+    lock_guard<mutex> lock(mutex_);
     if (!file_name_regex_ && !file_name_regex_str_.empty())
       file_name_regex_ = regex::compile(file_name_regex_str_);
     return file_name_regex_;
@@ -100,6 +101,7 @@ public:
   const regex::regex_t_sptr&
   get_file_name_not_regex() const
   {
+    lock_guard<mutex> lock(mutex_);
     if (!file_name_not_regex_ && !file_name_not_regex_str_.empty())
       file_name_not_regex_ = regex::compile(file_name_not_regex_str_);
     return file_name_not_regex_;
@@ -116,6 +118,7 @@ public:
   const regex::regex_t_sptr&
   get_soname_regex() const
   {
+    lock_guard<mutex> lock(mutex_);
     if (!soname_regex_ && !soname_regex_str_.empty())
       soname_regex_ = regex::compile(soname_regex_str_);
     return soname_regex_;
@@ -132,6 +135,7 @@ public:
   const regex::regex_t_sptr&
   get_soname_not_regex() const
   {
+    lock_guard<mutex> lock(mutex_);
     if (!soname_not_regex_ && !soname_not_regex_str_.empty())
       soname_not_regex_ = regex::compile(soname_not_regex_str_);
     return soname_not_regex_;
@@ -216,6 +220,7 @@ class function_suppression::parameter_spec::priv
   friend class function_suppression::parameter_spec;
   friend class function_suppression;
 
+  mutable mutex			mutex_;
   size_t				index_;
   string				type_name_;
   string				type_name_regex_str_;
@@ -236,6 +241,7 @@ class function_suppression::parameter_spec::priv
   const regex::regex_t_sptr
   get_type_name_regex() const
   {
+    lock_guard<mutex> lock(mutex_);
     if (!type_name_regex_ && !type_name_regex_str_.empty())
       type_name_regex_ = regex::compile(type_name_regex_str_);
     return type_name_regex_;
@@ -249,7 +255,7 @@ struct function_suppression::priv
 {
   friend class function_suppression;
 
-  std::recursive_mutex			mutex_;
+  mutable std::mutex			mutex_;
   change_kind				change_kind_;
   string				name_;
   string				name_regex_str_;
@@ -310,6 +316,7 @@ struct function_suppression::priv
   const regex::regex_t_sptr
   get_name_regex() const
   {
+    lock_guard<mutex> lock(mutex_);
     if (!name_regex_ && !name_regex_str_.empty())
       name_regex_ = regex::compile(name_regex_str_);
     return name_regex_;
@@ -327,6 +334,7 @@ struct function_suppression::priv
   const regex::regex_t_sptr
   get_name_not_regex() const
   {
+    lock_guard<mutex> lock(mutex_);
     if (!name_not_regex_ && !name_not_regex_str_.empty())
       name_not_regex_ = regex::compile(name_not_regex_str_);
     return name_not_regex_;
@@ -344,6 +352,7 @@ struct function_suppression::priv
   const regex::regex_t_sptr
   get_return_type_regex() const
   {
+    lock_guard<mutex> lock(mutex_);
     if (!return_type_regex_ && !return_type_regex_str_.empty())
       return_type_regex_ = regex::compile(return_type_regex_str_);
     return return_type_regex_;
@@ -361,6 +370,7 @@ struct function_suppression::priv
   const regex::regex_t_sptr
   get_symbol_name_regex() const
   {
+    lock_guard<mutex> lock(mutex_);
     if (!symbol_name_regex_ && !symbol_name_regex_str_.empty())
       symbol_name_regex_ = regex::compile(symbol_name_regex_str_);
     return symbol_name_regex_;
@@ -378,6 +388,7 @@ struct function_suppression::priv
   const regex::regex_t_sptr
   get_symbol_name_not_regex() const
   {
+    lock_guard<mutex> lock(mutex_);
     if (!symbol_name_not_regex_ && !symbol_name_not_regex_str_.empty())
       symbol_name_not_regex_ = regex::compile(symbol_name_not_regex_str_);
     return symbol_name_not_regex_;
@@ -395,6 +406,7 @@ struct function_suppression::priv
   const regex::regex_t_sptr
   get_symbol_version_regex() const
   {
+    lock_guard<mutex> lock(mutex_);
     if (!symbol_version_regex_ && !symbol_version_regex_str_.empty())
       symbol_version_regex_ = regex::compile(symbol_version_regex_str_);
     return symbol_version_regex_;
@@ -424,6 +436,7 @@ struct variable_suppression::priv
 {
   friend class variable_suppression;
 
+  mutable mutex			mutex_;
   change_kind				change_kind_;
   string				name_;
   string				name_regex_str_;
@@ -473,6 +486,7 @@ struct variable_suppression::priv
   const regex::regex_t_sptr
   get_name_regex() const
   {
+    lock_guard<mutex> lock(mutex_);
     if (!name_regex_ && !name_regex_str_.empty())
       name_regex_ = regex::compile(name_regex_str_);
     return name_regex_;
@@ -490,6 +504,7 @@ struct variable_suppression::priv
   const regex::regex_t_sptr
   get_name_not_regex() const
   {
+    lock_guard<mutex> lock(mutex_);
     if (!name_not_regex_ && !name_not_regex_str_.empty())
       name_not_regex_ = regex::compile(name_not_regex_str_);
     return name_not_regex_;
@@ -507,6 +522,7 @@ struct variable_suppression::priv
   const regex::regex_t_sptr
   get_symbol_name_regex() const
   {
+    lock_guard<mutex> lock(mutex_);
     if (!symbol_name_regex_ && !symbol_name_regex_str_.empty())
       symbol_name_regex_ = regex::compile(symbol_name_regex_str_);
     return symbol_name_regex_;
@@ -524,6 +540,7 @@ struct variable_suppression::priv
   const regex::regex_t_sptr
   get_symbol_name_not_regex() const
   {
+    lock_guard<mutex> lock(mutex_);
     if (!symbol_name_not_regex_ && !symbol_name_not_regex_str_.empty())
       symbol_name_not_regex_ = regex::compile(symbol_name_not_regex_str_);
     return symbol_name_not_regex_;
@@ -539,8 +556,9 @@ struct variable_suppression::priv
   /// @return a pointer to the regular expression object of
   /// variable_suppression::priv::symbol_version_regex_str_.
   const regex::regex_t_sptr
-  get_symbol_version_regex()  const
+  get_symbol_version_regex() const
   {
+    lock_guard<mutex> lock(mutex_);
     if (!symbol_version_regex_ && !symbol_version_regex_str_.empty())
       symbol_version_regex_ = regex::compile(symbol_version_regex_str_);
     return symbol_version_regex_;
@@ -558,6 +576,7 @@ struct variable_suppression::priv
   const regex::regex_t_sptr
   get_type_name_regex() const
   {
+    lock_guard<mutex> lock(mutex_);
     if (!type_name_regex_ && !type_name_regex_str_.empty())
       type_name_regex_ = regex::compile(type_name_regex_str_);
     return type_name_regex_;
