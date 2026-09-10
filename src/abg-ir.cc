@@ -3099,7 +3099,6 @@ elf_symbol::add_alias(const elf_symbol_sptr& alias)
 elf_symbol_sptr
 elf_symbol::update_main_symbol(const std::string& name)
 {
-  ABG_ASSERT(is_main_symbol());
   if (!has_aliases() || get_name() == name)
     return get_main_symbol();
 
