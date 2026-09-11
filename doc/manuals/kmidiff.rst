@@ -21,10 +21,10 @@ another one using kmidiff is: ::
     make allyesconfig all
 
 Then install the modules into a directory, for instance, the
-build/modules sub-directory of the your kernel source tree: ::
+build/modules sub-directory of your kernel source tree: ::
 
     mkdir build/modules
-    make modules_install INSTALL_MOD_DIR=build/modules
+    make modules_install INSTALL_MOD_PATH=build/modules
 
 
 Then construct a list of interfaces exported by the kernel, that you
