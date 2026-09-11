@@ -124,18 +124,34 @@ interfaces (along with their types).
 Options
 =======
 
-  * ``--help | -h``
+  * ``--allow-non-exported-interfaces``
 
-    Display a short help about the command and exit.
+    When using this option, this tool analyzes the descriptions of the
+    types reachable by the interfaces (functions and variables) that
+    are visible outside of their translation unit.  Once that analysis
+    is done, an ABI Corpus is constructed by only considering the
+    subset of types reachable from interfaces associated to `ELF`_
+    symbols that are defined and exported by the binary.  It's that
+    final ABI corpus which is compared against another one.
+
+    The problem with that approach however is that analyzing all the
+    interfaces that are visible from outside their translation unit
+    can amount to a lot of data, leading to very slow operations.
+
+    Note that this option is turned off by default.
 
 
-  * ``--version | -v``
+  * ``--btf``
 
-    Display the version of the program and exit.
+    Extract ABI information from `BTF`_ debug information, if present,
+    in the Kernel and Modules.
 
-  * ``--verbose``
 
-    Display some verbose messages while executing.
+  * ``--ctf``
+
+    Extract ABI information from `CTF`_ debug information, if present,
+    in the Kernel and Modules.
+
 
   * ``--debug-info-dir1 | --d1`` <*di-path1*>
 
@@ -148,80 +164,13 @@ Options
     Red Hat based systems, that directory is usually
     ``<root>/usr/lib/debug``.
 
+
   * ``--debug-info-dir2 | --d2`` <*di-path2*>
 
     Like ``--debug-info-dir1``, this options tells ``kmidiff`` where
     to find the split debug information for the binaries of the second
     Linux kernel.
 
-  * ``--vmlinux1 | --l1`` <*path-to-first-vmlinux*>
-
-    Sets the path to the first ``vmlinux`` binary to consider.  This
-    has to be the uncompressed vmlinux binary compiled with debug
-    info.
-
-  * ``--vmlinux2 | --l2`` <*path-to-first-vmlinux*>
-
-    Sets the path to the second ``vmlinux`` binary to consider.  This
-    has to be the uncompressed vmlinux binary compiled with debug
-    info.
-
-  * ``--kmi-whitelist | -w`` <*path-to-interface-whitelist*>
-
-    Set the path to the white list of interfaces to compare while
-    comparing the Kernel Module Interface of the first kernel against
-    the one of the second kernel.
-
-    If this option is not provided, *all* the exported interfaces of
-    the two kernels are compared.  That takes a lot of times and is
-    not necessarily meaningful because many interface are probably
-    meant to see their reachable types change.
-
-    So please, make sure you always use this option unless you really
-    know what you  are doing.
-
-  * ``--suppressions | --suppr`` <*path-to-suppressions*>
-
-    Use a :ref:`suppression specification <suppr_spec_label>` file
-    located at *path-to-suppressions*.  Note that this option can
-    appear multiple times on the command line.  In that case, all of
-    the provided suppression specification files are taken into
-    account.
-
-    Please note that, by default, if this option is not provided, then
-    the :ref:`default suppression specification files
-    <abidiff_default_supprs_label>` are loaded .
-
-  * ``--no-change-categorization | -x``
-
-    This option disables the categorization of changes into harmless
-    and harmful changes.  Note that this categorization is a
-    pre-requisite for the filtering of changes so this option disables
-    that filtering.  The goal of this option is to speed-up the
-    execution of the program for cases where the graph of changes is
-    huge and where the user is just interested in looking at, for
-    instance, leaf node changes without caring about their possible
-    impact on interfaces.
-
-  * ``--ctf``
-
-    Extract ABI information from `CTF`_ debug information, if present,
-    in the Kernel and Modules.
-
-  * ``--btf``
-
-    Extract ABI information from `BTF`_ debug information, if present,
-    in the Kernel and Modules.
-
-  * ``--impacted-interfaces | -i``
-
-    Tell what interfaces got impacted by each individual ABI change.
-
-  * ``--full-impact | -f``
-
-    Emit a change report that shows the full impact of each change on
-    exported interfaces.  This is the default kind of report emitted
-    by tools like ``abidiff`` or ``abipkgdiff``.
 
   * ``--exported-interfaces-only``
 
@@ -239,40 +188,85 @@ Options
     That is why this option is enabled by default.
 
 
-  * ``--allow-non-exported-interfaces``
+  * ``--full-impact | -f``
 
-    When using this option, this tool analyzes the descriptions of the
-    types reachable by the interfaces (functions and variables) that
-    are visible outside of their translation unit.  Once that analysis
-    is done, an ABI Corpus is constructed by only considering the
-    subset of types reachable from interfaces associated to `ELF`_
-    symbols that are defined and exported by the binary.  It's that
-    final ABI corpus which is compared against another one.
+    Emit a change report that shows the full impact of each change on
+    exported interfaces.  This is the default kind of report emitted
+    by tools like ``abidiff`` or ``abipkgdiff``.
 
-    The problem with that approach however is that analyzing all the
-    interfaces that are visible from outside their translation unit
-    can amount to a lot of data, leading to very slow operations.
 
-    Note that this option is turned off by default.
+  * ``--help | -h``
 
-  * ``--show-bytes``
+    Display a short help about the command and exit.
 
-    Show sizes and offsets in bytes, not bits.  This option is
-    activated by default.
+
+  * ``--impacted-interfaces | -i``
+
+    Tell what interfaces got impacted by each individual ABI change.
+
+
+  * ``--kmi-whitelist | -w`` <*path-to-interface-whitelist*>
+
+    Set the path to the white list of interfaces to compare while
+    comparing the Kernel Module Interface of the first kernel against
+    the one of the second kernel.
+
+    If this option is not provided, *all* the exported interfaces of
+    the two kernels are compared.  That takes a lot of times and is
+    not necessarily meaningful because many interface are probably
+    meant to see their reachable types change.
+
+    So please, make sure you always use this option unless you really
+    know what you  are doing.
+
+
+  * ``--no-change-categorization | -x``
+
+    This option disables the categorization of changes into harmless
+    and harmful changes.  Note that this categorization is a
+    pre-requisite for the filtering of changes so this option disables
+    that filtering.  The goal of this option is to speed-up the
+    execution of the program for cases where the graph of changes is
+    huge and where the user is just interested in looking at, for
+    instance, leaf node changes without caring about their possible
+    impact on interfaces.
+
 
   * ``--show-bits``
 
     Show sizes and offsets in bits, not bytes.  By default, sizes and
     offsets are shown in bytes.
 
+
+  * ``--show-bytes``
+
+    Show sizes and offsets in bytes, not bits.  This option is
+    activated by default.
+
+
+  * ``--show-dec``
+
+    Show sizes and offsets in decimal base.
+
+
   * ``--show-hex``
 
     Show sizes and offsets in hexadecimal base.  This option is
     activated by default.
 
-  * ``--show-dec``
 
-    Show sizes and offsets in decimal base.
+  * ``--suppressions | --suppr`` <*path-to-suppressions*>
+
+    Use a :ref:`suppression specification <suppr_spec_label>` file
+    located at *path-to-suppressions*.  Note that this option can
+    appear multiple times on the command line.  In that case, all of
+    the provided suppression specification files are taken into
+    account.
+
+    Please note that, by default, if this option is not provided, then
+    the :ref:`default suppression specification files
+    <abidiff_default_supprs_label>` are loaded .
+
 
   * ``--thread-pool-size <N|N%> | -j <N|N%>``
 
@@ -285,6 +279,30 @@ Options
     Note that the environment variable ABIGAIL_THREAD_POOL_SIZE can
     also be set to similar values.  This command line option, if
     present, supersedes the value of the environment variable.
+
+
+  * ``--verbose``
+
+    Display some verbose messages while executing.
+
+
+  * ``--version | -v``
+
+    Display the version of the program and exit.
+
+
+  * ``--vmlinux1 | --l1`` <*path-to-first-vmlinux*>
+
+    Sets the path to the first ``vmlinux`` binary to consider.  This
+    has to be the uncompressed vmlinux binary compiled with debug
+    info.
+
+
+  * ``--vmlinux2 | --l2`` <*path-to-first-vmlinux*>
+
+    Sets the path to the second ``vmlinux`` binary to consider.  This
+    has to be the uncompressed vmlinux binary compiled with debug
+    info.
 
 
 .. _ELF: http://en.wikipedia.org/wiki/Executable_and_Linkable_Format
