@@ -779,7 +779,7 @@ public:
 	 ++i)
       sorted.push_back(const_cast<type_base*>(*i));
     type_topo_comp comp;
-    sort(sorted.begin(), sorted.end(), comp);
+    abigail::ir::sort_types(sorted.begin(), sorted.end(), comp);
   }
 
   /// Sort the content of a map of type pointers into a vector.
@@ -798,7 +798,7 @@ public:
     for (auto& type : types)
       sorted.push_back(type);
     type_topo_comp comp;
-    sort(sorted.begin(), sorted.end(), comp);
+    abigail::ir::sort_types(sorted.begin(), sorted.end(), comp);
   }
 
   /// Sort the content of a map of type pointers into a vector.
@@ -819,7 +819,7 @@ public:
 	 ++i)
       sorted.push_back(type_base_sptr(i->second));
     type_topo_comp comp;
-    sort(sorted.begin(), sorted.end(), comp);
+    abigail::ir::sort_types(sorted.begin(), sorted.end(), comp);
   }
 
   /// Sort the content of a vector of function types into a vector of
@@ -841,7 +841,7 @@ public:
 	 ++i)
       sorted.push_back(*i);
     type_topo_comp comp;
-    sort(sorted.begin(), sorted.end(), comp);
+    abigail::ir::sort_types(sorted.begin(), sorted.end(), comp);
   }
 
   /// Flag a type as having been written out to the XML output.

@@ -1,12 +1,26 @@
-# false positive  lock-order-inversion report
-# probably due to the fact that thread sanitizer doesn't support
-# recursive mutexes
-# deadlock:^abigail::ir::add_decl_to_scope
-# deadlock:^abigail::dwarf::reader::associate_die_to_decl
-# deadlock:^abigail::ir::class_decl::traverse
-# deadlock:^abigail::ir::elf_symbol::get_name
-# deadlock:^abigail::ir::scope_decl::add_member_decl
-# deadlock:^abigail::ir::get_class_or_union_flat_representation
-# deadlock:^abigail::abixml::build_class_decl_if_not_suppressed
-# deadlock:^build_class_decl_if_not_suppressed
+# This removes false positive data race report from thread sanitizer
+# when using TBB indirectly from the parallel version of std::sort.
+# The parallel std::sort, is called from abigail::ir::sort_types in a
+# sequential manner, so there is almost no chance to see data races
+# there, unless the comparison functor used by the sort is not thread
+# safe.  But I doubt it because the warnings issued by Thread
+# Sanitizer don't argue in that direction.
+# Maybe compiling TBB with Thread Sanitizer support could remove those
+# false positives ... but for now, we need these suppression.
 
+# race:^rml::internal::MemoryPool::getTLS
+# race:^tbb::detail::r1::__TBB_InitOnce::remove_ref
+# race:^tbb::detail::r1::affinity_helper::protect_affinity_mask
+# race:^tbb::detail::r1::arena::create
+# race:^tbb::detail::r1::market::unregister_and_destroy_client
+# race:^tbb::detail::r1::rml::private_server::wake_some
+# race:^tbb::detail::r1::thread_dispatcher::process
+# race:^memmove
+# race:^memcmp
+
+race:^__pstl::__tbb_backend::*
+race:^rml::internal::MemoryPool::*
+race:^tbb::detail::d1::*
+race:^tbb::detail::r1::*
+race:operator delete[]
+race:memcmp

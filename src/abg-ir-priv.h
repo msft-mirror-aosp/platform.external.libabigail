@@ -12,6 +12,7 @@
 
 #ifndef __ABG_IR_PRIV_H__
 #define __ABG_IR_PRIV_H__
+#include "config.h"
 
 #include <algorithm>
 #include <iostream>
@@ -19,6 +20,9 @@
 #include <sstream>
 #include <mutex>
 #include <atomic>
+#ifdef HAS_EXECUTION_HEADER_FILE
+#include <execution>
+#endif
 #include <memory>
 
 #include "abg-hash.h"
@@ -1708,6 +1712,55 @@ canonicalize(type_base_sptr type,
 type_base_sptr
 hash_and_canonicalize_type(type_base_sptr t);
 
+/// Sort types.
+///
+///
+/// Depending on the number of types and on the presence of
+/// multithreading support, use C++17 parallel sorting or not.
+///
+/// @param begin an iterator pointing to the beginning of the sequence
+/// of types to sort.
+///
+/// @param end an iterator pointing to the end of the sequence of
+/// types to sort.
+///
+/// @param comp the comparison functor to use for sorting.
+///
+/// @param do_log emit leg messges if set to true.
+///
+/// @tparm IteratorType the iterator type to use for @p begin @p end.
+///
+/// @tparm SortingFunctorType the sorting functor to use.
+template <typename IteratorType, typename SortingFunctorType>
+void
+sort_types(IteratorType begin,
+	   IteratorType end,
+	   SortingFunctorType comp,
+	   bool do_log = false)
+{
+  auto d = std::distance(begin, end);
+  if (do_log)
+    std::cerr << "number of types to canonicalize: " << d << std::endl;
+#if HAS_PARALLEL_SORT_SUPPORT
+  if (d > 1200000)
+    {
+      if (do_log)
+	std::cerr << "using sort(std::execution::par, ...)\n";
+      std::sort(std::execution::par, begin, end, comp);
+    }
+  else
+    {
+      if (do_log)
+	std::cerr << "using sort(std::execution::seq, ...)\n";
+      std::sort(std::execution::par, begin, end, comp);
+    }
+#else
+  if (do_log)
+    std::cerr << "using sort(begin, end, comp)\n";
+  std::sort(begin, end, comp);
+#endif
+}
+
 /// Sort types before hashing (and then canonicalizing) them.
 ///
 /// @param begin an iterator pointing to the beginning of the sequence
@@ -1716,14 +1769,17 @@ hash_and_canonicalize_type(type_base_sptr t);
 /// @param end an iterator pointing to the end of the sequence of
 /// types to sort.
 ///
+/// @param do_log emit leg messges if set to true.
+///
 /// @tparm IteratorType the iterator type to use for @p begin @p end.
 template <typename IteratorType>
 void
 sort_types_for_hash_computing_and_c14n(IteratorType begin,
-				       IteratorType end)
+				       IteratorType end,
+				       bool do_log = false)
 {
   sort_for_hash_functor comp;
-  return std::sort(begin, end, comp);
+  return sort_types(begin, end, comp, do_log);
 }
 
 void
@@ -2033,7 +2089,7 @@ hash_and_canonicalize_types(SequenceType	&types,
       tmr.start();
     }
 
-  sort_types_for_hash_computing_and_c14n(types.begin(), types.end());
+  sort_types_for_hash_computing_and_c14n(types.begin(), types.end(), do_log);
 
   if (do_log)
     {

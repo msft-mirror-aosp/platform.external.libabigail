@@ -1633,7 +1633,9 @@ type_maps::get_types_sorted() const
 	  priv_->sorted_types_.push_back(t);
 
       type_topo_comp comp;
-      sort(priv_->sorted_types_.begin(), priv_->sorted_types_.end(), comp);
+      sort_types(priv_->sorted_types_.begin(),
+		 priv_->sorted_types_.end(),
+		 comp);
     }
 
   return priv_->sorted_types_;

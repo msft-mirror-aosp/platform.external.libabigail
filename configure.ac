@@ -67,6 +67,10 @@ dnl This one is to be able to run "make check-valgrind"
 dnl and have unit tests run under  der Valgrind.
 m4_include([autoconf-archive/ax_valgrind_check.m4])
 
+dnl This one is to detect supported compiler flags with
+dnl AX_CHECK_COMPILE_FLAG.
+m4_include([autoconf-archive/ax_check_compile_flag.m4])
+
 AM_INIT_AUTOMAKE([1.11.1 foreign subdir-objects dist-xz tar-ustar parallel-tests])
 AM_MAINTAINER_MODE([enable])
 
@@ -286,12 +290,54 @@ LT_INIT
 AC_LANG([C++])
 AC_LANG_COMPILER_REQUIRE
 
+dnl Set the level of C++ standard we use.
 dnl
-dnl We use C++14.  It has been the default in G++ since GCC 6.  In el8
-dnl (that we still support), we do have GCC 8.x with c++14 as the
-dnl default, still.
-dnl
-CXX_STANDARD=c++14
+dnl By default, we use C++14.  It has been the default in G++ since
+dnl GCC 8.5, which is what el8 has.  We still support el8.
+CAN_SUPPORT_PARALLEL_SORT=no
+DEFAULT_CXX_STANDARD=14
+CXX_STANDARD=$DEFAULT_CXX_STANDARD
+AC_LANG_PUSH([C++])
+AX_CHECK_COMPILE_FLAG([-std=c++${CXX_STANDARD}], [
+    AC_MSG_NOTICE([C++$CXX_STANDARD language support detected, using it])
+    AC_DEFINE([HAVE_CXX$CXX_STANDARD], [1], [Define if C++$CXX_STANDARD is supported])
+], [
+    AC_MSG_ERROR([C++$CXX_STANDARD support is required])
+])
+AC_LANG_POP([C++])
+
+dnl But if the compiler supports C++17, we use that because we'd like
+dnl to use the parallel sort algorithms.
+AC_LANG_PUSH([C++])
+AX_CHECK_COMPILE_FLAG([-std=c++17], [
+    AC_MSG_NOTICE([C++17 language support detected, using it])
+    CXX_STANDARD=17
+    AC_DEFINE([HAVE_CXX17], [1], [Define if C++17 is supported])
+    CAN_SUPPORT_PARALLEL_SORT=yes
+], [
+    AC_MSG_NOTICE([C++17 support is not present, falling back to C++$CXX_STANDARD])
+])
+AC_LANG_POP([C++])
+
+if test x$CAN_SUPPORT_PARALLEL_SORT = xyes; then
+  ac_save_CXXFLAGS="$CXXFLAGS"
+  CXXFLAGS="-std=c++$CXX_STANDARD"
+  AC_LANG_PUSH([C++])
+  AC_COMPILE_IFELSE([AC_LANG_PROGRAM([[#include <execution>]])],
+		    [HAS_EXECUTION_HEADER_FILE=yes],
+		    [HAS_EXECUTION_HEADER_FILE=no])
+  AC_LANG_POP([C++])
+  CXXFLAGS="$ac_save_CXXFLAGS"
+
+fi
+
+if test x$HAS_EXECUTION_HEADER_FILE = xyes; then
+  AC_MSG_NOTICE([has <execution> header file])
+  AC_DEFINE([HAS_EXECUTION_HEADER_FILE], [1], [Define if C++17 and <execution> header file are supported])
+else
+  AC_MSG_NOTICE([Could not support parallel sort so defaulting back to C++$DEFAULT_CXX_STANDARD])
+  CXX_STANDARD=$DEFAULT_CXX_STANDARD
+fi
 
 dnl
 dnl check if the c++ compiler has support __attribute__((visibility("hidden")))
@@ -551,6 +597,27 @@ fi
 AC_SUBST(LIBXML2_VERSION)
 AC_SUBST(XML_LIBS)
 AC_SUBST(XML_CFLAGS)
+
+dnl Check for dependency: tbb.
+HAS_PARALLEL_SORT_SUPPORT=no
+if test x$HAS_EXECUTION_HEADER_FILE = xyes; then
+  TBB_VERSION=2018.2
+  
+  AC_MSG_NOTICE([using PKG_CONFIG_PATH=$PKG_CONFIG_PATH to check for tbb]);
+  FOUND_TBB=no
+  PKG_CHECK_MODULES(TBB, tbb >= $TBB_VERSION, FOUND_TBB=yes, FOUND_TBB=no)
+  if test x$FOUND_TBB = xyes; then
+     AC_DEFINE([HAS_PARALLEL_SORT_SUPPORT], 1,
+  	     [Defined if the system has parallel sort support])
+     AC_SUBST(TBB_VERSION)
+     AC_SUBST(TBB_LIBS)
+     AC_SUBST(TBB_CFLAGS)
+     AC_MSG_NOTICE([found libtbb, enabled support for parallel sort \o/])
+     HAS_PARALLEL_SORT_SUPPORT=yes
+  else
+     AC_MSG_NOTICE([no libtbb found, disabled support for parallel sort])
+  fi
+fi
 
 dnl Check for dependency: xxhash
 XXHASH_VERSION=0.8.0
@@ -956,7 +1023,7 @@ AM_CONDITIONAL(ENABLE_RUNNING_TESTS_WITH_PY3, test x$RUN_TESTS_WITH_PY3 = xyes)
 AM_CONDITIONAL(ENABLE_PYTHON3_INTERPRETER, test x$PYTHON3_INTERPRETER != xno)
 AC_SUBST(PYTHON)
 
-DEPS_CPPFLAGS="$XML_CFLAGS $XXHASH_CFLAGS $ELF_CFLAGS $DW_CFLAGS $LZMA_CFLAGS"
+DEPS_CPPFLAGS="$TBB_CFLAGS $XML_CFLAGS $XXHASH_CFLAGS $ELF_CFLAGS $DW_CFLAGS $LZMA_CFLAGS"
 AC_SUBST(DEPS_CPPFLAGS)
 
 dnl Check for the presence of doxygen program
@@ -1075,7 +1142,7 @@ fi
 MT_LIBS=-latomic
 
 dnl Set the list of libraries libabigail depends on
-DEPS_LIBS="$XML_LIBS $CTF_LIBS $BPF_LIBS $LZMA_LIBS $MT_LIBS"
+DEPS_LIBS="$TBB_LIBS $XML_LIBS $CTF_LIBS $BPF_LIBS $LZMA_LIBS $MT_LIBS"
 if test x$ENABLE_INLINED_XXHASH = xno; then
   DEPS_LIBS="$DEPS_LIBS $XXHASH_LIBS"
 fi
@@ -1085,7 +1152,7 @@ AC_SUBST(DEPS_LIBS)
 
 if test x$ABIGAIL_DEVEL != x; then
    CFLAGS="-g -Og -Wall -Wextra -Werror -D_FORTIFY_SOURCE=2"
-   CXXFLAGS="-g -Og -Wall -Wextra -Werror -D_FORTIFY_SOURCE=2 -D_GLIBCXX_DEBUG"
+   CXXFLAGS="-std=c++$CXX_STANDARD -g -Og -Wall -Wextra -Werror -D_FORTIFY_SOURCE=2 -D_GLIBCXX_DEBUG"
 fi
 
 if test x$ABIGAIL_DEBUG != x; then
@@ -1124,15 +1191,14 @@ if test x$ENABLE_INLINED_XXHASH = xyes; then
    CXXFLAGS="$CXXFLAGS -DXXH_INLINE_ALL=1"
 fi
 
+CXXFLAGS="$CXXFLAGS -std=c++$CXX_STANDARD"
+
 dnl Set a few Automake conditionals
 
 AM_CONDITIONAL([ENABLE_THREAD_SANITIZER],[test "x$ENABLE_TSAN" = "xyes"])
 AM_CONDITIONAL([CTF_READER],[test "x$ENABLE_CTF" = "xyes"])
 AM_CONDITIONAL([BTF_READER],[test "x$ENABLE_BTF" = "xyes"])
 AM_CONDITIONAL([ENABLE_LIBABIGAIL_MULTITHREADING],[test "x$ENABLE_MULTITHREADING" = "xyes"])
-
-dnl Set the level of C++ standard we use.
-CXXFLAGS="$CXXFLAGS -std=$CXX_STANDARD"
 
 use_prefixed_includedir=""
 if test x$prefix != x; then
@@ -1785,14 +1851,16 @@ AC_MSG_NOTICE([
     ELF_CFLAGS					   : ${ELF_CFLAGS}
     DW_LIBS					   : ${DW_LIBS}
     DW_CFLAGS					   : ${DW_CFLAGS}
-    XML_LIBS					   $ ${XML_LIBS}
-    XML_CFLAGS					   $ ${XML_CFLAGS}
-    DEPS_LIBS					   $ ${DEPS_LIBS}
+    XML_LIBS					   : ${XML_LIBS}
+    XML_CFLAGS					   : ${XML_CFLAGS}
+    DEPS_LIBS					   : ${DEPS_LIBS}
+    DEPS_CPPFLAGS                                  : ${DEPS_CPPFLAGS}
     Python					   : ${PYTHON}
 
  OPTIONAL FEATURES:
-    C++ standard level                             : ${CXX_STANDARD}
+    C++ standard level                             : C++${CXX_STANDARD}
     Enable multithreading support                  : ${ENABLE_MULTITHREADING}
+    Enable parallel sort                           : ${HAS_PARALLEL_SORT_SUPPORT}
     Enable inlined-only xxhash library             : ${ENABLE_INLINED_XXHASH}
     Enable rpm support in abipkgdiff               : ${ENABLE_RPM}
     Enable rpm/zstd in abipkgdiff testing          : ${ENABLE_RPM_ZSTD}
