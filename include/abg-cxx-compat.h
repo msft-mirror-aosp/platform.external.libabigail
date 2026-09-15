@@ -31,6 +31,7 @@ namespace abg_compat
 
 using std::optional;
 using std::tuple;
+using std::apply;
 
 #else
 
