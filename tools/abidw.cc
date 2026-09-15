@@ -749,7 +749,25 @@ load_corpus_and_write_abixml(char* argv[],
   if (opts.noout)
     {
       if (corp)
-	corp->get_types_not_reachable_from_public_interfaces();
+	{
+	  if (opts.do_log)
+	    {
+	      emit_prefix(argv[0], cerr)
+		<< "computing types not reachable from public interfaces ...\n";
+	      t.start();
+	    }
+
+	  corp->get_types_not_reachable_from_public_interfaces();
+
+	  if (opts.do_log)
+	    {
+	      t.stop();
+	      emit_prefix(argv[0], cerr)
+		<< "computed types not reachable from public interfaces in: "
+		<< t
+		<< "\n";
+	    }
+	}
 
       return 0;
     }
