@@ -1975,7 +1975,7 @@ canonicalize_types(const SequenceType&	types,
     {
       global_tmr.stop();
       std::cerr
-	<< "Finished types sorting, hashing, canonicalizing & adjusting in: "
+	<< "Finished types canonicalizing & adjusting in: "
 	<< global_tmr
 	<< "\n";
     }
