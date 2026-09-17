@@ -1368,8 +1368,8 @@ struct decl_topo_comp
   ///
   /// @return true iff @p f is less than @p s.
   bool
-  operator()(const decl_base_sptr &f,
-	     const decl_base_sptr &s)
+  operator()(const decl_base_sptr f,
+	     const decl_base_sptr s)
   {return operator()(f.get(), s.get());}
 
 }; // end struct decl_topo_comp
@@ -1416,12 +1416,12 @@ struct type_topo_comp
   ///
   /// @return true iff @p f is less than @p s.
   bool
-  operator()(const type_base_sptr &f,
-	     const type_base_sptr &s)
+  operator()(const type_base_sptr f,
+	     const type_base_sptr s)
   {return operator()(f.get(), s.get());}
 
   bool
-  operator()(const type_base_wptr& f, const type_base_wptr& s)
+  operator()(const type_base_wptr f, const type_base_wptr s)
   {
     type_base_sptr first(f), second(s);
     return operator()(first, second);
@@ -1687,13 +1687,13 @@ struct sort_for_hash_functor
   ///
   /// @param s the second operand to consider.
   bool
-  operator()(const type_base_sptr& f, const type_base_sptr& s)
+  operator()(const type_base_sptr f, const type_base_sptr s)
   {
     return operator()(f.get(), s.get());
   }
 
   bool
-  operator()(const type_base_wptr& f, const type_base_wptr& s)
+  operator()(const type_base_wptr f, const type_base_wptr s)
   {
     type_base_sptr first(f), second(s);
     return operator()(first, second);
