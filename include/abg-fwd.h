@@ -59,9 +59,6 @@ using std::unordered_set;
 
 typedef unordered_set<string> string_set_type;
 
-// Pull in relational operators.
-using namespace std::rel_ops;
-
 namespace comparison
 {
 class diff_context;
