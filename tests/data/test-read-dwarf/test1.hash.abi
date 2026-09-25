@@ -46,7 +46,7 @@
     </function-type>
     <type-decl name='int' size-in-bits='32' hash='09d17c08f594edc7' id='95e97e5e'/>
     <type-decl name='long long int' size-in-bits='64' hash='8aa1e1a2ab2c2d3e' id='95e97e5f'/>
-    <function-type method-class-id='10ec88de' static='yes' size-in-bits='64' hash='61d56fd2006ef201' id='9430f7a8'>
+    <function-type method-class-id='10ec88de' static='yes' size-in-bits='64' hash='0a43cc4cbe68cf25' id='9430f7a8'>
       <parameter type-id='a1a34114' is-artificial='yes'/>
       <return type-id='61814d27'/>
     </function-type>
@@ -76,10 +76,10 @@
       <base-class access='public' layout-offset-in-bits='192' is-virtual='yes' type-id='96c6f7f7'/>
       <base-class access='public' layout-offset-in-bits='256' is-virtual='yes' type-id='95c6f664'/>
       <member-type access='private'>
-        <typedef-decl name='byte' type-id='002ac4a6' size-in-bits='8' hash='6ebac62b3366db68' id='92bf8355'/>
+        <typedef-decl name='byte' type-id='002ac4a6' size-in-bits='8' hash='7948234ee9eb1041' id='92bf8355'/>
       </member-type>
       <member-type access='private'>
-        <typedef-decl name='integer' type-id='95e97e5e' size-in-bits='32' hash='09d17c08f594edc7' id='61814d27'/>
+        <typedef-decl name='integer' type-id='95e97e5e' size-in-bits='32' hash='f2b82e49c8af56cd' id='61814d27'/>
       </member-type>
       <data-member access='public' layout-offset-in-bits='64'>
         <var-decl name='m0' type-id='61814d27' visibility='default'/>

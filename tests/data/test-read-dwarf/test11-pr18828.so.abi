@@ -674,10 +674,10 @@
     <namespace-decl name='__gnu_cxx'>
       <class-decl name='__normal_iterator&lt;conststd::basic_string&lt;char,std::char_traits&lt;char&gt;,std::allocator&lt;char&gt;&gt;*,std::vector&lt;std::basic_string&lt;char,std::char_traits&lt;char&gt;,std::allocator&lt;char&gt;&gt;,std::allocator&lt;std::basic_string&lt;char,std::char_traits&lt;char&gt;,std::allocator&lt;char&gt;&gt;&gt;&gt;&gt;' visibility='default' size-in-bits='64' hash='f66d1889e029ab3b' id='type-id-9'>
         <member-type access='public'>
-          <typedef-decl name='iterator_type' type-id='type-id-40' size-in-bits='64' hash='93216338bfd60dbb' id='type-id-39'/>
+          <typedef-decl name='iterator_type' type-id='type-id-40' size-in-bits='64' hash='5ffc4f1581d0ae3b' id='type-id-39'/>
         </member-type>
         <member-type access='public'>
-          <typedef-decl name='reference' type-id='type-id-42' size-in-bits='64' hash='8dc531d1e21e11d5' id='type-id-41'/>
+          <typedef-decl name='reference' type-id='type-id-42' size-in-bits='64' hash='38a7474cb007a553' id='type-id-41'/>
         </member-type>
         <data-member access='protected' layout-offset-in-bits='0'>
           <var-decl name='_M_current' type-id='type-id-40' visibility='default'/>
@@ -699,10 +699,10 @@
     <namespace-decl name='__gnu_cxx'>
       <class-decl name='__normal_iterator&lt;std::basic_string&lt;char,std::char_traits&lt;char&gt;,std::allocator&lt;char&gt;&gt;*,std::vector&lt;std::basic_string&lt;char,std::char_traits&lt;char&gt;,std::allocator&lt;char&gt;&gt;,std::allocator&lt;std::basic_string&lt;char,std::char_traits&lt;char&gt;,std::allocator&lt;char&gt;&gt;&gt;&gt;&gt;' visibility='default' size-in-bits='64' hash='d492fc5dc7b4e3f3' id='type-id-12'>
         <member-type access='public'>
-          <typedef-decl name='iterator_type' type-id='type-id-48' size-in-bits='64' hash='f36237e7d9f39a16' id='type-id-47'/>
+          <typedef-decl name='iterator_type' type-id='type-id-48' size-in-bits='64' hash='d08558467961a66f' id='type-id-47'/>
         </member-type>
         <member-type access='public'>
-          <typedef-decl name='reference' type-id='type-id-50' size-in-bits='64' hash='9ad020bd257af775' id='type-id-49'/>
+          <typedef-decl name='reference' type-id='type-id-50' size-in-bits='64' hash='a94317aea28f1528' id='type-id-49'/>
         </member-type>
         <data-member access='protected' layout-offset-in-bits='0'>
           <var-decl name='_M_current' type-id='type-id-48' visibility='default'/>
@@ -760,7 +760,7 @@
     <namespace-decl name='mongo'>
       <class-decl name='AtomicWord&lt;unsignedint&gt;' visibility='default' size-in-bits='32' hash='1d65ad90067513cf' id='type-id-63'>
         <member-type access='public'>
-          <typedef-decl name='WordType' type-id='type-id-65' size-in-bits='32' hash='e66b43f97c38e87a' id='type-id-64'/>
+          <typedef-decl name='WordType' type-id='type-id-65' size-in-bits='32' hash='01b265816e53dd71' id='type-id-64'/>
         </member-type>
         <data-member access='private' layout-offset-in-bits='0'>
           <var-decl name='_value' type-id='type-id-66' visibility='default'/>
@@ -892,7 +892,7 @@
     <namespace-decl name='mongo'>
       <class-decl name='ConstDataView' visibility='default' size-in-bits='64' hash='0f4a2d40325b3f10' id='type-id-98'>
         <member-type access='public'>
-          <typedef-decl name='bytes_type' type-id='type-id-69' size-in-bits='64' hash='83a5509e2ae27d75' id='type-id-99'/>
+          <typedef-decl name='bytes_type' type-id='type-id-69' size-in-bits='64' hash='b7a105b2ab7e8574' id='type-id-99'/>
         </member-type>
         <data-member access='private' layout-offset-in-bits='0'>
           <var-decl name='_bytes' type-id='type-id-99' visibility='default'/>
@@ -940,7 +940,7 @@
       <class-decl name='DataView' visibility='default' size-in-bits='64' hash='7c91d82a961b9638' id='type-id-110'>
         <base-class access='public' layout-offset-in-bits='0' type-id='type-id-98'/>
         <member-type access='public'>
-          <typedef-decl name='bytes_type' type-id='type-id-32' size-in-bits='64' hash='cdcd419d6a95ce45' id='type-id-111'/>
+          <typedef-decl name='bytes_type' type-id='type-id-32' size-in-bits='64' hash='5320719cca7a2021' id='type-id-111'/>
         </member-type>
         <member-function access='public'>
           <function-decl name='write&lt;mongo::LittleEndian&lt;char&gt;&gt;' type-id='type-id-112' mangled-name='_ZN5mongo8DataView5writeINS_12LittleEndianIcEEEERS0_RKT_m' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZN5mongo8DataView5writeINS_12LittleEndianIcEEEERS0_RKT_m'/>
@@ -1075,10 +1075,10 @@
     <namespace-decl name='mongo'>
       <class-decl name='InitializerContext' visibility='default' size-in-bits='576' hash='d43a7980a8db5f7e' id='type-id-146'>
         <member-type access='public'>
-          <typedef-decl name='ArgumentVector' type-id='type-id-148' size-in-bits='192' hash='5e58c920da436194' id='type-id-147'/>
+          <typedef-decl name='ArgumentVector' type-id='type-id-148' size-in-bits='192' hash='dac51d23c1450c56' id='type-id-147'/>
         </member-type>
         <member-type access='public'>
-          <typedef-decl name='EnvironmentMap' type-id='type-id-150' size-in-bits='384' hash='efdd03d278d9c63b' id='type-id-149'/>
+          <typedef-decl name='EnvironmentMap' type-id='type-id-150' size-in-bits='384' hash='939bbb27d4c25119' id='type-id-149'/>
         </member-type>
         <data-member access='private' layout-offset-in-bits='0'>
           <var-decl name='_args' type-id='type-id-147' visibility='default'/>
@@ -1104,7 +1104,7 @@
     <namespace-decl name='mongo'>
       <class-decl name='ServerParameterSet' visibility='default' size-in-bits='384' hash='6d829b58d5deeda5' id='type-id-154'>
         <member-type access='public'>
-          <typedef-decl name='Map' type-id='type-id-156' size-in-bits='384' hash='e2f1fa1d3b51203d' id='type-id-155'/>
+          <typedef-decl name='Map' type-id='type-id-156' size-in-bits='384' hash='69a7c2dc0fb7733a' id='type-id-155'/>
         </member-type>
         <data-member access='private' layout-offset-in-bits='0'>
           <var-decl name='_map' type-id='type-id-155' visibility='default'/>
@@ -1131,7 +1131,7 @@
     <namespace-decl name='mongo'>
       <class-decl name='Status' visibility='default' size-in-bits='64' hash='98e7052079883b30' id='type-id-160'>
         <member-type access='private'>
-          <class-decl name='ErrorInfo' is-struct='yes' visibility='default' size-in-bits='192' hash='34aff81f39806d8c' id='type-id-161'>
+          <class-decl name='ErrorInfo' is-struct='yes' visibility='default' size-in-bits='192' hash='2f550b0c7d34a221' id='type-id-161'>
             <data-member access='public' layout-offset-in-bits='0'>
               <var-decl name='refs' type-id='type-id-158' visibility='default'/>
             </data-member>
@@ -1371,7 +1371,7 @@
       <namespace-decl name='logger'>
         <class-decl name='LogDomain&lt;mongo::logger::MessageEventEphemeral&gt;' visibility='default' size-in-bits='256' hash='d6654c3bedb8b21c' id='type-id-201'>
           <member-type access='private'>
-            <typedef-decl name='AppenderVector' type-id='type-id-208' size-in-bits='192' hash='3485e13c2db0618c' id='type-id-207'/>
+            <typedef-decl name='AppenderVector' type-id='type-id-208' size-in-bits='192' hash='4e086ed9dbcaa3bb' id='type-id-207'/>
           </member-type>
           <data-member access='private' layout-offset-in-bits='0'>
             <var-decl name='_appenders' type-id='type-id-207' visibility='default'/>
@@ -1386,7 +1386,7 @@
       <namespace-decl name='logger'>
         <class-decl name='LogManager' visibility='default' size-in-bits='896' hash='6b6a924d4d91ab19' id='type-id-209'>
           <member-type access='private'>
-            <typedef-decl name='DomainsByNameMap' type-id='type-id-211' size-in-bits='448' hash='13233a115a0674cd' id='type-id-210'/>
+            <typedef-decl name='DomainsByNameMap' type-id='type-id-211' size-in-bits='448' hash='292dc5d9a1fd8ef9' id='type-id-210'/>
           </member-type>
           <data-member access='private' layout-offset-in-bits='0'>
             <var-decl name='_domains' type-id='type-id-210' visibility='default'/>
@@ -1682,7 +1682,7 @@
           </class-decl>
         </member-type>
         <member-type access='public'>
-          <typedef-decl name='_Manager_type' type-id='type-id-27' size-in-bits='64' hash='f10d0da14563388a' id='type-id-269'/>
+          <typedef-decl name='_Manager_type' type-id='type-id-27' size-in-bits='64' hash='220174f4f089bc77' id='type-id-269'/>
         </member-type>
         <data-member access='public' layout-offset-in-bits='0'>
           <var-decl name='_M_functor' type-id='type-id-270' visibility='default'/>
@@ -1715,13 +1715,13 @@
         <base-class access='public' layout-offset-in-bits='0' type-id='type-id-279'/>
         <base-class access='private' layout-offset-in-bits='0' type-id='type-id-280'/>
         <member-type access='private'>
-          <typedef-decl name='__bucket_type' type-id='type-id-282' size-in-bits='64' hash='5481147dba7aa383' id='type-id-281'/>
+          <typedef-decl name='__bucket_type' type-id='type-id-282' size-in-bits='64' hash='426e8ccad934fd5e' id='type-id-281'/>
         </member-type>
         <member-type access='private'>
-          <typedef-decl name='__node_base' type-id='type-id-284' size-in-bits='64' hash='2c9f7fcd0904b953' id='type-id-283'/>
+          <typedef-decl name='__node_base' type-id='type-id-284' size-in-bits='64' hash='4aab30e42a2496eb' id='type-id-283'/>
         </member-type>
         <member-type access='public'>
-          <typedef-decl name='size_type' type-id='type-id-286' size-in-bits='64' hash='da551c1631705dfe' id='type-id-285'/>
+          <typedef-decl name='size_type' type-id='type-id-286' size-in-bits='64' hash='8b230c0ebd12548b' id='type-id-285'/>
         </member-type>
         <data-member access='private' layout-offset-in-bits='0'>
           <var-decl name='_M_buckets' type-id='type-id-287' visibility='default'/>
@@ -1757,7 +1757,7 @@
           </class-decl>
         </member-type>
         <member-type access='protected'>
-          <typedef-decl name='_Node_alloc_type' type-id='type-id-295' size-in-bits='8' hash='322c8b3e38fd9b3f' id='type-id-294'/>
+          <typedef-decl name='_Node_alloc_type' type-id='type-id-295' size-in-bits='8' hash='9ed2f3e8008f8bb4' id='type-id-294'/>
         </member-type>
         <data-member access='protected' layout-offset-in-bits='0'>
           <var-decl name='_M_impl' type-id='type-id-290' visibility='default'/>
@@ -1796,7 +1796,7 @@
           </class-decl>
         </member-type>
         <member-type access='protected'>
-          <typedef-decl name='_Node_alloc_type' type-id='type-id-304' size-in-bits='8' hash='790ca23857dd0343' id='type-id-303'/>
+          <typedef-decl name='_Node_alloc_type' type-id='type-id-304' size-in-bits='8' hash='d3d1dbc3d070b29b' id='type-id-303'/>
         </member-type>
         <data-member access='protected' layout-offset-in-bits='0'>
           <var-decl name='_M_impl' type-id='type-id-300' visibility='default'/>
@@ -1841,7 +1841,7 @@
           </class-decl>
         </member-type>
         <member-type access='public'>
-          <typedef-decl name='size_type' type-id='type-id-315' size-in-bits='64' hash='da551c1631705dfe' id='type-id-314'/>
+          <typedef-decl name='size_type' type-id='type-id-315' size-in-bits='64' hash='8b230c0ebd12548b' id='type-id-314'/>
         </member-type>
         <data-member access='protected' layout-offset-in-bits='0'>
           <var-decl name='_M_impl' type-id='type-id-310' visibility='default'/>
@@ -1865,7 +1865,7 @@
           </class-decl>
         </member-type>
         <member-type access='public'>
-          <typedef-decl name='size_type' type-id='type-id-315' size-in-bits='64' hash='da551c1631705dfe' id='type-id-319'/>
+          <typedef-decl name='size_type' type-id='type-id-315' size-in-bits='64' hash='8b230c0ebd12548b' id='type-id-319'/>
         </member-type>
         <data-member access='protected' layout-offset-in-bits='0'>
           <var-decl name='_M_impl' type-id='type-id-317' visibility='default'/>
@@ -1895,19 +1895,19 @@
           </class-decl>
         </member-type>
         <member-type access='protected'>
-          <typedef-decl name='_Base_ptr' type-id='type-id-326' size-in-bits='64' hash='087181fa8141a494' id='type-id-325'/>
+          <typedef-decl name='_Base_ptr' type-id='type-id-326' size-in-bits='64' hash='1fa10d8271376bd5' id='type-id-325'/>
         </member-type>
         <member-type access='public'>
-          <typedef-decl name='_Link_type' type-id='type-id-328' size-in-bits='64' hash='43e7fbfbfbc32329' id='type-id-327'/>
+          <typedef-decl name='_Link_type' type-id='type-id-328' size-in-bits='64' hash='6a1b517dd341a28a' id='type-id-327'/>
         </member-type>
         <member-type access='private'>
-          <typedef-decl name='_Node_allocator' type-id='type-id-330' size-in-bits='8' hash='062dc28ba12125c6' id='type-id-329'/>
+          <typedef-decl name='_Node_allocator' type-id='type-id-330' size-in-bits='8' hash='ad24d695c5a9a4ef' id='type-id-329'/>
         </member-type>
         <member-type access='public'>
-          <typedef-decl name='iterator' type-id='type-id-332' size-in-bits='64' hash='9bf07ac28a8e01f5' id='type-id-331'/>
+          <typedef-decl name='iterator' type-id='type-id-332' size-in-bits='64' hash='09b5410dad848c12' id='type-id-331'/>
         </member-type>
         <member-type access='public'>
-          <typedef-decl name='size_type' type-id='type-id-315' size-in-bits='64' hash='da551c1631705dfe' id='type-id-323'/>
+          <typedef-decl name='size_type' type-id='type-id-315' size-in-bits='64' hash='8b230c0ebd12548b' id='type-id-323'/>
         </member-type>
         <data-member access='protected' layout-offset-in-bits='0'>
           <var-decl name='_M_impl' type-id='type-id-321' visibility='default'/>
@@ -2005,7 +2005,7 @@
       <class-decl name='allocator&lt;mongo::logger::Appender&lt;mongo::logger::MessageEventEphemeral&gt;*&gt;' visibility='default' size-in-bits='8' hash='fa55af6d0519cb74' id='type-id-351'>
         <base-class access='public' layout-offset-in-bits='0' type-id='type-id-352'/>
         <member-type access='public'>
-          <typedef-decl name='pointer' type-id='type-id-354' size-in-bits='64' hash='a20beb6b41ec401d' id='type-id-353'/>
+          <typedef-decl name='pointer' type-id='type-id-354' size-in-bits='64' hash='33659c46a507c3a8' id='type-id-353'/>
         </member-type>
       </class-decl>
     </namespace-decl>
@@ -2013,7 +2013,7 @@
       <class-decl name='allocator&lt;mongo::optionenvironment::Constraint*&gt;' visibility='default' size-in-bits='8' hash='c8401f9318ceaa7d' id='type-id-355'>
         <base-class access='public' layout-offset-in-bits='0' type-id='type-id-356'/>
         <member-type access='public'>
-          <typedef-decl name='pointer' type-id='type-id-358' size-in-bits='64' hash='bbd48480d62fd584' id='type-id-357'/>
+          <typedef-decl name='pointer' type-id='type-id-358' size-in-bits='64' hash='55f27adb976eace6' id='type-id-357'/>
         </member-type>
       </class-decl>
     </namespace-decl>
@@ -2021,7 +2021,7 @@
       <class-decl name='allocator&lt;mongo::optionenvironment::KeyConstraint*&gt;' visibility='default' size-in-bits='8' hash='cc278fe4bb3ad03f' id='type-id-359'>
         <base-class access='public' layout-offset-in-bits='0' type-id='type-id-360'/>
         <member-type access='public'>
-          <typedef-decl name='pointer' type-id='type-id-362' size-in-bits='64' hash='fc550e7be802f723' id='type-id-361'/>
+          <typedef-decl name='pointer' type-id='type-id-362' size-in-bits='64' hash='04a0c6b11be95316' id='type-id-361'/>
         </member-type>
       </class-decl>
     </namespace-decl>
@@ -2061,10 +2061,10 @@
       <class-decl name='allocator&lt;std::_Rb_tree_node&lt;std::pair&lt;conststd::basic_string&lt;char,std::char_traits&lt;char&gt;,std::allocator&lt;char&gt;&gt;,std::basic_string&lt;char,std::char_traits&lt;char&gt;,std::allocator&lt;char&gt;&gt;&gt;&gt;&gt;' visibility='default' size-in-bits='8' hash='062dc28ba12125c6' id='type-id-322'>
         <base-class access='public' layout-offset-in-bits='0' type-id='type-id-19'/>
         <member-type access='public'>
-          <typedef-decl name='pointer' type-id='type-id-328' size-in-bits='64' hash='43e7fbfbfbc32329' id='type-id-367'/>
+          <typedef-decl name='pointer' type-id='type-id-328' size-in-bits='64' hash='6a1b517dd341a28a' id='type-id-367'/>
         </member-type>
         <member-type access='public'>
-          <typedef-decl name='size_type' type-id='type-id-315' size-in-bits='64' hash='da551c1631705dfe' id='type-id-368'/>
+          <typedef-decl name='size_type' type-id='type-id-315' size-in-bits='64' hash='8b230c0ebd12548b' id='type-id-368'/>
         </member-type>
         <member-function access='public'>
           <function-decl name='allocator' type-id='type-id-369' mangled-name='_ZNSaISt13_Rb_tree_nodeISt4pairIKSsSsEEEC2Ev' declared-inline='yes' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZNSaISt13_Rb_tree_nodeISt4pairIKSsSsEEEC2Ev'/>
@@ -2085,18 +2085,18 @@
         <member-type access='private'>
           <class-decl name='rebind&lt;std::basic_string&lt;char,std::char_traits&lt;char&gt;,std::allocator&lt;char&gt;&gt;&gt;' is-struct='yes' visibility='default' size-in-bits='8' hash='7115a1ea7c791977' id='type-id-373'>
             <member-type access='private'>
-              <typedef-decl name='other' type-id='type-id-372' size-in-bits='8' hash='00998045d1cce7ab' id='type-id-374'/>
+              <typedef-decl name='other' type-id='type-id-372' size-in-bits='8' hash='4e71bdee1fa8703e' id='type-id-374'/>
             </member-type>
           </class-decl>
         </member-type>
         <member-type access='public'>
-          <typedef-decl name='pointer' type-id='type-id-48' size-in-bits='64' hash='f36237e7d9f39a16' id='type-id-375'/>
+          <typedef-decl name='pointer' type-id='type-id-48' size-in-bits='64' hash='d08558467961a66f' id='type-id-375'/>
         </member-type>
         <member-type access='public'>
-          <typedef-decl name='size_type' type-id='type-id-315' size-in-bits='64' hash='da551c1631705dfe' id='type-id-376'/>
+          <typedef-decl name='size_type' type-id='type-id-315' size-in-bits='64' hash='8b230c0ebd12548b' id='type-id-376'/>
         </member-type>
         <member-type access='public'>
-          <typedef-decl name='value_type' type-id='type-id-378' size-in-bits='64' hash='db31a765cc04c2f7' id='type-id-377'/>
+          <typedef-decl name='value_type' type-id='type-id-378' size-in-bits='64' hash='51b49d2af614721e' id='type-id-377'/>
         </member-type>
         <member-function access='public'>
           <function-decl name='allocator' type-id='type-id-379' mangled-name='_ZNSaISsEC2ERKS_' declared-inline='yes' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZNSaISsEC2ERKS_'/>
@@ -2115,15 +2115,15 @@
         <member-type access='private'>
           <class-decl name='rebind&lt;std::shared_ptr&lt;mongo::optionenvironment::Constraint&gt;&gt;' is-struct='yes' visibility='default' size-in-bits='8' hash='175ec8703e1d7632' id='type-id-382'>
             <member-type access='private'>
-              <typedef-decl name='other' type-id='type-id-381' size-in-bits='8' hash='d718a3528ac3db97' id='type-id-383'/>
+              <typedef-decl name='other' type-id='type-id-381' size-in-bits='8' hash='0d3bfe6709fcb381' id='type-id-383'/>
             </member-type>
           </class-decl>
         </member-type>
         <member-type access='public'>
-          <typedef-decl name='pointer' type-id='type-id-385' size-in-bits='64' hash='c998cb8c9ecc1b4b' id='type-id-384'/>
+          <typedef-decl name='pointer' type-id='type-id-385' size-in-bits='64' hash='4324ebee35f87489' id='type-id-384'/>
         </member-type>
         <member-type access='public'>
-          <typedef-decl name='size_type' type-id='type-id-315' size-in-bits='64' hash='da551c1631705dfe' id='type-id-386'/>
+          <typedef-decl name='size_type' type-id='type-id-315' size-in-bits='64' hash='8b230c0ebd12548b' id='type-id-386'/>
         </member-type>
         <member-function access='public' destructor='yes'>
           <function-decl name='~allocator' type-id='type-id-387' mangled-name='_ZNSaISt10shared_ptrIN5mongo17optionenvironment10ConstraintEEED2Ev' declared-inline='yes' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZNSaISt10shared_ptrIN5mongo17optionenvironment10ConstraintEEED2Ev'/>
@@ -2166,7 +2166,7 @@
         <base-class access='public' layout-offset-in-bits='0' type-id='type-id-395'/>
         <base-class access='private' layout-offset-in-bits='0' type-id='type-id-260'/>
         <member-type access='private'>
-          <typedef-decl name='_Invoker_type' type-id='type-id-397' size-in-bits='64' hash='4bfa5c48fea3da76' id='type-id-396'/>
+          <typedef-decl name='_Invoker_type' type-id='type-id-397' size-in-bits='64' hash='342868dbd78f1f6a' id='type-id-396'/>
         </member-type>
         <data-member access='private' layout-offset-in-bits='192'>
           <var-decl name='_M_invoker' type-id='type-id-396' visibility='default'/>
@@ -2195,7 +2195,7 @@
     <namespace-decl name='std'>
       <class-decl name='map&lt;std::basic_string&lt;char,std::char_traits&lt;char&gt;,std::allocator&lt;char&gt;&gt;,mongo::ServerParameter*,std::less&lt;std::basic_string&lt;char,std::char_traits&lt;char&gt;,std::allocator&lt;char&gt;&gt;&gt;,std::allocator&lt;std::pair&lt;conststd::basic_string&lt;char,std::char_traits&lt;char&gt;,std::allocator&lt;char&gt;&gt;,mongo::ServerParameter*&gt;&gt;&gt;' visibility='default' size-in-bits='384' hash='e2f1fa1d3b51203d' id='type-id-156'>
         <member-type access='private'>
-          <typedef-decl name='_Rep_type' type-id='type-id-309' size-in-bits='384' hash='ea5787d69d7d7be8' id='type-id-401'/>
+          <typedef-decl name='_Rep_type' type-id='type-id-309' size-in-bits='384' hash='aff2b3be917d56ae' id='type-id-401'/>
         </member-type>
         <data-member access='private' layout-offset-in-bits='0'>
           <var-decl name='_M_t' type-id='type-id-401' visibility='default'/>
@@ -2205,7 +2205,7 @@
     <namespace-decl name='std'>
       <class-decl name='map&lt;std::basic_string&lt;char,std::char_traits&lt;char&gt;,std::allocator&lt;char&gt;&gt;,mongo::optionenvironment::Value,std::less&lt;std::basic_string&lt;char,std::char_traits&lt;char&gt;,std::allocator&lt;char&gt;&gt;&gt;,std::allocator&lt;std::pair&lt;conststd::basic_string&lt;char,std::char_traits&lt;char&gt;,std::allocator&lt;char&gt;&gt;,mongo::optionenvironment::Value&gt;&gt;&gt;' visibility='default' size-in-bits='384' hash='b07e748888162a9f' id='type-id-231'>
         <member-type access='private'>
-          <typedef-decl name='_Rep_type' type-id='type-id-316' size-in-bits='384' hash='89f0bbe0598cd6f8' id='type-id-402'/>
+          <typedef-decl name='_Rep_type' type-id='type-id-316' size-in-bits='384' hash='c59d3b95c3c2aa21' id='type-id-402'/>
         </member-type>
         <data-member access='private' layout-offset-in-bits='0'>
           <var-decl name='_M_t' type-id='type-id-402' visibility='default'/>
@@ -2215,10 +2215,10 @@
     <namespace-decl name='std'>
       <class-decl name='map&lt;std::basic_string&lt;char,std::char_traits&lt;char&gt;,std::allocator&lt;char&gt;&gt;,std::basic_string&lt;char,std::char_traits&lt;char&gt;,std::allocator&lt;char&gt;&gt;,std::less&lt;std::basic_string&lt;char,std::char_traits&lt;char&gt;,std::allocator&lt;char&gt;&gt;&gt;,std::allocator&lt;std::pair&lt;conststd::basic_string&lt;char,std::char_traits&lt;char&gt;,std::allocator&lt;char&gt;&gt;,std::basic_string&lt;char,std::char_traits&lt;char&gt;,std::allocator&lt;char&gt;&gt;&gt;&gt;&gt;' visibility='default' size-in-bits='384' hash='efdd03d278d9c63b' id='type-id-150'>
         <member-type access='private'>
-          <typedef-decl name='_Rep_type' type-id='type-id-320' size-in-bits='384' hash='a6c82685429bd06c' id='type-id-403'/>
+          <typedef-decl name='_Rep_type' type-id='type-id-320' size-in-bits='384' hash='a0df7a7bda08b251' id='type-id-403'/>
         </member-type>
         <member-type access='public'>
-          <typedef-decl name='iterator' type-id='type-id-331' size-in-bits='64' hash='9bf07ac28a8e01f5' id='type-id-404'/>
+          <typedef-decl name='iterator' type-id='type-id-331' size-in-bits='64' hash='09b5410dad848c12' id='type-id-404'/>
         </member-type>
         <data-member access='private' layout-offset-in-bits='0'>
           <var-decl name='_M_t' type-id='type-id-403' visibility='default'/>
@@ -2237,13 +2237,13 @@
     <namespace-decl name='std'>
       <class-decl name='move_iterator&lt;std::basic_string&lt;char,std::char_traits&lt;char&gt;,std::allocator&lt;char&gt;&gt;*&gt;' visibility='default' size-in-bits='64' hash='6f2ea9176bc5d7f5' id='type-id-407'>
         <member-type access='public'>
-          <typedef-decl name='iterator_type' type-id='type-id-48' size-in-bits='64' hash='f36237e7d9f39a16' id='type-id-408'/>
+          <typedef-decl name='iterator_type' type-id='type-id-48' size-in-bits='64' hash='d08558467961a66f' id='type-id-408'/>
         </member-type>
         <member-type access='public'>
-          <typedef-decl name='reference' type-id='type-id-410' size-in-bits='64' hash='e912fba6094a6810' id='type-id-409'/>
+          <typedef-decl name='reference' type-id='type-id-410' size-in-bits='64' hash='d34da8d5603665ee' id='type-id-409'/>
         </member-type>
         <member-type access='public'>
-          <typedef-decl name='value_type' type-id='type-id-412' size-in-bits='64' hash='db31a765cc04c2f7' id='type-id-411'/>
+          <typedef-decl name='value_type' type-id='type-id-412' size-in-bits='64' hash='51b49d2af614721e' id='type-id-411'/>
         </member-type>
         <data-member access='protected' layout-offset-in-bits='0'>
           <var-decl name='_M_current' type-id='type-id-48' visibility='default'/>
@@ -2283,7 +2283,7 @@
     <namespace-decl name='std'>
       <class-decl name='unique_ptr&lt;mongo::BSONObjBuilder,std::default_delete&lt;mongo::BSONObjBuilder&gt;&gt;' visibility='default' size-in-bits='64' hash='3f8800fb620fc249' id='type-id-94'>
         <member-type access='private'>
-          <typedef-decl name='__tuple_type' type-id='type-id-418' size-in-bits='64' hash='1474eafcf2928543' id='type-id-423'/>
+          <typedef-decl name='__tuple_type' type-id='type-id-418' size-in-bits='64' hash='fc6190d6bb114dc7' id='type-id-423'/>
         </member-type>
         <member-type access='public'>
           <typedef-decl name='deleter_type' type-id='type-id-425' size-in-bits='8' hash='8bd2dd6d8c0ace70' id='type-id-424'/>
@@ -2304,15 +2304,15 @@
         <member-type access='private'>
           <class-decl name='_Pointer' visibility='default' size-in-bits='8' hash='2eb37a7c73a54f07' id='type-id-428'>
             <member-type access='public'>
-              <typedef-decl name='type' type-id='type-id-430' size-in-bits='64' hash='12ef8f8da4c0d2fa' id='type-id-429'/>
+              <typedef-decl name='type' type-id='type-id-430' size-in-bits='64' hash='dc5e9b5da5bd90ac' id='type-id-429'/>
             </member-type>
           </class-decl>
         </member-type>
         <member-type access='private'>
-          <typedef-decl name='__tuple_type' type-id='type-id-420' size-in-bits='64' hash='b3c10dfb0906b922' id='type-id-431'/>
+          <typedef-decl name='__tuple_type' type-id='type-id-420' size-in-bits='64' hash='3c8a8b8a60158e4a' id='type-id-431'/>
         </member-type>
         <member-type access='public'>
-          <typedef-decl name='pointer' type-id='type-id-429' size-in-bits='64' hash='12ef8f8da4c0d2fa' id='type-id-432'/>
+          <typedef-decl name='pointer' type-id='type-id-429' size-in-bits='64' hash='dc5e9b5da5bd90ac' id='type-id-432'/>
         </member-type>
         <data-member access='private' layout-offset-in-bits='0'>
           <var-decl name='_M_t' type-id='type-id-431' visibility='default'/>
@@ -2331,7 +2331,7 @@
     <namespace-decl name='std'>
       <class-decl name='unordered_map&lt;std::basic_string&lt;char,std::char_traits&lt;char&gt;,std::allocator&lt;char&gt;&gt;,mongo::logger::LogDomain&lt;mongo::logger::MessageEventEphemeral&gt;*,std::hash&lt;std::basic_string&lt;char,std::char_traits&lt;char&gt;,std::allocator&lt;char&gt;&gt;&gt;,std::equal_to&lt;std::basic_string&lt;char,std::char_traits&lt;char&gt;,std::allocator&lt;char&gt;&gt;&gt;,std::allocator&lt;std::pair&lt;conststd::basic_string&lt;char,std::char_traits&lt;char&gt;,std::allocator&lt;char&gt;&gt;,mongo::logger::LogDomain&lt;mongo::logger::MessageEventEphemeral&gt;*&gt;&gt;&gt;' visibility='default' size-in-bits='448' hash='13233a115a0674cd' id='type-id-211'>
         <member-type access='private'>
-          <typedef-decl name='_Hashtable' type-id='type-id-437' size-in-bits='448' hash='9263f9250582c118' id='type-id-436'/>
+          <typedef-decl name='_Hashtable' type-id='type-id-437' size-in-bits='448' hash='f613d42742b7a17c' id='type-id-436'/>
         </member-type>
         <data-member access='private' layout-offset-in-bits='0'>
           <var-decl name='_M_h' type-id='type-id-436' visibility='default'/>
@@ -2357,25 +2357,25 @@
       <class-decl name='vector&lt;std::basic_string&lt;char,std::char_traits&lt;char&gt;,std::allocator&lt;char&gt;&gt;,std::allocator&lt;std::basic_string&lt;char,std::char_traits&lt;char&gt;,std::allocator&lt;char&gt;&gt;&gt;&gt;' visibility='default' size-in-bits='192' hash='5e58c920da436194' id='type-id-148'>
         <base-class access='protected' layout-offset-in-bits='0' type-id='type-id-441'/>
         <member-type access='public'>
-          <typedef-decl name='allocator_type' type-id='type-id-372' size-in-bits='8' hash='00998045d1cce7ab' id='type-id-442'/>
+          <typedef-decl name='allocator_type' type-id='type-id-372' size-in-bits='8' hash='4e71bdee1fa8703e' id='type-id-442'/>
         </member-type>
         <member-type access='public'>
-          <typedef-decl name='const_iterator' type-id='type-id-9' size-in-bits='64' hash='f66d1889e029ab3b' id='type-id-443'/>
+          <typedef-decl name='const_iterator' type-id='type-id-9' size-in-bits='64' hash='fa34ab0fd7b99afb' id='type-id-443'/>
         </member-type>
         <member-type access='public'>
-          <typedef-decl name='const_reference' type-id='type-id-445' size-in-bits='64' hash='030514d310deec99' id='type-id-444'/>
+          <typedef-decl name='const_reference' type-id='type-id-445' size-in-bits='64' hash='3b1a0de2ddaaa75f' id='type-id-444'/>
         </member-type>
         <member-type access='public'>
-          <typedef-decl name='iterator' type-id='type-id-12' size-in-bits='64' hash='d492fc5dc7b4e3f3' id='type-id-446'/>
+          <typedef-decl name='iterator' type-id='type-id-12' size-in-bits='64' hash='9f93d7f683649867' id='type-id-446'/>
         </member-type>
         <member-type access='public'>
-          <typedef-decl name='pointer' type-id='type-id-448' size-in-bits='64' hash='f36237e7d9f39a16' id='type-id-447'/>
+          <typedef-decl name='pointer' type-id='type-id-448' size-in-bits='64' hash='d08558467961a66f' id='type-id-447'/>
         </member-type>
         <member-type access='public'>
-          <typedef-decl name='size_type' type-id='type-id-315' size-in-bits='64' hash='da551c1631705dfe' id='type-id-449'/>
+          <typedef-decl name='size_type' type-id='type-id-315' size-in-bits='64' hash='8b230c0ebd12548b' id='type-id-449'/>
         </member-type>
         <member-type access='public'>
-          <typedef-decl name='value_type' type-id='type-id-378' size-in-bits='64' hash='db31a765cc04c2f7' id='type-id-450'/>
+          <typedef-decl name='value_type' type-id='type-id-378' size-in-bits='64' hash='51b49d2af614721e' id='type-id-450'/>
         </member-type>
         <member-function access='protected' const='yes'>
           <function-decl name='_M_check_len' type-id='type-id-451' mangled-name='_ZNKSt6vectorISsSaISsEE12_M_check_lenEmPKc' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZNKSt6vectorISsSaISsEE12_M_check_lenEmPKc'/>
@@ -2450,8 +2450,8 @@
         </member-function>
       </class-decl>
     </namespace-decl>
-    <qualified-type-def type-id='type-id-466' const='yes' hash='0d4c7cf1b8c74c39' id='type-id-467'/>
-    <reference-type-def kind='lvalue' type-id='type-id-467' size-in-bits='64' hash='030514d310deec99' id='type-id-468'/>
+    <qualified-type-def type-id='type-id-466' const='yes' hash='268076b657477445' id='type-id-467'/>
+    <reference-type-def kind='lvalue' type-id='type-id-467' size-in-bits='64' hash='54bcdbcbab8cfed3' id='type-id-468'/>
     <qualified-type-def type-id='type-id-9' const='yes' hash='238532428aa9e9b9' id='type-id-469'/>
     <reference-type-def kind='lvalue' type-id='type-id-469' size-in-bits='64' hash='723e5e3516360911' id='type-id-470'/>
     <pointer-type-def type-id='type-id-469' size-in-bits='64' hash='3807dfe2acaa7b9f' id='type-id-471'/>
@@ -2513,16 +2513,16 @@
     <reference-type-def kind='lvalue' type-id='type-id-527' size-in-bits='64' hash='1b005b7b62f83ad7' id='type-id-528'/>
     <qualified-type-def type-id='type-id-332' const='yes' hash='b6414ab4d47d769e' id='type-id-529'/>
     <pointer-type-def type-id='type-id-529' size-in-bits='64' hash='dd59ed8b72d10870' id='type-id-530'/>
-    <qualified-type-def type-id='type-id-531' const='yes' hash='13e2ee9483c37a8d' id='type-id-532'/>
-    <reference-type-def kind='lvalue' type-id='type-id-532' size-in-bits='64' hash='c5195770ff7514f8' id='type-id-533'/>
+    <qualified-type-def type-id='type-id-531' const='yes' hash='01b4453e481eadd3' id='type-id-532'/>
+    <reference-type-def kind='lvalue' type-id='type-id-532' size-in-bits='64' hash='7a1e09a6a92f2ba3' id='type-id-533'/>
     <qualified-type-def type-id='type-id-421' const='yes' hash='ca9e0caeadf3873d' id='type-id-534'/>
     <reference-type-def kind='lvalue' type-id='type-id-534' size-in-bits='64' hash='472918133f7f0f17' id='type-id-535'/>
     <qualified-type-def type-id='type-id-441' const='yes' hash='45d7638b8e9ff95e' id='type-id-536'/>
     <pointer-type-def type-id='type-id-536' size-in-bits='64' hash='463d10f3f6dcb8d6' id='type-id-537'/>
-    <qualified-type-def type-id='type-id-538' const='yes' hash='b8e97d36f507712c' id='type-id-539'/>
-    <reference-type-def kind='lvalue' type-id='type-id-539' size-in-bits='64' hash='133d610019d9bdaf' id='type-id-540'/>
-    <qualified-type-def type-id='type-id-541' const='yes' hash='046e41e5a1c2a354' id='type-id-542'/>
-    <reference-type-def kind='lvalue' type-id='type-id-542' size-in-bits='64' hash='627dffa42e582f77' id='type-id-543'/>
+    <qualified-type-def type-id='type-id-538' const='yes' hash='4aa3c954a1e21860' id='type-id-539'/>
+    <reference-type-def kind='lvalue' type-id='type-id-539' size-in-bits='64' hash='910476b2f1ec4c8b' id='type-id-540'/>
+    <qualified-type-def type-id='type-id-541' const='yes' hash='e0989e7634834ccd' id='type-id-542'/>
+    <reference-type-def kind='lvalue' type-id='type-id-542' size-in-bits='64' hash='dd08ee75982551dc' id='type-id-543'/>
     <qualified-type-def type-id='type-id-372' const='yes' hash='1077b8b1eba4ea20' id='type-id-544'/>
     <reference-type-def kind='lvalue' type-id='type-id-544' size-in-bits='64' hash='17bc8560f544d8de' id='type-id-545'/>
     <qualified-type-def type-id='type-id-378' const='yes' hash='14d376d47ce0ec17' id='type-id-546'/>
@@ -2535,8 +2535,8 @@
     <qualified-type-def type-id='type-id-407' const='yes' hash='72f5cd1cd920e155' id='type-id-552'/>
     <reference-type-def kind='lvalue' type-id='type-id-552' size-in-bits='64' hash='dc2ee1747c010afc' id='type-id-553'/>
     <pointer-type-def type-id='type-id-552' size-in-bits='64' hash='fc8b21e92439803e' id='type-id-554'/>
-    <qualified-type-def type-id='type-id-218' const='yes' hash='158a75c3b975c2dc' id='type-id-163'/>
-    <reference-type-def kind='lvalue' type-id='type-id-163' size-in-bits='64' hash='d8e5391b3091f92a' id='type-id-555'/>
+    <qualified-type-def type-id='type-id-218' const='yes' hash='e6a6a640993f1d52' id='type-id-163'/>
+    <reference-type-def kind='lvalue' type-id='type-id-163' size-in-bits='64' hash='3dbadda6e76b0bcb' id='type-id-555'/>
     <qualified-type-def type-id='type-id-420' const='yes' hash='a1454e39289d55bc' id='type-id-556'/>
     <reference-type-def kind='lvalue' type-id='type-id-556' size-in-bits='64' hash='7edef4c40e64d57f' id='type-id-557'/>
     <qualified-type-def type-id='type-id-422' const='yes' hash='f43ca094a5fe0d6e' id='type-id-558'/>
@@ -2548,8 +2548,8 @@
     <qualified-type-def type-id='type-id-148' const='yes' hash='a295cc6132bd7b21' id='type-id-564'/>
     <reference-type-def kind='lvalue' type-id='type-id-564' size-in-bits='64' hash='e69340f3ab61b6ff' id='type-id-565'/>
     <pointer-type-def type-id='type-id-564' size-in-bits='64' hash='564e4845f54ba155' id='type-id-566'/>
-    <qualified-type-def type-id='type-id-442' const='yes' hash='cd8917f1c930af85' id='type-id-567'/>
-    <reference-type-def kind='lvalue' type-id='type-id-567' size-in-bits='64' hash='5ce35990030ce321' id='type-id-568'/>
+    <qualified-type-def type-id='type-id-442' const='yes' hash='59a31c742670c949' id='type-id-567'/>
+    <reference-type-def kind='lvalue' type-id='type-id-567' size-in-bits='64' hash='07a4e93122368e29' id='type-id-568'/>
     <qualified-type-def type-id='type-id-569' const='yes' hash='9c5281b733a48a99' id='type-id-570'/>
     <reference-type-def kind='lvalue' type-id='type-id-570' size-in-bits='64' hash='a11c383567fb7623' id='type-id-571'/>
     <type-decl name='double' size-in-bits='64' hash='e9e9b320886d9aa6' id='type-id-245'/>
@@ -2821,11 +2821,11 @@
       <parameter type-id='type-id-31'/>
       <return type-id='type-id-31'/>
     </function-type>
-    <function-type size-in-bits='64' hash='7aa61b488be67b11' id='type-id-585'>
+    <function-type size-in-bits='64' hash='fe80fffe4df6f10d' id='type-id-585'>
       <parameter type-id='type-id-586'/>
       <return type-id='type-id-547'/>
     </function-type>
-    <function-type size-in-bits='64' hash='3af1a82e42e78d1e' id='type-id-587'>
+    <function-type size-in-bits='64' hash='c54aa98fd115d9d3' id='type-id-587'>
       <parameter type-id='type-id-571'/>
       <parameter type-id='type-id-571'/>
       <return type-id='type-id-571'/>
@@ -2834,7 +2834,7 @@
       <parameter type-id='type-id-70'/>
       <return type-id='type-id-70'/>
     </function-type>
-    <function-type size-in-bits='64' hash='8ac4082899942db4' id='type-id-589'>
+    <function-type size-in-bits='64' hash='5275044bbfa2b590' id='type-id-589'>
       <parameter type-id='type-id-590'/>
       <return type-id='type-id-591'/>
     </function-type>
@@ -2846,7 +2846,7 @@
       <parameter type-id='type-id-70'/>
       <return type-id='type-id-505'/>
     </function-type>
-    <function-type size-in-bits='64' hash='f4c0b67d7e43ed6f' id='type-id-594'>
+    <function-type size-in-bits='64' hash='9aa4d80fa11a3d3a' id='type-id-594'>
       <parameter type-id='type-id-595'/>
       <return type-id='type-id-596'/>
     </function-type>
@@ -2867,7 +2867,7 @@
       <parameter type-id='type-id-602'/>
       <return type-id='type-id-160'/>
     </function-type>
-    <function-type size-in-bits='64' hash='4c4c81efe0a37ff4' id='type-id-603'>
+    <function-type size-in-bits='64' hash='7d04791c2f60df02' id='type-id-603'>
       <return type-id='type-id-604'/>
     </function-type>
     <function-type size-in-bits='64' hash='a790a9fa8f8cceb9' id='type-id-605'>
@@ -2875,43 +2875,43 @@
       <parameter type-id='type-id-573'/>
       <return type-id='type-id-573'/>
     </function-type>
-    <function-type size-in-bits='64' hash='879e5ddacf3dabfe' id='type-id-606'>
+    <function-type size-in-bits='64' hash='df359a3b199cf53b' id='type-id-606'>
       <parameter type-id='type-id-9'/>
       <return type-id='type-id-607'/>
     </function-type>
-    <function-type size-in-bits='64' hash='a75b9691e285d31c' id='type-id-608'>
+    <function-type size-in-bits='64' hash='387677d876b1d340' id='type-id-608'>
       <parameter type-id='type-id-9'/>
       <return type-id='type-id-609'/>
     </function-type>
-    <function-type size-in-bits='64' hash='295619704dcd9df1' id='type-id-610'>
+    <function-type size-in-bits='64' hash='9280ab2fc96ae7bc' id='type-id-610'>
       <parameter type-id='type-id-12'/>
       <return type-id='type-id-611'/>
     </function-type>
-    <function-type size-in-bits='64' hash='9ce24edc8fb2a228' id='type-id-612'>
+    <function-type size-in-bits='64' hash='efc0bc1d604ddffb' id='type-id-612'>
       <parameter type-id='type-id-48'/>
       <return type-id='type-id-613'/>
     </function-type>
-    <function-type size-in-bits='64' hash='fc38196fe6d46ade' id='type-id-614'>
+    <function-type size-in-bits='64' hash='813c96cff821f93c' id='type-id-614'>
       <parameter type-id='type-id-535'/>
       <return type-id='type-id-615'/>
     </function-type>
-    <function-type size-in-bits='64' hash='f01a99810d9f1b17' id='type-id-616'>
+    <function-type size-in-bits='64' hash='8bbe7210b0f3ba40' id='type-id-616'>
       <parameter type-id='type-id-557'/>
       <return type-id='type-id-615'/>
     </function-type>
-    <function-type size-in-bits='64' hash='0f49c450f5f968e0' id='type-id-617'>
+    <function-type size-in-bits='64' hash='c73bcb58848f196e' id='type-id-617'>
       <parameter type-id='type-id-618'/>
       <return type-id='type-id-619'/>
     </function-type>
-    <function-type size-in-bits='64' hash='507ad1539e448123' id='type-id-620'>
+    <function-type size-in-bits='64' hash='4e0882b2389360e1' id='type-id-620'>
       <parameter type-id='type-id-621'/>
       <return type-id='type-id-619'/>
     </function-type>
-    <function-type size-in-bits='64' hash='9797f93fbc5421a2' id='type-id-622'>
+    <function-type size-in-bits='64' hash='da6b18449ed6c9b9' id='type-id-622'>
       <parameter type-id='type-id-623'/>
       <return type-id='type-id-624'/>
     </function-type>
-    <function-type size-in-bits='64' hash='2bb9a07988d25949' id='type-id-625'>
+    <function-type size-in-bits='64' hash='e17d7068e5430745' id='type-id-625'>
       <parameter type-id='type-id-621'/>
       <return type-id='type-id-624'/>
     </function-type>
@@ -2920,57 +2920,57 @@
       <parameter type-id='type-id-627'/>
       <return type-id='type-id-378'/>
     </function-type>
-    <function-type size-in-bits='64' hash='1f9667399ad6b700' id='type-id-628'>
+    <function-type size-in-bits='64' hash='eea74567888c22df' id='type-id-628'>
       <parameter type-id='type-id-629'/>
       <return type-id='type-id-630'/>
     </function-type>
-    <function-type size-in-bits='64' hash='7f03822a0dd38521' id='type-id-631'>
+    <function-type size-in-bits='64' hash='7564618a8791cbe2' id='type-id-631'>
       <parameter type-id='type-id-632'/>
       <return type-id='type-id-627'/>
     </function-type>
-    <function-type size-in-bits='64' hash='ac0619e6ed18b88b' id='type-id-633'>
+    <function-type size-in-bits='64' hash='4f950dab383b5438' id='type-id-633'>
       <parameter type-id='type-id-9'/>
       <parameter type-id='type-id-9'/>
       <parameter type-id='type-id-48'/>
       <return type-id='type-id-48'/>
     </function-type>
-    <function-type size-in-bits='64' hash='642437fc1cf8026b' id='type-id-634'>
+    <function-type size-in-bits='64' hash='1febd5b8584e18b1' id='type-id-634'>
       <parameter type-id='type-id-9'/>
       <parameter type-id='type-id-9'/>
       <parameter type-id='type-id-48'/>
       <parameter type-id='type-id-635'/>
       <return type-id='type-id-48'/>
     </function-type>
-    <function-type size-in-bits='64' hash='c9f3acbc927dc982' id='type-id-636'>
+    <function-type size-in-bits='64' hash='a1ec69779973ba8e' id='type-id-636'>
       <parameter type-id='type-id-40'/>
       <parameter type-id='type-id-40'/>
       <parameter type-id='type-id-48'/>
       <return type-id='type-id-48'/>
     </function-type>
-    <function-type size-in-bits='64' hash='6210e82ead9ef20e' id='type-id-637'>
+    <function-type size-in-bits='64' hash='ae8b846dd004dbe1' id='type-id-637'>
       <parameter type-id='type-id-630'/>
       <return type-id='type-id-48'/>
     </function-type>
-    <function-type size-in-bits='64' hash='a465862b6ec43c31' id='type-id-638'>
+    <function-type size-in-bits='64' hash='4359cc8a93eb94b3' id='type-id-638'>
       <parameter type-id='type-id-48'/>
       <parameter type-id='type-id-48'/>
       <parameter type-id='type-id-48'/>
       <return type-id='type-id-48'/>
     </function-type>
-    <function-type size-in-bits='64' hash='4f26b5ea29016fc8' id='type-id-639'>
+    <function-type size-in-bits='64' hash='5a10317d4f6f0447' id='type-id-639'>
       <parameter type-id='type-id-48'/>
       <parameter type-id='type-id-48'/>
       <parameter type-id='type-id-48'/>
       <parameter type-id='type-id-635'/>
       <return type-id='type-id-48'/>
     </function-type>
-    <function-type size-in-bits='64' hash='62ef7fb4a1ea9177' id='type-id-640'>
+    <function-type size-in-bits='64' hash='1cf14fac8199374b' id='type-id-640'>
       <parameter type-id='type-id-407'/>
       <parameter type-id='type-id-407'/>
       <parameter type-id='type-id-48'/>
       <return type-id='type-id-48'/>
     </function-type>
-    <function-type size-in-bits='64' hash='62bb74f3ff89e5f6' id='type-id-641'>
+    <function-type size-in-bits='64' hash='dacc49ef692bca5b' id='type-id-641'>
       <parameter type-id='type-id-407'/>
       <parameter type-id='type-id-407'/>
       <parameter type-id='type-id-48'/>
@@ -2981,27 +2981,27 @@
       <parameter type-id='type-id-48'/>
       <return type-id='type-id-407'/>
     </function-type>
-    <function-type size-in-bits='64' hash='8b77581f4a3c9792' id='type-id-643'>
+    <function-type size-in-bits='64' hash='5714f6ebf5e5c388' id='type-id-643'>
       <parameter type-id='type-id-644'/>
       <return type-id='type-id-645'/>
     </function-type>
-    <function-type size-in-bits='64' hash='d19dfc93a9657700' id='type-id-646'>
+    <function-type size-in-bits='64' hash='283cc70f18d5799e' id='type-id-646'>
       <parameter type-id='type-id-635'/>
       <return type-id='type-id-647'/>
     </function-type>
-    <function-type size-in-bits='64' hash='5f9f0ed50d57bd73' id='type-id-648'>
+    <function-type size-in-bits='64' hash='1df411e7e5f7c75e' id='type-id-648'>
       <parameter type-id='type-id-630'/>
       <return type-id='type-id-649'/>
     </function-type>
-    <function-type size-in-bits='64' hash='840fc62218fadc21' id='type-id-650'>
+    <function-type size-in-bits='64' hash='907dd60cf83af021' id='type-id-650'>
       <parameter type-id='type-id-651'/>
       <return type-id='type-id-652'/>
     </function-type>
-    <function-type size-in-bits='64' hash='ab397a570531e507' id='type-id-653'>
+    <function-type size-in-bits='64' hash='6fdd3afb9363f75d' id='type-id-653'>
       <parameter type-id='type-id-654'/>
       <return type-id='type-id-655'/>
     </function-type>
-    <function-type size-in-bits='64' hash='180aacd9c365b773' id='type-id-656'>
+    <function-type size-in-bits='64' hash='4bb8b1951ac8ab7b' id='type-id-656'>
       <parameter type-id='type-id-657'/>
       <return type-id='type-id-385'/>
     </function-type>
@@ -3100,7 +3100,7 @@
       <parameter type-id='type-id-681'/>
       <return type-id='type-id-659'/>
     </function-type>
-    <function-type size-in-bits='64' hash='9a9706d2f43fbd97' id='type-id-682'>
+    <function-type size-in-bits='64' hash='60669c113750b1e7' id='type-id-682'>
       <parameter type-id='type-id-315'/>
       <parameter type-id='type-id-681'/>
       <return type-id='type-id-681'/>
@@ -3115,7 +3115,7 @@
       <parameter type-id='type-id-11' is-artificial='yes'/>
       <return type-id='type-id-10'/>
     </function-type>
-    <function-type method-class-id='type-id-9' static='yes' const='yes' size-in-bits='64' hash='1dbe46f87c5f0071' id='type-id-46'>
+    <function-type method-class-id='type-id-9' static='yes' const='yes' size-in-bits='64' hash='a85ea07dab7534f7' id='type-id-46'>
       <parameter type-id='type-id-471' is-artificial='yes'/>
       <return type-id='type-id-41'/>
     </function-type>
@@ -3123,17 +3123,17 @@
       <parameter type-id='type-id-14' is-artificial='yes'/>
       <return type-id='type-id-13'/>
     </function-type>
-    <function-type method-class-id='type-id-12' static='yes' const='yes' size-in-bits='64' hash='17c89180a9dbdb2c' id='type-id-54'>
+    <function-type method-class-id='type-id-12' static='yes' const='yes' size-in-bits='64' hash='6204fd9425e95974' id='type-id-54'>
       <parameter type-id='type-id-474' is-artificial='yes'/>
       <return type-id='type-id-49'/>
     </function-type>
-    <function-type method-class-id='type-id-21' static='yes' size-in-bits='64' hash='304b3e348047bd8f' id='type-id-683'>
+    <function-type method-class-id='type-id-21' static='yes' size-in-bits='64' hash='e2a272924fbc4820' id='type-id-683'>
       <parameter type-id='type-id-22' is-artificial='yes'/>
       <parameter type-id='type-id-684'/>
       <parameter type-id='type-id-681'/>
       <return type-id='type-id-685'/>
     </function-type>
-    <function-type method-class-id='type-id-21' static='yes' const='yes' size-in-bits='64' hash='2cad9d4a028fa6cc' id='type-id-686'>
+    <function-type method-class-id='type-id-21' static='yes' const='yes' size-in-bits='64' hash='c1f21506be0e7a48' id='type-id-686'>
       <parameter type-id='type-id-477' is-artificial='yes'/>
       <return type-id='type-id-684'/>
     </function-type>
@@ -3162,7 +3162,7 @@
       <parameter type-id='type-id-574'/>
       <return type-id='type-id-25'/>
     </function-type>
-    <function-type method-class-id='type-id-332' static='yes' const='yes' size-in-bits='64' hash='f48709b698897d7a' id='type-id-689'>
+    <function-type method-class-id='type-id-332' static='yes' const='yes' size-in-bits='64' hash='ca2fa8f080caeae1' id='type-id-689'>
       <parameter type-id='type-id-530' is-artificial='yes'/>
       <parameter type-id='type-id-533'/>
       <return type-id='type-id-25'/>
@@ -3196,13 +3196,13 @@
       <parameter type-id='type-id-497' is-artificial='yes'/>
       <return type-id='type-id-480'/>
     </function-type>
-    <function-type method-class-id='type-id-98' static='yes' const='yes' size-in-bits='64' hash='c764b05b94734c15' id='type-id-101'>
+    <function-type method-class-id='type-id-98' static='yes' const='yes' size-in-bits='64' hash='f6af8ea4a86f0023' id='type-id-101'>
       <parameter type-id='type-id-490' is-artificial='yes'/>
       <parameter type-id='type-id-691'/>
       <parameter type-id='type-id-181'/>
       <return type-id='type-id-489'/>
     </function-type>
-    <function-type method-class-id='type-id-441' static='yes' const='yes' size-in-bits='64' hash='b7a0e470a18088a5' id='type-id-692'>
+    <function-type method-class-id='type-id-441' static='yes' const='yes' size-in-bits='64' hash='ade897d2e60c08c8' id='type-id-692'>
       <parameter type-id='type-id-537' is-artificial='yes'/>
       <return type-id='type-id-540'/>
     </function-type>
@@ -3248,7 +3248,7 @@
       <parameter type-id='type-id-520' is-artificial='yes'/>
       <return type-id='type-id-70'/>
     </function-type>
-    <function-type method-class-id='type-id-63' static='yes' size-in-bits='64' hash='2d8faba99802b28c' id='type-id-67'>
+    <function-type method-class-id='type-id-63' static='yes' size-in-bits='64' hash='52638bc773032e20' id='type-id-67'>
       <parameter type-id='type-id-700' is-artificial='yes'/>
       <parameter type-id='type-id-64'/>
       <return type-id='type-id-64'/>
@@ -3270,7 +3270,7 @@
       <parameter type-id='type-id-486'/>
       <return type-id='type-id-701'/>
     </function-type>
-    <function-type method-class-id='type-id-77' static='yes' size-in-bits='64' hash='831f766ad452cbd3' id='type-id-86'>
+    <function-type method-class-id='type-id-77' static='yes' size-in-bits='64' hash='b225843fbfd5038e' id='type-id-86'>
       <parameter type-id='type-id-93' is-artificial='yes'/>
       <parameter type-id='type-id-92'/>
       <parameter type-id='type-id-555'/>
@@ -3296,24 +3296,24 @@
       <parameter type-id='type-id-618'/>
       <return type-id='type-id-705'/>
     </function-type>
-    <function-type method-class-id='type-id-98' static='yes' const='yes' size-in-bits='64' hash='1c7e45b2d54adb92' id='type-id-103'>
+    <function-type method-class-id='type-id-98' static='yes' const='yes' size-in-bits='64' hash='a9d1da4d431bbe24' id='type-id-103'>
       <parameter type-id='type-id-490' is-artificial='yes'/>
       <parameter type-id='type-id-315'/>
       <return type-id='type-id-99'/>
     </function-type>
-    <function-type method-class-id='type-id-110' static='yes' size-in-bits='64' hash='44ec727bca539ea1' id='type-id-112'>
+    <function-type method-class-id='type-id-110' static='yes' size-in-bits='64' hash='485caa86665fe604' id='type-id-112'>
       <parameter type-id='type-id-707' is-artificial='yes'/>
       <parameter type-id='type-id-504'/>
       <parameter type-id='type-id-315'/>
       <return type-id='type-id-708'/>
     </function-type>
-    <function-type method-class-id='type-id-110' static='yes' size-in-bits='64' hash='157731c72945b5a9' id='type-id-113'>
+    <function-type method-class-id='type-id-110' static='yes' size-in-bits='64' hash='02cac91f8cf2a158' id='type-id-113'>
       <parameter type-id='type-id-707' is-artificial='yes'/>
       <parameter type-id='type-id-507'/>
       <parameter type-id='type-id-315'/>
       <return type-id='type-id-708'/>
     </function-type>
-    <function-type method-class-id='type-id-110' static='yes' const='yes' size-in-bits='64' hash='12dd23dbdacc66e7' id='type-id-115'>
+    <function-type method-class-id='type-id-110' static='yes' const='yes' size-in-bits='64' hash='273b4d479ad1f9d1' id='type-id-115'>
       <parameter type-id='type-id-494' is-artificial='yes'/>
       <parameter type-id='type-id-315'/>
       <return type-id='type-id-111'/>
@@ -3322,7 +3322,7 @@
       <parameter type-id='type-id-510' is-artificial='yes'/>
       <return type-id='type-id-495'/>
     </function-type>
-    <function-type method-class-id='type-id-98' static='yes' const='yes' size-in-bits='64' hash='6c5b9ddc34a9676b' id='type-id-102'>
+    <function-type method-class-id='type-id-98' static='yes' const='yes' size-in-bits='64' hash='74f1536f86e90e90' id='type-id-102'>
       <parameter type-id='type-id-490' is-artificial='yes'/>
       <parameter type-id='type-id-315'/>
       <return type-id='type-id-505'/>
@@ -3364,7 +3364,7 @@
       <parameter type-id='type-id-484'/>
       <return type-id='type-id-160'/>
     </function-type>
-    <function-type method-class-id='type-id-117' static='yes' size-in-bits='64' hash='77479cc5e12f78b5' id='type-id-126'>
+    <function-type method-class-id='type-id-117' static='yes' size-in-bits='64' hash='5af4694a374e3a49' id='type-id-126'>
       <parameter type-id='type-id-718' is-artificial='yes'/>
       <parameter type-id='type-id-555'/>
       <return type-id='type-id-160'/>
@@ -3379,7 +3379,7 @@
       <parameter type-id='type-id-547'/>
       <return type-id='type-id-160'/>
     </function-type>
-    <function-type method-class-id='type-id-129' static='yes' size-in-bits='64' hash='5ce7ba7492286d82' id='type-id-134'>
+    <function-type method-class-id='type-id-129' static='yes' size-in-bits='64' hash='c56e1c0dbca9824f' id='type-id-134'>
       <parameter type-id='type-id-719' is-artificial='yes'/>
       <parameter type-id='type-id-555'/>
       <return type-id='type-id-160'/>
@@ -3389,7 +3389,7 @@
       <parameter type-id='type-id-484'/>
       <return type-id='type-id-160'/>
     </function-type>
-    <function-type method-class-id='type-id-137' static='yes' size-in-bits='64' hash='559db6a6be5cc7e4' id='type-id-143'>
+    <function-type method-class-id='type-id-137' static='yes' size-in-bits='64' hash='4f70fd80837e9515' id='type-id-143'>
       <parameter type-id='type-id-720' is-artificial='yes'/>
       <parameter type-id='type-id-555'/>
       <return type-id='type-id-160'/>
@@ -3434,11 +3434,11 @@
       <parameter type-id='type-id-92'/>
       <return type-id='type-id-722'/>
     </function-type>
-    <function-type method-class-id='type-id-723' static='yes' size-in-bits='64' hash='bfc50d27031d7f1f' id='type-id-724'>
+    <function-type method-class-id='type-id-723' static='yes' size-in-bits='64' hash='e5038853a47e7ba3' id='type-id-724'>
       <parameter type-id='type-id-725'/>
       <return type-id='type-id-725'/>
     </function-type>
-    <function-type method-class-id='type-id-726' static='yes' size-in-bits='64' hash='34d7b08152728872' id='type-id-727'>
+    <function-type method-class-id='type-id-726' static='yes' size-in-bits='64' hash='6ed75f425368d619' id='type-id-727'>
       <parameter type-id='type-id-728'/>
       <return type-id='type-id-728'/>
     </function-type>
@@ -3454,7 +3454,7 @@
       <parameter type-id='type-id-69'/>
       <return type-id='type-id-731'/>
     </function-type>
-    <function-type method-class-id='type-id-216' static='yes' size-in-bits='64' hash='edc7891b7c88ec34' id='type-id-223'>
+    <function-type method-class-id='type-id-216' static='yes' size-in-bits='64' hash='83251f7a3da7492a' id='type-id-223'>
       <parameter type-id='type-id-730' is-artificial='yes'/>
       <parameter type-id='type-id-555'/>
       <return type-id='type-id-731'/>
@@ -3474,23 +3474,23 @@
       <parameter type-id='type-id-480'/>
       <return type-id='type-id-733'/>
     </function-type>
-    <function-type method-class-id='type-id-92' static='yes' const='yes' size-in-bits='64' hash='43463ccd5fb79a7d' id='type-id-185'>
+    <function-type method-class-id='type-id-92' static='yes' const='yes' size-in-bits='64' hash='0b0503ac2fcd4fe9' id='type-id-185'>
       <parameter type-id='type-id-514' is-artificial='yes'/>
       <return type-id='type-id-181'/>
     </function-type>
-    <function-type method-class-id='type-id-734' static='yes' size-in-bits='64' hash='2a78aeee54231ed9' id='type-id-735'>
+    <function-type method-class-id='type-id-734' static='yes' size-in-bits='64' hash='a9e44f5c55dd0521' id='type-id-735'>
       <parameter type-id='type-id-9'/>
       <return type-id='type-id-607'/>
     </function-type>
-    <function-type method-class-id='type-id-736' static='yes' size-in-bits='64' hash='f7d94f99b6b42ead' id='type-id-737'>
+    <function-type method-class-id='type-id-736' static='yes' size-in-bits='64' hash='3de7f7532b8e35aa' id='type-id-737'>
       <parameter type-id='type-id-9'/>
       <return type-id='type-id-609'/>
     </function-type>
-    <function-type method-class-id='type-id-738' static='yes' size-in-bits='64' hash='c3f85f72ea5b2bfa' id='type-id-739'>
+    <function-type method-class-id='type-id-738' static='yes' size-in-bits='64' hash='fa136eb95b2a8a58' id='type-id-739'>
       <parameter type-id='type-id-12'/>
       <return type-id='type-id-611'/>
     </function-type>
-    <function-type method-class-id='type-id-740' static='yes' size-in-bits='64' hash='3b06aa1fdd4cfb70' id='type-id-741'>
+    <function-type method-class-id='type-id-740' static='yes' size-in-bits='64' hash='7cf7bf013930998f' id='type-id-741'>
       <parameter type-id='type-id-48'/>
       <return type-id='type-id-613'/>
     </function-type>
@@ -3502,11 +3502,11 @@
       <parameter type-id='type-id-744' is-artificial='yes'/>
       <return type-id='type-id-745'/>
     </function-type>
-    <function-type method-class-id='type-id-320' static='yes' size-in-bits='64' hash='2851d3b83cfa18a9' id='type-id-337'>
+    <function-type method-class-id='type-id-320' static='yes' size-in-bits='64' hash='c1646789c0807c4c' id='type-id-337'>
       <parameter type-id='type-id-746' is-artificial='yes'/>
       <return type-id='type-id-327'/>
     </function-type>
-    <function-type method-class-id='type-id-320' static='yes' size-in-bits='64' hash='a801a2c624a5d59c' id='type-id-336'>
+    <function-type method-class-id='type-id-320' static='yes' size-in-bits='64' hash='f1da1a22b972d2f7' id='type-id-336'>
       <parameter type-id='type-id-325'/>
       <return type-id='type-id-327'/>
     </function-type>
@@ -3514,16 +3514,16 @@
       <parameter type-id='type-id-746' is-artificial='yes'/>
       <return type-id='type-id-747'/>
     </function-type>
-    <function-type method-class-id='type-id-320' static='yes' size-in-bits='64' hash='1b33e43a406be158' id='type-id-335'>
+    <function-type method-class-id='type-id-320' static='yes' size-in-bits='64' hash='444488d6fea798d5' id='type-id-335'>
       <parameter type-id='type-id-746' is-artificial='yes'/>
       <return type-id='type-id-331'/>
     </function-type>
-    <function-type method-class-id='type-id-332' static='yes' size-in-bits='64' hash='72ded28cf7979643' id='type-id-748'>
+    <function-type method-class-id='type-id-332' static='yes' size-in-bits='64' hash='5acd7d81aaeda316' id='type-id-748'>
       <parameter type-id='type-id-749' is-artificial='yes'/>
       <parameter type-id='type-id-70'/>
       <return type-id='type-id-531'/>
     </function-type>
-    <function-type method-class-id='type-id-332' static='yes' const='yes' size-in-bits='64' hash='067920fa09764009' id='type-id-750'>
+    <function-type method-class-id='type-id-332' static='yes' const='yes' size-in-bits='64' hash='c1119d04cde58739' id='type-id-750'>
       <parameter type-id='type-id-530' is-artificial='yes'/>
       <return type-id='type-id-751'/>
     </function-type>
@@ -3531,11 +3531,11 @@
       <parameter type-id='type-id-753' is-artificial='yes'/>
       <return type-id='type-id-754'/>
     </function-type>
-    <function-type method-class-id='type-id-441' static='yes' const='yes' size-in-bits='64' hash='148134fa2629be29' id='type-id-755'>
+    <function-type method-class-id='type-id-441' static='yes' const='yes' size-in-bits='64' hash='7129230191a36bb2' id='type-id-755'>
       <parameter type-id='type-id-537' is-artificial='yes'/>
       <return type-id='type-id-541'/>
     </function-type>
-    <function-type method-class-id='type-id-441' static='yes' size-in-bits='64' hash='3f4c6a7be7ec8d71' id='type-id-756'>
+    <function-type method-class-id='type-id-441' static='yes' size-in-bits='64' hash='b5d3d3a317cc4eed' id='type-id-756'>
       <parameter type-id='type-id-753' is-artificial='yes'/>
       <parameter type-id='type-id-315'/>
       <return type-id='type-id-448'/>
@@ -3544,20 +3544,20 @@
       <parameter type-id='type-id-758' is-artificial='yes'/>
       <return type-id='type-id-759'/>
     </function-type>
-    <function-type method-class-id='type-id-219' static='yes' const='yes' size-in-bits='64' hash='f4b74d44aa4aefa3' id='type-id-435'>
+    <function-type method-class-id='type-id-219' static='yes' const='yes' size-in-bits='64' hash='8124293b0dc565a6' id='type-id-435'>
       <parameter type-id='type-id-563' is-artificial='yes'/>
       <return type-id='type-id-760'/>
     </function-type>
-    <function-type method-class-id='type-id-761' static='yes' size-in-bits='64' hash='73aea17f266adaae' id='type-id-762'>
+    <function-type method-class-id='type-id-761' static='yes' size-in-bits='64' hash='883c4c50dfe98997' id='type-id-762'>
       <parameter type-id='type-id-635'/>
       <parameter type-id='type-id-763'/>
       <return type-id='type-id-764'/>
     </function-type>
-    <function-type method-class-id='type-id-761' static='yes' size-in-bits='64' hash='6b2de40277951d01' id='type-id-765'>
+    <function-type method-class-id='type-id-761' static='yes' size-in-bits='64' hash='743685752054ccdd' id='type-id-765'>
       <parameter type-id='type-id-545'/>
       <return type-id='type-id-763'/>
     </function-type>
-    <function-type method-class-id='type-id-761' static='yes' size-in-bits='64' hash='3919b922b85787d2' id='type-id-766'>
+    <function-type method-class-id='type-id-761' static='yes' size-in-bits='64' hash='c2009a37834e23bd' id='type-id-766'>
       <parameter type-id='type-id-545'/>
       <parameter type-id='type-id-70'/>
       <return type-id='type-id-763'/>
@@ -3620,7 +3620,7 @@
       <parameter type-id='type-id-520' is-artificial='yes'/>
       <return type-id='type-id-150'/>
     </function-type>
-    <function-type method-class-id='type-id-150' static='yes' size-in-bits='64' hash='733c8a448c6ee553' id='type-id-405'>
+    <function-type method-class-id='type-id-150' static='yes' size-in-bits='64' hash='3d7f080a29f918ed' id='type-id-405'>
       <parameter type-id='type-id-784' is-artificial='yes'/>
       <return type-id='type-id-404'/>
     </function-type>
@@ -3628,11 +3628,11 @@
       <parameter type-id='type-id-785' is-artificial='yes'/>
       <return type-id='type-id-786'/>
     </function-type>
-    <function-type method-class-id='type-id-407' static='yes' const='yes' size-in-bits='64' hash='52bf8af4ab5b8c16' id='type-id-413'>
+    <function-type method-class-id='type-id-407' static='yes' const='yes' size-in-bits='64' hash='67f67c9cfac1d77b' id='type-id-413'>
       <parameter type-id='type-id-554' is-artificial='yes'/>
       <return type-id='type-id-408'/>
     </function-type>
-    <function-type method-class-id='type-id-407' static='yes' const='yes' size-in-bits='64' hash='e59f356540e51a82' id='type-id-414'>
+    <function-type method-class-id='type-id-407' static='yes' const='yes' size-in-bits='64' hash='077e27445a1d6838' id='type-id-414'>
       <parameter type-id='type-id-554' is-artificial='yes'/>
       <return type-id='type-id-409'/>
     </function-type>
@@ -3648,15 +3648,15 @@
       <parameter type-id='type-id-328' is-artificial='yes'/>
       <return type-id='type-id-789'/>
     </function-type>
-    <function-type method-class-id='type-id-77' static='yes' size-in-bits='64' hash='2682593a40647179' id='type-id-89'>
+    <function-type method-class-id='type-id-77' static='yes' size-in-bits='64' hash='588d4482adb9191f' id='type-id-89'>
       <parameter type-id='type-id-70'/>
       <return type-id='type-id-218'/>
     </function-type>
-    <function-type method-class-id='type-id-172' static='yes' const='yes' size-in-bits='64' hash='22496159f9d399a2' id='type-id-180'>
+    <function-type method-class-id='type-id-172' static='yes' const='yes' size-in-bits='64' hash='87cdc6e482e064cb' id='type-id-180'>
       <parameter type-id='type-id-512' is-artificial='yes'/>
       <return type-id='type-id-218'/>
     </function-type>
-    <function-type method-class-id='type-id-254' static='yes' const='yes' size-in-bits='64' hash='125af439a8d2e54b' id='type-id-259'>
+    <function-type method-class-id='type-id-254' static='yes' const='yes' size-in-bits='64' hash='ed7c90ce94077f2c' id='type-id-259'>
       <parameter type-id='type-id-522' is-artificial='yes'/>
       <return type-id='type-id-218'/>
     </function-type>
@@ -3664,7 +3664,7 @@
       <parameter type-id='type-id-792' is-artificial='yes'/>
       <return type-id='type-id-793'/>
     </function-type>
-    <function-type method-class-id='type-id-219' static='yes' const='yes' size-in-bits='64' hash='26d91072e44fbb34' id='type-id-433'>
+    <function-type method-class-id='type-id-219' static='yes' const='yes' size-in-bits='64' hash='52f0eb15353c77b2' id='type-id-433'>
       <parameter type-id='type-id-563' is-artificial='yes'/>
       <return type-id='type-id-432'/>
     </function-type>
@@ -3682,31 +3682,31 @@
       <parameter type-id='type-id-794'/>
       <return type-id='type-id-654'/>
     </function-type>
-    <function-type method-class-id='type-id-148' static='yes' const='yes' size-in-bits='64' hash='e6bc95707b09020a' id='type-id-452'>
+    <function-type method-class-id='type-id-148' static='yes' const='yes' size-in-bits='64' hash='e3b86f3de007d96f' id='type-id-452'>
       <parameter type-id='type-id-566' is-artificial='yes'/>
       <return type-id='type-id-443'/>
     </function-type>
-    <function-type method-class-id='type-id-148' static='yes' const='yes' size-in-bits='64' hash='08b4b76aa788b3ff' id='type-id-454'>
+    <function-type method-class-id='type-id-148' static='yes' const='yes' size-in-bits='64' hash='8352dfa1ac25787d' id='type-id-454'>
       <parameter type-id='type-id-566' is-artificial='yes'/>
       <parameter type-id='type-id-449'/>
       <return type-id='type-id-444'/>
     </function-type>
-    <function-type method-class-id='type-id-148' static='yes' size-in-bits='64' hash='ac9c0b751163e4d3' id='type-id-459'>
+    <function-type method-class-id='type-id-148' static='yes' size-in-bits='64' hash='72e74958177e24e9' id='type-id-459'>
       <parameter type-id='type-id-138' is-artificial='yes'/>
       <return type-id='type-id-446'/>
     </function-type>
-    <function-type method-class-id='type-id-148' static='yes' size-in-bits='64' hash='7df3fa8dd193e5b6' id='type-id-458'>
+    <function-type method-class-id='type-id-148' static='yes' size-in-bits='64' hash='963c02a4a82b68f3' id='type-id-458'>
       <parameter type-id='type-id-138' is-artificial='yes'/>
       <parameter type-id='type-id-449'/>
       <parameter type-id='type-id-9'/>
       <parameter type-id='type-id-9'/>
       <return type-id='type-id-447'/>
     </function-type>
-    <function-type method-class-id='type-id-148' static='yes' const='yes' size-in-bits='64' hash='fa3e9b10497bfb9e' id='type-id-453'>
+    <function-type method-class-id='type-id-148' static='yes' const='yes' size-in-bits='64' hash='251a9e29618268be' id='type-id-453'>
       <parameter type-id='type-id-566' is-artificial='yes'/>
       <return type-id='type-id-449'/>
     </function-type>
-    <function-type method-class-id='type-id-148' static='yes' const='yes' size-in-bits='64' hash='20ec77721f438960' id='type-id-451'>
+    <function-type method-class-id='type-id-148' static='yes' const='yes' size-in-bits='64' hash='4749f1e59e37b7b6' id='type-id-451'>
       <parameter type-id='type-id-566' is-artificial='yes'/>
       <parameter type-id='type-id-449'/>
       <parameter type-id='type-id-69'/>
@@ -3726,7 +3726,7 @@
       <parameter type-id='type-id-16' is-artificial='yes'/>
       <return type-id='type-id-659'/>
     </function-type>
-    <function-type method-class-id='type-id-15' static='yes' size-in-bits='64' hash='b52c67f689bd95cf' id='type-id-796'>
+    <function-type method-class-id='type-id-15' static='yes' size-in-bits='64' hash='cc993f272c585d2f' id='type-id-796'>
       <parameter type-id='type-id-16' is-artificial='yes'/>
       <parameter type-id='type-id-797'/>
       <parameter type-id='type-id-798'/>
@@ -3741,7 +3741,7 @@
       <parameter type-id='type-id-18' is-artificial='yes'/>
       <return type-id='type-id-659'/>
     </function-type>
-    <function-type method-class-id='type-id-17' static='yes' size-in-bits='64' hash='ea05c8a1283ac26e' id='type-id-802'>
+    <function-type method-class-id='type-id-17' static='yes' size-in-bits='64' hash='cf719a2b46dc42d5' id='type-id-802'>
       <parameter type-id='type-id-18' is-artificial='yes'/>
       <parameter type-id='type-id-803'/>
       <parameter type-id='type-id-804'/>
@@ -3756,7 +3756,7 @@
       <parameter type-id='type-id-20' is-artificial='yes'/>
       <return type-id='type-id-659'/>
     </function-type>
-    <function-type method-class-id='type-id-19' static='yes' size-in-bits='64' hash='7d6ad18d9371437b' id='type-id-808'>
+    <function-type method-class-id='type-id-19' static='yes' size-in-bits='64' hash='f054912630b4d925' id='type-id-808'>
       <parameter type-id='type-id-20' is-artificial='yes'/>
       <parameter type-id='type-id-809'/>
       <parameter type-id='type-id-810'/>
@@ -3771,7 +3771,7 @@
       <parameter type-id='type-id-22' is-artificial='yes'/>
       <return type-id='type-id-659'/>
     </function-type>
-    <function-type method-class-id='type-id-21' static='yes' size-in-bits='64' hash='5fcf9e843ceda49a' id='type-id-813'>
+    <function-type method-class-id='type-id-21' static='yes' size-in-bits='64' hash='a9126e83d0c440bc' id='type-id-813'>
       <parameter type-id='type-id-22' is-artificial='yes'/>
       <parameter type-id='type-id-685'/>
       <parameter type-id='type-id-684'/>
@@ -3791,7 +3791,7 @@
       <parameter type-id='type-id-24' is-artificial='yes'/>
       <return type-id='type-id-659'/>
     </function-type>
-    <function-type method-class-id='type-id-23' static='yes' size-in-bits='64' hash='c6d215f7a4c83bd1' id='type-id-817'>
+    <function-type method-class-id='type-id-23' static='yes' size-in-bits='64' hash='48d4599aa1b368c8' id='type-id-817'>
       <parameter type-id='type-id-24' is-artificial='yes'/>
       <parameter type-id='type-id-818'/>
       <parameter type-id='type-id-819'/>
@@ -3805,7 +3805,7 @@
       <parameter type-id='type-id-820' is-artificial='yes'/>
       <return type-id='type-id-659'/>
     </function-type>
-    <function-type method-class-id='type-id-58' static='yes' size-in-bits='64' hash='f121cd8ae1d9ef49' id='type-id-60'>
+    <function-type method-class-id='type-id-58' static='yes' size-in-bits='64' hash='8e038776505a7faf' id='type-id-60'>
       <parameter type-id='type-id-820' is-artificial='yes'/>
       <parameter type-id='type-id-555'/>
       <parameter type-id='type-id-70'/>
@@ -3830,7 +3830,7 @@
       <parameter type-id='type-id-70'/>
       <return type-id='type-id-659'/>
     </function-type>
-    <function-type method-class-id='type-id-98' static='yes' size-in-bits='64' hash='41a135c0580869ed' id='type-id-100'>
+    <function-type method-class-id='type-id-98' static='yes' size-in-bits='64' hash='872ac4175afef94e' id='type-id-100'>
       <parameter type-id='type-id-822' is-artificial='yes'/>
       <parameter type-id='type-id-99'/>
       <return type-id='type-id-659'/>
@@ -3839,12 +3839,12 @@
       <parameter type-id='type-id-823' is-artificial='yes'/>
       <return type-id='type-id-659'/>
     </function-type>
-    <function-type method-class-id='type-id-59' static='yes' size-in-bits='64' hash='cb17cbcbb64ecaeb' id='type-id-109'>
+    <function-type method-class-id='type-id-59' static='yes' size-in-bits='64' hash='a70b8d7cba601789' id='type-id-109'>
       <parameter type-id='type-id-823' is-artificial='yes'/>
       <parameter type-id='type-id-555'/>
       <return type-id='type-id-659'/>
     </function-type>
-    <function-type method-class-id='type-id-59' static='yes' size-in-bits='64' hash='442b41f5ff5303c8' id='type-id-104'>
+    <function-type method-class-id='type-id-59' static='yes' size-in-bits='64' hash='8b0ea82265022a78' id='type-id-104'>
       <parameter type-id='type-id-823' is-artificial='yes'/>
       <parameter type-id='type-id-555'/>
       <parameter type-id='type-id-70'/>
@@ -3927,12 +3927,12 @@
       <parameter type-id='type-id-826'/>
       <return type-id='type-id-659'/>
     </function-type>
-    <function-type method-class-id='type-id-110' static='yes' size-in-bits='64' hash='97f0eed4bf1b5965' id='type-id-114'>
+    <function-type method-class-id='type-id-110' static='yes' size-in-bits='64' hash='f0abab1184ddc4cb' id='type-id-114'>
       <parameter type-id='type-id-707' is-artificial='yes'/>
       <parameter type-id='type-id-111'/>
       <return type-id='type-id-659'/>
     </function-type>
-    <function-type method-class-id='type-id-840' static='yes' size-in-bits='64' hash='7cd92d97e51a6323' id='type-id-841'>
+    <function-type method-class-id='type-id-840' static='yes' size-in-bits='64' hash='f78e2b6f81d45fe6' id='type-id-841'>
       <parameter type-id='type-id-842' is-artificial='yes'/>
       <parameter type-id='type-id-555'/>
       <parameter type-id='type-id-70'/>
@@ -3946,14 +3946,14 @@
       <parameter type-id='type-id-718' is-artificial='yes'/>
       <return type-id='type-id-659'/>
     </function-type>
-    <function-type method-class-id='type-id-117' static='yes' size-in-bits='64' hash='5cd7fa3770ef4fef' id='type-id-124'>
+    <function-type method-class-id='type-id-117' static='yes' size-in-bits='64' hash='43ce2290032f4167' id='type-id-124'>
       <parameter type-id='type-id-718' is-artificial='yes'/>
       <parameter type-id='type-id-843'/>
       <parameter type-id='type-id-701'/>
       <parameter type-id='type-id-555'/>
       <return type-id='type-id-659'/>
     </function-type>
-    <function-type method-class-id='type-id-117' static='yes' size-in-bits='64' hash='21d4a2ad27b821df' id='type-id-122'>
+    <function-type method-class-id='type-id-117' static='yes' size-in-bits='64' hash='e5e77c9171d3d93b' id='type-id-122'>
       <parameter type-id='type-id-718' is-artificial='yes'/>
       <parameter type-id='type-id-844'/>
       <parameter type-id='type-id-555'/>
@@ -3966,14 +3966,14 @@
       <parameter type-id='type-id-719' is-artificial='yes'/>
       <return type-id='type-id-659'/>
     </function-type>
-    <function-type method-class-id='type-id-129' static='yes' size-in-bits='64' hash='cf78addedd1ffaff' id='type-id-132'>
+    <function-type method-class-id='type-id-129' static='yes' size-in-bits='64' hash='2393ec6097d59261' id='type-id-132'>
       <parameter type-id='type-id-719' is-artificial='yes'/>
       <parameter type-id='type-id-843'/>
       <parameter type-id='type-id-701'/>
       <parameter type-id='type-id-555'/>
       <return type-id='type-id-659'/>
     </function-type>
-    <function-type method-class-id='type-id-129' static='yes' size-in-bits='64' hash='fd21dea438c09ce9' id='type-id-130'>
+    <function-type method-class-id='type-id-129' static='yes' size-in-bits='64' hash='bc34e6bcbc101e43' id='type-id-130'>
       <parameter type-id='type-id-719' is-artificial='yes'/>
       <parameter type-id='type-id-844'/>
       <parameter type-id='type-id-555'/>
@@ -3986,14 +3986,14 @@
       <parameter type-id='type-id-720' is-artificial='yes'/>
       <return type-id='type-id-659'/>
     </function-type>
-    <function-type method-class-id='type-id-137' static='yes' size-in-bits='64' hash='8fe1fe895c8c1382' id='type-id-141'>
+    <function-type method-class-id='type-id-137' static='yes' size-in-bits='64' hash='6277934c05796691' id='type-id-141'>
       <parameter type-id='type-id-720' is-artificial='yes'/>
       <parameter type-id='type-id-843'/>
       <parameter type-id='type-id-701'/>
       <parameter type-id='type-id-555'/>
       <return type-id='type-id-659'/>
     </function-type>
-    <function-type method-class-id='type-id-137' static='yes' size-in-bits='64' hash='85951f0dec8d107a' id='type-id-139'>
+    <function-type method-class-id='type-id-137' static='yes' size-in-bits='64' hash='d84038927f0cbe78' id='type-id-139'>
       <parameter type-id='type-id-720' is-artificial='yes'/>
       <parameter type-id='type-id-844'/>
       <parameter type-id='type-id-555'/>
@@ -4012,7 +4012,7 @@
       <parameter type-id='type-id-70'/>
       <return type-id='type-id-659'/>
     </function-type>
-    <function-type method-class-id='type-id-151' static='yes' size-in-bits='64' hash='e283f7c580a80532' id='type-id-152'>
+    <function-type method-class-id='type-id-151' static='yes' size-in-bits='64' hash='82d05514adcfa409' id='type-id-152'>
       <parameter type-id='type-id-848' is-artificial='yes'/>
       <parameter type-id='type-id-70'/>
       <parameter type-id='type-id-555'/>
@@ -4063,7 +4063,7 @@
       <parameter type-id='type-id-69'/>
       <return type-id='type-id-659'/>
     </function-type>
-    <function-type method-class-id='type-id-92' static='yes' size-in-bits='64' hash='cf2ce9beaac0b95a' id='type-id-183'>
+    <function-type method-class-id='type-id-92' static='yes' size-in-bits='64' hash='daf23fb54f8aca81' id='type-id-183'>
       <parameter type-id='type-id-855' is-artificial='yes'/>
       <parameter type-id='type-id-555'/>
       <return type-id='type-id-659'/>
@@ -4093,7 +4093,7 @@
       <parameter type-id='type-id-25'/>
       <return type-id='type-id-659'/>
     </function-type>
-    <function-type method-class-id='type-id-173' static='yes' size-in-bits='64' hash='1082efa7972041d0' id='type-id-196'>
+    <function-type method-class-id='type-id-173' static='yes' size-in-bits='64' hash='63502e8c54ab9982' id='type-id-196'>
       <parameter type-id='type-id-690' is-artificial='yes'/>
       <parameter type-id='type-id-681'/>
       <parameter type-id='type-id-181'/>
@@ -4109,12 +4109,12 @@
       <parameter type-id='type-id-70'/>
       <return type-id='type-id-659'/>
     </function-type>
-    <function-type method-class-id='type-id-224' static='yes' size-in-bits='64' hash='12492890dfa2a23e' id='type-id-225'>
+    <function-type method-class-id='type-id-224' static='yes' size-in-bits='64' hash='9df2550fb26b370b' id='type-id-225'>
       <parameter type-id='type-id-220' is-artificial='yes'/>
       <parameter type-id='type-id-555'/>
       <return type-id='type-id-659'/>
     </function-type>
-    <function-type method-class-id='type-id-239' static='yes' size-in-bits='64' hash='4023f9a22afc5bfc' id='type-id-242'>
+    <function-type method-class-id='type-id-239' static='yes' size-in-bits='64' hash='ce980ca8a675f112' id='type-id-242'>
       <parameter type-id='type-id-602' is-artificial='yes'/>
       <parameter type-id='type-id-555'/>
       <return type-id='type-id-659'/>
@@ -4190,7 +4190,7 @@
       <parameter type-id='type-id-746' is-artificial='yes'/>
       <return type-id='type-id-659'/>
     </function-type>
-    <function-type method-class-id='type-id-320' static='yes' size-in-bits='64' hash='d466ae3d61c59f75' id='type-id-333'>
+    <function-type method-class-id='type-id-320' static='yes' size-in-bits='64' hash='5a143fb2bf2d88f0' id='type-id-333'>
       <parameter type-id='type-id-746' is-artificial='yes'/>
       <parameter type-id='type-id-327'/>
       <return type-id='type-id-659'/>
@@ -4199,7 +4199,7 @@
       <parameter type-id='type-id-867' is-artificial='yes'/>
       <return type-id='type-id-659'/>
     </function-type>
-    <function-type method-class-id='type-id-332' static='yes' size-in-bits='64' hash='53da58ea65bb95a1' id='type-id-868'>
+    <function-type method-class-id='type-id-332' static='yes' size-in-bits='64' hash='66ac85e789d31cb3' id='type-id-868'>
       <parameter type-id='type-id-749' is-artificial='yes'/>
       <parameter type-id='type-id-869'/>
       <return type-id='type-id-659'/>
@@ -4216,12 +4216,12 @@
       <parameter type-id='type-id-753' is-artificial='yes'/>
       <return type-id='type-id-659'/>
     </function-type>
-    <function-type method-class-id='type-id-441' static='yes' size-in-bits='64' hash='12b7f20710926592' id='type-id-873'>
+    <function-type method-class-id='type-id-441' static='yes' size-in-bits='64' hash='e1de87a88344928a' id='type-id-873'>
       <parameter type-id='type-id-753' is-artificial='yes'/>
       <parameter type-id='type-id-543'/>
       <return type-id='type-id-659'/>
     </function-type>
-    <function-type method-class-id='type-id-441' static='yes' size-in-bits='64' hash='0be8aa41ce10a3f7' id='type-id-874'>
+    <function-type method-class-id='type-id-441' static='yes' size-in-bits='64' hash='c1757cd208d13a92' id='type-id-874'>
       <parameter type-id='type-id-753' is-artificial='yes'/>
       <parameter type-id='type-id-448'/>
       <parameter type-id='type-id-315'/>
@@ -4231,7 +4231,7 @@
       <parameter type-id='type-id-877' is-artificial='yes'/>
       <return type-id='type-id-659'/>
     </function-type>
-    <function-type method-class-id='type-id-875' static='yes' size-in-bits='64' hash='14b16514658e1085' id='type-id-878'>
+    <function-type method-class-id='type-id-875' static='yes' size-in-bits='64' hash='ca861eaadcd19d37' id='type-id-878'>
       <parameter type-id='type-id-877' is-artificial='yes'/>
       <parameter type-id='type-id-540'/>
       <return type-id='type-id-659'/>
@@ -4245,7 +4245,7 @@
       <parameter type-id='type-id-758' is-artificial='yes'/>
       <return type-id='type-id-659'/>
     </function-type>
-    <function-type method-class-id='type-id-464' static='yes' size-in-bits='64' hash='2c6ea5a34c031ae7' id='type-id-882'>
+    <function-type method-class-id='type-id-464' static='yes' size-in-bits='64' hash='ccf4218b14ec82ff' id='type-id-882'>
       <parameter type-id='type-id-758' is-artificial='yes'/>
       <parameter type-id='type-id-883'/>
       <parameter type-id='type-id-315'/>
@@ -4284,7 +4284,7 @@
       <parameter type-id='type-id-890' is-artificial='yes'/>
       <return type-id='type-id-659'/>
     </function-type>
-    <function-type method-class-id='type-id-891' static='yes' size-in-bits='64' hash='dc95ad060243c0c6' id='type-id-892'>
+    <function-type method-class-id='type-id-891' static='yes' size-in-bits='64' hash='e763e3cbe1aa3063' id='type-id-892'>
       <parameter type-id='type-id-893'/>
       <parameter type-id='type-id-894'/>
       <parameter type-id='type-id-895'/>
@@ -4295,7 +4295,7 @@
       <parameter type-id='type-id-789'/>
       <return type-id='type-id-659'/>
     </function-type>
-    <function-type method-class-id='type-id-761' static='yes' size-in-bits='64' hash='9cf94b71edd4a9bb' id='type-id-897'>
+    <function-type method-class-id='type-id-761' static='yes' size-in-bits='64' hash='052513ef164361c8' id='type-id-897'>
       <parameter type-id='type-id-635'/>
       <parameter type-id='type-id-764'/>
       <parameter type-id='type-id-763'/>
@@ -4306,7 +4306,7 @@
       <parameter type-id='type-id-48'/>
       <return type-id='type-id-659'/>
     </function-type>
-    <function-type method-class-id='type-id-899' static='yes' size-in-bits='64' hash='064db6367fcd4516' id='type-id-900'>
+    <function-type method-class-id='type-id-899' static='yes' size-in-bits='64' hash='9b531c23229292d8' id='type-id-900'>
       <parameter type-id='type-id-678'/>
       <parameter type-id='type-id-901'/>
       <parameter type-id='type-id-902'/>
@@ -4338,7 +4338,7 @@
       <parameter type-id='type-id-784' is-artificial='yes'/>
       <return type-id='type-id-659'/>
     </function-type>
-    <function-type method-class-id='type-id-407' static='yes' size-in-bits='64' hash='5f90d076a00469fb' id='type-id-415'>
+    <function-type method-class-id='type-id-407' static='yes' size-in-bits='64' hash='6d365d6014f03d24' id='type-id-415'>
       <parameter type-id='type-id-785' is-artificial='yes'/>
       <parameter type-id='type-id-408'/>
       <return type-id='type-id-659'/>
@@ -4351,7 +4351,7 @@
       <parameter type-id='type-id-138' is-artificial='yes'/>
       <return type-id='type-id-659'/>
     </function-type>
-    <function-type method-class-id='type-id-148' static='yes' size-in-bits='64' hash='5c3d66860dd54397' id='type-id-461'>
+    <function-type method-class-id='type-id-148' static='yes' size-in-bits='64' hash='e20af57c8452bafc' id='type-id-461'>
       <parameter type-id='type-id-138' is-artificial='yes'/>
       <parameter type-id='type-id-568'/>
       <return type-id='type-id-659'/>
@@ -4362,7 +4362,7 @@
       <parameter type-id='type-id-667'/>
       <return type-id='type-id-659'/>
     </function-type>
-    <function-type method-class-id='type-id-148' static='yes' size-in-bits='64' hash='159fdc82bdaaf406' id='type-id-457'>
+    <function-type method-class-id='type-id-148' static='yes' size-in-bits='64' hash='2348d722391a61ce' id='type-id-457'>
       <parameter type-id='type-id-138' is-artificial='yes'/>
       <parameter type-id='type-id-447'/>
       <return type-id='type-id-659'/>
@@ -4380,12 +4380,12 @@
       <parameter type-id='type-id-8' is-artificial='yes'/>
       <return type-id='type-id-681'/>
     </function-type>
-    <function-type method-class-id='type-id-187' static='yes' size-in-bits='64' hash='a95decfa465023d8' id='type-id-189'>
+    <function-type method-class-id='type-id-187' static='yes' size-in-bits='64' hash='a0f97308d80807ab' id='type-id-189'>
       <parameter type-id='type-id-856' is-artificial='yes'/>
       <parameter type-id='type-id-181'/>
       <return type-id='type-id-681'/>
     </function-type>
-    <function-type method-class-id='type-id-187' static='yes' size-in-bits='64' hash='b9a4631fb053f2d5' id='type-id-190'>
+    <function-type method-class-id='type-id-187' static='yes' size-in-bits='64' hash='286f06db1f12c0a1' id='type-id-190'>
       <parameter type-id='type-id-856' is-artificial='yes'/>
       <parameter type-id='type-id-681'/>
       <parameter type-id='type-id-181'/>
@@ -4570,7 +4570,7 @@
       <class-decl name='__alloc_traits&lt;std::allocator&lt;mongo::logger::Appender&lt;mongo::logger::MessageEventEphemeral&gt;*&gt;&gt;' is-struct='yes' visibility='default' size-in-bits='8' hash='21c3dd9c8d64c771' id='type-id-942'>
         <base-class access='public' layout-offset-in-bits='0' type-id='type-id-943'/>
         <member-type access='private'>
-          <typedef-decl name='pointer' type-id='type-id-945' size-in-bits='64' hash='a20beb6b41ec401d' id='type-id-944'/>
+          <typedef-decl name='pointer' type-id='type-id-945' size-in-bits='64' hash='33659c46a507c3a8' id='type-id-944'/>
         </member-type>
       </class-decl>
     </namespace-decl>
@@ -4578,7 +4578,7 @@
       <class-decl name='__alloc_traits&lt;std::allocator&lt;mongo::optionenvironment::Constraint*&gt;&gt;' is-struct='yes' visibility='default' size-in-bits='8' hash='f0a17d4820b85b29' id='type-id-946'>
         <base-class access='public' layout-offset-in-bits='0' type-id='type-id-947'/>
         <member-type access='private'>
-          <typedef-decl name='pointer' type-id='type-id-949' size-in-bits='64' hash='bbd48480d62fd584' id='type-id-948'/>
+          <typedef-decl name='pointer' type-id='type-id-949' size-in-bits='64' hash='55f27adb976eace6' id='type-id-948'/>
         </member-type>
       </class-decl>
     </namespace-decl>
@@ -4586,7 +4586,7 @@
       <class-decl name='__alloc_traits&lt;std::allocator&lt;mongo::optionenvironment::KeyConstraint*&gt;&gt;' is-struct='yes' visibility='default' size-in-bits='8' hash='29789d1914414ace' id='type-id-950'>
         <base-class access='public' layout-offset-in-bits='0' type-id='type-id-951'/>
         <member-type access='private'>
-          <typedef-decl name='pointer' type-id='type-id-953' size-in-bits='64' hash='fc550e7be802f723' id='type-id-952'/>
+          <typedef-decl name='pointer' type-id='type-id-953' size-in-bits='64' hash='04a0c6b11be95316' id='type-id-952'/>
         </member-type>
       </class-decl>
     </namespace-decl>
@@ -4596,18 +4596,18 @@
         <member-type access='private'>
           <class-decl name='rebind&lt;std::basic_string&lt;char,std::char_traits&lt;char&gt;,std::allocator&lt;char&gt;&gt;&gt;' is-struct='yes' visibility='default' size-in-bits='8' hash='dc6d3c6ef025f4f8' id='type-id-954'>
             <member-type access='private'>
-              <typedef-decl name='other' type-id='type-id-956' size-in-bits='8' hash='00998045d1cce7ab' id='type-id-955'/>
+              <typedef-decl name='other' type-id='type-id-956' size-in-bits='8' hash='4e71bdee1fa8703e' id='type-id-955'/>
             </member-type>
           </class-decl>
         </member-type>
         <member-type access='private'>
-          <typedef-decl name='const_reference' type-id='type-id-468' size-in-bits='64' hash='030514d310deec99' id='type-id-445'/>
+          <typedef-decl name='const_reference' type-id='type-id-468' size-in-bits='64' hash='3b1a0de2ddaaa75f' id='type-id-445'/>
         </member-type>
         <member-type access='private'>
-          <typedef-decl name='pointer' type-id='type-id-764' size-in-bits='64' hash='f36237e7d9f39a16' id='type-id-957'/>
+          <typedef-decl name='pointer' type-id='type-id-764' size-in-bits='64' hash='d08558467961a66f' id='type-id-957'/>
         </member-type>
         <member-type access='private'>
-          <typedef-decl name='value_type' type-id='type-id-958' size-in-bits='64' hash='db31a765cc04c2f7' id='type-id-466'/>
+          <typedef-decl name='value_type' type-id='type-id-958' size-in-bits='64' hash='51b49d2af614721e' id='type-id-466'/>
         </member-type>
         <member-function access='public' static='yes'>
           <function-decl name='_S_always_equal' type-id='type-id-688' mangled-name='_ZN9__gnu_cxx14__alloc_traitsISaISsEE15_S_always_equalEv' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZN9__gnu_cxx14__alloc_traitsISaISsEE15_S_always_equalEv'/>
@@ -4622,7 +4622,7 @@
         <member-type access='private'>
           <class-decl name='rebind&lt;std::_Rb_tree_node&lt;std::pair&lt;conststd::basic_string&lt;char,std::char_traits&lt;char&gt;,std::allocator&lt;char&gt;&gt;,std::basic_string&lt;char,std::char_traits&lt;char&gt;,std::allocator&lt;char&gt;&gt;&gt;&gt;&gt;' is-struct='yes' visibility='default' size-in-bits='8' hash='df06e8a33330ad1c' id='type-id-960'>
             <member-type access='private'>
-              <typedef-decl name='other' type-id='type-id-961' size-in-bits='8' hash='062dc28ba12125c6' id='type-id-330'/>
+              <typedef-decl name='other' type-id='type-id-961' size-in-bits='8' hash='ad24d695c5a9a4ef' id='type-id-330'/>
             </member-type>
           </class-decl>
         </member-type>
@@ -4634,12 +4634,12 @@
         <member-type access='private'>
           <class-decl name='rebind&lt;std::shared_ptr&lt;mongo::optionenvironment::Constraint&gt;&gt;' is-struct='yes' visibility='default' size-in-bits='8' hash='bf240bc060159ebe' id='type-id-963'>
             <member-type access='private'>
-              <typedef-decl name='other' type-id='type-id-965' size-in-bits='8' hash='d718a3528ac3db97' id='type-id-964'/>
+              <typedef-decl name='other' type-id='type-id-965' size-in-bits='8' hash='0d3bfe6709fcb381' id='type-id-964'/>
             </member-type>
           </class-decl>
         </member-type>
         <member-type access='private'>
-          <typedef-decl name='pointer' type-id='type-id-901' size-in-bits='64' hash='c998cb8c9ecc1b4b' id='type-id-966'/>
+          <typedef-decl name='pointer' type-id='type-id-901' size-in-bits='64' hash='4324ebee35f87489' id='type-id-966'/>
         </member-type>
       </class-decl>
     </namespace-decl>
@@ -4655,10 +4655,10 @@
     <namespace-decl name='__gnu_cxx'>
       <class-decl name='new_allocator&lt;std::_List_node&lt;mongo::optionenvironment::OptionDescription&gt;&gt;' is-struct='yes' visibility='default' size-in-bits='8' hash='b5ecacb431144efa' id='type-id-15'>
         <member-type access='private'>
-          <typedef-decl name='pointer' type-id='type-id-800' size-in-bits='64' hash='9c56c1feb2542fec' id='type-id-797'/>
+          <typedef-decl name='pointer' type-id='type-id-800' size-in-bits='64' hash='e5a188d4ddbf14a4' id='type-id-797'/>
         </member-type>
         <member-type access='private'>
-          <typedef-decl name='size_type' type-id='type-id-315' size-in-bits='64' hash='da551c1631705dfe' id='type-id-798'/>
+          <typedef-decl name='size_type' type-id='type-id-315' size-in-bits='64' hash='8b230c0ebd12548b' id='type-id-798'/>
         </member-type>
         <member-function access='public'>
           <function-decl name='deallocate' type-id='type-id-796' mangled-name='_ZN9__gnu_cxx13new_allocatorISt10_List_nodeIN5mongo17optionenvironment17OptionDescriptionEEE10deallocateEPS5_m' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZN9__gnu_cxx13new_allocatorISt10_List_nodeIN5mongo17optionenvironment17OptionDescriptionEEE10deallocateEPS5_m'/>
@@ -4677,10 +4677,10 @@
     <namespace-decl name='__gnu_cxx'>
       <class-decl name='new_allocator&lt;std::_List_node&lt;mongo::optionenvironment::OptionSection&gt;&gt;' is-struct='yes' visibility='default' size-in-bits='8' hash='9277d4fe411f248b' id='type-id-17'>
         <member-type access='private'>
-          <typedef-decl name='pointer' type-id='type-id-806' size-in-bits='64' hash='1db411a418c1ccd7' id='type-id-803'/>
+          <typedef-decl name='pointer' type-id='type-id-806' size-in-bits='64' hash='3d459f97e8b30d70' id='type-id-803'/>
         </member-type>
         <member-type access='private'>
-          <typedef-decl name='size_type' type-id='type-id-315' size-in-bits='64' hash='da551c1631705dfe' id='type-id-804'/>
+          <typedef-decl name='size_type' type-id='type-id-315' size-in-bits='64' hash='8b230c0ebd12548b' id='type-id-804'/>
         </member-type>
         <member-function access='public'>
           <function-decl name='deallocate' type-id='type-id-802' mangled-name='_ZN9__gnu_cxx13new_allocatorISt10_List_nodeIN5mongo17optionenvironment13OptionSectionEEE10deallocateEPS5_m' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZN9__gnu_cxx13new_allocatorISt10_List_nodeIN5mongo17optionenvironment13OptionSectionEEE10deallocateEPS5_m'/>
@@ -4705,10 +4705,10 @@
     <namespace-decl name='__gnu_cxx'>
       <class-decl name='new_allocator&lt;std::_Rb_tree_node&lt;std::pair&lt;conststd::basic_string&lt;char,std::char_traits&lt;char&gt;,std::allocator&lt;char&gt;&gt;,std::basic_string&lt;char,std::char_traits&lt;char&gt;,std::allocator&lt;char&gt;&gt;&gt;&gt;&gt;' is-struct='yes' visibility='default' size-in-bits='8' hash='af0a0c5805593ce1' id='type-id-19'>
         <member-type access='private'>
-          <typedef-decl name='pointer' type-id='type-id-328' size-in-bits='64' hash='43e7fbfbfbc32329' id='type-id-809'/>
+          <typedef-decl name='pointer' type-id='type-id-328' size-in-bits='64' hash='6a1b517dd341a28a' id='type-id-809'/>
         </member-type>
         <member-type access='private'>
-          <typedef-decl name='size_type' type-id='type-id-315' size-in-bits='64' hash='da551c1631705dfe' id='type-id-810'/>
+          <typedef-decl name='size_type' type-id='type-id-315' size-in-bits='64' hash='8b230c0ebd12548b' id='type-id-810'/>
         </member-type>
         <member-function access='public'>
           <function-decl name='deallocate' type-id='type-id-808' mangled-name='_ZN9__gnu_cxx13new_allocatorISt13_Rb_tree_nodeISt4pairIKSsSsEEE10deallocateEPS5_m' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZN9__gnu_cxx13new_allocatorISt13_Rb_tree_nodeISt4pairIKSsSsEEE10deallocateEPS5_m'/>
@@ -4730,10 +4730,10 @@
     <namespace-decl name='__gnu_cxx'>
       <class-decl name='new_allocator&lt;std::basic_string&lt;char,std::char_traits&lt;char&gt;,std::allocator&lt;char&gt;&gt;&gt;' is-struct='yes' visibility='default' size-in-bits='8' hash='d45b389ed2b74aad' id='type-id-21'>
         <member-type access='private'>
-          <typedef-decl name='pointer' type-id='type-id-48' size-in-bits='64' hash='f36237e7d9f39a16' id='type-id-685'/>
+          <typedef-decl name='pointer' type-id='type-id-48' size-in-bits='64' hash='d08558467961a66f' id='type-id-685'/>
         </member-type>
         <member-type access='private'>
-          <typedef-decl name='size_type' type-id='type-id-315' size-in-bits='64' hash='da551c1631705dfe' id='type-id-684'/>
+          <typedef-decl name='size_type' type-id='type-id-315' size-in-bits='64' hash='8b230c0ebd12548b' id='type-id-684'/>
         </member-type>
         <member-function access='public'>
           <function-decl name='deallocate' type-id='type-id-813' mangled-name='_ZN9__gnu_cxx13new_allocatorISsE10deallocateEPSsm' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZN9__gnu_cxx13new_allocatorISsE10deallocateEPSsm'/>
@@ -4764,10 +4764,10 @@
     <namespace-decl name='__gnu_cxx'>
       <class-decl name='new_allocator&lt;std::shared_ptr&lt;mongo::optionenvironment::Constraint&gt;&gt;' is-struct='yes' visibility='default' size-in-bits='8' hash='7da17d35061009b3' id='type-id-23'>
         <member-type access='private'>
-          <typedef-decl name='pointer' type-id='type-id-385' size-in-bits='64' hash='c998cb8c9ecc1b4b' id='type-id-818'/>
+          <typedef-decl name='pointer' type-id='type-id-385' size-in-bits='64' hash='4324ebee35f87489' id='type-id-818'/>
         </member-type>
         <member-type access='private'>
-          <typedef-decl name='size_type' type-id='type-id-315' size-in-bits='64' hash='da551c1631705dfe' id='type-id-819'/>
+          <typedef-decl name='size_type' type-id='type-id-315' size-in-bits='64' hash='8b230c0ebd12548b' id='type-id-819'/>
         </member-type>
         <member-function access='public'>
           <function-decl name='deallocate' type-id='type-id-817' mangled-name='_ZN9__gnu_cxx13new_allocatorISt10shared_ptrIN5mongo17optionenvironment10ConstraintEEE10deallocateEPS5_m' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZN9__gnu_cxx13new_allocatorISt10shared_ptrIN5mongo17optionenvironment10ConstraintEEE10deallocateEPS5_m'/>
@@ -4907,7 +4907,7 @@
       <namespace-decl name='endian'>
         <class-decl name='ByteOrderConverter&lt;int&gt;' is-struct='yes' visibility='default' size-in-bits='8' hash='69d8a850bb9a9d20' id='type-id-723'>
           <member-type access='private'>
-            <typedef-decl name='T' type-id='type-id-967' size-in-bits='32' hash='09d17c08f594edc7' id='type-id-725'/>
+            <typedef-decl name='T' type-id='type-id-967' size-in-bits='32' hash='f2b82e49c8af56cd' id='type-id-725'/>
           </member-type>
           <member-function access='public' static='yes'>
             <function-decl name='littleToNative' type-id='type-id-724' mangled-name='_ZN5mongo6endian18ByteOrderConverterIiE14littleToNativeEi' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZN5mongo6endian18ByteOrderConverterIiE14littleToNativeEi'/>
@@ -4922,7 +4922,7 @@
       <namespace-decl name='endian'>
         <class-decl name='ByteOrderConverter&lt;signedchar&gt;' is-struct='yes' visibility='default' size-in-bits='8' hash='1c3b230950cf6c8f' id='type-id-726'>
           <member-type access='private'>
-            <typedef-decl name='T' type-id='type-id-968' size-in-bits='8' hash='3c595c3350588f18' id='type-id-728'/>
+            <typedef-decl name='T' type-id='type-id-968' size-in-bits='8' hash='4bf2b0cb39fbd6fb' id='type-id-728'/>
           </member-type>
           <member-function access='public' static='yes'>
             <function-decl name='nativeToLittle' type-id='type-id-727' mangled-name='_ZN5mongo6endian18ByteOrderConverterIaE14nativeToLittleEa' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZN5mongo6endian18ByteOrderConverterIaE14nativeToLittleEa'/>
@@ -4979,7 +4979,7 @@
     <namespace-decl name='std'>
       <class-decl name='_Iter_base&lt;__gnu_cxx::__normal_iterator&lt;conststd::basic_string&lt;char,std::char_traits&lt;char&gt;,std::allocator&lt;char&gt;&gt;*,std::vector&lt;std::basic_string&lt;char,std::char_traits&lt;char&gt;,std::allocator&lt;char&gt;&gt;,std::allocator&lt;std::basic_string&lt;char,std::char_traits&lt;char&gt;,std::allocator&lt;char&gt;&gt;&gt;&gt;&gt;,false&gt;' is-struct='yes' visibility='default' size-in-bits='8' hash='04c24af8c38f79da' id='type-id-734'>
         <member-type access='private'>
-          <typedef-decl name='iterator_type' type-id='type-id-9' size-in-bits='64' hash='f66d1889e029ab3b' id='type-id-607'/>
+          <typedef-decl name='iterator_type' type-id='type-id-9' size-in-bits='64' hash='fa34ab0fd7b99afb' id='type-id-607'/>
         </member-type>
         <member-function access='public' static='yes'>
           <function-decl name='_S_base' type-id='type-id-735' mangled-name='_ZNSt10_Iter_baseIN9__gnu_cxx17__normal_iteratorIPKSsSt6vectorISsSaISsEEEELb0EE7_S_baseES7_' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZNSt10_Iter_baseIN9__gnu_cxx17__normal_iteratorIPKSsSt6vectorISsSaISsEEEELb0EE7_S_baseES7_'/>
@@ -4989,7 +4989,7 @@
     <namespace-decl name='std'>
       <class-decl name='_Iter_base&lt;__gnu_cxx::__normal_iterator&lt;conststd::basic_string&lt;char,std::char_traits&lt;char&gt;,std::allocator&lt;char&gt;&gt;*,std::vector&lt;std::basic_string&lt;char,std::char_traits&lt;char&gt;,std::allocator&lt;char&gt;&gt;,std::allocator&lt;std::basic_string&lt;char,std::char_traits&lt;char&gt;,std::allocator&lt;char&gt;&gt;&gt;&gt;&gt;,true&gt;' is-struct='yes' visibility='default' size-in-bits='8' hash='839916cb01cc7aad' id='type-id-736'>
         <member-type access='private'>
-          <typedef-decl name='iterator_type' type-id='type-id-39' size-in-bits='64' hash='93216338bfd60dbb' id='type-id-609'/>
+          <typedef-decl name='iterator_type' type-id='type-id-39' size-in-bits='64' hash='5ffc4f1581d0ae3b' id='type-id-609'/>
         </member-type>
         <member-function access='public' static='yes'>
           <function-decl name='_S_base' type-id='type-id-737' mangled-name='_ZNSt10_Iter_baseIN9__gnu_cxx17__normal_iteratorIPKSsSt6vectorISsSaISsEEEELb1EE7_S_baseES7_' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZNSt10_Iter_baseIN9__gnu_cxx17__normal_iteratorIPKSsSt6vectorISsSaISsEEEELb1EE7_S_baseES7_'/>
@@ -4999,7 +4999,7 @@
     <namespace-decl name='std'>
       <class-decl name='_Iter_base&lt;__gnu_cxx::__normal_iterator&lt;std::basic_string&lt;char,std::char_traits&lt;char&gt;,std::allocator&lt;char&gt;&gt;*,std::vector&lt;std::basic_string&lt;char,std::char_traits&lt;char&gt;,std::allocator&lt;char&gt;&gt;,std::allocator&lt;std::basic_string&lt;char,std::char_traits&lt;char&gt;,std::allocator&lt;char&gt;&gt;&gt;&gt;&gt;,true&gt;' is-struct='yes' visibility='default' size-in-bits='8' hash='d1e1d5bac3506898' id='type-id-738'>
         <member-type access='private'>
-          <typedef-decl name='iterator_type' type-id='type-id-47' size-in-bits='64' hash='f36237e7d9f39a16' id='type-id-611'/>
+          <typedef-decl name='iterator_type' type-id='type-id-47' size-in-bits='64' hash='d08558467961a66f' id='type-id-611'/>
         </member-type>
         <member-function access='public' static='yes'>
           <function-decl name='_S_base' type-id='type-id-739' mangled-name='_ZNSt10_Iter_baseIN9__gnu_cxx17__normal_iteratorIPSsSt6vectorISsSaISsEEEELb1EE7_S_baseES6_' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZNSt10_Iter_baseIN9__gnu_cxx17__normal_iteratorIPSsSt6vectorISsSaISsEEEELb1EE7_S_baseES6_'/>
@@ -5009,7 +5009,7 @@
     <namespace-decl name='std'>
       <class-decl name='_Iter_base&lt;std::basic_string&lt;char,std::char_traits&lt;char&gt;,std::allocator&lt;char&gt;&gt;*,false&gt;' is-struct='yes' visibility='default' size-in-bits='8' hash='efcaeacd27da0bb9' id='type-id-740'>
         <member-type access='private'>
-          <typedef-decl name='iterator_type' type-id='type-id-48' size-in-bits='64' hash='f36237e7d9f39a16' id='type-id-613'/>
+          <typedef-decl name='iterator_type' type-id='type-id-48' size-in-bits='64' hash='d08558467961a66f' id='type-id-613'/>
         </member-type>
         <member-function access='public' static='yes'>
           <function-decl name='_S_base' type-id='type-id-741' mangled-name='_ZNSt10_Iter_baseIPSsLb0EE7_S_baseES0_' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZNSt10_Iter_baseIPSsLb0EE7_S_baseES0_'/>
@@ -5040,16 +5040,16 @@
     <namespace-decl name='std'>
       <class-decl name='_Rb_tree_iterator&lt;std::pair&lt;conststd::basic_string&lt;char,std::char_traits&lt;char&gt;,std::allocator&lt;char&gt;&gt;,std::basic_string&lt;char,std::char_traits&lt;char&gt;,std::allocator&lt;char&gt;&gt;&gt;&gt;' is-struct='yes' visibility='default' size-in-bits='64' hash='9bf07ac28a8e01f5' id='type-id-332'>
         <member-type access='private'>
-          <typedef-decl name='_Base_ptr' type-id='type-id-973' size-in-bits='64' hash='087181fa8141a494' id='type-id-972'/>
+          <typedef-decl name='_Base_ptr' type-id='type-id-973' size-in-bits='64' hash='1fa10d8271376bd5' id='type-id-972'/>
         </member-type>
         <member-type access='private'>
-          <typedef-decl name='_Link_type' type-id='type-id-328' size-in-bits='64' hash='43e7fbfbfbc32329' id='type-id-869'/>
+          <typedef-decl name='_Link_type' type-id='type-id-328' size-in-bits='64' hash='6a1b517dd341a28a' id='type-id-869'/>
         </member-type>
         <member-type access='private'>
-          <typedef-decl name='_Self' type-id='type-id-332' size-in-bits='64' hash='9bf07ac28a8e01f5' id='type-id-531'/>
+          <typedef-decl name='_Self' type-id='type-id-332' size-in-bits='64' hash='09b5410dad848c12' id='type-id-531'/>
         </member-type>
         <member-type access='private'>
-          <typedef-decl name='pointer' type-id='type-id-789' size-in-bits='64' hash='6553f313e3ad5ffa' id='type-id-751'/>
+          <typedef-decl name='pointer' type-id='type-id-789' size-in-bits='64' hash='0936198f1fc76c64' id='type-id-751'/>
         </member-type>
         <data-member access='public' layout-offset-in-bits='0'>
           <var-decl name='_M_node' type-id='type-id-972' visibility='default'/>
@@ -5082,7 +5082,7 @@
     <namespace-decl name='std'>
       <class-decl name='_Rb_tree_node_base' is-struct='yes' visibility='default' size-in-bits='256' hash='56ce99e8ee20c8ce' id='type-id-313'>
         <member-type access='private'>
-          <typedef-decl name='_Base_ptr' type-id='type-id-326' size-in-bits='64' hash='087181fa8141a494' id='type-id-973'/>
+          <typedef-decl name='_Base_ptr' type-id='type-id-326' size-in-bits='64' hash='1fa10d8271376bd5' id='type-id-973'/>
         </member-type>
         <data-member access='public' layout-offset-in-bits='0'>
           <var-decl name='_M_color' type-id='type-id-575' visibility='default'/>
@@ -5151,7 +5151,7 @@
           </class-decl>
         </member-type>
         <member-type access='private'>
-          <typedef-decl name='pointer' type-id='type-id-944' size-in-bits='64' hash='a20beb6b41ec401d' id='type-id-977'/>
+          <typedef-decl name='pointer' type-id='type-id-944' size-in-bits='64' hash='33659c46a507c3a8' id='type-id-977'/>
         </member-type>
         <data-member access='public' layout-offset-in-bits='0'>
           <var-decl name='_M_impl' type-id='type-id-976' visibility='default'/>
@@ -5175,7 +5175,7 @@
           </class-decl>
         </member-type>
         <member-type access='private'>
-          <typedef-decl name='pointer' type-id='type-id-948' size-in-bits='64' hash='bbd48480d62fd584' id='type-id-979'/>
+          <typedef-decl name='pointer' type-id='type-id-948' size-in-bits='64' hash='55f27adb976eace6' id='type-id-979'/>
         </member-type>
         <data-member access='public' layout-offset-in-bits='0'>
           <var-decl name='_M_impl' type-id='type-id-978' visibility='default'/>
@@ -5199,7 +5199,7 @@
           </class-decl>
         </member-type>
         <member-type access='private'>
-          <typedef-decl name='pointer' type-id='type-id-952' size-in-bits='64' hash='fc550e7be802f723' id='type-id-981'/>
+          <typedef-decl name='pointer' type-id='type-id-952' size-in-bits='64' hash='04a0c6b11be95316' id='type-id-981'/>
         </member-type>
         <data-member access='public' layout-offset-in-bits='0'>
           <var-decl name='_M_impl' type-id='type-id-980' visibility='default'/>
@@ -5232,13 +5232,13 @@
           </class-decl>
         </member-type>
         <member-type access='private'>
-          <typedef-decl name='_Tp_alloc_type' type-id='type-id-955' size-in-bits='8' hash='00998045d1cce7ab' id='type-id-538'/>
+          <typedef-decl name='_Tp_alloc_type' type-id='type-id-955' size-in-bits='8' hash='4e71bdee1fa8703e' id='type-id-538'/>
         </member-type>
         <member-type access='private'>
-          <typedef-decl name='allocator_type' type-id='type-id-372' size-in-bits='8' hash='00998045d1cce7ab' id='type-id-541'/>
+          <typedef-decl name='allocator_type' type-id='type-id-372' size-in-bits='8' hash='4e71bdee1fa8703e' id='type-id-541'/>
         </member-type>
         <member-type access='private'>
-          <typedef-decl name='pointer' type-id='type-id-957' size-in-bits='64' hash='f36237e7d9f39a16' id='type-id-448'/>
+          <typedef-decl name='pointer' type-id='type-id-957' size-in-bits='64' hash='d08558467961a66f' id='type-id-448'/>
         </member-type>
         <data-member access='public' layout-offset-in-bits='0'>
           <var-decl name='_M_impl' type-id='type-id-875' visibility='default'/>
@@ -5286,10 +5286,10 @@
           </class-decl>
         </member-type>
         <member-type access='private'>
-          <typedef-decl name='_Tp_alloc_type' type-id='type-id-964' size-in-bits='8' hash='d718a3528ac3db97' id='type-id-921'/>
+          <typedef-decl name='_Tp_alloc_type' type-id='type-id-964' size-in-bits='8' hash='0d3bfe6709fcb381' id='type-id-921'/>
         </member-type>
         <member-type access='private'>
-          <typedef-decl name='pointer' type-id='type-id-966' size-in-bits='64' hash='c998cb8c9ecc1b4b' id='type-id-883'/>
+          <typedef-decl name='pointer' type-id='type-id-966' size-in-bits='64' hash='4324ebee35f87489' id='type-id-883'/>
         </member-type>
         <data-member access='public' layout-offset-in-bits='0'>
           <var-decl name='_M_impl' type-id='type-id-982' visibility='default'/>
@@ -5308,56 +5308,56 @@
     <namespace-decl name='std'>
       <class-decl name='__add_c_ref&lt;std::basic_ostringstream&lt;char,std::char_traits&lt;char&gt;,std::allocator&lt;char&gt;&gt;*&gt;' is-struct='yes' visibility='default' size-in-bits='8' hash='391133ae0c791709' id='type-id-983'>
         <member-type access='private'>
-          <typedef-decl name='type' type-id='type-id-768' size-in-bits='64' hash='be2d7ab0ec90f221' id='type-id-615'/>
+          <typedef-decl name='type' type-id='type-id-768' size-in-bits='64' hash='4f6c6f0983fab96e' id='type-id-615'/>
         </member-type>
       </class-decl>
     </namespace-decl>
     <namespace-decl name='std'>
       <class-decl name='__add_lvalue_reference_helper&lt;std::basic_ostringstream&lt;char,std::char_traits&lt;char&gt;,std::allocator&lt;char&gt;&gt;,true&gt;' is-struct='yes' visibility='default' size-in-bits='8' hash='9114fb9d761eb8e2' id='type-id-984'>
         <member-type access='private'>
-          <typedef-decl name='type' type-id='type-id-926' size-in-bits='64' hash='0ec3fb8ca56e5d22' id='type-id-760'/>
+          <typedef-decl name='type' type-id='type-id-926' size-in-bits='64' hash='e98cb88eea214aa3' id='type-id-760'/>
         </member-type>
       </class-decl>
     </namespace-decl>
     <namespace-decl name='std'>
       <class-decl name='__add_ref&lt;mongo::BSONObjBuilder*&gt;' is-struct='yes' visibility='default' size-in-bits='8' hash='76e3036b452ac3ba' id='type-id-985'>
         <member-type access='private'>
-          <typedef-decl name='type' type-id='type-id-705' size-in-bits='64' hash='83c25fd150343cc5' id='type-id-619'/>
+          <typedef-decl name='type' type-id='type-id-705' size-in-bits='64' hash='857b8c79f1217538' id='type-id-619'/>
         </member-type>
       </class-decl>
     </namespace-decl>
     <namespace-decl name='std'>
       <class-decl name='__add_ref&lt;std::default_delete&lt;mongo::BSONObjBuilder&gt;&gt;' is-struct='yes' visibility='default' size-in-bits='8' hash='5a998b2729914bc1' id='type-id-986'>
         <member-type access='private'>
-          <typedef-decl name='type' type-id='type-id-781' size-in-bits='64' hash='ee86a807d3ea82ea' id='type-id-624'/>
+          <typedef-decl name='type' type-id='type-id-781' size-in-bits='64' hash='0c2d8c250ff3bbc0' id='type-id-624'/>
         </member-type>
       </class-decl>
     </namespace-decl>
     <namespace-decl name='std'>
       <class-decl name='__alloctr_rebind&lt;std::allocator&lt;std::basic_string&lt;char,std::char_traits&lt;char&gt;,std::allocator&lt;char&gt;&gt;&gt;,std::basic_string&lt;char,std::char_traits&lt;char&gt;,std::allocator&lt;char&gt;&gt;,true&gt;' is-struct='yes' visibility='default' size-in-bits='8' hash='2fa7ac29a175646d' id='type-id-987'>
         <member-type access='private'>
-          <typedef-decl name='__type' type-id='type-id-374' size-in-bits='8' hash='00998045d1cce7ab' id='type-id-988'/>
+          <typedef-decl name='__type' type-id='type-id-374' size-in-bits='8' hash='4e71bdee1fa8703e' id='type-id-988'/>
         </member-type>
       </class-decl>
     </namespace-decl>
     <namespace-decl name='std'>
       <class-decl name='__alloctr_rebind&lt;std::allocator&lt;std::pair&lt;conststd::basic_string&lt;char,std::char_traits&lt;char&gt;,std::allocator&lt;char&gt;&gt;,std::basic_string&lt;char,std::char_traits&lt;char&gt;,std::allocator&lt;char&gt;&gt;&gt;&gt;,std::_Rb_tree_node&lt;std::pair&lt;conststd::basic_string&lt;char,std::char_traits&lt;char&gt;,std::allocator&lt;char&gt;&gt;,std::basic_string&lt;char,std::char_traits&lt;char&gt;,std::allocator&lt;char&gt;&gt;&gt;&gt;,true&gt;' is-struct='yes' visibility='default' size-in-bits='8' hash='ac90de740837c1b4' id='type-id-989'>
         <member-type access='private'>
-          <typedef-decl name='__type' type-id='type-id-991' size-in-bits='8' hash='062dc28ba12125c6' id='type-id-990'/>
+          <typedef-decl name='__type' type-id='type-id-991' size-in-bits='8' hash='ad24d695c5a9a4ef' id='type-id-990'/>
         </member-type>
       </class-decl>
     </namespace-decl>
     <namespace-decl name='std'>
       <class-decl name='__alloctr_rebind&lt;std::allocator&lt;std::shared_ptr&lt;mongo::optionenvironment::Constraint&gt;&gt;,std::shared_ptr&lt;mongo::optionenvironment::Constraint&gt;,true&gt;' is-struct='yes' visibility='default' size-in-bits='8' hash='6b8906bb1e8a67fe' id='type-id-992'>
         <member-type access='private'>
-          <typedef-decl name='__type' type-id='type-id-383' size-in-bits='8' hash='d718a3528ac3db97' id='type-id-993'/>
+          <typedef-decl name='__type' type-id='type-id-383' size-in-bits='8' hash='0d3bfe6709fcb381' id='type-id-993'/>
         </member-type>
       </class-decl>
     </namespace-decl>
     <namespace-decl name='std'>
       <class-decl name='__atomic_base&lt;unsignedint&gt;' is-struct='yes' visibility='default' size-in-bits='32' hash='4c25729e2eeaf2ce' id='type-id-994'>
         <member-type access='private'>
-          <typedef-decl name='__int_type' type-id='type-id-65' size-in-bits='32' hash='e66b43f97c38e87a' id='type-id-995'/>
+          <typedef-decl name='__int_type' type-id='type-id-65' size-in-bits='32' hash='01b265816e53dd71' id='type-id-995'/>
         </member-type>
         <data-member access='private' layout-offset-in-bits='0'>
           <var-decl name='_M_i' type-id='type-id-995' visibility='default'/>
@@ -5402,10 +5402,10 @@
         <class-decl name='_Hashtable_alloc&lt;std::allocator&lt;std::__detail::_Hash_node&lt;std::pair&lt;conststd::basic_string&lt;char,std::char_traits&lt;char&gt;,std::allocator&lt;char&gt;&gt;,mongo::logger::LogDomain&lt;mongo::logger::MessageEventEphemeral&gt;*&gt;,true&gt;&gt;&gt;' is-struct='yes' visibility='default' size-in-bits='8' hash='6f9f70b397fad481' id='type-id-280'>
           <base-class access='private' layout-offset-in-bits='0' type-id='type-id-1000'/>
           <member-type access='private'>
-            <typedef-decl name='__bucket_type' type-id='type-id-924' size-in-bits='64' hash='5481147dba7aa383' id='type-id-282'/>
+            <typedef-decl name='__bucket_type' type-id='type-id-924' size-in-bits='64' hash='426e8ccad934fd5e' id='type-id-282'/>
           </member-type>
           <member-type access='private'>
-            <typedef-decl name='__node_base' type-id='type-id-922' size-in-bits='64' hash='2c9f7fcd0904b953' id='type-id-284'/>
+            <typedef-decl name='__node_base' type-id='type-id-922' size-in-bits='64' hash='4aab30e42a2496eb' id='type-id-284'/>
           </member-type>
         </class-decl>
       </namespace-decl>
@@ -5416,7 +5416,7 @@
           <base-class access='public' layout-offset-in-bits='0' type-id='type-id-996'/>
           <base-class access='private' layout-offset-in-bits='0' type-id='type-id-1001'/>
           <member-type access='private'>
-            <typedef-decl name='size_type' type-id='type-id-315' size-in-bits='64' hash='da551c1631705dfe' id='type-id-286'/>
+            <typedef-decl name='size_type' type-id='type-id-315' size-in-bits='64' hash='8b230c0ebd12548b' id='type-id-286'/>
           </member-type>
         </class-decl>
       </namespace-decl>
@@ -5547,7 +5547,7 @@
         <member-type access='private'>
           <class-decl name='rebind&lt;std::_List_node&lt;mongo::optionenvironment::OptionDescription&gt;&gt;' is-struct='yes' visibility='default' size-in-bits='8' hash='3ada61ec28057a68' id='type-id-1011'>
             <member-type access='private'>
-              <typedef-decl name='other' type-id='type-id-291' size-in-bits='8' hash='322c8b3e38fd9b3f' id='type-id-295'/>
+              <typedef-decl name='other' type-id='type-id-291' size-in-bits='8' hash='9ed2f3e8008f8bb4' id='type-id-295'/>
             </member-type>
           </class-decl>
         </member-type>
@@ -5558,7 +5558,7 @@
         <member-type access='private'>
           <class-decl name='rebind&lt;std::_List_node&lt;mongo::optionenvironment::OptionSection&gt;&gt;' is-struct='yes' visibility='default' size-in-bits='8' hash='c64559427e1ceed1' id='type-id-1013'>
             <member-type access='private'>
-              <typedef-decl name='other' type-id='type-id-301' size-in-bits='8' hash='790ca23857dd0343' id='type-id-304'/>
+              <typedef-decl name='other' type-id='type-id-301' size-in-bits='8' hash='d3d1dbc3d070b29b' id='type-id-304'/>
             </member-type>
           </class-decl>
         </member-type>
@@ -5569,7 +5569,7 @@
         <member-type access='private'>
           <class-decl name='rebind&lt;std::_Rb_tree_node&lt;std::pair&lt;conststd::basic_string&lt;char,std::char_traits&lt;char&gt;,std::allocator&lt;char&gt;&gt;,std::basic_string&lt;char,std::char_traits&lt;char&gt;,std::allocator&lt;char&gt;&gt;&gt;&gt;&gt;' is-struct='yes' visibility='default' size-in-bits='8' hash='abbd1a6be405d34d' id='type-id-1015'>
             <member-type access='private'>
-              <typedef-decl name='other' type-id='type-id-322' size-in-bits='8' hash='062dc28ba12125c6' id='type-id-991'/>
+              <typedef-decl name='other' type-id='type-id-322' size-in-bits='8' hash='ad24d695c5a9a4ef' id='type-id-991'/>
             </member-type>
           </class-decl>
         </member-type>
@@ -5578,46 +5578,46 @@
     <namespace-decl name='std'>
       <class-decl name='allocator_traits&lt;std::allocator&lt;mongo::logger::Appender&lt;mongo::logger::MessageEventEphemeral&gt;*&gt;&gt;' is-struct='yes' visibility='default' size-in-bits='8' hash='378cfb83265459f1' id='type-id-943'>
         <member-type access='private'>
-          <typedef-decl name='__pointer' type-id='type-id-353' size-in-bits='64' hash='a20beb6b41ec401d' id='type-id-1016'/>
+          <typedef-decl name='__pointer' type-id='type-id-353' size-in-bits='64' hash='33659c46a507c3a8' id='type-id-1016'/>
         </member-type>
         <member-type access='private'>
-          <typedef-decl name='pointer' type-id='type-id-1016' size-in-bits='64' hash='a20beb6b41ec401d' id='type-id-945'/>
+          <typedef-decl name='pointer' type-id='type-id-1016' size-in-bits='64' hash='33659c46a507c3a8' id='type-id-945'/>
         </member-type>
       </class-decl>
     </namespace-decl>
     <namespace-decl name='std'>
       <class-decl name='allocator_traits&lt;std::allocator&lt;mongo::optionenvironment::Constraint*&gt;&gt;' is-struct='yes' visibility='default' size-in-bits='8' hash='326509d77541a460' id='type-id-947'>
         <member-type access='private'>
-          <typedef-decl name='__pointer' type-id='type-id-357' size-in-bits='64' hash='bbd48480d62fd584' id='type-id-1017'/>
+          <typedef-decl name='__pointer' type-id='type-id-357' size-in-bits='64' hash='55f27adb976eace6' id='type-id-1017'/>
         </member-type>
         <member-type access='private'>
-          <typedef-decl name='pointer' type-id='type-id-1017' size-in-bits='64' hash='bbd48480d62fd584' id='type-id-949'/>
+          <typedef-decl name='pointer' type-id='type-id-1017' size-in-bits='64' hash='55f27adb976eace6' id='type-id-949'/>
         </member-type>
       </class-decl>
     </namespace-decl>
     <namespace-decl name='std'>
       <class-decl name='allocator_traits&lt;std::allocator&lt;mongo::optionenvironment::KeyConstraint*&gt;&gt;' is-struct='yes' visibility='default' size-in-bits='8' hash='f795b994678d3980' id='type-id-951'>
         <member-type access='private'>
-          <typedef-decl name='__pointer' type-id='type-id-361' size-in-bits='64' hash='fc550e7be802f723' id='type-id-1018'/>
+          <typedef-decl name='__pointer' type-id='type-id-361' size-in-bits='64' hash='04a0c6b11be95316' id='type-id-1018'/>
         </member-type>
         <member-type access='private'>
-          <typedef-decl name='pointer' type-id='type-id-1018' size-in-bits='64' hash='fc550e7be802f723' id='type-id-953'/>
+          <typedef-decl name='pointer' type-id='type-id-1018' size-in-bits='64' hash='04a0c6b11be95316' id='type-id-953'/>
         </member-type>
       </class-decl>
     </namespace-decl>
     <namespace-decl name='std'>
       <class-decl name='allocator_traits&lt;std::allocator&lt;std::_Rb_tree_node&lt;std::pair&lt;conststd::basic_string&lt;char,std::char_traits&lt;char&gt;,std::allocator&lt;char&gt;&gt;,std::basic_string&lt;char,std::char_traits&lt;char&gt;,std::allocator&lt;char&gt;&gt;&gt;&gt;&gt;&gt;' is-struct='yes' visibility='default' size-in-bits='8' hash='61e69956668f2273' id='type-id-891'>
         <member-type access='private'>
-          <typedef-decl name='__pointer' type-id='type-id-367' size-in-bits='64' hash='43e7fbfbfbc32329' id='type-id-1019'/>
+          <typedef-decl name='__pointer' type-id='type-id-367' size-in-bits='64' hash='6a1b517dd341a28a' id='type-id-1019'/>
         </member-type>
         <member-type access='private'>
-          <typedef-decl name='__size_type' type-id='type-id-368' size-in-bits='64' hash='da551c1631705dfe' id='type-id-1020'/>
+          <typedef-decl name='__size_type' type-id='type-id-368' size-in-bits='64' hash='8b230c0ebd12548b' id='type-id-1020'/>
         </member-type>
         <member-type access='private'>
-          <typedef-decl name='pointer' type-id='type-id-1019' size-in-bits='64' hash='43e7fbfbfbc32329' id='type-id-894'/>
+          <typedef-decl name='pointer' type-id='type-id-1019' size-in-bits='64' hash='6a1b517dd341a28a' id='type-id-894'/>
         </member-type>
         <member-type access='private'>
-          <typedef-decl name='size_type' type-id='type-id-1020' size-in-bits='64' hash='da551c1631705dfe' id='type-id-895'/>
+          <typedef-decl name='size_type' type-id='type-id-1020' size-in-bits='64' hash='8b230c0ebd12548b' id='type-id-895'/>
         </member-type>
         <member-function access='private' static='yes'>
           <function-decl name='_S_destroy&lt;std::pair&lt;conststd::basic_string&lt;char&gt;,std::basic_string&lt;char&gt;&gt;&gt;' type-id='type-id-896' mangled-name='_ZNSt16allocator_traitsISaISt13_Rb_tree_nodeISt4pairIKSsSsEEEE10_S_destroyIS3_EENSt9enable_ifIXsrSt6__and_IINS6_16__destroy_helperIT_E4typeEEE5valueEvE4typeERS5_PSB_' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZNSt16allocator_traitsISaISt13_Rb_tree_nodeISt4pairIKSsSsEEEE10_S_destroyIS3_EENSt9enable_ifIXsrSt6__and_IINS6_16__destroy_helperIT_E4typeEEE5valueEvE4typeERS5_PSB_'/>
@@ -5633,22 +5633,22 @@
     <namespace-decl name='std'>
       <class-decl name='allocator_traits&lt;std::allocator&lt;std::basic_string&lt;char,std::char_traits&lt;char&gt;,std::allocator&lt;char&gt;&gt;&gt;&gt;' is-struct='yes' visibility='default' size-in-bits='8' hash='f9e45ff61e05b1dd' id='type-id-761'>
         <member-type access='private'>
-          <typedef-decl name='__pointer' type-id='type-id-375' size-in-bits='64' hash='f36237e7d9f39a16' id='type-id-1021'/>
+          <typedef-decl name='__pointer' type-id='type-id-375' size-in-bits='64' hash='d08558467961a66f' id='type-id-1021'/>
         </member-type>
         <member-type access='private'>
-          <typedef-decl name='__size_type' type-id='type-id-376' size-in-bits='64' hash='da551c1631705dfe' id='type-id-1022'/>
+          <typedef-decl name='__size_type' type-id='type-id-376' size-in-bits='64' hash='8b230c0ebd12548b' id='type-id-1022'/>
         </member-type>
         <member-type access='private'>
-          <typedef-decl name='pointer' type-id='type-id-1021' size-in-bits='64' hash='f36237e7d9f39a16' id='type-id-764'/>
+          <typedef-decl name='pointer' type-id='type-id-1021' size-in-bits='64' hash='d08558467961a66f' id='type-id-764'/>
         </member-type>
         <member-type access='private'>
-          <typedef-decl name='rebind_alloc' type-id='type-id-988' size-in-bits='8' hash='00998045d1cce7ab' id='type-id-956'/>
+          <typedef-decl name='rebind_alloc' type-id='type-id-988' size-in-bits='8' hash='4e71bdee1fa8703e' id='type-id-956'/>
         </member-type>
         <member-type access='private'>
-          <typedef-decl name='size_type' type-id='type-id-1022' size-in-bits='64' hash='da551c1631705dfe' id='type-id-763'/>
+          <typedef-decl name='size_type' type-id='type-id-1022' size-in-bits='64' hash='8b230c0ebd12548b' id='type-id-763'/>
         </member-type>
         <member-type access='private'>
-          <typedef-decl name='value_type' type-id='type-id-377' size-in-bits='64' hash='db31a765cc04c2f7' id='type-id-958'/>
+          <typedef-decl name='value_type' type-id='type-id-377' size-in-bits='64' hash='51b49d2af614721e' id='type-id-958'/>
         </member-type>
         <member-function access='private' static='yes'>
           <function-decl name='_S_destroy&lt;std::basic_string&lt;char&gt;&gt;' type-id='type-id-898' mangled-name='_ZNSt16allocator_traitsISaISsEE10_S_destroyISsEENSt9enable_ifIXsrSt6__and_IINS1_16__destroy_helperIT_E4typeEEE5valueEvE4typeERS0_PS6_' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZNSt16allocator_traitsISaISsEE10_S_destroyISsEENSt9enable_ifIXsrSt6__and_IINS1_16__destroy_helperIT_E4typeEEE5valueEvE4typeERS0_PS6_'/>
@@ -5679,26 +5679,26 @@
     <namespace-decl name='std'>
       <class-decl name='allocator_traits&lt;std::allocator&lt;std::pair&lt;conststd::basic_string&lt;char,std::char_traits&lt;char&gt;,std::allocator&lt;char&gt;&gt;,std::basic_string&lt;char,std::char_traits&lt;char&gt;,std::allocator&lt;char&gt;&gt;&gt;&gt;&gt;' is-struct='yes' visibility='default' size-in-bits='8' hash='3ac869a46a3064d0' id='type-id-1023'>
         <member-type access='private'>
-          <typedef-decl name='rebind_alloc' type-id='type-id-990' size-in-bits='8' hash='062dc28ba12125c6' id='type-id-961'/>
+          <typedef-decl name='rebind_alloc' type-id='type-id-990' size-in-bits='8' hash='ad24d695c5a9a4ef' id='type-id-961'/>
         </member-type>
       </class-decl>
     </namespace-decl>
     <namespace-decl name='std'>
       <class-decl name='allocator_traits&lt;std::allocator&lt;std::shared_ptr&lt;mongo::optionenvironment::Constraint&gt;&gt;&gt;' is-struct='yes' visibility='default' size-in-bits='8' hash='1ad559f8f9729ecc' id='type-id-899'>
         <member-type access='private'>
-          <typedef-decl name='__pointer' type-id='type-id-384' size-in-bits='64' hash='c998cb8c9ecc1b4b' id='type-id-1024'/>
+          <typedef-decl name='__pointer' type-id='type-id-384' size-in-bits='64' hash='4324ebee35f87489' id='type-id-1024'/>
         </member-type>
         <member-type access='private'>
-          <typedef-decl name='__size_type' type-id='type-id-386' size-in-bits='64' hash='da551c1631705dfe' id='type-id-1025'/>
+          <typedef-decl name='__size_type' type-id='type-id-386' size-in-bits='64' hash='8b230c0ebd12548b' id='type-id-1025'/>
         </member-type>
         <member-type access='private'>
-          <typedef-decl name='pointer' type-id='type-id-1024' size-in-bits='64' hash='c998cb8c9ecc1b4b' id='type-id-901'/>
+          <typedef-decl name='pointer' type-id='type-id-1024' size-in-bits='64' hash='4324ebee35f87489' id='type-id-901'/>
         </member-type>
         <member-type access='private'>
-          <typedef-decl name='rebind_alloc' type-id='type-id-993' size-in-bits='8' hash='d718a3528ac3db97' id='type-id-965'/>
+          <typedef-decl name='rebind_alloc' type-id='type-id-993' size-in-bits='8' hash='0d3bfe6709fcb381' id='type-id-965'/>
         </member-type>
         <member-type access='private'>
-          <typedef-decl name='size_type' type-id='type-id-1025' size-in-bits='64' hash='da551c1631705dfe' id='type-id-902'/>
+          <typedef-decl name='size_type' type-id='type-id-1025' size-in-bits='64' hash='8b230c0ebd12548b' id='type-id-902'/>
         </member-type>
         <member-function access='public' static='yes'>
           <function-decl name='deallocate' type-id='type-id-900' mangled-name='_ZNSt16allocator_traitsISaISt10shared_ptrIN5mongo17optionenvironment10ConstraintEEEE10deallocateERS5_PS4_m' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZNSt16allocator_traitsISaISt10shared_ptrIN5mongo17optionenvironment10ConstraintEEEE10deallocateERS5_PS4_m'/>
@@ -5742,17 +5742,17 @@
     <namespace-decl name='std'>
       <class-decl name='iterator_traits&lt;conststd::basic_string&lt;char,std::char_traits&lt;char&gt;,std::allocator&lt;char&gt;&gt;*&gt;' is-struct='yes' visibility='default' size-in-bits='8' hash='93547236bc0e9bf5' id='type-id-1029'>
         <member-type access='private'>
-          <typedef-decl name='reference' type-id='type-id-547' size-in-bits='64' hash='8dc531d1e21e11d5' id='type-id-42'/>
+          <typedef-decl name='reference' type-id='type-id-547' size-in-bits='64' hash='38a7474cb007a553' id='type-id-42'/>
         </member-type>
       </class-decl>
     </namespace-decl>
     <namespace-decl name='std'>
       <class-decl name='iterator_traits&lt;std::basic_string&lt;char,std::char_traits&lt;char&gt;,std::allocator&lt;char&gt;&gt;*&gt;' is-struct='yes' visibility='default' size-in-bits='8' hash='1e3c9bc9fae7a17b' id='type-id-1030'>
         <member-type access='private'>
-          <typedef-decl name='reference' type-id='type-id-630' size-in-bits='64' hash='9ad020bd257af775' id='type-id-50'/>
+          <typedef-decl name='reference' type-id='type-id-630' size-in-bits='64' hash='a94317aea28f1528' id='type-id-50'/>
         </member-type>
         <member-type access='private'>
-          <typedef-decl name='value_type' type-id='type-id-378' size-in-bits='64' hash='db31a765cc04c2f7' id='type-id-412'/>
+          <typedef-decl name='value_type' type-id='type-id-378' size-in-bits='64' hash='51b49d2af614721e' id='type-id-412'/>
         </member-type>
       </class-decl>
     </namespace-decl>
@@ -5774,56 +5774,56 @@
     <namespace-decl name='std'>
       <class-decl name='remove_reference&lt;conststd::basic_string&lt;char,std::char_traits&lt;char&gt;,std::allocator&lt;char&gt;&gt;&amp;&gt;' is-struct='yes' visibility='default' size-in-bits='8' hash='0711a500fed66481' id='type-id-1031'>
         <member-type access='private'>
-          <typedef-decl name='type' type-id='type-id-546' size-in-bits='64' hash='14d376d47ce0ec17' id='type-id-931'/>
+          <typedef-decl name='type' type-id='type-id-546' size-in-bits='64' hash='5013309b70f3cc98' id='type-id-931'/>
         </member-type>
       </class-decl>
     </namespace-decl>
     <namespace-decl name='std'>
       <class-decl name='remove_reference&lt;mongo::InitializerContext*&gt;' is-struct='yes' visibility='default' size-in-bits='8' hash='4eddb7e18be49499' id='type-id-1032'>
         <member-type access='private'>
-          <typedef-decl name='type' type-id='type-id-599' size-in-bits='64' hash='c07274a5d84558b6' id='type-id-932'/>
+          <typedef-decl name='type' type-id='type-id-599' size-in-bits='64' hash='2590021e78035437' id='type-id-932'/>
         </member-type>
       </class-decl>
     </namespace-decl>
     <namespace-decl name='std'>
       <class-decl name='remove_reference&lt;mongo::Status(*&amp;)(mongo::InitializerContext*)&gt;' is-struct='yes' visibility='default' size-in-bits='8' hash='fad2f2b05b35fb58' id='type-id-1033'>
         <member-type access='private'>
-          <typedef-decl name='type' type-id='type-id-906' size-in-bits='64' hash='b38a90c634736f4d' id='type-id-933'/>
+          <typedef-decl name='type' type-id='type-id-906' size-in-bits='64' hash='e601e9e79cf71bf5' id='type-id-933'/>
         </member-type>
       </class-decl>
     </namespace-decl>
     <namespace-decl name='std'>
       <class-decl name='remove_reference&lt;std::allocator&lt;std::basic_string&lt;char,std::char_traits&lt;char&gt;,std::allocator&lt;char&gt;&gt;&gt;&amp;&gt;' is-struct='yes' visibility='default' size-in-bits='8' hash='3633164710ad3813' id='type-id-1034'>
         <member-type access='private'>
-          <typedef-decl name='type' type-id='type-id-372' size-in-bits='8' hash='00998045d1cce7ab' id='type-id-934'/>
+          <typedef-decl name='type' type-id='type-id-372' size-in-bits='8' hash='4e71bdee1fa8703e' id='type-id-934'/>
         </member-type>
       </class-decl>
     </namespace-decl>
     <namespace-decl name='std'>
       <class-decl name='remove_reference&lt;std::basic_string&lt;char,std::char_traits&lt;char&gt;,std::allocator&lt;char&gt;&gt;&amp;&gt;' is-struct='yes' visibility='default' size-in-bits='8' hash='5ad6d61c00f2bccd' id='type-id-1035'>
         <member-type access='private'>
-          <typedef-decl name='type' type-id='type-id-378' size-in-bits='64' hash='db31a765cc04c2f7' id='type-id-935'/>
+          <typedef-decl name='type' type-id='type-id-378' size-in-bits='64' hash='51b49d2af614721e' id='type-id-935'/>
         </member-type>
       </class-decl>
     </namespace-decl>
     <namespace-decl name='std'>
       <class-decl name='remove_reference&lt;std::basic_string&lt;char,std::char_traits&lt;char&gt;,std::allocator&lt;char&gt;&gt;*&amp;&gt;' is-struct='yes' visibility='default' size-in-bits='8' hash='811fe62af15610be' id='type-id-1036'>
         <member-type access='private'>
-          <typedef-decl name='type' type-id='type-id-48' size-in-bits='64' hash='f36237e7d9f39a16' id='type-id-936'/>
+          <typedef-decl name='type' type-id='type-id-48' size-in-bits='64' hash='d08558467961a66f' id='type-id-936'/>
         </member-type>
       </class-decl>
     </namespace-decl>
     <namespace-decl name='std'>
       <class-decl name='remove_reference&lt;std::basic_string&lt;char,std::char_traits&lt;char&gt;,std::allocator&lt;char&gt;&gt;&gt;' is-struct='yes' visibility='default' size-in-bits='8' hash='88fbc3db5bafdd4d' id='type-id-1037'>
         <member-type access='private'>
-          <typedef-decl name='type' type-id='type-id-378' size-in-bits='64' hash='db31a765cc04c2f7' id='type-id-937'/>
+          <typedef-decl name='type' type-id='type-id-378' size-in-bits='64' hash='51b49d2af614721e' id='type-id-937'/>
         </member-type>
       </class-decl>
     </namespace-decl>
     <namespace-decl name='std'>
       <class-decl name='remove_reference&lt;std::vector&lt;std::basic_string&lt;char,std::char_traits&lt;char&gt;,std::allocator&lt;char&gt;&gt;,std::allocator&lt;std::basic_string&lt;char,std::char_traits&lt;char&gt;,std::allocator&lt;char&gt;&gt;&gt;&gt;&amp;&gt;' is-struct='yes' visibility='default' size-in-bits='8' hash='a2ef405fbfd00505' id='type-id-1038'>
         <member-type access='private'>
-          <typedef-decl name='type' type-id='type-id-148' size-in-bits='192' hash='5e58c920da436194' id='type-id-938'/>
+          <typedef-decl name='type' type-id='type-id-148' size-in-bits='192' hash='dac51d23c1450c56' id='type-id-938'/>
         </member-type>
       </class-decl>
     </namespace-decl>
@@ -5839,41 +5839,41 @@
       </data-member>
     </class-decl>
     <class-decl name='__anonymous_struct__' is-struct='yes' visibility='default' size-in-bits='64' is-anonymous='yes' hash='1c3e4e54fe3ebe96' id='type-id-1009'/>
-    <typedef-decl name='_Atomic_word' type-id='type-id-70' size-in-bits='32' hash='09d17c08f594edc7' id='type-id-340'/>
-    <typedef-decl name='int32_t' type-id='type-id-70' size-in-bits='32' hash='09d17c08f594edc7' id='type-id-967'/>
-    <typedef-decl name='int8_t' type-id='type-id-918' size-in-bits='8' hash='3c595c3350588f18' id='type-id-968'/>
+    <typedef-decl name='_Atomic_word' type-id='type-id-70' size-in-bits='32' hash='f2b82e49c8af56cd' id='type-id-340'/>
+    <typedef-decl name='int32_t' type-id='type-id-70' size-in-bits='32' hash='f2b82e49c8af56cd' id='type-id-967'/>
+    <typedef-decl name='int8_t' type-id='type-id-918' size-in-bits='8' hash='4bf2b0cb39fbd6fb' id='type-id-968'/>
     <namespace-decl name='mongo'>
-      <typedef-decl name='AtomicUInt32' type-id='type-id-63' size-in-bits='32' hash='1d65ad90067513cf' id='type-id-158'/>
+      <typedef-decl name='AtomicUInt32' type-id='type-id-63' size-in-bits='32' hash='b3eeff21c8118044' id='type-id-158'/>
     </namespace-decl>
     <namespace-decl name='mongo'>
-      <typedef-decl name='BufBuilder' type-id='type-id-173' size-in-bits='256' hash='e4bcd3babb87c83c' id='type-id-79'/>
+      <typedef-decl name='BufBuilder' type-id='type-id-173' size-in-bits='256' hash='211e5299d0e9a1b1' id='type-id-79'/>
     </namespace-decl>
     <namespace-decl name='mongo'>
-      <typedef-decl name='StringBuilder' type-id='type-id-172' size-in-bits='256' hash='52721cd0af68d82b' id='type-id-255'/>
+      <typedef-decl name='StringBuilder' type-id='type-id-172' size-in-bits='256' hash='71e2905b787da761' id='type-id-255'/>
     </namespace-decl>
     <namespace-decl name='mongo'>
       <namespace-decl name='logger'>
-        <typedef-decl name='MessageLogDomain' type-id='type-id-201' size-in-bits='256' hash='d6654c3bedb8b21c' id='type-id-916'/>
+        <typedef-decl name='MessageLogDomain' type-id='type-id-201' size-in-bits='256' hash='2d0152c65cc5fdce' id='type-id-916'/>
       </namespace-decl>
     </namespace-decl>
     <namespace-decl name='mongo'>
       <namespace-decl name='optionenvironment'>
-        <typedef-decl name='Key' type-id='type-id-218' size-in-bits='64' hash='db31a765cc04c2f7' id='type-id-233'/>
+        <typedef-decl name='Key' type-id='type-id-218' size-in-bits='64' hash='51b49d2af614721e' id='type-id-233'/>
       </namespace-decl>
     </namespace-decl>
     <namespace-decl name='mongo'>
       <namespace-decl name='optionenvironment'>
-        <typedef-decl name='StringMap_t' type-id='type-id-150' size-in-bits='384' hash='efdd03d278d9c63b' id='type-id-249'/>
+        <typedef-decl name='StringMap_t' type-id='type-id-150' size-in-bits='384' hash='939bbb27d4c25119' id='type-id-249'/>
       </namespace-decl>
     </namespace-decl>
     <namespace-decl name='mongo'>
       <namespace-decl name='optionenvironment'>
-        <typedef-decl name='StringVector_t' type-id='type-id-148' size-in-bits='192' hash='5e58c920da436194' id='type-id-248'/>
+        <typedef-decl name='StringVector_t' type-id='type-id-148' size-in-bits='192' hash='dac51d23c1450c56' id='type-id-248'/>
       </namespace-decl>
     </namespace-decl>
-    <typedef-decl name='size_t' type-id='type-id-569' size-in-bits='64' hash='da551c1631705dfe' id='type-id-181'/>
+    <typedef-decl name='size_t' type-id='type-id-569' size-in-bits='64' hash='8b230c0ebd12548b' id='type-id-181'/>
     <namespace-decl name='std'>
-      <typedef-decl name='__umap_hashtable' type-id='type-id-274' size-in-bits='448' hash='9263f9250582c118' id='type-id-437'/>
+      <typedef-decl name='__umap_hashtable' type-id='type-id-274' size-in-bits='448' hash='f613d42742b7a17c' id='type-id-437'/>
     </namespace-decl>
     <namespace-decl name='std'>
       <typedef-decl name='false_type' type-id='type-id-1027' size-in-bits='8' hash='9ca53a78e163d876' id='type-id-664'/>
@@ -5882,10 +5882,10 @@
       <typedef-decl name='ostream' type-id='type-id-388' hash='2511882b1c80c03b' id='type-id-929'/>
     </namespace-decl>
     <namespace-decl name='std'>
-      <typedef-decl name='size_t' type-id='type-id-569' size-in-bits='64' hash='da551c1631705dfe' id='type-id-315'/>
+      <typedef-decl name='size_t' type-id='type-id-569' size-in-bits='64' hash='8b230c0ebd12548b' id='type-id-315'/>
     </namespace-decl>
     <namespace-decl name='std'>
-      <typedef-decl name='string' type-id='type-id-378' size-in-bits='64' hash='db31a765cc04c2f7' id='type-id-218'/>
+      <typedef-decl name='string' type-id='type-id-378' size-in-bits='64' hash='51b49d2af614721e' id='type-id-218'/>
     </namespace-decl>
     <namespace-decl name='std'>
       <typedef-decl name='stringstream' type-id='type-id-391' hash='b2d415325eaaf102' id='type-id-939'/>

@@ -446,9 +446,9 @@ debug_hash_value(const type_or_decl_base& artifact,
 
 /// Hash a type as a basic type having a name and size attributes.
 ///
-/// This hashing takes into account the name of the type as as its
-/// size.  The name taken into account is the same name that is taken
-/// into account by the type canonicalization process in
+/// This hashing function takes into account the name of the type as
+/// as its size.  The name taken into account is the same name that is
+/// taken into account by the type canonicalization process in
 /// type_base::get_canonical_type_for.
 ///
 /// @param t the type to hash.
@@ -472,9 +472,9 @@ hash_as_basic_type(const abigail::ir::type_base& t)
 
 /// Hash a type as a basic type having a name and size attributes.
 ///
-/// This hashing takes into account the name of the type as as its
-/// size.  The name taken into account is the same name that is taken
-/// into account by the type canonicalization process in
+/// This hashing function takes into account the name of the type as
+/// well as its size.  The name taken into account is the same name
+/// that is taken into account by the type canonicalization process in
 /// type_base::get_canonical_type_for.
 ///
 /// @param t the type to hash.
@@ -495,7 +495,7 @@ hash_as_basic_type(const type_base_sptr t)
 ///
 /// @return the hash value.
 static hash_t
-hash_as_ptr_ref_or_typedef_type(const type_base_sptr& t)
+hash_as_ptr_ref_or_typedef_type(const type_base* t)
 {
   reference_type_def::hash hash_reference;
   pointer_type_def::hash hash_pointer;
@@ -519,12 +519,22 @@ hash_as_ptr_ref_or_typedef_type(const type_base_sptr& t)
 ///
 /// @return the resulting hash value.
 static hash_t
-hash_as_basic_then_ptr_ref_or_typedef_type(const type_base_sptr& t)
+hash_as_basic_then_ptr_ref_or_typedef_type(const type_base* t)
 {
-  hash_t h = hash_as_basic_type(t);
+  hash_t h = hash_as_basic_type(*t);
   h = hashing::combine_hashes(h, hash_as_ptr_ref_or_typedef_type(t));
   return h;
 }
+
+/// Hash a given type as a basic type, then depending on its type,
+/// hash it further as a pointer, reference, or typedef type.
+///
+/// @param t the type to consider.
+///
+/// @return the resulting hash value.
+static hash_t
+hash_as_basic_then_ptr_ref_or_typedef_type(const type_base_sptr t)
+{return hash_as_basic_then_ptr_ref_or_typedef_type(t.get());}
 
 /// The hashing functor for using instances of @ref type_or_decl_base
 /// as values in a hash map or set.
@@ -647,8 +657,9 @@ typedef_decl::hash::operator()(const typedef_decl& t) const
 
   hashing::add_to_hashing_state(t, hashing::HASHING_STARTED_STATE);
 
-  auto u = peel_typedef_type(&t);
-  hash_t h = get_subtype_hash(u);
+  auto u = look_through_decl_only_type
+    (const_cast<type_base*>(peel_typedef_type(&t)));
+  hash_t h = hash_as_basic_then_ptr_ref_or_typedef_type(is_type(u));
 
   hashing::set_hashing_state(t, hashing::HASHING_NOT_DONE_STATE);
 
@@ -727,7 +738,6 @@ pointer_type_def::hash::operator()(const pointer_type_def& t) const
   hash_t v = type_base_hash(t);
   v = hashing::combine_hashes(v, decl_hash(t));
   type_base_sptr u = look_through_decl_only_type(t.get_pointed_to_type());
-  hashing::combine_hashes(v, type_base_hash(t));
   if (auto d = is_decl(u))
     v = hashing::combine_hashes(v, decl_hash(*d));
 
@@ -764,7 +774,7 @@ reference_type_def::hash::operator()(const reference_type_def& t) const
 
   hash_t v = hash_as_basic_type(t);
   v = hashing::combine_hashes(v, hashing::hash(t.is_lvalue()));
-  type_base_sptr u = t.get_pointed_to_type();
+  type_base_sptr u = look_through_decl_only_type(t.get_pointed_to_type());
   v = hashing::combine_hashes(v, hash_as_basic_type(u));
 
   hashing::set_hashing_state(t, hashing::HASHING_NOT_DONE_STATE);
@@ -846,7 +856,7 @@ array_type_def::hash::operator()(const array_type_def& t) const
       v = hashing::combine_hashes(v, hash_as_decl_base(*type));
     }
 
-  type_base_sptr e = t.get_element_type();
+  type_base_sptr e = look_through_decl_only_type(t.get_element_type());
 
   if (auto d = is_decl(e))
     {
@@ -889,12 +899,12 @@ ptr_to_mbr_type::hash::operator() (const ptr_to_mbr_type& t) const
 
   hash_t v = hash_as_type_base(t);
   v = hashing::combine_hashes(v, hash_as_decl_base(t));
-  type_base_sptr e = t.get_member_type();
+  type_base_sptr e = look_through_decl_only_type(t.get_member_type());
 
   hash_t h = hash_as_basic_then_ptr_ref_or_typedef_type(e);
   v = hashing::combine_hashes(v, h);
 
-  e = t.get_containing_type();
+  e = look_through_decl_only_type(t.get_containing_type());
 
   h = hash_as_basic_then_ptr_ref_or_typedef_type(e);
   v = hashing::combine_hashes(v, h);
@@ -952,7 +962,7 @@ enum_type_decl::hash::operator()(const enum_type_decl& t) const
   hash_t v = hash_as_type(t);
   v = hashing::combine_hashes(v, hash_as_decl(t));
 
-  type_base_sptr u = t.get_underlying_type();
+  type_base_sptr u = look_through_decl_only_type(t.get_underlying_type());
 
   hash_t h = hash_as_basic_then_ptr_ref_or_typedef_type(u);
   v = hashing::combine_hashes(v, h);
@@ -997,13 +1007,13 @@ function_type::hash::operator()(const function_type& t) const
   add_to_hashing_state(t, hashing::HASHING_STARTED_STATE);
 
   hash_t h = hash_as_basic_type(t);
-  type_base_sptr r = t.get_return_type();
+  type_base_sptr r = look_through_decl_only_type(t.get_return_type());
 
-  h = hashing::combine_hashes(h, hash_as_basic_type(r));
+  h = hashing::combine_hashes(h, hash_as_basic_then_ptr_ref_or_typedef_type(r));
 
   for (auto parm : t.get_parameters())
     {
-      type_base_sptr type = parm->get_type();
+      type_base_sptr type = look_through_decl_only_type(parm->get_type());
       h = hashing::combine_hashes
 	(h, hash_as_basic_then_ptr_ref_or_typedef_type(type));
     }
@@ -1048,7 +1058,7 @@ method_type::hash::operator()(const method_type& t) const
   add_to_hashing_state(t, hashing::HASHING_STARTED_STATE);
 
   hash_t v = hash_as_basic_type(t);
-  type_base_sptr r = t.get_return_type();
+  type_base_sptr r = look_through_decl_only_type(t.get_return_type());
   v = hashing::combine_hashes(v, hash_as_basic_then_ptr_ref_or_typedef_type(r));
 
   bool c = t.get_is_const();
@@ -1064,7 +1074,7 @@ method_type::hash::operator()(const method_type& t) const
 
   for (auto parm : t.get_parameters())
     {
-      type_base_sptr ty = parm->get_type();
+      type_base_sptr ty = look_through_decl_only_type(parm->get_type());
       v = hashing::combine_hashes
 	(v, hash_as_basic_then_ptr_ref_or_typedef_type(ty));
     }
@@ -1120,7 +1130,7 @@ class_decl::base_spec::hash::operator()(const base_spec& t) const
   hash_t v = hash_member(t), h = 0;;
   v = hashing::combine_hashes(v, hashing::hash(t.get_offset_in_bits()));
   v = hashing::combine_hashes(v, hashing::hash(t.get_is_virtual()));
-  type_base_sptr b = t.get_base_class();
+  type_base_sptr b = look_through_decl_only_type(t.get_base_class());
 
   h = hash_as_basic_then_ptr_ref_or_typedef_type(b);
   v = hashing::combine_hashes(v, h);
@@ -1173,7 +1183,7 @@ class_or_union::hash::operator()(const class_or_union& t) const
        d != t.get_non_static_data_members().end();
        ++d)
     {
-      ty = (*d)->get_type();
+      ty = look_through_decl_only_type((*d)->get_type());
       hash_t h = hash_as_basic_type(ty);
       v = hashing::combine_hashes(v, h);
       v = hashing::combine_hashes(v, hashing::hash((*d)->get_name()));

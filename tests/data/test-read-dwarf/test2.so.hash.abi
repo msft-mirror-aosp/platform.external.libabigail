@@ -17,10 +17,10 @@
   </elf-function-symbols>
   <abi-types>
     <pointer-type-def type-id='55265432' size-in-bits='64' hash='d687ccbf27f48b23' id='82c95d70'/>
-    <function-type size-in-bits='64' hash='17fdf7d01382f8a6' id='a4c47a25'>
+    <function-type size-in-bits='64' hash='3f29b5a214375aba' id='a4c47a25'>
       <return type-id='82c95d70'/>
     </function-type>
-    <function-type size-in-bits='64' hash='83a9a753c9c80ad7' id='7cdb1841'>
+    <function-type size-in-bits='64' hash='52ef484d488acbe6' id='7cdb1841'>
       <return type-id='fc0abc74'/>
     </function-type>
     <type-decl name='int' size-in-bits='32' hash='09d17c08f594edc7' id='95e97e5e'/>
@@ -55,8 +55,8 @@
         <function-decl name='second_type' type-id='3ed256e5' mangled-name='_ZN11second_typeC2Ev' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZN11second_typeC2Ev'/>
       </member-function>
     </class-decl>
-    <typedef-decl name='character' type-id='002ac4a6' size-in-bits='8' hash='6ebac62b3366db68' id='8ec86933'/>
-    <typedef-decl name='integer' type-id='95e97e5e' size-in-bits='32' hash='09d17c08f594edc7' id='c2cab9c6'/>
+    <typedef-decl name='character' type-id='002ac4a6' size-in-bits='8' hash='7948234ee9eb1041' id='8ec86933'/>
+    <typedef-decl name='integer' type-id='95e97e5e' size-in-bits='32' hash='f2b82e49c8af56cd' id='c2cab9c6'/>
     <type-decl name='unsigned char' size-in-bits='8' hash='6ebac62b3366db68' id='002ac4a6'/>
     <type-decl name='void' hash='8dcbc64750c3d4e3' id='48b5725f'/>
   </abi-types>

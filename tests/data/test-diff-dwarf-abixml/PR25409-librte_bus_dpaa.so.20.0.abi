@@ -214,10 +214,10 @@
     <pointer-type-def type-id='type-id-105' size-in-bits='64' hash='542fb1a1484744c8' id='type-id-106'/>
     <qualified-type-def type-id='type-id-107' const='yes' hash='785e02f756adc298' id='type-id-108'/>
     <pointer-type-def type-id='type-id-108' size-in-bits='64' hash='88c776fe2b8595b1' id='type-id-109'/>
-    <qualified-type-def type-id='type-id-110' const='yes' hash='9f6284fa3a419601' id='type-id-111'/>
+    <qualified-type-def type-id='type-id-110' const='yes' hash='5949e77f101b2abc' id='type-id-111'/>
     <pointer-type-def type-id='type-id-111' size-in-bits='64' hash='8e9492c943fe2cd2' id='type-id-112'/>
     <pointer-type-def type-id='type-id-113' size-in-bits='64' hash='ec2af95f45252dec' id='type-id-114'/>
-    <qualified-type-def type-id='type-id-115' const='yes' hash='e79d39312fcdf877' id='type-id-116'/>
+    <qualified-type-def type-id='type-id-115' const='yes' hash='88909f9edf844d76' id='type-id-116'/>
     <pointer-type-def type-id='type-id-116' size-in-bits='64' hash='f456973581014b56' id='type-id-117'/>
     <pointer-type-def type-id='type-id-118' size-in-bits='64' hash='9a642438cf8a902e' id='type-id-119'/>
     <pointer-type-def type-id='type-id-120' size-in-bits='64' hash='3affd9e2e2007bcc' id='type-id-121'/>
@@ -432,26 +432,26 @@
       <subrange length='unknown' lower-bound='0' upper-bound='0' type-id='type-id-1' size-in-bits='64' is-anonymous='yes' hash='eba0a2b392137dcb' id='type-id-28'/>
     </array-type-def>
     <pointer-type-def type-id='type-id-151' size-in-bits='64' hash='0a39d5d9d46451b1' id='type-id-152'/>
-    <function-type size-in-bits='64' hash='45c3236b9e6f2b12' id='type-id-153'>
+    <function-type size-in-bits='64' hash='f167f09782f69e2e' id='type-id-153'>
       <parameter type-id='type-id-62'/>
       <return type-id='type-id-41'/>
     </function-type>
-    <function-type size-in-bits='64' hash='835ea44a3021a6ec' id='type-id-154'>
+    <function-type size-in-bits='64' hash='fe388dc2cf0b31de' id='type-id-154'>
       <parameter type-id='type-id-59'/>
       <return type-id='type-id-62'/>
     </function-type>
-    <function-type size-in-bits='64' hash='62fb5560b7f7827a' id='type-id-113'>
+    <function-type size-in-bits='64' hash='e45b6006628d0413' id='type-id-113'>
       <parameter type-id='type-id-155'/>
       <return type-id='type-id-112'/>
     </function-type>
-    <function-type size-in-bits='64' hash='a5071238eaf42915' id='type-id-156'>
+    <function-type size-in-bits='64' hash='8000db5578d89fff' id='type-id-156'>
       <parameter type-id='type-id-41'/>
       <parameter type-id='type-id-30'/>
       <parameter type-id='type-id-157'/>
       <parameter type-id='type-id-158'/>
       <return type-id='type-id-159'/>
     </function-type>
-    <function-type size-in-bits='64' hash='822f0b86443df516' id='type-id-160'>
+    <function-type size-in-bits='64' hash='0da31ca97b0eb091' id='type-id-160'>
       <parameter type-id='type-id-41'/>
       <parameter type-id='type-id-54'/>
       <parameter type-id='type-id-157'/>
@@ -477,19 +477,19 @@
       <parameter type-id='type-id-70'/>
       <return type-id='type-id-159'/>
     </function-type>
-    <function-type size-in-bits='64' hash='f45c3265297c0183' id='type-id-166'>
+    <function-type size-in-bits='64' hash='0ebe885f4112f61a' id='type-id-166'>
       <parameter type-id='type-id-152'/>
       <parameter type-id='type-id-167'/>
       <return type-id='type-id-159'/>
     </function-type>
-    <function-type size-in-bits='64' hash='f4bb87f53380de86' id='type-id-168'>
+    <function-type size-in-bits='64' hash='6ddec4ed9de4ea2b' id='type-id-168'>
       <parameter type-id='type-id-152'/>
       <parameter type-id='type-id-158'/>
       <parameter type-id='type-id-158'/>
       <parameter type-id='type-id-158'/>
       <return type-id='type-id-159'/>
     </function-type>
-    <function-type size-in-bits='64' hash='98e32b316827eace' id='type-id-169'>
+    <function-type size-in-bits='64' hash='e2f64e854b98a52d' id='type-id-169'>
       <parameter type-id='type-id-152'/>
       <parameter type-id='type-id-170'/>
       <parameter type-id='type-id-171'/>
@@ -499,7 +499,7 @@
       <parameter type-id='type-id-173'/>
       <return type-id='type-id-159'/>
     </function-type>
-    <function-type size-in-bits='64' hash='473540d5bec83609' id='type-id-174'>
+    <function-type size-in-bits='64' hash='2a4e13ac28f495e5' id='type-id-174'>
       <parameter type-id='type-id-173'/>
       <parameter type-id='type-id-158'/>
       <parameter type-id='type-id-175'/>
@@ -516,7 +516,7 @@
       <parameter type-id='type-id-159'/>
       <return type-id='type-id-159'/>
     </function-type>
-    <function-type size-in-bits='64' hash='40a97c34156cfce3' id='type-id-181'>
+    <function-type size-in-bits='64' hash='3372b906f9adb3da' id='type-id-181'>
       <parameter type-id='type-id-177'/>
       <parameter type-id='type-id-76'/>
       <parameter type-id='type-id-158'/>
@@ -534,7 +534,7 @@
       <parameter type-id='type-id-184'/>
       <return type-id='type-id-159'/>
     </function-type>
-    <function-type size-in-bits='64' hash='b67135af9612286b' id='type-id-185'>
+    <function-type size-in-bits='64' hash='119ab9ff9353052b' id='type-id-185'>
       <parameter type-id='type-id-177'/>
       <parameter type-id='type-id-167'/>
       <parameter type-id='type-id-110'/>
@@ -545,19 +545,19 @@
       <parameter type-id='type-id-180'/>
       <return type-id='type-id-159'/>
     </function-type>
-    <function-type size-in-bits='64' hash='335b66daf5d74bea' id='type-id-187'>
+    <function-type size-in-bits='64' hash='9b95c1c20763d894' id='type-id-187'>
       <parameter type-id='type-id-177'/>
       <parameter type-id='type-id-158'/>
       <parameter type-id='type-id-188'/>
       <return type-id='type-id-159'/>
     </function-type>
-    <function-type size-in-bits='64' hash='fd31ee026cde8746' id='type-id-189'>
+    <function-type size-in-bits='64' hash='f4d2f65dd1d08618' id='type-id-189'>
       <parameter type-id='type-id-177'/>
       <parameter type-id='type-id-158'/>
       <parameter type-id='type-id-158'/>
       <return type-id='type-id-159'/>
     </function-type>
-    <function-type size-in-bits='64' hash='0bfa8bd1320662c5' id='type-id-190'>
+    <function-type size-in-bits='64' hash='3b5a5cbf86acb35a' id='type-id-190'>
       <parameter type-id='type-id-191'/>
       <parameter type-id='type-id-158'/>
       <return type-id='type-id-159'/>
@@ -566,7 +566,7 @@
       <parameter type-id='type-id-193'/>
       <return type-id='type-id-159'/>
     </function-type>
-    <function-type size-in-bits='64' hash='1ebd9f0fcf7ef19f' id='type-id-194'>
+    <function-type size-in-bits='64' hash='a43640f9127aaa0b' id='type-id-194'>
       <parameter type-id='type-id-193'/>
       <parameter type-id='type-id-162'/>
       <parameter type-id='type-id-115'/>
@@ -586,7 +586,7 @@
       <parameter type-id='type-id-155'/>
       <return type-id='type-id-159'/>
     </function-type>
-    <function-type size-in-bits='64' hash='afb52c1f7b3d5c71' id='type-id-201'>
+    <function-type size-in-bits='64' hash='35e6de92a627702e' id='type-id-201'>
       <parameter type-id='type-id-155'/>
       <parameter type-id='type-id-46'/>
       <parameter type-id='type-id-195'/>
@@ -614,7 +614,7 @@
       <parameter type-id='type-id-159'/>
       <return type-id='type-id-159'/>
     </function-type>
-    <function-type size-in-bits='64' hash='b7d88e641a9c85f8' id='type-id-208'>
+    <function-type size-in-bits='64' hash='3b471ee71e2fa227' id='type-id-208'>
       <parameter type-id='type-id-155'/>
       <parameter type-id='type-id-209'/>
       <return type-id='type-id-159'/>
@@ -659,14 +659,14 @@
       <parameter type-id='type-id-225'/>
       <return type-id='type-id-159'/>
     </function-type>
-    <function-type size-in-bits='64' hash='194f429f70d34d38' id='type-id-226'>
+    <function-type size-in-bits='64' hash='adecba569d89ed51' id='type-id-226'>
       <parameter type-id='type-id-155'/>
       <parameter type-id='type-id-225'/>
       <parameter type-id='type-id-110'/>
       <parameter type-id='type-id-171'/>
       <return type-id='type-id-159'/>
     </function-type>
-    <function-type size-in-bits='64' hash='74e47a9c384e4f4a' id='type-id-227'>
+    <function-type size-in-bits='64' hash='f74b5b7aa54fb9c4' id='type-id-227'>
       <parameter type-id='type-id-155'/>
       <parameter type-id='type-id-228'/>
       <parameter type-id='type-id-171'/>
@@ -683,7 +683,7 @@
       <parameter type-id='type-id-232'/>
       <return type-id='type-id-159'/>
     </function-type>
-    <function-type size-in-bits='64' hash='cd1443a5042a037e' id='type-id-233'>
+    <function-type size-in-bits='64' hash='2ee4719104ffee9e' id='type-id-233'>
       <parameter type-id='type-id-155'/>
       <parameter type-id='type-id-234'/>
       <parameter type-id='type-id-235'/>
@@ -723,20 +723,20 @@
       <parameter type-id='type-id-246'/>
       <return type-id='type-id-159'/>
     </function-type>
-    <function-type size-in-bits='64' hash='180be78956717dbb' id='type-id-247'>
+    <function-type size-in-bits='64' hash='6068b2e6357aaaac' id='type-id-247'>
       <parameter type-id='type-id-155'/>
       <parameter type-id='type-id-246'/>
       <parameter type-id='type-id-110'/>
       <return type-id='type-id-159'/>
     </function-type>
-    <function-type size-in-bits='64' hash='9b16071288eebc36' id='type-id-248'>
+    <function-type size-in-bits='64' hash='bbef2c35389fa230' id='type-id-248'>
       <parameter type-id='type-id-155'/>
       <parameter type-id='type-id-246'/>
       <parameter type-id='type-id-110'/>
       <parameter type-id='type-id-110'/>
       <return type-id='type-id-159'/>
     </function-type>
-    <function-type size-in-bits='64' hash='c23af807238dab29' id='type-id-249'>
+    <function-type size-in-bits='64' hash='0f43b600617b3c60' id='type-id-249'>
       <parameter type-id='type-id-155'/>
       <parameter type-id='type-id-246'/>
       <parameter type-id='type-id-171'/>
@@ -749,7 +749,7 @@
       <parameter type-id='type-id-162'/>
       <return type-id='type-id-159'/>
     </function-type>
-    <function-type size-in-bits='64' hash='cb95a8a1c17b01ef' id='type-id-251'>
+    <function-type size-in-bits='64' hash='531d18e9324becee' id='type-id-251'>
       <parameter type-id='type-id-155'/>
       <parameter type-id='type-id-148'/>
       <parameter type-id='type-id-235'/>
@@ -760,43 +760,43 @@
       <parameter type-id='type-id-253'/>
       <return type-id='type-id-159'/>
     </function-type>
-    <function-type size-in-bits='64' hash='d199f0f6baeaec73' id='type-id-254'>
+    <function-type size-in-bits='64' hash='f0623509af41f315' id='type-id-254'>
       <parameter type-id='type-id-155'/>
       <parameter type-id='type-id-253'/>
       <parameter type-id='type-id-110'/>
       <return type-id='type-id-159'/>
     </function-type>
-    <function-type size-in-bits='64' hash='01a707bd28b4f0b3' id='type-id-255'>
+    <function-type size-in-bits='64' hash='4c69cbce35aceaa2' id='type-id-255'>
       <parameter type-id='type-id-155'/>
       <parameter type-id='type-id-235'/>
       <return type-id='type-id-159'/>
     </function-type>
-    <function-type size-in-bits='64' hash='230126254a38eaff' id='type-id-256'>
+    <function-type size-in-bits='64' hash='1b4bb37ec87fd991' id='type-id-256'>
       <parameter type-id='type-id-155'/>
       <parameter type-id='type-id-235'/>
       <parameter type-id='type-id-159'/>
       <return type-id='type-id-159'/>
     </function-type>
-    <function-type size-in-bits='64' hash='38147214f33a01c1' id='type-id-257'>
+    <function-type size-in-bits='64' hash='117ed4df24909ad4' id='type-id-257'>
       <parameter type-id='type-id-155'/>
       <parameter type-id='type-id-235'/>
       <parameter type-id='type-id-258'/>
       <return type-id='type-id-159'/>
     </function-type>
-    <function-type size-in-bits='64' hash='b90462591d3eeaab' id='type-id-259'>
+    <function-type size-in-bits='64' hash='204766f9e671df62' id='type-id-259'>
       <parameter type-id='type-id-155'/>
       <parameter type-id='type-id-235'/>
       <parameter type-id='type-id-235'/>
       <return type-id='type-id-159'/>
     </function-type>
-    <function-type size-in-bits='64' hash='e4fad2f6cff90994' id='type-id-260'>
+    <function-type size-in-bits='64' hash='a1a82e49eedbbe1f' id='type-id-260'>
       <parameter type-id='type-id-155'/>
       <parameter type-id='type-id-235'/>
       <parameter type-id='type-id-235'/>
       <parameter type-id='type-id-97'/>
       <return type-id='type-id-159'/>
     </function-type>
-    <function-type size-in-bits='64' hash='3be1a2896c0e1b59' id='type-id-261'>
+    <function-type size-in-bits='64' hash='b8f31c647f34d69b' id='type-id-261'>
       <parameter type-id='type-id-155'/>
       <parameter type-id='type-id-235'/>
       <parameter type-id='type-id-235'/>
@@ -805,7 +805,7 @@
       <parameter type-id='type-id-262'/>
       <return type-id='type-id-159'/>
     </function-type>
-    <function-type size-in-bits='64' hash='84c10e8b369631be' id='type-id-263'>
+    <function-type size-in-bits='64' hash='2eead5d05271807b' id='type-id-263'>
       <parameter type-id='type-id-155'/>
       <parameter type-id='type-id-235'/>
       <parameter type-id='type-id-235'/>
@@ -813,14 +813,14 @@
       <parameter type-id='type-id-103'/>
       <return type-id='type-id-159'/>
     </function-type>
-    <function-type size-in-bits='64' hash='1acc72c7987df0b6' id='type-id-264'>
+    <function-type size-in-bits='64' hash='a4127c5ae61d20a9' id='type-id-264'>
       <parameter type-id='type-id-155'/>
       <parameter type-id='type-id-235'/>
       <parameter type-id='type-id-171'/>
       <parameter type-id='type-id-171'/>
       <return type-id='type-id-159'/>
     </function-type>
-    <function-type size-in-bits='64' hash='ea93f535b7bd35c8' id='type-id-265'>
+    <function-type size-in-bits='64' hash='458256bf1a93f202' id='type-id-265'>
       <parameter type-id='type-id-155'/>
       <parameter type-id='type-id-110'/>
       <return type-id='type-id-159'/>
@@ -830,7 +830,7 @@
       <parameter type-id='type-id-205'/>
       <return type-id='type-id-159'/>
     </function-type>
-    <function-type size-in-bits='64' hash='d9e7f3054ef12c2e' id='type-id-267'>
+    <function-type size-in-bits='64' hash='b491f1a88de27290' id='type-id-267'>
       <parameter type-id='type-id-155'/>
       <parameter type-id='type-id-171'/>
       <return type-id='type-id-159'/>
@@ -840,24 +840,24 @@
       <parameter type-id='type-id-162'/>
       <return type-id='type-id-159'/>
     </function-type>
-    <function-type size-in-bits='64' hash='70b62838c2488a1f' id='type-id-269'>
+    <function-type size-in-bits='64' hash='700fe1f6a6277fe5' id='type-id-269'>
       <parameter type-id='type-id-158'/>
       <return type-id='type-id-159'/>
     </function-type>
-    <function-type size-in-bits='64' hash='1f148ac39bf69ca6' id='type-id-270'>
+    <function-type size-in-bits='64' hash='ab03cf8f0c01942e' id='type-id-270'>
       <parameter type-id='type-id-180'/>
       <parameter type-id='type-id-158'/>
       <parameter type-id='type-id-158'/>
       <parameter type-id='type-id-159'/>
       <return type-id='type-id-159'/>
     </function-type>
-    <function-type size-in-bits='64' hash='993231c949058307' id='type-id-271'>
+    <function-type size-in-bits='64' hash='50c1fc6c35ccf4ca' id='type-id-271'>
       <parameter type-id='type-id-158'/>
       <parameter type-id='type-id-158'/>
       <parameter type-id='type-id-177'/>
       <return type-id='type-id-159'/>
     </function-type>
-    <function-type size-in-bits='64' hash='ee1be6f212f832d5' id='type-id-272'>
+    <function-type size-in-bits='64' hash='d18b7c5a89e66377' id='type-id-272'>
       <parameter type-id='type-id-158'/>
       <parameter type-id='type-id-206'/>
       <return type-id='type-id-159'/>
@@ -878,20 +878,20 @@
       <parameter type-id='type-id-177'/>
       <return type-id='type-id-159'/>
     </function-type>
-    <function-type size-in-bits='64' hash='239cbfb0931fb9cb' id='type-id-277'>
+    <function-type size-in-bits='64' hash='3323ea6842fe49c8' id='type-id-277'>
       <parameter type-id='type-id-162'/>
       <parameter type-id='type-id-235'/>
       <return type-id='type-id-159'/>
     </function-type>
-    <function-type size-in-bits='64' hash='c7fddd3e0aaf17a5' id='type-id-278'>
+    <function-type size-in-bits='64' hash='aa20ad8c23612b19' id='type-id-278'>
       <parameter type-id='type-id-162'/>
       <parameter type-id='type-id-110'/>
       <return type-id='type-id-159'/>
     </function-type>
-    <function-type size-in-bits='64' hash='0f76e9ef7e8734c3' id='type-id-279'>
+    <function-type size-in-bits='64' hash='7384cca130e87d1a' id='type-id-279'>
       <return type-id='type-id-280'/>
     </function-type>
-    <function-type size-in-bits='64' hash='27b37e264c5bc93a' id='type-id-281'>
+    <function-type size-in-bits='64' hash='917d261ef4573b26' id='type-id-281'>
       <parameter type-id='type-id-177'/>
       <return type-id='type-id-282'/>
     </function-type>
@@ -909,11 +909,11 @@
       <parameter type-id='type-id-285'/>
       <return type-id='type-id-126'/>
     </function-type>
-    <function-type size-in-bits='64' hash='3b3085ad5fecefd6' id='type-id-286'>
+    <function-type size-in-bits='64' hash='fcfa1fc15fe92699' id='type-id-286'>
       <parameter type-id='type-id-287'/>
       <return type-id='type-id-191'/>
     </function-type>
-    <function-type size-in-bits='64' hash='3f9a3447bc23e57b' id='type-id-288'>
+    <function-type size-in-bits='64' hash='478b8dd08f3f7c27' id='type-id-288'>
       <parameter type-id='type-id-91'/>
       <parameter type-id='type-id-289'/>
       <parameter type-id='type-id-162'/>
@@ -922,21 +922,21 @@
     <function-type size-in-bits='64' hash='05a9f4c18b6334f9' id='type-id-290'>
       <return type-id='type-id-146'/>
     </function-type>
-    <function-type size-in-bits='64' hash='17ab8d762a8b39df' id='type-id-291'>
+    <function-type size-in-bits='64' hash='aba4c394274635f7' id='type-id-291'>
       <parameter type-id='type-id-41'/>
       <return type-id='type-id-158'/>
     </function-type>
-    <function-type size-in-bits='64' hash='04eafc1856dfba50' id='type-id-292'>
+    <function-type size-in-bits='64' hash='0a949b978df86e9a' id='type-id-292'>
       <parameter type-id='type-id-177'/>
       <return type-id='type-id-158'/>
     </function-type>
-    <function-type size-in-bits='64' hash='dd7b86b19216e2d0' id='type-id-293'>
+    <function-type size-in-bits='64' hash='8b02755424ee3010' id='type-id-293'>
       <parameter type-id='type-id-294'/>
       <parameter type-id='type-id-206'/>
       <parameter type-id='type-id-285'/>
       <return type-id='type-id-158'/>
     </function-type>
-    <function-type size-in-bits='64' hash='64417b231a93d889' id='type-id-295'>
+    <function-type size-in-bits='64' hash='728af230a133550f' id='type-id-295'>
       <parameter type-id='type-id-235'/>
       <parameter type-id='type-id-235'/>
       <parameter type-id='type-id-296'/>
@@ -945,7 +945,7 @@
       <parameter type-id='type-id-162'/>
       <return type-id='type-id-235'/>
     </function-type>
-    <function-type size-in-bits='64' hash='9a601eddff0a7ca8' id='type-id-297'>
+    <function-type size-in-bits='64' hash='a7b684a28e0bb9e5' id='type-id-297'>
       <parameter type-id='type-id-235'/>
       <parameter type-id='type-id-235'/>
       <parameter type-id='type-id-296'/>
@@ -953,13 +953,13 @@
       <parameter type-id='type-id-162'/>
       <return type-id='type-id-235'/>
     </function-type>
-    <function-type size-in-bits='64' hash='f2af5a179ac34d6d' id='type-id-298'>
+    <function-type size-in-bits='64' hash='c32dd92fd3bc012b' id='type-id-298'>
       <parameter type-id='type-id-162'/>
       <parameter type-id='type-id-296'/>
       <parameter type-id='type-id-235'/>
       <return type-id='type-id-235'/>
     </function-type>
-    <function-type size-in-bits='64' hash='5beb77c1e46e178f' id='type-id-299'>
+    <function-type size-in-bits='64' hash='08f0e3253a80c6d8' id='type-id-299'>
       <parameter type-id='type-id-155'/>
       <parameter type-id='type-id-235'/>
       <return type-id='type-id-110'/>
@@ -988,12 +988,12 @@
       <parameter type-id='type-id-237'/>
       <return type-id='type-id-302'/>
     </function-type>
-    <function-type size-in-bits='64' hash='362bbef7eebab894' id='type-id-306'>
+    <function-type size-in-bits='64' hash='c5a40137b8ecdd3d' id='type-id-306'>
       <parameter type-id='type-id-152'/>
       <parameter type-id='type-id-235'/>
       <return type-id='type-id-302'/>
     </function-type>
-    <function-type size-in-bits='64' hash='3570ab7d10ade609' id='type-id-307'>
+    <function-type size-in-bits='64' hash='6cc40ace1e6776bc' id='type-id-307'>
       <parameter type-id='type-id-152'/>
       <parameter type-id='type-id-110'/>
       <return type-id='type-id-302'/>
@@ -1004,12 +1004,12 @@
       <parameter type-id='type-id-159'/>
       <return type-id='type-id-302'/>
     </function-type>
-    <function-type size-in-bits='64' hash='2a2528a8dba7fc60' id='type-id-309'>
+    <function-type size-in-bits='64' hash='300609bbebf62e22' id='type-id-309'>
       <parameter type-id='type-id-152'/>
       <parameter type-id='type-id-171'/>
       <return type-id='type-id-302'/>
     </function-type>
-    <function-type size-in-bits='64' hash='0758a7c4d79e4c2a' id='type-id-310'>
+    <function-type size-in-bits='64' hash='95e3efb4f50297f6' id='type-id-310'>
       <parameter type-id='type-id-152'/>
       <parameter type-id='type-id-206'/>
       <parameter type-id='type-id-159'/>
@@ -1077,25 +1077,25 @@
       <parameter type-id='type-id-155'/>
       <return type-id='type-id-302'/>
     </function-type>
-    <function-type size-in-bits='64' hash='c62deabe91d3d4e0' id='type-id-325'>
+    <function-type size-in-bits='64' hash='b2556ca9050bc254' id='type-id-325'>
       <parameter type-id='type-id-155'/>
       <parameter type-id='type-id-235'/>
       <parameter type-id='type-id-159'/>
       <return type-id='type-id-302'/>
     </function-type>
-    <function-type size-in-bits='64' hash='61b5b00a6427a886' id='type-id-326'>
+    <function-type size-in-bits='64' hash='adda50a18c00bb19' id='type-id-326'>
       <parameter type-id='type-id-155'/>
       <parameter type-id='type-id-235'/>
       <parameter type-id='type-id-327'/>
       <return type-id='type-id-302'/>
     </function-type>
-    <function-type size-in-bits='64' hash='54f5b3d706d2a053' id='type-id-328'>
+    <function-type size-in-bits='64' hash='785d01cc34037745' id='type-id-328'>
       <parameter type-id='type-id-155'/>
       <parameter type-id='type-id-235'/>
       <parameter type-id='type-id-329'/>
       <return type-id='type-id-302'/>
     </function-type>
-    <function-type size-in-bits='64' hash='a2cd6eeb1cf4eeca' id='type-id-330'>
+    <function-type size-in-bits='64' hash='791699dcc6f12d6d' id='type-id-330'>
       <parameter type-id='type-id-155'/>
       <parameter type-id='type-id-110'/>
       <return type-id='type-id-302'/>
@@ -1105,17 +1105,17 @@
       <parameter type-id='type-id-162'/>
       <return type-id='type-id-302'/>
     </function-type>
-    <function-type size-in-bits='64' hash='59fec04c5d6d7f19' id='type-id-333'>
+    <function-type size-in-bits='64' hash='99273e470022f461' id='type-id-333'>
       <parameter type-id='type-id-158'/>
       <parameter type-id='type-id-191'/>
       <return type-id='type-id-302'/>
     </function-type>
-    <function-type size-in-bits='64' hash='6c3d8e969cf9cb3c' id='type-id-334'>
+    <function-type size-in-bits='64' hash='5a8b8d9a87e43cdb' id='type-id-334'>
       <parameter type-id='type-id-158'/>
       <parameter type-id='type-id-158'/>
       <return type-id='type-id-302'/>
     </function-type>
-    <function-type size-in-bits='64' hash='eb1305b321cf9cfb' id='type-id-335'>
+    <function-type size-in-bits='64' hash='a2969b4f411d2b0a' id='type-id-335'>
       <parameter type-id='type-id-157'/>
       <parameter type-id='type-id-159'/>
       <return type-id='type-id-302'/>
@@ -1136,7 +1136,7 @@
       <parameter type-id='type-id-162'/>
       <return type-id='type-id-302'/>
     </function-type>
-    <function-type size-in-bits='64' hash='c167ba48eb7453d8' id='type-id-340'>
+    <function-type size-in-bits='64' hash='34429f51af6c469c' id='type-id-340'>
       <parameter type-id='type-id-162'/>
       <parameter type-id='type-id-64'/>
       <parameter type-id='type-id-88'/>
@@ -2984,7 +2984,7 @@
         <var-decl name='cb_arg' type-id='type-id-162' visibility='default'/>
       </data-member>
     </class-decl>
-    <class-decl name='rte_epoll_event' is-struct='yes' visibility='default' size-in-bits='384' hash='d31860b96fad924c' id='type-id-441'>
+    <class-decl name='rte_epoll_event' is-struct='yes' visibility='default' size-in-bits='384' hash='4467dc0735c1cb77' id='type-id-441'>
       <data-member access='public' layout-offset-in-bits='0'>
         <var-decl name='status' type-id='type-id-705' visibility='default'/>
       </data-member>
@@ -4739,164 +4739,164 @@
         <var-decl name='hi' type-id='type-id-110' visibility='default'/>
       </data-member>
     </class-decl>
-    <class-decl name='__anonymous_struct__' is-struct='yes' naming-typedef-id='type-id-673' visibility='default' size-in-bits='32' is-anonymous='yes' hash='d68073f625baeb9e' id='type-id-818'>
+    <class-decl name='__anonymous_struct__' is-struct='yes' visibility='default' size-in-bits='32' is-anonymous='yes' hash='d68073f625baeb9e' id='type-id-818'>
       <data-member access='public' layout-offset-in-bits='0'>
         <var-decl name='locked' type-id='type-id-819' visibility='default'/>
       </data-member>
     </class-decl>
-    <class-decl name='__anonymous_struct__' is-struct='yes' naming-typedef-id='type-id-764' visibility='default' size-in-bits='16' is-anonymous='yes' hash='6368587aa939fefa' id='type-id-820'>
+    <class-decl name='__anonymous_struct__' is-struct='yes' visibility='default' size-in-bits='16' is-anonymous='yes' hash='17f47cb3e175fc7b' id='type-id-820'>
       <data-member access='public' layout-offset-in-bits='0'>
         <var-decl name='cnt' type-id='type-id-821' visibility='default'/>
       </data-member>
     </class-decl>
     <pointer-type-def type-id='type-id-107' size-in-bits='64' hash='3283f00fe5e889dd' id='type-id-253'/>
-    <typedef-decl name='MARKER' type-id='type-id-822' hash='f7b1945f477b9f75' id='type-id-755'/>
-    <typedef-decl name='MARKER64' type-id='type-id-823' hash='c0c8731336c1d069' id='type-id-757'/>
-    <typedef-decl name='__int16_t' type-id='type-id-494' size-in-bits='16' hash='2e5e87528799cdbb' id='type-id-824'/>
-    <typedef-decl name='__int32_t' type-id='type-id-159' size-in-bits='32' hash='09d17c08f594edc7' id='type-id-825'/>
-    <typedef-decl name='__int64_t' type-id='type-id-399' size-in-bits='64' hash='8aa1e1a2ab2c2d3e' id='type-id-826'/>
-    <typedef-decl name='__syscall_slong_t' type-id='type-id-399' size-in-bits='64' hash='8aa1e1a2ab2c2d3e' id='type-id-779'/>
-    <typedef-decl name='__time_t' type-id='type-id-399' size-in-bits='64' hash='8aa1e1a2ab2c2d3e' id='type-id-778'/>
-    <typedef-decl name='__uint16_t' type-id='type-id-827' size-in-bits='16' hash='e3133321c12b1361' id='type-id-828'/>
-    <typedef-decl name='__uint32_t' type-id='type-id-206' size-in-bits='32' hash='e66b43f97c38e87a' id='type-id-829'/>
-    <typedef-decl name='__uint64_t' type-id='type-id-520' size-in-bits='64' hash='da551c1631705dfe' id='type-id-830'/>
-    <typedef-decl name='__uint8_t' type-id='type-id-831' size-in-bits='8' hash='6ebac62b3366db68' id='type-id-832'/>
-    <typedef-decl name='eth_allmulticast_disable_t' type-id='type-id-347' size-in-bits='64' hash='0a2cdf0be3fc95cf' id='type-id-537'/>
-    <typedef-decl name='eth_allmulticast_enable_t' type-id='type-id-347' size-in-bits='64' hash='0a2cdf0be3fc95cf' id='type-id-536'/>
-    <typedef-decl name='eth_burst_mode_get_t' type-id='type-id-382' size-in-bits='64' hash='fdee09f016a89b3b' id='type-id-552'/>
-    <typedef-decl name='eth_dev_close_t' type-id='type-id-833' size-in-bits='64' hash='2be4b57812851ab0' id='type-id-530'/>
-    <typedef-decl name='eth_dev_configure_t' type-id='type-id-347' size-in-bits='64' hash='0a2cdf0be3fc95cf' id='type-id-525'/>
-    <typedef-decl name='eth_dev_infos_get_t' type-id='type-id-357' size-in-bits='64' hash='15b986c70bdeb4c6' id='type-id-549'/>
-    <typedef-decl name='eth_dev_led_off_t' type-id='type-id-347' size-in-bits='64' hash='0a2cdf0be3fc95cf' id='type-id-574'/>
-    <typedef-decl name='eth_dev_led_on_t' type-id='type-id-347' size-in-bits='64' hash='0a2cdf0be3fc95cf' id='type-id-573'/>
-    <typedef-decl name='eth_dev_ptypes_set_t' type-id='type-id-388' size-in-bits='64' hash='dda479fc897d83a3' id='type-id-555'/>
-    <typedef-decl name='eth_dev_reset_t' type-id='type-id-347' size-in-bits='64' hash='0a2cdf0be3fc95cf' id='type-id-531'/>
-    <typedef-decl name='eth_dev_set_link_down_t' type-id='type-id-347' size-in-bits='64' hash='0a2cdf0be3fc95cf' id='type-id-529'/>
-    <typedef-decl name='eth_dev_set_link_up_t' type-id='type-id-347' size-in-bits='64' hash='0a2cdf0be3fc95cf' id='type-id-528'/>
-    <typedef-decl name='eth_dev_start_t' type-id='type-id-347' size-in-bits='64' hash='0a2cdf0be3fc95cf' id='type-id-526'/>
-    <typedef-decl name='eth_dev_stop_t' type-id='type-id-833' size-in-bits='64' hash='2be4b57812851ab0' id='type-id-527'/>
-    <typedef-decl name='eth_dev_supported_ptypes_get_t' type-id='type-id-114' size-in-bits='64' hash='ec2af95f45252dec' id='type-id-554'/>
-    <typedef-decl name='eth_filter_ctrl_t' type-id='type-id-376' size-in-bits='64' hash='389f6ee32ea9dddf' id='type-id-597'/>
-    <typedef-decl name='eth_fw_version_get_t' type-id='type-id-348' size-in-bits='64' hash='92bead89805c8fc6' id='type-id-553'/>
-    <typedef-decl name='eth_get_dcb_info' type-id='type-id-356' size-in-bits='64' hash='443a2de8dadd0c2d' id='type-id-598'/>
-    <typedef-decl name='eth_get_eeprom_length_t' type-id='type-id-347' size-in-bits='64' hash='0a2cdf0be3fc95cf' id='type-id-592'/>
-    <typedef-decl name='eth_get_eeprom_t' type-id='type-id-354' size-in-bits='64' hash='352c6e237d4ce336' id='type-id-593'/>
-    <typedef-decl name='eth_get_module_eeprom_t' type-id='type-id-354' size-in-bits='64' hash='352c6e237d4ce336' id='type-id-596'/>
-    <typedef-decl name='eth_get_module_info_t' type-id='type-id-358' size-in-bits='64' hash='a9bbe3fa0fa942c5' id='type-id-595'/>
-    <typedef-decl name='eth_get_reg_t' type-id='type-id-355' size-in-bits='64' hash='21180f627fade3b0' id='type-id-591'/>
-    <typedef-decl name='eth_hairpin_cap_get_t' type-id='type-id-360' size-in-bits='64' hash='e29efa42bb6f5321' id='type-id-612'/>
-    <typedef-decl name='eth_is_removed_t' type-id='type-id-347' size-in-bits='64' hash='0a2cdf0be3fc95cf' id='type-id-533'/>
-    <typedef-decl name='eth_l2_tunnel_eth_type_conf_t' type-id='type-id-361' size-in-bits='64' hash='51836ad059912006' id='type-id-584'/>
-    <typedef-decl name='eth_l2_tunnel_offload_set_t' type-id='type-id-362' size-in-bits='64' hash='60a5050182b5ebc5' id='type-id-585'/>
-    <typedef-decl name='eth_link_update_t' type-id='type-id-352' size-in-bits='64' hash='9db752244daba03f' id='type-id-532'/>
-    <typedef-decl name='eth_mac_addr_add_t' type-id='type-id-374' size-in-bits='64' hash='f595a051de439a7e' id='type-id-539'/>
-    <typedef-decl name='eth_mac_addr_remove_t' type-id='type-id-834' size-in-bits='64' hash='8ef080dc9853746b' id='type-id-538'/>
-    <typedef-decl name='eth_mac_addr_set_t' type-id='type-id-372' size-in-bits='64' hash='1aecc9ef25817b76' id='type-id-540'/>
-    <typedef-decl name='eth_mirror_rule_reset_t' type-id='type-id-390' size-in-bits='64' hash='cc3d967559af16aa' id='type-id-581'/>
-    <typedef-decl name='eth_mirror_rule_set_t' type-id='type-id-363' size-in-bits='64' hash='148483717cd0aa22' id='type-id-580'/>
-    <typedef-decl name='eth_mtr_ops_get_t' type-id='type-id-391' size-in-bits='64' hash='a168b8819926be8a' id='type-id-610'/>
-    <typedef-decl name='eth_pool_ops_supported_t' type-id='type-id-349' size-in-bits='64' hash='47c9f4b7e1d41452' id='type-id-611'/>
-    <typedef-decl name='eth_promiscuous_disable_t' type-id='type-id-347' size-in-bits='64' hash='0a2cdf0be3fc95cf' id='type-id-535'/>
-    <typedef-decl name='eth_promiscuous_enable_t' type-id='type-id-347' size-in-bits='64' hash='0a2cdf0be3fc95cf' id='type-id-534'/>
-    <typedef-decl name='eth_queue_release_t' type-id='type-id-835' size-in-bits='64' hash='3c6555b15ff3c2e2' id='type-id-564'/>
-    <typedef-decl name='eth_queue_start_t' type-id='type-id-380' size-in-bits='64' hash='4f76993650f8ae4e' id='type-id-561'/>
-    <typedef-decl name='eth_queue_stats_mapping_set_t' type-id='type-id-387' size-in-bits='64' hash='d9f35580929751c0' id='type-id-548'/>
-    <typedef-decl name='eth_queue_stop_t' type-id='type-id-380' size-in-bits='64' hash='4f76993650f8ae4e' id='type-id-562'/>
-    <typedef-decl name='eth_read_clock' type-id='type-id-389' size-in-bits='64' hash='2bec1f9c2fdac2e5' id='type-id-606'/>
-    <typedef-decl name='eth_rx_burst_t' type-id='type-id-836' size-in-bits='64' hash='c716d87ddce91900' id='type-id-719'/>
-    <typedef-decl name='eth_rx_descriptor_done_t' type-id='type-id-394' size-in-bits='64' hash='a35da826464a12d6' id='type-id-566'/>
-    <typedef-decl name='eth_rx_descriptor_status_t' type-id='type-id-394' size-in-bits='64' hash='a35da826464a12d6' id='type-id-567'/>
-    <typedef-decl name='eth_rx_disable_intr_t' type-id='type-id-380' size-in-bits='64' hash='4f76993650f8ae4e' id='type-id-570'/>
-    <typedef-decl name='eth_rx_enable_intr_t' type-id='type-id-380' size-in-bits='64' hash='4f76993650f8ae4e' id='type-id-569'/>
-    <typedef-decl name='eth_rx_hairpin_queue_setup_t' type-id='type-id-384' size-in-bits='64' hash='e1f113428d1b7012' id='type-id-613'/>
-    <typedef-decl name='eth_rx_queue_count_t' type-id='type-id-837' size-in-bits='64' hash='7e320f5206800800' id='type-id-565'/>
-    <typedef-decl name='eth_rx_queue_setup_t' type-id='type-id-385' size-in-bits='64' hash='8fb21640952ff3ba' id='type-id-563'/>
-    <typedef-decl name='eth_rxq_info_get_t' type-id='type-id-838' size-in-bits='64' hash='a33980a42481d555' id='type-id-550'/>
-    <typedef-decl name='eth_set_eeprom_t' type-id='type-id-354' size-in-bits='64' hash='352c6e237d4ce336' id='type-id-594'/>
-    <typedef-decl name='eth_set_mc_addr_list_t' type-id='type-id-373' size-in-bits='64' hash='695b4a03e6526a86' id='type-id-541'/>
-    <typedef-decl name='eth_set_queue_rate_limit_t' type-id='type-id-383' size-in-bits='64' hash='18892e809312e0f9' id='type-id-586'/>
-    <typedef-decl name='eth_stats_get_t' type-id='type-id-367' size-in-bits='64' hash='f314cc06883bf1c4' id='type-id-543'/>
-    <typedef-decl name='eth_stats_reset_t' type-id='type-id-347' size-in-bits='64' hash='0a2cdf0be3fc95cf' id='type-id-544'/>
-    <typedef-decl name='eth_timesync_adjust_time' type-id='type-id-353' size-in-bits='64' hash='4f1201e44534e93f' id='type-id-603'/>
-    <typedef-decl name='eth_timesync_disable_t' type-id='type-id-347' size-in-bits='64' hash='0a2cdf0be3fc95cf' id='type-id-600'/>
-    <typedef-decl name='eth_timesync_enable_t' type-id='type-id-347' size-in-bits='64' hash='0a2cdf0be3fc95cf' id='type-id-599'/>
-    <typedef-decl name='eth_timesync_read_rx_timestamp_t' type-id='type-id-379' size-in-bits='64' hash='ce7bf3211de33f46' id='type-id-601'/>
-    <typedef-decl name='eth_timesync_read_time' type-id='type-id-378' size-in-bits='64' hash='72c49809f4375132' id='type-id-604'/>
-    <typedef-decl name='eth_timesync_read_tx_timestamp_t' type-id='type-id-378' size-in-bits='64' hash='72c49809f4375132' id='type-id-602'/>
-    <typedef-decl name='eth_timesync_write_time' type-id='type-id-350' size-in-bits='64' hash='868c94540859c94a' id='type-id-605'/>
-    <typedef-decl name='eth_tm_ops_get_t' type-id='type-id-391' size-in-bits='64' hash='a168b8819926be8a' id='type-id-609'/>
-    <typedef-decl name='eth_tx_burst_t' type-id='type-id-836' size-in-bits='64' hash='c716d87ddce91900' id='type-id-720'/>
-    <typedef-decl name='eth_tx_descriptor_status_t' type-id='type-id-394' size-in-bits='64' hash='a35da826464a12d6' id='type-id-568'/>
-    <typedef-decl name='eth_tx_done_cleanup_t' type-id='type-id-395' size-in-bits='64' hash='3e59167b8f3be287' id='type-id-572'/>
-    <typedef-decl name='eth_tx_hairpin_queue_setup_t' type-id='type-id-384' size-in-bits='64' hash='e1f113428d1b7012' id='type-id-614'/>
-    <typedef-decl name='eth_tx_prep_t' type-id='type-id-836' size-in-bits='64' hash='c716d87ddce91900' id='type-id-721'/>
-    <typedef-decl name='eth_tx_queue_setup_t' type-id='type-id-386' size-in-bits='64' hash='60e63d04e76b649b' id='type-id-571'/>
-    <typedef-decl name='eth_txq_info_get_t' type-id='type-id-839' size-in-bits='64' hash='2c9d480ce25a521f' id='type-id-551'/>
-    <typedef-decl name='eth_uc_all_hash_table_set_t' type-id='type-id-390' size-in-bits='64' hash='cc3d967559af16aa' id='type-id-579'/>
-    <typedef-decl name='eth_uc_hash_table_set_t' type-id='type-id-375' size-in-bits='64' hash='4041cc41d527b370' id='type-id-578'/>
-    <typedef-decl name='eth_udp_tunnel_port_add_t' type-id='type-id-368' size-in-bits='64' hash='03ea48260e862bf5' id='type-id-582'/>
-    <typedef-decl name='eth_udp_tunnel_port_del_t' type-id='type-id-368' size-in-bits='64' hash='03ea48260e862bf5' id='type-id-583'/>
-    <typedef-decl name='eth_xstats_get_by_id_t' type-id='type-id-351' size-in-bits='64' hash='a8e24f9a9c733874' id='type-id-607'/>
-    <typedef-decl name='eth_xstats_get_names_by_id_t' type-id='type-id-370' size-in-bits='64' hash='1a1a58993c101a70' id='type-id-608'/>
-    <typedef-decl name='eth_xstats_get_names_t' type-id='type-id-371' size-in-bits='64' hash='c24c578d89e5b886' id='type-id-547'/>
-    <typedef-decl name='eth_xstats_get_t' type-id='type-id-369' size-in-bits='64' hash='6041453963260ae2' id='type-id-545'/>
-    <typedef-decl name='eth_xstats_reset_t' type-id='type-id-347' size-in-bits='64' hash='0a2cdf0be3fc95cf' id='type-id-546'/>
-    <typedef-decl name='flow_ctrl_get_t' type-id='type-id-359' size-in-bits='64' hash='3fde60320e8d9ff1' id='type-id-575'/>
-    <typedef-decl name='flow_ctrl_set_t' type-id='type-id-359' size-in-bits='64' hash='3fde60320e8d9ff1' id='type-id-576'/>
-    <typedef-decl name='int16_t' type-id='type-id-824' size-in-bits='16' hash='2e5e87528799cdbb' id='type-id-840'/>
-    <typedef-decl name='int32_t' type-id='type-id-825' size-in-bits='32' hash='09d17c08f594edc7' id='type-id-767'/>
-    <typedef-decl name='int64_t' type-id='type-id-826' size-in-bits='64' hash='8aa1e1a2ab2c2d3e' id='type-id-209'/>
-    <typedef-decl name='mtu_set_t' type-id='type-id-380' size-in-bits='64' hash='4f76993650f8ae4e' id='type-id-542'/>
-    <typedef-decl name='phys_addr_t' type-id='type-id-115' size-in-bits='64' hash='da551c1631705dfe' id='type-id-841'/>
-    <typedef-decl name='priority_flow_ctrl_set_t' type-id='type-id-364' size-in-bits='64' hash='cdf01885978d31e2' id='type-id-577'/>
-    <typedef-decl name='qman_cb_cgr' type-id='type-id-842' size-in-bits='64' hash='c39d09dfa1f9e106' id='type-id-670'/>
-    <typedef-decl name='qman_cb_dc_ern' type-id='type-id-843' size-in-bits='64' hash='875cd730c8167bea' id='type-id-677'/>
-    <typedef-decl name='qman_cb_dqrr' type-id='type-id-411' size-in-bits='64' hash='2cc9239cf0ff71b9' id='type-id-844'/>
-    <typedef-decl name='qman_cb_mr' type-id='type-id-845' size-in-bits='64' hash='7b7810e2bc970eaa' id='type-id-676'/>
-    <typedef-decl name='qman_dpdk_cb_dqrr' type-id='type-id-412' size-in-bits='64' hash='12a3cc92369bc2fe' id='type-id-846'/>
-    <typedef-decl name='qman_dpdk_cb_prepare' type-id='type-id-847' size-in-bits='64' hash='04e0eaba5a53bbf0' id='type-id-675'/>
-    <typedef-decl name='qman_dpdk_pull_cb_dqrr' type-id='type-id-848' size-in-bits='64' hash='6b14e41ff5991503' id='type-id-849'/>
-    <typedef-decl name='reta_query_t' type-id='type-id-366' size-in-bits='64' hash='16366ef5da6363a4' id='type-id-590'/>
-    <typedef-decl name='reta_update_t' type-id='type-id-366' size-in-bits='64' hash='16366ef5da6363a4' id='type-id-589'/>
-    <typedef-decl name='rss_hash_conf_get_t' type-id='type-id-365' size-in-bits='64' hash='0780726895609410' id='type-id-588'/>
-    <typedef-decl name='rss_hash_update_t' type-id='type-id-365' size-in-bits='64' hash='0780726895609410' id='type-id-587'/>
-    <typedef-decl name='rte_atomic16_t' type-id='type-id-820' size-in-bits='16' hash='6368587aa939fefa' id='type-id-764'/>
-    <typedef-decl name='rte_bus_find_device_t' type-id='type-id-431' size-in-bits='64' hash='8861b4b7585b1b1c' id='type-id-681'/>
-    <typedef-decl name='rte_bus_get_iommu_class_t' type-id='type-id-479' size-in-bits='64' hash='da4e3a44f150a86b' id='type-id-688'/>
-    <typedef-decl name='rte_bus_hot_unplug_handler_t' type-id='type-id-343' size-in-bits='64' hash='64ee05fa992db2b7' id='type-id-690'/>
-    <typedef-decl name='rte_bus_parse_t' type-id='type-id-341' size-in-bits='64' hash='f4004ede390ffe8c' id='type-id-684'/>
-    <typedef-decl name='rte_bus_plug_t' type-id='type-id-343' size-in-bits='64' hash='64ee05fa992db2b7' id='type-id-682'/>
-    <typedef-decl name='rte_bus_probe_t' type-id='type-id-392' size-in-bits='64' hash='f79c82d44514ca2f' id='type-id-680'/>
-    <typedef-decl name='rte_bus_scan_t' type-id='type-id-392' size-in-bits='64' hash='f79c82d44514ca2f' id='type-id-679'/>
-    <typedef-decl name='rte_bus_sigbus_handler_t' type-id='type-id-393' size-in-bits='64' hash='8075f89e52b893d5' id='type-id-691'/>
-    <typedef-decl name='rte_bus_unplug_t' type-id='type-id-343' size-in-bits='64' hash='64ee05fa992db2b7' id='type-id-683'/>
-    <typedef-decl name='rte_dev_cmp_t' type-id='type-id-342' size-in-bits='64' hash='165e02a8e2d4f22f' id='type-id-289'/>
-    <typedef-decl name='rte_dev_dma_map_t' type-id='type-id-344' size-in-bits='64' hash='1a207885d32b679b' id='type-id-685'/>
-    <typedef-decl name='rte_dev_dma_unmap_t' type-id='type-id-344' size-in-bits='64' hash='1a207885d32b679b' id='type-id-686'/>
-    <typedef-decl name='rte_dev_iterate_t' type-id='type-id-850' size-in-bits='64' hash='7925378b892b6b24' id='type-id-689'/>
-    <typedef-decl name='rte_dpaa_probe_t' type-id='type-id-346' size-in-bits='64' hash='e7941710fb3d3cfe' id='type-id-700'/>
-    <typedef-decl name='rte_dpaa_remove_t' type-id='type-id-345' size-in-bits='64' hash='39a60fabf0d018a5' id='type-id-701'/>
-    <typedef-decl name='rte_intr_event_cb_t' type-id='type-id-851' size-in-bits='64' hash='52be52597dfc8eae' id='type-id-704'/>
-    <typedef-decl name='rte_iova_t' type-id='type-id-115' size-in-bits='64' hash='da551c1631705dfe' id='type-id-852'/>
-    <typedef-decl name='rte_mbuf_extbuf_free_callback_t' type-id='type-id-853' size-in-bits='64' hash='c559852600f1c7c8' id='type-id-763'/>
-    <typedef-decl name='rte_mempool_memchunk_free_cb_t' type-id='type-id-331' size-in-bits='64' hash='353c4ea6cf9f67de' id='type-id-487'/>
-    <typedef-decl name='rte_rx_callback_fn' type-id='type-id-854' size-in-bits='64' hash='cd19c62fe508ef7c' id='type-id-855'/>
-    <typedef-decl name='rte_spinlock_t' type-id='type-id-818' size-in-bits='32' hash='d68073f625baeb9e' id='type-id-673'/>
-    <typedef-decl name='rte_tx_callback_fn' type-id='type-id-856' size-in-bits='64' hash='f3c59045602a6a82' id='type-id-857'/>
-    <typedef-decl name='size_t' type-id='type-id-520' size-in-bits='64' hash='da551c1631705dfe' id='type-id-195'/>
-    <typedef-decl name='u16' type-id='type-id-235' size-in-bits='16' hash='e3133321c12b1361' id='type-id-167'/>
-    <typedef-decl name='u32' type-id='type-id-110' size-in-bits='32' hash='e66b43f97c38e87a' id='type-id-158'/>
-    <typedef-decl name='u64' type-id='type-id-115' size-in-bits='64' hash='da551c1631705dfe' id='type-id-795'/>
-    <typedef-decl name='u8' type-id='type-id-171' size-in-bits='8' hash='6ebac62b3366db68' id='type-id-157'/>
-    <typedef-decl name='uint16_t' type-id='type-id-828' size-in-bits='16' hash='e3133321c12b1361' id='type-id-235'/>
-    <typedef-decl name='uint32_t' type-id='type-id-829' size-in-bits='32' hash='e66b43f97c38e87a' id='type-id-110'/>
-    <typedef-decl name='uint64_t' type-id='type-id-830' size-in-bits='64' hash='da551c1631705dfe' id='type-id-115'/>
-    <typedef-decl name='uint8_t' type-id='type-id-832' size-in-bits='8' hash='6ebac62b3366db68' id='type-id-171'/>
-    <typedef-decl name='vlan_filter_set_t' type-id='type-id-381' size-in-bits='64' hash='2911aadea1bdde0a' id='type-id-556'/>
-    <typedef-decl name='vlan_offload_set_t' type-id='type-id-352' size-in-bits='64' hash='9db752244daba03f' id='type-id-559'/>
-    <typedef-decl name='vlan_pvid_set_t' type-id='type-id-381' size-in-bits='64' hash='2911aadea1bdde0a' id='type-id-560'/>
-    <typedef-decl name='vlan_strip_queue_set_t' type-id='type-id-858' size-in-bits='64' hash='03089dd113426a30' id='type-id-558'/>
-    <typedef-decl name='vlan_tpid_set_t' type-id='type-id-377' size-in-bits='64' hash='ff492276a3f53b79' id='type-id-557'/>
+    <typedef-decl name='MARKER' type-id='type-id-822' hash='3c94feb56bf0d4ba' id='type-id-755'/>
+    <typedef-decl name='MARKER64' type-id='type-id-823' hash='458db45390dc1cce' id='type-id-757'/>
+    <typedef-decl name='__int16_t' type-id='type-id-494' size-in-bits='16' hash='bfcf8c53a7e22b05' id='type-id-824'/>
+    <typedef-decl name='__int32_t' type-id='type-id-159' size-in-bits='32' hash='f2b82e49c8af56cd' id='type-id-825'/>
+    <typedef-decl name='__int64_t' type-id='type-id-399' size-in-bits='64' hash='567f7af3a2d00f27' id='type-id-826'/>
+    <typedef-decl name='__syscall_slong_t' type-id='type-id-399' size-in-bits='64' hash='567f7af3a2d00f27' id='type-id-779'/>
+    <typedef-decl name='__time_t' type-id='type-id-399' size-in-bits='64' hash='567f7af3a2d00f27' id='type-id-778'/>
+    <typedef-decl name='__uint16_t' type-id='type-id-827' size-in-bits='16' hash='012767b19cd3b7f4' id='type-id-828'/>
+    <typedef-decl name='__uint32_t' type-id='type-id-206' size-in-bits='32' hash='01b265816e53dd71' id='type-id-829'/>
+    <typedef-decl name='__uint64_t' type-id='type-id-520' size-in-bits='64' hash='8b230c0ebd12548b' id='type-id-830'/>
+    <typedef-decl name='__uint8_t' type-id='type-id-831' size-in-bits='8' hash='7948234ee9eb1041' id='type-id-832'/>
+    <typedef-decl name='eth_allmulticast_disable_t' type-id='type-id-347' size-in-bits='64' hash='955fafc76493f895' id='type-id-537'/>
+    <typedef-decl name='eth_allmulticast_enable_t' type-id='type-id-347' size-in-bits='64' hash='955fafc76493f895' id='type-id-536'/>
+    <typedef-decl name='eth_burst_mode_get_t' type-id='type-id-382' size-in-bits='64' hash='4228e05714e1da49' id='type-id-552'/>
+    <typedef-decl name='eth_dev_close_t' type-id='type-id-833' size-in-bits='64' hash='82478a070f185b9c' id='type-id-530'/>
+    <typedef-decl name='eth_dev_configure_t' type-id='type-id-347' size-in-bits='64' hash='955fafc76493f895' id='type-id-525'/>
+    <typedef-decl name='eth_dev_infos_get_t' type-id='type-id-357' size-in-bits='64' hash='7a7b6c905d49a7a5' id='type-id-549'/>
+    <typedef-decl name='eth_dev_led_off_t' type-id='type-id-347' size-in-bits='64' hash='955fafc76493f895' id='type-id-574'/>
+    <typedef-decl name='eth_dev_led_on_t' type-id='type-id-347' size-in-bits='64' hash='955fafc76493f895' id='type-id-573'/>
+    <typedef-decl name='eth_dev_ptypes_set_t' type-id='type-id-388' size-in-bits='64' hash='8c205200e1345dc9' id='type-id-555'/>
+    <typedef-decl name='eth_dev_reset_t' type-id='type-id-347' size-in-bits='64' hash='955fafc76493f895' id='type-id-531'/>
+    <typedef-decl name='eth_dev_set_link_down_t' type-id='type-id-347' size-in-bits='64' hash='955fafc76493f895' id='type-id-529'/>
+    <typedef-decl name='eth_dev_set_link_up_t' type-id='type-id-347' size-in-bits='64' hash='955fafc76493f895' id='type-id-528'/>
+    <typedef-decl name='eth_dev_start_t' type-id='type-id-347' size-in-bits='64' hash='955fafc76493f895' id='type-id-526'/>
+    <typedef-decl name='eth_dev_stop_t' type-id='type-id-833' size-in-bits='64' hash='82478a070f185b9c' id='type-id-527'/>
+    <typedef-decl name='eth_dev_supported_ptypes_get_t' type-id='type-id-114' size-in-bits='64' hash='8a67dc26507ce45c' id='type-id-554'/>
+    <typedef-decl name='eth_filter_ctrl_t' type-id='type-id-376' size-in-bits='64' hash='9f143d06dc18648d' id='type-id-597'/>
+    <typedef-decl name='eth_fw_version_get_t' type-id='type-id-348' size-in-bits='64' hash='9c0734c62376602e' id='type-id-553'/>
+    <typedef-decl name='eth_get_dcb_info' type-id='type-id-356' size-in-bits='64' hash='e4b672ed18d355c6' id='type-id-598'/>
+    <typedef-decl name='eth_get_eeprom_length_t' type-id='type-id-347' size-in-bits='64' hash='955fafc76493f895' id='type-id-592'/>
+    <typedef-decl name='eth_get_eeprom_t' type-id='type-id-354' size-in-bits='64' hash='0dd64d13c89ea79c' id='type-id-593'/>
+    <typedef-decl name='eth_get_module_eeprom_t' type-id='type-id-354' size-in-bits='64' hash='0dd64d13c89ea79c' id='type-id-596'/>
+    <typedef-decl name='eth_get_module_info_t' type-id='type-id-358' size-in-bits='64' hash='5bed773473030e11' id='type-id-595'/>
+    <typedef-decl name='eth_get_reg_t' type-id='type-id-355' size-in-bits='64' hash='d1522fef1d7eebdf' id='type-id-591'/>
+    <typedef-decl name='eth_hairpin_cap_get_t' type-id='type-id-360' size-in-bits='64' hash='541a127c75835515' id='type-id-612'/>
+    <typedef-decl name='eth_is_removed_t' type-id='type-id-347' size-in-bits='64' hash='955fafc76493f895' id='type-id-533'/>
+    <typedef-decl name='eth_l2_tunnel_eth_type_conf_t' type-id='type-id-361' size-in-bits='64' hash='605939158b3eaeaa' id='type-id-584'/>
+    <typedef-decl name='eth_l2_tunnel_offload_set_t' type-id='type-id-362' size-in-bits='64' hash='4f89c9029f730e48' id='type-id-585'/>
+    <typedef-decl name='eth_link_update_t' type-id='type-id-352' size-in-bits='64' hash='645adb0c7e63bc83' id='type-id-532'/>
+    <typedef-decl name='eth_mac_addr_add_t' type-id='type-id-374' size-in-bits='64' hash='f37df288154a20cd' id='type-id-539'/>
+    <typedef-decl name='eth_mac_addr_remove_t' type-id='type-id-834' size-in-bits='64' hash='6a741dd9e6e5957a' id='type-id-538'/>
+    <typedef-decl name='eth_mac_addr_set_t' type-id='type-id-372' size-in-bits='64' hash='94cc2d1d197c98d7' id='type-id-540'/>
+    <typedef-decl name='eth_mirror_rule_reset_t' type-id='type-id-390' size-in-bits='64' hash='4712eefe2be3a573' id='type-id-581'/>
+    <typedef-decl name='eth_mirror_rule_set_t' type-id='type-id-363' size-in-bits='64' hash='7434e607d026e92f' id='type-id-580'/>
+    <typedef-decl name='eth_mtr_ops_get_t' type-id='type-id-391' size-in-bits='64' hash='efe5b2db1e6ea798' id='type-id-610'/>
+    <typedef-decl name='eth_pool_ops_supported_t' type-id='type-id-349' size-in-bits='64' hash='6d37bf7fa0151904' id='type-id-611'/>
+    <typedef-decl name='eth_promiscuous_disable_t' type-id='type-id-347' size-in-bits='64' hash='955fafc76493f895' id='type-id-535'/>
+    <typedef-decl name='eth_promiscuous_enable_t' type-id='type-id-347' size-in-bits='64' hash='955fafc76493f895' id='type-id-534'/>
+    <typedef-decl name='eth_queue_release_t' type-id='type-id-835' size-in-bits='64' hash='cf5d5995059acedb' id='type-id-564'/>
+    <typedef-decl name='eth_queue_start_t' type-id='type-id-380' size-in-bits='64' hash='c3ae27cad7f6f324' id='type-id-561'/>
+    <typedef-decl name='eth_queue_stats_mapping_set_t' type-id='type-id-387' size-in-bits='64' hash='d872df47d1a39197' id='type-id-548'/>
+    <typedef-decl name='eth_queue_stop_t' type-id='type-id-380' size-in-bits='64' hash='c3ae27cad7f6f324' id='type-id-562'/>
+    <typedef-decl name='eth_read_clock' type-id='type-id-389' size-in-bits='64' hash='1816458f76d431da' id='type-id-606'/>
+    <typedef-decl name='eth_rx_burst_t' type-id='type-id-836' size-in-bits='64' hash='81ff111069f24a02' id='type-id-719'/>
+    <typedef-decl name='eth_rx_descriptor_done_t' type-id='type-id-394' size-in-bits='64' hash='cb0aea5d3730fce1' id='type-id-566'/>
+    <typedef-decl name='eth_rx_descriptor_status_t' type-id='type-id-394' size-in-bits='64' hash='cb0aea5d3730fce1' id='type-id-567'/>
+    <typedef-decl name='eth_rx_disable_intr_t' type-id='type-id-380' size-in-bits='64' hash='c3ae27cad7f6f324' id='type-id-570'/>
+    <typedef-decl name='eth_rx_enable_intr_t' type-id='type-id-380' size-in-bits='64' hash='c3ae27cad7f6f324' id='type-id-569'/>
+    <typedef-decl name='eth_rx_hairpin_queue_setup_t' type-id='type-id-384' size-in-bits='64' hash='2f4bbaad077ad352' id='type-id-613'/>
+    <typedef-decl name='eth_rx_queue_count_t' type-id='type-id-837' size-in-bits='64' hash='995132ba3e1072eb' id='type-id-565'/>
+    <typedef-decl name='eth_rx_queue_setup_t' type-id='type-id-385' size-in-bits='64' hash='cd29ae611708d9ff' id='type-id-563'/>
+    <typedef-decl name='eth_rxq_info_get_t' type-id='type-id-838' size-in-bits='64' hash='5d89e712e79fe25d' id='type-id-550'/>
+    <typedef-decl name='eth_set_eeprom_t' type-id='type-id-354' size-in-bits='64' hash='0dd64d13c89ea79c' id='type-id-594'/>
+    <typedef-decl name='eth_set_mc_addr_list_t' type-id='type-id-373' size-in-bits='64' hash='2a657cda9277d2a9' id='type-id-541'/>
+    <typedef-decl name='eth_set_queue_rate_limit_t' type-id='type-id-383' size-in-bits='64' hash='e245f53bcac44dd6' id='type-id-586'/>
+    <typedef-decl name='eth_stats_get_t' type-id='type-id-367' size-in-bits='64' hash='a16bcddb4a487d1b' id='type-id-543'/>
+    <typedef-decl name='eth_stats_reset_t' type-id='type-id-347' size-in-bits='64' hash='955fafc76493f895' id='type-id-544'/>
+    <typedef-decl name='eth_timesync_adjust_time' type-id='type-id-353' size-in-bits='64' hash='f50a5359a1907960' id='type-id-603'/>
+    <typedef-decl name='eth_timesync_disable_t' type-id='type-id-347' size-in-bits='64' hash='955fafc76493f895' id='type-id-600'/>
+    <typedef-decl name='eth_timesync_enable_t' type-id='type-id-347' size-in-bits='64' hash='955fafc76493f895' id='type-id-599'/>
+    <typedef-decl name='eth_timesync_read_rx_timestamp_t' type-id='type-id-379' size-in-bits='64' hash='5d1a9fa303babcb9' id='type-id-601'/>
+    <typedef-decl name='eth_timesync_read_time' type-id='type-id-378' size-in-bits='64' hash='fde24f9a4816587c' id='type-id-604'/>
+    <typedef-decl name='eth_timesync_read_tx_timestamp_t' type-id='type-id-378' size-in-bits='64' hash='fde24f9a4816587c' id='type-id-602'/>
+    <typedef-decl name='eth_timesync_write_time' type-id='type-id-350' size-in-bits='64' hash='58ad095b1d32d74b' id='type-id-605'/>
+    <typedef-decl name='eth_tm_ops_get_t' type-id='type-id-391' size-in-bits='64' hash='efe5b2db1e6ea798' id='type-id-609'/>
+    <typedef-decl name='eth_tx_burst_t' type-id='type-id-836' size-in-bits='64' hash='81ff111069f24a02' id='type-id-720'/>
+    <typedef-decl name='eth_tx_descriptor_status_t' type-id='type-id-394' size-in-bits='64' hash='cb0aea5d3730fce1' id='type-id-568'/>
+    <typedef-decl name='eth_tx_done_cleanup_t' type-id='type-id-395' size-in-bits='64' hash='90fe956ee4036b49' id='type-id-572'/>
+    <typedef-decl name='eth_tx_hairpin_queue_setup_t' type-id='type-id-384' size-in-bits='64' hash='2f4bbaad077ad352' id='type-id-614'/>
+    <typedef-decl name='eth_tx_prep_t' type-id='type-id-836' size-in-bits='64' hash='81ff111069f24a02' id='type-id-721'/>
+    <typedef-decl name='eth_tx_queue_setup_t' type-id='type-id-386' size-in-bits='64' hash='29c3f5edef69f4e4' id='type-id-571'/>
+    <typedef-decl name='eth_txq_info_get_t' type-id='type-id-839' size-in-bits='64' hash='ec6c84ac7e6727cb' id='type-id-551'/>
+    <typedef-decl name='eth_uc_all_hash_table_set_t' type-id='type-id-390' size-in-bits='64' hash='4712eefe2be3a573' id='type-id-579'/>
+    <typedef-decl name='eth_uc_hash_table_set_t' type-id='type-id-375' size-in-bits='64' hash='10e87740158e6914' id='type-id-578'/>
+    <typedef-decl name='eth_udp_tunnel_port_add_t' type-id='type-id-368' size-in-bits='64' hash='d59819abbc90621a' id='type-id-582'/>
+    <typedef-decl name='eth_udp_tunnel_port_del_t' type-id='type-id-368' size-in-bits='64' hash='d59819abbc90621a' id='type-id-583'/>
+    <typedef-decl name='eth_xstats_get_by_id_t' type-id='type-id-351' size-in-bits='64' hash='2f5783ba5ffd12ca' id='type-id-607'/>
+    <typedef-decl name='eth_xstats_get_names_by_id_t' type-id='type-id-370' size-in-bits='64' hash='69a3a4b8e2764dc1' id='type-id-608'/>
+    <typedef-decl name='eth_xstats_get_names_t' type-id='type-id-371' size-in-bits='64' hash='5392fb27c8012d9a' id='type-id-547'/>
+    <typedef-decl name='eth_xstats_get_t' type-id='type-id-369' size-in-bits='64' hash='fae8e2ff78473073' id='type-id-545'/>
+    <typedef-decl name='eth_xstats_reset_t' type-id='type-id-347' size-in-bits='64' hash='955fafc76493f895' id='type-id-546'/>
+    <typedef-decl name='flow_ctrl_get_t' type-id='type-id-359' size-in-bits='64' hash='1be87d423b4ec410' id='type-id-575'/>
+    <typedef-decl name='flow_ctrl_set_t' type-id='type-id-359' size-in-bits='64' hash='1be87d423b4ec410' id='type-id-576'/>
+    <typedef-decl name='int16_t' type-id='type-id-824' size-in-bits='16' hash='bfcf8c53a7e22b05' id='type-id-840'/>
+    <typedef-decl name='int32_t' type-id='type-id-825' size-in-bits='32' hash='f2b82e49c8af56cd' id='type-id-767'/>
+    <typedef-decl name='int64_t' type-id='type-id-826' size-in-bits='64' hash='567f7af3a2d00f27' id='type-id-209'/>
+    <typedef-decl name='mtu_set_t' type-id='type-id-380' size-in-bits='64' hash='c3ae27cad7f6f324' id='type-id-542'/>
+    <typedef-decl name='phys_addr_t' type-id='type-id-115' size-in-bits='64' hash='8b230c0ebd12548b' id='type-id-841'/>
+    <typedef-decl name='priority_flow_ctrl_set_t' type-id='type-id-364' size-in-bits='64' hash='9ec1f7e52acc889c' id='type-id-577'/>
+    <typedef-decl name='qman_cb_cgr' type-id='type-id-842' size-in-bits='64' hash='53d77ffa8081e48b' id='type-id-670'/>
+    <typedef-decl name='qman_cb_dc_ern' type-id='type-id-843' size-in-bits='64' hash='e6d9449221737d12' id='type-id-677'/>
+    <typedef-decl name='qman_cb_dqrr' type-id='type-id-411' size-in-bits='64' hash='e6b744828c75f0bc' id='type-id-844'/>
+    <typedef-decl name='qman_cb_mr' type-id='type-id-845' size-in-bits='64' hash='395224e1217ffc45' id='type-id-676'/>
+    <typedef-decl name='qman_dpdk_cb_dqrr' type-id='type-id-412' size-in-bits='64' hash='87fcb1396157e9ef' id='type-id-846'/>
+    <typedef-decl name='qman_dpdk_cb_prepare' type-id='type-id-847' size-in-bits='64' hash='193b9c85977e9a8e' id='type-id-675'/>
+    <typedef-decl name='qman_dpdk_pull_cb_dqrr' type-id='type-id-848' size-in-bits='64' hash='ee6e873819be971c' id='type-id-849'/>
+    <typedef-decl name='reta_query_t' type-id='type-id-366' size-in-bits='64' hash='e442ee3eaa684593' id='type-id-590'/>
+    <typedef-decl name='reta_update_t' type-id='type-id-366' size-in-bits='64' hash='e442ee3eaa684593' id='type-id-589'/>
+    <typedef-decl name='rss_hash_conf_get_t' type-id='type-id-365' size-in-bits='64' hash='0ce75c14216fb04e' id='type-id-588'/>
+    <typedef-decl name='rss_hash_update_t' type-id='type-id-365' size-in-bits='64' hash='0ce75c14216fb04e' id='type-id-587'/>
+    <typedef-decl name='rte_atomic16_t' type-id='type-id-820' size-in-bits='16' hash='65ab3fe84b31ec56' id='type-id-764'/>
+    <typedef-decl name='rte_bus_find_device_t' type-id='type-id-431' size-in-bits='64' hash='e47b28fb211463b6' id='type-id-681'/>
+    <typedef-decl name='rte_bus_get_iommu_class_t' type-id='type-id-479' size-in-bits='64' hash='2910af941b914c43' id='type-id-688'/>
+    <typedef-decl name='rte_bus_hot_unplug_handler_t' type-id='type-id-343' size-in-bits='64' hash='7fb15fc8f1b68853' id='type-id-690'/>
+    <typedef-decl name='rte_bus_parse_t' type-id='type-id-341' size-in-bits='64' hash='8429098b66847052' id='type-id-684'/>
+    <typedef-decl name='rte_bus_plug_t' type-id='type-id-343' size-in-bits='64' hash='7fb15fc8f1b68853' id='type-id-682'/>
+    <typedef-decl name='rte_bus_probe_t' type-id='type-id-392' size-in-bits='64' hash='761781c10509e4d4' id='type-id-680'/>
+    <typedef-decl name='rte_bus_scan_t' type-id='type-id-392' size-in-bits='64' hash='761781c10509e4d4' id='type-id-679'/>
+    <typedef-decl name='rte_bus_sigbus_handler_t' type-id='type-id-393' size-in-bits='64' hash='8945d8384c995b59' id='type-id-691'/>
+    <typedef-decl name='rte_bus_unplug_t' type-id='type-id-343' size-in-bits='64' hash='7fb15fc8f1b68853' id='type-id-683'/>
+    <typedef-decl name='rte_dev_cmp_t' type-id='type-id-342' size-in-bits='64' hash='8e57b52b98bc67be' id='type-id-289'/>
+    <typedef-decl name='rte_dev_dma_map_t' type-id='type-id-344' size-in-bits='64' hash='78dac59907b78d78' id='type-id-685'/>
+    <typedef-decl name='rte_dev_dma_unmap_t' type-id='type-id-344' size-in-bits='64' hash='78dac59907b78d78' id='type-id-686'/>
+    <typedef-decl name='rte_dev_iterate_t' type-id='type-id-850' size-in-bits='64' hash='57b095c6dc892b5c' id='type-id-689'/>
+    <typedef-decl name='rte_dpaa_probe_t' type-id='type-id-346' size-in-bits='64' hash='73b978cbe4c4ed9f' id='type-id-700'/>
+    <typedef-decl name='rte_dpaa_remove_t' type-id='type-id-345' size-in-bits='64' hash='40520c71208fdb81' id='type-id-701'/>
+    <typedef-decl name='rte_intr_event_cb_t' type-id='type-id-851' size-in-bits='64' hash='65fd4388cc7d3323' id='type-id-704'/>
+    <typedef-decl name='rte_iova_t' type-id='type-id-115' size-in-bits='64' hash='8b230c0ebd12548b' id='type-id-852'/>
+    <typedef-decl name='rte_mbuf_extbuf_free_callback_t' type-id='type-id-853' size-in-bits='64' hash='21d4fa73e6c6f741' id='type-id-763'/>
+    <typedef-decl name='rte_mempool_memchunk_free_cb_t' type-id='type-id-331' size-in-bits='64' hash='7f32ffea222edbe7' id='type-id-487'/>
+    <typedef-decl name='rte_rx_callback_fn' type-id='type-id-854' size-in-bits='64' hash='37eb5969fa1706e0' id='type-id-855'/>
+    <typedef-decl name='rte_spinlock_t' type-id='type-id-818' size-in-bits='32' hash='df7c237d84322be7' id='type-id-673'/>
+    <typedef-decl name='rte_tx_callback_fn' type-id='type-id-856' size-in-bits='64' hash='7efb5a5c1dcd6da5' id='type-id-857'/>
+    <typedef-decl name='size_t' type-id='type-id-520' size-in-bits='64' hash='8b230c0ebd12548b' id='type-id-195'/>
+    <typedef-decl name='u16' type-id='type-id-235' size-in-bits='16' hash='012767b19cd3b7f4' id='type-id-167'/>
+    <typedef-decl name='u32' type-id='type-id-110' size-in-bits='32' hash='01b265816e53dd71' id='type-id-158'/>
+    <typedef-decl name='u64' type-id='type-id-115' size-in-bits='64' hash='8b230c0ebd12548b' id='type-id-795'/>
+    <typedef-decl name='u8' type-id='type-id-171' size-in-bits='8' hash='7948234ee9eb1041' id='type-id-157'/>
+    <typedef-decl name='uint16_t' type-id='type-id-828' size-in-bits='16' hash='012767b19cd3b7f4' id='type-id-235'/>
+    <typedef-decl name='uint32_t' type-id='type-id-829' size-in-bits='32' hash='01b265816e53dd71' id='type-id-110'/>
+    <typedef-decl name='uint64_t' type-id='type-id-830' size-in-bits='64' hash='8b230c0ebd12548b' id='type-id-115'/>
+    <typedef-decl name='uint8_t' type-id='type-id-832' size-in-bits='8' hash='7948234ee9eb1041' id='type-id-171'/>
+    <typedef-decl name='vlan_filter_set_t' type-id='type-id-381' size-in-bits='64' hash='17c9cf5666fc9e7b' id='type-id-556'/>
+    <typedef-decl name='vlan_offload_set_t' type-id='type-id-352' size-in-bits='64' hash='645adb0c7e63bc83' id='type-id-559'/>
+    <typedef-decl name='vlan_pvid_set_t' type-id='type-id-381' size-in-bits='64' hash='17c9cf5666fc9e7b' id='type-id-560'/>
+    <typedef-decl name='vlan_strip_queue_set_t' type-id='type-id-858' size-in-bits='64' hash='61402b58bfb915a7' id='type-id-558'/>
+    <typedef-decl name='vlan_tpid_set_t' type-id='type-id-377' size-in-bits='64' hash='5bdfe742d8b85cd1' id='type-id-557'/>
     <pointer-type-def type-id='type-id-158' size-in-bits='64' hash='f4f2633fef2da92e' id='type-id-180'/>
     <array-type-def dimensions='1' type-id='type-id-158' size-in-bits='64' hash='6973a2069bbac27e' id='type-id-518'>
       <subrange length='2' lower-bound='0' upper-bound='1' type-id='type-id-1' size-in-bits='64' is-anonymous='yes' hash='95f31efc53154467' id='type-id-11'/>
@@ -5490,8 +5490,8 @@
       <subrange length='unknown' lower-bound='0' upper-bound='0' type-id='type-id-1' size-in-bits='64' is-anonymous='yes' hash='eba0a2b392137dcb' id='type-id-28'/>
     </array-type-def>
     <qualified-type-def type-id='type-id-159' volatile='yes' hash='dfb64ca9a4fa370c' id='type-id-819'/>
-    <qualified-type-def type-id='type-id-840' volatile='yes' hash='f23b37106577661a' id='type-id-821'/>
-    <qualified-type-def type-id='type-id-110' volatile='yes' hash='918cbd9b46c7cac7' id='type-id-705'/>
+    <qualified-type-def type-id='type-id-840' volatile='yes' hash='0e8f3ee1b5e09876' id='type-id-821'/>
+    <qualified-type-def type-id='type-id-110' volatile='yes' hash='4c64b7cfe353b90a' id='type-id-705'/>
     <qualified-type-def type-id='type-id-520' volatile='yes' hash='eca62de49bf8542c' id='type-id-672'/>
   </abi-types>
   <abi-instr address-size='64' path='../../dpdk/drivers/bus/dpaa/base/fman/fman.c' comp-dir-path='/home/dmarchan/v19.11/build-clang-shared' language='LANG_C99'>

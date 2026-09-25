@@ -66,13 +66,13 @@
     <!-- const std::basic_string<char,std::char_traits<char>,std::allocator<char>>& -->
     <reference-type-def kind='lvalue' type-id='type-id-10' size-in-bits='64' hash='8dc531d1e21e11d5' id='type-id-11'/>
     <!-- const std::char_traits<char>::char_type -->
-    <qualified-type-def type-id='type-id-12' const='yes' hash='cc12f9eeaa71fcbc' id='type-id-13'/>
+    <qualified-type-def type-id='type-id-12' const='yes' hash='62e496561c30eb49' id='type-id-13'/>
     <!-- const std::char_traits<char>::char_type* -->
     <pointer-type-def type-id='type-id-13' size-in-bits='64' hash='ac620fdffcaf919e' id='type-id-14'/>
     <!-- const std::string -->
-    <qualified-type-def type-id='type-id-15' const='yes' hash='158a75c3b975c2dc' id='type-id-16'/>
+    <qualified-type-def type-id='type-id-15' const='yes' hash='e6a6a640993f1d52' id='type-id-16'/>
     <!-- const std::string& -->
-    <reference-type-def kind='lvalue' type-id='type-id-16' size-in-bits='64' hash='d8e5391b3091f92a' id='type-id-17'/>
+    <reference-type-def kind='lvalue' type-id='type-id-16' size-in-bits='64' hash='3dbadda6e76b0bcb' id='type-id-17'/>
     <!-- std::basic_string<char,std::char_traits<char>,std::allocator<char>> (const char*, const std::basic_string<char,std::char_traits<char>,std::allocator<char>>&) -->
     <function-type size-in-bits='64' hash='0fb2ebcefe8723c5' id='type-id-18'>
       <!-- parameter of type 'const char*' -->
@@ -83,21 +83,21 @@
       <return type-id='type-id-6'/>
     </function-type>
     <!-- std::ostream* (const std::string&) -->
-    <function-type size-in-bits='64' hash='098d38eb283abba0' id='type-id-19'>
+    <function-type size-in-bits='64' hash='445b290557fc4a17' id='type-id-19'>
       <!-- parameter of type 'const std::string&' -->
       <parameter type-id='type-id-17'/>
       <!-- std::ostream* -->
       <return type-id='type-id-20'/>
     </function-type>
     <!-- std::string (const std::string&) -->
-    <function-type size-in-bits='64' hash='9da351816454312c' id='type-id-21'>
+    <function-type size-in-bits='64' hash='bc6293c5cb8e9cb8' id='type-id-21'>
       <!-- parameter of type 'const std::string&' -->
       <parameter type-id='type-id-17'/>
       <!-- typedef std::string -->
       <return type-id='type-id-15'/>
     </function-type>
     <!-- std::size_t (std::char_traits<char>::*) (const std::char_traits<char>::char_type*) -->
-    <function-type method-class-id='type-id-22' static='yes' size-in-bits='64' hash='51e1865a8a0585d8' id='type-id-23'>
+    <function-type method-class-id='type-id-22' static='yes' size-in-bits='64' hash='0bd77f100b6638fe' id='type-id-23'>
       <!-- parameter of type 'const std::char_traits<char>::char_type*' -->
       <parameter type-id='type-id-14'/>
       <!-- typedef std::size_t -->
@@ -110,7 +110,7 @@
       <class-decl name='char_traits&lt;char&gt;' is-struct='yes' visibility='default' size-in-bits='8' hash='7c988ae21f08b711' id='type-id-22'>
         <member-type access='private'>
           <!-- typedef char std::char_traits<char>::char_type -->
-          <typedef-decl name='char_type' type-id='type-id-1' size-in-bits='8' hash='65b2d157027b431a' id='type-id-12'/>
+          <typedef-decl name='char_type' type-id='type-id-1' size-in-bits='8' hash='39e744a8eb4bf364' id='type-id-12'/>
         </member-type>
         <member-function access='public' static='yes'>
           <!-- std::size_t std::char_traits<char>::length() -->
@@ -124,11 +124,11 @@
     </namespace-decl>
     <namespace-decl name='std'>
       <!-- typedef unsigned long int std::size_t -->
-      <typedef-decl name='size_t' type-id='type-id-26' size-in-bits='64' hash='da551c1631705dfe' id='type-id-24'/>
+      <typedef-decl name='size_t' type-id='type-id-26' size-in-bits='64' hash='8b230c0ebd12548b' id='type-id-24'/>
     </namespace-decl>
     <namespace-decl name='std'>
       <!-- typedef std::basic_string<char,std::char_traits<char>,std::allocator<char>> std::string -->
-      <typedef-decl name='string' type-id='type-id-6' size-in-bits='64' hash='db31a765cc04c2f7' id='type-id-15'/>
+      <typedef-decl name='string' type-id='type-id-6' size-in-bits='64' hash='51b49d2af614721e' id='type-id-15'/>
     </namespace-decl>
     <!-- unsigned long int -->
     <type-decl name='unsigned long int' size-in-bits='64' hash='da551c1631705dfe' id='type-id-26'/>

@@ -601,11 +601,11 @@
       <subrange length='1' lower-bound='0' upper-bound='0' type-id='type-id-1' size-in-bits='64' is-anonymous='yes' hash='eba0a2b392137dcb' id='type-id-2'/>
     </array-type-def>
     <!-- const hb_codepoint_t -->
-    <qualified-type-def type-id='type-id-56' const='yes' hash='d24e5742b7f58f3d' id='type-id-57'/>
+    <qualified-type-def type-id='type-id-56' const='yes' hash='b6f1fc1af715a5e4' id='type-id-57'/>
     <!-- const hb_codepoint_t* -->
     <pointer-type-def type-id='type-id-57' size-in-bits='64' hash='2e7e060ae9d4e796' id='type-id-58'/>
     <!-- const hb_feature_t -->
-    <qualified-type-def type-id='type-id-59' const='yes' hash='497bfb4719417d25' id='type-id-60'/>
+    <qualified-type-def type-id='type-id-59' const='yes' hash='f57480e97544fe7e' id='type-id-60'/>
     <!-- const hb_feature_t* -->
     <pointer-type-def type-id='type-id-60' size-in-bits='64' hash='b28ab7b661a9111c' id='type-id-61'/>
     <!-- const hb_language_impl_t -->
@@ -613,23 +613,23 @@
     <!-- const hb_language_impl_t* -->
     <pointer-type-def type-id='type-id-63' size-in-bits='64' hash='495841e10bc83929' id='type-id-64'/>
     <!-- const hb_segment_properties_t -->
-    <qualified-type-def type-id='type-id-65' const='yes' hash='11cde760962f69af' id='type-id-66'/>
+    <qualified-type-def type-id='type-id-65' const='yes' hash='c02c9b99ccd1e210' id='type-id-66'/>
     <!-- const hb_segment_properties_t* -->
     <pointer-type-def type-id='type-id-66' size-in-bits='64' hash='631dcfd5cdb344a4' id='type-id-67'/>
     <!-- const hb_set_t -->
-    <qualified-type-def type-id='type-id-68' const='yes' hash='64fe6102e77086ab' id='type-id-69'/>
+    <qualified-type-def type-id='type-id-68' const='yes' hash='a81845279cece907' id='type-id-69'/>
     <!-- const hb_set_t* -->
     <pointer-type-def type-id='type-id-69' size-in-bits='64' hash='7075f36453080cb8' id='type-id-70'/>
     <!-- const hb_tag_t -->
-    <qualified-type-def type-id='type-id-71' const='yes' hash='95433a50cedcd306' id='type-id-72'/>
+    <qualified-type-def type-id='type-id-71' const='yes' hash='b821958a2455d987' id='type-id-72'/>
     <!-- const hb_tag_t* -->
     <pointer-type-def type-id='type-id-72' size-in-bits='64' hash='f720a6e9e07bf2e4' id='type-id-73'/>
     <!-- const uint16_t -->
-    <qualified-type-def type-id='type-id-74' const='yes' hash='c137883814e17b0b' id='type-id-75'/>
+    <qualified-type-def type-id='type-id-74' const='yes' hash='37f3e556eac98723' id='type-id-75'/>
     <!-- const uint16_t* -->
     <pointer-type-def type-id='type-id-75' size-in-bits='64' hash='f59708b414486ea1' id='type-id-76'/>
     <!-- const uint32_t -->
-    <qualified-type-def type-id='type-id-77' const='yes' hash='9f6284fa3a419601' id='type-id-78'/>
+    <qualified-type-def type-id='type-id-77' const='yes' hash='5949e77f101b2abc' id='type-id-78'/>
     <!-- const uint32_t* -->
     <pointer-type-def type-id='type-id-78' size-in-bits='64' hash='8e9492c943fe2cd2' id='type-id-79'/>
     <!-- enum FT_Encoding_ -->
@@ -1080,7 +1080,7 @@
       <enumerator name='HB_UNICODE_GENERAL_CATEGORY_SPACE_SEPARATOR' value='29'/>
     </enum-decl>
     <!-- FT_Face (hb_font_t*) -->
-    <function-type size-in-bits='64' hash='c130ee24a6598d8f' id='type-id-94'>
+    <function-type size-in-bits='64' hash='c042abd6911a3416' id='type-id-94'>
       <!-- parameter of type 'hb_font_t*' -->
       <parameter type-id='type-id-95'/>
       <!-- typedef FT_Face -->
@@ -1094,7 +1094,7 @@
       <return type-id='type-id-83'/>
     </function-type>
     <!-- char* (hb_blob_t*, unsigned int*) -->
-    <function-type size-in-bits='64' hash='8f47ce8db1b68137' id='type-id-98'>
+    <function-type size-in-bits='64' hash='db8f03e0ae8de52c' id='type-id-98'>
       <!-- parameter of type 'hb_blob_t*' -->
       <parameter type-id='type-id-99'/>
       <!-- parameter of type 'unsigned int*' -->
@@ -1103,7 +1103,7 @@
       <return type-id='type-id-47'/>
     </function-type>
     <!-- const char* (hb_blob_t*, unsigned int*) -->
-    <function-type size-in-bits='64' hash='2ea2fa2f4d77132e' id='type-id-101'>
+    <function-type size-in-bits='64' hash='7f8b7537b8779f6c' id='type-id-101'>
       <!-- parameter of type 'hb_blob_t*' -->
       <parameter type-id='type-id-99'/>
       <!-- parameter of type 'unsigned int*' -->
@@ -1112,45 +1112,45 @@
       <return type-id='type-id-50'/>
     </function-type>
     <!-- const char* (hb_buffer_serialize_format_t) -->
-    <function-type size-in-bits='64' hash='f19477801af4e6ce' id='type-id-102'>
+    <function-type size-in-bits='64' hash='398806bbdf2cdea5' id='type-id-102'>
       <!-- parameter of type 'enum hb_buffer_serialize_format_t' -->
       <parameter type-id='type-id-87'/>
       <!-- const char* -->
       <return type-id='type-id-50'/>
     </function-type>
     <!-- const char* (hb_direction_t) -->
-    <function-type size-in-bits='64' hash='f4da70eb56e053c4' id='type-id-103'>
+    <function-type size-in-bits='64' hash='837506d29d684b22' id='type-id-103'>
       <!-- parameter of type 'enum hb_direction_t' -->
       <parameter type-id='type-id-88'/>
       <!-- const char* -->
       <return type-id='type-id-50'/>
     </function-type>
     <!-- const char* (hb_language_t) -->
-    <function-type size-in-bits='64' hash='088f1ef5f5a52fe3' id='type-id-104'>
+    <function-type size-in-bits='64' hash='8c1bba567fd13d3c' id='type-id-104'>
       <!-- parameter of type 'typedef hb_language_t' -->
       <parameter type-id='type-id-105'/>
       <!-- const char* -->
       <return type-id='type-id-50'/>
     </function-type>
     <!-- const char* (hb_shape_plan_t*) -->
-    <function-type size-in-bits='64' hash='07a1261e8e7e705f' id='type-id-106'>
+    <function-type size-in-bits='64' hash='b423b3a0e5245cb3' id='type-id-106'>
       <!-- parameter of type 'hb_shape_plan_t*' -->
       <parameter type-id='type-id-107'/>
       <!-- const char* -->
       <return type-id='type-id-50'/>
     </function-type>
     <!-- const char* (void) -->
-    <function-type size-in-bits='64' hash='895188eaa6ff4d74' id='type-id-108'>
+    <function-type size-in-bits='64' hash='2c8e1a2425f8663b' id='type-id-108'>
       <!-- const char* -->
       <return type-id='type-id-50'/>
     </function-type>
     <!-- const char** (void) -->
-    <function-type size-in-bits='64' hash='5a2fe20bdf538c70' id='type-id-109'>
+    <function-type size-in-bits='64' hash='7469a2a1067bb315' id='type-id-109'>
       <!-- const char** -->
       <return type-id='type-id-53'/>
     </function-type>
     <!-- hb_blob_t* (const char*, unsigned int, hb_memory_mode_t, void*, hb_destroy_func_t) -->
-    <function-type size-in-bits='64' hash='22540781b2eface2' id='type-id-110'>
+    <function-type size-in-bits='64' hash='945ae2a9f2d3dce3' id='type-id-110'>
       <!-- parameter of type 'const char*' -->
       <parameter type-id='type-id-50'/>
       <!-- parameter of type 'unsigned int' -->
@@ -1165,14 +1165,14 @@
       <return type-id='type-id-99'/>
     </function-type>
     <!-- hb_blob_t* (hb_blob_t*) -->
-    <function-type size-in-bits='64' hash='71c591a43ea06b9b' id='type-id-114'>
+    <function-type size-in-bits='64' hash='c5124cbe4dc67607' id='type-id-114'>
       <!-- parameter of type 'hb_blob_t*' -->
       <parameter type-id='type-id-99'/>
       <!-- hb_blob_t* -->
       <return type-id='type-id-99'/>
     </function-type>
     <!-- hb_blob_t* (hb_blob_t*, unsigned int, unsigned int) -->
-    <function-type size-in-bits='64' hash='44d6fdfb91977325' id='type-id-115'>
+    <function-type size-in-bits='64' hash='046383c54b7eeda1' id='type-id-115'>
       <!-- parameter of type 'hb_blob_t*' -->
       <parameter type-id='type-id-99'/>
       <!-- parameter of type 'unsigned int' -->
@@ -1183,14 +1183,14 @@
       <return type-id='type-id-99'/>
     </function-type>
     <!-- hb_blob_t* (hb_face_t*) -->
-    <function-type size-in-bits='64' hash='7b43a5d148b7ced0' id='type-id-116'>
+    <function-type size-in-bits='64' hash='978fdaf9c6b6d453' id='type-id-116'>
       <!-- parameter of type 'hb_face_t*' -->
       <parameter type-id='type-id-117'/>
       <!-- hb_blob_t* -->
       <return type-id='type-id-99'/>
     </function-type>
     <!-- hb_blob_t* (hb_face_t*, hb_tag_t) -->
-    <function-type size-in-bits='64' hash='3ee40cd4fcdaf1ef' id='type-id-118'>
+    <function-type size-in-bits='64' hash='121464b4ae58d9b2' id='type-id-118'>
       <!-- parameter of type 'hb_face_t*' -->
       <parameter type-id='type-id-117'/>
       <!-- parameter of type 'typedef hb_tag_t' -->
@@ -1199,7 +1199,7 @@
       <return type-id='type-id-99'/>
     </function-type>
     <!-- hb_blob_t* (hb_face_t*, hb_tag_t, void*) -->
-    <function-type size-in-bits='64' hash='fbac70f6d62ef21c' id='type-id-119'>
+    <function-type size-in-bits='64' hash='a41216387e33cfcc' id='type-id-119'>
       <!-- parameter of type 'hb_face_t*' -->
       <parameter type-id='type-id-117'/>
       <!-- parameter of type 'typedef hb_tag_t' -->
@@ -1210,12 +1210,12 @@
       <return type-id='type-id-99'/>
     </function-type>
     <!-- hb_blob_t* (void) -->
-    <function-type size-in-bits='64' hash='a96e1bacbac8a189' id='type-id-120'>
+    <function-type size-in-bits='64' hash='edb41b336db01114' id='type-id-120'>
       <!-- hb_blob_t* -->
       <return type-id='type-id-99'/>
     </function-type>
     <!-- hb_bool_t (const char*, int, hb_feature_t*) -->
-    <function-type size-in-bits='64' hash='36192ffb582e107e' id='type-id-121'>
+    <function-type size-in-bits='64' hash='e77c559ef949820c' id='type-id-121'>
       <!-- parameter of type 'const char*' -->
       <parameter type-id='type-id-50'/>
       <!-- parameter of type 'int' -->
@@ -1226,7 +1226,7 @@
       <return type-id='type-id-124'/>
     </function-type>
     <!-- hb_bool_t (const hb_segment_properties_t*, const hb_segment_properties_t*) -->
-    <function-type size-in-bits='64' hash='2de893a6ba0a8047' id='type-id-125'>
+    <function-type size-in-bits='64' hash='eac5c00cff951e4e' id='type-id-125'>
       <!-- parameter of type 'const hb_segment_properties_t*' -->
       <parameter type-id='type-id-67'/>
       <!-- parameter of type 'const hb_segment_properties_t*' -->
@@ -1235,14 +1235,14 @@
       <return type-id='type-id-124'/>
     </function-type>
     <!-- hb_bool_t (const hb_set_t*) -->
-    <function-type size-in-bits='64' hash='83e3564eb81b852c' id='type-id-126'>
+    <function-type size-in-bits='64' hash='c0b0f07f67606020' id='type-id-126'>
       <!-- parameter of type 'const hb_set_t*' -->
       <parameter type-id='type-id-70'/>
       <!-- typedef hb_bool_t -->
       <return type-id='type-id-124'/>
     </function-type>
     <!-- hb_bool_t (const hb_set_t*, const hb_set_t*) -->
-    <function-type size-in-bits='64' hash='604a1f6cd40c9804' id='type-id-127'>
+    <function-type size-in-bits='64' hash='ba111ebfca61570e' id='type-id-127'>
       <!-- parameter of type 'const hb_set_t*' -->
       <parameter type-id='type-id-70'/>
       <!-- parameter of type 'const hb_set_t*' -->
@@ -1251,7 +1251,7 @@
       <return type-id='type-id-124'/>
     </function-type>
     <!-- hb_bool_t (const hb_set_t*, hb_codepoint_t) -->
-    <function-type size-in-bits='64' hash='3e3318ef87968bfd' id='type-id-128'>
+    <function-type size-in-bits='64' hash='a22ebadeb1bc33f1' id='type-id-128'>
       <!-- parameter of type 'const hb_set_t*' -->
       <parameter type-id='type-id-70'/>
       <!-- parameter of type 'typedef hb_codepoint_t' -->
@@ -1260,7 +1260,7 @@
       <return type-id='type-id-124'/>
     </function-type>
     <!-- hb_bool_t (const hb_set_t*, hb_codepoint_t*) -->
-    <function-type size-in-bits='64' hash='0153b27d92e8014f' id='type-id-129'>
+    <function-type size-in-bits='64' hash='0b867fde22e2f8f1' id='type-id-129'>
       <!-- parameter of type 'const hb_set_t*' -->
       <parameter type-id='type-id-70'/>
       <!-- parameter of type 'hb_codepoint_t*' -->
@@ -1269,7 +1269,7 @@
       <return type-id='type-id-124'/>
     </function-type>
     <!-- hb_bool_t (const hb_set_t*, hb_codepoint_t*, hb_codepoint_t*) -->
-    <function-type size-in-bits='64' hash='dccdef921caef856' id='type-id-131'>
+    <function-type size-in-bits='64' hash='3b44f85400a06c8e' id='type-id-131'>
       <!-- parameter of type 'const hb_set_t*' -->
       <parameter type-id='type-id-70'/>
       <!-- parameter of type 'hb_codepoint_t*' -->
@@ -1280,14 +1280,14 @@
       <return type-id='type-id-124'/>
     </function-type>
     <!-- hb_bool_t (hb_blob_t*) -->
-    <function-type size-in-bits='64' hash='94aa3627527656ea' id='type-id-132'>
+    <function-type size-in-bits='64' hash='c93d6e13101ddfa6' id='type-id-132'>
       <!-- parameter of type 'hb_blob_t*' -->
       <parameter type-id='type-id-99'/>
       <!-- typedef hb_bool_t -->
       <return type-id='type-id-124'/>
     </function-type>
     <!-- hb_bool_t (hb_blob_t*, hb_user_data_key_t*, void*, hb_destroy_func_t, hb_bool_t) -->
-    <function-type size-in-bits='64' hash='5bb8cf78ba438be5' id='type-id-133'>
+    <function-type size-in-bits='64' hash='5ac2fca7ddc1e204' id='type-id-133'>
       <!-- parameter of type 'hb_blob_t*' -->
       <parameter type-id='type-id-99'/>
       <!-- parameter of type 'hb_user_data_key_t*' -->
@@ -1302,14 +1302,14 @@
       <return type-id='type-id-124'/>
     </function-type>
     <!-- hb_bool_t (hb_buffer_t*) -->
-    <function-type size-in-bits='64' hash='c7833bc92d35408d' id='type-id-135'>
+    <function-type size-in-bits='64' hash='ccebd1d4ac381562' id='type-id-135'>
       <!-- parameter of type 'hb_buffer_t*' -->
       <parameter type-id='type-id-136'/>
       <!-- typedef hb_bool_t -->
       <return type-id='type-id-124'/>
     </function-type>
     <!-- hb_bool_t (hb_buffer_t*, const char*, int, const char**, hb_font_t*, hb_buffer_serialize_format_t) -->
-    <function-type size-in-bits='64' hash='c852ac1b64a6d603' id='type-id-137'>
+    <function-type size-in-bits='64' hash='a1abb2a59bf93de4' id='type-id-137'>
       <!-- parameter of type 'hb_buffer_t*' -->
       <parameter type-id='type-id-136'/>
       <!-- parameter of type 'const char*' -->
@@ -1326,7 +1326,7 @@
       <return type-id='type-id-124'/>
     </function-type>
     <!-- hb_bool_t (hb_buffer_t*, hb_user_data_key_t*, void*, hb_destroy_func_t, hb_bool_t) -->
-    <function-type size-in-bits='64' hash='3f61841a8aef91c4' id='type-id-138'>
+    <function-type size-in-bits='64' hash='9a7ae4d97577014a' id='type-id-138'>
       <!-- parameter of type 'hb_buffer_t*' -->
       <parameter type-id='type-id-136'/>
       <!-- parameter of type 'hb_user_data_key_t*' -->
@@ -1341,7 +1341,7 @@
       <return type-id='type-id-124'/>
     </function-type>
     <!-- hb_bool_t (hb_buffer_t*, unsigned int) -->
-    <function-type size-in-bits='64' hash='1bf16933d4eb633c' id='type-id-139'>
+    <function-type size-in-bits='64' hash='26521599c32f3827' id='type-id-139'>
       <!-- parameter of type 'hb_buffer_t*' -->
       <parameter type-id='type-id-136'/>
       <!-- parameter of type 'unsigned int' -->
@@ -1350,14 +1350,14 @@
       <return type-id='type-id-124'/>
     </function-type>
     <!-- hb_bool_t (hb_face_t*) -->
-    <function-type size-in-bits='64' hash='688641d56bc7a76b' id='type-id-140'>
+    <function-type size-in-bits='64' hash='ba30438fe57759ab' id='type-id-140'>
       <!-- parameter of type 'hb_face_t*' -->
       <parameter type-id='type-id-117'/>
       <!-- typedef hb_bool_t -->
       <return type-id='type-id-124'/>
     </function-type>
     <!-- hb_bool_t (hb_face_t*, hb_tag_t, const hb_tag_t*, unsigned int*, hb_tag_t*) -->
-    <function-type size-in-bits='64' hash='006968247f403021' id='type-id-141'>
+    <function-type size-in-bits='64' hash='be049a680d964b2e' id='type-id-141'>
       <!-- parameter of type 'hb_face_t*' -->
       <parameter type-id='type-id-117'/>
       <!-- parameter of type 'typedef hb_tag_t' -->
@@ -1372,7 +1372,7 @@
       <return type-id='type-id-124'/>
     </function-type>
     <!-- hb_bool_t (hb_face_t*, hb_tag_t, hb_tag_t, unsigned int*) -->
-    <function-type size-in-bits='64' hash='86de7486184210b7' id='type-id-143'>
+    <function-type size-in-bits='64' hash='427dc8683c3bb6b4' id='type-id-143'>
       <!-- parameter of type 'hb_face_t*' -->
       <parameter type-id='type-id-117'/>
       <!-- parameter of type 'typedef hb_tag_t' -->
@@ -1385,7 +1385,7 @@
       <return type-id='type-id-124'/>
     </function-type>
     <!-- hb_bool_t (hb_face_t*, hb_tag_t, unsigned int, hb_tag_t, unsigned int*) -->
-    <function-type size-in-bits='64' hash='54a1604f882bd4e7' id='type-id-144'>
+    <function-type size-in-bits='64' hash='c867e3fed3d6feee' id='type-id-144'>
       <!-- parameter of type 'hb_face_t*' -->
       <parameter type-id='type-id-117'/>
       <!-- parameter of type 'typedef hb_tag_t' -->
@@ -1400,7 +1400,7 @@
       <return type-id='type-id-124'/>
     </function-type>
     <!-- hb_bool_t (hb_face_t*, hb_tag_t, unsigned int, unsigned int, hb_tag_t, unsigned int*) -->
-    <function-type size-in-bits='64' hash='2e10a155944e3bac' id='type-id-145'>
+    <function-type size-in-bits='64' hash='c4078fc904a3778b' id='type-id-145'>
       <!-- parameter of type 'hb_face_t*' -->
       <parameter type-id='type-id-117'/>
       <!-- parameter of type 'typedef hb_tag_t' -->
@@ -1417,7 +1417,7 @@
       <return type-id='type-id-124'/>
     </function-type>
     <!-- hb_bool_t (hb_face_t*, hb_tag_t, unsigned int, unsigned int, unsigned int*) -->
-    <function-type size-in-bits='64' hash='71227af5538c29f6' id='type-id-146'>
+    <function-type size-in-bits='64' hash='1cc0db1635603071' id='type-id-146'>
       <!-- parameter of type 'hb_face_t*' -->
       <parameter type-id='type-id-117'/>
       <!-- parameter of type 'typedef hb_tag_t' -->
@@ -1432,7 +1432,7 @@
       <return type-id='type-id-124'/>
     </function-type>
     <!-- hb_bool_t (hb_face_t*, hb_tag_t, unsigned int, unsigned int, unsigned int*, hb_tag_t*) -->
-    <function-type size-in-bits='64' hash='20f51e128c8403aa' id='type-id-147'>
+    <function-type size-in-bits='64' hash='902d91d48788a132' id='type-id-147'>
       <!-- parameter of type 'hb_face_t*' -->
       <parameter type-id='type-id-117'/>
       <!-- parameter of type 'typedef hb_tag_t' -->
@@ -1449,7 +1449,7 @@
       <return type-id='type-id-124'/>
     </function-type>
     <!-- hb_bool_t (hb_face_t*, hb_user_data_key_t*, void*, hb_destroy_func_t, hb_bool_t) -->
-    <function-type size-in-bits='64' hash='4cdd5a538d853c14' id='type-id-148'>
+    <function-type size-in-bits='64' hash='00327a15876bd8c5' id='type-id-148'>
       <!-- parameter of type 'hb_face_t*' -->
       <parameter type-id='type-id-117'/>
       <!-- parameter of type 'hb_user_data_key_t*' -->
@@ -1464,7 +1464,7 @@
       <return type-id='type-id-124'/>
     </function-type>
     <!-- hb_bool_t (hb_face_t*, unsigned int*, unsigned int*, unsigned int*, unsigned int*, unsigned int*) -->
-    <function-type size-in-bits='64' hash='90535db33235a6a5' id='type-id-149'>
+    <function-type size-in-bits='64' hash='69d63437fcbea4e5' id='type-id-149'>
       <!-- parameter of type 'hb_face_t*' -->
       <parameter type-id='type-id-117'/>
       <!-- parameter of type 'unsigned int*' -->
@@ -1481,7 +1481,7 @@
       <return type-id='type-id-124'/>
     </function-type>
     <!-- hb_bool_t (hb_face_t*, unsigned int, const hb_codepoint_t*, unsigned int, hb_bool_t) -->
-    <function-type size-in-bits='64' hash='8c954e28f33fffd1' id='type-id-150'>
+    <function-type size-in-bits='64' hash='682fb54296fa7ac3' id='type-id-150'>
       <!-- parameter of type 'hb_face_t*' -->
       <parameter type-id='type-id-117'/>
       <!-- parameter of type 'unsigned int' -->
@@ -1496,14 +1496,14 @@
       <return type-id='type-id-124'/>
     </function-type>
     <!-- hb_bool_t (hb_font_funcs_t*) -->
-    <function-type size-in-bits='64' hash='b319b8bfcb380cf3' id='type-id-151'>
+    <function-type size-in-bits='64' hash='349ea66a9dba52db' id='type-id-151'>
       <!-- parameter of type 'hb_font_funcs_t*' -->
       <parameter type-id='type-id-152'/>
       <!-- typedef hb_bool_t -->
       <return type-id='type-id-124'/>
     </function-type>
     <!-- hb_bool_t (hb_font_funcs_t*, hb_user_data_key_t*, void*, hb_destroy_func_t, hb_bool_t) -->
-    <function-type size-in-bits='64' hash='180c0d1e08b9e9c0' id='type-id-153'>
+    <function-type size-in-bits='64' hash='808848b680ea7cab' id='type-id-153'>
       <!-- parameter of type 'hb_font_funcs_t*' -->
       <parameter type-id='type-id-152'/>
       <!-- parameter of type 'hb_user_data_key_t*' -->
@@ -1518,14 +1518,14 @@
       <return type-id='type-id-124'/>
     </function-type>
     <!-- hb_bool_t (hb_font_t*) -->
-    <function-type size-in-bits='64' hash='25540b6c2ac2f280' id='type-id-154'>
+    <function-type size-in-bits='64' hash='5ebdce3e89bcdb2b' id='type-id-154'>
       <!-- parameter of type 'hb_font_t*' -->
       <parameter type-id='type-id-95'/>
       <!-- typedef hb_bool_t -->
       <return type-id='type-id-124'/>
     </function-type>
     <!-- hb_bool_t (hb_font_t*, const char*, int, hb_codepoint_t*) -->
-    <function-type size-in-bits='64' hash='2b48c59ba8bfc1e8' id='type-id-155'>
+    <function-type size-in-bits='64' hash='cf972d18cff56e74' id='type-id-155'>
       <!-- parameter of type 'hb_font_t*' -->
       <parameter type-id='type-id-95'/>
       <!-- parameter of type 'const char*' -->
@@ -1538,7 +1538,7 @@
       <return type-id='type-id-124'/>
     </function-type>
     <!-- hb_bool_t (hb_font_t*, hb_buffer_t*, const hb_feature_t*, unsigned int, const char* const*) -->
-    <function-type size-in-bits='64' hash='7c140f8f95abb002' id='type-id-156'>
+    <function-type size-in-bits='64' hash='85020b8ae4d10a76' id='type-id-156'>
       <!-- parameter of type 'hb_font_t*' -->
       <parameter type-id='type-id-95'/>
       <!-- parameter of type 'hb_buffer_t*' -->
@@ -1553,7 +1553,7 @@
       <return type-id='type-id-124'/>
     </function-type>
     <!-- hb_bool_t (hb_font_t*, hb_codepoint_t, char*, unsigned int) -->
-    <function-type size-in-bits='64' hash='e80428c7bfdeeefb' id='type-id-157'>
+    <function-type size-in-bits='64' hash='7acd34e8908bc891' id='type-id-157'>
       <!-- parameter of type 'hb_font_t*' -->
       <parameter type-id='type-id-95'/>
       <!-- parameter of type 'typedef hb_codepoint_t' -->
@@ -1566,7 +1566,7 @@
       <return type-id='type-id-124'/>
     </function-type>
     <!-- hb_bool_t (hb_font_t*, hb_codepoint_t, hb_codepoint_t, hb_codepoint_t*) -->
-    <function-type size-in-bits='64' hash='640ef87648b0217a' id='type-id-158'>
+    <function-type size-in-bits='64' hash='8bd8f23c50eeaf00' id='type-id-158'>
       <!-- parameter of type 'hb_font_t*' -->
       <parameter type-id='type-id-95'/>
       <!-- parameter of type 'typedef hb_codepoint_t' -->
@@ -1579,7 +1579,7 @@
       <return type-id='type-id-124'/>
     </function-type>
     <!-- hb_bool_t (hb_font_t*, hb_codepoint_t, hb_direction_t, hb_glyph_extents_t*) -->
-    <function-type size-in-bits='64' hash='48ccd6402c48bc9f' id='type-id-159'>
+    <function-type size-in-bits='64' hash='f37807cf9869eec2' id='type-id-159'>
       <!-- parameter of type 'hb_font_t*' -->
       <parameter type-id='type-id-95'/>
       <!-- parameter of type 'typedef hb_codepoint_t' -->
@@ -1592,7 +1592,7 @@
       <return type-id='type-id-124'/>
     </function-type>
     <!-- hb_bool_t (hb_font_t*, hb_codepoint_t, hb_glyph_extents_t*) -->
-    <function-type size-in-bits='64' hash='ae6c46e19bef9662' id='type-id-161'>
+    <function-type size-in-bits='64' hash='486b5beb106aaa53' id='type-id-161'>
       <!-- parameter of type 'hb_font_t*' -->
       <parameter type-id='type-id-95'/>
       <!-- parameter of type 'typedef hb_codepoint_t' -->
@@ -1603,7 +1603,7 @@
       <return type-id='type-id-124'/>
     </function-type>
     <!-- hb_bool_t (hb_font_t*, hb_codepoint_t, hb_position_t*, hb_position_t*) -->
-    <function-type size-in-bits='64' hash='c701835459ffba8c' id='type-id-162'>
+    <function-type size-in-bits='64' hash='0932486e4bd30984' id='type-id-162'>
       <!-- parameter of type 'hb_font_t*' -->
       <parameter type-id='type-id-95'/>
       <!-- parameter of type 'typedef hb_codepoint_t' -->
@@ -1616,7 +1616,7 @@
       <return type-id='type-id-124'/>
     </function-type>
     <!-- hb_bool_t (hb_font_t*, hb_codepoint_t, unsigned int, hb_direction_t, hb_position_t*, hb_position_t*) -->
-    <function-type size-in-bits='64' hash='e2db8093ec549429' id='type-id-164'>
+    <function-type size-in-bits='64' hash='f3ae941d655affe6' id='type-id-164'>
       <!-- parameter of type 'hb_font_t*' -->
       <parameter type-id='type-id-95'/>
       <!-- parameter of type 'typedef hb_codepoint_t' -->
@@ -1633,7 +1633,7 @@
       <return type-id='type-id-124'/>
     </function-type>
     <!-- hb_bool_t (hb_font_t*, hb_codepoint_t, unsigned int, hb_position_t*, hb_position_t*) -->
-    <function-type size-in-bits='64' hash='7135d42118cc8496' id='type-id-165'>
+    <function-type size-in-bits='64' hash='5661e1ec5372be6f' id='type-id-165'>
       <!-- parameter of type 'hb_font_t*' -->
       <parameter type-id='type-id-95'/>
       <!-- parameter of type 'typedef hb_codepoint_t' -->
@@ -1648,7 +1648,7 @@
       <return type-id='type-id-124'/>
     </function-type>
     <!-- hb_bool_t (hb_font_t*, hb_user_data_key_t*, void*, hb_destroy_func_t, hb_bool_t) -->
-    <function-type size-in-bits='64' hash='9a9e451a1fc7d9e4' id='type-id-166'>
+    <function-type size-in-bits='64' hash='75510c5d74b9a379' id='type-id-166'>
       <!-- parameter of type 'hb_font_t*' -->
       <parameter type-id='type-id-95'/>
       <!-- parameter of type 'hb_user_data_key_t*' -->
@@ -1663,7 +1663,7 @@
       <return type-id='type-id-124'/>
     </function-type>
     <!-- hb_bool_t (hb_font_t*, void*, const char*, int, hb_codepoint_t*, void*) -->
-    <function-type size-in-bits='64' hash='9ccdf57a51f56edd' id='type-id-167'>
+    <function-type size-in-bits='64' hash='4b6957574fdeab9f' id='type-id-167'>
       <!-- parameter of type 'hb_font_t*' -->
       <parameter type-id='type-id-95'/>
       <!-- parameter of type 'void*' -->
@@ -1680,7 +1680,7 @@
       <return type-id='type-id-124'/>
     </function-type>
     <!-- hb_bool_t (hb_font_t*, void*, hb_codepoint_t, char*, unsigned int, void*) -->
-    <function-type size-in-bits='64' hash='2381212bdc6947b6' id='type-id-168'>
+    <function-type size-in-bits='64' hash='aec420658a7cfffb' id='type-id-168'>
       <!-- parameter of type 'hb_font_t*' -->
       <parameter type-id='type-id-95'/>
       <!-- parameter of type 'void*' -->
@@ -1697,7 +1697,7 @@
       <return type-id='type-id-124'/>
     </function-type>
     <!-- hb_bool_t (hb_font_t*, void*, hb_codepoint_t, hb_codepoint_t, hb_codepoint_t*, void*) -->
-    <function-type size-in-bits='64' hash='fdf5ed75dc5d4c4b' id='type-id-169'>
+    <function-type size-in-bits='64' hash='15db29f6839aa6e7' id='type-id-169'>
       <!-- parameter of type 'hb_font_t*' -->
       <parameter type-id='type-id-95'/>
       <!-- parameter of type 'void*' -->
@@ -1714,7 +1714,7 @@
       <return type-id='type-id-124'/>
     </function-type>
     <!-- hb_bool_t (hb_font_t*, void*, hb_codepoint_t, hb_glyph_extents_t*, void*) -->
-    <function-type size-in-bits='64' hash='5a564abc444212fc' id='type-id-170'>
+    <function-type size-in-bits='64' hash='19f55263d2b4d273' id='type-id-170'>
       <!-- parameter of type 'hb_font_t*' -->
       <parameter type-id='type-id-95'/>
       <!-- parameter of type 'void*' -->
@@ -1729,7 +1729,7 @@
       <return type-id='type-id-124'/>
     </function-type>
     <!-- hb_bool_t (hb_font_t*, void*, hb_codepoint_t, hb_position_t*, hb_position_t*, void*) -->
-    <function-type size-in-bits='64' hash='368cd33a59a91779' id='type-id-171'>
+    <function-type size-in-bits='64' hash='d8628b9f653acb0a' id='type-id-171'>
       <!-- parameter of type 'hb_font_t*' -->
       <parameter type-id='type-id-95'/>
       <!-- parameter of type 'void*' -->
@@ -1746,7 +1746,7 @@
       <return type-id='type-id-124'/>
     </function-type>
     <!-- hb_bool_t (hb_font_t*, void*, hb_codepoint_t, unsigned int, hb_position_t*, hb_position_t*, void*) -->
-    <function-type size-in-bits='64' hash='8c7aa69345178264' id='type-id-172'>
+    <function-type size-in-bits='64' hash='e92da80f2954f3e1' id='type-id-172'>
       <!-- parameter of type 'hb_font_t*' -->
       <parameter type-id='type-id-95'/>
       <!-- parameter of type 'void*' -->
@@ -1765,7 +1765,7 @@
       <return type-id='type-id-124'/>
     </function-type>
     <!-- hb_bool_t (hb_set_t*, hb_user_data_key_t*, void*, hb_destroy_func_t, hb_bool_t) -->
-    <function-type size-in-bits='64' hash='0bd4c7614e50fe2f' id='type-id-173'>
+    <function-type size-in-bits='64' hash='a80dbf83b5d28e64' id='type-id-173'>
       <!-- parameter of type 'hb_set_t*' -->
       <parameter type-id='type-id-174'/>
       <!-- parameter of type 'hb_user_data_key_t*' -->
@@ -1780,7 +1780,7 @@
       <return type-id='type-id-124'/>
     </function-type>
     <!-- hb_bool_t (hb_shape_plan_t*, hb_font_t*, hb_buffer_t*, const hb_feature_t*, unsigned int) -->
-    <function-type size-in-bits='64' hash='7b97d18c9006cc9d' id='type-id-175'>
+    <function-type size-in-bits='64' hash='224ade176d1f9eb5' id='type-id-175'>
       <!-- parameter of type 'hb_shape_plan_t*' -->
       <parameter type-id='type-id-107'/>
       <!-- parameter of type 'hb_font_t*' -->
@@ -1795,7 +1795,7 @@
       <return type-id='type-id-124'/>
     </function-type>
     <!-- hb_bool_t (hb_shape_plan_t*, hb_user_data_key_t*, void*, hb_destroy_func_t, hb_bool_t) -->
-    <function-type size-in-bits='64' hash='a9f96e7d15c4c366' id='type-id-176'>
+    <function-type size-in-bits='64' hash='9b530eab38d1ebb3' id='type-id-176'>
       <!-- parameter of type 'hb_shape_plan_t*' -->
       <parameter type-id='type-id-107'/>
       <!-- parameter of type 'hb_user_data_key_t*' -->
@@ -1810,14 +1810,14 @@
       <return type-id='type-id-124'/>
     </function-type>
     <!-- hb_bool_t (hb_unicode_funcs_t*) -->
-    <function-type size-in-bits='64' hash='88101eb683825499' id='type-id-177'>
+    <function-type size-in-bits='64' hash='2cec3243eea8570d' id='type-id-177'>
       <!-- parameter of type 'hb_unicode_funcs_t*' -->
       <parameter type-id='type-id-178'/>
       <!-- typedef hb_bool_t -->
       <return type-id='type-id-124'/>
     </function-type>
     <!-- hb_bool_t (hb_unicode_funcs_t*, hb_codepoint_t, hb_codepoint_t*, hb_codepoint_t*) -->
-    <function-type size-in-bits='64' hash='785ad1cd5d4a269b' id='type-id-179'>
+    <function-type size-in-bits='64' hash='1452b5227889a41a' id='type-id-179'>
       <!-- parameter of type 'hb_unicode_funcs_t*' -->
       <parameter type-id='type-id-178'/>
       <!-- parameter of type 'typedef hb_codepoint_t' -->
@@ -1830,7 +1830,7 @@
       <return type-id='type-id-124'/>
     </function-type>
     <!-- hb_bool_t (hb_unicode_funcs_t*, hb_codepoint_t, hb_codepoint_t*, hb_codepoint_t*, void*) -->
-    <function-type size-in-bits='64' hash='c2a1199cf792413d' id='type-id-180'>
+    <function-type size-in-bits='64' hash='9836e959eba7828d' id='type-id-180'>
       <!-- parameter of type 'hb_unicode_funcs_t*' -->
       <parameter type-id='type-id-178'/>
       <!-- parameter of type 'typedef hb_codepoint_t' -->
@@ -1845,7 +1845,7 @@
       <return type-id='type-id-124'/>
     </function-type>
     <!-- hb_bool_t (hb_unicode_funcs_t*, hb_codepoint_t, hb_codepoint_t, hb_codepoint_t*) -->
-    <function-type size-in-bits='64' hash='d1ee20493828e6b8' id='type-id-181'>
+    <function-type size-in-bits='64' hash='0dd67676ae367270' id='type-id-181'>
       <!-- parameter of type 'hb_unicode_funcs_t*' -->
       <parameter type-id='type-id-178'/>
       <!-- parameter of type 'typedef hb_codepoint_t' -->
@@ -1858,7 +1858,7 @@
       <return type-id='type-id-124'/>
     </function-type>
     <!-- hb_bool_t (hb_unicode_funcs_t*, hb_codepoint_t, hb_codepoint_t, hb_codepoint_t*, void*) -->
-    <function-type size-in-bits='64' hash='4de35c8fab5ec58c' id='type-id-182'>
+    <function-type size-in-bits='64' hash='bd8edc400470d17a' id='type-id-182'>
       <!-- parameter of type 'hb_unicode_funcs_t*' -->
       <parameter type-id='type-id-178'/>
       <!-- parameter of type 'typedef hb_codepoint_t' -->
@@ -1873,7 +1873,7 @@
       <return type-id='type-id-124'/>
     </function-type>
     <!-- hb_bool_t (hb_unicode_funcs_t*, hb_user_data_key_t*, void*, hb_destroy_func_t, hb_bool_t) -->
-    <function-type size-in-bits='64' hash='e4a559db615f8be7' id='type-id-183'>
+    <function-type size-in-bits='64' hash='e8da25cffda5dfbb' id='type-id-183'>
       <!-- parameter of type 'hb_unicode_funcs_t*' -->
       <parameter type-id='type-id-178'/>
       <!-- parameter of type 'hb_user_data_key_t*' -->
@@ -1888,7 +1888,7 @@
       <return type-id='type-id-124'/>
     </function-type>
     <!-- hb_bool_t (unsigned int, unsigned int, unsigned int) -->
-    <function-type size-in-bits='64' hash='aa3a8b4e31c32c84' id='type-id-184'>
+    <function-type size-in-bits='64' hash='a4e6c7ef999e6823' id='type-id-184'>
       <!-- parameter of type 'unsigned int' -->
       <parameter type-id='type-id-111'/>
       <!-- parameter of type 'unsigned int' -->
@@ -1922,33 +1922,33 @@
       <return type-id='type-id-87'/>
     </function-type>
     <!-- hb_buffer_t* (hb_buffer_t*) -->
-    <function-type size-in-bits='64' hash='1ac902b17ae5e85d' id='type-id-188'>
+    <function-type size-in-bits='64' hash='9bf953e3d3e07fbb' id='type-id-188'>
       <!-- parameter of type 'hb_buffer_t*' -->
       <parameter type-id='type-id-136'/>
       <!-- hb_buffer_t* -->
       <return type-id='type-id-136'/>
     </function-type>
     <!-- hb_buffer_t* (void) -->
-    <function-type size-in-bits='64' hash='bcf3460e7eb0242a' id='type-id-189'>
+    <function-type size-in-bits='64' hash='2419bb84afa9a563' id='type-id-189'>
       <!-- hb_buffer_t* -->
       <return type-id='type-id-136'/>
     </function-type>
     <!-- hb_codepoint_t (const hb_set_t*) -->
-    <function-type size-in-bits='64' hash='109f93d725231450' id='type-id-190'>
+    <function-type size-in-bits='64' hash='4c8a677fb66109c6' id='type-id-190'>
       <!-- parameter of type 'const hb_set_t*' -->
       <parameter type-id='type-id-70'/>
       <!-- typedef hb_codepoint_t -->
       <return type-id='type-id-56'/>
     </function-type>
     <!-- hb_codepoint_t (hb_buffer_t*) -->
-    <function-type size-in-bits='64' hash='21f0f3b8e6201042' id='type-id-191'>
+    <function-type size-in-bits='64' hash='be76f2a757d60066' id='type-id-191'>
       <!-- parameter of type 'hb_buffer_t*' -->
       <parameter type-id='type-id-136'/>
       <!-- typedef hb_codepoint_t -->
       <return type-id='type-id-56'/>
     </function-type>
     <!-- hb_codepoint_t (hb_unicode_funcs_t*, hb_codepoint_t) -->
-    <function-type size-in-bits='64' hash='654296fec6756314' id='type-id-192'>
+    <function-type size-in-bits='64' hash='a6d588aaa98b9267' id='type-id-192'>
       <!-- parameter of type 'hb_unicode_funcs_t*' -->
       <parameter type-id='type-id-178'/>
       <!-- parameter of type 'typedef hb_codepoint_t' -->
@@ -1957,7 +1957,7 @@
       <return type-id='type-id-56'/>
     </function-type>
     <!-- hb_codepoint_t (hb_unicode_funcs_t*, hb_codepoint_t, void*) -->
-    <function-type size-in-bits='64' hash='68e3af74891d8ca6' id='type-id-193'>
+    <function-type size-in-bits='64' hash='91394a2d56112257' id='type-id-193'>
       <!-- parameter of type 'hb_unicode_funcs_t*' -->
       <parameter type-id='type-id-178'/>
       <!-- parameter of type 'typedef hb_codepoint_t' -->
@@ -1991,14 +1991,14 @@
       <return type-id='type-id-88'/>
     </function-type>
     <!-- hb_face_t* (FT_Face) -->
-    <function-type size-in-bits='64' hash='02a3247a953c717c' id='type-id-197'>
+    <function-type size-in-bits='64' hash='4b17ff1782dd1882' id='type-id-197'>
       <!-- parameter of type 'typedef FT_Face' -->
       <parameter type-id='type-id-96'/>
       <!-- hb_face_t* -->
       <return type-id='type-id-117'/>
     </function-type>
     <!-- hb_face_t* (FT_Face, hb_destroy_func_t) -->
-    <function-type size-in-bits='64' hash='a0c828b048c7a51a' id='type-id-198'>
+    <function-type size-in-bits='64' hash='6e988e8374a7e65f' id='type-id-198'>
       <!-- parameter of type 'typedef FT_Face' -->
       <parameter type-id='type-id-96'/>
       <!-- parameter of type 'typedef hb_destroy_func_t' -->
@@ -2007,7 +2007,7 @@
       <return type-id='type-id-117'/>
     </function-type>
     <!-- hb_face_t* (hb_blob_t*, unsigned int) -->
-    <function-type size-in-bits='64' hash='576dc9b1d41eab59' id='type-id-199'>
+    <function-type size-in-bits='64' hash='627dfa24d91ead6c' id='type-id-199'>
       <!-- parameter of type 'hb_blob_t*' -->
       <parameter type-id='type-id-99'/>
       <!-- parameter of type 'unsigned int' -->
@@ -2016,21 +2016,21 @@
       <return type-id='type-id-117'/>
     </function-type>
     <!-- hb_face_t* (hb_face_t*) -->
-    <function-type size-in-bits='64' hash='fa0542ca390129c2' id='type-id-200'>
+    <function-type size-in-bits='64' hash='a5c48791569a6fb7' id='type-id-200'>
       <!-- parameter of type 'hb_face_t*' -->
       <parameter type-id='type-id-117'/>
       <!-- hb_face_t* -->
       <return type-id='type-id-117'/>
     </function-type>
     <!-- hb_face_t* (hb_font_t*) -->
-    <function-type size-in-bits='64' hash='759e863de6f457a4' id='type-id-201'>
+    <function-type size-in-bits='64' hash='1bbb1f5dd2399ccc' id='type-id-201'>
       <!-- parameter of type 'hb_font_t*' -->
       <parameter type-id='type-id-95'/>
       <!-- hb_face_t* -->
       <return type-id='type-id-117'/>
     </function-type>
     <!-- hb_face_t* (hb_reference_table_func_t, void*, hb_destroy_func_t) -->
-    <function-type size-in-bits='64' hash='1f90aefc9be47cc7' id='type-id-202'>
+    <function-type size-in-bits='64' hash='fc33135e3c7f3359' id='type-id-202'>
       <!-- parameter of type 'typedef hb_reference_table_func_t' -->
       <parameter type-id='type-id-203'/>
       <!-- parameter of type 'void*' -->
@@ -2041,24 +2041,24 @@
       <return type-id='type-id-117'/>
     </function-type>
     <!-- hb_face_t* (void) -->
-    <function-type size-in-bits='64' hash='5b71e44cd44f54bd' id='type-id-204'>
+    <function-type size-in-bits='64' hash='1af3c8ada9530f45' id='type-id-204'>
       <!-- hb_face_t* -->
       <return type-id='type-id-117'/>
     </function-type>
     <!-- hb_font_funcs_t* (hb_font_funcs_t*) -->
-    <function-type size-in-bits='64' hash='ebf9cd140c5e371b' id='type-id-205'>
+    <function-type size-in-bits='64' hash='cbb72a898c2e3856' id='type-id-205'>
       <!-- parameter of type 'hb_font_funcs_t*' -->
       <parameter type-id='type-id-152'/>
       <!-- hb_font_funcs_t* -->
       <return type-id='type-id-152'/>
     </function-type>
     <!-- hb_font_funcs_t* (void) -->
-    <function-type size-in-bits='64' hash='4e33e703df99fb62' id='type-id-206'>
+    <function-type size-in-bits='64' hash='6c5ce18540e48db8' id='type-id-206'>
       <!-- hb_font_funcs_t* -->
       <return type-id='type-id-152'/>
     </function-type>
     <!-- hb_font_t* (FT_Face, hb_destroy_func_t) -->
-    <function-type size-in-bits='64' hash='38395618bd8ee830' id='type-id-207'>
+    <function-type size-in-bits='64' hash='471886af6880a078' id='type-id-207'>
       <!-- parameter of type 'typedef FT_Face' -->
       <parameter type-id='type-id-96'/>
       <!-- parameter of type 'typedef hb_destroy_func_t' -->
@@ -2067,26 +2067,26 @@
       <return type-id='type-id-95'/>
     </function-type>
     <!-- hb_font_t* (hb_face_t*) -->
-    <function-type size-in-bits='64' hash='be3af39091e66aa8' id='type-id-208'>
+    <function-type size-in-bits='64' hash='a3ab35943b203ce0' id='type-id-208'>
       <!-- parameter of type 'hb_face_t*' -->
       <parameter type-id='type-id-117'/>
       <!-- hb_font_t* -->
       <return type-id='type-id-95'/>
     </function-type>
     <!-- hb_font_t* (hb_font_t*) -->
-    <function-type size-in-bits='64' hash='bcec8dd8f13b74e8' id='type-id-209'>
+    <function-type size-in-bits='64' hash='c8b74085288feb4e' id='type-id-209'>
       <!-- parameter of type 'hb_font_t*' -->
       <parameter type-id='type-id-95'/>
       <!-- hb_font_t* -->
       <return type-id='type-id-95'/>
     </function-type>
     <!-- hb_font_t* (void) -->
-    <function-type size-in-bits='64' hash='ee7ad27163ae1d60' id='type-id-210'>
+    <function-type size-in-bits='64' hash='a219676353e1c0c1' id='type-id-210'>
       <!-- hb_font_t* -->
       <return type-id='type-id-95'/>
     </function-type>
     <!-- hb_glyph_info_t* (hb_buffer_t*, unsigned int*) -->
-    <function-type size-in-bits='64' hash='c66ddf9e0ae4eaeb' id='type-id-211'>
+    <function-type size-in-bits='64' hash='394aded902e98010' id='type-id-211'>
       <!-- parameter of type 'hb_buffer_t*' -->
       <parameter type-id='type-id-136'/>
       <!-- parameter of type 'unsigned int*' -->
@@ -2095,7 +2095,7 @@
       <return type-id='type-id-212'/>
     </function-type>
     <!-- hb_glyph_position_t* (hb_buffer_t*, unsigned int*) -->
-    <function-type size-in-bits='64' hash='785594e247b01797' id='type-id-213'>
+    <function-type size-in-bits='64' hash='d65799cdc25fffa2' id='type-id-213'>
       <!-- parameter of type 'hb_buffer_t*' -->
       <parameter type-id='type-id-136'/>
       <!-- parameter of type 'unsigned int*' -->
@@ -2104,7 +2104,7 @@
       <return type-id='type-id-214'/>
     </function-type>
     <!-- hb_language_t (const char*, int) -->
-    <function-type size-in-bits='64' hash='ad035daf9f199a7e' id='type-id-215'>
+    <function-type size-in-bits='64' hash='d1eb0a1b905f3727' id='type-id-215'>
       <!-- parameter of type 'const char*' -->
       <parameter type-id='type-id-50'/>
       <!-- parameter of type 'int' -->
@@ -2113,26 +2113,26 @@
       <return type-id='type-id-105'/>
     </function-type>
     <!-- hb_language_t (hb_buffer_t*) -->
-    <function-type size-in-bits='64' hash='a396b0326c9b77d2' id='type-id-216'>
+    <function-type size-in-bits='64' hash='1000085458388713' id='type-id-216'>
       <!-- parameter of type 'hb_buffer_t*' -->
       <parameter type-id='type-id-136'/>
       <!-- typedef hb_language_t -->
       <return type-id='type-id-105'/>
     </function-type>
     <!-- hb_language_t (hb_tag_t) -->
-    <function-type size-in-bits='64' hash='de5019c740b81487' id='type-id-217'>
+    <function-type size-in-bits='64' hash='8523377f5c81591a' id='type-id-217'>
       <!-- parameter of type 'typedef hb_tag_t' -->
       <parameter type-id='type-id-71'/>
       <!-- typedef hb_language_t -->
       <return type-id='type-id-105'/>
     </function-type>
     <!-- hb_language_t (void) -->
-    <function-type size-in-bits='64' hash='f0335ffa254c5551' id='type-id-218'>
+    <function-type size-in-bits='64' hash='f18d133174b4ffce' id='type-id-218'>
       <!-- typedef hb_language_t -->
       <return type-id='type-id-105'/>
     </function-type>
     <!-- hb_ot_layout_glyph_class_t (hb_face_t*, hb_codepoint_t) -->
-    <function-type size-in-bits='64' hash='85bab19e00deef0c' id='type-id-219'>
+    <function-type size-in-bits='64' hash='c7997778514541a5' id='type-id-219'>
       <!-- parameter of type 'hb_face_t*' -->
       <parameter type-id='type-id-117'/>
       <!-- parameter of type 'typedef hb_codepoint_t' -->
@@ -2141,7 +2141,7 @@
       <return type-id='type-id-90'/>
     </function-type>
     <!-- hb_position_t (hb_font_t*, hb_codepoint_t) -->
-    <function-type size-in-bits='64' hash='d4bb0ab9ea3aa4ac' id='type-id-220'>
+    <function-type size-in-bits='64' hash='e4fbd8817e00d1cd' id='type-id-220'>
       <!-- parameter of type 'hb_font_t*' -->
       <parameter type-id='type-id-95'/>
       <!-- parameter of type 'typedef hb_codepoint_t' -->
@@ -2150,7 +2150,7 @@
       <return type-id='type-id-221'/>
     </function-type>
     <!-- hb_position_t (hb_font_t*, hb_codepoint_t, hb_codepoint_t) -->
-    <function-type size-in-bits='64' hash='f4c3d9e763fedbbd' id='type-id-222'>
+    <function-type size-in-bits='64' hash='4ac0d79d1ad4977c' id='type-id-222'>
       <!-- parameter of type 'hb_font_t*' -->
       <parameter type-id='type-id-95'/>
       <!-- parameter of type 'typedef hb_codepoint_t' -->
@@ -2161,7 +2161,7 @@
       <return type-id='type-id-221'/>
     </function-type>
     <!-- hb_position_t (hb_font_t*, void*, hb_codepoint_t, hb_codepoint_t, void*) -->
-    <function-type size-in-bits='64' hash='3d1fe4586b700710' id='type-id-223'>
+    <function-type size-in-bits='64' hash='78d9b00a7168e1d8' id='type-id-223'>
       <!-- parameter of type 'hb_font_t*' -->
       <parameter type-id='type-id-95'/>
       <!-- parameter of type 'void*' -->
@@ -2176,7 +2176,7 @@
       <return type-id='type-id-221'/>
     </function-type>
     <!-- hb_position_t (hb_font_t*, void*, hb_codepoint_t, void*) -->
-    <function-type size-in-bits='64' hash='86d62670098a7d14' id='type-id-224'>
+    <function-type size-in-bits='64' hash='8898b2e74ea50e4f' id='type-id-224'>
       <!-- parameter of type 'hb_font_t*' -->
       <parameter type-id='type-id-95'/>
       <!-- parameter of type 'void*' -->
@@ -2212,14 +2212,14 @@
       <return type-id='type-id-91'/>
     </function-type>
     <!-- hb_script_t (hb_tag_t) -->
-    <function-type size-in-bits='64' hash='ae6edebcb12401e0' id='type-id-228'>
+    <function-type size-in-bits='64' hash='4ed6d5f25280da8e' id='type-id-228'>
       <!-- parameter of type 'typedef hb_tag_t' -->
       <parameter type-id='type-id-71'/>
       <!-- enum hb_script_t -->
       <return type-id='type-id-91'/>
     </function-type>
     <!-- hb_script_t (hb_unicode_funcs_t*, hb_codepoint_t) -->
-    <function-type size-in-bits='64' hash='f9791da284b00f23' id='type-id-229'>
+    <function-type size-in-bits='64' hash='6366d89ceebd732a' id='type-id-229'>
       <!-- parameter of type 'hb_unicode_funcs_t*' -->
       <parameter type-id='type-id-178'/>
       <!-- parameter of type 'typedef hb_codepoint_t' -->
@@ -2228,7 +2228,7 @@
       <return type-id='type-id-91'/>
     </function-type>
     <!-- hb_script_t (hb_unicode_funcs_t*, hb_codepoint_t, void*) -->
-    <function-type size-in-bits='64' hash='5b44860e888834ff' id='type-id-230'>
+    <function-type size-in-bits='64' hash='845fc08199d1547b' id='type-id-230'>
       <!-- parameter of type 'hb_unicode_funcs_t*' -->
       <parameter type-id='type-id-178'/>
       <!-- parameter of type 'typedef hb_codepoint_t' -->
@@ -2239,19 +2239,19 @@
       <return type-id='type-id-91'/>
     </function-type>
     <!-- hb_set_t* (hb_set_t*) -->
-    <function-type size-in-bits='64' hash='c4bf2ea582cb660c' id='type-id-231'>
+    <function-type size-in-bits='64' hash='8346ba04b2c9c18c' id='type-id-231'>
       <!-- parameter of type 'hb_set_t*' -->
       <parameter type-id='type-id-174'/>
       <!-- hb_set_t* -->
       <return type-id='type-id-174'/>
     </function-type>
     <!-- hb_set_t* (void) -->
-    <function-type size-in-bits='64' hash='671cc5023d1d7756' id='type-id-232'>
+    <function-type size-in-bits='64' hash='e61edd5183de9448' id='type-id-232'>
       <!-- hb_set_t* -->
       <return type-id='type-id-174'/>
     </function-type>
     <!-- hb_shape_plan_t* (hb_face_t*, const hb_segment_properties_t*, const hb_feature_t*, unsigned int, const char* const*) -->
-    <function-type size-in-bits='64' hash='959b2965f86aba88' id='type-id-233'>
+    <function-type size-in-bits='64' hash='98351567e48a35d7' id='type-id-233'>
       <!-- parameter of type 'hb_face_t*' -->
       <parameter type-id='type-id-117'/>
       <!-- parameter of type 'const hb_segment_properties_t*' -->
@@ -2266,19 +2266,19 @@
       <return type-id='type-id-107'/>
     </function-type>
     <!-- hb_shape_plan_t* (hb_shape_plan_t*) -->
-    <function-type size-in-bits='64' hash='5151393b7ee91279' id='type-id-234'>
+    <function-type size-in-bits='64' hash='69655d96da9da082' id='type-id-234'>
       <!-- parameter of type 'hb_shape_plan_t*' -->
       <parameter type-id='type-id-107'/>
       <!-- hb_shape_plan_t* -->
       <return type-id='type-id-107'/>
     </function-type>
     <!-- hb_shape_plan_t* (void) -->
-    <function-type size-in-bits='64' hash='b498d549552300af' id='type-id-235'>
+    <function-type size-in-bits='64' hash='9693aecf78b3e862' id='type-id-235'>
       <!-- hb_shape_plan_t* -->
       <return type-id='type-id-107'/>
     </function-type>
     <!-- hb_tag_t (const char*, int) -->
-    <function-type size-in-bits='64' hash='51a32900ecc785fe' id='type-id-236'>
+    <function-type size-in-bits='64' hash='2a9c4836021f0414' id='type-id-236'>
       <!-- parameter of type 'const char*' -->
       <parameter type-id='type-id-50'/>
       <!-- parameter of type 'int' -->
@@ -2287,21 +2287,21 @@
       <return type-id='type-id-71'/>
     </function-type>
     <!-- hb_tag_t (hb_language_t) -->
-    <function-type size-in-bits='64' hash='ab31d303dc84f046' id='type-id-237'>
+    <function-type size-in-bits='64' hash='ff824ffd3dde8b5a' id='type-id-237'>
       <!-- parameter of type 'typedef hb_language_t' -->
       <parameter type-id='type-id-105'/>
       <!-- typedef hb_tag_t -->
       <return type-id='type-id-71'/>
     </function-type>
     <!-- hb_tag_t (hb_script_t) -->
-    <function-type size-in-bits='64' hash='766d50c7fb656e2a' id='type-id-238'>
+    <function-type size-in-bits='64' hash='75c7ee9ecda82225' id='type-id-238'>
       <!-- parameter of type 'enum hb_script_t' -->
       <parameter type-id='type-id-91'/>
       <!-- typedef hb_tag_t -->
       <return type-id='type-id-71'/>
     </function-type>
     <!-- hb_unicode_combining_class_t (hb_unicode_funcs_t*, hb_codepoint_t) -->
-    <function-type size-in-bits='64' hash='9a4c0e7170e71007' id='type-id-239'>
+    <function-type size-in-bits='64' hash='a7743c8a9a7faf2b' id='type-id-239'>
       <!-- parameter of type 'hb_unicode_funcs_t*' -->
       <parameter type-id='type-id-178'/>
       <!-- parameter of type 'typedef hb_codepoint_t' -->
@@ -2310,7 +2310,7 @@
       <return type-id='type-id-92'/>
     </function-type>
     <!-- hb_unicode_combining_class_t (hb_unicode_funcs_t*, hb_codepoint_t, void*) -->
-    <function-type size-in-bits='64' hash='028f59a0ce69cbfb' id='type-id-240'>
+    <function-type size-in-bits='64' hash='e5ca2959a84affd4' id='type-id-240'>
       <!-- parameter of type 'hb_unicode_funcs_t*' -->
       <parameter type-id='type-id-178'/>
       <!-- parameter of type 'typedef hb_codepoint_t' -->
@@ -2321,26 +2321,26 @@
       <return type-id='type-id-92'/>
     </function-type>
     <!-- hb_unicode_funcs_t* (hb_buffer_t*) -->
-    <function-type size-in-bits='64' hash='4a7893962ddfc210' id='type-id-241'>
+    <function-type size-in-bits='64' hash='61cacd6626612d23' id='type-id-241'>
       <!-- parameter of type 'hb_buffer_t*' -->
       <parameter type-id='type-id-136'/>
       <!-- hb_unicode_funcs_t* -->
       <return type-id='type-id-178'/>
     </function-type>
     <!-- hb_unicode_funcs_t* (hb_unicode_funcs_t*) -->
-    <function-type size-in-bits='64' hash='7babede534994b17' id='type-id-242'>
+    <function-type size-in-bits='64' hash='1815d2083380e0d1' id='type-id-242'>
       <!-- parameter of type 'hb_unicode_funcs_t*' -->
       <parameter type-id='type-id-178'/>
       <!-- hb_unicode_funcs_t* -->
       <return type-id='type-id-178'/>
     </function-type>
     <!-- hb_unicode_funcs_t* (void) -->
-    <function-type size-in-bits='64' hash='ad9811262ffbb128' id='type-id-243'>
+    <function-type size-in-bits='64' hash='a83acb6dc46dfafc' id='type-id-243'>
       <!-- hb_unicode_funcs_t* -->
       <return type-id='type-id-178'/>
     </function-type>
     <!-- hb_unicode_general_category_t (hb_unicode_funcs_t*, hb_codepoint_t) -->
-    <function-type size-in-bits='64' hash='6a5e8d4f07bf22ce' id='type-id-244'>
+    <function-type size-in-bits='64' hash='47a0182529d5a0eb' id='type-id-244'>
       <!-- parameter of type 'hb_unicode_funcs_t*' -->
       <parameter type-id='type-id-178'/>
       <!-- parameter of type 'typedef hb_codepoint_t' -->
@@ -2349,7 +2349,7 @@
       <return type-id='type-id-93'/>
     </function-type>
     <!-- hb_unicode_general_category_t (hb_unicode_funcs_t*, hb_codepoint_t, void*) -->
-    <function-type size-in-bits='64' hash='7231a493c49aa830' id='type-id-245'>
+    <function-type size-in-bits='64' hash='854aa20d8c4d50f6' id='type-id-245'>
       <!-- parameter of type 'hb_unicode_funcs_t*' -->
       <parameter type-id='type-id-178'/>
       <!-- parameter of type 'typedef hb_codepoint_t' -->
@@ -2418,7 +2418,7 @@
       <return type-id='type-id-111'/>
     </function-type>
     <!-- unsigned int (hb_face_t*, hb_codepoint_t, unsigned int, unsigned int*, unsigned int*) -->
-    <function-type size-in-bits='64' hash='c76d3c528c27a987' id='type-id-252'>
+    <function-type size-in-bits='64' hash='5816c3b3bd1e78ac' id='type-id-252'>
       <!-- parameter of type 'hb_face_t*' -->
       <parameter type-id='type-id-117'/>
       <!-- parameter of type 'typedef hb_codepoint_t' -->
@@ -2433,7 +2433,7 @@
       <return type-id='type-id-111'/>
     </function-type>
     <!-- unsigned int (hb_face_t*, hb_tag_t) -->
-    <function-type size-in-bits='64' hash='3bc8b4f00999212b' id='type-id-253'>
+    <function-type size-in-bits='64' hash='e47d6cc5f2414126' id='type-id-253'>
       <!-- parameter of type 'hb_face_t*' -->
       <parameter type-id='type-id-117'/>
       <!-- parameter of type 'typedef hb_tag_t' -->
@@ -2442,7 +2442,7 @@
       <return type-id='type-id-111'/>
     </function-type>
     <!-- unsigned int (hb_face_t*, hb_tag_t, unsigned int, unsigned int*, hb_tag_t*) -->
-    <function-type size-in-bits='64' hash='8eab0a696ed0aaf8' id='type-id-254'>
+    <function-type size-in-bits='64' hash='57d4f38f303dc6b0' id='type-id-254'>
       <!-- parameter of type 'hb_face_t*' -->
       <parameter type-id='type-id-117'/>
       <!-- parameter of type 'typedef hb_tag_t' -->
@@ -2457,7 +2457,7 @@
       <return type-id='type-id-111'/>
     </function-type>
     <!-- unsigned int (hb_face_t*, hb_tag_t, unsigned int, unsigned int, unsigned int*, hb_tag_t*) -->
-    <function-type size-in-bits='64' hash='3b5789d010b0b89f' id='type-id-255'>
+    <function-type size-in-bits='64' hash='22da3265295497aa' id='type-id-255'>
       <!-- parameter of type 'hb_face_t*' -->
       <parameter type-id='type-id-117'/>
       <!-- parameter of type 'typedef hb_tag_t' -->
@@ -2474,7 +2474,7 @@
       <return type-id='type-id-111'/>
     </function-type>
     <!-- unsigned int (hb_face_t*, hb_tag_t, unsigned int, unsigned int, unsigned int*, unsigned int*) -->
-    <function-type size-in-bits='64' hash='efb22e24ca258787' id='type-id-256'>
+    <function-type size-in-bits='64' hash='a1eac4a7e1df013d' id='type-id-256'>
       <!-- parameter of type 'hb_face_t*' -->
       <parameter type-id='type-id-117'/>
       <!-- parameter of type 'typedef hb_tag_t' -->
@@ -2491,7 +2491,7 @@
       <return type-id='type-id-111'/>
     </function-type>
     <!-- unsigned int (hb_face_t*, hb_tag_t, unsigned int, unsigned int, unsigned int, unsigned int*, hb_tag_t*) -->
-    <function-type size-in-bits='64' hash='d424fc0f0df2d1f3' id='type-id-257'>
+    <function-type size-in-bits='64' hash='2aaa1243449cd52d' id='type-id-257'>
       <!-- parameter of type 'hb_face_t*' -->
       <parameter type-id='type-id-117'/>
       <!-- parameter of type 'typedef hb_tag_t' -->
@@ -2510,7 +2510,7 @@
       <return type-id='type-id-111'/>
     </function-type>
     <!-- unsigned int (hb_face_t*, hb_tag_t, unsigned int, unsigned int, unsigned int, unsigned int*, unsigned int*) -->
-    <function-type size-in-bits='64' hash='7045bcbc5e6b3257' id='type-id-258'>
+    <function-type size-in-bits='64' hash='09cc8dc6e2181a59' id='type-id-258'>
       <!-- parameter of type 'hb_face_t*' -->
       <parameter type-id='type-id-117'/>
       <!-- parameter of type 'typedef hb_tag_t' -->
@@ -2529,7 +2529,7 @@
       <return type-id='type-id-111'/>
     </function-type>
     <!-- unsigned int (hb_font_t*, hb_direction_t, hb_codepoint_t, unsigned int, unsigned int*, int*) -->
-    <function-type size-in-bits='64' hash='3dd6232ea2231594' id='type-id-259'>
+    <function-type size-in-bits='64' hash='65216d608741d972' id='type-id-259'>
       <!-- parameter of type 'hb_font_t*' -->
       <parameter type-id='type-id-95'/>
       <!-- parameter of type 'enum hb_direction_t' -->
@@ -2546,7 +2546,7 @@
       <return type-id='type-id-111'/>
     </function-type>
     <!-- unsigned int (hb_unicode_funcs_t*, hb_codepoint_t) -->
-    <function-type size-in-bits='64' hash='12157cf5dc544b4a' id='type-id-261'>
+    <function-type size-in-bits='64' hash='d21fa52be058a6d0' id='type-id-261'>
       <!-- parameter of type 'hb_unicode_funcs_t*' -->
       <parameter type-id='type-id-178'/>
       <!-- parameter of type 'typedef hb_codepoint_t' -->
@@ -2555,7 +2555,7 @@
       <return type-id='type-id-111'/>
     </function-type>
     <!-- unsigned int (hb_unicode_funcs_t*, hb_codepoint_t, hb_codepoint_t*) -->
-    <function-type size-in-bits='64' hash='e4ccf872d4157a5b' id='type-id-262'>
+    <function-type size-in-bits='64' hash='c2ac8c5255f0c679' id='type-id-262'>
       <!-- parameter of type 'hb_unicode_funcs_t*' -->
       <parameter type-id='type-id-178'/>
       <!-- parameter of type 'typedef hb_codepoint_t' -->
@@ -2566,7 +2566,7 @@
       <return type-id='type-id-111'/>
     </function-type>
     <!-- unsigned int (hb_unicode_funcs_t*, hb_codepoint_t, hb_codepoint_t*, void*) -->
-    <function-type size-in-bits='64' hash='72f2daf87dc46d27' id='type-id-263'>
+    <function-type size-in-bits='64' hash='a31d8c3a3fe3852b' id='type-id-263'>
       <!-- parameter of type 'hb_unicode_funcs_t*' -->
       <parameter type-id='type-id-178'/>
       <!-- parameter of type 'typedef hb_codepoint_t' -->
@@ -2579,7 +2579,7 @@
       <return type-id='type-id-111'/>
     </function-type>
     <!-- unsigned int (hb_unicode_funcs_t*, hb_codepoint_t, void*) -->
-    <function-type size-in-bits='64' hash='60d4384fef25b7ef' id='type-id-264'>
+    <function-type size-in-bits='64' hash='58420622e9051315' id='type-id-264'>
       <!-- parameter of type 'hb_unicode_funcs_t*' -->
       <parameter type-id='type-id-178'/>
       <!-- parameter of type 'typedef hb_codepoint_t' -->
@@ -2590,7 +2590,7 @@
       <return type-id='type-id-111'/>
     </function-type>
     <!-- unsigned long int (FT_Stream, unsigned long int, unsigned char*, unsigned long int) -->
-    <function-type size-in-bits='64' hash='bb67bcc98346c1e1' id='type-id-265'>
+    <function-type size-in-bits='64' hash='d3084bbfec77918b' id='type-id-265'>
       <!-- parameter of type 'typedef FT_Stream' -->
       <parameter type-id='type-id-266'/>
       <!-- parameter of type 'unsigned long int' -->
@@ -2603,7 +2603,7 @@
       <return type-id='type-id-1'/>
     </function-type>
     <!-- void (FT_Memory, void*) -->
-    <function-type size-in-bits='64' hash='cdd6492ababab0a4' id='type-id-268'>
+    <function-type size-in-bits='64' hash='b0f28bffdbe3e05f' id='type-id-268'>
       <!-- parameter of type 'typedef FT_Memory' -->
       <parameter type-id='type-id-269'/>
       <!-- parameter of type 'void*' -->
@@ -2612,7 +2612,7 @@
       <return type-id='type-id-270'/>
     </function-type>
     <!-- void (FT_Stream) -->
-    <function-type size-in-bits='64' hash='e737cc0ca50560b2' id='type-id-271'>
+    <function-type size-in-bits='64' hash='f0e5093b5561d090' id='type-id-271'>
       <!-- parameter of type 'typedef FT_Stream' -->
       <parameter type-id='type-id-266'/>
       <!-- void -->
@@ -2720,7 +2720,7 @@
       <return type-id='type-id-270'/>
     </function-type>
     <!-- void (hb_buffer_t*, hb_codepoint_t) -->
-    <function-type size-in-bits='64' hash='e9c7ced0f4cee8f9' id='type-id-281'>
+    <function-type size-in-bits='64' hash='880ad684873c8f71' id='type-id-281'>
       <!-- parameter of type 'hb_buffer_t*' -->
       <parameter type-id='type-id-136'/>
       <!-- parameter of type 'typedef hb_codepoint_t' -->
@@ -2729,7 +2729,7 @@
       <return type-id='type-id-270'/>
     </function-type>
     <!-- void (hb_buffer_t*, hb_codepoint_t, unsigned int) -->
-    <function-type size-in-bits='64' hash='41fa9ec04a662879' id='type-id-282'>
+    <function-type size-in-bits='64' hash='090c5dd8285c5108' id='type-id-282'>
       <!-- parameter of type 'hb_buffer_t*' -->
       <parameter type-id='type-id-136'/>
       <!-- parameter of type 'typedef hb_codepoint_t' -->
@@ -2749,7 +2749,7 @@
       <return type-id='type-id-270'/>
     </function-type>
     <!-- void (hb_buffer_t*, hb_language_t) -->
-    <function-type size-in-bits='64' hash='67cf0e4b0e5714cc' id='type-id-284'>
+    <function-type size-in-bits='64' hash='7cf83b5ed7ad573a' id='type-id-284'>
       <!-- parameter of type 'hb_buffer_t*' -->
       <parameter type-id='type-id-136'/>
       <!-- parameter of type 'typedef hb_language_t' -->
@@ -2803,7 +2803,7 @@
       <return type-id='type-id-270'/>
     </function-type>
     <!-- void (hb_face_t*, hb_tag_t, const hb_tag_t*, const hb_tag_t*, const hb_tag_t*, hb_set_t*) -->
-    <function-type size-in-bits='64' hash='60e7af5c3cc4be2b' id='type-id-291'>
+    <function-type size-in-bits='64' hash='917c522564db4e8e' id='type-id-291'>
       <!-- parameter of type 'hb_face_t*' -->
       <parameter type-id='type-id-117'/>
       <!-- parameter of type 'typedef hb_tag_t' -->
@@ -2820,7 +2820,7 @@
       <return type-id='type-id-270'/>
     </function-type>
     <!-- void (hb_face_t*, hb_tag_t, unsigned int, hb_set_t*, hb_set_t*, hb_set_t*, hb_set_t*) -->
-    <function-type size-in-bits='64' hash='754076a17df04d0a' id='type-id-292'>
+    <function-type size-in-bits='64' hash='eabc6ebeb1ca9a86' id='type-id-292'>
       <!-- parameter of type 'hb_face_t*' -->
       <parameter type-id='type-id-117'/>
       <!-- parameter of type 'typedef hb_tag_t' -->
@@ -2877,7 +2877,7 @@
       <return type-id='type-id-270'/>
     </function-type>
     <!-- void (hb_font_funcs_t*, hb_font_get_glyph_contour_point_func_t, void*, hb_destroy_func_t) -->
-    <function-type size-in-bits='64' hash='076f115e564ddd1a' id='type-id-297'>
+    <function-type size-in-bits='64' hash='8ddaed5f556fca4f' id='type-id-297'>
       <!-- parameter of type 'hb_font_funcs_t*' -->
       <parameter type-id='type-id-152'/>
       <!-- parameter of type 'typedef hb_font_get_glyph_contour_point_func_t' -->
@@ -2890,7 +2890,7 @@
       <return type-id='type-id-270'/>
     </function-type>
     <!-- void (hb_font_funcs_t*, hb_font_get_glyph_extents_func_t, void*, hb_destroy_func_t) -->
-    <function-type size-in-bits='64' hash='c635a028d2fe4a1d' id='type-id-299'>
+    <function-type size-in-bits='64' hash='4f9b91ff8a33ff77' id='type-id-299'>
       <!-- parameter of type 'hb_font_funcs_t*' -->
       <parameter type-id='type-id-152'/>
       <!-- parameter of type 'typedef hb_font_get_glyph_extents_func_t' -->
@@ -2903,7 +2903,7 @@
       <return type-id='type-id-270'/>
     </function-type>
     <!-- void (hb_font_funcs_t*, hb_font_get_glyph_from_name_func_t, void*, hb_destroy_func_t) -->
-    <function-type size-in-bits='64' hash='2568ac613d57c21e' id='type-id-301'>
+    <function-type size-in-bits='64' hash='4e3be65d7382233c' id='type-id-301'>
       <!-- parameter of type 'hb_font_funcs_t*' -->
       <parameter type-id='type-id-152'/>
       <!-- parameter of type 'typedef hb_font_get_glyph_from_name_func_t' -->
@@ -2916,7 +2916,7 @@
       <return type-id='type-id-270'/>
     </function-type>
     <!-- void (hb_font_funcs_t*, hb_font_get_glyph_func_t, void*, hb_destroy_func_t) -->
-    <function-type size-in-bits='64' hash='134d0356d5e840de' id='type-id-303'>
+    <function-type size-in-bits='64' hash='bf707e59cef360ac' id='type-id-303'>
       <!-- parameter of type 'hb_font_funcs_t*' -->
       <parameter type-id='type-id-152'/>
       <!-- parameter of type 'typedef hb_font_get_glyph_func_t' -->
@@ -2929,7 +2929,7 @@
       <return type-id='type-id-270'/>
     </function-type>
     <!-- void (hb_font_funcs_t*, hb_font_get_glyph_h_advance_func_t, void*, hb_destroy_func_t) -->
-    <function-type size-in-bits='64' hash='577e4a4043452925' id='type-id-305'>
+    <function-type size-in-bits='64' hash='6798603f998c8e45' id='type-id-305'>
       <!-- parameter of type 'hb_font_funcs_t*' -->
       <parameter type-id='type-id-152'/>
       <!-- parameter of type 'typedef hb_font_get_glyph_h_advance_func_t' -->
@@ -2942,7 +2942,7 @@
       <return type-id='type-id-270'/>
     </function-type>
     <!-- void (hb_font_funcs_t*, hb_font_get_glyph_h_kerning_func_t, void*, hb_destroy_func_t) -->
-    <function-type size-in-bits='64' hash='9fa733298d35f5c3' id='type-id-307'>
+    <function-type size-in-bits='64' hash='542da7a4a1f84737' id='type-id-307'>
       <!-- parameter of type 'hb_font_funcs_t*' -->
       <parameter type-id='type-id-152'/>
       <!-- parameter of type 'typedef hb_font_get_glyph_h_kerning_func_t' -->
@@ -2955,7 +2955,7 @@
       <return type-id='type-id-270'/>
     </function-type>
     <!-- void (hb_font_funcs_t*, hb_font_get_glyph_h_origin_func_t, void*, hb_destroy_func_t) -->
-    <function-type size-in-bits='64' hash='e1afa917bd14aba8' id='type-id-309'>
+    <function-type size-in-bits='64' hash='185bcefe7061e6ff' id='type-id-309'>
       <!-- parameter of type 'hb_font_funcs_t*' -->
       <parameter type-id='type-id-152'/>
       <!-- parameter of type 'typedef hb_font_get_glyph_h_origin_func_t' -->
@@ -2968,7 +2968,7 @@
       <return type-id='type-id-270'/>
     </function-type>
     <!-- void (hb_font_funcs_t*, hb_font_get_glyph_name_func_t, void*, hb_destroy_func_t) -->
-    <function-type size-in-bits='64' hash='18d3496713265f6d' id='type-id-311'>
+    <function-type size-in-bits='64' hash='08385705f5f2f263' id='type-id-311'>
       <!-- parameter of type 'hb_font_funcs_t*' -->
       <parameter type-id='type-id-152'/>
       <!-- parameter of type 'typedef hb_font_get_glyph_name_func_t' -->
@@ -2981,7 +2981,7 @@
       <return type-id='type-id-270'/>
     </function-type>
     <!-- void (hb_font_funcs_t*, hb_font_get_glyph_v_advance_func_t, void*, hb_destroy_func_t) -->
-    <function-type size-in-bits='64' hash='3615fd64039d740d' id='type-id-313'>
+    <function-type size-in-bits='64' hash='9668bc228b6bb24d' id='type-id-313'>
       <!-- parameter of type 'hb_font_funcs_t*' -->
       <parameter type-id='type-id-152'/>
       <!-- parameter of type 'typedef hb_font_get_glyph_v_advance_func_t' -->
@@ -2994,7 +2994,7 @@
       <return type-id='type-id-270'/>
     </function-type>
     <!-- void (hb_font_funcs_t*, hb_font_get_glyph_v_kerning_func_t, void*, hb_destroy_func_t) -->
-    <function-type size-in-bits='64' hash='d9ebd9b2b11f2586' id='type-id-315'>
+    <function-type size-in-bits='64' hash='a61fdd9b26dfaa18' id='type-id-315'>
       <!-- parameter of type 'hb_font_funcs_t*' -->
       <parameter type-id='type-id-152'/>
       <!-- parameter of type 'typedef hb_font_get_glyph_v_kerning_func_t' -->
@@ -3007,7 +3007,7 @@
       <return type-id='type-id-270'/>
     </function-type>
     <!-- void (hb_font_funcs_t*, hb_font_get_glyph_v_origin_func_t, void*, hb_destroy_func_t) -->
-    <function-type size-in-bits='64' hash='a278e7f7df774819' id='type-id-317'>
+    <function-type size-in-bits='64' hash='ca9b77ac02d26667' id='type-id-317'>
       <!-- parameter of type 'hb_font_funcs_t*' -->
       <parameter type-id='type-id-152'/>
       <!-- parameter of type 'typedef hb_font_get_glyph_v_origin_func_t' -->
@@ -3055,7 +3055,7 @@
       <return type-id='type-id-270'/>
     </function-type>
     <!-- void (hb_font_t*, hb_codepoint_t, char*, unsigned int) -->
-    <function-type size-in-bits='64' hash='d977b6764be5c510' id='type-id-322'>
+    <function-type size-in-bits='64' hash='c0ae0898cf602a00' id='type-id-322'>
       <!-- parameter of type 'hb_font_t*' -->
       <parameter type-id='type-id-95'/>
       <!-- parameter of type 'typedef hb_codepoint_t' -->
@@ -3068,7 +3068,7 @@
       <return type-id='type-id-270'/>
     </function-type>
     <!-- void (hb_font_t*, hb_codepoint_t, hb_codepoint_t, hb_direction_t, hb_position_t*, hb_position_t*) -->
-    <function-type size-in-bits='64' hash='a06f206e22bdbb84' id='type-id-323'>
+    <function-type size-in-bits='64' hash='cd166f0ac0d3b072' id='type-id-323'>
       <!-- parameter of type 'hb_font_t*' -->
       <parameter type-id='type-id-95'/>
       <!-- parameter of type 'typedef hb_codepoint_t' -->
@@ -3085,7 +3085,7 @@
       <return type-id='type-id-270'/>
     </function-type>
     <!-- void (hb_font_t*, hb_codepoint_t, hb_direction_t, hb_position_t*, hb_position_t*) -->
-    <function-type size-in-bits='64' hash='1c94e6664bbbf8cd' id='type-id-324'>
+    <function-type size-in-bits='64' hash='f1d33daf332bcd14' id='type-id-324'>
       <!-- parameter of type 'hb_font_t*' -->
       <parameter type-id='type-id-95'/>
       <!-- parameter of type 'typedef hb_codepoint_t' -->
@@ -3100,7 +3100,7 @@
       <return type-id='type-id-270'/>
     </function-type>
     <!-- void (hb_font_t*, hb_font_funcs_t*, void*, hb_destroy_func_t) -->
-    <function-type size-in-bits='64' hash='9391ad901b2560cc' id='type-id-325'>
+    <function-type size-in-bits='64' hash='791d2e6351642382' id='type-id-325'>
       <!-- parameter of type 'hb_font_t*' -->
       <parameter type-id='type-id-95'/>
       <!-- parameter of type 'hb_font_funcs_t*' -->
@@ -3157,7 +3157,7 @@
       <return type-id='type-id-270'/>
     </function-type>
     <!-- void (hb_font_t*, void*, hb_destroy_func_t) -->
-    <function-type size-in-bits='64' hash='f58b7ad3ecb44d17' id='type-id-330'>
+    <function-type size-in-bits='64' hash='cc207c226cce2ab8' id='type-id-330'>
       <!-- parameter of type 'hb_font_t*' -->
       <parameter type-id='type-id-95'/>
       <!-- parameter of type 'void*' -->
@@ -3195,7 +3195,7 @@
       <return type-id='type-id-270'/>
     </function-type>
     <!-- void (hb_set_t*, hb_codepoint_t) -->
-    <function-type size-in-bits='64' hash='53e537d80067cdcc' id='type-id-334'>
+    <function-type size-in-bits='64' hash='718acfdd8786bd4d' id='type-id-334'>
       <!-- parameter of type 'hb_set_t*' -->
       <parameter type-id='type-id-174'/>
       <!-- parameter of type 'typedef hb_codepoint_t' -->
@@ -3204,7 +3204,7 @@
       <return type-id='type-id-270'/>
     </function-type>
     <!-- void (hb_set_t*, hb_codepoint_t, hb_codepoint_t) -->
-    <function-type size-in-bits='64' hash='215c6114d95d47cf' id='type-id-335'>
+    <function-type size-in-bits='64' hash='4c876938668d1285' id='type-id-335'>
       <!-- parameter of type 'hb_set_t*' -->
       <parameter type-id='type-id-174'/>
       <!-- parameter of type 'typedef hb_codepoint_t' -->
@@ -3222,7 +3222,7 @@
       <return type-id='type-id-270'/>
     </function-type>
     <!-- void (hb_shape_plan_t*, hb_tag_t, hb_set_t*) -->
-    <function-type size-in-bits='64' hash='a4cfbc28c84c1e3b' id='type-id-337'>
+    <function-type size-in-bits='64' hash='2992f521ae00de91' id='type-id-337'>
       <!-- parameter of type 'hb_shape_plan_t*' -->
       <parameter type-id='type-id-107'/>
       <!-- parameter of type 'typedef hb_tag_t' -->
@@ -3233,7 +3233,7 @@
       <return type-id='type-id-270'/>
     </function-type>
     <!-- void (hb_tag_t, char*) -->
-    <function-type size-in-bits='64' hash='815487ddda17e3cc' id='type-id-338'>
+    <function-type size-in-bits='64' hash='44018b3c5893a765' id='type-id-338'>
       <!-- parameter of type 'typedef hb_tag_t' -->
       <parameter type-id='type-id-71'/>
       <!-- parameter of type 'char*' -->
@@ -3249,7 +3249,7 @@
       <return type-id='type-id-270'/>
     </function-type>
     <!-- void (hb_unicode_funcs_t*, hb_unicode_combining_class_func_t, void*, hb_destroy_func_t) -->
-    <function-type size-in-bits='64' hash='eabfff00390b3f0d' id='type-id-340'>
+    <function-type size-in-bits='64' hash='97ef8e7d98fb0214' id='type-id-340'>
       <!-- parameter of type 'hb_unicode_funcs_t*' -->
       <parameter type-id='type-id-178'/>
       <!-- parameter of type 'typedef hb_unicode_combining_class_func_t' -->
@@ -3262,7 +3262,7 @@
       <return type-id='type-id-270'/>
     </function-type>
     <!-- void (hb_unicode_funcs_t*, hb_unicode_compose_func_t, void*, hb_destroy_func_t) -->
-    <function-type size-in-bits='64' hash='60942e7414f48e8b' id='type-id-342'>
+    <function-type size-in-bits='64' hash='6f6752cca5117809' id='type-id-342'>
       <!-- parameter of type 'hb_unicode_funcs_t*' -->
       <parameter type-id='type-id-178'/>
       <!-- parameter of type 'typedef hb_unicode_compose_func_t' -->
@@ -3275,7 +3275,7 @@
       <return type-id='type-id-270'/>
     </function-type>
     <!-- void (hb_unicode_funcs_t*, hb_unicode_decompose_compatibility_func_t, void*, hb_destroy_func_t) -->
-    <function-type size-in-bits='64' hash='9836800008b505a7' id='type-id-344'>
+    <function-type size-in-bits='64' hash='e66f01ac0a5ccc25' id='type-id-344'>
       <!-- parameter of type 'hb_unicode_funcs_t*' -->
       <parameter type-id='type-id-178'/>
       <!-- parameter of type 'typedef hb_unicode_decompose_compatibility_func_t' -->
@@ -3288,7 +3288,7 @@
       <return type-id='type-id-270'/>
     </function-type>
     <!-- void (hb_unicode_funcs_t*, hb_unicode_decompose_func_t, void*, hb_destroy_func_t) -->
-    <function-type size-in-bits='64' hash='f8a2145d3d210e26' id='type-id-346'>
+    <function-type size-in-bits='64' hash='73171cfa105bc9c8' id='type-id-346'>
       <!-- parameter of type 'hb_unicode_funcs_t*' -->
       <parameter type-id='type-id-178'/>
       <!-- parameter of type 'typedef hb_unicode_decompose_func_t' -->
@@ -3301,7 +3301,7 @@
       <return type-id='type-id-270'/>
     </function-type>
     <!-- void (hb_unicode_funcs_t*, hb_unicode_eastasian_width_func_t, void*, hb_destroy_func_t) -->
-    <function-type size-in-bits='64' hash='f46ac2dfbcbb0df8' id='type-id-348'>
+    <function-type size-in-bits='64' hash='a2d1ec3cb1d6421d' id='type-id-348'>
       <!-- parameter of type 'hb_unicode_funcs_t*' -->
       <parameter type-id='type-id-178'/>
       <!-- parameter of type 'typedef hb_unicode_eastasian_width_func_t' -->
@@ -3314,7 +3314,7 @@
       <return type-id='type-id-270'/>
     </function-type>
     <!-- void (hb_unicode_funcs_t*, hb_unicode_general_category_func_t, void*, hb_destroy_func_t) -->
-    <function-type size-in-bits='64' hash='6886bc13b742f6db' id='type-id-350'>
+    <function-type size-in-bits='64' hash='bcc633b46c8195c5' id='type-id-350'>
       <!-- parameter of type 'hb_unicode_funcs_t*' -->
       <parameter type-id='type-id-178'/>
       <!-- parameter of type 'typedef hb_unicode_general_category_func_t' -->
@@ -3327,7 +3327,7 @@
       <return type-id='type-id-270'/>
     </function-type>
     <!-- void (hb_unicode_funcs_t*, hb_unicode_mirroring_func_t, void*, hb_destroy_func_t) -->
-    <function-type size-in-bits='64' hash='6434c7a3634f731a' id='type-id-352'>
+    <function-type size-in-bits='64' hash='52e33e11aeef9756' id='type-id-352'>
       <!-- parameter of type 'hb_unicode_funcs_t*' -->
       <parameter type-id='type-id-178'/>
       <!-- parameter of type 'typedef hb_unicode_mirroring_func_t' -->
@@ -3340,7 +3340,7 @@
       <return type-id='type-id-270'/>
     </function-type>
     <!-- void (hb_unicode_funcs_t*, hb_unicode_script_func_t, void*, hb_destroy_func_t) -->
-    <function-type size-in-bits='64' hash='aeb87a62d98f1df8' id='type-id-354'>
+    <function-type size-in-bits='64' hash='dd2fbde46dc21277' id='type-id-354'>
       <!-- parameter of type 'hb_unicode_funcs_t*' -->
       <parameter type-id='type-id-178'/>
       <!-- parameter of type 'typedef hb_unicode_script_func_t' -->
@@ -3371,7 +3371,7 @@
       <return type-id='type-id-270'/>
     </function-type>
     <!-- void* (FT_Memory, long int) -->
-    <function-type size-in-bits='64' hash='6d64704a0da97585' id='type-id-358'>
+    <function-type size-in-bits='64' hash='9fcfbf5d567274fb' id='type-id-358'>
       <!-- parameter of type 'typedef FT_Memory' -->
       <parameter type-id='type-id-269'/>
       <!-- parameter of type 'long int' -->
@@ -3380,7 +3380,7 @@
       <return type-id='type-id-112'/>
     </function-type>
     <!-- void* (FT_Memory, long int, long int, void*) -->
-    <function-type size-in-bits='64' hash='79ba3f555d82111d' id='type-id-360'>
+    <function-type size-in-bits='64' hash='61071eb9ac4a40ce' id='type-id-360'>
       <!-- parameter of type 'typedef FT_Memory' -->
       <parameter type-id='type-id-269'/>
       <!-- parameter of type 'long int' -->
@@ -3393,7 +3393,7 @@
       <return type-id='type-id-112'/>
     </function-type>
     <!-- void* (hb_blob_t*, hb_user_data_key_t*) -->
-    <function-type size-in-bits='64' hash='74dc721a9c5046bc' id='type-id-361'>
+    <function-type size-in-bits='64' hash='c1a25c89d3e8b698' id='type-id-361'>
       <!-- parameter of type 'hb_blob_t*' -->
       <parameter type-id='type-id-99'/>
       <!-- parameter of type 'hb_user_data_key_t*' -->
@@ -3402,7 +3402,7 @@
       <return type-id='type-id-112'/>
     </function-type>
     <!-- void* (hb_buffer_t*, hb_user_data_key_t*) -->
-    <function-type size-in-bits='64' hash='587d350ca63a3ef6' id='type-id-362'>
+    <function-type size-in-bits='64' hash='05cc4e7b286a78cd' id='type-id-362'>
       <!-- parameter of type 'hb_buffer_t*' -->
       <parameter type-id='type-id-136'/>
       <!-- parameter of type 'hb_user_data_key_t*' -->
@@ -3411,7 +3411,7 @@
       <return type-id='type-id-112'/>
     </function-type>
     <!-- void* (hb_face_t*, hb_user_data_key_t*) -->
-    <function-type size-in-bits='64' hash='bca1a8e0644e209e' id='type-id-363'>
+    <function-type size-in-bits='64' hash='22568974ca6ddf64' id='type-id-363'>
       <!-- parameter of type 'hb_face_t*' -->
       <parameter type-id='type-id-117'/>
       <!-- parameter of type 'hb_user_data_key_t*' -->
@@ -3420,7 +3420,7 @@
       <return type-id='type-id-112'/>
     </function-type>
     <!-- void* (hb_font_funcs_t*, hb_user_data_key_t*) -->
-    <function-type size-in-bits='64' hash='cadfbd3bff16c39e' id='type-id-364'>
+    <function-type size-in-bits='64' hash='0ca7a1f577d30248' id='type-id-364'>
       <!-- parameter of type 'hb_font_funcs_t*' -->
       <parameter type-id='type-id-152'/>
       <!-- parameter of type 'hb_user_data_key_t*' -->
@@ -3429,7 +3429,7 @@
       <return type-id='type-id-112'/>
     </function-type>
     <!-- void* (hb_font_t*, hb_user_data_key_t*) -->
-    <function-type size-in-bits='64' hash='dd46ba32e8f61980' id='type-id-365'>
+    <function-type size-in-bits='64' hash='078467f05e5d2fd4' id='type-id-365'>
       <!-- parameter of type 'hb_font_t*' -->
       <parameter type-id='type-id-95'/>
       <!-- parameter of type 'hb_user_data_key_t*' -->
@@ -3438,7 +3438,7 @@
       <return type-id='type-id-112'/>
     </function-type>
     <!-- void* (hb_set_t*, hb_user_data_key_t*) -->
-    <function-type size-in-bits='64' hash='c223a91e3664724a' id='type-id-366'>
+    <function-type size-in-bits='64' hash='08e13951bb764912' id='type-id-366'>
       <!-- parameter of type 'hb_set_t*' -->
       <parameter type-id='type-id-174'/>
       <!-- parameter of type 'hb_user_data_key_t*' -->
@@ -3447,7 +3447,7 @@
       <return type-id='type-id-112'/>
     </function-type>
     <!-- void* (hb_shape_plan_t*, hb_user_data_key_t*) -->
-    <function-type size-in-bits='64' hash='fb290e57d2c15995' id='type-id-367'>
+    <function-type size-in-bits='64' hash='4a984737238d755a' id='type-id-367'>
       <!-- parameter of type 'hb_shape_plan_t*' -->
       <parameter type-id='type-id-107'/>
       <!-- parameter of type 'hb_user_data_key_t*' -->
@@ -3456,7 +3456,7 @@
       <return type-id='type-id-112'/>
     </function-type>
     <!-- void* (hb_unicode_funcs_t*, hb_user_data_key_t*) -->
-    <function-type size-in-bits='64' hash='a2476fc0fe84995b' id='type-id-368'>
+    <function-type size-in-bits='64' hash='a9522f448b8c20d5' id='type-id-368'>
       <!-- parameter of type 'hb_unicode_funcs_t*' -->
       <parameter type-id='type-id-178'/>
       <!-- parameter of type 'hb_user_data_key_t*' -->
@@ -4873,7 +4873,7 @@
     <class-decl name='hb_set_t' is-struct='yes' visibility='default' size-in-bits='66496' hash='df6a6f0bb5f361f5' id='type-id-487'>
       <member-type access='private'>
         <!-- typedef uint32_t hb_set_t::elt_t -->
-        <typedef-decl name='elt_t' type-id='type-id-77' size-in-bits='32' hash='e66b43f97c38e87a' id='type-id-400'/>
+        <typedef-decl name='elt_t' type-id='type-id-77' size-in-bits='32' hash='01b265816e53dd71' id='type-id-400'/>
       </member-type>
       <data-member access='public' layout-offset-in-bits='0'>
         <!-- hb_object_header_t hb_set_t::header -->
@@ -4974,193 +4974,193 @@
       </data-member>
     </class-decl>
     <!-- typedef void* (*)(FT_Memory, long int) FT_Alloc_Func -->
-    <typedef-decl name='FT_Alloc_Func' type-id='type-id-490' size-in-bits='64' hash='6647242c5bb9c791' id='type-id-454'/>
+    <typedef-decl name='FT_Alloc_Func' type-id='type-id-490' size-in-bits='64' hash='f97c47d76d558af6' id='type-id-454'/>
     <!-- typedef FT_BBox_ FT_BBox -->
-    <typedef-decl name='FT_BBox' type-id='type-id-424' size-in-bits='256' hash='840938101634393a' id='type-id-434'/>
+    <typedef-decl name='FT_BBox' type-id='type-id-424' size-in-bits='256' hash='26d7eea9c7725974' id='type-id-434'/>
     <!-- typedef FT_Bitmap_ FT_Bitmap -->
-    <typedef-decl name='FT_Bitmap' type-id='type-id-426' size-in-bits='320' hash='dd0aac44e30e5425' id='type-id-447'/>
+    <typedef-decl name='FT_Bitmap' type-id='type-id-426' size-in-bits='320' hash='0faebbe03a8c0e59' id='type-id-447'/>
     <!-- typedef FT_Bitmap_Size_ FT_Bitmap_Size -->
-    <typedef-decl name='FT_Bitmap_Size' type-id='type-id-427' size-in-bits='256' hash='48096fbe77d39230' id='type-id-9'/>
+    <typedef-decl name='FT_Bitmap_Size' type-id='type-id-427' size-in-bits='256' hash='8e2739f9754dc161' id='type-id-9'/>
     <!-- typedef FT_CharMapRec_* FT_CharMap -->
-    <typedef-decl name='FT_CharMap' type-id='type-id-14' size-in-bits='64' hash='b30387c097d79219' id='type-id-11'/>
+    <typedef-decl name='FT_CharMap' type-id='type-id-14' size-in-bits='64' hash='112fa5fe32d1d7ec' id='type-id-11'/>
     <!-- typedef FT_DriverRec_* FT_Driver -->
-    <typedef-decl name='FT_Driver' type-id='type-id-16' size-in-bits='64' hash='e794e0987d0c01cc' id='type-id-437'/>
+    <typedef-decl name='FT_Driver' type-id='type-id-16' size-in-bits='64' hash='ab1f77a3a243b411' id='type-id-437'/>
     <!-- typedef FT_Encoding_ FT_Encoding -->
-    <typedef-decl name='FT_Encoding' type-id='type-id-80' size-in-bits='32' alignment-in-bits='32' hash='bfa73008c3d5772f' id='type-id-429'/>
+    <typedef-decl name='FT_Encoding' type-id='type-id-80' size-in-bits='32' alignment-in-bits='32' hash='f62b274302396c60' id='type-id-429'/>
     <!-- typedef FT_FaceRec_* FT_Face -->
-    <typedef-decl name='FT_Face' type-id='type-id-18' size-in-bits='64' hash='6600231176960b91' id='type-id-96'/>
+    <typedef-decl name='FT_Face' type-id='type-id-18' size-in-bits='64' hash='7cad891b591c04aa' id='type-id-96'/>
     <!-- typedef FT_Face_InternalRec_* FT_Face_Internal -->
-    <typedef-decl name='FT_Face_Internal' type-id='type-id-20' size-in-bits='64' hash='b92fd9e2c19dc14f' id='type-id-439'/>
+    <typedef-decl name='FT_Face_Internal' type-id='type-id-20' size-in-bits='64' hash='710966bbe0180206' id='type-id-439'/>
     <!-- typedef long int FT_Fixed -->
-    <typedef-decl name='FT_Fixed' type-id='type-id-359' size-in-bits='64' hash='8aa1e1a2ab2c2d3e' id='type-id-445'/>
+    <typedef-decl name='FT_Fixed' type-id='type-id-359' size-in-bits='64' hash='567f7af3a2d00f27' id='type-id-445'/>
     <!-- typedef void (*)(FT_Memory, void*) FT_Free_Func -->
-    <typedef-decl name='FT_Free_Func' type-id='type-id-491' size-in-bits='64' hash='458f239eeac9e9aa' id='type-id-455'/>
+    <typedef-decl name='FT_Free_Func' type-id='type-id-491' size-in-bits='64' hash='ae65d896f3063c94' id='type-id-455'/>
     <!-- typedef FT_Generic_ FT_Generic -->
-    <typedef-decl name='FT_Generic' type-id='type-id-440' size-in-bits='128' hash='39e7f64d7d21b28a' id='type-id-433'/>
+    <typedef-decl name='FT_Generic' type-id='type-id-440' size-in-bits='128' hash='b58ecaff12ed7b52' id='type-id-433'/>
     <!-- typedef void (*)(void*) FT_Generic_Finalizer -->
-    <typedef-decl name='FT_Generic_Finalizer' type-id='type-id-492' size-in-bits='64' hash='3c6555b15ff3c2e2' id='type-id-441'/>
+    <typedef-decl name='FT_Generic_Finalizer' type-id='type-id-492' size-in-bits='64' hash='cf5d5995059acedb' id='type-id-441'/>
     <!-- typedef FT_GlyphSlotRec_* FT_GlyphSlot -->
-    <typedef-decl name='FT_GlyphSlot' type-id='type-id-22' size-in-bits='64' hash='852b982b0011d276' id='type-id-435'/>
+    <typedef-decl name='FT_GlyphSlot' type-id='type-id-22' size-in-bits='64' hash='47c9137f993812f4' id='type-id-435'/>
     <!-- typedef FT_Glyph_Format_ FT_Glyph_Format -->
-    <typedef-decl name='FT_Glyph_Format' type-id='type-id-82' size-in-bits='32' alignment-in-bits='32' hash='d0e597f9aa5f79a7' id='type-id-446'/>
+    <typedef-decl name='FT_Glyph_Format' type-id='type-id-82' size-in-bits='32' alignment-in-bits='32' hash='01cdba8662293804' id='type-id-446'/>
     <!-- typedef FT_Glyph_Metrics_ FT_Glyph_Metrics -->
-    <typedef-decl name='FT_Glyph_Metrics' type-id='type-id-451' size-in-bits='512' hash='e0f2645194827561' id='type-id-444'/>
+    <typedef-decl name='FT_Glyph_Metrics' type-id='type-id-451' size-in-bits='512' hash='678facb8a8f9fef6' id='type-id-444'/>
     <!-- typedef int FT_Int -->
-    <typedef-decl name='FT_Int' type-id='type-id-122' size-in-bits='32' hash='09d17c08f594edc7' id='type-id-432'/>
+    <typedef-decl name='FT_Int' type-id='type-id-122' size-in-bits='32' hash='f2b82e49c8af56cd' id='type-id-432'/>
     <!-- typedef FT_LibraryRec_* FT_Library -->
-    <typedef-decl name='FT_Library' type-id='type-id-24' size-in-bits='64' hash='6e3b4a8c36a8978c' id='type-id-442'/>
+    <typedef-decl name='FT_Library' type-id='type-id-24' size-in-bits='64' hash='1d54069825b4212f' id='type-id-442'/>
     <!-- typedef FT_ListNodeRec_* FT_ListNode -->
-    <typedef-decl name='FT_ListNode' type-id='type-id-26' size-in-bits='64' hash='51a81ff1f59507b7' id='type-id-452'/>
+    <typedef-decl name='FT_ListNode' type-id='type-id-26' size-in-bits='64' hash='a935ce5487e0d199' id='type-id-452'/>
     <!-- typedef FT_ListRec_ FT_ListRec -->
-    <typedef-decl name='FT_ListRec' type-id='type-id-453' size-in-bits='128' hash='8df231ffd4ed9f85' id='type-id-438'/>
+    <typedef-decl name='FT_ListRec' type-id='type-id-453' size-in-bits='128' hash='d963800833485e88' id='type-id-438'/>
     <!-- typedef long int FT_Long -->
-    <typedef-decl name='FT_Long' type-id='type-id-359' size-in-bits='64' hash='8aa1e1a2ab2c2d3e' id='type-id-431'/>
+    <typedef-decl name='FT_Long' type-id='type-id-359' size-in-bits='64' hash='567f7af3a2d00f27' id='type-id-431'/>
     <!-- typedef FT_MemoryRec_* FT_Memory -->
-    <typedef-decl name='FT_Memory' type-id='type-id-28' size-in-bits='64' hash='66075bdbc3758e3f' id='type-id-269'/>
+    <typedef-decl name='FT_Memory' type-id='type-id-28' size-in-bits='64' hash='6e401da6144eff45' id='type-id-269'/>
     <!-- typedef FT_Outline_ FT_Outline -->
-    <typedef-decl name='FT_Outline' type-id='type-id-457' size-in-bits='320' hash='dd2954ad165eee81' id='type-id-448'/>
+    <typedef-decl name='FT_Outline' type-id='type-id-457' size-in-bits='320' hash='d803444af01e5772' id='type-id-448'/>
     <!-- typedef long int FT_Pos -->
-    <typedef-decl name='FT_Pos' type-id='type-id-359' size-in-bits='64' hash='8aa1e1a2ab2c2d3e' id='type-id-425'/>
+    <typedef-decl name='FT_Pos' type-id='type-id-359' size-in-bits='64' hash='567f7af3a2d00f27' id='type-id-425'/>
     <!-- typedef void* (*)(FT_Memory, long int, long int, void*) FT_Realloc_Func -->
-    <typedef-decl name='FT_Realloc_Func' type-id='type-id-493' size-in-bits='64' hash='e276ab5ee45db5be' id='type-id-456'/>
+    <typedef-decl name='FT_Realloc_Func' type-id='type-id-493' size-in-bits='64' hash='112b89689f6b9eaf' id='type-id-456'/>
     <!-- typedef short int FT_Short -->
-    <typedef-decl name='FT_Short' type-id='type-id-421' size-in-bits='16' hash='2e5e87528799cdbb' id='type-id-428'/>
+    <typedef-decl name='FT_Short' type-id='type-id-421' size-in-bits='16' hash='bfcf8c53a7e22b05' id='type-id-428'/>
     <!-- typedef FT_SizeRec_* FT_Size -->
-    <typedef-decl name='FT_Size' type-id='type-id-30' size-in-bits='64' hash='05274e5a8f692aa5' id='type-id-436'/>
+    <typedef-decl name='FT_Size' type-id='type-id-30' size-in-bits='64' hash='38b26077013d43de' id='type-id-436'/>
     <!-- typedef FT_Size_InternalRec_* FT_Size_Internal -->
-    <typedef-decl name='FT_Size_Internal' type-id='type-id-32' size-in-bits='64' hash='6ab5e6e90d055539' id='type-id-459'/>
+    <typedef-decl name='FT_Size_Internal' type-id='type-id-32' size-in-bits='64' hash='0942097dd4b221e0' id='type-id-459'/>
     <!-- typedef FT_Size_Metrics_ FT_Size_Metrics -->
-    <typedef-decl name='FT_Size_Metrics' type-id='type-id-460' size-in-bits='448' hash='fdda306b266a7f18' id='type-id-458'/>
+    <typedef-decl name='FT_Size_Metrics' type-id='type-id-460' size-in-bits='448' hash='6079184a8b399c3b' id='type-id-458'/>
     <!-- typedef FT_Slot_InternalRec_* FT_Slot_Internal -->
-    <typedef-decl name='FT_Slot_Internal' type-id='type-id-34' size-in-bits='64' hash='fb8e92fb782cbd22' id='type-id-450'/>
+    <typedef-decl name='FT_Slot_Internal' type-id='type-id-34' size-in-bits='64' hash='04ae3ad5ed5d6cf2' id='type-id-450'/>
     <!-- typedef FT_StreamRec_* FT_Stream -->
-    <typedef-decl name='FT_Stream' type-id='type-id-36' size-in-bits='64' hash='f3977807d429afad' id='type-id-266'/>
+    <typedef-decl name='FT_Stream' type-id='type-id-36' size-in-bits='64' hash='7f964eb725185ecc' id='type-id-266'/>
     <!-- typedef FT_StreamDesc_ FT_StreamDesc -->
-    <typedef-decl name='FT_StreamDesc' type-id='type-id-494' size-in-bits='64' hash='7c1bf985877558b3' id='type-id-461'/>
+    <typedef-decl name='FT_StreamDesc' type-id='type-id-494' size-in-bits='64' hash='5a36a418035f2b9c' id='type-id-461'/>
     <!-- typedef void (*)(FT_Stream) FT_Stream_CloseFunc -->
-    <typedef-decl name='FT_Stream_CloseFunc' type-id='type-id-495' size-in-bits='64' hash='fbe164e48d88ee6f' id='type-id-463'/>
+    <typedef-decl name='FT_Stream_CloseFunc' type-id='type-id-495' size-in-bits='64' hash='71ac4d3a8f5b9021' id='type-id-463'/>
     <!-- typedef unsigned long int (*)(FT_Stream, unsigned long int, unsigned char*, unsigned long int) FT_Stream_IoFunc -->
-    <typedef-decl name='FT_Stream_IoFunc' type-id='type-id-496' size-in-bits='64' hash='32b81fc8c5023f26' id='type-id-462'/>
+    <typedef-decl name='FT_Stream_IoFunc' type-id='type-id-496' size-in-bits='64' hash='d414c134d1bd36e2' id='type-id-462'/>
     <!-- typedef char FT_String -->
-    <typedef-decl name='FT_String' type-id='type-id-46' size-in-bits='8' hash='65b2d157027b431a' id='type-id-37'/>
+    <typedef-decl name='FT_String' type-id='type-id-46' size-in-bits='8' hash='39e744a8eb4bf364' id='type-id-37'/>
     <!-- typedef FT_SubGlyphRec_* FT_SubGlyph -->
-    <typedef-decl name='FT_SubGlyph' type-id='type-id-40' size-in-bits='64' hash='73ea1c131bf3f19c' id='type-id-449'/>
+    <typedef-decl name='FT_SubGlyph' type-id='type-id-40' size-in-bits='64' hash='cb75bab2cda914ee' id='type-id-449'/>
     <!-- typedef unsigned int FT_UInt -->
-    <typedef-decl name='FT_UInt' type-id='type-id-111' size-in-bits='32' hash='e66b43f97c38e87a' id='type-id-443'/>
+    <typedef-decl name='FT_UInt' type-id='type-id-111' size-in-bits='32' hash='01b265816e53dd71' id='type-id-443'/>
     <!-- typedef unsigned short int FT_UShort -->
-    <typedef-decl name='FT_UShort' type-id='type-id-497' size-in-bits='16' hash='e3133321c12b1361' id='type-id-430'/>
+    <typedef-decl name='FT_UShort' type-id='type-id-497' size-in-bits='16' hash='012767b19cd3b7f4' id='type-id-430'/>
     <!-- typedef FT_Vector_ FT_Vector -->
-    <typedef-decl name='FT_Vector' type-id='type-id-464' size-in-bits='128' hash='08431e47cccc9a1a' id='type-id-41'/>
+    <typedef-decl name='FT_Vector' type-id='type-id-464' size-in-bits='128' hash='9de309e8ec34487a' id='type-id-41'/>
     <!-- typedef __pthread_internal_list __pthread_list_t -->
-    <typedef-decl name='__pthread_list_t' type-id='type-id-43' size-in-bits='128' hash='f05c1c2887dcea15' id='type-id-466'/>
+    <typedef-decl name='__pthread_list_t' type-id='type-id-43' size-in-bits='128' hash='7549cc0b2a1f3ffb' id='type-id-466'/>
     <!-- typedef int hb_atomic_int_t -->
-    <typedef-decl name='hb_atomic_int_t' type-id='type-id-122' size-in-bits='32' hash='09d17c08f594edc7' id='type-id-485'/>
+    <typedef-decl name='hb_atomic_int_t' type-id='type-id-122' size-in-bits='32' hash='f2b82e49c8af56cd' id='type-id-485'/>
     <!-- typedef hb_blob_t hb_blob_t -->
-    <typedef-decl name='hb_blob_t' type-id='type-id-467' size-in-bits='1216' hash='98e48d071debcd2c' id='type-id-369'/>
+    <typedef-decl name='hb_blob_t' type-id='type-id-467' size-in-bits='1216' hash='22a985d67e62aa9c' id='type-id-369'/>
     <!-- typedef int hb_bool_t -->
-    <typedef-decl name='hb_bool_t' type-id='type-id-122' size-in-bits='32' hash='09d17c08f594edc7' id='type-id-124'/>
+    <typedef-decl name='hb_bool_t' type-id='type-id-122' size-in-bits='32' hash='f2b82e49c8af56cd' id='type-id-124'/>
     <!-- typedef hb_buffer_t hb_buffer_t -->
-    <typedef-decl name='hb_buffer_t' type-id='type-id-468' size-in-bits='2752' hash='53232dde98a48073' id='type-id-379'/>
+    <typedef-decl name='hb_buffer_t' type-id='type-id-468' size-in-bits='2752' hash='c8b76d1acc46f426' id='type-id-379'/>
     <!-- typedef uint32_t hb_codepoint_t -->
-    <typedef-decl name='hb_codepoint_t' type-id='type-id-77' size-in-bits='32' hash='e66b43f97c38e87a' id='type-id-56'/>
+    <typedef-decl name='hb_codepoint_t' type-id='type-id-77' size-in-bits='32' hash='01b265816e53dd71' id='type-id-56'/>
     <!-- typedef void (*)(void*) hb_destroy_func_t -->
-    <typedef-decl name='hb_destroy_func_t' type-id='type-id-492' size-in-bits='64' hash='3c6555b15ff3c2e2' id='type-id-113'/>
+    <typedef-decl name='hb_destroy_func_t' type-id='type-id-492' size-in-bits='64' hash='cf5d5995059acedb' id='type-id-113'/>
     <!-- typedef hb_face_t hb_face_t -->
-    <typedef-decl name='hb_face_t' type-id='type-id-471' size-in-bits='1472' hash='e24eea8f8c5aaadb' id='type-id-382'/>
+    <typedef-decl name='hb_face_t' type-id='type-id-471' size-in-bits='1472' hash='3c6afd60c5a1c439' id='type-id-382'/>
     <!-- typedef hb_feature_t hb_feature_t -->
-    <typedef-decl name='hb_feature_t' type-id='type-id-473' size-in-bits='128' hash='d9b14cd9d5ae09c0' id='type-id-59'/>
+    <typedef-decl name='hb_feature_t' type-id='type-id-473' size-in-bits='128' hash='a63d977baa409607' id='type-id-59'/>
     <!-- typedef hb_font_funcs_t hb_font_funcs_t -->
-    <typedef-decl name='hb_font_funcs_t' type-id='type-id-386' size-in-bits='3072' hash='3aeb704fbf621883' id='type-id-385'/>
+    <typedef-decl name='hb_font_funcs_t' type-id='type-id-386' size-in-bits='3072' hash='8e3a334ef02b81c2' id='type-id-385'/>
     <!-- typedef hb_position_t (*)(hb_font_t*, void*, hb_codepoint_t, void*) hb_font_get_glyph_advance_func_t -->
-    <typedef-decl name='hb_font_get_glyph_advance_func_t' type-id='type-id-398' size-in-bits='64' hash='6275c8576198ebaf' id='type-id-498'/>
+    <typedef-decl name='hb_font_get_glyph_advance_func_t' type-id='type-id-398' size-in-bits='64' hash='e261037811f3437c' id='type-id-498'/>
     <!-- typedef hb_bool_t (*)(hb_font_t*, void*, hb_codepoint_t, unsigned int, hb_position_t*, hb_position_t*, void*) hb_font_get_glyph_contour_point_func_t -->
-    <typedef-decl name='hb_font_get_glyph_contour_point_func_t' type-id='type-id-376' size-in-bits='64' hash='d911885ca9871482' id='type-id-298'/>
+    <typedef-decl name='hb_font_get_glyph_contour_point_func_t' type-id='type-id-376' size-in-bits='64' hash='472f7479bb135ca1' id='type-id-298'/>
     <!-- typedef hb_bool_t (*)(hb_font_t*, void*, hb_codepoint_t, hb_glyph_extents_t*, void*) hb_font_get_glyph_extents_func_t -->
-    <typedef-decl name='hb_font_get_glyph_extents_func_t' type-id='type-id-374' size-in-bits='64' hash='785731568deeaf22' id='type-id-300'/>
+    <typedef-decl name='hb_font_get_glyph_extents_func_t' type-id='type-id-374' size-in-bits='64' hash='d9191c61ca4ff789' id='type-id-300'/>
     <!-- typedef hb_bool_t (*)(hb_font_t*, void*, const char*, int, hb_codepoint_t*, void*) hb_font_get_glyph_from_name_func_t -->
-    <typedef-decl name='hb_font_get_glyph_from_name_func_t' type-id='type-id-371' size-in-bits='64' hash='c865f84eb623316e' id='type-id-302'/>
+    <typedef-decl name='hb_font_get_glyph_from_name_func_t' type-id='type-id-371' size-in-bits='64' hash='ac9e1ebb42371c5e' id='type-id-302'/>
     <!-- typedef hb_bool_t (*)(hb_font_t*, void*, hb_codepoint_t, hb_codepoint_t, hb_codepoint_t*, void*) hb_font_get_glyph_func_t -->
-    <typedef-decl name='hb_font_get_glyph_func_t' type-id='type-id-373' size-in-bits='64' hash='bd72f3508c9793ca' id='type-id-304'/>
+    <typedef-decl name='hb_font_get_glyph_func_t' type-id='type-id-373' size-in-bits='64' hash='11090237841bf37d' id='type-id-304'/>
     <!-- typedef hb_font_get_glyph_advance_func_t hb_font_get_glyph_h_advance_func_t -->
-    <typedef-decl name='hb_font_get_glyph_h_advance_func_t' type-id='type-id-498' size-in-bits='64' hash='6275c8576198ebaf' id='type-id-306'/>
+    <typedef-decl name='hb_font_get_glyph_h_advance_func_t' type-id='type-id-498' size-in-bits='64' hash='e261037811f3437c' id='type-id-306'/>
     <!-- typedef hb_font_get_glyph_kerning_func_t hb_font_get_glyph_h_kerning_func_t -->
-    <typedef-decl name='hb_font_get_glyph_h_kerning_func_t' type-id='type-id-499' size-in-bits='64' hash='c54902f9eb22e021' id='type-id-308'/>
+    <typedef-decl name='hb_font_get_glyph_h_kerning_func_t' type-id='type-id-499' size-in-bits='64' hash='0f3e944a3729f111' id='type-id-308'/>
     <!-- typedef hb_font_get_glyph_origin_func_t hb_font_get_glyph_h_origin_func_t -->
-    <typedef-decl name='hb_font_get_glyph_h_origin_func_t' type-id='type-id-500' size-in-bits='64' hash='11591c3dc19afd05' id='type-id-310'/>
+    <typedef-decl name='hb_font_get_glyph_h_origin_func_t' type-id='type-id-500' size-in-bits='64' hash='8f3b93e27337eb62' id='type-id-310'/>
     <!-- typedef hb_position_t (*)(hb_font_t*, void*, hb_codepoint_t, hb_codepoint_t, void*) hb_font_get_glyph_kerning_func_t -->
-    <typedef-decl name='hb_font_get_glyph_kerning_func_t' type-id='type-id-397' size-in-bits='64' hash='c54902f9eb22e021' id='type-id-499'/>
+    <typedef-decl name='hb_font_get_glyph_kerning_func_t' type-id='type-id-397' size-in-bits='64' hash='0f3e944a3729f111' id='type-id-499'/>
     <!-- typedef hb_bool_t (*)(hb_font_t*, void*, hb_codepoint_t, char*, unsigned int, void*) hb_font_get_glyph_name_func_t -->
-    <typedef-decl name='hb_font_get_glyph_name_func_t' type-id='type-id-372' size-in-bits='64' hash='366177c8605f2414' id='type-id-312'/>
+    <typedef-decl name='hb_font_get_glyph_name_func_t' type-id='type-id-372' size-in-bits='64' hash='82f0a2fdd63badc8' id='type-id-312'/>
     <!-- typedef hb_bool_t (*)(hb_font_t*, void*, hb_codepoint_t, hb_position_t*, hb_position_t*, void*) hb_font_get_glyph_origin_func_t -->
-    <typedef-decl name='hb_font_get_glyph_origin_func_t' type-id='type-id-375' size-in-bits='64' hash='11591c3dc19afd05' id='type-id-500'/>
+    <typedef-decl name='hb_font_get_glyph_origin_func_t' type-id='type-id-375' size-in-bits='64' hash='8f3b93e27337eb62' id='type-id-500'/>
     <!-- typedef hb_font_get_glyph_advance_func_t hb_font_get_glyph_v_advance_func_t -->
-    <typedef-decl name='hb_font_get_glyph_v_advance_func_t' type-id='type-id-498' size-in-bits='64' hash='6275c8576198ebaf' id='type-id-314'/>
+    <typedef-decl name='hb_font_get_glyph_v_advance_func_t' type-id='type-id-498' size-in-bits='64' hash='e261037811f3437c' id='type-id-314'/>
     <!-- typedef hb_font_get_glyph_kerning_func_t hb_font_get_glyph_v_kerning_func_t -->
-    <typedef-decl name='hb_font_get_glyph_v_kerning_func_t' type-id='type-id-499' size-in-bits='64' hash='c54902f9eb22e021' id='type-id-316'/>
+    <typedef-decl name='hb_font_get_glyph_v_kerning_func_t' type-id='type-id-499' size-in-bits='64' hash='0f3e944a3729f111' id='type-id-316'/>
     <!-- typedef hb_font_get_glyph_origin_func_t hb_font_get_glyph_v_origin_func_t -->
-    <typedef-decl name='hb_font_get_glyph_v_origin_func_t' type-id='type-id-500' size-in-bits='64' hash='11591c3dc19afd05' id='type-id-318'/>
+    <typedef-decl name='hb_font_get_glyph_v_origin_func_t' type-id='type-id-500' size-in-bits='64' hash='8f3b93e27337eb62' id='type-id-318'/>
     <!-- typedef hb_font_t hb_font_t -->
-    <typedef-decl name='hb_font_t' type-id='type-id-391' size-in-bits='1536' hash='ad30fa81c5e79976' id='type-id-393'/>
+    <typedef-decl name='hb_font_t' type-id='type-id-391' size-in-bits='1536' hash='6565c1eb0952e200' id='type-id-393'/>
     <!-- typedef hb_glyph_extents_t hb_glyph_extents_t -->
-    <typedef-decl name='hb_glyph_extents_t' type-id='type-id-474' size-in-bits='128' hash='f4aeef4f4616a9ae' id='type-id-394'/>
+    <typedef-decl name='hb_glyph_extents_t' type-id='type-id-474' size-in-bits='128' hash='525069de6ada4298' id='type-id-394'/>
     <!-- typedef hb_glyph_info_t hb_glyph_info_t -->
-    <typedef-decl name='hb_glyph_info_t' type-id='type-id-475' size-in-bits='160' hash='2f99f0288f329163' id='type-id-395'/>
+    <typedef-decl name='hb_glyph_info_t' type-id='type-id-475' size-in-bits='160' hash='6a5abce4dd52ca3b' id='type-id-395'/>
     <!-- typedef hb_glyph_position_t hb_glyph_position_t -->
-    <typedef-decl name='hb_glyph_position_t' type-id='type-id-478' size-in-bits='160' hash='a7f3284ca4817ea7' id='type-id-396'/>
+    <typedef-decl name='hb_glyph_position_t' type-id='type-id-478' size-in-bits='160' hash='870c67ddc914f309' id='type-id-396'/>
     <!-- typedef const hb_language_impl_t* hb_language_t -->
-    <typedef-decl name='hb_language_t' type-id='type-id-64' size-in-bits='64' hash='495841e10bc83929' id='type-id-105'/>
+    <typedef-decl name='hb_language_t' type-id='type-id-64' size-in-bits='64' hash='dbad2daea4610410' id='type-id-105'/>
     <!-- typedef uint32_t hb_mask_t -->
-    <typedef-decl name='hb_mask_t' type-id='type-id-77' size-in-bits='32' hash='e66b43f97c38e87a' id='type-id-476'/>
+    <typedef-decl name='hb_mask_t' type-id='type-id-77' size-in-bits='32' hash='01b265816e53dd71' id='type-id-476'/>
     <!-- typedef pthread_mutex_t hb_mutex_impl_t -->
-    <typedef-decl name='hb_mutex_impl_t' type-id='type-id-501' size-in-bits='320' hash='6342cbcc9c7f9eaa' id='type-id-482'/>
+    <typedef-decl name='hb_mutex_impl_t' type-id='type-id-501' size-in-bits='320' hash='51a31fdce94066cc' id='type-id-482'/>
     <!-- typedef int32_t hb_position_t -->
-    <typedef-decl name='hb_position_t' type-id='type-id-502' size-in-bits='32' hash='09d17c08f594edc7' id='type-id-221'/>
+    <typedef-decl name='hb_position_t' type-id='type-id-502' size-in-bits='32' hash='f2b82e49c8af56cd' id='type-id-221'/>
     <!-- typedef hb_blob_t* (*)(hb_face_t*, hb_tag_t, void*) hb_reference_table_func_t -->
-    <typedef-decl name='hb_reference_table_func_t' type-id='type-id-370' size-in-bits='64' hash='aeb451e511c9b2b1' id='type-id-203'/>
+    <typedef-decl name='hb_reference_table_func_t' type-id='type-id-370' size-in-bits='64' hash='19a767c3f8c232a7' id='type-id-203'/>
     <!-- typedef hb_segment_properties_t hb_segment_properties_t -->
-    <typedef-decl name='hb_segment_properties_t' type-id='type-id-486' size-in-bits='256' hash='d97417cf687a7c1b' id='type-id-65'/>
+    <typedef-decl name='hb_segment_properties_t' type-id='type-id-486' size-in-bits='256' hash='6191c15e87ff4e9d' id='type-id-65'/>
     <!-- typedef hb_set_t hb_set_t -->
-    <typedef-decl name='hb_set_t' type-id='type-id-487' size-in-bits='66496' hash='df6a6f0bb5f361f5' id='type-id-68'/>
+    <typedef-decl name='hb_set_t' type-id='type-id-487' size-in-bits='66496' hash='bff684a598dd7de7' id='type-id-68'/>
     <!-- typedef hb_bool_t (hb_shape_plan_t*, hb_font_t*, hb_buffer_t*, const hb_feature_t*, unsigned int) hb_shape_func_t -->
-    <typedef-decl name='hb_shape_func_t' type-id='type-id-175' size-in-bits='64' hash='7b97d18c9006cc9d' id='type-id-402'/>
+    <typedef-decl name='hb_shape_func_t' type-id='type-id-175' size-in-bits='64' hash='7f32ffea222edbe7' id='type-id-402'/>
     <!-- typedef hb_shape_plan_t hb_shape_plan_t -->
-    <typedef-decl name='hb_shape_plan_t' type-id='type-id-488' size-in-bits='1664' hash='53b271ac56da766f' id='type-id-404'/>
+    <typedef-decl name='hb_shape_plan_t' type-id='type-id-488' size-in-bits='1664' hash='875a654aba3afa86' id='type-id-404'/>
     <!-- typedef uint32_t hb_tag_t -->
-    <typedef-decl name='hb_tag_t' type-id='type-id-77' size-in-bits='32' hash='e66b43f97c38e87a' id='type-id-71'/>
+    <typedef-decl name='hb_tag_t' type-id='type-id-77' size-in-bits='32' hash='01b265816e53dd71' id='type-id-71'/>
     <!-- typedef hb_unicode_combining_class_t (*)(hb_unicode_funcs_t*, hb_codepoint_t, void*) hb_unicode_combining_class_func_t -->
-    <typedef-decl name='hb_unicode_combining_class_func_t' type-id='type-id-405' size-in-bits='64' hash='572077845319ca77' id='type-id-341'/>
+    <typedef-decl name='hb_unicode_combining_class_func_t' type-id='type-id-405' size-in-bits='64' hash='02dc3e2d6da3f6a8' id='type-id-341'/>
     <!-- typedef hb_bool_t (*)(hb_unicode_funcs_t*, hb_codepoint_t, hb_codepoint_t, hb_codepoint_t*, void*) hb_unicode_compose_func_t -->
-    <typedef-decl name='hb_unicode_compose_func_t' type-id='type-id-378' size-in-bits='64' hash='faa1c96dde065f3e' id='type-id-343'/>
+    <typedef-decl name='hb_unicode_compose_func_t' type-id='type-id-378' size-in-bits='64' hash='e5cebcfaab78fbee' id='type-id-343'/>
     <!-- typedef unsigned int (*)(hb_unicode_funcs_t*, hb_codepoint_t, hb_codepoint_t*, void*) hb_unicode_decompose_compatibility_func_t -->
-    <typedef-decl name='hb_unicode_decompose_compatibility_func_t' type-id='type-id-503' size-in-bits='64' hash='d620536bc4af933d' id='type-id-345'/>
+    <typedef-decl name='hb_unicode_decompose_compatibility_func_t' type-id='type-id-503' size-in-bits='64' hash='42db3877266e4af7' id='type-id-345'/>
     <!-- typedef hb_bool_t (*)(hb_unicode_funcs_t*, hb_codepoint_t, hb_codepoint_t*, hb_codepoint_t*, void*) hb_unicode_decompose_func_t -->
-    <typedef-decl name='hb_unicode_decompose_func_t' type-id='type-id-377' size-in-bits='64' hash='d416a4826817f090' id='type-id-347'/>
+    <typedef-decl name='hb_unicode_decompose_func_t' type-id='type-id-377' size-in-bits='64' hash='7581868db1bf0d3f' id='type-id-347'/>
     <!-- typedef unsigned int (*)(hb_unicode_funcs_t*, hb_codepoint_t, void*) hb_unicode_eastasian_width_func_t -->
-    <typedef-decl name='hb_unicode_eastasian_width_func_t' type-id='type-id-504' size-in-bits='64' hash='78cc77853294a2d0' id='type-id-349'/>
+    <typedef-decl name='hb_unicode_eastasian_width_func_t' type-id='type-id-504' size-in-bits='64' hash='e51444332cbb51a4' id='type-id-349'/>
     <!-- typedef hb_unicode_funcs_t hb_unicode_funcs_t -->
-    <typedef-decl name='hb_unicode_funcs_t' type-id='type-id-407' size-in-bits='2560' hash='fb3af10afceb996e' id='type-id-406'/>
+    <typedef-decl name='hb_unicode_funcs_t' type-id='type-id-407' size-in-bits='2560' hash='77fe51ef20c564e1' id='type-id-406'/>
     <!-- typedef hb_unicode_general_category_t (*)(hb_unicode_funcs_t*, hb_codepoint_t, void*) hb_unicode_general_category_func_t -->
-    <typedef-decl name='hb_unicode_general_category_func_t' type-id='type-id-412' size-in-bits='64' hash='25ec1a5d24fe61c4' id='type-id-351'/>
+    <typedef-decl name='hb_unicode_general_category_func_t' type-id='type-id-412' size-in-bits='64' hash='86dc73640b875fc8' id='type-id-351'/>
     <!-- typedef hb_codepoint_t (*)(hb_unicode_funcs_t*, hb_codepoint_t, void*) hb_unicode_mirroring_func_t -->
-    <typedef-decl name='hb_unicode_mirroring_func_t' type-id='type-id-380' size-in-bits='64' hash='ac17c89835875e6e' id='type-id-353'/>
+    <typedef-decl name='hb_unicode_mirroring_func_t' type-id='type-id-380' size-in-bits='64' hash='6d314f8a14b45362' id='type-id-353'/>
     <!-- typedef hb_script_t (*)(hb_unicode_funcs_t*, hb_codepoint_t, void*) hb_unicode_script_func_t -->
-    <typedef-decl name='hb_unicode_script_func_t' type-id='type-id-399' size-in-bits='64' hash='010eebc933122b11' id='type-id-355'/>
+    <typedef-decl name='hb_unicode_script_func_t' type-id='type-id-399' size-in-bits='64' hash='25f392aea6c1ed22' id='type-id-355'/>
     <!-- typedef hb_user_data_key_t hb_user_data_key_t -->
-    <typedef-decl name='hb_user_data_key_t' type-id='type-id-489' size-in-bits='8' hash='6047d3db44892c61' id='type-id-416'/>
+    <typedef-decl name='hb_user_data_key_t' type-id='type-id-489' size-in-bits='8' hash='c431ccfdd76b87be' id='type-id-416'/>
     <!-- typedef _hb_var_int_t hb_var_int_t -->
-    <typedef-decl name='hb_var_int_t' type-id='type-id-505' size-in-bits='32' hash='51dccfe05cf59479' id='type-id-477'/>
+    <typedef-decl name='hb_var_int_t' type-id='type-id-505' size-in-bits='32' hash='b34c3c0e2ee6defc' id='type-id-477'/>
     <!-- typedef short int int16_t -->
-    <typedef-decl name='int16_t' type-id='type-id-421' size-in-bits='16' hash='2e5e87528799cdbb' id='type-id-417'/>
+    <typedef-decl name='int16_t' type-id='type-id-421' size-in-bits='16' hash='bfcf8c53a7e22b05' id='type-id-417'/>
     <!-- typedef int int32_t -->
-    <typedef-decl name='int32_t' type-id='type-id-122' size-in-bits='32' hash='09d17c08f594edc7' id='type-id-502'/>
+    <typedef-decl name='int32_t' type-id='type-id-122' size-in-bits='32' hash='f2b82e49c8af56cd' id='type-id-502'/>
     <!-- typedef signed char int8_t -->
-    <typedef-decl name='int8_t' type-id='type-id-423' size-in-bits='8' hash='3c595c3350588f18' id='type-id-419'/>
+    <typedef-decl name='int8_t' type-id='type-id-423' size-in-bits='8' hash='4bf2b0cb39fbd6fb' id='type-id-419'/>
     <!-- typedef unsigned short int uint16_t -->
-    <typedef-decl name='uint16_t' type-id='type-id-497' size-in-bits='16' hash='e3133321c12b1361' id='type-id-74'/>
+    <typedef-decl name='uint16_t' type-id='type-id-497' size-in-bits='16' hash='012767b19cd3b7f4' id='type-id-74'/>
     <!-- typedef unsigned int uint32_t -->
-    <typedef-decl name='uint32_t' type-id='type-id-111' size-in-bits='32' hash='e66b43f97c38e87a' id='type-id-77'/>
+    <typedef-decl name='uint32_t' type-id='type-id-111' size-in-bits='32' hash='01b265816e53dd71' id='type-id-77'/>
     <!-- typedef unsigned char uint8_t -->
-    <typedef-decl name='uint8_t' type-id='type-id-506' size-in-bits='8' hash='6ebac62b3366db68' id='type-id-507'/>
+    <typedef-decl name='uint8_t' type-id='type-id-506' size-in-bits='8' hash='7948234ee9eb1041' id='type-id-507'/>
     <!-- uint16_t[2] -->
     <array-type-def dimensions='1' type-id='type-id-74' size-in-bits='32' hash='b64a386f7dd5eae0' id='type-id-508'>
       <!-- <anonymous range>[2] -->

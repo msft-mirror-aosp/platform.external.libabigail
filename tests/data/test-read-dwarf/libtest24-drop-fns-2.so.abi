@@ -44,24 +44,24 @@
     <pointer-type-def type-id='type-id-8' size-in-bits='64' hash='83a5509e2ae27d75' id='type-id-9'/>
     <qualified-type-def type-id='type-id-6' const='yes' hash='14d376d47ce0ec17' id='type-id-10'/>
     <reference-type-def kind='lvalue' type-id='type-id-10' size-in-bits='64' hash='8dc531d1e21e11d5' id='type-id-11'/>
-    <qualified-type-def type-id='type-id-12' const='yes' hash='cc12f9eeaa71fcbc' id='type-id-13'/>
+    <qualified-type-def type-id='type-id-12' const='yes' hash='62e496561c30eb49' id='type-id-13'/>
     <pointer-type-def type-id='type-id-13' size-in-bits='64' hash='ac620fdffcaf919e' id='type-id-14'/>
-    <qualified-type-def type-id='type-id-15' const='yes' hash='158a75c3b975c2dc' id='type-id-16'/>
-    <reference-type-def kind='lvalue' type-id='type-id-16' size-in-bits='64' hash='d8e5391b3091f92a' id='type-id-17'/>
+    <qualified-type-def type-id='type-id-15' const='yes' hash='e6a6a640993f1d52' id='type-id-16'/>
+    <reference-type-def kind='lvalue' type-id='type-id-16' size-in-bits='64' hash='3dbadda6e76b0bcb' id='type-id-17'/>
     <function-type size-in-bits='64' hash='0fb2ebcefe8723c5' id='type-id-18'>
       <parameter type-id='type-id-9'/>
       <parameter type-id='type-id-11'/>
       <return type-id='type-id-6'/>
     </function-type>
-    <function-type size-in-bits='64' hash='098d38eb283abba0' id='type-id-19'>
+    <function-type size-in-bits='64' hash='445b290557fc4a17' id='type-id-19'>
       <parameter type-id='type-id-17'/>
       <return type-id='type-id-20'/>
     </function-type>
-    <function-type size-in-bits='64' hash='9da351816454312c' id='type-id-21'>
+    <function-type size-in-bits='64' hash='bc6293c5cb8e9cb8' id='type-id-21'>
       <parameter type-id='type-id-17'/>
       <return type-id='type-id-15'/>
     </function-type>
-    <function-type method-class-id='type-id-22' static='yes' size-in-bits='64' hash='51e1865a8a0585d8' id='type-id-23'>
+    <function-type method-class-id='type-id-22' static='yes' size-in-bits='64' hash='0bd77f100b6638fe' id='type-id-23'>
       <parameter type-id='type-id-14'/>
       <return type-id='type-id-24'/>
     </function-type>
@@ -69,7 +69,7 @@
     <namespace-decl name='std'>
       <class-decl name='char_traits&lt;char&gt;' is-struct='yes' visibility='default' size-in-bits='8' hash='7c988ae21f08b711' id='type-id-22'>
         <member-type access='private'>
-          <typedef-decl name='char_type' type-id='type-id-1' size-in-bits='8' hash='65b2d157027b431a' id='type-id-12'/>
+          <typedef-decl name='char_type' type-id='type-id-1' size-in-bits='8' hash='39e744a8eb4bf364' id='type-id-12'/>
         </member-type>
         <member-function access='public' static='yes'>
           <function-decl name='length' type-id='type-id-23' mangled-name='_ZNSt11char_traitsIcE6lengthEPKc' visibility='default' binding='global' size-in-bits='64' elf-symbol-id='_ZNSt11char_traitsIcE6lengthEPKc'/>
@@ -80,10 +80,10 @@
       <typedef-decl name='ostream' type-id='type-id-5' hash='2511882b1c80c03b' id='type-id-25'/>
     </namespace-decl>
     <namespace-decl name='std'>
-      <typedef-decl name='size_t' type-id='type-id-26' size-in-bits='64' hash='da551c1631705dfe' id='type-id-24'/>
+      <typedef-decl name='size_t' type-id='type-id-26' size-in-bits='64' hash='8b230c0ebd12548b' id='type-id-24'/>
     </namespace-decl>
     <namespace-decl name='std'>
-      <typedef-decl name='string' type-id='type-id-6' size-in-bits='64' hash='db31a765cc04c2f7' id='type-id-15'/>
+      <typedef-decl name='string' type-id='type-id-6' size-in-bits='64' hash='51b49d2af614721e' id='type-id-15'/>
     </namespace-decl>
     <type-decl name='unsigned long int' size-in-bits='64' hash='da551c1631705dfe' id='type-id-26'/>
   </abi-types>

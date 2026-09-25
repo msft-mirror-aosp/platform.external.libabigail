@@ -81,7 +81,7 @@
     <!-- long long int -->
     <type-decl name='long long int' size-in-bits='64' hash='8aa1e1a2ab2c2d3e' id='type-id-8'/>
     <!-- s0::integer (s0::*) () -->
-    <function-type method-class-id='type-id-9' static='yes' size-in-bits='64' hash='61d56fd2006ef201' id='type-id-10'>
+    <function-type method-class-id='type-id-9' static='yes' size-in-bits='64' hash='0a43cc4cbe68cf25' id='type-id-10'>
       <!-- implicit parameter of type 's0*' -->
       <parameter type-id='type-id-11' is-artificial='yes'/>
       <!-- typedef s0::integer -->
@@ -128,11 +128,11 @@
       <base-class access='public' layout-offset-in-bits='256' is-virtual='yes' type-id='type-id-15'/>
       <member-type access='private'>
         <!-- typedef unsigned char s0::byte -->
-        <typedef-decl name='byte' type-id='type-id-17' size-in-bits='8' hash='6ebac62b3366db68' id='type-id-16'/>
+        <typedef-decl name='byte' type-id='type-id-17' size-in-bits='8' hash='7948234ee9eb1041' id='type-id-16'/>
       </member-type>
       <member-type access='private'>
         <!-- typedef int s0::integer -->
-        <typedef-decl name='integer' type-id='type-id-4' size-in-bits='32' hash='09d17c08f594edc7' id='type-id-12'/>
+        <typedef-decl name='integer' type-id='type-id-4' size-in-bits='32' hash='f2b82e49c8af56cd' id='type-id-12'/>
       </member-type>
       <data-member access='public' layout-offset-in-bits='64'>
         <!-- s0::integer s0::m0 -->

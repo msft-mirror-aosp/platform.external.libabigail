@@ -46,7 +46,7 @@
     </function-type>
     <type-decl name='int' size-in-bits='32' hash='09d17c08f594edc7' id='type-id-4'/>
     <type-decl name='long long int' size-in-bits='64' hash='8aa1e1a2ab2c2d3e' id='type-id-8'/>
-    <function-type method-class-id='type-id-9' static='yes' size-in-bits='64' hash='61d56fd2006ef201' id='type-id-10'>
+    <function-type method-class-id='type-id-9' static='yes' size-in-bits='64' hash='0a43cc4cbe68cf25' id='type-id-10'>
       <parameter type-id='type-id-11' is-artificial='yes'/>
       <return type-id='type-id-12'/>
     </function-type>
@@ -76,10 +76,10 @@
       <base-class access='public' layout-offset-in-bits='192' is-virtual='yes' type-id='type-id-14'/>
       <base-class access='public' layout-offset-in-bits='256' is-virtual='yes' type-id='type-id-15'/>
       <member-type access='private'>
-        <typedef-decl name='byte' type-id='type-id-17' size-in-bits='8' hash='6ebac62b3366db68' id='type-id-16'/>
+        <typedef-decl name='byte' type-id='type-id-17' size-in-bits='8' hash='7948234ee9eb1041' id='type-id-16'/>
       </member-type>
       <member-type access='private'>
-        <typedef-decl name='integer' type-id='type-id-4' size-in-bits='32' hash='09d17c08f594edc7' id='type-id-12'/>
+        <typedef-decl name='integer' type-id='type-id-4' size-in-bits='32' hash='f2b82e49c8af56cd' id='type-id-12'/>
       </member-type>
       <data-member access='public' layout-offset-in-bits='64'>
         <var-decl name='m0' type-id='type-id-12' visibility='default'/>
