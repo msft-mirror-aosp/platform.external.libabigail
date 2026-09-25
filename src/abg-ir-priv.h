@@ -41,6 +41,7 @@ using std::lock_guard;
 using std::recursive_mutex;
 using std::atomic;
 using std::string;
+using std::list;
 using std::unordered_set;
 using std::ostringstream;
 using abg_compat::optional;
@@ -385,7 +386,7 @@ compare_canonical_type_against_candidate(const type_base* canonical_type,
 					 const type_base* candidate_type);
 
 bool
-compute_canonical_type_index(const vector<type_base_sptr>&	adjacent_canonical_types,
+compute_canonical_type_index(const list<type_base_sptr>&	adjacent_canonical_types,
 			     const type_base_sptr		canonical_type,
 			     int&				resulting_index);
 
@@ -398,7 +399,7 @@ maybe_adjust_canonical_type(const type_base_sptr& canonical,
 			    const type_base_sptr& type);
 
 type_base_sptr
-candidate_matches_a_canonical_type_hash(const vector<type_base_sptr>&	cncls,
+candidate_matches_a_canonical_type_hash(const list<type_base_sptr>&	cncls,
 					type_base&			type);
 
 bool
@@ -654,7 +655,7 @@ class homonym_type_group
   // The types of the group.
   vector<type_base_sptr>	types_;
   // The canonical types of the types in types_.
-  vector<type_base_sptr>	canonical_types_;
+  list<type_base_sptr>		canonical_types_;
   canonical_type_sptr_set_type	canonical_types_set_;
 
 public:
@@ -676,7 +677,7 @@ public:
   get_types() const
   {return types_;}
 
-  const vector<type_base_sptr>&
+  const list<type_base_sptr>&
   get_canonical_types() const
   {return canonical_types_;}
 

@@ -16573,7 +16573,7 @@ compare_canonical_type_against_candidate(const type_base_sptr& canonical_type,
 /// @return the canonical type from @p cncls that matches the
 /// candidate @p type.
 type_base_sptr
-candidate_matches_a_canonical_type_hash(const vector<type_base_sptr>&	cncls,
+candidate_matches_a_canonical_type_hash(const list<type_base_sptr>&	cncls,
 					type_base&			type)
 {
   if (type.get_corpus()
@@ -16681,7 +16681,7 @@ type_is_suitable_for_hash_computing(const type_base& t)
 /// @return true iff the function could compute the canonical index
 /// and set it into @p resulting_index.
 bool
-compute_canonical_type_index(const vector<type_base_sptr>&	adjacent_canonical_types,
+compute_canonical_type_index(const list<type_base_sptr>&	adjacent_canonical_types,
 			     const type_base_sptr		canonical_type,
 			     int&				resulting_index)
 {
