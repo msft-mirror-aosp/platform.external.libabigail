@@ -916,10 +916,15 @@ struct environment::priv
   // input of abidw, as well as as the abixml file that represents the
   // ABI of that binary.
   //
+  // The intent is the same when doing "abidiff <binary> <binary>".
+  // In that case, we don't make any assumption about the nature
+  // (ELF/ABIXML) of <binary> other than abidiff expect the two to be
+  // equivalent.
+  //
   // So this one is the corpus for the input binary.
   corpus_wptr				first_self_comparison_corpus_;
-  // This one is the corpus for the ABIXML file representing the
-  // serialization of the input binary.
+  // This one is the corpus representing the second input binary which
+  // is supposed to be equivalent to the first one.
   corpus_wptr				second_self_comparison_corpus_;
   // This is also used for debugging purposes, when using
   //   'abidw --debug-abidiff <binary>'.  It holds the set of mapping of
