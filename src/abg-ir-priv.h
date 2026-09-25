@@ -1926,11 +1926,12 @@ struct c14n_task : public abigail::workers::task
       }
 
     environment::priv::allow_type_comparison_results_caching(true);
+
     for (auto type : group->get_types())
-      {
-	canonicalize(type, group, do_log, do_show_stats);
-	environment::priv::clear_type_comparison_results_cache();
-      }
+      canonicalize(type, group, do_log, do_show_stats);
+
+    environment::priv::clear_type_comparison_results_cache();
+
     environment::priv::allow_type_comparison_results_caching(false);
 
     if (do_log)
