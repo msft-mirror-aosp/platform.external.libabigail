@@ -4019,6 +4019,7 @@ add_canonical_type(type_base_sptr t, homonym_type_group_sptr group)
 {
   if (group->canonical_types_set_.find(t) != group->types_set_.end())
     return;
+  group->canonical_types_set_.insert(t);
   group->canonical_types_.push_back(t);
   t->priv_->group = group;
 }
@@ -4043,10 +4044,17 @@ add_canonical_type(type_base_sptr t, homonym_type_group_sptr group)
 /// @param t a smart pointer to instance of @ref type_base we want to
 /// compute a canonical type for.
 ///
+/// @param this_group this a shared_ptr to the current instance of
+/// @ref homonym_type_group.  This is used as an argument for
+/// homonym_type_group::add_canonical_type.
+///
 /// @return the canonical type for @p t.
 type_base_sptr
-homonym_type_group::get_canonical_type_for(type_base_sptr t)
+homonym_type_group::get_canonical_type_for(type_base_sptr t,
+					   homonym_type_group_sptr this_group)
 {
+  ABG_ASSERT(this_group.get() == this);
+
   if (!t)
     return t;
 
@@ -4221,7 +4229,9 @@ homonym_type_group::get_canonical_type_for(type_base_sptr t)
 				       canonical_type_index))
 	t->priv_->canonical_type_index = canonical_type_index;
     }
-  canonical_types_.push_back(result);
+
+  add_canonical_type(result, this_group);
+
   return result;
 }
 
@@ -16886,7 +16896,7 @@ maybe_adjust_canonical_type(const type_base_sptr& canonical,
 
 /// Compute the canonical type of a given type.
 ///
-/// It means that after invoking this function, comparing the intance
+/// It means that after invoking this function, comparing the instance
 /// instance @ref type_base and another one (on which
 /// type_base::enable_canonical_equality() would have been invoked as
 /// well) is performed by just comparing the pointer values of the
@@ -16931,7 +16941,7 @@ canonicalize(type_base_sptr t,
   if (do_log && show_stats)
     tmr.start();
 
-  type_base_sptr canonical = group->get_canonical_type_for(t);
+  type_base_sptr canonical = group->get_canonical_type_for(t, group);
 
   if (do_log && show_stats)
     tmr.stop();

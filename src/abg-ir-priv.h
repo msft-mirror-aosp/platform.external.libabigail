@@ -676,27 +676,26 @@ public:
   get_canonical_types() const
   {return canonical_types_;}
 
-  /// Get the canonical type for a given canonical type of the current
-  /// group.
-  ///
-  /// @param t the type to consider.
-  ///
-  /// @return the canonical type for t.
   type_base_sptr
-  get_canonical_type_for(type_base_sptr t);
+  get_canonical_type_for(type_base_sptr t, homonym_type_group_sptr thiz);
 
-  /// @brief Canonicalize all types in this homonym type group.
+  /// @brief Canonicalize a given type that belongs to the current
+  /// homonym type group.
   ///
-  /// Iterate over all types in the homonym type group and compute
-  /// their canonical type.  Types that are structurally equivalent
-  /// will share the same canonical type.
+  /// @param t the type to canonicalize.  The type must belong to the
+  /// current homonym type group.
+  ///
+  /// @param this_group a shared pointer to the current @ref
+  /// homonym_type_group.  This is useful because the type will point
+  /// back to that group.
   ///
   /// @param do_log if true, log canonicalization activity to stderr.
   ///
   /// @param show_stats if true, show timing statistics for each type
   /// canonicalization.
   type_base_sptr
-  canonicalize(type_base_sptr t, bool do_log, bool show_stats)
+  canonicalize(type_base_sptr t, homonym_type_group_sptr this_group,
+	       bool do_log, bool show_stats)
   {
     if (!t)
       return t;
@@ -717,7 +716,7 @@ public:
 
     if (do_log && show_stats)
       tmr.start();
-    type_base_sptr canonical = get_canonical_type_for(t);
+    type_base_sptr canonical = get_canonical_type_for(t, this_group);
 
     if (do_log && show_stats)
       tmr.stop();
