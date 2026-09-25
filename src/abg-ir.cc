@@ -4086,25 +4086,27 @@ homonym_type_group::get_canonical_type_for(type_base_sptr t)
   if (env.self_comparison_debug_is_on())
     {
       // So we are debugging the canonicalization process,
-      // possibly via the use of 'abidw --debug-abidiff <binary>'.
+      // possibly via the use of 'abidw --debug-abidiff <binary>' or
+      // 'abidiff --debug-self-comparison <binary> <binary>'
       corpus_sptr corp1, corp2;
       env.get_self_comparison_debug_inputs(corp1, corp2);
-      if (corp1 && corp2 && type_originates_from_corpus(t, corp2)
-	  && corp1->get_origin() != corp2->get_origin()
-	  && corp2->get_origin() & corpus::NATIVE_XML_ORIGIN)
+      if (corp1 && corp2 && type_originates_from_corpus(t, corp2))
 	{
-	  // If 't' comes from the second corpus, then it *must*
-	  // be equal to its matching canonical type coming from
-	  // the first corpus because the second corpus is the
-	  // abixml representation of the first corpus.  In other
-	  // words, all types coming from the second corpus must
-	  // have canonical types coming from the first corpus.
+	  // If 't' comes from the second corpus, then it *must* be
+	  // equal to its matching canonical type coming from the
+	  // first corpus because the second corpus is equivalent to
+	  // the first corpus.  In other words, all types coming from
+	  // the second corpus must have canonical types coming from
+	  // the first corpus.
 	  if (result)
 	    {
-	      if (!env.priv_->
-		  check_canonical_type_from_abixml_during_self_comp(t,
-								    result))
+	      if ((corp1->get_origin() != corp2->get_origin()
+		   && (corp2->get_origin() & corpus::NATIVE_XML_ORIGIN))
+		  && !env.priv_->
+		  check_canonical_type_from_abixml_during_self_comp(t, result))
 		{
+		  // We must be in the case of 'abidw --debug-abidiff <binary>'
+		  //
 		  // The canonical type of the type re-read from abixml
 		  // type doesn't match the canonical type that was
 		  // initially serialized down.
@@ -4134,35 +4136,49 @@ homonym_type_group::get_canonical_type_for(type_base_sptr t)
 	    }
 	  else //!result
 	    {
-	      uintptr_t ptr_val = reinterpret_cast<uintptr_t>(t.get());
-	      string type_id = env.get_type_id_from_pointer(ptr_val);
-	      if (type_id.empty())
-		type_id = "type-id-<not-found>";
-	      // We are in the case where 't' is different from all
-	      // the canonical types of the same name that come from
-	      // the first corpus.
-	      //
-	      // If 't' indeed comes from the second corpus then this
-	      // clearly is a canonicalization failure.
-	      //
-	      // There was a problem either during the serialization
-	      // of 't' into abixml, or during the de-serialization
-	      // from abixml into abigail::ir.  Further debugging is
-	      // needed to determine what that root cause problem is.
-	      //
-	      // Note that the first canonicalization problem of this
-	      // kind must be fixed before looking at the subsequent
-	      // ones, because the later might well just be
-	      // consequences of the former.
-	      std::cerr << "error: wrong induced canonical type for '"
-			<< repr
-			<< "' from second corpus"
-			<< ", ptr: " << std::hex << t.get()
-			<< " type-id: " << type_id
-			<< " /hash="
-			<< *t->hash_value()
-			<< std::dec
-			<< std::endl;
+	      if (corp2->get_origin() & corpus::NATIVE_XML_ORIGIN)
+		{
+		  uintptr_t ptr_val = reinterpret_cast<uintptr_t>(t.get());
+		  string type_id = env.get_type_id_from_pointer(ptr_val);
+		  if (type_id.empty())
+		    type_id = "type-id-<not-found>";
+		  // We are in the case where 't' is different from all
+		  // the canonical types of the same name that come from
+		  // the first corpus.
+		  //
+		  // If 't' indeed comes from the second corpus then this
+		  // clearly is a canonicalization failure.
+		  //
+		  // There was a problem either during the serialization
+		  // of 't' into abixml, or during the de-serialization
+		  // from abixml into abigail::ir.  Further debugging is
+		  // needed to determine what that root cause problem is.
+		  //
+		  // Note that the first canonicalization problem of this
+		  // kind must be fixed before looking at the subsequent
+		  // ones, because the later might well just be
+		  // consequences of the former.
+		  std::cerr << "error: wrong induced canonical type for '"
+			    << repr
+			    << "' from second corpus"
+			    << ", ptr: " << std::hex << t.get()
+			    << " type-id: " << type_id
+			    << " /hash="
+			    << *t->hash_value()
+			    << std::dec
+			    << std::endl;
+		}
+	      else // The second corpus is not ABIXML
+		{
+		  std::cerr << "error: wrong induced canonical type for '"
+			    << repr
+			    << "' from second corpus"
+			    << ", ptr: " << std::hex << t.get()
+			    << " /hash="
+			    << *t->hash_value()
+			    << std::dec
+			    << std::endl;
+		}
 	    }
 	}
       if (result)
