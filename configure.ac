@@ -572,10 +572,11 @@ if test x$ENABLE_BIG_TESTS = xyes; then
 			 BTF_OPTS=
 			 if test x$CTF_ENABLED = xyes; then CTF_OPTS="--enable-ctf"; fi;
 			 if test x$BTF_ENABLED = xyes; then BTF_OPTS="--enable-btf"; fi;
-			 AC_MSG_NOTICE([configuring $srcdir/big-tests --with-libabigail-tools-dir=$ac_abs_top_builddir/tools --with-libabigail-headers-dir=$ac_abs_top_srcdir/include $CTF_OPTS $BTF_OPTS])
-			 $ac_abs_top_srcdir/big-tests/configure --with-libabigail-tools-dir=$ac_abs_top_builddir/tools --with-libabigail-headers-dir=$ac_abs_top_srcdir/include $CTF_OPTS $BTF_OPTS],
+			 AC_MSG_NOTICE([configuring $srcdir/big-tests --with-cxx-standard=$CXX_STD --with-libabigail-tools-dir=$ac_abs_top_builddir/tools --with-libabigail-headers-dir=$ac_abs_top_srcdir/include $CTF_OPTS $BTF_OPTS])
+			 $ac_abs_top_srcdir/big-tests/configure --with-cxx-standard=$CXX_STD --with-libabigail-tools-dir=$ac_abs_top_builddir/tools --with-libabigail-headers-dir=$ac_abs_top_srcdir/include $CTF_OPTS $BTF_OPTS],
 			 [CTF_ENABLED=$ENABLE_CTF
-			 BTF_ENABLED=$ENABLE_BTF])
+			  BTF_ENABLED=$ENABLE_BTF
+			  CXX_STD=$CXX_STANDARD])
   else
      AC_MSG_ERROR([No sub-directory big-tests found. Please checkout libabigail-big-tests under a sub-directory named 'big-tests'])
   fi
