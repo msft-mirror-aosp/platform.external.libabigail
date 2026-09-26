@@ -2150,7 +2150,7 @@ public:
   mutable mutex			die_qualified_name_maps_mutex_;
 
   mutable die_istring_map_type		die_pretty_repr_maps_;
-  mutable mutex			die_pretty_repr_maps_mutex_;
+  mutable recursive_mutex		die_pretty_repr_maps_mutex_;
 
   // A map that associates the address of a decl die to its
   // corresponding decl artifact, along with its mutex.
@@ -2797,7 +2797,7 @@ public:
   set_die_pretty_repr(const void* die_addr, interned_string istr) const
   {
     ABG_ASSERT(die_addr && !istr.empty());
-    std::lock_guard<mutex> lock(die_pretty_repr_maps_mutex_);
+    std::lock_guard<recursive_mutex> lock(die_pretty_repr_maps_mutex_);
     die_pretty_repr_maps_[const_cast<void*>(die_addr)] = istr;
   }
 
@@ -3483,6 +3483,7 @@ public:
     ABG_ASSERT(die);
 
     const die_istring_map_type& map = die_pretty_repr_maps();
+    lock_guard<recursive_mutex> lock(die_pretty_repr_maps_mutex_);
     die_istring_map_type::const_iterator i = map.find(die->addr);
 
     if (i == map.end())
