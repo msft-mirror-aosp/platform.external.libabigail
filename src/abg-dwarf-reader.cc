@@ -2146,11 +2146,9 @@ public:
   unsigned short			dwarf_version_;
   scope_decl_sptr			nil_scope_;
 
-  mutable die_istring_map_type		die_qualified_name_maps_;
-  mutable mutex			die_qualified_name_maps_mutex_;
+  static thread_local die_istring_map_type die_qualified_name_maps_;
 
-  mutable die_istring_map_type		die_pretty_repr_maps_;
-  mutable recursive_mutex		die_pretty_repr_maps_mutex_;
+  static thread_local die_istring_map_type die_pretty_repr_maps_;
 
   // A map that associates the address of a decl die to its
   // corresponding decl artifact, along with its mutex.
@@ -2769,36 +2767,55 @@ public:
     clear_types_to_canonicalize();
   }
 
-  const die_istring_map_type&
-  die_qualified_name_maps() const
-  {return die_qualified_name_maps_;}
-
-  die_istring_map_type&
+  /// Getter for the map that associates a DIE to its qualified name.
+  ///
+  /// This map is stored in thread-local-storage to avoid locking.
+  /// Things are not slower when using this, even when analyzing the
+  /// Linux kernel.
+  ///
+  /// @return the map that associates a DIE to its qualified name.
+  static die_istring_map_type&
   die_qualified_name_maps()
   {return die_qualified_name_maps_;}
 
+  /// Set the qualified name of a given DIE in its thread-local storage.
+  ///
+  /// This does not involve any synchronization.
+  ///
+  /// @param die_addr the address of the DIE to consider.
+  ///
+  /// @param istr the new qualified name.
   void
   set_die_qualified_name(const void* die_addr, interned_string istr) const
   {
     ABG_ASSERT(die_addr && !istr.empty());
-    std::lock_guard<mutex> lock(die_qualified_name_maps_mutex_);
-    die_qualified_name_maps_[const_cast<void*>(die_addr)] = istr;
+    die_qualified_name_maps()[const_cast<void*>(die_addr)] = istr;
   }
 
-  const die_istring_map_type&
-  die_pretty_repr_maps() const
-  {return die_pretty_repr_maps_;}
-
-  die_istring_map_type&
+  /// Getter of the map that associates a DIE to its pretty representation.
+  ///
+  /// This map is stored in thread-local-storage to avoid locking.
+  /// Things are not slower when using this, even when analyzing the
+  /// Linux kernel.
+  ///
+  /// @return the map that associates a DIE to its pretty representation.
+  static die_istring_map_type&
   die_pretty_repr_maps()
   {return die_pretty_repr_maps_;}
 
-  void
-  set_die_pretty_repr(const void* die_addr, interned_string istr) const
+  /// Set the pretty representation of a given DIE.
+  ///
+  /// This does not involve any synchronization as the DIE -> pretty
+  /// repr map is stored in thread-local storage.
+  ///
+  /// @param die_addr the address of the DIE to consider.
+  ///
+  /// @param istr the new pretty representation.
+  static void
+  set_die_pretty_repr(const void* die_addr, interned_string istr)
   {
     ABG_ASSERT(die_addr && !istr.empty());
-    std::lock_guard<recursive_mutex> lock(die_pretty_repr_maps_mutex_);
-    die_pretty_repr_maps_[const_cast<void*>(die_addr)] = istr;
+    die_pretty_repr_maps()[const_cast<void*>(die_addr)] = istr;
   }
 
   /// Getter for the current environment.
@@ -5564,6 +5581,17 @@ public:
     merge_die_parent_maps(die_parent_map_building_queue.get_completed_tasks());
   }
 };// end class reader.
+
+/// The thread-local storage of the reader::die_qualified_name_maps_
+/// data member.  Using this avoids the need for locking.
+thread_local die_istring_map_type
+reader::die_qualified_name_maps_;
+
+/// The thread-local storage of the reader::die_pretty_repr_maps_ data
+/// member.  Using this avoids the need for locking.
+/// Using this avoids the need for locking.
+thread_local die_istring_map_type
+reader::die_pretty_repr_maps_;
 
 static bool
 do_handle_dwarf_die(reader& rdr, reader::tu_context_type_sptr tu_ctxt,
