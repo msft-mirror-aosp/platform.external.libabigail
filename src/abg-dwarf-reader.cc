@@ -12467,7 +12467,14 @@ maybe_strip_qualification(const qualified_type_def_sptr t,
       scope_decl_sptr scope = 0;
       if ((array = is_array_type(u)))
 	{
-	  scope = array->get_scope();
+	  {
+	    // Taking a lock on the array to ensure that in
+	    // build_ir_node_from_die, for DW_TAG_array_type, the
+	    // array gets added to its scope before we try to get the
+	    // scope here.
+	    lock_guard<recursive_mutex> lock(array->get_mutex());
+	    scope = array->get_scope();
+	  }
 	  ABG_ASSERT(scope);
 	  array = is_array_type(clone_array_tree(array));
 	  schedule_array_tree_for_late_canonicalization(array, rdr);
@@ -12477,7 +12484,14 @@ maybe_strip_qualification(const qualified_type_def_sptr t,
 	}
       else if (is_typedef_of_array(u))
 	{
-	  scope = is_decl(u)->get_scope();
+	  {
+	    // Taking a lock on the array to ensure that in
+	    // build_ir_node_from_die, for DW_TAG_typedef, the array
+	    // gets added to its scope before we try to get the scope
+	    // here.
+	    lock_guard<recursive_mutex> lock(u->get_mutex());
+	    scope = is_decl(u)->get_scope();
+	  }
 	  ABG_ASSERT(scope);
 	  typedef_decl_sptr typdef =
 	    is_typedef(clone_array_tree(is_typedef(u)));
@@ -14473,9 +14487,15 @@ build_ir_node_from_die(reader&				rdr,
 	typedef_decl_sptr t = build_typedef_type(rdr, die,
 						 called_from_public_decl,
 						 where_addr, tu_ctxt);
-
-	t = is_typedef(rdr.maybe_associate_die_to_type(die, t));
-	result = add_decl_to_scope(t, scope);
+	{
+	  typedef_decl_sptr t_store = t;
+	  if (t_store)
+	    {
+	      lock_guard<recursive_mutex> lock(t->get_mutex());
+	      t = is_typedef(rdr.maybe_associate_die_to_type(die, t));
+	      result = add_decl_to_scope(t, scope);
+	    }
+	}
 	if (result)
 	  {
 	    maybe_set_member_type_access_specifier(is_decl(result), die);
@@ -14756,9 +14776,13 @@ build_ir_node_from_die(reader&				rdr,
 						 where_addr, tu_ctxt);
 	if (a)
 	  {
-	    a = is_array_type(rdr.maybe_associate_die_to_type(die, a));
-	    result =
-	      add_decl_to_scope(a, tu_ctxt->get_tu()->get_global_scope());
+	    {
+	      array_type_def_sptr a_store = a;
+	      lock_guard<recursive_mutex> lock(a->get_mutex());
+	      a = is_array_type(rdr.maybe_associate_die_to_type(die, a));
+	      result =
+		add_decl_to_scope(a, tu_ctxt->get_tu()->get_global_scope());
+	    }
 	    maybe_canonicalize_type(a, rdr);
 	  }
 	break;
