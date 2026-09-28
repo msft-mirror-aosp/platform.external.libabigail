@@ -2157,7 +2157,7 @@ public:
   // A map that associates the address of a type die to its
   // corresponding type artifact along with its mutex.
   mutable die_artefact_map_type	type_die_artefact_maps_;
-  mutable recursive_mutex		die_artefact_maps_mutex_;
+  mutable mutex			die_artefact_maps_mutex_;
 
   die_function_decl_map_type		die_function_with_no_symbol_map_;
 
@@ -3340,7 +3340,7 @@ public:
     if (!die ||!decl)
       return nullptr;
 
-    std::lock_guard<recursive_mutex> lock(die_artefact_maps_mutex_);
+    std::lock_guard<mutex> lock(die_artefact_maps_mutex_);
     die_artefact_map_type& m = decl_die_artefact_maps();
     void* die_addr = die->addr;
     auto it = m.find(die_addr);
@@ -3500,7 +3500,6 @@ public:
     ABG_ASSERT(die);
 
     const die_istring_map_type& map = die_pretty_repr_maps();
-    lock_guard<recursive_mutex> lock(die_pretty_repr_maps_mutex_);
     die_istring_map_type::const_iterator i = map.find(die->addr);
 
     if (i == map.end())
@@ -3616,7 +3615,7 @@ public:
   type_or_decl_base_sptr
   lookup_artifact_from_die(const Dwarf_Die *die, bool die_as_type = false) const
   {
-    lock_guard<recursive_mutex> lock(die_artefact_maps_mutex_);
+    lock_guard<mutex> lock(die_artefact_maps_mutex_);
     const die_artefact_map_type& m =
       die_as_type ? type_die_artefact_maps() : decl_die_artefact_maps();
 
@@ -3650,7 +3649,7 @@ public:
   lookup_artifact_from_die_addr(void* die_addr,
 				bool die_as_type = false) const
   {
-    lock_guard<recursive_mutex> lock(die_artefact_maps_mutex_);
+    lock_guard<mutex> lock(die_artefact_maps_mutex_);
     const die_artefact_map_type& m =
       die_as_type ? type_die_artefact_maps() : decl_die_artefact_maps();
 
@@ -3767,7 +3766,7 @@ public:
     if (!type || !die)
       return nullptr;
 
-    std::lock_guard<recursive_mutex> lock(die_artefact_maps_mutex_);
+    std::lock_guard<mutex> lock(die_artefact_maps_mutex_);
     die_artefact_map_type& m = type_die_artefact_maps();
     auto it = m.find(die->addr);
     if (it != m.end())
