@@ -665,6 +665,8 @@ public:
   {
     string root = extracted_dir_path_;
     string p = path;
+    maybe_get_symlink_target_file_path(root, root);
+    maybe_get_symlink_target_file_path(p, p);
     return string_suffix(p, root, converted_path);
   }
 
@@ -682,7 +684,13 @@ public:
   bool
   convert_path_to_unique_suffix(const string& path,
 				string& converted_path) const
-  {return string_suffix(path, common_paths_prefix(), converted_path);}
+  {
+    string p = path;
+    string c = common_paths_prefix();
+    maybe_get_symlink_target_file_path(p, p);
+    maybe_get_symlink_target_file_path(c, c);
+    return string_suffix(p, c, converted_path);
+  }
 
   /// Retrieve the set of "interesting" package element paths by
   /// walking the package.
