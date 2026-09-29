@@ -12444,8 +12444,14 @@ schedule_array_tree_for_late_canonicalization(const type_base_sptr& t,
 /// leak into the IR and make for bad diagnostics.
 ///
 /// This function thus strips the const qualifier from the type in
-/// that case.  It might contain code to strip other cases like this
-/// in the future.
+/// that case.  The function also applies CV-qualifiers of an array to
+/// the elements of the array.
+///
+/// Note that this functions edits the IR graph reachable from the
+/// qualified type, so callers must be aware of that.
+///
+/// Please note that this code might contain code to strip or massage
+/// other qualification-related cases like this in the future.
 ///
 /// @param t the type to strip const qualification from.
 ///
@@ -12469,6 +12475,13 @@ maybe_strip_qualification(const qualified_type_def_sptr t,
 
   if (is_array_type(u) || is_typedef_of_array(u))
     {
+      // Now, let's apply CV-qualifiers of an array (or of a typedef of an
+      // array) to the elements of the array, transforming a qualified
+      // array into an array of similarly qualified elements.
+      //
+      // Before editing the qualified array tree in this way, let's clone
+      // the tree first, because we'd be editing a share tree otherwise.
+
       array_type_def_sptr array;
       scope_decl_sptr scope = 0;
       if ((array = is_array_type(u)))
@@ -12515,6 +12528,10 @@ maybe_strip_qualification(const qualified_type_def_sptr t,
       // We should not be editing types that are already canonicalized.
       ABG_ASSERT(!array->get_canonical_type());
       type_base_sptr element_type = array->get_element_type();
+
+      // Now that the array tree has been cloned, let's perform the
+      // "qualified array to array of similarly qualified elements"
+      // transformation.
 
       if (qualified_type_def_sptr qualified = is_qualified_type(element_type))
 	{
