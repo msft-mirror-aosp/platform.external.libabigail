@@ -3746,9 +3746,15 @@ public:
   /// represents, if and only if no IR type node was already
   /// associated the DIE.
   ///
-  /// If another IR type node, was previously associated with this new
+  /// If another IR type node was previously associated with this new
   /// DIE, then the NEW type node is NOT associated.  The previous
   /// type node that was already associated is returned.
+  ///
+  /// Otherwise, if this is the first time that the DIE is being
+  /// associated to a type IR node, the function makes that type IR
+  /// node be available to other threads calling
+  /// reader::lookup_artifact_from_die or
+  /// reader::lookup_type_artifact_from_die.
   ///
   /// @param die the DIE to consider.
   ///
