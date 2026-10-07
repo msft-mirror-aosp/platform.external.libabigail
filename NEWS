@@ -1,3 +1,80 @@
+3.0
+===
+Aaron Merey (1):
+      configure: Optionally pass --track-destroy to helgrind
+
+Dodji Seketeli (68):
+      configure.ac: Bump version to 2.11
+      doc/website/mainpage.txt: Update for 2.10
+      tests/mockfedabipkgdiff.in: Fix python module loading
+      dwarf-reader: Log the number of canonicalized types
+      {tests,tools}/Makefile.am: Consider prefixed include directories
+      Update copyright year for 2026
+      tools/abilint: Fix --annotate when reading free form translation units
+      abi{lint,diff}: Fix build configured with --enable-show-type-use-in-abilint
+      abidiff: Fix a thinko
+      tools/abicompat: Fix a thinko
+      tools: switch to argp for command-line parsing
+      configure: Consider prefixed headers dir when checking decls
+      ir: remove unused enum_has_non_name_change
+      ir: make is_at_{class,global}_scope more crash proof
+      kmidiff: Migrate to argp for command-line processing
+      abicompat: Do not abort when abicompat is invoked without argument
+      abi{compat,diff,dw,pkgdiff},kmidiff: Fix short options handling
+      abidw: Improve timing logs during self-comparison
+      README-type-canonicalization.txt: New file
+      dwarf-reader: Address a DIE using its address, not its offset.
+      Fix DWARF member functions building & merging and fix self-compare failures
+      dwarf-reader: Don't share function types of similar representation
+      dwarf-reader: Stop canonicalizing DWARF DIEs
+      ir,comp,corpus: Support shared fn types & much more
+      ir: Make canonicalization from ABIXML closer to the one from binaries
+      ir: Add error message for type hash mismatches when doing abidw --debug-abidiff
+      Analyze TUs & generate their IR nodes in parallel
+      ir: Remove useless cruft now that hashing simplifies canonicalization
+      configure,workers,dwarf-reader: Make multi-threading support optional
+      Implement a parallel algorithm for type canonicalization
+      ir,reader,writer: Speedup sorting of canonical types before c14n
+      abi{diff,dw,pkgdiff,compat},kmidiff: Support new --thread-pool-size/-j option
+      Update reference to big-test commit
+      abidiff: Improve logging messages
+      comparison: Improve logging messages consistency and clarity
+      abidiff: Fix indentation
+      configure: Add --with-elfutils and remove --with-lib{dw,elf} options
+      tools/Makefile.am: Cleanup
+      dwarf-reader: Improve logging messages
+      dwarf-reader: Fix typo in comments
+      tests/trun.sh.in: Specifically use bash in this script that uses bash-isms.
+      ir: Remove over zealous assert from elf_symbol::update_main_symbol
+      suppression: Fix race conditions
+      dwarf-reader: Parallelize build_die_parent_maps
+      kmidiff.rst: Fix some typos in the kmidiff manual
+      kmidiff.rst: Sort options and their documentation
+      ir-priv: Fix logging message
+      ir-priv: Fix comments
+      abidw: Add better logging when invoked with --noout
+      cxx-compat: Fix the use of abg_compat namespace in C++17
+      abg-fwd.h: Remove outdated std::rel_ops
+      ir-priv: Pass shared_ptr parameters by copy to type_topo_comp functor
+      ir: make "abidiff --debug-self-comparison vmlinux vmlinux" work
+      hash: Always hash the definition of decl-only types when possible
+      ir: Fix adding a canonical type to its homonym type group
+      configure,ir,writer: Use parallel sort for big type sequences
+      ir: Use a list for canonical types to speed up additions
+      ir: Speed-up type canonicalization by NOT clearing up caches too often
+      dwarf-reader: Fix data race on reader::die_pretty_repr_maps_
+      configure.ac: Invoke big-tests/configure with the new --with-cxx-standard
+      big-tests: Update the reference to the big tests
+      dwarf-reader: Store DIE -> pretty representation map in TLS
+      dwarf-reader: Turn reader::die_artefact_maps_mutex_ into a mutex
+      big-tests: Adjust to hash c8afa6c77adb510cae0a84b5ed94296a10ee58d3
+      abipkgdiff: Better symlinks on the package file system
+      dwarf-reader: Fix an intermittent assert in maybe_strip_qualification
+      dwarf-reader: Improve comments of reader::maybe_associate_die_to_type
+      dwarf-reader: Improve comments for maybe_strip_qualification
+      ChangeLog: Update for 3.0
+      NEWS: Update for 3.0
+
 2.10
 ====
 Chris Burr (4):
