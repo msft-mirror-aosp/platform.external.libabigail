@@ -1956,10 +1956,14 @@ default_reporter::report(const corpus_diff& d, ostream& out,
 	  out << "'" << (f)->get_pretty_representation() << "'";
 	  if (ctxt->show_linkage_names())
 	    {
-	      out << "    {";
-	      show_linkage_name_and_aliases(out, "", *(f)->get_symbol(),
-					    d.first_corpus()->get_fun_symbol_map());
-	      out << "}";
+	      auto symbol = f->get_symbol();
+	      if (symbol)
+		{
+		  out << "    {";
+		  show_linkage_name_and_aliases(out, "", *symbol,
+						d.first_corpus()->get_fun_symbol_map());
+		  out << "}";
+		}
 	    }
 	  out << "\n";
 	  if (is_member_function(f) && get_member_function_is_virtual(f))
@@ -2017,11 +2021,15 @@ default_reporter::report(const corpus_diff& d, ostream& out,
 	      << "'";
 	  if (ctxt->show_linkage_names())
 	    {
-	      out << "    {";
-	      show_linkage_name_and_aliases
-		(out, "", *f->get_symbol(),
-		 d.second_corpus()->get_fun_symbol_map());
-	      out << "}";
+	      auto symbol = f->get_symbol();
+	      if (symbol)
+		{
+		  out << "    {";
+		  show_linkage_name_and_aliases
+		    (out, "", *symbol,
+		     d.second_corpus()->get_fun_symbol_map());
+		  out << "}";
+		}
 	    }
 	  out << "\n";
 	  if (is_member_function(f) && get_member_function_is_virtual(f))
@@ -2084,10 +2092,14 @@ default_reporter::report(const corpus_diff& d, ostream& out,
 	      << "'";
 	  if (ctxt->show_linkage_names())
 	    {
-	      out << "    {";
-	      show_linkage_name_and_aliases(out, "", *v->get_symbol(),
-					    d.first_corpus()->get_var_symbol_map());
-	      out << "}";
+	      auto symbol = v->get_symbol();
+	      if (symbol)
+		{
+		  out << "    {";
+		  show_linkage_name_and_aliases(out, "", *symbol,
+						d.first_corpus()->get_var_symbol_map());
+		  out << "}";
+		}
 	    }
 	  out << "\n";
 	  emitted = true;
@@ -2135,10 +2147,14 @@ default_reporter::report(const corpus_diff& d, ostream& out,
 	  out << "'" << n << "'";
 	  if (ctxt->show_linkage_names())
 	    {
-	      out << "    {";
-	      show_linkage_name_and_aliases(out, "", *v->get_symbol(),
-					    d.second_corpus()->get_var_symbol_map());
-	      out << "}";
+	      auto symbol = v->get_symbol();
+	      if (symbol)
+		{
+		  out << "    {";
+		  show_linkage_name_and_aliases(out, "", *symbol,
+						d.second_corpus()->get_var_symbol_map());
+		  out << "}";
+		}
 	    }
 	  out << "\n";
 	  emitted = true;
