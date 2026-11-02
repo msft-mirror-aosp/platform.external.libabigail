@@ -604,12 +604,12 @@
     </namespace-decl>
     <namespace-decl name='std'>
       <namespace-decl name='__cxx11'>
-        <class-decl name='basic_string&lt;char,std::char_traits&lt;char&gt;,std::allocator&lt;char&gt;&gt;' visibility='default' is-declaration-only='yes' hash='35ad60ae8262b955' id='type-id-125'/>
+        <class-decl name='basic_string&lt;char,std::char_traits&lt;char&gt;,std::allocator&lt;char&gt;&gt;' visibility='default' size-in-bits='256' is-declaration-only='yes' hash='35ad60ae8262b955' id='type-id-125'/>
       </namespace-decl>
     </namespace-decl>
     <namespace-decl name='std'>
       <namespace-decl name='__cxx11'>
-        <class-decl name='basic_string&lt;wchar_t,std::char_traits&lt;wchar_t&gt;,std::allocator&lt;wchar_t&gt;&gt;' visibility='default' is-declaration-only='yes' hash='6e5702fb5aff44b2' id='type-id-126'/>
+        <class-decl name='basic_string&lt;wchar_t,std::char_traits&lt;wchar_t&gt;,std::allocator&lt;wchar_t&gt;&gt;' visibility='default' size-in-bits='256' is-declaration-only='yes' hash='6e5702fb5aff44b2' id='type-id-126'/>
       </namespace-decl>
     </namespace-decl>
     <namespace-decl name='std'>
@@ -1121,7 +1121,7 @@
     </namespace-decl>
     <namespace-decl name='boost'>
       <namespace-decl name='exception_detail'>
-        <class-decl name='error_info_container' is-struct='yes' visibility='default' is-declaration-only='yes' hash='601e009fb79edd8d' id='type-id-10'/>
+        <class-decl name='error_info_container' is-struct='yes' visibility='default' size-in-bits='64' is-declaration-only='yes' hash='601e009fb79edd8d' id='type-id-10'/>
       </namespace-decl>
     </namespace-decl>
     <namespace-decl name='boost'>

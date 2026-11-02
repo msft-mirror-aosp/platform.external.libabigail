@@ -2179,13 +2179,15 @@ write_common_type_info(const type_base_sptr& t,
 		       write_context& ctxt,
 		       const string& id)
 {
-  decl_base_sptr d = is_decl(t);
+  decl_base_sptr d = look_through_decl_only(is_decl(t));
 
   ostream& o = ctxt.get_ostream();
 
   write_is_non_reachable(t, o);
 
-  if (!d || (d && !d->get_is_declaration_only()))
+  if (!d || (d && (!d->get_is_declaration_only()
+		   || t->get_size_in_bits()
+		   || t->get_alignment_in_bits())))
     {
       if (!is_qualified_type(t) && !is_array_type(t))
 	write_size_and_alignment(t, o);

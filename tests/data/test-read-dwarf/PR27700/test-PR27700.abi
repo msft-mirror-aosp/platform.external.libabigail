@@ -3,7 +3,7 @@
     <elf-symbol name='foo' type='func-type' binding='global-binding' visibility='default-visibility' is-defined='yes'/>
   </elf-function-symbols>
   <abi-types>
-    <enum-decl name='foo' size-in-bits='32' alignment-in-bits='32' hash='e8c620d1af7ae9ae' id='022218d8'>
+    <enum-decl name='foo' size-in-bits='32' alignment-in-bits='32' is-declaration-only='yes' hash='e8c620d1af7ae9ae' id='022218d8'>
       <underlying-type type-id='9cac1fee'/>
     </enum-decl>
     <pointer-type-def type-id='022218d8' size-in-bits='64' hash='62a9ec05c7f5eb06' id='8750e847'/>

@@ -14090,6 +14090,7 @@ get_opaque_version_of_type(reader&				rdr,
 							    underlying_type,
 							    enumeratorz,
 							    linkage_name));
+	  enum_type->set_is_declaration_only(true);
 	  enum_type->set_is_artificial(die_is_artificial(type_die));
 	  enum_type = is_enum_type(rdr.maybe_associate_die_to_type(type_die,
 								   enum_type));

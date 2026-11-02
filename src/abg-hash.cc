@@ -949,8 +949,7 @@ enum_type_decl::hash::operator()(const enum_type_decl& t) const
   if (t.get_is_declaration_only() && t.get_definition_of_declaration())
     {
       enum_type_decl_sptr e = is_enum_type(t.get_definition_of_declaration());
-
-      hash_t v = hash_as_basic_then_ptr_ref_or_typedef_type(e);
+      hash_t v = operator()(*e);
       return v;
     }
 

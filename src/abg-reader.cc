@@ -5817,9 +5817,18 @@ build_enum_type_decl(reader&	rdr,
       return result;
     }
 
+  size_t size_in_bits = 0, alignment_in_bits = 0;
+  read_size_and_alignment(node, size_in_bits, alignment_in_bits);
+
   enum_type_decl_sptr t(new enum_type_decl(name, loc,
 					   underlying_type,
 					   enums, linkage_name));
+
+  if (size_in_bits || alignment_in_bits)
+    {
+      t->set_size_in_bits(size_in_bits);
+      t->set_alignment_in_bits(alignment_in_bits);
+    }
 
   t->set_is_anonymous(is_anonymous);
   t->set_is_artificial(is_artificial);
