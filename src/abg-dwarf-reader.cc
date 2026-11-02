@@ -533,21 +533,6 @@ get_translation_unit_die_for_die(const Dwarf_Die* die,
 				 Dwarf_Die& cu_die)
 {
   ABG_ASSERT(dwarf_diecu(const_cast<Dwarf_Die*>(die), &cu_die, 0, 0));
-
-  Dwarf_Die *testing_die = const_cast<Dwarf_Die*>(die);
-  if (dwarf_dieoffset(testing_die) == 0xf9)
-    {
-      if (dwarf_dieoffset(&cu_die) != 0xb)
-        {
-          std::cerr << "Got CU DIE offset "
-		    << std::hex
-		    <<dwarf_dieoffset(&cu_die)
-		    << " in lieu of "
-		    << 0xf9
-		    << std::endl;
-          ABG_ASSERT_NOT_REACHED;
-        }
-    }
   return true;
 }
 
