@@ -13490,7 +13490,7 @@ build_typedef_type(reader&				rdr,
       if (!die_die_attribute(die, DW_AT_type, underlying_type_die))
 	// A typedef DIE with no underlying type means a typedef to
 	// void type.
-	utype = rdr.env().get_void_type();
+	utype = is_type(build_ir_node_for_void_type(rdr, tu_ctxt));
 
       if (!utype)
 	utype =
@@ -13638,7 +13638,7 @@ build_var_decl(reader&				rdr,
   die_loc_and_name(die, tu_ctxt, loc, name, linkage_name);
 
   if (!type && result && !result->get_type())
-    type = rdr.env().get_void_type();
+    type = is_type(build_ir_node_for_void_type(rdr, tu_ctxt));
 
   if (!result)
     result.reset(new var_decl(name, type, loc, linkage_name));
