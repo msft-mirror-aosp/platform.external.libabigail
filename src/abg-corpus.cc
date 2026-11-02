@@ -1189,6 +1189,16 @@ public:
 	  if (abi->record_type_as_reachable_from_public_interfaces(*p))
 	    maybe_record_subtypes_as_reachable(p.get(), rec_types);
       }
+    else if (auto ptr = is_ptr_to_mbr_type(examplar_type))
+      {
+	if (auto member_type = ptr->get_member_type())
+	  if (abi->record_type_as_reachable_from_public_interfaces(*member_type))
+	    maybe_record_subtypes_as_reachable(member_type.get(), rec_types);
+
+	if (auto containing_type = ptr->get_containing_type())
+	  if (abi->record_type_as_reachable_from_public_interfaces(*containing_type))
+	    maybe_record_subtypes_as_reachable(containing_type.get(), rec_types);
+      }
     else if (auto q = is_qualified_type(examplar_type))
       {
 	if (auto u = q->get_underlying_type())
