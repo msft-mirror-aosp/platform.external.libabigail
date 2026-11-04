@@ -209,6 +209,16 @@ InOutSpec in_out_specs[] =
     "data/test-abicompat/test-diff-ptr-to-void-ptr/test-diff-ptr-to-void-ptr-report-1.txt",
     "output/test-abicompat/test-diff-ptr-to-void-ptr/test-diff-ptr-to-void-ptr-report-1.txt",
   },
+  {
+    "data/test-abicompat/bz27208-bidirectional-analysis-in-weak-mode/app",
+    "data/test-abicompat/bz27208-bidirectional-analysis-in-weak-mode/libfoo.so",
+    "",
+    "",
+    "--show-base-names --no-show-locs",
+    abigail::tools_utils::ABIDIFF_ABI_CHANGE,
+    "data/test-abicompat/bz27208-bidirectional-analysis-in-weak-mode/bidi-report-1.txt",
+    "output/test-abicompat/bz27208-bidirectional-analysis-in-weak-mode/bidi-report-1.txt",
+  },
 #ifdef WITH_BTF
   {
     "data/test-abicompat/test7-fn-changed-app.btf",

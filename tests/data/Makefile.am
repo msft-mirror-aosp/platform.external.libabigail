@@ -2297,6 +2297,16 @@ test-abicompat/test-diff-ptr-to-void-ptr/test-diff-ptr-to-void-ptr-app \
 test-abicompat/test-diff-ptr-to-void-ptr/test-diff-ptr-to-void-ptr-app.c \
 test-abicompat/test-diff-ptr-to-void-ptr/test-diff-ptr-to-void-ptr-report-0.txt \
 test-abicompat/test-diff-ptr-to-void-ptr/test-diff-ptr-to-void-ptr-report-1.txt \
+test-abicompat/bz27208-bidirectional-analysis-in-weak-mode/app \
+test-abicompat/bz27208-bidirectional-analysis-in-weak-mode/app.c \
+test-abicompat/bz27208-bidirectional-analysis-in-weak-mode/backcall-v1.h \
+test-abicompat/bz27208-bidirectional-analysis-in-weak-mode/backcall.c \
+test-abicompat/bz27208-bidirectional-analysis-in-weak-mode/backcall.h \
+test-abicompat/bz27208-bidirectional-analysis-in-weak-mode/build.sh \
+test-abicompat/bz27208-bidirectional-analysis-in-weak-mode/libbackcall.so \
+test-abicompat/bz27208-bidirectional-analysis-in-weak-mode/libfoo.c \
+test-abicompat/bz27208-bidirectional-analysis-in-weak-mode/libfoo.so \
+test-abicompat/bz27208-bidirectional-analysis-in-weak-mode/bidi-report-1.txt \
 \
 test-diff-pkg/dbus-glib-0.104-3.fc23.x86_64.rpm \
 test-diff-pkg/dbus-glib-0.80-3.fc12.x86_64.rpm \
