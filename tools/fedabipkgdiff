@@ -963,13 +963,16 @@ class Brew(object):
         return RPMCollection((RPM(rpm_info) for rpm_info in rpm_infos))
 
     @log_call
-    def get_latest_built_rpms(self, package_name, distro, arches=None):
+    def get_latest_built_rpms(self, package_name, distro, arches=None,
+                              select_subpackages=None):
         """Get RPMs from latest build of a package
 
         :param str package_name: from which package to get the rpms
         :param str distro: which distro the rpms belong to
         :param arches: which arches the rpms belong to
         :type arches: str or None
+        :param select_subpackages: whether to select all subpackages
+        of the build (see select_rpms_from_a_build)
         :return: the selected RPMs
         :rtype: list
         """
@@ -977,7 +980,8 @@ class Brew(object):
         # Get rpm and debuginfo rpm from each arch
         return self.select_rpms_from_a_build(latest_build['build_id'],
                                              package_name,
-                                             arches=arches)
+                                             arches=arches,
+                                             select_subpackages=select_subpackages)
 
 
 @log_call
@@ -1261,7 +1265,8 @@ def diff_local_rpm_with_latest_rpm_from_koji():
     local_rpm = LocalRPM(local_rpm_file)
     rpm_col1 = session.get_latest_built_rpms(local_rpm.name,
                                              from_distro,
-                                             arches=local_rpm.arch)
+                                             arches=local_rpm.arch,
+                                             select_subpackages=global_config.check_all_subpackages)
     rpm_col2 = RPMCollection.gather_from_dir(local_rpm_file)
 
     if global_config.clean_cache_before:
@@ -1298,9 +1303,11 @@ def diff_latest_rpms_based_on_distros():
     package_name = global_config.NVR[0]
 
     rpm_col1 = session.get_latest_built_rpms(package_name,
-                                             distro=global_config.from_distro)
+                                             distro=global_config.from_distro,
+                                             select_subpackages=global_config.check_all_subpackages)
     rpm_col2 = session.get_latest_built_rpms(package_name,
-                                             distro=global_config.to_distro)
+                                             distro=global_config.to_distro,
+                                             select_subpackages=global_config.check_all_subpackages)
 
     if global_config.clean_cache_before:
         delete_download_cache()
@@ -1389,7 +1396,8 @@ def self_compare_rpms_from_distro():
     package_name = global_config.NVR[0]
 
     rpm_col1 = session.get_latest_built_rpms(package_name,
-                                             distro=global_config.from_distro)
+                                             distro=global_config.from_distro,
+                                             select_subpackages=global_config.check_all_subpackages)
 
     if global_config.clean_cache_before:
         delete_download_cache()
