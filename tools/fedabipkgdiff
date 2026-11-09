@@ -890,7 +890,12 @@ class Brew(object):
         :raises NoCompleteBuilds: if there is no latest build of a package.
         """
         package = self.getPackage(package_name)
-        selector = lambda item: get_distro_from_string(item['release']) == distro
+        # Sometimes, the release string of a package can be 1.el10.6
+        # when the user specified --from el10.  In that case, we can't
+        # just naively expect "item['release'] == distro" to be verified.
+        selector = lambda item: get_distro_from_string(item['release']) == distro \
+            or '.' + distro + '.' in item['release'] \
+            or distro + '.' in item['release']
 
         builds = self.listBuilds(packageID=package['id'],
                                  selector=selector,
