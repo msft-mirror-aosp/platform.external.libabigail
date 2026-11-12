@@ -3844,6 +3844,7 @@ static const struct argp_option argp_options[] =
   { "self-check", OPT_SELF_CHECK, 0, 0,
     "perform a sanity check by comparing binaries inside the input package "
     "against their ABIXML representation", 0 },
+  { "self-compare", OPT_SELF_CHECK, 0, OPTION_ALIAS, 0, 0},
   { "set1", OPT_SET1, "PKG1[,PKG2,..] | PKG1[ PKG2 ..]", 0,
     "the first set of packages to compare", 0 },
   { "set2", OPT_SET2, "PKG1[,PKG2,..] | PKG1[ PKG2 ..]", 0,
