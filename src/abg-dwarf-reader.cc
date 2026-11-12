@@ -2325,6 +2325,7 @@ public:
     {
       string alt_di_path;
       if (refers_to_alt_debug_info(alt_di_path)
+	  && !found_alt_debug_info_file()
 	  && !alternate_dwarf_debug_info())
 	status |= STATUS_ALT_DEBUG_INFO_NOT_FOUND;
     }

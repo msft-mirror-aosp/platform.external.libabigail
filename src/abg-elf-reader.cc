@@ -137,6 +137,8 @@ struct reader::priv
   // and make the DWARF reference it in here.
   Dwarf*				alt_dwarf_handle	= nullptr;
   string				alt_dwarf_path;
+  // If this is set, it means the absolute_alt_dwarf_path was found on disk.
+  bool					found_alt_dwarf_file	= false;
   int					alt_dwarf_fd		= -1;
   Elf_Scn*				ctf_section		= nullptr;
   int					alt_ctf_fd		= -1;
@@ -298,7 +300,41 @@ struct reader::priv
     Dwarf_Addr bias = 0;
     dwarf_handle = dwfl_module_getdwarf(elf_module, &bias);
     alt_dwarf_handle = dwarf_getalt(dwarf_handle);
+    if (alt_dwarf_handle)
+      found_alt_dwarf_file = true;
     find_alt_dwarf_debug_info_link(elf_module, alt_dwarf_path);
+    if (!found_alt_dwarf_file)
+      locate_alt_dwarf_file();
+  }
+
+  /// Locate the alternate DWARF debuginfo file on disk and set
+  /// reader::priv::found_alt_dwarf_file if the file was found.
+  ///
+  /// @return true iff the alternate DWARF debuginfo file was found
+  /// and reader::priv::found_alt_dwarf_file was set.
+  bool
+  locate_alt_dwarf_file()
+  {
+    if (!alt_dwarf_path.empty())
+      {
+        string alt_dwarf_base_name;
+
+        if (!tools_utils::base_name(alt_dwarf_path, alt_dwarf_base_name))
+          return false;
+
+        for (auto root_dir : debug_info_root_paths)
+          {
+            string absolute_alt_dwarf_path;
+            if (tools_utils::find_file_under_dir(root_dir, alt_dwarf_base_name,
+                                                 absolute_alt_dwarf_path))
+              {
+                found_alt_dwarf_file = true;
+                return true;
+              }
+          }
+        return false;
+      }
+    return false;
   }
 
   /// Clear the resources related to the alternate CTF data.
@@ -561,6 +597,15 @@ reader::refers_to_alt_debug_info(string& alt_di_path) const
     }
   return false;
 }
+
+/// Test if the alternate DWARF debuginfo file has been found or not.
+///
+/// An alternate DWARF debuginfo file can be found and yet
+/// alternate_dwarf_debug_info() ca be nullptr if the alternate
+/// debuginfo file is empty
+bool
+reader::found_alt_debug_info_file() const
+{return priv_->found_alt_dwarf_file;}
 
 /// Find and return a pointer to the ELF symbol table
 /// section.

@@ -112,6 +112,9 @@ class reader : public fe_iface
   bool
   refers_to_alt_debug_info(string& alt_di_path) const;
 
+  bool
+  found_alt_debug_info_file() const;
+
   const Elf_Scn*
   find_symbol_table_section() const;
 
