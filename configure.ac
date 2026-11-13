@@ -373,6 +373,15 @@ dnl glibc and BSD include fts into their libc, but musl does not so
 dnl check if we need to explicitly link to the standalone musl-fts.
 AC_SEARCH_LIBS([fts_open], [fts])
 
+dnl The tools use argp, which glibc provides but musl does not, so check
+dnl if we need to explicitly link to the standalone argp library.
+save_LIBS="$LIBS"
+LIBS=
+AC_SEARCH_LIBS([argp_parse], [argp], [ARGP_LIBS="$LIBS"],
+               [AC_MSG_ERROR([argp_parse not found])])
+LIBS="$save_LIBS"
+AC_SUBST(ARGP_LIBS)
+
 dnl Older glibc had a broken fts that didn't work with Large File Systems.
 dnl We want the version that can handler LFS, but include workaround if we
 dnl get a bad one. Add define to CFLAGS (not AC_DEFINE it) since we need to

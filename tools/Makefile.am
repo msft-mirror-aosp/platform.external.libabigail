@@ -19,7 +19,7 @@ else
 endif
 
 noinst_PROGRAMS = abisym abinilint
-LDADD = $(abs_top_builddir)/src/libabigail.la
+LDADD = $(abs_top_builddir)/src/libabigail.la $(ARGP_LIBS)
 AM_LDFLAGS = -lpthread
 
 abidiff_SOURCES = abidiff.cc
