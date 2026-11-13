@@ -11175,6 +11175,7 @@ get_debug_representation(const type_or_decl_base* artifact)
 	  for (auto f : clazz->get_virtual_mem_fns())
 	    {
 	      o << std::hex << "(" << is_method_decl(f).get() << ") "
+                << std::dec
 		<< "  " << f->get_pretty_representation(/*internal=*/false,
 							/*qualified=*/false)
 		<< "   // voffset: " << get_member_function_vtable_offset(f)
