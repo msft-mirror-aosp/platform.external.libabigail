@@ -4017,6 +4017,48 @@ public:
     return equal;
   }
 
+  /// When a virtual method which has an ELF symbol that is in the
+  /// public symbol table is added to both a decl-only class and its
+  /// definition, reconcile the two after decl-only class resolution
+  /// is done.
+  ///
+  /// If decl-only virtual function has an elf symbol when the
+  /// definition virtual has not, update the later with the symbol
+  /// coming from the former.  This is because the virtual function
+  /// with the ELF symbol that is in the public symbol table is part
+  /// of the ABI so the later too must have the same ELF symbol for
+  /// consistency reasons.
+  ///
+  /// @param declaration the declaration-only class that might contain
+  /// virtual member functions with corresponding ELF symbols.
+  ///
+  /// @param definition the definition of the declaration-only class
+  /// @p declaration that might contain virtual member functions that
+  /// might lack the ELF symbols referred to by the virtual member
+  /// functions present on @p declaration.
+  void
+  reconcile_virtual_method_symbols(class_decl_sptr declaration,
+				   class_decl_sptr definition)
+  {
+    if (!declaration || !definition)
+      return;
+
+    for (auto virtual_method : declaration->get_virtual_mem_fns())
+      if (auto decl_sym = virtual_method->get_symbol())
+        {
+          if (virtual_method->get_is_in_public_symbol_table())
+            {
+              auto linkage_name = virtual_method->get_linkage_name();
+              if (auto def_virt_method = definition->find_member_function(linkage_name))
+                if (!def_virt_method->get_symbol())
+		  {
+		    def_virt_method->set_symbol(decl_sym);
+		    add_fn_to_exported_or_undefined_decls(def_virt_method);
+		  }
+            }
+        }
+  }
+
   /// Walk the declaration-only classes that have been found during
   /// the building of the corpus and resolve them to their definitions.
   void
@@ -4124,10 +4166,18 @@ public:
 		    map<string, class_or_union_sptr>::const_iterator e =
 		      per_tu_class_map.find(tu_path);
 		    if (e != per_tu_class_map.end())
-		      (*j)->set_definition_of_declaration(e->second);
+                      {
+                        (*j)->set_definition_of_declaration(e->second);
+                        reconcile_virtual_method_symbols(is_class_type(*j),
+							 is_class_type(e->second));
+                      }
 		    else if (per_tu_class_map.size() == 1)
-		      (*j)->set_definition_of_declaration
-			(per_tu_class_map.begin()->second);
+                      {
+                        (*j)->set_definition_of_declaration
+                          (per_tu_class_map.begin()->second);
+                        reconcile_virtual_method_symbols(is_class_type(*j),
+							 is_class_type(per_tu_class_map.begin()->second));
+                      }
 		    else
 		      {
 			// We are in case where there are more than
@@ -4158,7 +4208,11 @@ public:
 			      }
 			  }
 			if (all_class_definitions_are_equal)
-			  (*j)->set_definition_of_declaration(first_class);
+                          {
+                            (*j)->set_definition_of_declaration(first_class);
+                            reconcile_virtual_method_symbols(is_class_type(*j),
+							     is_class_type(first_class));
+                          }
 		      }
 		  }
 	      }
