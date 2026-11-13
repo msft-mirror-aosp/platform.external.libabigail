@@ -1215,6 +1215,12 @@ public:
 	  if (abi->record_type_as_reachable_from_public_interfaces(*s))
 	    maybe_record_subtypes_as_reachable(s.get(), rec_types);
       }
+    else if (auto s = is_subrange_type(examplar_type))
+      {
+	if (auto u = s->get_underlying_type())
+	  if (abi->record_type_as_reachable_from_public_interfaces(*u))
+	    maybe_record_subtypes_as_reachable(u.get(), rec_types);
+      }
     else if (auto fn_type = is_function_type(examplar_type))
       {
 	if (auto t = fn_type->get_return_type())

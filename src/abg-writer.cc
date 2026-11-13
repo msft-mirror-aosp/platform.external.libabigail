@@ -733,6 +733,14 @@ public:
   {
     type_base* t = get_exemplar_type(type.get());
     if (t && !m_write_non_reachable_types)
+      // If we see 't' here then it must be reachable.  Otherwise, the
+      // unthinkable happened, OMG.
+      //
+      // Go look in src/abg-corpus.cc in
+      // reachable_types_marker::maybe_record_subtypes_as_reachable.
+      // I probably forgot to handle one case in the if/else if/
+      // lithany there.  ADd the the proper case to re-establish
+      // harmony in the universe and things should work again.
       ABG_ASSERT(type_is_reachable_from_public_interfaces(*t));
 
     // If the type is a function type, record it in a dedicated data
