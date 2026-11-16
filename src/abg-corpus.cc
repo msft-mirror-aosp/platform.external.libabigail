@@ -1088,7 +1088,9 @@ corpus::get_types_not_reachable_from_public_interfaces() const
 	  if (auto clazz = is_class_or_union_type(t))
 	    t = look_through_decl_only_class(clazz);
 	  type_base_sptr examplar_type = get_exemplar_type(t);
-	  if (!type_is_reachable_from_public_interfaces(*examplar_type))
+	  if (type_is_reachable_from_public_interfaces(*examplar_type))
+	    priv_->reachable_types_from_pub_ifaces_.insert(examplar_type.get());
+	  else
 	    priv_->non_reachable_types_from_pub_ifaces_.insert(examplar_type.get());
 	}
     }
@@ -1111,6 +1113,36 @@ corpus::get_sorted_types_not_reachable_from_public_interfaces() const
 	   comp);
     }
   return priv_->sorted_non_reachable_types_from_pub_ifaces_;
+}
+
+/// Getter of the types reachable from public interface.
+///
+/// @return the types reachable from public interface.
+const canonical_type_ptr_set_type&
+corpus::get_types_reachable_from_public_interfaces() const
+{
+  get_types_not_reachable_from_public_interfaces();
+  return priv_->reachable_types_from_pub_ifaces_;
+}
+
+/// Getter of the sorted types reachable from public interface.
+///
+/// @return the sorted types reachable from public interface.
+const type_base_ptrs_type&
+corpus::get_sorted_types_reachable_from_public_interfaces() const
+{
+  lock_guard<recursive_mutex> lock(priv_->get_mutex());
+  if (priv_->sorted_reachable_types_from_pub_ifaces_.empty())
+    {
+      for (auto& type : get_types_reachable_from_public_interfaces())
+	priv_->sorted_reachable_types_from_pub_ifaces_.push_back(type);
+
+      type_topo_comp comp;
+      sort(priv_->sorted_reachable_types_from_pub_ifaces_.begin(),
+	   priv_->sorted_reachable_types_from_pub_ifaces_.end(),
+	   comp);
+    }
+  return priv_->sorted_reachable_types_from_pub_ifaces_;
 }
 
 /// A pass that markes the types that are reachable from the ABI

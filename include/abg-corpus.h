@@ -195,6 +195,12 @@ public:
   const type_base_ptrs_type&
   get_sorted_types_not_reachable_from_public_interfaces() const;
 
+  const canonical_type_ptr_set_type&
+  get_types_reachable_from_public_interfaces() const;
+
+  const type_base_ptrs_type&
+  get_sorted_types_reachable_from_public_interfaces() const;
+
   const corpus_group*
   get_group() const;
 

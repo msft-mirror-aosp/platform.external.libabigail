@@ -931,6 +931,7 @@ struct corpus::priv
   type_maps					type_per_loc_map_;
   std::atomic<bool>				do_compute_non_reachable_types_;
   std::atomic<bool>				types_are_canonicalized_;
+  mutable type_base_ptrs_type			sorted_reachable_types_from_pub_ifaces_;
   mutable type_base_ptrs_type			sorted_non_reachable_types_from_pub_ifaces_;
   canonical_type_ptr_set_type			reachable_types_from_pub_ifaces_;
   canonical_type_ptr_set_type			non_reachable_types_from_pub_ifaces_;

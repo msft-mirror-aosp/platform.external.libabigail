@@ -1422,12 +1422,7 @@ public:
 
     corpus()->sort_functions();
     corpus()->sort_variables();
-    if (options().load_all_types)
-      // If we were instructed to load all types, then we need to
-      // detect which types are reachable or not.  Otherwise, by
-      // default, all types are considered reachable.  This makes the
-      // loading faster.
-      corpus()->mark_non_reachable_types();
+    corpus()->mark_non_reachable_types();
 
     if (do_log())
       {
