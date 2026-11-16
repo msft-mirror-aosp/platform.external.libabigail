@@ -732,16 +732,6 @@ public:
   record_type_as_referenced(const type_base_sptr& type)
   {
     type_base* t = get_exemplar_type(type.get());
-    if (t && !m_write_non_reachable_types)
-      // If we see 't' here then it must be reachable.  Otherwise, the
-      // unthinkable happened, OMG.
-      //
-      // Go look in src/abg-corpus.cc in
-      // reachable_types_marker::maybe_record_subtypes_as_reachable.
-      // I probably forgot to handle one case in the if/else if/
-      // lithany there.  ADd the the proper case to re-establish
-      // harmony in the universe and things should work again.
-      ABG_ASSERT(type_is_reachable_from_public_interfaces(*t));
 
     // If the type is a function type, record it in a dedicated data
     // structure.
@@ -1086,6 +1076,7 @@ static bool write_pointer_type_def(const pointer_type_def_sptr&,
 				   write_context&, unsigned);
 static bool write_reference_type_def(const reference_type_def_sptr&,
 				     write_context&, unsigned);
+static void write_referenced_types(write_context &, const unsigned);
 static bool write_ptr_to_mbr_type(const ptr_to_mbr_type_sptr&,
 				  write_context&, unsigned);
 static bool write_array_type_def(const array_type_def_sptr&,
@@ -2772,7 +2763,6 @@ static void
 write_referenced_types(write_context &		ctxt,
 		       const unsigned		indent)
 {
-  const config& c = ctxt.get_config();
   // Now let's handle types that were referenced, but not yet
   // emitted because they are either:
   //   1/ Types without canonical type
@@ -2823,14 +2813,12 @@ write_referenced_types(write_context &		ctxt,
 	      if (decl_base* d = get_type_declaration(t))
 		{
 		  decl_base_sptr decl(d, noop_deleter());
-		  write_artifact_in_scope(decl, ctxt,
-					  indent + c.get_xml_element_indent());
+		  write_artifact_in_scope(decl, ctxt, indent);
 		}
 	      else if (function_type* f = is_function_type(t))
 		{
 		  function_type_sptr fn_type(f, noop_deleter());
-		  write_function_type(fn_type, ctxt,
-				      indent + c.get_xml_element_indent());
+		  write_function_type(fn_type, ctxt, indent);
 		}
 	      else
 		ABG_ASSERT_NOT_REACHED;
@@ -2952,11 +2940,7 @@ write_decls_from_scope(write_context&		ctxt,
   for (const decl_base_sptr& decl : decls)
     {
       if (type_base_sptr t = is_type(decl))
-	{
-	  if (!ctxt.type_to_be_emitted(t))
-	    continue;
-	  ABG_ASSERT(ctxt.type_is_emitted(t));
-	}
+	;
       else if (var_decl_sptr var = is_var_decl(decl))
 	{
 	  var_decl_sptr v(is_var_decl(get_variant_of_decl_from_abi(ctxt, var)),
@@ -3153,6 +3137,17 @@ write_abi_types(write_context&		ctxt,
       if (!ctxt.type_to_be_emitted(t))
 	continue;
 
+      if (t && !ctxt.get_write_non_reachable_types())
+      // If we see 't' here then it must be reachable.  Otherwise, the
+      // unthinkable happened, OMG.
+      //
+      // Go look in src/abg-corpus.cc in
+      // reachable_types_marker::maybe_record_subtypes_as_reachable.
+      // I probably forgot to handle one case in the if/else if/
+      // lithany there.  ADd the the proper case to re-establish
+      // harmony in the universe and things should work again.
+      ABG_ASSERT(type_is_reachable_from_public_interfaces(*t));
+
       if (function_type_sptr fn_type = is_function_type(t))
 	write_type(fn_type, ctxt, indent + conf.get_xml_element_indent());
       else if (decl_base_sptr type_decl = is_decl(t))
@@ -3162,7 +3157,14 @@ write_abi_types(write_context&		ctxt,
 	ABG_ASSERT_NOT_REACHED;
     }
 
+  // Write the types that might have been referenced when emitting the
+  // scope of the artifact to emit.  Note that all referenced types
+  // must be emitted, including types that are not reachable, even if
+  // we are instructed to emit reachable types only.
+  bool saved = ctxt.get_write_non_reachable_types();
+  ctxt.set_write_non_reachable_types(true);
   write_referenced_types(ctxt, indent + conf.get_xml_element_indent());
+  ctxt.set_write_non_reachable_types(saved);
 
   do_indent(o, indent);
   o << "</abi-types>\n";

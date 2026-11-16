@@ -841,7 +841,7 @@ ensure_dir_path_created(const string& dir_path)
     }
 
   string cmd;
-  cmd = "mkdir -p " + dir_path;
+  cmd = "mkdir -p \'" + dir_path + "\'";
 
   if (system(cmd.c_str()))
     return false;
